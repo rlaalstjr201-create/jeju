@@ -8,9 +8,18 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "axios": "^1.7.0",
+    "pg": "^8.11.0"
+  },
   "devDependencies": {
     "typescript": "^5.4.0",
     "vitest": "^1.6.0",
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "msw": "^2.3.0",
+    "@types/pg": "^8.11.0",
+    "testcontainers": "^10.10.0",
+    "@testcontainers/postgresql": "^10.10.0"
   }
 }
