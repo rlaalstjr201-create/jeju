@@ -50,7 +50,11 @@ When a Trip is shortened, the Traveller is warned ("Day N's M pinned Spots will 
 _Avoid_: Slot, block, period, time-block
 
 **Spot**:
-The atomic content unit — any place a Traveller can go or thing they can do in Jeju (restaurant, beach, attraction, activity provider, accommodation). Lives in a self-curated database; metadata (name, coordinates, hours) seeded from Kakao Local API, category/tags and curation comments (1–2 lines, Korean) assigned by the editorial team. Carries `curationScore` and `popularityScore` (both editorial-assigned). Also carries `embedding VECTOR(1536)` — populated at seed time for semantic similarity lookups; not used for SpotPreferences computation (D4). Photos are not stored — served at runtime via Kakao Maps Places widget embed. "Hidden Gem" is a UI label (high curation, low popularity) — not a domain type.
+The atomic content unit — any place a Traveller can go or thing they can do in Jeju (restaurant, beach, attraction, activity provider, accommodation). Lives in a self-curated database; metadata (name, coordinates, hours) seeded from Kakao Local API. Carries three distinct scores (D-CUR-3):
+- `curationScore` (SMALLINT, manual): curator-assigned editorial quality judgment — "thesis quality, 너 픽만". Set only after curator approval via the CurationCandidate flow; never auto-computed.
+- `popularityScore` (SMALLINT, auto): refreshed by the popularity data pipeline from public data (Jeju Tourism Organization card-sales TOP15, Kakao Map ratings and review counts).
+- `trendScore` (SMALLINT, auto): refreshed by the trend data pipeline from SNS mention volume and search-trend time series (NAVER datalab, visitkorea datalab, TrendSource ACL).
+Also carries `embedding VECTOR(1024)` — populated at seed time for semantic similarity lookups; not used for SpotPreferences computation (D4). Photos are not stored — served at runtime via Kakao Maps Places widget embed. "Hidden Gem" is a UI label (high `curationScore`, low `popularityScore`) — not a domain type.
 _Avoid_: Place, venue, location, experience, activity (as standalone nouns), HiddenGem (as a type)
 
 **Booking**:
@@ -88,11 +92,16 @@ A derived, non-persisted value computed on demand from a Traveller's Shortlist �
 _Avoid_: TasteProfile (implies persistence), UserPreferences, interests, embedding vector
 
 **RecommendationContext**:
-A value object capturing the inputs to a recommendation call. In v1 (`recommendForShortlist`): Traveller + Trip metadata. In v2 (`recommendNow`): Traveller + current GPS coordinates + remaining time. The Recommender accepts a RecommendationContext and returns ranked Spots.
+A value object capturing the inputs to a recommendation call. In v1 (`recommendForShortlist`): Traveller + Trip metadata + `CalibrationProfile`. In v2 (`recommendNow`): Traveller + current GPS coordinates + remaining time + `CalibrationProfile`. The Recommender accepts a RecommendationContext and returns a `RecommendationResult` containing two `RecommendationSection`s (ADR-0017).
 _Avoid_: RecommendationRequest, RecommendationInput
 
 **Recommender**:
-A domain service that ranks and surfaces Spots. Two operations, scoped by version:
+A domain service that ranks and surfaces Spots in two separate tracks (D-CUR-1, ADR-0017):
+- `curatedPicks`: ranked by `curationScore`, filtered to categories matching `SpotPreferences`. Represents the curator's personal selection — unaffected by saturation or popularity.
+- `popularSpots`: ranked by `popularityScore` weighted by `CalibrationProfile` ratio; Spots whose saturation metrics (혼잡도, TOP15 카드매출) exceed threshold are down-ranked within this track (D-CUR-6).
+The Recommender never merges the two tracks into a single weighted score (ADR-0017). Consumers receive a `RecommendationResult { curatedPicks: RecommendationSection, popularSpots: RecommendationSection }`.
+
+Two operations, scoped by version:
 - v1 — `recommendForShortlist(context)`: supplements a Traveller's Shortlist with curated Spots when the ScheduleComposer needs more content to fill a DayPlan.
 - v2 — `recommendNow(context)`: surfaces immediately relevant nearby Spots based on GPS and remaining time (Now Mode).
 Both operations share the same service; v2 adds a new call, not a new service.
@@ -105,6 +114,22 @@ Minimum Shortlist size: 1 Spot (D1). When `shortlist.count < trip.dayCount`, Com
 Re-invocation behaviour: if the existing DayPlan has no manually pinned Spots, generates immediately; if manual pins exist, asks "keep existing layout and fill empty Days only, or rebuild from scratch?" — executes Fill-empty-only or Replace accordingly.
 Signature: `compose(shortlist, trip) → DayPlan`
 _Avoid_: Scheduler, Planner, Optimizer, TripPlanner
+
+**CalibrationProfile**:
+A non-persisted value object expressing a Traveller's preferred balance between the two recommendation tracks: `curatedRatio` (0.0–1.0) and `popularRatio` (= 1 − curatedRatio). Default values vary by persona: Tagalong default is 30:70 (curated:popular); hardcore traveller default is 70:30. The profile can be dynamically adjusted by negative meta-intent in natural-language input (e.g. "유명한 데 말고" → shifts curated ratio up) and explicitly by the Traveller via a UI calibration slider (B5, A4). Never persisted as a standalone record in v1 — derived fresh per request from user-expressed signals (D-CUR-2).
+_Avoid_: TasteWeight, PreferenceRatio, UserBalance
+
+**RecommendationSection**:
+A value object representing one ranked track within a `RecommendationResult`. Shape: `{ label: 'curatedPicks' | 'popularSpots', spots: Spot[], coldStart: boolean }`. `coldStart` is true when the track fell back to score-only ranking due to an empty or insufficient Shortlist. The two sections are always returned together; the consumer (UI or ScheduleComposer) decides how to display or blend them.
+_Avoid_: RecommendationGroup, SpotList, ResultBucket
+
+**CurationCandidate**:
+A domain entity in the curation pipeline representing a Spot that has been automatically discovered but not yet approved by the curator. States: `pending → approved | rejected`. On approval the curator assigns `curationScore` and optionally a `curationComment`; the Candidate is promoted to an active `Spot`. On rejection it is archived. LLM-generated tags and summary are attached at discovery time ("silver label"); curator approval is the "golden label" gate (D-CUR-5). The domain does not model the admin UI — that is an infrastructure concern.
+_Avoid_: SpotDraft, CandidateSpot, PendingSpot
+
+**TrendSource**:
+An infrastructure-layer entity (ACL) representing one external data provider for trend and popularity signals. Examples: `IJTODataSource` (제주관광공사 빅데이터, `data.ijto.or.kr` — 이동통신 혼잡도, 차량 분포, 카드매출 TOP15, 슬로우로드), `VisitKoreaDataSource` (한국관광 데이터랩, `datalab.visitkorea.or.kr` — SNS 언급량·키워드), `KakaoMapRatingSource`. Each TrendSource is wrapped by an ACL adapter; raw external schemas never appear in domain code (ADR-0018). Domain only sees normalised `{ spotId, popularitySignal: number, trendSignal: number, fetchedAt: CalendarDate }` payloads.
+_Avoid_: DataFeed, ExternalSource, APIProvider (in domain code)
 
 **Now Mode**:
 A GPS-triggered entry point (v2) that activates the `recommendNow` operation on the Recommender. Requires only that `isInJeju(gps)` is true — independent of TripPhase and Trip existence. A Traveller with no active Trip (or no Trip at all) can still enter Now Mode. The v1 design exposes the interface; the implementation ships in v2.
@@ -121,7 +146,9 @@ _Avoid_: Explore mode, nearby mode, live mode
 - A **Spot** can appear in multiple **Days** across any number of **Trips**, and simultaneously in a **Shortlist** — it is shared content, not consumed when pinned
 - Pinning a **Spot** into a **Day** does not remove it from the **Shortlist**; the two references are independent
 - **ScheduleComposer** reads a **Shortlist** (and optionally calls **Recommender**) to populate a **DayPlan**
-- **Recommender** consumes a **RecommendationContext** (derived from **SpotPreferences** + trip/GPS data) and returns ranked **Spots**
+- **Recommender** consumes a **RecommendationContext** (derived from **SpotPreferences** + **CalibrationProfile** + trip/GPS data) and returns a **RecommendationResult** containing two **RecommendationSection**s (`curatedPicks`, `popularSpots`)
+- A **CurationCandidate** is discovered automatically and promoted to a **Spot** upon curator approval
+- A **TrendSource** (ACL) feeds normalised signals that update **Spot** `popularityScore` and `trendScore`
 
 ## Example dialogue
 
@@ -143,17 +170,21 @@ _Avoid_: Explore mode, nearby mode, live mode
 - **UI language resolved**: Korean-only for MVP. No i18n layer. v2 foreign-traveller target deferred.
 - **Identifier policy resolved**: translate to English when a precise single English word exists; otherwise use romanised Korean (e.g. `oreum`, `haenyeo-experience`, `olle-trail`).
 - **Spot type taxonomy incomplete**: `beach | restaurant | activity | accommodation | oreum | …` — full list deferred to Light Spec.
-- **Score calculation deferred**: `curationScore` and `popularityScore` field ranges and computation methods deferred to Light Spec.
+- **Score model resolved (D-CUR-3)**: three separate fields — `curationScore` (manual, curator), `popularityScore` (auto, public data + Kakao), `trendScore` (auto, SNS/search trends). Normalisation formula for `popularityScore` deferred to Plan (OQ-CUR-1).
 - **Single context confirmed**: one `docs/context.md`. External partner isolation via ACL, not context boundaries.
 - **ACL modules (infrastructure only)**: `AgodaAdapter`, `SocarAdapter`, `MyrealtripAdapter`, `KakaoMapAdapter`, `KMAAdapter`. Partner brands do not appear in domain code.
 - **Spot seeding method open**: target ~200 curated Spots for launch. Collection approach deferred to Plan stage.
 - **"Concierge" resolved**: UI/marketing label only. Does not appear in domain code. Covered functionally by Recommender + ScheduleComposer + Now Mode.
-- **Editor/Curator resolved**: no domain entity. Spot curation is a content-operations concern handled in the admin panel (infrastructure). The domain only sees the resulting Spot fields.
+- **Editor/Curator revised (D-CUR-5)**: `CurationCandidate` is now a domain entity (pending → approved | rejected pipeline). The curator role is still not a domain entity — it is the human operator. The admin UI is infrastructure. The domain models only the lifecycle of a candidate Spot, not who operates it.
 - **Spot search resolved**: infrastructure only (`SpotRepository.search`). No domain service. Search indexing, text matching, and filtering are infrastructure concerns.
 - **ScheduleComposer minimum Spot count resolved**: ≥ 1 Spot in Shortlist required; when count < Day count, Recommender fills gaps; auto-filled Spots added to Shortlist; UI labels them "자동 추천으로 채움" (D1).
 - **Trip dateRange nullability resolved**: required, not nullable; `parseFreeText` failure → default next weekend 1박2일 (KST); inferred value shown with one-tap edit (D2).
 - **SpotPreferences representation resolved (D3)**: categorical type distribution map `{ category: weight }`. Not an embedding vector. "왜 이 Spot?" UI 설명 가능. Resolves plan-review BLOCKER B1.
-- **Spot embedding purpose resolved (D4)**: `spots.embedding VECTOR(1536)` is for semantic/similarity search infrastructure. Not used by SpotPreferences. Not used in v1 recommendation flow. Populated at seed time via batch (Voyage AI voyage-3 or equivalent). Resolves plan-review MAJOR B4.
+- **Spot embedding purpose resolved (D4)**: `spots.embedding VECTOR(1024)` is for semantic/similarity search infrastructure. Not used by SpotPreferences. Not used in v1 recommendation flow. Populated at seed time via batch (Voyage AI voyage-3 or equivalent). Resolves plan-review MAJOR B4. (Note: earlier docs incorrectly stated VECTOR(1536) — corrected to match actual migration 003.)
+- **Recommendation response structure resolved (D-CUR-1)**: two-track output — `curatedPicks` + `popularSpots` — never merged (ADR-0017). Weighted-sum blending rejected.
+- **CalibrationProfile defaults resolved (D-CUR-2)**: Tagalong default 30:70 (curated:popular); hardcore traveller 70:30. Dynamic adjustment from negative meta-intent ("유명한 데 말고").
+- **Saturation penalty scope resolved (D-CUR-6)**: affects only `popularSpots` track; `curatedPicks` is saturation-immune.
+- **External data source isolation resolved (D-CUR-4)**: TrendSource ACL adapters only; raw external schemas never enter domain code (ADR-0018). Sources: IJTO, visitkorea datalab, Kakao Map ratings.
 - **DayPlan incomplete-spot policy**: what happens to unvisited Spots at end of day (carry over? stay in DayPlan?) deferred to Light Spec.
 - **TripPhase transition triggers**: date-based vs GPS vs manual activation deferred to Light Spec.
 
