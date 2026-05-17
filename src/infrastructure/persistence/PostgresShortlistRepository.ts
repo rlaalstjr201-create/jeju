@@ -67,7 +67,7 @@ export class PostgresShortlistRepository implements ShortlistRepository {
     return new Shortlist(spots);
   }
 
-  async save(travellerId: string, shortlist: Shortlist): Promise<void> {
+  async save(travellerId: string, shortlist: Shortlist, autoFilledSpotIds?: readonly string[]): Promise<void> {
     const client = await this.pool.connect();
     try {
       await client.query('BEGIN');
@@ -99,7 +99,7 @@ export class PostgresShortlistRepository implements ShortlistRepository {
 
       // Upsert current spots (preserve is_auto_filled for existing rows)
       for (const spot of shortlist.spots) {
-        const isAutoFilled = existingMap.get(spot.id) ?? false;
+        const isAutoFilled = existingMap.get(spot.id) ?? autoFilledSpotIds?.includes(spot.id) ?? false;
         await client.query(
           `INSERT INTO shortlist_spots (traveller_id, spot_id, is_auto_filled)
            VALUES ($1, $2, $3)

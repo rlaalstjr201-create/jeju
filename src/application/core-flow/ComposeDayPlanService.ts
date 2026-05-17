@@ -64,7 +64,7 @@ export class ComposeDayPlanService {
       autoFilledSpotIds.push(spot.id);
     }
 
-    await params.shortlistRepository.save(params.travellerId, updatedShortlist);
+    await params.shortlistRepository.save(params.travellerId, updatedShortlist, autoFilledSpotIds);
 
     const dayPlan = composer.compose(updatedShortlist, params.trip);
 
