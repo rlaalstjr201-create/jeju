@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import type { Shortlist } from '../shortlist/Shortlist.js';
 import type { Trip } from '../trip/Trip.js';
 import { Day } from '../trip/Day.js';
@@ -21,7 +22,7 @@ const REGION_ORDER: Region[] = [
 ];
 
 function generateId(): string {
-  return `dayplan-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  return randomUUID();
 }
 
 /**

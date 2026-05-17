@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { Pool } from 'pg';
+import type { Pool, PoolClient } from 'pg';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,8 +25,8 @@ function getMigrationFiles(direction: 'up' | 'down'): string[] {
   return files;
 }
 
-async function getAppliedMigrations(pool: Pool): Promise<Set<string>> {
-  const result = await pool.query<{ name: string }>(
+async function getAppliedMigrations(client: PoolClient): Promise<Set<string>> {
+  const result = await client.query<{ name: string }>(
     'SELECT name FROM schema_migrations ORDER BY name ASC',
   );
   return new Set(result.rows.map((r) => r.name));
@@ -40,7 +40,7 @@ export async function runMigrations(pool: Pool): Promise<void> {
     // Ensure migrations tracking table exists
     await client.query(CREATE_MIGRATIONS_TABLE);
 
-    const applied = await getAppliedMigrations(pool);
+    const applied = await getAppliedMigrations(client);
     const upFiles = getMigrationFiles('up');
 
     for (const file of upFiles) {
@@ -72,7 +72,7 @@ export async function rollbackMigrations(pool: Pool): Promise<void> {
     // Ensure migrations tracking table exists before querying it
     await client.query(CREATE_MIGRATIONS_TABLE);
 
-    const applied = await getAppliedMigrations(pool);
+    const applied = await getAppliedMigrations(client);
     const downFiles = getMigrationFiles('down').reverse(); // reverse order
 
     for (const file of downFiles) {

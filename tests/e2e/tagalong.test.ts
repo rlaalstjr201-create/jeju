@@ -176,7 +176,7 @@ maybeDescribe('E2E: Tagalong flow', () => {
 
   beforeAll(async () => {
     const { PostgreSqlContainer } = await import('@testcontainers/postgresql');
-    container = await new PostgreSqlContainer('postgres:16-alpine')
+    container = await new PostgreSqlContainer('pgvector/pgvector:pg16')
       .withDatabase('jeju_test')
       .withUsername('test')
       .withPassword('test')
@@ -237,14 +237,14 @@ maybeDescribe('E2E: Tagalong flow', () => {
 
       // Step 2: Add 8 spots (2 per region, 4 regions)
       const spotIds = [
-        'spot-jc-oreum-1',
-        'spot-jc-oreum-2',
-        'spot-ea-oreum-1',
-        'spot-ea-oreum-2',
-        'spot-sg-cafe-1',
-        'spot-sg-cafe-2',
-        'spot-wt-cafe-1',
-        'spot-wt-cafe-2',
+        '00000001-0000-4000-8000-000000000000',
+        '00000002-0000-4000-8000-000000000000',
+        '00000004-0000-4000-8000-000000000000',
+        '00000005-0000-4000-8000-000000000000',
+        '00000007-0000-4000-8000-000000000000',
+        '00000008-0000-4000-8000-000000000000',
+        '00000009-0000-4000-8000-000000000000',
+        '0000000a-0000-4000-8000-000000000000',
       ];
       for (const spotId of spotIds) {
         const r = await fastify.inject({
@@ -323,7 +323,7 @@ maybeDescribe('E2E: Tagalong flow', () => {
         method: 'PATCH',
         url: '/api/v1/shortlist',
         headers: { authorization: 'Bearer e3' },
-        body: { spotId: 'spot-sg-cafe-1', action: 'add' },
+        body: { spotId: '00000007-0000-4000-8000-000000000000', action: 'add' },
       });
       expect(addRes.statusCode).toBe(200);
 
@@ -384,10 +384,10 @@ maybeDescribe('E2E: Tagalong flow', () => {
 
       // Step 2: Add 4 spots, one per region
       const spotsToAdd = [
-        'spot-jc-oreum-1',
-        'spot-ea-oreum-1',
-        'spot-sg-cafe-1',
-        'spot-wt-cafe-1',
+        '00000001-0000-4000-8000-000000000000',
+        '00000004-0000-4000-8000-000000000000',
+        '00000007-0000-4000-8000-000000000000',
+        '00000009-0000-4000-8000-000000000000',
       ];
       for (const spotId of spotsToAdd) {
         const r = await fastify.inject({
@@ -436,10 +436,10 @@ maybeDescribe('E2E: Tagalong flow', () => {
 
       // Step 2: Add 4 spots
       const spotsToAdd = [
-        'spot-jc-oreum-1',
-        'spot-ea-oreum-1',
-        'spot-sg-cafe-1',
-        'spot-wt-cafe-1',
+        '00000001-0000-4000-8000-000000000000',
+        '00000004-0000-4000-8000-000000000000',
+        '00000007-0000-4000-8000-000000000000',
+        '00000009-0000-4000-8000-000000000000',
       ];
       for (const spotId of spotsToAdd) {
         const r = await fastify.inject({

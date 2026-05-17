@@ -96,7 +96,7 @@ maybeDescribe('Repository integration tests', () => {
 
   beforeAll(async () => {
     const { PostgreSqlContainer } = await import('@testcontainers/postgresql');
-    container = await new PostgreSqlContainer('postgres:16-alpine')
+    container = await new PostgreSqlContainer('pgvector/pgvector:pg16')
       .withDatabase('jeju_test')
       .withUsername('test')
       .withPassword('test')
