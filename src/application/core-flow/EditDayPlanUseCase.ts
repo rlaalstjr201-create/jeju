@@ -3,15 +3,8 @@ import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerA
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { DayPlanRepository } from '../../domain/ports/DayPlanRepository.js';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
-import { TripNotFoundError, ForbiddenError } from './GetRecommendationsUseCase.js';
-import { SpotNotFoundError } from './UpdateShortlistUseCase.js';
-
-export class DayNotFoundError extends Error {
-  constructor() {
-    super('DAY_NOT_FOUND');
-    this.name = 'DayNotFoundError';
-  }
-}
+import { TripNotFoundError, ForbiddenError, SpotNotFoundError, DayNotFoundError } from '../errors.js';
+export { DayNotFoundError };
 
 interface EditDayPlanInput {
   readonly accessToken: string;

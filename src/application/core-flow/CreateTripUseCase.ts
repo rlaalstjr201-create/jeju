@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { Trip } from '../../domain/trip/Trip.js';
 import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
-import type { ParseFreeTextPort } from '../../infrastructure/llm/ParseFreeTextPort.js';
+import type { ParseFreeTextPort } from '../ports/ParseFreeTextPort.js';
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 
 interface CreateTripInput {

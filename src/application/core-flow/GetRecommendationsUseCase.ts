@@ -5,20 +5,8 @@ import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerA
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import type { Recommender } from '../../domain/recommender/Recommender.js';
-
-export class TripNotFoundError extends Error {
-  constructor() {
-    super('TRIP_NOT_FOUND');
-    this.name = 'TripNotFoundError';
-  }
-}
-
-export class ForbiddenError extends Error {
-  constructor() {
-    super('FORBIDDEN');
-    this.name = 'ForbiddenError';
-  }
-}
+import { TripNotFoundError, ForbiddenError } from '../errors.js';
+export { TripNotFoundError, ForbiddenError };
 
 interface GetRecommendationsInput {
   readonly accessToken: string;

@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { parseWithRegex } from './regexParser.js'
-import type { ParseFreeTextPort, ParsedDateRange } from './ParseFreeTextPort.js'
+import type { ParseFreeTextPort, ParsedDateRange } from '../../application/ports/ParseFreeTextPort.js'
 import { CalendarDate } from '../../domain/shared/CalendarDate.js'
 
 export class LLMParseFreeTextAdapter implements ParseFreeTextPort {

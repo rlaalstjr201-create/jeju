@@ -1,5 +1,5 @@
 import { CalendarDate } from '../../domain/shared/CalendarDate.js'
-import type { ParsedDateRange } from './ParseFreeTextPort.js'
+import type { ParsedDateRange } from '../../application/ports/ParseFreeTextPort.js'
 
 // Returns the next Friday strictly after `from` (if `from` IS Friday, returns the following Friday).
 function nextFridayFrom(from: CalendarDate): CalendarDate {

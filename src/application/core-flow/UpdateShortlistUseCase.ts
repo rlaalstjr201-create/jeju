@@ -1,13 +1,8 @@
 import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
-
-export class SpotNotFoundError extends Error {
-  constructor() {
-    super('SPOT_NOT_FOUND');
-    this.name = 'SpotNotFoundError';
-  }
-}
+import { SpotNotFoundError } from '../errors.js';
+export { SpotNotFoundError };
 
 interface UpdateShortlistInput {
   readonly accessToken: string;
