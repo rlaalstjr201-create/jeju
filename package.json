@@ -10,16 +10,18 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
+    "@fastify/sensible": "^6.0.4",
     "axios": "^1.7.0",
+    "fastify": "^5.8.5",
     "pg": "^8.11.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "vitest": "^1.6.0",
-    "@types/node": "^20.0.0",
-    "msw": "^2.3.0",
+    "@testcontainers/postgresql": "^10.10.0",
+    "@types/node": "^20.19.41",
     "@types/pg": "^8.11.0",
+    "msw": "^2.3.0",
     "testcontainers": "^10.10.0",
-    "@testcontainers/postgresql": "^10.10.0"
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
   }
 }

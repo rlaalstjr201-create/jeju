@@ -11,6 +11,7 @@ export interface Spot {
   readonly curationScore: number;
   readonly popularityScore: number;
   readonly curationComment: string | null;
+  readonly thumbnailUrl: string | null;
   readonly lat: number;
   readonly lng: number;
 }

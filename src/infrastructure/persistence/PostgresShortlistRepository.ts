@@ -15,6 +15,7 @@ interface ShortlistSpotRow {
   curation_score: number;
   popularity_score: number;
   curation_comment: string | null;
+  thumbnail_url: string | null;
   lat: number;
   lng: number;
   is_auto_filled: boolean;
@@ -31,6 +32,7 @@ function rowToSpot(row: ShortlistSpotRow): Spot {
     curationScore: row.curation_score,
     popularityScore: row.popularity_score,
     curationComment: row.curation_comment,
+    thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
   };
@@ -51,6 +53,7 @@ export class PostgresShortlistRepository implements ShortlistRepository {
          s.curation_score,
          s.popularity_score,
          s.curation_comment,
+         s.thumbnail_url,
          s.lat,
          s.lng,
          ss.is_auto_filled

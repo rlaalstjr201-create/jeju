@@ -14,6 +14,7 @@ function makeSpot(id: string, category = 'beach'): Spot {
     curationScore: 80,
     popularityScore: 70,
     curationComment: null,
+    thumbnailUrl: null,
     lat: 33.25,
     lng: 126.5,
   };

@@ -33,6 +33,7 @@ interface PinnedSpotRow {
   curation_score: number;
   popularity_score: number;
   curation_comment: string | null;
+  thumbnail_url: string | null;
   lat: number;
   lng: number;
 }
@@ -52,6 +53,7 @@ function rowToSpot(row: PinnedSpotRow): Spot {
     curationScore: row.curation_score,
     popularityScore: row.popularity_score,
     curationComment: row.curation_comment,
+    thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
   };
@@ -96,6 +98,7 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
          s.curation_score,
          s.popularity_score,
          s.curation_comment,
+         s.thumbnail_url,
          s.lat,
          s.lng
        FROM pinned_spots ps

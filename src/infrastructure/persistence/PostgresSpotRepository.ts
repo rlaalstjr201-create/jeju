@@ -14,6 +14,7 @@ interface SpotRow {
   curation_score: number;
   popularity_score: number;
   curation_comment: string | null;
+  thumbnail_url: string | null;
   lat: number;
   lng: number;
 }
@@ -29,6 +30,7 @@ function rowToSpot(row: SpotRow): Spot {
     curationScore: row.curation_score,
     popularityScore: row.popularity_score,
     curationComment: row.curation_comment,
+    thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
   };
@@ -36,7 +38,7 @@ function rowToSpot(row: SpotRow): Spot {
 
 const SELECT_COLUMNS = `
   id, kakao_place_id, name, region, category, price_range,
-  curation_score, popularity_score, curation_comment, lat, lng
+  curation_score, popularity_score, curation_comment, thumbnail_url, lat, lng
 `;
 
 export class PostgresSpotRepository implements SpotRepository {

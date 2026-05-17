@@ -29,6 +29,7 @@ function makeSpotRow(overrides: Partial<{
   curation_score: number;
   popularity_score: number;
   curation_comment: string | null;
+  thumbnail_url: string | null;
   lat: number;
   lng: number;
 }> = {}) {
@@ -42,6 +43,7 @@ function makeSpotRow(overrides: Partial<{
     curation_score: 4.5,
     popularity_score: 3.2,
     curation_comment: null,
+    thumbnail_url: null,
     lat: 33.5,
     lng: 126.5,
     ...overrides,
@@ -59,6 +61,7 @@ function makeExpectedSpot(row: ReturnType<typeof makeSpotRow>): Spot {
     curationScore: row.curation_score,
     popularityScore: row.popularity_score,
     curationComment: row.curation_comment,
+    thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
   };
@@ -114,7 +117,7 @@ describe('PostgresRecommenderAdapter', () => {
     // We use Object.create to call fromShortlist with a fake Shortlist that
     // has exactly one spot with category 'cafe'.
     const fakeShortlist = {
-      spots: [{ category: 'cafe', id: 's1', name: 'Café', region: 'jeju-city', priceRange: 'budget', kakaoPlaceId: 'k1', curationScore: 4, popularityScore: 3, curationComment: null, lat: 33, lng: 126 }],
+      spots: [{ category: 'cafe', id: 's1', name: 'Café', region: 'jeju-city', priceRange: 'budget', kakaoPlaceId: 'k1', curationScore: 4, popularityScore: 3, curationComment: null, thumbnailUrl: null, lat: 33, lng: 126 }],
     };
     const preferences = SpotPreferences.fromShortlist(fakeShortlist as never);
     expect(preferences.isEmpty).toBe(false);
@@ -153,9 +156,9 @@ describe('PostgresRecommenderAdapter', () => {
 
     const fakeShortlist = {
       spots: [
-        { category: 'oreum', id: 's1', name: 'Oreum', region: 'eastern', priceRange: 'free', kakaoPlaceId: 'k1', curationScore: 5, popularityScore: 4, curationComment: null, lat: 33.4, lng: 126.6 },
-        { category: 'oreum', id: 's2', name: 'Oreum 2', region: 'eastern', priceRange: 'free', kakaoPlaceId: 'k2', curationScore: 5, popularityScore: 4, curationComment: null, lat: 33.4, lng: 126.6 },
-        { category: 'cafe', id: 's3', name: 'Café', region: 'jeju-city', priceRange: 'budget', kakaoPlaceId: 'k3', curationScore: 4, popularityScore: 3, curationComment: null, lat: 33.5, lng: 126.5 },
+        { category: 'oreum', id: 's1', name: 'Oreum', region: 'eastern', priceRange: 'free', kakaoPlaceId: 'k1', curationScore: 5, popularityScore: 4, curationComment: null, thumbnailUrl: null, lat: 33.4, lng: 126.6 },
+        { category: 'oreum', id: 's2', name: 'Oreum 2', region: 'eastern', priceRange: 'free', kakaoPlaceId: 'k2', curationScore: 5, popularityScore: 4, curationComment: null, thumbnailUrl: null, lat: 33.4, lng: 126.6 },
+        { category: 'cafe', id: 's3', name: 'Café', region: 'jeju-city', priceRange: 'budget', kakaoPlaceId: 'k3', curationScore: 4, popularityScore: 3, curationComment: null, thumbnailUrl: null, lat: 33.5, lng: 126.5 },
       ],
     };
     // oreum weight = 2/3, cafe weight = 1/3
