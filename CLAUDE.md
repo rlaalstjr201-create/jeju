@@ -37,3 +37,17 @@
 - 첫 작업: Grilling 스킬로 인터뷰 → `docs/context.md` 생성
 
 (아키텍처·스택·hook 룰은 context.md 완성 후 이 파일에 추가)
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as local markdown files under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default label strings (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo; domain glossary at `docs/context.md`, ADRs at `docs/adr/`. See `docs/agents/domain.md`.
