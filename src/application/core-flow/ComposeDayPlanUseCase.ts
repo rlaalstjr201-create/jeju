@@ -1,12 +1,12 @@
 import type { Region } from '../../domain/shared/Region.js';
-import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
+import type { AuthService } from '../ports/AuthService.js';
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import type { DayPlanRepository } from '../../domain/ports/DayPlanRepository.js';
 import type { Recommender } from '../../domain/recommender/Recommender.js';
 import type { TransactionManager } from '../ports/TransactionManager.js';
 import { ComposeDayPlanService } from './ComposeDayPlanService.js';
-import { TripNotFoundError, ForbiddenError } from './GetRecommendationsUseCase.js';
+import { resolveOwnedTrip } from '../helpers/resolveOwnedTrip.js';
 
 interface ComposeDayPlanInput {
   readonly accessToken: string;
@@ -35,7 +35,7 @@ interface ComposeDayPlanOutput {
 
 export class ComposeDayPlanUseCase {
   constructor(
-    private readonly authService: TravellerAuthService,
+    private readonly authService: AuthService,
     private readonly tripRepository: TripRepository,
     private readonly shortlistRepository: ShortlistRepository,
     private readonly dayPlanRepository: DayPlanRepository,
@@ -45,11 +45,9 @@ export class ComposeDayPlanUseCase {
   ) {}
 
   async execute(input: ComposeDayPlanInput): Promise<ComposeDayPlanOutput> {
-    const traveller = await this.authService.authenticate(input.accessToken);
-
-    const trip = await this.tripRepository.findById(input.tripId);
-    if (trip === undefined) throw new TripNotFoundError();
-    if (trip.travellerId !== traveller.id) throw new ForbiddenError();
+    const { traveller, trip } = await resolveOwnedTrip(
+      this.authService, this.tripRepository, input.accessToken, input.tripId,
+    );
 
     const shortlist = await this.shortlistRepository.findByTravellerId(traveller.id);
 

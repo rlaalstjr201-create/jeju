@@ -1,9 +1,10 @@
 import type { Region } from '../../domain/shared/Region.js';
-import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
+import type { AuthService } from '../ports/AuthService.js';
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { DayPlanRepository } from '../../domain/ports/DayPlanRepository.js';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
-import { TripNotFoundError, ForbiddenError, SpotNotFoundError, DayNotFoundError } from '../errors.js';
+import { SpotNotFoundError, DayNotFoundError } from '../errors.js';
+import { resolveOwnedTrip } from '../helpers/resolveOwnedTrip.js';
 export { DayNotFoundError };
 
 interface EditDayPlanInput {
@@ -29,18 +30,14 @@ interface EditDayPlanOutput {
 
 export class EditDayPlanUseCase {
   constructor(
-    private readonly authService: TravellerAuthService,
+    private readonly authService: AuthService,
     private readonly tripRepository: TripRepository,
     private readonly dayPlanRepository: DayPlanRepository,
     private readonly spotRepository: SpotRepository,
   ) {}
 
   async execute(input: EditDayPlanInput): Promise<EditDayPlanOutput> {
-    const traveller = await this.authService.authenticate(input.accessToken);
-
-    const trip = await this.tripRepository.findById(input.tripId);
-    if (trip === undefined) throw new TripNotFoundError();
-    if (trip.travellerId !== traveller.id) throw new ForbiddenError();
+    await resolveOwnedTrip(this.authService, this.tripRepository, input.accessToken, input.tripId);
 
     const dayPlan = await this.dayPlanRepository.findByTripId(input.tripId);
     if (dayPlan === undefined) throw new DayNotFoundError();

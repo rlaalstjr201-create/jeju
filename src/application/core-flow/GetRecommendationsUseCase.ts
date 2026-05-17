@@ -1,12 +1,12 @@
 import { SpotPreferences } from '../../domain/recommender/SpotPreferences.js';
 import type { Region } from '../../domain/shared/Region.js';
 import type { PriceRange } from '../../domain/shared/PriceRange.js';
-import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
+import type { AuthService } from '../ports/AuthService.js';
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import type { Recommender } from '../../domain/recommender/Recommender.js';
-import { TripNotFoundError, ForbiddenError } from '../errors.js';
-export { TripNotFoundError, ForbiddenError };
+import { resolveOwnedTrip } from '../helpers/resolveOwnedTrip.js';
+export { TripNotFoundError, ForbiddenError } from '../errors.js';
 
 interface GetRecommendationsInput {
   readonly accessToken: string;
@@ -34,18 +34,16 @@ interface GetRecommendationsOutput {
 
 export class GetRecommendationsUseCase {
   constructor(
-    private readonly authService: TravellerAuthService,
+    private readonly authService: AuthService,
     private readonly tripRepository: TripRepository,
     private readonly shortlistRepository: ShortlistRepository,
     private readonly recommender: Recommender,
   ) {}
 
   async execute(input: GetRecommendationsInput): Promise<GetRecommendationsOutput> {
-    const traveller = await this.authService.authenticate(input.accessToken);
-
-    const trip = await this.tripRepository.findById(input.tripId);
-    if (trip === undefined) throw new TripNotFoundError();
-    if (trip.travellerId !== traveller.id) throw new ForbiddenError();
+    const { traveller, trip } = await resolveOwnedTrip(
+      this.authService, this.tripRepository, input.accessToken, input.tripId,
+    );
 
     const shortlist = await this.shortlistRepository.findByTravellerId(traveller.id);
     const preferences = SpotPreferences.fromShortlist(shortlist);

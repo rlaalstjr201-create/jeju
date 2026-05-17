@@ -1,4 +1,4 @@
-import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
+import type { AuthService } from '../ports/AuthService.js';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import { SpotNotFoundError } from '../errors.js';
@@ -16,7 +16,7 @@ interface UpdateShortlistOutput {
 
 export class UpdateShortlistUseCase {
   constructor(
-    private readonly authService: TravellerAuthService,
+    private readonly authService: AuthService,
     private readonly spotRepository: SpotRepository,
     private readonly shortlistRepository: ShortlistRepository,
   ) {}

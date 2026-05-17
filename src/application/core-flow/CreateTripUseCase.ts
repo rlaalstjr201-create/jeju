@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Trip } from '../../domain/trip/Trip.js';
-import type { TravellerAuthService } from '../../infrastructure/kakao/TravellerAuthService.js';
+import type { AuthService } from '../ports/AuthService.js';
 import type { ParseFreeTextPort } from '../ports/ParseFreeTextPort.js';
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 
@@ -18,7 +18,7 @@ interface CreateTripOutput {
 
 export class CreateTripUseCase {
   constructor(
-    private readonly authService: TravellerAuthService,
+    private readonly authService: AuthService,
     private readonly parsePort: ParseFreeTextPort,
     private readonly tripRepository: TripRepository,
   ) {}

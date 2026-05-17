@@ -3,8 +3,9 @@ import type { AuthProvider } from './AuthProvider.js'
 import type { TravellerRepository } from '../../domain/ports/TravellerRepository.js'
 import type { Traveller } from '../../domain/traveller/Traveller.js'
 import { CalendarDate } from '../../domain/shared/CalendarDate.js'
+import type { AuthService } from '../../application/ports/AuthService.js'
 
-export class TravellerAuthService {
+export class TravellerAuthService implements AuthService {
   constructor(
     private readonly authProvider: AuthProvider,
     private readonly travellerRepository: TravellerRepository,
