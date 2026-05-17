@@ -1,5 +1,6 @@
 import { ScheduleComposer } from '../../domain/schedule-composer/ScheduleComposer.js';
 import { SpotPreferences } from '../../domain/recommender/SpotPreferences.js';
+import { CalibrationProfile } from '../../domain/recommender/CalibrationProfile.js';
 import { Shortlist } from '../../domain/shortlist/Shortlist.js';
 import type { Trip } from '../../domain/trip/Trip.js';
 import type { DayPlan } from '../../domain/trip/DayPlan.js';
@@ -40,13 +41,22 @@ export class ComposeDayPlanService {
 
     // Build preferences and recommendation context
     const preferences = SpotPreferences.fromShortlist(params.shortlist);
+    const calibration = CalibrationProfile.default();
     const context = {
       traveller: { id: params.travellerId } as Traveller,
       trip: params.trip,
       preferences,
+      calibration,
     };
 
-    const candidates = await params.recommender.recommendForShortlist(context);
+    const result = await params.recommender.recommendForShortlist(context);
+
+    // curatedPicks first, then popularSpots (curated preferred), deduplicated
+    const curatedIds = new Set(result.curatedPicks.spots.map((s) => s.id));
+    const candidates = [
+      ...result.curatedPicks.spots,
+      ...result.popularSpots.spots.filter((s) => !curatedIds.has(s.id)),
+    ];
 
     // Filter out spots already in the shortlist
     const filteredCandidates = candidates.filter(

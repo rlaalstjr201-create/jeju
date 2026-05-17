@@ -13,6 +13,7 @@ interface SpotRow {
   price_range: string;
   curation_score: number;
   popularity_score: number;
+  trend_score: number;
   curation_comment: string | null;
   thumbnail_url: string | null;
   lat: number;
@@ -29,6 +30,7 @@ function rowToSpot(row: SpotRow): Spot {
     priceRange: row.price_range as PriceRange,
     curationScore: row.curation_score,
     popularityScore: row.popularity_score,
+    trendScore: row.trend_score,
     curationComment: row.curation_comment,
     thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
@@ -38,7 +40,7 @@ function rowToSpot(row: SpotRow): Spot {
 
 const SELECT_COLUMNS = `
   id, kakao_place_id, name, region, category, price_range,
-  curation_score, popularity_score, curation_comment, thumbnail_url, lat, lng
+  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
 `;
 
 export class PostgresSpotRepository implements SpotRepository {
@@ -97,5 +99,82 @@ export class PostgresSpotRepository implements SpotRepository {
       [region],
     );
     return result.rows.map(rowToSpot);
+  }
+
+  async save(spot: Spot): Promise<void> {
+    await this.pool.query(
+      `INSERT INTO spots (
+         id, kakao_place_id, name, region, category, price_range,
+         curation_score, popularity_score, trend_score, curation_comment,
+         thumbnail_url, lat, lng, is_active, updated_at
+       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,true,now())
+       ON CONFLICT (kakao_place_id) DO UPDATE SET
+         name           = EXCLUDED.name,
+         region         = EXCLUDED.region,
+         category       = EXCLUDED.category,
+         price_range    = EXCLUDED.price_range,
+         curation_score = EXCLUDED.curation_score,
+         popularity_score = EXCLUDED.popularity_score,
+         trend_score    = EXCLUDED.trend_score,
+         curation_comment = EXCLUDED.curation_comment,
+         thumbnail_url  = EXCLUDED.thumbnail_url,
+         lat            = EXCLUDED.lat,
+         lng            = EXCLUDED.lng,
+         is_active      = true,
+         updated_at     = now()`,
+      [
+        spot.id,
+        spot.kakaoPlaceId,
+        spot.name,
+        spot.region,
+        spot.category,
+        spot.priceRange,
+        spot.curationScore,
+        spot.popularityScore,
+        spot.trendScore,
+        spot.curationComment,
+        spot.thumbnailUrl,
+        spot.lat,
+        spot.lng,
+      ],
+    );
+  }
+
+  async existsByKakaoPlaceId(kakaoPlaceId: string): Promise<boolean> {
+    const result = await this.pool.query<{ exists: boolean }>(
+      `SELECT EXISTS(SELECT 1 FROM spots WHERE kakao_place_id = $1) AS exists`,
+      [kakaoPlaceId],
+    );
+    return result.rows[0]?.exists ?? false;
+  }
+
+  async findExistingKakaoPlaceIds(kakaoPlaceIds: string[]): Promise<Set<string>> {
+    if (kakaoPlaceIds.length === 0) return new Set();
+    const result = await this.pool.query<{ kakao_place_id: string }>(
+      `SELECT kakao_place_id FROM spots WHERE kakao_place_id = ANY($1)`,
+      [kakaoPlaceIds],
+    );
+    return new Set(result.rows.map((r) => r.kakao_place_id));
+  }
+
+  async deactivate(kakaoPlaceId: string): Promise<void> {
+    await this.pool.query(
+      `UPDATE spots SET is_active = false, curation_score = 0, updated_at = now()
+       WHERE kakao_place_id = $1`,
+      [kakaoPlaceId],
+    );
+  }
+
+  async updateScores(
+    updates: { spotId: string; popularityScore: number; trendScore: number }[],
+  ): Promise<void> {
+    if (updates.length === 0) return;
+    for (const u of updates) {
+      await this.pool.query(
+        `UPDATE spots SET popularity_score = $1, trend_score = $2, updated_at = now()
+         WHERE id = $3`,
+        [u.popularityScore, u.trendScore, u.spotId],
+      );
+    }
   }
 }

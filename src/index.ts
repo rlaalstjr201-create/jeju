@@ -10,16 +10,29 @@ import { PostgresDayPlanRepository } from './infrastructure/persistence/Postgres
 import { PostgresSpotRepository } from './infrastructure/persistence/PostgresSpotRepository.js';
 import { PostgresRecommenderAdapter } from './infrastructure/recommender/PostgresRecommenderAdapter.js';
 import { PostgresTransactionManager } from './infrastructure/persistence/PostgresTransactionManager.js';
+import { PostgresCurationCandidateRepository } from './infrastructure/persistence/PostgresCurationCandidateRepository.js';
+import { PostgresCalibrationProfileRepository } from './infrastructure/persistence/PostgresCalibrationProfileRepository.js';
+import { PostgresTrendSourceRepository } from './infrastructure/persistence/PostgresTrendSourceRepository.js';
 import { KakaoAuthAdapter } from './infrastructure/kakao/KakaoAuthAdapter.js';
+import { KakaoLocalPlaceAdapter } from './infrastructure/kakao/KakaoLocalPlaceAdapter.js';
 import { DevAuthProvider } from './infrastructure/kakao/DevAuthProvider.js';
 import { TravellerAuthService } from './infrastructure/kakao/TravellerAuthService.js';
 import { LLMParseFreeTextAdapter } from './infrastructure/llm/LLMParseFreeTextAdapter.js';
+import { AnthropicLLMEnricherAdapter } from './infrastructure/llm/AnthropicLLMEnricherAdapter.js';
+import { DatalabVisitkoreaAdapter } from './infrastructure/trend/DatalabVisitkoreaAdapter.js';
+import { JejuTourismBigdataAdapter } from './infrastructure/trend/JejuTourismBigdataAdapter.js';
 import { ComposeDayPlanService } from './application/core-flow/ComposeDayPlanService.js';
 import { CreateTripUseCase } from './application/core-flow/CreateTripUseCase.js';
 import { GetRecommendationsUseCase } from './application/core-flow/GetRecommendationsUseCase.js';
 import { UpdateShortlistUseCase } from './application/core-flow/UpdateShortlistUseCase.js';
 import { ComposeDayPlanUseCase } from './application/core-flow/ComposeDayPlanUseCase.js';
 import { EditDayPlanUseCase } from './application/core-flow/EditDayPlanUseCase.js';
+import { DiscoverCandidatesUseCase } from './application/curation/DiscoverCandidatesUseCase.js';
+import { ListCandidatesUseCase } from './application/curation/ListCandidatesUseCase.js';
+import { EnrichCandidateUseCase } from './application/curation/EnrichCandidateUseCase.js';
+import { ApproveCandidateUseCase } from './application/curation/ApproveCandidateUseCase.js';
+import { RejectCandidateUseCase } from './application/curation/RejectCandidateUseCase.js';
+import { AdjustCalibrationUseCase } from './application/curation/AdjustCalibrationUseCase.js';
 
 // ---------------------------------------------------------------------------
 // Load .env (manual parse — no dotenv dependency)
@@ -76,6 +89,9 @@ const tripRepo = new PostgresTripRepository(pool);
 const shortlistRepo = new PostgresShortlistRepository(pool);
 const dayPlanRepo = new PostgresDayPlanRepository(pool);
 const spotRepo = new PostgresSpotRepository(pool);
+const candidateRepo = new PostgresCurationCandidateRepository(pool);
+const calibrationRepo = new PostgresCalibrationProfileRepository(pool);
+const trendSourceRepo = new PostgresTrendSourceRepository(pool);
 
 // Services
 const authService = new TravellerAuthService(authProvider, travellerRepo);
@@ -83,14 +99,30 @@ const recommender = new PostgresRecommenderAdapter(pool);
 const txManager = new PostgresTransactionManager(pool);
 const composeSvc = new ComposeDayPlanService();
 const parsePort = new LLMParseFreeTextAdapter(process.env['ANTHROPIC_API_KEY']);
+const llmEnricher = new AnthropicLLMEnricherAdapter(process.env['ANTHROPIC_API_KEY']);
+const kakaoLocalApi = new KakaoLocalPlaceAdapter();
+const datalabAdapter = new DatalabVisitkoreaAdapter();
+const ijtoAdapter = new JejuTourismBigdataAdapter();
 
 // Use cases
 const deps = {
   createTripUseCase: new CreateTripUseCase(authService, parsePort, tripRepo),
-  getRecommendationsUseCase: new GetRecommendationsUseCase(authService, tripRepo, shortlistRepo, recommender),
+  getRecommendationsUseCase: new GetRecommendationsUseCase(
+    authService, tripRepo, shortlistRepo, recommender, calibrationRepo,
+  ),
   updateShortlistUseCase: new UpdateShortlistUseCase(authService, spotRepo, shortlistRepo),
-  composeDayPlanUseCase: new ComposeDayPlanUseCase(authService, tripRepo, shortlistRepo, dayPlanRepo, recommender, composeSvc, txManager),
+  composeDayPlanUseCase: new ComposeDayPlanUseCase(
+    authService, tripRepo, shortlistRepo, dayPlanRepo, recommender, composeSvc, txManager,
+  ),
   editDayPlanUseCase: new EditDayPlanUseCase(authService, tripRepo, dayPlanRepo, spotRepo),
+  discoverCandidatesUseCase: new DiscoverCandidatesUseCase(
+    [datalabAdapter, ijtoAdapter], candidateRepo, spotRepo,
+  ),
+  listCandidatesUseCase: new ListCandidatesUseCase(candidateRepo),
+  enrichCandidateUseCase: new EnrichCandidateUseCase(candidateRepo, llmEnricher, kakaoLocalApi),
+  approveCandidateUseCase: new ApproveCandidateUseCase(candidateRepo, spotRepo),
+  rejectCandidateUseCase: new RejectCandidateUseCase(candidateRepo, spotRepo),
+  adjustCalibrationUseCase: new AdjustCalibrationUseCase(authService, tripRepo, calibrationRepo),
 };
 
 // ---------------------------------------------------------------------------

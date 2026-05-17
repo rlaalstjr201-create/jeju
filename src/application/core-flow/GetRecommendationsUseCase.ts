@@ -1,10 +1,12 @@
 import { SpotPreferences } from '../../domain/recommender/SpotPreferences.js';
+import { CalibrationProfile } from '../../domain/recommender/CalibrationProfile.js';
 import type { Region } from '../../domain/shared/Region.js';
 import type { PriceRange } from '../../domain/shared/PriceRange.js';
 import type { AuthService } from '../ports/AuthService.js';
 import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import type { Recommender } from '../../domain/recommender/Recommender.js';
+import type { CalibrationProfileRepository } from '../../domain/ports/CalibrationProfileRepository.js';
 import { resolveOwnedTrip } from '../helpers/resolveOwnedTrip.js';
 export { TripNotFoundError, ForbiddenError } from '../errors.js';
 
@@ -27,9 +29,17 @@ interface SpotOutput {
 }
 
 interface GetRecommendationsOutput {
-  readonly spots: SpotOutput[];
-  readonly total: number;
-  readonly coldStart: boolean;
+  readonly curatedPicks: {
+    label: 'curatedPicks';
+    spots: SpotOutput[];
+    coldStart: boolean;
+  };
+  readonly popularSpots: {
+    label: 'popularSpots';
+    spots: SpotOutput[];
+    coldStart: boolean;
+  };
+  readonly calibration: { curatedRatio: number; popularRatio: number };
 }
 
 export class GetRecommendationsUseCase {
@@ -38,6 +48,7 @@ export class GetRecommendationsUseCase {
     private readonly tripRepository: TripRepository,
     private readonly shortlistRepository: ShortlistRepository,
     private readonly recommender: Recommender,
+    private readonly calibrationRepo?: CalibrationProfileRepository,
   ) {}
 
   async execute(input: GetRecommendationsInput): Promise<GetRecommendationsOutput> {
@@ -47,26 +58,40 @@ export class GetRecommendationsUseCase {
 
     const shortlist = await this.shortlistRepository.findByTravellerId(traveller.id);
     const preferences = SpotPreferences.fromShortlist(shortlist);
-    const coldStart = preferences.isEmpty;
 
-    const context = { traveller, trip, preferences };
-    const allSpots = await this.recommender.recommendForShortlist(context);
+    const calibration = this.calibrationRepo
+      ? await this.calibrationRepo.findByTripId(trip.id)
+      : CalibrationProfile.default();
 
-    const pageSpots = allSpots.slice(input.offset, input.offset + input.limit);
+    const context = { traveller, trip, preferences, calibration };
+    const result = await this.recommender.recommendForShortlist(context);
+
+    const mapSpot = (s: import('../../domain/spot/Spot.js').Spot): SpotOutput => ({
+      spotId: s.id,
+      name: s.name,
+      category: s.category,
+      region: s.region,
+      priceRange: s.priceRange,
+      curationScore: s.curationScore,
+      thumbnailUrl: s.thumbnailUrl,
+      curationComment: s.curationComment,
+    });
 
     return {
-      spots: pageSpots.map((s) => ({
-        spotId: s.id,
-        name: s.name,
-        category: s.category,
-        region: s.region,
-        priceRange: s.priceRange,
-        curationScore: s.curationScore,
-        thumbnailUrl: s.thumbnailUrl,
-        curationComment: s.curationComment,
-      })),
-      total: allSpots.length,
-      coldStart,
+      curatedPicks: {
+        label: 'curatedPicks',
+        spots: result.curatedPicks.spots.slice(input.offset, input.offset + input.limit).map(mapSpot),
+        coldStart: result.curatedPicks.coldStart,
+      },
+      popularSpots: {
+        label: 'popularSpots',
+        spots: result.popularSpots.spots.slice(0, input.limit).map(mapSpot),
+        coldStart: result.popularSpots.coldStart,
+      },
+      calibration: {
+        curatedRatio: calibration.curatedRatio,
+        popularRatio: calibration.popularRatio,
+      },
     };
   }
 }

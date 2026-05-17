@@ -10,6 +10,7 @@ export interface Spot {
   readonly priceRange: PriceRange;
   readonly curationScore: number;
   readonly popularityScore: number;
+  readonly trendScore: number;
   readonly curationComment: string | null;
   readonly thumbnailUrl: string | null;
   readonly lat: number;

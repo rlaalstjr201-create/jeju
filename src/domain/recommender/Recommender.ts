@@ -1,5 +1,5 @@
-import type { Spot } from '../spot/Spot.js';
 import type { RecommendationContext } from './RecommendationContext.js';
+import type { RecommendationResult } from './RecommendationResult.js';
 
 /**
  * Domain service port — no implementation here.
@@ -9,5 +9,5 @@ import type { RecommendationContext } from './RecommendationContext.js';
  * v2: recommendNow — surfaces immediately relevant nearby Spots (GPS-based, Now Mode).
  */
 export interface Recommender {
-  recommendForShortlist(context: RecommendationContext): Promise<Spot[]>;
+  recommendForShortlist(context: RecommendationContext): Promise<RecommendationResult>;
 }

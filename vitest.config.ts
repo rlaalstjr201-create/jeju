@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     exclude: [
       'node_modules',
+      '.claude/worktrees/**',
       'tests/e2e/**',
       'src/interface/api/server.test.ts',
     ],

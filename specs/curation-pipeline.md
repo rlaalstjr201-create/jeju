@@ -36,10 +36,13 @@
 
 | 엔드포인트 | 메서드 | 역할 |
 |---|---|---|
-| `/api/v1/curation/candidates/discover` | POST | 자동 발굴 트리거 (cron 또는 관리자 수동). body: `{ sources?: string[] }` |
-| `/api/v1/curation/candidates` | GET | 큐레이터용 후보 목록. query: `status=pending\|approved\|rejected`, `limit`, `offset` |
-| `/api/v1/curation/candidates/:id/approve` | POST | 승인 + 점수 부여. body: `{ curationScore: number, curationComment?: string }` |
-| `/api/v1/curation/candidates/:id/reject` | POST | 거절 + 아카이브 |
+| `/api/v1/admin/curation/discover` | POST | 자동 발굴 트리거 (관리자 수동). body: `{ region?: Region, category?: string, limit?: number }` |
+| `/api/v1/admin/curation/candidates` | GET | 큐레이터용 후보 목록. query: `status=pending\|approved\|rejected`, `limit`, `offset` |
+| `/api/v1/admin/curation/candidates/:id/enrich` | POST | LLM + Kakao Local API enrichment |
+| `/api/v1/admin/curation/candidates/:id/approve` | POST | 승인 + 점수 부여. body: `{ curationScore: number, curationComment?: string }` |
+| `/api/v1/admin/curation/candidates/:id/reject` | POST | 거절 + 아카이브 (소프트 삭제, status='rejected') |
+
+> `/api/v1/admin/...` 프리픽스는 보안 라우팅 분리용. 미들웨어 prefix match로 RBAC 한 줄 적용 가능.
 
 ### 추천 응답 구조 변경
 

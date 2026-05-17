@@ -22,6 +22,7 @@ function makeSpot(id: string): Spot {
     priceRange: 'free',
     curationScore: 80,
     popularityScore: 70,
+    trendScore: 0,
     curationComment: null,
     thumbnailUrl: null,
     lat: 33.25,

@@ -15,6 +15,12 @@ function makeDeps(overrides: Partial<AppDependencies> = {}): AppDependencies {
     updateShortlistUseCase: { execute: vi.fn() } as unknown as AppDependencies['updateShortlistUseCase'],
     composeDayPlanUseCase: { execute: vi.fn() } as unknown as AppDependencies['composeDayPlanUseCase'],
     editDayPlanUseCase: { execute: vi.fn() } as unknown as AppDependencies['editDayPlanUseCase'],
+    discoverCandidatesUseCase: { execute: vi.fn() } as unknown as AppDependencies['discoverCandidatesUseCase'],
+    listCandidatesUseCase: { execute: vi.fn() } as unknown as AppDependencies['listCandidatesUseCase'],
+    enrichCandidateUseCase: { execute: vi.fn() } as unknown as AppDependencies['enrichCandidateUseCase'],
+    approveCandidateUseCase: { execute: vi.fn() } as unknown as AppDependencies['approveCandidateUseCase'],
+    rejectCandidateUseCase: { execute: vi.fn() } as unknown as AppDependencies['rejectCandidateUseCase'],
+    adjustCalibrationUseCase: { execute: vi.fn() } as unknown as AppDependencies['adjustCalibrationUseCase'],
     ...overrides,
   };
 }
@@ -128,9 +134,9 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
 
   it('cold-start — spots empty, coldStart true', async () => {
     vi.mocked(deps.getRecommendationsUseCase.execute).mockResolvedValue({
-      spots: [],
-      total: 0,
-      coldStart: true,
+      curatedPicks: { label: 'curatedPicks', spots: [], coldStart: true },
+      popularSpots: { label: 'popularSpots', spots: [], coldStart: false },
+      calibration: { curatedRatio: 0.5, popularRatio: 0.5 },
     });
 
     const res = await fastify.inject({
@@ -140,28 +146,31 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    const body = res.json<{ spots: unknown[]; total: number; coldStart: boolean }>();
-    expect(body.coldStart).toBe(true);
-    expect(body.spots).toHaveLength(0);
-    expect(body.total).toBe(0);
+    const body = res.json<{ curatedPicks: { coldStart: boolean; spots: unknown[] }; popularSpots: { spots: unknown[] } }>();
+    expect(body.curatedPicks.coldStart).toBe(true);
+    expect(body.curatedPicks.spots).toHaveLength(0);
   });
 
   it('warm path with spots', async () => {
     vi.mocked(deps.getRecommendationsUseCase.execute).mockResolvedValue({
-      spots: [
-        {
-          spotId: 's1',
-          name: '한라산',
-          category: '관광명소',
-          region: 'hallasan',
-          priceRange: 'free',
-          curationScore: 95,
-          thumbnailUrl: null,
-          curationComment: null,
-        },
-      ],
-      total: 1,
-      coldStart: false,
+      curatedPicks: {
+        label: 'curatedPicks',
+        spots: [
+          {
+            spotId: 's1',
+            name: '한라산',
+            category: '관광명소',
+            region: 'hallasan',
+            priceRange: 'free',
+            curationScore: 95,
+            thumbnailUrl: null,
+            curationComment: null,
+          },
+        ],
+        coldStart: false,
+      },
+      popularSpots: { label: 'popularSpots', spots: [], coldStart: false },
+      calibration: { curatedRatio: 0.5, popularRatio: 0.5 },
     });
 
     const res = await fastify.inject({
@@ -171,11 +180,11 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    const body = res.json<{ spots: Array<{ spotId: string; name: string }>; total: number; coldStart: boolean }>();
-    expect(body.coldStart).toBe(false);
-    expect(body.spots).toHaveLength(1);
-    expect(body.spots[0]?.spotId).toBe('s1');
-    expect(body.spots[0]?.name).toBe('한라산');
+    const body = res.json<{ curatedPicks: { spots: Array<{ spotId: string; name: string }>; coldStart: boolean } }>();
+    expect(body.curatedPicks.coldStart).toBe(false);
+    expect(body.curatedPicks.spots).toHaveLength(1);
+    expect(body.curatedPicks.spots[0]?.spotId).toBe('s1');
+    expect(body.curatedPicks.spots[0]?.name).toBe('한라산');
   });
 
   it('TripNotFoundError → 404 TRIP_NOT_FOUND', async () => {
@@ -208,9 +217,9 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
 
   it('default pagination — limit=12 offset=0', async () => {
     vi.mocked(deps.getRecommendationsUseCase.execute).mockResolvedValue({
-      spots: [],
-      total: 0,
-      coldStart: false,
+      curatedPicks: { label: 'curatedPicks', spots: [], coldStart: false },
+      popularSpots: { label: 'popularSpots', spots: [], coldStart: false },
+      calibration: { curatedRatio: 0.5, popularRatio: 0.5 },
     });
 
     await fastify.inject({
@@ -226,9 +235,9 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
 
   it('custom pagination — limit=8 offset=8', async () => {
     vi.mocked(deps.getRecommendationsUseCase.execute).mockResolvedValue({
-      spots: [],
-      total: 0,
-      coldStart: false,
+      curatedPicks: { label: 'curatedPicks', spots: [], coldStart: false },
+      popularSpots: { label: 'popularSpots', spots: [], coldStart: false },
+      calibration: { curatedRatio: 0.5, popularRatio: 0.5 },
     });
 
     await fastify.inject({

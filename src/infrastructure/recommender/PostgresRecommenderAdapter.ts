@@ -1,6 +1,7 @@
 import type { Pool } from 'pg';
 import type { Recommender } from '../../domain/recommender/Recommender.js';
 import type { RecommendationContext } from '../../domain/recommender/RecommendationContext.js';
+import type { RecommendationResult } from '../../domain/recommender/RecommendationResult.js';
 import type { Spot } from '../../domain/spot/Spot.js';
 import type { Region } from '../../domain/shared/Region.js';
 import type { PriceRange } from '../../domain/shared/PriceRange.js';
@@ -14,6 +15,7 @@ interface SpotRow {
   price_range: string;
   curation_score: number;
   popularity_score: number;
+  trend_score: number;
   curation_comment: string | null;
   thumbnail_url: string | null;
   lat: number;
@@ -30,6 +32,7 @@ function rowToSpot(row: SpotRow): Spot {
     priceRange: row.price_range as PriceRange,
     curationScore: row.curation_score,
     popularityScore: row.popularity_score,
+    trendScore: row.trend_score,
     curationComment: row.curation_comment,
     thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
@@ -39,7 +42,7 @@ function rowToSpot(row: SpotRow): Spot {
 
 const SELECT_COLUMNS = `
   id, kakao_place_id, name, region, category, price_range,
-  curation_score, popularity_score, curation_comment, thumbnail_url, lat, lng
+  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
 `;
 
 export class PostgresRecommenderAdapter implements Recommender {
@@ -48,21 +51,64 @@ export class PostgresRecommenderAdapter implements Recommender {
     private readonly limit = 12,
   ) {}
 
-  async recommendForShortlist(context: RecommendationContext): Promise<Spot[]> {
-    if (context.preferences.isEmpty) {
-      return this.coldStart();
-    }
-    return this.warm(context);
+  async recommendForShortlist(context: RecommendationContext): Promise<RecommendationResult> {
+    const [curatedSpots, popularSpots] = await Promise.all([
+      this.recommendCurated(context),
+      this.recommendPopular(context),
+    ]);
+
+    // Deduplicate: spots in curatedPicks are excluded from popularSpots
+    const curatedIds = new Set(curatedSpots.map((s) => s.id));
+    const deduplicatedPopular = popularSpots.filter((s) => !curatedIds.has(s.id));
+
+    return {
+      curatedPicks: {
+        kind: 'curated',
+        spots: curatedSpots,
+        coldStart: context.preferences.isEmpty,
+      },
+      popularSpots: {
+        kind: 'popular',
+        spots: deduplicatedPopular,
+        coldStart: false,
+      },
+    };
   }
 
-  private async coldStart(): Promise<Spot[]> {
+  private async recommendCurated(context: RecommendationContext): Promise<Spot[]> {
+    const curatedLimit = Math.max(
+      1,
+      Math.round(this.limit * context.calibration.curatedRatio),
+    );
+
+    if (context.preferences.isEmpty) {
+      const result = await this.pool.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS}
+         FROM spots
+         WHERE is_active = true
+         ORDER BY curation_score DESC
+         LIMIT $1`,
+        [curatedLimit],
+      );
+      return result.rows.map(rowToSpot);
+    }
+
+    return this.warm(context, curatedLimit);
+  }
+
+  private async recommendPopular(context: RecommendationContext): Promise<Spot[]> {
+    const popularLimit = Math.max(
+      1,
+      Math.round(this.limit * context.calibration.popularRatio),
+    );
+
     const result = await this.pool.query<SpotRow>(
       `SELECT ${SELECT_COLUMNS}
        FROM spots
        WHERE is_active = true
-       ORDER BY curation_score DESC
+       ORDER BY (popularity_score * 0.6 + trend_score * 0.4) DESC
        LIMIT $1`,
-      [this.limit],
+      [popularLimit],
     );
     return result.rows.map(rowToSpot);
   }
@@ -70,7 +116,7 @@ export class PostgresRecommenderAdapter implements Recommender {
   // v1 limitation (ADR-0015): warm path only considers Spots whose category
   // appears in the Traveller's existing Shortlist. Cross-category discoveries
   // are not surfaced until the cold-start or a future embedding-based path.
-  private async warm(context: RecommendationContext): Promise<Spot[]> {
+  private async warm(context: RecommendationContext, curatedLimit: number): Promise<Spot[]> {
     const weights = context.preferences.weights;
     const entries = Object.entries(weights);
 
@@ -106,7 +152,7 @@ export class PostgresRecommenderAdapter implements Recommender {
     const limitParamIdx = 2 * entries.length + 2;
 
     const categories = entries.map(([cat]) => cat);
-    params.push(categories, this.limit);
+    params.push(categories, curatedLimit);
 
     const sql = `
       SELECT ${SELECT_COLUMNS},

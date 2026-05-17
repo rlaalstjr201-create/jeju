@@ -6,6 +6,7 @@ import { CalendarDate } from '../../domain/shared/CalendarDate.js';
 import { ShortlistEmptyError } from '../../domain/schedule-composer/ScheduleComposer.js';
 import type { Spot } from '../../domain/spot/Spot.js';
 import type { Region } from '../../domain/shared/Region.js';
+import type { RecommendationResult } from '../../domain/recommender/RecommendationResult.js';
 
 // ---- Helpers ---------------------------------------------------------------
 
@@ -19,6 +20,7 @@ function makeSpot(id: string, region: Region, category = 'beach'): Spot {
     priceRange: 'free',
     curationScore: 80,
     popularityScore: 70,
+    trendScore: 0,
     curationComment: null,
     thumbnailUrl: null,
     lat: 33.25,
@@ -40,6 +42,21 @@ function makeTrip(dayCount: number): Trip {
 
 function makeShortlist(spots: Spot[]): Shortlist {
   return new Shortlist(spots);
+}
+
+function makeRecommendationResult(curatedSpots: Spot[], popularSpots: Spot[] = []): RecommendationResult {
+  return {
+    curatedPicks: {
+      kind: 'curated',
+      spots: curatedSpots,
+      coldStart: curatedSpots.length === 0,
+    },
+    popularSpots: {
+      kind: 'popular',
+      spots: popularSpots,
+      coldStart: false,
+    },
+  };
 }
 
 // ---- Mocks -----------------------------------------------------------------
@@ -107,7 +124,7 @@ describe('ComposeDayPlanService', () => {
     const originalSpot = makeSpot('s1', 'jeju-city');
     const recommendedSpot = makeSpot('s2', 'seogwipo');
 
-    mockRecommender.recommendForShortlist.mockResolvedValue([recommendedSpot]);
+    mockRecommender.recommendForShortlist.mockResolvedValue(makeRecommendationResult([recommendedSpot]));
 
     const shortlist = makeShortlist([originalSpot]);
     const trip = makeTrip(2);
@@ -138,7 +155,7 @@ describe('ComposeDayPlanService', () => {
 
     const originalSpot = makeSpot('s1', 'jeju-city');
     // Recommender returns the same spot that is already in the shortlist
-    mockRecommender.recommendForShortlist.mockResolvedValue([originalSpot]);
+    mockRecommender.recommendForShortlist.mockResolvedValue(makeRecommendationResult([originalSpot]));
 
     const shortlist = makeShortlist([originalSpot]);
     const trip = makeTrip(2);
@@ -165,7 +182,7 @@ describe('ComposeDayPlanService', () => {
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
-    mockRecommender.recommendForShortlist.mockResolvedValue([]);
+    mockRecommender.recommendForShortlist.mockResolvedValue(makeRecommendationResult([]));
 
     const shortlist = makeShortlist([makeSpot('s1', 'jeju-city')]);
     const trip = makeTrip(2);
@@ -220,7 +237,7 @@ describe('ComposeDayPlanService', () => {
     const rec2 = makeSpot('s3', 'eastern');
 
     // 1-spot shortlist, 3-day trip → 2 empty days; recommender returns 2 new spots
-    mockRecommender.recommendForShortlist.mockResolvedValue([rec1, rec2]);
+    mockRecommender.recommendForShortlist.mockResolvedValue(makeRecommendationResult([rec1, rec2]));
 
     const shortlist = makeShortlist([originalSpot]);
     const trip = makeTrip(3);
@@ -250,7 +267,9 @@ describe('ComposeDayPlanService', () => {
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
-    mockRecommender.recommendForShortlist.mockResolvedValue([makeSpot('s2', 'seogwipo')]);
+    mockRecommender.recommendForShortlist.mockResolvedValue(
+      makeRecommendationResult([makeSpot('s2', 'seogwipo')]),
+    );
 
     const shortlist = makeShortlist([makeSpot('s1', 'jeju-city')]);
     const trip = makeTrip(2);
@@ -277,7 +296,9 @@ describe('ComposeDayPlanService', () => {
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockRejectedValue(new Error('DB connection lost'));
 
-    mockRecommender.recommendForShortlist.mockResolvedValue([makeSpot('s2', 'seogwipo')]);
+    mockRecommender.recommendForShortlist.mockResolvedValue(
+      makeRecommendationResult([makeSpot('s2', 'seogwipo')]),
+    );
 
     const shortlist = makeShortlist([makeSpot('s1', 'jeju-city')]);
     const trip = makeTrip(2);

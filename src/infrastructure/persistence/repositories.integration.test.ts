@@ -59,6 +59,7 @@ function makeSpotRow(overrides: Partial<{
     popularityScore: overrides.popularityScore ?? 30,
     curationComment: null,
     thumbnailUrl: null,
+    trendScore: 0,
     lat: overrides.lat ?? 33.4996,
     lng: overrides.lng ?? 126.5312,
   };
