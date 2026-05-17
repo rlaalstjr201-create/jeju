@@ -101,6 +101,7 @@ _Avoid_: RecommendationEngine, SuggestionService, ConciergeService
 **ScheduleComposer**:
 A domain service invoked explicitly by the Traveller to distribute Spots from a Shortlist into a DayPlan draft via geographic clustering. Returns a proposed DayPlan for the Traveller to accept or modify — does not auto-apply. Does not assign times, check conflicts, or reorder based on travel duration. DayPlan authority always stays with the Traveller.
 Minimum Shortlist size: 1 Spot (D1). When `shortlist.count < trip.dayCount`, Composer calls `Recommender.recommendForShortlist` to fill empty Days; each auto-filled Spot is also added to the Shortlist (invariant: all Recommender-output Spots persist in Shortlist). The UI must label auto-filled Spots as "자동 추천으로 채움" (B1, B5).
+`is_auto_filled` is a sticky flag: once set to `true` it is never reverted to `false` by subsequent saves — preserving provenance even if the Traveller removes and re-adds the Spot manually (ADR-0014).
 Re-invocation behaviour: if the existing DayPlan has no manually pinned Spots, generates immediately; if manual pins exist, asks "keep existing layout and fill empty Days only, or rebuild from scratch?" — executes Fill-empty-only or Replace accordingly.
 Signature: `compose(shortlist, trip) → DayPlan`
 _Avoid_: Scheduler, Planner, Optimizer, TripPlanner

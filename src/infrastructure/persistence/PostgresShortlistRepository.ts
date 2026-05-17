@@ -114,14 +114,16 @@ export class PostgresShortlistRepository implements ShortlistRepository {
         );
       }
 
-      // Upsert current spots (preserve is_auto_filled for existing rows)
+      // Upsert current spots.
+      // is_auto_filled is sticky (ADR-0014): once true it never reverts to false.
+      // GREATEST preserves true even if we accidentally compute false for an existing row.
       for (const spot of shortlist.spots) {
         const isAutoFilled = existingMap.get(spot.id) ?? autoFilledSpotIds?.includes(spot.id) ?? false;
         await client.query(
           `INSERT INTO shortlist_spots (traveller_id, spot_id, is_auto_filled)
            VALUES ($1, $2, $3)
            ON CONFLICT (traveller_id, spot_id) DO UPDATE
-             SET is_auto_filled = EXCLUDED.is_auto_filled`,
+             SET is_auto_filled = GREATEST(shortlist_spots.is_auto_filled, EXCLUDED.is_auto_filled)`,
           [travellerId, spot.id, isAutoFilled],
         );
       }

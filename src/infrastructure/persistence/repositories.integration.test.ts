@@ -325,6 +325,75 @@ maybeDescribe('Repository integration tests', () => {
       );
       expect(row.rows[0]?.is_auto_filled).toBe(true);
     });
+
+    it('autoFilledSpotIds marks those spots true, others false (ADR-0014)', async () => {
+      const t2 = {
+        id: crypto.randomUUID(),
+        kakaoId: `kakao-af-${crypto.randomUUID()}`,
+        createdAt: CalendarDate.fromISO('2024-03-01'),
+      };
+      await travellerRepo.save(t2);
+      const autoSpot = makeSpotRow({ name: 'Auto Spot' });
+      const manualSpot = makeSpotRow({ name: 'Manual Spot' });
+      await insertSpot(pool, autoSpot);
+      await insertSpot(pool, manualSpot);
+
+      await repo.save(t2.id, new Shortlist([autoSpot, manualSpot]), [autoSpot.id]);
+
+      const [autoRow, manualRow] = await Promise.all([
+        pool.query<{ is_auto_filled: boolean }>(
+          'SELECT is_auto_filled FROM shortlist_spots WHERE traveller_id = $1 AND spot_id = $2',
+          [t2.id, autoSpot.id],
+        ),
+        pool.query<{ is_auto_filled: boolean }>(
+          'SELECT is_auto_filled FROM shortlist_spots WHERE traveller_id = $1 AND spot_id = $2',
+          [t2.id, manualSpot.id],
+        ),
+      ]);
+      expect(autoRow.rows[0]?.is_auto_filled).toBe(true);
+      expect(manualRow.rows[0]?.is_auto_filled).toBe(false);
+    });
+
+    it('is_auto_filled stays true after re-save without autoFilledSpotIds — sticky (ADR-0014)', async () => {
+      const t3 = {
+        id: crypto.randomUUID(),
+        kakaoId: `kakao-sticky-${crypto.randomUUID()}`,
+        createdAt: CalendarDate.fromISO('2024-03-01'),
+      };
+      await travellerRepo.save(t3);
+      const stickySpot = makeSpotRow({ name: 'Sticky Spot' });
+      await insertSpot(pool, stickySpot);
+
+      // First save: mark as auto-filled
+      await repo.save(t3.id, new Shortlist([stickySpot]), [stickySpot.id]);
+      // Second save: same spot, no autoFilledSpotIds — existingMap + GREATEST must preserve true
+      await repo.save(t3.id, new Shortlist([stickySpot]));
+
+      const row = await pool.query<{ is_auto_filled: boolean }>(
+        'SELECT is_auto_filled FROM shortlist_spots WHERE traveller_id = $1 AND spot_id = $2',
+        [t3.id, stickySpot.id],
+      );
+      expect(row.rows[0]?.is_auto_filled).toBe(true);
+    });
+
+    it('manually added Spot keeps is_auto_filled = false (ADR-0014)', async () => {
+      const t4 = {
+        id: crypto.randomUUID(),
+        kakaoId: `kakao-manual-${crypto.randomUUID()}`,
+        createdAt: CalendarDate.fromISO('2024-03-01'),
+      };
+      await travellerRepo.save(t4);
+      const userSpot = makeSpotRow({ name: 'User-added Spot' });
+      await insertSpot(pool, userSpot);
+
+      await repo.save(t4.id, new Shortlist([userSpot]));
+
+      const row = await pool.query<{ is_auto_filled: boolean }>(
+        'SELECT is_auto_filled FROM shortlist_spots WHERE traveller_id = $1 AND spot_id = $2',
+        [t4.id, userSpot.id],
+      );
+      expect(row.rows[0]?.is_auto_filled).toBe(false);
+    });
   });
 
   // -------------------------------------------------------------------------
