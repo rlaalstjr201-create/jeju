@@ -67,6 +67,9 @@ export class PostgresRecommenderAdapter implements Recommender {
     return result.rows.map(rowToSpot);
   }
 
+  // v1 limitation (ADR-0015): warm path only considers Spots whose category
+  // appears in the Traveller's existing Shortlist. Cross-category discoveries
+  // are not surfaced until the cold-start or a future embedding-based path.
   private async warm(context: RecommendationContext): Promise<Spot[]> {
     const weights = context.preferences.weights;
     const entries = Object.entries(weights);
