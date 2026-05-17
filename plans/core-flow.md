@@ -119,16 +119,17 @@ src/
 │
 ├── infrastructure/
 │   ├── persistence/
-│   │   ├── PostgresTripRepository.ts
+│   │   ├── PostgresTripRepository.ts       ← travellers + trips
 │   │   ├── PostgresSpotRepository.ts
-│   │   └── PostgresShortlistRepository.ts
+│   │   ├── PostgresShortlistRepository.ts
+│   │   └── PostgresDayPlanRepository.ts    ← day_plans + days + pinned_spots (D5)
 │   ├── kakao/
-│   │   ├── KakaoAuthAdapter.ts       ← ACL: verifyToken → TravellerId
-│   │   └── KakaoLocalAdapter.ts      ← ACL: Spot 썸네일 URL 조회
+│   │   ├── KakaoAuthAdapter.ts             ← ACL: verifyToken → TravellerId
+│   │   └── KakaoLocalAdapter.ts            ← ACL: Spot 썸네일 URL 조회
 │   ├── llm/
-│   │   └── LLMParseFreeTextAdapter.ts ← ParseFreeTextPort 구현
+│   │   └── LLMParseFreeTextAdapter.ts      ← ParseFreeTextPort 구현
 │   └── recommender/
-│       └── PgVectorRecommenderAdapter.ts ← RecommenderPort 구현
+│       └── PostgresRecommenderAdapter.ts   ← RecommenderPort 구현 (카테고리 가중 쿼리; D3)
 │
 └── interface/
     └── api/
@@ -146,19 +147,20 @@ src/
 | 2. Trip 생성 | Trip(traveller, dateRange) | CreateTripUseCase | LLMParseFreeTextAdapter, PostgresTripRepository |
 | 3. 추천 | Recommender.recommendForShortlist | GetRecommendationsUseCase | PgVectorRecommenderAdapter |
 | 4. Shortlist | shortlist.add(spot) | UpdateShortlistUseCase | PostgresShortlistRepository |
-| 5. Compose | ScheduleComposer.compose | ComposeDayPlanUseCase | PgVectorRecommenderAdapter (gap-fill) |
-| 6. 편집 | day.pin / day.unpin | EditDayPlanUseCase | PostgresTripRepository |
+| 5. Compose | ScheduleComposer.compose | ComposeDayPlanUseCase | PostgresRecommenderAdapter (gap-fill), PostgresDayPlanRepository (저장) |
+| 6. 편집 | day.pin / day.unpin | EditDayPlanUseCase | PostgresDayPlanRepository |
 
 ### Port / Adapter 분리
 
 ```
-ParseFreeTextPort       ←→  LLMParseFreeTextAdapter   (Claude API)
-AuthPort                ←→  KakaoAuthAdapter           (Kakao OAuth2)
-SpotThumbnailPort       ←→  KakaoLocalAdapter          (Kakao Local API)
-SpotRepository          ←→  PostgresSpotRepository     (PostgreSQL)
-TripRepository          ←→  PostgresTripRepository     (PostgreSQL)
-ShortlistRepository     ←→  PostgresShortlistRepository (PostgreSQL)
-RecommenderPort         ←→  PgVectorRecommenderAdapter (pgvector)
+ParseFreeTextPort       ←→  LLMParseFreeTextAdapter      (Claude API)
+AuthPort                ←→  KakaoAuthAdapter             (Kakao OAuth2)
+SpotThumbnailPort       ←→  KakaoLocalAdapter            (Kakao Local API)
+SpotRepository          ←→  PostgresSpotRepository       (PostgreSQL)
+TripRepository          ←→  PostgresTripRepository       (PostgreSQL; travellers + trips)
+ShortlistRepository     ←→  PostgresShortlistRepository  (PostgreSQL)
+DayPlanRepository       ←→  PostgresDayPlanRepository    (PostgreSQL; day_plans + days + pinned_spots — D5)
+RecommenderPort         ←→  PostgresRecommenderAdapter   (PostgreSQL; 카테고리 가중 쿼리 — D3)
 ```
 
 도메인 레이어는 Port 인터페이스만 알고, Adapter 구현은 infrastructure에만 존재.
@@ -380,10 +382,11 @@ pinned_spots (
 
 | 목적 | 컬럼 | 쿼리 |
 |------|------|------|
-| SpotPreferences 기반 추천 | `spots.embedding` | `ORDER BY embedding <=> $preference_vector` |
-| cold-start (Shortlist 없음) | — | `ORDER BY curation_score DESC` (벡터 불필요) |
+| SpotPreferences 기반 추천 | — | `WHERE category = ANY($categories) ORDER BY curation_score * $weight DESC` (카테고리 분포 가중치; D3) |
+| cold-start (Shortlist 없음) | — | `ORDER BY curation_score DESC` |
+| 유사 Spot / semantic 검색 | `spots.embedding` | `ORDER BY embedding <=> $query_vector` (v1 기본 추천 흐름 미사용; 인프라 준비; D4) |
 
-`SpotPreferences`는 Shortlist Spot들의 embedding 평균 벡터로 파생 (non-persisted). Recommender가 즉석 계산 후 쿼리.
+`SpotPreferences`는 Shortlist Spot의 카테고리 분포 맵으로 즉석 파생 (non-persisted). 예: `{ oreum: 0.4, cafe: 0.3, beach: 0.3 }`. Recommender가 이 분포를 가중치로 변환해 카테고리 필터+정렬 쿼리 실행 (D3). `spots.embedding`은 SpotPreferences 연산에 관여하지 않는다 (D4).
 
 ---
 
@@ -477,7 +480,7 @@ T+x+100ms DayPlan 초안 반환  ✅
 | **B** | DB schema migrations (PostgreSQL + pgvector extension) | 없음 |
 | **C** | KakaoAuthAdapter (OAuth2 토큰 검증 → TravellerId) | Kakao API |
 | **D** | LLMParseFreeTextAdapter (regex pre-filter + Claude structured output) | Claude API |
-| **E** | PostgresSpotRepository + Spot seed pipeline (Kakao Local API 200 Spots 수집 스크립트) | Kakao Local API, DB |
+| **E** | PostgresSpotRepository + Spot seed pipeline: (1) Kakao Local API 200 Spots 수집, (2) Voyage AI voyage-3 (1536 dim)로 embedding 배치 생성 → `spots.embedding` 저장 (D4; SpotPreferences와 무관 — 인프라 준비) | Kakao Local API, Voyage AI API, DB |
 | **F** | PgVectorRecommenderAdapter (cold-start + SpotPreferences-weighted 쿼리) | DB (pgvector) |
 | **G** | ScheduleComposer 구현 (Region 클러스터링 알고리즘, gap-fill 오케스트레이션) | Agent A (domain), Agent F (Recommender) |
 | **H** | Application use cases + Fastify API 엔드포인트 5개 | Agents A, B, C, D, F, G |
@@ -488,7 +491,6 @@ T+x+100ms DayPlan 초안 반환  ✅
 ```
 A ──────────────────────────────── G
 A ──────────────────────────────── F
-A ─── B
 B ─── E
 B ─── F
 B ─── H
@@ -500,10 +502,12 @@ G ─── H
 H ─── I
 ```
 
+A와 B는 독립 — B(schema)는 Agent A의 코드 출력이 아닌 plans/core-flow.md §4 스펙을 소비한다 (D6-ㄴ).
+
 ### 병렬 배치
 
 ```
-Batch 1 (병렬):  A  B  C  D
+Batch 1 (병렬):  A  B  C  D   ← 모두 독립 (D6-ㄴ)
                  ↓  ↓
 Batch 2:         E (B 완료 후)
                  ↓
@@ -514,7 +518,7 @@ Batch 4:         H (C, D, F, G 완료 후)
 Batch 5:         I (H 완료 후)
 ```
 
-최소 경로: A → F → G → H → I (직렬 5단계). B, C, D는 Batch 1에서 병렬로 선행.
+최소 경로: A → F → G → H → I (직렬 5단계). B, C, D는 A와 병렬로 선행.
 
 ---
 
@@ -561,11 +565,22 @@ Batch 5:         I (H 완료 후)
 
 ---
 
-### ❌ 수정 필요 항목
+### ✅ 해소된 항목 (Rev 2)
+
+| ID | 결정 | 해소 방법 |
+|----|------|----------|
+| BLOCKER B1 | SpotPreferences = 카테고리 분포 맵 | D3 채택 (Option B); context.md + plan 모두 갱신 |
+| MAJOR B2 | DayPlanRepository Port 추가 | D5; Port/Adapter 목록 + 레이어 매핑 + 폴더 구조 갱신 |
+| MAJOR B3 | A↔B 독립 확인 | D6-ㄴ; `A ─── B` 화살표 제거 |
+| MAJOR B4 | embedding = 유사 Spot 인프라 (v1 미사용) | D4; Agent E에 Voyage AI 배치 잡 추가 |
 
 ---
 
-#### [BLOCKER] B1 — SpotPreferences 구현 정의가 context.md와 충돌
+### ❌ 수정 필요 항목 (Rev 1 원문 보존)
+
+---
+
+#### [BLOCKER — ✅ RESOLVED via D3] B1 — SpotPreferences 구현 정의가 context.md와 충돌
 
 **위치:** `plans/core-flow.md` § 4. 데이터 모델 > pgvector 사용 위치, line 386
 
@@ -590,7 +605,7 @@ Batch 5:         I (H 완료 후)
 
 ---
 
-#### [MAJOR] B2 — DayPlanRepository / DayRepository가 Port/Adapter 목록에서 누락
+#### [MAJOR — ✅ RESOLVED via D5] B2 — DayPlanRepository / DayRepository가 Port/Adapter 목록에서 누락
 
 **위치:** `plans/core-flow.md` § 2. 아키텍처 매핑 > Port/Adapter 분리 + § 7. Sub-agent 단위
 
@@ -611,7 +626,7 @@ Batch 5:         I (H 완료 후)
 
 ---
 
-#### [MAJOR] B3 — 의존성 그래프와 Batch 1 스케줄이 모순
+#### [MAJOR — ✅ RESOLVED via D6-ㄴ] B3 — 의존성 그래프와 Batch 1 스케줄이 모순
 
 **위치:** `plans/core-flow.md` § 7. 구현 순서 > 의존성 그래프 + 병렬 배치
 
@@ -629,7 +644,7 @@ Batch 5:         I (H 완료 후)
 
 ---
 
-#### [MAJOR] B4 — Spot embedding 생성 파이프라인 미정의
+#### [MAJOR — ✅ RESOLVED via D4] B4 — Spot embedding 생성 파이프라인 미정의
 
 **위치:** `plans/core-flow.md` § 7. Sub-agent E + § 4. pgvector 사용 위치
 
@@ -676,17 +691,20 @@ Kakao access token TTL은 ~2시간이다. Bearer 토큰 만료 시 API가 401을
 ### 종합 판정
 
 ```
-🚫 BUILD ENTRY BLOCKED
+🚫 BUILD ENTRY BLOCKED  [Rev 1 — 2026-05-17]
+  BLOCKER 1 + MAJOR 3 존재. 상세 위 참조.
 
-BLOCKER 1개: SpotPreferences 정의 — context.md 권위와 충돌.
-MAJOR 3개: DayPlanRepository 누락, 의존성 그래프 모순, embedding 파이프라인 미정의.
+✅ BUILD READY  [Rev 2 — 2026-05-17]
+  BLOCKER B1 → RESOLVED (D3)
+  MAJOR B2   → RESOLVED (D5)
+  MAJOR B3   → RESOLVED (D6-ㄴ)
+  MAJOR B4   → RESOLVED (D4)
 
-해소 순서:
-  1. Blocker B1 결정 (context.md 업데이트 vs 계획 조정) → Option 선택 후 패치
-  2. Major B2 (DayPlanRepository) → Port/Adapter 목록 + 레이어 매핑 수정
-  3. Major B3 (의존성 그래프) → 그래프 or 배치 수정
-  4. Major B4 (embedding 파이프라인) → B1 결정에 따라 Agent E 범위 수정
-  5. Minor M1-M4 → 선택적, Build 진입 가능 후 처리 허용
+잔여 위험 (Minor — Build 진입 후 처리 허용):
+  M1  TravellerRepository 인터페이스 명시 미완 — Agent A/H 착수 시 해소
+  M2  SLA 분석에 썸네일 로딩 비용 미포함 — 구현 후 실측으로 보완
+  M3  ParseFreeText 실패 경로 단위 테스트 미작성 — Agent D 착수 시 추가
+  M4  Kakao OAuth2 토큰 만료 처리 Out-of-scope 미명시 — specs 업데이트 권장
 
-BLOCKER + MAJOR 4개 해소 시 → ✅ Build ready 재발급 가능.
+BUILD READY. Agent A 착수 가능.
 ```

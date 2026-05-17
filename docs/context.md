@@ -50,7 +50,7 @@ When a Trip is shortened, the Traveller is warned ("Day N's M pinned Spots will 
 _Avoid_: Slot, block, period, time-block
 
 **Spot**:
-The atomic content unit — any place a Traveller can go or thing they can do in Jeju (restaurant, beach, attraction, activity provider, accommodation). Lives in a self-curated database; metadata (name, coordinates, hours) seeded from Kakao Local API, category/tags and curation comments (1–2 lines, Korean) assigned by the editorial team. Carries `curationScore` and `popularityScore` (both editorial-assigned). Photos are not stored — served at runtime via Kakao Maps Places widget embed. "Hidden Gem" is a UI label (high curation, low popularity) — not a domain type.
+The atomic content unit — any place a Traveller can go or thing they can do in Jeju (restaurant, beach, attraction, activity provider, accommodation). Lives in a self-curated database; metadata (name, coordinates, hours) seeded from Kakao Local API, category/tags and curation comments (1–2 lines, Korean) assigned by the editorial team. Carries `curationScore` and `popularityScore` (both editorial-assigned). Also carries `embedding VECTOR(1536)` — populated at seed time for semantic similarity lookups; not used for SpotPreferences computation (D4). Photos are not stored — served at runtime via Kakao Maps Places widget embed. "Hidden Gem" is a UI label (high curation, low popularity) — not a domain type.
 _Avoid_: Place, venue, location, experience, activity (as standalone nouns), HiddenGem (as a type)
 
 **Booking**:
@@ -84,8 +84,8 @@ _Avoid_: TripStatus, TripState, TripMode
 ### Discovery & recommendation
 
 **SpotPreferences**:
-A derived, non-persisted value computed on demand from a Traveller's Shortlist — specifically the distribution of Spot types it contains. The sole taste signal in v1; no separate input step. Consumed by the Recommender; never stored as a separate entity.
-_Avoid_: TasteProfile (implies persistence), UserPreferences, interests
+A derived, non-persisted value computed on demand from a Traveller's Shortlist — specifically the distribution of Spot categories (types) it contains. Format: a map from Spot category to frequency weight, e.g. `{ oreum: 0.4, cafe: 0.3, beach: 0.3 }`. The sole taste signal in v1; no separate input step. Consumed by the Recommender to weight ranked output toward the Traveller's inferred category preferences. Never stored as a separate entity. Not an embedding vector — SpotPreferences is an interpretable categorical distribution, not a dense float array (D3).
+_Avoid_: TasteProfile (implies persistence), UserPreferences, interests, embedding vector
 
 **RecommendationContext**:
 A value object capturing the inputs to a recommendation call. In v1 (`recommendForShortlist`): Traveller + Trip metadata. In v2 (`recommendNow`): Traveller + current GPS coordinates + remaining time. The Recommender accepts a RecommendationContext and returns ranked Spots.
@@ -151,6 +151,8 @@ _Avoid_: Explore mode, nearby mode, live mode
 - **Spot search resolved**: infrastructure only (`SpotRepository.search`). No domain service. Search indexing, text matching, and filtering are infrastructure concerns.
 - **ScheduleComposer minimum Spot count resolved**: ≥ 1 Spot in Shortlist required; when count < Day count, Recommender fills gaps; auto-filled Spots added to Shortlist; UI labels them "자동 추천으로 채움" (D1).
 - **Trip dateRange nullability resolved**: required, not nullable; `parseFreeText` failure → default next weekend 1박2일 (KST); inferred value shown with one-tap edit (D2).
+- **SpotPreferences representation resolved (D3)**: categorical type distribution map `{ category: weight }`. Not an embedding vector. "왜 이 Spot?" UI 설명 가능. Resolves plan-review BLOCKER B1.
+- **Spot embedding purpose resolved (D4)**: `spots.embedding VECTOR(1536)` is for semantic/similarity search infrastructure. Not used by SpotPreferences. Not used in v1 recommendation flow. Populated at seed time via batch (Voyage AI voyage-3 or equivalent). Resolves plan-review MAJOR B4.
 - **DayPlan incomplete-spot policy**: what happens to unvisited Spots at end of day (carry over? stay in DayPlan?) deferred to Light Spec.
 - **TripPhase transition triggers**: date-based vs GPS vs manual activation deferred to Light Spec.
 
