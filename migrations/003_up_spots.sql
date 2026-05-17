@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS spots (
   lat              FLOAT8    NOT NULL,
   lng              FLOAT8    NOT NULL,
   thumbnail_url    TEXT,
-  embedding        VECTOR(1536),
+  embedding        VECTOR(1024),
   is_active        BOOLEAN   NOT NULL DEFAULT true,
   updated_at       TIMESTAMPTZ NOT NULL DEFAULT now()
 );
