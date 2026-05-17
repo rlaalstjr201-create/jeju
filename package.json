@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run",
@@ -24,6 +26,7 @@
     "@types/pg": "^8.11.0",
     "msw": "^2.3.0",
     "testcontainers": "^10.10.0",
+    "tsx": "^4.22.1",
     "typescript": "^5.4.0",
     "vitest": "^1.6.0"
   }
