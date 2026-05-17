@@ -536,4 +536,157 @@ Batch 5:         I (H 완료 후)
 
 ---
 
-*plan-reviewer 전달 준비 완료. 위 계획에 context.md 모순 없음. Agent I까지 구현 완료 시 core-flow 기능 검증 가능.*
+---
+
+## Plan Review
+
+**Reviewed by:** plan-eng-review (gstack) — non-interactive mode (Windows/spawned)
+**Date:** 2026-05-17
+**Input files:** `docs/context.md`, `specs/core-flow.md`, `plans/core-flow.md`
+
+---
+
+### ✅ 통과 항목
+
+| # | 검토 관점 | 결과 |
+|---|----------|------|
+| 1a | context.md 도메인 용어 (Trip, Day, Spot, Shortlist, DayPlan, Traveller, CalendarDate, Region, priceRange, TripPhase) | 모두 정의 준수 |
+| 1b | Deprecated 용어 (Schedule, ScheduleRewriter, TasteProfile) | 계획 어디에도 없음 |
+| 2 | 6단계 도메인 호출 → 레이어 매핑 | Step 1-6 전부 Application/Infrastructure에 1:1 매핑 |
+| 3 | OQ-1/2/4 결정 → Mission Criteria 추적 | OQ-1 → B3·A2, OQ-2 → B2·A1, OQ-4 → B3·A1·A4 모두 위반 없음 |
+| 6 | gap-fill 시나리오 + Tagalong 5케이스 | E1–E5 + Given/When/Then gap-fill 상세 모두 포함 |
+| 7a | Kakao ACL | KakaoAuthAdapter + KakaoLocalAdapter — 파트너 브랜드 도메인 미노출 |
+| 7b | LLM Port/Adapter 분리 | ParseFreeTextPort ↔ LLMParseFreeTextAdapter ✅ |
+| 7c | DB Port/Adapter 분리 | SpotRepository, TripRepository, ShortlistRepository ↔ Postgres 구현 ✅ |
+
+---
+
+### ❌ 수정 필요 항목
+
+---
+
+#### [BLOCKER] B1 — SpotPreferences 구현 정의가 context.md와 충돌
+
+**위치:** `plans/core-flow.md` § 4. 데이터 모델 > pgvector 사용 위치, line 386
+
+**증거:**
+- `context.md`: SpotPreferences = *"the distribution of Spot types it contains"* (카테고리 타입 분포)
+- `plans/core-flow.md`: `"SpotPreferences는 Shortlist Spot들의 embedding 평균 벡터로 파생"`
+
+두 정의는 다른 것이다. 타입 분포(categorical histogram)는 embedding 벡터(dense float array)가 아니다. 계획이 도메인 계약을 암묵적으로 업그레이드했다.
+
+이 충돌이 blockers인 이유가 세 가지다:
+
+1. domain/recommender/SpotPreferences.ts를 어떻게 구현할지 Agent A와 Agent F가 다르게 해석한다. Agent A는 타입 분포 계산기를 만들고 Agent F는 벡터 평균 계산기를 만들면 두 코드가 충돌한다.
+2. embedding 방식은 Spot seeding 시점에 embedding 생성 파이프라인을 필요로 한다 (아래 Major B3 참고). 이 의존성이 Agent E 범위에 들어가야 하는데 현재 없다.
+3. CLAUDE.md 절대 룰: `context.md 없이 도메인 entity·용어 추정 금지.`
+
+**필요한 조치 (둘 중 하나):**
+
+- **Option A**: context.md의 SpotPreferences 정의를 embedding 방식으로 업데이트. Grilling/patch를 거쳐 도메인 권위 변경. 이후 Agent E에 embedding 생성 파이프라인 추가.
+- **Option B**: 계획의 pgvector 사용 위치를 context.md 정의에 맞춤 — SpotPreferences = 타입 분포로 구현, vector 검색은 별도 mechanism으로 분리. (단, 이 경우 `ORDER BY embedding <=> $preference_vector` 쿼리 방식 변경 필요)
+
+**Build 진입 금지 — 이 항목이 해소될 때까지.**
+
+---
+
+#### [MAJOR] B2 — DayPlanRepository / DayRepository가 Port/Adapter 목록에서 누락
+
+**위치:** `plans/core-flow.md` § 2. 아키텍처 매핑 > Port/Adapter 분리 + § 7. Sub-agent 단위
+
+**증거:**
+
+- 데이터 모델에 `day_plans`, `days`, `pinned_spots` 세 테이블이 있다.
+- `ComposeDayPlanUseCase` (step 5)는 DayPlan 초안을 DB에 저장해야 한다.
+- `EditDayPlanUseCase` (step 6)는 `day.pin / day.unpin` 결과를 저장해야 한다.
+- 레이어 매핑 표 step 6: "PostgresTripRepository"가 담당으로 명시됐지만 PostgresTripRepository는 trips 테이블 담당이다. pinned_spots 저장은 다른 Repository 책임이다.
+- Port/Adapter 목록에 `DayPlanRepository ↔ PostgresDayPlanRepository`가 없다.
+
+결과: Agent H가 ComposeDayPlanUseCase를 구현할 때 어떤 Repository에 DayPlan을 저장해야 하는지 알 수 없다. Agent G(ScheduleComposer)도 마찬가지다.
+
+**권장 변경:**
+- `DayPlanRepository` Port 추가 (`saveDayPlan`, `findByTrip`, `updatePinnedSpots`)
+- `PostgresDayPlanRepository` Adapter 추가 (day_plans + days + pinned_spots 테이블 담당)
+- 레이어 매핑 표 step 5, 6의 Infrastructure 컬럼을 `PostgresDayPlanRepository`로 수정
+
+---
+
+#### [MAJOR] B3 — 의존성 그래프와 Batch 1 스케줄이 모순
+
+**위치:** `plans/core-flow.md` § 7. 구현 순서 > 의존성 그래프 + 병렬 배치
+
+**증거:**
+- 그래프: `A ─── B` → A가 B보다 먼저 완료돼야 함
+- Batch 1: `A B C D` 병렬 실행
+
+`A ─── B` (schema mirrors domain)는 논리적으로 맞다. DB schema는 도메인 타입을 미러링하므로, domain models(A)가 확정되지 않으면 schema(B)에서 컬럼/타입이 틀릴 수 있다. 특히 ScheduleComposer 내부 데이터 흐름이 A에서 확정된다.
+
+두 선택지:
+- **Option A**: 그래프가 정확 → B를 Batch 2로 이동. `Batch 1: A C D` / `Batch 2: B E (A 완료 후)`. 직렬 경로 1단계 증가.
+- **Option B**: Batch 1이 의도 → 그래프에서 `A ─── B` 화살표 제거하고 이유 명시 ("schema spec은 plan 문서에서 충분히 확정됐으므로 A와 병렬 가능").
+
+**권장:** Option A. 이 프로젝트는 속도보다 정확성 우선. A 완료 후 B 착수해도 전체 배치 수는 동일(5배치).
+
+---
+
+#### [MAJOR] B4 — Spot embedding 생성 파이프라인 미정의
+
+**위치:** `plans/core-flow.md` § 7. Sub-agent E + § 4. pgvector 사용 위치
+
+**증거:**
+- `spots.embedding VECTOR(1536)` 컬럼이 있고 Recommender가 이를 사용한다.
+- Agent E 범위: "Kakao Local API 200 Spots 수집 스크립트" — Kakao Local API는 텍스트 데이터를 주지 embedding을 주지 않는다.
+- 어떤 모델로 embedding을 생성하는지 (Claude API text embedding? OpenAI ada-002? local model?) 미정.
+- 이는 Blocker B1과 연결된다 — SpotPreferences를 embedding 방식으로 확정할 경우, embedding 생성이 Agent E의 핵심 작업이 된다.
+
+**권장 변경:**
+- Blocker B1 Option A 채택 시: Agent E에 "Spot 텍스트(이름+카테고리+코멘트) → embedding 생성 → DB 저장" 단계 추가. 사용 모델 결정 필요.
+- Blocker B1 Option B 채택 시: `spots.embedding` 컬럼 불필요, 제거. Agent E 단순화.
+
+---
+
+### ⚠️ Minor 항목
+
+#### [minor] M1 — TravellerRepository 미정의
+
+`KakaoAuthAdapter.verifyToken → TravellerId`를 반환하지만, CreateTripUseCase에서 TravellerId로 Traveller entity를 findOrCreate해야 한다. `PostgresTripRepository`가 이 역할을 맡는지 독립 `TravellerRepository`가 있는지 명시가 없다.
+
+**권장:** Port/Adapter 목록에 `TravellerRepository` 추가 (단순 findOrCreate 인터페이스면 충분; PostgresTripRepository 파일 내부에 구현 병합 가능).
+
+---
+
+#### [minor] M2 — SLA 분석에 썸네일 이미지 로딩 비용 미모델링
+
+T=380ms를 "첫 12 카드 화면 렌더링"으로 표기하지만, 이는 API 응답 시점이다. 12개 `thumbnailUrl` 이미지 로딩(모바일 기준 ~300-1500ms)이 포함되지 않았다. 썸네일을 진행형 로딩(skeleton UI → lazy load) 방식으로 처리하면 체감 렌더는 API 응답 직후로 당길 수 있다. 이 전략을 명시하면 B3 달성 근거가 더 견고해진다.
+
+---
+
+#### [minor] M3 — ParseFreeText 실패 경로 Domain 단위 테스트 누락
+
+E2(E2E)가 dateInferred 경로를 커버하지만, `ParseFreeTextPort.parse()` 반환값이 `null`일 때 CreateTripUseCase가 D2 기본값을 사용하는 경로에 대한 unit test가 없다. Application layer 단위 테스트 케이스 하나 추가 필요.
+
+---
+
+#### [minor] M4 — Kakao OAuth2 토큰 만료 처리 미정
+
+Kakao access token TTL은 ~2시간이다. Bearer 토큰 만료 시 API가 401을 반환하지만 클라이언트 refresh 전략이 미정이다. 이 feature 범위 밖이라면 Out of scope에 명시적으로 추가해야 한다. 현재 Out of scope 목록에 없다.
+
+---
+
+### 종합 판정
+
+```
+🚫 BUILD ENTRY BLOCKED
+
+BLOCKER 1개: SpotPreferences 정의 — context.md 권위와 충돌.
+MAJOR 3개: DayPlanRepository 누락, 의존성 그래프 모순, embedding 파이프라인 미정의.
+
+해소 순서:
+  1. Blocker B1 결정 (context.md 업데이트 vs 계획 조정) → Option 선택 후 패치
+  2. Major B2 (DayPlanRepository) → Port/Adapter 목록 + 레이어 매핑 수정
+  3. Major B3 (의존성 그래프) → 그래프 or 배치 수정
+  4. Major B4 (embedding 파이프라인) → B1 결정에 따라 Agent E 범위 수정
+  5. Minor M1-M4 → 선택적, Build 진입 가능 후 처리 허용
+
+BLOCKER + MAJOR 4개 해소 시 → ✅ Build ready 재발급 가능.
+```
