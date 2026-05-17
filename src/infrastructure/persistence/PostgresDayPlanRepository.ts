@@ -131,7 +131,7 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
     return new DayPlan({ id: planRow.id, days });
   }
 
-  async save(tripId: string, dayPlan: DayPlan): Promise<void> {
+  async save(tripId: string, dayPlan: DayPlan, autoFilledSpotIds?: readonly string[]): Promise<void> {
     const client = await this.pool.connect();
     try {
       await client.query('BEGIN');
@@ -168,10 +168,11 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
         for (let i = 0; i < day.pinnedSpots.length; i++) {
           const spot = day.pinnedSpots[i];
           if (spot === undefined) continue;
+          const isAutoFilled = autoFilledSpotIds?.includes(spot.id) ?? false;
           await client.query(
-            `INSERT INTO pinned_spots (day_id, spot_id, position)
-             VALUES ($1, $2, $3)`,
-            [dayId, spot.id, i],
+            `INSERT INTO pinned_spots (day_id, spot_id, position, is_auto_filled)
+             VALUES ($1, $2, $3, $4)`,
+            [dayId, spot.id, i, isAutoFilled],
           );
         }
       }
