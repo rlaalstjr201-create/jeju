@@ -22,8 +22,8 @@ export function extractToken(req: FastifyRequest): string {
 
 export function requireCuratorRole(req: FastifyRequest): void {
   const token = extractToken(req);
-  // Dev mode: 'dev-curator-{id}' tokens carry curator role
-  if (token.startsWith('dev-curator-')) return;
+  // Dev mode only: 'dev-curator-{id}' tokens carry curator role
+  if (process.env['NODE_ENV'] === 'development' && token.startsWith('dev-curator-')) return;
   // Production: match CURATOR_SECRET env
   const secret = process.env['CURATOR_SECRET'];
   if (secret && token === secret) return;

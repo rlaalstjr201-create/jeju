@@ -81,19 +81,17 @@ export class ApproveCandidateUseCase {
       lng: candidate.lng,
     };
 
-    // C3: atomic — saveReturningId returns actual DB id (handles ON CONFLICT); conditional
-    // status update prevents TOCTOU race (M5)
-    const [realSpotId, updated] = await this.txManager.run(async () => {
+    // C3/M5/S8B-2: throw inside callback so a failed race rolls back the Spot insert
+    const realSpotId = await this.txManager.run(async () => {
       const id = await this.spotRepo.saveReturningId(spot);
       const ok = await this.candidateRepo.updateStatusConditional(
         candidate.id, 'approved', 'pending',
       );
-      return [id, ok] as [string, boolean];
+      if (!ok) {
+        throw new InvalidStatusError('concurrent modification');
+      }
+      return id;
     });
-
-    if (!updated) {
-      throw new InvalidStatusError('concurrent modification');
-    }
 
     return { spotId: realSpotId };
   }

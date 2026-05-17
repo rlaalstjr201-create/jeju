@@ -131,6 +131,41 @@ describe('ApproveCandidateUseCase', () => {
     ).rejects.toThrow(ApproveError);
   });
 
+  // -------------------------------------------------------------------------
+  // S8B-2: InvalidStatusError thrown INSIDE transaction (Spot rolls back)
+  // -------------------------------------------------------------------------
+
+  it('(S8B-2) concurrent modification: error thrown inside tx callback (Spot rolled back)', async () => {
+    const { candidateRepo, spotRepo } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(makeCandidate());
+    spotRepo.saveReturningId.mockResolvedValue('spot-id');
+    candidateRepo.updateStatusConditional.mockResolvedValue(false);
+
+    // Tracking mock: catches errors from inside the callback — identical to what
+    // PostgresTransactionManager does before calling ROLLBACK.
+    let threwInsideTx = false;
+    const txManager = {
+      run: vi.fn().mockImplementation(async (work: () => Promise<unknown>) => {
+        try {
+          return await work();
+        } catch (err) {
+          threwInsideTx = true; // real tx would ROLLBACK here — Spot not committed
+          throw err;
+        }
+      }),
+    };
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await expect(
+      useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
+    ).rejects.toThrow(InvalidStatusError);
+
+    // saveReturningId ran (Spot was attempted) but the callback threw → ROLLBACK
+    expect(spotRepo.saveReturningId).toHaveBeenCalledOnce();
+    // The throw propagated through the transaction boundary — proves rollback path
+    expect(threwInsideTx).toBe(true);
+  });
+
   it('throws ApproveError(IncompleteEnrichment) when lat is null', async () => {
     const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(

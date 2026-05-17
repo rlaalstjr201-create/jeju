@@ -1,6 +1,17 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { buildServer } from '../server.js';
 import type { AppDependencies } from '../AppDependencies.js';
+
+const ORIGINAL_NODE_ENV = process.env['NODE_ENV'];
+
+afterEach(() => {
+  delete process.env['CURATOR_SECRET'];
+  if (ORIGINAL_NODE_ENV !== undefined) {
+    process.env['NODE_ENV'] = ORIGINAL_NODE_ENV;
+  } else {
+    delete process.env['NODE_ENV'];
+  }
+});
 
 function makeDeps(): AppDependencies {
   return {
@@ -77,7 +88,12 @@ describe('Admin curation routes — auth (C1) + validation (M1)', () => {
     expect(res.statusCode).toBe(401);
   });
 
-  it('(C1) dev-curator-* prefix is accepted', async () => {
+  // -------------------------------------------------------------------------
+  // S8B-1: dev-curator-* gated to development mode only
+  // -------------------------------------------------------------------------
+
+  it('(S8B-1) dev-curator-* accepted when NODE_ENV=development', async () => {
+    process.env['NODE_ENV'] = 'development';
     const fastify = buildServer(makeDeps());
     await fastify.ready();
     const res = await fastify.inject({
@@ -90,17 +106,62 @@ describe('Admin curation routes — auth (C1) + validation (M1)', () => {
     expect(res.statusCode).toBe(201);
   });
 
-  // -------------------------------------------------------------------------
-  // M1: ValidationError → 400 for out-of-range curationScore
-  // -------------------------------------------------------------------------
-
-  it('(M1) curationScore=150 → 400 VALIDATION_ERROR', async () => {
+  it('(S8B-1) dev-curator-* rejected when NODE_ENV=production', async () => {
+    process.env['NODE_ENV'] = 'production';
     const fastify = buildServer(makeDeps());
     await fastify.ready();
     const res = await fastify.inject({
       method: 'POST',
       url: '/api/v1/admin/curation/candidates/c-1/approve',
       headers: { authorization: 'Bearer dev-curator-alice' },
+      body: { curationScore: 80 },
+    });
+    await fastify.close();
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('(S8B-1) dev-curator-* rejected when NODE_ENV=test (vitest default)', async () => {
+    // NODE_ENV='test' is the default in vitest — no change needed, explicit for clarity
+    process.env['NODE_ENV'] = 'test';
+    const fastify = buildServer(makeDeps());
+    await fastify.ready();
+    const res = await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/admin/curation/candidates/c-1/approve',
+      headers: { authorization: 'Bearer dev-curator-alice' },
+      body: { curationScore: 80 },
+    });
+    await fastify.close();
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('(S8B-1) dev-curator-* rejected when NODE_ENV is undefined', async () => {
+    delete process.env['NODE_ENV'];
+    const fastify = buildServer(makeDeps());
+    await fastify.ready();
+    const res = await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/admin/curation/candidates/c-1/approve',
+      headers: { authorization: 'Bearer dev-curator-alice' },
+      body: { curationScore: 80 },
+    });
+    await fastify.close();
+    expect(res.statusCode).toBe(401);
+  });
+
+  // -------------------------------------------------------------------------
+  // M1: ValidationError → 400 for out-of-range curationScore
+  // (uses CURATOR_SECRET for auth so NODE_ENV doesn't affect these)
+  // -------------------------------------------------------------------------
+
+  it('(M1) curationScore=150 → 400 VALIDATION_ERROR', async () => {
+    process.env['CURATOR_SECRET'] = 'ci-secret';
+    const fastify = buildServer(makeDeps());
+    await fastify.ready();
+    const res = await fastify.inject({
+      method: 'POST',
+      url: '/api/v1/admin/curation/candidates/c-1/approve',
+      headers: { authorization: 'Bearer ci-secret' },
       body: { curationScore: 150 },
     });
     await fastify.close();
@@ -109,12 +170,13 @@ describe('Admin curation routes — auth (C1) + validation (M1)', () => {
   });
 
   it('(M1) curationScore=0 → 400 VALIDATION_ERROR', async () => {
+    process.env['CURATOR_SECRET'] = 'ci-secret';
     const fastify = buildServer(makeDeps());
     await fastify.ready();
     const res = await fastify.inject({
       method: 'POST',
       url: '/api/v1/admin/curation/candidates/c-1/approve',
-      headers: { authorization: 'Bearer dev-curator-alice' },
+      headers: { authorization: 'Bearer ci-secret' },
       body: { curationScore: 0 },
     });
     await fastify.close();
@@ -122,12 +184,13 @@ describe('Admin curation routes — auth (C1) + validation (M1)', () => {
   });
 
   it('(M1) curationScore=1.5 (non-integer) → 400 VALIDATION_ERROR', async () => {
+    process.env['CURATOR_SECRET'] = 'ci-secret';
     const fastify = buildServer(makeDeps());
     await fastify.ready();
     const res = await fastify.inject({
       method: 'POST',
       url: '/api/v1/admin/curation/candidates/c-1/approve',
-      headers: { authorization: 'Bearer dev-curator-alice' },
+      headers: { authorization: 'Bearer ci-secret' },
       body: { curationScore: 1.5 },
     });
     await fastify.close();
