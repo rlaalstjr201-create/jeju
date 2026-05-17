@@ -36,6 +36,7 @@ _Avoid_: User (in domain code), member, customer, visitor, guest
 
 **Trip**:
 A Jeju visit with a fixed date range owned by one Traveller. The top-level container for a DayPlan and zero or more Bookings. Duration is variable (day-trip to 1+ weeks); 2–6 nights is the primary target but is a default, not an invariant. No hard duration validation beyond rejecting negative or physically impossible values.
+`dateRange` is required — not nullable (D2). When natural-language input fails to yield a date range, the system infers a default: next weekend, 1박2일 (KST). The inferred value is shown at the top of the result screen with a one-tap edit affordance; no extra question turn is added (B2, B5).
 _Avoid_: Journey, session, vacation, travel
 
 **DayPlan**:
@@ -99,6 +100,7 @@ _Avoid_: RecommendationEngine, SuggestionService, ConciergeService
 
 **ScheduleComposer**:
 A domain service invoked explicitly by the Traveller to distribute Spots from a Shortlist into a DayPlan draft via geographic clustering. Returns a proposed DayPlan for the Traveller to accept or modify — does not auto-apply. Does not assign times, check conflicts, or reorder based on travel duration. DayPlan authority always stays with the Traveller.
+Minimum Shortlist size: 1 Spot (D1). When `shortlist.count < trip.dayCount`, Composer calls `Recommender.recommendForShortlist` to fill empty Days; each auto-filled Spot is also added to the Shortlist (invariant: all Recommender-output Spots persist in Shortlist). The UI must label auto-filled Spots as "자동 추천으로 채움" (B1, B5).
 Re-invocation behaviour: if the existing DayPlan has no manually pinned Spots, generates immediately; if manual pins exist, asks "keep existing layout and fill empty Days only, or rebuild from scratch?" — executes Fill-empty-only or Replace accordingly.
 Signature: `compose(shortlist, trip) → DayPlan`
 _Avoid_: Scheduler, Planner, Optimizer, TripPlanner
@@ -147,6 +149,8 @@ _Avoid_: Explore mode, nearby mode, live mode
 - **"Concierge" resolved**: UI/marketing label only. Does not appear in domain code. Covered functionally by Recommender + ScheduleComposer + Now Mode.
 - **Editor/Curator resolved**: no domain entity. Spot curation is a content-operations concern handled in the admin panel (infrastructure). The domain only sees the resulting Spot fields.
 - **Spot search resolved**: infrastructure only (`SpotRepository.search`). No domain service. Search indexing, text matching, and filtering are infrastructure concerns.
+- **ScheduleComposer minimum Spot count resolved**: ≥ 1 Spot in Shortlist required; when count < Day count, Recommender fills gaps; auto-filled Spots added to Shortlist; UI labels them "자동 추천으로 채움" (D1).
+- **Trip dateRange nullability resolved**: required, not nullable; `parseFreeText` failure → default next weekend 1박2일 (KST); inferred value shown with one-tap edit (D2).
 - **DayPlan incomplete-spot policy**: what happens to unvisited Spots at end of day (carry over? stay in DayPlan?) deferred to Light Spec.
 - **TripPhase transition triggers**: date-based vs GPS vs manual activation deferred to Light Spec.
 
