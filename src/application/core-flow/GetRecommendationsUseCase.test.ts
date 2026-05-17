@@ -100,8 +100,6 @@ describe('GetRecommendationsUseCase', () => {
     const result = await useCase.execute({
       accessToken: 'token',
       tripId: 'trip-1',
-      limit: 12,
-      offset: 0,
     });
 
     expect(result.curatedPicks.label).toBe('curatedPicks');
@@ -136,8 +134,6 @@ describe('GetRecommendationsUseCase', () => {
     const result = await useCase.execute({
       accessToken: 'token',
       tripId: 'trip-1',
-      limit: 12,
-      offset: 0,
     });
 
     expect(result.curatedPicks.coldStart).toBe(true);
@@ -168,8 +164,6 @@ describe('GetRecommendationsUseCase', () => {
     const result = await useCase.execute({
       accessToken: 'token',
       tripId: 'trip-1',
-      limit: 12,
-      offset: 0,
     });
 
     expect(result.curatedPicks.coldStart).toBe(false);
@@ -192,7 +186,7 @@ describe('GetRecommendationsUseCase', () => {
     );
 
     await expect(
-      useCase.execute({ accessToken: 'token', tripId: 'nonexistent', limit: 12, offset: 0 }),
+      useCase.execute({ accessToken: 'token', tripId: 'nonexistent' }),
     ).rejects.toThrow(TripNotFoundError);
   });
 
@@ -213,7 +207,7 @@ describe('GetRecommendationsUseCase', () => {
     );
 
     await expect(
-      useCase.execute({ accessToken: 'token', tripId: 'trip-1', limit: 12, offset: 0 }),
+      useCase.execute({ accessToken: 'token', tripId: 'trip-1' }),
     ).rejects.toThrow(ForbiddenError);
   });
 
@@ -240,8 +234,6 @@ describe('GetRecommendationsUseCase', () => {
     const result = await useCase.execute({
       accessToken: 'token',
       tripId: 'trip-1',
-      limit: 12,
-      offset: 0,
     });
 
     expect(result.calibration.curatedRatio).toBe(0.5);

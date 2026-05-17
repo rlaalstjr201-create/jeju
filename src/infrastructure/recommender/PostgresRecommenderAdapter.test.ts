@@ -262,4 +262,36 @@ describe('PostgresRecommenderAdapter', () => {
       expect(curatedIds.has(id)).toBe(false);
     }
   });
+
+  // -------------------------------------------------------------------------
+  // Test 8: B3 — curatedRatio=0 skips curated query entirely
+  // -------------------------------------------------------------------------
+
+  it('(B3) curatedRatio=0.0 → curated query skipped, returns empty curatedPicks', async () => {
+    mockPool.query.mockResolvedValue({ rows: [] });
+    const preferences = SpotPreferences.fromShortlist({ spots: [] } as never);
+    const context = {
+      ...makeContext(preferences),
+      calibration: CalibrationProfile.fromUserInput(0.0),
+    };
+    const result = await adapter.recommendForShortlist(context);
+
+    // Only popular query should run
+    expect(mockPool.query).toHaveBeenCalledTimes(1);
+    expect(result.curatedPicks.spots).toEqual([]);
+  });
+
+  it('(B3) curatedRatio=1.0 → popular query skipped, returns empty popularSpots', async () => {
+    mockPool.query.mockResolvedValue({ rows: [] });
+    const preferences = SpotPreferences.fromShortlist({ spots: [] } as never);
+    const context = {
+      ...makeContext(preferences),
+      calibration: CalibrationProfile.fromUserInput(1.0),
+    };
+    const result = await adapter.recommendForShortlist(context);
+
+    // Only curated query should run
+    expect(mockPool.query).toHaveBeenCalledTimes(1);
+    expect(result.popularSpots.spots).toEqual([]);
+  });
 });

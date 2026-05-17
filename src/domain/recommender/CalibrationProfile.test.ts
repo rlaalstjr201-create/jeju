@@ -38,11 +38,4 @@ describe('CalibrationProfile', () => {
     expect(() => CalibrationProfile.fromUserInput(1.1)).toThrow('Invalid curatedRatio: 1.1');
   });
 
-  it('toJSON returns correct shape', () => {
-    const profile = CalibrationProfile.fromUserInput(0.3);
-    const json = profile.toJSON();
-    expect(json.curatedRatio).toBe(0.3);
-    expect(json.popularRatio).toBeCloseTo(0.7);
-    expect(json.isUserAdjusted).toBe(true);
-  });
 });

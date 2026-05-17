@@ -21,9 +21,8 @@ export class SyncSpotScoresUseCase {
   async execute(input: SyncSpotScoresInput = {}): Promise<SyncSpotScoresOutput> {
     const { dryRun = false } = input;
 
-    // Get active spot IDs
-    const activeSpots = await this.spotRepo.findTopByCurationScore(10000);
-    const activeSpotIds = activeSpots.map((s) => s.id);
+    // B2: use findAllActiveIds instead of findTopByCurationScore (avoids top-N cap)
+    const activeSpotIds = await this.spotRepo.findAllActiveIds();
 
     if (activeSpotIds.length === 0) {
       return { updated: 0, failed: [] };
@@ -35,7 +34,6 @@ export class SyncSpotScoresUseCase {
     );
 
     const failed: string[] = [];
-    const consecutiveFailureMap = new Map<string, number>();
 
     // Build score map from successful results
     const scoreMap = new Map<string, { popularitySum: number; trendSum: number; count: number }>();
@@ -47,10 +45,15 @@ export class SyncSpotScoresUseCase {
 
       if (result.status === 'rejected') {
         failed.push(source.sourceName);
-        consecutiveFailureMap.set(source.sourceName, 1);
 
         if (!dryRun) {
-          await this.trendSourceRepo.updateStatus(source.sourceName, 'failure', 1);
+          // B1: read previous failure count, increment, check threshold
+          const current = await this.trendSourceRepo.getStatus(source.sourceName);
+          const newFailures = (current?.consecutiveFailures ?? 0) + 1;
+          await this.trendSourceRepo.updateStatus(source.sourceName, 'failure', newFailures);
+          if (newFailures >= 3) {
+            console.log(`[ALERT] TrendSource ${source.sourceName} failed ${newFailures} consecutive times`);
+          }
         }
 
         continue;
@@ -73,18 +76,10 @@ export class SyncSpotScoresUseCase {
       }
     }
 
-    // Alert on consecutive failures
-    for (const [sourceName, failures] of consecutiveFailureMap) {
-      if (failures >= 3) {
-        console.log(`[ALERT] TrendSource ${sourceName} failed 3 times`);
-      }
-    }
-
     if (dryRun || scoreMap.size === 0) {
       return { updated: 0, failed };
     }
 
-    // Build updates array
     const updates = Array.from(scoreMap.entries()).map(([spotId, scores]) => ({
       spotId,
       popularityScore: Math.min(100, Math.max(0, Math.round(scores.popularitySum / scores.count))),

@@ -4,6 +4,15 @@ import type { TrendSourceRepository } from '../../domain/ports/TrendSourceReposi
 export class PostgresTrendSourceRepository implements TrendSourceRepository {
   constructor(private readonly pool: Pool) {}
 
+  async getStatus(sourceName: string): Promise<{ consecutiveFailures: number } | null> {
+    const result = await this.pool.query<{ consecutive_failures: number }>(
+      `SELECT consecutive_failures FROM trend_sources WHERE source_name = $1`,
+      [sourceName],
+    );
+    const row = result.rows[0];
+    return row !== undefined ? { consecutiveFailures: row.consecutive_failures } : null;
+  }
+
   async updateStatus(
     sourceName: string,
     status: 'success' | 'failure',

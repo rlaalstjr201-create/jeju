@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { RejectCandidateUseCase, CandidateNotFoundError } from './RejectCandidateUseCase.js';
+import { RejectCandidateUseCase, CandidateNotFoundError, InvalidStatusError } from './RejectCandidateUseCase.js';
 import type { CurationCandidate } from '../../domain/curation/CurationCandidate.js';
 
 function makeCandidate(overrides: Partial<CurationCandidate> = {}): CurationCandidate {
@@ -27,9 +27,9 @@ function makeMocks() {
   const candidateRepo = {
     findById: vi.fn(),
     findByStatus: vi.fn(),
-    existsByKakaoPlaceId: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
     save: vi.fn(),
+    updateStatusConditional: vi.fn().mockResolvedValue(true),
   };
   const spotRepo = {
     findById: vi.fn(),
@@ -38,60 +38,71 @@ function makeMocks() {
     findTopByCurationScore: vi.fn(),
     findByRegion: vi.fn(),
     save: vi.fn(),
-    existsByKakaoPlaceId: vi.fn(),
+    saveReturningId: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
-    deactivate: vi.fn(),
+    findAllActiveIds: vi.fn(),
+    deactivate: vi.fn().mockResolvedValue(undefined),
     updateScores: vi.fn(),
   };
-  return { candidateRepo, spotRepo };
+  const txManager = {
+    run: vi.fn().mockImplementation((work: () => Promise<unknown>) => work()),
+  };
+  return { candidateRepo, spotRepo, txManager };
 }
 
 describe('RejectCandidateUseCase', () => {
-  it('pending → rejected (soft delete)', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+  it('pending → rejected (soft delete via updateStatusConditional)', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(makeCandidate({ status: 'pending' }));
-    candidateRepo.save.mockResolvedValue(undefined);
 
-    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await useCase.execute({ candidateId: 'candidate-1' });
 
-    expect(candidateRepo.save).toHaveBeenCalledWith(
-      expect.objectContaining({ status: 'rejected' }),
-    );
+    expect(candidateRepo.updateStatusConditional).toHaveBeenCalledWith('candidate-1', 'rejected', 'pending');
     expect(spotRepo.deactivate).not.toHaveBeenCalled();
+    expect(txManager.run).not.toHaveBeenCalled();
   });
 
-  it('approved → rejected + spot deactivation', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+  it('(C2) approved → rejected uses transaction wrapping deactivate + status update', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(makeCandidate({ status: 'approved' }));
-    candidateRepo.save.mockResolvedValue(undefined);
-    spotRepo.deactivate.mockResolvedValue(undefined);
 
-    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await useCase.execute({ candidateId: 'candidate-1' });
 
+    expect(txManager.run).toHaveBeenCalledOnce();
     expect(spotRepo.deactivate).toHaveBeenCalledWith('kp-001');
-    expect(candidateRepo.save).toHaveBeenCalledWith(
-      expect.objectContaining({ status: 'rejected' }),
-    );
+    expect(candidateRepo.updateStatusConditional).toHaveBeenCalledWith('candidate-1', 'rejected', 'approved');
+  });
+
+  it('(M5) approved → rejected throws InvalidStatusError on concurrent modification', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(makeCandidate({ status: 'approved' }));
+    candidateRepo.updateStatusConditional.mockResolvedValue(false);
+
+    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await expect(
+      useCase.execute({ candidateId: 'candidate-1' }),
+    ).rejects.toThrow(InvalidStatusError);
   });
 
   it('already-rejected → idempotent no-op', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(makeCandidate({ status: 'rejected' }));
 
-    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await useCase.execute({ candidateId: 'candidate-1' });
 
-    expect(candidateRepo.save).not.toHaveBeenCalled();
+    expect(candidateRepo.updateStatusConditional).not.toHaveBeenCalled();
     expect(spotRepo.deactivate).not.toHaveBeenCalled();
+    expect(txManager.run).not.toHaveBeenCalled();
   });
 
   it('throws CandidateNotFoundError when not found', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(undefined);
 
-    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new RejectCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await expect(
       useCase.execute({ candidateId: 'nonexistent' }),
     ).rejects.toThrow(CandidateNotFoundError);

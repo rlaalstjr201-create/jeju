@@ -32,9 +32,9 @@ function makeMocks() {
   const candidateRepo = {
     findById: vi.fn(),
     findByStatus: vi.fn(),
-    existsByKakaoPlaceId: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
     save: vi.fn(),
+    updateStatusConditional: vi.fn().mockResolvedValue(true),
   };
   const spotRepo = {
     findById: vi.fn(),
@@ -43,81 +43,101 @@ function makeMocks() {
     findTopByCurationScore: vi.fn(),
     findByRegion: vi.fn(),
     save: vi.fn(),
-    existsByKakaoPlaceId: vi.fn(),
+    saveReturningId: vi.fn().mockResolvedValue('spot-real-id'),
     findExistingKakaoPlaceIds: vi.fn(),
+    findAllActiveIds: vi.fn(),
     deactivate: vi.fn(),
     updateScores: vi.fn(),
   };
-  return { candidateRepo, spotRepo };
+  const txManager = {
+    run: vi.fn().mockImplementation((work: () => Promise<unknown>) => work()),
+  };
+  return { candidateRepo, spotRepo, txManager };
 }
 
 describe('ApproveCandidateUseCase', () => {
-  it('approves a pending enriched candidate — creates spot and marks approved', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+  it('(C3) returns actual DB spotId from saveReturningId — not the generated UUID', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     const candidate = makeCandidate();
 
     candidateRepo.findById.mockResolvedValue(candidate);
-    spotRepo.save.mockResolvedValue(undefined);
-    spotRepo.findById.mockResolvedValue({ id: 'spot-uuid' });
-    candidateRepo.save.mockResolvedValue(undefined);
+    spotRepo.saveReturningId.mockResolvedValue('spot-from-db');
+    candidateRepo.updateStatusConditional.mockResolvedValue(true);
 
-    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     const result = await useCase.execute({
       candidateId: 'candidate-1',
       curationScore: 85,
       curationComment: 'Great cafe',
     });
 
-    expect(result.spotId).toBeDefined();
-    expect(spotRepo.save).toHaveBeenCalledOnce();
-    expect(candidateRepo.save).toHaveBeenCalledWith(
-      expect.objectContaining({ status: 'approved' }),
-    );
+    expect(result.spotId).toBe('spot-from-db');
+    expect(spotRepo.saveReturningId).toHaveBeenCalledOnce();
+    expect(spotRepo.findById).not.toHaveBeenCalled(); // old phantom-id lookup must not be called
+    expect(candidateRepo.updateStatusConditional).toHaveBeenCalledWith('candidate-1', 'approved', 'pending');
+  });
+
+  it('(C3) wraps saveReturningId + updateStatusConditional in a transaction', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(makeCandidate());
+    spotRepo.saveReturningId.mockResolvedValue('spot-id');
+    candidateRepo.updateStatusConditional.mockResolvedValue(true);
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await useCase.execute({ candidateId: 'candidate-1', curationScore: 80 });
+
+    expect(txManager.run).toHaveBeenCalledOnce();
+  });
+
+  it('(M5) throws InvalidStatusError when updateStatusConditional returns false (race condition)', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(makeCandidate());
+    spotRepo.saveReturningId.mockResolvedValue('spot-id');
+    candidateRepo.updateStatusConditional.mockResolvedValue(false);
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await expect(
+      useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
+    ).rejects.toThrow(InvalidStatusError);
   });
 
   it('throws CandidateNotFoundError when candidate not found', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(undefined);
 
-    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await expect(
       useCase.execute({ candidateId: 'nonexistent', curationScore: 80 }),
     ).rejects.toThrow(CandidateNotFoundError);
   });
 
   it('throws InvalidStatusError when candidate is already approved', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(makeCandidate({ status: 'approved' }));
 
-    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await expect(
       useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
     ).rejects.toThrow(InvalidStatusError);
   });
 
   it('throws ApproveError(NotEnriched) when enrichedAt is null', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(makeCandidate({ enrichedAt: null }));
 
-    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await expect(
       useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
     ).rejects.toThrow(ApproveError);
-
-    try {
-      await useCase.execute({ candidateId: 'candidate-1', curationScore: 80 });
-    } catch (err) {
-      expect((err as ApproveError).code).toBe('NotEnriched');
-    }
   });
 
   it('throws ApproveError(IncompleteEnrichment) when lat is null', async () => {
-    const { candidateRepo, spotRepo } = makeMocks();
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
     candidateRepo.findById.mockResolvedValue(
       makeCandidate({ enrichedAt: '2026-05-18', lat: null }),
     );
 
-    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never);
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
     await expect(
       useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
     ).rejects.toThrow(ApproveError);

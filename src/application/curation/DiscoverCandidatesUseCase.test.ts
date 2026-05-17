@@ -21,9 +21,9 @@ function makeMocks() {
   const candidateRepo = {
     findById: vi.fn(),
     findByStatus: vi.fn(),
-    existsByKakaoPlaceId: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
     save: vi.fn(),
+    updateStatusConditional: vi.fn(),
   };
   const spotRepo = {
     findById: vi.fn(),
@@ -32,8 +32,9 @@ function makeMocks() {
     findTopByCurationScore: vi.fn(),
     findByRegion: vi.fn(),
     save: vi.fn(),
-    existsByKakaoPlaceId: vi.fn(),
+    saveReturningId: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
+    findAllActiveIds: vi.fn(),
     deactivate: vi.fn(),
     updateScores: vi.fn(),
   };

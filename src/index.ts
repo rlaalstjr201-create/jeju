@@ -120,8 +120,8 @@ const deps = {
   ),
   listCandidatesUseCase: new ListCandidatesUseCase(candidateRepo),
   enrichCandidateUseCase: new EnrichCandidateUseCase(candidateRepo, llmEnricher, kakaoLocalApi),
-  approveCandidateUseCase: new ApproveCandidateUseCase(candidateRepo, spotRepo),
-  rejectCandidateUseCase: new RejectCandidateUseCase(candidateRepo, spotRepo),
+  approveCandidateUseCase: new ApproveCandidateUseCase(candidateRepo, spotRepo, txManager),
+  rejectCandidateUseCase: new RejectCandidateUseCase(candidateRepo, spotRepo, txManager),
   adjustCalibrationUseCase: new AdjustCalibrationUseCase(authService, tripRepo, calibrationRepo),
 };
 

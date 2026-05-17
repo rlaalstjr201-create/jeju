@@ -10,11 +10,11 @@ import type { CalibrationProfileRepository } from '../../domain/ports/Calibratio
 import { resolveOwnedTrip } from '../helpers/resolveOwnedTrip.js';
 export { TripNotFoundError, ForbiddenError } from '../errors.js';
 
+const SECTION_LIMIT = 8;
+
 interface GetRecommendationsInput {
   readonly accessToken: string;
   readonly tripId: string;
-  readonly limit: number;
-  readonly offset: number;
 }
 
 interface SpotOutput {
@@ -80,12 +80,12 @@ export class GetRecommendationsUseCase {
     return {
       curatedPicks: {
         label: 'curatedPicks',
-        spots: result.curatedPicks.spots.slice(input.offset, input.offset + input.limit).map(mapSpot),
+        spots: result.curatedPicks.spots.slice(0, SECTION_LIMIT).map(mapSpot),
         coldStart: result.curatedPicks.coldStart,
       },
       popularSpots: {
         label: 'popularSpots',
-        spots: result.popularSpots.spots.slice(0, input.limit).map(mapSpot),
+        spots: result.popularSpots.spots.slice(0, SECTION_LIMIT).map(mapSpot),
         coldStart: result.popularSpots.coldStart,
       },
       calibration: {

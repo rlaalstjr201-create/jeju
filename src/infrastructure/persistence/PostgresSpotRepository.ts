@@ -1,8 +1,9 @@
-import type { Pool } from 'pg';
+import type { Pool, PoolClient } from 'pg';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
 import type { Spot } from '../../domain/spot/Spot.js';
 import type { Region } from '../../domain/shared/Region.js';
 import type { PriceRange } from '../../domain/shared/PriceRange.js';
+import { transactionContext } from './transactionContext.js';
 
 interface SpotRow {
   id: string;
@@ -43,126 +44,169 @@ const SELECT_COLUMNS = `
   curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
 `;
 
+const UPSERT_SQL = `
+  INSERT INTO spots (
+    id, kakao_place_id, name, region, category, price_range,
+    curation_score, popularity_score, trend_score, curation_comment,
+    thumbnail_url, lat, lng, is_active, updated_at
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,true,now())
+  ON CONFLICT (kakao_place_id) DO UPDATE SET
+    name           = EXCLUDED.name,
+    region         = EXCLUDED.region,
+    category       = EXCLUDED.category,
+    price_range    = EXCLUDED.price_range,
+    curation_score = EXCLUDED.curation_score,
+    popularity_score = EXCLUDED.popularity_score,
+    trend_score    = EXCLUDED.trend_score,
+    curation_comment = EXCLUDED.curation_comment,
+    thumbnail_url  = EXCLUDED.thumbnail_url,
+    lat            = EXCLUDED.lat,
+    lng            = EXCLUDED.lng,
+    is_active      = true,
+    updated_at     = now()
+`;
+
+function spotParams(spot: Spot): unknown[] {
+  return [
+    spot.id,
+    spot.kakaoPlaceId,
+    spot.name,
+    spot.region,
+    spot.category,
+    spot.priceRange,
+    spot.curationScore,
+    spot.popularityScore,
+    spot.trendScore,
+    spot.curationComment,
+    spot.thumbnailUrl,
+    spot.lat,
+    spot.lng,
+  ];
+}
+
 export class PostgresSpotRepository implements SpotRepository {
   constructor(private readonly pool: Pool) {}
 
+  private async withClient<T>(work: (client: PoolClient) => Promise<T>): Promise<T> {
+    const txClient = transactionContext.getStore();
+    if (txClient !== undefined) return work(txClient);
+    const client = await this.pool.connect();
+    try {
+      return await work(client);
+    } finally {
+      client.release();
+    }
+  }
+
   async findById(id: string): Promise<Spot | undefined> {
-    const result = await this.pool.query<SpotRow>(
-      `SELECT ${SELECT_COLUMNS} FROM spots WHERE id = $1 AND is_active = true`,
-      [id],
-    );
-    const row = result.rows[0];
-    return row !== undefined ? rowToSpot(row) : undefined;
+    return this.withClient(async (client) => {
+      const result = await client.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS} FROM spots WHERE id = $1 AND is_active = true`,
+        [id],
+      );
+      const row = result.rows[0];
+      return row !== undefined ? rowToSpot(row) : undefined;
+    });
   }
 
   async findByIds(ids: string[]): Promise<Spot[]> {
     if (ids.length === 0) return [];
-    const result = await this.pool.query<SpotRow>(
-      `SELECT ${SELECT_COLUMNS} FROM spots WHERE id = ANY($1) AND is_active = true`,
-      [ids],
-    );
-    return result.rows.map(rowToSpot);
+    return this.withClient(async (client) => {
+      const result = await client.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS} FROM spots WHERE id = ANY($1) AND is_active = true`,
+        [ids],
+      );
+      return result.rows.map(rowToSpot);
+    });
   }
 
   async search(query: string, limit = 20): Promise<Spot[]> {
     const pattern = `%${query}%`;
-    const result = await this.pool.query<SpotRow>(
-      `SELECT ${SELECT_COLUMNS}
-       FROM spots
-       WHERE is_active = true
-         AND (name ILIKE $1 OR category ILIKE $1)
-       ORDER BY curation_score DESC
-       LIMIT $2`,
-      [pattern, limit],
-    );
-    return result.rows.map(rowToSpot);
+    return this.withClient(async (client) => {
+      const result = await client.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS}
+         FROM spots
+         WHERE is_active = true
+           AND (name ILIKE $1 OR category ILIKE $1)
+         ORDER BY curation_score DESC
+         LIMIT $2`,
+        [pattern, limit],
+      );
+      return result.rows.map(rowToSpot);
+    });
   }
 
   async findTopByCurationScore(limit: number): Promise<Spot[]> {
-    const result = await this.pool.query<SpotRow>(
-      `SELECT ${SELECT_COLUMNS}
-       FROM spots
-       WHERE is_active = true
-       ORDER BY curation_score DESC
-       LIMIT $1`,
-      [limit],
-    );
-    return result.rows.map(rowToSpot);
+    return this.withClient(async (client) => {
+      const result = await client.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS}
+         FROM spots
+         WHERE is_active = true
+         ORDER BY curation_score DESC
+         LIMIT $1`,
+        [limit],
+      );
+      return result.rows.map(rowToSpot);
+    });
   }
 
   async findByRegion(region: Region): Promise<Spot[]> {
-    const result = await this.pool.query<SpotRow>(
-      `SELECT ${SELECT_COLUMNS}
-       FROM spots
-       WHERE is_active = true AND region = $1
-       ORDER BY curation_score DESC`,
-      [region],
-    );
-    return result.rows.map(rowToSpot);
+    return this.withClient(async (client) => {
+      const result = await client.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS}
+         FROM spots
+         WHERE is_active = true AND region = $1
+         ORDER BY curation_score DESC`,
+        [region],
+      );
+      return result.rows.map(rowToSpot);
+    });
   }
 
   async save(spot: Spot): Promise<void> {
-    await this.pool.query(
-      `INSERT INTO spots (
-         id, kakao_place_id, name, region, category, price_range,
-         curation_score, popularity_score, trend_score, curation_comment,
-         thumbnail_url, lat, lng, is_active, updated_at
-       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,true,now())
-       ON CONFLICT (kakao_place_id) DO UPDATE SET
-         name           = EXCLUDED.name,
-         region         = EXCLUDED.region,
-         category       = EXCLUDED.category,
-         price_range    = EXCLUDED.price_range,
-         curation_score = EXCLUDED.curation_score,
-         popularity_score = EXCLUDED.popularity_score,
-         trend_score    = EXCLUDED.trend_score,
-         curation_comment = EXCLUDED.curation_comment,
-         thumbnail_url  = EXCLUDED.thumbnail_url,
-         lat            = EXCLUDED.lat,
-         lng            = EXCLUDED.lng,
-         is_active      = true,
-         updated_at     = now()`,
-      [
-        spot.id,
-        spot.kakaoPlaceId,
-        spot.name,
-        spot.region,
-        spot.category,
-        spot.priceRange,
-        spot.curationScore,
-        spot.popularityScore,
-        spot.trendScore,
-        spot.curationComment,
-        spot.thumbnailUrl,
-        spot.lat,
-        spot.lng,
-      ],
-    );
+    await this.withClient(async (client) => {
+      await client.query(UPSERT_SQL, spotParams(spot));
+    });
   }
 
-  async existsByKakaoPlaceId(kakaoPlaceId: string): Promise<boolean> {
-    const result = await this.pool.query<{ exists: boolean }>(
-      `SELECT EXISTS(SELECT 1 FROM spots WHERE kakao_place_id = $1) AS exists`,
-      [kakaoPlaceId],
-    );
-    return result.rows[0]?.exists ?? false;
+  async saveReturningId(spot: Spot): Promise<string> {
+    return this.withClient(async (client) => {
+      const result = await client.query<{ id: string }>(
+        `${UPSERT_SQL} RETURNING id`,
+        spotParams(spot),
+      );
+      return result.rows[0]!.id;
+    });
   }
 
   async findExistingKakaoPlaceIds(kakaoPlaceIds: string[]): Promise<Set<string>> {
     if (kakaoPlaceIds.length === 0) return new Set();
-    const result = await this.pool.query<{ kakao_place_id: string }>(
-      `SELECT kakao_place_id FROM spots WHERE kakao_place_id = ANY($1)`,
-      [kakaoPlaceIds],
-    );
-    return new Set(result.rows.map((r) => r.kakao_place_id));
+    return this.withClient(async (client) => {
+      const result = await client.query<{ kakao_place_id: string }>(
+        `SELECT kakao_place_id FROM spots WHERE kakao_place_id = ANY($1)`,
+        [kakaoPlaceIds],
+      );
+      return new Set(result.rows.map((r) => r.kakao_place_id));
+    });
+  }
+
+  async findAllActiveIds(): Promise<string[]> {
+    return this.withClient(async (client) => {
+      const result = await client.query<{ id: string }>(
+        `SELECT id FROM spots WHERE is_active = true`,
+      );
+      return result.rows.map((r) => r.id);
+    });
   }
 
   async deactivate(kakaoPlaceId: string): Promise<void> {
-    await this.pool.query(
-      `UPDATE spots SET is_active = false, curation_score = 0, updated_at = now()
-       WHERE kakao_place_id = $1`,
-      [kakaoPlaceId],
-    );
+    await this.withClient(async (client) => {
+      await client.query(
+        `UPDATE spots SET is_active = false, curation_score = 0, updated_at = now()
+         WHERE kakao_place_id = $1`,
+        [kakaoPlaceId],
+      );
+    });
   }
 
   async updateScores(
@@ -170,11 +214,13 @@ export class PostgresSpotRepository implements SpotRepository {
   ): Promise<void> {
     if (updates.length === 0) return;
     for (const u of updates) {
-      await this.pool.query(
-        `UPDATE spots SET popularity_score = $1, trend_score = $2, updated_at = now()
-         WHERE id = $3`,
-        [u.popularityScore, u.trendScore, u.spotId],
-      );
+      await this.withClient(async (client) => {
+        await client.query(
+          `UPDATE spots SET popularity_score = $1, trend_score = $2, updated_at = now()
+           WHERE id = $3`,
+          [u.popularityScore, u.trendScore, u.spotId],
+        );
+      });
     }
   }
 }

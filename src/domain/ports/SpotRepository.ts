@@ -8,8 +8,9 @@ export interface SpotRepository {
   findTopByCurationScore(limit: number): Promise<Spot[]>;
   findByRegion(region: Region): Promise<Spot[]>;
   save(spot: Spot): Promise<void>;
-  existsByKakaoPlaceId(kakaoPlaceId: string): Promise<boolean>;
+  saveReturningId(spot: Spot): Promise<string>;
   findExistingKakaoPlaceIds(kakaoPlaceIds: string[]): Promise<Set<string>>;
+  findAllActiveIds(): Promise<string[]>;
   deactivate(kakaoPlaceId: string): Promise<void>;
   updateScores(updates: { spotId: string; popularityScore: number; trendScore: number }[]): Promise<void>;
 }

@@ -1,5 +1,6 @@
 import type { CurationCandidateRepository } from '../../domain/ports/CurationCandidateRepository.js';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
+import type { TransactionManager } from '../ports/TransactionManager.js';
 import type { Spot } from '../../domain/spot/Spot.js';
 
 export class CandidateNotFoundError extends Error {
@@ -39,6 +40,7 @@ export class ApproveCandidateUseCase {
   constructor(
     private readonly candidateRepo: CurationCandidateRepository,
     private readonly spotRepo: SpotRepository,
+    private readonly txManager: TransactionManager,
   ) {}
 
   async execute(input: ApproveCandidateInput): Promise<ApproveCandidateOutput> {
@@ -63,10 +65,8 @@ export class ApproveCandidateUseCase {
       throw new ApproveError('IncompleteEnrichment');
     }
 
-    const spotId = crypto.randomUUID();
-
     const spot: Spot = {
-      id: spotId,
+      id: crypto.randomUUID(),
       kakaoPlaceId: candidate.kakaoPlaceId,
       name: candidate.name,
       region: candidate.region,
@@ -81,14 +81,20 @@ export class ApproveCandidateUseCase {
       lng: candidate.lng,
     };
 
-    await this.spotRepo.save(spot);
+    // C3: atomic — saveReturningId returns actual DB id (handles ON CONFLICT); conditional
+    // status update prevents TOCTOU race (M5)
+    const [realSpotId, updated] = await this.txManager.run(async () => {
+      const id = await this.spotRepo.saveReturningId(spot);
+      const ok = await this.candidateRepo.updateStatusConditional(
+        candidate.id, 'approved', 'pending',
+      );
+      return [id, ok] as [string, boolean];
+    });
 
-    // Get the actual spotId (may differ if kakaoPlaceId already exists — idempotent)
-    const existingSpot = await this.spotRepo.findById(spot.id);
-    const finalSpotId = existingSpot?.id ?? spotId;
+    if (!updated) {
+      throw new InvalidStatusError('concurrent modification');
+    }
 
-    await this.candidateRepo.save({ ...candidate, status: 'approved' });
-
-    return { spotId: finalSpotId };
+    return { spotId: realSpotId };
   }
 }

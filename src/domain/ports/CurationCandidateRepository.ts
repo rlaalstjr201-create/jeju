@@ -6,7 +6,11 @@ export interface CurationCandidateRepository {
     status: 'pending' | 'approved' | 'rejected',
     opts?: { limit: number; offset: number },
   ): Promise<CurationCandidate[]>;
-  existsByKakaoPlaceId(kakaoPlaceId: string): Promise<boolean>;
   findExistingKakaoPlaceIds(kakaoPlaceIds: string[]): Promise<Set<string>>;
   save(candidate: CurationCandidate): Promise<void>;
+  updateStatusConditional(
+    id: string,
+    newStatus: 'approved' | 'rejected',
+    expectedCurrentStatus: 'pending' | 'approved',
+  ): Promise<boolean>;
 }

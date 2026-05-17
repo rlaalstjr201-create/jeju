@@ -215,7 +215,7 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
     expect(body.code).toBe('FORBIDDEN');
   });
 
-  it('default pagination — limit=12 offset=0', async () => {
+  it('(D5) forwards only accessToken + tripId — no limit/offset', async () => {
     vi.mocked(deps.getRecommendationsUseCase.execute).mockResolvedValue({
       curatedPicks: { label: 'curatedPicks', spots: [], coldStart: false },
       popularSpots: { label: 'popularSpots', spots: [], coldStart: false },
@@ -228,12 +228,13 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
       headers: { authorization: 'Bearer token1' },
     });
 
-    expect(deps.getRecommendationsUseCase.execute).toHaveBeenCalledWith(
-      expect.objectContaining({ limit: 12, offset: 0 }),
-    );
+    expect(deps.getRecommendationsUseCase.execute).toHaveBeenCalledWith({
+      accessToken: 'token1',
+      tripId: 'trip-1',
+    });
   });
 
-  it('custom pagination — limit=8 offset=8', async () => {
+  it('(D5) ignores legacy limit/offset query params', async () => {
     vi.mocked(deps.getRecommendationsUseCase.execute).mockResolvedValue({
       curatedPicks: { label: 'curatedPicks', spots: [], coldStart: false },
       popularSpots: { label: 'popularSpots', spots: [], coldStart: false },
@@ -246,9 +247,10 @@ describe('GET /api/v1/trips/:tripId/recommendations', () => {
       headers: { authorization: 'Bearer token1' },
     });
 
-    expect(deps.getRecommendationsUseCase.execute).toHaveBeenCalledWith(
-      expect.objectContaining({ limit: 8, offset: 8 }),
-    );
+    expect(deps.getRecommendationsUseCase.execute).toHaveBeenCalledWith({
+      accessToken: 'token1',
+      tripId: 'trip-1',
+    });
   });
 });
 

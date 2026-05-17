@@ -1,4 +1,5 @@
 export interface TrendSourceRepository {
+  getStatus(sourceName: string): Promise<{ consecutiveFailures: number } | null>;
   updateStatus(
     sourceName: string,
     status: 'success' | 'failure',

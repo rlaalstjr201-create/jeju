@@ -76,10 +76,8 @@ export class PostgresRecommenderAdapter implements Recommender {
   }
 
   private async recommendCurated(context: RecommendationContext): Promise<Spot[]> {
-    const curatedLimit = Math.max(
-      1,
-      Math.round(this.limit * context.calibration.curatedRatio),
-    );
+    const curatedLimit = Math.round(this.limit * context.calibration.curatedRatio);
+    if (curatedLimit === 0) return [];
 
     if (context.preferences.isEmpty) {
       const result = await this.pool.query<SpotRow>(
@@ -97,10 +95,8 @@ export class PostgresRecommenderAdapter implements Recommender {
   }
 
   private async recommendPopular(context: RecommendationContext): Promise<Spot[]> {
-    const popularLimit = Math.max(
-      1,
-      Math.round(this.limit * context.calibration.popularRatio),
-    );
+    const popularLimit = Math.round(this.limit * context.calibration.popularRatio);
+    if (popularLimit === 0) return [];
 
     const result = await this.pool.query<SpotRow>(
       `SELECT ${SELECT_COLUMNS}

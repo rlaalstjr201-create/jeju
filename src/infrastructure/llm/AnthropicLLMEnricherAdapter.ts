@@ -26,7 +26,7 @@ export class AnthropicLLMEnricherAdapter implements LLMEnricherPort {
 카테고리: ${candidate.category}
 
 응답은 반드시 아래 JSON 형식으로만 답하세요:
-{"summary":"2문장 한국어 요약","tags":["태그1","태그2","태그3"],"priceRange":"free|budget|mid|high|null"}
+{"summary":"2문장 한국어 요약","tags":["태그1","태그2","태그3"],"priceRange":"free|budget|mid|premium|null"}
 
 priceRange는 카테고리와 장소명 기반으로 추정하되, 모르면 null로.`,
         },
@@ -69,12 +69,15 @@ priceRange는 카테고리와 장소명 기반으로 추정하되, 모르면 nul
       }),
     );
 
-    return {
-      summary: parsed.summary,
-      tags: parsed.tags,
-      priceRange: typeof parsed.priceRange === 'string' && parsed.priceRange !== 'null'
-        ? parsed.priceRange
-        : null,
-    };
+    const VALID_PRICE_RANGES = new Set(['free', 'budget', 'mid', 'premium']);
+    const rawPriceRange = typeof parsed.priceRange === 'string' && parsed.priceRange !== 'null'
+      ? parsed.priceRange
+      : null;
+    // Normalize: map legacy "high" → "premium" in case model ignores updated prompt
+    const priceRange = rawPriceRange === 'high' ? 'premium'
+      : rawPriceRange !== null && VALID_PRICE_RANGES.has(rawPriceRange) ? rawPriceRange
+      : null;
+
+    return { summary: parsed.summary, tags: parsed.tags, priceRange };
   }
 }

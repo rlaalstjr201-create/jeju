@@ -16,12 +16,4 @@ export class CalibrationProfile {
   get popularRatio(): number {
     return 1 - this.curatedRatio;
   }
-
-  toJSON(): { curatedRatio: number; popularRatio: number; isUserAdjusted: boolean } {
-    return {
-      curatedRatio: this.curatedRatio,
-      popularRatio: this.popularRatio,
-      isUserAdjusted: this.isUserAdjusted,
-    };
-  }
 }
