@@ -4,6 +4,7 @@ import type { TripRepository } from '../../domain/ports/TripRepository.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import type { DayPlanRepository } from '../../domain/ports/DayPlanRepository.js';
 import type { Recommender } from '../../domain/recommender/Recommender.js';
+import type { TransactionManager } from '../ports/TransactionManager.js';
 import { ComposeDayPlanService } from './ComposeDayPlanService.js';
 import { TripNotFoundError, ForbiddenError } from './GetRecommendationsUseCase.js';
 
@@ -40,6 +41,7 @@ export class ComposeDayPlanUseCase {
     private readonly dayPlanRepository: DayPlanRepository,
     private readonly recommender: Recommender,
     private readonly composeDayPlanService: ComposeDayPlanService,
+    private readonly transactionManager: TransactionManager,
   ) {}
 
   async execute(input: ComposeDayPlanInput): Promise<ComposeDayPlanOutput> {
@@ -59,6 +61,7 @@ export class ComposeDayPlanUseCase {
       recommender: this.recommender,
       shortlistRepository: this.shortlistRepository,
       dayPlanRepository: this.dayPlanRepository,
+      transactionManager: this.transactionManager,
     });
 
     const autoFilledSet = new Set(result.autoFilledSpotIds);
@@ -68,12 +71,12 @@ export class ComposeDayPlanUseCase {
       days: result.dayPlan.days.map((day) => ({
         dayIndex: day.dayIndex,
         date: day.date.toISO(),
-        spots: day.pinnedSpots.map((s, i) => ({
-          spotId: s.id,
-          name: s.name,
-          region: s.region,
+        spots: day.pinnedSpots.map((ps, i) => ({
+          spotId: ps.spot.id,
+          name: ps.spot.name,
+          region: ps.spot.region,
           position: i,
-          isAutoFilled: autoFilledSet.has(s.id),
+          isAutoFilled: autoFilledSet.has(ps.spot.id),
         })),
       })),
       autoFilledSpotIds: result.autoFilledSpotIds,

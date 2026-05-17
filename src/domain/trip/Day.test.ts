@@ -34,7 +34,7 @@ describe('Day', () => {
       const spot = makeSpot('spot-1');
       day.pin(spot);
       expect(day.pinnedSpots.length).toBe(1);
-      expect(day.pinnedSpots[0]?.id).toBe('spot-1');
+      expect(day.pinnedSpots[0]?.spot.id).toBe('spot-1');
     });
 
     it('is idempotent: pinning the same spot twice keeps length 1', () => {
@@ -82,7 +82,28 @@ describe('Day', () => {
       day.pin(s2);
       day.unpin(s1);
       expect(day.pinnedSpots.length).toBe(1);
-      expect(day.pinnedSpots[0]?.id).toBe('spot-2');
+      expect(day.pinnedSpots[0]?.spot.id).toBe('spot-2');
+    });
+  });
+
+  describe('isAutoFilled tracking', () => {
+    it('pin with isAutoFilled=true marks the PinnedSpot', () => {
+      const day = makeDay();
+      day.pin(makeSpot('spot-1'), true);
+      expect(day.pinnedSpots[0]?.isAutoFilled).toBe(true);
+    });
+
+    it('pin without isAutoFilled defaults to false', () => {
+      const day = makeDay();
+      day.pin(makeSpot('spot-1'));
+      expect(day.pinnedSpots[0]?.isAutoFilled).toBe(false);
+    });
+
+    it('withDate preserves isAutoFilled flag', () => {
+      const day = makeDay(1, '2025-06-01');
+      day.pin(makeSpot('spot-1'), true);
+      const shifted = day.withDate(CalendarDate.fromISO('2025-06-08'));
+      expect(shifted.pinnedSpots[0]?.isAutoFilled).toBe(true);
     });
   });
 
@@ -108,7 +129,7 @@ describe('Day', () => {
       expect(shifted.dayIndex).toBe(2);
       expect(shifted.date.toISO()).toBe('2025-06-09');
       expect(shifted.pinnedSpots.length).toBe(1);
-      expect(shifted.pinnedSpots[0]?.id).toBe('spot-1');
+      expect(shifted.pinnedSpots[0]?.spot.id).toBe('spot-1');
     });
 
     it('does not mutate the original Day', () => {

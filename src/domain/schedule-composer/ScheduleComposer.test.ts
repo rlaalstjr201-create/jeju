@@ -59,7 +59,7 @@ describe('ScheduleComposer', () => {
       const day1 = dayPlan.dayAt(1);
       expect(day1).toBeDefined();
       expect(day1!.pinnedSpots.length).toBe(1);
-      expect(day1!.pinnedSpots[0]?.id).toBe('spot-1');
+      expect(day1!.pinnedSpots[0]?.spot.id).toBe('spot-1');
     });
   });
 
@@ -76,15 +76,15 @@ describe('ScheduleComposer', () => {
 
       // Find the day that has seogwipo spots
       const seogwipoDays = dayPlan.days.filter((d) =>
-        d.pinnedSpots.some((s) => s.region === 'seogwipo'),
+        d.pinnedSpots.some((ps) => ps.spot.region === 'seogwipo'),
       );
       // Both seogwipo spots should be on the same day
       expect(seogwipoDays.length).toBe(1);
-      expect(seogwipoDays[0]!.pinnedSpots.filter((s) => s.region === 'seogwipo').length).toBe(2);
+      expect(seogwipoDays[0]!.pinnedSpots.filter((ps) => ps.spot.region === 'seogwipo').length).toBe(2);
 
       // jeju-city spot should be on a different day
       const jejuCityDays = dayPlan.days.filter((d) =>
-        d.pinnedSpots.some((s) => s.region === 'jeju-city'),
+        d.pinnedSpots.some((ps) => ps.spot.region === 'jeju-city'),
       );
       expect(jejuCityDays.length).toBe(1);
       expect(jejuCityDays[0]!.dayIndex).not.toBe(seogwipoDays[0]!.dayIndex);

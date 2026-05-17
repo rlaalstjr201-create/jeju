@@ -7,6 +7,7 @@ import type { Recommender } from '../../domain/recommender/Recommender.js';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
 import type { DayPlanRepository } from '../../domain/ports/DayPlanRepository.js';
 import type { Traveller } from '../../domain/traveller/Traveller.js';
+import type { TransactionManager } from '../ports/TransactionManager.js';
 
 export interface ComposeDayPlanParams {
   readonly travellerId: string;
@@ -15,6 +16,7 @@ export interface ComposeDayPlanParams {
   readonly recommender: Recommender;
   readonly shortlistRepository: ShortlistRepository;
   readonly dayPlanRepository: DayPlanRepository;
+  readonly transactionManager: TransactionManager;
 }
 
 export interface ComposeDayPlanResult {
@@ -64,11 +66,14 @@ export class ComposeDayPlanService {
       autoFilledSpotIds.push(spot.id);
     }
 
-    await params.shortlistRepository.save(params.travellerId, updatedShortlist, autoFilledSpotIds);
-
+    // Pure computation — outside transaction
     const dayPlan = composer.compose(updatedShortlist, params.trip);
 
-    await params.dayPlanRepository.save(params.trip.id, dayPlan, autoFilledSpotIds);
+    // Atomic: shortlist and dayplan saved together — if dayplan save fails, shortlist is rolled back
+    await params.transactionManager.run(async () => {
+      await params.shortlistRepository.save(params.travellerId, updatedShortlist, autoFilledSpotIds);
+      await params.dayPlanRepository.save(params.trip.id, dayPlan, autoFilledSpotIds);
+    });
 
     return { dayPlan, autoFilledSpotIds };
   }

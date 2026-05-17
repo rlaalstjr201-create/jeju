@@ -52,7 +52,11 @@ function makeMocks() {
     save: vi.fn(),
     updatePinnedSpots: vi.fn(),
   };
-  return { mockRecommender, mockShortlistRepo, mockDayPlanRepo };
+  // TransactionManager mock: just runs the work function (no real DB transaction)
+  const mockTransactionManager = {
+    run: vi.fn().mockImplementation((work: () => Promise<unknown>) => work()),
+  };
+  return { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager };
 }
 
 // ---- Tests -----------------------------------------------------------------
@@ -66,7 +70,7 @@ describe('ComposeDayPlanService', () => {
 
   // Test 1: No gap-fill needed — spots cover all days
   it('does not call recommender when spots are enough to fill all days', async () => {
-    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo } = makeMocks();
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
     // 4 spots across 4 distinct regions, 3-day trip → no empty days
@@ -86,6 +90,7 @@ describe('ComposeDayPlanService', () => {
       recommender: mockRecommender,
       shortlistRepository: mockShortlistRepo,
       dayPlanRepository: mockDayPlanRepo,
+      transactionManager: mockTransactionManager,
     });
 
     expect(mockRecommender.recommendForShortlist).not.toHaveBeenCalled();
@@ -95,7 +100,7 @@ describe('ComposeDayPlanService', () => {
 
   // Test 2: Gap-fill needed — 1-spot shortlist, 2-day trip, recommender provides 1 candidate
   it('fills empty day when recommender returns a suitable candidate', async () => {
-    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo } = makeMocks();
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
@@ -114,6 +119,7 @@ describe('ComposeDayPlanService', () => {
       recommender: mockRecommender,
       shortlistRepository: mockShortlistRepo,
       dayPlanRepository: mockDayPlanRepo,
+      transactionManager: mockTransactionManager,
     });
 
     expect(mockRecommender.recommendForShortlist).toHaveBeenCalledOnce();
@@ -126,7 +132,7 @@ describe('ComposeDayPlanService', () => {
 
   // Test 3: Gap-fill — recommender returns an already-shortlisted spot → filtered out
   it('filters out already-shortlisted spots from recommendations (partial fill OK)', async () => {
-    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo } = makeMocks();
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
@@ -144,17 +150,18 @@ describe('ComposeDayPlanService', () => {
       recommender: mockRecommender,
       shortlistRepository: mockShortlistRepo,
       dayPlanRepository: mockDayPlanRepo,
+      transactionManager: mockTransactionManager,
     });
 
     // Already-shortlisted spot must be filtered out → no auto-fill
     expect(result.autoFilledSpotIds).toEqual([]);
-    // shortlistRepository.save is called with unchanged content (fillCount = 0)
+    // shortlistRepository.save is called (inside the atomic transaction)
     expect(mockShortlistRepo.save).toHaveBeenCalledOnce();
   });
 
   // Test 4: Gap-fill — recommender returns empty list → no auto-fill, empty day stays empty
   it('produces no auto-fill when recommender returns empty list', async () => {
-    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo } = makeMocks();
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
@@ -170,6 +177,7 @@ describe('ComposeDayPlanService', () => {
       recommender: mockRecommender,
       shortlistRepository: mockShortlistRepo,
       dayPlanRepository: mockDayPlanRepo,
+      transactionManager: mockTransactionManager,
     });
 
     expect(result.autoFilledSpotIds).toEqual([]);
@@ -180,7 +188,7 @@ describe('ComposeDayPlanService', () => {
 
   // Test 5: ShortlistEmptyError propagates
   it('propagates ShortlistEmptyError when shortlist has no spots', async () => {
-    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo } = makeMocks();
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
 
     const shortlist = makeShortlist([]);
     const trip = makeTrip(2);
@@ -193,6 +201,7 @@ describe('ComposeDayPlanService', () => {
         recommender: mockRecommender,
         shortlistRepository: mockShortlistRepo,
         dayPlanRepository: mockDayPlanRepo,
+        transactionManager: mockTransactionManager,
       }),
     ).rejects.toThrow(ShortlistEmptyError);
 
@@ -202,7 +211,7 @@ describe('ComposeDayPlanService', () => {
 
   // Test 6: DayPlanRepository.save is called with the correct autoFilledSpotIds
   it('calls dayPlanRepository.save with the correct autoFilledSpotIds', async () => {
-    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo } = makeMocks();
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
     mockShortlistRepo.save.mockResolvedValue(undefined);
     mockDayPlanRepo.save.mockResolvedValue(undefined);
 
@@ -223,6 +232,7 @@ describe('ComposeDayPlanService', () => {
       recommender: mockRecommender,
       shortlistRepository: mockShortlistRepo,
       dayPlanRepository: mockDayPlanRepo,
+      transactionManager: mockTransactionManager,
     });
 
     expect(result.autoFilledSpotIds).toEqual(['s2', 's3']);
@@ -232,5 +242,59 @@ describe('ComposeDayPlanService', () => {
     expect(saveCall).toBeDefined();
     // saveCall[0] = tripId, saveCall[1] = dayPlan, saveCall[2] = autoFilledSpotIds
     expect(saveCall![2]).toEqual(['s2', 's3']);
+  });
+
+  // Test 7: Atomicity — both saves happen inside transactionManager.run()
+  it('wraps shortlist and dayplan saves inside a single transactionManager.run call', async () => {
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
+    mockShortlistRepo.save.mockResolvedValue(undefined);
+    mockDayPlanRepo.save.mockResolvedValue(undefined);
+
+    mockRecommender.recommendForShortlist.mockResolvedValue([makeSpot('s2', 'seogwipo')]);
+
+    const shortlist = makeShortlist([makeSpot('s1', 'jeju-city')]);
+    const trip = makeTrip(2);
+
+    await service.compose({
+      travellerId: 'traveller-1',
+      shortlist,
+      trip,
+      recommender: mockRecommender,
+      shortlistRepository: mockShortlistRepo,
+      dayPlanRepository: mockDayPlanRepo,
+      transactionManager: mockTransactionManager,
+    });
+
+    // Both saves happened inside exactly one transactionManager.run() call
+    expect(mockTransactionManager.run).toHaveBeenCalledOnce();
+    expect(mockShortlistRepo.save).toHaveBeenCalledOnce();
+    expect(mockDayPlanRepo.save).toHaveBeenCalledOnce();
+  });
+
+  // Test 8: Atomicity — if dayplan save fails, error propagates (real DB would roll back shortlist)
+  it('propagates error when dayplan save fails inside transaction', async () => {
+    const { mockRecommender, mockShortlistRepo, mockDayPlanRepo, mockTransactionManager } = makeMocks();
+    mockShortlistRepo.save.mockResolvedValue(undefined);
+    mockDayPlanRepo.save.mockRejectedValue(new Error('DB connection lost'));
+
+    mockRecommender.recommendForShortlist.mockResolvedValue([makeSpot('s2', 'seogwipo')]);
+
+    const shortlist = makeShortlist([makeSpot('s1', 'jeju-city')]);
+    const trip = makeTrip(2);
+
+    await expect(
+      service.compose({
+        travellerId: 'traveller-1',
+        shortlist,
+        trip,
+        recommender: mockRecommender,
+        shortlistRepository: mockShortlistRepo,
+        dayPlanRepository: mockDayPlanRepo,
+        transactionManager: mockTransactionManager,
+      }),
+    ).rejects.toThrow('DB connection lost');
+
+    // Both ops were attempted inside transactionManager.run()
+    expect(mockTransactionManager.run).toHaveBeenCalledOnce();
   });
 });

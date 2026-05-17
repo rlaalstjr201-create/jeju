@@ -12,6 +12,7 @@ import { PostgresShortlistRepository } from '../../src/infrastructure/persistenc
 import { PostgresDayPlanRepository } from '../../src/infrastructure/persistence/PostgresDayPlanRepository.js';
 import { PostgresSpotRepository } from '../../src/infrastructure/persistence/PostgresSpotRepository.js';
 import { PostgresRecommenderAdapter } from '../../src/infrastructure/recommender/PostgresRecommenderAdapter.js';
+import { PostgresTransactionManager } from '../../src/infrastructure/persistence/PostgresTransactionManager.js';
 import { TravellerAuthService } from '../../src/infrastructure/kakao/TravellerAuthService.js';
 import { ComposeDayPlanService } from '../../src/application/core-flow/ComposeDayPlanService.js';
 import { CreateTripUseCase } from '../../src/application/core-flow/CreateTripUseCase.js';
@@ -195,12 +196,13 @@ maybeDescribe('E2E: Tagalong flow', () => {
     recommender = new PostgresRecommenderAdapter(pool);
     const authService = new TravellerAuthService(authProviderMock, travellerRepo);
     const composeSvc = new ComposeDayPlanService();
+    const txManager = new PostgresTransactionManager(pool);
 
     const deps: AppDependencies = {
       createTripUseCase: new CreateTripUseCase(authService, parsePortMock, tripRepo),
       getRecommendationsUseCase: new GetRecommendationsUseCase(authService, tripRepo, shortlistRepo, recommender),
       updateShortlistUseCase: new UpdateShortlistUseCase(authService, spotRepo, shortlistRepo),
-      composeDayPlanUseCase: new ComposeDayPlanUseCase(authService, tripRepo, shortlistRepo, dayPlanRepo, recommender, composeSvc),
+      composeDayPlanUseCase: new ComposeDayPlanUseCase(authService, tripRepo, shortlistRepo, dayPlanRepo, recommender, composeSvc, txManager),
       editDayPlanUseCase: new EditDayPlanUseCase(authService, tripRepo, dayPlanRepo, spotRepo),
     };
 

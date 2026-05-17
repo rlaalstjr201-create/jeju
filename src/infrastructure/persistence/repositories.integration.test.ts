@@ -409,13 +409,13 @@ maybeDescribe('Repository integration tests', () => {
       const foundDay1 = found?.dayAt(1);
       expect(foundDay1).toBeDefined();
       expect(foundDay1?.pinnedSpots.length).toBe(1);
-      expect(foundDay1?.pinnedSpots[0]?.id).toBe(spotA.id);
+      expect(foundDay1?.pinnedSpots[0]?.spot.id).toBe(spotA.id);
 
       const foundDay2 = found?.dayAt(2);
-      expect(foundDay2?.pinnedSpots[0]?.id).toBe(spotB.id);
+      expect(foundDay2?.pinnedSpots[0]?.spot.id).toBe(spotB.id);
 
       const foundDay3 = found?.dayAt(3);
-      expect(foundDay3?.pinnedSpots[0]?.id).toBe(spotC.id);
+      expect(foundDay3?.pinnedSpots[0]?.spot.id).toBe(spotC.id);
     });
 
     it('update — pin new Spot to Day 2, retrieve — Spot present', async () => {
@@ -432,7 +432,7 @@ maybeDescribe('Repository integration tests', () => {
       const updated = await repo.findByTripId(trip.id);
       const updatedDay2 = updated?.dayAt(2);
       expect(updatedDay2?.pinnedSpots.length).toBe(2);
-      const pinnedIds = updatedDay2!.pinnedSpots.map((s) => s.id);
+      const pinnedIds = updatedDay2!.pinnedSpots.map((ps) => ps.spot.id);
       expect(pinnedIds).toContain(spotB.id);
       expect(pinnedIds).toContain(spotD.id);
     });

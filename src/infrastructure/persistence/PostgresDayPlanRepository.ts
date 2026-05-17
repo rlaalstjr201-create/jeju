@@ -1,4 +1,4 @@
-import type { Pool } from 'pg';
+import type { Pool, PoolClient } from 'pg';
 import type { DayPlanRepository } from '../../domain/ports/DayPlanRepository.js';
 import { DayPlan } from '../../domain/trip/DayPlan.js';
 import { Day } from '../../domain/trip/Day.js';
@@ -6,6 +6,7 @@ import type { Spot } from '../../domain/spot/Spot.js';
 import { CalendarDate } from '../../domain/shared/CalendarDate.js';
 import type { Region } from '../../domain/shared/Region.js';
 import type { PriceRange } from '../../domain/shared/PriceRange.js';
+import { transactionContext } from './transactionContext.js';
 
 interface DayPlanRow {
   id: string;
@@ -61,6 +62,25 @@ function rowToSpot(row: PinnedSpotRow): Spot {
 
 export class PostgresDayPlanRepository implements DayPlanRepository {
   constructor(private readonly pool: Pool) {}
+
+  private async withClient<T>(work: (client: PoolClient) => Promise<T>): Promise<T> {
+    const txClient = transactionContext.getStore();
+    if (txClient) {
+      return work(txClient);
+    }
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const result = await work(client);
+      await client.query('COMMIT');
+      return result;
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
 
   async findByTripId(tripId: string): Promise<DayPlan | undefined> {
     // Load day_plan row
@@ -126,7 +146,7 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
       });
       const pinnedRows = pinnedByDayId.get(dayRow.id) ?? [];
       for (const pr of pinnedRows) {
-        day.pin(rowToSpot(pr));
+        day.pin(rowToSpot(pr), pr.is_auto_filled);
       }
       return day;
     });
@@ -135,10 +155,7 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
   }
 
   async save(tripId: string, dayPlan: DayPlan, autoFilledSpotIds?: readonly string[]): Promise<void> {
-    const client = await this.pool.connect();
-    try {
-      await client.query('BEGIN');
-
+    await this.withClient(async (client) => {
       // Upsert day_plan
       await client.query(
         `INSERT INTO day_plans (id, trip_id)
@@ -165,35 +182,23 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
         }
 
         // Delete existing pinned spots then re-insert
-        await client.query('DELETE FROM pinned_spots WHERE day_id = $1', [
-          dayId,
-        ]);
+        await client.query('DELETE FROM pinned_spots WHERE day_id = $1', [dayId]);
         for (let i = 0; i < day.pinnedSpots.length; i++) {
-          const spot = day.pinnedSpots[i];
-          if (spot === undefined) continue;
-          const isAutoFilled = autoFilledSpotIds?.includes(spot.id) ?? false;
+          const ps = day.pinnedSpots[i];
+          if (ps === undefined) continue;
+          const isAutoFilled = autoFilledSpotIds?.includes(ps.spot.id) ?? false;
           await client.query(
             `INSERT INTO pinned_spots (day_id, spot_id, position, is_auto_filled)
              VALUES ($1, $2, $3, $4)`,
-            [dayId, spot.id, i, isAutoFilled],
+            [dayId, ps.spot.id, i, isAutoFilled],
           );
         }
       }
-
-      await client.query('COMMIT');
-    } catch (err) {
-      await client.query('ROLLBACK');
-      throw err;
-    } finally {
-      client.release();
-    }
+    });
   }
 
   async updatePinnedSpots(dayPlan: DayPlan): Promise<void> {
-    const client = await this.pool.connect();
-    try {
-      await client.query('BEGIN');
-
+    await this.withClient(async (client) => {
       for (const day of dayPlan.days) {
         // Resolve the UUID for this day by (day_plan_id, day_index)
         const dayResult = await client.query<{ id: string }>(
@@ -203,26 +208,17 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
         const dayRow = dayResult.rows[0];
         if (dayRow === undefined) continue;
 
-        await client.query('DELETE FROM pinned_spots WHERE day_id = $1', [
-          dayRow.id,
-        ]);
+        await client.query('DELETE FROM pinned_spots WHERE day_id = $1', [dayRow.id]);
         for (let i = 0; i < day.pinnedSpots.length; i++) {
-          const spot = day.pinnedSpots[i];
-          if (spot === undefined) continue;
+          const ps = day.pinnedSpots[i];
+          if (ps === undefined) continue;
           await client.query(
-            `INSERT INTO pinned_spots (day_id, spot_id, position)
-             VALUES ($1, $2, $3)`,
-            [dayRow.id, spot.id, i],
+            `INSERT INTO pinned_spots (day_id, spot_id, position, is_auto_filled)
+             VALUES ($1, $2, $3, $4)`,
+            [dayRow.id, ps.spot.id, i, ps.isAutoFilled],
           );
         }
       }
-
-      await client.query('COMMIT');
-    } catch (err) {
-      await client.query('ROLLBACK');
-      throw err;
-    } finally {
-      client.release();
-    }
+    });
   }
 }

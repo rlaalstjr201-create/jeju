@@ -1,5 +1,6 @@
-import type { Pool } from 'pg';
+import type { Pool, PoolClient } from 'pg';
 import type { ShortlistRepository } from '../../domain/ports/ShortlistRepository.js';
+import { transactionContext } from './transactionContext.js';
 import { Shortlist } from '../../domain/shortlist/Shortlist.js';
 import type { Spot } from '../../domain/spot/Spot.js';
 import type { Region } from '../../domain/shared/Region.js';
@@ -41,6 +42,25 @@ function rowToSpot(row: ShortlistSpotRow): Spot {
 export class PostgresShortlistRepository implements ShortlistRepository {
   constructor(private readonly pool: Pool) {}
 
+  private async withClient<T>(work: (client: PoolClient) => Promise<T>): Promise<T> {
+    const txClient = transactionContext.getStore();
+    if (txClient) {
+      return work(txClient);
+    }
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const result = await work(client);
+      await client.query('COMMIT');
+      return result;
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
+
   async findByTravellerId(travellerId: string): Promise<Shortlist> {
     const result = await this.pool.query<ShortlistSpotRow>(
       `SELECT
@@ -68,10 +88,7 @@ export class PostgresShortlistRepository implements ShortlistRepository {
   }
 
   async save(travellerId: string, shortlist: Shortlist, autoFilledSpotIds?: readonly string[]): Promise<void> {
-    const client = await this.pool.connect();
-    try {
-      await client.query('BEGIN');
-
+    await this.withClient(async (client) => {
       // Fetch existing rows to preserve is_auto_filled flags
       const existing = await client.query<{
         spot_id: string;
@@ -108,13 +125,6 @@ export class PostgresShortlistRepository implements ShortlistRepository {
           [travellerId, spot.id, isAutoFilled],
         );
       }
-
-      await client.query('COMMIT');
-    } catch (err) {
-      await client.query('ROLLBACK');
-      throw err;
-    } finally {
-      client.release();
-    }
+    });
   }
 }

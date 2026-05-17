@@ -68,12 +68,12 @@ export class EditDayPlanUseCase {
 
     return {
       dayIndex: input.dayIndex,
-      spots: day.pinnedSpots.map((s, i) => ({
-        spotId: s.id,
-        name: s.name,
-        region: s.region,
+      spots: day.pinnedSpots.map((ps, i) => ({
+        spotId: ps.spot.id,
+        name: ps.spot.name,
+        region: ps.spot.region,
         position: i,
-        isAutoFilled: false,
+        isAutoFilled: ps.isAutoFilled,
       })),
     };
   }

@@ -492,6 +492,21 @@ describe('PATCH /api/v1/trips/:tripId/dayplan/days/:dayIndex/spots', () => {
     expect(body.code).toBe('TRIP_NOT_FOUND');
   });
 
+  it('ForbiddenError in editDayPlan → 403 FORBIDDEN', async () => {
+    vi.mocked(deps.editDayPlanUseCase.execute).mockRejectedValue(new ForbiddenError());
+
+    const res = await fastify.inject({
+      method: 'PATCH',
+      url: '/api/v1/trips/trip-2/dayplan/days/1/spots',
+      headers: { authorization: 'Bearer token-other' },
+      body: { spotId: 's1', action: 'pin' },
+    });
+
+    expect(res.statusCode).toBe(403);
+    const body = res.json<{ code: string }>();
+    expect(body.code).toBe('FORBIDDEN');
+  });
+
   it('generic error in editDayPlan → 500 INTERNAL_SERVER_ERROR', async () => {
     vi.mocked(deps.editDayPlanUseCase.execute).mockRejectedValue(new Error('unexpected failure'));
 
@@ -505,5 +520,27 @@ describe('PATCH /api/v1/trips/:tripId/dayplan/days/:dayIndex/spots', () => {
     expect(res.statusCode).toBe(500);
     const body = res.json<{ code: string }>();
     expect(body.code).toBe('INTERNAL_SERVER_ERROR');
+  });
+
+  it('isAutoFilled flag preserved in pin response — auto-filled spot returns true', async () => {
+    vi.mocked(deps.editDayPlanUseCase.execute).mockResolvedValue({
+      dayIndex: 1,
+      spots: [
+        { spotId: 's1', name: '한라산 오름A', region: 'jeju-city', position: 0, isAutoFilled: true },
+        { spotId: 's2', name: '제주시 카페A', region: 'jeju-city', position: 1, isAutoFilled: false },
+      ],
+    });
+
+    const res = await fastify.inject({
+      method: 'PATCH',
+      url: '/api/v1/trips/trip-1/dayplan/days/1/spots',
+      headers: { authorization: 'Bearer token1' },
+      body: { spotId: 's2', action: 'pin' },
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json<{ spots: Array<{ spotId: string; isAutoFilled: boolean }> }>();
+    expect(body.spots[0]?.isAutoFilled).toBe(true);
+    expect(body.spots[1]?.isAutoFilled).toBe(false);
   });
 });
