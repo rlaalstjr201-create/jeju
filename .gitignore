@@ -98,3 +98,6 @@ secrets/
 .claude/settings.local.json
 .agents/
 .codex-review-prompt.txt
+
+# External API documentation (binary/zip, not source)
+docs/api-guides/
