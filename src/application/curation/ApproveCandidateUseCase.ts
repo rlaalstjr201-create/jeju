@@ -1,7 +1,9 @@
+import { createHash } from 'node:crypto';
 import type { CurationCandidateRepository } from '../../domain/ports/CurationCandidateRepository.js';
 import type { SpotRepository } from '../../domain/ports/SpotRepository.js';
 import type { TransactionManager } from '../ports/TransactionManager.js';
 import type { Spot } from '../../domain/spot/Spot.js';
+import type { PriceRange } from '../../domain/shared/PriceRange.js';
 
 export class CandidateNotFoundError extends Error {
   constructor(id: string) {
@@ -24,6 +26,13 @@ export class ApproveError extends Error {
     this.name = 'ApproveError';
     this.code = code;
   }
+}
+
+// Deterministic ID: synth_<sha1(name|lat.toFixed(6)|lng.toFixed(6))[:12]>
+export function buildSyntheticId(name: string, lat: number, lng: number): string {
+  const payload = `${name}|${lat.toFixed(6)}|${lng.toFixed(6)}`;
+  const hash = createHash('sha1').update(payload).digest('hex');
+  return `synth_${hash.slice(0, 12)}`;
 }
 
 interface ApproveCandidateInput {
@@ -53,26 +62,27 @@ export class ApproveCandidateUseCase {
       throw new InvalidStatusError(candidate.status);
     }
 
-    // Enrichment guards (CM-2)
+    // Enrichment guards
     if (candidate.enrichedAt === null) {
       throw new ApproveError('NotEnriched');
     }
-    if (
-      candidate.lat === null ||
-      candidate.lng === null ||
-      candidate.thumbnailUrl === null
-    ) {
+    if (candidate.lat === null || candidate.lng === null || candidate.thumbnailUrl === null) {
       throw new ApproveError('IncompleteEnrichment');
     }
 
+    // Build synthetic ID for both path A and path B
+    const syntheticId = buildSyntheticId(candidate.name, candidate.lat, candidate.lng);
+
     const spot: Spot = {
       id: crypto.randomUUID(),
+      // Path A: kakao matched (kakaoPlaceId != null)
+      // Path B: kakao_unverified (kakaoPlaceId == null)
       kakaoPlaceId: candidate.kakaoPlaceId,
-      syntheticId: null,
+      syntheticId,
       name: candidate.name,
       region: candidate.region,
       category: candidate.category,
-      priceRange: (candidate.priceRange ?? 'mid') as import('../../domain/shared/PriceRange.js').PriceRange,
+      priceRange: (candidate.priceRange ?? 'mid') as PriceRange,
       curationScore: input.curationScore,
       popularityScore: 0,
       trendScore: 0,
@@ -82,11 +92,15 @@ export class ApproveCandidateUseCase {
       lng: candidate.lng,
     };
 
+    // Store syntheticId on candidate for future dedup tracking
+    await this.candidateRepo.setSyntheticId(candidate.id, syntheticId);
+
     // C3/M5/S8B-2: throw inside callback so a failed race rolls back the Spot insert
     const realSpotId = await this.txManager.run(async () => {
       const id = await this.spotRepo.saveReturningId(spot);
+      // Use candidate.status (not hardcoded 'pending') to handle kakao_unverified path
       const ok = await this.candidateRepo.updateStatusConditional(
-        candidate.id, 'approved', 'pending',
+        candidate.id, 'approved', candidate.status,
       );
       if (!ok) {
         throw new InvalidStatusError('concurrent modification');

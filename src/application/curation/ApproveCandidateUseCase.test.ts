@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   ApproveCandidateUseCase,
+  buildSyntheticId,
   CandidateNotFoundError,
   InvalidStatusError,
   ApproveError,
@@ -188,5 +189,82 @@ describe('ApproveCandidateUseCase', () => {
     await expect(
       useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
     ).rejects.toThrow(ApproveError);
+  });
+
+  // ─── C4: buildSyntheticId ─────────────────────────────────────────────────
+
+  describe('buildSyntheticId', () => {
+    it('produces synth_ prefix + 12 hex chars', () => {
+      const id = buildSyntheticId('성산일출봉', 33.458485, 126.942678);
+      expect(id).toMatch(/^synth_[0-9a-f]{12}$/);
+    });
+
+    it('is deterministic — same inputs produce same output', () => {
+      const a = buildSyntheticId('성산일출봉', 33.458485, 126.942678);
+      const b = buildSyntheticId('성산일출봉', 33.458485, 126.942678);
+      expect(a).toBe(b);
+    });
+
+    it('different name → different id', () => {
+      const a = buildSyntheticId('성산일출봉', 33.458485, 126.942678);
+      const b = buildSyntheticId('만장굴', 33.458485, 126.942678);
+      expect(a).not.toBe(b);
+    });
+
+    it('different coords → different id', () => {
+      const a = buildSyntheticId('카페', 33.458485, 126.942678);
+      const b = buildSyntheticId('카페', 33.468485, 126.942678);
+      expect(a).not.toBe(b);
+    });
+  });
+
+  // ─── C4: Path A (kakao matched) ───────────────────────────────────────────
+
+  it('(C4-A) kakao matched — spot has kakaoPlaceId AND syntheticId, candidate setSyntheticId called', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    const candidate = makeCandidate({ kakaoPlaceId: 'kp-001', status: 'pending' });
+    candidateRepo.findById.mockResolvedValue(candidate);
+    spotRepo.saveReturningId.mockResolvedValue('spot-a');
+    candidateRepo.updateStatusConditional.mockResolvedValue(true);
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await useCase.execute({ candidateId: 'candidate-1', curationScore: 80 });
+
+    const savedSpot = spotRepo.saveReturningId.mock.calls[0]![0] as import('../../domain/spot/Spot.js').Spot;
+    expect(savedSpot.kakaoPlaceId).toBe('kp-001');
+    expect(savedSpot.syntheticId).toMatch(/^synth_[0-9a-f]{12}$/);
+    expect(candidateRepo.setSyntheticId).toHaveBeenCalledWith('candidate-1', savedSpot.syntheticId);
+  });
+
+  // ─── C4: Path B (kakao_unverified) ────────────────────────────────────────
+
+  it('(C4-B) kakao_unverified — spot.kakaoPlaceId null, spot.syntheticId set', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    const candidate = makeCandidate({ kakaoPlaceId: null, status: 'kakao_unverified' });
+    candidateRepo.findById.mockResolvedValue(candidate);
+    spotRepo.saveReturningId.mockResolvedValue('spot-b');
+    candidateRepo.updateStatusConditional.mockResolvedValue(true);
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await useCase.execute({ candidateId: 'candidate-1', curationScore: 75 });
+
+    const savedSpot = spotRepo.saveReturningId.mock.calls[0]![0] as import('../../domain/spot/Spot.js').Spot;
+    expect(savedSpot.kakaoPlaceId).toBeNull();
+    expect(savedSpot.syntheticId).toMatch(/^synth_[0-9a-f]{12}$/);
+    expect(candidateRepo.setSyntheticId).toHaveBeenCalled();
+  });
+
+  it('(C4-B) kakao_unverified — updateStatusConditional uses candidate.status not hardcoded pending', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(makeCandidate({ kakaoPlaceId: null, status: 'kakao_unverified' }));
+    spotRepo.saveReturningId.mockResolvedValue('spot-b');
+    candidateRepo.updateStatusConditional.mockResolvedValue(true);
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await useCase.execute({ candidateId: 'candidate-1', curationScore: 75 });
+
+    expect(candidateRepo.updateStatusConditional).toHaveBeenCalledWith(
+      'candidate-1', 'approved', 'kakao_unverified',
+    );
   });
 });
