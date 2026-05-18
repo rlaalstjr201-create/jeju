@@ -33,6 +33,7 @@ function makeSpot(id: string, region: Region = 'jeju-city'): Spot {
   return {
     id,
     kakaoPlaceId: `kakao-${id}`,
+    syntheticId: null,
     name: `Spot ${id}`,
     region,
     category: 'beach',

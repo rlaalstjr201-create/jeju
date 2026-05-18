@@ -8,7 +8,8 @@ import type { PriceRange } from '../../domain/shared/PriceRange.js';
 
 interface ShortlistSpotRow {
   spot_id: string;
-  kakao_place_id: string;
+  kakao_place_id: string | null;
+  synthetic_id: string | null;
   name: string;
   region: string;
   category: string;
@@ -27,6 +28,7 @@ function rowToSpot(row: ShortlistSpotRow): Spot {
   return {
     id: row.spot_id,
     kakaoPlaceId: row.kakao_place_id,
+    syntheticId: row.synthetic_id,
     name: row.name,
     region: row.region as Region,
     category: row.category,
@@ -68,6 +70,7 @@ export class PostgresShortlistRepository implements ShortlistRepository {
       `SELECT
          ss.spot_id,
          s.kakao_place_id,
+         s.synthetic_id,
          s.name,
          s.region,
          s.category,

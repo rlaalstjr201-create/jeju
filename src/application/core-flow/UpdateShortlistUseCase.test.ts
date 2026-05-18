@@ -16,6 +16,7 @@ function makeSpot(id: string): Spot {
   return {
     id,
     kakaoPlaceId: `kakao-${id}`,
+    syntheticId: null,
     name: `Spot ${id}`,
     region: 'jeju-city',
     category: 'beach',

@@ -8,7 +8,8 @@ import type { PriceRange } from '../../domain/shared/PriceRange.js';
 
 interface SpotRow {
   id: string;
-  kakao_place_id: string;
+  kakao_place_id: string | null;
+  synthetic_id: string | null;
   name: string;
   region: string;
   category: string;
@@ -26,6 +27,7 @@ function rowToSpot(row: SpotRow): Spot {
   return {
     id: row.id,
     kakaoPlaceId: row.kakao_place_id,
+    syntheticId: row.synthetic_id,
     name: row.name,
     region: row.region as Region,
     category: row.category,
@@ -41,7 +43,7 @@ function rowToSpot(row: SpotRow): Spot {
 }
 
 const SELECT_COLUMNS = `
-  id, kakao_place_id, name, region, category, price_range,
+  id, kakao_place_id, synthetic_id, name, region, category, price_range,
   curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
 `;
 

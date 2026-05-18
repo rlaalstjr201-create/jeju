@@ -53,7 +53,9 @@ export class RejectCandidateUseCase {
 
     // status === 'approved': cascade — deactivate spot + soft-delete candidate, atomically (C2)
     await this.txManager.run(async () => {
-      await this.spotRepo.deactivate(candidate.kakaoPlaceId);
+      if (candidate.kakaoPlaceId !== null) {
+        await this.spotRepo.deactivate(candidate.kakaoPlaceId);
+      }
       const updated = await this.candidateRepo.updateStatusConditional(
         candidate.id, 'rejected', 'approved',
       );

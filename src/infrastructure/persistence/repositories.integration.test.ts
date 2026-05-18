@@ -51,6 +51,7 @@ function makeSpotRow(overrides: Partial<{
   return {
     id: overrides.id ?? crypto.randomUUID(),
     kakaoPlaceId: overrides.kakaoPlaceId ?? `kp-${crypto.randomUUID()}`,
+    syntheticId: null,
     name: overrides.name ?? 'Test Spot',
     region: (overrides.region ?? 'jeju-city') as Spot['region'],
     category: overrides.category ?? 'restaurant',

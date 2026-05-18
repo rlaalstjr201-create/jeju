@@ -62,6 +62,8 @@ export class DiscoverCandidatesUseCase {
       const candidate: CurationCandidate = {
         id: crypto.randomUUID(),
         kakaoPlaceId: c.kakaoPlaceId,
+        visitjejuContentId: null,
+        sourceType: 'naver',
         name: c.name,
         region: c.region,
         category: c.category,
@@ -75,6 +77,13 @@ export class DiscoverCandidatesUseCase {
         thumbnailUrl: null,
         priceRange: null,
         enrichedAt: null,
+        naverSourceUrl: null,
+        naverSnippet: null,
+        authenticityScore: null,
+        ordinarinessScore: null,
+        aiEstimatedScore: null,
+        aiEstimatedAt: null,
+        syntheticId: null,
       };
       await this.candidateRepo.save(candidate);
     }
