@@ -60,7 +60,11 @@ function visitjejuToCandidate(
   };
 }
 
+const DEFAULT_NAVER_DISPLAY = 30; // 50 queries × 2 channels × 30 = 3,000/run ≈ 12% of 25,000/day
+
 export class RunDiscoveryPipelineUseCase {
+  private readonly naverDisplayPerQuery: number;
+
   constructor(
     private readonly visitjejuApi: VisitjejuApiPort,
     private readonly naverApi: NaverSearchApiPort,
@@ -68,7 +72,10 @@ export class RunDiscoveryPipelineUseCase {
     private readonly kakaoVerifier: KakaoLocalVerifierPort,
     private readonly candidateRepo: CurationCandidateRepository,
     private readonly naverQueries: string[],
-  ) {}
+    options?: { naverDisplayPerQuery?: number },
+  ) {
+    this.naverDisplayPerQuery = options?.naverDisplayPerQuery ?? DEFAULT_NAVER_DISPLAY;
+  }
 
   async execute(): Promise<DiscoveryPipelineResult> {
     // Load existing candidate coordinates for dedup baseline
@@ -125,8 +132,8 @@ export class RunDiscoveryPipelineUseCase {
 
     for (const query of this.naverQueries) {
       const [blogResult, cafeResult] = await Promise.all([
-        this.naverApi.searchBlog(query),
-        this.naverApi.searchCafe(query),
+        this.naverApi.searchBlog(query, this.naverDisplayPerQuery),
+        this.naverApi.searchCafe(query, this.naverDisplayPerQuery),
       ]);
 
       const allItems = [...blogResult.items, ...cafeResult.items];
