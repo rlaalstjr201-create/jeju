@@ -1,6 +1,9 @@
 # ADR-0027: HITL 큐레이터 워크플로우 + 진화 단계 명시
 
-Status: Accepted (2026-05-19)
+Status: Superseded (2026-05-19) — superseded by 0027-curator-hitl-evolution-and-tooling.md
+
+> 이 문서는 이력 추적을 위해 보존됩니다. Deep Research 후 Label Studio·Argilla·Prodigy
+> 구체 도구가 결정돼 당일 보강·재발행됐습니다.
 
 ## Context
 

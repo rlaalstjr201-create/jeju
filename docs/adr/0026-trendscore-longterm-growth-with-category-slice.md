@@ -1,6 +1,9 @@
 # ADR-0026: trendScore 정의 — 장기 증가율 기반 + 카테고리 슬라이스
 
-Status: Accepted (2026-05-19)
+Status: Superseded (2026-05-19) — superseded by 0026-trendscore-curator-tool-model.md
+
+> 이 문서는 이력 추적을 위해 보존됩니다. 실측 검증(빅데이터\_GW 격자 2개, BC카드 법적 제약)으로
+> 자동 trendScore 산정 가정이 무효화돼 당일 재작성됐습니다.
 
 ## Context
 
