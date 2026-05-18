@@ -23,7 +23,8 @@ function makeContext(preferences: SpotPreferences): RecommendationContext {
 
 function makeSpotRow(overrides: Partial<{
   id: string;
-  kakao_place_id: string;
+  kakao_place_id: string | null;
+  synthetic_id: string | null;
   name: string;
   region: string;
   category: string;
@@ -39,6 +40,7 @@ function makeSpotRow(overrides: Partial<{
   return {
     id: 'spot-1',
     kakao_place_id: 'kakao-1',
+    synthetic_id: null,
     name: 'Test Spot',
     region: 'jeju-city',
     category: 'cafe',
@@ -58,6 +60,7 @@ function makeExpectedSpot(row: ReturnType<typeof makeSpotRow>): Spot {
   return {
     id: row.id,
     kakaoPlaceId: row.kakao_place_id,
+    syntheticId: null,
     name: row.name,
     region: row.region as Spot['region'],
     category: row.category,

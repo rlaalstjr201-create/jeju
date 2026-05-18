@@ -14,6 +14,8 @@ function makeCandidate(): CurationCandidate {
   return {
     id: 'c-1',
     kakaoPlaceId: 'kp-1',
+    visitjejuContentId: null,
+    sourceType: 'visitjeju' as const,
     name: 'Test Café',
     region: 'jeju-city',
     category: 'cafe',
@@ -27,6 +29,13 @@ function makeCandidate(): CurationCandidate {
     thumbnailUrl: null,
     priceRange: null,
     enrichedAt: null,
+    naverSourceUrl: null,
+    naverSnippet: null,
+    authenticityScore: null,
+    ordinarinessScore: null,
+    aiEstimatedScore: null,
+    aiEstimatedAt: null,
+    syntheticId: null,
   };
 }
 

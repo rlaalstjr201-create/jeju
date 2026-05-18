@@ -42,37 +42,46 @@ export class EnrichCandidateUseCase {
       throw new CandidateNotFoundError(input.candidateId);
     }
 
-    // Fetch location details from Kakao
-    const placeDetails = await this.kakaoLocalApi.fetchPlaceDetails(candidate.kakaoPlaceId);
-    if (placeDetails === null) {
-      throw new EnrichmentError(
-        `Kakao API returned null for kakaoPlaceId: ${candidate.kakaoPlaceId}`,
-      );
+    let lat: number;
+    let lng: number;
+    let thumbnailUrl: string;
+
+    if (candidate.kakaoPlaceId !== null) {
+      // Old flow: enrich coords + thumbnail from Kakao
+      const placeDetails = await this.kakaoLocalApi.fetchPlaceDetails(candidate.kakaoPlaceId);
+      if (placeDetails === null) {
+        throw new EnrichmentError(
+          `Kakao API returned null for kakaoPlaceId: ${candidate.kakaoPlaceId}`,
+        );
+      }
+      lat = placeDetails.lat;
+      lng = placeDetails.lng;
+      thumbnailUrl = placeDetails.thumbnailUrl;
+    } else {
+      // Phase 0 visitjeju flow: coords + thumbnail already present from Stage 1
+      if (candidate.lat === null || candidate.lng === null || candidate.thumbnailUrl === null) {
+        throw new EnrichmentError('visitjeju candidate missing lat/lng/thumbnailUrl');
+      }
+      lat = candidate.lat;
+      lng = candidate.lng;
+      thumbnailUrl = candidate.thumbnailUrl;
     }
 
-    // Enrich with LLM
     const { summary, tags, priceRange } = await this.llmEnricher.enrich(candidate);
 
     const today = new Date().toISOString().slice(0, 10);
 
     await this.candidateRepo.save({
       ...candidate,
-      lat: placeDetails.lat,
-      lng: placeDetails.lng,
-      thumbnailUrl: placeDetails.thumbnailUrl,
+      lat,
+      lng,
+      thumbnailUrl,
       priceRange,
       enrichedAt: today,
       llmSummary: summary,
       llmTags: tags,
     });
 
-    return {
-      summary,
-      tags,
-      lat: placeDetails.lat,
-      lng: placeDetails.lng,
-      thumbnailUrl: placeDetails.thumbnailUrl,
-      priceRange,
-    };
+    return { summary, tags, lat, lng, thumbnailUrl, priceRange };
   }
 }

@@ -3,7 +3,8 @@ import type { PriceRange } from '../shared/PriceRange.js';
 
 export interface Spot {
   readonly id: string;
-  readonly kakaoPlaceId: string;
+  readonly kakaoPlaceId: string | null; // null for kakao_unverified approved spots
+  readonly syntheticId: string | null;  // non-null when kakaoPlaceId is null
   readonly name: string;
   readonly region: Region;
   readonly category: string;

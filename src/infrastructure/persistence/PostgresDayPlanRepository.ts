@@ -26,7 +26,8 @@ interface PinnedSpotRow {
   spot_id: string;
   position: number;
   is_auto_filled: boolean;
-  kakao_place_id: string;
+  kakao_place_id: string | null;
+  synthetic_id: string | null;
   name: string;
   region: string;
   category: string;
@@ -48,6 +49,7 @@ function rowToSpot(row: PinnedSpotRow): Spot {
   return {
     id: row.spot_id,
     kakaoPlaceId: row.kakao_place_id,
+    syntheticId: row.synthetic_id,
     name: row.name,
     region: row.region as Region,
     category: row.category,
@@ -113,6 +115,7 @@ export class PostgresDayPlanRepository implements DayPlanRepository {
          ps.position,
          ps.is_auto_filled,
          s.kakao_place_id,
+         s.synthetic_id,
          s.name,
          s.region,
          s.category,

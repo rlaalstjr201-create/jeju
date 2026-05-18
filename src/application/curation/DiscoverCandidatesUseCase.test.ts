@@ -22,8 +22,11 @@ function makeMocks() {
     findById: vi.fn(),
     findByStatus: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
+    findExistingVisitjejuContentIds: vi.fn(),
+    findAllWithCoordinates: vi.fn(),
     save: vi.fn(),
     updateStatusConditional: vi.fn(),
+    setSyntheticId: vi.fn(),
   };
   const spotRepo = {
     findById: vi.fn(),

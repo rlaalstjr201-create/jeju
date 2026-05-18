@@ -49,7 +49,7 @@ export class ApproveCandidateUseCase {
       throw new CandidateNotFoundError(input.candidateId);
     }
 
-    if (candidate.status !== 'pending') {
+    if (candidate.status !== 'pending' && candidate.status !== 'kakao_unverified') {
       throw new InvalidStatusError(candidate.status);
     }
 
@@ -68,6 +68,7 @@ export class ApproveCandidateUseCase {
     const spot: Spot = {
       id: crypto.randomUUID(),
       kakaoPlaceId: candidate.kakaoPlaceId,
+      syntheticId: null,
       name: candidate.name,
       region: candidate.region,
       category: candidate.category,

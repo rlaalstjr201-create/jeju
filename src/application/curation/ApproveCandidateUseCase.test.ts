@@ -11,6 +11,8 @@ function makeCandidate(overrides: Partial<CurationCandidate> = {}): CurationCand
   return {
     id: 'candidate-1',
     kakaoPlaceId: 'kp-001',
+    visitjejuContentId: null,
+    sourceType: 'visitjeju' as const,
     name: 'Test Place',
     region: 'jeju-city',
     category: 'cafe',
@@ -24,6 +26,13 @@ function makeCandidate(overrides: Partial<CurationCandidate> = {}): CurationCand
     thumbnailUrl: 'https://example.com/thumb.jpg',
     priceRange: 'mid',
     enrichedAt: '2026-05-18',
+    naverSourceUrl: null,
+    naverSnippet: null,
+    authenticityScore: null,
+    ordinarinessScore: null,
+    aiEstimatedScore: null,
+    aiEstimatedAt: null,
+    syntheticId: null,
     ...overrides,
   };
 }
@@ -33,8 +42,11 @@ function makeMocks() {
     findById: vi.fn(),
     findByStatus: vi.fn(),
     findExistingKakaoPlaceIds: vi.fn(),
+    findExistingVisitjejuContentIds: vi.fn(),
+    findAllWithCoordinates: vi.fn(),
     save: vi.fn(),
     updateStatusConditional: vi.fn().mockResolvedValue(true),
+    setSyntheticId: vi.fn(),
   };
   const spotRepo = {
     findById: vi.fn(),

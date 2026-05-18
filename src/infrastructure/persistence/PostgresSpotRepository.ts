@@ -7,7 +7,8 @@ import { transactionContext } from './transactionContext.js';
 
 interface SpotRow {
   id: string;
-  kakao_place_id: string;
+  kakao_place_id: string | null;
+  synthetic_id: string | null;
   name: string;
   region: string;
   category: string;
@@ -25,6 +26,7 @@ function rowToSpot(row: SpotRow): Spot {
   return {
     id: row.id,
     kakaoPlaceId: row.kakao_place_id,
+    syntheticId: row.synthetic_id,
     name: row.name,
     region: row.region as Region,
     category: row.category,
@@ -40,36 +42,49 @@ function rowToSpot(row: SpotRow): Spot {
 }
 
 const SELECT_COLUMNS = `
-  id, kakao_place_id, name, region, category, price_range,
+  id, kakao_place_id, synthetic_id, name, region, category, price_range,
   curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
-`;
+`.trim();
 
-const UPSERT_SQL = `
+// Kakao-verified spots: conflict on kakao_place_id
+const KAKAO_UPSERT_SQL = `
   INSERT INTO spots (
-    id, kakao_place_id, name, region, category, price_range,
+    id, kakao_place_id, synthetic_id, name, region, category, price_range,
     curation_score, popularity_score, trend_score, curation_comment,
     thumbnail_url, lat, lng, is_active, updated_at
-  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,true,now())
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,true,now())
   ON CONFLICT (kakao_place_id) DO UPDATE SET
-    name           = EXCLUDED.name,
-    region         = EXCLUDED.region,
-    category       = EXCLUDED.category,
-    price_range    = EXCLUDED.price_range,
-    curation_score = EXCLUDED.curation_score,
-    popularity_score = EXCLUDED.popularity_score,
-    trend_score    = EXCLUDED.trend_score,
-    curation_comment = EXCLUDED.curation_comment,
-    thumbnail_url  = EXCLUDED.thumbnail_url,
-    lat            = EXCLUDED.lat,
-    lng            = EXCLUDED.lng,
-    is_active      = true,
-    updated_at     = now()
+    synthetic_id      = EXCLUDED.synthetic_id,
+    name              = EXCLUDED.name,
+    region            = EXCLUDED.region,
+    category          = EXCLUDED.category,
+    price_range       = EXCLUDED.price_range,
+    curation_score    = EXCLUDED.curation_score,
+    popularity_score  = EXCLUDED.popularity_score,
+    trend_score       = EXCLUDED.trend_score,
+    curation_comment  = EXCLUDED.curation_comment,
+    thumbnail_url     = EXCLUDED.thumbnail_url,
+    lat               = EXCLUDED.lat,
+    lng               = EXCLUDED.lng,
+    is_active         = true,
+    updated_at        = now()
+`;
+
+// Synthetic spots (no kakao_place_id): plain INSERT — ApproveCandidateUseCase
+// ensures no duplicate via transaction + dedup upstream
+const SYNTHETIC_INSERT_SQL = `
+  INSERT INTO spots (
+    id, kakao_place_id, synthetic_id, name, region, category, price_range,
+    curation_score, popularity_score, trend_score, curation_comment,
+    thumbnail_url, lat, lng, is_active, updated_at
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,true,now())
 `;
 
 function spotParams(spot: Spot): unknown[] {
   return [
     spot.id,
     spot.kakaoPlaceId,
+    spot.syntheticId,
     spot.name,
     spot.region,
     spot.category,
@@ -165,16 +180,17 @@ export class PostgresSpotRepository implements SpotRepository {
 
   async save(spot: Spot): Promise<void> {
     await this.withClient(async (client) => {
-      await client.query(UPSERT_SQL, spotParams(spot));
+      const sql = spot.kakaoPlaceId !== null ? KAKAO_UPSERT_SQL : SYNTHETIC_INSERT_SQL;
+      await client.query(sql, spotParams(spot));
     });
   }
 
   async saveReturningId(spot: Spot): Promise<string> {
     return this.withClient(async (client) => {
-      const result = await client.query<{ id: string }>(
-        `${UPSERT_SQL} RETURNING id`,
-        spotParams(spot),
-      );
+      const sql = spot.kakaoPlaceId !== null
+        ? `${KAKAO_UPSERT_SQL} RETURNING id`
+        : `${SYNTHETIC_INSERT_SQL} RETURNING id`;
+      const result = await client.query<{ id: string }>(sql, spotParams(spot));
       return result.rows[0]!.id;
     });
   }
@@ -183,7 +199,8 @@ export class PostgresSpotRepository implements SpotRepository {
     if (kakaoPlaceIds.length === 0) return new Set();
     return this.withClient(async (client) => {
       const result = await client.query<{ kakao_place_id: string }>(
-        `SELECT kakao_place_id FROM spots WHERE kakao_place_id = ANY($1)`,
+        `SELECT kakao_place_id FROM spots
+         WHERE kakao_place_id = ANY($1) AND kakao_place_id IS NOT NULL`,
         [kakaoPlaceIds],
       );
       return new Set(result.rows.map((r) => r.kakao_place_id));
