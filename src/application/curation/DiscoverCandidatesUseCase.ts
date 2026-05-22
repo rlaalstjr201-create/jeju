@@ -84,6 +84,7 @@ export class DiscoverCandidatesUseCase {
         aiEstimatedScore: null,
         aiEstimatedAt: null,
         syntheticId: null,
+        verifiedBy: null,
       };
       await this.candidateRepo.save(candidate);
     }

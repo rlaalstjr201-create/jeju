@@ -19,6 +19,11 @@ function makeSpot(id: string, category: string): Spot {
     thumbnailUrl: null,
     lat: 33.25,
     lng: 126.5,
+    tier: 'hidden',
+    awards: [],
+    curatorComment: null,
+    curatorCommentSource: null,
+    curatorCommentRetryCount: 0,
   };
 }
 

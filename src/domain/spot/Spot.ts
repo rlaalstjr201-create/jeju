@@ -16,4 +16,9 @@ export interface Spot {
   readonly thumbnailUrl: string | null;
   readonly lat: number;
   readonly lng: number;
+  readonly tier: 'reference' | 'hidden';
+  readonly awards: string[];
+  readonly curatorComment: string | null;
+  readonly curatorCommentSource: 'gemma' | 'claude_fallback' | 'curator_edit' | null;
+  readonly curatorCommentRetryCount: number;
 }

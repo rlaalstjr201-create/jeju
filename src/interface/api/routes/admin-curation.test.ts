@@ -30,6 +30,11 @@ function makeDeps(): AppDependencies {
     } as never,
     rejectCandidateUseCase: { execute: vi.fn().mockResolvedValue(undefined) } as never,
     adjustCalibrationUseCase: { execute: vi.fn() } as never,
+    runDiscoveryPipelineUseCase: { execute: vi.fn() } as never,
+    getCandidateByIdUseCase: { execute: vi.fn() } as never,
+    patchCandidateCoordinatesUseCase: { execute: vi.fn().mockResolvedValue(undefined) } as never,
+    embeddingBatcher: { run: vi.fn(), runSingle: vi.fn() } as never,
+    labelStudioBridge: { handleWebhook: vi.fn(), handleWebhookWithSignature: vi.fn() } as never,
   };
 }
 

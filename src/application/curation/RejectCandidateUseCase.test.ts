@@ -28,6 +28,10 @@ function makeCandidate(overrides: Partial<CurationCandidate> = {}): CurationCand
     aiEstimatedScore: null,
     aiEstimatedAt: null,
     syntheticId: null,
+    verifiedBy: null,
+    tier: 'hidden',
+    awardsHint: [],
+    curatorComment: null,
     ...overrides,
   };
 }
@@ -42,6 +46,7 @@ function makeMocks() {
     save: vi.fn(),
     updateStatusConditional: vi.fn().mockResolvedValue(true),
     setSyntheticId: vi.fn(),
+    patchCoordinates: vi.fn().mockResolvedValue(undefined),
   };
   const spotRepo = {
     findById: vi.fn(),

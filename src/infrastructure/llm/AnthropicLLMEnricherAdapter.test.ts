@@ -36,6 +36,10 @@ function makeCandidate(): CurationCandidate {
     aiEstimatedScore: null,
     aiEstimatedAt: null,
     syntheticId: null,
+    verifiedBy: null,
+    tier: 'hidden',
+    awardsHint: [],
+    curatorComment: null,
   };
 }
 

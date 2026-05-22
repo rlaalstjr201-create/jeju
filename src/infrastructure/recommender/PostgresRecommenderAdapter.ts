@@ -21,6 +21,9 @@ interface SpotRow {
   thumbnail_url: string | null;
   lat: number;
   lng: number;
+  tier: string;
+  awards: unknown;
+  curator_comment: string | null;
 }
 
 function rowToSpot(row: SpotRow): Spot {
@@ -39,12 +42,18 @@ function rowToSpot(row: SpotRow): Spot {
     thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
+    tier: (row.tier as 'reference' | 'hidden') ?? 'hidden',
+    awards: (row.awards as string[]) ?? [],
+    curatorComment: row.curator_comment,
+    curatorCommentSource: null,
+    curatorCommentRetryCount: 0,
   };
 }
 
 const SELECT_COLUMNS = `
   id, kakao_place_id, synthetic_id, name, region, category, price_range,
-  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
+  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng,
+  tier, awards, curator_comment
 `;
 
 export class PostgresRecommenderAdapter implements Recommender {

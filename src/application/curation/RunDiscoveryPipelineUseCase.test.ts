@@ -61,10 +61,13 @@ function makeKakaoUnverified(): KakaoVerification {
 function makeLlmExtraction(overrides: Partial<LlmExtraction> = {}): LlmExtraction {
   return {
     spot_name: '조용한 카페',
+    parent_spot_hint: null,
     category: 'cafe',
     authenticity_score: 0.85,
     ordinariness_score: 0.15,
     summary: '현지인만 아는 조용한 카페',
+    extraction_confidence: 1.0,
+    verification_status: 'unverified',
     ...overrides,
   };
 }
@@ -104,12 +107,17 @@ function makeMocks() {
     save: vi.fn().mockResolvedValue(undefined),
     updateStatusConditional: vi.fn().mockResolvedValue(true),
     setSyntheticId: vi.fn(),
+    patchCoordinates: vi.fn().mockResolvedValue(undefined),
   };
 
   return { visitjejuApi, naverApi, llmExtractor, kakaoVerifier, candidateRepo, visitjejuSpots };
 }
 
-function makeUseCase(mocks: ReturnType<typeof makeMocks>, queries: string[] = ['제주 숨은 카페']) {
+function makeUseCase(
+  mocks: ReturnType<typeof makeMocks>,
+  queries: string[] = ['제주 숨은 카페'],
+  options?: { blockedUrlPatterns?: string[]; blockedCategories?: string[] },
+) {
   return new RunDiscoveryPipelineUseCase(
     mocks.visitjejuApi as never,
     mocks.naverApi as never,
@@ -117,7 +125,19 @@ function makeUseCase(mocks: ReturnType<typeof makeMocks>, queries: string[] = ['
     mocks.kakaoVerifier as never,
     mocks.candidateRepo as never,
     queries,
+    options,
   );
+}
+
+function makeNaverVerifier(overrides: Partial<{ matched: boolean; lat: number; lng: number; category: string | null }> = {}) {
+  return {
+    verify: vi.fn().mockResolvedValue({
+      matched: overrides.matched ?? true,
+      lat: overrides.lat ?? 33.5,
+      lng: overrides.lng ?? 126.7,
+      category: overrides.category !== undefined ? overrides.category : null,
+    }),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -278,6 +298,233 @@ describe('RunDiscoveryPipelineUseCase', () => {
         naverDeduplicated: expect.any(Number),
         naverDroppedUnidentifiable: expect.any(Number),
       });
+    });
+  });
+
+  describe('domain blocking', () => {
+    it('item from blocked domain → skipped, LLM not called', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.naverApi.searchBlog.mockResolvedValue({
+        query: '제주 카페',
+        items: [{ title: '이벤트', link: 'https://cafeflex.naver.com/event/1', description: '...', postdate: '20260501' }],
+      });
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: '제주 카페', items: [] });
+
+      const useCase = makeUseCase(mocks, ['제주 카페'], { blockedUrlPatterns: ['cafeflex.naver.com'] });
+      const result = await useCase.execute();
+
+      expect(mocks.llmExtractor.extract).not.toHaveBeenCalled();
+      expect(result.naverDomainBlocked).toBe(1);
+    });
+
+    it('item from non-blocked domain → proceeds normally', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoVerified());
+
+      const useCase = makeUseCase(mocks, ['제주 카페'], { blockedUrlPatterns: ['cafeflex.naver.com'] });
+      await useCase.execute();
+
+      expect(mocks.llmExtractor.extract).toHaveBeenCalled();
+    });
+
+    it('cafe.naver.com/cafeflex URL → blocked by substring match', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.naverApi.searchBlog.mockResolvedValue({
+        query: '제주 공방',
+        items: [{ title: '이벤트', link: 'http://cafe.naver.com/cafeflex/31415', description: '...', postdate: '20260501' }],
+      });
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: '제주 공방', items: [] });
+
+      const useCase = makeUseCase(mocks, ['제주 공방'], { blockedUrlPatterns: ['cafe.naver.com/cafeflex'] });
+      const result = await useCase.execute();
+
+      expect(mocks.llmExtractor.extract).not.toHaveBeenCalled();
+      expect(result.naverDomainBlocked).toBe(1);
+    });
+  });
+
+  describe('Stage 4 all-fail → auto_rejected', () => {
+    it('kakao + naver + parent all fail → saves as auto_rejected', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoUnverified());
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '어떤카페', parent_spot_hint: null }));
+
+      const useCase = makeUseCase(mocks, ['제주 카페']);
+      await useCase.execute();
+
+      const saved = mocks.candidateRepo.save.mock.calls[0]![0] as CurationCandidate;
+      expect(saved.status).toBe('auto_rejected');
+      expect(saved.lat).toBeNull();
+      expect(saved.lng).toBeNull();
+    });
+
+    it('auto_rejected increments naverAutoRejected counter', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoUnverified());
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '어떤카페' }));
+
+      const useCase = makeUseCase(mocks, ['제주 카페']);
+      const result = await useCase.execute();
+
+      expect(result.naverAutoRejected).toBeGreaterThan(0);
+    });
+  });
+
+  describe('name dedup', () => {
+    it('kakao_unverified same spot_name twice → second deduplicated', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoUnverified());
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '메종드백' }));
+      mocks.naverApi.searchBlog.mockResolvedValue({
+        query: 'q',
+        items: [
+          { title: 't1', link: 'https://blog.naver.com/1', description: 'd1', postdate: '20260501' },
+          { title: 't2', link: 'https://blog.naver.com/2', description: 'd2', postdate: '20260501' },
+        ],
+      });
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: 'q', items: [] });
+
+      const useCase = makeUseCase(mocks, ['q']);
+      const result = await useCase.execute();
+
+      expect(mocks.candidateRepo.save).toHaveBeenCalledTimes(1);
+      expect(result.naverDeduplicated).toBe(1);
+    });
+
+    it('kakao-verified same spot_name twice → second deduplicated by name', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      let kakaoCall = 0;
+      mocks.kakaoVerifier.verify.mockImplementation(async () => {
+        kakaoCall++;
+        // Different coords each call so coord dedup won't trigger
+        return makeKakaoVerified({ lat: 33.4 + kakaoCall * 0.01, lng: 126.9 });
+      });
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '어떤가게' }));
+      mocks.naverApi.searchBlog.mockResolvedValue({
+        query: 'q',
+        items: [
+          { title: 't1', link: 'https://blog.naver.com/1', description: 'd1', postdate: '20260501' },
+          { title: 't2', link: 'https://blog.naver.com/2', description: 'd2', postdate: '20260501' },
+        ],
+      });
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: 'q', items: [] });
+
+      const useCase = makeUseCase(mocks, ['q']);
+      const result = await useCase.execute();
+
+      expect(mocks.candidateRepo.save).toHaveBeenCalledTimes(1);
+      expect(result.naverDeduplicated).toBe(1);
+    });
+  });
+
+  describe('Stage 4 — category filtering (Layer 2)', () => {
+    it('kakao matched but category is blocked → treated as unmatched → auto_rejected', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoVerified({
+        categoryName: '스포츠,레저 > 스포츠시설 > 필라테스',
+      }));
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '제주필라테스' }));
+      mocks.naverApi.searchBlog.mockResolvedValue(makeNaverResult());
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: 'q', items: [] });
+
+      const useCase = makeUseCase(mocks, ['q'], { blockedCategories: ['필라테스'] });
+      await useCase.execute();
+
+      const saved = mocks.candidateRepo.save.mock.calls[0]![0] as CurationCandidate;
+      expect(saved.status).toBe('auto_rejected');
+    });
+
+    it('kakao matched with allowed category → saved as pending', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoVerified({
+        categoryName: '음식점 > 한식 > 흑돼지',
+      }));
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '흑돼지식당' }));
+      mocks.naverApi.searchBlog.mockResolvedValue(makeNaverResult());
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: 'q', items: [] });
+
+      const useCase = makeUseCase(mocks, ['q'], { blockedCategories: ['필라테스'] });
+      await useCase.execute();
+
+      const saved = mocks.candidateRepo.save.mock.calls.find(
+        c => (c[0] as CurationCandidate).sourceType === 'naver',
+      )![0] as CurationCandidate;
+      expect(saved.status).toBe('pending');
+    });
+  });
+
+  describe('Stage 4 — naver→kakao cross-check (Layer 3)', () => {
+    it('naver matched but kakao cross-check fails → auto_rejected (false positive blocked)', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      // ALL kakao calls fail (direct + cross-check)
+      mocks.kakaoVerifier.verify.mockResolvedValue(makeKakaoUnverified());
+      const naverVerifier = makeNaverVerifier({ matched: true, lat: 33.5, lng: 126.7, category: null });
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '돌핀뷰' }));
+      mocks.naverApi.searchBlog.mockResolvedValue(makeNaverResult('q'));
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: 'q', items: [] });
+
+      const useCase = new RunDiscoveryPipelineUseCase(
+        mocks.visitjejuApi as never,
+        mocks.naverApi as never,
+        mocks.llmExtractor as never,
+        mocks.kakaoVerifier as never,
+        mocks.candidateRepo as never,
+        ['q'],
+        { naverLocalVerifier: naverVerifier as never },
+      );
+
+      await useCase.execute();
+
+      const naverSave = mocks.candidateRepo.save.mock.calls.find(
+        c => (c[0] as CurationCandidate).sourceType === 'naver',
+      );
+      // Should be auto_rejected (naver matched but cross-check failed)
+      expect((naverSave![0] as CurationCandidate).status).toBe('auto_rejected');
+    });
+
+    it('naver matched and kakao cross-check passes → verified_by=naver_kakao_cross', async () => {
+      const mocks = makeMocks();
+      mocks.visitjejuSpots.length = 0;
+      let kakaoCallCount = 0;
+      mocks.kakaoVerifier.verify.mockImplementation(async () => {
+        kakaoCallCount++;
+        // 1st call: direct kakao verify → no match
+        if (kakaoCallCount === 1) return makeKakaoUnverified();
+        // 2nd call: cross-check after naver → match
+        return makeKakaoVerified({ kakaoPlaceId: 'kp-cross', lat: 33.5, lng: 126.7, categoryName: '스포츠,레저 > 레저 > 해양레포츠' });
+      });
+      const naverVerifier = makeNaverVerifier({ matched: true, lat: 33.5, lng: 126.7, category: null });
+      mocks.llmExtractor.extract.mockResolvedValue(makeLlmExtraction({ spot_name: '씨유다이브' }));
+      mocks.naverApi.searchBlog.mockResolvedValue(makeNaverResult('q'));
+      mocks.naverApi.searchCafe.mockResolvedValue({ query: 'q', items: [] });
+
+      const useCase = new RunDiscoveryPipelineUseCase(
+        mocks.visitjejuApi as never,
+        mocks.naverApi as never,
+        mocks.llmExtractor as never,
+        mocks.kakaoVerifier as never,
+        mocks.candidateRepo as never,
+        ['q'],
+        { naverLocalVerifier: naverVerifier as never },
+      );
+
+      await useCase.execute();
+
+      const naverSave = mocks.candidateRepo.save.mock.calls.find(
+        c => (c[0] as CurationCandidate).sourceType === 'naver',
+      );
+      expect((naverSave![0] as CurationCandidate).verifiedBy).toBe('naver_kakao_cross');
+      expect((naverSave![0] as CurationCandidate).status).toBe('pending');
     });
   });
 });

@@ -23,4 +23,5 @@ export interface CurationCandidateRepository {
     expectedCurrentStatus: CandidateStatus,
   ): Promise<boolean>;
   setSyntheticId(id: string, syntheticId: string): Promise<void>;
+  patchCoordinates(id: string, lat: number, lng: number, verifiedBy: string): Promise<void>;
 }

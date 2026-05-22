@@ -1,5 +1,5 @@
-import Anthropic from '@anthropic-ai/sdk';
 import type { SpotMetaInfererPort, SpotMetaInferInput, SpotMetaInference } from '../../application/ports/SpotMetaInfererPort.js';
+import type { LlmProviderPort, LlmTool } from '../../application/ports/LlmProviderPort.js';
 
 export class SpotMetaInfererError extends Error {
   constructor(message: string, public readonly cause?: unknown) {
@@ -8,58 +8,45 @@ export class SpotMetaInfererError extends Error {
   }
 }
 
-const INFER_TOOL: Anthropic.Tool = {
+const INFER_TOOL: LlmTool = {
   name: 'infer_spot_meta',
-  description: '비짓제주 장소 소개 텍스트에서 4가지 메타 정보를 추론합니다.',
-  input_schema: {
-    type: 'object' as const,
+  description: 'Infer 4 meta attributes for a Jeju travel spot.',
+  parameters: {
+    type: 'object',
     properties: {
-      atmosphere: { type: 'string', description: '분위기 묘사 (20자 이내)' },
-      crowd_level: { type: 'string', description: '혼잡도 추정 (20자 이내)' },
-      best_time: { type: 'string', description: '추천 방문 시간대 (20자 이내)' },
-      target_visitor: { type: 'string', description: '주요 방문객 특성 (30자 이내)' },
+      atmosphere: { type: 'string', description: 'Atmosphere description (within 20 chars)' },
+      crowd_level: { type: 'string', description: 'Estimated crowd level (within 20 chars)' },
+      best_time: { type: 'string', description: 'Recommended visit time (within 20 chars)' },
+      target_visitor: { type: 'string', description: 'Primary visitor profile (within 30 chars)' },
     },
     required: ['atmosphere', 'crowd_level', 'best_time', 'target_visitor'],
   },
 };
 
 export class SpotMetaInfererAdapter implements SpotMetaInfererPort {
-  private readonly client: Anthropic;
+  private readonly provider: LlmProviderPort;
 
-  constructor(apiKey?: string) {
-    this.client = new Anthropic({ apiKey: apiKey ?? process.env['ANTHROPIC_API_KEY'] ?? '' });
+  constructor(provider: LlmProviderPort) {
+    this.provider = provider;
   }
 
   async infer(input: SpotMetaInferInput): Promise<SpotMetaInference> {
-    let response: Anthropic.Message;
+    let raw: Record<string, unknown>;
     try {
-      response = await this.client.messages.create({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 256,
-        tools: [INFER_TOOL],
-        tool_choice: { type: 'tool', name: 'infer_spot_meta' },
-        messages: [
-          {
-            role: 'user',
-            content: `장소명: ${input.name}\n소개: ${input.introduction}\n태그: ${input.tags}\n\n위 장소의 메타 정보를 추론하세요.`,
-          },
-        ],
+      raw = await this.provider.callWithTool({
+        userMessage: `Place: ${input.name}\nIntroduction: ${input.introduction}\nTags: ${input.tags}\n\nInfer the 4 meta attributes for this Jeju travel spot.`,
+        tool: INFER_TOOL,
+        maxTokens: 256,
       });
     } catch (err) {
-      throw new SpotMetaInfererError('SpotMetaInferer API call failed', err);
+      throw new SpotMetaInfererError('SpotMetaInferer inference failed', err);
     }
 
-    const toolBlock = response.content.find((b) => b.type === 'tool_use');
-    if (!toolBlock || toolBlock.type !== 'tool_use') {
-      throw new SpotMetaInfererError('SpotMetaInferer did not return tool_use block');
-    }
-
-    const raw = toolBlock.input as SpotMetaInference;
     return {
-      atmosphere: raw.atmosphere,
-      crowd_level: raw.crowd_level,
-      best_time: raw.best_time,
-      target_visitor: raw.target_visitor,
+      atmosphere: raw['atmosphere'] as string,
+      crowd_level: raw['crowd_level'] as string,
+      best_time: raw['best_time'] as string,
+      target_visitor: raw['target_visitor'] as string,
     };
   }
 }

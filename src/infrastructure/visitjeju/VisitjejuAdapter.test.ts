@@ -32,8 +32,12 @@ function makeRawItem(overrides: Record<string, unknown> = {}) {
     tag: '일출,오름,세계유산',
     introduction: '유네스코 세계자연유산',
     repPhoto: {
-      thumbnailpath: 'https://tong.visitjeju.net/a/t.jpg',
-      imgpath: 'https://tong.visitjeju.net/a/o.jpg',
+      descseo: '성산일출봉',
+      photoid: {
+        photoid: 1,
+        thumbnailpath: 'https://tong.visitjeju.net/a/t.jpg',
+        imgpath: 'https://tong.visitjeju.net/a/o.jpg',
+      },
     },
     region1cd: { value: 'A01' },
     region2cd: { value: 'A0104' },
@@ -126,7 +130,7 @@ describe('VisitjejuAdapter.fetchAll', () => {
     expect(spots[3]!.contentsid).toBe('P2-0');
   });
 
-  it('passes category filter as query param `cid`', async () => {
+  it('passes category filter as query param `category` (not `cid`)', async () => {
     let capturedUrl: string | undefined;
     server.use(
       http.get(ENDPOINT, ({ request }) => {
@@ -140,7 +144,8 @@ describe('VisitjejuAdapter.fetchAll', () => {
 
     expect(capturedUrl).toBeDefined();
     const params = new URL(capturedUrl!).searchParams;
-    expect(params.get('cid')).toBe('c4');
+    expect(params.get('category')).toBe('c4');
+    expect(params.get('cid')).toBeNull();
   });
 
   it('passes region filter as query param `region1cd`', async () => {

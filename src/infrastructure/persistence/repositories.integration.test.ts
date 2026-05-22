@@ -63,6 +63,11 @@ function makeSpotRow(overrides: Partial<{
     trendScore: 0,
     lat: overrides.lat ?? 33.4996,
     lng: overrides.lng ?? 126.5312,
+    tier: 'hidden',
+    awards: [],
+    curatorComment: null,
+    curatorCommentSource: null,
+    curatorCommentRetryCount: 0,
   };
 }
 

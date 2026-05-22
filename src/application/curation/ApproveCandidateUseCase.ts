@@ -28,6 +28,13 @@ export class ApproveError extends Error {
   }
 }
 
+export class ApproveBlockedError extends Error {
+  constructor(reason: string) {
+    super(reason);
+    this.name = 'ApproveBlockedError';
+  }
+}
+
 // Deterministic ID: synth_<sha1(name|lat.toFixed(6)|lng.toFixed(6))[:12]>
 export function buildSyntheticId(name: string, lat: number, lng: number): string {
   const payload = `${name}|${lat.toFixed(6)}|${lng.toFixed(6)}`;
@@ -62,6 +69,14 @@ export class ApproveCandidateUseCase {
       throw new InvalidStatusError(candidate.status);
     }
 
+    // Coordinate guard: kakao_unverified with no coords cannot be approved
+    if (candidate.status === 'kakao_unverified' &&
+        (candidate.lat === null || candidate.lng === null)) {
+      throw new ApproveBlockedError(
+        '좌표 미확인 후보는 approve 불가. 좌표 보강(PATCH /coordinates) 또는 hold 처리 필요',
+      );
+    }
+
     // Enrichment guards
     if (candidate.enrichedAt === null) {
       throw new ApproveError('NotEnriched');
@@ -90,6 +105,11 @@ export class ApproveCandidateUseCase {
       thumbnailUrl: candidate.thumbnailUrl,
       lat: candidate.lat,
       lng: candidate.lng,
+      tier: candidate.tier ?? 'hidden',
+      awards: candidate.awardsHint ?? [],
+      curatorComment: candidate.curatorComment,
+      curatorCommentSource: candidate.curatorComment !== null ? 'claude_fallback' : null,
+      curatorCommentRetryCount: 0,
     };
 
     // Store syntheticId on candidate for future dedup tracking

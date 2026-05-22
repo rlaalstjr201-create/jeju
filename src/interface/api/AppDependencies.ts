@@ -9,6 +9,11 @@ import type { EnrichCandidateUseCase } from '../../application/curation/EnrichCa
 import type { ApproveCandidateUseCase } from '../../application/curation/ApproveCandidateUseCase.js';
 import type { RejectCandidateUseCase } from '../../application/curation/RejectCandidateUseCase.js';
 import type { AdjustCalibrationUseCase } from '../../application/curation/AdjustCalibrationUseCase.js';
+import type { RunDiscoveryPipelineUseCase } from '../../application/curation/RunDiscoveryPipelineUseCase.js';
+import type { PatchCandidateCoordinatesUseCase } from '../../application/curation/PatchCandidateCoordinatesUseCase.js';
+import type { EmbeddingBatcherPort } from '../../application/ports/EmbeddingBatcherPort.js';
+import type { LabelStudioBridgePort } from '../../application/ports/LabelStudioBridgePort.js';
+import type { CurationCandidate } from '../../domain/curation/CurationCandidate.js';
 
 export interface AppDependencies {
   createTripUseCase: CreateTripUseCase;
@@ -22,4 +27,9 @@ export interface AppDependencies {
   approveCandidateUseCase: ApproveCandidateUseCase;
   rejectCandidateUseCase: RejectCandidateUseCase;
   adjustCalibrationUseCase: AdjustCalibrationUseCase;
+  runDiscoveryPipelineUseCase: Pick<RunDiscoveryPipelineUseCase, 'execute'>;
+  getCandidateByIdUseCase: { execute(id: string): Promise<CurationCandidate | undefined> };
+  patchCandidateCoordinatesUseCase: Pick<PatchCandidateCoordinatesUseCase, 'execute'>;
+  embeddingBatcher: EmbeddingBatcherPort;
+  labelStudioBridge: LabelStudioBridgePort;
 }

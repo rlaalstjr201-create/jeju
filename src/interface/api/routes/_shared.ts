@@ -74,6 +74,15 @@ export function mapErrorToReply(
     if (err.name === 'ApproveError') {
       return reply.status(422).send({ code: 'APPROVE_ERROR', message: err.message });
     }
+    if (err.name === 'ApproveBlockedError') {
+      return reply.status(422).send({ code: 'APPROVE_BLOCKED', message: err.message });
+    }
+    if (err.name === 'LabelStudioWebhookError') {
+      if (err.message.toLowerCase().includes('signature')) {
+        return reply.status(401).send({ code: 'INVALID_SIGNATURE', message: err.message });
+      }
+      return reply.status(400).send({ code: 'WEBHOOK_ERROR', message: err.message });
+    }
   }
   return reply.status(500).send({ code: 'INTERNAL_SERVER_ERROR', message: 'Internal server error' });
 }

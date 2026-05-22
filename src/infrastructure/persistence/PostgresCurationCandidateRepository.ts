@@ -29,6 +29,10 @@ interface CandidateRow {
   ai_estimated_score: number | null;
   ai_estimated_at: string | null;
   synthetic_id: string | null;
+  verified_by: string | null;
+  tier: string | null;
+  awards_hint: string[] | null;
+  curator_comment: string | null;
 }
 
 function rowToCandidate(row: CandidateRow): CurationCandidate {
@@ -57,6 +61,10 @@ function rowToCandidate(row: CandidateRow): CurationCandidate {
     aiEstimatedScore: row.ai_estimated_score,
     aiEstimatedAt: row.ai_estimated_at,
     syntheticId: row.synthetic_id,
+    verifiedBy: (row.verified_by as 'kakao' | 'naver' | 'kakao_parent' | 'manual' | null) ?? null,
+    tier: (row.tier as 'reference' | 'hidden') ?? 'hidden',
+    awardsHint: row.awards_hint ?? [],
+    curatorComment: row.curator_comment,
   };
 }
 
@@ -66,7 +74,8 @@ const SELECT_COLS = `
   status, discovered_at, sourced_from, lat, lng,
   thumbnail_url, price_range, enriched_at,
   naver_source_url, naver_snippet, authenticity_score, ordinariness_score,
-  ai_estimated_score, ai_estimated_at, synthetic_id
+  ai_estimated_score, ai_estimated_at, synthetic_id, verified_by,
+  tier, awards_hint, curator_comment
 `.trim();
 
 export class PostgresCurationCandidateRepository implements CurationCandidateRepository {
@@ -168,36 +177,40 @@ export class PostgresCurationCandidateRepository implements CurationCandidateRep
            lat, lng, thumbnail_url, price_range, enriched_at,
            naver_source_url, naver_snippet,
            authenticity_score, ordinariness_score,
-           ai_estimated_score, ai_estimated_at, synthetic_id,
+           ai_estimated_score, ai_estimated_at, synthetic_id, verified_by,
+           tier, awards_hint,
            updated_at
          ) VALUES (
            $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,
-           $13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,now()
+           $13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,now()
          )
          ON CONFLICT (id) DO UPDATE SET
-           kakao_place_id     = EXCLUDED.kakao_place_id,
+           kakao_place_id       = EXCLUDED.kakao_place_id,
            visitjeju_content_id = EXCLUDED.visitjeju_content_id,
-           source_type        = EXCLUDED.source_type,
-           name               = EXCLUDED.name,
-           region             = EXCLUDED.region,
-           category           = EXCLUDED.category,
-           llm_summary        = EXCLUDED.llm_summary,
-           llm_tags           = EXCLUDED.llm_tags,
-           status             = EXCLUDED.status,
-           sourced_from       = EXCLUDED.sourced_from,
-           lat                = EXCLUDED.lat,
-           lng                = EXCLUDED.lng,
-           thumbnail_url      = EXCLUDED.thumbnail_url,
-           price_range        = EXCLUDED.price_range,
-           enriched_at        = EXCLUDED.enriched_at,
-           naver_source_url   = EXCLUDED.naver_source_url,
-           naver_snippet      = EXCLUDED.naver_snippet,
-           authenticity_score = EXCLUDED.authenticity_score,
-           ordinariness_score = EXCLUDED.ordinariness_score,
-           ai_estimated_score = EXCLUDED.ai_estimated_score,
-           ai_estimated_at    = EXCLUDED.ai_estimated_at,
-           synthetic_id       = EXCLUDED.synthetic_id,
-           updated_at         = now()`,
+           source_type          = EXCLUDED.source_type,
+           name                 = EXCLUDED.name,
+           region               = EXCLUDED.region,
+           category             = EXCLUDED.category,
+           llm_summary          = EXCLUDED.llm_summary,
+           llm_tags             = EXCLUDED.llm_tags,
+           status               = EXCLUDED.status,
+           sourced_from         = EXCLUDED.sourced_from,
+           lat                  = EXCLUDED.lat,
+           lng                  = EXCLUDED.lng,
+           thumbnail_url        = EXCLUDED.thumbnail_url,
+           price_range          = EXCLUDED.price_range,
+           enriched_at          = EXCLUDED.enriched_at,
+           naver_source_url     = EXCLUDED.naver_source_url,
+           naver_snippet        = EXCLUDED.naver_snippet,
+           authenticity_score   = EXCLUDED.authenticity_score,
+           ordinariness_score   = EXCLUDED.ordinariness_score,
+           ai_estimated_score   = EXCLUDED.ai_estimated_score,
+           ai_estimated_at      = EXCLUDED.ai_estimated_at,
+           synthetic_id         = EXCLUDED.synthetic_id,
+           verified_by          = EXCLUDED.verified_by,
+           tier                 = EXCLUDED.tier,
+           awards_hint          = EXCLUDED.awards_hint,
+           updated_at           = now()`,
         [
           candidate.id,
           candidate.kakaoPlaceId,
@@ -223,6 +236,9 @@ export class PostgresCurationCandidateRepository implements CurationCandidateRep
           candidate.aiEstimatedScore,
           candidate.aiEstimatedAt,
           candidate.syntheticId,
+          candidate.verifiedBy,
+          candidate.tier,
+          candidate.awardsHint,
         ],
       );
     });
@@ -251,6 +267,17 @@ export class PostgresCurationCandidateRepository implements CurationCandidateRep
          SET synthetic_id = $2, updated_at = now()
          WHERE id = $1`,
         [id, syntheticId],
+      );
+    });
+  }
+
+  async patchCoordinates(id: string, lat: number, lng: number, verifiedBy: string): Promise<void> {
+    await this.withClient(async (client) => {
+      await client.query(
+        `UPDATE curation_candidates
+         SET lat = $2, lng = $3, verified_by = $4, updated_at = now()
+         WHERE id = $1`,
+        [id, lat, lng, verifiedBy],
       );
     });
   }

@@ -20,6 +20,11 @@ interface SpotRow {
   thumbnail_url: string | null;
   lat: number;
   lng: number;
+  tier: string;
+  awards: unknown;
+  curator_comment: string | null;
+  curator_comment_source: string | null;
+  curator_comment_retry_count: number;
 }
 
 function rowToSpot(row: SpotRow): Spot {
@@ -38,12 +43,18 @@ function rowToSpot(row: SpotRow): Spot {
     thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
+    tier: (row.tier as 'reference' | 'hidden') ?? 'hidden',
+    awards: (row.awards as string[]) ?? [],
+    curatorComment: row.curator_comment,
+    curatorCommentSource: row.curator_comment_source as 'gemma' | 'claude_fallback' | 'curator_edit' | null,
+    curatorCommentRetryCount: row.curator_comment_retry_count ?? 0,
   };
 }
 
 const SELECT_COLUMNS = `
   id, kakao_place_id, synthetic_id, name, region, category, price_range,
-  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng
+  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng,
+  tier, awards, curator_comment, curator_comment_source, curator_comment_retry_count
 `.trim();
 
 // Kakao-verified spots: conflict on kakao_place_id
@@ -51,23 +62,30 @@ const KAKAO_UPSERT_SQL = `
   INSERT INTO spots (
     id, kakao_place_id, synthetic_id, name, region, category, price_range,
     curation_score, popularity_score, trend_score, curation_comment,
-    thumbnail_url, lat, lng, is_active, updated_at
-  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,true,now())
+    thumbnail_url, lat, lng,
+    tier, awards, curator_comment, curator_comment_source, curator_comment_retry_count,
+    is_active, updated_at
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16::jsonb,$17,$18,$19,true,now())
   ON CONFLICT (kakao_place_id) DO UPDATE SET
-    synthetic_id      = EXCLUDED.synthetic_id,
-    name              = EXCLUDED.name,
-    region            = EXCLUDED.region,
-    category          = EXCLUDED.category,
-    price_range       = EXCLUDED.price_range,
-    curation_score    = EXCLUDED.curation_score,
-    popularity_score  = EXCLUDED.popularity_score,
-    trend_score       = EXCLUDED.trend_score,
-    curation_comment  = EXCLUDED.curation_comment,
-    thumbnail_url     = EXCLUDED.thumbnail_url,
-    lat               = EXCLUDED.lat,
-    lng               = EXCLUDED.lng,
-    is_active         = true,
-    updated_at        = now()
+    synthetic_id                = EXCLUDED.synthetic_id,
+    name                        = EXCLUDED.name,
+    region                      = EXCLUDED.region,
+    category                    = EXCLUDED.category,
+    price_range                 = EXCLUDED.price_range,
+    curation_score              = EXCLUDED.curation_score,
+    popularity_score            = EXCLUDED.popularity_score,
+    trend_score                 = EXCLUDED.trend_score,
+    curation_comment            = EXCLUDED.curation_comment,
+    thumbnail_url               = EXCLUDED.thumbnail_url,
+    lat                         = EXCLUDED.lat,
+    lng                         = EXCLUDED.lng,
+    tier                        = EXCLUDED.tier,
+    awards                      = EXCLUDED.awards,
+    curator_comment             = EXCLUDED.curator_comment,
+    curator_comment_source      = EXCLUDED.curator_comment_source,
+    curator_comment_retry_count = EXCLUDED.curator_comment_retry_count,
+    is_active                   = true,
+    updated_at                  = now()
 `;
 
 // Synthetic spots (no kakao_place_id): plain INSERT — ApproveCandidateUseCase
@@ -76,8 +94,10 @@ const SYNTHETIC_INSERT_SQL = `
   INSERT INTO spots (
     id, kakao_place_id, synthetic_id, name, region, category, price_range,
     curation_score, popularity_score, trend_score, curation_comment,
-    thumbnail_url, lat, lng, is_active, updated_at
-  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,true,now())
+    thumbnail_url, lat, lng,
+    tier, awards, curator_comment, curator_comment_source, curator_comment_retry_count,
+    is_active, updated_at
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16::jsonb,$17,$18,$19,true,now())
 `;
 
 function spotParams(spot: Spot): unknown[] {
@@ -96,6 +116,11 @@ function spotParams(spot: Spot): unknown[] {
     spot.thumbnailUrl,
     spot.lat,
     spot.lng,
+    spot.tier,
+    JSON.stringify(spot.awards),
+    spot.curatorComment,
+    spot.curatorCommentSource,
+    spot.curatorCommentRetryCount,
   ];
 }
 
@@ -239,5 +264,37 @@ export class PostgresSpotRepository implements SpotRepository {
         );
       });
     }
+  }
+
+  async findForEmbedding(spotIds?: string[]): Promise<{ id: string; name: string; introduction: string; tags: string }[]> {
+    return this.withClient(async (client) => {
+      type EmbedRow = { id: string; name: string; curator_comment: string | null; curation_comment: string | null; category: string };
+      let result;
+      if (spotIds !== undefined) {
+        result = await client.query<EmbedRow>(
+          `SELECT id, name, curator_comment, curation_comment, category FROM spots WHERE id = ANY($1) AND is_active = true`,
+          [spotIds],
+        );
+      } else {
+        result = await client.query<EmbedRow>(
+          `SELECT id, name, curator_comment, curation_comment, category FROM spots WHERE is_active = true AND embedding IS NULL`,
+        );
+      }
+      return result.rows.map((r) => ({
+        id: r.id,
+        name: r.name,
+        introduction: r.curator_comment ?? r.curation_comment ?? '',
+        tags: r.category,
+      }));
+    });
+  }
+
+  async saveEmbedding(spotId: string, embedding: number[]): Promise<void> {
+    await this.withClient(async (client) => {
+      await client.query(
+        `UPDATE spots SET embedding = $1::vector WHERE id = $2`,
+        [JSON.stringify(embedding), spotId],
+      );
+    });
   }
 }

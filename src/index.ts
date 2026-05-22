@@ -11,14 +11,23 @@ import { PostgresSpotRepository } from './infrastructure/persistence/PostgresSpo
 import { PostgresRecommenderAdapter } from './infrastructure/recommender/PostgresRecommenderAdapter.js';
 import { PostgresTransactionManager } from './infrastructure/persistence/PostgresTransactionManager.js';
 import { PostgresCurationCandidateRepository } from './infrastructure/persistence/PostgresCurationCandidateRepository.js';
+import { PostgresCurationDecisionRepository } from './infrastructure/persistence/PostgresCurationDecisionRepository.js';
 import { PostgresCalibrationProfileRepository } from './infrastructure/persistence/PostgresCalibrationProfileRepository.js';
 import { PostgresTrendSourceRepository } from './infrastructure/persistence/PostgresTrendSourceRepository.js';
 import { KakaoAuthAdapter } from './infrastructure/kakao/KakaoAuthAdapter.js';
 import { KakaoLocalPlaceAdapter } from './infrastructure/kakao/KakaoLocalPlaceAdapter.js';
+import { KakaoLocalVerifier } from './infrastructure/kakao/KakaoLocalVerifier.js';
 import { DevAuthProvider } from './infrastructure/kakao/DevAuthProvider.js';
 import { TravellerAuthService } from './infrastructure/kakao/TravellerAuthService.js';
 import { LLMParseFreeTextAdapter } from './infrastructure/llm/LLMParseFreeTextAdapter.js';
 import { AnthropicLLMEnricherAdapter } from './infrastructure/llm/AnthropicLLMEnricherAdapter.js';
+import { LlmExtractorAdapter } from './infrastructure/llm/LlmExtractorAdapter.js';
+import { SpotMetaInfererAdapter } from './infrastructure/llm/SpotMetaInfererAdapter.js';
+import { AnthropicLlmAdapter } from './infrastructure/llm/AnthropicLlmAdapter.js';
+import { VisitjejuAdapter } from './infrastructure/visitjeju/VisitjejuAdapter.js';
+import { NaverSearchAdapter } from './infrastructure/naver/NaverSearchAdapter.js';
+import { VoyageEmbeddingBatcher } from './infrastructure/voyage/VoyageEmbeddingBatcher.js';
+import { LabelStudioBridge } from './infrastructure/labelstudio/LabelStudioBridge.js';
 import { DatalabVisitkoreaAdapter } from './infrastructure/trend/DatalabVisitkoreaAdapter.js';
 import { JejuTourismBigdataAdapter } from './infrastructure/trend/JejuTourismBigdataAdapter.js';
 import { ComposeDayPlanService } from './application/core-flow/ComposeDayPlanService.js';
@@ -33,6 +42,9 @@ import { EnrichCandidateUseCase } from './application/curation/EnrichCandidateUs
 import { ApproveCandidateUseCase } from './application/curation/ApproveCandidateUseCase.js';
 import { RejectCandidateUseCase } from './application/curation/RejectCandidateUseCase.js';
 import { AdjustCalibrationUseCase } from './application/curation/AdjustCalibrationUseCase.js';
+import { RunDiscoveryPipelineUseCase } from './application/curation/RunDiscoveryPipelineUseCase.js';
+import { PersistCurationDecisionUseCase } from './application/curation/PersistCurationDecisionUseCase.js';
+import { PatchCandidateCoordinatesUseCase } from './application/curation/PatchCandidateCoordinatesUseCase.js';
 
 // ---------------------------------------------------------------------------
 // Load .env (manual parse — no dotenv dependency)
@@ -90,6 +102,7 @@ const shortlistRepo = new PostgresShortlistRepository(pool);
 const dayPlanRepo = new PostgresDayPlanRepository(pool);
 const spotRepo = new PostgresSpotRepository(pool);
 const candidateRepo = new PostgresCurationCandidateRepository(pool);
+const decisionRepo = new PostgresCurationDecisionRepository(pool);
 const calibrationRepo = new PostgresCalibrationProfileRepository(pool);
 const trendSourceRepo = new PostgresTrendSourceRepository(pool);
 
@@ -103,6 +116,48 @@ const llmEnricher = new AnthropicLLMEnricherAdapter(process.env['ANTHROPIC_API_K
 const kakaoLocalApi = new KakaoLocalPlaceAdapter();
 const datalabAdapter = new DatalabVisitkoreaAdapter();
 const ijtoAdapter = new JejuTourismBigdataAdapter();
+
+// Phase 0 adapters
+const visitjejuAdapter = new VisitjejuAdapter({ apiKey: process.env['VISITJEJU_API_KEY'] ?? '' });
+const naverSearchAdapter = new NaverSearchAdapter({
+  clientId: process.env['NAVER_CLIENT_ID'] ?? '',
+  clientSecret: process.env['NAVER_CLIENT_SECRET'] ?? '',
+});
+const defaultLlmProvider = new AnthropicLlmAdapter({
+  model: process.env['ANTHROPIC_MODEL'] ?? 'claude-haiku-4-5-20251001',
+  ...(process.env['ANTHROPIC_API_KEY'] !== undefined && { apiKey: process.env['ANTHROPIC_API_KEY'] }),
+});
+const llmExtractorAdapter = new LlmExtractorAdapter(defaultLlmProvider);
+const kakaoLocalVerifier = new KakaoLocalVerifier({ restApiKey: process.env['KAKAO_REST_API_KEY'] ?? '' });
+const spotMetaInferer = new SpotMetaInfererAdapter(defaultLlmProvider);
+const persistDecisionUseCase = new PersistCurationDecisionUseCase(decisionRepo, candidateRepo);
+const labelStudioBridge = new LabelStudioBridge(
+  persistDecisionUseCase,
+  process.env['LABEL_STUDIO_WEBHOOK_SECRET'] ?? '',
+);
+const voyageBatcher = new VoyageEmbeddingBatcher(
+  process.env['VOYAGE_API_KEY'] ?? '',
+  spotMetaInferer,
+  spotRepo,
+);
+
+// Load naver queries (populated in Phase F: src/config/naver-queries.json)
+let naverQueries: string[] = [];
+try {
+  const queriesPath = resolve(process.cwd(), 'src/config/naver-queries.json');
+  naverQueries = JSON.parse(readFileSync(queriesPath, 'utf-8')) as string[];
+} catch {
+  // File does not yet exist — pipeline will run with an empty query list
+}
+
+const runPipelineUseCase = new RunDiscoveryPipelineUseCase(
+  visitjejuAdapter,
+  naverSearchAdapter,
+  llmExtractorAdapter,
+  kakaoLocalVerifier,
+  candidateRepo,
+  naverQueries,
+);
 
 // Use cases
 const deps = {
@@ -123,6 +178,11 @@ const deps = {
   approveCandidateUseCase: new ApproveCandidateUseCase(candidateRepo, spotRepo, txManager),
   rejectCandidateUseCase: new RejectCandidateUseCase(candidateRepo, spotRepo, txManager),
   adjustCalibrationUseCase: new AdjustCalibrationUseCase(authService, tripRepo, calibrationRepo),
+  runDiscoveryPipelineUseCase: runPipelineUseCase,
+  getCandidateByIdUseCase: { execute: (id: string) => candidateRepo.findById(id) },
+  patchCandidateCoordinatesUseCase: new PatchCandidateCoordinatesUseCase(candidateRepo),
+  embeddingBatcher: voyageBatcher,
+  labelStudioBridge,
 };
 
 // ---------------------------------------------------------------------------

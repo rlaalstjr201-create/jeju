@@ -22,8 +22,9 @@ interface VisitjejuApiItem {
   latitude: string;
   longitude: string;
   tag: string;
+  alltag: string;
   introduction: string;
-  repPhoto: { thumbnailpath: string; imgpath: string } | null;
+  repPhoto: { descseo?: string; photoid?: { photoid: number; imgpath: string; thumbnailpath: string } } | null;
   region1cd: { value: string } | string;
   region2cd: { value: string } | string;
 }
@@ -50,8 +51,11 @@ function toRawSpot(item: VisitjejuApiItem): VisitjejuRawSpot {
     latitude: item.latitude,
     longitude: item.longitude,
     tag: item.tag,
+    alltag: item.alltag ?? '',
     introduction: item.introduction,
-    repPhoto: item.repPhoto ?? null,
+    repPhoto: item.repPhoto?.photoid
+      ? { thumbnailpath: item.repPhoto.photoid.thumbnailpath, imgpath: item.repPhoto.photoid.imgpath }
+      : null,
     region1cd: flattenValue(item.region1cd),
     region2cd: flattenValue(item.region2cd),
   };
@@ -78,7 +82,7 @@ export class VisitjejuAdapter implements VisitjejuApiPort {
       url.searchParams.set('locale', 'kr');
       url.searchParams.set('pageSize', String(pageSize));
       url.searchParams.set('page', String(page));
-      if (params.category) url.searchParams.set('cid', params.category);
+      if (params.category) url.searchParams.set('category', params.category);
       if (params.region)   url.searchParams.set('region1cd', params.region);
 
       let data: VisitjejuApiResponse;

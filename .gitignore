@@ -101,3 +101,6 @@ secrets/
 
 # External API documentation (binary/zip, not source)
 docs/api-guides/
+
+# Label Studio local data
+label-studio-data/

@@ -1,6 +1,6 @@
 import type { Region } from '../shared/Region.js';
 
-export type CandidateStatus = 'pending' | 'kakao_unverified' | 'approved' | 'rejected';
+export type CandidateStatus = 'pending' | 'kakao_unverified' | 'approved' | 'rejected' | 'auto_rejected';
 
 export type CandidateSourceType = 'visitjeju' | 'naver';
 
@@ -29,4 +29,8 @@ export interface CurationCandidate {
   readonly aiEstimatedScore: number | null;  // 1–10, v1 null
   readonly aiEstimatedAt: string | null;     // ISO timestamp, v1 null
   readonly syntheticId: string | null;       // set on approval of kakao_unverified
+  readonly verifiedBy: 'kakao' | 'naver' | 'kakao_parent' | 'manual' | 'naver_kakao_cross' | null; // coordinate verification source
+  readonly tier: 'reference' | 'hidden';
+  readonly awardsHint: string[];
+  readonly curatorComment: string | null;
 }

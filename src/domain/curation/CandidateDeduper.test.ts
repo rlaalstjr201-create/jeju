@@ -80,3 +80,44 @@ describe('CandidateDeduper', () => {
     expect(deduper.isDuplicate(33.458899, 126.942)).toBe(true);
   });
 });
+
+// ---------------------------------------------------------------------------
+// CandidateDeduper — name dedup
+// ---------------------------------------------------------------------------
+
+describe('CandidateDeduper — name dedup', () => {
+  it('new name → not duplicate', () => {
+    const deduper = new CandidateDeduper([]);
+    expect(deduper.isNameDuplicate('카페아무개')).toBe(false);
+  });
+
+  it('same name after acceptName → duplicate', () => {
+    const deduper = new CandidateDeduper([]);
+    deduper.acceptName('카페아무개');
+    expect(deduper.isNameDuplicate('카페아무개')).toBe(true);
+  });
+
+  it('name normalization — spaces stripped', () => {
+    const deduper = new CandidateDeduper([]);
+    deduper.acceptName('카페 아무개');
+    expect(deduper.isNameDuplicate('카페아무개')).toBe(true);
+  });
+
+  it('name normalization — brackets removed', () => {
+    const deduper = new CandidateDeduper([]);
+    deduper.acceptName('메종드백(분점)');
+    expect(deduper.isNameDuplicate('메종드백')).toBe(true);
+  });
+
+  it('name normalization — case insensitive', () => {
+    const deduper = new CandidateDeduper([]);
+    deduper.acceptName('Cafe Bora');
+    expect(deduper.isNameDuplicate('cafe bora')).toBe(true);
+  });
+
+  it('different names are not duplicates', () => {
+    const deduper = new CandidateDeduper([]);
+    deduper.acceptName('카페A');
+    expect(deduper.isNameDuplicate('카페B')).toBe(false);
+  });
+});

@@ -13,6 +13,7 @@ export interface VisitjejuRawSpot {
   readonly latitude: string;
   readonly longitude: string;
   readonly tag: string;
+  readonly alltag: string;
   readonly introduction: string;
   readonly repPhoto: { readonly thumbnailpath: string; readonly imgpath: string } | null;
   readonly region1cd: string;

@@ -5,6 +5,7 @@ import {
   CandidateNotFoundError,
   InvalidStatusError,
   ApproveError,
+  ApproveBlockedError,
 } from './ApproveCandidateUseCase.js';
 import type { CurationCandidate } from '../../domain/curation/CurationCandidate.js';
 
@@ -34,6 +35,10 @@ function makeCandidate(overrides: Partial<CurationCandidate> = {}): CurationCand
     aiEstimatedScore: null,
     aiEstimatedAt: null,
     syntheticId: null,
+    verifiedBy: null,
+    tier: 'hidden',
+    awardsHint: [],
+    curatorComment: null,
     ...overrides,
   };
 }
@@ -48,6 +53,7 @@ function makeMocks() {
     save: vi.fn(),
     updateStatusConditional: vi.fn().mockResolvedValue(true),
     setSyntheticId: vi.fn(),
+    patchCoordinates: vi.fn().mockResolvedValue(undefined),
   };
   const spotRepo = {
     findById: vi.fn(),
@@ -189,6 +195,48 @@ describe('ApproveCandidateUseCase', () => {
     await expect(
       useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
     ).rejects.toThrow(ApproveError);
+  });
+
+  it('throws ApproveBlockedError when kakao_unverified candidate has null coordinates', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(
+      makeCandidate({ status: 'kakao_unverified', lat: null, lng: null, enrichedAt: '2026-05-18' }),
+    );
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await expect(
+      useCase.execute({ candidateId: 'candidate-1', curationScore: 80 }),
+    ).rejects.toBeInstanceOf(ApproveBlockedError);
+  });
+
+  // ─── Phase E: curatorComment passthrough ──────────────────────────────────
+
+  it('(F1) candidate.curatorComment is passed to Spot.curatorComment with source=claude_fallback', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(
+      makeCandidate({ curatorComment: '"고사리커피"가 시그니처인 카페예요.' }),
+    );
+    spotRepo.saveReturningId.mockResolvedValue('spot-x');
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await useCase.execute({ candidateId: 'candidate-1', curationScore: 80 });
+
+    const saved = spotRepo.saveReturningId.mock.calls[0]![0] as import('../../domain/spot/Spot.js').Spot;
+    expect(saved.curatorComment).toBe('"고사리커피"가 시그니처인 카페예요.');
+    expect(saved.curatorCommentSource).toBe('claude_fallback');
+  });
+
+  it('(F1) candidate.curatorComment null → Spot.curatorComment null, source null', async () => {
+    const { candidateRepo, spotRepo, txManager } = makeMocks();
+    candidateRepo.findById.mockResolvedValue(makeCandidate({ curatorComment: null }));
+    spotRepo.saveReturningId.mockResolvedValue('spot-y');
+
+    const useCase = new ApproveCandidateUseCase(candidateRepo as never, spotRepo as never, txManager as never);
+    await useCase.execute({ candidateId: 'candidate-1', curationScore: 80 });
+
+    const saved = spotRepo.saveReturningId.mock.calls[0]![0] as import('../../domain/spot/Spot.js').Spot;
+    expect(saved.curatorComment).toBeNull();
+    expect(saved.curatorCommentSource).toBeNull();
   });
 
   // ─── C4: buildSyntheticId ─────────────────────────────────────────────────

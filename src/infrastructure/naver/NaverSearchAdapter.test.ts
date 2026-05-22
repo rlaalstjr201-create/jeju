@@ -76,6 +76,25 @@ describe('NaverSearchAdapter.searchBlog', () => {
     expect(result.items[0]!.description).toBe('진짜 현지인만 아는 곳');
   });
 
+  it('decodes HTML entities (&amp; &lt; &gt; &quot; &#39;) from title and description', async () => {
+    server.use(
+      http.get(BLOG_ENDPOINT, () =>
+        HttpResponse.json(makeNaverResponse([
+          makeNaverItem({
+            title: 'B &amp; B 숙소 &quot;제주&quot; &lt;추천&gt;',
+            description: '가격 &amp; 위치 최고, &#39;현지인&#39; 추천',
+          }),
+        ])),
+      ),
+    );
+
+    const adapter = makeAdapter();
+    const result = await adapter.searchBlog('제주 숙소');
+
+    expect(result.items[0]!.title).toBe('B & B 숙소 "제주" <추천>');
+    expect(result.items[0]!.description).toBe("가격 & 위치 최고, '현지인' 추천");
+  });
+
   it('sends query, display, and auth headers', async () => {
     let capturedRequest: Request | undefined;
     server.use(

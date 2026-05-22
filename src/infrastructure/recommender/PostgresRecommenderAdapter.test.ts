@@ -36,6 +36,9 @@ function makeSpotRow(overrides: Partial<{
   thumbnail_url: string | null;
   lat: number;
   lng: number;
+  tier: string;
+  awards: unknown;
+  curator_comment: string | null;
 }> = {}) {
   return {
     id: 'spot-1',
@@ -52,6 +55,9 @@ function makeSpotRow(overrides: Partial<{
     thumbnail_url: null,
     lat: 33.5,
     lng: 126.5,
+    tier: 'hidden',
+    awards: [],
+    curator_comment: null,
     ...overrides,
   };
 }
@@ -72,6 +78,11 @@ function makeExpectedSpot(row: ReturnType<typeof makeSpotRow>): Spot {
     thumbnailUrl: row.thumbnail_url,
     lat: row.lat,
     lng: row.lng,
+    tier: 'hidden',
+    awards: [],
+    curatorComment: null,
+    curatorCommentSource: null,
+    curatorCommentRetryCount: 0,
   };
 }
 

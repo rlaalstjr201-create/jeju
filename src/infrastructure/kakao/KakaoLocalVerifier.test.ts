@@ -149,4 +149,192 @@ describe('KakaoLocalVerifier.verify', () => {
     expect(params.has('x')).toBe(false);
     expect(params.has('y')).toBe(false);
   });
+
+  describe('Jeju bbox filter', () => {
+    it('Kakao matched but coords outside Jeju bbox → matched=false (산방산 오매칭 케이스)', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([
+            makeKakaoPlace({ y: '34.862', x: '128.539' }), // 경남 거제 산방산
+          ])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('산방산');
+
+      expect(result.matched).toBe(false);
+      expect(result.lat).toBeNull();
+      expect(result.lng).toBeNull();
+    });
+
+    it('Kakao matched and coords inside Jeju bbox → matched=true', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([
+            makeKakaoPlace({ y: '33.458485', x: '126.942678' }), // 성산일출봉
+          ])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('성산일출봉');
+
+      expect(result.matched).toBe(true);
+      expect(result.lat).toBeCloseTo(33.458485, 4);
+    });
+
+    it('coords on Jeju bbox boundary (lat=33.0, lng=126.0) → matched=true', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([
+            makeKakaoPlace({ y: '33.0', x: '126.0', place_name: '경계테스트' }),
+          ])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('경계테스트');
+
+      expect(result.matched).toBe(true);
+    });
+
+    it('추자도 coords (lat=33.95) → matched=true (bbox 34.0으로 확장, ADR-0031)', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([
+            makeKakaoPlace({ y: '33.935432', x: '126.32276', place_name: '신양항' }), // 신양항(하추자항)
+          ])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('신양항');
+
+      expect(result.matched).toBe(true);
+      expect(result.lat).toBeCloseTo(33.935432, 4);
+    });
+
+    it('lat=34.86 (경남 거제) → matched=false (bbox 34.0 상한 초과)', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([
+            makeKakaoPlace({ y: '34.86', x: '128.54' }),
+          ])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('산방산');
+
+      expect(result.matched).toBe(false);
+    });
+  });
+
+  describe('name-match filter (isSubstantialMatch)', () => {
+    it('generic phrase query "제주 서귀포 현지인 맛집" → matched=false even if bbox passes', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([makeKakaoPlace({ place_name: '제주 서귀포 현지인 맛집' })])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('제주 서귀포 현지인 맛집');
+
+      expect(result.matched).toBe(false);
+    });
+
+    it('specific spot name "선흘곶식당" exactly matching result → matched=true', async () => {
+      server.use(
+        http.get(ENDPOINT, () =>
+          HttpResponse.json(makeKakaoResponse([makeKakaoPlace({ place_name: '선흘곶식당' })])),
+        ),
+      );
+
+      const verifier = makeVerifier();
+      const result = await verifier.verify('선흘곶식당');
+
+      expect(result.matched).toBe(true);
+    });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// searchRaw tests
+// ---------------------------------------------------------------------------
+
+describe('KakaoLocalVerifier.searchRaw', () => {
+  it('returns KakaoSearchHit array for Jeju results', async () => {
+    server.use(
+      http.get(ENDPOINT, () => HttpResponse.json(makeKakaoResponse([makeKakaoPlace()]))),
+    );
+
+    const verifier = makeVerifier();
+    const results = await verifier.searchRaw('성산일출봉');
+
+    expect(results).toHaveLength(1);
+    expect(results[0]!.name).toBe('성산일출봉');
+    expect(results[0]!.placeId).toBe('12345678');
+    expect(results[0]!.lat).toBeCloseTo(33.458485, 4);
+    expect(results[0]!.lng).toBeCloseTo(126.942678, 4);
+    expect(results[0]!.category).toBe('여행 > 관광,명소 > 자연');
+  });
+
+  it('filters out non-Jeju results', async () => {
+    const seoulPlace = makeKakaoPlace({
+      place_name: '서울 카페',
+      x: '126.978',  // Seoul lng
+      y: '37.566',   // Seoul lat
+    });
+    server.use(
+      http.get(ENDPOINT, () => HttpResponse.json(makeKakaoResponse([seoulPlace]))),
+    );
+
+    const verifier = makeVerifier();
+    const results = await verifier.searchRaw('서울 카페');
+
+    expect(results).toHaveLength(0);
+  });
+
+  it('sends size param equal to limit', async () => {
+    let capturedUrl: string | undefined;
+    server.use(
+      http.get(ENDPOINT, ({ request }) => {
+        capturedUrl = request.url;
+        return HttpResponse.json(makeKakaoResponse([]));
+      }),
+    );
+
+    const verifier = makeVerifier();
+    await verifier.searchRaw('test', 3);
+
+    const params = new URL(capturedUrl!).searchParams;
+    expect(params.get('size')).toBe('3');
+  });
+
+  it('default limit is 5', async () => {
+    let capturedUrl: string | undefined;
+    server.use(
+      http.get(ENDPOINT, ({ request }) => {
+        capturedUrl = request.url;
+        return HttpResponse.json(makeKakaoResponse([]));
+      }),
+    );
+
+    const verifier = makeVerifier();
+    await verifier.searchRaw('test');
+
+    const params = new URL(capturedUrl!).searchParams;
+    expect(params.get('size')).toBe('5');
+  });
+
+  it('401 → throws KakaoLocalVerifierError', async () => {
+    server.use(
+      http.get(ENDPOINT, () => HttpResponse.json({ msg: 'KOE401' }, { status: 401 })),
+    );
+
+    const verifier = makeVerifier();
+    await expect(verifier.searchRaw('test')).rejects.toBeInstanceOf(KakaoLocalVerifierError);
+  });
 });

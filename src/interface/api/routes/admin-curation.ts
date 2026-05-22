@@ -119,4 +119,28 @@ export function registerAdminCurationRoutes(fastify: FastifyInstance, deps: AppD
       return mapErrorToReply(reply, err);
     }
   });
+
+  // PATCH /api/v1/admin/curation/candidates/:id/coordinates
+  fastify.patch('/api/v1/admin/curation/candidates/:id/coordinates', async (req, reply) => {
+    try {
+      requireCuratorRole(req);
+      const { id } = req.params as { id: string };
+      const body = req.body as { lat: number; lng: number };
+      if (typeof body.lat !== 'number' || typeof body.lng !== 'number') {
+        throw new ValidationError('lat and lng must be numbers');
+      }
+      // Jeju bbox check
+      if (body.lat < 33.0 || body.lat > 34.0 || body.lng < 126.0 || body.lng > 127.0) {
+        throw new ValidationError('coordinates outside Jeju bbox (lat 33.0-34.0, lng 126.0-127.0)');
+      }
+      await deps.patchCandidateCoordinatesUseCase.execute({
+        candidateId: id,
+        lat: body.lat,
+        lng: body.lng,
+      });
+      return reply.status(200).send({ status: 'pending' });
+    } catch (err) {
+      return mapErrorToReply(reply, err);
+    }
+  });
 }
