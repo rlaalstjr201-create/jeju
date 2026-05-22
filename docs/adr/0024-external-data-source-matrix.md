@@ -1,6 +1,6 @@
-# ADR-0024: 외부 데이터 소스 4슬롯 모델
+# ADR-0024: 외부 데이터 소스 5슬롯 모델 (Stage 4 검증 체인)
 
-Status: Accepted (2026-05-18, 2026-05-19 수정)
+Status: Accepted (2026-05-18, 2026-05-19 수정×2)
 
 ## Context
 
@@ -16,14 +16,23 @@ Status: Accepted (2026-05-18, 2026-05-19 수정)
 
 ## Decision
 
-**4슬롯 모델**:
+**5슬롯 모델** (2026-05-19 개정: Stage 4 검증 체인 추가):
 
 | 슬롯 | 역할 | 1차 소스 | 보조 |
 |---|---|---|---|
-| WHAT | spot 메타 base | 비짓제주 API | 카카오 로컬 (좌표 검증, 스텁 유지) |
+| WHAT | spot 메타 base | 비짓제주 API | 카카오 로컬 (좌표 검증) |
 | WHERE | 좌표 (lat/lng) | 비짓제주 `latitude`/`longitude` | — |
 | DISCOVERY | long-tail hidden gem 후보 발굴 | **네이버 블로그·카페 검색 API** | — |
+| VERIFY | Stage 4 좌표 검증 fallback 체인 | 카카오 로컬 → 네이버 로컬 → parent hint | 수동 (curator PATCH API) |
 | WHY | 큐레이터 판단 보조 | 큐레이터 1인 | LLM 사전 점수 + 네이버 데이터랩 (수동) |
+
+**VERIFY 슬롯 fallback 체인 (naver 후보 전용)**:
+1. `KakaoLocalVerifier.verify(spot_name)` → matched: `verified_by='kakao'`
+2. 실패 시 `NaverLocalVerifierAdapter.verify(spot_name)` → matched: `verified_by='naver'`
+3. 2차도 실패 + `parent_spot_hint` 있을 때 `KakaoLocalVerifier.verify(parent_spot_hint)` → matched: `verified_by='kakao_parent'`, spot_name 원본 유지
+4. 모두 실패 → `status='kakao_unverified'`, `verified_by=null`, 좌표 null
+
+`verified_by` 컬럼은 Migration 015에서 추가 (ADR-0034).
 
 **임베딩·지도는 별도 인프라 슬롯으로 관리** (소스 교체 가능성 낮음):
 - 임베딩: Voyage AI

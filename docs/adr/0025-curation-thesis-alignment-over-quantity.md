@@ -31,7 +31,40 @@ Phase 0 자동 수집은 후보 100~200개 산출을 예상한다. "200개 채�
 - ADR-0010(광고 없음, 큐레이터 thesis)과 충돌. 양적 압박이 thesis 훼손으로 이어진다.
 - KPI 달성을 위한 승인이 B1(신뢰)·A4(파트너 같은 경험)를 직접 위협한다.
 
+## Amendment 1 (2026-05-23): Phase F Alpha 조건 충족 기록
+
+**상태:** ADR-0025 조건 달성.
+
+### 달성 경위
+
+Phase E (generate-comments-v2, B2 prompt + L2 snippet-target 0.70)로 reference 스팟 1000건 중 816건에 큐레이터 코멘트 자동 생성.  
+Phase F에서 큐레이터가 alpha-50 후보 풀(L2 ≥ 0.80, trend ≠ declining, 161건)을 검토하고 최종 49건 approve.
+
+### 최종 수치
+
+| 항목 | 값 |
+|---|---|
+| 생성된 Spot 레코드 | **49건** |
+| curatorComment 연결 | 49/49 (`claude_fallback` source) |
+| 카테고리 배분 | sightseeing 15 / restaurant 14 / cultural_space 10 / experience 6 / cafe 4 |
+| 스킵 1건 | 우도바위소리 — visitjeju content 삭제(404), thumbnail 없음 |
+| 알파 조건 | **충족** — "thesis 정렬 50건 > 평균 200건" |
+
+### 카테고리 편차 허용 근거
+
+구씨커피로스터스 restaurant → cafe 재분류(ADR-0051 Amendment 1)로 restaurant−1 / cafe+1.  
+총 49건이 50건 목표에서 1건 미달이지만 스킵 사유(외부 콘텐츠 삭제)가 명확하고 thesis 정렬도는 충족.
+
+### 후속 백로그
+
+- 우도바위소리 thumbnail 소싱 후 approve → 50건 완성
+- NULL 잔여 코멘트 114건 (529 재처리 13건 + 구조적 실패 101건)
+- naver_snippet=NULL spot 전수 규모 audit
+- SDK 업그레이드 후 prompt caching 적용 (ADR-0052 Amendment 5 참고)
+
 ## References
 
 - ADR-0010: No Monetisation Influence; Curator-Thesis Scoring
 - ADR-0022: Rejected Candidate Is Not Re-Discoverable
+- ADR-0052: Amendment 5 — 검증 레이어 최종 구성 (L1+L2+HHEM폐기)
+- ADR-0051: Amendment 1 — 카테고리 재정립

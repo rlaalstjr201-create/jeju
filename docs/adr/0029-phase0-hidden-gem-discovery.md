@@ -1,6 +1,8 @@
 # ADR-0029: Phase 0 hidden gem 자동 발굴 파이프라인
 
-Status: Accepted (2026-05-19)
+Status: Deprecated (2026-05-20)
+
+> **폐기 사유**: Naver 발굴 파이프라인 ROI 낮음 검증 (2026-05-20 실측 분석). 비짓제주 3,534건(c1+c4) 점수 기반 선별 중심으로 전환 (ADR-0048, ADR-0051). 네이버 long-tail 발굴 121건은 v1.5 재검토 보류. 단, 네이버 검색 API는 external_buzz_score 측정에 재활용 (ADR-0051).
 
 ## Context
 
