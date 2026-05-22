@@ -96,8 +96,14 @@ secrets/
 
 # Claude Code / Codex local artifacts
 .claude/settings.local.json
+.claude/worktrees/
 .agents/
 .codex-review-prompt.txt
+
+# Runtime artifacts (regeneratable)
+backup/
+diagnostics/
+data/
 
 # External API documentation (binary/zip, not source)
 docs/api-guides/
