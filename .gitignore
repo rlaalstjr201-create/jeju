@@ -103,7 +103,8 @@ secrets/
 # Runtime artifacts (regeneratable)
 backup/
 diagnostics/
-data/
+/data/
+!apps/*/src/data/
 
 # External API documentation (binary/zip, not source)
 docs/api-guides/
