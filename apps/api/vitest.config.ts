@@ -8,5 +8,8 @@ export default defineConfig({
       'tests/e2e/**',
       'src/interface/api/server.test.ts',
     ],
+    deps: {
+      inline: ['@jeju/shared'],
+    },
   },
 });

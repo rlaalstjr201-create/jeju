@@ -1,14 +1,9 @@
 import type { FastifyInstance } from 'fastify';
+import { SPOT_CATEGORIES } from '@jeju/shared';
 import type { AppDependencies } from '../AppDependencies.js';
 import { mapErrorToReply, ValidationError } from './_shared.js';
 
-const VALID_CATEGORIES = new Set([
-  'sightseeing',
-  'restaurant',
-  'cultural_space',
-  'experience',
-  'cafe',
-]);
+const VALID_CATEGORIES = new Set<string>(SPOT_CATEGORIES);
 
 export function registerSpotsRoutes(fastify: FastifyInstance, deps: AppDependencies): void {
   fastify.get('/api/v1/spots', async (req, reply) => {
@@ -19,7 +14,9 @@ export function registerSpotsRoutes(fastify: FastifyInstance, deps: AppDependenc
       if (category !== undefined && !VALID_CATEGORIES.has(category)) {
         throw new ValidationError(`Invalid category: ${category}`);
       }
-      const result = await deps.listApprovedSpotsUseCase.execute({ category });
+      const result = await deps.listApprovedSpotsUseCase.execute(
+        category !== undefined ? { category } : {},
+      );
       return reply.status(200).send(result);
     } catch (err) {
       return mapErrorToReply(reply, err);

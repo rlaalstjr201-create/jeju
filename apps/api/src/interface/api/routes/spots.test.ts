@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
+import type { SpotCard, SpotsResponse } from '@jeju/shared';
 import { buildServer } from '../server.js';
 import type { AppDependencies } from '../AppDependencies.js';
-import type { ListApprovedSpotsResult } from '../../../application/spots/ListApprovedSpotsUseCase.js';
 
-function makeSpot(overrides: Partial<ListApprovedSpotsResult['spots'][number]> = {}): ListApprovedSpotsResult['spots'][number] {
+function makeSpot(overrides: Partial<SpotCard> = {}): SpotCard {
   return {
     id: 'spot-1',
     name: '테스트 스팟',
@@ -12,12 +12,12 @@ function makeSpot(overrides: Partial<ListApprovedSpotsResult['spots'][number]> =
     lng: 126.5,
     thumbnailUrl: null,
     curatorComment: '좋은 곳',
-    region: 'jeju' as never,
+    region: 'jeju-city',
     ...overrides,
   };
 }
 
-function makeDeps(spotsResult: ListApprovedSpotsResult = { spots: [] }): AppDependencies {
+function makeDeps(spotsResult: SpotsResponse = { spots: [] }): AppDependencies {
   return {
     createTripUseCase: { execute: vi.fn() } as never,
     getRecommendationsUseCase: { execute: vi.fn() } as never,
@@ -51,7 +51,7 @@ describe('GET /api/v1/spots', () => {
     await fastify.close();
 
     expect(res.statusCode).toBe(200);
-    expect(res.json<ListApprovedSpotsResult>().spots).toHaveLength(2);
+    expect(res.json<SpotsResponse>().spots).toHaveLength(2);
   });
 
   it('category 필터 — use case에 category 전달됨', async () => {
@@ -67,7 +67,7 @@ describe('GET /api/v1/spots', () => {
 
     expect(res.statusCode).toBe(200);
     expect(mockExecute).toHaveBeenCalledWith({ category: 'cafe' });
-    expect(res.json<ListApprovedSpotsResult>().spots[0]?.category).toBe('cafe');
+    expect(res.json<SpotsResponse>().spots[0]?.category).toBe('cafe');
   });
 
   it('잘못된 category — 400 VALIDATION_ERROR', async () => {
@@ -88,7 +88,7 @@ describe('GET /api/v1/spots', () => {
     const res = await fastify.inject({ method: 'GET', url: '/api/v1/spots' });
     await fastify.close();
 
-    const spot = res.json<ListApprovedSpotsResult>().spots[0] as Record<string, unknown>;
+    const spot = res.json<SpotsResponse>().spots[0] as unknown as Record<string, unknown>;
     expect(spot['rating']).toBeUndefined();
     expect(spot['reviewCount']).toBeUndefined();
     expect(spot['popularityScore']).toBeUndefined();

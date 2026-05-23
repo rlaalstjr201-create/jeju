@@ -57,6 +57,7 @@
     "generate:comments:v2:hhem:dryrun": "tsx src/scripts/generate-comments-v2.ts --dry-run --limit=10"
   },
   "dependencies": {
+    "@jeju/shared": "*",
     "@anthropic-ai/sdk": "^0.27.0",
     "@fastify/sensible": "^6.0.4",
     "axios": "^1.7.0",

@@ -2,7 +2,7 @@
   "name": "jeju",
   "version": "0.1.0",
   "private": true,
-  "workspaces": ["apps/*"],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "db:up": "docker compose up -d",
     "db:down": "docker compose down"

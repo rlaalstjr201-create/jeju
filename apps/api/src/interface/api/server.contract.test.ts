@@ -26,6 +26,7 @@ function makeDeps(overrides: Partial<AppDependencies> = {}): AppDependencies {
     patchCandidateCoordinatesUseCase: { execute: vi.fn().mockResolvedValue(undefined) } as unknown as AppDependencies['patchCandidateCoordinatesUseCase'],
     embeddingBatcher: { run: vi.fn(), runSingle: vi.fn() } as unknown as AppDependencies['embeddingBatcher'],
     labelStudioBridge: { handleWebhook: vi.fn(), handleWebhookWithSignature: vi.fn() } as unknown as AppDependencies['labelStudioBridge'],
+    listApprovedSpotsUseCase: { execute: vi.fn().mockResolvedValue({ spots: [] }) } as unknown as AppDependencies['listApprovedSpotsUseCase'],
     ...overrides,
   };
 }
