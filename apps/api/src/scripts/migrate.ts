@@ -1,11 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Pool } from 'pg';
 import { runMigrations } from '../infrastructure/persistence/migrationRunner.js';
 
 function loadEnv(): void {
   try {
-    const envPath = resolve(process.cwd(), '.env');
+    const envPath = fileURLToPath(new URL('../../../../.env', import.meta.url));
     const lines = readFileSync(envPath, 'utf-8').split('\n');
     for (const line of lines) {
       const trimmed = line.trim();

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Pool } from 'pg';
 import { buildServer } from './interface/api/server.js';
 import { runMigrations } from './infrastructure/persistence/migrationRunner.js';
@@ -52,7 +53,7 @@ import { PatchCandidateCoordinatesUseCase } from './application/curation/PatchCa
 
 function loadEnv(): void {
   try {
-    const envPath = resolve(process.cwd(), '.env');
+    const envPath = fileURLToPath(new URL('../../../.env', import.meta.url));
     const lines = readFileSync(envPath, 'utf-8').split('\n');
     for (const line of lines) {
       const trimmed = line.trim();
@@ -144,7 +145,7 @@ const voyageBatcher = new VoyageEmbeddingBatcher(
 // Load naver queries (populated in Phase F: src/config/naver-queries.json)
 let naverQueries: string[] = [];
 try {
-  const queriesPath = resolve(process.cwd(), 'src/config/naver-queries.json');
+  const queriesPath = fileURLToPath(new URL('./config/naver-queries.json', import.meta.url));
   naverQueries = JSON.parse(readFileSync(queriesPath, 'utf-8')) as string[];
 } catch {
   // File does not yet exist — pipeline will run with an empty query list
