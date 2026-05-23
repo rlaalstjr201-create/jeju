@@ -12,13 +12,21 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, 'node_modules'),
 ];
 
-// expo-router@6 → @react-navigation/bottom-tabs@7.x has peerDep react-native@0.85.3,
-// so npm hoists 0.85.3 to root/node_modules alongside apps/mobile's SDK 54 install (0.81.5).
-// Metro may resolve react-native imports from packages in root to the wrong 0.85.3 version
-// (which has VirtualViewNativeComponent codegen that babel-plugin-codegen@0.81.5 can't parse).
-// Use resolveRequest to pin ALL react-native requires to apps/mobile's 0.81.5.
+// npm hoists newer peer-dep versions of native packages to root/node_modules when
+// @react-navigation (pulled in by expo-router@6) requires them. Metro then bundles two
+// instances of the same native module, causing "Tried to register two views with the
+// same name" / duplicate-React-instance errors at runtime.
+// Pin react, react-native, and all RN community native modules to apps/mobile's versions.
+const PINNED_TO_MOBILE = new Set([
+  'react',
+  'react-native',
+  'react-native-safe-area-context',
+  'react-native-screens',
+]);
 config.resolver.resolveRequest = (context, moduleName, platform) => {
-  if (moduleName === 'react-native' || moduleName.startsWith('react-native/')) {
+  const root = moduleName.split('/')[0];
+  const scoped = moduleName.startsWith('@') ? moduleName.split('/').slice(0, 2).join('/') : root;
+  if (PINNED_TO_MOBILE.has(root) || PINNED_TO_MOBILE.has(scoped)) {
     return context.resolveRequest(
       { ...context, originModulePath: path.join(projectRoot, 'package.json') },
       moduleName,
