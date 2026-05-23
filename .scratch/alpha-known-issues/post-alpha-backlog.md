@@ -55,6 +55,16 @@ Phase E 풀런 결과:
 
 ---
 
+## [backlog] tsc 기존 에러 19건 — Phase E/F 스키마 드리프트
+
+- **사유:** Phase E/F에서 `CurationCandidate`에 `tier`, `awardsHint`, `curatorComment` 필드 추가 후
+  `DiscoverCandidatesUseCase`, `PostgresDayPlanRepository`, `PostgresShortlistRepository` 등 미갱신.
+  기타: `VisitjejuRawSpot.alltag` optional→required 변경, `DiscoveryPipelineResult` 필드 추가 등.
+- **영향:** 런타임 및 599 tests 영향 없음. RN 앱과 무관.
+- **조치:** 큐레이션 파이프라인 재가동 전 각 파일 누락 필드 보완.
+
+---
+
 ## [backlog] Label Studio 풀 연동 (알파 후)
 
 - **현황:** B1(comment export), B3(webhook secret), B4(webhook handler), B5(UI template) 미구현
