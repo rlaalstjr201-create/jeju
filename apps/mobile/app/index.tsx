@@ -1,4 +1,3 @@
-import type { ComponentProps } from 'react';
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -9,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router, type Href } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import type { SpotCard, SpotCategory } from '@jeju/shared';
 import { BottomTabBar } from '../src/components/BottomTabBar';
@@ -17,15 +17,13 @@ import { CATEGORY_ORDER, SPOT_CATEGORY_LABELS } from '../src/constants/categorie
 import { getSpots } from '../src/data/spotRepository';
 import { colors, fontSize, fontWeight, spacing } from '../src/theme/tokens';
 
-type FeatherName = ComponentProps<typeof Feather>['name'];
-
-const TOP_TABS: Array<{ label: string; icon?: FeatherName }> = [
-  { label: '홈' },
-  { label: '관광' },
-  { label: '맛집' },
-  { label: '카페' },
-  { label: '문화' },
-  { label: '체험' },
+const TOP_TABS: Array<{ label: string; category: SpotCategory | null }> = [
+  { label: '홈', category: null },
+  { label: '관광', category: 'sightseeing' },
+  { label: '맛집', category: 'restaurant' },
+  { label: '카페', category: 'cafe' },
+  { label: '문화', category: 'cultural_space' },
+  { label: '체험', category: 'experience' },
 ];
 
 export default function HomeScreen() {
@@ -61,7 +59,13 @@ export default function HomeScreen() {
           {TOP_TABS.map((tab, i) => (
             <Pressable
               key={tab.label}
-              onPress={i === 0 ? () => setActiveTopTab(0) : () => {}}
+              onPress={() => {
+                if (tab.category !== null) {
+                  router.push(`/category/${tab.category}` as Href);
+                } else {
+                  setActiveTopTab(0);
+                }
+              }}
               style={styles.tabItem}
             >
               <Text style={i === activeTopTab ? styles.tabActive : styles.tabInactive}>
@@ -94,7 +98,7 @@ export default function HomeScreen() {
               <View key={cat} style={styles.section}>
                 <View style={styles.sectionHeader}>
                   <Text style={styles.sectionTitle}>{SPOT_CATEGORY_LABELS[cat]}</Text>
-                  <Pressable onPress={() => {}}>
+                  <Pressable onPress={() => router.push(`/category/${cat}` as Href)}>
                     <Feather name="chevron-right" size={18} color={colors.accent} />
                   </Pressable>
                 </View>
