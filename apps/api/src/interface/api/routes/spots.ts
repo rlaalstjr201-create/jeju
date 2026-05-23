@@ -22,4 +22,14 @@ export function registerSpotsRoutes(fastify: FastifyInstance, deps: AppDependenc
       return mapErrorToReply(reply, err);
     }
   });
+
+  fastify.get('/api/v1/spots/:id', async (req, reply) => {
+    const { id } = req.params as { id: string };
+    try {
+      const result = await deps.getSpotByIdUseCase.execute(id);
+      return reply.status(200).send(result);
+    } catch (err) {
+      return mapErrorToReply(reply, err);
+    }
+  });
 }

@@ -25,6 +25,7 @@ function makeDeps(): AppDependencies {
       handleWebhookWithSignature: vi.fn().mockResolvedValue(undefined),
     },
     listApprovedSpotsUseCase: { execute: vi.fn().mockResolvedValue({ spots: [] }) } as never,
+    getSpotByIdUseCase: { execute: vi.fn() } as never,
   };
 }
 

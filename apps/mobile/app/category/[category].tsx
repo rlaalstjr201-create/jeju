@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, type Href } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import type { SpotCard, SpotCategory } from '@jeju/shared';
 import { BottomTabBar } from '../../src/components/BottomTabBar';
@@ -52,7 +52,12 @@ export default function CategoryScreen() {
         <FlatList
           data={spots}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <SpotCardList spot={item} onPress={() => {}} />}
+          renderItem={({ item }) => (
+            <SpotCardList
+              spot={item}
+              onPress={() => router.push(`/spot/${item.id}` as Href)}
+            />
+          )}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
         />

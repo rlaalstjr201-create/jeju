@@ -71,6 +71,7 @@ function makeDeps(): AppDependencies {
     embeddingBatcher: { run: vi.fn(), runSingle: vi.fn() } as never,
     labelStudioBridge: { handleWebhook: vi.fn(), handleWebhookWithSignature: vi.fn() } as never,
     listApprovedSpotsUseCase: { execute: vi.fn().mockResolvedValue({ spots: [] }) } as never,
+    getSpotByIdUseCase: { execute: vi.fn() } as never,
   };
 }
 

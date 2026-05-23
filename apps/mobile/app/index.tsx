@@ -108,7 +108,11 @@ export default function HomeScreen() {
                   contentContainerStyle={styles.cardList}
                 >
                   {(grouped[cat] ?? []).map((spot) => (
-                    <SpotCardHome key={spot.id} spot={spot} onPress={() => {}} />
+                    <SpotCardHome
+                      key={spot.id}
+                      spot={spot}
+                      onPress={() => router.push(`/spot/${spot.id}` as Href)}
+                    />
                   ))}
                 </ScrollView>
               </View>

@@ -15,6 +15,7 @@ import type { EmbeddingBatcherPort } from '../../application/ports/EmbeddingBatc
 import type { LabelStudioBridgePort } from '../../application/ports/LabelStudioBridgePort.js';
 import type { CurationCandidate } from '../../domain/curation/CurationCandidate.js';
 import type { ListApprovedSpotsUseCase } from '../../application/spots/ListApprovedSpotsUseCase.js';
+import type { GetSpotByIdUseCase } from '../../application/spots/GetSpotByIdUseCase.js';
 
 export interface AppDependencies {
   createTripUseCase: CreateTripUseCase;
@@ -34,4 +35,5 @@ export interface AppDependencies {
   embeddingBatcher: EmbeddingBatcherPort;
   labelStudioBridge: LabelStudioBridgePort;
   listApprovedSpotsUseCase: ListApprovedSpotsUseCase;
+  getSpotByIdUseCase: GetSpotByIdUseCase;
 }

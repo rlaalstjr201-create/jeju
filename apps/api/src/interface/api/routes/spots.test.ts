@@ -38,6 +38,7 @@ function makeDeps(spotsResult: SpotsResponse = { spots: [] }): AppDependencies {
     listApprovedSpotsUseCase: {
       execute: vi.fn().mockResolvedValue(spotsResult),
     } as never,
+    getSpotByIdUseCase: { execute: vi.fn() } as never,
   };
 }
 

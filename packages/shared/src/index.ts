@@ -35,3 +35,11 @@ export interface SpotCard {
 export interface SpotsResponse {
   spots: SpotCard[];
 }
+
+export interface SpotDetail extends SpotCard {
+  source: string | null;
+}
+
+export interface SpotDetailResponse {
+  spot: SpotDetail;
+}
