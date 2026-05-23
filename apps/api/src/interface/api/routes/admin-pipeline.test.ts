@@ -70,6 +70,7 @@ function makeDeps(): AppDependencies {
     patchCandidateCoordinatesUseCase: { execute: vi.fn().mockResolvedValue(undefined) } as never,
     embeddingBatcher: { run: vi.fn(), runSingle: vi.fn() } as never,
     labelStudioBridge: { handleWebhook: vi.fn(), handleWebhookWithSignature: vi.fn() } as never,
+    listApprovedSpotsUseCase: { execute: vi.fn().mockResolvedValue({ spots: [] }) } as never,
   };
 }
 

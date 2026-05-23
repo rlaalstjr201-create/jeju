@@ -10,6 +10,7 @@ import { registerCalibrationRoutes } from './routes/calibration.js';
 import { registerAdminPipelineRoutes } from './routes/admin-pipeline.js';
 import { registerAdminLabelingRoutes } from './routes/admin-labeling.js';
 import { registerAdminEmbeddingRoutes } from './routes/admin-embedding.js';
+import { registerSpotsRoutes } from './routes/spots.js';
 
 export type { AppDependencies } from './AppDependencies.js';
 
@@ -25,6 +26,7 @@ export function buildServer(deps: AppDependencies): FastifyInstance {
   registerAdminPipelineRoutes(fastify, deps);
   registerAdminLabelingRoutes(fastify, deps);
   registerAdminEmbeddingRoutes(fastify, deps);
+  registerSpotsRoutes(fastify, deps);
 
   return fastify;
 }

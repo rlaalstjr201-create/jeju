@@ -30,6 +30,7 @@ function makeDeps(): AppDependencies {
       runSingle: vi.fn(),
     },
     labelStudioBridge: { handleWebhook: vi.fn(), handleWebhookWithSignature: vi.fn() } as never,
+    listApprovedSpotsUseCase: { execute: vi.fn().mockResolvedValue({ spots: [] }) } as never,
   };
 }
 

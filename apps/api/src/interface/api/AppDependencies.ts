@@ -14,6 +14,7 @@ import type { PatchCandidateCoordinatesUseCase } from '../../application/curatio
 import type { EmbeddingBatcherPort } from '../../application/ports/EmbeddingBatcherPort.js';
 import type { LabelStudioBridgePort } from '../../application/ports/LabelStudioBridgePort.js';
 import type { CurationCandidate } from '../../domain/curation/CurationCandidate.js';
+import type { ListApprovedSpotsUseCase } from '../../application/spots/ListApprovedSpotsUseCase.js';
 
 export interface AppDependencies {
   createTripUseCase: CreateTripUseCase;
@@ -32,4 +33,5 @@ export interface AppDependencies {
   patchCandidateCoordinatesUseCase: Pick<PatchCandidateCoordinatesUseCase, 'execute'>;
   embeddingBatcher: EmbeddingBatcherPort;
   labelStudioBridge: LabelStudioBridgePort;
+  listApprovedSpotsUseCase: ListApprovedSpotsUseCase;
 }

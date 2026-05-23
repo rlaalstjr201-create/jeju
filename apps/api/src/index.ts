@@ -46,6 +46,7 @@ import { AdjustCalibrationUseCase } from './application/curation/AdjustCalibrati
 import { RunDiscoveryPipelineUseCase } from './application/curation/RunDiscoveryPipelineUseCase.js';
 import { PersistCurationDecisionUseCase } from './application/curation/PersistCurationDecisionUseCase.js';
 import { PatchCandidateCoordinatesUseCase } from './application/curation/PatchCandidateCoordinatesUseCase.js';
+import { ListApprovedSpotsUseCase } from './application/spots/ListApprovedSpotsUseCase.js';
 
 // ---------------------------------------------------------------------------
 // Load .env (manual parse — no dotenv dependency)
@@ -184,6 +185,7 @@ const deps = {
   patchCandidateCoordinatesUseCase: new PatchCandidateCoordinatesUseCase(candidateRepo),
   embeddingBatcher: voyageBatcher,
   labelStudioBridge,
+  listApprovedSpotsUseCase: new ListApprovedSpotsUseCase(spotRepo),
 };
 
 // ---------------------------------------------------------------------------

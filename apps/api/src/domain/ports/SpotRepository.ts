@@ -13,4 +13,5 @@ export interface SpotRepository {
   findAllActiveIds(): Promise<string[]>;
   deactivate(kakaoPlaceId: string): Promise<void>;
   updateScores(updates: { spotId: string; popularityScore: number; trendScore: number }[]): Promise<void>;
+  findApproved(category?: string): Promise<Spot[]>;
 }

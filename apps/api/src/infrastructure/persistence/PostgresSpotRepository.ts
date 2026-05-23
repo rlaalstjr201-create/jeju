@@ -289,6 +289,28 @@ export class PostgresSpotRepository implements SpotRepository {
     });
   }
 
+  async findApproved(category?: string): Promise<Spot[]> {
+    return this.withClient(async (client) => {
+      if (category !== undefined) {
+        const result = await client.query<SpotRow>(
+          `SELECT ${SELECT_COLUMNS}
+           FROM spots
+           WHERE is_active = true AND curator_comment_source IS NOT NULL AND category = $1
+           ORDER BY name`,
+          [category],
+        );
+        return result.rows.map(rowToSpot);
+      }
+      const result = await client.query<SpotRow>(
+        `SELECT ${SELECT_COLUMNS}
+         FROM spots
+         WHERE is_active = true AND curator_comment_source IS NOT NULL
+         ORDER BY name`,
+      );
+      return result.rows.map(rowToSpot);
+    });
+  }
+
   async saveEmbedding(spotId: string, embedding: number[]): Promise<void> {
     await this.withClient(async (client) => {
       await client.query(
