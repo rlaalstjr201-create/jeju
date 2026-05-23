@@ -18,6 +18,9 @@ export function SpotCardHome({ spot, onPress }: Props) {
         </View>
       )}
       <Text style={styles.name} numberOfLines={2}>{spot.name}</Text>
+      {spot.curatorComment !== null && (
+        <Text style={styles.comment} numberOfLines={1}>{spot.curatorComment}</Text>
+      )}
     </Pressable>
   );
 }
@@ -32,11 +35,11 @@ function PhotoIcon({ size }: { size: number }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 108,
+    width: 124,
   },
   thumbnail: {
-    width: 108,
-    height: 108,
+    width: 124,
+    height: 186,
     borderRadius: radius.sm,
   },
   placeholder: {
@@ -46,8 +49,14 @@ const styles = StyleSheet.create({
   },
   name: {
     marginTop: spacing.xs,
-    fontSize: fontSize.sub,
+    fontSize: fontSize.body,
     fontWeight: fontWeight.medium,
     color: colors.text.primary,
+  },
+  comment: {
+    marginTop: 2,
+    fontSize: fontSize.hint,
+    fontWeight: fontWeight.regular,
+    color: colors.text.secondary,
   },
 });

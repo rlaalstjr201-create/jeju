@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "private": true,
   "dependencies": {
+    "@expo/vector-icons": "^15.0.3",
     "@jeju/shared": "*",
     "expo": "^54.0.34",
     "expo-constants": "~18.0.13",

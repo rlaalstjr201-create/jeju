@@ -1,55 +1,199 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import type { SpotCard } from '@jeju/shared';
-import { SpotCardDetailHeader } from '../src/components/SpotCardDetailHeader';
+import type { ComponentProps } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
+import type { SpotCard, SpotCategory } from '@jeju/shared';
+import { BottomTabBar } from '../src/components/BottomTabBar';
 import { SpotCardHome } from '../src/components/SpotCardHome';
-import { SpotCardList } from '../src/components/SpotCardList';
+import { CATEGORY_ORDER, SPOT_CATEGORY_LABELS } from '../src/constants/categories';
+import { getSpots } from '../src/data/spotRepository';
 import { colors, fontSize, fontWeight, spacing } from '../src/theme/tokens';
 
-const SAMPLE: SpotCard = {
-  id: 'sample-1',
-  name: '성산일출봉',
-  category: 'sightseeing',
-  lat: 33.458,
-  lng: 126.943,
-  thumbnailUrl: null,
-  curatorComment: '제주 동쪽 끝, 일출로 유명한 분화구. 세계자연유산.',
-  region: '서귀포시',
-};
+type FeatherName = ComponentProps<typeof Feather>['name'];
 
-export default function ComponentSamples() {
+const TOP_TABS: Array<{ label: string; icon?: FeatherName }> = [
+  { label: '홈' },
+  { label: '관광' },
+  { label: '맛집' },
+  { label: '카페' },
+  { label: '문화' },
+  { label: '체험' },
+];
+
+export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+  const [spots, setSpots] = useState<SpotCard[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [activeTopTab, setActiveTopTab] = useState(0);
+  const [activeBottomTab, setActiveBottomTab] = useState(0);
+
+  useEffect(() => {
+    getSpots()
+      .then((res) => setSpots(res.spots))
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : String(err)))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const grouped = spots.reduce<Partial<Record<SpotCategory, SpotCard[]>>>((acc, spot) => {
+    (acc[spot.category] ??= []).push(spot);
+    return acc;
+  }, {});
+
   return (
-    <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <Label>SpotCardDetailHeader</Label>
-      <SpotCardDetailHeader spot={SAMPLE} onBack={() => {}} />
-
-      <Label>SpotCardHome</Label>
-      <View style={styles.padded}>
-        <SpotCardHome spot={SAMPLE} onPress={() => {}} />
+    <View style={[styles.page, { paddingTop: insets.top }]}>
+      {/* Top tab row */}
+      <View style={styles.tabRow}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.tabScroll}
+          style={styles.tabScrollOuter}
+        >
+          {TOP_TABS.map((tab, i) => (
+            <Pressable
+              key={tab.label}
+              onPress={i === 0 ? () => setActiveTopTab(0) : () => {}}
+              style={styles.tabItem}
+            >
+              <Text style={i === activeTopTab ? styles.tabActive : styles.tabInactive}>
+                {tab.label}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+        <View style={styles.bellWrap}>
+          <Feather name="bell" size={20} color={colors.text.secondary} />
+        </View>
       </View>
+      <View style={styles.tabDivider} />
 
-      <Label>SpotCardList</Label>
-      <View style={styles.padded}>
-        <SpotCardList spot={SAMPLE} onPress={() => {}} />
-      </View>
-    </ScrollView>
+      {/* Body */}
+      {loading && (
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color={colors.accent} />
+        </View>
+      )}
+      {!loading && error !== null && (
+        <View style={styles.center}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
+      {!loading && error === null && (
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
+          {CATEGORY_ORDER.map((cat) =>
+            (grouped[cat]?.length ?? 0) > 0 ? (
+              <View key={cat} style={styles.section}>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>{SPOT_CATEGORY_LABELS[cat]}</Text>
+                  <Pressable onPress={() => {}}>
+                    <Feather name="chevron-right" size={18} color={colors.accent} />
+                  </Pressable>
+                </View>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.cardList}
+                >
+                  {(grouped[cat] ?? []).map((spot) => (
+                    <SpotCardHome key={spot.id} spot={spot} onPress={() => {}} />
+                  ))}
+                </ScrollView>
+              </View>
+            ) : null
+          )}
+        </ScrollView>
+      )}
+
+      {/* Bottom tab bar */}
+      <BottomTabBar
+        activeIndex={activeBottomTab}
+        onPress={(i) => { if (i === 0) setActiveBottomTab(0); }}
+        insetBottom={insets.bottom}
+      />
+    </View>
   );
 }
 
-function Label({ children }: { children: string }) {
-  return <Text style={styles.label}>{children}</Text>;
-}
-
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: colors.bg.page },
-  content: { paddingBottom: spacing.xl },
-  padded: { paddingHorizontal: spacing.lg },
-  label: {
+  page: {
+    flex: 1,
+    backgroundColor: colors.bg.page,
+  },
+  tabRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 48,
+  },
+  tabScrollOuter: {
+    flex: 1,
+  },
+  tabScroll: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.sm,
-    fontSize: fontSize.hint,
+    alignItems: 'center',
+    columnGap: spacing.lg,
+  },
+  tabItem: {
+    paddingVertical: spacing.sm,
+  },
+  tabActive: {
+    fontSize: fontSize.sub,
     fontWeight: fontWeight.medium,
+    color: colors.text.primary,
+  },
+  tabInactive: {
+    fontSize: fontSize.sub,
+    fontWeight: fontWeight.regular,
     color: colors.text.hint,
-    letterSpacing: 0.5,
+  },
+  bellWrap: {
+    paddingRight: spacing.lg,
+    paddingLeft: spacing.sm,
+    justifyContent: 'center',
+  },
+  tabDivider: {
+    height: 1,
+    backgroundColor: colors.divider,
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: colors.accent,
+    textAlign: 'center',
+    padding: spacing.lg,
+  },
+  body: {
+    paddingBottom: spacing.xl,
+  },
+  section: {
+    marginTop: spacing.xl,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  sectionTitle: {
+    fontSize: fontSize.titleLg,
+    fontWeight: fontWeight.medium,
+    color: colors.text.primary,
+  },
+  cardList: {
+    paddingHorizontal: spacing.lg,
+    columnGap: spacing.md,
+    paddingRight: spacing.xl + spacing.lg,
   },
 });
