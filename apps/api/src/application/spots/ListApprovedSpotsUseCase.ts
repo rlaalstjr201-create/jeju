@@ -20,6 +20,7 @@ export class ListApprovedSpotsUseCase {
         lat: s.lat,
         lng: s.lng,
         thumbnailUrl: s.thumbnailUrl,
+        imageUrl: s.imageUrl ?? null,
         curatorComment: s.curatorComment,
         region: s.region,
       })),

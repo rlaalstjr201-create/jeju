@@ -17,6 +17,7 @@ export class GetSpotByIdUseCase {
       lat: spot.lat,
       lng: spot.lng,
       thumbnailUrl: spot.thumbnailUrl,
+      imageUrl: spot.imageUrl ?? null,
       curatorComment: spot.curatorComment,
       region: spot.region,
       source: spot.curatorCommentSource,

@@ -37,9 +37,9 @@ export function SpotCardFeed({ spot, onPress }: Props) {
     <Pressable onPress={onPress} style={styles.card}>
       {/* Photo + overlays */}
       <View style={styles.photoWrap}>
-        {spot.thumbnailUrl !== null ? (
+        {(spot.imageUrl ?? spot.thumbnailUrl) !== null ? (
           <Image
-            source={{ uri: spot.thumbnailUrl }}
+            source={{ uri: (spot.imageUrl ?? spot.thumbnailUrl)! }}
             style={StyleSheet.absoluteFill}
             resizeMode="cover"
           />

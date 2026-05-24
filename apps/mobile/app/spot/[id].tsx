@@ -60,9 +60,9 @@ export default function SpotDetailScreen() {
       {!loading && spot !== null && (
         <ScrollView showsVerticalScrollIndicator={false} bounces>
           {/* Hero */}
-          <Pressable style={styles.hero} onPress={() => spot.thumbnailUrl !== null && setShowFullscreen(true)}>
-            {spot.thumbnailUrl !== null ? (
-              <Image source={{ uri: spot.thumbnailUrl }} style={StyleSheet.absoluteFill} resizeMode="cover" />
+          <Pressable style={styles.hero} onPress={() => (spot.imageUrl ?? spot.thumbnailUrl) !== null && setShowFullscreen(true)}>
+            {(spot.imageUrl ?? spot.thumbnailUrl) !== null ? (
+              <Image source={{ uri: (spot.imageUrl ?? spot.thumbnailUrl)! }} style={StyleSheet.absoluteFill} resizeMode="cover" />
             ) : (
               <View style={[StyleSheet.absoluteFill, styles.heroPlaceholder]} />
             )}
@@ -139,11 +139,11 @@ export default function SpotDetailScreen() {
       />
 
       {/* Fullscreen modal */}
-      {spot?.thumbnailUrl !== null && (
+      {(spot?.imageUrl ?? spot?.thumbnailUrl) !== null && (
         <Modal visible={showFullscreen} animationType="fade" statusBarTranslucent>
           <View style={styles.modal}>
             <Image
-              source={{ uri: spot?.thumbnailUrl ?? '' }}
+              source={{ uri: spot?.imageUrl ?? spot?.thumbnailUrl ?? '' }}
               style={StyleSheet.absoluteFill}
               resizeMode="contain"
             />

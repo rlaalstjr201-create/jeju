@@ -18,6 +18,7 @@ interface SpotRow {
   trend_score: number;
   curation_comment: string | null;
   thumbnail_url: string | null;
+  image_url: string | null;
   lat: number;
   lng: number;
   tier: string;
@@ -41,6 +42,7 @@ function rowToSpot(row: SpotRow): Spot {
     trendScore: row.trend_score,
     curationComment: row.curation_comment,
     thumbnailUrl: row.thumbnail_url,
+    imageUrl: row.image_url,
     lat: row.lat,
     lng: row.lng,
     tier: (row.tier as 'reference' | 'hidden') ?? 'hidden',
@@ -53,7 +55,7 @@ function rowToSpot(row: SpotRow): Spot {
 
 const SELECT_COLUMNS = `
   id, kakao_place_id, synthetic_id, name, region, category, price_range,
-  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, lat, lng,
+  curation_score, popularity_score, trend_score, curation_comment, thumbnail_url, image_url, lat, lng,
   tier, awards, curator_comment, curator_comment_source, curator_comment_retry_count
 `.trim();
 
@@ -62,10 +64,10 @@ const KAKAO_UPSERT_SQL = `
   INSERT INTO spots (
     id, kakao_place_id, synthetic_id, name, region, category, price_range,
     curation_score, popularity_score, trend_score, curation_comment,
-    thumbnail_url, lat, lng,
+    thumbnail_url, image_url, lat, lng,
     tier, awards, curator_comment, curator_comment_source, curator_comment_retry_count,
     is_active, updated_at
-  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16::jsonb,$17,$18,$19,true,now())
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$20,$13,$14,$15,$16::jsonb,$17,$18,$19,true,now())
   ON CONFLICT (kakao_place_id) DO UPDATE SET
     synthetic_id                = EXCLUDED.synthetic_id,
     name                        = EXCLUDED.name,
@@ -77,6 +79,7 @@ const KAKAO_UPSERT_SQL = `
     trend_score                 = EXCLUDED.trend_score,
     curation_comment            = EXCLUDED.curation_comment,
     thumbnail_url               = EXCLUDED.thumbnail_url,
+    image_url                   = EXCLUDED.image_url,
     lat                         = EXCLUDED.lat,
     lng                         = EXCLUDED.lng,
     tier                        = EXCLUDED.tier,
@@ -94,10 +97,10 @@ const SYNTHETIC_INSERT_SQL = `
   INSERT INTO spots (
     id, kakao_place_id, synthetic_id, name, region, category, price_range,
     curation_score, popularity_score, trend_score, curation_comment,
-    thumbnail_url, lat, lng,
+    thumbnail_url, image_url, lat, lng,
     tier, awards, curator_comment, curator_comment_source, curator_comment_retry_count,
     is_active, updated_at
-  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16::jsonb,$17,$18,$19,true,now())
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$20,$13,$14,$15,$16::jsonb,$17,$18,$19,true,now())
 `;
 
 function spotParams(spot: Spot): unknown[] {
@@ -121,6 +124,7 @@ function spotParams(spot: Spot): unknown[] {
     spot.curatorComment,
     spot.curatorCommentSource,
     spot.curatorCommentRetryCount,
+    spot.imageUrl, // $20 — appended last to keep $1-$19 positions stable
   ];
 }
 

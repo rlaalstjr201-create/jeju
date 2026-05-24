@@ -28,6 +28,7 @@ export interface SpotCard {
   lat: number;
   lng: number;
   thumbnailUrl: string | null;
+  imageUrl?: string | null;
   curatorComment: string | null;
   region: string;
 }
