@@ -65,6 +65,18 @@ Phase E 풀런 결과:
 
 ---
 
+## [backlog] 출처 아이콘 표시
+
+- **현황:** 상세 화면 출처 칸 "비짓제주" 텍스트 고정 (임시). 아이콘 미표시.
+- **조치:**
+  1. `spots` 테이블에 `source_url` 컬럼 추가 + `curation_candidates.naver_source_url` 값 이전
+  2. `GET /api/v1/spots/:id` 응답에 `sourceUrl` 노출
+  3. `apps/api/public/icons/source-*.png` → `apps/mobile/assets/icons/` 이전
+  4. `apps/api/src/lib/source-icons.ts` RN용 포팅 (`require` 방식, `/icons/` 경로 제거)
+  5. 상세 화면 `GridItem 출처` 도메인별 아이콘 + 텍스트 표시
+
+---
+
 ## [backlog] Label Studio 풀 연동 (알파 후)
 
 - **현황:** B1(comment export), B3(webhook secret), B4(webhook handler), B5(UI template) 미구현

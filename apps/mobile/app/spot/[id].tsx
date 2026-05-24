@@ -18,11 +18,6 @@ import { SPOT_CATEGORY_LABELS } from '../../src/constants/categories';
 import { getSpotById } from '../../src/data/spotRepository';
 import { colors, fontSize, fontWeight, radius, spacing } from '../../src/theme/tokens';
 
-const SOURCE_LABELS: Record<string, string> = {
-  gemma: '감귤 AI',
-  claude_fallback: '감귤 AI',
-  curator_edit: '큐레이터',
-};
 
 const REGION_LABELS: Record<string, string> = {
   'jeju-city': '제주시',
@@ -104,11 +99,7 @@ export default function SpotDetailScreen() {
               <View style={styles.gridSep} />
               <GridItem label="카테고리" value={SPOT_CATEGORY_LABELS[spot.category] ?? spot.category} />
               <View style={styles.gridSep} />
-              <GridItem
-                label="출처"
-                value={spot.source !== null ? (SOURCE_LABELS[spot.source] ?? spot.source) : '—'}
-                accent={spot.source !== null}
-              />
+              <GridItem label="출처" value="비짓제주" />
             </View>
           </View>
 
