@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  FlatList,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -9,16 +10,14 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router, type Href } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
 import type { SpotCard, SpotCategory } from '@jeju/shared';
 import { BottomTabBar } from '../src/components/BottomTabBar';
-import { SpotCardHome } from '../src/components/SpotCardHome';
-import { CATEGORY_ORDER, SPOT_CATEGORY_LABELS } from '../src/constants/categories';
+import { SpotCardFeed } from '../src/components/SpotCardFeed';
 import { getSpots } from '../src/data/spotRepository';
 import { colors, fontSize, fontWeight, spacing } from '../src/theme/tokens';
 
-const TOP_TABS: Array<{ label: string; category: SpotCategory | null }> = [
-  { label: '홈', category: null },
+const FILTER_TABS: Array<{ label: string; category: SpotCategory | null }> = [
+  { label: '전체', category: null },
   { label: '관광', category: 'sightseeing' },
   { label: '맛집', category: 'restaurant' },
   { label: '카페', category: 'cafe' },
@@ -31,54 +30,60 @@ export default function HomeScreen() {
   const [spots, setSpots] = useState<SpotCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTopTab, setActiveTopTab] = useState(0);
-  const [activeBottomTab, setActiveBottomTab] = useState(0);
+  const [activeFilter, setActiveFilter] = useState(0);
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
     getSpots()
       .then((res) => setSpots(res.spots))
       .catch((err: unknown) => setError(err instanceof Error ? err.message : String(err)))
       .finally(() => setLoading(false));
   }, []);
 
-  const grouped = spots.reduce<Partial<Record<SpotCategory, SpotCard[]>>>((acc, spot) => {
-    (acc[spot.category] ??= []).push(spot);
-    return acc;
-  }, {});
+  useEffect(() => { load(); }, [load]);
+
+  const filtered = activeFilter === 0
+    ? spots
+    : spots.filter((s) => s.category === FILTER_TABS[activeFilter]!.category);
+
+  const renderItem = useCallback(({ item }: { item: SpotCard }) => (
+    <SpotCardFeed
+      spot={item}
+      onPress={() => router.push(`/spot/${item.id}` as Href)}
+    />
+  ), []);
+
+  const keyExtractor = useCallback((item: SpotCard) => item.id, []);
 
   return (
     <View style={[styles.page, { paddingTop: insets.top }]}>
-      {/* Top tab row */}
-      <View style={styles.tabRow}>
+      {/* Filter tabs */}
+      <View style={styles.filterWrap}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.tabScroll}
-          style={styles.tabScrollOuter}
+          contentContainerStyle={styles.filterScroll}
         >
-          {TOP_TABS.map((tab, i) => (
+          {FILTER_TABS.map((tab, i) => (
             <Pressable
               key={tab.label}
               onPress={() => {
                 if (tab.category !== null) {
                   router.push(`/category/${tab.category}` as Href);
                 } else {
-                  setActiveTopTab(0);
+                  setActiveFilter(0);
                 }
               }}
-              style={styles.tabItem}
+              style={[styles.filterChip, i === activeFilter && styles.filterChipActive]}
             >
-              <Text style={i === activeTopTab ? styles.tabActive : styles.tabInactive}>
+              <Text style={[styles.filterText, i === activeFilter && styles.filterTextActive]}>
                 {tab.label}
               </Text>
             </Pressable>
           ))}
         </ScrollView>
-        <View style={styles.bellWrap}>
-          <Feather name="bell" size={20} color={colors.text.secondary} />
-        </View>
       </View>
-      <View style={styles.tabDivider} />
 
       {/* Body */}
       {loading && (
@@ -89,42 +94,31 @@ export default function HomeScreen() {
       {!loading && error !== null && (
         <View style={styles.center}>
           <Text style={styles.errorText}>{error}</Text>
+          <Pressable onPress={load} style={styles.retryBtn}>
+            <Text style={styles.retryText}>다시 시도</Text>
+          </Pressable>
         </View>
       )}
       {!loading && error === null && (
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
-          {CATEGORY_ORDER.map((cat) =>
-            (grouped[cat]?.length ?? 0) > 0 ? (
-              <View key={cat} style={styles.section}>
-                <View style={styles.sectionHeader}>
-                  <Text style={styles.sectionTitle}>{SPOT_CATEGORY_LABELS[cat]}</Text>
-                  <Pressable onPress={() => router.push(`/category/${cat}` as Href)}>
-                    <Feather name="chevron-right" size={18} color={colors.accent} />
-                  </Pressable>
-                </View>
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.cardList}
-                >
-                  {(grouped[cat] ?? []).map((spot) => (
-                    <SpotCardHome
-                      key={spot.id}
-                      spot={spot}
-                      onPress={() => router.push(`/spot/${spot.id}` as Href)}
-                    />
-                  ))}
-                </ScrollView>
-              </View>
-            ) : null
-          )}
-        </ScrollView>
+        <FlatList
+          data={filtered}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={styles.feed}
+          showsVerticalScrollIndicator={false}
+          initialNumToRender={3}
+          maxToRenderPerBatch={2}
+          windowSize={5}
+          removeClippedSubviews
+          updateCellsBatchingPeriod={50}
+        />
       )}
 
-      {/* Bottom tab bar */}
       <BottomTabBar
-        activeIndex={activeBottomTab}
-        onPress={(i) => { if (i === 0) setActiveBottomTab(0); }}
+        activeIndex={0}
+        onPress={(i) => {
+          if (i === 2) router.push('/favorites' as Href);
+        }}
         insetBottom={insets.bottom}
       />
     </View>
@@ -136,72 +130,59 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bg.page,
   },
-  tabRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 48,
+  filterWrap: {
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.divider,
   },
-  tabScrollOuter: {
-    flex: 1,
-  },
-  tabScroll: {
+  filterScroll: {
     paddingHorizontal: spacing.lg,
-    alignItems: 'center',
-    columnGap: spacing.lg,
+    columnGap: spacing.sm,
   },
-  tabItem: {
-    paddingVertical: spacing.sm,
+  filterChip: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: 7,
+    borderRadius: 100,
+    backgroundColor: colors.bg.card,
   },
-  tabActive: {
-    fontSize: fontSize.sub,
-    fontWeight: fontWeight.medium,
-    color: colors.text.primary,
+  filterChipActive: {
+    backgroundColor: colors.accent,
   },
-  tabInactive: {
+  filterText: {
     fontSize: fontSize.sub,
     fontWeight: fontWeight.regular,
-    color: colors.text.hint,
+    color: colors.text.secondary,
   },
-  bellWrap: {
-    paddingRight: spacing.lg,
-    paddingLeft: spacing.sm,
-    justifyContent: 'center',
-  },
-  tabDivider: {
-    height: 1,
-    backgroundColor: colors.divider,
+  filterTextActive: {
+    fontWeight: fontWeight.medium,
+    color: '#FFFFFF',
   },
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: spacing.lg,
   },
   errorText: {
     color: colors.accent,
     textAlign: 'center',
     padding: spacing.lg,
+    fontSize: fontSize.body,
   },
-  body: {
-    paddingBottom: spacing.xl,
+  retryBtn: {
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+    borderRadius: 100,
+    backgroundColor: colors.accent,
   },
-  section: {
-    marginTop: spacing.xl,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
-    marginBottom: spacing.md,
-  },
-  sectionTitle: {
-    fontSize: fontSize.titleLg,
+  retryText: {
+    fontSize: fontSize.sub,
     fontWeight: fontWeight.medium,
-    color: colors.text.primary,
+    color: '#FFFFFF',
   },
-  cardList: {
+  feed: {
     paddingHorizontal: spacing.lg,
-    columnGap: spacing.md,
-    paddingRight: spacing.xl + spacing.lg,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xl,
   },
 });

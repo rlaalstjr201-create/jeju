@@ -22,6 +22,7 @@ const PINNED_TO_MOBILE = new Set([
   'react-native',
   'react-native-safe-area-context',
   'react-native-screens',
+  '@react-native-async-storage/async-storage',
 ]);
 config.resolver.resolveRequest = (context, moduleName, platform) => {
   const root = moduleName.split('/')[0];

@@ -10,14 +10,14 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { router, useLocalSearchParams } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
+import { router, useLocalSearchParams, type Href } from 'expo-router';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import type { SpotDetail } from '@jeju/shared';
 import { BottomTabBar } from '../../src/components/BottomTabBar';
+import { useFavorites } from '../../src/context/FavoritesContext';
 import { SPOT_CATEGORY_LABELS } from '../../src/constants/categories';
 import { getSpotById } from '../../src/data/spotRepository';
 import { colors, fontSize, fontWeight, radius, spacing } from '../../src/theme/tokens';
-
 
 const REGION_LABELS: Record<string, string> = {
   'jeju-city': '제주시',
@@ -30,6 +30,7 @@ const REGION_LABELS: Record<string, string> = {
 export default function SpotDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const insets = useSafeAreaInsets();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [spot, setSpot] = useState<SpotDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,6 +42,8 @@ export default function SpotDetailScreen() {
       .catch((err: unknown) => setError(err instanceof Error ? err.message : String(err)))
       .finally(() => setLoading(false));
   }, [id]);
+
+  const fav = spot !== null ? isFavorite(spot.id) : false;
 
   return (
     <View style={[styles.page, { paddingTop: insets.top }]}>
@@ -66,8 +69,15 @@ export default function SpotDetailScreen() {
             <Pressable onPress={() => router.back()} style={[styles.overlayBtn, styles.backBtn]}>
               <Feather name="chevron-left" size={22} color="#fff" />
             </Pressable>
-            <Pressable onPress={() => {}} style={[styles.overlayBtn, styles.heartBtn]}>
-              <Feather name="heart" size={20} color="#fff" />
+            <Pressable
+              onPress={() => { void toggleFavorite(spot.id); }}
+              style={[styles.overlayBtn, styles.heartBtn]}
+            >
+              <AntDesign
+                name={fav ? 'heart' : 'hearto'}
+                size={18}
+                color={fav ? colors.accent : '#fff'}
+              />
             </Pressable>
             {spot.thumbnailUrl !== null && (
               <View style={styles.fullscreenChip}>
@@ -119,7 +129,14 @@ export default function SpotDetailScreen() {
         </ScrollView>
       )}
 
-      <BottomTabBar insetBottom={insets.bottom} />
+      <BottomTabBar
+        activeIndex={0}
+        insetBottom={insets.bottom}
+        onPress={(i) => {
+          if (i === 2) router.push('/favorites' as Href);
+          else if (i === 0) router.push('/' as Href);
+        }}
+      />
 
       {/* Fullscreen modal */}
       {spot?.thumbnailUrl !== null && (
@@ -143,11 +160,11 @@ export default function SpotDetailScreen() {
   );
 }
 
-function GridItem({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+function GridItem({ label, value }: { label: string; value: string }) {
   return (
     <View style={styles.gridItem}>
       <Text style={styles.gridLabel}>{label}</Text>
-      <Text style={[styles.gridValue, accent === true && { color: colors.accent }]}>{value}</Text>
+      <Text style={styles.gridValue}>{value}</Text>
     </View>
   );
 }

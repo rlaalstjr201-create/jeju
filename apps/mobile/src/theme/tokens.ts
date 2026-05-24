@@ -1,16 +1,16 @@
 export const colors = {
   bg: {
-    page: '#FDFCF8',
-    card: '#FFFFFF',
-    placeholder: '#F2EFE7',
+    page: '#1C1E21',
+    card: '#26282C',
+    placeholder: '#2F3236',
   },
-  accent: '#C8841E',
+  accent: '#FF7E40',
   text: {
-    primary: '#2C2A24',
-    secondary: '#7C7560',
-    hint: '#B8B09A',
+    primary: '#F5F3EE',
+    secondary: '#8E949E',
+    hint: '#6E6A63',
   },
-  divider: '#EFECE3',
+  divider: 'rgba(255,255,255,0.08)',
 } as const;
 
 export const spacing = {
