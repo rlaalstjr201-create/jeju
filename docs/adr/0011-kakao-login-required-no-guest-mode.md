@@ -1,6 +1,6 @@
 # ADR 0011: Kakao Login Required; No Guest Mode
 
-Status: Accepted (2026-05-17)
+Status: Superseded by ADR-0026 (2026-09-30) — originally Accepted (2026-05-17)
 
 ## Context
 

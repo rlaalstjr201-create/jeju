@@ -1,5 +1,7 @@
 # Jeju Travel All-in-One
 
+> **2026-09-30 방향 전환**: 제품 방향은 ADR-0025("내일 뭐하지" 파트너), ADR-0026(로그인 없음), ADR-0027(폰 우선 웹 + 고정 데이터)이 우선한다. 아래 내용 중 이와 충돌하는 부분(큐레이션·일정·로그인·데이터 수집)은 이전 방향의 기록이다.
+
 A single-context app covering the entirety of a short-stay Jeju trip — from arrival to departure — replacing the 8-app stack most travellers currently use. Value is in curation and context, not inventory or payments.
 
 ## Mission
