@@ -34,7 +34,7 @@ export type Histories = Partial<Record<Button, History>>;
 
 export const CARD_COUNT = 3;
 export const MAX_MINUTES = 60;
-const MOODS: Mood[] = ['rest', 'walk', 'new', 'food'];
+const ANY_MOODS: Mood[] = ['rest', 'walk', 'new'];
 
 export function distanceKm(a: Point, b: Point): number {
   const R = 6371;
@@ -95,11 +95,10 @@ export function pickCards(
   let cards: Card[];
   let poolIds: string[];
   if (button === 'any') {
-    // 아무거나: 4개 기분(맛집 포함)에서 한 장씩 뽑은 뒤, 가까운 3장(=서로 다른 기분 3개)만 남긴다.
-    const pools = MOODS.map((m) => pool(spots, origin, m));
+    // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
+    const pools = ANY_MOODS.map((m) => pool(spots, origin, m));
     cards = pools.map((p) => rotate(p, h)[0]).filter((c): c is Card => !!c);
     cards.sort((a, b) => distanceKm(origin, a.spot) - distanceKm(origin, b.spot));
-    cards = cards.slice(0, CARD_COUNT);
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
     const p = pool(spots, origin, button);

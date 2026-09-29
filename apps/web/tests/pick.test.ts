@@ -25,11 +25,16 @@ describe('S2 real data: 4 origins × 5 buttons', () => {
     }
   });
 
-  it.each(Object.entries(ORIGINS))('%s / any → 3 cards from 3 different moods (food included)', (_, origin) => {
+  it.each(Object.entries(ORIGINS))('%s / any → one each of rest, walk, new — never food', (_, origin) => {
     const { cards } = pickCards(realSpots, origin, 'any');
-    const moods = cards.map((c) => c.spot.mood);
-    expect(new Set(moods).size).toBe(3);
-    for (const m of moods) expect(['rest', 'walk', 'new', 'food']).toContain(m);
+    expect(cards.map((c) => c.spot.mood).sort()).toEqual(['new', 'rest', 'walk']);
+  });
+
+  it.each(Object.entries(ORIGINS))('%s / food never mixes into rest, walk, new; food button is food only', (_, origin) => {
+    for (const b of ['rest', 'walk', 'new'] as const) {
+      expect(pickCards(realSpots, origin, b).cards.every((c) => c.spot.mood === b)).toBe(true);
+    }
+    expect(pickCards(realSpots, origin, 'food').cards.every((c) => c.spot.mood === 'food')).toBe(true);
   });
 
   it.each(combos)('$name / $button → re-tap shows no card from the previous 3', ({ origin, button }) => {
@@ -101,7 +106,7 @@ describe('S2 rotation on a synthetic set', () => {
     const spots = [0, 1, 2].flatMap((i) => [at(i, 'rest'), at(i + 10, 'walk'), at(i + 20, 'new'), at(i + 30, 'food')]);
     const a = pickCards(spots, origin, 'any');
     const b = pickCards(spots, origin, 'any', a.histories);
-    expect(new Set(b.cards.map((c) => c.spot.mood)).size).toBe(3);
+    expect(b.cards.map((c) => c.spot.mood).sort()).toEqual(['new', 'rest', 'walk']);
     const before = new Set(a.cards.map((c) => c.spot.id));
     expect(b.cards.filter((c) => before.has(c.spot.id))).toEqual([]);
   });
