@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocateError, REGIONS, bookingUrl, kakaoUrl, mountApp, type Deps } from '../src/app';
 import { cardTextProblem } from '../src/card-text';
-import { pickCards, type Point } from '../src/pick';
+import { pickCards, type Point, type Sub } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
 const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
@@ -296,5 +296,62 @@ describe('S3 위치', () => {
     const second = cardNames();
     expect(second).toHaveLength(3);
     expect(second.filter((n) => first.includes(n))).toEqual([]);
+  });
+});
+
+describe('S3 식사 | 카페·디저트 토글', () => {
+  const expectedSub = (o: Point, sub: Sub) => pickCards(realSpots, o, 'food', {}, sub).cards.map((c) => c.spot.name);
+
+  it('toggle absent on first screen and in every non-food state; present only when food is active', async () => {
+    render();
+    expect($('#foodSub').hidden).toBe(true);
+    for (const mood of ['rest', 'walk', 'new', 'any'] as const) {
+      await tap(`[data-mood="${mood}"]`);
+      expect($('#foodSub').hidden, mood).toBe(true);
+    }
+    await tap('[data-mood="food"]');
+    expect($('#foodSub').hidden).toBe(false);
+    await tap('[data-mood="walk"]');
+    expect($('#foodSub').hidden).toBe(true);
+  });
+
+  it('tapping 맛있는 거 먹고 싶어 shows cards immediately with default 식사 (meal), toggle shows 식사 pressed', async () => {
+    render();
+    await tap('[data-mood="food"]');
+    expect($$('.card')).toHaveLength(3);
+    expect(cardNames()).toEqual(expectedSub(ORIGINS.제주시, 'meal'));
+    const [mealBtn, cafeBtn] = $$('[data-sub]') as HTMLButtonElement[];
+    expect(mealBtn.getAttribute('aria-pressed')).toBe('true');
+    expect(cafeBtn.getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('switching the toggle changes the 3 cards to the other sub; toggling back keeps meal rotation separate from cafe', async () => {
+    render();
+    await tap('[data-mood="food"]');
+    const meal1 = cardNames();
+    expect(meal1).toEqual(expectedSub(ORIGINS.제주시, 'meal'));
+    await tap('[data-sub="cafe"]');
+    const cafe1 = cardNames();
+    expect(cafe1).toEqual(expectedSub(ORIGINS.제주시, 'cafe'));
+    const [mealBtn, cafeBtn] = $$('[data-sub]') as HTMLButtonElement[];
+    expect(mealBtn.getAttribute('aria-pressed')).toBe('false');
+    expect(cafeBtn.getAttribute('aria-pressed')).toBe('true');
+    await tap('[data-sub="meal"]');
+    const meal2 = cardNames();
+    // meal history advances on its own (like re-tapping any mood button); the cafe tap in between must not leak in.
+    expect(meal2.filter((n) => meal1.includes(n))).toEqual([]);
+    expect(meal2.filter((n) => cafe1.includes(n))).toEqual([]);
+  });
+
+  it('every card shown under either sub actually has that sub (no leakage between meal/cafe)', async () => {
+    render();
+    await tap('[data-mood="food"]');
+    for (const id of $$('.card').map((c) => c.getAttribute('data-id'))) {
+      expect(realSpots.find((s) => s.id === id)?.sub).toBe('meal');
+    }
+    await tap('[data-sub="cafe"]');
+    for (const id of $$('.card').map((c) => c.getAttribute('data-id'))) {
+      expect(realSpots.find((s) => s.id === id)?.sub).toBe('cafe');
+    }
   });
 });

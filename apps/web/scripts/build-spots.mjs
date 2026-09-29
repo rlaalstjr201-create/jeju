@@ -13,6 +13,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const inputDir = resolve(root, 'review/input');
 const outDir = resolve(root, 'review/out');
+const foodSplitDir = resolve(root, 'review/food-split');
 const outPath = resolve(root, 'public/spots.json');
 
 // S1': 이유 문장 15~70자, 가격·운영시간·요일·평점 표현 0건.
@@ -53,6 +54,13 @@ for (const f of readdirSync(outDir).filter((f) => /^adj-\d{3}\.json$/.test(f)).s
   for (const v of readJson(resolve(outDir, f))) verdictById.set(v.id, v);
 }
 
+// --- load food sub-type verdicts (meal|cafe), out-NN.json arrays of {id, sub} ---
+const SUBS = new Set(['meal', 'cafe']);
+const subById = new Map();
+for (const f of readdirSync(foodSplitDir).filter((f) => /^out-\d{2}\.json$/.test(f)).sort()) {
+  for (const v of readJson(resolve(foodSplitDir, f))) subById.set(v.id, v.sub);
+}
+
 // --- merge ---
 const counts = {
   input: inputItems.length,
@@ -90,7 +98,7 @@ for (const item of inputItems) {
     counts.droppedByBadMood++;
     continue;
   }
-  kept.push({
+  const spot = {
     id: item.id,
     name: item.name,
     lat: item.lat,
@@ -100,7 +108,15 @@ for (const item of inputItems) {
     image: item.image,
     kakaoPlaceId: item.kakaoPlaceId ?? null,
     bookable: item.category === 'experience',
-  });
+  };
+  if (v.mood === 'food') {
+    const sub = subById.get(item.id);
+    if (!SUBS.has(sub)) {
+      throw new Error(`food spot ${item.id} has no sub (meal|cafe) in review/food-split/out-NN.json`);
+    }
+    spot.sub = sub;
+  }
+  kept.push(spot);
   counts.kept++;
   counts.perMood[v.mood]++;
 }

@@ -2,6 +2,8 @@
 
 export type Mood = 'rest' | 'walk' | 'new' | 'food';
 export type Button = Mood | 'any';
+/** food-only sub-type: 식사 | 카페·디저트 (ADR-0028 update). */
+export type Sub = 'meal' | 'cafe';
 
 export interface Spot {
   id: string;
@@ -13,6 +15,8 @@ export interface Spot {
   image: string;
   kakaoPlaceId: string | null;
   bookable: boolean;
+  /** set iff mood === 'food' */
+  sub?: Sub;
 }
 
 export interface Point {
@@ -25,12 +29,13 @@ export interface Card {
   minutes: number;
 }
 
-/** Per-button memory of what was shown, so a re-tap moves on (plan OQ4). */
+/** Per-button memory of what was shown, so a re-tap moves on (plan OQ4). food keeps meal/cafe history separately. */
 export interface History {
   seen: string[];
   last: string[];
 }
-export type Histories = Partial<Record<Button, History>>;
+export type HistoryKey = Exclude<Button, 'food'> | `food:${Sub}`;
+export type Histories = Partial<Record<HistoryKey, History>>;
 
 export const CARD_COUNT = 3;
 export const MAX_MINUTES = 60;
@@ -55,9 +60,9 @@ export function driveMinutes(km: number): number {
  * Candidates for one mood, nearest first. Normally everything within an hour's drive;
  * if that leaves fewer than 3, widen to the nearest 3 on the whole island (빈손 없음).
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood): Card[] {
+export function pool(spots: Spot[], origin: Point, mood: Mood, sub?: Sub): Card[] {
   const sorted = spots
-    .filter((s) => s.mood === mood)
+    .filter((s) => s.mood === mood && (mood !== 'food' || s.sub === (sub ?? 'meal')))
     .map((spot) => ({ spot, km: distanceKm(origin, spot) }))
     .sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id))
     .map(({ spot, km }) => ({ spot, minutes: driveMinutes(km) }));
@@ -85,13 +90,16 @@ function remember(h: History | undefined, shown: Card[], poolIds: string[]): His
   return { seen, last: ids };
 }
 
+/** sub only applies to the 'food' button (defaults to 'meal'); ignored otherwise. */
 export function pickCards(
   spots: Spot[],
   origin: Point,
   button: Button,
   histories: Histories = {},
+  sub?: Sub,
 ): { cards: Card[]; histories: Histories } {
-  const h = histories[button];
+  const key: HistoryKey = button === 'food' ? `food:${sub ?? 'meal'}` : button;
+  const h = histories[key];
   let cards: Card[];
   let poolIds: string[];
   if (button === 'any') {
@@ -101,9 +109,9 @@ export function pickCards(
     cards.sort((a, b) => distanceKm(origin, a.spot) - distanceKm(origin, b.spot));
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button);
+    const p = pool(spots, origin, button, sub);
     cards = rotate(p, h).slice(0, CARD_COUNT);
     poolIds = p.map((c) => c.spot.id);
   }
-  return { cards, histories: { ...histories, [button]: remember(h, cards, poolIds) } };
+  return { cards, histories: { ...histories, [key]: remember(h, cards, poolIds) } };
 }

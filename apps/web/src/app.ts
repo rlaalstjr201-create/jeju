@@ -1,5 +1,5 @@
 // One screen: 5 mood buttons (static HTML, ADR-0028) + basis toggle → 3 cards (spec, plan OQ3·5).
-import { distanceKm, pickCards, type Button, type Card, type Histories, type Point, type Spot } from './pick';
+import { distanceKm, pickCards, type Button, type Card, type Histories, type Point, type Spot, type Sub } from './pick';
 
 export const REGIONS = [
   { name: '제주시', lat: 33.4996, lng: 126.5312 },
@@ -78,7 +78,9 @@ export function mountApp(doc: Document, deps: Deps) {
   const cardsBox = $<HTMLElement>('#cards');
   const status = $<HTMLElement>('#status');
   const sheetBox = $<HTMLElement>('#sheet');
+  const foodSubBox = $<HTMLElement>('#foodSub');
   const moodBtns = [...doc.querySelectorAll<HTMLButtonElement>('[data-mood]')];
+  const subBtns = [...doc.querySelectorAll<HTMLButtonElement>('[data-sub]')];
 
   // S1' 검수(build-spots.mjs)가 가격·운영시간·요일·평점 문구와 부적합 항목을 이미 걸러냈다.
   const spotsP = deps.loadSpots();
@@ -93,9 +95,15 @@ export function mountApp(doc: Document, deps: Deps) {
   if (basis === 'region' && !region) basis = 'gps';
 
   let active: Button | null = null;
+  let foodSub: Sub = 'meal';
   let histories: Histories = {};
   let lastOrigin: { basis: Basis; point: Point } | null = null;
   let busy = 0;
+
+  function renderFoodSub() {
+    foodSubBox.hidden = active !== 'food';
+    for (const b of subBtns) b.setAttribute('aria-pressed', String(b.dataset.sub === foodSub));
+  }
 
   function setBasis(b: Basis) {
     basis = b;
@@ -231,6 +239,7 @@ export function mountApp(doc: Document, deps: Deps) {
     const ticket = ++busy;
     active = button;
     for (const b of moodBtns) b.setAttribute('aria-pressed', String(b.dataset.mood === button));
+    renderFoodSub();
     say(basis === 'gps' ? '위치 확인 중…' : '');
     const o = await origin();
     if (ticket !== busy) return;
@@ -249,12 +258,21 @@ export function mountApp(doc: Document, deps: Deps) {
       histories = {};
       lastOrigin = { basis, point: { lat: o.lat, lng: o.lng } };
     }
-    const r = pickCards(spots, o, button, histories);
+    const r = pickCards(spots, o, button, histories, button === 'food' ? foodSub : undefined);
     histories = r.histories;
     renderCards(r.cards);
   }
 
   for (const b of moodBtns) b.addEventListener('click', () => void show(b.dataset.mood as Button));
+  for (const b of subBtns) {
+    b.addEventListener('click', () => {
+      const sub = b.dataset.sub as Sub;
+      if (sub === foodSub || active !== 'food') return;
+      foodSub = sub;
+      renderFoodSub();
+      void show('food');
+    });
+  }
   basisBtn.addEventListener('click', () => {
     // 'region' is only a stand-in for GPS: toggling retries GPS (the picker reopens if it still fails).
     if (basis === 'stay' || basis === 'region') setBasis('gps');
@@ -265,5 +283,6 @@ export function mountApp(doc: Document, deps: Deps) {
 
   closeSheet();
   renderBasis();
+  renderFoodSub();
   return { show };
 }

@@ -118,6 +118,28 @@ button {
   display: none;
 }
 
+.food-sub {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.sub-btn {
+  flex: 1;
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.sub-btn[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .cards {
   margin-top: 24px;
 }

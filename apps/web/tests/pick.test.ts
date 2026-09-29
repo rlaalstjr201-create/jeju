@@ -1,7 +1,7 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
 import { distanceKm, driveMinutes, pickCards, type Histories, type Spot } from '../src/pick';
-import { BUTTONS, ORIGINS, realSpots } from './fixtures';
+import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
 
 const combos = Object.entries(ORIGINS).flatMap(([name, origin]) => BUTTONS.map((button) => ({ name, origin, button })));
 
@@ -50,12 +50,57 @@ describe('S2 real data: 4 origins × 5 buttons', () => {
     const km = cards.map((c) => distanceKm(origin, c.spot));
     expect([...km].sort((a, b) => a - b)).toEqual(km);
     if (button === 'any') return;
+    // 'food' with no sub given defaults to 'meal' (S2/S3 toggle default).
     const nearest = realSpots
-      .filter((s) => s.mood === button)
+      .filter((s) => s.mood === button && (button !== 'food' || s.sub === 'meal'))
       .map((s) => distanceKm(origin, s))
       .sort((a, b) => a - b)
       .slice(0, 3);
     expect(km).toEqual(nearest);
+  });
+});
+
+const subCombos = Object.entries(ORIGINS).flatMap(([name, origin]) => SUBS.map((sub) => ({ name, origin, sub })));
+
+describe('food sub-type split (식사 | 카페·디저트)', () => {
+  it.each(subCombos)('$name / food·$sub → exactly 3 distinct spots, all mood=food & sub=$sub', ({ origin, sub }) => {
+    const { cards } = pickCards(realSpots, origin, 'food', {}, sub);
+    expect(cards).toHaveLength(3);
+    expect(new Set(cards.map((c) => c.spot.id)).size).toBe(3);
+    for (const c of cards) {
+      expect(c.spot.mood).toBe('food');
+      expect(c.spot.sub).toBe(sub);
+    }
+  });
+
+  it.each(subCombos)('$name / food·$sub → every card ≤ 60분', ({ origin, sub }) => {
+    const { cards } = pickCards(realSpots, origin, 'food', {}, sub);
+    for (const c of cards) expect(c.minutes).toBeLessThanOrEqual(60);
+  });
+
+  it('no sub given defaults to meal', () => {
+    for (const origin of Object.values(ORIGINS)) {
+      const withDefault = pickCards(realSpots, origin, 'food');
+      const withMeal = pickCards(realSpots, origin, 'food', {}, 'meal');
+      expect(withDefault.cards.map((c) => c.spot.id)).toEqual(withMeal.cards.map((c) => c.spot.id));
+      for (const c of withDefault.cards) expect(c.spot.sub).toBe('meal');
+    }
+  });
+
+  it('meal and cafe rotation histories are kept separately: a cafe tap in between does not advance the meal pool', () => {
+    // synthetic: exactly 3 meal + 3 cafe candidates → without history the same 3 always come back.
+    const mk = (i: number, sub: 'meal' | 'cafe'): Spot => ({
+      id: `${sub}${i}`, name: `${sub}${i}`, lat: 33.5, lng: 126.5 + i * 0.001, mood: 'food', sub,
+      reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(2000 + i), bookable: false,
+    });
+    const spots = [0, 1, 2].flatMap((i) => [mk(i, 'meal'), mk(i, 'cafe')]);
+    const origin = { lat: 33.5, lng: 126.5 };
+    let h: Histories = {};
+    const meal1 = pickCards(spots, origin, 'food', h, 'meal');
+    h = meal1.histories;
+    pickCards(spots, origin, 'food', h, 'cafe'); // cafe tap must not touch the meal history
+    const meal2 = pickCards(spots, origin, 'food', h, 'meal');
+    expect(meal2.cards.map((c) => c.spot.id).sort()).toEqual(meal1.cards.map((c) => c.spot.id).sort());
   });
 });
 

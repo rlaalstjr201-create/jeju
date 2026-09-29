@@ -9,13 +9,15 @@ import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
 const FIELDS = ['bookable', 'id', 'image', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason'];
+const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 9 fields, coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 9 fields (food: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
+      const expectedFields = s.mood === 'food' ? FOOD_FIELDS : FIELDS;
       return (
-        Object.keys(s).sort().join() !== FIELDS.join() ||
+        Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
         !(s.lat >= 33.1 && s.lat <= 33.6 && s.lng >= 126.1 && s.lng <= 127.0) ||
         !s.image.startsWith('https://') ||
         !['rest', 'walk', 'new', 'food'].includes(s.mood) ||
@@ -24,6 +26,15 @@ describe("S1' 레코드 형식", () => {
       );
     });
     expect(bad.map((s) => s.id)).toEqual([]);
+  });
+
+  it("food spots all have sub ∈ {meal, cafe}; non-food spots have no sub field", () => {
+    const badFood = fileSpots.filter((s) => s.mood === 'food' && s.sub !== 'meal' && s.sub !== 'cafe');
+    expect(badFood.map((s) => s.id)).toEqual([]);
+    const badNonFood = fileSpots.filter((s) => s.mood !== 'food' && 'sub' in s);
+    expect(badNonFood.map((s) => s.id)).toEqual([]);
+    expect(fileSpots.some((s) => s.sub === 'meal')).toBe(true);
+    expect(fileSpots.some((s) => s.sub === 'cafe')).toBe(true);
   });
 
   it("reason is 15~70 chars and has no price/hours/weekday/rating wording (S1')", () => {

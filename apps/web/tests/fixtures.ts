@@ -15,3 +15,4 @@ export const ORIGINS = {
   '서쪽(한림)': { lat: 33.4125, lng: 126.265 },
 } as const;
 export const BUTTONS: Button[] = ['rest', 'walk', 'new', 'food', 'any'];
+export const SUBS = ['meal', 'cafe'] as const;
