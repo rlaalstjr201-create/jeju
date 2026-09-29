@@ -1,0 +1,250 @@
+:root {
+  --bg: #f6f3ee;
+  --surface: #ffffff;
+  --text: #22262a;
+  --muted: #6b716f;
+  --line: #e4ded5;
+  --accent: #2f6f68;
+  --accent-soft: #e3eeec;
+  --shadow: 0 1px 2px rgb(34 38 42 / 6%), 0 4px 16px rgb(34 38 42 / 5%);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1f1e;
+    --surface: #262a29;
+    --text: #ecebe7;
+    --muted: #a3a8a5;
+    --line: #353a38;
+    --accent: #8cc7bd;
+    --accent-soft: #2b3a37;
+    --shadow: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+.basis {
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 36px;
+}
+
+.ask {
+  margin: 36px 0 18px;
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.moods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mood {
+  min-height: 68px;
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.mood[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.status {
+  margin: 16px 0 0;
+  min-height: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.status:empty {
+  display: none;
+}
+
+.cards {
+  margin-top: 24px;
+}
+.card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.card-img {
+  aspect-ratio: 16 / 10;
+  background: var(--accent-soft);
+}
+.card-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card-body {
+  padding: 14px 16px 16px;
+}
+.card-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.card-reason {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: var(--text);
+}
+.card-drive {
+  margin: 10px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.book {
+  display: block;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.book::after {
+  content: ' ↗';
+}
+.hint {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* bottom sheet */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 35%);
+}
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  padding: 22px 16px max(16px, env(safe-area-inset-bottom));
+}
+.sheet h2 {
+  margin: 0;
+  font-size: 19px;
+}
+.sheet-note {
+  margin: 6px 0 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.sheet-body button {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-size: 15px;
+}
+.sheet-body .primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+  font-weight: 600;
+}
+.or {
+  margin: 16px 0 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.regions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.sheet-close {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+}

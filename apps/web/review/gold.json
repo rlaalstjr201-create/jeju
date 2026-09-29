@@ -1,0 +1,715 @@
+[
+ {
+  "id": "8e1fc769-b4f4-4f81-bb99-cc50cb32af81",
+  "evidence": "화려한 야키소바와 바삭하고 부드러운 돈까스",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "화려한 야키소바와 바삭하고 부드러운 돈까스를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "5dc9c9d5-a5f5-475c-82cb-ab6ff4b74ea8",
+  "evidence": "갓 잡은 제철 생선 활어회",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "갓 잡은 제철 생선으로 뜬 활어회를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "9159e2da-0285-405e-9600-8bfb785dafcc",
+  "evidence": "갈치조림 | 해물뚝배기 | 성게미역국",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "갈치조림과 해물뚝배기, 성게미역국 같은 한식을 먹을 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1"
+  ],
+  "note": "summary generic; dishes only in tags"
+ },
+ {
+  "id": "9044c70c-a2a4-4ad2-9dd7-3ec4a2616db3",
+  "evidence": "겨울 바다의 왕, 방어 요리가 일품인",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "겨울 바다의 왕이라 불리는 방어 요리가 일품이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "b92f8691-7902-41dc-b614-0b45aff3d4bc",
+  "evidence": "냉모밀 | 우동",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "냉모밀과 우동을 먹을 수 있는 식당이에요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L3"
+  ],
+  "note": "summary is location only; draw from tags"
+ },
+ {
+  "id": "90365401-616c-435a-a4bf-955275a7bbb4",
+  "evidence": "셀프 쿠킹 체험과 커피를 즐길 수 있는 체험 공간",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "직접 요리해 보는 셀프 쿠킹 체험을 할 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "restaurant category but draw is cooking experience"
+ },
+ {
+  "id": "c58435bc-a58a-466e-9588-08ab009ecf9b",
+  "evidence": "제주 해산물 12가지를 넣은 육수로 깔끔하고 깊은 해물 육수의 맛",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "제주 해산물을 넣은 깊은 해물 육수의 냉면을 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "6fa34d19-d0ec-4d6c-b43d-6afa415ba0a4",
+  "evidence": "제주감귤 훈연칩으로 훈연하는 텍사스 바베큐",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "제주감귤 훈연칩으로 훈연한 텍사스 바베큐를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "84faaea2-cbbf-4035-82d6-53818681e87e",
+  "evidence": "프리미엄 흑돼지를 저온숙성하여 제공하는 중문의 흑돼지 전문점",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "저온숙성한 프리미엄 흑돼지 구이를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "6eee5726-208e-4d50-9f7c-46cc997983db",
+  "evidence": "흑돼지오겹살 | 우도땅콩막걸리 | 고깃집",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "흑돼지 오겹살과 우도땅콩막걸리를 즐길 수 있는 고깃집이에요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1"
+  ],
+  "note": "summary is location+category; dishes from tags"
+ },
+ {
+  "id": "332c1c5f-ad27-4b7e-847a-2aa3c6f44588",
+  "evidence": "흑돼지농장을 운영하는 식당",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "흑돼지농장을 운영하는 식당에서 흑돼지구이를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "f579952a-2006-470f-9ff5-de95d9ab96ae",
+  "evidence": "길고 통통한 통갈치구이 전문점",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "길고 통통한 통갈치구이를 먹을 수 있는 전문점이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "98375e3d-17aa-47e9-9126-551453b161c1",
+  "evidence": "생선으로 푹 끓여낸 어곰탕 맛집",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "생선으로 푹 끓여낸 어곰탕을 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "2ba0659c-a8be-4cd7-886b-bb698010cb72",
+  "evidence": "갈치조림의 참맛을 느낄 수 있는 곳",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "갈치조림과 성게미역국, 전복미역국을 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "2d120acb-1c07-401b-a9ef-9aeec382117b",
+  "evidence": "제주의 신선한 돼지를 사용한 두루치기 맛집",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "제주의 신선한 돼지로 만든 두루치기를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "68654c3c-0aa4-458e-a1f6-26a7f6268307",
+  "evidence": "비양도에서 직접 채집한 싱싱한 재료들을 사용하여 만든 건강한 음식",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "비양도에서 직접 채집한 재료로 만든 해물요리를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "ffd4d560-6759-42b0-9743-97ae0ad12f81",
+  "evidence": "톳과 소라가 얹어진 우도 톳 짜장면",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "톳과 소라를 얹은 우도 톳 짜장면을 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "2e70ae17-5734-4225-80fb-e40b72d9582e",
+  "evidence": "오픈키친으로 설렁탕이 만들어지는 과정을 눈에 담아낼 수 있으며",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "오픈키친에서 만들어지는 과정을 보며 설렁탕을 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "0a1d7f22-3ea1-4e46-b208-3f8ba8b6be2b",
+  "evidence": "만져질 듯 가까이 보이는 바다 앞에 위치한 오션뷰 카페",
+  "keep": true,
+  "dropReason": null,
+  "mood": "rest",
+  "reason": "바다가 만져질 듯 가까이 보이는 오션뷰 카페예요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "cf6d27c7-2b28-4aa1-b684-5c514aa906c6",
+  "evidence": "제주 농산물로 건강한 홈메이드 푸드를 만드는 바닷가의 작은 레스토랑",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "제주 농산물로 만든 홈메이드 파스타를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "7500f298-1c11-490a-88ce-b33be0ca7e04",
+  "evidence": "\"소세지피자빵\"과 단팥빵이 평가받고 있습니다",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "소세지피자빵과 단팥빵 같은 추억의 빵을 맛볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "c2508e4a-b085-4019-a83d-4e4cbe4684ee",
+  "evidence": "필터커피 | 크림커피 | 논알콜칵테일",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "필터커피와 크림커피, 논알콜칵테일을 마실 수 있는 공간이에요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L2",
+   "L3"
+  ],
+  "note": "summary vague; draw only from tags; also video/fashion shop"
+ },
+ {
+  "id": "ea36bee4-4ff8-4b98-9420-91c35539a76f",
+  "evidence": "평대리 마을 안 숨어있는 이탈리안 레스토랑",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "평대리 마을 안에서 리조또와 파스타를 먹을 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1"
+  ],
+  "note": "dishes from tags"
+ },
+ {
+  "id": "13804148-5f3c-450e-a7e0-071a9dfe960d",
+  "evidence": "정통 프랑스 방식으로 만든 수제 디저트와 브런치",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "정통 프랑스 방식으로 만든 수제 디저트와 브런치를 즐길 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "f57acc26-d7a7-4e6b-b42f-6254b0cc190c",
+  "evidence": "협재 바다 앞 카페에서 느끼는 휴양지의 여유로움",
+  "keep": true,
+  "dropReason": null,
+  "mood": "rest",
+  "reason": "협재 바다 앞 카페에서 휴양지의 여유로움을 느낄 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "241f0f9d-fefd-4650-9a69-8ab7ec830089",
+  "evidence": "제주도 청정자연을 담은 연잎밥 정식",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "제주 청정자연을 담은 연잎밥 정식을 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "e29b91b2-e947-4dce-9d88-95e9598899dd",
+  "evidence": "돌고래가 보이는 한옥 베이커리 | 소금빵",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "돌고래가 보이는 한옥 베이커리에서 소금빵을 먹을 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "bakery(food) vs view(rest)"
+ },
+ {
+  "id": "69a82a79-6f02-405e-b2f4-1ff47980eb27",
+  "evidence": "월정리 풍차와 바다, 일몰이 잘보이는 카페",
+  "keep": true,
+  "dropReason": null,
+  "mood": "rest",
+  "reason": "월정리 풍차와 바다, 일몰이 잘 보이는 카페예요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "5c6df355-7db6-4a04-a7ee-911e2c9f47e7",
+  "evidence": "육즙이 가득한 수제버거를 종달리 바다 뷰를 바라보며",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "종달리 바다를 바라보며 육즙 가득한 수제버거를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "5b5c0bcf-eefe-4554-98d8-ec555a57cba8",
+  "evidence": "제주 로컬 푸드를 활용한 피타 샌드위치와 수제청 에이드",
+  "keep": true,
+  "dropReason": null,
+  "mood": "food",
+  "reason": "제주 로컬 푸드로 만든 피타 샌드위치를 먹을 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "31b42f83-42bb-42f2-8734-4ef0102e53a6",
+  "evidence": "오름 모양이 밤알같이 생겼다하여 붙여진 오름 | 도보여행",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "밤알처럼 생긴 오름을 걸어서 올라가 볼 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L3"
+  ],
+  "note": "only name origin; walk from category/tags"
+ },
+ {
+  "id": "d839ff5f-b06b-4b8c-9cf7-a0e2a5aaf2de",
+  "evidence": "성산일출봉과 우도를 한눈에 조망할 수 있는 제주 동쪽 해변",
+  "keep": true,
+  "dropReason": null,
+  "mood": "rest",
+  "reason": "성산일출봉과 우도를 한눈에 바라볼 수 있는 해변이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "83848eb3-aa38-4929-9173-276e87be6197",
+  "evidence": "4.3사건 당시 하가리 주민들을 공개적으로 집단학살한 곳.",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "4.3사건 당시 하가리 주민들이 희생된 역사 유적지예요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L2"
+  ],
+  "note": "memorial heritage site; thin text"
+ },
+ {
+  "id": "533abf1e-9dfd-4570-aeb4-9fa093283741",
+  "evidence": "횃불과 연기를 이용하여 정치·군사적으로 급한 소식을 전하던 통신수단",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "횃불과 연기로 급한 소식을 전하던 옛 통신수단을 볼 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1"
+  ],
+  "note": ""
+ },
+ {
+  "id": "a39a4601-f2a7-41b8-bc3a-c2f78743f3a0",
+  "evidence": "박쥐의 모습을 닮은 오름 단산과 단산의 나쁜 기운을 막기 위해 세운 방사탑",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "박쥐 모습을 닮은 오름과 나쁜 기운을 막던 방사탑을 볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "7bff7733-788c-4fa8-91d0-6af618b857ad",
+  "evidence": "숲의 다양한 모습과 풍경들을 보여주는 장생의 숲길",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "숲의 다양한 모습과 풍경을 보며 걸을 수 있는 숲길이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "f9307ed1-8a8c-4217-a997-7582dda8a4b3",
+  "evidence": "뒤가 굽은 오름이라는 뜻으로 후곡악이라고 부르는 오름 | 도보여행",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "후곡악이라고도 불리는 뒤가 굽은 오름을 걸어 올라가 볼 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L3"
+  ],
+  "note": "only name origin; walk from category/tags"
+ },
+ {
+  "id": "6eecb02c-22ea-4ca6-9767-bc3f2728449d",
+  "evidence": "산 중턱 동굴 사찰로, 굴 앞에서 \"형제섬과 가파도 그리고 멀리 마라도까지 이어지는 바다 풍경\"",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "산 중턱 동굴 사찰에 오르면 형제섬과 가파도 바다 풍경이 보여요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "walk vs rest(viewpoint)"
+ },
+ {
+  "id": "68117f1e-51f7-4674-8006-a7600ea61590",
+  "evidence": "바다, 숲, 개울 3가지를 한 곳에서 느낄 수 있는 곳",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "바다와 숲, 개울을 한 곳에서 느낄 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L2"
+  ],
+  "note": "walk vs rest"
+ },
+ {
+  "id": "7f38a1e0-0915-40f5-8923-bc620b015a0f",
+  "evidence": "제주도의 진짜 자연을 볼 수 있는 에코힐링여행 | 곶자왈",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "곶자왈 숲을 걸으며 제주의 자연을 볼 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1"
+  ],
+  "note": "summary generic; forest walk from tags"
+ },
+ {
+  "id": "edab657b-d2b4-4e7a-9c14-6ba257166b8b",
+  "evidence": "방탈출 | 서바이벌 | 테마파크",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "방탈출과 서바이벌 게임을 즐길 수 있는 테마파크예요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L3"
+  ],
+  "note": "summary generic; branch name suggests possible chain"
+ },
+ {
+  "id": "663319af-f2e1-4e61-9448-18c1480e27ea",
+  "evidence": "곤돌라 체험과 박물관 관람을 함께 즐길 수 있습니다",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "곤돌라 체험과 박물관 관람을 함께 즐길 수 있는 테마공원이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "1bb714e2-a233-4778-924f-abd08f1f1480",
+  "evidence": "제주의 자연과 문화를 직접 체험할 수 있는 | 마을산책",
+  "keep": true,
+  "dropReason": null,
+  "mood": "walk",
+  "reason": "마을을 산책하며 제주의 자연과 문화를 체험할 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L2",
+   "L3"
+  ],
+  "note": "near-generic praise; KEEP-low per rule"
+ },
+ {
+  "id": "a736a35b-d4e2-492f-bedd-eeec7a15f0c5",
+  "evidence": "가위컷 전문으로하는 반려견미용과, 반려견유치원, 반려견호텔을 운영하는 곳",
+  "keep": false,
+  "dropReason": "NOT_DESTINATION",
+  "mood": null,
+  "reason": "",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": "pet grooming/boarding service"
+ },
+ {
+  "id": "6b302d78-1d18-4b86-9480-f699d9e84b27",
+  "evidence": "제주의 숨은 명소에서 유유자적 패들보드",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "숨은 명소에서 유유자적 패들보드를 타 볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "7d571331-53a0-4925-aea7-be37bf3de5b4",
+  "evidence": "성산일출봉을 바라보며 승마를 즐기다",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "성산일출봉을 바라보며 승마를 즐길 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "b1e7aa8a-6d71-42a3-9be6-da6f723a04d7",
+  "evidence": "18년된 전통요가원 | 요가 | 체험",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "오랜 전통의 요가원에서 요가 체험을 할 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L1",
+   "L3"
+  ],
+  "note": "thin; class vs destination"
+ },
+ {
+  "id": "799c022a-a4ee-4519-a0dc-87920464e3ac",
+  "evidence": "송악산을 바라보며 카트체험하기",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "송악산을 바라보며 카트를 타 볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "62ac4d25-f1f5-4687-88b9-5a9f0824b533",
+  "evidence": "먹이를 직접 주고 새를 만질 수 있는 실내체험동물원",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "먹이를 직접 주고 새를 만질 수 있는 실내 동물원이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "3e5f8eca-e0e4-410a-9de1-1d09ff80619e",
+  "evidence": "제주 식문화 클래스에서 경험하는 제주의 맛",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "제주 식문화 클래스에서 빙떡 같은 향토음식을 경험해 볼 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "new(class) vs food"
+ },
+ {
+  "id": "bab84393-9304-438c-a771-ed7a238147d4",
+  "evidence": "반려견 유치원, 반려견 미용, 반려견 호텔, 모두 가능한 반려동물 멀티샵",
+  "keep": false,
+  "dropReason": "NOT_DESTINATION",
+  "mood": null,
+  "reason": "",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": "pet service shop"
+ },
+ {
+  "id": "d30a07cc-9e4a-4ed5-888f-fbdcfa148e4c",
+  "evidence": "초콜릿공장 견학과 초콜릿만들기 체험이 가능한",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "초콜릿 공장을 견학하고 초콜릿 만들기 체험을 할 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "aba68e12-8b24-43d4-8b52-33e7a90c5514",
+  "evidence": "제주도의 아름다운 남쪽 풍경을 품은 제주 최고의 체험형 테마파크 | 카트체험",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "제주 남쪽 풍경을 품은 테마파크에서 카트를 타 볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "974295f2-8d5b-489b-b4b6-26b0ce81dfdc",
+  "evidence": "제주도내 유일 요트 다이빙 체험",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "요트 다이빙을 직접 체험해 볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "793d8a51-94f9-4343-a11d-600a47d9adee",
+  "evidence": "\"생생한 해양생물 관찰 체험\"이 가능한 박물관",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "생생한 해양생물 관찰 체험을 할 수 있는 박물관이에요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "f00bf0c5-ac05-41c5-8900-042bc4e2471d",
+  "evidence": "제주만의 돌문화와 설문대할망 신화를 주제로 조성한 문화공원",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "제주 돌문화와 설문대할망 신화를 주제로 한 공원을 둘러봐요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "new(museum/theme) vs walk(park)"
+ },
+ {
+  "id": "b5e5fad9-37f0-44c5-aa75-6e415064a530",
+  "evidence": "루브르, 바티칸박물관 명화와 대리석 조각상 200점 재현! 시공간을 초월하는 입체미술체험관",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "명화와 대리석 조각상을 재현한 입체미술 체험을 할 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "93a4a104-8d2c-4abe-9f41-454927cf49a8",
+  "evidence": "75년이나 된 근대 건축물로, 복원을 거쳐 제주책방과 사랑방으로 운영 중인 문화공간",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "복원된 근대 건축물 속 책방과 사랑방을 둘러볼 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "new(culture space) vs rest"
+ },
+ {
+  "id": "52e6caf4-da94-465a-986e-1050656ea0a0",
+  "evidence": "자연 조경과 유리조각품이 조화를 이루는 야외정원과 실내 전시공간",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "유리조각품이 있는 야외정원과 실내 전시를 함께 볼 수 있어요",
+  "confidence": "high",
+  "lowFlags": [],
+  "note": ""
+ },
+ {
+  "id": "e295fa17-fedf-4ec8-aa9f-efb74499f559",
+  "evidence": "5층 뮤지엄부터 1층 카페까지 내려오며 갤러리를 관람하는 구조",
+  "keep": true,
+  "dropReason": null,
+  "mood": "new",
+  "reason": "영화 사진작가의 갤러리를 층마다 내려오며 관람할 수 있어요",
+  "confidence": "low",
+  "lowFlags": [
+   "L2"
+  ],
+  "note": "gallery(new) vs cafe(rest)"
+ }
+]
