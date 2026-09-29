@@ -1,3 +1,8 @@
+/* `hidden` must win over component display rules (e.g. .food-sub { display:flex }). */
+[hidden] {
+  display: none !important;
+}
+
 :root {
   --bg: #f6f3ee;
   --surface: #ffffff;
@@ -59,6 +64,21 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.saved {
+  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 36px;
 }
 .brand {
   margin: 0;
@@ -151,6 +171,7 @@ button {
   gap: 16px;
 }
 .card {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -161,6 +182,55 @@ button {
   display: block;
   color: inherit;
   text-decoration: none;
+}
+/* sibling of .card-link, not a descendant — a tap never reaches the map link (S8-3) */
+.heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1; /* own stacking context so ::before (z-index:-1) paints behind the glyph but above .card-link */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heart::before {
+  content: '';
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgb(34 38 42 / 45%);
+  position: absolute;
+  z-index: -1;
+}
+.heart.is-saved::before {
+  background: var(--accent);
+}
+.card:has(.card-img[hidden]) .card-name,
+.card:not(:has(.card-img)) .card-name {
+  padding-right: 52px;
+}
+.saved-view .back {
+  display: block;
+  margin: 0 0 4px;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+.saved-view .saved-heading {
+  margin: 0 0 16px;
+  font-size: 19px;
 }
 .card-img {
   aspect-ratio: 16 / 10;
@@ -223,6 +293,9 @@ button {
   bottom: 0;
   max-width: 480px;
   margin: 0 auto;
+  max-height: 85dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--surface);
   border-radius: 20px 20px 0 0;
   padding: 22px 16px max(16px, env(safe-area-inset-bottom));
@@ -235,6 +308,11 @@ button {
   margin: 6px 0 16px;
   font-size: 14px;
   color: var(--muted);
+}
+.sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .sheet-body button {
   width: 100%;
@@ -250,23 +328,41 @@ button {
   color: var(--surface);
   font-weight: 600;
 }
+.sheet-body button[aria-pressed='true']:not(.primary) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 .or {
   margin: 16px 0 8px;
   font-size: 13px;
   color: var(--muted);
+}
+.area-heading {
+  margin: 16px 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.area-heading:first-of-type {
+  margin-top: 4px;
 }
 .regions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
+.regions button {
+  min-height: 44px;
+}
 .sheet-close {
   display: block;
+  position: sticky;
+  bottom: 0;
   width: 100%;
   margin-top: 12px;
   min-height: 44px;
   border: 0;
-  background: transparent;
+  background: var(--surface);
   color: var(--muted);
   font-size: 14px;
 }
