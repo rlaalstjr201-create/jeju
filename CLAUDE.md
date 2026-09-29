@@ -1,7 +1,8 @@
+> 공유 지식: `C:\Users\rlaal\knowledge\` 참조
+
 # CLAUDE.md
 
 > Jeju Travel All-in-One 프로젝트.
-> 현재 단계: **Grilling 대기 중** (도메인 미정의)
 
 ## 행동 원칙
 
@@ -34,13 +35,6 @@
 - 스킬을 우회해서 직접 구현하지 마.
 - 주요 도메인·아키텍처 결정은 `docs/adr/`에 기록. 새 결정 시 새 ADR 발행 (`NNNN-title.md`).
 - Architecture improve 진입 전 ADR 목록 확인 — 기존 결정 재리티게이션 금지.
-
-## 시작점
-
-- 시드: `docs/grilling_seed.md`
-- 첫 작업: Grilling 스킬로 인터뷰 → `docs/context.md` 생성
-
-(아키텍처·스택·hook 룰은 context.md 완성 후 이 파일에 추가)
 
 ## Agent skills
 
