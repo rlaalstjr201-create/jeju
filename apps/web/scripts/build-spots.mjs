@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
 import { positionProblems } from './positions.mjs';
+import { reasonPunctuationProblem, shipReason } from './reason.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -77,10 +78,9 @@ const len = (s) => [...s].length;
 // Some source names carry leading/trailing spaces, tabs or U+3000 — they end up in map/booking search
 // URLs (S32). Collapse any whitespace run and trim; src/data.ts applies the same rule at load time.
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
-// Reason punctuation (design/SPEC.md §12.4): drop any final full stop, then a sentence ending in 요 gets
-// one; a noun ending gets none. src/data.ts applies the same rule at load time.
-const bareReason = (s) => cleanName(s).replace(/[.。]+$/, '');
-const punctuate = (s) => (s.endsWith('요') ? `${s}.` : s);
+// Reason as shipped (design/SPEC.md §10·§12.4, 3판): whitespace cleaned, 돈까스 → 돈가스, no final full
+// stop whatever the ending (scripts/reason.mjs).
+const bareReason = shipReason;
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
@@ -135,6 +135,8 @@ for (const f of readdirSync(copyDir).filter((f) => /^input-\d{2}\.json$/.test(f)
 for (const id of COPY_REVERT) {
   if (copyOldReasonById.has(id)) copyReasonById.set(id, copyOldReasonById.get(id));
 }
+// fix-02.json (SPEC 3판 §10): rewrites of the sentences carrying the 3판 banned forms (겉바속촉, 아름다운,
+// 여유를 누려요, 공간이에요) and of the two two-sentence reasons, each from that spot's review/input text.
 // fix-NN.json (QA 2026-09-30): hand edits that take the design/SPEC.md §10 banned forms ("~하기 좋아요",
 // 인생샷, 힐링, 다양한 …) out of a sentence without adding anything the old sentence did not say. Applied
 // last, so it also covers ids reverted above.
@@ -220,7 +222,7 @@ for (const item of inputItems) {
     lat: geo ? geo.lat : item.lat,
     lng: geo ? geo.lng : item.lng,
     mood: v.mood,
-    reason: punctuate(reason),
+    reason,
     image: item.image,
     // a fix names the place it found (placeId) or says the source id is wrong (null); otherwise keep it
     kakaoPlaceId: geo && geo.placeId !== undefined ? geo.placeId : item.kakaoPlaceId ?? null,
@@ -274,6 +276,17 @@ const problems = positionProblems(kept, new Set([...geoById.keys()]));
 if (problems.length) {
   throw new Error(`spots.json positions: ${problems.length} problem(s)\n  ${problems.slice(0, 10).join('\n  ')}\n` +
     'Run scripts/regeocode.ts (and review review/geo) before building.');
+}
+
+// Guard: one sentence per caption, no full stop (§10, §14 #19). A second sentence needs a rewrite in
+// review/copy/fix-NN.json, not a machine edit.
+const stops = kept.flatMap((s) => {
+  const p = reasonPunctuationProblem(s.reason);
+  return p ? [`${s.id} ${p}: ${s.reason}`] : [];
+});
+if (stops.length) {
+  throw new Error(`spots.json reasons: ${stops.length} punctuation problem(s)\n  ${stops.slice(0, 10).join('\n  ')}\n` +
+    'Rewrite them in review/copy/fix-NN.json.');
 }
 
 writeFileSync(outPath, JSON.stringify(kept));
