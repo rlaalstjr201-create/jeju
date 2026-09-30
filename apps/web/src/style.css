@@ -158,8 +158,8 @@ main { flex: 1; display: flex; flex-direction: column; }
 .card.row {
   --thumb: clamp(80px, 24vw, 104px);
   grid-template-columns: var(--thumb) minmax(0, 1fr) 44px;
-  grid-template-areas: "ph name heart" "ph reason reason" "ph meta meta" "book book book" "hint hint hint";
-  grid-template-rows: auto auto 1fr auto auto;
+  grid-template-areas: "ph name heart" "ph reason reason" "ph meta meta" "book book book" "hint hint hint" "ctl ctl ctl";
+  grid-template-rows: auto auto 1fr auto auto auto;
 }
 .card.row .ph { width: var(--thumb); aspect-ratio: 1; border-radius: var(--r-thumb); align-self: start; }
 /* 320: two siblings ("… 절로 가는길 - 정진의 길" / "- 인욕의 길") would clamp to the same two lines. The name
@@ -169,12 +169,22 @@ main { flex: 1; display: flex; flex-direction: column; }
 .card.row .name:has(.alias) { -webkit-line-clamp: 3; line-clamp: 3; }
 .card.row .reason { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
 .card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; }
-.card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; grid-template-rows: none; }
+.card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
 /* em = .picks font size (15px → 270px). A 320px phone at default text (288px) is not caught: photo beside */
 @container (max-width: 18em) {
-  .card.row:not(.noimg):not(.ghost) { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "book book" "hint hint"; grid-template-rows: none; }
+  .card.row:not(.noimg):not(.ghost) { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
   .card.row:not(.noimg):not(.ghost) .ph { width: auto; aspect-ratio: 2 / 1; margin-bottom: 12px; }
 }
+
+/* saved list by day (specs/date-mode.md): a quiet heading per day, rows in the user's order. Each row's
+   위로 / 아래로 / 다른 날로 are text buttons on their own full-width line, left-aligned under the row */
+.day { display: flex; flex-direction: column; gap: 20px; }
+.day + .day { margin-top: 8px; }
+.day-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; font-size: 0.9375rem; line-height: 1.5; font-weight: 600; color: var(--muted); }
+.day-h h2 { margin: 0; font: inherit; }
+.day-h .tbtn { margin-right: -8px; color: var(--text); }
+.day .group-h { margin: 0 0 -8px; }
+.ctl { grid-area: ctl; position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 0 8px; margin: 4px 0 -8px -8px; }
 
 /* fill buttons: 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. Labels left-aligned */
 .more, .retry, .primary {
@@ -242,6 +252,12 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 .opt .nm { display: block; }
 .opt .lm { display: block; font-size: 0.9375rem; line-height: 1.35; color: var(--muted); }
 .opt[aria-pressed="true"] .nm { font-weight: 600; }
+.sheet h2 + .group-h { margin-top: 0; }
+/* 날짜 고르기 where the browser has no picker to open: the date field itself, on its own line */
+.date-in {
+  flex: 1 1 100%; min-height: 44px; margin: 0 8px 8px; padding: 0 8px;
+  font: inherit; color: var(--text); background: none; border: 1px solid var(--line); border-radius: var(--r-ctl);
+}
 
 /* bottom sheet: its own layer above the cards' hearts, links and the 다른 3곳 bar */
 #sheet { position: relative; z-index: var(--z-sheet); }

@@ -2,9 +2,10 @@
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
+import { addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { bookingUrl, kakaoUrl } from './links';
-import { historyKey, travel, travelText, type Button, type Card } from './pick';
-import { cardsValid, savedCount, type State } from './state';
+import { historyKey, travel, travelText, type Button, type Card, type Spot } from './pick';
+import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
@@ -13,6 +14,8 @@ export const COPY = {
   basisStay: '숙소 근처',
   basisRegion: (label: string) => `${label} 근처`,
   basisNoGps: '지역 고르기',
+  /** a day chosen in the basis sheet goes in front ("내일 · 애월 근처", "10월 3일 · 숙소 근처"). */
+  basisWhen: (day: string, where: string) => `${day} · ${where}`,
   basisAria: (label: string) => `${label}, 기준 바꾸기`,
   savedAria: (n: number) => `저장한 곳 ${n}개`,
   locating: '위치 확인 중…',
@@ -40,10 +43,23 @@ export const COPY = {
   retry: '다시 불러오기',
   westFirst: '서쪽부터',
   savedEmpty: '저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.',
-  savedUnsorted: '위치를 몰라서 저장한 순서대로 보여 드려요.',
-  /** a label, not a sentence: no full stop ("애월에서 가까운 순", "여기서 가까운 순"). */
-  savedNear: (from: string) => `${from} 가까운 순`,
-  basisSheet: '어디 근처로 볼까요?',
+  today: '오늘',
+  tomorrow: '내일',
+  past: '지난 날',
+  pastOpen: '펼치기',
+  pastClose: '접기',
+  up: '위로',
+  down: '아래로',
+  moveDay: '다른 날로',
+  upAria: (name: string) => `${name}, 위로`,
+  downAria: (name: string) => `${name}, 아래로`,
+  moveDayAria: (name: string) => `${name}, 다른 날로`,
+  moveSheet: '어느 날로 옮길까요?',
+  basisSheet: '언제 어디 근처로 볼까요?',
+  whenHead: '언제',
+  whereHead: '어디',
+  whenNow: '지금',
+  pickDay: '날짜 고르기',
   gpsOption: '지금 있는 곳',
   gpsOff: '위치 권한이 꺼져 있어요',
   stayOption: '숙소',
@@ -81,10 +97,16 @@ const CHECK = '<svg class="i-check" width="18" height="18" viewBox="0 0 24 24" f
 const ALT_TRIP = 'alt-trip';
 const HEART_22 = `<svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${HEART_PATH}"/></svg>`;
 
-const WEEKDAYS = '일월화수목금토';
-/** "9월 30일 수요일": today's date (ADR-0059). */
+/** "9월 30일 수요일": today's date in Jeju (ADR-0059, Asia/Seoul like the saved days). */
 export function dateLabel(d: Date): string {
-  return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
+  return longDay(dayOf(d));
+}
+
+/** A saved-list day: "오늘", "내일", "10월 3일 금요일". */
+export function dayName(today: Day, day: Day): string {
+  if (day === today) return COPY.today;
+  if (day === addDays(today, 1)) return COPY.tomorrow;
+  return longDay(day);
 }
 
 /** "더럭초등학교(구, 더럭분교)" → name + "(구, 더럭분교)" shown smaller and never broken inside (§3.3). So is
@@ -94,14 +116,16 @@ export function splitName(name: string): { main: string; alias: string | null } 
   return m ? { main: m[1], alias: m[2] } : { main: name, alias: null };
 }
 
-export function basisLabel(s: State): string {
+function whereLabel(s: State): string {
   if (s.basis === 'stay' && s.stay) return COPY.basisStay;
   if (s.basis === 'region' && s.region) return COPY.basisRegion(areaLabel(s.region));
   return s.lastFail ? COPY.basisNoGps : COPY.basisGps;
 }
-
-export function savedSortText(origin: Origin | null): string {
-  return origin ? COPY.savedNear(origin.from) : COPY.savedUnsorted;
+/** 지금: the place only. A chosen day goes in front: "내일 · 애월 근처", "10월 3일 · 숙소 근처". */
+export function basisLabel(s: State): string {
+  const where = whereLabel(s);
+  if (s.when === 'now') return where;
+  return COPY.basisWhen(s.when === addDays(s.today, 1) ? COPY.tomorrow : shortDay(s.when), where);
 }
 
 /** Status line under the results heading: one short line, plus an escape hatch while GPS is slow (S04·S05). */
@@ -287,8 +311,20 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     return ph;
   }
 
-  /** `meta`: the trip (null = none); `dest`: also say where a tap goes ("카카오맵"). */
-  function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string): HTMLElement {
+  function metaEl(meta: string | null, dest: boolean): HTMLElement {
+    const metaEl = el(doc, 'p', { class: 'meta' });
+    if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
+    // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
+    // "… 5분 ·" and the next starts with "카카오맵", never with "·".
+    if (meta && dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    // Says where a tap on the card goes (S57); no arrow glyph.
+    if (dest) metaEl.append(el(doc, 'span', { class: 'dest', 'aria-hidden': 'true' }, COPY.map));
+    return metaEl;
+  }
+
+  /** `meta`: the trip (null = none); `dest`: also say where a tap goes ("카카오맵"); `day`: a saved-list row,
+   * whose heart is about that day. */
+  function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string, day?: Day): HTMLElement {
     const { spot } = c;
     const name = spot.name.trim();
     const broken = s.broken.includes(spot.id);
@@ -305,19 +341,11 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     else link.append(main);
     title.append(link);
     // Name fixed, state only in aria-pressed (S59).
-    const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(s.saved.includes(spot.id)), 'aria-label': COPY.heartAria(name) });
+    const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(isSaved(s, spot.id, day)), 'aria-label': COPY.heartAria(name) });
+    if (day) heart.dataset.date = day;
     heart.innerHTML = HEART_22;
     card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
-    if (meta || dest) {
-      const metaEl = el(doc, 'p', { class: 'meta' });
-      if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
-      // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
-      // "… 5분 ·" and the next starts with "카카오맵", never with "·".
-      if (meta && dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
-      // Says where a tap on the card goes (S57); no arrow glyph.
-      if (dest) metaEl.append(el(doc, 'span', { class: 'dest', 'aria-hidden': 'true' }, COPY.map));
-      card.append(metaEl);
-    }
+    if (meta || dest) card.append(metaEl(meta, dest));
     if (spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
     }
@@ -444,43 +472,130 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     }
   }
 
+  // --- saved list (§6.12): by day. Rows are keyed `${id}|${day}` and reused, so moving one never reloads
+  // a photo; the meta and the 위로/아래로 buttons are patched on each draw. ---
+  const rowNodes = new Map<string, HTMLElement>();
+
+  function savedRowEl(s: State, spot: Spot, row: SavedRow, pos: { first: boolean; last: boolean }, meta: string | null, dest: boolean): HTMLElement {
+    const { entry } = row;
+    const key = `${entry.id}|${entry.date}`;
+    let card = rowNodes.get(key);
+    if (!card) {
+      card = cardEl(s, { spot, minutes: 0 }, 'row', null, false, false, undefined, entry.date);
+      const name = spot.name.trim();
+      const ctl = el(doc, 'div', { class: 'ctl' });
+      const btn = (action: string, text: string, aria: string) =>
+        el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': action, 'data-id': entry.id, 'data-date': entry.date, 'aria-label': aria }, text);
+      ctl.append(btn('up', COPY.up, COPY.upAria(name)), btn('down', COPY.down, COPY.downAria(name)), btn('move-day', COPY.moveDay, COPY.moveDayAria(name)));
+      card.append(ctl);
+      rowNodes.set(key, card);
+    }
+    const metaKey = `${meta ?? ''}|${dest}`;
+    if (card.dataset.meta !== metaKey) {
+      card.dataset.meta = metaKey;
+      card.querySelector(':scope > .meta')?.remove();
+      if (meta || dest) card.querySelector(':scope > .reason')!.after(metaEl(meta, dest));
+    }
+    // a row taken out in this visit keeps only its (empty) heart: nothing to move
+    const ctl = card.querySelector<HTMLElement>(':scope > .ctl')!;
+    ctl.hidden = !row.live;
+    ctl.querySelector<HTMLElement>('[data-action="up"]')!.hidden = pos.first;
+    ctl.querySelector<HTMLElement>('[data-action="down"]')!.hidden = pos.last;
+    return card;
+  }
+
+  function savedListSig(s: State): string {
+    const { upcoming, past } = savedDays(s);
+    const o = s.savedList!.origin;
+    const days = [...upcoming, ...(s.pastOpen ? past : [])].map((d) => `${d.day}:${d.rows.map((r) => `${r.entry.id}${r.live ? '' : '~'}`).join(',')}`);
+    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${past.length}|${s.pastOpen}|${days.join(';')}`;
+  }
+
+  function savedListNodes(s: State): HTMLElement[] {
+    const { upcoming, past } = savedDays(s);
+    const o = s.savedList!.origin;
+    const idx = spotIndex(s.spots!);
+    const used = new Set<string>();
+    let first = true;
+    // The first row says where the trips are measured from (the current basis, not that day's) and where a
+    // tap goes; the others say only their trip. Without a position there is no trip.
+    const rowsOf = (rows: SavedRow[]) => {
+      const live = rows.filter((r) => r.live);
+      return rows.map((r) => {
+        const spot = idx.get(r.entry.id)!;
+        const i = live.indexOf(r);
+        const meta = o ? travelText(travel(o.point, o.isPoint, spot), first ? o.from : undefined) : null;
+        const node = savedRowEl(s, spot, r, { first: i <= 0, last: i === live.length - 1 }, meta, first);
+        first = false;
+        used.add(`${r.entry.id}|${r.entry.date}`);
+        return node;
+      });
+    };
+    const nodes: HTMLElement[] = [];
+    for (const d of upcoming) {
+      const id = `day-${d.day}`;
+      const sec = el(doc, 'section', { class: 'day', 'aria-labelledby': id });
+      sec.append(el(doc, 'h2', { class: 'day-h', id }, dayName(s.today, d.day)), ...rowsOf(d.rows));
+      nodes.push(sec);
+    }
+    if (past.length) {
+      // 지난 날: folded at the bottom; opened, each day under its own date
+      const sec = el(doc, 'section', { class: 'day past', 'aria-labelledby': 'day-past' });
+      const head = el(doc, 'div', { class: 'day-h' });
+      head.append(
+        el(doc, 'h2', { id: 'day-past' }, COPY.past),
+        el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'past', 'aria-expanded': String(s.pastOpen) }, s.pastOpen ? COPY.pastClose : COPY.pastOpen),
+      );
+      sec.append(head);
+      if (s.pastOpen) for (const d of past) sec.append(el(doc, 'p', { class: 'group-h' }, longDay(d.day)), ...rowsOf(d.rows));
+      nodes.push(sec);
+    }
+    for (const k of [...rowNodes.keys()]) if (!used.has(k)) rowNodes.delete(k);
+    return nodes;
+  }
+
+  /** The control that had focus before the list was redrawn, or its stand-in: the same button in its new
+   * place, the row's next visible control when it hid (위로 on the new first row), the new 펼치기/접기. */
+  function refocus(active: HTMLElement) {
+    const same = (b: HTMLElement) => b.dataset.action === active.dataset.action && b.dataset.id === active.dataset.id && b.dataset.date === active.dataset.date;
+    const shown = (b: Element | null | undefined): b is HTMLElement => !!b && b.isConnected && !(b as HTMLElement).hidden && !b.closest('[hidden]');
+    let t: HTMLElement | null | undefined = shown(active) ? active : [...els.savedList.querySelectorAll<HTMLElement>('button[data-action]')].find(same);
+    if (!shown(t)) t = active.closest('.card')?.querySelector<HTMLElement>('.ctl button:not([hidden])') ?? active.closest('.card')?.querySelector<HTMLElement>('.heart');
+    if (shown(t) && doc.activeElement !== t) t.focus();
+  }
+
   function renderSaved(s: State) {
     const b = savedBodyOf(s, savedShowing);
     if (b.k === 'keep') return;
-    const list = b.k === 'list' ? s.savedList! : null;
-    const sig = b.k === 'list' ? `list|${list!.seq}` : b.k === 'error' ? `error|${s.phase.k === 'loadError' && s.phase.offline}` : b.k;
+    const sig = b.k === 'list' ? `list|${savedListSig(s)}` : b.k === 'error' ? `error|${s.phase.k === 'loadError' && s.phase.offline}` : b.k;
+    const n = savedCount(s);
+    setText(els.savedCount, b.k === 'list' && n ? String(n) : '');
     if (sig === savedSig) return;
     savedSig = sig;
     savedShowing = b.k === 'list' || b.k === 'error' || b.k === 'ghost';
-    let count = '';
-    let sort = '';
-    const nodes: HTMLElement[] = [];
+    // read before the rows are taken into their new sections (moving the focused one drops its focus)
+    const active = doc.activeElement as HTMLElement | null;
+    const inside = !!active && els.savedList.contains(active);
+    let empty = '';
+    let nodes: HTMLElement[] = [];
     if (b.k === 'ghost') {
-      const n = Math.min(Math.max(s.snapshot?.length ?? 1, 1), 3);
-      for (let i = 0; i < n; i++) nodes.push(ghostCard('row'));
+      const k = Math.min(Math.max(s.saved.length, 1), 3);
+      for (let i = 0; i < k; i++) nodes.push(ghostCard('row'));
     } else if (b.k === 'error') {
       nodes.push(notice(s, 'loadError'));
-    } else if (list) {
-      if (list.list.length) {
-        count = String(list.list.length);
-        sort = savedSortText(list.origin);
-        // The sort label says where from; each row says only its trip, and the first also where a tap goes
-        // (§6.12). Without a position there is no trip: the first row says 카카오맵 alone.
-        const o = list.origin;
-        list.list.forEach((c, i) => nodes.push(cardEl(s, c, 'row', o ? travelText(tripOf(o, c)) : null, i === 0, false)));
-      } else {
-        sort = COPY.savedEmpty;
-      }
+    } else if (b.k === 'list') {
+      nodes = savedListNodes(s);
+      if (!nodes.length) empty = COPY.savedEmpty;
     }
-    setText(els.savedCount, count);
-    setText(els.savedSort, sort);
+    if (b.k !== 'list') rowNodes.clear();
+    setText(els.savedSort, empty);
     els.savedList.replaceChildren(...nodes);
+    if (inside) refocus(active!);
   }
 
   /** Hearts, broken photos and the first-save hint are patched in place — cards are never rebuilt for them. */
   function patchCards(s: State) {
-    const on = new Set(s.saved);
-    for (const h of els.main.querySelectorAll<HTMLButtonElement>('.heart[data-id]')) setAttr(h, 'aria-pressed', String(on.has(h.dataset.id!)));
+    for (const h of els.main.querySelectorAll<HTMLButtonElement>('.heart[data-id]')) setAttr(h, 'aria-pressed', String(isSaved(s, h.dataset.id!, h.dataset.date)));
     if (s.broken !== patchedBroken) {
       const was = patchedBroken;
       patchedBroken = s.broken;
@@ -493,12 +608,13 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       }
       // Back online: a card that lost its photo only for want of a connection gets it back in place.
       if (was.length > s.broken.length) {
-        const shownCards = [...(s.cards?.list ?? []), ...(s.savedList?.list ?? [])];
+        const idx = s.spots ? spotIndex(s.spots) : null;
         for (const card of els.main.querySelectorAll<HTMLElement>('.card.noimg[data-id]')) {
-          const c = broken.has(card.dataset.id!) ? null : shownCards.find((x) => x.spot.id === card.dataset.id);
-          if (!c) continue;
+          const id = card.dataset.id!;
+          const spot = broken.has(id) ? null : (s.cards?.list.find((x) => x.spot.id === id)?.spot ?? idx?.get(id));
+          if (!spot) continue;
           card.classList.remove('noimg');
-          card.prepend(photoEl(c.spot, false));
+          card.prepend(photoEl(spot, false));
         }
       }
     }
@@ -520,26 +636,65 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   function sheetSigOf(s: State): string {
     // Only what the user changes in a sheet. News that arrives while it is open — a 숙소 GPS failure, a GPS
     // denial — is patched in place (patchSheet): a rebuild under the finger would reset its scroll and focus.
-    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}`;
+    const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
+    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.when}|${s.today}|${move}`;
+  }
+
+  /** A thin-rule list of rows under its own group heading (the 언제 / 어디 parts of the basis sheet). */
+  function optGroup(parent: HTMLElement, id: string, heading: string | null, rows: HTMLElement[]): HTMLElement {
+    const opts = el(doc, 'div', { class: 'opts', role: 'group' });
+    if (heading) {
+      const h = el(doc, 'p', { class: 'group-h', id });
+      h.append(el(doc, 'span', {}, heading));
+      parent.append(h);
+      opts.setAttribute('aria-labelledby', id);
+    }
+    opts.append(...rows);
+    parent.append(opts);
+    return opts;
+  }
+  function optRow(...children: HTMLElement[]): HTMLElement {
+    const row = el(doc, 'div', { class: 'optrow' });
+    row.append(...children);
+    return row;
+  }
+  /** 날짜 고르기: a row that opens the browser's own date picker (today and later), with the native input
+   * kept beside it. Where showPicker() is missing the input itself is shown (app.ts). */
+  function pickDayRow(s: State, picked: Day | null): HTMLElement {
+    const input = el(doc, 'input', { type: 'date', class: 'sr', min: s.today, tabindex: '-1', 'aria-hidden': 'true', 'aria-label': COPY.pickDay, 'data-action': 'day-input' });
+    input.value = picked ?? '';
+    return optRow(option(COPY.pickDay, picked ? longDay(picked) : null, { 'data-action': 'pick-day', 'aria-pressed': String(!!picked) }), input);
   }
 
   function buildSheet(s: State) {
     const overlay = s.overlay!;
     const scrim = el(doc, 'div', { class: 'scrim', 'data-action': 'close' });
     const panel = el(doc, 'section', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
-    panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, overlay === 'basis' ? COPY.basisSheet : COPY.staySheet));
+    const title = overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : COPY.staySheet;
+    panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
-      // A thin-rule list of two rows; 다시 정하기 sits at the end of the 숙소 row, beside its option (§6.10).
-      const opts = el(doc, 'div', { class: 'opts' });
-      const gpsRow = el(doc, 'div', { class: 'optrow' });
-      // its "위치 권한이 꺼져 있어요" line comes and goes in patchSheet
-      gpsRow.append(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') }));
-      const stayRow = el(doc, 'div', { class: 'optrow' });
-      stayRow.append(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
+      // 언제 (specs/date-mode.md): 지금 / 내일 / 날짜 고르기. Choosing one keeps the sheet open for 어디.
+      const tomorrow = addDays(s.today, 1);
+      const picked = s.when !== 'now' && s.when !== tomorrow ? s.when : null;
+      optGroup(panel, 'when-h', COPY.whenHead, [
+        optRow(option(COPY.whenNow, null, { 'data-when': 'now', 'aria-pressed': String(s.when === 'now') })),
+        optRow(option(COPY.tomorrow, null, { 'data-when': tomorrow, 'aria-pressed': String(s.when === tomorrow) })),
+        pickDayRow(s, picked),
+      ]);
+      // 어디: a thin-rule list of two rows; 다시 정하기 sits at the end of the 숙소 row, beside its option (§6.10).
+      // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
+      const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
-      opts.append(gpsRow, stayRow);
-      panel.append(opts);
+      optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow]);
       areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
+    } else if (overlay === 'move') {
+      // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.
+      const from = s.moveTarget?.date ?? '';
+      const days = [...new Set(s.saved.map((e) => e.date).filter((d) => d >= s.today))].sort();
+      optGroup(panel, 'move-h', null, [
+        ...days.map((d) => optRow(option(dayName(s.today, d), null, { 'data-day': d, 'aria-pressed': String(d === from) }))),
+        pickDayRow(s, null),
+      ]);
     } else {
       panel.append(
         el(doc, 'p', { class: 'note' }, COPY.stayNote),
@@ -619,7 +774,12 @@ export function createRenderer(doc: Document, els: Els): Renderer {
         els.sheet.classList.add('closing');
         closeTimer = later(190, done);
       } else done();
-      const back = opener?.isConnected && !opener.closest('[hidden]') ? opener : els.basis;
+      // 다른 날로 moved its row: the row (a new node, keyed by its new day) gets the focus back
+      const moved =
+        opener && !opener.isConnected && opener.dataset.action === 'move-day' && s.moveTarget
+          ? [...els.savedList.querySelectorAll<HTMLElement>('[data-action="move-day"]')].find((b) => b.dataset.id === s.moveTarget!.id && b.dataset.date === s.moveTarget!.date)
+          : null;
+      const back = opener?.isConnected && !opener.closest('[hidden]') ? opener : (moved ?? els.basis);
       opener = null;
       back.focus?.({ preventScroll: true });
     }
@@ -684,8 +844,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
     const n = savedCount(s);
     const inSaved = s.view === 'saved';
-    // Stays visible while the list is open, even at 0, so the toggle never vanishes under the thumb.
-    els.saved.hidden = n === 0 && !inSaved;
+    // Counts today and later; shown while anything is saved (지난 날 stays reachable) and while the list is
+    // open, even at 0, so the toggle never vanishes under the thumb.
+    els.saved.hidden = !hasSaved(s) && !inSaved;
     setText(els.savedN, String(n));
     setAttr(els.saved, 'aria-label', COPY.savedAria(n));
     setAttr(els.saved, 'aria-pressed', String(inSaved));

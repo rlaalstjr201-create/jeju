@@ -1,5 +1,6 @@
 // Shared domain types (no runtime code).
 import type { AreaName } from './areas';
+import type { Day } from './dates';
 import type { Point } from './pick';
 
 export type Basis = 'gps' | 'stay' | 'region';
@@ -22,7 +23,16 @@ export interface Origin {
   from: string;
 }
 export type View = 'home' | 'cards' | 'saved';
-export type Overlay = null | 'basis' | 'stay';
+/** 'move': the 다른 날로 sheet of a saved row. */
+export type Overlay = null | 'basis' | 'stay' | 'move';
+/** The day hearts go to: 'now' = today (the default), or a later day (specs/date-mode.md). */
+export type When = 'now' | Day;
+/** A saved place on a day. `order` = its place in that day's list (0, 1, 2, …). */
+export interface SavedEntry {
+  id: string;
+  date: Day;
+  order: number;
+}
 export interface Route {
   view: View;
   overlay: Overlay;

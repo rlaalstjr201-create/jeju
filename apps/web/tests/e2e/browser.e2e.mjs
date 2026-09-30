@@ -135,7 +135,7 @@ async function shot(page, name) {
 }
 
 // --- history (S15–S20, audit MAJOR 1·2) ---
-await check('S15', 'saved list → ⇄ → area keeps the list, re-sorted; no blank screen', async () => {
+await check('S15', 'saved list → ⇄ → area keeps the list, trips from the new area; no blank screen', async () => {
   const { ctx, page } = await fresh();
   await tapText(page, '[data-mood="walk"]');
   await waitCards(page);
@@ -147,7 +147,7 @@ await check('S15', 'saved list → ⇄ → area keeps the list, re-sorted; no bl
   await tapText(page, '#sheet [data-area="성산"]');
   await sleep(500);
   assert(await visible(page, '#savedView'), 'saved list closed');
-  assert((await page.textContent('#savedView .sort')) === '성산에서 가까운 순', 'not re-sorted from 성산');
+  assert((await page.textContent('#savedView .travel')).startsWith('성산에서 '), 'trips not from 성산');
   const s = await hstate(page);
   assert(s?.view === 'saved' && s?.overlay === null, `history.state ${JSON.stringify(s)}`);
   await shot(page, 'saved-390-light');
@@ -284,7 +284,7 @@ await check('two-tabs', 'tab A saves, tab B saves → both kept, both tabs show 
   await waitCards(b);
   await b.locator('.card .heart').first().click();
   await sleep(200);
-  const saved = await a.evaluate(() => JSON.parse(localStorage.getItem('jeju.saved') || '[]'));
+  const saved = await a.evaluate(() => JSON.parse(localStorage.getItem('jeju.saved.v2') || '[]'));
   assert(saved.length === 2, `storage has ${saved.length}`);
   assert((await a.textContent('#saved')).trim().endsWith('2'), `tab A shows ${await a.textContent('#saved')}`);
   assert((await b.textContent('#saved')).trim().endsWith('2'), `tab B shows ${await b.textContent('#saved')}`);
@@ -951,7 +951,7 @@ await check('QA-saved-scroll', 'closing the saved list returns to the scroll pos
   await ctx.close();
 });
 
-await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown in saved order within ~3s, never a grey placeholder forever', async () => {
+await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown (no trips) within ~3s, never a grey placeholder forever', async () => {
   const { ctx, page } = await fresh();
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
@@ -961,7 +961,7 @@ await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown in s
   await tapText(page, '#results .change');
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card:not(.ghost)', { timeout: 4500 });
-  assert((await page.textContent('#savedView .sort')) === '위치를 몰라서 저장한 순서대로 보여 드려요.', 'sort line');
+  assert((await page.locator('#savedView .travel').count()) === 0, 'a trip without a position');
   assert((await page.textContent('#basis')) === '여기 근처', 'a wait is not a failure');
   await ctx.close();
 });
@@ -1171,7 +1171,8 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     await b.page.waitForSelector('#sheet .areas');
     verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
-    assert(rows.join('/') === '지금 있는 곳/숙소성산 숙소', `sheet rows ${rows.join('/')}`);
+    // 언제 (specs/date-mode.md) above 어디
+    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소', `sheet rows ${rows.join('/')}`);
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
     await b.page.waitForSelector('#sheet .primary');
@@ -1420,6 +1421,118 @@ await check('QA2-row-names', 'row cards at 320/390: "… 절로 가는길 - 정�
     await shot(page, `row-names-${w}-${rows[0].slice(0, 4)}`);
     await ctx.close();
   }
+});
+
+// --- date mode (specs/date-mode.md D1–D6) ---
+const SPOT_IDS = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8')).map((x) => x.id);
+const seoulDay = (plus = 0) => new Date(Date.now() + 9 * 3600_000 + plus * 86_400_000).toISOString().slice(0, 10);
+const dayMeasure = () => {
+  const de = document.documentElement;
+  const small = [...document.querySelectorAll('button, input')]
+    .filter((b) => b.offsetParent !== null && !b.closest('[inert]') && !b.closest('[hidden]') && !b.classList.contains('sr'))
+    .map((b) => [b.dataset.action || b.className || b.textContent.trim().slice(0, 12), b.getBoundingClientRect()])
+    .filter(([, r]) => r.height > 0 && r.height < 43.5)
+    .map(([n, r]) => `${n}:${Math.round(r.height)}`);
+  const sizes = new Set();
+  const scope = document.querySelector('#sheet:not([hidden]) .sheet') ?? document.querySelector('main');
+  for (const e of scope.querySelectorAll('*')) {
+    if (e.closest('[hidden]') || e.closest('.sr') || e.offsetParent === null) continue;
+    if ([...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) sizes.add(getComputedStyle(e).fontSize);
+  }
+  const centred = [...document.querySelectorAll('main *, #sheet *')].filter((e) => e.offsetParent !== null && getComputedStyle(e).textAlign === 'center').length;
+  return { over: de.scrollWidth - de.clientWidth, small, sizes: sizes.size, centred };
+};
+await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the basis sheet, date in the label, hearts per day, saved list by day with 위로·아래로·다른 날로·빼기 kept across a reload; history balanced; no sideways scroll, every control ≥ 44px, ≤ 3 text sizes, nothing centred', async () => {
+  const problems = [];
+  const measure = async (page, label) => {
+    const r = await page.evaluate(dayMeasure);
+    if (r.over > 0) problems.push(`${label} overflows by ${r.over}px`);
+    if (r.small.length) problems.push(`${label} small: ${r.small.join(',')}`);
+    if (r.sizes > 3) problems.push(`${label} ${r.sizes} text sizes`);
+    if (r.centred) problems.push(`${label} ${r.centred} centred`);
+  };
+  const [a, b, c, d] = SPOT_IDS;
+  const today = seoulDay();
+  const tomorrow = seoulDay(1);
+  const sections = (page) =>
+    page.$$eval('#savedView .day', (els) => els.map((s) => `${s.querySelector('.day-h').textContent}:${[...s.querySelectorAll('.card')].map((x) => x.dataset.id).join(',')}`).join(' / '));
+  for (const width of [320, 390, 430])
+    for (const dark of [false, true]) {
+      const tag = `${width}-${dark ? 'dark' : 'light'}`;
+      const { ctx, page } = await fresh({
+        width,
+        dark,
+        storage: {
+          'jeju.saved.v2': [
+            { id: a, date: today, order: 0 },
+            { id: b, date: today, order: 1 },
+            { id: c, date: tomorrow, order: 0 },
+            { id: d, date: seoulDay(-2), order: 0 },
+          ],
+        },
+      });
+      // D1: the first screen as before (the ♥ N is there because something is saved)
+      const first = await page.$$eval('main button:not([hidden]), header button:not([hidden]), .top button:not([hidden])', (els) => els.filter((e) => e.offsetParent !== null).length);
+      if (first !== 7) problems.push(`${tag} first screen has ${first} controls`);
+      if ((await page.textContent('#basis')).trim() !== '여기 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
+      if ((await page.textContent('#saved')).trim() !== '3') problems.push(`${tag} ♥ ${await page.textContent('#saved')}`);
+      // D2: 언제 → 내일
+      await tapText(page, '#basis');
+      await measure(page, `${tag} basis sheet`);
+      const picker = await page.evaluate(() => {
+        const i = document.querySelector('#sheet input[type="date"]');
+        return { min: i.min, picker: typeof i.showPicker === 'function' };
+      });
+      if (picker.min !== today || !picker.picker) problems.push(`${tag} date input ${JSON.stringify(picker)}`);
+      await tapText(page, `#sheet [data-when="${tomorrow}"]`);
+      if (!(await visible(page, '#sheet .sheet'))) problems.push(`${tag} 내일 closed the sheet`);
+      await tapText(page, '#sheet .sheet-close');
+      await sleep(250);
+      const label = (await page.textContent('#basis')).trim();
+      if (label !== '내일 · 여기 근처') problems.push(`${tag} label "${label}"`);
+      await tapText(page, '[data-mood="rest"]');
+      await waitCards(page);
+      await measure(page, `${tag} results`);
+      const id = await page.locator('#cards .card').first().getAttribute('data-id');
+      await page.locator('#cards .card .heart').first().click();
+      const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('jeju.saved.v2')));
+      if (!stored.some((e) => e.id === id && e.date === tomorrow)) problems.push(`${tag} heart not on 내일`);
+      // D3: by day
+      await tapText(page, '#saved');
+      await page.waitForSelector('#savedView .card:not(.ghost)');
+      const want = `오늘:${a},${b} / 내일:${[c, id].filter((x, i, l) => l.indexOf(x) === i).join(',')} / 지난 날펼치기:`;
+      if ((await sections(page)) !== want) problems.push(`${tag} sections ${await sections(page)}`);
+      await measure(page, `${tag} saved`);
+      await tapText(page, '#savedView [data-action="past"]');
+      await measure(page, `${tag} saved past open`);
+      await tapText(page, `#savedView .card[data-id="${a}"] [data-action="down"]`);
+      await tapText(page, `#savedView .card[data-id="${b}"] [data-action="move-day"]`);
+      const hs = await hstate(page);
+      if (hs?.overlay !== 'move') problems.push(`${tag} move sheet history ${JSON.stringify(hs)}`);
+      await measure(page, `${tag} move sheet`);
+      await tapText(page, `#sheet [data-day="${tomorrow}"]`);
+      await sleep(250);
+      const focused = await page.evaluate(() => [document.activeElement?.dataset.action, document.activeElement?.dataset.id]);
+      if (focused[0] !== 'move-day' || focused[1] !== b) problems.push(`${tag} focus after move ${focused}`);
+      await tapText(page, `#savedView .card[data-id="${c}"] .heart`);
+      const hb = await hstate(page);
+      if (hb?.view !== 'saved' || hb?.overlay !== null) problems.push(`${tag} history after move ${JSON.stringify(hb)}`);
+      if (width === 390 && !dark) await shot(page, 'date-saved-390-light');
+      // across a reload: the order, the move and the removal stay; back pops saved → cards → first screen
+      await page.reload();
+      await page.waitForSelector('#savedView .card:not(.ghost)');
+      const after = await sections(page);
+      const want2 = `오늘:${a} / 내일:${[id, b].filter((x) => x !== c).join(',')} / 지난 날펼치기:`;
+      if (after !== want2) problems.push(`${tag} after reload ${after} (want ${want2})`);
+      // every back press does something: no entry left behind by the two sheets
+      await back(page);
+      const v1 = await page.evaluate(() => [history.state?.view, history.state?.overlay, !document.querySelector('#results').hidden]);
+      await back(page);
+      const v2 = await page.evaluate(() => [history.state?.view, history.state?.depth, !document.querySelector('#home').hidden]);
+      if (v1.join() !== 'cards,,true' || v2.join() !== 'home,0,true') problems.push(`${tag} back: ${v1} then ${v2}`);
+      await ctx.close();
+    }
+  assert(problems.length === 0, problems.join(' | '));
 });
 
 await browser.close();

@@ -2,9 +2,10 @@
 // effects and feeds their results back in as actions tagged with a request id; results for an old id are
 // dropped here, so the last user intent always wins (S36–S38).
 import { areaByName, type AreaName } from './areas';
+import { type Day } from './dates';
 import { distanceKm, driveMinutes, historyKey, pickCards, type Button, type Card, type Histories, type HistoryKey, type Spot, type Sub } from './pick';
 import type { SessionRecord } from './store';
-import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, Stay, View } from './types';
+import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';
 export type Phase =
@@ -34,6 +35,10 @@ export interface State {
   mood: Button | null;
   sub: Sub;
   basis: Basis;
+  /** the day hearts go to ('now' = today); reset to 'now' once that day comes (specs/date-mode.md). */
+  when: When;
+  /** today in Jeju (Asia/Seoul). */
+  today: Day;
   region: AreaName | null;
   stay: Stay | null;
   /** last GPS failure; cleared by the next GPS success. Drives the "지역 고르기" label and sheet hint. */
@@ -45,11 +50,16 @@ export interface State {
   /** last 3 ids shown per button (+food sub) — brought back when that button is chosen again (S43·S44). */
   shown: Partial<Record<HistoryKey, string[]>>;
   cards: Shown | null;
-  savedList: { list: Card[]; origin: Origin | null; seq: number } | null;
-  /** saved ids at the moment the saved list opened (unsaving there keeps the row: undo path). */
-  snapshot: string[] | null;
-  /** every saved id, newest first — may include ids missing from the current data (kept, S42). */
-  saved: string[];
+  /** the saved list is ready to draw: the point its trips are measured from (null = position unknown). */
+  savedList: { origin: Origin | null; seq: number } | null;
+  /** rows taken out in the saved list while it is open: they stay, heart empty, until it is reopened (undo). */
+  unsaved: SavedEntry[];
+  /** 지난 날 opened in the saved list. */
+  pastOpen: boolean;
+  /** the row the 다른 날로 sheet is for. */
+  moveTarget: { id: string; date: Day } | null;
+  /** every saved place per day — may include ids missing from the current data (kept, S42). */
+  saved: SavedEntry[];
   spots: Spot[] | null;
   broken: string[];
   /** photos that failed while offline: tried again once the connection is back. */
@@ -82,7 +92,12 @@ export type Action =
   | { type: 'overlay'; overlay: Overlay }
   | { type: 'basis'; basis: Basis; region?: AreaName; stay?: Stay }
   | { type: 'stayForm'; pending: boolean; error: NoOrigin | null }
-  | { type: 'saved'; ids: string[] }
+  /** the saved list as stored now; `removed`: a row taken out in the saved list (kept on screen). */
+  | { type: 'saved'; entries: SavedEntry[]; removed?: SavedEntry | null }
+  | { type: 'when'; when: When }
+  | { type: 'today'; today: Day }
+  | { type: 'pastOpen'; open: boolean }
+  | { type: 'moveTarget'; id: string; date: Day }
   | { type: 'hint'; id: string }
   | { type: 'hintSeen' }
   | { type: 'imgError'; id: string }
@@ -94,9 +109,11 @@ export const GPS_KEY = 'gps';
 
 export function initialState(init: {
   basis: Basis;
+  when?: When;
+  today: Day;
   region: AreaName | null;
   stay: Stay | null;
-  saved: string[];
+  saved: SavedEntry[];
   hintSeen: boolean;
   offline: boolean;
 }): State {
@@ -107,6 +124,8 @@ export function initialState(init: {
     mood: null,
     sub: 'meal',
     basis: init.basis,
+    when: init.when && init.when !== 'now' && init.when > init.today ? init.when : 'now',
+    today: init.today,
     region: init.region,
     stay: init.stay,
     lastFail: null,
@@ -116,7 +135,9 @@ export function initialState(init: {
     shown: {},
     cards: null,
     savedList: null,
-    snapshot: null,
+    unsaved: [],
+    pastOpen: false,
+    moveTarget: null,
     saved: init.saved,
     spots: null,
     broken: [],
@@ -184,11 +205,56 @@ export function spotIndex(spots: Spot[]): Map<string, Spot> {
   return m;
 }
 
-/** ♥ N: once data is loaded, only ids that still exist count (S42). */
-export function savedCount(s: State): number {
-  if (!s.spots) return s.saved.length;
+/** The day a heart goes to now. */
+export const whenDay = (s: State): Day => (s.when === 'now' ? s.today : s.when);
+
+/** Saved on `day` (the current day by default): what a card's heart shows. */
+export function isSaved(s: State, id: string, day: Day = whenDay(s)): boolean {
+  return s.saved.some((e) => e.id === id && e.date === day);
+}
+
+/** Once data is loaded, only ids that still exist count (S42). */
+function known(s: State): SavedEntry[] {
+  if (!s.spots) return s.saved;
   const idx = spotIndex(s.spots);
-  return s.saved.filter((id) => idx.has(id)).length;
+  return s.saved.filter((e) => idx.has(e.id));
+}
+/** ♥ N: today and later — the days gone by are not counted. */
+export function savedCount(s: State): number {
+  return known(s).filter((e) => e.date >= s.today).length;
+}
+/** ♥ N is shown: something saved, even if only on days gone by (지난 날 stays reachable). */
+export const hasSaved = (s: State): boolean => known(s).length > 0;
+
+export interface SavedRow {
+  entry: SavedEntry;
+  /** false: taken out while the list is open (heart empty, kept for undo). */
+  live: boolean;
+}
+export interface SavedDay {
+  day: Day;
+  rows: SavedRow[];
+}
+/** The saved list by day (§6.12): today and later in date order, then the days gone by. Each day in the
+ * order the user set; rows taken out in this visit stay where they were. Ids missing from the data are
+ * left out. */
+export function savedDays(s: State): { upcoming: SavedDay[]; past: SavedDay[] } {
+  const idx = s.spots ? spotIndex(s.spots) : null;
+  const byDay = new Map<Day, SavedRow[]>();
+  const add = (day: Day) => {
+    let rows = byDay.get(day);
+    if (!rows) byDay.set(day, (rows = []));
+    return rows;
+  };
+  for (const e of s.saved) if (!idx || idx.has(e.id)) add(e.date).push({ entry: e, live: true });
+  const ghosts = [...s.unsaved].sort((a, b) => a.order - b.order);
+  for (const e of ghosts) {
+    if ((idx && !idx.has(e.id)) || s.saved.some((x) => x.id === e.id && x.date === e.date)) continue;
+    const rows = add(e.date);
+    rows.splice(Math.min(e.order, rows.length), 0, { entry: e, live: false });
+  }
+  const days = [...byDay.keys()].sort().map((day) => ({ day, rows: byDay.get(day)! }));
+  return { upcoming: days.filter((d) => d.day >= s.today), past: days.filter((d) => d.day < s.today) };
 }
 
 // --- reducer ---
@@ -252,16 +318,8 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
 }
 
 function resolveSaved(s: State, origin: Origin | null, spots: Spot[]): State {
-  const idx = spotIndex(spots);
-  const found = (s.snapshot ?? []).map((id) => idx.get(id)).filter((x): x is Spot => !!x);
-  const list: Card[] = origin
-    ? found
-        .map((spot) => ({ spot, minutes: driveMinutes(distanceKm(origin.point, spot)), km: distanceKm(origin.point, spot) }))
-        .sort((a, b) => a.km - b.km) // stable: ties keep newest-saved first
-        .map(({ spot, minutes }) => ({ spot, minutes }))
-    : found.map((spot) => ({ spot, minutes: 0 }));
   const seq = s.seq + 1;
-  return { ...s, spots, phase: { k: 'ready' }, savedList: { list, origin, seq }, seq };
+  return { ...s, spots, phase: { k: 'ready' }, savedList: { origin, seq }, seq };
 }
 
 const isReq = (s: State, req: number) => s.phase.k === 'pending' && s.phase.req === req;
@@ -270,15 +328,15 @@ function enterView(s: State, view: View): State {
   if (view === s.view) return s;
   const next: State = { ...s, view };
   if (view === 'saved') {
-    return { ...next, snapshot: s.saved, savedList: null, savedFrom: s.view === 'saved' ? s.savedFrom : s.view, phase: { k: 'idle' } };
+    return { ...next, unsaved: [], pastOpen: false, savedList: null, savedFrom: s.view === 'saved' ? s.savedFrom : s.view, phase: { k: 'idle' } };
   }
-  const left = { ...next, snapshot: null, savedList: null };
+  const left = { ...next, unsaved: [], savedList: null };
   if (view === 'cards') return { ...left, phase: cardsValid(left) ? { k: 'ready' } : { k: 'idle' } };
   return { ...left, phase: { k: 'idle' } };
 }
 
 /** Every user intent but a heart clears the first-save hint (§6.13, §11.2): it goes with the next draw. */
-const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'request', 'openSaved', 'closeSaved', 'route', 'overlay', 'basis', 'restore']);
+const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'request', 'openSaved', 'closeSaved', 'route', 'overlay', 'basis', 'when', 'restore']);
 
 export function reduce(s: State, a: Action): State {
   const next = step(s, a);
@@ -333,9 +391,12 @@ function step(s: State, a: Action): State {
       const moved = enterView(s, a.route.view === 'cards' && !s.mood ? 'home' : a.route.view);
       return a.route.overlay === s.overlay ? moved : reduce(moved, { type: 'overlay', overlay: a.route.overlay });
     }
-    case 'overlay':
-      if (a.overlay === s.overlay) return s;
-      return { ...s, overlay: a.overlay, stayForm: { pending: false, error: null } };
+    case 'overlay': {
+      // 다른 날로 belongs to a row of the saved list: without one (a forward after a reload) there is none.
+      const overlay = a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved') ? null : a.overlay;
+      if (overlay === s.overlay) return s;
+      return { ...s, overlay, stayForm: { pending: false, error: null } };
+    }
     case 'basis':
       return {
         ...s,
@@ -348,8 +409,24 @@ function step(s: State, a: Action): State {
     case 'stayForm':
       // the 숙소 GPS failing is as much news about GPS as a failed pick: 내 주변 → 지역 고르기
       return { ...s, stayForm: { pending: a.pending, error: a.error }, lastFail: a.error ?? s.lastFail };
-    case 'saved':
-      return { ...s, saved: a.ids };
+    case 'saved': {
+      const unsaved = a.removed && s.view === 'saved' ? [...s.unsaved, a.removed] : s.unsaved;
+      // a row put back (here or in another tab) is live again
+      const stillOut = unsaved.filter((g) => !a.entries.some((e) => e.id === g.id && e.date === g.date));
+      return { ...s, saved: a.entries, unsaved: stillOut.length === s.unsaved.length && stillOut.every((g, i) => g === s.unsaved[i]) ? s.unsaved : stillOut };
+    }
+    case 'when':
+      return a.when === s.when ? s : { ...s, when: a.when };
+    case 'today': {
+      if (a.today === s.today) return s;
+      // the chosen day has come (or gone): back to 지금 (D5)
+      const when = s.when !== 'now' && s.when <= a.today ? 'now' : s.when;
+      return { ...s, today: a.today, when };
+    }
+    case 'pastOpen':
+      return a.open === s.pastOpen ? s : { ...s, pastOpen: a.open };
+    case 'moveTarget':
+      return { ...s, moveTarget: { id: a.id, date: a.date } };
     case 'hint':
       return { ...s, hintSeen: true, hintFor: a.id };
     case 'hintSeen':

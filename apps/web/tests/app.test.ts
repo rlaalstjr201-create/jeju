@@ -7,7 +7,7 @@ import { AREAS, LocateError, bookingUrl, kakaoUrl, mountApp, type App, type Deps
 import { nearestArea } from '../src/areas';
 import { cardTextProblem } from '../src/card-text';
 import { cleanReason } from '../src/data';
-import { distanceKm, pickCards, travel, travelText, type Point, type Sub } from '../src/pick';
+import { pickCards, travel, travelText, type Point, type Sub } from '../src/pick';
 import { splitName } from '../src/render';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
@@ -62,6 +62,8 @@ const drawnName = (name: string) => {
 // jsdom has no layout: scrolling is a no-op here.
 window.scrollTo = (() => undefined) as typeof window.scrollTo;
 const expectedNames = (o: Point, b: Parameters<typeof pickCards>[2]) => pickCards(realSpots, o, b).cards.map((c) => c.spot.name);
+/** saved ids as stored (jeju.saved.v2), day by day in their order */
+const storedIds = (): string[] => (JSON.parse(window.localStorage.getItem('jeju.saved.v2') ?? '[]') as { id: string }[]).map((e) => e.id);
 
 beforeEach(() => {
   app?.destroy();
@@ -529,7 +531,7 @@ describe('S8-2 위치 전환 시트', () => {
     expect($('#sheet [data-basis="gps"]')).not.toBeNull();
     expect($('#sheet [data-basis="stay"]')).not.toBeNull();
     const headings = $$('#sheet .group-h > span:first-child').map((h) => h.textContent);
-    expect(headings).toEqual(['제주시 쪽', '서귀포 쪽']);
+    expect(headings).toEqual(['언제', '어디', '제주시 쪽', '서귀포 쪽']);
     expect($('#sheet .group-h .order')?.textContent).toBe('서쪽부터');
     const areaBtns = $$('#sheet [data-area]').filter(visible) as HTMLElement[];
     expect(areaBtns.map((b) => b.dataset.area)).toEqual(AREAS.map((a) => a.name));
@@ -622,13 +624,13 @@ describe('S8-3 하트', () => {
     await flush();
     expect(heart.getAttribute('aria-pressed')).toBe('true');
     expect(navigated).toBe(false);
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([id]);
+    expect(storedIds()).toEqual([id]);
 
     heart.click();
     await flush();
     expect(heart.getAttribute('aria-pressed')).toBe('false');
     expect(navigated).toBe(false);
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([]);
+    expect(storedIds()).toEqual([]);
   });
 
   it('saves persist across a fresh render (localStorage)', async () => {
@@ -637,7 +639,7 @@ describe('S8-3 하트', () => {
     const id = $('.card')!.getAttribute('data-id')!;
     ($('.card .heart') as HTMLButtonElement).click();
     await flush();
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([id]);
+    expect(storedIds()).toEqual([id]);
 
     render();
     await tap('[data-mood="walk"]');
@@ -654,7 +656,9 @@ describe('S8-4 저장 목록', () => {
     expect(els).toHaveLength(6); // 5 moods + basis, same as S3 (saved button absent)
   });
 
-  it('"♥ N" appears once N > 0, opens saved-first list nearest-first from the current basis, allows unsave and 돌아가기', async () => {
+  // Changed on purpose (specs/date-mode.md): the list is in the order the user set (saved order to begin with),
+  // no longer nearest first.
+  it('"♥ N" appears once N > 0, opens the saved list in saved order under 오늘, allows unsave and 돌아가기', async () => {
     render({ locate: () => Promise.resolve(ORIGINS.제주시) });
     await tap('[data-mood="rest"]');
     const restId = $('.card')!.getAttribute('data-id')!;
@@ -672,14 +676,8 @@ describe('S8-4 저장 목록', () => {
     const savedList = $$('#savedView .card');
     expect(savedList).toHaveLength(2);
     const shownIds = savedList.map((c) => c.getAttribute('data-id'));
-    // saved ids are newest-first ([newId, restId]); the app's sort is stable, so ties break by that order too.
-    const savedIds = JSON.parse(window.localStorage.getItem('jeju.saved')!) as string[];
-    const expectedOrder = savedIds
-      .map((id) => realSpots.find((s) => s.id === id)!)
-      .sort((a, b) => distanceKm(ORIGINS.제주시, a) - distanceKm(ORIGINS.제주시, b))
-      .map((s) => s.id);
-    expect(shownIds).toEqual(expectedOrder);
-    expect(new Set(shownIds)).toEqual(new Set([restId, newId]));
+    expect(shownIds).toEqual([restId, newId]);
+    expect($$('#savedView .day-h').map((h) => h.textContent)).toEqual(['오늘']);
 
     // unsave one from the saved list: stays visible with an outline heart (undo path) until the
     // list is reopened — it does not disappear immediately (MINOR).
@@ -712,21 +710,23 @@ describe('S8-4 저장 목록', () => {
 
   // Changed on purpose (no dead end, no sheet popping up by itself): without a position the saved list
   // opens right away in saved order and says so; choosing an area via ⇄ re-sorts it in place.
-  it('gps basis, locate denied: ♥ N shows the saved list in saved order, and picking an area via ⇄ keeps it open, re-sorted (no dead end)', async () => {
+  it('gps basis, locate denied: ♥ N shows the saved list, and picking an area via ⇄ keeps it open, trips from there (no dead end)', async () => {
     window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id]));
     render({ locate: () => Promise.reject(new LocateError('denied')) });
     expect($('#saved').textContent).toBe('1');
     await tap('#saved');
     expect($('#sheet').hidden).toBe(true);
     expect($$('#savedView .card').map((c) => c.getAttribute('data-id'))).toEqual([realSpots[0].id]);
-    expect($('#savedView .sort')?.textContent).toBe('위치를 몰라서 저장한 순서대로 보여 드려요.');
+    // no position: no trip, the first row says only where a tap goes
+    expect($('#savedView .sort')?.textContent).toBe('');
+    expect($('#savedView .meta')?.textContent).toBe('카카오맵');
     await tap('#basis');
     await tap('#sheet [data-area="애월"]');
     await settle();
     expect($('#sheet').hidden).toBe(true);
     expect($('#savedView').hidden).toBe(false);
     expect($$('#savedView .card').map((c) => c.getAttribute('data-id'))).toEqual([realSpots[0].id]);
-    expect($('#savedView .sort')?.textContent).toBe('애월에서 가까운 순');
+    expect($('#savedView .travel')?.textContent).toMatch(/^애월에서 /);
     expect($('#basis').textContent).toBe('애월 근처');
   });
 

@@ -4,7 +4,7 @@
 // in tests/e2e/browser.e2e.mjs (Chromium).
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
-import { distanceKm, islandOf, pickCards, type Point } from '../src/pick';
+import { islandOf, pickCards, type Point } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, render, reset, settle, shownMood, tap, wait } from './harness';
 
@@ -18,6 +18,8 @@ const ESCAPE_30 = { slow: 0, long: 30, settle: 300 };
 /** The mood whose results are on screen (its title). */
 const pressedMoods = shownMood;
 const state = () => current().state();
+/** saved ids as stored (jeju.saved.v2), day by day in their order */
+const storedIds = (): string[] => (JSON.parse(window.localStorage.getItem('jeju.saved.v2') ?? '[]') as { id: string }[]).map((e) => e.id);
 /** Declarations of every top-level rule whose selector list includes `sel` exactly (media blocks excluded). */
 const cssRule = (sel: string) => {
   const flat = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/@media[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g, '');
@@ -209,7 +211,7 @@ describe('숙소', () => {
     await flush();
     await flush();
     expect($('#sheet').hidden).toBe(false);
-    expect($('#sheet-title').textContent).toBe('어디 근처로 볼까요?');
+    expect($('#sheet-title').textContent).toBe('언제 어디 근처로 볼까요?');
     expect($('#basis').textContent).toBe('애월 근처');
     expect(window.localStorage.getItem('jeju.stay')).toBeNull();
     expect(cardNames()).toEqual(before);
@@ -291,21 +293,17 @@ describe('뒤로가기와 저장 목록 (history)', () => {
     await settle();
   }
 
-  it('S15 saved list → ⇄ → area: the list stays, re-sorted from the new area (no bounce to mood cards)', async () => {
+  // Changed on purpose (specs/date-mode.md): the order is the user's; only the trips follow the new basis.
+  it('S15 saved list → ⇄ → area: the list stays, its trips from the new area (no bounce to mood cards)', async () => {
     await savedOpenFromCards();
-    const saved = JSON.parse(window.localStorage.getItem('jeju.saved')!) as string[];
+    const saved = storedIds();
     await tap('#basis');
     await tap('#sheet [data-area="성산"]');
     await settle();
     expect($('#savedView').hidden).toBe(false);
     expect(pressedMoods()).toEqual([]);
-    const 성산 = area('성산');
-    const want = saved
-      .map((id) => realSpots.find((s) => s.id === id)!)
-      .sort((a, b) => distanceKm(성산, a) - distanceKm(성산, b))
-      .map((s) => s.id);
-    expect(cardIds()).toEqual(want);
-    expect($('#savedView .sort')?.textContent).toBe('성산에서 가까운 순');
+    expect(cardIds()).toEqual(saved);
+    expect($('#savedView .travel')?.textContent).toMatch(/^성산에서 /);
     expect(window.history.state).toMatchObject({ view: 'saved', overlay: null });
   });
 
@@ -473,7 +471,7 @@ describe('저장소 값 손상 (S29)', () => {
     await tap('#saved');
     expect(cardIds()).toEqual([realSpots[0].id]);
     await tap('#savedView .heart'); // unsave → really unsaved (was: heart off, id still stored)
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([]);
+    expect(storedIds()).toEqual([]);
     await tap('#saved');
     await tap('#basis');
     expect($('#sheet [data-basis="gps"]').getAttribute('aria-pressed')).toBe('true');
@@ -639,7 +637,7 @@ describe('하트', () => {
     h.click();
     await flush();
     expect(h.getAttribute('aria-pressed')).toBe('false');
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([]);
+    expect(storedIds()).toEqual([]);
   });
 
   it('S40 the first heart ever says once where saves go; later hearts don\'t', async () => {
@@ -678,7 +676,7 @@ describe('하트', () => {
     await flush();
     await flush();
     expect($('#saved').textContent).toBe('1');
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual(['gone', realSpots[0].id]);
+    expect(storedIds()).toEqual(['gone', realSpots[0].id]);
   });
 
   it('audit: another tab\'s save shows up here (storage event) and is never overwritten', async () => {
@@ -686,14 +684,15 @@ describe('하트', () => {
     await tap('[data-mood="rest"]');
     const [a, b] = $$('.card').map((c) => c.dataset.id!);
     await tap('.card .heart');
-    // another tab saves b
-    window.localStorage.setItem('jeju.saved', JSON.stringify([b, a]));
-    window.dispatchEvent(new StorageEvent('storage', { key: 'jeju.saved', storageArea: window.localStorage }));
+    // another tab saves b (today)
+    const day = state().today;
+    window.localStorage.setItem('jeju.saved.v2', JSON.stringify([{ id: a, date: day, order: 0 }, { id: b, date: day, order: 1 }]));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'jeju.saved.v2', storageArea: window.localStorage }));
     expect($('#saved').textContent).toBe('2');
     expect($$('.card .heart').map((h) => h.getAttribute('aria-pressed'))).toEqual(['true', 'true', 'false']);
     // this tab unsaves a: b survives
     await tap('.card .heart');
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([b]);
+    expect(storedIds()).toEqual([b]);
   });
 
   it('a heart tap never rebuilds the card (photo not reloaded)', async () => {
@@ -1005,8 +1004,9 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
   });
 
   // Changed on purpose (3판 §6.5·§6.12): two cards still get the one-word 아니면 line (only one card has none);
-  // the saved list's rows say only their trip (the sort label says where from), 카카오맵 on the first row only.
-  it('two cards only: a bare 아니면; the saved list has rows only, trip without "from", 카카오맵 once', async () => {
+  // the saved list's first row says where from (no sort label any more, specs/date-mode.md), the others only
+  // their trip, 카카오맵 on the first row only.
+  it('two cards only: a bare 아니면; the saved list has rows only, "from" on the first trip only, 카카오맵 once', async () => {
     const two = realSpots.filter((s) => s.mood === 'walk').slice(0, 2);
     render({ loadSpots: () => Promise.resolve(two), locate: () => Promise.resolve(two[0]) });
     await tap('[data-mood="walk"]');
@@ -1018,18 +1018,24 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     await tap('#saved');
     expect($$('#savedView .card.lead')).toHaveLength(0);
     expect($$('#savedView .card.row')).toHaveLength(2);
-    expect($('#savedView .sort').textContent).toBe('여기서 가까운 순');
-    for (const t of $$('#savedView .travel')) expect(t.textContent).toMatch(/^(차로|걸어서) 약 /);
+    expect($('#savedView .sort').textContent).toBe('');
+    const trips = $$('#savedView .travel').map((t) => t.textContent);
+    expect(trips[0]).toMatch(/^여기서 (차로|걸어서) 약 /);
+    expect(trips[1]).toMatch(/^(차로|걸어서) 약 /);
     expect($$('#savedView .dest')).toHaveLength(1);
     expect($('#savedView .card .dest')).toBe($$('#savedView .card')[0].querySelector('.dest'));
     expect($('#savedView .foot').textContent).toBe('이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.');
     expect($('#savedTitle .count').textContent).toBe('2');
   });
 
-  it('date line: today, at any hour (ADR-0059)', () => {
-    render({ today: () => new Date(2026, 8, 30, 22, 0) });
+  // Changed on purpose (specs/date-mode.md): the date is Jeju's (Asia/Seoul), the same day the saved list
+  // calls 오늘, whatever the device's time zone.
+  it('date line: today in Jeju, at any hour (ADR-0059)', () => {
+    render({ today: () => new Date('2026-09-30T22:00:00+09:00') });
     expect($('#date').textContent).toBe('9월 30일 수요일');
-    render({ today: () => new Date(2026, 9, 1, 1, 30) });
+    render({ today: () => new Date('2026-10-01T01:30:00+09:00') });
+    expect($('#date').textContent).toBe('10월 1일 목요일');
+    render({ today: () => new Date('2026-09-30T15:00:00Z') }); // midnight in Jeju, 15:00 in London
     expect($('#date').textContent).toBe('10월 1일 목요일');
   });
 
@@ -1344,14 +1350,14 @@ describe('QA 2026-09-30 — 다른 3곳 보기·저장 목록·사진', () => {
     expect(cardNames().filter((n) => first.includes(n))).toEqual([]);
   });
 
-  it('saved list while GPS never answers (a prompt left open): after a moment it shows in saved order, the label unchanged', async () => {
+  it('saved list while GPS never answers (a prompt left open): after a moment it shows (no trips), the label unchanged', async () => {
     const [a, b] = realSpots;
     window.localStorage.setItem('jeju.saved', JSON.stringify([a.id, b.id]));
     render({ locate: hang, delays: ESCAPE_30 });
     await tap('#saved');
     await wait(40); // delays.long = 30 here (3s in the app)
     expect(cardIds()).toEqual([a.id, b.id]);
-    expect($('#savedView .sort').textContent).toBe('위치를 몰라서 저장한 순서대로 보여 드려요.');
+    expect($$('#savedView .travel')).toHaveLength(0);
     expect($('#basis').textContent).toBe('여기 근처'); // nothing failed; it just didn't answer
   });
 
@@ -1529,5 +1535,273 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     expect($('.notice')).toBeNull();
     expect(cardNames()).toEqual(expectedNames(area('애월'), 'walk'));
     expect(loadSpots).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
+  const TODAY = '2026-09-30';
+  const TOMORROW = '2026-10-01';
+  let wall = new Date('2026-09-30T12:00:00+09:00');
+  const at = (iso: string) => (wall = new Date(iso));
+  const open = (deps = {}) => render({ today: () => wall, ...deps });
+  const [a, b, c, d, e] = realSpots.map((s) => s.id);
+  const v2 = () => JSON.parse(window.localStorage.getItem('jeju.saved.v2') ?? '[]') as { id: string; date: string; order: number }[];
+  const seed = (entries: [string, string][]) => {
+    const n = new Map<string, number>();
+    window.localStorage.setItem(
+      'jeju.saved.v2',
+      JSON.stringify(entries.map(([id, date]) => ({ id, date, order: (n.set(date, (n.get(date) ?? -1) + 1), n.get(date)!) }))),
+    );
+  };
+  /** the saved list as drawn: [day heading, ids] per section */
+  const sections = () =>
+    $$('#savedView .day').map((sec) => [sec.querySelector('.day-h')!.textContent, [...sec.querySelectorAll<HTMLElement>('.card')].map((x) => x.dataset.id)]);
+  const row = (id: string) => $(`#savedView .card[data-id="${id}"]`);
+  const ctl = (id: string, action: string) => row(id).querySelector<HTMLElement>(`[data-action="${action}"]`)!;
+  const interactiveCount = () =>
+    $$('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])').filter((x) => !x.closest('[hidden]') && !x.closest('#sheet')).length;
+  beforeEach(() => {
+    at('2026-09-30T12:00:00+09:00');
+  });
+
+  it('D1 the first screen is as before: same interactive elements, label 여기 근처, no date in it', () => {
+    open();
+    expect(interactiveCount()).toBe(6);
+    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#saved').hidden).toBe(true);
+  });
+
+  it('D2 basis sheet: 언제 (지금 / 내일 / 날짜 고르기) above 어디; 내일 puts the date in the label and the sheet stays open', async () => {
+    open();
+    await tap('#basis');
+    const when = $$('#sheet .opts')[0];
+    expect($('#sheet .group-h').textContent).toBe('언제');
+    expect([...when.querySelectorAll('.opt .nm')].map((x) => x.textContent)).toEqual(['지금', '내일', '날짜 고르기']);
+    expect($('#sheet [data-when="now"]').getAttribute('aria-pressed')).toBe('true');
+    const input = $<HTMLInputElement>('#sheet input[type="date"]');
+    expect(input.min).toBe(TODAY);
+    const entry = window.history.state;
+    await tap('#sheet [data-when="2026-10-01"]');
+    expect($('#sheet').hidden).toBe(false);
+    expect(window.history.state).toEqual(entry); // no history change: still the sheet's entry
+    expect($('#sheet [data-when="2026-10-01"]').getAttribute('aria-pressed')).toBe('true');
+    expect(document.activeElement).toBe($('#sheet [data-when="2026-10-01"]'));
+    expect($('#basis').textContent).toBe('내일 · 여기 근처');
+    expect(JSON.parse(window.localStorage.getItem('jeju.when')!)).toBe(TOMORROW);
+    await tap('#sheet [data-area="애월"]');
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect($('#basis').textContent).toBe('내일 · 애월 근처');
+    expect($('#basis').getAttribute('aria-label')).toBe('내일 · 애월 근처, 기준 바꾸기');
+  });
+
+  it('D2 날짜 고르기: a later day picked in the native field → "10월 3일 · …"; today or earlier → 지금', async () => {
+    open();
+    await tap('#basis');
+    const input = $<HTMLInputElement>('#sheet input[type="date"]');
+    input.value = '2026-10-03';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    expect($('#basis').textContent).toBe('10월 3일 · 여기 근처');
+    expect($('#sheet [data-action="pick-day"]').getAttribute('aria-pressed')).toBe('true');
+    expect($('#sheet [data-action="pick-day"] .lm').textContent).toBe('10월 3일 토요일');
+    const again = $<HTMLInputElement>('#sheet input[type="date"]');
+    again.value = '2026-09-29';
+    again.dispatchEvent(new Event('change', { bubbles: true }));
+    expect($('#basis').textContent).toBe('10월 3일 · 여기 근처'); // before today: ignored
+    again.value = TODAY;
+    again.dispatchEvent(new Event('change', { bubbles: true }));
+    expect($('#basis').textContent).toBe('여기 근처');
+  });
+
+  it('날짜 고르기 with no showPicker (older browsers): the date field itself shows and takes the focus', async () => {
+    open();
+    await tap('#basis');
+    const input = $<HTMLInputElement>('#sheet input[type="date"]');
+    (input as { showPicker?: unknown }).showPicker = undefined;
+    await tap('#sheet [data-action="pick-day"]');
+    expect(input.classList.contains('sr')).toBe(false);
+    expect(input.hasAttribute('aria-hidden')).toBe(false);
+    expect(document.activeElement).toBe(input);
+  });
+
+  it('D2 a heart goes to the chosen day and is filled only for that day; the same place can go on two days', async () => {
+    open();
+    await tap('[data-mood="rest"]');
+    const id = $('.card').dataset.id!;
+    await tap('.card .heart');
+    expect(v2()).toEqual([{ id, date: TODAY, order: 0 }]);
+    await tap('#basis');
+    await tap('#sheet [data-when="2026-10-01"]');
+    await tap('#sheet .sheet-close');
+    await settle();
+    expect($('.card .heart').getAttribute('aria-pressed')).toBe('false'); // not saved for 내일 yet
+    await tap('.card .heart');
+    expect($('.card .heart').getAttribute('aria-pressed')).toBe('true');
+    expect(v2()).toEqual([
+      { id, date: TODAY, order: 0 },
+      { id, date: TOMORROW, order: 0 },
+    ]);
+    expect($('#saved').textContent).toBe('2');
+  });
+
+  it('D3 the saved list by day: 오늘, 내일, later dates, 지난 날 folded at the bottom; ♥ N counts today on', async () => {
+    seed([[a, TODAY], [b, TODAY], [c, '2026-10-03'], [d, TOMORROW], [e, '2026-09-28']]);
+    open();
+    expect($('#saved').textContent).toBe('4');
+    await tap('#saved');
+    expect(sections()).toEqual([
+      ['오늘', [a, b]],
+      ['내일', [d]],
+      ['10월 3일 토요일', [c]],
+      ['지난 날펼치기', []],
+    ]);
+    expect($('#savedTitle .count').textContent).toBe('4');
+    expect($('#savedView .sort').textContent).toBe(''); // no sort label any more
+    const fold = $('#savedView [data-action="past"]');
+    expect(fold.getAttribute('aria-expanded')).toBe('false');
+    fold.focus(); // a click focuses the button in a browser; jsdom does not
+    await tap(fold);
+    expect($('#savedView [data-action="past"]').getAttribute('aria-expanded')).toBe('true');
+    expect($('#savedView .past .group-h').textContent).toBe('9월 28일 월요일');
+    expect(row(e)).not.toBeNull();
+    expect(document.activeElement).toBe($('#savedView [data-action="past"]'));
+  });
+
+  it('D3 위로·아래로 (ends hidden), 다른 날로 (a sheet with history), 빼기 — all still there after a reload', async () => {
+    seed([[a, TODAY], [b, TODAY], [c, TODAY], [d, TOMORROW]]);
+    open();
+    await tap('#saved');
+    expect(ctl(a, 'up').hidden).toBe(true);
+    expect(ctl(a, 'down').hidden).toBe(false);
+    expect(ctl(c, 'down').hidden).toBe(true);
+    expect(ctl(d, 'up').hidden && ctl(d, 'down').hidden).toBe(true);
+    const photo = row(a).querySelector('img');
+    ctl(a, 'down').focus();
+    await tap(ctl(a, 'down'));
+    expect(sections()[0]).toEqual(['오늘', [b, a, c]]);
+    expect(row(a).querySelector('img')).toBe(photo); // the row moved, not rebuilt
+    expect(document.activeElement).toBe(ctl(a, 'down'));
+    // 다른 날로: its own sheet and history entry
+    const length = window.history.length;
+    ctl(c, 'move-day').focus();
+    await tap(ctl(c, 'move-day'));
+    expect($('#sheet').hidden).toBe(false);
+    expect($('#sheet-title').textContent).toBe('어느 날로 옮길까요?');
+    expect(window.history.state).toMatchObject({ view: 'saved', overlay: 'move' });
+    expect(window.history.length).toBe(length + 1);
+    expect($$('#sheet .opt .nm').map((x) => x.textContent)).toEqual(['오늘', '내일', '날짜 고르기']);
+    expect($('#sheet [data-day="2026-09-30"]').getAttribute('aria-pressed')).toBe('true');
+    await tap('#sheet [data-day="2026-10-01"]');
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect(window.history.state).toMatchObject({ view: 'saved', overlay: null });
+    expect(sections()).toEqual([
+      ['오늘', [b, a]],
+      ['내일', [d, c]],
+    ]);
+    expect(document.activeElement).toBe(ctl(c, 'move-day'));
+    // 빼기: the heart; the row stays (undo) with nothing to move
+    await tap(row(b).querySelector<HTMLElement>('.heart')!);
+    expect(row(b).querySelector('.heart')!.getAttribute('aria-pressed')).toBe('false');
+    expect(row(b).querySelector<HTMLElement>('.ctl')!.hidden).toBe(true);
+    expect(ctl(a, 'up').hidden).toBe(true); // a is the first live row now
+    expect($('#saved').textContent).toBe('3');
+    window.history.replaceState(null, ''); // a new visit (a reload here would reopen the list by itself)
+    open();
+    await tap('#saved');
+    expect(sections()).toEqual([
+      ['오늘', [a]],
+      ['내일', [d, c]],
+    ]);
+  });
+
+  it('D3 a heart taken out and put back in the saved list returns to its place', async () => {
+    seed([[a, TODAY], [b, TODAY], [c, TODAY]]);
+    open();
+    await tap('#saved');
+    const heart = () => row(b).querySelector<HTMLElement>('.heart')!;
+    await tap(heart());
+    await tap(heart());
+    expect(heart().getAttribute('aria-pressed')).toBe('true');
+    expect(v2().map((x) => x.id)).toEqual([a, b, c]);
+  });
+
+  it('D3 double taps: 아래로 moves once; 다른 날로 opens one sheet', async () => {
+    seed([[a, TODAY], [b, TODAY], [c, TODAY]]);
+    open();
+    await tap('#saved');
+    advance();
+    ctl(a, 'down').click();
+    ctl(a, 'down').click();
+    await flush();
+    expect(sections()[0]).toEqual(['오늘', [b, a, c]]);
+    advance();
+    const length = window.history.length;
+    ctl(c, 'move-day').click();
+    ctl(c, 'move-day').click();
+    await flush();
+    expect(window.history.length).toBe(length + 1);
+  });
+
+  it('다른 날로 sheet: phone back closes only the sheet; the row stays', async () => {
+    seed([[a, TODAY], [b, TOMORROW]]);
+    open();
+    await tap('#saved');
+    await tap(ctl(a, 'move-day'));
+    window.history.back();
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect($('#savedView').hidden).toBe(false);
+    expect(sections()[0]).toEqual(['오늘', [a]]);
+    expect(window.history.state).toMatchObject({ view: 'saved', overlay: null });
+  });
+
+  it('D5 midnight: a chosen day that has come goes back to 지금; yesterday\'s saves go to 지난 날, out of ♥ N', async () => {
+    seed([[a, TODAY], [b, TOMORROW]]);
+    window.localStorage.setItem('jeju.when', JSON.stringify(TOMORROW));
+    open();
+    expect($('#basis').textContent).toBe('내일 · 여기 근처');
+    expect($('#saved').textContent).toBe('2');
+    at('2026-10-01T00:00:05+09:00');
+    document.dispatchEvent(new Event('visibilitychange'));
+    expect($('#basis').textContent).toBe('여기 근처');
+    expect(JSON.parse(window.localStorage.getItem('jeju.when')!)).toBe('now');
+    expect($('#date').textContent).toBe('10월 1일 목요일');
+    expect($('#saved').textContent).toBe('1');
+    await tap('#saved');
+    expect(sections()).toEqual([
+      ['오늘', [b]],
+      ['지난 날펼치기', []],
+    ]);
+    open(); // and a reload the day after
+    expect($('#basis').textContent).toBe('여기 근처');
+  });
+
+  it('D5 the midnight timer itself moves the day on (no need to leave the app)', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      at('2026-09-30T23:59:00+09:00');
+      window.localStorage.setItem('jeju.when', JSON.stringify(TOMORROW));
+      open();
+      expect($('#basis').textContent).toBe('내일 · 여기 근처');
+      at('2026-10-01T00:00:02+09:00');
+      vi.advanceTimersByTime(61_000);
+      expect($('#basis').textContent).toBe('여기 근처');
+      expect($('#date').textContent).toBe('10월 1일 목요일');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('D6 storage blocked: hearts per day and moves work from memory for the visit', async () => {
+    open({ storage: null });
+    await tap('[data-mood="rest"]');
+    const [x, y] = $$('.card').map((k) => k.dataset.id!);
+    await tap('.card .heart');
+    await tap($$('.card .heart')[1]);
+    await tap('#saved');
+    expect(sections()).toEqual([['오늘', [x, y]]]);
+    await tap(ctl(y, 'up'));
+    expect(sections()).toEqual([['오늘', [y, x]]]);
   });
 });

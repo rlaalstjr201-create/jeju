@@ -2,13 +2,20 @@
 // repaired; every access is try/catch'd, and when storage is missing or throws the app keeps working from
 // memory for this visit (S27·S28·S29).
 import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
+import { isDay, type Day } from './dates';
 import type { Button, Histories, History, HistoryKey, Sub } from './pick';
-import type { Basis, Origin, Stay } from './types';
+import type { Basis, Origin, SavedEntry, Stay, When } from './types';
 
 export const KEYS = {
   basis: 'jeju.basis',
+  /** the day hearts go to, next to the basis (specs/date-mode.md): 'now' | 'YYYY-MM-DD'. */
+  when: 'jeju.when',
   region: 'jeju.region',
   stay: 'jeju.stay',
+  /** v2: `{ id, date, order }[]`, saved per day. */
+  savedV2: 'jeju.saved.v2',
+  /** v1: ids, newest first. Read once into v2 (today) and never written or removed again, so a rollback
+   * still finds it. */
   saved: 'jeju.saved',
   hint: 'jeju.hintSeen',
   session: 'jeju.session',
@@ -31,9 +38,51 @@ const isStr = (x: unknown): x is string => typeof x === 'string' && x.length > 0
 const isNum = (x: unknown): x is number => typeof x === 'number' && Number.isFinite(x);
 const strings = (v: unknown): string[] | null => (Array.isArray(v) ? v.filter(isStr) : null);
 
-/** Strings only, duplicates removed (first = newest kept), at most MAX_SAVED. */
+/** v1 list: strings only, duplicates removed (first = newest kept), at most MAX_SAVED. */
 export function parseSaved(v: unknown): string[] {
   return [...new Set(strings(v) ?? [])].slice(0, MAX_SAVED);
+}
+
+/** Canonical form: sorted by day, then order; one entry per place and day (the first kept); each day's
+ * orders renumbered 0, 1, 2, …; at most MAX_SAVED (the latest days kept). */
+export function normalizeEntries(list: readonly SavedEntry[]): SavedEntry[] {
+  const seen = new Set<string>();
+  const kept = list.filter((e) => {
+    const k = `${e.id}|${e.date}`;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+  const sorted = kept
+    .map((e, i) => ({ e, i }))
+    .sort((a, b) => (a.e.date < b.e.date ? -1 : a.e.date > b.e.date ? 1 : a.e.order - b.e.order || a.i - b.i))
+    .map(({ e }) => e)
+    .slice(-MAX_SAVED);
+  let day = '';
+  let n = 0;
+  return sorted.map((e) => {
+    if (e.date !== day) {
+      day = e.date;
+      n = 0;
+    }
+    return { id: e.id, date: e.date, order: n++ };
+  });
+}
+
+/** v2 list: entries with a non-empty id, a real day and a finite order only, then normalized. */
+export function parseEntries(v: unknown): SavedEntry[] {
+  if (!Array.isArray(v)) return [];
+  const ok = v.filter((x): x is SavedEntry => {
+    if (!x || typeof x !== 'object') return false;
+    const o = x as Record<string, unknown>;
+    return isStr(o.id) && isDay(o.date) && isNum(o.order);
+  });
+  return normalizeEntries(ok);
+}
+
+/** 'now', or a day after today. Today or earlier is 'now' again (the day has come or gone). */
+export function parseWhen(v: unknown, today: Day): When {
+  return isDay(v) && v > today ? v : 'now';
 }
 
 /** One of the 15 areas; the 4 legacy names map to their nearest area. */
@@ -115,23 +164,32 @@ export function parseSession(v: unknown): SessionRecord | null {
 
 export interface Loaded {
   basis: Basis;
+  when: When;
   region: AreaName | null;
   stay: Stay | null;
-  saved: string[];
+  saved: SavedEntry[];
   hintSeen: boolean;
 }
 
 export interface Store {
-  /** Read everything once at mount, writing back repaired values where the stored ones were bad. */
-  load(): Loaded;
+  /** Read everything once at mount, writing back repaired values where the stored ones were bad. The v1
+   * saved list is moved to `today` the first time (no v2 key yet), in its order. */
+  load(today: Day): Loaded;
   setBasis(b: Basis): void;
+  setWhen(w: When): void;
   setRegion(name: AreaName): void;
   setStay(stay: Stay): void;
   setHintSeen(): void;
-  /** Current saved ids, re-read from storage (another tab may have changed them). */
-  saved(): string[];
-  /** Read-modify-write so two tabs never overwrite each other's hearts. Newest first. */
-  toggleSaved(id: string): { ids: string[]; added: boolean };
+  // Every saved-list change below is read-modify-write, so two tabs never overwrite each other's hearts.
+  /** Current saved entries, re-read from storage (another tab may have changed them). */
+  saved(): SavedEntry[];
+  /** Heart on `id` for `date`: added at the end of that day (or at `at`, putting back a row just taken out),
+   * or taken out (`removed` says where it was). */
+  toggleSaved(id: string, date: Day, at?: number): { entries: SavedEntry[]; added: boolean; removed: SavedEntry | null };
+  /** One place up (-1) or down (+1) within its day. */
+  moveSaved(id: string, date: Day, dir: -1 | 1): SavedEntry[];
+  /** To another day, at its end (if it is already there, the two become one). */
+  moveToDay(id: string, from: Day, to: Day): SavedEntry[];
   readSession(): SessionRecord | null;
   writeSession(rec: SessionRecord): void;
   clearSession(): void;
@@ -140,7 +198,7 @@ export interface Store {
 export function createStore(local: Storage | null, session: Storage | null): Store {
   // Once storage throws on a saved-list read or write, memory is the truth for the rest of the visit.
   let trusted = !!local;
-  let memory: string[] = [];
+  let memory: SavedEntry[] = [];
 
   function get(storage: Storage | null, key: string): unknown {
     try {
@@ -160,25 +218,32 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
   }
   const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 
-  function readSaved(): string[] {
+  function readSaved(): SavedEntry[] {
     if (!trusted || !local) return memory;
     let raw: string | null;
     try {
-      raw = local.getItem(KEYS.saved);
+      raw = local.getItem(KEYS.savedV2);
     } catch {
       trusted = false;
       return memory;
     }
-    memory = parseSaved(parse(raw));
+    memory = parseEntries(parse(raw));
     return memory;
   }
-  function writeSaved(ids: string[]) {
-    memory = ids;
-    if (trusted && !set(local, KEYS.saved, ids)) trusted = false;
+  function writeSaved(entries: SavedEntry[]) {
+    memory = entries;
+    if (trusted && !set(local, KEYS.savedV2, entries)) trusted = false;
   }
+  function update(change: (cur: SavedEntry[]) => SavedEntry[]): SavedEntry[] {
+    const next = normalizeEntries(change(readSaved()));
+    writeSaved(next);
+    return next;
+  }
+  const ofDay = (list: SavedEntry[], day: Day) => list.filter((e) => e.date === day);
+  const lastOrder = (list: SavedEntry[], day: Day) => ofDay(list, day).length;
 
   return {
-    load() {
+    load(today) {
       const rawRegion = get(local, KEYS.region);
       const region = parseRegion(rawRegion);
       if (rawRegion != null && !same(rawRegion, region)) {
@@ -194,23 +259,61 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       const rawBasis = get(local, KEYS.basis);
       const basis = parseBasis(rawBasis, stay, region);
       if (rawBasis != null && rawBasis !== basis) set(local, KEYS.basis, basis);
-      const rawSaved = get(local, KEYS.saved);
-      const saved = parseSaved(rawSaved);
-      memory = saved;
-      if (rawSaved != null && !same(rawSaved, saved)) writeSaved(saved);
-      return { basis, region, stay, saved, hintSeen: get(local, KEYS.hint) === true };
+      const rawWhen = get(local, KEYS.when);
+      const when = parseWhen(rawWhen, today);
+      if (rawWhen != null && rawWhen !== when) set(local, KEYS.when, when);
+      const rawSaved = get(local, KEYS.savedV2);
+      let saved: SavedEntry[];
+      if (rawSaved == null) {
+        // First run with day-by-day saving: the old list becomes today's, in its order (D4).
+        saved = parseSaved(get(local, KEYS.saved)).map((id, order) => ({ id, date: today, order }));
+        memory = saved;
+        if (saved.length) writeSaved(saved);
+      } else {
+        saved = parseEntries(rawSaved);
+        memory = saved;
+        if (!same(rawSaved, saved)) writeSaved(saved);
+      }
+      return { basis, when, region, stay, saved, hintSeen: get(local, KEYS.hint) === true };
     },
     setBasis: (b) => void set(local, KEYS.basis, b),
+    setWhen: (w) => void set(local, KEYS.when, w),
     setRegion: (name) => void set(local, KEYS.region, name),
     setStay: (stay) => void set(local, KEYS.stay, stay),
     setHintSeen: () => void set(local, KEYS.hint, true),
     saved: readSaved,
-    toggleSaved(id) {
-      const cur = readSaved();
-      const added = !cur.includes(id);
-      const ids = added ? [id, ...cur].slice(0, MAX_SAVED) : cur.filter((x) => x !== id);
-      writeSaved(ids);
-      return { ids, added };
+    toggleSaved(id, date, at) {
+      let removed: SavedEntry | null = null;
+      const entries = update((cur) => {
+        removed = cur.find((e) => e.id === id && e.date === date) ?? null;
+        if (removed) return cur.filter((e) => e !== removed);
+        // Put back where it was: everything of that day from `at` on moves one down.
+        const order = at === undefined ? lastOrder(cur, date) : at - 0.5;
+        return [...cur, { id, date, order }];
+      });
+      return { entries, added: !removed, removed };
+    },
+    moveSaved(id, date, dir) {
+      return update((cur) => {
+        const day = ofDay(cur, date);
+        const i = day.findIndex((e) => e.id === id);
+        const j = i + dir;
+        if (i < 0 || j < 0 || j >= day.length) return cur;
+        const swap = new Map([
+          [day[i], day[j].order],
+          [day[j], day[i].order],
+        ]);
+        return cur.map((e) => (swap.has(e) ? { ...e, order: swap.get(e)! } : e));
+      });
+    },
+    moveToDay(id, from, to) {
+      return update((cur) => {
+        const entry = cur.find((e) => e.id === id && e.date === from);
+        if (!entry || from === to) return cur;
+        const rest = cur.filter((e) => e !== entry);
+        if (rest.some((e) => e.id === id && e.date === to)) return rest;
+        return [...rest, { id, date: to, order: lastOrder(rest, to) }];
+      });
     },
     readSession: () => parseSession(get(session, KEYS.session)),
     writeSession: (rec) => void set(session, KEYS.session, rec),

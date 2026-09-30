@@ -2,7 +2,8 @@
 // repaired, and hearts are read-modify-write so two tabs never erase each other's saves.
 import { beforeEach, describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
-import { KEYS, MAX_SAVED, createStore, parseBasis, parseRegion, parseSaved, parseSession, parseStay } from '../src/store';
+import { KEYS, MAX_SAVED, createStore, normalizeEntries, parseBasis, parseEntries, parseRegion, parseSaved, parseSession, parseStay, parseWhen } from '../src/store';
+import type { SavedEntry } from '../src/types';
 
 /** In-memory Storage shared between "tabs". */
 class MemStorage implements Storage {
@@ -31,6 +32,11 @@ beforeEach(() => {
   mem = new MemStorage();
 });
 const 애월 = AREAS.find((a) => a.name === '애월')!;
+const TODAY = '2026-09-30';
+const TOMORROW = '2026-10-01';
+/** ids of one day, in their order */
+const ids = (list: SavedEntry[], date = TODAY) => list.filter((e) => e.date === date).sort((a, b) => a.order - b.order).map((e) => e.id);
+const stored = (): SavedEntry[] => JSON.parse(mem.getItem(KEYS.savedV2)!);
 
 describe('S29 손상된 값 — 읽을 때 검증·복구', () => {
   it('saved: strings only, duplicates removed (newest kept first), capped', () => {
@@ -75,21 +81,21 @@ describe('S29 손상된 값 — 읽을 때 검증·복구', () => {
     mem.setItem(KEYS.region, JSON.stringify('동쪽'));
     mem.setItem(KEYS.basis, JSON.stringify('region'));
     mem.setItem(KEYS.stay, JSON.stringify({ lat: 0, lng: 0, label: '' }));
-    const got = createStore(mem, null).load();
-    expect(got).toMatchObject({ basis: 'region', region: '성산', stay: null, saved: ['x', 'y'] });
-    expect(JSON.parse(mem.getItem(KEYS.saved)!)).toEqual(['x', 'y']);
+    const got = createStore(mem, null).load(TODAY);
+    expect(got).toMatchObject({ basis: 'region', region: '성산', stay: null, saved: [{ id: 'x', date: TODAY, order: 0 }, { id: 'y', date: TODAY, order: 1 }] });
+    expect(stored()).toEqual(got.saved);
     expect(JSON.parse(mem.getItem(KEYS.region)!)).toBe('성산');
     expect(mem.getItem(KEYS.stay)).toBeNull();
 
     mem.setItem(KEYS.basis, JSON.stringify('teleport'));
-    expect(createStore(mem, null).load().basis).toBe('gps');
+    expect(createStore(mem, null).load(TODAY).basis).toBe('gps');
     expect(JSON.parse(mem.getItem(KEYS.basis)!)).toBe('gps');
   });
 
   it('unparseable JSON reads as "nothing stored"', () => {
     mem.setItem(KEYS.saved, '{oops');
     mem.setItem(KEYS.basis, 'stay"');
-    expect(createStore(mem, null).load()).toMatchObject({ saved: [], basis: 'gps' });
+    expect(createStore(mem, null).load(TODAY)).toMatchObject({ saved: [], basis: 'gps' });
   });
 });
 
@@ -97,39 +103,40 @@ describe('저장 — 두 탭 (audit MAJOR: last-writer-wins)', () => {
   it('two tabs on one storage: A saves, B saves → both kept (read-modify-write)', () => {
     const a = createStore(mem, null);
     const b = createStore(mem, null);
-    a.load();
-    b.load();
-    a.toggleSaved('rest-1');
-    b.toggleSaved('walk-1');
-    expect(JSON.parse(mem.getItem(KEYS.saved)!)).toEqual(['walk-1', 'rest-1']);
-    expect(a.saved()).toEqual(['walk-1', 'rest-1']);
+    a.load(TODAY);
+    b.load(TODAY);
+    a.toggleSaved('rest-1', TODAY);
+    b.toggleSaved('walk-1', TODAY);
+    expect(ids(stored())).toEqual(['rest-1', 'walk-1']);
+    expect(ids(a.saved())).toEqual(['rest-1', 'walk-1']);
   });
 
   it('unsaving in one tab does not resurrect or drop the other tab\'s save', () => {
     const a = createStore(mem, null);
     const b = createStore(mem, null);
-    a.toggleSaved('1');
-    b.toggleSaved('2');
-    expect(a.toggleSaved('1')).toEqual({ ids: ['2'], added: false });
-    expect(b.saved()).toEqual(['2']);
+    a.toggleSaved('1', TODAY);
+    b.toggleSaved('2', TODAY);
+    expect(a.toggleSaved('1', TODAY)).toEqual({ entries: [{ id: '2', date: TODAY, order: 0 }], added: false, removed: { id: '1', date: TODAY, order: 0 } });
+    expect(ids(b.saved())).toEqual(['2']);
   });
 
   it('S42 ids unknown to the current data are never pruned from storage', () => {
     mem.setItem(KEYS.saved, JSON.stringify(['gone-from-data', 'kept']));
     const s = createStore(mem, null);
-    s.load();
-    s.toggleSaved('new');
-    expect(JSON.parse(mem.getItem(KEYS.saved)!)).toEqual(['new', 'gone-from-data', 'kept']);
+    s.load(TODAY);
+    s.toggleSaved('new', TODAY);
+    expect(ids(stored())).toEqual(['gone-from-data', 'kept', 'new']);
   });
 });
 
 describe('S27·S28 저장소 차단·가득 참', () => {
   it('S27 no storage at all: hearts work from memory for the visit', () => {
     const s = createStore(null, null);
-    expect(s.load().saved).toEqual([]);
-    expect(s.toggleSaved('a')).toEqual({ ids: ['a'], added: true });
-    expect(s.toggleSaved('b').ids).toEqual(['b', 'a']);
-    expect(s.toggleSaved('a')).toEqual({ ids: ['b'], added: false });
+    expect(s.load(TODAY).saved).toEqual([]);
+    expect(s.toggleSaved('a', TODAY)).toEqual({ entries: [{ id: 'a', date: TODAY, order: 0 }], added: true, removed: null });
+    expect(ids(s.toggleSaved('b', TODAY).entries)).toEqual(['a', 'b']);
+    expect(ids(s.moveSaved('b', TODAY, -1))).toEqual(['b', 'a']);
+    expect(ids(s.toggleSaved('a', TODAY).entries)).toEqual(['b']);
   });
 
   it('S28 quota exceeded: the first failed write switches to memory, later toggles stay right', () => {
@@ -138,20 +145,22 @@ describe('S27·S28 저장소 차단·가득 참', () => {
       throw new Error('QuotaExceededError');
     };
     const s = createStore(full, null);
-    s.load();
-    expect(s.toggleSaved('a').ids).toEqual(['a']);
-    expect(s.toggleSaved('b').ids).toEqual(['b', 'a']);
-    expect(s.toggleSaved('a').ids).toEqual(['b']);
+    s.load(TODAY);
+    expect(ids(s.toggleSaved('a', TODAY).entries)).toEqual(['a']);
+    expect(ids(s.toggleSaved('b', TODAY).entries)).toEqual(['a', 'b']);
+    expect(ids(s.moveToDay('b', TODAY, TOMORROW), TOMORROW)).toEqual(['b']);
+    expect(ids(s.toggleSaved('a', TODAY).entries)).toEqual([]);
+    expect(s.saved()).toEqual([{ id: 'b', date: TOMORROW, order: 0 }]);
   });
 
   it('getItem throwing (blocked mid-visit) also falls back to memory', () => {
     const s = createStore(mem, null);
-    s.load();
-    s.toggleSaved('a');
+    s.load(TODAY);
+    s.toggleSaved('a', TODAY);
     mem.getItem = () => {
       throw new Error('SecurityError');
     };
-    expect(s.toggleSaved('b').ids).toEqual(['b', 'a']);
+    expect(ids(s.toggleSaved('b', TODAY).entries)).toEqual(['a', 'b']);
   });
 });
 
@@ -206,5 +215,122 @@ describe('QA 2026-09-30 — 세션 기록: 요청만 된 기분', () => {
     expect(s.readSession()?.mood).toBe('rest');
     s.clearSession();
     expect(s.readSession()).toBeNull();
+  });
+});
+
+describe('날짜 모드 저장 (specs/date-mode.md D3·D4·D5)', () => {
+  it('D4 the v1 list moves to today in its order; v2 written as {id,date,order}[]; the old key is kept as it was', () => {
+    mem.setItem(KEYS.saved, JSON.stringify(['c', 'a', 'b']));
+    const got = createStore(mem, null).load(TODAY);
+    expect(got.saved).toEqual([
+      { id: 'c', date: TODAY, order: 0 },
+      { id: 'a', date: TODAY, order: 1 },
+      { id: 'b', date: TODAY, order: 2 },
+    ]);
+    expect(stored()).toEqual(got.saved);
+    expect(JSON.parse(mem.getItem(KEYS.saved)!)).toEqual(['c', 'a', 'b']);
+  });
+
+  it('D4 migration runs once: with a v2 list present (even empty) the v1 list is never read again', () => {
+    mem.setItem(KEYS.saved, JSON.stringify(['a']));
+    const s = createStore(mem, null);
+    s.load(TODAY);
+    s.toggleSaved('a', TODAY); // taken out
+    expect(stored()).toEqual([]);
+    expect(createStore(mem, null).load(TOMORROW).saved).toEqual([]);
+    expect(JSON.parse(mem.getItem(KEYS.saved)!)).toEqual(['a']);
+  });
+
+  it('nothing stored: nothing written', () => {
+    expect(createStore(mem, null).load(TODAY).saved).toEqual([]);
+    expect(mem.getItem(KEYS.savedV2)).toBeNull();
+  });
+
+  it('v2 validation: bad entries dropped, one per place and day, orders renumbered per day, sorted by day', () => {
+    expect(
+      parseEntries([
+        { id: 'b', date: TOMORROW, order: 5 },
+        { id: 'a', date: TODAY, order: 9 },
+        { id: 'a', date: TOMORROW, order: 1 },
+        { id: 'a', date: TODAY, order: 2 },
+        { id: '', date: TODAY, order: 0 },
+        { id: 'x', date: '2026-02-30', order: 0 },
+        { id: 'y', date: TODAY, order: 'first' },
+        'z',
+        null,
+      ]),
+    ).toEqual([
+      { id: 'a', date: TODAY, order: 0 },
+      { id: 'a', date: TOMORROW, order: 0 },
+      { id: 'b', date: TOMORROW, order: 1 },
+    ]);
+    expect(parseEntries({ id: 'a' })).toEqual([]);
+    expect(normalizeEntries(Array.from({ length: MAX_SAVED + 3 }, (_, i) => ({ id: `id${i}`, date: TODAY, order: i })))).toHaveLength(MAX_SAVED);
+  });
+
+  it('a repaired v2 list is written back', () => {
+    mem.setItem(KEYS.savedV2, JSON.stringify([{ id: 'a', date: TODAY, order: 3 }, { id: 'a', date: TODAY, order: 4 }]));
+    createStore(mem, null).load(TODAY);
+    expect(stored()).toEqual([{ id: 'a', date: TODAY, order: 0 }]);
+  });
+
+  it('the same place on two days is two entries; a heart is about its own day', () => {
+    const s = createStore(mem, null);
+    s.load(TODAY);
+    s.toggleSaved('a', TODAY);
+    const r = s.toggleSaved('a', TOMORROW);
+    expect(r.added).toBe(true);
+    expect(r.entries).toEqual([
+      { id: 'a', date: TODAY, order: 0 },
+      { id: 'a', date: TOMORROW, order: 0 },
+    ]);
+    expect(s.toggleSaved('a', TODAY).entries).toEqual([{ id: 'a', date: TOMORROW, order: 0 }]);
+  });
+
+  it('위로·아래로 swap within the day only; the ends do nothing; kept across a new store (reload)', () => {
+    const s = createStore(mem, null);
+    s.load(TODAY);
+    for (const id of ['a', 'b', 'c']) s.toggleSaved(id, TODAY);
+    s.toggleSaved('z', TOMORROW);
+    expect(ids(s.moveSaved('c', TODAY, -1))).toEqual(['a', 'c', 'b']);
+    expect(ids(s.moveSaved('a', TODAY, -1))).toEqual(['a', 'c', 'b']);
+    expect(ids(s.moveSaved('b', TODAY, 1))).toEqual(['a', 'c', 'b']);
+    expect(ids(s.moveSaved('a', TODAY, 1))).toEqual(['c', 'a', 'b']);
+    expect(ids(s.saved(), TOMORROW)).toEqual(['z']);
+    expect(ids(createStore(mem, null).load(TODAY).saved)).toEqual(['c', 'a', 'b']);
+  });
+
+  it('다른 날로: to the end of that day; already there → one entry', () => {
+    const s = createStore(mem, null);
+    s.load(TODAY);
+    for (const id of ['a', 'b']) s.toggleSaved(id, TODAY);
+    s.toggleSaved('z', TOMORROW);
+    const moved = s.moveToDay('a', TODAY, TOMORROW);
+    expect(ids(moved)).toEqual(['b']);
+    expect(ids(moved, TOMORROW)).toEqual(['z', 'a']);
+    s.toggleSaved('z', TODAY);
+    expect(ids(s.moveToDay('z', TODAY, TOMORROW), TOMORROW)).toEqual(['z', 'a']);
+    expect(ids(s.saved())).toEqual(['b']);
+  });
+
+  it('put back where it was: toggling on with a position inserts there', () => {
+    const s = createStore(mem, null);
+    s.load(TODAY);
+    for (const id of ['a', 'b', 'c']) s.toggleSaved(id, TODAY);
+    const { removed } = s.toggleSaved('b', TODAY);
+    expect(removed).toEqual({ id: 'b', date: TODAY, order: 1 });
+    expect(ids(s.toggleSaved('b', TODAY, removed!.order).entries)).toEqual(['a', 'b', 'c']);
+  });
+
+  it('D5 the chosen day: "now" or a later day; today or earlier reads as "now" and is written back', () => {
+    expect(parseWhen(TOMORROW, TODAY)).toBe(TOMORROW);
+    expect(parseWhen(TODAY, TODAY)).toBe('now');
+    expect(parseWhen('2026-09-01', TODAY)).toBe('now');
+    expect(parseWhen('soon', TODAY)).toBe('now');
+    const s = createStore(mem, null);
+    s.setWhen(TOMORROW);
+    expect(createStore(mem, null).load(TODAY).when).toBe(TOMORROW);
+    expect(createStore(mem, null).load(TOMORROW).when).toBe('now');
+    expect(JSON.parse(mem.getItem(KEYS.when)!)).toBe('now');
   });
 });
