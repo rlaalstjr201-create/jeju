@@ -1,0 +1,1368 @@
+{
+ "meta": {
+  "spec": "specs/ranking.md 감사",
+  "seed": 20260930,
+  "population": 2959,
+  "sample": 150,
+  "strata": {
+   "food/meal": 65,
+   "food/cafe": 20,
+   "new": 26,
+   "walk": 23,
+   "rest": 16
+  },
+  "method": "random.Random(seed).sample per stratum over spots sorted by id; audit scored blind from review/input + shipped reason before joining score-NN.json"
+ },
+ "rows": [
+  {
+   "id": "b955f65d-005a-4afc-86f2-72bc6c3112ab",
+   "name": "달콤한휴식",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "비자림 근처라는 위치 외 요약 일반적"
+  },
+  {
+   "id": "a4736f58-e147-4822-a268-e58617a14e95",
+   "name": "쉐프1192레스토랑",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "요약이 일반적, 메뉴 태그만"
+  },
+  {
+   "id": "59a924fe-be02-45ed-bb78-2d82fa697c34",
+   "name": "대원가",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 4,
+   "audit": 5,
+   "note": "blue_ribbon_listed + 활전복요리 전문"
+  },
+  {
+   "id": "7a70ea69-7f10-4f9d-ad5c-0009b111885c",
+   "name": "동백별장",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "동네 요리주점, 일반적 설명"
+  },
+  {
+   "id": "c99cf412-a2b6-493f-8847-4773576c26d6",
+   "name": "성산흑돼지두루치기",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 4,
+   "audit": 4,
+   "note": "흑돼지·활전복·해녀 모자반 등 구체적 강점"
+  },
+  {
+   "id": "a7d5614d-9b9b-48a6-a650-5e6735d88dbd",
+   "name": "커큐민흑돼지",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "요약 한 줄"
+  },
+  {
+   "id": "0a42b115-2e9d-4244-aff2-1610e9463234",
+   "name": "솔지식당 시청점",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "멜조림 유명, 원문 짧음"
+  },
+  {
+   "id": "1738af4c-611d-4648-a546-799c1ade0058",
+   "name": "이돈갓시청점",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "시내 일본식 돈가스, 일반적"
+  },
+  {
+   "id": "e2ac1dfc-b640-498d-ac5f-ba62c03d6631",
+   "name": "서귀포흑돈",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 4,
+   "audit": 5,
+   "note": "blue_ribbon + 숙성 흑돼지"
+  },
+  {
+   "id": "6cc66424-2702-44b9-89e3-b20467b7f62d",
+   "name": "순두부엔짬뽕",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 4,
+   "note": "새벽 재래식 두부, 순두부짬뽕 대표메뉴 구체적"
+  },
+  {
+   "id": "bb14c57a-7880-4a64-8b5c-028afa249d72",
+   "name": "금보",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "생선조림 일품, 원문 짧음"
+  },
+  {
+   "id": "ebb9cf25-8ec9-4bd5-a88f-1975b6c9912a",
+   "name": "우도이야기",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "우도 해물라면, 원문 짧음"
+  },
+  {
+   "id": "ac22993c-c278-4110-9b00-e627e336b870",
+   "name": "협재해물라면쪼꼴락상회",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "해물라면, 원문 짧음"
+  },
+  {
+   "id": "0beb7047-21bd-41b7-b3bc-1c615671b733",
+   "name": "다인숯불갈비",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "일반적 숯불갈비"
+  },
+  {
+   "id": "130337ba-a20e-47b7-8708-10b292883251",
+   "name": "바다를본돼지",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "흑돼지 부담 없이, 강점 약함"
+  },
+  {
+   "id": "c77ac5b9-7512-4951-abb1-51302b8028eb",
+   "name": "사려니국수",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 4,
+   "note": "사려니숲길 동선, 고사리육개장·고기국수 제주 향토"
+  },
+  {
+   "id": "2435ab79-cd3a-4251-9eff-4d1124470460",
+   "name": "24시얼큰시원생고기김치찌개노형점",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 2,
+   "audit": 2,
+   "note": "24시 김치찌개 체인형, 일상 편의 성격"
+  },
+  {
+   "id": "489985b2-fdf8-43df-8601-6767f959ecaf",
+   "name": "기원 은갈치",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 4,
+   "note": "중문 통갈치조림 맛집(제주 대표 메뉴)"
+  },
+  {
+   "id": "f9ebfc8f-73c5-4a08-ae00-959691dc9c1e",
+   "name": "파도소리해녀촌",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 4,
+   "note": "우도 해녀촌, 보말·톳칼국수, 고메페스타 태그"
+  },
+  {
+   "id": "d4541c64-2d56-4aca-9658-a6d17d70c67e",
+   "name": "덕성원",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 5,
+   "audit": 5,
+   "note": "blue_ribbon + 100년 화교 중식당 + KOREAT TOP10"
+  },
+  {
+   "id": "8c96f872-0cc9-4f57-9217-dc00b4c90f4b",
+   "name": "오는정김밥",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 5,
+   "note": "blue_ribbon + 오는정김밥 대표"
+  },
+  {
+   "id": "21ad5b45-b9da-4bfc-9bad-f75b9e9f8f90",
+   "name": "양가형제",
+   "mood": "food/meal",
+   "slice": "04",
+   "original": 4,
+   "audit": 4,
+   "note": "마을회관 리모델링 + 어니언링 시그니처"
+  },
+  {
+   "id": "974b952e-600d-48c0-bf2c-a54c2df79481",
+   "name": "신제주보말칼국수",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "향토음식인증 + 보말칼국수"
+  },
+  {
+   "id": "80a70186-80e4-4490-a18c-8a6360bb9bbb",
+   "name": "탐라칼국수 직영2호점",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "도민 식당, 일반적"
+  },
+  {
+   "id": "1d37055e-57d3-406c-bb27-f4337c338904",
+   "name": "김밥명가 서귀포점",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 2,
+   "audit": 2,
+   "note": "종합분식집, 일상 편의"
+  },
+  {
+   "id": "a3defebc-3ea6-4dd7-b458-a5e0350d29bc",
+   "name": "핫덕이",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 2,
+   "note": "영어교육도시 핫도그, 여행 만족 근거 약함"
+  },
+  {
+   "id": "15e672f5-3c72-4195-b8ea-1878d8bb478f",
+   "name": "돈풍년",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 5,
+   "note": "blue_ribbon, 흑돼지·한우"
+  },
+  {
+   "id": "604c4ab2-b2bf-46b5-962b-eb05c91842f1",
+   "name": "성산돌섬흑돼지",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "직접 양식 전복 돌솥밥, 고메페스타"
+  },
+  {
+   "id": "027364aa-ed65-4e1f-9c4d-37f679a49c95",
+   "name": "해왓",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "섭지코지 향토음식 한상, 파란 건물"
+  },
+  {
+   "id": "ca92102d-c6a3-4311-9305-3ef3be6d491c",
+   "name": "현옥식당",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 2,
+   "audit": 3,
+   "note": "착한가격 백반·두루치기"
+  },
+  {
+   "id": "6d5b82f8-ca35-4a5c-b28d-4e7151cbc467",
+   "name": "앙끄레국수",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 4,
+   "note": "12시간 사골 고기국수, 제주산 1등급"
+  },
+  {
+   "id": "b0d3db3f-70c2-497e-ae72-08327325b04e",
+   "name": "부원뚝배기",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "가성비 뚝배기"
+  },
+  {
+   "id": "cbff5b70-639e-4352-8dfd-516185f53c1e",
+   "name": "소반",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "집밥, 일반적"
+  },
+  {
+   "id": "d9f04304-671f-4f67-840f-ea1ffe097fb8",
+   "name": "마마무말가든",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 4,
+   "audit": 4,
+   "note": "제주 말고기 구체적 설명"
+  },
+  {
+   "id": "29fef347-0df4-46d0-9c38-a0811054d50d",
+   "name": "연동길",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "낙지볶음 동네식당"
+  },
+  {
+   "id": "520e4a93-56e9-40e6-9675-027d7cd3afe2",
+   "name": "흑염소마루",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "흑염소 전문, 제주다움 약함"
+  },
+  {
+   "id": "fd30efe9-9f47-47ed-97d0-26a5cd7f6d1a",
+   "name": "예지원",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "메뉴 나열"
+  },
+  {
+   "id": "d42641a3-ad06-4e2c-beb2-0b7b13bb39f9",
+   "name": "루스트플레이스 노형점",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 2,
+   "audit": 3,
+   "note": "양식 체인, 일반적"
+  },
+  {
+   "id": "421ecc81-f983-4e95-a9b4-94921d1cf7dc",
+   "name": "그때그집 함덕",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "함덕 돼지고기 세트, 일반적"
+  },
+  {
+   "id": "69f0482e-2b96-450b-8929-48da82eccc23",
+   "name": "중문덤장",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "향토음식인증 덤장상차림, 고메페스타"
+  },
+  {
+   "id": "df3d1243-d5b2-4ac8-ae55-d3843358a02b",
+   "name": "해담은",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "동네 횟집"
+  },
+  {
+   "id": "a6c567a1-04c1-494a-8993-ac0f0ace6ada",
+   "name": "올드캡",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "호주식 버거, 원문 짧음"
+  },
+  {
+   "id": "d216a031-5149-4874-9b64-dd18d863d0c8",
+   "name": "영주말가든",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "향토음식인증 조랑말 코스"
+  },
+  {
+   "id": "6cf740c4-fbe9-44e0-8b93-c9aca52a8dd9",
+   "name": "당케올레국수",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "표선 보말·성게·한치 제주 식재료"
+  },
+  {
+   "id": "3b190e2a-690f-4594-9097-b8618d97f3af",
+   "name": "남춘식당",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 5,
+   "note": "blue_ribbon 고기국수"
+  },
+  {
+   "id": "49e0757c-ad57-48ae-92f4-414e87e30cce",
+   "name": "물꼬해녀의집",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 4,
+   "audit": 4,
+   "note": "우도 해녀가 잡은 해산물 문어라면"
+  },
+  {
+   "id": "104c2fec-c0ca-4b17-8840-e7b8857ee282",
+   "name": "제주로운청해원",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 4,
+   "audit": 4,
+   "note": "23년 전통 향토음식점"
+  },
+  {
+   "id": "a07a3fd1-1774-443b-808e-54099f2bd95a",
+   "name": "야시장맛통령",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 4,
+   "note": "동문시장 야시장 통전복초밥 대표메뉴"
+  },
+  {
+   "id": "13a139b1-10e1-4a92-b743-b9d821f494b7",
+   "name": "피갈회옥",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "요약 일반적"
+  },
+  {
+   "id": "c601de8d-2211-4de8-8ef8-c6a0b94d0d22",
+   "name": "마모루",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "라멘, 착한가격"
+  },
+  {
+   "id": "e4965b8f-5138-4208-9e7c-e9f74f4648d4",
+   "name": "돈이랑 정육점식당",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "흑돼지 연탄구이, 일반적"
+  },
+  {
+   "id": "6922ca29-a6a8-45d9-ace1-ab9fd9a2af35",
+   "name": "회춘",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 4,
+   "audit": 4,
+   "note": "1940년대 돌집 구옥 리모델링 한정식"
+  },
+  {
+   "id": "05633f34-b5a9-41c7-aab6-400c85a04731",
+   "name": "섭섭이네",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "고기국수+커리, 원문 짧음"
+  },
+  {
+   "id": "d3478dfd-8a53-401d-9e85-c482bc7dda88",
+   "name": "흑돼지BBQ",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "요약 일반적"
+  },
+  {
+   "id": "8384856f-994e-4451-894f-8abfa1248bb2",
+   "name": "513텐동",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "요약 한 줄"
+  },
+  {
+   "id": "4dfb41a1-c785-442c-aa49-90366683d85c",
+   "name": "성산일출봉손칼국수",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "성산일출봉 앞 손칼국수, 보말전복"
+  },
+  {
+   "id": "8abdf288-e940-450c-b5de-f2aff3d74f70",
+   "name": "오후새우시",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 4,
+   "note": "게살김밥·새우라면 유명"
+  },
+  {
+   "id": "68e2d8cd-7ef4-48de-a686-179e94532e99",
+   "name": "탕궁샤브",
+   "mood": "food/meal",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "훠궈, 제주다움 없음"
+  },
+  {
+   "id": "8a1b127a-b05f-409b-91e0-753c19920fc2",
+   "name": "정직한돈 한림협재점",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "협재 흑돼지, 일반적"
+  },
+  {
+   "id": "4c74fd81-084c-4f33-b90e-4bd85420a160",
+   "name": "돼지촌",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "등갈비, 일반적"
+  },
+  {
+   "id": "1db48610-0e12-4bb6-b0c6-aae1c8eeeb52",
+   "name": "이스트포레스트",
+   "mood": "food/meal",
+   "slice": "04",
+   "original": 4,
+   "audit": 4,
+   "note": "종달리 전복리조또·문어파스타 지역재료"
+  },
+  {
+   "id": "373c326e-7b61-4d86-b4b2-e6437f2e75f8",
+   "name": "성아시",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "해물뚝배기 한 줄"
+  },
+  {
+   "id": "91df593b-1afc-4dd6-9533-14effdb0a5df",
+   "name": "백리향",
+   "mood": "food/meal",
+   "slice": "01",
+   "original": 3,
+   "audit": 3,
+   "note": "가정식 백반"
+  },
+  {
+   "id": "fc63cf88-c36b-4854-85cb-25eb63f1f55f",
+   "name": "난드르바당",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 4,
+   "note": "산방산 인근 야외 흑돼지"
+  },
+  {
+   "id": "6348bcac-f87c-4524-ae68-5255d0e5862a",
+   "name": "촌촌해녀촌",
+   "mood": "food/meal",
+   "slice": "02",
+   "original": 4,
+   "audit": 3,
+   "note": "바다 앞, 원문 짧음"
+  },
+  {
+   "id": "94690830-beee-4d59-a506-909d3781c7c6",
+   "name": "월정리 담또와",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "소금빵 베이커리, 원문 짧음"
+  },
+  {
+   "id": "9c10370b-3be5-40ee-8096-358acfb776da",
+   "name": "너븐",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "분위기 카페, 일반적"
+  },
+  {
+   "id": "5c6ec87b-f3fd-4cf7-a454-9134b9ab90b3",
+   "name": "정미당 제주",
+   "mood": "food/cafe",
+   "slice": "03",
+   "original": 3,
+   "audit": 4,
+   "note": "칼호텔 15년 셰프 빵집"
+  },
+  {
+   "id": "70086127-4e31-4ee9-b65b-01614b6704cc",
+   "name": "모카다방",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "레트로 카페, 일반적"
+  },
+  {
+   "id": "9fa762e3-a833-4ce9-ae70-ee989fe65ffa",
+   "name": "카카듀",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "녹차빙수, 원문 짧음"
+  },
+  {
+   "id": "d26976d0-530e-4af1-8455-871f341b505f",
+   "name": "귤꽃다락",
+   "mood": "food/cafe",
+   "slice": "03",
+   "original": 3,
+   "audit": 4,
+   "note": "돌창고 + 귤 수제청"
+  },
+  {
+   "id": "105fe750-2176-4ab4-ab4d-5976f214cb94",
+   "name": "메종드쁘티푸르",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "체인 베이커리"
+  },
+  {
+   "id": "ba360fe2-077d-4195-83b6-f2c771d38bed",
+   "name": "플레이커피랩",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 5,
+   "note": "blue_ribbon + 스페셜티 로스터리"
+  },
+  {
+   "id": "662e4c43-103a-44b7-9a42-77873e328dfa",
+   "name": "성산해나",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 5,
+   "note": "blue_ribbon 디저트"
+  },
+  {
+   "id": "58548b99-3f2f-4408-b764-e770cd4ceed9",
+   "name": "섬나라오메기",
+   "mood": "food/cafe",
+   "slice": "01",
+   "original": 4,
+   "audit": 4,
+   "note": "오메기떡 제주 전통 떡집"
+  },
+  {
+   "id": "e624dc0c-b350-4ad3-8868-a9ac61f31450",
+   "name": "오복떡집",
+   "mood": "food/cafe",
+   "slice": "02",
+   "original": 3,
+   "audit": 3,
+   "note": "오메기떡집, 요약이 막연함"
+  },
+  {
+   "id": "f66e5058-1179-498f-b44c-1f6a18061d11",
+   "name": "바다는안보여요",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "종달리 카페, 당근주스 외 강점 약함"
+  },
+  {
+   "id": "1bba1cde-e795-45c2-b11d-aca4b4f07e73",
+   "name": "그리트커피",
+   "mood": "food/cafe",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "동네 디저트카페, 일반적"
+  },
+  {
+   "id": "0efc95ab-242e-41e6-808e-01edb77233aa",
+   "name": "하록",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "소품샵 겸 카페, 원문 짧음"
+  },
+  {
+   "id": "61f24b7a-7df5-4826-9dd0-651e58ea5ff7",
+   "name": "더헤이븐",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "도심 카페, 일반적"
+  },
+  {
+   "id": "37d62673-1a61-4212-b864-3ea164658975",
+   "name": "커브커피스토어",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 5,
+   "note": "blue_ribbon + 삼양 바닷가 커브길"
+  },
+  {
+   "id": "5b5c0bcf-eefe-4554-98d8-ec555a57cba8",
+   "name": "시원하당",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "테이크아웃 로컬 샌드위치, 원문 짧음"
+  },
+  {
+   "id": "fd8dc277-e89d-45ae-9db7-a67bbe7e65ee",
+   "name": "점점",
+   "mood": "food/cafe",
+   "slice": "03",
+   "original": 4,
+   "audit": 4,
+   "note": "초당옥수수 아이스크림 시그니처"
+  },
+  {
+   "id": "8487ea0a-aa7e-4657-a73a-8a253a3761da",
+   "name": "버터넛",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "디저트 카페, 원문 짧음"
+  },
+  {
+   "id": "893ec487-aec8-4c04-a1e8-34fb1b32bb25",
+   "name": "러프라이프커피",
+   "mood": "food/cafe",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "시청 신상카페, 일반적"
+  },
+  {
+   "id": "b2d873eb-c97e-4443-b3bc-8d5a09f60f88",
+   "name": "제주이야기",
+   "mood": "new",
+   "slice": "04",
+   "original": 4,
+   "audit": 3,
+   "note": "체험 카페, 강점 보통"
+  },
+  {
+   "id": "f116122d-ecd8-4fa5-bb46-6cdf001b5bf4",
+   "name": "제라진어드벤쳐",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 4,
+   "note": "제주 유일 오프로드 투어"
+  },
+  {
+   "id": "09106245-a807-4ac7-8dee-100ed19236d0",
+   "name": "서귀포잠수함(대국해저관광)",
+   "mood": "new",
+   "slice": "06",
+   "original": 4,
+   "audit": 4,
+   "note": "세계최대 연산호군락 잠수함 체험 구체적"
+  },
+  {
+   "id": "0d03a943-8a5b-42e9-916a-bf2da1062dae",
+   "name": "세화소품관",
+   "mood": "new",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "소품샵"
+  },
+  {
+   "id": "d526360f-1e8e-487c-9ab5-38db13281458",
+   "name": "공방:하루_반",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "공방, 원문 짧음"
+  },
+  {
+   "id": "edab657b-d2b4-4e7a-9c14-6ba257166b8b",
+   "name": "액트몬 제주점",
+   "mood": "new",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "실내 방탈출·서바이벌, 제주다움 없음"
+  },
+  {
+   "id": "e90d95bc-3a57-4d72-b0b5-3e212c97f378",
+   "name": "한림바다체험마을",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 4,
+   "note": "제주 전통 테우낚시·조간대 체험(comment는 무관 횟집)"
+  },
+  {
+   "id": "4acb1c2f-6892-4298-98d9-8485a1f12792",
+   "name": "오븐이네쿠킹클래스",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "화과자 클래스, 원문 짧음"
+  },
+  {
+   "id": "15bc0a81-3c19-4f48-9a39-92204caa8146",
+   "name": "부영컨트리클럽",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 2,
+   "note": "골프장, 일반 여행자 체험과 거리"
+  },
+  {
+   "id": "98f17cc0-07e4-48ab-88f2-24f23c985db5",
+   "name": "제주해양레저",
+   "mood": "new",
+   "slice": "06",
+   "original": 4,
+   "audit": 4,
+   "note": "중문 종합해양레저, 파라세일링 등 구체적"
+  },
+  {
+   "id": "59fe691e-0f62-4c59-8815-e8765573cc00",
+   "name": "산도스카발리오홀스파크",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "승마체험, 원문 짧음"
+  },
+  {
+   "id": "64c49e69-32bf-43be-84b5-59e6eda46a5a",
+   "name": "조이다이브",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 4,
+   "note": "섬속의 섬 스쿠버다이빙 체험"
+  },
+  {
+   "id": "02b99eb8-cd76-4b22-a940-9f1e0ffd288c",
+   "name": "샤카다이브",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "다이빙샵, 요약 일반적"
+  },
+  {
+   "id": "f1d28a81-1441-4900-b84f-c3058031065a",
+   "name": "스마일러 카페",
+   "mood": "new",
+   "slice": "04",
+   "original": 4,
+   "audit": 4,
+   "note": "파충류 테마카페, 구체적 설명"
+  },
+  {
+   "id": "c284a76f-3eb6-4718-944d-908314514f50",
+   "name": "카페말로",
+   "mood": "new",
+   "slice": "03",
+   "original": 4,
+   "audit": 4,
+   "note": "목장 체험 카페, 말·알파카"
+  },
+  {
+   "id": "38ff7ce1-b916-46f7-93b6-971818373de7",
+   "name": "유동룡미술관",
+   "mood": "new",
+   "slice": "06",
+   "original": 5,
+   "audit": 5,
+   "note": "2023 관광10선 + 이타미 준 건축 미술관"
+  },
+  {
+   "id": "7e819017-e8b0-4a39-85c0-41e7a3062a73",
+   "name": "비고르서프",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "서핑, 원문 짧음"
+  },
+  {
+   "id": "f9e70ce4-c7da-44d7-9266-88ff757a253b",
+   "name": "제주카트클럽",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 4,
+   "note": "제주 최초 카트장, 어린이 가능"
+  },
+  {
+   "id": "0a698a3e-d1e3-49ff-bc07-bfcf754426f4",
+   "name": "김택화미술관",
+   "mood": "new",
+   "slice": "06",
+   "original": 4,
+   "audit": 4,
+   "note": "김택화 화백 미술관, 제주 풍경"
+  },
+  {
+   "id": "aa83ab22-626f-4741-99f0-b28fdd995dc9",
+   "name": "제주불빛정원 테마파크",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "불빛 테마파크, 일반적"
+  },
+  {
+   "id": "17fef02e-0be7-409b-b402-db84eebc30b7",
+   "name": "오름터 민속마을",
+   "mood": "new",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "성읍 내 민속 체험, 원문 짧음"
+  },
+  {
+   "id": "6836b73c-e89f-4e17-95bc-54330d612bff",
+   "name": "제이제이 필라테스요가",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "요가원"
+  },
+  {
+   "id": "68212f98-75dd-4979-b8f1-4515d06a2a5b",
+   "name": "하도 어촌 체험 마을",
+   "mood": "new",
+   "slice": "06",
+   "original": 4,
+   "audit": 5,
+   "note": "해녀 물질 체험, 제주 최다 해녀 마을"
+  },
+  {
+   "id": "66a4d4d9-125b-4a24-9641-0233ef236187",
+   "name": "더럭초등학교(구, 더럭분교)",
+   "mood": "new",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "옛 분교, 원문 짧음"
+  },
+  {
+   "id": "93a4a104-8d2c-4abe-9f41-454927cf49a8",
+   "name": "고씨주택",
+   "mood": "new",
+   "slice": "06",
+   "original": 3,
+   "audit": 4,
+   "note": "75년 근대건축 복원 책방"
+  },
+  {
+   "id": "6cf22555-b2f1-40e6-812b-5c71567733fa",
+   "name": "제주그림카페",
+   "mood": "new",
+   "slice": "03",
+   "original": 4,
+   "audit": 4,
+   "note": "흑백 그림 테마카페 + 항공우주박물관 전망"
+  },
+  {
+   "id": "23fdbd4f-6f96-40db-992a-ddb157b967a7",
+   "name": "제주올레 21코스",
+   "mood": "walk",
+   "slice": "06",
+   "original": 4,
+   "audit": 4,
+   "note": "올레 21코스 바다·마을·오름"
+  },
+  {
+   "id": "f00bf0c5-ac05-41c5-8900-042bc4e2471d",
+   "name": "제주돌문화공원",
+   "mood": "walk",
+   "slice": "06",
+   "original": 5,
+   "audit": 5,
+   "note": "공영관광지, 설문대할망 신화 돌문화공원"
+  },
+  {
+   "id": "4e5545b6-810a-4314-91e6-12ee7ea54259",
+   "name": "평대리불턱",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "해녀 불턱 유적, 원문 짧음"
+  },
+  {
+   "id": "5b5134c1-553a-4bfd-9fd9-fddd82838607",
+   "name": "구좌해안로",
+   "mood": "walk",
+   "slice": "05",
+   "original": 4,
+   "audit": 3,
+   "note": "해안 드라이브 코스(걷기 기대와 어긋남)"
+  },
+  {
+   "id": "bb546de3-0ae5-491b-b8dc-194a0f327e8b",
+   "name": "어리목계곡",
+   "mood": "walk",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "어리목 탐방로 계곡"
+  },
+  {
+   "id": "d529b581-59b3-4987-93b1-d1a762961654",
+   "name": "알진오름(안친오름)",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "가벼운 오름, 원문 짧음"
+  },
+  {
+   "id": "c49e025a-000c-436c-a4fc-ff8da89fa258",
+   "name": "삼매봉",
+   "mood": "walk",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "외돌개 앞 오름"
+  },
+  {
+   "id": "ebf2d59a-79f5-4acb-b5b4-6dcc73ff95fb",
+   "name": "관음사 군 주둔지 옛터",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "4·3 유적, 걷기 만족 근거 약함"
+  },
+  {
+   "id": "9f98fe17-4e41-4f76-a680-dc17990f5e98",
+   "name": "풋감마을 소길리 농어촌체험마을",
+   "mood": "walk",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "옛 올레 마을, 원문 짧음"
+  },
+  {
+   "id": "c3267b19-5ebd-4643-aa60-7a71bd5302f9",
+   "name": "하도리 철새도래지",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "철새도래지, 계절 의존"
+  },
+  {
+   "id": "0d4ef772-dc80-4cde-9989-c75f5b70d1a9",
+   "name": "베릿네오름",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "가족 산책 오름, 원문 짧음"
+  },
+  {
+   "id": "e83964e9-7a08-4de0-880b-c2cf476d2e1e",
+   "name": "빌레못동굴",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 4,
+   "note": "천연기념물, 세계 최장 동굴 설명"
+  },
+  {
+   "id": "a39a4601-f2a7-41b8-bc3a-c2f78743f3a0",
+   "name": "단산과 방사탑",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "단산·방사탑, 원문 짧음"
+  },
+  {
+   "id": "accb8f41-be55-46d4-97c1-b46035a6734b",
+   "name": "사라봉공원",
+   "mood": "walk",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "영주10경 사봉낙조, 올레 18코스"
+  },
+  {
+   "id": "67c1e6ff-f35a-4d05-bd5d-59ff0f971a53",
+   "name": "제주조천스위스마을",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "스위스풍 포토스팟"
+  },
+  {
+   "id": "c4ab79bf-c1f3-47bc-93ce-49f37cb79a1e",
+   "name": "법화사",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "천년고찰, 원문 한 줄"
+  },
+  {
+   "id": "ee9e6eb6-1ada-4ae6-a867-385cd1d9e900",
+   "name": "송악산둘레길",
+   "mood": "walk",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "송악산 해안산책로"
+  },
+  {
+   "id": "67cf5184-e4e7-4ef8-a820-c6f785a2f3b4",
+   "name": "성읍민속마을",
+   "mood": "walk",
+   "slice": "06",
+   "original": 5,
+   "audit": 5,
+   "note": "공영관광지·해설사인증 민속마을"
+  },
+  {
+   "id": "5f057e1b-add9-446f-a90e-a1351f0c5854",
+   "name": "한모살 (표선백사장)",
+   "mood": "walk",
+   "slice": "05",
+   "original": 2,
+   "audit": 3,
+   "note": "4·3 학살지 설명만, 해변 설명 없음"
+  },
+  {
+   "id": "d72becd6-ac8a-4e78-9d1c-6a798e621f46",
+   "name": "불탑사 (5층석탑)",
+   "mood": "walk",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "보물 제1187호, 유일 고려 석탑"
+  },
+  {
+   "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+   "name": "렛츠런팜 양귀비꽃",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 2,
+   "note": "양귀비꽃 시즌 한정"
+  },
+  {
+   "id": "b6c4f435-674e-4b8e-bc00-f48155ff60bf",
+   "name": "제주베스트힐",
+   "mood": "walk",
+   "slice": "06",
+   "original": 3,
+   "audit": 3,
+   "note": "곶자왈 야영장, 일반적"
+  },
+  {
+   "id": "1eccf2b0-fb43-4d68-9126-ab64df349307",
+   "name": "곤물",
+   "mood": "walk",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "용천수, 원문 짧음"
+  },
+  {
+   "id": "6f00527a-17af-4831-8a11-7c6863f501db",
+   "name": "산천단곰솔",
+   "mood": "rest",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "곰솔·제단 숨은 비경, 원문 짧음"
+  },
+  {
+   "id": "15d6d827-b91b-43f2-bf42-018bb8eacca1",
+   "name": "영아리(youngari)",
+   "mood": "rest",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "구옥 감성카페, 일반적"
+  },
+  {
+   "id": "c71000a3-8d48-4556-bcaf-e1c82deba6fa",
+   "name": "약천사",
+   "mood": "rest",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "동양 최대 법당, 해안 조망"
+  },
+  {
+   "id": "f61e2d63-b732-445d-a783-52ac1b36f863",
+   "name": "리부아르",
+   "mood": "rest",
+   "slice": "04",
+   "original": 3,
+   "audit": 4,
+   "note": "애월 바다 한눈에 보이는 카페"
+  },
+  {
+   "id": "e64bf3c3-cb3f-41de-b43c-10ff4f7b798a",
+   "name": "하도해변",
+   "mood": "rest",
+   "slice": "06",
+   "original": 4,
+   "audit": 4,
+   "note": "파란 바다·해돋이 명소 해변"
+  },
+  {
+   "id": "4e5b24c1-1066-43a7-83df-d4947a89e801",
+   "name": "정주항",
+   "mood": "rest",
+   "slice": "05",
+   "original": 3,
+   "audit": 3,
+   "note": "항구, 원문 짧음"
+  },
+  {
+   "id": "9dd465fd-843d-4cbb-a055-99c57cca9e8c",
+   "name": "종달리전망대",
+   "mood": "rest",
+   "slice": "05",
+   "original": 4,
+   "audit": 4,
+   "note": "종달리 전망대, 일출 조망"
+  },
+  {
+   "id": "e98c446b-0d3f-40c4-ade9-501ae29042f1",
+   "name": "해지개",
+   "mood": "rest",
+   "slice": "04",
+   "original": 5,
+   "audit": 4,
+   "note": "한옥 오션뷰 카페, 일몰"
+  },
+  {
+   "id": "e328ed2c-7615-4765-b488-1a07a1aa7109",
+   "name": "카페갤러리",
+   "mood": "rest",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "사진 카페, 일반적"
+  },
+  {
+   "id": "57663d44-da2a-4aa9-b12c-fb3d76e83a70",
+   "name": "클랭블루",
+   "mood": "rest",
+   "slice": "04",
+   "original": 5,
+   "audit": 5,
+   "note": "blue_ribbon + 신창풍차해안 뷰"
+  },
+  {
+   "id": "ab540b7c-77ee-46cc-8bd5-1d0fb2d84db5",
+   "name": "루미온 포레스트",
+   "mood": "rest",
+   "slice": "06",
+   "original": 4,
+   "audit": 3,
+   "note": "웰니스 공간, 일반적"
+  },
+  {
+   "id": "2aafaa55-1db9-4eb0-949d-20d3f4dc586c",
+   "name": "마녀의언덕",
+   "mood": "rest",
+   "slice": "04",
+   "original": 4,
+   "audit": 4,
+   "note": "바다 앞 언덕 브런치카페"
+  },
+  {
+   "id": "1a203581-cbd5-42e6-be82-6486e1db7073",
+   "name": "미쿠니",
+   "mood": "rest",
+   "slice": "04",
+   "original": 3,
+   "audit": 3,
+   "note": "선착장 앞 복층 카페, 일반적"
+  },
+  {
+   "id": "30a58eb3-b792-4dc7-b9b4-8eb5b6bbae11",
+   "name": "카페을리",
+   "mood": "rest",
+   "slice": "03",
+   "original": 3,
+   "audit": 3,
+   "note": "통창 풍경 카페, 일반적"
+  },
+  {
+   "id": "70aaf181-16ef-437d-9c2c-c44488df93b3",
+   "name": "우정원베이커리 제주삼나무점",
+   "mood": "rest",
+   "slice": "04",
+   "original": 4,
+   "audit": 5,
+   "note": "blue_ribbon + 삼나무 숲 베이커리"
+  },
+  {
+   "id": "dfcc877f-90c3-461b-a79d-be74ae2ad673",
+   "name": "카페나모나모베이커리",
+   "mood": "rest",
+   "slice": "03",
+   "original": 4,
+   "audit": 5,
+   "note": "blue_ribbon + 오션뷰"
+  }
+ ]
+}
