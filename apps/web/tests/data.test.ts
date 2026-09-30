@@ -312,7 +312,8 @@ describe('QA 2026-09-30 중복 — 한 곳이 두 번 나가지 않는다', () =
 
 describe('S60 이유 문장 어미 (S9-3 파이프라인 몫, design/SPEC.md §10)', () => {
   // The reason sentences are rewritten by the S9-3 pipeline (model rewrite + faithfulness audit), not by
-  // app code. Baseline 77.2% end in "~수 있어요"; the S9-3 gate is ≤20% and no ending above 25%.
+  // app code. Baseline 77.2% end in "~수 있어요"; the S9-3 gate is ≤20%. The "no ending above 25%"
+  // metric was dropped (ADR-0058).
   // Classifier: strip trailing space/punctuation, match the common 해요체 endings first (longest — "수
   // 있어요" — before its own suffix "있어요"), else bucket by the reason's last syllable (mostly noun
   // endings: "~집", "~카페", "~길" …).
@@ -322,13 +323,11 @@ describe('S60 이유 문장 어미 (S9-3 파이프라인 몫, design/SPEC.md §1
     return bare.match(ENDING)?.[1] ?? bare.slice(-1);
   }
 
-  it('no single ending exceeds 25% of all reasons, and "~수 있어요" is at most 20%', () => {
+  it('"~수 있어요" is at most 20% of all reasons', () => {
     const shares = new Map<string, number>();
     for (const s of fileSpots) shares.set(ending(s.reason), (shares.get(ending(s.reason)) ?? 0) + 1);
     const total = fileSpots.length;
     expect(total).toBeGreaterThan(0);
-    const over25 = [...shares.entries()].filter(([, n]) => n / total > 0.25);
-    expect(over25.map(([e, n]) => `${e}: ${((n / total) * 100).toFixed(1)}%`)).toEqual([]);
     const soIsseoyo = shares.get('수 있어요') ?? 0;
     expect(soIsseoyo / total).toBeLessThanOrEqual(0.2);
   });
