@@ -1,630 +1,523 @@
-// One screen: 5 mood buttons (static HTML, ADR-0028) + basis toggle → 3 cards (spec, plan OQ3·5).
-import { distanceKm, driveMinutes, pickCards, type Button, type Card, type Histories, type Point, type Spot, type Sub } from './pick';
+// One screen: 5 mood buttons (static HTML, ADR-0028) + basis toggle → 3 cards (spec, plan OQ3·5; design/SPEC.md).
+// Controller only: user intents → reduce(state) → render(state); effects (GPS, data, storage, history)
+// report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
+import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
+import { createSpotSource } from './data';
+import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
+import { bookingUrl, kakaoUrl } from './links';
+import { HOME, createNav } from './nav';
+import type { Button, Sub } from './pick';
+import { createRenderer, dateLabel, findEls } from './render';
+import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, sessionOf, staticOrigin, type Action, type Intent, type State } from './state';
+import { KEYS, createStore } from './store';
+import type { Basis, Route, Stay } from './types';
 
-/** 15개 세부 지역, 고정 중심 좌표 (ADR-0029, plans/tomorrow-picker.md "지역 15곳 중심 좌표"). */
-export const AREAS = [
-  { name: '구제주', lat: 33.5125, lng: 126.526, group: 'jeju' },
-  { name: '신제주', lat: 33.487, lng: 126.488, group: 'jeju' },
-  { name: '애월', lat: 33.4475, lng: 126.3678, group: 'jeju' },
-  { name: '한림', lat: 33.3957, lng: 126.2651, group: 'jeju' },
-  { name: '한경', lat: 33.3274, lng: 126.2212, group: 'jeju' },
-  { name: '조천', lat: 33.5012, lng: 126.6668, group: 'jeju' },
-  { name: '구좌', lat: 33.5189, lng: 126.8079, group: 'jeju' },
-  { name: '우도', lat: 33.5079, lng: 126.9538, group: 'jeju' },
-  { name: '서귀포시내', lat: 33.2573, lng: 126.5338, group: 'seogwipo' },
-  { name: '중문', lat: 33.2576, lng: 126.4205, group: 'seogwipo' },
-  { name: '안덕', lat: 33.2693, lng: 126.3295, group: 'seogwipo' },
-  { name: '대정', lat: 33.2472, lng: 126.2689, group: 'seogwipo' },
-  { name: '남원', lat: 33.3053, lng: 126.6735, group: 'seogwipo' },
-  { name: '표선', lat: 33.3643, lng: 126.7973, group: 'seogwipo' },
-  { name: '성산', lat: 33.4387, lng: 126.9026, group: 'seogwipo' },
-] as const;
-type Area = (typeof AREAS)[number];
+export { AREAS, LocateError, bookingUrl, inJeju, kakaoUrl };
+export type { NoOrigin as LocateFailure } from './types';
 
-export type LocateFailure = 'denied' | 'unavailable' | 'outside';
-export class LocateError extends Error {
-  constructor(readonly reason: LocateFailure) {
-    super(reason);
-  }
+export interface Delays {
+  /** show the placeholder / "위치 확인 중…" only when a request takes longer than this (S02·S25). */
+  slow: number;
+  /** offer "지역으로 고르기" while GPS is still pending after this long (S04·S05). */
+  long: number;
+  /** same control tapped again within this window is ignored (S35). */
+  guard: number;
+  /** how long the first-save hint stays (S40). */
+  hint: number;
+  /** give up waiting for a self-caused popstate after this long. */
+  settle: number;
+  /** after a tap changes the screen, the 2nd tap of a double tap is swallowed (it would land on a card link). */
+  quiet: number;
+  dataTimeout: number;
 }
+export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, hint: 3000, settle: 1000, quiet: 300, dataTimeout: 15000 };
 
-export interface Deps {
-  loadSpots(): Promise<Spot[]>;
-  /** Current position; rejects with LocateError. */
-  locate(): Promise<Point>;
+export interface Deps extends GeoDeps {
+  loadSpots(): Promise<unknown>;
   storage: Storage | null;
+  /** sessionStorage — the cards being looked at survive a reload / discarded tab (S54). */
+  session?: Storage | null;
+  online?(): boolean;
+  userAgent?: string;
+  now?(): number;
+  /** wall clock for the date line (defaults to the device clock). */
+  today?(): Date;
+  delays?: Partial<Delays>;
 }
 
-type Basis = 'gps' | 'stay' | 'region';
-interface Place extends Point {
-  label: string;
+export interface App {
+  destroy(): void;
+  state(): State;
 }
 
-const KEY_STAY = 'jeju.stay';
-const KEY_BASIS = 'jeju.basis';
-const KEY_REGION = 'jeju.region';
-const KEY_SAVED = 'jeju.saved';
+const CARDS: Route = { view: 'cards', overlay: null };
+const SAVED: Route = { view: 'saved', overlay: null };
+/** Stopped waiting for GPS (saved list only): nothing is known about the position, nothing failed. */
+const GAVE_UP = { ok: false, why: 'unavailable', gaveUp: true } as const;
+type GaveUp = typeof GAVE_UP;
+const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
 
-// kakaoPlaceId 없으면 이름 검색으로 대체 (ADR-0028 지도 링크 폴백).
-export const kakaoUrl = (s: Spot) =>
-  s.kakaoPlaceId
-    ? `https://place.map.kakao.com/${encodeURIComponent(s.kakaoPlaceId)}`
-    : `https://map.kakao.com/link/search/${encodeURIComponent(s.name)}`;
-export const bookingUrl = (s: Spot) => `https://www.myrealtrip.com/search?q=${encodeURIComponent(s.name)}`;
-
-const JEJU = { latMin: 33.0, latMax: 33.7, lngMin: 126.0, lngMax: 127.1 };
-export const inJeju = (p: Point) =>
-  p.lat >= JEJU.latMin && p.lat <= JEJU.latMax && p.lng >= JEJU.lngMin && p.lng <= JEJU.lngMax;
-
-function read<T>(storage: Storage | null, key: string): T | null {
-  try {
-    const v = storage?.getItem(key);
-    return v ? (JSON.parse(v) as T) : null;
-  } catch {
-    return null;
-  }
+/** index.html's inline script: the mood tapped before this module ran (a slow first visit). */
+interface EarlyTap {
+  __early?: EventListener;
+  __tap?: string;
 }
-function write(storage: Storage | null, key: string, value: unknown) {
-  try {
-    storage?.setItem(key, JSON.stringify(value));
-  } catch {
-    /* private mode etc. — still works for this visit */
-  }
-}
-const isPlace = (v: unknown): v is Place =>
-  !!v && typeof (v as Place).lat === 'number' && typeof (v as Place).lng === 'number' && typeof (v as Place).label === 'string';
+/** KakaoTalk / Instagram / Facebook / Naver / Line in-app browsers keep their own storage (S55). */
+const IN_APP = /KAKAOTALK|Instagram|FBAN|FBAV|NAVER\(inapp|Line\//;
 
-/** Storage read used only to seed the in-memory saved-id list at mount (S8-3/S8-4 UX fix #2: the
- * in-memory list, not storage, is the session's source of truth from here on — storage is a
- * best-effort mirror, so a broken/throwing storage never gets hearts stuck). */
-function getSaved(storage: Storage | null): string[] {
-  const v = read<unknown[]>(storage, KEY_SAVED);
-  return Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [];
-}
-
-function el<K extends keyof HTMLElementTagNameMap>(
-  doc: Document,
-  tag: K,
-  attrs: Record<string, string> = {},
-  text?: string,
-): HTMLElementTagNameMap[K] {
-  const node = doc.createElement(tag);
-  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
-  if (text !== undefined) node.textContent = text;
-  return node;
-}
-
-export function mountApp(doc: Document, deps: Deps) {
-  const $ = <T extends HTMLElement>(sel: string) => doc.querySelector(sel) as T;
-  const basisBtn = $<HTMLButtonElement>('#basis');
-  const savedBtn = $<HTMLButtonElement>('#saved');
-  const cardsBox = $<HTMLElement>('#cards');
-  const status = $<HTMLElement>('#status');
-  const sheetBox = $<HTMLElement>('#sheet');
-  const foodSubBox = $<HTMLElement>('#foodSub');
-  const moodBtns = [...doc.querySelectorAll<HTMLButtonElement>('[data-mood]')];
-  const subBtns = [...doc.querySelectorAll<HTMLButtonElement>('[data-sub]')];
-
-  // S1' 검수(build-spots.mjs)가 가격·운영시간·요일·평점 문구와 부적합 항목을 이미 걸러냈다.
-  const spotsP = deps.loadSpots();
-  spotsP.catch(() => undefined); // surfaced on tap
-  // Drop saved ids that no longer exist in the data, quietly (ADR-0029 "조용히 제외"), so ♥ N never
-  // over-counts against what the saved list will actually show (MINOR).
-  spotsP
-    .then((spots) => {
-      const known = new Set(spots.map((s) => s.id));
-      const filtered = savedIds.filter((id) => known.has(id));
-      if (filtered.length !== savedIds.length) {
-        saveIds(filtered);
-        renderSavedBtn();
-      }
-    })
-    .catch(() => undefined);
-
-  let stay: Place | null = read<Place>(deps.storage, KEY_STAY);
-  if (!isPlace(stay)) stay = null;
-  const savedArea = AREAS.find((a) => a.name === read<string>(deps.storage, KEY_REGION)) ?? null;
-  let region: Place | null = savedArea ? { lat: savedArea.lat, lng: savedArea.lng, label: savedArea.name } : null;
-  let basis: Basis = read<Basis>(deps.storage, KEY_BASIS) ?? 'gps';
-  if (basis === 'stay' && !stay) basis = 'gps';
-  if (basis === 'region' && !region) basis = 'gps';
-
-  let active: Button | null = null;
-  let foodSub: Sub = 'meal';
-  let histories: Histories = {};
-  let lastOrigin: { basis: Basis; point: Point } | null = null;
-  let busy = 0;
-  /** saved-list view state (S8-4): what to restore on "돌아가기". */
-  let showingSaved = false;
-  let beforeSaved: Button | null = null;
-  /** the 3 cards last shown for `beforeSaved`, tagged with the button they belong to — "돌아가기"
-   * only restores them when they still match `beforeSaved`; otherwise it recomputes via show()
-   * (UX fix #1: a stale pair could restore the wrong cards, e.g. after a basis change). */
-  let lastCards: { button: Button; cards: Card[] } | null = null;
-  /** in-memory source of truth for saved ids this session (UX fix #2); storage is a best-effort mirror. */
-  let savedIds: string[] = getSaved(deps.storage);
-
-  function saveIds(ids: string[]) {
-    savedIds = ids;
-    write(deps.storage, KEY_SAVED, ids); // best-effort; savedIds stays correct even if this throws
-  }
-  /** newest-first (ADR-0029 하트 저장); returns the new pressed state. */
-  function toggleSavedId(id: string): boolean {
-    const i = savedIds.indexOf(id);
-    if (i >= 0) {
-      const next = savedIds.slice();
-      next.splice(i, 1);
-      saveIds(next);
-      return false;
-    }
-    saveIds([id, ...savedIds]);
-    return true;
-  }
-
-  // --- Back-button/back-swipe handling (UX fix #3): pushState when an overlay (sheet or the saved
-  // list) opens, so the phone's back gesture closes it instead of leaving the app. popstate closes
-  // whichever overlay is open; a UI-triggered close instead calls history.back() so the entry it
-  // pushed gets consumed and history stays balanced (no double pops in either direction).
+export function mountApp(doc: Document, deps: Deps): App {
   const win = doc.defaultView;
-  let sheetHistoryPushed = false;
-  let savedHistoryPushed = false;
-  let handlingPopstate = false;
-  function pushOverlayHistory() {
-    try {
-      win?.history.pushState({ jejuOverlay: true }, '');
-    } catch {
-      /* history API unavailable (e.g. sandboxed) — overlay still works, just without the back-guard */
-    }
+  const ac = new AbortController();
+  const { signal } = ac;
+  const on = (target: EventTarget | null | undefined, type: string, fn: (e: Event) => void, capture = false) =>
+    target?.addEventListener(type, fn, { signal, capture });
+
+  const delays: Delays = { ...DELAYS, ...deps.delays };
+  const now = deps.now ?? (() => Date.now());
+  const online = () => deps.online?.() ?? win?.navigator.onLine ?? true;
+  const els = findEls(doc);
+  const store = createStore(deps.storage, deps.session ?? null);
+  // ♥ N drops ids missing from the data once it lands (S42); a failure notice gives way to the list if a
+  // download that outlived its timeout lands after all.
+  const data = createSpotSource(deps.loadSpots, delays.dataTimeout, (spots) => {
+    dispatch({ type: 'spots', spots });
+    retryFailedLoad();
+  });
+  const renderer = createRenderer(doc, els, { inApp: IN_APP.test(deps.userAgent ?? win?.navigator.userAgent ?? '') });
+  let state = initialState({ ...store.load(), offline: !online() });
+
+  const timers = new Set<ReturnType<typeof setTimeout>>();
+  function later(ms: number, fn: () => void) {
+    const t = setTimeout(() => {
+      timers.delete(t);
+      if (!signal.aborted) fn();
+    }, ms);
+    timers.add(t);
+    return t;
   }
-  function popOverlayHistory() {
-    if (handlingPopstate) return; // already consumed by the browser's own back navigation
-    try {
-      win?.history.back();
-    } catch {
-      /* ignore */
-    }
-  }
-  win?.addEventListener('popstate', () => {
-    // Guard against a listener from an earlier mountApp() call on the same window (e.g. re-mounting
-    // in tests) firing against detached elements — only the live mount's DOM is still in `doc`.
-    if (!doc.body.contains(sheetBox)) return;
-    handlingPopstate = true;
-    try {
-      if (!sheetBox.hidden) dismissSheet();
-      else if (showingSaved) void closeSavedView();
-    } finally {
-      handlingPopstate = false;
-    }
+  signal.addEventListener('abort', () => {
+    for (const t of timers) clearTimeout(t);
+    timers.clear();
+    data.dispose();
+    renderer.dispose();
   });
 
-  function renderFoodSub() {
-    foodSubBox.hidden = active !== 'food';
-    for (const b of subBtns) b.setAttribute('aria-pressed', String(b.dataset.sub === foodSub));
+  function dispatch(a: Action) {
+    if (signal.aborted) return;
+    state = reduce(state, a);
+    renderer.render(state);
   }
 
-  function setBasis(b: Basis) {
-    basis = b;
-    write(deps.storage, KEY_BASIS, b);
-    // A basis change invalidates cards computed from the old origin, so 돌아가기 must recompute
-    // rather than restore stale drive times (MINOR).
-    lastCards = null;
-    renderBasis();
-  }
-  function renderBasis() {
-    const label = basis === 'stay' ? '숙소 기준' : basis === 'region' && region ? `${region.label} 기준` : '내 위치 기준';
-    basisBtn.textContent = `${label} ⇄`;
-    basisBtn.setAttribute('aria-label', `${label}. 누르면 기준 위치를 바꿔요`);
+  /** Same control again within `delays.guard` → ignored (double tap = one tap, S35). Hearts are toggles and not guarded. */
+  const lastTap = new Map<string, number>();
+  function guarded(key: string): boolean {
+    const t = now();
+    const prev = lastTap.get(key);
+    if (prev !== undefined && t - prev < delays.guard) return true;
+    lastTap.set(key, t);
+    return false;
   }
 
-  function renderSavedBtn() {
-    const n = savedIds.length;
-    savedBtn.hidden = n === 0;
-    savedBtn.textContent = `${HEART_FILLED} ${n}`;
-    savedBtn.setAttribute('aria-label', `저장한 곳 ${n}개`);
-    savedBtn.setAttribute('aria-pressed', String(showingSaved));
-  }
-
-  function say(text: string) {
-    status.textContent = text;
-  }
-
-  /** Fires when the open sheet is dismissed (backdrop tap, 닫기, or Escape) without completing its pick. */
-  let onSheetDismiss: (() => void) | null = null;
-  /** The element to return focus to once the sheet closes (MINOR: focus management). */
-  let sheetReturnFocus: HTMLElement | null = null;
-
-  function closeSheet() {
-    sheetBox.replaceChildren();
-    sheetBox.hidden = true;
-    const focusTarget = sheetReturnFocus;
-    sheetReturnFocus = null;
-    focusTarget?.focus?.();
-    if (sheetHistoryPushed) {
-      sheetHistoryPushed = false;
-      popOverlayHistory();
+  // --- requests: origin + data for the current view. Newest request id wins. ---
+  let reqSeq = 0;
+  let reqTimers: ReturnType<typeof setTimeout>[] = [];
+  function clearReqTimers() {
+    for (const t of reqTimers) {
+      clearTimeout(t);
+      timers.delete(t);
     }
+    reqTimers = [];
   }
-
-  /** Dismiss = closeSheet + tell openSheet's caller nothing was picked. A successful pick calls
-   * closeSheet() directly instead, so onSheetDismiss never fires for it. */
-  function dismissSheet() {
-    const cb = onSheetDismiss;
-    onSheetDismiss = null;
-    closeSheet();
-    cb?.();
+  /** The results entry's session record follows what it is for (S54): written when asked, and again when
+   * the cards land, so a reload always comes back to the mood last chosen — loading, failed or shown. */
+  function remember() {
+    const rec = sessionOf(state);
+    if (rec) store.writeSession(rec);
   }
-
-  function openSheet(title: string, note: string, build: (body: HTMLElement) => void, onDismiss?: () => void) {
-    onSheetDismiss = onDismiss ?? null;
-    // A sheet already open (e.g. opening the stay sheet from the basis sheet) is being replaced in
-    // place, not freshly opened: keep the existing return target (UX fix #6) — doc.activeElement
-    // would otherwise be a button inside the sheet that's about to be removed — and don't push a
-    // second history entry for it (one physical back should close the whole sheet flow).
-    if (sheetBox.hidden) {
-      sheetReturnFocus = (doc.activeElement as HTMLElement) ?? null;
-      pushOverlayHistory();
-      sheetHistoryPushed = true;
+  function request(intent: Intent) {
+    const req = ++reqSeq;
+    clearReqTimers();
+    // "다른 3곳 보기" measures from where these 3 were measured: no new GPS fix, which could fail (and take the
+    // cards being compared away), keep the thumb waiting, or have moved and repeat places just seen.
+    const kept = intent === 'more' && state.view === 'cards' && state.cards ? state.cards.origin : null;
+    const fixed = kept ?? staticOrigin(state.basis, state.region, state.stay);
+    const forSaved = state.view === 'saved';
+    dispatch({ type: 'request', req, intent, step: fixed ? 'loading' : 'locating' });
+    remember();
+    reqTimers.push(later(delays.slow, () => dispatch({ type: 'slow', req })));
+    if (!fixed) reqTimers.push(later(delays.long, () => dispatch({ type: 'long', req })));
+    // GPS and data start together; the data promise is shared and memoized only on success (S24).
+    const spotsP = data.get();
+    spotsP.catch(() => undefined);
+    let originP: Promise<OriginResult | GaveUp> = kept ? Promise.resolve({ ok: true, origin: kept }) : resolveOrigin(state.basis, state.region, state.stay, deps);
+    if (forSaved && !fixed) {
+      // The saved list never waits on an unanswered permission prompt (its timeout only starts once
+      // answered): after a moment it is shown in saved order, and a late position is not used (no re-sort
+      // under the thumb).
+      const gaveUp = new Promise<GaveUp>((resolve) => reqTimers.push(later(delays.long, () => resolve(GAVE_UP))));
+      originP = Promise.race([originP, gaveUp]);
     }
-    const backdrop = el(doc, 'div', { class: 'backdrop' });
-    backdrop.addEventListener('click', dismissSheet);
-    const panel = el(doc, 'section', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
-    panel.append(el(doc, 'h2', { id: 'sheet-title' }, title));
-    if (note) panel.append(el(doc, 'p', { class: 'sheet-note' }, note));
-    const body = el(doc, 'div', { class: 'sheet-body' });
-    build(body);
-    const close = el(doc, 'button', { type: 'button', class: 'sheet-close' }, '닫기');
-    close.addEventListener('click', dismissSheet);
-    panel.append(body, close);
-    sheetBox.replaceChildren(backdrop, panel);
-    sheetBox.hidden = false;
-    (body.querySelector('button') as HTMLButtonElement | null)?.focus();
-  }
-
-  // Escape dismisses the open sheet the same way a backdrop tap does (MINOR: keyboard support).
-  doc.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !sheetBox.hidden) dismissSheet();
-  });
-
-  /** 15개 지역을 제주시 쪽 / 서귀포 쪽 두 묶음으로 렌더 (ADR-0029, plan S8-2). `selected`가 있으면 그 지역을 표시한다. */
-  function areaGroups(body: HTMLElement, onPick: (a: Area) => void, selected?: string | null) {
-    const groups: { group: Area['group']; heading: string }[] = [
-      { group: 'jeju', heading: '제주시 쪽' },
-      { group: 'seogwipo', heading: '서귀포 쪽' },
-    ];
-    for (const { group, heading } of groups) {
-      body.append(el(doc, 'h3', { class: 'area-heading' }, heading));
-      const grid = el(doc, 'div', { class: 'regions' });
-      for (const a of AREAS.filter((x) => x.group === group)) {
-        const isSelected = a.name === selected;
-        const b = el(doc, 'button', {
-          type: 'button',
-          'data-area': a.name,
-          'aria-pressed': String(isSelected),
-          ...(isSelected ? { class: 'primary' } : {}),
-        }, a.name);
-        b.addEventListener('click', () => onPick(a));
-        grid.append(b);
-      }
-      body.append(grid);
-    }
-  }
-
-  function pickArea(a: Area) {
-    region = { lat: a.lat, lng: a.lng, label: a.name };
-    write(deps.storage, KEY_REGION, a.name);
-    setBasis('region');
-    closeSheet();
-    resumeAfterBasisChange();
-  }
-
-  /** GPS unusable: ask which of the 15 areas we are in (replaces the old 4-region picker, ADR-0029). */
-  function openAreaFallback(why: LocateFailure) {
-    const note =
-      why === 'outside'
-        ? '지금은 제주 밖에 계신 것 같아요. 내일 머물 곳과 가까운 지역을 골라 주세요.'
-        : '위치를 확인할 수 없어요. 지금 계신 곳과 가까운 지역을 골라 주세요.';
-    openSheet('어느 지역에 계세요?', note, (body) => areaGroups(body, pickArea), () => {
-      // Dismissed without picking an area: don't leave ♥ N dead (showingSaved stuck true forever) or
-      // the old mood cards showing with every mood button unpressed (MAJOR).
-      if (showingSaved) {
-        void closeSavedView();
+    void (async () => {
+      const o = await originP;
+      if (req !== reqSeq || signal.aborted) return;
+      if (!o.ok && !forSaved) {
+        clearReqTimers();
+        dispatch({ type: 'noOrigin', req, why: o.why });
         return;
       }
-      // A mood button was pressed but had nothing to show (no origin) — return to the calm start
-      // state instead of leaving it pressed with no cards and no message (UX fix #4).
-      if (active) {
-        active = null;
-        for (const b of moodBtns) b.setAttribute('aria-pressed', 'false');
-        renderFoodSub();
-        cardsBox.replaceChildren();
-        say('위치를 몰라서 못 골랐어요. 위 ⇄에서 지역을 골라 주세요');
+      // Saved list without a position is still shown, in saved order — never a dead end.
+      if (!fixed) dispatch({ type: 'located', req, why: o.ok || o === GAVE_UP ? undefined : o.why, unknown: o === GAVE_UP });
+      let spots;
+      try {
+        spots = await spotsP;
+      } catch {
+        if (req !== reqSeq) return;
+        clearReqTimers();
+        dispatch({ type: 'loadError', req, offline: !online() });
+        return;
       }
-    });
+      if (req !== reqSeq) return;
+      clearReqTimers();
+      dispatch({ type: 'resolved', req, origin: o.ok ? o.origin : null, spots });
+      remember();
+    })();
+  }
+  function abortRequest() {
+    reqSeq++;
+    clearReqTimers();
+    dispatch({ type: 'abort' });
+  }
+  /** The list failed to load and now can: ask again by itself instead of waiting for 다시 불러오기. */
+  function retryFailedLoad() {
+    if (signal.aborted || state.phase.k !== 'loadError') return;
+    if (state.view === 'cards' || state.view === 'saved') request('show');
+  }
+  /** After the view changed: fetch what it needs, or keep what is already on screen. */
+  function enteredView() {
+    if (state.view === 'saved' || (state.view === 'cards' && !cardsValid(state))) request('show');
+    else abortRequest();
   }
 
-  function saveStay(place: Place) {
-    stay = place;
-    write(deps.storage, KEY_STAY, place);
-    setBasis('stay');
-    closeSheet();
-    resumeAfterBasisChange();
-  }
-
-  /** After a basis change (area pick, 숙소 save, gps/숙소 switch): resume whichever view was pending —
-   * the saved list if that's what the user was trying to reach, otherwise the active mood (S8-4). */
-  function resumeAfterBasisChange() {
-    if (showingSaved) void showSavedView();
-    else if (active) void show(active);
-  }
-
-  /** First switch to 숙소 with nothing saved: register it (plan OQ3). */
-  function openStaySheet() {
-    openSheet('숙소를 어디로 할까요?', '한 번만 정하면 이 기기에 기억해 둘게요.', (body) => {
-      const here = el(doc, 'button', { type: 'button', class: 'primary' }, '지금 위치를 숙소로 저장');
-      here.addEventListener('click', async () => {
-        here.disabled = true;
-        try {
-          const p = await deps.locate();
-          saveStay({ lat: p.lat, lng: p.lng, label: '숙소' });
-        } catch {
-          here.disabled = false;
-          here.textContent = '위치를 확인할 수 없어요. 아래에서 골라 주세요';
-        }
-      });
-      body.append(here, el(doc, 'p', { class: 'or' }, '또는 숙소가 있는 지역'));
-      areaGroups(body, (a) => saveStay({ lat: a.lat, lng: a.lng, label: '숙소' }));
-    });
-  }
-
-  /** Basis toggle now always opens a sheet: 내 위치 / 숙소 / 15개 지역 (ADR-0029 S8-2). */
-  function openBasisSheet() {
-    openSheet('어디 기준으로 볼까요?', '', (body) => {
-      const gps = el(doc, 'button', {
-        type: 'button',
-        'data-basis': 'gps',
-        'aria-pressed': String(basis === 'gps'),
-        ...(basis === 'gps' ? { class: 'primary' } : {}),
-      }, '내 위치');
-      gps.addEventListener('click', () => {
-        setBasis('gps');
-        closeSheet();
-        resumeAfterBasisChange();
-      });
-      const stayBtn = el(doc, 'button', {
-        type: 'button',
-        'data-basis': 'stay',
-        'aria-pressed': String(basis === 'stay'),
-        ...(basis === 'stay' ? { class: 'primary' } : {}),
-      }, '숙소');
-      stayBtn.addEventListener('click', () => {
-        if (stay) {
-          setBasis('stay');
-          closeSheet();
-          resumeAfterBasisChange();
-        } else {
-          openStaySheet();
-        }
-      });
-      body.append(gps, stayBtn);
-      if (stay) {
-        // A traveller who moves hotels mid-trip needs a way back into 숙소 registration (MINOR).
-        const restay = el(doc, 'button', { type: 'button' }, '숙소 다시 정하기');
-        restay.addEventListener('click', () => openStaySheet());
-        body.append(restay);
+  // --- history ---
+  const nav = createNav(win, { signal, settleMs: delays.settle, onRoute: applyRoute });
+  /** Back/forward the app did not cause: the history entry says what should be on screen. */
+  function applyRoute(r: Route) {
+    const prev = state;
+    if (prev.overlay && r.overlay !== prev.overlay) stayToken++;
+    if (r.view === 'cards' && !prev.mood) {
+      // Forward onto a results entry after a reload on the first screen: its record says which mood.
+      const rec = store.readSession();
+      if (rec) {
+        dispatch({ type: 'restore', rec });
+        dispatch({ type: 'route', route: r });
+        request('show');
+        return;
       }
-      body.append(el(doc, 'p', { class: 'or' }, '또는 지역으로 고르기'));
-      areaGroups(body, pickArea, basis === 'region' ? region?.label : null);
+      // Nothing to show for it: step back off it, so it never becomes an entry that back presses swallow.
+      nav.back(HOME);
+      r = { view: 'home', overlay: null };
+    }
+    dispatch({ type: 'route', route: r });
+    if (state.view !== prev.view) enteredView();
+  }
+
+  // --- intents ---
+  function onMood(b: Button) {
+    // The mood buttons live on the first screen; from the results they are reached only programmatically
+    // (tests), from the saved list not at all (hidden, and 돌아가기 comes first).
+    if (state.overlay || state.view === 'saved' || guarded(`mood:${b}`)) return;
+    const intent = moodIntent(state, b);
+    if (!intent) return;
+    const from = state.view;
+    if (from === 'home') hush();
+    dispatch({ type: 'mood', button: b });
+    if (from === 'home') nav.push(CARDS);
+    request(intent);
+  }
+
+  function onMore() {
+    if (guarded('more') || state.view !== 'cards' || state.phase.k !== 'ready') return;
+    hush();
+    request('more');
+  }
+
+  /** 바꾸기: back to the moods (the results entry is popped, so phone back never lands on it again). */
+  function onChange() {
+    if (guarded('change') || state.view !== 'cards') return;
+    reqSeq++; // whatever was still on its way is void
+    clearReqTimers();
+    hush();
+    dispatch({ type: 'route', route: HOME });
+    store.clearSession(); // a reload now is a reload of the first screen, not of the mood just left
+    nav.back(HOME);
+  }
+
+  function onSub(sub: Sub) {
+    if (guarded(`sub:${sub}`) || state.view !== 'cards' || state.mood !== 'food' || state.sub === sub) return;
+    dispatch({ type: 'sub', sub });
+    request('show');
+  }
+
+  function openSaved() {
+    hush();
+    dispatch({ type: 'openSaved' });
+    nav.push(SAVED);
+    request('show');
+  }
+  function closeSaved() {
+    hush();
+    const from = state.savedFrom;
+    if (!from) {
+      // Restored after a reload: what is underneath is unknown — go back and show whatever it is.
+      nav.back('adopt');
+      return;
+    }
+    dispatch({ type: 'closeSaved' });
+    nav.back({ view: from, overlay: null });
+    enteredView();
+  }
+
+  let stayToken = 0;
+  let quietUntil = 0;
+  /** The screen under the finger just changed (new view, sheet opened/closed, next 3): for a moment, a pointer
+   * tap is the 2nd half of a double tap and is swallowed — it would land on whatever appeared there. */
+  function hush() {
+    quietUntil = Math.max(quietUntil, now() + delays.quiet);
+  }
+  function openOverlay(kind: 'basis' | 'stay') {
+    if (state.overlay === kind) return;
+    const was = state.overlay;
+    stayToken++;
+    hush(); // a double tap on 기준 must not land on the scrim (closing it again) or on a sheet option
+    dispatch({ type: 'overlay', overlay: kind });
+    const r: Route = { view: state.view, overlay: kind };
+    if (was) nav.replace(r);
+    else nav.push(r);
+  }
+  function closeOverlay() {
+    if (!state.overlay) return;
+    stayToken++; // a 숙소 GPS request still in flight is now void (S10)
+    hush(); // the 2nd tap of a double tap must not land on the page under the sheet
+    dispatch({ type: 'overlay', overlay: null });
+    nav.back();
+  }
+
+  function changeBasis(next: { basis: Basis; region?: AreaName; stay?: Stay }) {
+    dispatch({ type: 'basis', ...next });
+    store.setBasis(next.basis);
+    if (next.region) store.setRegion(next.region);
+    if (next.stay) store.setStay(next.stay);
+    closeOverlay();
+    // A new request also abandons any GPS request still in flight (S37·S38).
+    if (state.view === 'home') abortRequest();
+    else request('show');
+  }
+
+  function stayHere() {
+    if (state.overlay !== 'stay' || state.stayForm.pending) return;
+    const token = ++stayToken;
+    dispatch({ type: 'stayForm', pending: true, error: null });
+    void locateGps(deps).then((r) => {
+      if (token !== stayToken || signal.aborted || state.overlay !== 'stay') return; // sheet closed or replaced
+      if (!r.ok) dispatch({ type: 'stayForm', pending: false, error: r.why });
+      else changeBasis({ basis: 'stay', stay: { ...r.point, area: nearestArea(r.point).name, source: 'gps' } });
     });
   }
 
-  async function origin(): Promise<Point | null> {
-    if (basis === 'stay' && stay) return stay;
-    if (basis === 'region' && region) return region;
-    try {
-      return await deps.locate();
-    } catch (e) {
-      openAreaFallback(e instanceof LocateError ? e.reason : 'unavailable');
-      return null;
+  function onHeart(id: string) {
+    const { ids, added } = store.toggleSaved(id);
+    dispatch({ type: 'saved', ids });
+    if (added && !state.hintSeen) {
+      store.setHintSeen();
+      dispatch({ type: 'hint', id });
+      later(delays.hint, () => dispatch({ type: 'hintDone', id }));
     }
   }
 
-  // U+FE0E (text presentation selector) keeps iOS from swapping this for a red emoji glyph.
-  const HEART_FILLED = '♥︎';
-  const HEART_OUTLINE = '♡︎';
+  function onSheetButton(b: HTMLElement) {
+    const action = b.dataset.action;
+    if (action === 'close') return closeOverlay();
+    if (action === 'restay') return openOverlay('stay');
+    if (action === 'stay-here') return stayHere();
+    const basis = b.dataset.basis;
+    if (basis === 'gps') return basisIsCurrent(state, 'gps') ? closeOverlay() : changeBasis({ basis: 'gps' });
+    if (basis === 'stay') {
+      if (!state.stay) return openOverlay('stay');
+      return basisIsCurrent(state, 'stay') ? closeOverlay() : changeBasis({ basis: 'stay' });
+    }
+    const area = areaByName(b.dataset.area);
+    if (!area) return;
+    if (b.dataset.where === 'stay') return changeBasis({ basis: 'stay', stay: { lat: area.lat, lng: area.lng, area: area.name, source: 'area' } });
+    return basisIsCurrent(state, 'region', area.name) ? closeOverlay() : changeBasis({ basis: 'region', region: area.name });
+  }
 
-  /** Heart button, top-right of the photo (S8-3): a real button, own aria-pressed/name, never triggers the card link. */
-  function heartButton(spot: Spot): HTMLButtonElement {
-    const pressed = savedIds.includes(spot.id);
-    const b = el(doc, 'button', {
-      type: 'button',
-      class: `heart${pressed ? ' is-saved' : ''}`,
-      'aria-pressed': String(pressed),
-      'aria-label': `${spot.name} ${pressed ? '저장 해제' : '저장'}`,
-    });
-    b.textContent = pressed ? HEART_FILLED : HEART_OUTLINE;
-    b.addEventListener('click', (e) => {
+  function onMainButton(b: HTMLButtonElement) {
+    if (b.dataset.mood) return onMood(b.dataset.mood as Button);
+    if (b.dataset.sub) return onSub(b.dataset.sub as Sub);
+    if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id);
+    const action = b.dataset.action;
+    if (action === 'more') return onMore();
+    if (action === 'change') return onChange();
+    if (action === 'choose-area') return openOverlay('basis');
+    if (action === 'retry') {
+      if (!guarded('retry')) request('show');
+      return;
+    }
+    if (action === 'close-saved') {
+      if (!guarded('close-saved') && state.view === 'saved') closeSaved();
+      return;
+    }
+    const area = areaByName(b.dataset.area);
+    if (area && !guarded(`area:${area.name}`)) {
+      hush();
+      changeBasis({ basis: 'region', region: area.name });
+    }
+  }
+
+  // --- listeners (all removed by destroy()) ---
+  const buttonIn = (e: Event, box: HTMLElement) => {
+    const b = (e.target as Element | null)?.closest?.('button');
+    return b && box.contains(b) ? (b as HTMLButtonElement) : null;
+  };
+  on(els.main, 'click', (e) => {
+    const b = buttonIn(e, els.main);
+    if (b && !state.overlay) onMainButton(b);
+  });
+  on(els.basis, 'click', () => {
+    if (!state.overlay && !guarded('basis')) openOverlay('basis');
+  });
+  on(els.saved, 'click', () => {
+    if (state.overlay || guarded('saved')) return;
+    if (state.view === 'saved') closeSaved();
+    else openSaved();
+  });
+  on(els.sheet, 'click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.dataset?.action === 'close') return closeOverlay(); // scrim
+    const b = buttonIn(e, els.sheet);
+    if (b && !b.disabled) onSheetButton(b);
+  });
+  on(
+    doc,
+    'click',
+    (e) => {
+      // Only pointer taps (detail ≥ 1); a keyboard Enter/Space (detail 0) is always deliberate.
+      if (now() >= quietUntil || (e as MouseEvent).detail === 0) return;
       e.preventDefault();
-      e.stopPropagation();
-      const now = toggleSavedId(spot.id);
-      b.setAttribute('aria-pressed', String(now));
-      b.setAttribute('aria-label', `${spot.name} ${now ? '저장 해제' : '저장'}`);
-      b.classList.toggle('is-saved', now);
-      b.textContent = now ? HEART_FILLED : HEART_OUTLINE;
-      renderSavedBtn();
-    });
-    return b;
-  }
-
-  function cardLi({ spot, minutes }: Card): HTMLLIElement {
-    const li = el(doc, 'li', { class: 'card', 'data-id': spot.id });
-    const link = el(doc, 'a', { class: 'card-link', href: kakaoUrl(spot), target: '_blank', rel: 'noopener' });
-    const figure = el(doc, 'div', { class: 'card-img' });
-    const img = el(doc, 'img', { src: spot.image, alt: '', loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
-    img.addEventListener('error', () => {
-      figure.hidden = true; // no blank photo box
-      console.warn('card image failed', spot.id);
-    });
-    figure.append(img);
-    const body = el(doc, 'div', { class: 'card-body' });
-    body.append(
-      el(doc, 'h2', { class: 'card-name' }, spot.name),
-      el(doc, 'p', { class: 'card-reason' }, spot.reason),
-      el(doc, 'p', { class: 'card-drive' }, `차로 약 ${minutes}분`),
-    );
-    link.append(figure, body);
-    // heart sits as a sibling of the link (not inside it) so a tap never reaches the map link (S8-3).
-    li.append(link, heartButton(spot));
-    if (spot.bookable) {
-      li.append(el(doc, 'a', { class: 'book', href: bookingUrl(spot), target: '_blank', rel: 'noopener' }, '예약 찾아보기'));
+      e.stopImmediatePropagation();
+    },
+    true,
+  );
+  // Image errors don't bubble; capture them to drop the photo box (S30) and remember it for re-renders.
+  on(
+    els.main,
+    'error',
+    (e) => {
+      const img = e.target as HTMLElement;
+      if (img.tagName !== 'IMG') return;
+      const id = img.closest<HTMLElement>('.card[data-id]')?.dataset.id;
+      if (id) dispatch({ type: 'imgError', id });
+    },
+    true,
+  );
+  on(doc, 'keydown', (e) => {
+    const k = e as KeyboardEvent;
+    if (!state.overlay) return;
+    if (k.key === 'Escape') {
+      k.preventDefault();
+      closeOverlay();
+    } else if (k.key === 'Tab') {
+      // Focus stays inside the sheet (inert covers modern browsers; this covers the rest, S58).
+      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled])')];
+      if (!f.length) return;
+      const i = f.indexOf(doc.activeElement as HTMLElement);
+      if (k.shiftKey && i <= 0) {
+        k.preventDefault();
+        f[f.length - 1].focus();
+      } else if (!k.shiftKey && (i === -1 || i === f.length - 1)) {
+        k.preventDefault();
+        f[0].focus();
+      }
     }
-    return li;
-  }
-
-  function renderCards(cards: Card[]) {
-    const list = el(doc, 'ol', { class: 'card-list' });
-    for (const c of cards) list.append(cardLi(c));
-    cardsBox.replaceChildren(list);
-    if (cards.length) cardsBox.append(el(doc, 'p', { class: 'hint' }, '한 번 더 누르면 다른 곳을 보여 드려요.'));
-  }
-
-  function renderSavedView(cards: Card[]) {
-    const wrap = el(doc, 'div', { class: 'saved-view' });
-    const back = el(doc, 'button', { type: 'button', class: 'back' }, '← 돌아가기');
-    back.addEventListener('click', () => void closeSavedView());
-    const heading = el(doc, 'h2', { class: 'saved-heading' }, '저장한 곳');
-    wrap.append(back, heading);
-    if (cards.length) {
-      const list = el(doc, 'ol', { class: 'card-list' });
-      // Unsaving here just flips the heart to outline — the card stays on screen until the list is
-      // reopened, so a stray tap while scrolling has an undo path (MINOR).
-      for (const c of cards) list.append(cardLi(c));
-      wrap.append(list);
-    } else {
-      wrap.append(el(doc, 'p', { class: 'hint' }, '저장한 곳이 없어요.'));
-    }
-    cardsBox.replaceChildren(wrap);
-  }
-
-  async function closeSavedView() {
-    showingSaved = false;
-    renderSavedBtn();
-    if (savedHistoryPushed) {
-      savedHistoryPushed = false;
-      popOverlayHistory();
-    }
-    if (beforeSaved && lastCards && lastCards.button === beforeSaved) {
-      // Restore the cards the user was already looking at — don't advance pickCards' history (S8-4).
-      // Only when they still match `beforeSaved` (UX fix #1): a basis change or similar in between
-      // invalidates them, so fall through to a fresh show() instead of restoring stale cards.
-      active = beforeSaved;
-      for (const b of moodBtns) b.setAttribute('aria-pressed', String(b.dataset.mood === beforeSaved));
-      renderFoodSub();
-      renderCards(lastCards.cards);
-    } else if (beforeSaved) {
-      void show(beforeSaved);
-    } else {
-      active = null;
-      for (const b of moodBtns) b.setAttribute('aria-pressed', 'false');
-      renderFoodSub();
-      cardsBox.replaceChildren();
-      say('');
-    }
-  }
-
-  async function showSavedView() {
-    const ticket = ++busy;
-    showingSaved = true;
-    renderSavedBtn();
-    for (const b of moodBtns) b.setAttribute('aria-pressed', 'false');
-    active = null;
-    renderFoodSub();
-    say(basis === 'gps' ? '위치 확인 중…' : '');
-    const o = await origin();
-    if (ticket !== busy) return;
-    say('');
-    if (!o) return;
-    let spots: Spot[];
-    try {
-      spots = await spotsP;
-    } catch {
-      say('목록을 불러오지 못했어요. 잠시 뒤 다시 눌러 주세요.');
-      showingSaved = false; // let ♥ N be tapped again instead of staying stuck (S8-4)
-      renderSavedBtn();
-      return;
-    }
-    if (ticket !== busy || !showingSaved) return;
-    // Unknown ids (data changed since saving) are skipped silently (S8-4).
-    const byId = new Map(spots.map((s) => [s.id, s] as const));
-    const found = savedIds.map((id) => byId.get(id)).filter((s): s is Spot => !!s);
-    const cards: Card[] = found
-      .map((spot) => ({ spot, minutes: driveMinutes(distanceKm(o, spot)) }))
-      .sort((a, b) => distanceKm(o, a.spot) - distanceKm(o, b.spot));
-    // Now actually opening (UX fix #3): push a history entry so back closes the list instead of
-    // leaving the app.
-    pushOverlayHistory();
-    savedHistoryPushed = true;
-    renderSavedView(cards);
-  }
-
-  async function show(button: Button) {
-    const ticket = ++busy;
-    showingSaved = false;
-    renderSavedBtn();
-    // Clear immediately (UX fix #1): a stale pair from a previous button/basis must never be
-    // restorable by 돌아가기 while this pick is in flight.
-    lastCards = null;
-    active = button;
-    for (const b of moodBtns) b.setAttribute('aria-pressed', String(b.dataset.mood === button));
-    renderFoodSub();
-    say(basis === 'gps' ? '위치 확인 중…' : '');
-    const o = await origin();
-    if (ticket !== busy) return;
-    say('');
-    if (!o) return;
-    let spots: Spot[];
-    try {
-      spots = await spotsP;
-    } catch {
-      say('목록을 불러오지 못했어요. 잠시 뒤 다시 눌러 주세요.');
-      return;
-    }
-    if (ticket !== busy) return;
-    // Start over only when the basis changes or the origin moves more than ~1km (GPS jitter keeps history).
-    if (!lastOrigin || lastOrigin.basis !== basis || distanceKm(lastOrigin.point, o) > 1) {
-      histories = {};
-      lastOrigin = { basis, point: { lat: o.lat, lng: o.lng } };
-    }
-    const r = pickCards(spots, o, button, histories, button === 'food' ? foodSub : undefined);
-    histories = r.histories;
-    lastCards = { button, cards: r.cards };
-    renderCards(r.cards);
-  }
-
-  for (const b of moodBtns) b.addEventListener('click', () => void show(b.dataset.mood as Button));
-  for (const b of subBtns) {
-    b.addEventListener('click', () => {
-      const sub = b.dataset.sub as Sub;
-      if (sub === foodSub || active !== 'food') return;
-      foodSub = sub;
-      renderFoodSub();
-      void show('food');
-    });
-  }
-  basisBtn.addEventListener('click', openBasisSheet);
-  savedBtn.addEventListener('click', () => {
-    // Toggle (UX fix #7): tapping ♥ N again while the list is open closes it, matching its
-    // aria-pressed state.
-    if (showingSaved) {
-      void closeSavedView();
-      return;
-    }
-    beforeSaved = active;
-    void showSavedView();
+  });
+  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write).
+  on(win, 'storage', (e) => {
+    const s = e as StorageEvent;
+    if (s.storageArea && deps.storage && s.storageArea !== deps.storage) return;
+    if (s.key === KEYS.saved || s.key === null) dispatch({ type: 'saved', ids: store.saved() });
+    if (s.key === KEYS.hint && s.newValue === 'true') dispatch({ type: 'hintSeen' });
+  });
+  on(win, 'online', () => {
+    dispatch({ type: 'offline', offline: false });
+    retryFailedLoad(); // "오프라인이라 목록을 불러오지 못했어요" would be wrong now
+  });
+  on(win, 'offline', () => dispatch({ type: 'offline', offline: true }));
+  // Back in the foreground (maybe the next morning, maybe from the settings app): refresh the date line and
+  // what the browser says about location permission.
+  on(doc, 'visibilitychange', () => {
+    if (doc.visibilityState !== 'visible') return;
+    showDate();
+    checkPermission();
   });
 
-  closeSheet();
-  renderBasis();
-  renderSavedBtn();
-  renderFoodSub();
-  return { show };
+  function showDate() {
+    renderer.setDate(dateLabel(deps.today?.() ?? new Date()));
+  }
+  function checkPermission() {
+    if (!deps.geoPermission || state.basis !== 'gps') return;
+    deps.geoPermission().then(
+      (permission) => {
+        if (signal.aborted) return;
+        dispatch({ type: 'permission', permission });
+        // Location turned back on in settings while the results say it is off: the label says 내 주변 again,
+        // so the cards come too, instead of a notice that now contradicts it.
+        const p = state.phase;
+        const on = permission === 'granted' || permission === 'prompt';
+        if (on && state.view === 'cards' && state.basis === 'gps' && p.k === 'noOrigin' && p.why === 'denied') request('show');
+      },
+      () => undefined,
+    );
+  }
+
+  // --- mount: restore what this history entry was showing (S18·S54) ---
+  try {
+    if (win && 'scrollRestoration' in win.history) win.history.scrollRestoration = 'manual';
+  } catch {
+    /* sandboxed */
+  }
+  showDate();
+  renderer.render(state);
+  checkPermission();
+  // Taps on the static mood buttons before this module ran: the last one is carried out now.
+  const early = win as (Window & EarlyTap) | null;
+  const earlyTap = early?.__tap;
+  if (early?.__early) win!.removeEventListener('click', early.__early, true);
+  if (early) {
+    delete early.__early;
+    delete early.__tap;
+  }
+  const rec = nav.initial.view !== 'home' ? store.readSession() : null;
+  if (nav.initial.view === 'cards' && rec) {
+    // The same mood again: its 3 cards if they were shown (no rotation), else asked again — a reload during
+    // loading or on a failure notice (e.g. after turning location on) gets that mood, never an older one.
+    dispatch({ type: 'restore', rec });
+    request('show');
+  } else if (nav.initial.view === 'saved') {
+    if (rec) dispatch({ type: 'restore', rec });
+    dispatch({ type: 'openSaved', restored: true });
+    request('show');
+  } else if (nav.initial.view === 'cards') {
+    // A results entry with nothing to show for it (no session record: storage blocked or cleared): go
+    // back past it, so the phone's back button never has an empty entry to swallow.
+    nav.back(HOME);
+  } else if (earlyTap && BUTTONS.includes(earlyTap as Button)) {
+    onMood(earlyTap as Button);
+  }
+  // Warm the data so the first tap is fast (what it brings is handled by the source's onLoad above).
+  data.get().catch(() => undefined);
+
+  return {
+    destroy: () => ac.abort(),
+    state: () => state,
+  };
 }

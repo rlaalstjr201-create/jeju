@@ -1,0 +1,1987 @@
+[
+ {
+  "id": "2cefac39-c147-4b2b-bb4e-2a253e943153",
+  "name": "고사리식당",
+  "from": {
+   "lat": 33.4777041,
+   "lng": 126.7135515
+  },
+  "status": "matched",
+  "lat": 33.4528481729785,
+  "lng": 126.707495884726,
+  "placeId": "1951669987",
+  "placeName": "고사리식당",
+  "address": "제주특별자치도 제주시 조천읍 번영로 1680",
+  "note": "exact"
+ },
+ {
+  "id": "a65317fa-35d8-405f-a8dc-f58d14efc45c",
+  "name": "카페선흘",
+  "from": {
+   "lat": 33.4777041,
+   "lng": 126.7135515
+  },
+  "status": "matched",
+  "lat": 33.4857639949223,
+  "lng": 126.699231485541,
+  "placeId": "1832440912",
+  "placeName": "카페선흘",
+  "address": "제주특별자치도 제주시 조천읍 선교로 198",
+  "note": "exact"
+ },
+ {
+  "id": "12df6110-dec1-4d27-87ec-d2547b00b3b1",
+  "name": "카페동백",
+  "from": {
+   "lat": 33.4777041,
+   "lng": 126.7135515
+  },
+  "status": "matched",
+  "lat": 33.50900709679585,
+  "lng": 126.71441047138867,
+  "placeId": "1208953462",
+  "placeName": "카페 동백",
+  "address": "제주특별자치도 제주시 조천읍 동백로 68",
+  "note": "exact"
+ },
+ {
+  "id": "31b42f83-42bb-42f2-8734-4ef0102e53a6",
+  "name": "알밤(알바매기, 알밤오름)",
+  "from": {
+   "lat": 33.4777041,
+   "lng": 126.7135515
+  },
+  "status": "matched",
+  "lat": 33.4911440585536,
+  "lng": 126.71261724155109,
+  "placeId": "8490981",
+  "placeName": "알밤오름",
+  "address": "제주특별자치도 제주시 조천읍 선흘리 산 59-2",
+  "note": "exact"
+ },
+ {
+  "id": "7411896d-094c-4b31-bc01-092f37d3abf3",
+  "name": "포레스트 사파리",
+  "from": {
+   "lat": 33.4777041,
+   "lng": 126.7135515
+  },
+  "status": "matched",
+  "lat": 33.4630824982394,
+  "lng": 126.709496747084,
+  "placeId": "1144766060",
+  "placeName": "포레스트사파리",
+  "address": "제주특별자치도 제주시 조천읍 선교로 474-1",
+  "note": "exact"
+ },
+ {
+  "id": "618e8a8d-d8f5-4b3f-958d-9091bfba46c7",
+  "name": "제주햇살농원",
+  "from": {
+   "lat": 33.4777041,
+   "lng": 126.7135515
+  },
+  "status": "matched",
+  "lat": 33.5233040267515,
+  "lng": 126.687996976046,
+  "placeId": "1731144250",
+  "placeName": "제주햇살농원",
+  "address": "제주특별자치도 제주시 조천읍 북선로 189",
+  "note": "exact"
+ },
+ {
+  "id": "5fc9d57a-7a1c-43e5-a84b-15f7f900c204",
+  "name": "목포고을",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "matched",
+  "lat": 33.266191807997835,
+  "lng": 126.39456238373023,
+  "placeId": "11313995",
+  "placeName": "목포고을",
+  "address": "제주특별자치도 서귀포시 상예로 242",
+  "note": "exact"
+ },
+ {
+  "id": "9e3d0de4-a155-4e75-bf6c-559731f3371e",
+  "name": "삼원정",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a3cf5ce6-6af9-4ae9-ae75-f69a05905003",
+  "name": "LMNT",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "85450658-fe7f-4bd1-a4a7-3052ce5b227f",
+  "name": "큰돈가 남쪽대표 중문점",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "5ee90328-ccc2-41d0-855c-f262282bb19b",
+  "name": "다다익고 정육점식당 호텔더본점",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a565d1d2-1a65-4d9c-bad0-7c2ac989a207",
+  "name": "제주신라호텔 히노데",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "matched",
+  "lat": 33.247358561236,
+  "lng": 126.408002196457,
+  "placeId": "11495493",
+  "placeName": "제주신라호텔 히노데",
+  "address": "제주특별자치도 서귀포시 중문관광로72번길 75",
+  "note": "exact"
+ },
+ {
+  "id": "2e7f8020-aecc-41b6-8694-f14cc91e25e7",
+  "name": "중문해물라면오빠네",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "matched",
+  "lat": 33.25821716974639,
+  "lng": 126.4077046765053,
+  "placeId": "1999061413",
+  "placeName": "중문해물라면오빠네",
+  "address": "제주특별자치도 서귀포시 일주서로 962",
+  "note": "exact"
+ },
+ {
+  "id": "a888610e-e2b5-47d1-95f0-5cd5a6412e12",
+  "name": "달페이지",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "matched",
+  "lat": 33.2597568731775,
+  "lng": 126.413928430329,
+  "placeId": "1654598093",
+  "placeName": "달페이지",
+  "address": "제주특별자치도 서귀포시 색달로64번길 51",
+  "note": "exact"
+ },
+ {
+  "id": "0da92fe9-6cda-4fc1-bc2e-993715f02809",
+  "name": "더클리프",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "matched",
+  "lat": 33.2443293868576,
+  "lng": 126.414919852704,
+  "placeId": "1378746048",
+  "placeName": "더클리프",
+  "address": "제주특별자치도 서귀포시 중문관광로 154-17",
+  "note": "exact"
+ },
+ {
+  "id": "490a5d54-1710-4270-a0ea-90836f97ba96",
+  "name": "버디프렌즈 플래닛",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "matched",
+  "lat": 33.25512647025178,
+  "lng": 126.41284972958132,
+  "placeId": "1805672225",
+  "placeName": "버디프렌즈 플래닛",
+  "address": "제주특별자치도 서귀포시 색달동 2558",
+  "note": "exact"
+ },
+ {
+  "id": "19403e0f-6c13-4da9-b666-48b1180a313f",
+  "name": "리틀프린스뮤지엄",
+  "from": {
+   "lat": 33.2814107,
+   "lng": 126.4111118
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a8cd14ed-8782-4107-b8b1-0df5c95bc89c",
+  "name": "함덕면장",
+  "from": {
+   "lat": 33.5437203,
+   "lng": 126.6728038
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "c51afd75-af24-467e-8c22-5de69a8753b1",
+  "name": "비앤알",
+  "from": {
+   "lat": 33.5437203,
+   "lng": 126.6728038
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a0f73abd-19c5-428d-995a-b8f0d24ec51d",
+  "name": "함덕 수산시장",
+  "from": {
+   "lat": 33.5437203,
+   "lng": 126.6728038
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "c6bb0fc4-a9d5-4f37-a7e5-bea5a3219e8c",
+  "name": "고래라면 제주신화월드점",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "8fd8dce4-9104-4af7-800b-e0eda66e55c0",
+  "name": "제주신화월드 스카이온파이브다이닝",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "matched",
+  "lat": 33.3075853072682,
+  "lng": 126.317721090534,
+  "placeId": "618763228",
+  "placeName": "제주신화월드 스카이 온 파이브 다이닝",
+  "address": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 38",
+  "note": "exact"
+ },
+ {
+  "id": "7a61f8e6-4e3e-4ccf-9280-08020e817de1",
+  "name": "신화돌담집 제주신화월드점",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "15a2d55d-da92-4a78-8f25-eec8273904e0",
+  "name": "서유기마라탕",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "matched",
+  "lat": 33.3049739532565,
+  "lng": 126.316354163651,
+  "placeId": "789122234",
+  "placeName": "서유기마라탕&훠궈",
+  "address": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 38",
+  "note": "part"
+ },
+ {
+  "id": "734f1934-4041-4415-8f1d-5ec24f66f068",
+  "name": "씨네라운지 더 코브",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "256d4ee8-c18a-4426-a930-4a63a5946f80",
+  "name": "리치망고 신화월드점",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "matched",
+  "lat": 33.304945120788766,
+  "lng": 126.31635760982498,
+  "placeId": "1984077029",
+  "placeName": "리치망고 신화월드점",
+  "address": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 38",
+  "note": "exact"
+ },
+ {
+  "id": "b0b36621-e2f9-4c8e-bcc8-5a160ff10f64",
+  "name": "리썸커피",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "579ec2e4-fc8e-48f7-9471-924c8b120ebd",
+  "name": "홀가분가든",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "8501ead9-48b8-4730-a08b-4091b3725e94",
+  "name": "웃뜨리",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "matched",
+  "lat": 33.45950567714255,
+  "lng": 126.42993162891553,
+  "placeId": "1376096684",
+  "placeName": "웃뜨리 1호점",
+  "address": "제주특별자치도 제주시 애월읍 광성로 213",
+  "note": "part"
+ },
+ {
+  "id": "21f10963-f4f8-400d-aaac-adb70e679f7d",
+  "name": "이리로카페",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "f5e1cb32-7339-4831-8187-9f09868f1aff",
+  "name": "미깡창고",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "matched",
+  "lat": 33.46028056783821,
+  "lng": 126.44512769425427,
+  "placeId": "314991516",
+  "placeName": "미깡창고",
+  "address": "제주특별자치도 제주시 애월읍 중산간서로 6710-1",
+  "note": "exact"
+ },
+ {
+  "id": "6a6eea2e-fbe6-499a-bd65-ca9eab339615",
+  "name": "제주 서핑도",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "dc556d3f-3d56-49bb-9a8d-672c9816d400",
+  "name": "제주홀릭뮤지엄",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "matched",
+  "lat": 33.4565974412374,
+  "lng": 126.44168769626148,
+  "placeId": "1292537515",
+  "placeName": "제주홀릭뮤지엄",
+  "address": "제주특별자치도 제주시 애월읍 평화로 2835",
+  "note": "exact"
+ },
+ {
+  "id": "71683a99-0b1f-46e8-8f34-aafe79acebbb",
+  "name": "탐라칼국수",
+  "from": {
+   "lat": 33.302706,
+   "lng": 126.6568975
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a7f32e02-1489-48bf-a815-6dd87be97bc2",
+  "name": "카페드노아",
+  "from": {
+   "lat": 33.302706,
+   "lng": 126.6568975
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "b01762f3-823f-4615-aed0-45914a427e6d",
+  "name": "제주동백수목원",
+  "from": {
+   "lat": 33.302706,
+   "lng": 126.6568975
+  },
+  "status": "matched",
+  "lat": 33.27553438613486,
+  "lng": 126.67849287187154,
+  "placeId": "236028555",
+  "placeName": "제주동백수목원",
+  "address": "제주특별자치도 서귀포시 남원읍 위미리 929-2",
+  "note": "exact"
+ },
+ {
+  "id": "6d991668-45fd-4881-9cd3-c9c0dbe29f39",
+  "name": "제주일상식탁",
+  "from": {
+   "lat": 33.302706,
+   "lng": 126.6568975
+  },
+  "status": "matched",
+  "lat": 33.27472331406354,
+  "lng": 126.69000898831763,
+  "placeId": "1912140049",
+  "placeName": "제주일상식탁",
+  "address": "제주특별자치도 서귀포시 남원읍 태위로 402",
+  "note": "exact"
+ },
+ {
+  "id": "9e351bbb-d098-47d7-a22a-3f75ee293e73",
+  "name": "천하대장군",
+  "from": {
+   "lat": 33.48309800000001,
+   "lng": 126.4772312
+  },
+  "status": "unresolved",
+  "note": "ambiguous: 천하대장군 / 천하대장군"
+ },
+ {
+  "id": "9057845d-7161-4d4e-b71a-b154f08491dc",
+  "name": "시나르",
+  "from": {
+   "lat": 33.48309800000001,
+   "lng": 126.4772312
+  },
+  "status": "matched",
+  "lat": 33.4839102031996,
+  "lng": 126.477655743629,
+  "placeId": "1814759854",
+  "placeName": "시나르",
+  "address": "제주특별자치도 제주시 노형10길 3",
+  "note": "id"
+ },
+ {
+  "id": "89242341-31f5-4cb0-8bf2-8eed0fa8d758",
+  "name": "모앙",
+  "from": {
+   "lat": 33.48309800000001,
+   "lng": 126.4772312
+  },
+  "status": "matched",
+  "lat": 33.47590762544363,
+  "lng": 126.5473307449926,
+  "placeId": "723636395",
+  "placeName": "모앙",
+  "address": "제주특별자치도 제주시 인다5길 12-4",
+  "note": "exact"
+ },
+ {
+  "id": "a58031c3-90f4-42a8-9966-3158b50d74fb",
+  "name": "버거307",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.54252554304194,
+  "lng": 126.6670423855909,
+  "placeId": "267313463",
+  "placeName": "버거307 제주함덕점",
+  "address": "제주특별자치도 제주시 조천읍 조함해안로 504",
+  "note": "part"
+ },
+ {
+  "id": "8b5c9ce2-4c57-40af-b091-ad15247168af",
+  "name": "덕승식당(신관)",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.2192664935737,
+  "lng": 126.251180315246,
+  "placeId": "2080847055",
+  "placeName": "덕승식당",
+  "address": "제주특별자치도 서귀포시 대정읍 하모항구로 66",
+  "note": "exact"
+ },
+ {
+  "id": "62551484-64d5-4c3c-b49a-66dd92a9486f",
+  "name": "친구네 분식",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "468a699c-72ca-4731-8f4e-ef98e2f920b4",
+  "name": "뜰향기",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.4731161622645,
+  "lng": 126.658785401071,
+  "placeId": "16284476",
+  "placeName": "뜰향기",
+  "address": "제주특별자치도 제주시 조천읍 남조로 2326",
+  "note": "exact"
+ },
+ {
+  "id": "494bc0fa-f1a9-4726-9db4-31ccba95bd7e",
+  "name": "만선식당",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.2178625441496,
+  "lng": 126.249810687304,
+  "placeId": "16260200",
+  "placeName": "만선식당",
+  "address": "제주특별자치도 서귀포시 대정읍 하모항구로 44",
+  "note": "exact"
+ },
+ {
+  "id": "f07cfc76-be97-4810-a85d-f70659c635e5",
+  "name": "피자아일랜드",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "77d34e57-b37c-4919-bcc8-3ce092a244d1",
+  "name": "솔향바다가든",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "fcd4ca34-4008-4db3-9b72-c5e98ae2619a",
+  "name": "비밀의숲 카페",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "c265e383-6d9f-4606-a641-43e4cbe8bf77",
+  "name": "바다위에코끼리",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "dab4d6de-b445-4cd9-8a1f-f92e4b7016b5",
+  "name": "살롱드라방 SALON de LAVANT",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.45785999967484,
+  "lng": 126.34895681503754,
+  "placeId": "25665611",
+  "placeName": "살롱드라방",
+  "address": "제주특별자치도 제주시 애월읍 하가로 146-9",
+  "note": "exact"
+ },
+ {
+  "id": "79860cdf-d9e4-47b0-8605-ab8a8c132c48",
+  "name": "비블리아성서식물원",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.35618117911788,
+  "lng": 126.27498661700028,
+  "placeId": "23275861",
+  "placeName": "비블리아성서식물원",
+  "address": "제주특별자치도 제주시 한림읍 조성로 17",
+  "note": "exact"
+ },
+ {
+  "id": "c402e214-9937-4540-afa4-fd027f477334",
+  "name": "비양도의 비양나무자생지",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "1546321a-f81a-476d-8cde-cfcf142c58cc",
+  "name": "돛오름",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "d826c4fa-41ae-4e48-8e16-22d100d88cc2",
+  "name": "제주농업학교 옛터",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a2b5c611-b57c-49c7-9381-c8e91d2931b7",
+  "name": "중문리 신사터",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.2536122348484,
+  "lng": 126.421030536232,
+  "placeId": "1197939562",
+  "placeName": "중문리 신사터",
+  "address": "제주특별자치도 서귀포시 천제연로 149",
+  "note": "exact"
+ },
+ {
+  "id": "49a6035e-aefb-4877-b6e2-1e18d6bcb503",
+  "name": "아홉굿마을 낙천리 농어촌체험마을",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "3c4a9be1-fa04-41df-9639-ffa3d7658837",
+  "name": "늘보의작업실",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "matched",
+  "lat": 33.495821141216,
+  "lng": 126.899626617852,
+  "placeId": "1849344316",
+  "placeName": "늘보의작업실",
+  "address": "제주특별자치도 제주시 구좌읍 종달로1길 36-1",
+  "note": "exact"
+ },
+ {
+  "id": "301287e4-4845-41b6-b095-65d4f0ff0f99",
+  "name": "보말칼국수 해월정",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "5b1c3f62-7603-4a4b-865a-c1d806771396",
+  "name": "돌담넘는고양이",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "matched",
+  "lat": 33.4859890682676,
+  "lng": 126.901792094938,
+  "placeId": "45858683",
+  "placeName": "돌담넘는고양이",
+  "address": "제주특별자치도 제주시 구좌읍 해맞이해안로 2478",
+  "note": "exact"
+ },
+ {
+  "id": "5718126f-fe50-4577-b9b1-66a44bbb51c4",
+  "name": "종달리엔 심야식당",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "matched",
+  "lat": 33.4918320345387,
+  "lng": 126.898023581823,
+  "placeId": "1703657625",
+  "placeName": "종달리엔심야식당",
+  "address": "제주특별자치도 제주시 구좌읍 종달로7길 15",
+  "note": "exact"
+ },
+ {
+  "id": "bd6e65e4-2045-4680-8ef5-f08fb78768c1",
+  "name": "모뉴에트",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "matched",
+  "lat": 33.4914819914411,
+  "lng": 126.902224926828,
+  "placeId": "1307726606",
+  "placeName": "모뉴에트",
+  "address": "제주특별자치도 제주시 구좌읍 종달동길 23",
+  "note": "exact"
+ },
+ {
+  "id": "a3c7410e-c4b1-4fda-be93-2212bf9feddd",
+  "name": "가비오타카페",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.88049539999997
+  },
+  "status": "matched",
+  "lat": 33.5094078697287,
+  "lng": 126.900202888932,
+  "placeId": "657055154",
+  "placeName": "가비오타카페",
+  "address": "제주특별자치도 제주시 구좌읍 해맞이해안로 2030",
+  "note": "exact"
+ },
+ {
+  "id": "5c6df355-7db6-4a04-a7ee-911e2c9f47e7",
+  "name": "스테이지 버거",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "matched",
+  "lat": 33.49033163668219,
+  "lng": 126.91071083401705,
+  "placeId": "1444622501",
+  "placeName": "스테이지버거",
+  "address": "제주특별자치도 제주시 구좌읍 해맞이해안로 2361",
+  "note": "exact"
+ },
+ {
+  "id": "d9cf70bf-5d50-4c3e-a7e3-05ac537f5f37",
+  "name": "금악똣똣라면",
+  "from": {
+   "lat": 33.3586969,
+   "lng": 126.2966655
+  },
+  "status": "matched",
+  "lat": 33.3586560891764,
+  "lng": 126.296621479698,
+  "placeId": "123681638",
+  "placeName": "똣똣라면 본점",
+  "address": "제주특별자치도 제주시 한림읍 금악로 18",
+  "note": "id"
+ },
+ {
+  "id": "4029c937-423d-449d-a641-f6f735197600",
+  "name": "치꼬",
+  "from": {
+   "lat": 33.3586969,
+   "lng": 126.2966655
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "714c58a3-19d0-4f09-9928-ca56623468bb",
+  "name": "금악리 자양식당",
+  "from": {
+   "lat": 33.3586969,
+   "lng": 126.2966655
+  },
+  "status": "matched",
+  "lat": 33.358652531564275,
+  "lng": 126.2966301034404,
+  "placeId": "1103468485",
+  "placeName": "금악리 자양식당",
+  "address": "제주특별자치도 제주시 한림읍 금악로 18",
+  "note": "id"
+ },
+ {
+  "id": "8f65eb3e-4a1d-4927-985d-d29a629a7e5d",
+  "name": "손맛촌",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "matched",
+  "lat": 33.43730635979675,
+  "lng": 126.67736200233784,
+  "placeId": "1709133718",
+  "placeName": "손맛촌 조천본점",
+  "address": "제주특별자치도 제주시 조천읍 비자림로 661",
+  "note": "part"
+ },
+ {
+  "id": "3f15079f-6809-42c3-ac49-705cdaff37e6",
+  "name": "금보가든",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "matched",
+  "lat": 33.4355717141648,
+  "lng": 126.675652143576,
+  "placeId": "718921155",
+  "placeName": "금보가든",
+  "address": "제주특별자치도 제주시 조천읍 비자림로 639",
+  "note": "exact"
+ },
+ {
+  "id": "c62b2116-d4ad-48aa-9bb3-fd2f90916862",
+  "name": "산굼부리카페",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "matched",
+  "lat": 33.4264432171829,
+  "lng": 126.671650684861,
+  "placeId": "1740558776",
+  "placeName": "브라운포레",
+  "address": "제주특별자치도 제주시 조천읍 교래4길 20-16",
+  "note": "id"
+ },
+ {
+  "id": "5aaa0fee-eb29-4bb9-8937-fdc2777f8ef3",
+  "name": "더로맨틱",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "4176f6c8-103a-4f8a-91bb-5ef0674c8e76",
+  "name": "까끄래기오름",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.66658030000008
+  },
+  "status": "matched",
+  "lat": 33.431644640136135,
+  "lng": 126.70314748837606,
+  "placeId": "25190845",
+  "placeName": "까끄래기오름",
+  "address": "제주특별자치도 제주시 조천읍 교래리 128-1",
+  "note": "exact"
+ },
+ {
+  "id": "b6c4f435-674e-4b8e-bc00-f48155ff60bf",
+  "name": "제주베스트힐",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a1a5f7b4-8e50-480c-bdca-f1666aae5a2d",
+  "name": "루스트플레이스 구남점",
+  "from": {
+   "lat": 33.4261379,
+   "lng": 126.5626925
+  },
+  "status": "matched",
+  "lat": 33.485108631208,
+  "lng": 126.53521053356658,
+  "placeId": "1682601452",
+  "placeName": "루스트플레이스 구남점",
+  "address": "제주특별자치도 제주시 도남로 199",
+  "note": "exact"
+ },
+ {
+  "id": "21fd8c46-6753-486b-a3a5-a940c5fab00e",
+  "name": "고고리식당",
+  "from": {
+   "lat": 33.4261379,
+   "lng": 126.5626925
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "49e94799-b5a7-4f35-af78-8b7d78559b20",
+  "name": "모모제이",
+  "from": {
+   "lat": 33.4261379,
+   "lng": 126.5626925
+  },
+  "status": "matched",
+  "lat": 33.4761038993873,
+  "lng": 126.548739096187,
+  "placeId": "132566301",
+  "placeName": "모모제이",
+  "address": "제주특별자치도 제주시 인다8길 36-1",
+  "note": "exact"
+ },
+ {
+  "id": "1bba1cde-e795-45c2-b11d-aca4b4f07e73",
+  "name": "그리트커피",
+  "from": {
+   "lat": 33.4261379,
+   "lng": 126.5626925
+  },
+  "status": "matched",
+  "lat": 33.4751825135475,
+  "lng": 126.549247368103,
+  "placeId": "582507428",
+  "placeName": "그리트커피",
+  "address": "제주특별자치도 제주시 인다6길 57",
+  "note": "exact"
+ },
+ {
+  "id": "5352c1fc-0379-4c03-bc09-5d74e5b07a07",
+  "name": "조은빵",
+  "from": {
+   "lat": 33.4261379,
+   "lng": 126.5626925
+  },
+  "status": "matched",
+  "lat": 33.47681653627774,
+  "lng": 126.54933788629738,
+  "placeId": "737001541",
+  "placeName": "조은빵",
+  "address": "제주특별자치도 제주시 인다3길 9",
+  "note": "exact"
+ },
+ {
+  "id": "37e47f16-ab99-402b-9543-875d4cdb4a3e",
+  "name": "심헌갤러리",
+  "from": {
+   "lat": 33.4261379,
+   "lng": 126.5626925
+  },
+  "status": "matched",
+  "lat": 33.4706636686974,
+  "lng": 126.544304921939,
+  "placeId": "23825742",
+  "placeName": "심헌갤러리",
+  "address": "제주특별자치도 제주시 아란14길 3",
+  "note": "exact"
+ },
+ {
+  "id": "c2faa826-8f57-4214-884e-ba55e598154c",
+  "name": "천지연해물전복뚝배기",
+  "from": {
+   "lat": 33.2639577,
+   "lng": 126.5507293
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "2ef01aab-23a3-49b9-96ea-c6fac539c027",
+  "name": "보틀앤볼",
+  "from": {
+   "lat": 33.2639577,
+   "lng": 126.5507293
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "a97c48de-c4d8-4940-902f-cc2e4bb8f57f",
+  "name": "겹겹의 의도",
+  "from": {
+   "lat": 33.2639577,
+   "lng": 126.5507293
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "8aa91b6a-1a0e-4f69-8424-93e064d7755f",
+  "name": "차롱 해모루",
+  "from": {
+   "lat": 33.2639577,
+   "lng": 126.5507293
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "c49e025a-000c-436c-a4fc-ff8da89fa258",
+  "name": "삼매봉",
+  "from": {
+   "lat": 33.2639577,
+   "lng": 126.5507293
+  },
+  "status": "matched",
+  "lat": 33.243971920946706,
+  "lng": 126.54630884192959,
+  "placeId": "7919832",
+  "placeName": "삼매봉",
+  "address": "제주특별자치도 서귀포시 서홍동 819",
+  "note": "exact"
+ },
+ {
+  "id": "78691b42-a7d2-4cd8-850c-8b385960915e",
+  "name": "킴스커틀렛",
+  "from": {
+   "lat": 33.496986,
+   "lng": 126.53534
+  },
+  "status": "matched",
+  "lat": 33.48922081339591,
+  "lng": 126.53425243132375,
+  "placeId": "20172563",
+  "placeName": "킴스커틀렛",
+  "address": "제주특별자치도 제주시 구남로4길 11",
+  "note": "exact"
+ },
+ {
+  "id": "38326dbb-7836-42bd-a952-7d6c66f73186",
+  "name": "촵촵",
+  "from": {
+   "lat": 33.496986,
+   "lng": 126.53534
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "2dd1d88c-8e66-4bed-b63d-7e6386bb853c",
+  "name": "그러므로",
+  "from": {
+   "lat": 33.496986,
+   "lng": 126.53534
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "c77ac5b9-7512-4951-abb1-51302b8028eb",
+  "name": "사려니국수",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.4228456105557,
+  "lng": 126.6767295206955,
+  "placeId": "1128652469",
+  "placeName": "사려니국수",
+  "address": "제주특별자치도 제주시 조천읍 남조로 1732",
+  "note": "exact"
+ },
+ {
+  "id": "814a389a-3d11-469b-9cff-110a047da4c1",
+  "name": "램앤블랙",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.4369211354646,
+  "lng": 126.673139339477,
+  "placeId": "471417273",
+  "placeName": "램앤블랙",
+  "address": "제주특별자치도 제주시 조천읍 교래1길 45",
+  "note": "exact"
+ },
+ {
+  "id": "54712017-88ce-40b5-a691-2a76a123f6af",
+  "name": "교래퐁낭",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.4259493535126,
+  "lng": 126.674126679598,
+  "placeId": "671706241",
+  "placeName": "교래퐁낭",
+  "address": "제주특별자치도 제주시 조천읍 남조로 1773",
+  "note": "exact"
+ },
+ {
+  "id": "c284a76f-3eb6-4718-944d-908314514f50",
+  "name": "카페말로",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "964af979-8c1d-4ec4-a645-a0224ef94fc8",
+  "name": "워터쉐드카페",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.4239469784832,
+  "lng": 126.675540547388,
+  "placeId": "401429233",
+  "placeName": "워터쉐드",
+  "address": "제주특별자치도 제주시 조천읍 교래4길 74",
+  "note": "part"
+ },
+ {
+  "id": "8a5c2190-3416-4a8c-abc9-7908df6dd520",
+  "name": "사려니숲길",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.422032834994496,
+  "lng": 126.62649730394567,
+  "placeId": "26319779",
+  "placeName": "사려니숲길",
+  "address": "제주특별자치도 제주시 조천읍 교래리 산 137-1",
+  "note": "exact"
+ },
+ {
+  "id": "ef7d58bf-dfe3-486a-8fae-baaf41cfb74c",
+  "name": "삼다수숲길 지질트레일",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "1c34de95-bfe9-4df7-8a57-7c15daeaa181",
+  "name": "탐라승마장",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "3934dcf4-b852-4fb4-a961-127ecb2ee3ab",
+  "name": "너도나도 ATV",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.43455157242151,
+  "lng": 126.71868179204425,
+  "placeId": "1690363195",
+  "placeName": "너도나도ATV",
+  "address": "제주특별자치도 제주시 조천읍 비자림로 1065",
+  "note": "exact"
+ },
+ {
+  "id": "ed9eb435-2269-4312-bf20-b50fe9cf4e74",
+  "name": "길갈 팜 랜드",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.42757901275154,
+  "lng": 126.67258618896248,
+  "placeId": "1057534349",
+  "placeName": "길갈팜랜드",
+  "address": "제주특별자치도 제주시 조천읍 교래리 619",
+  "note": "exact"
+ },
+ {
+  "id": "8bc85490-4a01-4fab-9cad-58f9021812db",
+  "name": "에코승마아카데미",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "1a6b3e2d-723b-4a6e-b4b9-7a3929230465",
+  "name": "사려니팜",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "8e33fb73-bc11-4940-b95c-23eccb092910",
+  "name": "제주교래자연휴양림야영장",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "eaeccd4a-ed24-45fd-a8f7-1190b104f574",
+  "name": "삼다수목장",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.42985426885318,
+  "lng": 126.65872251687044,
+  "placeId": "18653117",
+  "placeName": "삼다수목장",
+  "address": "제주특별자치도 제주시 조천읍 비자림로 485-15",
+  "note": "exact"
+ },
+ {
+  "id": "f00bf0c5-ac05-41c5-8900-042bc4e2471d",
+  "name": "제주돌문화공원",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.448562363241095,
+  "lng": 126.66027330385505,
+  "placeId": "13322621",
+  "placeName": "제주돌문화공원",
+  "address": "제주특별자치도 제주시 조천읍 남조로 2023",
+  "note": "exact"
+ },
+ {
+  "id": "cab674cc-fa36-4dff-9367-e66aa6b3fed3",
+  "name": "포차",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.48412148855873,
+  "lng": 126.48073384765303,
+  "placeId": "1815084252",
+  "placeName": "노형주유소포차",
+  "address": "제주특별자치도 제주시 1100로 3338",
+  "note": "id"
+ },
+ {
+  "id": "7bf98cef-0968-4f3c-9302-d04fdec3b675",
+  "name": "녹나무",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.4852605116184,
+  "lng": 126.481454403301,
+  "placeId": "1973173481",
+  "placeName": "제주 드림타워 녹나무",
+  "address": "제주특별자치도 제주시 노연로 12",
+  "note": "id"
+ },
+ {
+  "id": "8b7e72e1-4833-49ba-a38f-53baf49bc870",
+  "name": "유메야마",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.4852623371948,
+  "lng": 126.481459772252,
+  "placeId": "103304122",
+  "placeName": "제주 드림타워 유메야마",
+  "address": "제주특별자치도 제주시 노연로 12",
+  "note": "id"
+ },
+ {
+  "id": "788d27d4-c6a6-43c9-9f14-8daf9dd11646",
+  "name": "팝업 플라자",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "345b7aba-3a72-4415-8ec2-e92a7b41efda",
+  "name": "카페 8",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.4852623372669,
+  "lng": 126.481459772249,
+  "placeId": "2031581114",
+  "placeName": "제주드림타워 카페8",
+  "address": "제주특별자치도 제주시 노연로 12",
+  "note": "id"
+ },
+ {
+  "id": "afd64b9a-e296-4a75-b926-631385a8d8d3",
+  "name": "제주 핫팟",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.4850716771661,
+  "lng": 126.48157388453,
+  "placeId": "1983991153",
+  "placeName": "제주 드림타워 제주 핫팟",
+  "address": "제주특별자치도 제주시 노연로 12",
+  "note": "id"
+ },
+ {
+  "id": "17a2c7a6-17d1-423a-91a4-7105d0d87907",
+  "name": "라운지 38",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.4852623372669,
+  "lng": 126.481459772249,
+  "placeId": "901887675",
+  "placeName": "제주드림타워 라운지38",
+  "address": "제주특별자치도 제주시 노연로 12",
+  "note": "id"
+ },
+ {
+  "id": "c5df8f52-1b80-45cb-af36-649162c26873",
+  "name": "델리",
+  "from": {
+   "lat": 33.4852786,
+   "lng": 126.4814609
+  },
+  "status": "matched",
+  "lat": 33.4852623371948,
+  "lng": 126.481459772252,
+  "placeId": "894723282",
+  "placeName": "제주 드림타워 델리",
+  "address": "제주특별자치도 제주시 노연로 12",
+  "note": "id"
+ },
+ {
+  "id": "a7f07a45-da78-48a5-a3fc-64fee5d2f93b",
+  "name": "황금빅버거",
+  "from": {
+   "lat": 33.3252261,
+   "lng": 126.5961931
+  },
+  "status": "matched",
+  "lat": 33.3256520184228,
+  "lng": 126.600711832257,
+  "placeId": "12569171",
+  "placeName": "황금빅버거 서귀포점",
+  "address": "제주특별자치도 서귀포시 남원읍 516로 918",
+  "note": "id"
+ },
+ {
+  "id": "ad7ee5c5-8164-4ebd-ac7c-6ce28cd45d3d",
+  "name": "하례감귤점빵협동조합",
+  "from": {
+   "lat": 33.3252261,
+   "lng": 126.5961931
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "77c538b3-4945-4b6c-b3a1-aa0dc8c4fa2f",
+  "name": "하례점빵",
+  "from": {
+   "lat": 33.3252261,
+   "lng": 126.5961931
+  },
+  "status": "matched",
+  "lat": 33.2713474600299,
+  "lng": 126.623349082401,
+  "placeId": "1207678819",
+  "placeName": "하례점빵",
+  "address": "제주특별자치도 서귀포시 남원읍 하례로 272",
+  "note": "exact"
+ },
+ {
+  "id": "02b99eb8-cd76-4b22-a940-9f1e0ffd288c",
+  "name": "샤카다이브",
+  "from": {
+   "lat": 33.3252261,
+   "lng": 126.5961931
+  },
+  "status": "matched",
+  "lat": 33.26382845907454,
+  "lng": 126.62773875508093,
+  "placeId": "662842292",
+  "placeName": "샤카다이브",
+  "address": "제주특별자치도 서귀포시 남원읍 일주동로 8034",
+  "note": "exact"
+ },
+ {
+  "id": "147ee187-ac7f-4480-a417-fad315ef0680",
+  "name": "행운문",
+  "from": {
+   "lat": 33.364338,
+   "lng": 126.3552026
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "58246239-cc79-4543-93e8-491bc9229b08",
+  "name": "봉성식당",
+  "from": {
+   "lat": 33.364338,
+   "lng": 126.3552026
+  },
+  "status": "matched",
+  "lat": 33.4186810441423,
+  "lng": 126.312626070319,
+  "placeId": "15783258",
+  "placeName": "봉성식당",
+  "address": "제주특별자치도 제주시 애월읍 봉성로 66",
+  "note": "exact"
+ },
+ {
+  "id": "6ea9c857-4dd2-4ed7-90a1-6629ebb0eac5",
+  "name": "제주당 베이커리 카페",
+  "from": {
+   "lat": 33.364338,
+   "lng": 126.3552026
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "6f84c4e4-d8ae-4d6c-9ad0-37743b932139",
+  "name": "영국찻집",
+  "from": {
+   "lat": 33.364338,
+   "lng": 126.3552026
+  },
+  "status": "matched",
+  "lat": 33.4172313997298,
+  "lng": 126.314112546652,
+  "placeId": "310705633",
+  "placeName": "영국찻집",
+  "address": "제주특별자치도 제주시 애월읍 녹근로 19-15",
+  "note": "exact"
+ },
+ {
+  "id": "c5028947-2389-4290-bfa9-5276407489c2",
+  "name": "새별프렌즈 (새별헤이요목장)",
+  "from": {
+   "lat": 33.364338,
+   "lng": 126.3552026
+  },
+  "status": "matched",
+  "lat": 33.36155035804362,
+  "lng": 126.36365757668948,
+  "placeId": "336100555",
+  "placeName": "새별프렌즈",
+  "address": "제주특별자치도 제주시 애월읍 평화로 1529",
+  "note": "exact"
+ },
+ {
+  "id": "c5a4a10c-8e44-4749-81ec-c67f6958f7c6",
+  "name": "레몬뮤지엄",
+  "from": {
+   "lat": 33.3330338,
+   "lng": 126.6180657
+  },
+  "status": "matched",
+  "lat": 33.2988582779752,
+  "lng": 126.617851756949,
+  "placeId": "1406187011",
+  "placeName": "레몬뮤지엄",
+  "address": "제주특별자치도 서귀포시 남원읍 하례로620번길 41",
+  "note": "exact"
+ },
+ {
+  "id": "eea764b0-bcd4-4156-a4eb-f123a76a0e13",
+  "name": "무 히어",
+  "from": {
+   "lat": 33.3330338,
+   "lng": 126.6180657
+  },
+  "status": "matched",
+  "lat": 33.2634305325436,
+  "lng": 126.640815800557,
+  "placeId": "1032132450",
+  "placeName": "무히어",
+  "address": "제주특별자치도 서귀포시 남원읍 공천포로 51",
+  "note": "exact"
+ },
+ {
+  "id": "475f8b35-060f-46c5-85c3-607d50af4762",
+  "name": "담소요",
+  "from": {
+   "lat": 33.3330338,
+   "lng": 126.6180657
+  },
+  "status": "matched",
+  "lat": 33.29935453151049,
+  "lng": 126.62537290558568,
+  "placeId": "34111321",
+  "placeName": "담소요",
+  "address": "제주특별자치도 서귀포시 남원읍 신례천로 195",
+  "note": "exact"
+ },
+ {
+  "id": "dde167bf-f07e-42f5-8a1d-a6ee85249411",
+  "name": "(주)시트러스",
+  "from": {
+   "lat": 33.3330338,
+   "lng": 126.6180657
+  },
+  "status": "matched",
+  "lat": 33.28662230373079,
+  "lng": 126.62495603678158,
+  "placeId": "1776477729",
+  "placeName": "시트러스",
+  "address": "제주특별자치도 서귀포시 남원읍 신례천로 46",
+  "note": "exact"
+ },
+ {
+  "id": "a9dd1a13-1530-46d5-9f79-9849e8166edc",
+  "name": "휴애리 자연생활공원",
+  "from": {
+   "lat": 33.3330338,
+   "lng": 126.6180657
+  },
+  "status": "matched",
+  "lat": 33.309410458656,
+  "lng": 126.635409752107,
+  "placeId": "27581976",
+  "placeName": "휴애리자연생활공원",
+  "address": "제주특별자치도 서귀포시 남원읍 신례동로 256",
+  "note": "exact"
+ },
+ {
+  "id": "d08599d9-3e3a-404a-bace-e7831d831a1a",
+  "name": "가스름식당",
+  "from": {
+   "lat": 33.3828211,
+   "lng": 126.7313785
+  },
+  "status": "matched",
+  "lat": 33.3531187435195,
+  "lng": 126.771966410543,
+  "placeId": "12109134",
+  "placeName": "가스름식당",
+  "address": "제주특별자치도 서귀포시 표선면 가시로565번길 19",
+  "note": "exact"
+ },
+ {
+  "id": "4ddf3549-0e77-4a3d-8bc4-cdf09d8d688a",
+  "name": "양과자회관",
+  "from": {
+   "lat": 33.3828211,
+   "lng": 126.7313785
+  },
+  "status": "matched",
+  "lat": 33.362040387679656,
+  "lng": 126.76571986907624,
+  "placeId": "1603674758",
+  "placeName": "양과자회관",
+  "address": "제주특별자치도 서귀포시 표선면 녹산로 14",
+  "note": "exact"
+ },
+ {
+  "id": "1ab6287f-ccf1-4690-b780-75753db0aebc",
+  "name": "붉은오름(표선면)",
+  "from": {
+   "lat": 33.3828211,
+   "lng": 126.7313785
+  },
+  "status": "matched",
+  "lat": 33.39985819362572,
+  "lng": 126.67953852060523,
+  "placeId": "10455841",
+  "placeName": "붉은오름",
+  "address": "제주특별자치도 서귀포시 표선면 가시리 산 158",
+  "note": "exact"
+ },
+ {
+  "id": "31ca4f81-273b-453d-96ec-ffdf88b33a5f",
+  "name": "가시림",
+  "from": {
+   "lat": 33.3828211,
+   "lng": 126.7313785
+  },
+  "status": "matched",
+  "lat": 33.3611735164716,
+  "lng": 126.751592108242,
+  "placeId": "225982489",
+  "placeName": "가시림카페",
+  "address": "제주특별자치도 서귀포시 표선면 녹산로5번길 171",
+  "note": "part"
+ },
+ {
+  "id": "c56c4c76-231e-4bfa-b89e-cda61beddc75",
+  "name": "다가미 애월점",
+  "from": {
+   "lat": 33.3701721,
+   "lng": 126.4819697
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "d0b6220d-a414-4afb-bf68-803865512393",
+  "name": "제주기와",
+  "from": {
+   "lat": 33.3701721,
+   "lng": 126.4819697
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "816ae555-5cf4-4bb5-8c26-2e194b3fa4cf",
+  "name": "윗세오름(웃세오름)",
+  "from": {
+   "lat": 33.3701721,
+   "lng": 126.4819697
+  },
+  "status": "matched",
+  "lat": 33.36073344112611,
+  "lng": 126.52101985518864,
+  "placeId": "25338262",
+  "placeName": "윗세오름",
+  "address": "제주특별자치도 서귀포시 서호동 산 1-1",
+  "note": "exact"
+ },
+ {
+  "id": "95e3477b-6580-4b80-aac0-4f6ecd3fbcd6",
+  "name": "휴림",
+  "from": {
+   "lat": 33.3701721,
+   "lng": 126.4819697
+  },
+  "status": "matched",
+  "lat": 33.44375855771391,
+  "lng": 126.42878175371447,
+  "placeId": "264598647",
+  "placeName": "휴림",
+  "address": "제주특별자치도 제주시 애월읍 광령남서길 40",
+  "note": "exact"
+ },
+ {
+  "id": "6cf22555-b2f1-40e6-812b-5c71567733fa",
+  "name": "제주그림카페",
+  "from": {
+   "lat": 33.3029712,
+   "lng": 126.2990679
+  },
+  "status": "matched",
+  "lat": 33.304020694479824,
+  "lng": 126.30011191589946,
+  "placeId": "1738934843",
+  "placeName": "제주그림카페",
+  "address": "제주특별자치도 서귀포시 안덕면 항공우주로 83",
+  "note": "id"
+ },
+ {
+  "id": "a4fd80f7-cd75-428d-a70b-e5064b463f75",
+  "name": "제주신화전설탐방로",
+  "from": {
+   "lat": 33.3029712,
+   "lng": 126.2990679
+  },
+  "status": "matched",
+  "lat": 33.301007276313555,
+  "lng": 126.30134924696101,
+  "placeId": "98588671",
+  "placeName": "제주신화전설탐방로",
+  "address": "제주특별자치도 서귀포시 안덕면 서광리 산 39",
+  "note": "id"
+ },
+ {
+  "id": "f8a8dc66-6d77-4121-bca3-8909a324c0c9",
+  "name": "오페라 옴니아 : 라파엘로展",
+  "from": {
+   "lat": 33.3029712,
+   "lng": 126.2990679
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "01409503-5911-4965-a623-6870118b0659",
+  "name": "M1971엠브릿지",
+  "from": {
+   "lat": 33.2100551,
+   "lng": 126.2585746
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "cdf718a5-57d4-4d0d-bdc2-4d16123da61f",
+  "name": "케이제주씨워킹",
+  "from": {
+   "lat": 33.2100551,
+   "lng": 126.2585746
+  },
+  "status": "matched",
+  "lat": 33.21006534988049,
+  "lng": 126.25837945061265,
+  "placeId": "26809802",
+  "placeName": "케이제주씨워킹",
+  "address": "제주특별자치도 서귀포시 대정읍 최남단해안로 120",
+  "note": "id"
+ },
+ {
+  "id": "9e307978-a455-4d64-95c0-c71e6e08e1a4",
+  "name": "M1971 요트투어",
+  "from": {
+   "lat": 33.2100551,
+   "lng": 126.2585746
+  },
+  "status": "matched",
+  "lat": 33.210132817040474,
+  "lng": 126.25714435622717,
+  "placeId": "1011859675",
+  "placeName": "M1971 요트투어",
+  "address": "제주특별자치도 서귀포시 대정읍 최남단해안로 128",
+  "note": "id"
+ },
+ {
+  "id": "e7e684d7-c647-4515-bf57-ff5eca5060f0",
+  "name": "크리메이트",
+  "from": {
+   "lat": 33.476097,
+   "lng": 126.5543
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "dc1f12ee-f80d-412c-aceb-f1b93d660e5f",
+  "name": "픽스커피",
+  "from": {
+   "lat": 33.476097,
+   "lng": 126.5543
+  },
+  "status": "matched",
+  "lat": 33.4846431143835,
+  "lng": 126.577702776566,
+  "placeId": "1379053124",
+  "placeName": "픽스커피",
+  "address": "제주특별자치도 제주시 영강길 184",
+  "note": "exact"
+ },
+ {
+  "id": "f221f399-664c-4c9a-a968-b66372400e71",
+  "name": "컬쳐드",
+  "from": {
+   "lat": 33.476097,
+   "lng": 126.5543
+  },
+  "status": "matched",
+  "lat": 33.49185382882041,
+  "lng": 126.54355693356952,
+  "placeId": "1148019176",
+  "placeName": "컬쳐드",
+  "address": "제주특별자치도 제주시 승천로 81",
+  "note": "exact"
+ },
+ {
+  "id": "debfc9a1-29ee-41eb-8140-4eadf2a04c0d",
+  "name": "메종드쁘띠푸루",
+  "from": {
+   "lat": 33.476097,
+   "lng": 126.5543
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "9719bb24-469f-4c72-833e-2c1ee52d3c88",
+  "name": "제주빵집",
+  "from": {
+   "lat": 33.4102243,
+   "lng": 126.3758566
+  },
+  "status": "matched",
+  "lat": 33.3931778816375,
+  "lng": 126.383179181071,
+  "placeId": "910476384",
+  "placeName": "제주빵집 제주점",
+  "address": "제주특별자치도 제주시 애월읍 상가목장길 84",
+  "note": "part"
+ },
+ {
+  "id": "64dc3e65-57f2-4279-9988-926715a05b74",
+  "name": "상가리야자숲",
+  "from": {
+   "lat": 33.4102243,
+   "lng": 126.3758566
+  },
+  "status": "matched",
+  "lat": 33.4392078372321,
+  "lng": 126.35827996412,
+  "placeId": "878819879",
+  "placeName": "상가리야자숲",
+  "address": "제주특별자치도 제주시 애월읍 상가리 536",
+  "note": "exact"
+ },
+ {
+  "id": "d8cc9572-26b8-43e5-b103-5e83731e2053",
+  "name": "제주 샘주",
+  "from": {
+   "lat": 33.4102243,
+   "lng": 126.3758566
+  },
+  "status": "matched",
+  "lat": 33.4446883537411,
+  "lng": 126.337487650219,
+  "placeId": "8864950",
+  "placeName": "제주샘주",
+  "address": "제주특별자치도 제주시 애월읍 애원로 283",
+  "note": "exact"
+ },
+ {
+  "id": "db645cfb-0426-4bcb-a864-3ba168196632",
+  "name": "카페내창",
+  "from": {
+   "lat": 33.3420367,
+   "lng": 126.5884214
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "9f926d3c-157e-4a80-b5fd-965f65f20cf0",
+  "name": "내창트레킹",
+  "from": {
+   "lat": 33.3420367,
+   "lng": 126.5884214
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "5cd13e6f-5f1a-42e3-8e20-3b9449ae394d",
+  "name": "감귤상웨빵 체험",
+  "from": {
+   "lat": 33.3420367,
+   "lng": 126.5884214
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "dd8f9dfd-1df8-45a7-8b90-31814f57ecd2",
+  "name": "남내소",
+  "from": {
+   "lat": 33.3420367,
+   "lng": 126.5884214
+  },
+  "status": "matched",
+  "lat": 33.269169644254035,
+  "lng": 126.62352157593817,
+  "placeId": "25192955",
+  "placeName": "남내소",
+  "address": "제주특별자치도 서귀포시 남원읍 하례리 1889",
+  "note": "exact"
+ },
+ {
+  "id": "ab5bf8e5-b566-400e-abc0-ea5702635f89",
+  "name": "망장포",
+  "from": {
+   "lat": 33.3420367,
+   "lng": 126.5884214
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "95ccbb08-9a9e-43c1-a911-9e9c26c4e96e",
+  "name": "성읍녹차마을",
+  "from": {
+   "lat": 33.4112985,
+   "lng": 126.7819256
+  },
+  "status": "matched",
+  "lat": 33.3805783454111,
+  "lng": 126.790279463023,
+  "placeId": "49703929",
+  "placeName": "성읍녹차마을",
+  "address": "제주특별자치도 서귀포시 표선면 중산간동로 4778",
+  "note": "exact"
+ },
+ {
+  "id": "1503b8c1-38ae-4116-95c4-c454545ad294",
+  "name": "정의향교",
+  "from": {
+   "lat": 33.4112985,
+   "lng": 126.7819256
+  },
+  "status": "unresolved",
+  "note": "no matching place nearby"
+ },
+ {
+  "id": "90aba438-d354-41bf-a512-228e8bcb7939",
+  "name": "알프스승마장포니",
+  "from": {
+   "lat": 33.4112985,
+   "lng": 126.7819256
+  },
+  "status": "matched",
+  "lat": 33.3985409799657,
+  "lng": 126.802740754269,
+  "placeId": "18647283",
+  "placeName": "알프스승마장포니",
+  "address": "제주특별자치도 서귀포시 표선면 서성일로 73",
+  "note": "exact"
+ }
+]

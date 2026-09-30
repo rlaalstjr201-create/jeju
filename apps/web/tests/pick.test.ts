@@ -1,6 +1,7 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
-import { distanceKm, driveMinutes, pickCards, type Histories, type Spot } from '../src/pick';
+import { AREAS } from '../src/areas';
+import { distanceKm, driveMinutes, formatMinutes, islandOf, pickCards, travel, travelText, walkMinutes, type Histories, type Spot } from '../src/pick';
 import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
 
 const combos = Object.entries(ORIGINS).flatMap(([name, origin]) => BUTTONS.map((button) => ({ name, origin, button })));
@@ -185,5 +186,97 @@ describe('S2 이동시간 공식: 직선거리 × 1.3 ÷ 40km/h × 60, 5분 단�
     const d = distanceKm(ORIGINS.제주시, ORIGINS.서귀포);
     expect(d).toBeGreaterThan(27);
     expect(d).toBeLessThan(28);
+  });
+});
+
+describe('S33 섬 스팟 — 배가 필요한 곳은 차로 몇 분이라고 하지 않는다', () => {
+  const areas = (n: string) => AREAS.find((a) => a.name === n)!;
+
+  it('islandOf catches exactly 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 in spots.json', () => {
+    const counts: Record<string, number> = {};
+    for (const s of realSpots) {
+      const i = islandOf(s);
+      if (i) counts[i] = (counts[i] ?? 0) + 1;
+    }
+    expect(counts).toEqual({ 우도: 65, 비양도: 5, 가파도: 4, 마라도: 10 });
+  });
+
+  it('main-island edge spots (성산포·종달·협재·금능·모슬포) stay on the main island', () => {
+    for (const p of [
+      { lat: 33.4623, lng: 126.9365 }, // 성산포항
+      { lat: 33.4945, lng: 126.9063 }, // 종달리
+      { lat: 33.3940, lng: 126.2397 }, // 협재
+      { lat: 33.3895, lng: 126.2350 }, // 금능
+      { lat: 33.2140, lng: 126.2510 }, // 모슬포
+    ]) {
+      expect(islandOf(p)).toBeNull();
+    }
+    expect(islandOf(areas('우도'))).toBe('우도');
+  });
+
+  it('from 성산 to a 우도 spot → "우도라서 배를 타야 해요"; from 우도 to the main island → "본섬이라 …"', () => {
+    const udo = realSpots.find((s) => islandOf(s) === '우도')!;
+    const main = realSpots.find((s) => !islandOf(s))!;
+    expect(travelText(travel(areas('성산'), false, udo), '성산에서')).toBe('우도라서 배를 타야 해요');
+    expect(travelText(travel(areas('우도'), false, main), '우도에서')).toBe('본섬이라 배를 타고 나가야 해요');
+    expect(travelText(travel(areas('우도'), false, udo), '우도에서')).toBe('같은 우도 안이에요');
+    const mara = realSpots.find((s) => islandOf(s) === '마라도')!;
+    expect(travelText(travel(areas('대정'), false, mara))).toBe('마라도라서 배를 타야 해요');
+  });
+
+  it('every area × button: no card on another island is ever given a drive time', () => {
+    for (const area of AREAS) {
+      for (const b of BUTTONS) {
+        for (const c of pickCards(realSpots, area, b).cards) {
+          const t = travel(area, false, c.spot);
+          if (islandOf(area) !== islandOf(c.spot)) expect(t.kind).toMatch(/^ferry/);
+        }
+      }
+    }
+  });
+});
+
+describe('S12 이동 문구 — 출발지·걷기·시간 표기', () => {
+  it('walks only from a real position under 1km; an area centre never "walks"', () => {
+    const near = { lat: 33.5, lng: 126.505 }; // ~0.46km from (33.5, 126.5)
+    expect(travel({ lat: 33.5, lng: 126.5 }, true, near)).toEqual({ kind: 'walk', minutes: walkMinutes(distanceKm({ lat: 33.5, lng: 126.5 }, near)) });
+    expect(travel({ lat: 33.5, lng: 126.5 }, false, near).kind).toBe('drive');
+    expect(travelText({ kind: 'walk', minutes: 10 }, '여기서')).toBe('여기서 걸어서 약 10분');
+  });
+
+  it('walkMinutes: km × 1.3 ÷ 4.5km/h, 5-minute steps, at least 5', () => {
+    expect(walkMinutes(0)).toBe(5);
+    expect(walkMinutes(0.5)).toBe(10); // 8.67 → 10
+    expect(walkMinutes(0.9)).toBe(15); // 15.6 → 15
+  });
+
+  it('formatMinutes: under an hour in 분, then 시간 (+ 분)', () => {
+    expect(formatMinutes(5)).toBe('5분');
+    expect(formatMinutes(60)).toBe('1시간');
+    expect(formatMinutes(70)).toBe('1시간 10분');
+    expect(travelText({ kind: 'drive', minutes: 70 }, '애월에서')).toBe('애월에서 차로 약 1시간 10분');
+    expect(travelText({ kind: 'drive', minutes: 15 })).toBe('차로 약 15분');
+  });
+});
+
+describe('S34 한 바퀴 (wrapped)', () => {
+  const at = (i: number): Spot => ({
+    id: `w${i}`, name: `스팟${i}`, lat: 33.5, lng: 126.5 + i * 0.001, mood: 'walk',
+    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(3000 + i), bookable: false,
+  });
+  it('is false while unseen places remain, true on the tap that starts the pool over', () => {
+    const spots = Array.from({ length: 6 }, (_, i) => at(i));
+    const o = { lat: 33.5, lng: 126.5 };
+    const a = pickCards(spots, o, 'walk');
+    expect(a.wrapped).toBe(false);
+    const b = pickCards(spots, o, 'walk', a.histories);
+    expect(b.wrapped).toBe(false); // the second 3 are all new
+    const c = pickCards(spots, o, 'walk', b.histories);
+    expect(c.wrapped).toBe(true); // everything seen → back to the start
+    expect(c.cards.map((x) => x.spot.id)).toEqual(['w0', 'w1', 'w2']);
+  });
+
+  it('real data: a first pick is never "wrapped"', () => {
+    for (const o of Object.values(ORIGINS)) for (const b of BUTTONS) expect(pickCards(realSpots, o, b).wrapped).toBe(false);
   });
 });

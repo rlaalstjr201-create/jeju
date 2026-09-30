@@ -1,6 +1,8 @@
 import './style.css';
 import { LocateError, inJeju, mountApp } from './app';
-import type { Point, Spot } from './pick';
+import type { GeoPermission } from './effects';
+import type { Point } from './pick';
+import { reloadOnUpdate, runsCachedCode } from './update';
 
 function locate(): Promise<Point> {
   return new Promise((resolve, reject) => {
@@ -17,25 +19,62 @@ function locate(): Promise<Point> {
   });
 }
 
-let storage: Storage | null = null;
-try {
-  storage = window.localStorage;
-} catch {
-  storage = null;
+/** Lets a known "denied" skip the GPS call entirely (S07). Unknown on browsers without the API. */
+async function geoPermission(): Promise<GeoPermission> {
+  try {
+    const s = await navigator.permissions?.query({ name: 'geolocation' as PermissionName });
+    return (s?.state as GeoPermission | undefined) ?? 'unknown';
+  } catch {
+    return 'unknown';
+  }
 }
 
-mountApp(document, {
+function storageOf(name: 'localStorage' | 'sessionStorage'): Storage | null {
+  try {
+    return window[name];
+  } catch {
+    return null; // blocked (private mode, sandbox) — the app keeps state in memory for this visit
+  }
+}
+
+const app = mountApp(document, {
+  // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
   loadSpots: () =>
-    fetch('./spots.json').then((r) => {
+    fetch(`./spots.json?v=${__SPOTS_V__}`).then((r) => {
       if (!r.ok) throw new Error(String(r.status));
-      return r.json() as Promise<Spot[]>;
+      return r.json() as Promise<unknown>;
     }),
   locate,
-  storage,
+  geoPermission,
+  storage: storageOf('localStorage'),
+  session: storageOf('sessionStorage'),
 });
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  reloadOnUpdate({
+    sw: navigator.serviceWorker,
+    doc: document,
+    idle: () => {
+      const s = app.state();
+      return s.view === 'home' && !s.overlay && s.phase.k !== 'pending';
+    },
+    current: () =>
+      runsCachedCode(document, 'caches' in window ? caches : undefined, new URL(import.meta.url).href, navigator.serviceWorker.controller),
+    reload: () => location.reload(),
+  });
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => undefined);
+    navigator.serviceWorker
+      .register('./sw.js')
+      .then((reg) => {
+        // A home-screen app that stays resident never navigates, so it would never look for a new
+        // deploy. Check when it comes back to the foreground (at most once a minute).
+        let last = Date.now();
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState !== 'visible' || Date.now() - last < 60_000) return;
+          last = Date.now();
+          reg.update().catch(() => undefined);
+        });
+      })
+      .catch(() => undefined);
   });
 }

@@ -1,14 +1,24 @@
-// Hand-written service worker. The build fills in VERSION and PRECACHE (vite.config.ts).
+// Hand-written service worker. The build fills in VERSION and PRECACHE (vite.config.ts + scripts/sw-build.ts).
+// VERSION hashes the built file names, index.html and every precached public file, so any change to code,
+// shell or data gets a new cache; the old ones are deleted on activate.
 const VERSION = '__VERSION__';
 const PRECACHE = __PRECACHE__;
 const CACHE = `tomorrow-${VERSION}`;
+/** Weak signal: after this long, answer a navigation from the cached shell (S23). */
+const NAV_TIMEOUT_MS = 3000;
 const scoped = (p) => new URL(p, self.registration.scope).href;
+/** Content-hashed build files (Vite's assets/<name>-<hash>.*) and spots.json?v=<hash>: a URL that names its
+ * content can't be stale. */
+const HASHED = /^assets\/|[?&]v=/;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE.map(scoped)))
+      // The unversioned entries ('./', manifest, icons) bypass the HTTP cache (cache: 'reload'), so a host's
+      // max-age can't put last deploy's files into this deploy's cache. Hashed ones may come from it — on a
+      // first visit that is the copy the page is already downloading, not a second 330 KB download.
+      .then((cache) => cache.addAll(PRECACHE.map((u) => new Request(scoped(u), HASHED.test(u) ? {} : { cache: 'reload' }))))
       .then(() => self.skipWaiting()),
   );
 });
@@ -22,17 +32,26 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+async function navigate(req) {
+  const shell = await caches.match(scoped('./'), { cacheName: CACHE });
+  const network = fetch(req);
+  if (!shell) return network; // first visit: nothing cached to fall back on
+  const fromNetwork = network.then((res) => (res.ok ? res : shell)).catch(() => shell);
+  const late = new Promise((resolve) => setTimeout(() => resolve(shell), NAV_TIMEOUT_MS));
+  return Promise.race([fromNetwork, late]);
+}
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
 
-  // Pages: network first so a new deploy shows up, cached shell when offline.
+  // Pages: network first so a new deploy shows up; cached shell when offline, failing, or slow.
   if (req.mode === 'navigate') {
-    event.respondWith(fetch(req).catch(() => caches.match(scoped('./'), { cacheName: CACHE })));
+    event.respondWith(navigate(req));
     return;
   }
 
-  // App shell files and spots.json: cache first (hashed or fixed content).
+  // App shell files and spots.json?v=<hash>: cache first (hashed or versioned URLs).
   event.respondWith(
     caches.match(req, { cacheName: CACHE }).then(
       (hit) =>
@@ -40,7 +59,12 @@ self.addEventListener('fetch', (event) => {
         fetch(req).then((res) => {
           if (res.ok) {
             const copy = res.clone();
-            caches.open(CACHE).then((cache) => cache.put(req, copy));
+            // Only into this version's cache while it still exists: once a newer worker has deleted it,
+            // caches.open() would bring it back as an orphan that nothing ever cleans up.
+            caches
+              .has(CACHE)
+              .then((live) => live && caches.open(CACHE).then((cache) => cache.put(req, copy)))
+              .catch(() => undefined);
           }
           return res;
         }),

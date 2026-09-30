@@ -1,10 +1,13 @@
 // S1' 데이터 (plans/tomorrow-picker.md "전 항목 검수", ADR-0028) — spots.json 자체와, build-spots.mjs가
 // review/input 대비 완전성을 지켰는지를 검사한다. 옛 S1(총 400개 이상 등)은 275곳 실패로 S1'가 대체했다.
 import { gzipSync } from 'node:zlib';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cardTextProblem, PRICE_HOURS } from '../src/card-text';
+import { cleanReason, createSpotSource, normalizeSpots } from '../src/data';
+import { bookingUrl, kakaoUrl } from '../src/links';
+import { distanceKm } from '../src/pick';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -111,5 +114,250 @@ describe('spots.json size', () => {
     expect(kb).toBeGreaterThan(0);
     // eslint-disable-next-line no-console
     console.log(`spots.json gzip: ${kb.toFixed(1)} KB`);
+  });
+});
+
+describe('S32 이름 공백', () => {
+  it('no shipped name has leading/trailing or repeated whitespace (tabs, U+3000)', () => {
+    const bad = fileSpots.filter((s) => s.name !== s.name.trim() || /\s{2,}|[\t\u3000]/.test(s.name));
+    expect(bad.map((s) => JSON.stringify(s.name))).toEqual([]);
+  });
+
+  it('the app cleans names on load too, and map/booking URLs never carry encoded whitespace at the ends', () => {
+    const raw = [{ ...fileSpots[0], name: '아일랜드 터프팅\t\t\t', kakaoPlaceId: null }, { ...fileSpots[1], name: ' 뚱보조개\u3000' }];
+    const [a, b] = normalizeSpots(raw);
+    expect(a.name).toBe('아일랜드 터프팅');
+    expect(b.name).toBe('뚱보조개');
+    for (const url of [kakaoUrl(raw[0]), bookingUrl(raw[0]), bookingUrl(raw[1])]) {
+      expect(url).not.toMatch(/(%09|%20|%E3%80%80)+($|&)/);
+      expect(url).not.toMatch(/=(%20|%09)/);
+    }
+  });
+
+  it('records the app cannot render are dropped, the rest kept (only the reason gets its full stop)', () => {
+    const good = fileSpots.find((s) => s.mood !== 'food')!;
+    // x3: a food spot without its 식사/카페 sub can't be placed under either tab
+    const out = normalizeSpots([good, { ...good, id: 'x1', lat: 'n/a' }, { ...good, id: 'x2', mood: 'swim' }, null, { ...good, id: 'x3', mood: 'food' }]);
+    expect(out).toEqual([{ ...good, reason: cleanReason(good.reason) }]);
+    expect(() => normalizeSpots({})).toThrow();
+  });
+});
+
+describe('이유 문장 마침표 (design/SPEC.md §10·§12.4)', () => {
+  it('a sentence ending in 요 gets exactly one full stop; a noun ending gets none; whitespace is cleaned', () => {
+    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요')).toBe('카페와 아트샵을 한 공간에서 둘러봐요.');
+    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요..')).toBe('카페와 아트샵을 한 공간에서 둘러봐요.');
+    expect(cleanReason('  봄마다 벚꽃 축제가 열리는  길. ')).toBe('봄마다 벚꽃 축제가 열리는 길');
+    expect(cleanReason('애월 하가리의 전망 좋은 카페')).toBe('애월 하가리의 전망 좋은 카페');
+  });
+
+  it('every shipped reason, as drawn, follows the rule', () => {
+    for (const s of normalizeSpots(fileSpots)) {
+      if (s.reason.endsWith('요.')) continue;
+      expect(s.reason, s.reason).not.toMatch(/[.요]$/);
+    }
+  });
+});
+
+describe('S24 목록 로드 — 실패는 기억하지 않는다 (audit MAJOR)', () => {
+  it('a failed load is retried on the next get(); success is memoized', async () => {
+    let calls = 0;
+    const src = createSpotSource(() => (++calls === 1 ? Promise.reject(new Error('503')) : Promise.resolve(fileSpots.slice(0, 3))));
+    await expect(src.get()).rejects.toThrow('503');
+    expect(src.peek()).toBeNull();
+    await expect(src.get()).resolves.toHaveLength(3);
+    await src.get();
+    expect(calls).toBe(2);
+    src.dispose();
+  });
+
+  it('concurrent callers share one request', async () => {
+    let calls = 0;
+    const src = createSpotSource(() => {
+      calls++;
+      return Promise.resolve(fileSpots.slice(0, 1));
+    });
+    await Promise.all([src.get(), src.get(), src.get()]);
+    expect(calls).toBe(1);
+  });
+
+  it('a hanging request times out (then can be retried)', async () => {
+    let calls = 0;
+    const src = createSpotSource(() => (++calls === 1 ? new Promise(() => undefined) : Promise.resolve(fileSpots.slice(0, 1))), 20);
+    await expect(src.get()).rejects.toThrow('timeout');
+    await expect(src.get()).resolves.toHaveLength(1);
+  });
+
+  describe('QA 2026-09-30 — a download that outlives its timeout is kept (weak rural network)', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+    const after = <T,>(ms: number, v: T) => new Promise<T>((r) => setTimeout(() => r(v), ms));
+
+    it('the wait times out at 20ms, the copy landing at 60ms is memoized and reported; no second download', async () => {
+      vi.useFakeTimers();
+      let calls = 0;
+      const onLoad = vi.fn();
+      const src = createSpotSource(() => (calls++, after(60, fileSpots.slice(0, 2))), 20, onLoad);
+      const first = src.get();
+      first.catch(() => undefined);
+      await vi.advanceTimersByTimeAsync(20);
+      await expect(first).rejects.toThrow('timeout');
+      expect(src.peek()).toBeNull();
+      await vi.advanceTimersByTimeAsync(60);
+      expect(src.peek()).toHaveLength(2);
+      expect(onLoad).toHaveBeenCalledTimes(1);
+      await expect(src.get()).resolves.toHaveLength(2);
+      expect(calls).toBe(1);
+    });
+
+    it('a retry after the timeout gets whichever download lands first — the slow first one, though its own hangs', async () => {
+      vi.useFakeTimers();
+      let calls = 0;
+      const src = createSpotSource(() => (++calls === 1 ? after(60, fileSpots.slice(0, 3)) : new Promise(() => undefined)), 50);
+      const first = src.get();
+      first.catch(() => undefined);
+      await vi.advanceTimersByTimeAsync(50);
+      await expect(first).rejects.toThrow('timeout');
+      const retry = src.get(); // 다시 불러오기
+      await vi.advanceTimersByTimeAsync(10);
+      expect(calls).toBe(2); // a hung request is never the only hope
+      await expect(retry).resolves.toHaveLength(3);
+    });
+
+    it('nothing is reported after dispose (an unmounted app)', async () => {
+      vi.useFakeTimers();
+      const onLoad = vi.fn();
+      const src = createSpotSource(() => after(60, fileSpots.slice(0, 1)), 20, onLoad);
+      src.get().catch(() => undefined);
+      src.dispose();
+      await vi.advanceTimersByTimeAsync(100);
+      expect(onLoad).not.toHaveBeenCalled();
+    });
+  });
+});
+
+describe('QA 2026-09-30 중복 — 한 곳이 두 번 나가지 않는다', () => {
+  it('each place listed twice ships once: the left-out record is gone, the kept one ships (물질식육식당, not 몰질식육식당)', async () => {
+    const { DUPLICATES } = await import('../scripts/duplicates.mjs');
+    const ids = new Set(fileSpots.map((s) => s.id));
+    expect(DUPLICATES.size).toBeGreaterThan(0);
+    for (const [gone, { keep }] of DUPLICATES) {
+      expect(ids.has(gone), gone).toBe(false);
+      expect(ids.has(keep), keep).toBe(true);
+    }
+    expect(fileSpots.filter((s) => /[물몰]질식육식당/.test(s.name)).map((s) => s.name)).toEqual(['물질식육식당']);
+  });
+
+  it('no two shipped spots share a name within 500 m (the same place imported twice)', () => {
+    const byName = new Map<string, typeof fileSpots>();
+    for (const s of fileSpots) {
+      const k = s.name.replace(/\s+/g, '');
+      byName.set(k, [...(byName.get(k) ?? []), s]);
+    }
+    const near: string[] = [];
+    for (const [name, group] of byName) {
+      for (let i = 0; i < group.length; i++) for (let j = i + 1; j < group.length; j++) if (distanceKm(group[i], group[j]) < 0.5) near.push(name);
+    }
+    expect(near).toEqual([]);
+  });
+
+  it('the build applies the rule, and the rule never drops both copies of a place', async () => {
+    const { DUPLICATES, dropDuplicates } = await import('../scripts/duplicates.mjs');
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/dropDuplicates\(kept\)/);
+    const [gone, { keep }] = [...DUPLICATES][0];
+    expect(dropDuplicates([{ id: gone }, { id: keep }, { id: 'x' }]).map((s) => s.id)).toEqual([keep, 'x']);
+    expect(() => dropDuplicates([{ id: gone }, { id: 'x' }])).toThrow(keep);
+  });
+});
+
+describe('S60 이유 문장 어미 (S9-3 파이프라인 몫, design/SPEC.md §10)', () => {
+  // The reason sentences are rewritten by the S9-3 pipeline (model rewrite + faithfulness audit), not by
+  // app code. Baseline 77.2% end in "~수 있어요"; the S9-3 gate is ≤20% and no ending above 25%.
+  // Classifier: strip trailing space/punctuation, match the common 해요체 endings first (longest — "수
+  // 있어요" — before its own suffix "있어요"), else bucket by the reason's last syllable (mostly noun
+  // endings: "~집", "~카페", "~길" …).
+  const ENDING = /(수 있어요|있어요|이에요|예요|해요|좋아요|어요|아요|네요|죠)$/;
+  function ending(reason: string): string {
+    const bare = reason.trim().replace(/[.。]+$/, '');
+    return bare.match(ENDING)?.[1] ?? bare.slice(-1);
+  }
+
+  it('no single ending exceeds 25% of all reasons, and "~수 있어요" is at most 20%', () => {
+    const shares = new Map<string, number>();
+    for (const s of fileSpots) shares.set(ending(s.reason), (shares.get(ending(s.reason)) ?? 0) + 1);
+    const total = fileSpots.length;
+    expect(total).toBeGreaterThan(0);
+    const over25 = [...shares.entries()].filter(([, n]) => n / total > 0.25);
+    expect(over25.map(([e, n]) => `${e}: ${((n / total) * 100).toFixed(1)}%`)).toEqual([]);
+    const soIsseoyo = shares.get('수 있어요') ?? 0;
+    expect(soIsseoyo / total).toBeLessThanOrEqual(0.2);
+  });
+
+  it('no reason carries an emoji/symbol icon, exclamation mark, or em/en dash (design/SPEC.md §9, §14 rule 2·3)', () => {
+    const SYMBOLS = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2728}\u{2665}\u{2661}\u{21C4}]/u;
+    const EXCLAIM_DASH = /[!—–]/;
+    const bad = fileSpots.filter((s) => SYMBOLS.test(s.reason) || EXCLAIM_DASH.test(s.reason));
+    expect(bad.map((s) => `${s.id}: ${s.reason}`)).toEqual([]);
+  });
+});
+
+describe('QA 2026-09-30 위치 — 지오코딩 대체 좌표가 다시 나가지 않는다', () => {
+  it('no spot on the city-hall fallback point; no 3+ spots on one point unless each is a Kakao place or re-checked', async () => {
+    const { positionProblems, FALLBACK_POINTS } = await import('../scripts/positions.mjs');
+    const geo = [
+      ...JSON.parse(readFileSync(resolve(root, 'review/geo/regeocode.json'), 'utf8')),
+      ...JSON.parse(readFileSync(resolve(root, 'review/geo/manual.json'), 'utf8')),
+    ] as { id: string; status: string }[];
+    const verified = new Set(geo.filter((g) => g.status === 'matched').map((g) => g.id));
+    expect(positionProblems(fileSpots, verified)).toEqual([]);
+    // the checker itself catches both cases
+    const at = FALLBACK_POINTS[0];
+    const fake = (id: string, lat = at.lat, lng = at.lng) => ({ id, name: id, lat, lng, kakaoPlaceId: null });
+    expect(positionProblems([fake('a')])).toHaveLength(1);
+    expect(positionProblems([fake('b', 33.4, 126.6), fake('c', 33.4, 126.6), fake('d', 33.4, 126.6)])).toHaveLength(1);
+    expect(positionProblems([fake('b', 33.4, 126.6), fake('c', 33.4, 126.6), fake('d', 33.4, 126.6)], new Set(['b', 'c', 'd']))).toEqual([]);
+  });
+
+  it('every re-checked spot ships at its checked point; the unresolved ones are left out (확인 실패, not "없는 곳")', () => {
+    const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+    const geo = new Map<string, { status: string; lat?: number; lng?: number }>();
+    for (const f of ['regeocode.json', 'manual.json']) for (const g of JSON.parse(readFileSync(resolve(root, 'review/geo', f), 'utf8'))) geo.set(g.id, g);
+    for (const [id, g] of geo) {
+      const s = byId.get(id);
+      if (g.status === 'matched') expect(s && [s.lat, s.lng], id).toEqual([g.lat, g.lng]);
+      else expect(s, id).toBeUndefined();
+    }
+  });
+
+  it('an island place re-checked from the fallback now says it needs a boat (was "여기서 걸어서 약 5분" from the city hall)', () => {
+    const 돛오름 = fileSpots.find((s) => s.name === '돛오름')!;
+    expect(distanceKm(돛오름, { lat: 33.499622, lng: 126.53119 })).toBeGreaterThan(20);
+    expect(distanceKm(돛오름, { lat: 33.4811, lng: 126.8015 })).toBeLessThan(0.2); // 돝오름, by 비자림
+  });
+});
+
+describe('QA 2026-09-30 이유 문장 — §10 금지 어형 0건', () => {
+  it('no "~하기 좋아요 / ~하기 좋은", 인생샷, 힐링, 다양한, 특별한 … in any shipped reason', async () => {
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const bad = fileSpots.filter((s) => REASON_BANNED.test(s.reason)).map((s) => `${s.name}: ${s.reason}`);
+    expect(bad).toEqual([]);
+    // and the pattern is not so wide that plain sentences trip it
+    for (const ok of ['공기 좋은 곳의 조용한 캠핑장이에요.', '반려견 카페부터 호텔까지 한곳에 있어요.']) expect(REASON_BANNED.test(ok), ok).toBe(false);
+    for (const no of ['브런치 즐기기 좋아요.', '사진 찍기 좋은 카페', '인생샷 명소']) expect(REASON_BANNED.test(no), no).toBe(true);
+  });
+});
+
+describe('S51 홈 화면(PWA) 실행 — 매니페스트', () => {
+  it('opens standalone at the app root, within scope, with both icons present; dark splash (D6)', () => {
+    const m = JSON.parse(readFileSync(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
+    expect(m.display).toBe('standalone');
+    expect(new URL(m.start_url, 'https://x.test/app/').href.startsWith(new URL(m.scope, 'https://x.test/app/').href)).toBe(true);
+    expect(m.name).toBe('내일 뭐하지');
+    expect(m.short_name).toBe('내일 뭐하지');
+    expect(m.background_color).toBe('#151718');
+    for (const i of m.icons) expect(existsSync(resolve(root, 'public', i.src)), i.src).toBe(true);
+    const html = readFileSync(resolve(root, 'index.html'), 'utf8');
+    expect(html).toContain('<link rel="manifest" href="./manifest.webmanifest" />');
   });
 });

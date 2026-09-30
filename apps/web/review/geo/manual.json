@@ -1,0 +1,257 @@
+[
+ {
+  "id": "c6bb0fc4-a9d5-4f37-a7e5-bea5a3219e8c",
+  "name": "고래라면 제주신화월드점",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "matched",
+  "lat": 33.3056374957526,
+  "lng": 126.31634683852732,
+  "placeId": "585446463",
+  "placeName": "고래라면 신화월드점",
+  "address": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 38",
+  "note": "manual: same shop, 신화역사공원 food court (source summary)"
+ },
+ {
+  "id": "734f1934-4041-4415-8f1d-5ec24f66f068",
+  "name": "씨네라운지 더 코브",
+  "from": {
+   "lat": 33.3017501,
+   "lng": 126.3206458
+  },
+  "status": "matched",
+  "lat": 33.30764759737634,
+  "lng": 126.31757135197267,
+  "placeId": "1263771503",
+  "placeName": "제주신화월드 씨네 라운지 더 코브",
+  "address": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 38",
+  "note": "manual: same venue inside 제주신화월드"
+ },
+ {
+  "id": "b0b36621-e2f9-4c8e-bcc8-5a160ff10f64",
+  "name": "리썸커피",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "matched",
+  "lat": 33.4595773150771,
+  "lng": 126.434352059131,
+  "placeId": null,
+  "placeName": "리썸커피 주차장",
+  "address": "제주특별자치도 제주시 애월읍 광성로 256-2",
+  "note": "manual: only the shop's own parking lot is listed; point used, id not"
+ },
+ {
+  "id": "6a6eea2e-fbe6-499a-bd65-ca9eab339615",
+  "name": "제주 서핑도",
+  "from": {
+   "lat": 33.4034138,
+   "lng": 126.4508866
+  },
+  "status": "matched",
+  "lat": 33.4472965947767,
+  "lng": 126.432551825943,
+  "placeId": "1030057562",
+  "placeName": "서핑도",
+  "address": "제주특별자치도 제주시 애월읍 광령평화3길 21",
+  "note": "manual: indoor surf park 서핑도 in 애월 (source area 애월)"
+ },
+ {
+  "id": "1546321a-f81a-476d-8cde-cfcf142c58cc",
+  "name": "돛오름",
+  "from": {
+   "lat": 33.499622,
+   "lng": 126.53119
+  },
+  "status": "matched",
+  "lat": 33.48108329798336,
+  "lng": 126.80150161868967,
+  "placeId": "17788818",
+  "placeName": "돝오름",
+  "address": "제주특별자치도 제주시 구좌읍 송당리 산 3",
+  "note": "manual: 돝오름 is the official spelling; source: \"비자림을 안고 있는\" — 돝오름 borders 비자림"
+ },
+ {
+  "id": "301287e4-4845-41b6-b095-65d4f0ff0f99",
+  "name": "보말칼국수 해월정",
+  "from": {
+   "lat": 33.4880673,
+   "lng": 126.8804954
+  },
+  "status": "matched",
+  "lat": 33.492262994490375,
+  "lng": 126.90963170684925,
+  "placeId": "8615207",
+  "placeName": "해월정 본점",
+  "address": "제주특별자치도 제주시 구좌읍 해맞이해안로 2340",
+  "note": "manual: 해월정 본점 in 종달리 (source summary names 종달리)"
+ },
+ {
+  "id": "b6c4f435-674e-4b8e-bc00-f48155ff60bf",
+  "name": "제주베스트힐",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "matched",
+  "lat": 33.45383873226979,
+  "lng": 126.65771434502179,
+  "placeId": "26823680",
+  "placeName": "제주베스트힐 글램핑&펜션",
+  "address": "제주특별자치도 제주시 조천읍 남조로 2109-36",
+  "note": "manual: same place, 조천 곶자왈 (source area 조천)"
+ },
+ {
+  "id": "c2faa826-8f57-4214-884e-ba55e598154c",
+  "name": "천지연해물전복뚝배기",
+  "from": {
+   "lat": 33.2639577,
+   "lng": 126.5507293
+  },
+  "status": "matched",
+  "lat": 33.243479864359855,
+  "lng": 126.55967020766893,
+  "placeId": "23159110",
+  "placeName": "천지연 전복해물뚝배기",
+  "address": "제주특별자치도 서귀포시 남성중로 2-3",
+  "note": "manual: source: \"천지연폭포 주차장에 위치한 천지연전복해물뚝배기\""
+ },
+ {
+  "id": "38326dbb-7836-42bd-a952-7d6c66f73186",
+  "name": "촵촵",
+  "from": {
+   "lat": 33.496986,
+   "lng": 126.53534
+  },
+  "status": "matched",
+  "lat": 33.49350867548493,
+  "lng": 126.54538833272214,
+  "placeId": "26341561",
+  "placeName": "촵촵 본점",
+  "address": "제주특별자치도 제주시 신설로9길 8-1",
+  "note": "manual: 본점 of the 수제돈가스 shop, 1km from the source point"
+ },
+ {
+  "id": "c284a76f-3eb6-4718-944d-908314514f50",
+  "name": "카페말로",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.4274767696583,
+  "lng": 126.672108081067,
+  "placeId": "922717571",
+  "placeName": "말로",
+  "address": "제주특별자치도 제주시 조천읍 남조로 1785-12",
+  "note": "manual: cafe 말로 in 교래, 말·숲 (source summary)"
+ },
+ {
+  "id": "8e33fb73-bc11-4940-b95c-23eccb092910",
+  "name": "제주교래자연휴양림야영장",
+  "from": {
+   "lat": 33.4180631,
+   "lng": 126.6534847
+  },
+  "status": "matched",
+  "lat": 33.4422373793122,
+  "lng": 126.66650434646,
+  "placeId": null,
+  "placeName": "교래자연휴양림 야영장 입구",
+  "address": "제주특별자치도 제주시 조천읍 교래리 산 98",
+  "note": "manual: campsite entrance of 교래자연휴양림; point used, id not"
+ },
+ {
+  "id": "6ea9c857-4dd2-4ed7-90a1-6629ebb0eac5",
+  "name": "제주당 베이커리 카페",
+  "from": {
+   "lat": 33.364338,
+   "lng": 126.3552026
+  },
+  "status": "matched",
+  "lat": 33.3544721055684,
+  "lng": 126.355834145436,
+  "placeId": "808417339",
+  "placeName": "제주당",
+  "address": "제주특별자치도 제주시 애월읍 월각로 927",
+  "note": "manual: large bakery cafe 제주당 in 애월 (source summary)"
+ },
+ {
+  "id": "c56c4c76-231e-4bfa-b89e-cda61beddc75",
+  "name": "다가미 애월점",
+  "from": {
+   "lat": 33.3701721,
+   "lng": 126.4819697
+  },
+  "status": "matched",
+  "lat": 33.4605608588339,
+  "lng": 126.44732455299,
+  "placeId": null,
+  "placeName": "다가미 애월점 주차장",
+  "address": "제주특별자치도 제주시 애월읍 광령리 4-5",
+  "note": "manual: only the shop's own parking lot is listed; point used, id not"
+ },
+ {
+  "id": "d0b6220d-a414-4afb-bf68-803865512393",
+  "name": "제주기와",
+  "from": {
+   "lat": 33.3701721,
+   "lng": 126.4819697
+  },
+  "status": "matched",
+  "lat": 33.451131599110724,
+  "lng": 126.42542183349036,
+  "placeId": "1829041018",
+  "placeName": "제주기와",
+  "address": "제주특별자치도 제주시 애월읍 광령남4길 45-1",
+  "note": "manual: source: \"애월읍 광령리에 위치한 카페\""
+ },
+ {
+  "id": "ab5bf8e5-b566-400e-abc0-ea5702635f89",
+  "name": "망장포",
+  "from": {
+   "lat": 33.3420367,
+   "lng": 126.5884214
+  },
+  "status": "matched",
+  "lat": 33.2591950092477,
+  "lng": 126.639688035965,
+  "placeId": "7863117",
+  "placeName": "망장포",
+  "address": "제주특별자치도 서귀포시 남원읍 하례리",
+  "note": "manual: same 포구, 남원읍 하례리"
+ },
+ {
+  "id": "1503b8c1-38ae-4116-95c4-c454545ad294",
+  "name": "정의향교",
+  "from": {
+   "lat": 33.4112985,
+   "lng": 126.7819256
+  },
+  "status": "matched",
+  "lat": 33.3867973599582,
+  "lng": 126.799895506059,
+  "placeId": "17807528",
+  "placeName": "제주성읍마을 정의향교",
+  "address": "제주특별자치도 서귀포시 표선면 성읍서문로 14",
+  "note": "manual: source: \"표선면 성읍리에 있는 조선시대의 향교\""
+ },
+ {
+  "id": "c62b2116-d4ad-48aa-9bb3-fd2f90916862",
+  "name": "산굼부리카페",
+  "from": {
+   "lat": 33.4276176,
+   "lng": 126.6665803
+  },
+  "status": "matched",
+  "lat": 33.4325740941816,
+  "lng": 126.69383199842952,
+  "placeId": null,
+  "placeName": "산굼부리",
+  "address": "제주특별자치도 제주시 조천읍 교래리 166-2",
+  "note": "manual: source: \"산굼부리 내에 위치\" — its source Kakao id is another business (브라운포레); point of 산굼부리, id dropped"
+ }
+]

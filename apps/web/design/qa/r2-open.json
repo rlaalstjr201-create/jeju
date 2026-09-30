@@ -1,0 +1,93 @@
+{
+ "codeFindings": [
+  {
+   "severity": "MAJOR",
+   "area": "SW update path / reload",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/src/update.ts",
+   "issue": "reloadOnUpdate() reloads on every controllerchange once the page is controlled, even when the page is already running the new build. The old worker's navigate() is network-first, so a user who reopens the app after a deploy usually gets the new index.html and new bundle straight away. A few seconds later the new worker installs, activates and claims the page, and controllerchange forces an unneeded full reload. On the idle first screen this happens about 3-4 s after opening, a flash that can eat a mood tap made during the reload. If a mood was already tapped, the reload happens instead when the tab goes to the background (e.g. tapping a card to open Kakao Map), and the user returns to a reloaded page at the top. This hits every returning user once per deploy.",
+   "repro": "Verified in real Chrome (playwright-core, scratch copies of dist, script scratchpad/audit/swreload.mjs). Serve v1, let the SW take control, then swap in v2 (only the sw.js VERSION and an index.html comment changed) and page.goto('/'). The document is already the v2 shell, yet a second `load` event fires 3.7 s later on the idle first screen. In the other run, tap 푹 쉬고 싶어 (3 cards) instead: no reload while visible, then a second `load` as soon as visibilityState becomes hidden.",
+   "fix": "Reload only when the running code differs from what the new worker serves. Add `current(): Promise<boolean>` to UpdateDeps. In main.ts use `caches.match(new URL(import.meta.url).href)`, plus the stylesheet href. activate deletes the old caches before clients.claim(), so a hit means this bundle is in the new precache and the reload can be skipped. Add a sw.test case: 'controllerchange while the page already runs the new bundle → no reload'."
+  },
+  {
+   "severity": "MINOR",
+   "area": "flow / visual flicker",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/src/render.ts",
+   "issue": "With the GPS basis, re-tapping the same mood from the first screen shows its still-valid cards at once. reduce('mood') sets phase ready because cardsValid is true. request() then re-locates, and after `slow` (300 ms) resultsBodyOf() returns 'ghost' for any slow pending state. The shown cards are swapped for 3 grey skeletons and '위치 확인 중…', then the same 3 cards come back.",
+   "repro": "Basis 내 주변. Tap 푹 쉬고 싶어 → 3 cards → 바꾸기 (or phone back) → tap 푹 쉬고 싶어 again when the fix takes >300 ms (e.g. more than 10 min later, once maximumAge has expired). Scratch jsdom repro with slow=20 ms: at t0, 3 card ids and no ghosts; at t40, 0 cards, 3 ghosts and status '위치 확인 중…'; after GPS resolves, the same 3 ids.",
+   "fix": "In resultsBodyOf, while pending, return 'keep' when what is on screen is still valid for this mood, sub and basis (`same && cardsValid(s)`), before the `p.slow ? ghost` branch. Use ghost only when nothing valid is showing. A basis change or sub change still ghosts because cardsValid is false there."
+  },
+  {
+   "severity": "MINOR",
+   "area": "sheet stability",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/src/render.ts",
+   "issue": "sheetSigOf() includes `gpsOff` (lastFail==='denied'). A GPS denial that arrives while the basis sheet is open changes the sig, so buildSheet() replaces the whole panel under the finger. The sheet scroll resets to the top, focus jumps to '내 위치', and the next tap can land on a different area. The same principle is already applied to the 숙소 sheet ('must not rebuild under the finger') but not to the basis sheet.",
+   "repro": "On a browser with a non-modal permission prompt (desktop Chrome, some Android UIs): tap a mood and ignore the prompt. After 3 s tap 지역으로 고르기 and scroll the sheet to 서귀포 쪽, then block the prompt. Scratch jsdom repro: after the denial, the `.sheet` panel and the [data-area=성산] button are new nodes and document.activeElement is '내 위치 / 위치 권한이 꺼져 있어요'.",
+   "fix": "Remove gpsOff from the sig. Patch the '내 위치' option's `.sub` line in patchSheet(), the way the 숙소 form error is patched."
+  },
+  {
+   "severity": "MINOR",
+   "area": "recovery / stale notice",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/src/app.ts",
+   "issue": "The user turns location on in settings and comes back. The visibilitychange handler dispatches 'permission', which clears lastFail, so the header flips to '내 주변'. The results body still shows the denied notice ('위치 권한이 꺼져 있어요.' / '브라우저 설정에서 위치 권한을 켜 주세요.') and nothing retries. Header and body now contradict each other, and the user has to find the basis sheet or pull to refresh.",
+   "repro": "Scratch jsdom repro: geoPermission 'denied' → tap 푹 쉬고 싶어 → basis label '지역 고르기', notice '위치 권한이 꺼져 있어요.'. Switch the permission to 'granted' and fire visibilitychange: basis label '내 주변', and the notice and the settings hint are unchanged.",
+   "fix": "In checkPermission's then(): if the permission is now granted or prompt, state.view==='cards', basis is gps and phase is noOrigin 'denied', call request('show') so the cards just appear."
+  },
+  {
+   "severity": "MINOR",
+   "area": "recovery / stale notice",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/src/app.ts",
+   "issue": "An offline load error never recovers by itself. When the 'online' event arrives, only state.offline and photo retries change. The notice still says '오프라인이라 목록을 불러오지 못했어요.' although the device is online, and the user must notice and tap 다시 불러오기. This applies to both the results and the saved list.",
+   "repro": "Scratch jsdom repro: online()=false and loadSpots rejects → tap a mood → '오프라인이라 목록을 불러오지 못했어요.'. Set online()=true and dispatch window 'online': the notice text is unchanged.",
+   "fix": "In the 'online' listener: if phase.k==='loadError' and the view is cards or saved, call request('show'). Or at least rebuild the notice with the online wording (its sig uses phase.offline, not s.offline)."
+  },
+  {
+   "severity": "MINOR",
+   "area": "data loading on weak networks",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/src/data.ts",
+   "issue": "When an attempt hits the 15 s timeout, the fetch keeps downloading, but its eventual success is thrown away: `value` is set only through the race winner. 다시 불러오기 then starts a new 330 KB (gzip) download from zero, which can time out again. On a slow rural connection this becomes an error loop even though a full copy already arrived.",
+   "repro": "Scratch jsdom: createSpotSource(load resolving at 60 ms, timeout 20 ms). get() rejects with 'timeout'. After 80 ms the load has finished, but peek() is still null, and the next get() calls load() again.",
+   "fix": "Keep one in-flight load promise separate from the timeout. The timeout only rejects the waiting request. When the load resolves later, memoize it (`value = spots`) and optionally dispatch 'spots' so a pending loadError screen can retry at once."
+  },
+  {
+   "severity": "MINOR",
+   "area": "performance / first visit",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/sw/sw.js",
+   "issue": "On first visit (and after every deploy) spots.json?v=<hash> is downloaded twice. The page's warm-up fetch starts at mount, and the SW (registered on 'load', which does not wait for fetch()) precaches the same URL with cache:'reload', which bypasses the HTTP cache. The second 330 KB (gzip) download competes for bandwidth with the one the user's first tap is waiting on.",
+   "repro": "Fresh profile with the SW allowed: open the app. DevTools Network shows two full 200 responses for spots.json?v=<hash>, one from the page and one from the SW install.",
+   "fix": "Use `cache: 'reload'` only for the unversioned precache entries ('./', manifest, icons). Content-hashed assets and spots.json?v= can use the default mode, because a hashed URL cannot be stale, so the second request reuses or waits on the HTTP cache."
+  },
+  {
+   "severity": "MINOR",
+   "area": "test reliability (S9-7)",
+   "file": "C:/Users/rlaal/projects/jeju/apps/web/tests/scenarios.test.ts",
+   "issue": "S02 asserts the exact status text while the harness uses a real-time `long: 30` ms timer (tests/harness.ts:37). Under parallel load the 30 ms passes during tap()'s awaits, '지역으로 고르기' is appended, and the test fails. The full suite is therefore flaky.",
+   "repro": "`npx vitest run` in apps/web: 346/347 passed, and S02 failed with expected '위치 확인 중…', received '위치 확인 중…지역으로 고르기'. Re-running S02 alone passed 3/3.",
+   "fix": "Give S02 `delays: { long: 10_000 }` (it does not test the escape hatch) or use vi.useFakeTimers(). Check the other tests that rely on long:30 (app.test.ts:41, scenarios.test.ts:613/950) the same way."
+  }
+ ],
+ "scenarioFails": [
+  {
+   "id": "QA-doc-staleness (meta finding)",
+   "pass": false,
+   "evidence": "design/qa/scenarios.md's '간극' column is stale for roughly 30 of 66 rows (S02,S03,S04,S05,S06,S07,S08,S09,S12,S13,S15-S18,S23-S26,S32,S33,S35,S37,S38,S40,S43,S44,S45,S46,S48,S49,S54,S55,S57 etc.): it documents bugs (e.g. 'S03: 어느 지역에 계세요?' wording, 'S10/S15-18: history/basis races', 'S26: 옛 SW가 옛 spots.json 제공', 'S32: URL에 %09 들어감', 'S49: 밝은 베이지 스플래시') that a grep of current src/ and public/manifest.webmanifest shows are no longer present, and for which passing tests (many freshly dated 'QA 2026-09-30') already assert the fixed/expected behavior. Net effect: the code and test suite are materially healthier than the matrix document currently claims — the document was not swept to 간극=없음 after the fixes landed. This is a documentation-integrity gap worth closing (update the 간극 column), not a code defect. All 347 vitest + 32 e2e browser checks pass; `tsc --noEmit` is clean (0 errors)."
+  }
+ ],
+ "regressionFails": [
+  {
+   "id": "S6_review",
+   "pass": false,
+   "evidence": "Could not find current evidence of a completed spec/ADR-scope review or Codex cross-review for this tomorrow-picker + QA/design-overhaul work. All codex_review*.md files in the repo (root, docs/, and worktree copies) are dated 2026-05-17 and review the old 'Core Flow' (Shortlist/Trip/DayPlan) codebase, not apps/web. No MAJOR-finding-count artifact specific to this feature was found. Out-of-scope-feature check (informal, not the formal S6 review): grepped the shipped app/DOM/JS for login, booking/payment, and schedule-related UI and found none — consistent with staying in ADR scope — but this does not substitute for the S6 criterion itself, which explicitly requires a completed Codex cross-review with 0 unresolved MAJOR. Flagging as unverified/pending rather than reporting a pass I have no artifact for."
+  },
+  {
+   "id": "S7_real_browser",
+   "pass": false,
+   "evidence": "Plan explicitly assigns S7 to the main session ('메인 세션이 확인'), not this regression check, so I did not attempt to independently perform it. Supporting evidence exists in the repo: tests/e2e/browser.e2e.mjs (Playwright-driven real-Chrome checks for history timing, hit-testing, small-width/large-text/dark-mode layout, two-tab behavior, offline/SW) and a screenshot set under apps/web/design/qa/shots-r1/ covering mood screens at 320/390/430px in light and dark. I did not execute the e2e suite myself (it needs a running preview server + real Chrome/Chromium channel, outside this fast regression pass) and found no explicit sign-off record that the main session completed the 390×844 tap-through-and-screenshot confirmation for the current build. Reporting as not independently confirmed rather than assuming completion."
+  }
+ ],
+ "fixR1Report": "Every blocking item (3 missing scenario checks and 4 MAJORs) is fixed. 12 of the 13 MINORs are done and one is left for you to decide. Typecheck passes, vitest is 347/347, the build is fine, the slop check finds 0 violations and the browser checks pass 32/32. Nothing was committed.\n\n**Missing browser checks: S31, S51, S52** (added to `tests/e2e/browser.e2e.mjs`)\n- **S31:** a 32-character name with an English part in brackets was checked at 320 and 195px wide. Nothing spills sideways, the name stays clear of the heart, and the bracket part never breaks in the middle.\n- **S51 (installed home-screen app):** headless Chrome can't fake this mode, so the check does what a home-screen launch does instead. It opens the app's start page in a fresh tab. That shows the first screen, the remembered area and the saved count. Every layer also closes from inside the page, since iOS has no back button there. The build has no code that changes behaviour in this mode.\n- **S52 (landscape):** at 844×390 and 667×375 the page stays one centred column with no sideways scroll. The area sheet fits the screen and scrolls inside itself.\n- I marked these three rows as browser-checked in `design/qa/scenarios.md` and added rows S61–S66 for the new cases.\n\n**MAJOR 1: wrong coordinates**\n- I re-looked-up the 16 places parked on the city-hall fallback point, plus the other 136 that shared a point with 2 or more unrelated places. This used the Kakao place-search API with the project key, read-only, run once.\n- 93 matched automatically. I checked the unmatched ones by hand and accepted 16 more; each is recorded in `review/geo/manual.json` with the reason.\n- 43 places whose position couldn't be confirmed are left out, marked \"확인 실패\" (unconfirmed), not \"없는 곳\". The data goes from 3,003 to 2,960 places.\n- The data build now fails if any place sits on the fallback point, or if 3 or more unconfirmed places share one point. A test checks the shipped file the same way.\n- The browser tests' default location moved to 동문시장, so the old default can't hide this again.\n\n**MAJOR 2: \"차로 약 5분\" three times on one screen**\n- When all three cards are the same trip, the first card says it once, e.g. `셋 다 애월에서 차로 약 5분`, and the other two show no trip line.\n- `카카오맵` now appears only on the first card; every card is still a map link, and screen readers hear it on each one.\n- A new test covers 15 areas × 6 buttons × 2 pages and finds no screen with the same line three times.\n\n**MAJOR 3 and 4: reload and back button**\n- The saved \"what this screen is showing\" record is now written as soon as a mood is asked for, not only after cards appear. `바꾸기` clears it.\n- Reloading while loading, or on a failure notice, brings back the mood you last picked, not an older one's cards.\n- If a results screen has no record, its history entry is removed instead of being overwritten, so no back press does nothing.\n\n**MINOR items done:**\n- 58 place sentences rewritten to drop the banned forms (`~하기 좋아요`, 인생샷, 힐링 and so on), and the slop check now scans the data too.\n- The `·` before `카카오맵` can no longer start a line.\n- Font sizes are now in rem, so the browser's text-size setting actually applies. The 200% test uses a real 195×422 screen and a root font size of 200% instead of the old zoom trick.\n- The dark-mode selected area is dimmer (`#8e938f`, contrast 5.76:1).\n- The area grid is 4 across, so `성산` is no longer alone on the last row.\n- `다른 3곳 보기` no longer asks for GPS again.\n- Closing the saved list returns to your scroll position in a real browser.\n- The saved list shows in saved order after 3 seconds if GPS never answers.\n- An installed app switches to a new deploy: straight away if you're idle on the first screen, otherwise when you leave the app.\n- Photos that failed only because you were offline come back when you reconnect.\n- The unused duplicate strings and the unreachable \"mood from the saved list\" path are removed.\n- A mood tapped before the app script loads is carried out once it loads.\n\n**Your call:**\n- **Bars in 푹 쉬고 싶어:** wine bars and music bars still show under 푹 쉬고 싶어. None of the four moods fits a bar well, so this needs a classification decision from you. For now they stay under 푹 쉬고 싶어.\n- **GPS time limit on the results screen:** I didn't add one. The `지역으로 고르기` escape already appears after 3 seconds, as the spec says.\n- **Spec vs CSS mismatch (not from this work):** the spec gives the narrow-card breakpoint as 20em but the CSS uses 18em. I didn't change it.\n\nDesign changes are recorded in `design/SPEC.md` (sections 0, 2, 3, 6, 7, 9, 11, 13, 14, 15). The code changes are in `apps/web/src/` (`app.ts`, `state.ts`, `render.ts`, `store.ts`, `style.css`, `main.ts`, new `update.ts`), `apps/web/sw/sw.js`, `apps/web/index.html`, and the scripts `build-spots.mjs`, `positions.mjs`, `regeocode.ts` and `check-slop.ts` in `apps/web/scripts/`.\n\nScreenshots are in `C:\\Users\\rlaal\\projects\\jeju\\.playwright-mcp\\qa-r2\\`. The preview server on 4412 and its browser are closed.",
+ "extra": [
+  {
+   "issue": "Duplicate spot with a typo: 물질식육식당 and 몰질식육식당 are the same restaurant (same coordinates area). Keep one (물질식육식당) via build-spots.mjs dedupe rule, not by hand-editing spots.json."
+  }
+ ]
+}

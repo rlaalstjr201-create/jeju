@@ -9,9 +9,11 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "e2e": "vite build && node tests/e2e/browser.e2e.mjs",
     "export:spots": "tsx scripts/export-spots.ts",
     "build:spots": "node scripts/build-spots.mjs",
     "check:data": "tsx scripts/check-data.ts",
+    "check:slop": "tsx scripts/check-slop.ts",
     "make:icons": "tsx scripts/make-icons.ts"
   },
   "devDependencies": {

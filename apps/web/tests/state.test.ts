@@ -1,0 +1,183 @@
+// Pure reducer: last intent wins, restore vs next-3, basis idempotency — no DOM.
+import { describe, expect, it } from 'vitest';
+import { AREAS } from '../src/areas';
+import { pickCards } from '../src/pick';
+import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, savedCount, sessionOf, staticOrigin, type Action, type State } from '../src/state';
+import type { Point } from '../src/pick';
+import type { Origin } from '../src/types';
+import { ORIGINS, realSpots } from './fixtures';
+
+const 애월 = AREAS.find((a) => a.name === '애월')!;
+const gps = (p: Point = ORIGINS.제주시): Origin => ({ key: 'gps', point: p, isPoint: true, from: '여기서' });
+const s0 = (over: Partial<State> = {}): State => ({
+  ...initialState({ basis: 'gps', region: null, stay: null, saved: [], hintSeen: false, offline: false }),
+  ...over,
+});
+const run = (s: State, ...actions: Action[]) => actions.reduce(reduce, s);
+/** tap a mood and resolve it with `origin` */
+const pick = (s: State, button: 'rest' | 'walk' | 'food' | 'any', req: number, origin = gps(), intent: 'show' | 'more' = 'show') =>
+  run(s, { type: 'mood', button }, { type: 'request', req, intent, step: 'loading' }, { type: 'resolved', req, origin, spots: realSpots });
+const ids = (s: State) => s.cards?.list.map((c) => c.spot.id);
+
+describe('S36·S38 요청 id — 마지막 의도만 반영', () => {
+  it('a result for an older request is dropped', () => {
+    let s = run(s0(), { type: 'mood', button: 'rest' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
+    s = run(s, { type: 'mood', button: 'walk' }, { type: 'request', req: 2, intent: 'show', step: 'locating' });
+    const late = run(s, { type: 'noOrigin', req: 1, why: 'denied' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(late).toBe(s); // nothing changed
+    const done = run(s, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(done.cards?.key).toBe('walk');
+  });
+
+  it('slow / long flags only for the pending request', () => {
+    const s = run(s0(), { type: 'mood', button: 'rest' }, { type: 'request', req: 5, intent: 'show', step: 'locating' });
+    expect(run(s, { type: 'slow', req: 4 })).toBe(s);
+    expect(run(s, { type: 'slow', req: 5 }, { type: 'long', req: 5 }).phase).toMatchObject({ k: 'pending', slow: true, long: true });
+  });
+});
+
+describe('S43·S44 다시 고르면 보던 3장, 다음 3장은 "다른 3곳 보기"', () => {
+  // Changed on purpose (design/SPEC.md D2): the mood on screen again is a no-op (it is already showing);
+  // the next 3 come from the 'more' intent only.
+  it('A → B → A restores A; the active A again is a no-op; more moves on', () => {
+    let s = pick(s0(), 'rest', 1);
+    const rest1 = ids(s);
+    expect(rest1).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest').cards.map((c) => c.spot.id));
+    s = pick(s, 'walk', 2);
+    s = pick(s, 'rest', 3);
+    expect(ids(s)).toEqual(rest1);
+    expect(s.cards?.how).toBe('restore');
+    expect(moodIntent(s, 'rest')).toBeNull();
+    expect(moodIntent(run(s, { type: 'route', route: { view: 'home', overlay: null } }), 'rest')).toBe('show');
+    s = run(s, { type: 'request', req: 4, intent: 'more', step: 'loading' }, { type: 'resolved', req: 4, origin: gps(), spots: realSpots });
+    expect(ids(s)!.filter((id) => rest1!.includes(id))).toEqual([]);
+    expect(s.cards?.how).toBe('more');
+  });
+
+  it('a new origin (another basis, or GPS moved > 1km) starts fresh', () => {
+    let s = pick(s0(), 'rest', 1);
+    const rest1 = ids(s);
+    const far = gps({ lat: ORIGINS.제주시.lat + 0.05, lng: ORIGINS.제주시.lng });
+    s = run(s, { type: 'mood', button: 'walk' });
+    s = pick(s, 'rest', 2, far);
+    expect(ids(s)).not.toEqual(rest1);
+    expect(s.cards?.how).toBe('new');
+    expect(Object.keys(s.shown)).toEqual(['rest']);
+  });
+
+  it('moodIntent: pending same mood → ignore; failed → retry', () => {
+    const pending = run(s0(), { type: 'mood', button: 'rest' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
+    expect(moodIntent(pending, 'rest')).toBeNull();
+    expect(moodIntent(pending, 'walk')).toBe('show');
+    const failed = run(pending, { type: 'noOrigin', req: 1, why: 'denied' });
+    expect(moodIntent(failed, 'rest')).toBe('show');
+  });
+});
+
+describe('기준 — 멱등성·유효성 (audit MAJOR idempotency)', () => {
+  it('basisIsCurrent: the same basis/area is a no-op unless the last attempt failed', () => {
+    const s = s0({ basis: 'region', region: '애월', phase: { k: 'ready' } });
+    expect(basisIsCurrent(s, 'region', '애월')).toBe(true);
+    expect(basisIsCurrent(s, 'region', '성산')).toBe(false);
+    expect(basisIsCurrent(s, 'gps')).toBe(false);
+    expect(basisIsCurrent({ ...s, basis: 'gps', phase: { k: 'noOrigin', why: 'denied' } }, 'gps')).toBe(false);
+    expect(basisIsCurrent({ ...s, phase: { k: 'loadError', offline: false } }, 'region', '애월')).toBe(false);
+  });
+
+  it('cardsValid turns false as soon as the basis changes (돌아가기 then recomputes)', () => {
+    let s = pick(s0({ basis: 'region', region: '애월' }), 'walk', 1, staticOrigin('region', '애월', null)!);
+    expect(cardsValid(s)).toBe(true);
+    s = run(s, { type: 'basis', basis: 'region', region: '성산' });
+    expect(cardsValid(s)).toBe(false);
+  });
+
+  it('staticOrigin: 숙소 from GPS is a real point (may "walk"), an area centre is not', () => {
+    expect(staticOrigin('stay', null, { lat: 33.4, lng: 126.3, area: '한림', source: 'gps' })).toMatchObject({ isPoint: true, from: '숙소에서' });
+    expect(staticOrigin('region', '애월', null)).toEqual({ key: 'region:애월', point: { lat: 애월.lat, lng: 애월.lng }, isPoint: false, from: '애월에서' });
+    expect(staticOrigin('gps', '애월', null)).toBeNull();
+  });
+});
+
+describe('GPS 실패 기억 (S07)', () => {
+  it('noOrigin records why; the next GPS success clears it', () => {
+    let s = run(s0(), { type: 'mood', button: 'rest' }, { type: 'request', req: 1, intent: 'show', step: 'locating' }, { type: 'noOrigin', req: 1, why: 'denied' });
+    expect(s.lastFail).toBe('denied');
+    expect(s.phase).toEqual({ k: 'noOrigin', why: 'denied' });
+    s = run(s, { type: 'request', req: 2, intent: 'show', step: 'locating' }, { type: 'located', req: 2 }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(s.lastFail).toBeNull();
+  });
+});
+
+describe('저장 목록 상태', () => {
+  it('opening snapshots the saved ids and remembers where it came from', () => {
+    let s = pick(s0({ saved: ['b', 'a'] }), 'rest', 1);
+    s = run(s, { type: 'openSaved' });
+    expect(s).toMatchObject({ view: 'saved', snapshot: ['b', 'a'], savedFrom: 'cards' });
+    s = run(s, { type: 'saved', ids: ['a'] }); // unsaved in the list: the row stays (undo path)
+    expect(s.snapshot).toEqual(['b', 'a']);
+    s = run(s, { type: 'closeSaved' });
+    expect(s).toMatchObject({ view: 'cards', snapshot: null, phase: { k: 'ready' } });
+  });
+
+  it('S42 ♥ N counts only ids still in the data once it is loaded; storage list untouched', () => {
+    const s = s0({ saved: ['gone', realSpots[0].id] });
+    expect(savedCount(s)).toBe(2);
+    const loaded = run(s, { type: 'spots', spots: realSpots });
+    expect(savedCount(loaded)).toBe(1);
+    expect(loaded.saved).toEqual(['gone', realSpots[0].id]);
+  });
+
+  it('saved list without a position keeps saved order', () => {
+    const [a, b] = realSpots;
+    let s = run(s0({ saved: [a.id, b.id] }), { type: 'openSaved' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
+    s = run(s, { type: 'located', req: 1, why: 'denied' }, { type: 'resolved', req: 1, origin: null, spots: realSpots });
+    expect(s.savedList?.list.map((c) => c.spot.id)).toEqual([a.id, b.id]);
+    expect(s.savedList?.origin).toBeNull();
+    expect(s.lastFail).toBe('denied');
+  });
+});
+
+describe('S54 세션 기록', () => {
+  it('only a ready cards view is worth keeping', () => {
+    expect(sessionOf(s0())).toBeNull();
+    const s = pick(s0(), 'walk', 1);
+    expect(sessionOf(s)).toMatchObject({ v: 1, mood: 'walk', sub: 'meal', shown: { walk: ids(s) } });
+    const back = run(s0(), { type: 'restore', rec: sessionOf(s)! });
+    expect(back).toMatchObject({ view: 'cards', mood: 'walk', shown: { walk: ids(s) } });
+  });
+});
+
+describe('QA 2026-09-30 — 세션 기록·위치 대기', () => {
+  it('the record names the mood as soon as it is asked for (loading or failed), with the rotation so far', () => {
+    const shown = pick(s0(), 'rest', 1);
+    const asked = run(shown, { type: 'mood', button: 'walk' }, { type: 'request', req: 2, intent: 'show', step: 'locating' });
+    expect(sessionOf(asked)).toMatchObject({ mood: 'walk', origin: shown.origin, shown: { rest: ids(shown) } });
+    const failed = run(asked, { type: 'noOrigin', req: 2, why: 'unavailable' });
+    expect(sessionOf(failed)?.mood).toBe('walk');
+    expect(sessionOf(run(s0(), { type: 'mood', button: 'any' }))).toMatchObject({ mood: 'any', origin: null, shown: {} });
+    expect(sessionOf(run(failed, { type: 'route', route: { view: 'home', overlay: null } }))).toBeNull();
+  });
+
+  it('giving up on an unanswered GPS wait learns nothing: a known failure stays, none is invented', () => {
+    const base = run(s0(), { type: 'openSaved' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
+    expect(run(base, { type: 'located', req: 1, unknown: true }).lastFail).toBeNull();
+    expect(run({ ...base, lastFail: 'denied' }, { type: 'located', req: 1, unknown: true }).lastFail).toBe('denied');
+  });
+
+  it('photo failures: those that happened offline are forgotten when back online, the others kept', () => {
+    let s = run(s0(), { type: 'imgError', id: 'a' });
+    s = run(s, { type: 'offline', offline: true }, { type: 'imgError', id: 'b' });
+    expect(s.broken).toEqual(['a', 'b']);
+    s = run(s, { type: 'offline', offline: false });
+    expect(s.broken).toEqual(['a']);
+    expect(s.brokenOffline).toEqual([]);
+  });
+
+  it('announcements carry the count and kind; the words live in render.ts COPY', () => {
+    const s = pick(s0(), 'rest', 1);
+    expect(s.announce).toMatchObject({ n: 3, more: false });
+    const more = run(s, { type: 'request', req: 2, intent: 'more', step: 'loading' }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(more.announce).toMatchObject({ n: 3, more: true });
+    expect(more.announce.seq).toBeGreaterThan(s.announce.seq);
+  });
+});

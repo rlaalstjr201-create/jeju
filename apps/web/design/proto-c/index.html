@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f6f3">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#161817">
+<title>내일 뭐하지</title>
+<script>
+  // ?theme=dark|light pins the scheme for screenshots; otherwise the device decides.
+  (function () {
+    var t = new URLSearchParams(location.search).get('theme');
+    if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+  })();
+</script>
+<style>
+:root {
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --fill: #ebebe6;
+  --fill-press: #dfdfd9;
+  --line: #e2e2dc;
+  --ink: #1b1d1c;
+  --muted: #5b605e;
+  --sel-bg: #1b1d1c;
+  --sel-fg: #ffffff;
+  --heart: #cc3a2f;
+  --scrim: rgb(0 0 0 / 35%);
+  --photo: none;
+
+  --top-h: 52px;
+  --r-ctl: 10px;
+  --r-photo: 12px;
+  --r-thumb: 8px;
+  --r-sheet: 18px;
+  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161817;
+    --surface: #1f2221;
+    --fill: #2a2e2c;
+    --fill-press: #353a38;
+    --line: #2c302e;
+    --ink: #e8e8e3;
+    --muted: #a3a8a5;
+    --sel-bg: #8e938f;
+    --sel-fg: #161817;
+    --heart: #ee7e71;
+    --scrim: rgb(0 0 0 / 55%);
+    --photo: brightness(0.9);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161817;
+  --surface: #1f2221;
+  --fill: #2a2e2c;
+  --fill-press: #353a38;
+  --line: #2c302e;
+  --ink: #e8e8e3;
+  --muted: #a3a8a5;
+  --sel-bg: #8e938f;
+  --sel-fg: #161817;
+  --heart: #ee7e71;
+  --scrim: rgb(0 0 0 / 55%);
+  --photo: brightness(0.9);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.5 var(--font);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; text-align: left; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg { display: block; flex: none; }
+
+/* ---------- frame ---------- */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px calc(28px + env(safe-area-inset-bottom));
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: 0 -16px;
+  padding: 4px 6px;
+  min-height: var(--top-h);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 8px;
+  background: var(--bg);
+}
+.basis, .saved-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--r-ctl);
+  font-weight: 600;
+  transition: background-color 120ms ease-out;
+}
+.basis { gap: 5px; }
+.basis svg { width: 12px; height: 12px; color: var(--muted); }
+.saved-btn { gap: 6px; min-width: 44px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.saved-btn svg { width: 18px; height: 18px; color: var(--heart); }
+.saved-btn[aria-pressed="true"] { background: var(--fill); }
+.basis:active, .saved-btn:active { background: var(--fill); }
+
+main { flex: 1; display: flex; flex-direction: column; }
+
+/* ---------- home ---------- */
+.home { flex: 1; display: flex; flex-direction: column; }
+.home::before { content: ""; flex: 2 1 16px; }
+.home::after { content: ""; flex: 1 1 0; }
+.date { color: var(--muted); font-variant-numeric: tabular-nums; }
+.q { margin: 2px 0 18px; font-size: 24px; line-height: 1.3; letter-spacing: -0.02em; font-weight: 700; text-wrap: balance; }
+.moods { list-style: none; margin: 0 -8px; padding: 0; }
+.moods li { position: relative; }
+.moods li::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 1px; background: var(--line); }
+.moods li:first-child::before { content: ""; position: absolute; left: 8px; right: 8px; top: 0; height: 1px; background: var(--line); }
+.mood {
+  width: 100%;
+  min-height: 60px;
+  padding: 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: var(--r-ctl);
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  transition: background-color 120ms ease-out;
+}
+.mood:active { background: var(--fill); }
+.mood svg { width: 20px; height: 20px; color: var(--ink); }
+.any {
+  align-self: flex-start;
+  margin: 10px 0 0 -8px;
+  min-height: 48px;
+  padding: 0 8px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  border-radius: var(--r-ctl);
+}
+.any:active { background: var(--fill); }
+
+/* ---------- result head ---------- */
+.mood-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; }
+.mood-line h1 { font-size: 16px; line-height: 1.4; font-weight: 600; }
+.textbtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  margin-right: -10px;
+  flex: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  border-radius: var(--r-ctl);
+  white-space: nowrap;
+}
+.textbtn:active { background: var(--fill); }
+.tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--line); margin-top: 2px; }
+.tab {
+  display: flex;
+  min-width: 44px;
+  min-height: 44px;
+  margin-bottom: -1px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.tab span { display: flex; align-items: center; border-bottom: 2px solid transparent; }
+.tab[aria-pressed="true"] { color: var(--ink); }
+.tab[aria-pressed="true"] span { border-bottom-color: var(--ink); }
+.status { margin-top: 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.status .textbtn { margin: 0 0 0 -10px; min-height: 44px; }
+
+/* ---------- the pick (first card) ---------- */
+.pick { position: relative; margin-top: 12px; }
+.ph {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-photo);
+  overflow: hidden;
+  background: var(--fill);
+}
+.ph img, .th img { width: 100%; height: 100%; object-fit: cover; display: block; filter: var(--photo); }
+.head { display: flex; align-items: flex-start; justify-content: space-between; gap: 4px; }
+.head h2, .head h3 { flex: 1; min-width: 0; }
+.pick .head { margin-top: 12px; }
+.pick h2 { padding-top: 1px; font-size: 20px; line-height: 1.35; letter-spacing: -0.01em; font-weight: 700; text-wrap: balance; }
+.alias { display: inline-block; font-size: 14px; line-height: 1.45; letter-spacing: 0; font-weight: 400; color: var(--muted); }
+.card-link { text-decoration: none; }
+.card-link::after { content: ""; position: absolute; inset: -6px; border-radius: 14px; }
+.card-link:focus-visible { outline: none; }
+.card-link:focus-visible::after { outline: 2px solid var(--ink); outline-offset: 0; }
+.reason { margin-top: 4px; text-wrap: pretty; }
+.pick .reason { font-size: 16px; line-height: 1.55; }
+.meta { margin-top: 6px; font-size: 14px; line-height: 1.45; color: var(--muted); font-variant-numeric: tabular-nums; }
+.meta .to { white-space: nowrap; }
+.meta .dest { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; white-space: nowrap; }
+.heart {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: -8px -11px -9px 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--muted);
+}
+.heart svg { width: 22px; height: 22px; transition: transform 100ms ease-out; }
+.heart .fill { fill: none; stroke: currentColor; stroke-width: 1.7; }
+.heart[aria-pressed="true"] { color: var(--heart); }
+.heart[aria-pressed="true"] .fill { fill: currentColor; }
+.heart:active svg { transform: scale(0.88); }
+.book {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.hint { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+
+/* ---------- 아니면 + rows ---------- */
+.or { margin: 28px 0 12px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.or b { font-weight: 600; }
+.row { position: relative; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 14px; align-items: start; }
+.row + .row { margin-top: 20px; }
+.row.noimg { grid-template-columns: minmax(0, 1fr); }
+.th { width: 76px; aspect-ratio: 1; border-radius: var(--r-thumb); overflow: hidden; background: var(--fill); }
+.row h3 { padding-top: 1px; font-size: 16px; line-height: 1.4; font-weight: 600; }
+.row .reason { margin-top: 2px; font-size: 14px; line-height: 1.5; }
+.row .meta { margin-top: 4px; }
+.row .heart { margin-top: -10px; margin-bottom: -11px; }
+
+.more {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 28px;
+  padding: 0 16px;
+  border-radius: var(--r-ctl);
+  background: var(--fill);
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 120ms ease-out, transform 120ms ease-out;
+}
+.more:active { background: var(--fill-press); transform: scale(0.98); }
+
+/* ---------- skeleton (no motion) ---------- */
+.sk { margin-top: 12px; }
+.sk-photo { aspect-ratio: 4 / 3; border-radius: var(--r-photo); background: var(--fill); }
+.bar { height: 14px; border-radius: 4px; background: var(--fill); margin-top: 10px; }
+.bar.t { height: 18px; margin-top: 14px; }
+.sk-row { display: grid; grid-template-columns: 76px 1fr; gap: 14px; margin-top: 20px; }
+.sk-row .sq { aspect-ratio: 1; border-radius: var(--r-thumb); background: var(--fill); }
+.sk-row .bar:first-child { margin-top: 2px; }
+
+/* ---------- notices (denied / outside / error) ---------- */
+.notice { margin-top: 20px; }
+.notice > p:first-child { font-size: 16px; line-height: 1.55; }
+.notice .fine { margin-top: 16px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.fill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 16px;
+  padding: 0 20px;
+  border-radius: var(--r-ctl);
+  background: var(--fill);
+  font-weight: 600;
+}
+.fill-btn:active { background: var(--fill-press); }
+
+/* ---------- areas (sheet + inline) ---------- */
+.group { margin: 20px 0 8px; font-size: 14px; line-height: 1.45; color: var(--muted); font-weight: 400; }
+.chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.chip {
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: var(--r-ctl);
+  background: var(--fill);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  transition: background-color 120ms ease-out;
+}
+.chip:active { background: var(--fill-press); }
+.chip[aria-pressed="true"] { background: var(--sel-bg); color: var(--sel-fg); font-weight: 600; }
+@media (max-width: 300px) {
+  /* 320px phones at 200% text land here too */
+  .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+}
+
+/* ---------- saved ---------- */
+.saved-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+.saved-head h1 { font-size: 24px; line-height: 1.3; letter-spacing: -0.02em; font-weight: 700; }
+.sort { margin: 2px 0 20px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.saved-note { margin-top: 28px; font-size: 14px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
+
+/* ---------- sheet ---------- */
+.sheet-root { position: fixed; inset: 0; z-index: 10; }
+.sheet-root[hidden] { display: none; }
+.scrim { position: absolute; inset: 0; background: var(--scrim); opacity: 0; transition: opacity 160ms ease-out; }
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 480px;
+  max-height: 88vh;
+  max-height: 88dvh;
+  margin: 0 auto;
+  padding: 0 16px calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface);
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  transform: translateY(100%);
+  transition: transform 190ms ease-in;
+}
+.sheet-root.open .scrim { opacity: 1; transition-duration: 200ms; }
+.sheet-root.open .sheet { transform: none; transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.sheet-root.instant .scrim, .sheet-root.instant .sheet { transition: none; }
+.sheet-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 60px;
+  padding-top: 6px;
+  background: var(--surface);
+}
+.sheet-head h2 { font-size: 19px; line-height: 1.35; letter-spacing: -0.01em; font-weight: 700; text-wrap: balance; }
+.sheet-head h2:focus { outline: none; }
+.opts { border-top: 1px solid var(--line); }
+.opt-row { display: flex; align-items: center; gap: 4px; border-bottom: 1px solid var(--line); }
+.opt { flex: 1; min-width: 0; min-height: 60px; padding: 10px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.opt b { display: block; font-weight: 600; }
+.opt small { display: block; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.opt svg { width: 20px; height: 20px; }
+.opt-row .textbtn { margin-right: -10px; }
+.stay-copy { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.primary {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 16px;
+  padding: 0 16px;
+  border-radius: var(--r-ctl);
+  background: var(--sel-bg);
+  color: var(--sel-fg);
+  font-weight: 600;
+  text-align: center;
+}
+.primary[aria-busy="true"] { opacity: 0.7; }
+.err { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .heart:active svg, .more:active { transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <button class="basis" id="basisBtn" type="button" aria-haspopup="dialog"></button>
+    <button class="saved-btn" id="savedBtn" type="button" hidden></button>
+  </header>
+  <main id="main"></main>
+  <p class="sr-only" id="sr" role="status" aria-live="polite"></p>
+</div>
+<div class="sheet-root" id="sheetRoot" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle"></section>
+</div>
+
+<script>
+'use strict';
+// ---------------------------------------------------------------------------------------------
+// Data: real rows from apps/web/public/spots.json (name, coords, mood, reason, image, kakao id,
+// bookable). id = first 8 chars of the spot uuid. Nothing here is invented.
+// ---------------------------------------------------------------------------------------------
+const IMG = 'https://api.cdn.visitjeju.net/photomng/thumbnailpath/';
+const SPOTS = [
+  { id: '64dc3e65', n: '상가리야자숲', la: 33.43921, ln: 126.35828, m: 'rest', r: '야자수 숲 사이에서 잠시 여유를 누려요.', img: '202407/18/5c4ee10a-8534-4278-a01a-972da115e4ec.webp', k: '878819879' },
+  { id: '385e0902', n: '연화못', la: 33.44669, ln: 126.35397, m: 'rest', r: '제주 서쪽에 있는 조용한 못이에요.', img: '201804/30/e2ca7f2f-5897-4e1f-97c8-e6979af785ae.webp' },
+  { id: 'fdd73898', n: '골목카페옥수', la: 33.43979, ln: 126.38008, m: 'rest', r: '소길리, 레트로 소품이 곳곳에 있는 카페예요.', img: '202203/04/202c5cb8-fd33-4967-a1c6-1e9aa0fce2a7.webp', k: '481425144' },
+  { id: 'd79c4c4c', n: '너와의 첫여행', la: 33.45062, ln: 126.38458, m: 'rest', r: '70년 된 감귤저장창고, 귤밭 보며 음료와 디저트를 즐겨요.', img: '202203/07/88e9af89-761a-4bfa-8f6a-f38c3e4e7e9b.webp', k: '325110055' },
+  { id: '7db4ec04', n: '까미노', la: 33.45782, ln: 126.34789, m: 'rest', r: '애월 하가리 카페, 전망이 좋아요.', img: '202407/09/5b516765-16dd-4fbe-a640-406cb2ca1a0a.webp', k: '26094495' },
+  { id: 'bf4e48f0', n: '드르쿰다 제주 애월점', la: 33.47027, ln: 126.38543, m: 'rest', r: '수산봉 아래 끝없이 펼쳐진 초원', img: '202511/19/d9bec3c9-1fa7-437d-a232-5eabff804bb1.webp', k: '208749695' },
+  { id: '9f98fe17', n: '풋감마을 소길리 농어촌체험마을', la: 33.44006, ln: 126.38, m: 'walk', r: '옛 올레길이 그대로 남은 소길리를 걸어요.', img: '201804/30/6c47b20f-7efe-4b2c-8ce3-60439bf04087.webp', b: true },
+  { id: 'cf326379', n: '족은바리메', la: 33.44356, ln: 126.35335, m: 'walk', r: '능선을 따라 이어지는 탐방로가 좋아요.', img: '201804/30/f86a93a6-11b6-4665-9c81-62484abfabe5.webp' },
+  { id: 'd695d1db', n: '고내봉(고내오름,고니오름,망오름)', la: 33.46002, ln: 126.34064, m: 'walk', r: '올레 15코스가 끝나는 지점에 있는 오름이에요.', img: '201907/12/d52004db-7558-4ca7-b8aa-b01e65668da9.webp', k: '8649358' },
+  { id: '3193e30f', n: '꽃향유', la: 33.45693, ln: 126.34759, m: 'new', r: '애월에서 카페와 아트샵이 함께 있는 공간이에요.', img: '201804/30/711eacc6-a948-47a3-83cd-d7ee906d3d67.webp', k: '2069872093' },
+  { id: '66a4d4d9', n: '더럭초등학교(구, 더럭분교)', la: 33.45346, ln: 126.34528, m: 'new', r: '알록달록한 애월의 옛 분교예요.', img: '201804/30/8b050ed1-a4f9-468b-bac5-a29aab9ada34.webp', k: '8267885' },
+  { id: 'aa983e52', n: '그린비즈', la: 33.46881, ln: 126.36045, m: 'new', r: '국내 하나뿐인 실내 꿀벌체험장에서 양봉을 체험해요.', img: '202407/24/0aaf166b-6d12-4217-89b4-c6068af733bd.webp', k: '218610155', b: true },
+  { id: '349d59e4', n: '소길역', la: 33.43808, ln: 126.38043, m: 'food', sub: 'meal', r: '소길리에서 샤부샤부와 스키야키, 카레우동을 내요.', img: '202211/07/57fa1bf6-80a9-4c2b-a610-7ec2fcbed473.webp', k: '45782254' },
+  { id: '522d94bb', n: '돈카츠서황', la: 33.43443, ln: 126.37979, m: 'food', sub: 'meal', r: '겉바속촉 돈까스와 생선카츠예요.', img: '202203/04/1b3c51e2-8506-4562-a81c-b15feffc1dec.webp', k: '27609941' },
+  { id: '1c284503', n: '애월자연농원', la: 33.44761, ln: 126.38851, m: 'food', sub: 'meal', r: '아이 놀이방이 딸린 애월의 한식당이에요.', img: '202601/23/c30df81b-a58b-4b35-b530-9cfaa34f36c9.webp' },
+  { id: '2e16e034', n: '더애월 흑돼지 김치찌개 두루치기 전문점', la: 33.45613, ln: 126.34882, m: 'food', sub: 'meal', r: '인증받은 흑돼지로 끓인 김치찌개와 두루치기예요.', img: '202306/21/c2bfffb4-9885-4f05-9414-5fae8431281e.webp', k: '1150787005' },
+  { id: 'b4f3b51b', n: '시루애월', la: 33.44261, ln: 126.39184, m: 'food', sub: 'cafe', r: '앤티크한 분위기에서 파스타와 스튜, 토스트를 먹어요.', img: '202306/05/058fa7bf-987f-4964-9eec-03c7778dfd14.webp' },
+  { id: 'cb6f9e05', n: '비스마일', la: 33.45089, ln: 126.39069, m: 'food', sub: 'cafe', r: '돌담과 귤밭 사이, 크로플 전문 카페예요.', img: '202306/07/66b545c2-143d-4443-8973-16685a49ed10.webp', k: '926994351' },
+  { id: 'dab4d6de', n: '살롱드라방 SALON de LAVANT', la: 33.45786, ln: 126.34896, m: 'food', sub: 'cafe', r: '평일에 느긋하게 브런치를 먹으러 가요.', img: '201804/30/d2b3de9d-dbdf-4583-9632-52406e8c70d8.webp', k: '25665611' },
+  { id: 'f1f1d773', n: '제주만주', la: 33.47213, ln: 126.36863, m: 'food', sub: 'cafe', r: '제주에서 하나뿐인 파이만주 전문점이에요.', img: '202307/07/052d73b0-09df-4961-ab95-1c84a1ead21e.webp', k: '905706752' },
+  { id: '978d8bb0', n: '신양포구', la: 33.44458, ln: 126.9095, m: 'rest', r: '포구에 앉으면 섭지코지가 한눈에 들어와요.', img: '201804/30/11dbcc1e-2ad5-4547-ba85-54dde5fd73c4.webp' },
+  { id: 'f2f31626', n: '톨칸이', la: 33.49239, ln: 126.9579, m: 'rest', r: '소의 여물통을 닮은 해변에서 쉬어 갈 수 있어요.', img: '202111/23/64e8837d-562f-40b5-80d6-bdd816d63692.webp', k: '20056498' },
+  { id: '21d49711', n: '랜딩커피', la: 33.43556, ln: 126.91889, m: 'rest', r: '통유리창 너머로 바다가 펼쳐지는 카페예요.', img: '202305/19/2b7d61a9-a109-4820-b6a2-c0cee0c89664.webp', k: '1335585931' },
+];
+const byId = new Map(SPOTS.map((s) => [s.id, s]));
+
+// 15 destination areas (src/areas.ts), west → east within each side.
+const AREAS = [
+  ['한경', 33.3274, 126.2212, 'jeju'], ['한림', 33.3957, 126.2651, 'jeju'], ['애월', 33.4475, 126.3678, 'jeju'],
+  ['신제주', 33.487, 126.488, 'jeju'], ['구제주', 33.5125, 126.526, 'jeju'], ['조천', 33.5012, 126.6668, 'jeju'],
+  ['구좌', 33.5189, 126.8079, 'jeju'], ['우도', 33.5079, 126.9538, 'jeju'],
+  ['대정', 33.2472, 126.2689, 'seogwipo'], ['안덕', 33.2693, 126.3295, 'seogwipo'], ['중문', 33.2576, 126.4205, 'seogwipo'],
+  ['서귀포 시내', 33.2573, 126.5338, 'seogwipo'], ['남원', 33.3053, 126.6735, 'seogwipo'], ['표선', 33.3643, 126.7973, 'seogwipo'],
+  ['성산', 33.4387, 126.9026, 'seogwipo'],
+].map(([name, lat, lng, side]) => ({ name, lat, lng, side }));
+const area = (name) => AREAS.find((a) => a.name === name);
+const GPS_DEMO = { lat: 33.4384, lng: 126.3828 }; // "여기" in the demo: a guesthouse lane in 소길리
+
+const MOODS = [
+  ['rest', '푹 쉬고 싶어'],
+  ['walk', '좀 걷고 싶어'],
+  ['new', '새로운 거 해보고 싶어'],
+  ['food', '맛있는 거 먹고 싶어'],
+];
+const MOOD_LABEL = Object.fromEntries([...MOODS, ['any', '아무거나 골라줘']]);
+
+// ---------------------------------------------------------------------------------------------
+// Travel (same rules as src/pick.ts): 직선 × 1.3, 차 40km/h · 걸음 4.5km/h, 5분 단위, 최소 5분.
+// ---------------------------------------------------------------------------------------------
+function km(a, b) {
+  const r = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * r;
+  const dLng = (b.lng - a.lng) * r;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+}
+const step5 = (min) => Math.max(5, Math.round(min / 5) * 5);
+const driveMin = (d) => step5(((d * 1.3) / 40) * 60);
+const walkMin = (d) => step5(((d * 1.3) / 4.5) * 60);
+const ISLANDS = [
+  ['우도', 33.48, 33.53, 126.93, 126.98], ['비양도', 33.4, 33.42, 126.22, 126.24],
+  ['가파도', 33.16, 33.18, 126.26, 126.28], ['마라도', 33.11, 33.125, 126.26, 126.275],
+];
+function islandOf(p) {
+  for (const [name, a, b, c, d] of ISLANDS) if (p.lat >= a && p.lat <= b && p.lng >= c && p.lng <= d) return name;
+  return null;
+}
+const fmt = (m) => (m < 60 ? `${m}분` : `${Math.floor(m / 60)}시간${m % 60 ? ` ${m % 60}분` : ''}`);
+function trip(o, s) {
+  const p = { lat: s.la, lng: s.ln };
+  const from = islandOf(o.point);
+  const to = islandOf(p);
+  if (from !== to) return to ? `${to}라서 배를 타야 해요` : '본섬이라 배를 타고 나가야 해요';
+  if (to) return `같은 ${to} 안이에요`;
+  const d = km(o.point, p);
+  if (o.isPoint && d < 1) return { how: '걸어서', min: walkMin(d) };
+  return { how: '차로', min: driveMin(d) };
+}
+/** "애월에서 차로 약 5분" (with from) / "차로 약 5분" / "우도라서 배를 타야 해요" */
+function tripText(o, s, withFrom) {
+  const t = trip(o, s);
+  if (typeof t === 'string') return t;
+  return `${withFrom ? o.from + ' ' : ''}${t.how} 약 ${fmt(t.min)}`;
+}
+
+// ---------------------------------------------------------------------------------------------
+// State. One object; render() derives every pressed state, label and card from it.
+// ---------------------------------------------------------------------------------------------
+const S = {
+  view: 'home', // home | cards | saved
+  prevView: 'home',
+  mood: null,
+  sub: 'meal',
+  reopen: false, // home opened from 바꾸기: show a check on the current mood
+  basis: { kind: 'area', area: '애월' }, // gps | stay | area
+  stay: null, // { area, point|null }
+  perm: 'granted', // granted | denied
+  phase: 'ready', // ready | loading | locating | denied | unavailable | outside | error
+  offline: false,
+  overlay: null, // null | basis | stay
+  stayPhase: 'idle', // idle | locating | failed
+  saved: [],
+  savedView: [], // snapshot while the saved list is open (un-hearting keeps the row until you leave)
+  shown: {}, // key -> ids last shown for that mood/sub (restored on mood switch)
+  seen: {}, // key -> ids seen in this round
+  restarted: {}, // key -> the round just ran out
+  wrapped: false,
+  hintSeen: true,
+  hintFor: null,
+};
+
+function origin() {
+  const b = S.basis;
+  if (b.kind === 'gps') return { point: GPS_DEMO, isPoint: true, from: '여기서', label: '여기' };
+  if (b.kind === 'stay' && S.stay) {
+    const p = S.stay.point || area(S.stay.area);
+    return { point: p, isPoint: !!S.stay.point, from: '숙소에서', label: '숙소' };
+  }
+  const a = area(b.area);
+  return { point: a, isPoint: false, from: `${a.name}에서`, label: a.name };
+}
+const keyOf = () => (S.mood === 'food' ? `food:${S.sub}` : S.mood);
+
+function pool(mood, sub, o) {
+  const list = SPOTS.filter((s) => s.m === mood && (mood !== 'food' || s.sub === sub))
+    .map((s) => ({ s, d: km(o.point, { lat: s.la, lng: s.ln }) }))
+    .sort((a, b) => a.d - b.d || a.s.id.localeCompare(b.s.id));
+  const near = list.filter((c) => driveMin(c.d) <= 60);
+  return (near.length >= 3 ? near : list.slice(0, 3)).map((c) => c.s);
+}
+function rotate(list, key) {
+  const seen = new Set(S.seen[key] || []);
+  const last = new Set(S.shown[key] || []);
+  const rank = (s) => (last.has(s.id) ? 2 : seen.has(s.id) ? 1 : 0);
+  return list.map((s, i) => ({ s, i })).sort((a, b) => rank(a.s) - rank(b.s) || a.i - b.i).map((x) => x.s);
+}
+/** New 3 for the current mood (only 다른 3곳 보기 and a first visit call this). */
+function drawNew() {
+  const key = keyOf();
+  const o = origin();
+  let cards;
+  let ids;
+  if (S.mood === 'any') {
+    const pools = ['rest', 'walk', 'new'].map((m) => pool(m, null, o));
+    cards = pools.map((p) => rotate(p, key)[0]).filter(Boolean);
+    cards.sort((a, b) => km(o.point, { lat: a.la, lng: a.ln }) - km(o.point, { lat: b.la, lng: b.ln }));
+    ids = pools.flat().map((s) => s.id);
+  } else {
+    const p = pool(S.mood, S.sub, o);
+    cards = rotate(p, key).slice(0, 3);
+    ids = p.map((s) => s.id);
+  }
+  const seen = S.seen[key] || [];
+  const cardIds = cards.map((c) => c.id);
+  // wrapped = the first tap after everything nearby was shown once (pick.ts `restarted`)
+  S.wrapped = !!S.restarted[key] || cards.some((c) => seen.includes(c.id));
+  let next = [...new Set([...seen, ...cardIds])];
+  S.restarted[key] = ids.every((id) => next.includes(id));
+  if (S.restarted[key]) next = cardIds;
+  S.seen[key] = next;
+  S.shown[key] = cardIds;
+}
+function resetRounds() {
+  S.shown = {};
+  S.seen = {};
+  S.restarted = {};
+  S.wrapped = false;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Rendering
+// ---------------------------------------------------------------------------------------------
+const $ = (sel, root = document) => root.querySelector(sel);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const ICON = {
+  chev: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M12 20.2s-7.6-4.5-9-9.3C2 7.5 4.2 4.8 7.2 4.8c2 0 3.6 1.1 4.8 2.9 1.2-1.8 2.8-2.9 4.8-2.9 3 0 5.2 2.7 4.2 6.1-1.4 4.8-9 9.3-9 9.3z" stroke-linejoin="round"/></svg>',
+  heartSolid: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.6-4.5-9-9.3C2 7.5 4.2 4.8 7.2 4.8c2 0 3.6 1.1 4.8 2.9 1.2-1.8 2.8-2.9 4.8-2.9 3 0 5.2 2.7 4.2 6.1-1.4 4.8-9 9.3-9 9.3z" fill="currentColor"/></svg>',
+  check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+/** "더럭초등학교(구, 더럭분교)" → name + small alias kept on one line */
+function nameHtml(n) {
+  const m = n.match(/^(.+?)\s*\((.+)\)\s*$/);
+  if (!m) return esc(n.trim());
+  const alias = m[2].split(/\s*,\s*/).join(', ');
+  return `${esc(m[1])} <span class="alias">(${esc(alias)})</span>`;
+}
+const plainName = (n) => n.replace(/\s*\(.+\)\s*$/, '').trim();
+function kakaoUrl(s) {
+  if (s.k) return `https://place.map.kakao.com/${encodeURIComponent(s.k)}`;
+  const name = plainName(s.n);
+  return `https://map.kakao.com/link/search/${encodeURIComponent(/제주|서귀포/.test(name) ? name : `제주 ${name}`)}`;
+}
+const bookUrl = (s) => `https://www.myrealtrip.com/search?q=${encodeURIComponent(plainName(s.n))}`;
+const photo = (s, w, h) =>
+  s.img && !S.offline ? `<img src="${IMG + s.img}" alt="" width="${w}" height="${h}" decoding="async" data-img>` : '';
+const heartBtn = (s) =>
+  `<button class="heart" type="button" data-heart="${s.id}" aria-pressed="${S.saved.includes(s.id)}" aria-label="${esc(plainName(s.n))} 저장">${ICON.heart}</button>`;
+const bookLink = (s) =>
+  s.b ? `<a class="book" href="${bookUrl(s)}" target="_blank" rel="noopener">마이리얼트립에서 예약 찾아보기</a>` : '';
+
+function pickCard(s, meta) {
+  const img = photo(s, 480, 360);
+  return `<article class="pick" data-card="${s.id}">
+    ${img ? `<a class="ph" href="${kakaoUrl(s)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img}</a>` : ''}
+    <div class="head"><h2><a class="card-link" href="${kakaoUrl(s)}" target="_blank" rel="noopener">${nameHtml(s.n)}</a></h2>${heartBtn(s)}</div>
+    <p class="reason">${esc(s.r)}</p>
+    <p class="meta">${esc(meta)} <span class="to">· <span class="dest">카카오맵</span></span></p>
+    ${bookLink(s)}
+  </article>`;
+}
+function rowCard(s, meta, dest) {
+  const img = photo(s, 152, 152);
+  return `<article class="row${img ? '' : ' noimg'}" data-card="${s.id}">
+    ${img ? `<div class="th">${img}</div>` : ''}
+    <div>
+      <div class="head"><h3><a class="card-link" href="${kakaoUrl(s)}" target="_blank" rel="noopener">${nameHtml(s.n)}</a></h3>${heartBtn(s)}</div>
+      <p class="reason">${esc(s.r)}</p>
+      ${meta ? `<p class="meta">${esc(meta)}${dest ? ' <span class="to">· <span class="dest">카카오맵</span></span>' : ''}</p>` : ''}
+      ${bookLink(s)}
+    </div>
+  </article>`;
+}
+function chipsHtml(selected) {
+  const side = (key, title) =>
+    `<h3 class="group">${title}</h3><div class="chips">${AREAS.filter((a) => a.side === key)
+      .map((a) => `<button class="chip" type="button" data-area="${a.name}" aria-pressed="${a.name === selected}">${a.name}</button>`)
+      .join('')}</div>`;
+  return side('jeju', '제주시 쪽 · 서쪽부터') + side('seogwipo', '서귀포 쪽');
+}
+const skeleton = () => `<div class="sk" aria-hidden="true"><div class="sk-photo"></div><div class="bar t" style="width:42%"></div><div class="bar" style="width:86%"></div><div class="bar" style="width:34%"></div>
+  ${[0, 1].map(() => '<div class="sk-row"><div class="sq"></div><div><div class="bar" style="width:55%"></div><div class="bar" style="width:92%"></div><div class="bar" style="width:40%"></div></div></div>').join('')}</div>`;
+
+function tomorrowLine() {
+  const d = new Date();
+  if (d.getHours() >= 4) d.setDate(d.getDate() + 1); // 새벽 1시에 보는 "내일"은 오늘 낮이다
+  return `${d.getMonth() + 1}월 ${d.getDate()}일 ${'일월화수목금토'[d.getDay()]}요일`;
+}
+
+function renderTop() {
+  const o = origin();
+  const label = S.basis.kind === 'gps' ? '여기 근처' : S.basis.kind === 'stay' ? '숙소 근처' : `${o.label} 근처`;
+  const bb = $('#basisBtn');
+  bb.innerHTML = `<span>${esc(label)}</span>${ICON.chev}`;
+  bb.setAttribute('aria-label', `기준: ${label}. 바꾸기`);
+  const sb = $('#savedBtn');
+  const n = S.saved.length;
+  sb.hidden = n === 0 && S.view !== 'saved';
+  sb.innerHTML = `${ICON.heartSolid}<span>${n}</span>`;
+  sb.setAttribute('aria-label', `저장한 곳 ${n}개`);
+  sb.setAttribute('aria-pressed', String(S.view === 'saved'));
+}
+
+function renderHome() {
+  const list = MOODS.map(
+    ([m, label]) =>
+      `<li><button class="mood" type="button" data-mood="${m}" aria-pressed="${S.reopen && S.mood === m}"><span>${label}</span>${S.reopen && S.mood === m ? ICON.check : ''}</button></li>`,
+  ).join('');
+  return `<section class="home">
+    <p class="date">${tomorrowLine()}</p>
+    <h1 class="q">내일은 어떤 기분이에요?</h1>
+    <ul class="moods">${list}</ul>
+    <button class="any" type="button" data-mood="any" aria-pressed="${S.reopen && S.mood === 'any'}">아무거나 골라줘</button>
+  </section>`;
+}
+
+function renderCards() {
+  const o = origin();
+  let h = `<div class="mood-line"><h1>${MOOD_LABEL[S.mood]}</h1><button class="textbtn" type="button" data-act="change">바꾸기</button></div>`;
+  if (S.mood === 'food') {
+    h += `<div class="tabs">${[['meal', '식사'], ['cafe', '카페·디저트']]
+      .map(([k, l]) => `<button class="tab" type="button" data-sub="${k}" aria-pressed="${S.sub === k}"><span>${l}</span></button>`)
+      .join('')}</div>`;
+  }
+  const inlineAreas = (msg) =>
+    `<div class="notice"><p>${msg}</p>${chipsHtml(S.basis.kind === 'area' ? S.basis.area : null)}${
+      S.phase === 'denied' ? '<p class="fine">위치를 쓰려면 브라우저 설정에서 위치 권한을 켜 주세요.</p>' : ''
+    }</div>`;
+  switch (S.phase) {
+    case 'loading':
+      return h + skeleton();
+    case 'locating':
+      return h + `<p class="status">위치 확인 중… <button class="textbtn" type="button" data-act="basis">동네로 고르기</button></p>` + skeleton();
+    case 'denied':
+      return h + inlineAreas('위치 권한이 꺼져 있어요. 내일 갈 동네를 골라 주세요.');
+    case 'unavailable':
+      return h + inlineAreas('위치를 확인하지 못했어요. 내일 갈 동네를 골라 주세요.');
+    case 'outside':
+      return h + inlineAreas('지금은 제주 밖이에요. 내일 갈 동네를 골라 주세요.');
+    case 'error':
+      return h + `<div class="notice"><p>장소 목록을 불러오지 못했어요. 연결을 확인하고 다시 불러와 주세요.</p><button class="fill-btn" type="button" data-act="retry">다시 불러오기</button></div>`;
+  }
+  const cards = (S.shown[keyOf()] || []).map((id) => byId.get(id));
+  const notes = [];
+  if (S.wrapped) notes.push('이 근처는 다 봤어요. 처음 본 곳부터 다시 보여 줘요.');
+  if (S.offline) notes.push('오프라인이라 사진은 안 보여요.');
+  if (notes.length) h += `<p class="status">${notes.join(' ')}</p>`;
+  const [first, ...rest] = cards;
+  h += pickCard(first, tripText(o, first, true));
+  if (rest.length) {
+    const texts = rest.map((s) => tripText(o, s, false));
+    // the same trip under both rows says nothing twice: say it once, next to 아니면
+    const same = texts.every((t) => t === texts[0]);
+    const shared = same ? ` · ${rest.length === 2 ? '둘 다 ' : ''}${esc(texts[0])}` : '';
+    h += `<p class="or"><b>아니면</b>${shared}</p>`;
+    h += rest.map((s, i) => rowCard(s, same ? '' : texts[i], false)).join('');
+  }
+  h += `<button class="more" type="button" data-act="more">다른 3곳 보기</button>`;
+  return h;
+}
+
+function renderSaved() {
+  const o = origin();
+  const list = S.savedView.map((id) => byId.get(id))
+    .sort((a, b) => km(o.point, { lat: a.la, lng: a.ln }) - km(o.point, { lat: b.la, lng: b.ln }));
+  const sortLabel = S.basis.kind === 'gps' ? '여기서 가까운 순' : S.basis.kind === 'stay' ? '숙소에서 가까운 순' : `${o.label}에서 가까운 순`;
+  return `<div class="saved-head"><h1>저장한 곳</h1><button class="textbtn" type="button" data-act="close-saved">닫기</button></div>
+    <p class="sort">${sortLabel}</p>
+    ${list.map((s, i) => rowCard(s, tripText(o, s, true), i === 0)).join('')}
+    <p class="saved-note">이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.</p>`;
+}
+
+function renderMain() {
+  const main = $('#main');
+  main.innerHTML = S.view === 'home' ? renderHome() : S.view === 'saved' ? renderSaved() : renderCards();
+  for (const img of main.querySelectorAll('img[data-img]')) {
+    img.addEventListener('error', () => {
+      // photo failed: drop the whole photo slot, never an empty grey box
+      const slot = img.closest('.ph, .th');
+      const row = img.closest('.row');
+      slot && slot.remove();
+      row && row.classList.add('noimg');
+    }, { once: true });
+  }
+}
+
+function renderSheet() {
+  const root = $('#sheetRoot');
+  const sheet = $('#sheet');
+  if (!S.overlay) return;
+  if (S.overlay === 'basis') {
+    const b = S.basis.kind;
+    const staySub = S.stay ? `${S.stay.area} 숙소` : '처음 한 번만 정해요';
+    const hereSub = S.perm === 'denied' ? '<small>위치 권한이 꺼져 있어요.</small>' : '';
+    sheet.innerHTML = `<div class="sheet-head"><h2 id="sheetTitle" tabindex="-1">어디 근처로 볼까요?</h2><button class="textbtn" type="button" data-act="close">닫기</button></div>
+      <div class="opts">
+        <div class="opt-row"><button class="opt" type="button" data-basis="gps" aria-pressed="${b === 'gps'}"><span><b>지금 있는 곳</b>${hereSub}</span>${b === 'gps' ? ICON.check : ''}</button></div>
+        <div class="opt-row"><button class="opt" type="button" data-basis="stay" aria-pressed="${b === 'stay'}"><span><b>숙소</b><small>${staySub}</small></span>${b === 'stay' ? ICON.check : ''}</button>${
+          S.stay ? '<button class="textbtn" type="button" data-act="stay">다시 정하기</button>' : ''
+        }</div>
+      </div>
+      ${chipsHtml(b === 'area' ? S.basis.area : null)}`;
+  } else {
+    const busy = S.stayPhase === 'locating';
+    sheet.innerHTML = `<div class="sheet-head"><h2 id="sheetTitle" tabindex="-1">숙소가 어디예요?</h2><button class="textbtn" type="button" data-act="close">닫기</button></div>
+      <p class="stay-copy">한 번 정하면 이 브라우저에 기억해 둬요.</p>
+      <button class="primary" type="button" data-act="stay-here" aria-busy="${busy}">${busy ? '위치 확인 중…' : '지금 위치를 숙소로'}</button>
+      ${S.stayPhase === 'failed' ? '<p class="err" role="alert">위치를 확인하지 못했어요. 아래에서 숙소 동네를 골라 주세요.</p>' : ''}
+      ${chipsHtml(S.stay ? S.stay.area : null).replace(/data-area=/g, 'data-stay-area=')}`;
+  }
+  root.hidden = false;
+}
+
+function render() {
+  renderTop();
+  renderMain();
+  if (S.overlay) renderSheet();
+}
+
+// ---------------------------------------------------------------------------------------------
+// Intents
+// ---------------------------------------------------------------------------------------------
+const sr = (t) => { $('#sr').textContent = ''; setTimeout(() => ($('#sr').textContent = t), 30); };
+let lastTap = { key: '', at: 0 };
+function tooSoon(key) {
+  const now = performance.now();
+  const dup = lastTap.key === key && now - lastTap.at < 400;
+  lastTap = { key, at: now };
+  return dup;
+}
+let ticket = 0; // every intent takes a new ticket; a late result with an old ticket is dropped
+
+function chooseMood(m) {
+  if (tooSoon('mood:' + m)) return;
+  const t = ++ticket;
+  S.mood = m;
+  S.view = 'cards';
+  S.reopen = false;
+  S.wrapped = false;
+  if (S.basis.kind === 'gps' && S.perm === 'denied') S.phase = 'denied';
+  else {
+    S.phase = 'ready';
+    if (!S.shown[keyOf()]) drawNew(); // coming back to a mood restores the three you last saw
+  }
+  render();
+  window.scrollTo(0, 0);
+  if (t === ticket && S.phase === 'ready') sr('3곳 골랐어요.');
+}
+function more() {
+  if (tooSoon('more')) return;
+  ++ticket;
+  drawNew();
+  render();
+  window.scrollTo(0, 0);
+  sr('다른 3곳을 골랐어요.');
+}
+function setSub(sub) {
+  if (S.sub === sub) return;
+  S.sub = sub;
+  S.wrapped = false;
+  if (!S.shown[keyOf()]) drawNew();
+  render();
+}
+function setBasis(basis) {
+  ++ticket;
+  S.basis = basis;
+  resetRounds();
+  if (S.view === 'cards') {
+    S.phase = basis.kind === 'gps' && S.perm === 'denied' ? 'denied' : 'ready';
+    if (S.phase === 'ready') drawNew();
+  }
+  closeSheet(false);
+  render();
+  window.scrollTo(0, 0);
+}
+function toggleSave(id) {
+  const on = !S.saved.includes(id);
+  S.saved = on ? [...S.saved, id] : S.saved.filter((x) => x !== id);
+  // update in place: no re-render, so photos never flicker
+  for (const b of document.querySelectorAll(`[data-heart="${id}"]`)) b.setAttribute('aria-pressed', String(on));
+  renderTop();
+  if (on && !S.hintSeen) {
+    S.hintSeen = true;
+    const card = document.querySelector(`[data-card="${id}"]`);
+    const at = card && (card.querySelector('.meta') || card.querySelector('.reason'));
+    if (at) {
+      const p = document.createElement('p');
+      p.className = 'hint';
+      p.textContent = '저장한 곳은 맨 위 하트에 모여요.';
+      at.after(p); // stays until the next render: no second layout jump, no timer to race a half-asleep reader
+    }
+  }
+}
+function openSaved() {
+  if (S.view === 'saved') return closeSaved();
+  S.prevView = S.view;
+  S.view = 'saved';
+  S.savedView = [...S.saved];
+  render();
+  window.scrollTo(0, 0);
+}
+function closeSaved() {
+  S.view = S.prevView;
+  render();
+}
+
+let opener = null;
+function openSheet(kind, instant) {
+  opener = document.activeElement;
+  S.overlay = kind;
+  if (kind === 'stay') S.stayPhase = S.stayPhase === 'failed' ? 'failed' : 'idle';
+  renderSheet();
+  const root = $('#sheetRoot');
+  root.classList.toggle('instant', !!instant);
+  $('#app').inert = true;
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    root.classList.add('open');
+    if (!instant) $('#sheetTitle').focus({ preventScroll: true });
+  });
+}
+function closeSheet(restoreFocus = true) {
+  if (!S.overlay) return;
+  S.overlay = null;
+  ++ticket; // a 숙소 lookup still running is dropped
+  S.stayPhase = 'idle';
+  const root = $('#sheetRoot');
+  root.classList.remove('open', 'instant');
+  $('#app').inert = false;
+  document.body.style.overflow = '';
+  const done = () => { if (!S.overlay) root.hidden = true; };
+  matchMedia('(prefers-reduced-motion: reduce)').matches ? done() : setTimeout(done, 190);
+  if (restoreFocus && opener && opener.isConnected) opener.focus({ preventScroll: true });
+}
+function showStaySheet() {
+  S.overlay = 'stay';
+  S.stayPhase = 'idle';
+  renderSheet();
+  $('#sheet').scrollTop = 0;
+  $('#sheetTitle').focus({ preventScroll: true });
+}
+function stayHere() {
+  if (S.stayPhase === 'locating') return;
+  const t = ++ticket;
+  S.stayPhase = 'locating';
+  renderSheet();
+  setTimeout(() => {
+    if (t !== ticket || S.overlay !== 'stay') return; // sheet closed or something newer happened
+    S.stay = { area: '애월', point: GPS_DEMO };
+    S.stayPhase = 'idle';
+    setBasis({ kind: 'stay' });
+  }, 700);
+}
+function retry() {
+  const t = ++ticket;
+  S.phase = 'loading';
+  render();
+  setTimeout(() => {
+    if (t !== ticket) return;
+    S.phase = 'ready';
+    drawNew();
+    render();
+    sr('3곳 골랐어요.');
+  }, 700);
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('button, [data-act]');
+  if (!el) return;
+  const d = el.dataset;
+  if (d.heart) return toggleSave(d.heart);
+  if (d.mood) return chooseMood(d.mood);
+  if (d.sub) return setSub(d.sub);
+  if (d.area) return setBasis({ kind: 'area', area: d.area });
+  if (d.stayArea) {
+    S.stay = { area: d.stayArea, point: null };
+    return setBasis({ kind: 'stay' });
+  }
+  if (d.basis === 'gps') return setBasis({ kind: 'gps' });
+  if (d.basis === 'stay') return S.stay ? setBasis({ kind: 'stay' }) : showStaySheet();
+  if (el.id === 'basisBtn') return openSheet('basis');
+  if (el.id === 'savedBtn') return openSaved();
+  switch (d.act) {
+    case 'change': S.view = 'home'; S.reopen = true; render(); return window.scrollTo(0, 0);
+    case 'more': return more();
+    case 'basis': return openSheet('basis');
+    case 'close': return closeSheet();
+    case 'close-saved': return closeSaved();
+    case 'stay': return showStaySheet();
+    case 'stay-here': return stayHere();
+    case 'retry': return retry();
+  }
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && S.overlay) closeSheet(); });
+
+// ---------------------------------------------------------------------------------------------
+// Screens by hash, so every state can be screenshotted directly.
+// ---------------------------------------------------------------------------------------------
+const PRESETS = {
+  home: {},
+  cards: { mood: 'rest' },
+  walk: { mood: 'walk' },
+  new: { mood: 'new' },
+  any: { mood: 'any' },
+  food: { mood: 'food', sub: 'meal', basis: { kind: 'gps' } },
+  cafe: { mood: 'food', sub: 'cafe', basis: { kind: 'gps' } },
+  sheet: { mood: 'rest', overlay: 'basis' },
+  stay: { mood: 'rest', overlay: 'stay', stay: null },
+  'stay-fail': { mood: 'rest', overlay: 'stay', stay: null, stayPhase: 'failed' },
+  saved: { view: 'saved' },
+  empty: { mood: 'rest', basis: { kind: 'gps' }, perm: 'denied', phase: 'denied', saved: [] },
+  unavailable: { mood: 'rest', basis: { kind: 'gps' }, phase: 'unavailable' },
+  outside: { mood: 'rest', basis: { kind: 'gps' }, phase: 'outside' },
+  locating: { mood: 'rest', basis: { kind: 'gps' }, phase: 'locating' },
+  loading: { mood: 'rest', phase: 'loading' },
+  error: { mood: 'rest', phase: 'error' },
+  offline: { mood: 'rest', offline: true },
+  island: { mood: 'rest', basis: { kind: 'area', area: '성산' } },
+  wrapped: { mood: 'rest', wrapAround: true },
+  first: { mood: 'rest', saved: [], hintSeen: false },
+  hint: { mood: 'rest', saved: [], hintSeen: false, tapFirstHeart: true },
+};
+function applyHash() {
+  const name = location.hash.slice(1) || 'home';
+  const p = PRESETS[name] || PRESETS.home;
+  if (S.overlay) closeSheet(false);
+  Object.assign(S, {
+    view: p.view || (p.mood ? 'cards' : 'home'),
+    prevView: 'home',
+    mood: p.mood || null,
+    sub: p.sub || 'meal',
+    reopen: false,
+    basis: p.basis || { kind: 'area', area: '애월' },
+    stay: 'stay' in p ? p.stay : { area: '애월', point: null },
+    perm: p.perm || 'granted',
+    phase: p.phase || 'ready',
+    offline: !!p.offline,
+    overlay: null,
+    stayPhase: p.stayPhase || 'idle',
+    saved: p.saved || ['7db4ec04', 'cb6f9e05'],
+    hintSeen: p.hintSeen !== false,
+  });
+  S.savedView = [...S.saved];
+  resetRounds();
+  if (S.view === 'cards' && S.phase === 'ready') {
+    drawNew();
+    if (p.wrapAround) { drawNew(); drawNew(); }
+  }
+  render();
+  if (p.tapFirstHeart) toggleSave(S.shown[keyOf()][0]);
+  if (p.overlay) {
+    if (p.overlay === 'stay') S.stayPhase = p.stayPhase || 'idle';
+    openSheet(p.overlay, true);
+  }
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', applyHash);
+applyHash();
+</script>
+</body>
+</html>
