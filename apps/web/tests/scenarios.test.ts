@@ -411,6 +411,25 @@ describe('뒤로가기와 저장 목록 (history)', () => {
     expect($('#savedView').hidden).toBe(true);
     expect($('#saved').hidden).toBe(true);
   });
+
+  it('QA r3 seed 198: saved list restored by a reload → ♥N closes it → ⇄ before the back lands: screen and entry agree', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    await tap('.card .heart');
+    await tap('#saved');
+    await settle();
+    render(); // reload on the saved list: what is underneath is unknown ('adopt')
+    await flush();
+    advance();
+    $('#saved').click(); // close: back('adopt') in flight
+    advance();
+    $('#basis').click(); // ⇄ on the saved list before that back lands
+    await settle();
+    await settle();
+    expect(current().state().view).toBe('cards');
+    expect($('#sheet').hidden).toBe(current().state().overlay === null);
+    expect(window.history.state).toMatchObject({ view: current().state().view, overlay: current().state().overlay, depth: 1 });
+  });
 });
 
 describe('오프라인·목록 실패', () => {

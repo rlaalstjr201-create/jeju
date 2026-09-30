@@ -153,7 +153,12 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
       forwarded = false;
       traverse(-1);
       if (then === 'adopt') {
-        queue.unshift(() => opts.onRoute(routeOf(current())));
+        // pushes queued behind it were asked of the screen being left (⇄ on a closing saved list): the
+        // landed entry replaces that screen, so they are dropped, not written on top of it (QA r3 seed 198)
+        queue.unshift(() => {
+          queue.length = 0;
+          opts.onRoute(routeOf(current()));
+        });
       } else if (then) {
         queue.unshift(() => {
           const at = routeOf(current());
