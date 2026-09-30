@@ -5,7 +5,7 @@
 
 "간극" = 사려 깊은 사람이 만든 앱이라면 할 행동과 지금 행동이 다름. **굵게** 표시한 ID는 브라우저에서 직접 재현한 것.
 
-확인 경로(S9-2): 행마다 `tests/scenarios.test.ts`(jsdom, ID로 이름 붙음) 또는 `tests/e2e/browser.e2e.mjs`(실제 Chrome, 같은 ID) 가운데 하나 이상. 2026-09-30 QA에서 브라우저 확인이 없던 S31·S51·S52를 e2e로 옮기고, 감사에서 나온 경우를 S61~S66으로 더했다. 2차 QA(r2)의 수정으로 S02·S07·S24·S26·S35·S65의 간극을 닫고 S67~S70을 더했다. SPEC 3판 구현 뒤 QA에서 옛 문구·옛 화면 이름(`#resultsTitle`→`#crumb`, "내 주변"→"여기 근처" 등)을 고치고 S71~S77(e2e `3-17`~`3-24`)을 더했다. 확인 값: vitest 374 통과·1 건너뜀(review/out 없음), e2e 40/40, 세 번씩 반복해도 흔들림 없음.
+확인 경로(S9-2): 행마다 `tests/scenarios.test.ts`(jsdom, ID로 이름 붙음) 또는 `tests/e2e/browser.e2e.mjs`(실제 Chrome, 같은 ID) 가운데 하나 이상. 2026-09-30 QA에서 브라우저 확인이 없던 S31·S51·S52를 e2e로 옮기고, 감사에서 나온 경우를 S61~S66으로 더했다. 2차 QA(r2)의 수정으로 S02·S07·S24·S26·S35·S65의 간극을 닫고 S67~S70을 더했다. SPEC 3판 구현 뒤 QA에서 옛 문구·옛 화면 이름(`#resultsTitle`→`#crumb`, "내 주변"→"여기 근처" 등)을 고치고 S71~S77(e2e `3-17`~`3-24`)을 더했다. 확인 값: vitest 374 통과·1 건너뜀(review/out 없음), e2e 40/40, 세 번씩 반복해도 흔들림 없음. 3차 QA(ea4bc86 뒤): S78~S82와 S60 검사 보강 행을 더했다. 확인 값: vitest 377 통과·1 건너뜀, e2e 45/45, tsc·build·check:slop 통과, 세 번씩 반복해도 흔들림 없음.
 
 | ID | 경우 | 기대 동작 | 현재 동작 (코드 기준) | 간극 |
 |---|---|---|---|---|
@@ -21,7 +21,7 @@
 | S10 | 숙소 GPS 저장 대기 중 시트를 닫음 | 닫으면 그 요청은 무효 | 시트를 닫으면 대기 중 GPS 요청은 무효: 기준·저장 변화 없고 다른 시트도 그대로(scenarios `S10`, e2e `S10`) | 없음 |
 | S11 | 숙소 옮김 | 숙소 다시 정하기 | 기준 시트 "숙소" 줄 오른쪽에 글자 버튼 "다시 정하기"(`data-action="restay"`)(scenarios `S08 the basis sheet shows which 동네 …`, app.test `S8-2 위치 전환 시트`, style 계약 `tap targets ≥ 44px …`) | 없음 |
 | S12 | 지역(목적지) 기준 선택 | "애월 근처"가 유지되고, 카드가 어디서 몇 분인지 말해 준다 | 첫 장은 늘 자기 문구에 출발지를 붙이고("애월에서 차로 약 5분") 끝에 밑줄 "카카오맵". 줄 카드 두 장의 문구가 같으면 "아니면 · 둘 다 …" 한 번으로 묶고 줄 카드엔 메타가 없으며, 다르면 줄마다 출발지 없는 문구. 첫 장의 "셋 다 …"는 없어짐(scenarios `S12 the first card says where …`, app.test `QA 2026-09-30 (§14): no screen shows the same trip line three times`, e2e `QA-meta`·`3-23`) | 없음. 다만 scenarios `S12`·`S13`의 정규식이 아직 옛 "(셋 다 )?"를 허용해 "셋 다"가 돌아와도 이 두 테스트만으로는 못 잡음(app.test·e2e `3-23`이 잡음) |
-| S13 | 다음 날 다시 엶(어제 고른 지역이 남아 있음) | 어제 기준이 그대로라는 걸 눈치채게 한다 | 새로 열어도 라벨 "○○ 근처"와 첫 장 메타의 출발지("애월에서 …")가 보임. 지역은 계속 저장(D5)(scenarios `S13 yesterday's area is still visible …`) | 없음 |
+| S13 | 다음 날 다시 엶(어제 고른 지역이 남아 있음) | 어제 기준이 그대로라는 걸 눈치채게 한다 | 새로 열어도 라벨 "○○ 근처"와 첫 장 메타의 출발지("애월에서 …")가 보임. 지역은 계속 저장(D5)(scenarios `S13 yesterday's area is still visible the next day: …`) | 없음 |
 | S14 | 카드가 보이는 중 기준 전환 | 새 기준으로 같은 기분 카드 다시 계산 | resumeAfterBasisChange가 같은 기분을 새 출발지로 다시 계산(scenarios `S14`, state.test `cardsValid`) | 없음 |
 | **S15** | 저장 목록을 연 채 기준 전환(지역 선택) | 저장 목록이 새 기준 가까운 순으로 다시 정렬 | history.back()의 popstate를 nav.ts가 자기 것으로 걸러 저장 목록이 유지되고 새 기준 순으로 재정렬(nav.test `S15`, scenarios `S15`, e2e `S15`) | 없음 |
 | **S16** | 저장 목록에서 기준 시트 열고 "닫기" | 시트만 닫히고 저장 목록 유지 | 저장 목록 → ⇄ → 닫기: 시트만 닫히고 빈 항목 없음(nav.test `S16`, scenarios `S16`, e2e `S16`) | 없음 |
@@ -86,3 +86,9 @@
 | S75 | 동네 고르기(결과 자리·기준 시트·숙소 시트) | 행정 지명을 몰라도 고른다 | 15칸 색인이 서→동 순서·대표 지명과 함께 세 곳에 같은 모양으로 나옴, 선택 칸만 이름 600+체크, 칸 배경 없음, 글자가 커지면 1열, 대표 지명은 각 지역 중심에서 가장 가까운 곳(e2e `3-22`, app.test `area landmarks: 15 fixed places …`, `sheet lists 내 위치 / 숙소 / 15개 지역 …`, scenarios `S03 denied: …`) | 없음(app.test 제목에 옛 "내 위치") |
 | S76 | 결과 화면의 이동 문구 | 같은 문구를 세 번 읽지 않고, 지도 목적지는 한 번만 | 애월 기준 "푹 쉬고 싶어": 첫 장 "애월에서 … · 카카오맵", 줄 카드 둘이 같으면 "아니면 · 둘 다 …"(줄 카드에 `.meta` 없음, 링크에 `aria-describedby="alt-trip"`), "카카오맵"은 한 번(e2e `3-23`, `QA-meta`, app.test `no screen shows the same trip line three times …`) | 없음 |
 | S77 | 결과 화면의 시각 위계 | 장소가 주인공: 고른 기분은 작게, 첫 장 이름이 가장 크게 | `h1.crumb`(17/600) < 첫 장 `.name`(20/700), 화면 안 글자 크기 종류 ≤ 3(e2e `3-24`, slop.test 규칙 7·8) | 없음 |
+| S78 | 320·360에서 Tab으로 카드를 지나감 — "다른 3곳 보기" 띠가 떠 있음 | 포커스가 띠에 가려지지 않는다 | 카드 링크·하트가 띠 밑에 남지 않게 포커스 때 스크롤 여백을 둠(e2e `QA2-focus-bar`) | 없음 |
+| S79 | 320×568 기준 시트에서 Tab | 고정된 `닫기` 밑에 선택지가 남지 않는다 | 시트 안 모든 선택지가 sticky `닫기` 위 영역에 들어옴(e2e `QA2-focus-sheet`) | 없음 |
+| S80 | 320×568 동네 색인에서 Shift+Tab으로 위로 | 상단 줄 밑에 가려지는 칸이 없고, ♥ N에 포커스를 줘도 화면이 움직이지 않는다 | 포커스된 칸은 상단 줄 아래에 보임, ♥ N 포커스로 스크롤 안 바뀜(e2e `QA2-focus-top`) | 없음 |
+| S81 | 루트 글자 200%, 320px, 기준 시트의 숙소 줄 | "서귀포 시내 숙소"가 한 줄로 남는다 | 이름은 `다시 정하기` 옆이나 위에서 줄바꿈 없이 한 줄(e2e `QA2-stay-row`) | 없음 |
+| S82 | 320px 줄 카드의 이름이 " - "나 괄호로 나뉨("… 절로 가는길 - 정진의 길", "- 인욕의 길", "(박진경 추도비)") | 같은 이름 앞부분이라도 구분되어 보인다 | 이름 한 줄(말줄임), 그다음 줄에 " - " 뒤 또는 괄호 부분(`src/render.ts splitName`, `.base`/`.alias`)(e2e `QA2-row-names`) | 없음 |
+| S83 | 이유 문장·스타일 검사가 놓치던 경우 | 마침표(전각 포함)와 선택 채움을 따옴표 모양과 상관없이 잡는다 | 규칙 19는 둘째 문장·전각 끝 마침표를 잡고 소수점은 통과, `shipReason`·`cleanReason`이 전각 끝 마침표를 같이 지움, 규칙 18은 `aria-pressed`·`aria-current` 선택 채움을 따옴표 유무와 관계없이 잡고 `.saved-btn`은 통과(slop.test `#19 catches a second sentence after any stop, …`, `shipReason and cleanReason drop a fullwidth final stop too, and agree`, `#18 catches a filled selection however the attribute is quoted, and aria-current`) | 없음 |
