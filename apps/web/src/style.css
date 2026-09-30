@@ -163,8 +163,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 }
 .card.row .ph { width: var(--thumb); aspect-ratio: 1; border-radius: var(--r-thumb); align-self: start; }
 /* 320: two siblings ("… 절로 가는길 - 정진의 길" / "- 인욕의 길") would clamp to the same two lines. The name
-   takes one line, cut with "…", and the alias the second, whole */
-.card.row .base, .card.row .alias { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+   takes up to two lines, cut with "…", and the alias its own line after it, whole */
+.card.row .base { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+.card.row .alias { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.card.row .name:has(.alias) { -webkit-line-clamp: 3; line-clamp: 3; }
 .card.row .reason { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
 .card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; }
 .card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; grid-template-rows: none; }

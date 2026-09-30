@@ -9,6 +9,9 @@
 //   waiting so nothing stays queued forever.
 // - A popstate the app did not cause (phone back/forward) is applied from history.state — the entry says
 //   what should be on screen, nothing is guessed.
+// - A popstate landing deeper while a self-pop is in flight is the user's forward, not ours: it is not
+//   counted, and the self-pop is sent again from there until it reaches its target depth (Chromium drops a
+//   back sent right after a forward, so that re-send also runs at settleMs).
 import type { Overlay, Route, View } from './types';
 
 interface Entry extends Route {
@@ -55,6 +58,8 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
   const history = win?.history ?? null;
   let depth = 0;
   let pendingPops = 0;
+  let target = 0; // depth the in-flight self-pop should land on
+  let forwarded = false; // a user forward landed while it was in flight
   const queue: (() => void)[] = [];
   let settleTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -77,6 +82,22 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
   function flush() {
     while (queue.length && pendingPops === 0) queue.shift()!();
   }
+  function traverse(delta: number) {
+    if (settleTimer) clearTimeout(settleTimer);
+    settleTimer = setTimeout(onSettleTimeout, settleMs);
+    try {
+      if (delta === -1) history!.back();
+      else history!.go(delta);
+    } catch {
+      settled();
+    }
+  }
+  function onSettleTimeout() {
+    if (forwarded && depth > target && history) {
+      forwarded = false;
+      traverse(target - depth);
+    } else settled();
+  }
   function settled() {
     pendingPops = 0;
     if (settleTimer) clearTimeout(settleTimer);
@@ -92,12 +113,23 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
     'popstate',
     () => {
       const e = current();
-      depth = e?.depth ?? 0;
+      const landed = e?.depth ?? 0;
       if (pendingPops > 0) {
+        const forward = landed > depth;
+        depth = landed;
+        if (forward) {
+          forwarded = true; // the user's forward: our back is still to come (or was dropped)
+          return;
+        }
+        if (landed > target) {
+          traverse(target - landed); // ours, but it started from the forward entry: go on to the target
+          return;
+        }
         pendingPops--;
         if (pendingPops === 0) settled();
         return;
       }
+      depth = landed;
       opts.onRoute(routeOf(e));
     },
     { signal: opts.signal },
@@ -117,14 +149,9 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
         return;
       }
       pendingPops++;
-      depth--;
-      if (settleTimer) clearTimeout(settleTimer);
-      settleTimer = setTimeout(settled, settleMs);
-      try {
-        history.back();
-      } catch {
-        settled();
-      }
+      target = --depth;
+      forwarded = false;
+      traverse(-1);
       if (then === 'adopt') {
         queue.unshift(() => opts.onRoute(routeOf(current())));
       } else if (then) {

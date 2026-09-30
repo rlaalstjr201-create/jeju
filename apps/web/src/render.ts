@@ -302,7 +302,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // A row whose trip went to the `아니면` line hears it with the card (§6.5).
     if (describedBy) link.setAttribute('aria-describedby', describedBy);
     const { main, alias } = splitName(name);
-    // with an alias, the name is its own span: a row card cuts it to one line so the alias always shows
+    // with an alias, the name is its own span: a row card cuts it at two lines so the alias always shows
     if (alias) link.append(el(doc, 'span', { class: 'base' }, main), ' ', el(doc, 'span', { class: 'alias' }, alias));
     else link.append(main);
     title.append(link);

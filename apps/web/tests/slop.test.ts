@@ -79,4 +79,27 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
     checkCss('probe.css', ".saved-btn[aria-pressed='true'] { background: var(--fill); }", v);
     expect(v).toEqual([]);
   });
+
+  it('#18 also catches a bare attribute, the i flag and aria-current="page"; a cleared background passes', () => {
+    for (const css of [
+      '.mood[aria-current] { background: var(--fill); }',
+      '.mood[aria-pressed] { background: var(--fill); }',
+      '.mood[aria-current="true" i] { background: var(--fill); }',
+      '.mood[aria-current="page"] { background: var(--fill); }',
+      ".mood[aria-current='page' i] { background-color: var(--fill); }",
+    ]) {
+      const v: Violation[] = [];
+      checkCss('probe.css', css, v);
+      expect(v.map((x) => x.rule), css).toEqual([18]);
+    }
+    for (const css of [
+      '.mood[aria-current="true"] { background: none; }',
+      '.mood[aria-current="true"] { background: transparent; }',
+      '.mood[aria-current="page"] { background-color: initial; }',
+    ]) {
+      const v: Violation[] = [];
+      checkCss('probe.css', css, v);
+      expect(v, css).toEqual([]);
+    }
+  });
 });

@@ -155,6 +155,43 @@ describe('nav: self-caused pops are never applied (audit MAJOR 1)', () => {
     expect(onRoute).toHaveBeenCalledWith(HOME);
   });
 
+  it('a phone forward landing before a UI close\'s own back is the user\'s, not ours (QA r3, seed 5018)', () => {
+    const { nav, onRoute } = setup();
+    nav.push(CARDS);
+    nav.push({ view: 'cards', overlay: 'basis' });
+    fake.history.back(); // phone back closes the sheet: the sheet stays as a forward entry
+    fake.deliverAll();
+    onRoute.mockClear();
+    nav.back(HOME); // 바꾸기
+    fake.pending.unshift(1); // the user's forward (pressed just before) lands first
+    fake.deliverAll();
+    expect(nav.busy()).toBe(false);
+    expect(onRoute).not.toHaveBeenCalled(); // the app already shows the first screen
+    expect(fake.route).toEqual({ ...HOME, depth: 0 });
+    expect(fake.entries.map((e) => readEntry(e)?.depth)).toEqual([0, 1, 2]);
+  });
+
+  it('a phone forward that swallowed the own back (Chromium drops it): the back is sent again at settleMs', () => {
+    vi.useFakeTimers();
+    try {
+      const { nav } = setup(null, 200);
+      nav.push(CARDS);
+      nav.push({ view: 'cards', overlay: 'basis' });
+      fake.history.back();
+      fake.deliverAll();
+      nav.back(HOME);
+      fake.pending = [1]; // only the forward happens
+      fake.deliverAll();
+      vi.advanceTimersByTime(250);
+      fake.deliverAll();
+      expect(nav.busy()).toBe(false);
+      expect(fake.route).toEqual({ ...HOME, depth: 0 });
+      expect(fake.entries.map((e) => readEntry(e)?.depth)).toEqual([0, 1, 2]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('if the popstate never arrives, queued pushes run after settleMs', () => {
     vi.useFakeTimers();
     try {

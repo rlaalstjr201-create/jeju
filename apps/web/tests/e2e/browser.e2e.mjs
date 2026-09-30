@@ -1380,13 +1380,13 @@ async function withNames(page, mood, names) {
     await route.fulfill({ response: res, body: JSON.stringify(spots) });
   });
 }
-await check('QA2-row-names', 'row cards at 320: "… 절로 가는길 - 정진의 길" and "- 인욕의 길" tell apart, and "(박진경 추도비)" shows: name one line, then the part after " - " or in brackets', async () => {
+await check('QA2-row-names', 'row cards at 320/390: "… 절로 가는길 - 정진의 길" and "- 인욕의 길" tell apart, and "(박진경 추도비)" shows: name up to two lines, then the part after " - " or in brackets whole on its own line; at 390 neither name is cut', async () => {
   const LEAD = '제주돌문화공원';
-  for (const rows of [
+  for (const [w, h] of [[320, 568], [390, 844]]) for (const rows of [
     ['제주불교성지 순례길 절로 가는길 - 정진의 길', '제주불교성지 순례길 절로 가는길 - 인욕의 길'],
     ['제주시 충혼묘지 4·3추모비(박진경 추도비)', '추사 유배길 - 2코스 인연의 길'],
   ]) {
-    const { ctx, page } = await fresh({ width: 320, height: 568 });
+    const { ctx, page } = await fresh({ width: w, height: h });
     await withNames(page, 'walk', [LEAD, ...rows]);
     await page.reload();
     await tapText(page, '[data-mood="walk"]');
@@ -1394,6 +1394,7 @@ await check('QA2-row-names', 'row cards at 320: "… 절로 가는길 - 정진�
     const got = await page.$$eval('#cards .card.row .name', (els) =>
       els.map((name) => {
         const n = name.getBoundingClientRect();
+        const base = name.querySelector('.base');
         const alias = name.querySelector('.alias');
         const a = alias?.getBoundingClientRect();
         const range = document.createRange();
@@ -1403,13 +1404,20 @@ await check('QA2-row-names', 'row cards at 320: "… 절로 가는길 - 정진�
           alias: alias?.textContent ?? null,
           shown: !!a && a.height > 0 && a.bottom <= n.bottom + 0.5 && a.right <= n.right + 0.5,
           aliasLines: alias ? new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size : 0,
+          aliasCut: !!alias && alias.scrollWidth > alias.clientWidth + 0.5,
+          baseLines: base ? Math.round(base.getBoundingClientRect().height / parseFloat(getComputedStyle(base).lineHeight)) : 0,
+          baseCut: !!base && (base.scrollHeight > base.clientHeight + 0.5 || base.scrollWidth > base.clientWidth + 0.5),
         };
       }),
     );
-    assert(got.map((g) => g.text).join('|') === rows.join('|').replace('(박진경', ' (박진경'), `rows: ${got.map((g) => g.text).join(' | ')}`);
-    for (const g of got) assert(g.alias && g.shown && g.aliasLines === 1, `"${g.text}": alias ${JSON.stringify(g.alias)} shown ${g.shown}, ${g.aliasLines} lines`);
+    assert(got.map((g) => g.text).join('|') === rows.join('|').replace('(박진경', ' (박진경'), `${w}: rows: ${got.map((g) => g.text).join(' | ')}`);
+    for (const g of got) {
+      assert(g.alias && g.shown && g.aliasLines === 1 && !g.aliasCut, `${w} "${g.text}": alias ${JSON.stringify(g.alias)} shown ${g.shown}, ${g.aliasLines} lines, cut ${g.aliasCut}`);
+      assert(g.baseLines <= 2, `${w} "${g.text}": name ${g.baseLines} lines`);
+      if (w === 390) assert(!g.baseCut, `390 "${g.text}": name cut though two lines hold it`);
+    }
     await page.locator('#cards .card.row').first().scrollIntoViewIfNeeded();
-    await shot(page, `row-names-${rows[0].slice(0, 4)}`);
+    await shot(page, `row-names-${w}-${rows[0].slice(0, 4)}`);
     await ctx.close();
   }
 });
