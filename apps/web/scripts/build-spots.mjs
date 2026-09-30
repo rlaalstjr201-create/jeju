@@ -9,7 +9,7 @@
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { dropDuplicates } from './duplicates.mjs';
+import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
 import { positionProblems } from './positions.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -240,6 +240,13 @@ for (const item of inputItems) {
 }
 
 // The same place listed twice in the source (scripts/duplicates.mjs): only the record kept for it ships.
+// A typo twin (one-character name difference, ≤ TYPO_RADIUS_M apart) with no DUPLICATES entry stops the build.
+const twins = unresolvedTwins(kept);
+if (twins.length) {
+  throw new Error(`spots.json duplicates: ${twins.length} unresolved typo twin(s)\n  ` +
+    twins.map(([a, b]) => `${a.id} ${a.name} / ${b.id} ${b.name}`).join('\n  ') +
+    '\nAdd a DUPLICATES entry in scripts/duplicates.mjs naming the record to keep.');
+}
 const merged = dropDuplicates(kept);
 for (const s of kept) {
   if (merged.includes(s)) continue;
