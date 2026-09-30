@@ -1436,6 +1436,7 @@ await check('QA2-row-names', 'row cards at 320/390: "… 절로 가는길 - 정�
 // --- date mode (specs/date-mode.md D1–D6) ---
 const SPOT_IDS = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8')).map((x) => x.id);
 const seoulDay = (plus = 0) => new Date(Date.now() + 9 * 3600_000 + plus * 86_400_000).toISOString().slice(0, 10);
+const addDaysIso = (day, n) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 const dayMeasure = () => {
   const de = document.documentElement;
   const small = [...document.querySelectorAll('button, input')]
@@ -1669,6 +1670,196 @@ await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart
   assert(posts.length === 0, `non-GET requests: ${posts.map((r) => `${r.method} ${r.url}`).join(', ')}`);
   assert(beacons === 0, `sendBeacon called ${beacons}×`);
   assert(!noted, 'the note / 기록 끄기 shows though nothing is collected');
+});
+
+// --- QA r4 ---
+/** The next 12월 25일 that is neither today nor tomorrow: the longest date label. */
+const xmasDay = () => {
+  const t = seoulDay();
+  let d = `${t.slice(0, 4)}-12-25`;
+  if (d <= seoulDay(1)) d = `${Number(t.slice(0, 4)) + 1}-12-25`;
+  return d;
+};
+await check('QA4-label', 'top bar with a date label (12월 25일 · 서귀포 시내 근처) at 320 × 150%·200% and 390 × 200%: no sideways scroll, the label wraps instead of running off screen (no ellipsis), ♥ N stays on the same bar, both ≥ 44px', async () => {
+  const problems = [];
+  for (const [width, pct] of [[320, 150], [320, 200], [390, 200]]) {
+    const tag = `${width}×${pct}%`;
+    const { ctx, page } = await fresh({ width, height: 700, storage: { 'jeju.when': xmasDay(), 'jeju.basis': 'region', 'jeju.region': '서귀포시내', 'jeju.saved.v2': [{ id: SPOT_IDS[0], date: seoulDay(), order: 0 }] } });
+    await page.addStyleTag({ content: `html { font-size: ${pct}% }` });
+    await sleep(100);
+    const r = await page.evaluate(() => {
+      const de = document.documentElement;
+      const b = document.querySelector('#basis');
+      const text = b.querySelector('span');
+      const br = b.getBoundingClientRect();
+      const sr = document.querySelector('#saved').getBoundingClientRect();
+      const top = document.querySelector('.top').getBoundingClientRect();
+      return {
+        label: text.textContent,
+        sw: de.scrollWidth,
+        cw: de.clientWidth,
+        right: br.right,
+        textRight: text.getBoundingClientRect().right,
+        cut: text.scrollWidth > text.clientWidth + 1 || getComputedStyle(text).textOverflow === 'ellipsis',
+        h: br.height,
+        sh: sr.height,
+        sameBar: sr.top < br.bottom && sr.bottom > br.top && sr.bottom <= top.bottom + 0.5,
+        savedRight: sr.right,
+        // the day and its "·" on one line: no line of the label starts with "·"
+        dayLines: text.querySelector('.nw')?.getClientRects().length ?? 0,
+      };
+    });
+    if (r.label !== '12월 25일 · 서귀포 시내 근처') problems.push(`${tag} label "${r.label}"`);
+    if (r.sw !== r.cw) problems.push(`${tag} scrollWidth ${r.sw} ≠ ${r.cw}`);
+    if (r.right > r.cw + 0.5 || r.textRight > r.cw + 0.5) problems.push(`${tag} label right edge ${Math.round(r.textRight)} off screen (${r.cw})`);
+    if (r.savedRight > r.cw + 0.5) problems.push(`${tag} ♥ off screen`);
+    if (r.cut) problems.push(`${tag} label cut`);
+    if (r.dayLines !== 1) problems.push(`${tag} "12월 25일 ·" on ${r.dayLines} lines`);
+    if (!r.sameBar) problems.push(`${tag} ♥ N not on the label's bar`);
+    if (r.h < 43.5 || r.sh < 43.5) problems.push(`${tag} heights ${r.h}/${r.sh}`);
+    if (width === 320 && pct === 200) await shot(page, 'label-320-200');
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
+await check('QA4-datein', 'no showPicker: 날짜 고르기 shows the date field with 이 날로 (min today, max +365); typing a day digit by digit applies nothing until 이 날로 or Enter; out of range is ignored — in the 다른 날로 sheet and the basis sheet 언제', async () => {
+  const problems = [];
+  const today = seoulDay();
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR', reducedMotion: 'reduce' });
+  await ctx.addInitScript(GEO_STUB);
+  await ctx.addInitScript(() => {
+    delete HTMLInputElement.prototype.showPicker;
+  });
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  const page = await ctx.newPage();
+  await page.goto(BASE);
+  const [a, b] = SPOT_IDS;
+  await page.evaluate(
+    ({ a, b, today }) => {
+      localStorage.clear();
+      localStorage.setItem('jeju.saved.v2', JSON.stringify([{ id: a, date: today, order: 0 }, { id: b, date: today, order: 1 }]));
+    },
+    { a, b, today },
+  );
+  await page.reload();
+  const saved = () => page.evaluate(() => localStorage.getItem('jeju.saved.v2'));
+  const open = () => visible(page, '#sheet .sheet');
+  const field = async (tag) => {
+    const f = await page.evaluate(() => {
+      const i = document.querySelector('#sheet input[type="date"]');
+      const ok = document.querySelector('#sheet [data-action="day-ok"]');
+      const ir = i.getBoundingClientRect();
+      const or = ok?.getBoundingClientRect();
+      return { min: i.min, max: i.max, shown: ir.width > 1 && ir.height >= 43.5, focused: document.activeElement === i, ok: ok && !ok.hidden && or.height >= 43.5 ? ok.textContent : null, okTbtn: ok?.classList.contains('tbtn'), okRight: or?.right, vw: innerWidth };
+    });
+    if (f.min !== today || f.max !== addDaysIso(today, 365)) problems.push(`${tag} min/max ${f.min}/${f.max}`);
+    if (!f.shown || !f.focused) problems.push(`${tag} field shown ${f.shown} focused ${f.focused}`);
+    if (f.ok !== '이 날로' || !f.okTbtn || f.okRight > f.vw) problems.push(`${tag} confirm ${f.ok} tbtn ${f.okTbtn}`);
+  };
+  // The field's segment order follows the browser's own language (not the page locale): find it, then type
+  // year and month first and the day last, a digit at a time — its first digit already makes a whole date.
+  const probe = await ctx.newPage();
+  let order = null;
+  for (const o of ['ymd', 'mdy', 'dmy']) {
+    await probe.setContent('<input type="date">');
+    await probe.focus('input');
+    await probe.keyboard.type([...o].map((c) => ({ y: '2003', m: '11', d: '02' })[c]).join(''));
+    if ((await probe.inputValue('input')) === '2003-11-02') order = o;
+  }
+  await probe.close();
+  assert(order, 'could not tell the date field order');
+  const typeDay = async (day, tag, still) => {
+    const [y, m, d] = day.split('-');
+    for (const [seg, digits] of [['y', y], ['m', m], ['d', d]]) {
+      for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowLeft');
+      for (let i = 0; i < order.indexOf(seg); i++) await page.keyboard.press('ArrowRight');
+      for (const k of digits) {
+        await page.keyboard.type(k);
+        await sleep(80);
+        if (!(await still())) {
+          problems.push(`${tag} applied after typing ${seg} "${k}"`);
+          await ctx.close();
+          assert(false, problems.join(' | '));
+        }
+      }
+    }
+  };
+  /** The 15th/25th of a month to come: the day's first digit alone ("1"/"2") is still a day from today on. */
+  const monthAhead = (n, dd) => {
+    const [y, m] = today.split('-').map(Number);
+    return `${new Date(Date.UTC(y, m - 1 + n, 1)).toISOString().slice(0, 7)}-${dd}`;
+  };
+  // 다른 날로
+  await tapText(page, '#saved');
+  await page.waitForSelector('#savedView .card:not(.ghost)');
+  await tapText(page, `#savedView .card[data-id="${a}"] [data-action="move-day"]`);
+  await tapText(page, '#sheet [data-action="pick-day"]');
+  await field('move');
+  const before = await saved();
+  const target = monthAhead(1, '15');
+  await typeDay(target, 'move', async () => (await open()) && (await saved()) === before);
+  if ((await page.inputValue('#sheet input[type="date"]')) !== target) problems.push(`move typed value ${await page.inputValue('#sheet input[type="date"]')}`);
+  // out of range: ignored, nothing moves
+  await page.fill('#sheet input[type="date"]', seoulDay(400));
+  await tapText(page, '#sheet [data-action="day-ok"]');
+  if (!(await open()) || (await saved()) !== before) problems.push('move: a day past +365 was applied');
+  await page.fill('#sheet input[type="date"]', target);
+  await tapText(page, '#sheet [data-action="day-ok"]');
+  await sleep(250);
+  if (await open()) problems.push('move: 이 날로 left the sheet open');
+  const moved = JSON.parse(await saved());
+  if (!moved.some((e) => e.id === a && e.date === target)) problems.push(`move: not moved ${JSON.stringify(moved)}`);
+  // 기준 sheet 언제
+  await tapText(page, '#basis');
+  await tapText(page, '#sheet [data-action="pick-day"]');
+  await field('basis');
+  const label0 = (await page.textContent('#basis')).trim();
+  const when = monthAhead(2, '25');
+  await typeDay(when, 'basis', async () => (await page.evaluate(() => localStorage.getItem('jeju.when'))) === null && (await page.textContent('#basis')).trim() === label0);
+  await page.keyboard.press('Enter');
+  await sleep(200);
+  const stored = await page.evaluate(() => localStorage.getItem('jeju.when'));
+  if (stored !== JSON.stringify(when)) problems.push(`basis: Enter did not apply (${stored})`);
+  if (!(await page.textContent('#basis')).includes('일 · ')) problems.push(`basis label ${await page.textContent('#basis')}`);
+  if (!(await open())) problems.push('basis: the sheet closed');
+  await ctx.close();
+  assert(problems.length === 0, problems.join(' | '));
+});
+
+await check('QA4-when-row', '언제 is one compact row (지금 · 내일 · 날짜 고르기, each ≥ 44px, check and weight, no fill): at 320×568 the 어디 heading is in view on open and 얼마나 is reachable above 닫기', async () => {
+  const problems = [];
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    const tag = `${width}×${height}`;
+    const { ctx, page } = await fresh({ width, height });
+    await tapText(page, '#basis');
+    const r = await page.evaluate(() => {
+      const sheet = document.querySelector('#sheet .sheet');
+      const close = document.querySelector('#sheet .sheet-close').getBoundingClientRect();
+      const cells = [...document.querySelectorAll('#sheet [data-when], #sheet [data-action="pick-day"]')].map((b) => {
+        const x = b.getBoundingClientRect();
+        return { t: b.querySelector('.nm').textContent, top: Math.round(x.top), h: x.height, bg: getComputedStyle(b).backgroundColor, pressed: b.getAttribute('aria-pressed'), w: getComputedStyle(b.querySelector('.nm')).fontWeight, check: getComputedStyle(b.querySelector('.i-check')).display !== 'none' };
+      });
+      const where = document.querySelector('#where-h').getBoundingClientRect();
+      return { cells, whereIn: where.top >= sheet.getBoundingClientRect().top && where.bottom <= close.top + 0.5, scrollTop: sheet.scrollTop };
+    });
+    if (r.cells.map((c) => c.t).join() !== '지금,내일,날짜 고르기') problems.push(`${tag} cells ${r.cells.map((c) => c.t)}`);
+    if (new Set(r.cells.map((c) => c.top)).size !== 1) problems.push(`${tag} 언제 not one row: tops ${r.cells.map((c) => c.top)}`);
+    for (const c of r.cells) {
+      if (c.h < 43.5) problems.push(`${tag} ${c.t} ${c.h}px`);
+      if (c.bg !== 'rgba(0, 0, 0, 0)') problems.push(`${tag} ${c.t} filled`);
+      if ((c.pressed === 'true') !== c.check || (c.pressed === 'true') !== (c.w === '600')) problems.push(`${tag} ${c.t} pressed ${c.pressed} check ${c.check} weight ${c.w}`);
+    }
+    if (!r.whereIn || r.scrollTop !== 0) problems.push(`${tag} 어디 heading not in view on open`);
+    await page.locator('#sheet [data-reach="drive60"]').scrollIntoViewIfNeeded();
+    const reach = await page.$eval('#sheet [data-reach="drive60"]', (b) => b.getBoundingClientRect().bottom <= document.querySelector('#sheet .sheet-close').getBoundingClientRect().top + 0.5);
+    if (!reach) problems.push(`${tag} 얼마나 not reachable`);
+    const m = await page.evaluate(dayMeasure);
+    if (m.over > 0 || m.small.length || m.centred) problems.push(`${tag} measure ${JSON.stringify(m)}`);
+    if (width === 320) await shot(page, 'basis-sheet-320');
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
 });
 
 await browser.close();

@@ -2,7 +2,7 @@
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
-import { addDays, dayOf, longDay, shortDay, type Day } from './dates';
+import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { bookingUrl, kakaoUrl } from './links';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, type SavedRow, type State } from './state';
@@ -67,6 +67,8 @@ export const COPY = {
   reach: { walk: '걸어서', drive30: '차로 30분', drive60: '차로 1시간' } satisfies Record<Reach, string>,
   whenNow: '지금',
   pickDay: '날짜 고르기',
+  /** where the browser has no picker: the date field is shown and applies only on this (or Enter). */
+  dayOk: '이 날로',
   gpsOption: '지금 있는 곳',
   gpsOff: '위치 권한이 꺼져 있어요',
   stayOption: '숙소',
@@ -667,12 +669,14 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     row.append(...children);
     return row;
   }
-  /** 날짜 고르기: a row that opens the browser's own date picker (today and later), with the native input
-   * kept beside it. Where showPicker() is missing the input itself is shown (app.ts). */
-  function pickDayRow(s: State, picked: Day | null): HTMLElement {
-    const input = el(doc, 'input', { type: 'date', class: 'sr', min: s.today, tabindex: '-1', 'aria-hidden': 'true', 'aria-label': COPY.pickDay, 'data-action': 'day-input' });
+  /** 날짜 고르기: an option that opens the browser's own date picker (today to a year on), with the native
+   * input kept beside it. Where showPicker() is missing the input itself is shown with 이 날로 (app.ts). */
+  function pickDay(s: State, picked: Day | null): HTMLElement[] {
+    const input = el(doc, 'input', { type: 'date', class: 'sr', min: s.today, max: addDays(s.today, DAYS_AHEAD), tabindex: '-1', 'aria-hidden': 'true', 'aria-label': COPY.pickDay, 'data-action': 'day-input' });
     input.value = picked ?? '';
-    return optRow(option(COPY.pickDay, picked ? longDay(picked) : null, { 'data-action': 'pick-day', 'aria-pressed': String(!!picked) }), input);
+    const box = el(doc, 'div', { class: 'date-fb' });
+    box.append(input, el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'day-ok', hidden: '' }, COPY.dayOk));
+    return [option(COPY.pickDay, picked ? longDay(picked) : null, { 'data-action': 'pick-day', 'aria-pressed': String(!!picked) }), box];
   }
 
   function buildSheet(s: State) {
@@ -682,14 +686,17 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const title = overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : COPY.staySheet;
     panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
-      // 언제 (specs/date-mode.md): 지금 / 내일 / 날짜 고르기. Choosing one keeps the sheet open for 어디.
+      // 언제 (specs/date-mode.md): 지금 · 내일 · 날짜 고르기 on one compact row, so 어디 comes sooner.
+      // Choosing one keeps the sheet open for 어디.
       const tomorrow = addDays(s.today, 1);
       const picked = s.when !== 'now' && s.when !== tomorrow ? s.when : null;
-      optGroup(panel, 'when-h', COPY.whenHead, [
-        optRow(option(COPY.whenNow, null, { 'data-when': 'now', 'aria-pressed': String(s.when === 'now') })),
-        optRow(option(COPY.tomorrow, null, { 'data-when': tomorrow, 'aria-pressed': String(s.when === tomorrow) })),
-        pickDayRow(s, picked),
-      ]);
+      const when = optRow(
+        option(COPY.whenNow, null, { 'data-when': 'now', 'aria-pressed': String(s.when === 'now') }),
+        option(COPY.tomorrow, null, { 'data-when': tomorrow, 'aria-pressed': String(s.when === tomorrow) }),
+        ...pickDay(s, picked),
+      );
+      when.classList.add('when-row');
+      optGroup(panel, 'when-h', COPY.whenHead, [when]);
       // 어디: a thin-rule list of two rows; 다시 정하기 sits at the end of the 숙소 row, beside its option (§6.10).
       // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
       const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
@@ -705,7 +712,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       const days = [...new Set(s.saved.map((e) => e.date).filter((d) => d >= s.today))].sort();
       optGroup(panel, 'move-h', null, [
         ...days.map((d) => optRow(option(dayName(s.today, d), null, { 'data-day': d, 'aria-pressed': String(d === from) }))),
-        pickDayRow(s, null),
+        optRow(...pickDay(s, null)),
       ]);
     } else {
       panel.append(
@@ -851,7 +858,12 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   function render(s: State) {
     const yBefore = s.view !== shownView ? (win?.scrollY ?? 0) : 0;
     const label = basisLabel(s);
-    setText(els.basisText, label);
+    if (els.basisText.textContent !== label) {
+      // the day and its "·" stay together: a label wrapped at large text never starts a line with "·"
+      const i = label.indexOf(' · ');
+      if (i < 0) els.basisText.textContent = label;
+      else els.basisText.replaceChildren(el(doc, 'span', { class: 'nw' }, label.slice(0, i + 2)), label.slice(i + 2));
+    }
     setAttr(els.basis, 'aria-label', COPY.basisAria(label));
 
     const n = savedCount(s);

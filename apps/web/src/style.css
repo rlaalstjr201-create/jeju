@@ -56,12 +56,16 @@ svg { display: block; flex: none; }
 main { flex: 1; display: flex; flex-direction: column; }
 .top {
   position: sticky; top: 0; z-index: var(--z-top);
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 8px;
+  display: flex; align-items: center; justify-content: space-between; gap: 0 8px;
   min-height: calc(var(--top-h) + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 16px 0;
   margin: 0 -16px; background: var(--bg);
 }
-.basis, .saved-btn { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 600; white-space: nowrap; border-radius: var(--r-ctl); }
-.basis { margin-left: -8px; padding: 0 8px; }
+.basis, .saved-btn { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 600; border-radius: var(--r-ctl); }
+/* a long label ("12월 25일 · 서귀포 시내 근처" at 200%) wraps inside the button; ♥ N stays on the bar */
+.basis { min-width: 0; margin-left: -8px; padding: 0 8px; }
+.basis > span { min-width: 0; text-wrap: balance; }
+.basis .nw { white-space: nowrap; }
+.saved-btn { flex: none; white-space: nowrap; }
 .basis svg { color: var(--muted); }
 .saved-btn { margin-left: auto; margin-right: -8px; padding: 0 10px; min-width: 44px; justify-content: center; font-variant-numeric: tabular-nums; }
 .saved-btn svg { color: var(--accent); fill: currentColor; }
@@ -257,9 +261,15 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 .opt .lm { display: block; font-size: 0.9375rem; line-height: 1.35; color: var(--muted); }
 .opt[aria-pressed="true"] .nm { font-weight: 600; }
 .sheet h2 + .group-h { margin-top: 0; }
-/* 날짜 고르기 where the browser has no picker to open: the date field itself, on its own line */
+/* 언제: 지금 · 내일 · 날짜 고르기 on one compact row (the same check and weight, no fill) */
+.when-row { gap: 0; }
+.when-row .opt { flex: 0 1 auto; width: auto; min-height: 44px; justify-content: flex-start; }
+.when-row .opt + .opt::before { content: "·"; content: "·" / ""; color: var(--muted); }
+/* 날짜 고르기 where the browser has no picker to open: the date field and 이 날로, on their own line */
+.date-fb { display: contents; }
+.date-fb.open { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; margin: 0 0 8px 8px; }
 .date-in {
-  flex: 1 1 100%; min-height: 44px; margin: 0 8px 8px; padding: 0 8px;
+  flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px;
   font: inherit; color: var(--text); background: none; border: 1px solid var(--line); border-radius: var(--r-ctl);
 }
 

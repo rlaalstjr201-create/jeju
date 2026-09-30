@@ -1201,10 +1201,12 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
     expect(cssRule('button')).toMatch(/touch-action:\s*manipulation/);
   });
 
-  it('S48 large text: the top buttons never break inside ("♥" over "1"), the row wraps instead', () => {
+  it('S48 large text: ♥ N never breaks inside ("♥" over "1") and stays on the bar; a long basis label wraps inside its button (QA r4)', () => {
     expect(cssRule('.saved-btn')).toMatch(/white-space:\s*nowrap/);
-    expect(cssRule('.basis')).toMatch(/white-space:\s*nowrap/);
-    expect(cssRule('.top')).toMatch(/flex-wrap:\s*wrap/);
+    expect(cssRule('.saved-btn')).toMatch(/flex:\s*none/);
+    expect(cssRule('.basis')).not.toMatch(/white-space:\s*nowrap/);
+    expect(cssRule('.basis')).toMatch(/min-width:\s*0/);
+    expect(cssRule('.top')).not.toMatch(/flex-wrap:\s*wrap/);
     expect(cssRule('.top')).toMatch(/position:\s*sticky/);
   });
 

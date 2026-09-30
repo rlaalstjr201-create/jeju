@@ -15,6 +15,9 @@ export function addDays(day: Day, n: number): Day {
   return new Date(Date.parse(`${day}T00:00:00Z`) + n * DAY_MS).toISOString().slice(0, 10);
 }
 
+/** 날짜 고르기 reaches this many days past today (the date field's max). */
+export const DAYS_AHEAD = 365;
+
 /** A real calendar day ('2026-02-30' is not). */
 export function isDay(v: unknown): v is Day {
   if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;

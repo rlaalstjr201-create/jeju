@@ -197,6 +197,8 @@ export interface Store {
   setStay(stay: Stay): void;
   setHintSeen(): void;
   setTracking(on: boolean): void;
+  /** 기록 as stored now (another tab may have switched it). */
+  tracking(): boolean;
   // Every saved-list change below is read-modify-write, so two tabs never overwrite each other's hearts.
   /** Current saved entries, re-read from storage (another tab may have changed them). */
   saved(): SavedEntry[];
@@ -303,6 +305,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     setStay: (stay) => void set(local, KEYS.stay, stay),
     setHintSeen: () => void set(local, KEYS.hint, true),
     setTracking: (on) => void set(local, KEYS.track, on),
+    tracking: () => get(local, KEYS.track) !== false,
     saved: readSaved,
     toggleSaved(id, date, at) {
       let removed: SavedEntry | null = null;

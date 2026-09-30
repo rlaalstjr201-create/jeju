@@ -239,6 +239,37 @@ describe('U3 기록 끄기', () => {
     expect(events().filter((e) => e.e === 'shown')).toHaveLength(3);
   });
 
+  it('기록 끄기 in another tab stops this tab at once: what it queued is dropped, nothing more is sent, the button says 기록 켜기', async () => {
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await tap(`[data-mood="${exp.mood}"]`); // tap + 3 shown queued
+    window.localStorage.setItem('jeju.track', 'false');
+    window.dispatchEvent(new StorageEvent('storage', { key: 'jeju.track', oldValue: null, newValue: 'false', storageArea: window.localStorage }));
+    await tap($$('#cards .heart')[0]);
+    hide();
+    expect(beacon).not.toHaveBeenCalled();
+    expect($('#savedView [data-action="track"]').textContent).toBe('기록 켜기');
+    // the other tab turns it back on
+    window.localStorage.setItem('jeju.track', 'true');
+    window.dispatchEvent(new StorageEvent('storage', { key: 'jeju.track', oldValue: 'false', newValue: 'true', storageArea: window.localStorage }));
+    expect($('#savedView [data-action="track"]').textContent).toBe('기록 끄기');
+  });
+
+  it('storage cleared in another tab (key null) re-reads 기록 too', async () => {
+    window.localStorage.setItem('jeju.track', 'false');
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await flush();
+    expect($('#savedView [data-action="track"]').textContent).toBe('기록 켜기');
+    window.localStorage.clear();
+    window.dispatchEvent(new StorageEvent('storage', { key: null, storageArea: window.localStorage }));
+    expect($('#savedView [data-action="track"]').textContent).toBe('기록 끄기');
+    // and turned off again elsewhere with a queue in this tab
+    await tap(`[data-mood="${exp.mood}"]`);
+    window.localStorage.setItem('jeju.track', 'false');
+    window.dispatchEvent(new StorageEvent('storage', { key: null, storageArea: window.localStorage }));
+    hide();
+    expect(beacon).not.toHaveBeenCalled();
+  });
+
   it('storage blocked: 기록 끄기 still holds for the visit', async () => {
     render({ eventsUrl: URL_, beacon, storage: null, loadSpots: spots, locate: () => Promise.resolve(exp) });
     await tap(`[data-mood="${exp.mood}"]`);

@@ -3,7 +3,7 @@
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
 import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
-import { dayOf, isDay, msToNextDay, type Day } from './dates';
+import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './dates';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
 import { bookingUrl, kakaoUrl } from './links';
 import { HOME, createNav } from './nav';
@@ -412,7 +412,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     store.setWhen(when);
   }
 
-  /** 날짜 고르기: the browser's own picker; where it cannot be opened, the date field itself is shown. */
+  /** 날짜 고르기: the browser's own picker; where it cannot be opened, the date field itself is shown with
+   * 이 날로 beside it. Typed a digit at a time it is a real date long before it is the one meant (the day's
+   * first digit), so there it applies only on 이 날로 or Enter, never on `change`. */
   function pickDay(b: HTMLElement) {
     const input = b.parentElement?.querySelector<HTMLInputElement>('input[type="date"]');
     if (!input) return;
@@ -424,11 +426,15 @@ export function mountApp(doc: Document, deps: Deps): App {
       input.classList.add('date-in');
       input.removeAttribute('tabindex');
       input.removeAttribute('aria-hidden');
+      input.parentElement?.classList.add('open');
+      const ok = input.parentElement?.querySelector<HTMLElement>('[data-action="day-ok"]');
+      if (ok) ok.hidden = false;
       input.focus();
     }
   }
+  /** A day from today to a year on; anything else (typed past the field's min/max) is ignored. */
   function onDayPicked(value: string) {
-    if (!isDay(value) || value < state.today) return;
+    if (!isDay(value) || value < state.today || value > addDays(state.today, DAYS_AHEAD)) return;
     if (state.overlay === 'basis') setWhen(value);
     else if (state.overlay === 'move') moveTo(value);
   }
@@ -458,6 +464,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     const action = b.dataset.action;
     if (action === 'close') return closeOverlay();
     if (action === 'pick-day') return guarded('pick-day') ? undefined : pickDay(b);
+    if (action === 'day-ok') {
+      const input = b.parentElement?.querySelector<HTMLInputElement>('input[type="date"]');
+      return input ? onDayPicked(input.value) : undefined;
+    }
     if (b.dataset.when) return guarded(`when:${b.dataset.when}`) ? undefined : setWhen(b.dataset.when);
     if (b.dataset.day) return moveTo(b.dataset.day);
     const reach = b.dataset.reach as Reach | undefined;
@@ -548,9 +558,16 @@ export function mountApp(doc: Document, deps: Deps): App {
     const b = buttonIn(e, els.sheet);
     if (b && !b.disabled) onSheetButton(b);
   });
+  // The browser's picker reports the day once, on `change`; the shown field (no picker) waits for 이 날로 / Enter.
   on(els.sheet, 'change', (e) => {
     const t = e.target as HTMLInputElement;
-    if (t.type === 'date') onDayPicked(t.value);
+    if (t.type === 'date' && !t.classList.contains('date-in')) onDayPicked(t.value);
+  });
+  on(els.sheet, 'keydown', (e) => {
+    const t = e.target as HTMLInputElement;
+    if ((e as KeyboardEvent).key !== 'Enter' || t.type !== 'date' || !t.classList.contains('date-in')) return;
+    e.preventDefault();
+    onDayPicked(t.value);
   });
   on(
     doc,
@@ -595,12 +612,20 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
     }
   });
-  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write).
+  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write); so does 기록.
   on(win, 'storage', (e) => {
     const s = e as StorageEvent;
     if (s.storageArea && deps.storage && s.storageArea !== deps.storage) return;
     if (s.key === KEYS.savedV2 || s.key === null) dispatch({ type: 'saved', entries: store.saved() });
     if (s.key === KEYS.hint && s.newValue === 'true') dispatch({ type: 'hintSeen' });
+    // 기록 끄기 in another tab stops this one too: what it queued goes, nothing more is sent (ADR-0061).
+    if (deps.storage && (s.key === KEYS.track || s.key === null)) {
+      const on = store.tracking();
+      if (on !== state.tracking) {
+        if (!on) tracker.drop();
+        dispatch({ type: 'tracking', on });
+      }
+    }
   });
   on(win, 'online', () => {
     dispatch({ type: 'offline', offline: false });
