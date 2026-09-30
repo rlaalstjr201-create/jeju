@@ -263,3 +263,49 @@ describe('QA 2026-09-30 — 세션 기록·위치 대기', () => {
     expect(more.announce.seq).toBeGreaterThan(s.announce.seq);
   });
 });
+
+describe('얼마나 (ADR-0060) — 범위 변경은 기준 변경과 같은 규칙', () => {
+  it('starts at 차로 30분 unless given; the cards are picked in the current range', () => {
+    expect(s0().reach).toBe('drive30');
+    const s = pick(s0({ reach: 'walk' }), 'rest', 1);
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest', {}, undefined, 'walk').cards.map((c) => c.spot.id));
+    expect(s.cards?.reach).toBe('walk');
+  });
+
+  it('another range: the cards on hand no longer count, and the next result starts the rotation fresh', () => {
+    let s = pick(s0(), 'rest', 1);
+    s = run(s, { type: 'request', req: 2, intent: 'more', step: 'loading' }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(cardsValid(s)).toBe(true);
+    s = run(s, { type: 'reach', reach: 'drive60' });
+    expect(s.reach).toBe('drive60');
+    expect(cardsValid(s)).toBe(false);
+    s = run(s, { type: 'request', req: 3, intent: 'show', step: 'loading' }, { type: 'resolved', req: 3, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest', {}, undefined, 'drive60').cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+    expect(Object.keys(s.histories)).toEqual(['rest']);
+    expect(s.histories.rest?.seen).toEqual(ids(s));
+    // back to the first range: the rotation there was dropped too (like a basis change), a fresh pick again
+    s = run(s, { type: 'reach', reach: 'drive30' }, { type: 'request', req: 4, intent: 'show', step: 'loading' }, { type: 'resolved', req: 4, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest').cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+  });
+
+  it('the same range again changes nothing; choosing one is an intent (clears the first-save hint)', () => {
+    const s = pick(s0(), 'rest', 1);
+    expect(run(s, { type: 'reach', reach: 'drive30' })).toBe(s);
+    const hinted = run(s, { type: 'hint', id: ids(s)![0] });
+    expect(run(hinted, { type: 'reach', reach: 'walk' }).hintFor).toBeNull();
+  });
+
+  it('the session record carries the range of its rotation; restored in another range, it is picked fresh', () => {
+    const s = pick(s0({ reach: 'walk' }), 'walk', 1);
+    const rec = sessionOf(s)!;
+    expect(rec.reach).toBe('walk');
+    const same = run(s0({ reach: 'walk' }), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(same)).toEqual(ids(s));
+    expect(same.cards?.how).toBe('restore');
+    const other = run(s0({ reach: 'drive60' }), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(other)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'walk', {}, undefined, 'drive60').cards.map((c) => c.spot.id));
+    expect(other.cards?.how).toBe('new');
+  });
+});

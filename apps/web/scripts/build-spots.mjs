@@ -1,7 +1,7 @@
 /**
  * Merge review/input/batch-NNN.json + review/out/batch-NNN.json (verdicts) + review/out/adj-NNN.json
- * (adjudications, override by id) + review/copy/* (S9-3 reason rewrite layer) into public/spots.json
- * (ADR-0028, plan "전 항목 검수" / "전체 QA·디자인 개편", spec S1'/S9-3).
+ * (adjudications, override by id) + review/copy/* (S9-3 reason rewrite layer) + review/score/* (만족도 점수,
+ * ADR-0060) into public/spots.json (ADR-0028, plan "전 항목 검수" / "전체 QA·디자인 개편", spec S1'/S9-3).
  *
  * Read-only over review/*; does not call any model. Run once per merge; re-run is safe (idempotent —
  * always rebuilds spots.json from the same inputs).
@@ -157,6 +157,15 @@ for (const f of ['regeocode.json', 'manual.json']) {
   for (const v of readJson(resolve(geoDir, f))) geoById.set(v.id, v);
 }
 
+// --- load the 만족도 점수 (ADR-0060, specs/ranking.md): score-NN.json arrays of {id, score, basis}, later files
+// override earlier by id. Every shipped spot must have an integer 1–5; the score orders the cards and is never
+// shown. ---
+const scoreDir = resolve(root, 'review/score');
+const scoreById = new Map();
+for (const f of readdirSync(scoreDir).filter((f) => /^score-\d{2}\.json$/.test(f)).sort()) {
+  for (const v of readJson(resolve(scoreDir, f))) scoreById.set(v.id, v.score);
+}
+
 // --- merge ---
 const counts = {
   input: inputItems.length,
@@ -260,6 +269,17 @@ for (const s of kept) {
   counts.perMood[s.mood]--;
 }
 kept = merged;
+
+// 만족도 점수 last (after the duplicates are gone: only shipped spots are scored). A missing one stops the build.
+const unscored = kept.filter((s) => {
+  const score = scoreById.get(s.id);
+  return !Number.isInteger(score) || score < 1 || score > 5;
+});
+if (unscored.length) {
+  throw new Error(`spots.json scores: ${unscored.length} spot(s) without an integer 1–5 in review/score/score-NN.json\n  ` +
+    unscored.slice(0, 10).map((s) => `${s.id} ${s.name}`).join('\n  '));
+}
+for (const s of kept) s.score = scoreById.get(s.id);
 
 // A fix may name a Kakao place another spot already carries (the same building, or a wrong source id):
 // the map link would open someone else's page, so the fixed spot falls back to a name search.

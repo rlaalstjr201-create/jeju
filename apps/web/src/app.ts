@@ -7,7 +7,7 @@ import { dayOf, isDay, msToNextDay, type Day } from './dates';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
 import { bookingUrl, kakaoUrl } from './links';
 import { HOME, createNav } from './nav';
-import type { Button, Sub } from './pick';
+import { REACHES, type Button, type Reach, type Sub } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, sessionOf, staticOrigin, whenDay, type Action, type Intent, type State } from './state';
 import { KEYS, createStore } from './store';
@@ -316,6 +316,16 @@ export function mountApp(doc: Document, deps: Deps): App {
     else request('show');
   }
 
+  /** 얼마나 (ADR-0060): like another basis — saved, the sheet closes, the results are picked again (new request
+   * id, rotation from the start). The saved list does not depend on it. The range in use again just closes. */
+  function changeReach(reach: Reach) {
+    if (reach === state.reach) return closeOverlay();
+    dispatch({ type: 'reach', reach });
+    store.setReach(reach);
+    closeOverlay();
+    if (state.view === 'cards') request('show');
+  }
+
   function stayHere() {
     if (state.overlay !== 'stay' || state.stayForm.pending) return;
     const token = ++stayToken;
@@ -400,6 +410,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'pick-day') return guarded('pick-day') ? undefined : pickDay(b);
     if (b.dataset.when) return guarded(`when:${b.dataset.when}`) ? undefined : setWhen(b.dataset.when);
     if (b.dataset.day) return moveTo(b.dataset.day);
+    const reach = b.dataset.reach as Reach | undefined;
+    if (reach && REACHES.includes(reach)) return guarded(`reach:${reach}`) ? undefined : changeReach(reach);
     if (action === 'restay') return openOverlay('stay');
     if (action === 'stay-here') return stayHere();
     const basis = b.dataset.basis;

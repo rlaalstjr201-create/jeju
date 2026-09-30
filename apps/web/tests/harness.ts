@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { mountApp, type App, type Deps } from '../src/app';
-import { pickCards, type Button, type Point, type Sub } from '../src/pick';
+import { pickCards, type Button, type Point, type Reach, type Sub } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
 export const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
@@ -36,7 +36,8 @@ export function render(deps: Partial<Deps> = {}): App {
     now: () => clock,
     // `long` (the 지역으로 고르기 escape) is off unless a test asks for it: a real-time 30ms timer fired
     // during a busy run's awaits and made exact status checks flaky (QA 2026-09-30, S02).
-    delays: { slow: 0, long: 10_000, settle: 300 },
+    delays: { slow: 0, long: 10_000, settle: 300 },
+
     ...deps,
   });
   return app;
@@ -75,7 +76,8 @@ export const shownMood = () => {
     .filter((b) => b.textContent === t)
     .map((b) => b.dataset.mood);
 };
-export const expectedNames = (o: Point, b: Button, sub?: Sub) => pickCards(realSpots, o, b, {}, sub).cards.map((c) => c.spot.name);
+/** What a first pick shows (default range 차로 30분 unless given). */
+export const expectedNames = (o: Point, b: Button, sub?: Sub, reach?: Reach) => pickCards(realSpots, o, b, {}, sub, reach).cards.map((c) => c.spot.name);
 
 /** A promise with its resolve/reject exposed. */
 export function deferred<T>() {

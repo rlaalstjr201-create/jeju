@@ -11,12 +11,12 @@ import { distanceKm } from '../src/pick';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
-const FIELDS = ['bookable', 'id', 'image', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason'];
+const FIELDS = ['bookable', 'id', 'image', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason', 'score'];
 const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 9 fields (food: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 10 fields (food: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
       const expectedFields = s.mood === 'food' ? FOOD_FIELDS : FIELDS;
       return (
@@ -29,6 +29,25 @@ describe("S1' 레코드 형식", () => {
       );
     });
     expect(bad.map((s) => s.id)).toEqual([]);
+  });
+
+  it('만족도 점수 (ADR-0060): all 2,959 have an integer score 1–5, the one in review/score/score-NN.json', () => {
+    expect(fileSpots).toHaveLength(2959);
+    const bad = fileSpots.filter((s) => !Number.isInteger(s.score) || s.score < 1 || s.score > 5);
+    expect(bad.map((s) => s.id)).toEqual([]);
+    const recorded = new Map<string, number>();
+    for (const f of readdirSync(resolve(root, 'review/score')).filter((f) => /^score-\d{2}\.json$/.test(f)).sort()) {
+      for (const v of JSON.parse(readFileSync(resolve(root, 'review/score', f), 'utf8')) as { id: string; score: number }[]) recorded.set(v.id, v.score);
+    }
+    expect(fileSpots.filter((s) => recorded.get(s.id) !== s.score).map((s) => s.id)).toEqual([]);
+  });
+
+  it('a record whose score is missing or out of range loads as 3 (모르면 3); a valid one is kept', () => {
+    const base = fileSpots[0];
+    const [kept, missing, wrong] = normalizeSpots([base, { ...base, id: 'x', score: undefined }, { ...base, id: 'y', score: 9 }]);
+    expect(kept.score).toBe(base.score);
+    expect(missing.score).toBe(3);
+    expect(wrong.score).toBe(3);
   });
 
   it("food spots all have sub ∈ {meal, cafe}; non-food spots have no sub field", () => {

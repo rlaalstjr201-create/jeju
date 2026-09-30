@@ -989,7 +989,10 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
   it('first card large, then 아니면, then two rows; only the first says where from; names split "(별칭)" off', async () => {
     const withAlias = realSpots.find((s) => /^(.+?)\s*[(（](.+)[)）]$/.test(s.name) && s.mood !== 'food')!;
     const others = realSpots.filter((s) => s.mood === withAlias.mood && s.id !== withAlias.id).slice(0, 2);
-    render({ loadSpots: () => Promise.resolve([withAlias, ...others]), locate: () => Promise.resolve(withAlias) });
+    // Changed on purpose (ADR-0060): the lead is the best-scored card, not the nearest — so the aliased one
+    // gets the top score here.
+    const spots = [{ ...withAlias, score: 5 }, ...others.map((o) => ({ ...o, score: Math.min(o.score, 4) }))];
+    render({ loadSpots: () => Promise.resolve(spots), locate: () => Promise.resolve(withAlias) });
     await tap(`[data-mood="${withAlias.mood}"]`);
     const lead = $('#cards .card.lead');
     expect(lead.dataset.id).toBe(withAlias.id);
@@ -1803,5 +1806,120 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     expect(sections()).toEqual([['오늘', [x, y]]]);
     await tap(ctl(y, 'up'));
     expect(sections()).toEqual([['오늘', [y, x]]]);
+  });
+});
+
+describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1–R4)', () => {
+  const reachRows = () => $$('#sheet [data-reach]');
+  const pressedReach = () => reachRows().filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.reach);
+
+  it('R4 basis sheet: 얼마나 under 어디 (after the 동네 index) — 걸어서 · 차로 30분 · 차로 1시간, 차로 30분 checked by default; the label has no range', async () => {
+    render();
+    await tap('#basis');
+    const heads = $$('#sheet .group-h').map((h) => h.firstElementChild!.textContent);
+    expect(heads).toEqual(['언제', '어디', '제주시 쪽', '서귀포 쪽', '얼마나']);
+    expect(reachRows().map((b) => b.querySelector('.nm')!.textContent)).toEqual(['걸어서', '차로 30분', '차로 1시간']);
+    expect(pressedReach()).toEqual(['drive30']);
+    // check-mark selection (SPEC 3판): each row carries the check, shown only on the chosen one by CSS
+    for (const b of reachRows()) expect(b.querySelector('svg.i-check')).not.toBeNull();
+    expect(reachRows()[0].closest('.opts')!.getAttribute('aria-labelledby')).toBe('reach-h');
+    expect($('#basis').textContent).toBe('여기 근처');
+  });
+
+  it('R4 choosing a range on the results: stored, the sheet closes (history balanced), the same mood picked anew in that range; the label is unchanged', async () => {
+    render();
+    await tap('[data-mood="rest"]');
+    await tap('#cards .more');
+    const depth = window.history.state.depth;
+    await tap('#basis');
+    await tap('#sheet [data-reach="drive60"]');
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect(window.history.state.depth).toBe(depth);
+    expect(JSON.parse(window.localStorage.getItem('jeju.reach')!)).toBe('drive60');
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest', undefined, 'drive60'));
+    expect(state().cards?.how).toBe('new');
+    expect($('#basis').textContent).toBe('여기 근처');
+    // the rotation carries on inside the new range
+    const first = cardNames();
+    await tap('#cards .more');
+    expect(cardNames().filter((n) => first.includes(n))).toEqual([]);
+  });
+
+  it('R4 the range in use again changes nothing; from the first screen it is stored for the next pick', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    const shown = cardNames();
+    await tap('#basis');
+    await tap('#sheet [data-reach="drive30"]');
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect(cardNames()).toEqual(shown);
+    await tap('#results .change');
+    await settle();
+    await tap('#basis');
+    await tap('#sheet [data-reach="drive60"]');
+    await settle();
+    await tap('[data-mood="new"]');
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', undefined, 'drive60'));
+  });
+
+  it('R4 the range survives a reload (and so do the cards picked in it); an area basis follows the same rule', async () => {
+    window.localStorage.setItem('jeju.region', JSON.stringify('애월'));
+    window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
+    render();
+    await tap('#basis');
+    await tap('#sheet [data-reach="drive60"]');
+    await settle();
+    await tap('[data-mood="rest"]');
+    expect(cardNames()).toEqual(expectedNames(area('애월'), 'rest', undefined, 'drive60'));
+    const looking = cardNames();
+    render(); // reload on the results
+    await flush();
+    await flush();
+    expect(cardNames()).toEqual(looking);
+    expect($('#basis').textContent).toBe('애월 근처');
+    await tap('#basis');
+    expect(pressedReach()).toEqual(['drive60']);
+  });
+
+  it('R4 storage blocked: the range still applies for the visit', async () => {
+    render({ storage: null });
+    await tap('#basis');
+    await tap('#sheet [data-reach="walk"]');
+    await settle();
+    await tap('[data-mood="new"]');
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', undefined, 'walk'));
+  });
+
+  it('R4 a range picked on the saved list asks for nothing there; back on the results the mood is picked in it', async () => {
+    render();
+    await tap('[data-mood="rest"]');
+    await tap('.card .heart');
+    await tap('#saved');
+    await tap('#basis');
+    await tap('#sheet [data-reach="drive60"]');
+    await settle();
+    expect($('#savedView').hidden).toBe(false);
+    await tap('#savedView [data-action="close-saved"]');
+    await settle();
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest', undefined, 'drive60'));
+  });
+
+  it('R4 the score is never on screen: no number, star or attribute for it, on any card of any mood', async () => {
+    render();
+    const words = /score|점수|별점|평점|★|☆/i;
+    for (const mood of ['rest', 'walk', 'new', 'food', 'any'] as const) {
+      await tap('#results .change').catch(() => undefined);
+      await settle();
+      await tap(`[data-mood="${mood}"]`);
+      expect($$('.card')).toHaveLength(3);
+      expect(document.body.innerHTML).not.toMatch(words);
+      for (const c of $$('.card')) {
+        const spot = realSpots.find((s) => s.id === c.dataset.id)!;
+        expect([...c.querySelectorAll('*')].some((n) => [...n.attributes].some((a) => /score/i.test(a.name)))).toBe(false);
+        expect(c.textContent).not.toContain(`${spot.score}점`);
+      }
+    }
   });
 });

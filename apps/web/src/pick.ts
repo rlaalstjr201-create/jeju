@@ -17,6 +17,8 @@ export interface Spot {
   bookable: boolean;
   /** set iff mood === 'food' */
   sub?: Sub;
+  /** 만족도 1~5 (ADR-0060, specs/ranking.md): orders the cards, never shown. */
+  score: number;
 }
 
 export interface Point {
@@ -40,8 +42,13 @@ export type HistoryKey = Exclude<Button, 'food'> | `food:${Sub}`;
 export type Histories = Partial<Record<HistoryKey, History>>;
 
 export const CARD_COUNT = 3;
-export const MAX_MINUTES = 60;
 const ANY_MOODS: Mood[] = ['rest', 'walk', 'new'];
+
+/** 얼마나 (ADR-0060): 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간. */
+export type Reach = 'walk' | 'drive30' | 'drive60';
+export const REACHES: readonly Reach[] = ['walk', 'drive30', 'drive60'];
+export const DEFAULT_REACH: Reach = 'drive30';
+const REACH_MAX: Record<Reach, number> = { walk: 15, drive30: 30, drive60: 60 };
 
 export function distanceKm(a: Point, b: Point): number {
   const R = 6371;
@@ -62,6 +69,14 @@ export function driveMinutes(km: number): number {
 export function walkMinutes(km: number): number {
   const raw = ((km * 1.3) / 4.5) * 60;
   return Math.max(5, Math.round(raw / 5) * 5);
+}
+
+/** The trip in the range's own terms: on foot for 걸어서, by car otherwise. */
+export function reachMinutes(reach: Reach, km: number): number {
+  return reach === 'walk' ? walkMinutes(km) : driveMinutes(km);
+}
+export function withinReach(reach: Reach, origin: Point, spot: Point): boolean {
+  return reachMinutes(reach, distanceKm(origin, spot)) <= REACH_MAX[reach];
 }
 
 // --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 in spots.json.
@@ -120,26 +135,35 @@ export function travelText(t: Travel, from?: string): string {
   }
 }
 
+interface Ranked extends Card {
+  /** the trip in the range's terms (sort key only) */
+  trip: number;
+}
+/** specs/ranking.md: score high to low, then the shorter trip, then id. */
+const byRank = (a: Ranked, b: Ranked) => b.spot.score - a.spot.score || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
+
 /**
- * Candidates for one mood, nearest first. Normally everything within an hour's drive;
- * if that leaves fewer than 3, widen to the nearest 3 on the whole island (빈손 없음).
+ * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
+ * the nearest 3 on the whole island (빈손 없음).
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, sub?: Sub): Card[] {
-  const sorted = spots
+export function pool(spots: Spot[], origin: Point, mood: Mood, sub?: Sub, reach: Reach = DEFAULT_REACH): Ranked[] {
+  const all = spots
     .filter((s) => s.mood === mood && (mood !== 'food' || s.sub === (sub ?? 'meal')))
-    .map((spot) => ({ spot, km: distanceKm(origin, spot) }))
-    .sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id))
-    .map(({ spot, km }) => ({ spot, minutes: driveMinutes(km) }));
-  const near = sorted.filter((c) => c.minutes <= MAX_MINUTES);
-  return near.length >= CARD_COUNT ? near : sorted.slice(0, CARD_COUNT);
+    .map((spot) => {
+      const km = distanceKm(origin, spot);
+      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km) };
+    });
+  let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
+  if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id)).slice(0, CARD_COUNT);
+  return near.map(({ spot, minutes, trip }) => ({ spot, minutes, trip })).sort(byRank);
 }
 
 /** Unseen first, then seen, and the cards shown last time at the very back. */
-function rotate(cards: Card[], h: History | undefined): Card[] {
+function rotate(cards: Ranked[], h: History | undefined): Ranked[] {
   if (!h) return cards;
   const seen = new Set(h.seen);
   const last = new Set(h.last);
-  const rank = (c: Card) => (last.has(c.spot.id) ? 2 : seen.has(c.spot.id) ? 1 : 0);
+  const rank = (c: Ranked) => (last.has(c.spot.id) ? 2 : seen.has(c.spot.id) ? 1 : 0);
   return cards
     .map((c, i) => ({ c, i }))
     .sort((a, b) => rank(a.c) - rank(b.c) || a.i - b.i)
@@ -167,22 +191,24 @@ export function pickCards(
   button: Button,
   histories: Histories = {},
   sub?: Sub,
+  reach: Reach = DEFAULT_REACH,
 ): { cards: Card[]; histories: Histories; wrapped: boolean } {
   const key = historyKey(button, sub);
   const h = histories[key];
-  let cards: Card[];
+  let picked: Ranked[];
   let poolIds: string[];
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = ANY_MOODS.map((m) => pool(spots, origin, m));
-    cards = pools.map((p) => rotate(p, h)[0]).filter((c): c is Card => !!c);
-    cards.sort((a, b) => distanceKm(origin, a.spot) - distanceKm(origin, b.spot));
+    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach));
+    picked = pools.map((p) => rotate(p, h)[0]).filter((c): c is Ranked => !!c);
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, sub);
-    cards = rotate(p, h).slice(0, CARD_COUNT);
+    const p = pool(spots, origin, button, sub, reach);
+    picked = rotate(p, h).slice(0, CARD_COUNT);
     poolIds = p.map((c) => c.spot.id);
   }
+  // The rotation decides which 3; they are shown best first (R3), the score itself never.
+  const cards: Card[] = picked.sort(byRank).map(({ spot, minutes }) => ({ spot, minutes }));
   const wrapped = !!h && (!!h.restarted || cards.some((c) => h.seen.includes(c.spot.id)));
   return { cards, histories: { ...histories, [key]: remember(h, cards, poolIds) }, wrapped };
 }

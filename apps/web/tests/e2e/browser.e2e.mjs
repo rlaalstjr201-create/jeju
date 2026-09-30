@@ -705,15 +705,20 @@ await check('S65', 'new deploy: a page already on the new build is not reloaded;
 
 // --- QA 2026-09-30: scenario rows that had no browser check (S31, S51, S52) and the audit's findings ---
 
-/** spots.json with the nearest spot of `mood` renamed (a 32-letter name with an English part in brackets). */
+/** spots.json with the nearest spot of `mood` renamed (a 32-letter name with an English part in brackets).
+ * Changed on purpose (ADR-0060): cards are best-scored first, so it also gets the top score (the rest of that
+ * mood the lowest) to stay on screen. */
 async function withLongName(page, mood, name) {
   await page.route('**/spots.json*', async (route) => {
     const res = await route.fetch();
     const spots = await res.json();
     const [lat, lng] = [33.5122, 126.5272];
     const d = (s) => (s.lat - lat) ** 2 + (s.lng - lng) ** 2;
-    const nearest = spots.filter((s) => s.mood === mood).sort((a, b) => d(a) - d(b))[0];
+    const same = spots.filter((s) => s.mood === mood);
+    for (const s of same) s.score = 1;
+    const nearest = same.sort((a, b) => d(a) - d(b))[0];
     nearest.name = name;
+    nearest.score = 5;
     await route.fulfill({ response: res, body: JSON.stringify(spots) });
   });
 }
@@ -1171,8 +1176,8 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     await b.page.waitForSelector('#sheet .areas');
     verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
-    // 언제 (specs/date-mode.md) above 어디
-    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소', `sheet rows ${rows.join('/')}`);
+    // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) under it
+    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/걸어서/차로 30분/차로 1시간', `sheet rows ${rows.join('/')}`);
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
     await b.page.waitForSelector('#sheet .primary');
@@ -1370,14 +1375,19 @@ await check('QA2-stay-row', 'root 200% at 320: the 숙소 row of the basis sheet
   await ctx.close();
 });
 
-/** spots.json with the nearest spots of `mood` renamed, nearest first. */
+/** spots.json with the nearest spots of `mood` renamed, nearest first. Changed on purpose (ADR-0060): cards
+ * are best-scored first, so the renamed ones get descending top scores (the rest of that mood the lowest). */
 async function withNames(page, mood, names) {
   await page.route('**/spots.json*', async (route) => {
     const res = await route.fetch();
     const spots = await res.json();
     const d = (s) => (s.lat - 33.5122) ** 2 + (s.lng - 126.5272) ** 2;
     const near = spots.filter((s) => s.mood === mood).sort((a, b) => d(a) - d(b));
-    names.forEach((n, i) => (near[i].name = n));
+    for (const s of near) s.score = 1;
+    names.forEach((n, i) => {
+      near[i].name = n;
+      near[i].score = 5 - i;
+    });
     await route.fulfill({ response: res, body: JSON.stringify(spots) });
   });
 }
@@ -1532,6 +1542,74 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
       if (v1.join() !== 'cards,,true' || v2.join() !== 'home,0,true') problems.push(`${tag} back: ${v1} then ${v2}`);
       await ctx.close();
     }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
+// --- 얼마나 (ADR-0060, specs/ranking.md R4) ---
+await check('R4-range', '얼마나 at 320·390: under 어디 in the basis sheet, 차로 30분 checked, each row ≥ 44px and tappable above the sticky 닫기; choosing one closes the sheet, keeps the label, re-picks the cards, history balanced; kept across a reload; no sideways scroll', async () => {
+  const problems = [];
+  for (const width of [320, 390]) {
+    const tag = String(width);
+    const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844 });
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    const depth = (await hstate(page)).depth;
+    await tapText(page, '#basis');
+    const heads = await page.$$eval('#sheet .group-h > span:first-child', (els) => els.map((e) => e.textContent));
+    if (heads.join() !== '언제,어디,제주시 쪽,서귀포 쪽,얼마나') problems.push(`${tag} groups ${heads}`);
+    await page.locator('#sheet [data-reach="drive60"]').scrollIntoViewIfNeeded();
+    const rows = await page.$$eval('#sheet [data-reach]', (els) =>
+      els.map((b) => {
+        const r = b.getBoundingClientRect();
+        const close = document.querySelector('#sheet .sheet-close').getBoundingClientRect();
+        return {
+          reach: b.dataset.reach,
+          label: b.querySelector('.nm').textContent,
+          pressed: b.getAttribute('aria-pressed'),
+          check: getComputedStyle(b.querySelector('.i-check')).visibility !== 'hidden' && getComputedStyle(b.querySelector('.i-check')).display !== 'none' && getComputedStyle(b.querySelector('.i-check')).opacity !== '0',
+          weight: getComputedStyle(b.querySelector('.nm')).fontWeight,
+          h: r.height,
+          clear: r.bottom <= close.top + 0.5,
+          bg: getComputedStyle(b).backgroundColor,
+        };
+      }),
+    );
+    if (rows.map((r) => r.label).join() !== '걸어서,차로 30분,차로 1시간') problems.push(`${tag} rows ${rows.map((r) => r.label)}`);
+    for (const r of rows) {
+      if (r.h < 43.5) problems.push(`${tag} ${r.reach} ${r.h}px`);
+      if (!r.clear) problems.push(`${tag} ${r.reach} under 닫기`);
+      if ((r.pressed === 'true') !== (r.reach === 'drive30')) problems.push(`${tag} pressed ${r.reach}=${r.pressed}`);
+      if (r.check !== (r.reach === 'drive30')) problems.push(`${tag} check ${r.reach}=${r.check}`);
+      if (r.bg !== 'rgba(0, 0, 0, 0)') problems.push(`${tag} ${r.reach} filled ${r.bg}`);
+    }
+    if (!(Number(rows.find((r) => r.reach === 'drive30')?.weight) > Number(rows.find((r) => r.reach === 'walk')?.weight))) problems.push(`${tag} chosen row not heavier`);
+    const m = await page.evaluate(dayMeasure);
+    if (m.over > 0) problems.push(`${tag} sheet overflows by ${m.over}px`);
+    if (m.small.length) problems.push(`${tag} sheet small: ${m.small.join(',')}`);
+    if (m.centred) problems.push(`${tag} ${m.centred} centred`);
+    await tapText(page, '#sheet [data-reach="drive60"]');
+    await sleep(250);
+    if (await visible(page, '#sheet .sheet')) problems.push(`${tag} sheet still open`);
+    await waitCards(page);
+    const hs = await hstate(page);
+    if (hs.depth !== depth || hs.overlay !== null || hs.view !== 'cards') problems.push(`${tag} history ${JSON.stringify(hs)}`);
+    if ((await page.textContent('#basis')).trim() !== '여기 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
+    if ((await page.evaluate(() => localStorage.getItem('jeju.reach'))) !== '"drive60"') problems.push(`${tag} not stored`);
+    const after = await names(page);
+    if (after.length !== 3) problems.push(`${tag} ${after.length} cards`);
+    const text = await page.evaluate(() => document.body.innerText + document.body.innerHTML);
+    if (/score|점수|별점|★/i.test(text)) problems.push(`${tag} score on screen`);
+    const r = await page.evaluate(dayMeasure);
+    if (r.over > 0) problems.push(`${tag} results overflow ${r.over}px`);
+    // across a reload: the range stays chosen and the cards picked in it come back
+    await page.reload();
+    await waitCards(page);
+    if ((await names(page)).join() !== after.join()) problems.push(`${tag} reload cards ${await names(page)} (was ${after})`);
+    await tapText(page, '#basis');
+    const pressed = await page.$$eval('#sheet [data-reach][aria-pressed="true"]', (els) => els.map((e) => e.dataset.reach));
+    if (pressed.join() !== 'drive60') problems.push(`${tag} after reload pressed ${pressed}`);
+    await ctx.close();
+  }
   assert(problems.length === 0, problems.join(' | '));
 });
 

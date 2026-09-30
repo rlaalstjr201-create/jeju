@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { bookingUrl, kakaoUrl } from './links';
-import { historyKey, travel, travelText, type Button, type Card, type Spot } from './pick';
+import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
@@ -58,6 +58,9 @@ export const COPY = {
   basisSheet: '언제 어디 근처로 볼까요?',
   whenHead: '언제',
   whereHead: '어디',
+  /** 얼마나 (ADR-0060): the range, under 어디. Not in the basis label. */
+  reachHead: '얼마나',
+  reach: { walk: '걸어서', drive30: '차로 30분', drive60: '차로 1시간' } satisfies Record<Reach, string>,
   whenNow: '지금',
   pickDay: '날짜 고르기',
   gpsOption: '지금 있는 곳',
@@ -637,10 +640,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // Only what the user changes in a sheet. News that arrives while it is open — a 숙소 GPS failure, a GPS
     // denial — is patched in place (patchSheet): a rebuild under the finger would reset its scroll and focus.
     const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
-    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.when}|${s.today}|${move}`;
+    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.when}|${s.today}|${move}`;
   }
 
-  /** A thin-rule list of rows under its own group heading (the 언제 / 어디 parts of the basis sheet). */
+  /** A thin-rule list of rows under its own group heading (the 언제 / 어디 / 얼마나 parts of the basis sheet). */
   function optGroup(parent: HTMLElement, id: string, heading: string | null, rows: HTMLElement[]): HTMLElement {
     const opts = el(doc, 'div', { class: 'opts', role: 'group' });
     if (heading) {
@@ -687,6 +690,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
       optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow]);
       areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
+      // 얼마나 (ADR-0060): under 어디, the same thin-rule rows with a check. Choosing one closes the sheet.
+      optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));
     } else if (overlay === 'move') {
       // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.
       const from = s.moveTarget?.date ?? '';

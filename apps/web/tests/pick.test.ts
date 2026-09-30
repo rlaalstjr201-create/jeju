@@ -1,8 +1,14 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
-import { distanceKm, driveMinutes, formatMinutes, islandOf, pickCards, travel, travelText, walkMinutes, type Histories, type Spot } from '../src/pick';
+import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, pickCards, reachMinutes, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type Reach, type Spot, type Sub } from '../src/pick';
 import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
+
+/** specs/ranking.md 정렬 키: 점수 내림차순 → 이동 시간 오름차순 → id. */
+const byRank = (origin: Point, reach: Reach) => (a: { spot: Spot }, b: { spot: Spot }) =>
+  b.spot.score - a.spot.score ||
+  reachMinutes(reach, distanceKm(origin, a.spot)) - reachMinutes(reach, distanceKm(origin, b.spot)) ||
+  a.spot.id.localeCompare(b.spot.id);
 
 const combos = Object.entries(ORIGINS).flatMap(([name, origin]) => BUTTONS.map((button) => ({ name, origin, button })));
 
@@ -18,11 +24,13 @@ describe('S2 real data: 4 origins × 5 buttons', () => {
     expect(new Set(cards.map((c) => c.spot.id)).size).toBe(3);
   });
 
-  it.each(combos)('$name / $button → every card ≤ 60분', ({ origin, button }) => {
+  // Changed on purpose (ADR-0060): the default range is 차로 30분, no longer an hour.
+  it.each(combos)('$name / $button → every card ≤ 30분 (default 차로 30분)', ({ origin, button }) => {
+    expect(DEFAULT_REACH).toBe('drive30');
     const { cards } = pickCards(realSpots, origin, button);
     for (const c of cards) {
       expect(c.minutes).toBe(driveMinutes(distanceKm(origin, c.spot)));
-      expect(c.minutes).toBeLessThanOrEqual(60);
+      expect(c.minutes).toBeLessThanOrEqual(30);
     }
   });
 
@@ -46,18 +54,19 @@ describe('S2 real data: 4 origins × 5 buttons', () => {
     expect(second.cards.filter((c) => before.has(c.spot.id))).toEqual([]);
   });
 
-  it.each(combos)('$name / $button → mood buttons show the nearest spots, nearest first', ({ origin, button }) => {
+  // Changed on purpose (ADR-0060): no longer nearest first — score first, then the trip, then id.
+  it.each(combos)('$name / $button → the best-scored spots in range, best first', ({ origin, button }) => {
     const { cards } = pickCards(realSpots, origin, button);
-    const km = cards.map((c) => distanceKm(origin, c.spot));
-    expect([...km].sort((a, b) => a - b)).toEqual(km);
+    expect(cards.map((c) => c.spot.id)).toEqual([...cards].sort(byRank(origin, DEFAULT_REACH)).map((c) => c.spot.id));
     if (button === 'any') return;
     // 'food' with no sub given defaults to 'meal' (S2/S3 toggle default).
-    const nearest = realSpots
-      .filter((s) => s.mood === button && (button !== 'food' || s.sub === 'meal'))
-      .map((s) => distanceKm(origin, s))
-      .sort((a, b) => a - b)
-      .slice(0, 3);
-    expect(km).toEqual(nearest);
+    const best = realSpots
+      .filter((s) => s.mood === button && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
+      .map((spot) => ({ spot }))
+      .sort(byRank(origin, DEFAULT_REACH))
+      .slice(0, 3)
+      .map((c) => c.spot.id);
+    expect(cards.map((c) => c.spot.id)).toEqual(best);
   });
 });
 
@@ -92,7 +101,7 @@ describe('food sub-type split (식사 | 카페·디저트)', () => {
     // synthetic: exactly 3 meal + 3 cafe candidates → without history the same 3 always come back.
     const mk = (i: number, sub: 'meal' | 'cafe'): Spot => ({
       id: `${sub}${i}`, name: `${sub}${i}`, lat: 33.5, lng: 126.5 + i * 0.001, mood: 'food', sub,
-      reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(2000 + i), bookable: false,
+      reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(2000 + i), bookable: false, score: 3,
     });
     const spots = [0, 1, 2].flatMap((i) => [mk(i, 'meal'), mk(i, 'cafe')]);
     const origin = { lat: 33.5, lng: 126.5 };
@@ -106,9 +115,9 @@ describe('food sub-type split (식사 | 카페·디저트)', () => {
 });
 
 describe('S2 rotation on a synthetic set', () => {
-  const at = (i: number, mood: Spot['mood'] = 'walk'): Spot => ({
+  const at = (i: number, mood: Spot['mood'] = 'walk', score = 3): Spot => ({
     id: `s${i}`, name: `스팟${i}`, lat: 33.5, lng: 126.5 + i * 0.001, mood,
-    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(1000 + i), bookable: false,
+    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(1000 + i), bookable: false, score,
   });
   const origin = { lat: 33.5, lng: 126.5 };
 
@@ -140,12 +149,15 @@ describe('S2 rotation on a synthetic set', () => {
     }
   });
 
-  it('first tap shows nearest first; second tap moves to the next nearest', () => {
-    const spots = [5, 1, 4, 0, 3, 2].map((i) => at(i));
+  // Changed on purpose (ADR-0060): the first tap is the best-scored 3, not the nearest 3; the rotation then
+  // moves down the same ranking.
+  it('first tap shows the best-scored first; second tap moves to the next in rank', () => {
+    // s0..s5 lie ~90m apart (all "차로 약 5분"); s5 and s3 score highest.
+    const spots = [at(5, 'walk', 5), at(1, 'walk', 3), at(4, 'walk', 2), at(0, 'walk', 3), at(3, 'walk', 4), at(2, 'walk', 3)];
     const a = pickCards(spots, origin, 'walk');
-    expect(a.cards.map((c) => c.spot.id)).toEqual(['s0', 's1', 's2']);
+    expect(a.cards.map((c) => c.spot.id)).toEqual(['s5', 's3', 's0']);
     const b = pickCards(spots, origin, 'walk', a.histories);
-    expect(b.cards.map((c) => c.spot.id)).toEqual(['s3', 's4', 's5']);
+    expect(b.cards.map((c) => c.spot.id)).toEqual(['s1', 's2', 's4']);
   });
 
   it('any: re-tap changes all three and keeps 3 different moods', () => {
@@ -159,7 +171,7 @@ describe('S2 rotation on a synthetic set', () => {
 
   it('widens beyond 60분 rather than showing fewer than 3 (빈손 없음)', () => {
     const far = [0, 1, 2].map((i) => ({ ...at(i), lng: 126.95 + i * 0.01 }));
-    const { cards } = pickCards(far, { lat: 33.5, lng: 126.2 }, 'walk');
+    const { cards } = pickCards(far, { lat: 33.5, lng: 126.2 }, 'walk', {}, undefined, 'drive60');
     expect(cards).toHaveLength(3);
     expect(Math.min(...cards.map((c) => c.minutes))).toBeGreaterThan(60);
   });
@@ -262,7 +274,7 @@ describe('S12 이동 문구 — 출발지·걷기·시간 표기', () => {
 describe('S34 한 바퀴 (wrapped)', () => {
   const at = (i: number): Spot => ({
     id: `w${i}`, name: `스팟${i}`, lat: 33.5, lng: 126.5 + i * 0.001, mood: 'walk',
-    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(3000 + i), bookable: false,
+    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(3000 + i), bookable: false, score: 3,
   });
   it('is false while unseen places remain, true on the tap that starts the pool over', () => {
     const spots = Array.from({ length: 6 }, (_, i) => at(i));
@@ -278,5 +290,91 @@ describe('S34 한 바퀴 (wrapped)', () => {
 
   it('real data: a first pick is never "wrapped"', () => {
     for (const o of Object.values(ORIGINS)) for (const b of BUTTONS) expect(pickCards(realSpots, o, b).wrapped).toBe(false);
+  });
+});
+
+describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () => {
+  /** the 6 buttons of the results screen: 4 moods (food as 식사 / 카페·디저트) and 아무거나 */
+  const SIX: [Button, Sub?][] = [['rest'], ['walk'], ['new'], ['food', 'meal'], ['food', 'cafe'], ['any']];
+  const poolOf = (b: Button, sub?: Sub) =>
+    realSpots.filter((s) => (b === 'any' ? ['rest', 'walk', 'new'].includes(s.mood) : s.mood === b && (b !== 'food' || s.sub === sub)));
+  const label = (a: string, b: Button, sub: Sub | undefined, reach: Reach) => `${a} / ${b}${sub ? `:${sub}` : ''} / ${reach}`;
+
+  it('ranges: 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간; default 차로 30분', () => {
+    expect(REACHES).toEqual(['walk', 'drive30', 'drive60']);
+    expect(DEFAULT_REACH).toBe('drive30');
+    const o = { lat: 33.5, lng: 126.5 };
+    const east = (km: number) => ({ lat: 33.5, lng: 126.5 + km / (111.32 * Math.cos((33.5 * Math.PI) / 180)) });
+    expect(withinReach('walk', o, east(0.9))).toBe(true); // walkMinutes 15
+    expect(withinReach('walk', o, east(1.2))).toBe(false); // walkMinutes 20
+    expect(withinReach('drive30', o, east(15))).toBe(true); // driveMinutes 30
+    expect(withinReach('drive30', o, east(17))).toBe(false); // 35
+    expect(withinReach('drive60', o, east(31))).toBe(true); // 60
+    expect(withinReach('drive60', o, east(34))).toBe(false); // 65
+  });
+
+  it('R2 15 areas × 6 buttons × 3 ranges → 3 distinct cards; none beyond the range when 3 or more are in it', () => {
+    let checked = 0;
+    for (const area of AREAS) {
+      for (const [b, sub] of SIX) {
+        for (const reach of REACHES) {
+          const why = label(area.name, b, sub, reach);
+          const { cards } = pickCards(realSpots, area, b, {}, sub, reach);
+          expect(cards, why).toHaveLength(3);
+          expect(new Set(cards.map((c) => c.spot.id)).size, why).toBe(3);
+          for (const c of cards) {
+            // 아무거나 draws one card from each mood: that mood's own pool decides whether it had to widen
+            const pool = b === 'any' ? poolOf(c.spot.mood) : poolOf(b, sub);
+            if (pool.filter((s) => withinReach(reach, area, s)).length >= 3) expect(withinReach(reach, area, c.spot), `${why} / ${c.spot.name}`).toBe(true);
+          }
+          checked++;
+        }
+      }
+    }
+    expect(checked).toBe(15 * 6 * 3);
+  });
+
+  it('R3 within one range the first card scores at least as high as the cards after it (every area, button, range)', () => {
+    for (const area of AREAS) {
+      for (const [b, sub] of SIX) {
+        for (const reach of REACHES) {
+          const { cards } = pickCards(realSpots, area, b, {}, sub, reach);
+          const scores = cards.map((c) => c.spot.score);
+          expect(scores[0], label(area.name, b, sub, reach)).toBe(Math.max(...scores));
+        }
+      }
+    }
+  });
+
+  it('R3 holds tap after tap, while the rotation shows only unseen places', () => {
+    for (const [name, origin] of Object.entries(ORIGINS)) {
+      for (const [b, sub] of SIX) {
+        let h: Histories = {};
+        const seen = new Set<string>();
+        for (let tap = 0; tap < 4; tap++) {
+          const r = pickCards(realSpots, origin, b, h, sub);
+          const scores = r.cards.map((c) => c.spot.score);
+          expect(scores[0], `${name} / ${b} / tap ${tap}`).toBe(Math.max(...scores));
+          if (!r.wrapped) for (const c of r.cards) expect(seen.has(c.spot.id), `${name} / ${b} / tap ${tap}`).toBe(false);
+          for (const c of r.cards) seen.add(c.spot.id);
+          h = r.histories;
+        }
+      }
+    }
+  });
+
+  it('a better-scored place further away comes before a nearer one, but never one beyond the range', () => {
+    const mk = (id: string, km: number, score: number): Spot => ({
+      id, name: id, lat: 33.5, lng: 126.5 + km / (111.32 * Math.cos((33.5 * Math.PI) / 180)), mood: 'rest',
+      reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: null, bookable: false, score,
+    });
+    const spots = [mk('near3', 1, 3), mk('near3b', 2, 3), mk('mid5', 10, 5), mk('mid4', 12, 4), mk('far5', 25, 5)];
+    const o = { lat: 33.5, lng: 126.5 };
+    // 차로 30분: far5 (차로 약 50분) is out; the 5 comes first, the 3s last, ties by trip then id
+    expect(pickCards(spots, o, 'rest', {}, undefined, 'drive30').cards.map((c) => c.spot.id)).toEqual(['mid5', 'mid4', 'near3']);
+    // 차로 1시간: far5 is in, and outranks the nearer 4
+    expect(pickCards(spots, o, 'rest', {}, undefined, 'drive60').cards.map((c) => c.spot.id)).toEqual(['mid5', 'far5', 'mid4']);
+    // 걸어서: only near3 is within 15 minutes on foot → widened to the nearest 3, still best first
+    expect(pickCards(spots, o, 'rest', {}, undefined, 'walk').cards.map((c) => c.spot.id)).toEqual(['mid5', 'near3', 'near3b']);
   });
 });

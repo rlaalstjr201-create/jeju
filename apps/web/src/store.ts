@@ -3,7 +3,7 @@
 // memory for this visit (S27·S28·S29).
 import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
-import type { Button, Histories, History, HistoryKey, Sub } from './pick';
+import { DEFAULT_REACH, REACHES, type Button, type Histories, type History, type HistoryKey, type Reach, type Sub } from './pick';
 import type { Basis, Origin, SavedEntry, Stay, When } from './types';
 
 export const KEYS = {
@@ -11,6 +11,8 @@ export const KEYS = {
   /** the day hearts go to, next to the basis (specs/date-mode.md): 'now' | 'YYYY-MM-DD'. */
   when: 'jeju.when',
   region: 'jeju.region',
+  /** 얼마나 (ADR-0060): 'walk' | 'drive30' | 'drive60'. */
+  reach: 'jeju.reach',
   stay: 'jeju.stay',
   /** v2: `{ id, date, order }[]`, saved per day. */
   savedV2: 'jeju.saved.v2',
@@ -85,6 +87,11 @@ export function parseWhen(v: unknown, today: Day): When {
   return isDay(v) && v > today ? v : 'now';
 }
 
+/** 걸어서 · 차로 30분 · 차로 1시간; anything else is the default 차로 30분. */
+export function parseReach(v: unknown): Reach {
+  return REACHES.includes(v as Reach) ? (v as Reach) : DEFAULT_REACH;
+}
+
 /** One of the 15 areas; the 4 legacy names map to their nearest area. */
 export function parseRegion(v: unknown): AreaName | null {
   if (typeof v !== 'string') return null;
@@ -119,6 +126,8 @@ export interface SessionRecord {
   sub: Sub;
   /** the point `shown`/`histories` belong to; null = nothing shown yet. */
   origin: Origin | null;
+  /** the range `shown`/`histories` belong to (ADR-0060); missing in records written before it. */
+  reach?: Reach;
   shown: Partial<Record<HistoryKey, string[]>>;
   histories: Histories;
 }
@@ -157,6 +166,7 @@ export function parseSession(v: unknown): SessionRecord | null {
   return {
     ...base,
     origin: { key: og.key, from: og.from, isPoint: og.isPoint, point: { lat: pt.lat, lng: pt.lng } },
+    ...(REACHES.includes(o.reach as Reach) ? { reach: o.reach as Reach } : {}),
     shown,
     histories,
   };
@@ -164,6 +174,7 @@ export function parseSession(v: unknown): SessionRecord | null {
 
 export interface Loaded {
   basis: Basis;
+  reach: Reach;
   when: When;
   region: AreaName | null;
   stay: Stay | null;
@@ -176,6 +187,7 @@ export interface Store {
    * saved list is moved to `today` the first time (no v2 key yet), in its order. */
   load(today: Day): Loaded;
   setBasis(b: Basis): void;
+  setReach(r: Reach): void;
   setWhen(w: When): void;
   setRegion(name: AreaName): void;
   setStay(stay: Stay): void;
@@ -259,6 +271,9 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       const rawBasis = get(local, KEYS.basis);
       const basis = parseBasis(rawBasis, stay, region);
       if (rawBasis != null && rawBasis !== basis) set(local, KEYS.basis, basis);
+      const rawReach = get(local, KEYS.reach);
+      const reach = parseReach(rawReach);
+      if (rawReach != null && rawReach !== reach) set(local, KEYS.reach, reach);
       const rawWhen = get(local, KEYS.when);
       const when = parseWhen(rawWhen, today);
       if (rawWhen != null && rawWhen !== when) set(local, KEYS.when, when);
@@ -274,9 +289,10 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         memory = saved;
         if (!same(rawSaved, saved)) writeSaved(saved);
       }
-      return { basis, when, region, stay, saved, hintSeen: get(local, KEYS.hint) === true };
+      return { basis, reach, when, region, stay, saved, hintSeen: get(local, KEYS.hint) === true };
     },
     setBasis: (b) => void set(local, KEYS.basis, b),
+    setReach: (r) => void set(local, KEYS.reach, r),
     setWhen: (w) => void set(local, KEYS.when, w),
     setRegion: (name) => void set(local, KEYS.region, name),
     setStay: (stay) => void set(local, KEYS.stay, stay),

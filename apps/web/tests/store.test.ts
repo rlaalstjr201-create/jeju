@@ -2,7 +2,7 @@
 // repaired, and hearts are read-modify-write so two tabs never erase each other's saves.
 import { beforeEach, describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
-import { KEYS, MAX_SAVED, createStore, normalizeEntries, parseBasis, parseEntries, parseRegion, parseSaved, parseSession, parseStay, parseWhen } from '../src/store';
+import { KEYS, MAX_SAVED, createStore, normalizeEntries, parseBasis, parseEntries, parseRegion, parseReach, parseSaved, parseSession, parseStay, parseWhen } from '../src/store';
 import type { SavedEntry } from '../src/types';
 
 /** In-memory Storage shared between "tabs". */
@@ -332,5 +332,37 @@ describe('날짜 모드 저장 (specs/date-mode.md D3·D4·D5)', () => {
     expect(createStore(mem, null).load(TODAY).when).toBe(TOMORROW);
     expect(createStore(mem, null).load(TOMORROW).when).toBe('now');
     expect(JSON.parse(mem.getItem(KEYS.when)!)).toBe('now');
+  });
+});
+
+describe('얼마나 (ADR-0060) — 범위 저장', () => {
+  it('walk | drive30 | drive60; anything else (or nothing) reads as 차로 30분, and a bad value is written back', () => {
+    expect(parseReach('walk')).toBe('walk');
+    expect(parseReach('drive60')).toBe('drive60');
+    expect(parseReach('drive30')).toBe('drive30');
+    expect(parseReach('far')).toBe('drive30');
+    expect(parseReach(null)).toBe('drive30');
+    expect(createStore(mem, null).load(TODAY).reach).toBe('drive30');
+    expect(mem.getItem(KEYS.reach)).toBeNull(); // nothing stored: nothing written
+    mem.setItem(KEYS.reach, JSON.stringify('boat'));
+    expect(createStore(mem, null).load(TODAY).reach).toBe('drive30');
+    expect(JSON.parse(mem.getItem(KEYS.reach)!)).toBe('drive30');
+  });
+
+  it('setReach survives a new store (reload); with storage blocked it is simply not kept (the app holds it in memory)', () => {
+    createStore(mem, null).setReach('walk');
+    expect(JSON.parse(mem.getItem(KEYS.reach)!)).toBe('walk');
+    expect(createStore(mem, null).load(TODAY).reach).toBe('walk');
+    const blocked = createStore(null, null);
+    expect(() => blocked.setReach('drive60')).not.toThrow();
+    expect(blocked.load(TODAY).reach).toBe('drive30');
+  });
+
+  it('the session record keeps the range its rotation belongs to; an unknown one is dropped', () => {
+    const origin = { key: 'region:애월', point: { lat: 애월.lat, lng: 애월.lng }, isPoint: false, from: '애월에서' };
+    const rec = { v: 1, mood: 'walk', sub: 'meal', origin, shown: {}, histories: {} };
+    expect(parseSession({ ...rec, reach: 'walk' })?.reach).toBe('walk');
+    expect(parseSession({ ...rec, reach: 'boat' })).not.toHaveProperty('reach');
+    expect(parseSession(rec)).not.toHaveProperty('reach');
   });
 });

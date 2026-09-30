@@ -27,7 +27,9 @@ export function normalizeSpots(raw: unknown): Spot[] {
     const spot = r as unknown as Spot;
     const clean = cleanName(name);
     const why = cleanReason(reason);
-    out.push(clean === name && why === reason ? spot : { ...spot, name: clean, reason: why });
+    // 만족도 (ADR-0060): the shipped file always has 1–5; anything else ranks as the middle (모르면 3).
+    const score = Number.isInteger(r.score) && (r.score as number) >= 1 && (r.score as number) <= 5 ? (r.score as number) : 3;
+    out.push(clean === name && why === reason && score === r.score ? spot : { ...spot, name: clean, reason: why, score });
   }
   return out;
 }

@@ -3,7 +3,7 @@
 // dropped here, so the last user intent always wins (S36–S38).
 import { areaByName, type AreaName } from './areas';
 import { type Day } from './dates';
-import { distanceKm, driveMinutes, historyKey, pickCards, type Button, type Card, type Histories, type HistoryKey, type Spot, type Sub } from './pick';
+import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, type Button, type Card, type Histories, type HistoryKey, type Reach, type Spot, type Sub } from './pick';
 import type { SessionRecord } from './store';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
@@ -21,6 +21,8 @@ export interface Shown {
   key: HistoryKey;
   list: Card[];
   origin: Origin;
+  /** the range they were picked in (ADR-0060). */
+  reach: Reach;
   wrapped: boolean;
   how: 'new' | 'more' | 'restore';
   /** bumps on every result, so the renderer knows when to scroll/announce. */
@@ -35,6 +37,8 @@ export interface State {
   mood: Button | null;
   sub: Sub;
   basis: Basis;
+  /** 얼마나 (ADR-0060): the range cards are picked in. */
+  reach: Reach;
   /** the day hearts go to ('now' = today); reset to 'now' once that day comes (specs/date-mode.md). */
   when: When;
   /** today in Jeju (Asia/Seoul). */
@@ -46,6 +50,8 @@ export interface State {
   phase: Phase;
   /** the origin `histories`/`shown` belong to. */
   origin: Origin | null;
+  /** the range `histories`/`shown` belong to (null: unknown, e.g. a session record from before ranges). */
+  originReach: Reach | null;
   histories: Histories;
   /** last 3 ids shown per button (+food sub) — brought back when that button is chosen again (S43·S44). */
   shown: Partial<Record<HistoryKey, string[]>>;
@@ -91,6 +97,7 @@ export type Action =
   | { type: 'route'; route: Route }
   | { type: 'overlay'; overlay: Overlay }
   | { type: 'basis'; basis: Basis; region?: AreaName; stay?: Stay }
+  | { type: 'reach'; reach: Reach }
   | { type: 'stayForm'; pending: boolean; error: NoOrigin | null }
   /** the saved list as stored now; `removed`: a row taken out in the saved list (kept on screen). */
   | { type: 'saved'; entries: SavedEntry[]; removed?: SavedEntry | null }
@@ -109,6 +116,7 @@ export const GPS_KEY = 'gps';
 
 export function initialState(init: {
   basis: Basis;
+  reach?: Reach;
   when?: When;
   today: Day;
   region: AreaName | null;
@@ -124,6 +132,7 @@ export function initialState(init: {
     mood: null,
     sub: 'meal',
     basis: init.basis,
+    reach: init.reach ?? DEFAULT_REACH,
     when: init.when && init.when !== 'now' && init.when > init.today ? init.when : 'now',
     today: init.today,
     region: init.region,
@@ -131,6 +140,7 @@ export function initialState(init: {
     lastFail: null,
     phase: { k: 'idle' },
     origin: null,
+    originReach: null,
     histories: {},
     shown: {},
     cards: null,
@@ -174,9 +184,9 @@ export function sameOrigin(a: Origin | null, b: Origin | null): boolean {
   return a.key !== GPS_KEY || distanceKm(a.point, b.point) <= 1;
 }
 
-/** The shown cards still match the current button, sub and basis. */
+/** The shown cards still match the current button, sub, basis and range. */
 export function cardsValid(s: State): boolean {
-  if (!s.cards || !s.mood || s.cards.key !== historyKey(s.mood, s.sub)) return false;
+  if (!s.cards || !s.mood || s.cards.key !== historyKey(s.mood, s.sub) || s.cards.reach !== s.reach) return false;
   const fixed = staticOrigin(s.basis, s.region, s.stay);
   return fixed ? fixed.key === s.cards.origin.key : s.cards.origin.key === GPS_KEY;
 }
@@ -271,7 +281,8 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   const key = historyKey(mood, s.sub);
   let { histories, shown } = s;
   let base = s.origin;
-  if (!sameOrigin(base, origin)) {
+  // Another place or another range: the rotation so far no longer applies (plan OQ4, ADR-0060).
+  if (!sameOrigin(base, origin) || s.originReach !== s.reach) {
     histories = {};
     shown = {};
     base = origin;
@@ -285,6 +296,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
     const same =
       !!c &&
       c.key === key &&
+      c.reach === s.reach &&
       c.origin.key === origin.key &&
       c.origin.point.lat === origin.point.lat &&
       c.origin.point.lng === origin.point.lng &&
@@ -293,25 +305,27 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
       ...s,
       spots,
       origin: base,
+      originReach: s.reach,
       histories,
       shown,
       phase: { k: 'ready' },
-      cards: same ? c : { key, list: restored, origin, wrapped: false, how: 'restore', seq },
+      cards: same ? c : { key, list: restored, origin, reach: s.reach, wrapped: false, how: 'restore', seq },
       seq: same ? s.seq : seq,
     };
   }
-  const r = pickCards(spots, origin.point, mood, histories, s.sub);
-  if (!r.cards.length) return { ...s, spots, origin: base, histories, shown, phase: { k: 'empty' }, cards: null, seq };
+  const r = pickCards(spots, origin.point, mood, histories, s.sub, s.reach);
+  if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;
   return {
     ...s,
     spots,
     origin: base,
+    originReach: s.reach,
     histories: r.histories,
     shown: { ...shown, [key]: r.cards.map((c) => c.spot.id) },
     phase: { k: 'ready' },
-    cards: { key, list: r.cards, origin, wrapped: r.wrapped, how, seq },
+    cards: { key, list: r.cards, origin, reach: s.reach, wrapped: r.wrapped, how, seq },
     announce: { n, more: how === 'more', seq },
     seq,
   };
@@ -336,7 +350,7 @@ function enterView(s: State, view: View): State {
 }
 
 /** Every user intent but a heart clears the first-save hint (§6.13, §11.2): it goes with the next draw. */
-const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'request', 'openSaved', 'closeSaved', 'route', 'overlay', 'basis', 'when', 'restore']);
+const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'request', 'openSaved', 'closeSaved', 'route', 'overlay', 'basis', 'reach', 'when', 'restore']);
 
 export function reduce(s: State, a: Action): State {
   const next = step(s, a);
@@ -406,6 +420,8 @@ function step(s: State, a: Action): State {
         // a 숙소 saved from GPS means GPS works (the "위치 권한이 꺼져 있어요" hint no longer holds)
         lastFail: a.stay?.source === 'gps' ? null : s.lastFail,
       };
+    case 'reach':
+      return a.reach === s.reach ? s : { ...s, reach: a.reach };
     case 'stayForm':
       // the 숙소 GPS failing is as much news about GPS as a failed pick: 내 주변 → 지역 고르기
       return { ...s, stayForm: { pending: a.pending, error: a.error }, lastFail: a.error ?? s.lastFail };
@@ -452,6 +468,7 @@ function step(s: State, a: Action): State {
         mood: a.rec.mood,
         sub: a.rec.sub,
         origin: a.rec.origin,
+        originReach: a.rec.reach ?? null,
         shown: a.rec.shown,
         histories: a.rec.histories,
       };
@@ -464,5 +481,6 @@ function step(s: State, a: Action): State {
  * Null when the results are not on screen. */
 export function sessionOf(s: State): SessionRecord | null {
   if (s.view !== 'cards' || !s.mood) return null;
-  return { v: 1, mood: s.mood, sub: s.sub, origin: s.origin, shown: s.shown, histories: s.histories };
+  const rec: SessionRecord = { v: 1, mood: s.mood, sub: s.sub, origin: s.origin, shown: s.shown, histories: s.histories };
+  return s.originReach ? { ...rec, reach: s.originReach } : rec;
 }
