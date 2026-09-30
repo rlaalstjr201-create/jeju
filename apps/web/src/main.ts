@@ -58,8 +58,7 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
       const s = app.state();
       return s.view === 'home' && !s.overlay && s.phase.k !== 'pending';
     },
-    current: () =>
-      runsCachedCode(document, 'caches' in window ? caches : undefined, new URL(import.meta.url).href, navigator.serviceWorker.controller),
+    current: () => runsCachedCode(document, 'caches' in window ? caches : undefined, new URL(import.meta.url).href),
     reload: () => location.reload(),
   });
   window.addEventListener('load', () => {

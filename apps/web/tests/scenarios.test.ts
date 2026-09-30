@@ -622,7 +622,7 @@ describe('하트', () => {
   });
 
   it('S40 the first heart ever says once where saves go; later hearts don\'t', async () => {
-    const delays = { slow: 0, long: 30, settle: 300, hint: 400 };
+    const delays = { slow: 0, long: 10_000, settle: 300, hint: 400 };
     render({ delays });
     await tap('[data-mood="rest"]');
     await tap('.card .heart');
@@ -959,7 +959,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
       ((q: string) => ({ matches: q.includes('no-preference') ? !reduce : reduce, media: q, addEventListener() {}, removeEventListener() {} })) as unknown as typeof window.matchMedia;
     window.matchMedia = mm(false);
     try {
-      render({ delays: { slow: 0, long: 30, settle: 300, hint: 30 } });
+      render({ delays: { slow: 0, long: 10_000, settle: 300, hint: 30 } });
       await tap('[data-mood="rest"]');
       await tap('.card .heart');
       expect($$('.hint')).toHaveLength(1);
