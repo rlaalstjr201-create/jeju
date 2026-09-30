@@ -130,7 +130,7 @@ export function checkCss(file: string, css: string, v: Violation[]) {
     for (const m of r.body.matchAll(/(^|[;\s])height:\s*([^;]+)/g)) {
       if (!sels.every((s) => FIXED_HEIGHT_OK.test(s))) add(15, `${r.selector} height ${m[2]}`);
     }
-    const pressedFill = sels.some((s) => s.includes('[aria-pressed="true"]') && !s.startsWith('.saved-btn'));
+    const pressedFill = sels.some((s) => /\[aria-(pressed|current)=["']?true["']?\]/.test(s) && !s.startsWith('.saved-btn'));
     if (pressedFill && /(^|[;\s])background(-color)?\s*:/.test(r.body)) add(18, `${r.selector} fills the selection`);
   }
 }

@@ -10,7 +10,7 @@ export const cleanName = (s: string) => s.replace(/\s+/g, ' ').trim();
 /** A reason is a card caption: no final full stop whatever the ending, 돈까스 spelled 돈가스 (design/SPEC.md
  * §10·§12.4, 3판). Same rule as the build's shipReason (scripts/reason.mjs). */
 export function cleanReason(s: string): string {
-  return cleanName(s).replace(/돈까스/g, '돈가스').replace(/[\s.。]+$/, '');
+  return cleanName(s).replace(/돈까스/g, '돈가스').replace(/[\s.。．｡]+$/, '');
 }
 
 /** Drops records the app cannot render; normalizes names and reasons. The shipped file already passes S1'. */

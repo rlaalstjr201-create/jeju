@@ -3,6 +3,7 @@
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { checkCss, checkReasons, checkSlop, checkStrings, type Violation } from '../scripts/check-slop';
+import { cleanReason } from '../src/data';
 
 const root = resolve(__dirname, '..');
 
@@ -43,5 +44,39 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
     expect(r).toEqual([]);
     checkReasons('probe.json', [{ id: 'c', reason: '벚꽃 축제가 열리는 길.' }], r);
     expect(r.map((x) => x.rule)).toEqual([19]);
+  });
+
+  it('#19 catches a second sentence after any stop, and a fullwidth final stop; decimals still pass', () => {
+    const r: Violation[] = [];
+    const bad = ['맛있어요 . 포장해 가도 돼요', '카페(동문시장). 포장해요', '약 1.5km. 걸어요', 'OK. 좋아요', '좋아요．', '좋아요｡', '좋아요． 포장해요'];
+    checkReasons('probe.json', bad.map((reason, i) => ({ id: `b${i}`, reason })), r);
+    expect(r.map((x) => x.detail.split(' in ')[1])).toEqual(bad.map((_, i) => `b${i}: ${bad[i]}`));
+    const ok: Violation[] = [];
+    checkReasons('probe.json', [{ id: 'a', reason: '4.3 사건을 기억해요' }, { id: 'b', reason: '약 17.5km 이어지는 올레길' }], ok);
+    expect(ok).toEqual([]);
+  });
+
+  it('shipReason and cleanReason drop a fullwidth final stop too, and agree', async () => {
+    const { shipReason } = await import('../scripts/reason.mjs');
+    for (const s of ['좋아요．', '좋아요｡', '좋아요 ． ', '좋아요.。．｡']) {
+      expect(shipReason(s), s).toBe('좋아요');
+      expect(cleanReason(s), s).toBe('좋아요');
+    }
+  });
+
+  it('#18 catches a filled selection however the attribute is quoted, and aria-current', () => {
+    for (const css of [
+      '.opt[aria-pressed=true] { background: var(--fill); }',
+      ".opt[aria-pressed='true'] { background: var(--fill); }",
+      '.mood[aria-current="true"] { background: var(--fill); }',
+      '.mood[aria-current=true] { background-color: var(--fill); }',
+    ]) {
+      const v: Violation[] = [];
+      checkCss('probe.css', css, v);
+      expect(v.map((x) => x.rule), css).toEqual([18]);
+    }
+    const v: Violation[] = [];
+    checkCss('probe.css', ".saved-btn[aria-pressed='true'] { background: var(--fill); }", v);
+    expect(v).toEqual([]);
   });
 });

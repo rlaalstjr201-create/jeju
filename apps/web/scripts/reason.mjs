@@ -8,15 +8,16 @@ export const shipReason = (s) =>
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/돈까스/g, '돈가스')
-    .replace(/[\s.。]+$/, '');
+    .replace(/[\s.。．｡]+$/, '');
 
-// One sentence per caption: a full stop after a Hangul syllable followed by more text is a second sentence
-// ("딱새우김밥과 양념새우컵밥. 포장해 가도 돼요"). Decimals ("4.3", "17.5km") are not.
-const MID_STOP = /[가-힣][.。]\s*\S/;
+// One sentence per caption: a full stop after a Hangul syllable, or any stop then a space, followed by more
+// text is a second sentence ("딱새우김밥과 양념새우컵밥. 포장해 가도 돼요", "약 1.5km. 걸어요"). Decimals
+// ("4.3", "17.5km") are not.
+const MID_STOP = /[가-힣][.。．｡]\s*\S|(?<!\d)[.。．｡]\s+\S|[.。．｡]\s+(?!\d)\S/;
 
 /** Why a shipped reason breaks the §10 punctuation rule, or null. */
 export function reasonPunctuationProblem(reason) {
-  if (/[.。]$/.test(reason)) return 'ends with a full stop';
+  if (/[.。．｡]$/.test(reason)) return 'ends with a full stop';
   if (MID_STOP.test(reason)) return 'full stop mid-sentence';
   return null;
 }

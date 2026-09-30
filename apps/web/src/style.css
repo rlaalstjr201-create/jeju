@@ -24,10 +24,10 @@
 
 * { box-sizing: border-box; }
 html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-/* a control focused by Tab is never left under the sticky top bar. On the page's controls, not as html
-   scroll-padding: that also covers the top bar's own buttons, and focusing one (Shift+Tab back to ♥ N)
-   would scroll the page to the top */
-main :is(a, button) { scroll-margin-top: var(--top-h); }
+/* a control focused by Tab is never left under the sticky top bar (Chromium ignores scroll-margin when
+   focus scrolls). Only while the focus is in the page: for the top bar's own buttons it would scroll the
+   page to the top (Shift+Tab back to ♥ N) */
+html:has(main :is(a, button):focus-visible) { scroll-padding-top: calc(var(--top-h) + env(safe-area-inset-top)); }
 /* the sheet scrolls, not the page behind it */
 html:has(#sheet:not([hidden])) { overflow: hidden; }
 body {
@@ -162,6 +162,9 @@ main { flex: 1; display: flex; flex-direction: column; }
   grid-template-rows: auto auto 1fr auto auto;
 }
 .card.row .ph { width: var(--thumb); aspect-ratio: 1; border-radius: var(--r-thumb); align-self: start; }
+/* 320: two siblings ("… 절로 가는길 - 정진의 길" / "- 인욕의 길") would clamp to the same two lines. The name
+   takes one line, cut with "…", and the alias the second, whole */
+.card.row .base, .card.row .alias { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .card.row .reason { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
 .card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; }
 .card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; grid-template-rows: none; }
@@ -189,6 +192,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* the rule above the bar shows only while it floats; its colour changes, never its height */
 .more-bar::before { content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1px solid transparent; }
 .more-bar.stuck::before { border-top-color: var(--line); }
+/* Chromium ignores scroll-margin when Tab scrolls to a control: keep a focused card link or heart above the
+   floating bar (12 + 52 + its bottom padding, + 8) */
+html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(safe-area-inset-bottom))); }
 .more-end { position: absolute; left: 0; bottom: -1px; width: 1px; height: 1px; pointer-events: none; }
 
 /* placeholder after 300ms: still, no shimmer */
@@ -220,14 +226,15 @@ main { flex: 1; display: flex; flex-direction: column; }
 .areas::after { content: ""; grid-column: 1 / -1; margin: 0 8px; border-top: 1px solid var(--line); }
 .opts { margin: 0 -8px; }
 .opts::after { content: ""; display: block; margin: 0 8px; border-top: 1px solid var(--line); }
-.optrow { position: relative; display: flex; align-items: center; gap: 4px; }
+.optrow { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 .areas > .opt::before, .optrow::before { content: ""; position: absolute; top: 0; left: 8px; right: 8px; border-top: 1px solid var(--line); }
 .opt {
   position: relative; display: flex; align-items: center; justify-content: space-between; gap: 8px;
   width: 100%; min-height: 56px; padding: 8px; border-radius: var(--r-ctl);
   font-size: 1.0625rem; line-height: 1.35;
 }
-.optrow .opt { flex: 1; min-width: 0; }
+/* at 200% text 다시 정하기 goes under its option instead of squeezing "서귀포 시내 숙소" to a word a line */
+.optrow .opt { flex: 1 1 10em; min-width: 0; }
 .optrow .tbtn { flex: none; margin-right: 0; }
 .opt:active { background: var(--fill); }
 .opt .nm { display: block; }
@@ -242,6 +249,7 @@ main { flex: 1; display: flex; flex-direction: column; }
   position: fixed; left: 0; right: 0; bottom: 0; max-width: 480px; margin: 0 auto; max-height: 88dvh;
   overflow-y: auto; overscroll-behavior: contain; background: var(--surface);
   border-radius: var(--r-sheet) var(--r-sheet) 0 0; padding: 24px 16px 0;
+  scroll-padding-bottom: calc(64px + env(safe-area-inset-bottom)); /* a focused option stays above 닫기 (56 + 8) */
 }
 .sheet h2 { margin: 0 0 16px; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
 .sheet .note { margin: -8px 0 16px; color: var(--muted); }

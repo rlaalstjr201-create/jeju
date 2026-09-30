@@ -89,9 +89,10 @@ export function dateLabel(now: Date): string {
   return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
 }
 
-/** "더럭초등학교(구, 더럭분교)" → name + "(구, 더럭분교)" shown smaller and never broken inside (§3.3). */
+/** "더럭초등학교(구, 더럭분교)" → name + "(구, 더럭분교)" shown smaller and never broken inside (§3.3). So is
+ * the part after " - " ("… 절로 가는길 - 정진의 길"): it is what tells a course from its siblings. */
 export function splitName(name: string): { main: string; alias: string | null } {
-  const m = /^(.+?)\s*([(（].+[)）])$/.exec(name);
+  const m = /^(.+?)\s*([(（].+[)）])$/.exec(name) ?? /^(.+?)\s+(-\s+.+)$/.exec(name);
   return m ? { main: m[1], alias: m[2] } : { main: name, alias: null };
 }
 
@@ -301,8 +302,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // A row whose trip went to the `아니면` line hears it with the card (§6.5).
     if (describedBy) link.setAttribute('aria-describedby', describedBy);
     const { main, alias } = splitName(name);
-    link.append(main);
-    if (alias) link.append(' ', el(doc, 'span', { class: 'alias' }, alias));
+    // with an alias, the name is its own span: a row card cuts it to one line so the alias always shows
+    if (alias) link.append(el(doc, 'span', { class: 'base' }, main), ' ', el(doc, 'span', { class: 'alias' }, alias));
+    else link.append(main);
     title.append(link);
     // Name fixed, state only in aria-pressed (S59).
     const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(s.saved.includes(spot.id)), 'aria-label': COPY.heartAria(name) });

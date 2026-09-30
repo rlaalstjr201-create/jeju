@@ -1245,6 +1245,175 @@ await check('QA-first-tap', 'a mood tapped while the app script is still downloa
   await ctx.close();
 });
 
+// --- QA round 2: keyboard focus under the sticky bars, the 숙소 row at 200%, names that differ only after " - " ---
+
+await check('QA2-focus-bar', 'Tab through the cards at 320·360 with 다른 3곳 bar floating: no card link or heart is left under the bar', async () => {
+  for (const [width, height] of [
+    [320, 568],
+    [360, 640],
+  ]) {
+    for (const mood of ['food', 'rest']) {
+      const { ctx, page } = await fresh({ width, height });
+      await tapText(page, `[data-mood="${mood}"]`);
+      await waitCards(page);
+      await sleep(200);
+      await page.evaluate(() => {
+        document.activeElement.blur();
+        window.scrollTo(0, 0);
+      });
+      assert(await page.$eval('#cards .more-bar', (b) => b.classList.contains('stuck')), `${width} ${mood}: bar not floating at the top`);
+      const seen = new Set();
+      for (let i = 0; i < 30; i++) {
+        await page.keyboard.press('Tab');
+        await sleep(50);
+        const r = await page.evaluate(() => {
+          const a = document.activeElement;
+          const bar = document.querySelector('#cards .more-bar');
+          if (!a || !a.closest('#cards') || bar.contains(a)) return { done: !!a && bar.contains(a) };
+          if (!a.closest('.card')) return {};
+          const e = a.getBoundingClientRect();
+          return { el: `${a.className} ${a.getAttribute('aria-label')}`, stuck: bar.classList.contains('stuck'), bottom: e.bottom, barTop: bar.getBoundingClientRect().top };
+        });
+        if (r.done) break;
+        if (!r.el) continue;
+        seen.add(r.el.split(' ')[0]);
+        assert(!r.stuck || r.bottom <= r.barTop + 0.5, `${width} ${mood}: ${r.el} bottom ${Math.round(r.bottom)} under the bar at ${Math.round(r.barTop)}`);
+      }
+      assert(seen.has('card-link') && seen.has('heart'), `${width} ${mood}: tabbed through ${[...seen]}`);
+      await ctx.close();
+    }
+  }
+});
+
+await check('QA2-focus-sheet', 'Tab through the basis sheet at 320×568: no option is left under the sticky 닫기', async () => {
+  const { ctx, page } = await fresh({ width: 320, height: 568 });
+  await tapText(page, '#basis');
+  await page.waitForSelector('#sheet .sheet');
+  let n = 0;
+  for (let i = 0; i < 25; i++) {
+    await page.keyboard.press('Tab');
+    await sleep(30);
+    const r = await page.evaluate(() => {
+      const a = document.activeElement;
+      const close = document.querySelector('#sheet .sheet-close');
+      if (!a || !a.closest('#sheet') || a === close) return null;
+      return { el: a.textContent.trim().slice(0, 12), bottom: a.getBoundingClientRect().bottom, closeTop: close.getBoundingClientRect().top };
+    });
+    if (!r) continue;
+    n++;
+    assert(r.bottom <= r.closeTop + 0.5, `"${r.el}" bottom ${Math.round(r.bottom)} under 닫기 at ${Math.round(r.closeTop)}`);
+  }
+  assert(n >= 10, `only ${n} controls reached in the sheet`);
+  await ctx.close();
+});
+
+await check('QA2-focus-top', 'Shift+Tab up the area index at 320×568: nothing is left under the top bar; focusing ♥ N does not move the page', async () => {
+  const { ctx, page } = await fresh({ width: 320, height: 568, geo: { mode: 'deny' }, storage: { 'jeju.saved': [] } });
+  await tapText(page, '[data-mood="walk"]');
+  await page.waitForSelector('#results .notice');
+  await sleep(200);
+  await page.evaluate(() => {
+    document.activeElement.blur();
+    window.scrollTo(0, document.documentElement.scrollHeight);
+  });
+  let n = 0;
+  for (let i = 0; i < 24; i++) {
+    await page.keyboard.press('Shift+Tab');
+    await sleep(30);
+    const r = await page.evaluate(() => {
+      const a = document.activeElement;
+      if (!a || !a.closest('main') || a.closest('.top')) return null;
+      return { el: a.textContent.trim().slice(0, 12), top: a.getBoundingClientRect().top, barBottom: document.querySelector('.top').getBoundingClientRect().bottom };
+    });
+    if (!r) continue;
+    n++;
+    assert(r.top >= r.barBottom - 0.5, `"${r.el}" top ${Math.round(r.top)} under the top bar (${Math.round(r.barBottom)})`);
+  }
+  assert(n >= 10, `only ${n} controls reached`);
+  await ctx.close();
+  // the top bar's own buttons are always on screen: focusing one never scrolls the page
+  const two = await fresh({ width: 320, height: 568, storage: { 'jeju.hintSeen': true } });
+  await tapText(two.page, '[data-mood="rest"]');
+  await waitCards(two.page);
+  await two.page.locator('.card .heart').first().click();
+  // focus left on the heart by the keyboard (a ring), as when Shift+Tab goes from the page up to ♥ N
+  await two.page.keyboard.press('Shift+Tab');
+  await two.page.keyboard.press('Tab');
+  assert(await two.page.$eval('.card .heart', (h) => h.matches(':focus-visible')), 'heart not keyboard-focused');
+  await two.page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await sleep(100);
+  const y = await two.page.evaluate(() => scrollY);
+  assert(y > 50, `page does not scroll (y=${y})`);
+  for (const sel of ['#saved', '#basis']) {
+    await two.page.evaluate((sel) => document.querySelector(sel).focus(), sel);
+    await sleep(100);
+    const after = await two.page.evaluate(() => scrollY);
+    assert(after === y, `focusing ${sel} moved the page from ${y} to ${after}`);
+  }
+  await two.ctx.close();
+});
+
+await check('QA2-stay-row', 'root 200% at 320: the 숙소 row of the basis sheet keeps "서귀포 시내 숙소" on one line beside or above 다시 정하기', async () => {
+  const stay = { lat: 33.2573, lng: 126.5338, area: '서귀포시내', source: 'area' };
+  const { ctx, page } = await fresh({ width: 320, height: 568, storage: { 'jeju.stay': stay, 'jeju.basis': 'stay' } });
+  await page.addStyleTag({ content: 'html { font-size: 200% }' });
+  await tapText(page, '#basis');
+  await page.waitForSelector('#sheet [data-action="restay"]');
+  const r = await page.evaluate(() => {
+    const lm = document.querySelector('#sheet [data-basis="stay"] .lm');
+    const range = document.createRange();
+    range.selectNodeContents(lm);
+    return { text: lm.textContent, lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size };
+  });
+  assert(r.text === '서귀포 시내 숙소' && r.lines === 1, `"${r.text}" on ${r.lines} lines`);
+  await ctx.close();
+});
+
+/** spots.json with the nearest spots of `mood` renamed, nearest first. */
+async function withNames(page, mood, names) {
+  await page.route('**/spots.json*', async (route) => {
+    const res = await route.fetch();
+    const spots = await res.json();
+    const d = (s) => (s.lat - 33.5122) ** 2 + (s.lng - 126.5272) ** 2;
+    const near = spots.filter((s) => s.mood === mood).sort((a, b) => d(a) - d(b));
+    names.forEach((n, i) => (near[i].name = n));
+    await route.fulfill({ response: res, body: JSON.stringify(spots) });
+  });
+}
+await check('QA2-row-names', 'row cards at 320: "… 절로 가는길 - 정진의 길" and "- 인욕의 길" tell apart, and "(박진경 추도비)" shows: name one line, then the part after " - " or in brackets', async () => {
+  const LEAD = '제주돌문화공원';
+  for (const rows of [
+    ['제주불교성지 순례길 절로 가는길 - 정진의 길', '제주불교성지 순례길 절로 가는길 - 인욕의 길'],
+    ['제주시 충혼묘지 4·3추모비(박진경 추도비)', '추사 유배길 - 2코스 인연의 길'],
+  ]) {
+    const { ctx, page } = await fresh({ width: 320, height: 568 });
+    await withNames(page, 'walk', [LEAD, ...rows]);
+    await page.reload();
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    const got = await page.$$eval('#cards .card.row .name', (els) =>
+      els.map((name) => {
+        const n = name.getBoundingClientRect();
+        const alias = name.querySelector('.alias');
+        const a = alias?.getBoundingClientRect();
+        const range = document.createRange();
+        if (alias) range.selectNodeContents(alias);
+        return {
+          text: name.textContent,
+          alias: alias?.textContent ?? null,
+          shown: !!a && a.height > 0 && a.bottom <= n.bottom + 0.5 && a.right <= n.right + 0.5,
+          aliasLines: alias ? new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size : 0,
+        };
+      }),
+    );
+    assert(got.map((g) => g.text).join('|') === rows.join('|').replace('(박진경', ' (박진경'), `rows: ${got.map((g) => g.text).join(' | ')}`);
+    for (const g of got) assert(g.alias && g.shown && g.aliasLines === 1, `"${g.text}": alias ${JSON.stringify(g.alias)} shown ${g.shown}, ${g.aliasLines} lines`);
+    await page.locator('#cards .card.row').first().scrollIntoViewIfNeeded();
+    await shot(page, `row-names-${rows[0].slice(0, 4)}`);
+    await ctx.close();
+  }
+});
+
 await browser.close();
 server.kill();
 
