@@ -1176,7 +1176,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     await b.page.waitForSelector('#sheet .areas');
     verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
-    // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) under it
+    // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
     assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/걸어서/차로 30분/차로 1시간', `sheet rows ${rows.join('/')}`);
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
@@ -1546,7 +1546,7 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
 });
 
 // --- 얼마나 (ADR-0060, specs/ranking.md R4) ---
-await check('R4-range', '얼마나 at 320·390: under 어디 in the basis sheet, 차로 30분 checked, each row ≥ 44px and tappable above the sticky 닫기; choosing one closes the sheet, keeps the label, re-picks the cards, history balanced; kept across a reload; no sideways scroll', async () => {
+await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in the basis sheet (before the 동네 index; in view without scrolling at 390), 차로 30분 checked, each row ≥ 44px and tappable above the sticky 닫기; choosing one closes the sheet, keeps the label, re-picks the cards, history balanced; kept across a reload; no sideways scroll', async () => {
   const problems = [];
   for (const width of [320, 390]) {
     const tag = String(width);
@@ -1556,7 +1556,15 @@ await check('R4-range', '얼마나 at 320·390: under 어디 in the basis sheet,
     const depth = (await hstate(page)).depth;
     await tapText(page, '#basis');
     const heads = await page.$$eval('#sheet .group-h > span:first-child', (els) => els.map((e) => e.textContent));
-    if (heads.join() !== '언제,어디,제주시 쪽,서귀포 쪽,얼마나') problems.push(`${tag} groups ${heads}`);
+    if (heads.join() !== '언제,어디,얼마나,제주시 쪽,서귀포 쪽') problems.push(`${tag} groups ${heads}`);
+    if (width === 390) {
+      // right under 어디: all three range rows in view above the sticky 닫기 without scrolling the sheet
+      const inView = await page.$eval('#sheet [data-reach="drive60"]', (b) => {
+        const r = b.getBoundingClientRect();
+        return r.top >= 0 && r.bottom <= document.querySelector('#sheet .sheet-close').getBoundingClientRect().top + 0.5 && document.querySelector('#sheet .sheet').scrollTop === 0;
+      });
+      if (!inView) problems.push(`${tag} range needs a scroll`);
+    }
     await page.locator('#sheet [data-reach="drive60"]').scrollIntoViewIfNeeded();
     const rows = await page.$$eval('#sheet [data-reach]', (els) =>
       els.map((b) => {
@@ -1611,6 +1619,55 @@ await check('R4-range', '얼마나 at 320·390: under 어디 in the basis sheet,
     await ctx.close();
   }
   assert(problems.length === 0, problems.join(' | '));
+});
+
+// --- 익명 사용 기록 (ADR-0061, specs/usage-events.md U1) ---
+await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart, 카카오맵, the saved list, 기록 끄기 and hiding the page make no request but to this origin, the photo host and the link hosts; sendBeacon is never called', async () => {
+  const LINK_HOSTS = ['map.kakao.com', 'place.map.kakao.com', 'www.myrealtrip.com'];
+  const allowed = new Set([new URL(BASE).host, 'api.cdn.visitjeju.net', ...LINK_HOSTS]);
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
+  await ctx.addInitScript(GEO_STUB);
+  await ctx.addInitScript(() => {
+    const real = navigator.sendBeacon?.bind(navigator);
+    window.__beacons = 0;
+    navigator.sendBeacon = (...a) => {
+      window.__beacons++;
+      return real ? real(...a) : false;
+    };
+  });
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  for (const h of LINK_HOSTS) await ctx.route(`https://${h}/**`, (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '' }));
+  const seen = [];
+  ctx.on('request', (r) => {
+    if (r.url().startsWith('data:') || r.url().startsWith('about:')) return;
+    seen.push({ host: new URL(r.url()).host, method: r.method(), url: r.url() });
+  });
+  const page = await ctx.newPage();
+  await page.goto(BASE);
+  await tapText(page, '[data-mood="rest"]');
+  await waitCards(page);
+  await tapText(page, '#cards .card.lead .heart');
+  const popup = ctx.waitForEvent('page', { timeout: 3000 }).catch(() => null);
+  await page.locator('#cards .card.lead .card-link').click();
+  await (await popup)?.close();
+  await sleep(350);
+  await tapText(page, '#saved');
+  await page.waitForSelector('#savedView [data-action="track"]');
+  await tapText(page, '#savedView [data-action="track"]');
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+    document.dispatchEvent(new Event('visibilitychange'));
+    delete document.visibilityState;
+  });
+  await sleep(500);
+  const beacons = await page.evaluate(() => window.__beacons);
+  await ctx.close();
+  const other = seen.filter((r) => !allowed.has(r.host));
+  const posts = seen.filter((r) => r.method !== 'GET');
+  assert(seen.some((r) => LINK_HOSTS.includes(r.host)), 'the 카카오맵 link did not open (nothing exercised)');
+  assert(other.length === 0, `requests elsewhere: ${other.map((r) => r.url).join(', ')}`);
+  assert(posts.length === 0, `non-GET requests: ${posts.map((r) => `${r.method} ${r.url}`).join(', ')}`);
+  assert(beacons === 0, `sendBeacon called ${beacons}×`);
 });
 
 await browser.close();

@@ -11,6 +11,7 @@ import { REACHES, type Button, type Reach, type Sub } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, sessionOf, staticOrigin, whenDay, type Action, type Intent, type State } from './state';
 import { KEYS, createStore } from './store';
+import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
 export { AREAS, LocateError, bookingUrl, inJeju, kakaoUrl };
@@ -41,6 +42,10 @@ export interface Deps extends GeoDeps {
   /** wall clock for the date line and the saved days (defaults to the device clock; read as Asia/Seoul). */
   today?(): Date;
   delays?: Partial<Delays>;
+  /** where anonymous usage counts go (VITE_EVENTS_URL, ADR-0061); missing = nothing is kept or sent. */
+  eventsUrl?: string;
+  /** navigator.sendBeacon (the default when missing). */
+  beacon?(url: string, body: string): boolean;
 }
 
 export interface App {
@@ -84,6 +89,15 @@ export function mountApp(doc: Document, deps: Deps): App {
   const clockNow = () => deps.today?.() ?? new Date();
   const today0 = dayOf(clockNow());
   let state = initialState({ ...store.load(today0), today: today0, offline: !online() });
+  const nav0 = win?.navigator;
+  const tracker = createTracker({
+    url: deps.eventsUrl,
+    send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
+    enabled: () => state.tracking,
+    online,
+    doc,
+    signal,
+  });
 
   const timers = new Set<ReturnType<typeof setTimeout>>();
   function later(ms: number, fn: () => void) {
@@ -105,6 +119,37 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (signal.aborted) return;
     state = reduce(state, a);
     renderer.render(state);
+    countShown();
+  }
+
+  // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
+  /** `day`: the day a heart is about (dated = not today). */
+  function count(e: EventName, id?: string, day?: Day) {
+    tracker.track({ e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}) });
+  }
+  /** Each new set of 3 on screen, once: a re-render, the same 3 brought back or restored after a reload are
+   * not shown again. */
+  let shownSeq = 0;
+  function countShown() {
+    const c = state.cards;
+    if (!c || c.seq === shownSeq || state.view !== 'cards' || state.phase.k !== 'ready') return;
+    shownSeq = c.seq;
+    if (c.how === 'restore') return;
+    for (const card of c.list) count('shown', card.spot.id);
+  }
+  /** A link tapped twice (a 2nd tab opening) counts once. */
+  const lastLink = new Map<string, number>();
+  function countLink(e: 'map' | 'book', id: string) {
+    const key = `${e}:${id}`;
+    const t = now();
+    const prev = lastLink.get(key);
+    lastLink.set(key, t);
+    if (prev === undefined || t - prev >= delays.guard) count(e, id);
+  }
+  function setTracking(on: boolean) {
+    if (!on) tracker.drop();
+    dispatch({ type: 'tracking', on });
+    store.setTracking(on);
   }
 
   /** Same control again within `delays.guard` → ignored (double tap = one tap, S35). Hearts are toggles and not guarded. */
@@ -234,6 +279,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const from = state.view;
     if (from === 'home') hush();
     dispatch({ type: 'mood', button: b });
+    count('tap');
     if (from === 'home') nav.push(CARDS);
     request(intent);
   }
@@ -345,6 +391,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const out = day ? state.unsaved.find((e) => e.id === id && e.date === day) : undefined;
     const { entries, added, removed } = store.toggleSaved(id, date, out?.order);
     dispatch({ type: 'saved', entries, removed: day ? removed : null });
+    count(added ? 'save' : 'unsave', id, date);
     // The first save on the results screen says once where saved places go; it stays until the next
     // intent (no timer, §6.13).
     if (added && !state.hintSeen && state.view === 'cards') {
@@ -456,6 +503,10 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (!guarded('close-saved') && state.view === 'saved') closeSaved();
       return;
     }
+    if (action === 'track') {
+      if (!guarded('track')) setTracking(!state.tracking);
+      return;
+    }
     const area = areaByName(b.dataset.area);
     if (area && !guarded(`area:${area.name}`)) {
       hush();
@@ -471,6 +522,14 @@ export function mountApp(doc: Document, deps: Deps): App {
   on(els.main, 'click', (e) => {
     const b = buttonIn(e, els.main);
     if (b && !state.overlay) onMainButton(b);
+  });
+  // 카카오맵 (the card's name link) and 예약 links: counted, then the browser opens them as usual.
+  on(els.main, 'click', (e) => {
+    const a = (e.target as Element | null)?.closest?.('a');
+    const id = a && els.main.contains(a) ? a.closest<HTMLElement>('.card[data-id]')?.dataset.id : undefined;
+    if (!a || !id) return;
+    if (a.classList.contains('card-link')) countLink('map', id);
+    else if (a.classList.contains('book')) countLink('book', id);
   });
   on(els.basis, 'click', () => {
     if (!state.overlay && !guarded('basis')) openOverlay('basis');

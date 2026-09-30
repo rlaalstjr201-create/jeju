@@ -72,6 +72,8 @@ export interface State {
   brokenOffline: string[];
   hintSeen: boolean;
   hintFor: string | null;
+  /** anonymous usage counts on (기록 끄기 / 기록 켜기, ADR-0061). */
+  tracking: boolean;
   stayForm: { pending: boolean; error: NoOrigin | null };
   offline: boolean;
   /** what the screen reader is told about new cards (render.ts words it); `seq` bumps per announcement. */
@@ -107,6 +109,7 @@ export type Action =
   | { type: 'moveTarget'; id: string; date: Day }
   | { type: 'hint'; id: string }
   | { type: 'hintSeen' }
+  | { type: 'tracking'; on: boolean }
   | { type: 'imgError'; id: string }
   | { type: 'offline'; offline: boolean }
   | { type: 'permission'; permission: GeoPermission }
@@ -123,6 +126,7 @@ export function initialState(init: {
   stay: Stay | null;
   saved: SavedEntry[];
   hintSeen: boolean;
+  tracking?: boolean;
   offline: boolean;
 }): State {
   return {
@@ -154,6 +158,7 @@ export function initialState(init: {
     brokenOffline: [],
     hintSeen: init.hintSeen,
     hintFor: null,
+    tracking: init.tracking ?? true,
     stayForm: { pending: false, error: null },
     offline: init.offline,
     announce: { n: 0, more: false, seq: 0 },
@@ -447,6 +452,8 @@ function step(s: State, a: Action): State {
       return { ...s, hintSeen: true, hintFor: a.id };
     case 'hintSeen':
       return s.hintSeen ? s : { ...s, hintSeen: true };
+    case 'tracking':
+      return a.on === s.tracking ? s : { ...s, tracking: a.on };
     case 'imgError':
       if (s.broken.includes(a.id)) return s;
       return { ...s, broken: [...s.broken, a.id], brokenOffline: s.offline ? [...s.brokenOffline, a.id] : s.brokenOffline };

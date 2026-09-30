@@ -43,6 +43,8 @@ async function navigate(req) {
 
 self.addEventListener('fetch', (event) => {
   const req = event.request;
+  // Only this origin's GETs. Usage events (sendBeacon POST, ADR-0061) and other hosts go straight to the
+  // network and are never cached.
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
 
   // Pages: network first so a new deploy shows up; cached shell when offline, failing, or slow.

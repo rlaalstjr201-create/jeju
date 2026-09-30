@@ -14,7 +14,8 @@
     "build:spots": "node scripts/build-spots.mjs",
     "check:data": "tsx scripts/check-data.ts",
     "check:slop": "tsx scripts/check-slop.ts",
-    "make:icons": "tsx scripts/make-icons.ts"
+    "make:icons": "tsx scripts/make-icons.ts",
+    "aggregate:events": "tsx events/aggregate.ts"
   },
   "devDependencies": {
     "@types/node": "^20.19.41",

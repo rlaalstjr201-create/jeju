@@ -20,6 +20,8 @@ export const KEYS = {
    * still finds it. */
   saved: 'jeju.saved',
   hint: 'jeju.hintSeen',
+  /** 기록 끄기 (ADR-0061): false = no usage events from this device. Missing = on. */
+  track: 'jeju.track',
   session: 'jeju.session',
 } as const;
 export const MAX_SAVED = 500;
@@ -180,6 +182,8 @@ export interface Loaded {
   stay: Stay | null;
   saved: SavedEntry[];
   hintSeen: boolean;
+  /** anonymous usage counts on (ADR-0061); anything but a stored false is on. */
+  tracking: boolean;
 }
 
 export interface Store {
@@ -192,6 +196,7 @@ export interface Store {
   setRegion(name: AreaName): void;
   setStay(stay: Stay): void;
   setHintSeen(): void;
+  setTracking(on: boolean): void;
   // Every saved-list change below is read-modify-write, so two tabs never overwrite each other's hearts.
   /** Current saved entries, re-read from storage (another tab may have changed them). */
   saved(): SavedEntry[];
@@ -289,7 +294,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         memory = saved;
         if (!same(rawSaved, saved)) writeSaved(saved);
       }
-      return { basis, reach, when, region, stay, saved, hintSeen: get(local, KEYS.hint) === true };
+      return { basis, reach, when, region, stay, saved, hintSeen: get(local, KEYS.hint) === true, tracking: get(local, KEYS.track) !== false };
     },
     setBasis: (b) => void set(local, KEYS.basis, b),
     setReach: (r) => void set(local, KEYS.reach, r),
@@ -297,6 +302,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     setRegion: (name) => void set(local, KEYS.region, name),
     setStay: (stay) => void set(local, KEYS.stay, stay),
     setHintSeen: () => void set(local, KEYS.hint, true),
+    setTracking: (on) => void set(local, KEYS.track, on),
     saved: readSaved,
     toggleSaved(id, date, at) {
       let removed: SavedEntry | null = null;

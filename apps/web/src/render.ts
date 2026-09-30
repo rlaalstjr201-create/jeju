@@ -43,6 +43,10 @@ export const COPY = {
   retry: '다시 불러오기',
   westFirst: '서쪽부터',
   savedEmpty: '저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.',
+  /** ADR-0061: the saved list's note on anonymous counting, and its switch. */
+  trackNote: '어디가 좋았는지 익명으로 세어요.',
+  trackOff: '기록 끄기',
+  trackOn: '기록 켜기',
   today: '오늘',
   tomorrow: '내일',
   past: '지난 날',
@@ -164,6 +168,7 @@ export interface Els {
   savedCount: HTMLElement;
   savedSort: HTMLElement;
   savedList: HTMLElement;
+  track: HTMLButtonElement;
   sheet: HTMLElement;
   announce: HTMLElement | null;
   moods: HTMLButtonElement[];
@@ -195,6 +200,7 @@ export function findEls(doc: Document): Els {
     savedCount: q('#savedTitle > .count'),
     savedSort: q('#savedView > .sort'),
     savedList: q('#savedView > .picks'),
+    track: q<HTMLButtonElement>('#savedView [data-action="track"]'),
     sheet: q('#sheet'),
     announce: doc.querySelector<HTMLElement>('#announce'),
     moods: [...doc.querySelectorAll<HTMLButtonElement>('button[data-mood]')],
@@ -689,9 +695,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
       optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow]);
-      areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
-      // 얼마나 (ADR-0060): under 어디, the same thin-rule rows with a check. Choosing one closes the sheet.
+      // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
+      // The same thin-rule rows with a check. Choosing one closes the sheet.
       optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));
+      areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
     } else if (overlay === 'move') {
       // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.
       const from = s.moveTarget?.date ?? '';
@@ -855,6 +862,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     setText(els.savedN, String(n));
     setAttr(els.saved, 'aria-label', COPY.savedAria(n));
     setAttr(els.saved, 'aria-pressed', String(inSaved));
+    setText(els.track, s.tracking ? COPY.trackOff : COPY.trackOn);
 
     els.home.hidden = s.view !== 'home';
     els.results.hidden = s.view !== 'cards';

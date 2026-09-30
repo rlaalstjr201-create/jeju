@@ -128,6 +128,12 @@ function runSw(source: string, fetchImpl: (req: unknown) => Promise<unknown>, ca
       listeners.fetch(e);
       return done();
     },
+    /** true when the worker answered the request itself (respondWith). */
+    handles(url: string, init: { method?: string } = {}) {
+      let responded = false;
+      listeners.fetch({ request: new FakeRequest(url, init), respondWith: () => (responded = true), waitUntil: () => undefined });
+      return responded;
+    },
   };
 }
 
@@ -205,6 +211,23 @@ describe('S23 약한 망 — 내비게이션', () => {
     const { source } = buildServiceWorker(base());
     const sw = runSw(source, () => Promise.reject(new TypeError('offline')), c);
     await expect(sw.navigate()).rejects.toThrow('offline');
+  });
+});
+
+describe('U 익명 사용 기록 (ADR-0061) — 서비스워커는 이벤트 요청을 건드리지 않는다', () => {
+  it('a sendBeacon POST, same-origin or not, goes straight to the network: never answered from or put in the cache', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const fetched: unknown[] = [];
+    const sw = runSw(source, async (r) => (fetched.push(r), { ok: true }), c);
+    await sw.install();
+    const before = JSON.stringify([...(await c.api.keys())]);
+    expect(sw.handles('https://app.test/events', { method: 'POST' })).toBe(false);
+    expect(sw.handles('https://events.example/e', { method: 'POST' })).toBe(false);
+    expect(sw.handles('https://events.example/e')).toBe(false);
+    expect(fetched).toHaveLength(0);
+    expect(await c.api.match('https://app.test/events', { cacheName: (await c.api.keys())[0] })).toBeUndefined();
+    expect(JSON.stringify([...(await c.api.keys())])).toBe(before);
   });
 });
 

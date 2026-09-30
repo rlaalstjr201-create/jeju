@@ -48,6 +48,8 @@ const app = mountApp(document, {
   geoPermission,
   storage: storageOf('localStorage'),
   session: storageOf('sessionStorage'),
+  // Anonymous usage counts (ADR-0061): only when the build names a collection address.
+  eventsUrl: import.meta.env.VITE_EVENTS_URL,
 });
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {

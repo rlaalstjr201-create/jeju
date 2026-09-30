@@ -68,7 +68,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .saved-btn[aria-pressed="true"] { background: var(--fill); }
 .basis:active, .saved-btn:active { background: var(--fill); }
 
-/* text buttons: 바꾸기, 돌아가기, 지역으로 고르기, 다시 정하기, the booking link */
+/* text buttons: 바꾸기, 돌아가기, 지역으로 고르기, 다시 정하기, 기록 끄기, the booking link */
 .tbtn {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; border-radius: var(--r-ctl);
   font-weight: 600; white-space: nowrap;
@@ -118,6 +118,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 .sort { margin: 4px 0 0; color: var(--muted); text-wrap: pretty; }
 .foot { margin: 28px 0 0; color: var(--muted); text-wrap: pretty; }
 .sort:empty, .foot:empty { display: none; }
+/* ADR-0061: under the footnote, the note on anonymous counting and its switch (기록 끄기 / 기록 켜기) */
+.track { margin-top: 4px; color: var(--muted); }
+.track p { margin: 0; text-wrap: pretty; }
+.track .tbtn { margin-left: -8px; color: var(--text); }
 
 /* places: photo and text, no box */
 .picks { display: flex; flex-direction: column; gap: 20px; margin-top: 16px; container-type: inline-size; }

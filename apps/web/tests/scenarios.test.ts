@@ -1813,11 +1813,11 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
   const reachRows = () => $$('#sheet [data-reach]');
   const pressedReach = () => reachRows().filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.reach);
 
-  it('R4 basis sheet: 얼마나 under 어디 (after the 동네 index) — 걸어서 · 차로 30분 · 차로 1시간, 차로 30분 checked by default; the label has no range', async () => {
+  it('R4 basis sheet: 얼마나 right under the 어디 rows (before the 동네 index) — 걸어서 · 차로 30분 · 차로 1시간, 차로 30분 checked by default; the label has no range', async () => {
     render();
     await tap('#basis');
     const heads = $$('#sheet .group-h').map((h) => h.firstElementChild!.textContent);
-    expect(heads).toEqual(['언제', '어디', '제주시 쪽', '서귀포 쪽', '얼마나']);
+    expect(heads).toEqual(['언제', '어디', '얼마나', '제주시 쪽', '서귀포 쪽']);
     expect(reachRows().map((b) => b.querySelector('.nm')!.textContent)).toEqual(['걸어서', '차로 30분', '차로 1시간']);
     expect(pressedReach()).toEqual(['drive30']);
     // check-mark selection (SPEC 3판): each row carries the check, shown only on the chosen one by CSS
