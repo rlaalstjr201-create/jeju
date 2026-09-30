@@ -14,7 +14,7 @@ const hang = () => new Promise<Point>(() => undefined);
 const status = () => $('#status').textContent ?? '';
 /** The 3s GPS wait (지역으로 고르기, the saved list's give-up) cut to 30ms of real time. Only for "it is there
  * after 40ms" checks — Node fires the 30ms timer first. "Not there yet" checks use fake timers (S04). */
-const ESCAPE_30 = { slow: 0, long: 30, settle: 300, hint: 40 };
+const ESCAPE_30 = { slow: 0, long: 30, settle: 300 };
 /** The mood whose results are on screen (its title). */
 const pressedMoods = shownMood;
 const state = () => current().state();
@@ -84,7 +84,7 @@ describe('위치 — 거절·지연·제주 밖', () => {
     expect($('.notice-t')?.textContent).toBe('위치 권한이 꺼져 있어요.');
     expect($('.notice-b')?.textContent).toContain('내일 갈 동네');
     expect($('.notice-f')?.textContent).toBe('위치를 쓰려면 브라우저 설정에서 위치 권한을 켜 주세요.');
-    expect($$('#cards [data-area]').map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label));
+    expect($$('#cards [data-area]').map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label + a.landmark));
     expect($('#basis').textContent).toBe('지역 고르기');
     await tap('#cards [data-area="성산"]');
     expect(cardNames()).toEqual(expectedNames(area('성산'), 'rest'));
@@ -97,7 +97,7 @@ describe('위치 — 거절·지연·제주 밖', () => {
     // The app's 3s, on a fake clock: "not yet" at 2.999s and "now" at 3s are exact, however busy the run is.
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     try {
-      render({ locate: () => gps.promise, delays: { slow: 0, long: 3000, settle: 300, hint: 40 } });
+      render({ locate: () => gps.promise, delays: { slow: 0, long: 3000, settle: 300 } });
       advance();
       $('[data-mood="walk"]').click();
       await vi.advanceTimersByTimeAsync(2999);
@@ -143,7 +143,7 @@ describe('위치 — 거절·지연·제주 밖', () => {
     expect(locate).not.toHaveBeenCalled();
     expect($('.notice-t')?.textContent).toBe('위치 권한이 꺼져 있어요.');
     await tap('#basis');
-    expect($('#sheet [data-basis="gps"] .sub')?.textContent).toBe('위치 권한이 꺼져 있어요');
+    expect($('#sheet [data-basis="gps"] .lm')?.textContent).toBe('위치 권한이 꺼져 있어요');
     await tap('#sheet [data-basis="gps"]'); // last attempt failed → this is a retry, not a no-op
     await settle();
     expect($('#sheet').hidden).toBe(true);
@@ -156,12 +156,12 @@ describe('숙소', () => {
   it('S08 the basis sheet shows which 동네 the 숙소 is in (area pick, and GPS save → nearest area)', async () => {
     render();
     await tap('#basis');
-    expect($('#sheet [data-basis="stay"] .sub')?.textContent).toBe('처음 한 번만 정해요');
+    expect($('#sheet [data-basis="stay"] .lm')?.textContent).toBe('처음 한 번만 정해요');
     await tap('#sheet [data-basis="stay"]');
     await tap('#sheet [data-where="stay"][data-area="애월"]');
     await settle();
     await tap('#basis');
-    expect($('#sheet [data-basis="stay"] .sub')?.textContent).toBe('애월');
+    expect($('#sheet [data-basis="stay"] .lm')?.textContent).toBe('애월 숙소');
     expect($('#sheet [data-basis="stay"]').getAttribute('aria-pressed')).toBe('true');
 
     render({ locate: () => Promise.resolve(ORIGINS['서쪽(한림)']) });
@@ -170,7 +170,7 @@ describe('숙소', () => {
     await tap('#sheet [data-action="stay-here"]');
     await settle();
     await tap('#basis');
-    expect($('#sheet [data-basis="stay"] .sub')?.textContent).toBe('한림');
+    expect($('#sheet [data-basis="stay"] .lm')?.textContent).toBe('한림 숙소');
   });
 
   it('S09 "지금 위치를 숙소로" fails: the button stays a button, the reason goes on its own line', async () => {
@@ -305,7 +305,7 @@ describe('뒤로가기와 저장 목록 (history)', () => {
       .sort((a, b) => distanceKm(성산, a) - distanceKm(성산, b))
       .map((s) => s.id);
     expect(cardIds()).toEqual(want);
-    expect($('#savedView .sort')?.textContent).toBe('성산에서 가까운 순이에요.');
+    expect($('#savedView .sort')?.textContent).toBe('성산에서 가까운 순');
     expect(window.history.state).toMatchObject({ view: 'saved', overlay: null });
   });
 
@@ -329,7 +329,7 @@ describe('뒤로가기와 저장 목록 (history)', () => {
     await settle();
     expect($('#savedView').hidden).toBe(false);
     expect(window.history.state).toMatchObject({ view: 'saved', depth: 2 });
-    await tap('#savedView .change');
+    await tap('#savedView .back');
     await settle();
     await tap('#results .change');
     await settle();
@@ -349,7 +349,7 @@ describe('뒤로가기와 저장 목록 (history)', () => {
     render();
     await tap('#saved');
     await settle();
-    await tap('#savedView .change');
+    await tap('#savedView .back');
     await settle();
     await tap('[data-mood="rest"]');
     await settle();
@@ -449,7 +449,7 @@ describe('저장소 값 손상 (S29)', () => {
     window.localStorage.setItem('jeju.basis', JSON.stringify('teleport'));
     window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id, realSpots[0].id]));
     render();
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
     expect($('#saved').textContent).toBe('1');
     await tap('#saved');
     expect(cardIds()).toEqual([realSpots[0].id]);
@@ -468,7 +468,7 @@ describe('저장소 값 손상 (S29)', () => {
     window.localStorage.setItem('jeju.stay', JSON.stringify({ lat: 0, lng: 0, label: '' }));
     window.localStorage.setItem('jeju.basis', JSON.stringify('stay'));
     render();
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
   });
 });
 
@@ -482,12 +482,14 @@ describe('섬·이름·지도 링크', () => {
       await tap(`[data-mood="${mood}"]`);
       const cards = $$('.card');
       const want = cards.map((li) => (islandOf(realSpots.find((s) => s.id === li.dataset.id)!) === '우도' ? '같은 우도 안이에요' : '본섬이라 배를 타고 나가야 해요'));
-      const same = want.every((w) => w === want[0]);
+      // 3판 (§7): the first card keeps its own line; the rows' shared trip is said once on the 아니면 line
+      const same = want.length === 3 && want[1] === want[2];
+      expect($('#alt-trip')?.textContent ?? null).toBe(same ? `둘 다 ${want[1]}` : null);
+      if (same) seen.push(want[1]);
       cards.forEach((li, i) => {
         const meta = li.querySelector('.travel')?.textContent ?? null;
         if (meta) seen.push(meta);
-        // the same trip for all three is said once, on the first card
-        if (i === 0) expect(meta).toBe(same ? `셋 다 ${want[0]}` : want[0]);
+        if (i === 0) expect(meta).toBe(want[0]);
         else expect(meta).toBe(same ? null : want[i]);
       });
       await tap('#results .change');
@@ -605,7 +607,7 @@ describe('연타·겹친 요청', () => {
     await flush();
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
     expect($('.notice')).toBeNull();
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
   });
 });
 
@@ -622,7 +624,7 @@ describe('하트', () => {
   });
 
   it('S40 the first heart ever says once where saves go; later hearts don\'t', async () => {
-    const delays = { slow: 0, long: 10_000, settle: 300, hint: 400 };
+    const delays = { slow: 0, long: 10_000, settle: 3000 };
     render({ delays });
     await tap('[data-mood="rest"]');
     await tap('.card .heart');
@@ -630,9 +632,19 @@ describe('하트', () => {
     expect($$('.hint').map((e) => e.closest<HTMLElement>('.card')?.dataset.id)).toEqual([first]);
     expect($('.hint').textContent).toBe('저장한 곳은 맨 위 하트 버튼에 모여요.');
     expect(window.localStorage.getItem('jeju.hintSeen')).toBe('true');
+    expect($('#announce').textContent).toBe('저장한 곳은 맨 위 하트 버튼에 모여요.');
     await tap($$('.card .heart')[1]);
     expect($$('.hint')).toHaveLength(1);
-    await wait(450); // delays.hint (3s in the app)
+    // Changed on purpose (3판 §6.13): no timer — still there 10s later; it goes with the next intent.
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval'] });
+    try {
+      vi.advanceTimersByTime(10_000);
+    } finally {
+      vi.useRealTimers();
+    }
+    expect($$('.hint')).toHaveLength(1);
+    await tap('#cards .more');
+    await flush();
     expect($$('.hint')).toHaveLength(0);
     render({ delays });
     await tap('[data-mood="walk"]');
@@ -702,10 +714,14 @@ describe('다시 고르기', () => {
     const first = cardNames();
     const more = $('#cards .more');
     expect(more.textContent).toBe('다른 3곳 보기');
-    expect(more.previousElementSibling?.matches('.card.row')).toBe(true);
+    // 3판 (§6.6): the button sits in a sticky bar, the last child of the list, with the 1px float marker
+    const bar = more.parentElement!;
+    expect(bar.matches('.more-bar')).toBe(true);
+    expect(bar.previousElementSibling?.matches('.card.row')).toBe(true);
+    expect(bar.querySelector('.more-end')?.getAttribute('aria-hidden')).toBe('true');
     // first card large, then "아니면", then two row cards
-    expect([...$('#cards').children].map((e) => e.className)).toEqual(['card lead', 'alt', 'card row', 'card row', 'more']);
-    expect($('#cards .alt').textContent).toBe('아니면');
+    expect([...$('#cards').children].map((e) => e.className)).toEqual(['card lead', 'alt', 'card row', 'card row', 'more-bar']);
+    expect($('#cards .alt b').textContent).toBe('아니면');
     await tap(more);
     expect(cardNames().filter((n) => first.includes(n))).toEqual([]);
     expect(document.body.textContent).not.toContain('한 번 더 누르면');
@@ -726,22 +742,22 @@ describe('작은 화면 (S45·S46)', () => {
       render();
       await tap('[data-mood="rest"]');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
-      expect(document.activeElement).toBe($('#resultsTitle'));
+      expect(document.activeElement).toBe($('#crumb'));
       expect(intoView).not.toHaveBeenCalled();
 
       rect.mockImplementation(function (this: Element) {
         // the heading has scrolled up behind the 52px top bar (the thumb is down by the button)
-        return (this.id === 'resultsTitle' ? { top: -300, bottom: -270 } : { top: 0, bottom: 52 }) as DOMRect;
+        return (this.id === 'crumb' ? { top: -300, bottom: -270 } : { top: 0, bottom: 52 }) as DOMRect;
       });
       $('.card .card-link').focus();
       await tap('#cards .more');
       expect(intoView).toHaveBeenCalledWith({ block: 'start' });
       expect(intoView.mock.instances.at(-1)).toBe($('#results .head'));
-      expect(document.activeElement).toBe($('#resultsTitle'));
+      expect(document.activeElement).toBe($('#crumb'));
 
       intoView.mockClear();
       rect.mockImplementation(function (this: Element) {
-        return (this.id === 'resultsTitle' ? { top: 60, bottom: 90 } : { top: 0, bottom: 52 }) as DOMRect;
+        return (this.id === 'crumb' ? { top: 60, bottom: 90 } : { top: 0, bottom: 52 }) as DOMRect;
       });
       await tap('#cards .more');
       expect(intoView).not.toHaveBeenCalled();
@@ -761,7 +777,7 @@ describe('작은 화면 (S45·S46)', () => {
       Object.defineProperty(window, 'scrollY', { value: 420, configurable: true });
       await tap('#saved');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
-      await tap('#savedView .change');
+      await tap('#savedView .back');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 420);
       await tap('#results .change');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
@@ -798,15 +814,11 @@ describe('새로고침·인앱 브라우저', () => {
     expect(cardNames()).toEqual(expectedNames(ORIGINS.서귀포, 'rest'));
   });
 
-  it('S55 in-app browser (KakaoTalk): the saved list says saves stay in this browser only', async () => {
+  it('S55 the saved list always says saves stay in this browser — the same two sentences for every browser (3판: no UA check)', async () => {
     window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id]));
-    render({ userAgent: 'Mozilla/5.0 (iPhone) KAKAOTALK 10.4.5' });
+    render();
     await tap('#saved');
-    expect($('#savedView .foot')?.textContent).toBe('이 브라우저에만 저장돼요. 앱 안에서 연 창이라 다른 브라우저에서는 보이지 않아요.');
-    window.history.replaceState(null, ''); // a fresh open, not a reload of the open list
-    render({ userAgent: 'Mozilla/5.0 (iPhone) Safari/604.1' });
-    await tap('#saved');
-    expect($('#savedView .foot')?.textContent).toBe('이 브라우저에만 저장돼요.');
+    expect($('#savedView .foot')?.textContent).toBe('이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.');
   });
 });
 
@@ -858,7 +870,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     await tap('[data-mood="walk"]');
     expect($('#home').hidden).toBe(true);
     expect($('#results').hidden).toBe(false);
-    expect($('#resultsTitle').textContent).toBe('좀 걷고 싶어');
+    expect($('#crumb').textContent).toBe('좀 걷고 싶어');
     expect(window.history.state).toMatchObject({ view: 'cards', depth: 1 });
     await tap('#results .change');
     await settle();
@@ -878,7 +890,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     await flush();
     expect($('#savedView').hidden).toBe(false);
     advance(350); // past the 300ms double-tap window, inside the 400ms same-control guard
-    $('#savedView .change').click();
+    $('#savedView .back').click();
     await flush();
     expect($('#savedView').hidden).toBe(true);
     expect($('#home').hidden).toBe(false);
@@ -940,7 +952,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
 
   it('S35 the double-tap window runs on a monotonic clock: the device clock stepping back never freezes taps', async () => {
     region('애월');
-    render({ now: undefined, delays: { slow: 0, long: 10_000, settle: 300, hint: 40, quiet: 20 } }); // the app's own clock
+    render({ now: undefined, delays: { slow: 0, long: 10_000, settle: 300, quiet: 20 } }); // the app's own clock
     await tap('[data-mood="rest"]');
     await wait(30); // past the double-tap window (20ms here)
     const wall = Date.now();
@@ -973,18 +985,25 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     for (const row of $$('#cards .card.row')) expect(row.querySelector('.travel')!.textContent).not.toContain('에서');
   });
 
-  it('two cards only: no 아니면; the saved list has rows only, each saying where from', async () => {
+  // Changed on purpose (3판 §6.5·§6.12): two cards still get the one-word 아니면 line (only one card has none);
+  // the saved list's rows say only their trip (the sort label says where from), 카카오맵 on the first row only.
+  it('two cards only: a bare 아니면; the saved list has rows only, trip without "from", 카카오맵 once', async () => {
     const two = realSpots.filter((s) => s.mood === 'walk').slice(0, 2);
     render({ loadSpots: () => Promise.resolve(two), locate: () => Promise.resolve(two[0]) });
     await tap('[data-mood="walk"]');
     expect($$('#cards .card')).toHaveLength(2);
-    expect($('#cards .alt')).toBeNull();
+    expect($('#cards .alt').textContent).toBe('아니면');
+    expect($('#cards .card.row .meta')).not.toBeNull();
     await tap('#cards .card.lead .heart');
     await tap('#cards .card.row .heart');
     await tap('#saved');
     expect($$('#savedView .card.lead')).toHaveLength(0);
     expect($$('#savedView .card.row')).toHaveLength(2);
-    for (const t of $$('#savedView .travel')) expect(t.textContent).toMatch(/^여기서 /);
+    expect($('#savedView .sort').textContent).toBe('여기서 가까운 순');
+    for (const t of $$('#savedView .travel')) expect(t.textContent).toMatch(/^(차로|걸어서) 약 /);
+    expect($$('#savedView .dest')).toHaveLength(1);
+    expect($('#savedView .card .dest')).toBe($$('#savedView .card')[0].querySelector('.dest'));
+    expect($('#savedView .foot').textContent).toBe('이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.');
     expect($('#savedTitle .count').textContent).toBe('2');
   });
 
@@ -1003,25 +1022,31 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     permission = 'granted';
     document.dispatchEvent(new Event('visibilitychange'));
     await flush();
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
   });
 
-  it('first-save hint fades out (motion allowed) instead of vanishing mid-read; reduced motion removes it at once', async () => {
-    const mm = (reduce: boolean) =>
-      ((q: string) => ({ matches: q.includes('no-preference') ? !reduce : reduce, media: q, addEventListener() {}, removeEventListener() {} })) as unknown as typeof window.matchMedia;
-    window.matchMedia = mm(false);
-    try {
-      render({ delays: { slow: 0, long: 10_000, settle: 300, hint: 30 } });
-      await tap('[data-mood="rest"]');
-      await tap('.card .heart');
-      expect($$('.hint')).toHaveLength(1);
-      await wait(45);
-      expect($('.hint')?.classList.contains('leaving')).toBe(true);
-      await wait(200);
-      expect($$('.hint')).toHaveLength(0);
-    } finally {
-      delete (window as { matchMedia?: unknown }).matchMedia;
-    }
+  // Changed on purpose (3판 §6.13): no fade, no timer — the hint goes with the next intent, at once.
+  it('first-save hint: no fade; gone with the next intent (기준 sheet, 바꾸기); never in the saved list', async () => {
+    render();
+    await tap('[data-mood="rest"]');
+    await tap('.card .heart');
+    expect($$('.hint')).toHaveLength(1);
+    expect(cssRule('.hint')).not.toMatch(/transition|opacity/);
+    await tap('#basis');
+    expect($$('.hint')).toHaveLength(0);
+    await tap('#sheet .sheet-close');
+    await settle();
+    expect($$('.hint')).toHaveLength(0);
+
+    // the saved list: a first save there says nothing and does not use up the hint
+    reset();
+    window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id]));
+    render();
+    await tap('#saved');
+    await tap('#savedView .heart'); // unsave (row stays)
+    await tap('#savedView .heart'); // save again: 0 → 1
+    expect($$('.hint')).toHaveLength(0);
+    expect(window.localStorage.getItem('jeju.hintSeen')).toBeNull();
   });
 
   it('sheet: slides away over 190ms when motion is allowed (not clickable meanwhile); reopening during it takes it back', async () => {
@@ -1055,7 +1080,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     await tap('#results .change');
     await settle();
     await tap('[data-mood="walk"]');
-    expect($('#resultsTitle').textContent).toBe('좀 걷고 싶어');
+    expect($('#crumb').textContent).toBe('좀 걷고 싶어');
     expect($$('#cards .card')).toHaveLength(0); // blank (then the still frame after 300ms), never rest's cards
     gps.resolve(ORIGINS.제주시);
     await flush();
@@ -1076,6 +1101,44 @@ describe('수명주기 (audit: listeners, destroy)', () => {
     await flush();
     expect(cardNames()).toEqual([]);
     back.mockRestore();
+  });
+
+  it('the 다른 3곳 bar: one IntersectionObserver on its 1px marker toggles .stuck, reused bar node; destroy() disconnects it (3판 §6.6·§12)', async () => {
+    const made: { cb: IntersectionObserverCallback; targets: Element[]; disconnect: ReturnType<typeof vi.fn> }[] = [];
+    class FakeIO {
+      targets: Element[] = [];
+      disconnect = vi.fn();
+      constructor(public cb: IntersectionObserverCallback) {
+        made.push(this);
+      }
+      observe(t: Element) {
+        this.targets.push(t);
+      }
+      unobserve() {}
+      takeRecords() {
+        return [];
+      }
+    }
+    (window as { IntersectionObserver?: unknown }).IntersectionObserver = FakeIO;
+    try {
+      const a = render();
+      await tap('[data-mood="rest"]');
+      const bar = $('#cards .more-bar');
+      expect(made).toHaveLength(1);
+      expect(made[0].targets).toEqual([bar.querySelector('.more-end')]);
+      const fire = (isIntersecting: boolean) => made[0].cb([{ isIntersecting } as IntersectionObserverEntry], made[0] as unknown as IntersectionObserver);
+      fire(false);
+      expect(bar.classList.contains('stuck')).toBe(true);
+      fire(true);
+      expect(bar.classList.contains('stuck')).toBe(false);
+      await tap('#cards .more');
+      expect($('#cards .more-bar')).toBe(bar); // same node, still observed
+      expect(made).toHaveLength(1);
+      a.destroy();
+      expect(made[0].disconnect).toHaveBeenCalled();
+    } finally {
+      delete (window as { IntersectionObserver?: unknown }).IntersectionObserver;
+    }
   });
 
   it('re-mounting on the same page leaves exactly one live set of listeners', async () => {
@@ -1100,12 +1163,13 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
   });
 
   it('tap targets ≥ 44px: ♥ N, 기준, 식사/카페 tabs, 바꾸기·돌아가기, hearts 44×44, 다른 3곳 보기; no double-tap zoom', () => {
-    for (const sel of ['.saved-btn', '.basis', '.tab', '.change', '.link', '.book', '.restay']) expect(cssRule(sel), sel).toMatch(/min-height:\s*44px/);
+    // 3판: 바꾸기·돌아가기·지역으로 고르기·다시 정하기·예약 링크 are one .tbtn (was .change/.link/.book/.restay)
+    for (const sel of ['.saved-btn', '.basis', '.tab', '.tbtn']) expect(cssRule(sel), sel).toMatch(/min-height:\s*44px/);
     expect(cssRule('.heart')).toMatch(/width:\s*44px/);
     expect(cssRule('.heart')).toMatch(/height:\s*44px/);
     expect(cssRule('.more')).toMatch(/min-height:\s*52px/);
     expect(cssRule('.mood')).toMatch(/min-height:\s*60px/);
-    expect(cssRule('.opt')).toMatch(/min-height:\s*48px/);
+    expect(cssRule('.opt')).toMatch(/min-height:\s*56px/);
     expect(cssRule('button')).toMatch(/touch-action:\s*manipulation/);
   });
 
@@ -1117,7 +1181,7 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
   });
 
   it('S49 dark: first paint and splash are dark, photos dimmed a little', () => {
-    expect(html).toMatch(/<style>html\{background:#f7f7f5\}@media \(prefers-color-scheme:dark\)\{html\{background:#151718\}\}<\/style>/);
+    expect(html).toMatch(/<style>html\{background:#f6f6f3\}@media \(prefers-color-scheme:dark\)\{html\{background:#161817\}\}<\/style>/);
     expect(html).toMatch(/name="color-scheme" content="light dark"/);
     expect(css).toMatch(/--photo:\s*brightness\(0\.9\)/);
     expect(cssRule('.ph img')).toMatch(/filter:\s*var\(--photo\)/);
@@ -1164,12 +1228,12 @@ describe('QA 2026-09-30 — 새로고침·뒤로가기 정합성', () => {
     fail = true;
     await tap('[data-mood="walk"]');
     expect($('.notice-t')?.textContent).toBe('위치를 확인하지 못했어요.');
-    expect($('#resultsTitle').textContent).toBe('좀 걷고 싶어');
+    expect($('#crumb').textContent).toBe('좀 걷고 싶어');
     fail = false;
     render({ locate }); // pull to refresh with location working again
     await flush();
     await flush();
-    expect($('#resultsTitle').textContent).toBe('좀 걷고 싶어');
+    expect($('#crumb').textContent).toBe('좀 걷고 싶어');
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'walk'));
     expect(cardNames()).not.toEqual(rest);
   });
@@ -1269,7 +1333,7 @@ describe('QA 2026-09-30 — 다른 3곳 보기·저장 목록·사진', () => {
     await wait(40); // delays.long = 30 here (3s in the app)
     expect(cardIds()).toEqual([a.id, b.id]);
     expect($('#savedView .sort').textContent).toBe('위치를 몰라서 저장한 순서대로 보여 드려요.');
-    expect($('#basis').textContent).toBe('내 주변'); // nothing failed; it just didn't answer
+    expect($('#basis').textContent).toBe('여기 근처'); // nothing failed; it just didn't answer
   });
 
   it('photos lost while offline come back once online (in place), a photo broken while online stays dropped', async () => {
@@ -1313,7 +1377,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
   it('S67 the same mood again (GPS basis): its still-valid cards stay while GPS re-checks — no grey frame, same nodes', async () => {
     const again = deferred<Point>();
     let n = 0;
-    render({ locate: () => (++n === 1 ? Promise.resolve(ORIGINS.제주시) : again.promise), delays: { slow: 20, long: 10_000, settle: 300, hint: 40 } });
+    render({ locate: () => (++n === 1 ? Promise.resolve(ORIGINS.제주시) : again.promise), delays: { slow: 20, long: 10_000, settle: 300 } });
     await tap('[data-mood="rest"]');
     await wait(30);
     const ids = cardIds();
@@ -1340,7 +1404,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     let calls = 0;
     window.localStorage.setItem('jeju.region', JSON.stringify('애월'));
     window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
-    render({ loadSpots: () => (++calls === 1 ? Promise.resolve(fileSpots) : later.promise), delays: { slow: 20, long: 10_000, settle: 300, hint: 40 } });
+    render({ loadSpots: () => (++calls === 1 ? Promise.resolve(fileSpots) : later.promise), delays: { slow: 20, long: 10_000, settle: 300 } });
     await tap('[data-mood="food"]');
     await wait(30);
     expect(cardIds()).toHaveLength(3);
@@ -1360,11 +1424,11 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     const panel = $('#sheet .sheet');
     const seongsan = $('#sheet [data-area="성산"]');
     seongsan.focus();
-    expect($('#sheet [data-basis="gps"] .sub')).toBeNull();
+    expect($('#sheet [data-basis="gps"] .lm')).toBeNull();
     gps.reject(new LocateError('denied'));
     await flush();
     await flush();
-    expect($('#sheet [data-basis="gps"] .sub')?.textContent).toBe('위치 권한이 꺼져 있어요');
+    expect($('#sheet [data-basis="gps"] .lm')?.textContent).toBe('위치 권한이 꺼져 있어요');
     expect($('#sheet .sheet')).toBe(panel);
     expect($('#sheet [data-area="성산"]')).toBe(seongsan);
     expect(document.activeElement).toBe(seongsan);
@@ -1375,7 +1439,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     await flush();
     await flush();
     await flush();
-    expect($('#sheet [data-basis="gps"] .sub')).toBeNull();
+    expect($('#sheet [data-basis="gps"] .lm')).toBeNull();
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
     expect($('#sheet .sheet')).toBe(panel);
     expect(document.activeElement).toBe(seongsan);
@@ -1398,7 +1462,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     await flush();
     await flush();
     await flush();
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
     expect($('.notice')).toBeNull();
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
   });
@@ -1435,7 +1499,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     const loadSpots = vi.fn(() => data.promise);
     window.localStorage.setItem('jeju.region', JSON.stringify('애월'));
     window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
-    render({ loadSpots, delays: { slow: 0, long: 10_000, settle: 300, hint: 40, dataTimeout: 20 } });
+    render({ loadSpots, delays: { slow: 0, long: 10_000, settle: 300, dataTimeout: 20 } });
     await tap('[data-mood="walk"]');
     await wait(40); // past the (20ms here) timeout
     expect($('.notice-t')?.textContent).toBe('목록을 불러오지 못했어요.');

@@ -36,7 +36,7 @@ export function render(deps: Partial<Deps> = {}): App {
     now: () => clock,
     // `long` (the 지역으로 고르기 escape) is off unless a test asks for it: a real-time 30ms timer fired
     // during a busy run's awaits and made exact status checks flaky (QA 2026-09-30, S02).
-    delays: { slow: 0, long: 10_000, settle: 300, hint: 40 },
+    delays: { slow: 0, long: 10_000, settle: 300 },
     ...deps,
   });
   return app;
@@ -70,7 +70,7 @@ export const cardNames = (): string[] => cardIds().map((id) => nameById.get(id!)
 /** The mood whose results are on screen ([] on the first screen / saved list). */
 export const shownMood = () => {
   if ($('#results').hidden) return [];
-  const t = $('#resultsTitle').textContent;
+  const t = $('#crumb').textContent;
   return $$('button[data-mood]')
     .filter((b) => b.textContent === t)
     .map((b) => b.dataset.mood);

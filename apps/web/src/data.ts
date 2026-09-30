@@ -7,10 +7,10 @@ const MOODS: readonly Mood[] = ['rest', 'walk', 'new', 'food'];
 const SUBS: readonly Sub[] = ['meal', 'cafe'];
 /** Collapse any run of whitespace (tabs, U+3000 …) and trim — the build does this too (S32). */
 export const cleanName = (s: string) => s.replace(/\s+/g, ' ').trim();
-/** A sentence ending in 요 gets one full stop; a noun ending gets none (design/SPEC.md §10·§12.4). */
+/** A reason is a card caption: no final full stop whatever the ending, 돈까스 spelled 돈가스 (design/SPEC.md
+ * §10·§12.4, 3판). Same rule as the build's shipReason (scripts/reason.mjs). */
 export function cleanReason(s: string): string {
-  const t = cleanName(s).replace(/[.。]+$/, '');
-  return t.endsWith('요') ? `${t}.` : t;
+  return cleanName(s).replace(/돈까스/g, '돈가스').replace(/[\s.。]+$/, '');
 }
 
 /** Drops records the app cannot render; normalizes names and reasons. The shipped file already passes S1'. */

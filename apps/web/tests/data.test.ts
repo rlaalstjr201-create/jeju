@@ -145,17 +145,55 @@ describe('S32 이름 공백', () => {
 });
 
 describe('이유 문장 마침표 (design/SPEC.md §10·§12.4)', () => {
-  it('a sentence ending in 요 gets exactly one full stop; a noun ending gets none; whitespace is cleaned', () => {
-    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요')).toBe('카페와 아트샵을 한 공간에서 둘러봐요.');
-    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요..')).toBe('카페와 아트샵을 한 공간에서 둘러봐요.');
+  it('no final full stop whatever the ending (3판); 돈까스 → 돈가스; whitespace is cleaned', () => {
+    // 3판: no full stop after 요 either (was: "…둘러봐요.")
+    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요')).toBe('카페와 아트샵을 한 공간에서 둘러봐요');
+    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요..')).toBe('카페와 아트샵을 한 공간에서 둘러봐요');
+    expect(cleanReason('겉은 바삭한 돈까스')).toBe('겉은 바삭한 돈가스');
     expect(cleanReason('  봄마다 벚꽃 축제가 열리는  길. ')).toBe('봄마다 벚꽃 축제가 열리는 길');
     expect(cleanReason('애월 하가리의 전망 좋은 카페')).toBe('애월 하가리의 전망 좋은 카페');
   });
 
-  it('every shipped reason, as drawn, follows the rule', () => {
-    for (const s of normalizeSpots(fileSpots)) {
-      if (s.reason.endsWith('요.')) continue;
-      expect(s.reason, s.reason).not.toMatch(/[.요]$/);
+  it('every shipped reason, as drawn, follows the rule (3판: no final full stop, as the build ships it)', () => {
+    for (const s of normalizeSpots(fileSpots)) expect(s.reason, s.reason).not.toMatch(/[.。]$/);
+  });
+});
+
+describe('3판 이유 문장 — 빌드 규칙 (design/SPEC.md §10·§12.4, 0.3 #16)', () => {
+  it('shipReason: no final full stop whatever the ending, 돈까스 → 돈가스, whitespace cleaned, idempotent', async () => {
+    const { shipReason } = await import('../scripts/reason.mjs');
+    expect(shipReason('돌담과 귤밭 사이에서 크로플을 먹어요.')).toBe('돌담과 귤밭 사이에서 크로플을 먹어요');
+    expect(shipReason('  봄마다 벚꽃 축제가 열리는  길 . ')).toBe('봄마다 벚꽃 축제가 열리는 길');
+    expect(shipReason('수제 돈까스와 우동집이에요。')).toBe('수제 돈가스와 우동집이에요');
+    expect(shipReason('약 17.5km 이어지는 올레길')).toBe('약 17.5km 이어지는 올레길');
+    for (const s of fileSpots) expect(shipReason(s.reason), s.id).toBe(s.reason);
+  });
+
+  it('the build uses it and refuses a two-sentence reason', async () => {
+    const build = readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8');
+    expect(build).toMatch(/const bareReason = shipReason;/);
+    expect(build).not.toMatch(/punctuate/);
+    expect(build).toMatch(/reasonPunctuationProblem\(s\.reason\)/);
+    const { reasonPunctuationProblem } = await import('../scripts/reason.mjs');
+    expect(reasonPunctuationProblem('딱새우김밥과 양념새우컵밥. 포장해 가도 돼요')).toBe('full stop mid-sentence');
+    expect(reasonPunctuationProblem('기념관 영상과 전시로 4.3의 역사를 기억해요')).toBeNull();
+  });
+
+  it('every shipped reason: no full stop at the end or mid-sentence, no 돈까스, no 3판 banned form', async () => {
+    const { reasonPunctuationProblem } = await import('../scripts/reason.mjs');
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const bad = fileSpots.filter((s) => reasonPunctuationProblem(s.reason) || /돈까스|겉바속촉|아름다운|여유를 누려요|공간이에요/.test(s.reason) || REASON_BANNED.test(s.reason));
+    expect(bad.map((s) => `${s.id}: ${s.reason}`)).toEqual([]);
+  });
+
+  it('every review/copy/fix-02.json rewrite ships as written and replaces a sentence that broke the 3판 rule', async () => {
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const { reasonPunctuationProblem, shipReason } = await import('../scripts/reason.mjs');
+    const fix = JSON.parse(readFileSync(resolve(root, 'review/copy/fix-02.json'), 'utf8')) as { id: string; reason: string; was: string }[];
+    const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+    for (const f of fix) {
+      expect(byId.get(f.id)?.reason, f.id).toBe(shipReason(f.reason));
+      expect(REASON_BANNED.test(f.was) || reasonPunctuationProblem(shipReason(f.was)) !== null, f.was).toBe(true);
     }
   });
 });
@@ -356,7 +394,7 @@ describe('S51 홈 화면(PWA) 실행 — 매니페스트', () => {
     expect(new URL(m.start_url, 'https://x.test/app/').href.startsWith(new URL(m.scope, 'https://x.test/app/').href)).toBe(true);
     expect(m.name).toBe('내일 뭐하지');
     expect(m.short_name).toBe('내일 뭐하지');
-    expect(m.background_color).toBe('#151718');
+    expect(m.background_color).toBe('#161817');
     for (const i of m.icons) expect(existsSync(resolve(root, 'public', i.src)), i.src).toBe(true);
     const html = readFileSync(resolve(root, 'index.html'), 'utf8');
     expect(html).toContain('<link rel="manifest" href="./manifest.webmanifest" />');

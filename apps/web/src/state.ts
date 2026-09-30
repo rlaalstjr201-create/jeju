@@ -84,7 +84,6 @@ export type Action =
   | { type: 'stayForm'; pending: boolean; error: NoOrigin | null }
   | { type: 'saved'; ids: string[] }
   | { type: 'hint'; id: string }
-  | { type: 'hintDone'; id: string }
   | { type: 'hintSeen' }
   | { type: 'imgError'; id: string }
   | { type: 'offline'; offline: boolean }
@@ -278,7 +277,15 @@ function enterView(s: State, view: View): State {
   return { ...left, phase: { k: 'idle' } };
 }
 
+/** Every user intent but a heart clears the first-save hint (§6.13, §11.2): it goes with the next draw. */
+const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'request', 'openSaved', 'closeSaved', 'route', 'overlay', 'basis', 'restore']);
+
 export function reduce(s: State, a: Action): State {
+  const next = step(s, a);
+  return next.hintFor && CLEARS_HINT.has(a.type) ? { ...next, hintFor: null } : next;
+}
+
+function step(s: State, a: Action): State {
   switch (a.type) {
     case 'mood':
       // Set the mood first: whether the cards on hand still apply depends on it.
@@ -345,8 +352,6 @@ export function reduce(s: State, a: Action): State {
       return { ...s, saved: a.ids };
     case 'hint':
       return { ...s, hintSeen: true, hintFor: a.id };
-    case 'hintDone':
-      return s.hintFor === a.id ? { ...s, hintFor: null } : s;
     case 'hintSeen':
       return s.hintSeen ? s : { ...s, hintSeen: true };
     case 'imgError':

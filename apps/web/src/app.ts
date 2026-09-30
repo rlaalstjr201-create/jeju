@@ -22,15 +22,13 @@ export interface Delays {
   long: number;
   /** same control tapped again within this window is ignored (S35). */
   guard: number;
-  /** how long the first-save hint stays (S40). */
-  hint: number;
   /** give up waiting for a self-caused popstate after this long. */
   settle: number;
   /** after a tap changes the screen, the 2nd tap of a double tap is swallowed (it would land on a card link). */
   quiet: number;
   dataTimeout: number;
 }
-export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, hint: 3000, settle: 1000, quiet: 300, dataTimeout: 15000 };
+export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 15000 };
 
 export interface Deps extends GeoDeps {
   loadSpots(): Promise<unknown>;
@@ -38,7 +36,6 @@ export interface Deps extends GeoDeps {
   /** sessionStorage — the cards being looked at survive a reload / discarded tab (S54). */
   session?: Storage | null;
   online?(): boolean;
-  userAgent?: string;
   now?(): number;
   /** wall clock for the date line (defaults to the device clock). */
   today?(): Date;
@@ -62,8 +59,6 @@ interface EarlyTap {
   __early?: EventListener;
   __tap?: string;
 }
-/** KakaoTalk / Instagram / Facebook / Naver / Line in-app browsers keep their own storage (S55). */
-const IN_APP = /KAKAOTALK|Instagram|FBAN|FBAV|NAVER\(inapp|Line\//;
 
 export function mountApp(doc: Document, deps: Deps): App {
   const win = doc.defaultView;
@@ -84,7 +79,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'spots', spots });
     retryFailedLoad();
   });
-  const renderer = createRenderer(doc, els, { inApp: IN_APP.test(deps.userAgent ?? win?.navigator.userAgent ?? '') });
+  const renderer = createRenderer(doc, els);
   let state = initialState({ ...store.load(), offline: !online() });
 
   const timers = new Set<ReturnType<typeof setTimeout>>();
@@ -330,10 +325,11 @@ export function mountApp(doc: Document, deps: Deps): App {
   function onHeart(id: string) {
     const { ids, added } = store.toggleSaved(id);
     dispatch({ type: 'saved', ids });
-    if (added && !state.hintSeen) {
+    // The first save on the results screen says once where saved places go; it stays until the next
+    // intent (no timer, §6.13).
+    if (added && !state.hintSeen && state.view === 'cards') {
       store.setHintSeen();
       dispatch({ type: 'hint', id });
-      later(delays.hint, () => dispatch({ type: 'hintDone', id }));
     }
   }
 

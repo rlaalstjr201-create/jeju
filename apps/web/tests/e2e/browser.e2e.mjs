@@ -147,7 +147,7 @@ await check('S15', 'saved list → ⇄ → area keeps the list, re-sorted; no bl
   await tapText(page, '#sheet [data-area="성산"]');
   await sleep(500);
   assert(await visible(page, '#savedView'), 'saved list closed');
-  assert((await page.textContent('#savedView .sort')) === '성산에서 가까운 순이에요.', 'not re-sorted from 성산');
+  assert((await page.textContent('#savedView .sort')) === '성산에서 가까운 순', 'not re-sorted from 성산');
   const s = await hstate(page);
   assert(s?.view === 'saved' && s?.overlay === null, `history.state ${JSON.stringify(s)}`);
   await shot(page, 'saved-390-light');
@@ -199,7 +199,7 @@ await check('S17', 'saved list → 돌아가기 → 바꾸기 → another mood: 
   await page.locator('.card .heart').first().click();
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card');
-  await tapText(page, '#savedView .change');
+  await tapText(page, '#savedView .back');
   await tapText(page, '#results .change');
   await tapText(page, '[data-mood="walk"]');
   await waitCards(page);
@@ -322,11 +322,15 @@ for (const [w, h, id] of [
 ]) {
   await check(id, `${w}×${h}: after a tap the first card's name is on screen`, async () => {
     const { ctx, page } = await fresh({ width: w, height: h });
-    await tapText(page, '[data-mood="rest"]');
-    await waitCards(page);
-    await sleep(100);
-    const bottom = await page.$eval('.card .name', (e) => e.getBoundingClientRect().bottom);
-    assert(bottom <= h, `name bottom at y=${Math.round(bottom)} > ${h}`);
+    // with the 식사 tabs too (§15.1-9)
+    for (const mood of ['food', 'rest']) {
+      await tapText(page, `[data-mood="${mood}"]`);
+      await waitCards(page);
+      await sleep(100);
+      const bottom = await page.$eval('.card .name', (e) => e.getBoundingClientRect().bottom);
+      assert(bottom <= h, `${mood}: name bottom at y=${Math.round(bottom)} > ${h}`);
+      if (mood === 'food') await tapText(page, '#results .change');
+    }
     await tapText(page, '#cards .more');
     await sleep(100);
     const top = await page.$eval('.card .name', (e) => e.getBoundingClientRect().bottom);
@@ -371,7 +375,7 @@ await check('S9-4', '320·390·430 × light·dark × 9 states: no sideways scrol
       await page.waitForSelector('#savedView .card');
       await measure(page, `${tag} saved`);
       await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'deny' })));
-      await tapText(page, '#savedView .change');
+      await tapText(page, '#savedView .back');
       await tapText(page, '#results .change');
       await tapText(page, '[data-mood="walk"]');
       await page.waitForSelector('.notice');
@@ -445,6 +449,8 @@ await check('S48', '200% (page zoom = 195×422, and text size = root 200%): no s
       return { h: s.height, vh: innerHeight, closeBottom: close.bottom, over: document.documentElement.scrollWidth - document.documentElement.clientWidth };
     });
     assert(sheet.h <= sheet.vh * 0.9 && sheet.closeBottom <= sheet.vh + 1, `${mode} sheet ${Math.round(sheet.h)}px on ${sheet.vh}, 닫기 at ${Math.round(sheet.closeBottom)}`);
+    const cols = await page.$$eval('#sheet .areas', (gs) => gs.map((g) => getComputedStyle(g).gridTemplateColumns.split(' ').length));
+    assert(cols.every((c) => c === 1), `${mode}: area index ${cols} columns`);
     const cutInSheet = await page.evaluate(LINES);
     assert(!cutInSheet.cut.length && sheet.over <= 0, `${mode} sheet: cut ${cutInSheet.cut}, overflow ${sheet.over}`);
     await shot(page, `sheet-200-${mode}`);
@@ -793,7 +799,7 @@ await check('S51', 'home-screen launch: start_url in a fresh top-level page → 
   assert(!(await visible(app, '#sheet .sheet')), '닫기 did not close the sheet');
   await tapText(app, '#saved');
   await app.waitForSelector('#savedView .card');
-  await tapText(app, '#savedView .change');
+  await tapText(app, '#savedView .back');
   assert(await visible(app, '#results'), '돌아가기 did not return to the results');
   await tapText(app, '#results .change');
   assert(await visible(app, '#home'), '바꾸기 did not return to the moods');
@@ -814,7 +820,7 @@ await check('S52', 'landscape (844×390, 667×375): one centred 480px column, no
       assert(col.w <= 480 && Math.abs(col.left - col.right) <= 1, `${width} column ${JSON.stringify(col)}`);
       await tapText(page, '[data-mood="walk"]');
       await waitCards(page);
-      const top = await page.$eval('#resultsTitle', (e) => e.getBoundingClientRect().top);
+      const top = await page.$eval('#crumb', (e) => e.getBoundingClientRect().top);
       assert(top >= 0 && top < height, `${width}: results title at y=${Math.round(top)}`);
       await tapText(page, '#basis');
       const s = await page.evaluate(() => {
@@ -852,7 +858,7 @@ await check('QA-reload-history', 'reload on a results entry that never loaded (G
   await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'ok', lat: 33.5122, lng: 126.5272, delay: 30 })));
   await page.reload();
   await waitCards(page);
-  assert((await page.textContent('#resultsTitle')) === '새로운 거 해보고 싶어', `title after reload: ${await page.textContent('#resultsTitle')}`);
+  assert((await page.textContent('#crumb')) === '새로운 거 해보고 싶어', `title after reload: ${await page.textContent('#crumb')}`);
   await back(page);
   assert((await names(page)).length === 0 && (await hstate(page))?.depth === 0, `first back: ${JSON.stringify(await hstate(page))}`);
   await back(page);
@@ -865,7 +871,7 @@ await check('QA-reload-history', 'reload on a results entry that never loaded (G
   await b.page.evaluate(() => localStorage.removeItem('__geo'));
   await b.page.reload();
   await waitCards(b.page);
-  assert((await b.page.textContent('#resultsTitle')) === '좀 걷고 싶어', 'another mood after reload');
+  assert((await b.page.textContent('#crumb')) === '좀 걷고 싶어', 'another mood after reload');
   await tapText(b.page, '#results .change');
   await tapText(b.page, '[data-mood="rest"]');
   await waitCards(b.page);
@@ -898,7 +904,7 @@ await check('QA-stale-session', 'rest shown → 바꾸기 → walk fails → loc
   await page.evaluate(() => localStorage.removeItem('__geo'));
   await page.reload();
   await waitCards(page);
-  assert((await page.textContent('#resultsTitle')) === '좀 걷고 싶어', `title ${await page.textContent('#resultsTitle')}`);
+  assert((await page.textContent('#crumb')) === '좀 걷고 싶어', `title ${await page.textContent('#crumb')}`);
   // 식사 shown → 카페·디저트 still loading → reload: 카페·디저트
   await tapText(page, '#results .change');
   await tapText(page, '[data-mood="food"]');
@@ -927,7 +933,8 @@ await check('QA-more-origin', '"다른 3곳 보기" never asks GPS again: a fail
 });
 
 await check('QA-saved-scroll', 'closing the saved list returns to the scroll position the cards were at (real layout, not a mocked scrollY)', async () => {
-  const { ctx, page } = await fresh({ height: 700 });
+  // hint already seen: the first-save hint goes with ♥ N (3판 §6.13) and would shorten the page meanwhile
+  const { ctx, page } = await fresh({ height: 700, storage: { 'jeju.hintSeen': true } });
   await tapText(page, '[data-mood="walk"]');
   await waitCards(page);
   await page.locator('.card .heart').first().click();
@@ -938,7 +945,7 @@ await check('QA-saved-scroll', 'closing the saved list returns to the scroll pos
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card');
   assert((await page.evaluate(() => scrollY)) === 0, 'saved list did not open at the top');
-  await tapText(page, '#savedView .change');
+  await tapText(page, '#savedView .back');
   const after = await page.evaluate(() => scrollY);
   assert(Math.abs(after - y) <= 1, `back at y=${after}, was ${y}`);
   await ctx.close();
@@ -955,7 +962,7 @@ await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown in s
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card:not(.ghost)', { timeout: 4500 });
   assert((await page.textContent('#savedView .sort')) === '위치를 몰라서 저장한 순서대로 보여 드려요.', 'sort line');
-  assert((await page.textContent('#basis')) === '내 주변', 'a wait is not a failure');
+  assert((await page.textContent('#basis')) === '여기 근처', 'a wait is not a failure');
   await ctx.close();
 });
 
@@ -975,11 +982,13 @@ await check('QA-meta', 'meta: one trip line per screen when all three match; at 
         const rects = [...range.getClientRects()];
         return rects.some((x) => x.left <= m.getBoundingClientRect().left + 1);
       });
+      const alt = document.querySelector('#alt-trip')?.textContent;
+      if (alt) trips.push(alt.replace(/^둘 다 /, ''));
       return { trips, dests: document.querySelectorAll('#cards .dest').length, sepAtLineStart };
     });
     assert(r.dests === 1, `${mood}: 카카오맵 ${r.dests} times`);
     assert(!r.sepAtLineStart, `${mood}: a line starts with "·"`);
-    const bare = r.trips.map((t) => t.replace(/^셋 다 /, '').replace(/^\S+에서 /, ''));
+    const bare = r.trips.map((t) => t.replace(/^\S+에서 /, ''));
     assert(!bare.some((t) => bare.filter((x) => x === t).length >= 3), `${mood}: ${r.trips.join(' / ')}`);
     await shot(page, `meta-195-${mood}`);
     await tapText(page, '#results .change');
@@ -987,33 +996,236 @@ await check('QA-meta', 'meta: one trip line per screen when all three match; at 
   await ctx.close();
 });
 
-await check('QA-grid', 'area grid: 4 across at 320·390·430, no area alone on a last row; dark selection dimmer than a lamp', async () => {
-  for (const width of [320, 390, 430]) {
-    const { ctx, page } = await fresh({ width, dark: true, storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
-    await tapText(page, '#basis');
-    const r = await page.evaluate(() => {
-      const rows = [...document.querySelectorAll('#sheet .areas')].map((g) => {
-        const tops = [...g.children].map((b) => Math.round(b.getBoundingClientRect().top));
-        const last = tops.filter((t) => t === Math.max(...tops)).length;
-        const perRow = tops.filter((t) => t === tops[0]).length;
-        const broken = [...g.children].filter((b) => {
-          const range = document.createRange();
-          range.selectNodeContents(b);
-          return !b.textContent.includes(' ') && new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size > 1;
-        }).map((b) => b.textContent);
-        return { n: g.children.length, perRow, last, broken };
-      });
-      const sel = getComputedStyle(document.querySelector('#sheet [aria-pressed="true"]')).backgroundColor;
-      const [R, G, B] = sel.match(/\d+/g).map(Number).map((v) => v / 255).map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
-      return { rows, lum: 0.2126 * R + 0.7152 * G + 0.0722 * B };
-    });
-    for (const g of r.rows) {
-      assert(g.perRow === 4, `${width}: ${g.perRow} across`);
-      assert(g.last > 1, `${width}: ${g.n} areas leave ${g.last} alone on the last row`);
-      assert(!g.broken.length, `${width}: one-word names broken over lines: ${g.broken}`);
+// --- design/SPEC.md §15.1 17–24 (3판) ---
+const AREA_ORDER = [
+  ['한경', '수월봉'], ['한림', '협재'], ['애월', '한담'], ['신제주', '공항 근처'], ['구제주', '동문시장'], ['조천', '함덕'], ['구좌', '월정리'], ['우도', '배로 가는 섬'],
+  ['대정', '모슬포'], ['안덕', '산방산'], ['중문', '주상절리'], ['서귀포 시내', '올레시장'], ['남원', '위미'], ['표선', '성읍'], ['성산', '일출봉'],
+];
+
+await check('3-17', 'row cards: at 320×568 default text the photo sits beside the text; at root 150% it goes on top', async () => {
+  for (const big of [false, true]) {
+    const { ctx, page } = await fresh({ width: 320, height: 568 });
+    if (big) await page.addStyleTag({ content: 'html { font-size: 150% }' });
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    const r = await page.$$eval('#cards .card.row:not(.noimg)', (cards) =>
+      cards.map((c) => ({ ph: c.querySelector('.ph').getBoundingClientRect().toJSON(), name: c.querySelector('.name').getBoundingClientRect().toJSON() })),
+    );
+    assert(r.length === 2, `${r.length} row cards with a photo`);
+    for (const { ph, name } of r) {
+      if (big) assert(ph.bottom <= name.top + 0.5, `150%: photo bottom ${ph.bottom} below name top ${name.top}`);
+      else assert(ph.right <= name.left + 0.5, `default: photo right ${ph.right} past name left ${name.left}`);
     }
-    assert(r.lum < 0.3, `${width}: selected area luminance ${r.lum.toFixed(2)}`);
-    await shot(page, `sheet-grid-${width}-dark`);
+    await shot(page, `rows-320-${big ? '150' : '100'}`);
+    await ctx.close();
+  }
+});
+
+await check('3-18', 'booking link: one line at 320 and 390, on the first card and on a row card', async () => {
+  for (const width of [320, 390]) {
+    const seen = { lead: 0, row: 0 };
+    const bad = [];
+    for (const [area] of AREA_ORDER) {
+      if (seen.lead && seen.row) break;
+      const { ctx, page } = await fresh({ width, storage: { 'jeju.region': area.replace(' ', ''), 'jeju.basis': 'region', 'jeju.hintSeen': true } });
+      await tapText(page, '[data-mood="new"]');
+      await waitCards(page);
+      for (let i = 0; i < 4; i++) {
+        const r = await page.$$eval('#cards .card .book', (els) =>
+          els.map((a) => {
+            const range = document.createRange();
+            range.selectNodeContents(a);
+            return { kind: a.closest('.card').classList.contains('lead') ? 'lead' : 'row', lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size };
+          }),
+        );
+        for (const b of r) {
+          seen[b.kind]++;
+          if (b.lines !== 1) bad.push(`${width} ${area} ${b.kind}: ${b.lines} lines`);
+        }
+        if (seen.lead && seen.row) {
+          if (width === 320) await shot(page, 'book-320');
+          break;
+        }
+        await tapText(page, '#cards .more');
+        await sleep(150);
+      }
+      await ctx.close();
+    }
+    assert(seen.lead && seen.row, `${width}: no bookable card found (lead ${seen.lead}, row ${seen.row})`);
+    assert(!bad.length, bad.join(' | '));
+  }
+});
+
+await check('3-19', '다른 3곳 bar: at 320×568 the button is on screen and the bar floats with its rule; at the end it rests 28px under the last card, no rule', async () => {
+  const { ctx, page } = await fresh({ width: 320, height: 568 });
+  await tapText(page, '[data-mood="rest"]');
+  await waitCards(page);
+  await sleep(200);
+  const probe = () =>
+    page.evaluate(() => {
+      const bar = document.querySelector('#cards .more-bar');
+      const more = bar.querySelector('.more').getBoundingClientRect();
+      const cards = document.querySelectorAll('#cards .card');
+      const last = cards[cards.length - 1].getBoundingClientRect();
+      const line = getComputedStyle(bar, '::before').borderTopColor;
+      const probe = document.createElement('div');
+      probe.style.color = 'var(--line)';
+      bar.append(probe);
+      const lineColor = getComputedStyle(probe).color;
+      probe.remove();
+      return { top: more.top, bottom: more.bottom, vh: innerHeight, stuck: bar.classList.contains('stuck'), gap: more.top - last.bottom, line, lineColor };
+    });
+  const a = await probe();
+  assert(a.top >= 0 && a.bottom <= a.vh, `button at ${a.top}–${a.bottom} of ${a.vh}`);
+  assert(a.stuck, 'bar not .stuck while floating');
+  assert(a.line === a.lineColor, `floating rule ${a.line}, want ${a.lineColor}`);
+  await shot(page, 'bar-320-floating');
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await sleep(200);
+  const b = await probe();
+  assert(!b.stuck, 'bar still .stuck at the end');
+  assert(Math.abs(b.gap - 28) <= 1, `last card → button ${b.gap}px`);
+  assert(b.line !== b.lineColor, `rule shown at rest: ${b.line}`);
+  await ctx.close();
+});
+
+await check('3-20', 'focus return: 닫기 by pointer → #basis focused without a ring; Esc → with a ring', async () => {
+  const { ctx, page } = await fresh();
+  const after = () => page.evaluate(() => ({ basis: document.activeElement === document.getElementById('basis'), ring: document.activeElement.matches(':focus-visible') }));
+  await tapText(page, '#basis');
+  await page.waitForSelector('#sheet .sheet');
+  await tapText(page, '#sheet .sheet-close');
+  await sleep(300);
+  const a = await after();
+  assert(a.basis && !a.ring, `pointer close: focus on basis ${a.basis}, ring ${a.ring}`);
+  await sleep(300);
+  await tapText(page, '#basis');
+  await page.waitForSelector('#sheet .sheet');
+  await page.keyboard.press('Escape');
+  await sleep(300);
+  const b = await after();
+  assert(b.basis && b.ring, `Esc close: focus on basis ${b.basis}, ring ${b.ring}`);
+  await ctx.close();
+});
+
+await check('3-21', 'first-save hint: stays 4s and through another heart, goes with 다른 3곳 보기; not again after reload; never in the saved list', async () => {
+  const { ctx, page } = await fresh();
+  await tapText(page, '[data-mood="rest"]');
+  await waitCards(page);
+  await page.locator('#cards .card .heart').first().click();
+  await page.waitForSelector('#cards .hint');
+  assert((await page.textContent('#announce')) === '저장한 곳은 맨 위 하트 버튼에 모여요.', 'not announced');
+  await sleep(4000);
+  assert((await page.$$('#cards .hint')).length === 1, 'gone after 4s');
+  await page.locator('#cards .card .heart').nth(1).click();
+  await sleep(100);
+  assert((await page.$$('#cards .hint')).length === 1, 'gone after another heart');
+  await shot(page, 'hint-390');
+  await tapText(page, '#cards .more');
+  await sleep(200);
+  assert((await page.$$('.hint')).length === 0, 'still there after 다른 3곳 보기');
+  await page.reload();
+  await waitCards(page);
+  await page.locator('#cards .card .heart').nth(2).click();
+  await sleep(200);
+  assert((await page.$$('.hint')).length === 0, 'shown again after reload');
+  await tapText(page, '#saved');
+  await page.waitForSelector('#savedView .card');
+  await page.locator('#savedView .heart').first().click();
+  await page.locator('#savedView .heart').first().click();
+  await sleep(100);
+  assert((await page.$$('.hint')).length === 0, 'shown in the saved list');
+  await ctx.close();
+});
+
+await check('3-22', 'area index: 15 cells in order with landmarks in the results notice, basis sheet and 숙소 sheet; only the chosen one is 600 with a check; no cell has a fill', async () => {
+  const read = (page, root) =>
+    page.$$eval(`${root} .areas .opt`, (els) =>
+      els.map((b) => ({
+        text: `${b.querySelector('.nm').textContent}|${b.querySelector('.lm').textContent}`,
+        weight: getComputedStyle(b.querySelector('.nm')).fontWeight,
+        check: getComputedStyle(b.querySelector('.i-check')).display !== 'none',
+        pressed: b.getAttribute('aria-pressed') === 'true',
+        bg: getComputedStyle(b).backgroundColor,
+        cols: getComputedStyle(b.parentElement).gridTemplateColumns.split(' ').length,
+      })),
+    );
+  const want = AREA_ORDER.map(([n, l]) => `${n}|${l}`).join();
+  const verify = (cells, label, chosen) => {
+    assert(cells.map((c) => c.text).join() === want, `${label}: ${cells.map((c) => c.text).join()}`);
+    for (const c of cells) {
+      assert(c.bg === 'rgba(0, 0, 0, 0)', `${label} ${c.text}: background ${c.bg}`);
+      assert(c.cols === 2, `${label}: ${c.cols} columns`);
+      const on = c.text.startsWith(`${chosen}|`);
+      assert(c.pressed === on && c.check === on && c.weight === (on ? '600' : '400'), `${label} ${c.text}: pressed ${c.pressed} check ${c.check} weight ${c.weight}`);
+    }
+  };
+  for (const dark of [false, true]) {
+    const { ctx, page } = await fresh({ width: 320, dark, geo: { mode: 'deny' } });
+    await tapText(page, '[data-mood="walk"]');
+    await page.waitForSelector('.notice .areas');
+    verify(await read(page, '#cards'), 'results', null);
+    await ctx.close();
+    const b = await fresh({ width: 320, dark, storage: { 'jeju.region': '애월', 'jeju.basis': 'region', 'jeju.stay': { lat: 33.4387, lng: 126.9026, area: '성산', source: 'area' } } });
+    await tapText(b.page, '#basis');
+    await b.page.waitForSelector('#sheet .areas');
+    verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
+    const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
+    assert(rows.join('/') === '지금 있는 곳/숙소성산 숙소', `sheet rows ${rows.join('/')}`);
+    await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
+    await tapText(b.page, '#sheet [data-action="restay"]');
+    await b.page.waitForSelector('#sheet .primary');
+    verify(await read(b.page, '#sheet'), 'stay sheet', '성산');
+    await b.ctx.close();
+  }
+});
+
+await check('3-23', 'trip lines: 애월 · 푹 쉬고 싶어 — first card "애월에서 … · 카카오맵"; equal rows said once on 아니면 with aria-describedby; 카카오맵 once', async () => {
+  const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
+  await tapText(page, '[data-mood="rest"]');
+  await waitCards(page);
+  let grouped = 0;
+  for (let i = 0; i < 6; i++) {
+    const r = await page.evaluate(() => ({
+      lead: document.querySelector('#cards .card.lead .meta').textContent,
+      alt: document.querySelector('#cards .alt').textContent,
+      rowMetas: document.querySelectorAll('#cards .card.row .meta').length,
+      described: [...document.querySelectorAll('#cards .card.row .card-link')].map((a) => a.getAttribute('aria-describedby')),
+      maps: (document.getElementById('results').innerText.match(/카카오맵/g) ?? []).length,
+    }));
+    assert(r.lead.startsWith('애월에서 ') && r.lead.endsWith('카카오맵'), `lead meta "${r.lead}"`);
+    assert(r.maps === 1, `카카오맵 ${r.maps} times`);
+    if (r.alt.includes('둘 다 ')) {
+      grouped++;
+      assert(r.rowMetas === 0 && r.described.every((d) => d === 'alt-trip'), `grouped but rows ${r.rowMetas} metas, ${r.described}`);
+      if (grouped === 1) await shot(page, 'trip-grouped-390');
+    } else assert(r.rowMetas === 2 && r.described.every((d) => d === null), `ungrouped: ${r.rowMetas} metas, ${r.described}`);
+    await tapText(page, '#cards .more');
+    await sleep(150);
+  }
+  assert(grouped > 0, 'no screen with two equal row trips in 6 pages');
+  await ctx.close();
+});
+
+await check('3-24', 'results hierarchy: the chosen mood is smaller than the first card name; ≤ 3 text sizes on screen', async () => {
+  for (const mood of ['rest', 'food']) {
+    const { ctx, page } = await fresh();
+    await tapText(page, `[data-mood="${mood}"]`);
+    await waitCards(page);
+    const r = await page.evaluate(() => {
+      const px = (e) => parseFloat(getComputedStyle(e).fontSize);
+      const sizes = new Set();
+      const walker = document.createTreeWalker(document.getElementById('app'), NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        if (!n.textContent.trim() || n.parentElement.closest('[hidden], [aria-hidden="true"]')) continue;
+        const rect = n.parentElement.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > innerHeight || !rect.width) continue;
+        sizes.add(px(n.parentElement));
+      }
+      return { crumb: px(document.getElementById('crumb')), name: px(document.querySelector('#cards .card.lead .name')), sizes: [...sizes].sort() };
+    });
+    assert(r.crumb < r.name, `${mood}: crumb ${r.crumb} ≥ name ${r.name}`);
+    assert(r.sizes.length <= 3, `${mood}: sizes ${r.sizes}`);
     await ctx.close();
   }
 });
@@ -1029,7 +1241,7 @@ await check('QA-first-tap', 'a mood tapped while the app script is still downloa
   await page.locator('[data-mood="walk"]').click();
   assert(!(await page.evaluate(() => typeof window.__early === 'undefined')), 'the app had already loaded: the tap was not early');
   await waitCards(page);
-  assert((await page.textContent('#resultsTitle')) === '좀 걷고 싶어', 'wrong mood');
+  assert((await page.textContent('#crumb')) === '좀 걷고 싶어', 'wrong mood');
   await ctx.close();
 });
 
