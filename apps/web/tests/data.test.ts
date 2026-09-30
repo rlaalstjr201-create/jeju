@@ -196,6 +196,20 @@ describe('3판 이유 문장 — 빌드 규칙 (design/SPEC.md §10·§12.4, 0.3
       expect(REASON_BANNED.test(f.was) || reasonPunctuationProblem(shipReason(f.was)) !== null, f.was).toBe(true);
     }
   });
+
+  it('every review/copy/fix-03.json rewrite (S9-3 audit borderline + 할망밥상 branches) ships as written and differs from what it replaced', async () => {
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const { reasonPunctuationProblem, shipReason } = await import('../scripts/reason.mjs');
+    const fix = JSON.parse(readFileSync(resolve(root, 'review/copy/fix-03.json'), 'utf8')) as { id: string; reason: string; was: string; basis: string }[];
+    expect(fix).toHaveLength(7);
+    const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+    for (const f of fix) {
+      expect(byId.get(f.id)?.reason, f.id).toBe(shipReason(f.reason));
+      expect(shipReason(f.was), f.id).not.toBe(shipReason(f.reason));
+      expect(REASON_BANNED.test(f.reason) || reasonPunctuationProblem(shipReason(f.reason)) !== null, f.reason).toBe(false);
+      expect(f.basis.length, f.id).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe('S24 목록 로드 — 실패는 기억하지 않는다 (audit MAJOR)', () => {

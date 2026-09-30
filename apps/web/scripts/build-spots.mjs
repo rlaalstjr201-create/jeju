@@ -137,6 +137,9 @@ for (const id of COPY_REVERT) {
 }
 // fix-02.json (SPEC 3판 §10): rewrites of the sentences carrying the 3판 banned forms (겉바속촉, 아름다운,
 // 여유를 누려요, 공간이에요) and of the two two-sentence reasons, each from that spot's review/input text.
+// fix-03.json (S9-3 faithfulness audit, review/audit/s9-3-faithfulness.md): the 5 borderline reasons plus
+// the same "갓 잡은" overreach at 제주할망밥상 차귀도점·애월점, rewritten back to what review/input supports.
+// Sorted glob → applied after fix-02.
 // fix-NN.json (QA 2026-09-30): hand edits that take the design/SPEC.md §10 banned forms ("~하기 좋아요",
 // 인생샷, 힐링, 다양한 …) out of a sentence without adding anything the old sentence did not say. Applied
 // last, so it also covers ids reverted above.
