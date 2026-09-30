@@ -73,7 +73,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     target?.addEventListener(type, fn, { signal, capture });
 
   const delays: Delays = { ...DELAYS, ...deps.delays };
-  const now = deps.now ?? (() => Date.now());
+  // Monotonic: a device clock stepped back (NTP, manual change) must not stretch the double-tap windows.
+  const now = deps.now ?? (() => performance.now());
   const online = () => deps.online?.() ?? win?.navigator.onLine ?? true;
   const els = findEls(doc);
   const store = createStore(deps.storage, deps.session ?? null);
@@ -219,6 +220,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
     dispatch({ type: 'route', route: r });
     if (state.view !== prev.view) enteredView();
+    // Forward onto the results after 바꾸기 (which cleared the record): a reload here must come back to them.
+    remember();
   }
 
   // --- intents ---
@@ -360,7 +363,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'change') return onChange();
     if (action === 'choose-area') return openOverlay('basis');
     if (action === 'retry') {
-      if (!guarded('retry')) request('show');
+      if (!guarded('retry')) {
+        hush(); // the cards replace the notice under the finger
+        request('show');
+      }
       return;
     }
     if (action === 'close-saved') {

@@ -3,7 +3,7 @@
 // Run after `vite build`:  node tests/e2e/browser.e2e.mjs   (needs playwright-core + Chrome or Chromium)
 // Env: E2E_CHANNEL=chrome|chromium (default chrome), E2E_SHOTS=<dir> to save screenshots, E2E_ONLY=<id regex>.
 import { spawn, execSync } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +14,9 @@ const PORT = Number(process.env.E2E_PORT ?? 4179);
 const BASE = `http://localhost:${PORT}/`;
 const SHOTS = process.env.E2E_SHOTS ?? '';
 if (SHOTS) mkdirSync(SHOTS, { recursive: true });
+// Spot photos come from an external host; a local image stands in so the layout never depends on reaching it.
+const PHOTO = readFileSync(join(appDir, 'public/icons/icon-512.png'));
+const PHOTO_HOST = 'https://api.cdn.visitjeju.net/**';
 
 async function loadPlaywright() {
   for (const name of ['playwright-core', 'playwright']) {
@@ -95,6 +98,7 @@ async function fresh({ width = 390, height = 844, dark = false, sw = false, geo,
     locale: 'ko-KR',
   });
   await ctx.addInitScript(GEO_STUB);
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
   const page = await ctx.newPage();
   await page.goto('about:blank');
   await page.goto(BASE);
@@ -479,7 +483,7 @@ await check('S54', 'pull-to-refresh / discarded tab: the same 3 cards come back'
 });
 
 // --- design/SPEC.md §15.1: 12·13·15, and the double tap that lands on the next screen ---
-await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 never opens the card that appears under the finger', async () => {
+await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 / 다시 불러오기 never opens the card that appears under the finger', async () => {
   const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   await page.locator('[data-mood="rest"]').dblclick();
   await waitCards(page);
@@ -493,6 +497,23 @@ await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 never opens 
   const h = await page.evaluate(() => history.state);
   assert(h?.view === 'cards' && h?.depth === 1, `history ${JSON.stringify(h)}`);
   await ctx.close();
+
+  // 다시 불러오기 once the list can load: the cards take the notice's place under the finger
+  const two = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
+  await two.page.route('**/spots.json*', (r) => r.fulfill({ status: 503, body: 'down' }));
+  await two.page.reload();
+  await tapText(two.page, '[data-mood="rest"]');
+  await two.page.waitForSelector('.notice .retry');
+  await two.page.unroute('**/spots.json*');
+  const box = await two.page.locator('.notice .retry').boundingBox();
+  const [x, y] = [box.x + box.width / 2, box.y + box.height / 2];
+  await two.page.mouse.click(x, y);
+  await sleep(150);
+  assert(await two.page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.card-link'), [x, y]), 'no card under the finger');
+  await two.page.mouse.click(x, y, { clickCount: 2 });
+  await sleep(400);
+  assert(two.ctx.pages().length === 1, `${two.ctx.pages().length - 1} tab(s) opened by a double tap on 다시 불러오기`);
+  await two.ctx.close();
 });
 
 await check('S43·S44', 'mood A → 바꾸기 → B → 바꾸기 → A shows the same A; 식사 → 카페 → 식사 the same 식사', async () => {
@@ -544,6 +565,7 @@ await check('S22', 'offline revisit (SW installed): app + data load, cards shown
   });
   await page.reload(); // now controlled
   await sleep(300);
+  await ctx.unroute(PHOTO_HOST); // a route answers even offline; the photos must fail as the real host would
   await ctx.setOffline(true);
   await page.reload();
   await tapText(page, '[data-mood="rest"]');

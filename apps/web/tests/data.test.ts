@@ -78,21 +78,22 @@ describe("S1' 완전성 (review/input 대비)", () => {
   for (const f of readdirSync(resolve(root, 'review/input')).filter((f) => /^batch-\d{3}\.json$/.test(f))) {
     for (const item of JSON.parse(readFileSync(resolve(root, 'review/input', f), 'utf8'))) inputIds.add(item.id);
   }
-  // Same merge order as build-spots.mjs: batch verdicts first, then adj overrides by id.
-  const verdictIds = new Set<string>();
-  for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^batch-\d{3}\.json$/.test(f)).sort()) {
-    for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
-  }
-  for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
-    for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
-  }
 
   it('every kept spot exists as a prefilter-passing input item', () => {
     expect(fileSpots.every((s) => inputIds.has(s.id))).toBe(true);
     expect(inputIds.size).toBeGreaterThan(0);
   });
 
-  it('every prefilter-passing input item has a verdict (batch or adj) — 0 missing (plan S1\' 100% coverage)', () => {
+  // review/out (the verdicts) is not committed: on a clean checkout only this check is skipped.
+  it.skipIf(!existsSync(resolve(root, 'review/out')))('every prefilter-passing input item has a verdict (batch or adj) — 0 missing (plan S1\' 100% coverage)', () => {
+    // Same merge order as build-spots.mjs: batch verdicts first, then adj overrides by id.
+    const verdictIds = new Set<string>();
+    for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^batch-\d{3}\.json$/.test(f)).sort()) {
+      for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
+    }
+    for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
+      for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
+    }
     const missing = [...inputIds].filter((id) => !verdictIds.has(id)).sort();
     expect(missing).toEqual([]);
   });

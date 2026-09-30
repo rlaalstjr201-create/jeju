@@ -904,6 +904,58 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     expect(real.defaultPrevented).toBe(false);
   });
 
+  it('S35 a double tap on 다시 불러오기 never opens the card that replaced the notice (results and saved list)', async () => {
+    const pointer = () => new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 });
+    let fail = true;
+    const loadSpots = () => (fail ? Promise.reject(new Error('503')) : Promise.resolve(fileSpots));
+    region('애월');
+    render({ loadSpots });
+    await tap('[data-mood="rest"]');
+    expect($('.notice .retry')).toBeTruthy();
+    fail = false;
+    advance();
+    $('.notice .retry').dispatchEvent(pointer());
+    await flush();
+    await flush();
+    const ghost = pointer();
+    $('#cards .card-link').dispatchEvent(ghost); // same instant: the 2nd half of the double tap
+    expect(ghost.defaultPrevented).toBe(true);
+
+    reset();
+    fail = true;
+    region('애월');
+    window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id]));
+    render({ loadSpots });
+    await tap('#saved');
+    expect($('#savedView .notice .retry')).toBeTruthy();
+    fail = false;
+    advance();
+    $('#savedView .notice .retry').dispatchEvent(pointer());
+    await flush();
+    await flush();
+    const ghost2 = pointer();
+    $('#savedView .card-link').dispatchEvent(ghost2);
+    expect(ghost2.defaultPrevented).toBe(true);
+  });
+
+  it('S35 the double-tap window runs on a monotonic clock: the device clock stepping back never freezes taps', async () => {
+    region('애월');
+    render({ now: undefined, delays: { slow: 0, long: 10_000, settle: 300, hint: 40, quiet: 20 } }); // the app's own clock
+    await tap('[data-mood="rest"]');
+    await wait(30); // past the double-tap window (20ms here)
+    const wall = Date.now();
+    const stepped = vi.spyOn(Date, 'now').mockReturnValue(wall - 60_000); // NTP / manual correction: a minute back
+    try {
+      const change = new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 });
+      $('#results .change').dispatchEvent(change);
+      await settle();
+      expect(change.defaultPrevented).toBe(false);
+      expect($('#home').hidden).toBe(false);
+    } finally {
+      stepped.mockRestore();
+    }
+  });
+
   it('first card large, then 아니면, then two rows; only the first says where from; names split "(별칭)" off', async () => {
     const withAlias = realSpots.find((s) => /^(.+?)\s*[(（](.+)[)）]$/.test(s.name) && s.mood !== 'food')!;
     const others = realSpots.filter((s) => s.mood === withAlias.mood && s.id !== withAlias.id).slice(0, 2);
@@ -1167,6 +1219,23 @@ describe('QA 2026-09-30 — 새로고침·뒤로가기 정합성', () => {
     await tap('#results .change');
     await settle();
     expect(window.sessionStorage.getItem('jeju.session')).toBeNull();
+  });
+
+  it('바꾸기 then phone forward onto the results: the record is written again, so a reload keeps those cards', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    const ids = cardIds();
+    await tap('#results .change');
+    await settle();
+    window.history.forward();
+    await settle();
+    expect(cardIds()).toEqual(ids);
+    expect(JSON.parse(window.sessionStorage.getItem('jeju.session')!)).toMatchObject({ mood: 'walk' });
+    render(); // pull to refresh on the results entry
+    await flush();
+    await flush();
+    expect(shownMood()).toEqual(['walk']);
+    expect(cardIds()).toEqual(ids);
   });
 });
 
