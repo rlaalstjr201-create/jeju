@@ -98,6 +98,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     doc,
     signal,
   });
+  // The note and 기록 끄기 only where something is collected: without an address they would say what isn't so.
+  const trackBox = els.track.parentElement;
+  if (trackBox) trackBox.hidden = !deps.eventsUrl;
 
   const timers = new Set<ReturnType<typeof setTimeout>>();
   function later(ms: number, fn: () => void) {

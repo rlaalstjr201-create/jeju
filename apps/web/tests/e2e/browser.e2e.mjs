@@ -1622,7 +1622,7 @@ await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in t
 });
 
 // --- 익명 사용 기록 (ADR-0061, specs/usage-events.md U1) ---
-await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart, 카카오맵, the saved list, 기록 끄기 and hiding the page make no request but to this origin, the photo host and the link hosts; sendBeacon is never called', async () => {
+await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart, 카카오맵, the saved list (no note, no 기록 끄기) and hiding the page make no request but to this origin, the photo host and the link hosts; sendBeacon is never called', async () => {
   const LINK_HOSTS = ['map.kakao.com', 'place.map.kakao.com', 'www.myrealtrip.com'];
   const allowed = new Set([new URL(BASE).host, 'api.cdn.visitjeju.net', ...LINK_HOSTS]);
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
@@ -1652,8 +1652,8 @@ await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart
   await (await popup)?.close();
   await sleep(350);
   await tapText(page, '#saved');
-  await page.waitForSelector('#savedView [data-action="track"]');
-  await tapText(page, '#savedView [data-action="track"]');
+  await page.waitForSelector('#savedView .foot');
+  const noted = await visible(page, '#savedView .track');
   await page.evaluate(() => {
     Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
     document.dispatchEvent(new Event('visibilitychange'));
@@ -1668,6 +1668,7 @@ await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart
   assert(other.length === 0, `requests elsewhere: ${other.map((r) => r.url).join(', ')}`);
   assert(posts.length === 0, `non-GET requests: ${posts.map((r) => `${r.method} ${r.url}`).join(', ')}`);
   assert(beacons === 0, `sendBeacon called ${beacons}×`);
+  assert(!noted, 'the note / 기록 끄기 shows though nothing is collected');
 });
 
 await browser.close();

@@ -109,6 +109,23 @@ describe('U1 수집 주소가 없으면 보내지 않는다', () => {
     hide();
     expect(beacon).not.toHaveBeenCalled();
   });
+
+  it('without VITE_EVENTS_URL the saved list has no note and no 기록 끄기; with it, both', async () => {
+    render({ loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await tap(`[data-mood="${exp.mood}"]`);
+    await tap($$('#cards .heart')[0]);
+    await tap('#saved');
+    expect($('#savedView .track').hidden).toBe(true);
+    expect($('#savedView .foot').hidden).toBe(false);
+    reset();
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await tap(`[data-mood="${exp.mood}"]`);
+    await tap($$('#cards .heart')[0]);
+    await tap('#saved');
+    expect($('#savedView .track').hidden).toBe(false);
+    expect($('#trackNote').textContent).toBe('어디가 좋았는지 익명으로 세어요.');
+    expect($('#savedView [data-action="track"]').textContent).toBe('기록 끄기');
+  });
 });
 
 describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌표 없음', () => {
@@ -191,6 +208,7 @@ describe('U3 기록 끄기', () => {
     await tap('#saved');
     const btn = () => $<HTMLButtonElement>('#savedView [data-action="track"]');
     expect($('#savedView .foot').nextElementSibling).toBe(btn().parentElement);
+    expect(btn().parentElement!.hidden).toBe(false);
     expect($('#trackNote').textContent).toBe('어디가 좋았는지 익명으로 세어요.');
     expect(btn().textContent).toBe('기록 끄기');
     expect(btn().classList.contains('tbtn')).toBe(true);
