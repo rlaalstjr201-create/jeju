@@ -864,7 +864,7 @@ describe('S8-4 위치 — GPS 실패 안내 (UX fix #4 → S03)', () => {
     expect($('#results').hidden).toBe(false);
     expect($('#crumb').textContent).toBe('푹 쉬고 싶어');
     expect($('.notice-t')?.textContent).toBe('위치 권한이 꺼져 있어요.');
-    expect($('.notice-b')?.textContent).toBe('내일 갈 동네를 고르면 거기서 가까운 곳을 보여 드려요.');
+    expect($('.notice-b')?.textContent).toBe('동네를 고르면 거기서 가까운 곳을 보여 드려요.');
     expect($$('#cards [data-area]')).toHaveLength(15);
   });
 });

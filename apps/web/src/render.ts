@@ -32,7 +32,7 @@ export const COPY = {
     unavailable: '위치를 확인하지 못했어요.',
     outside: '지금은 제주 밖이에요.',
   } satisfies Record<NoOrigin, string>,
-  noOriginBody: '내일 갈 동네를 고르면 거기서 가까운 곳을 보여 드려요.',
+  noOriginBody: '동네를 고르면 거기서 가까운 곳을 보여 드려요.',
   deniedHow: '위치를 쓰려면 브라우저 설정에서 위치 권한을 켜 주세요.',
   empty: ['이 근처에는 보여 드릴 곳이 없어요.', '다른 동네를 골라 주세요.'],
   loadError: ['목록을 불러오지 못했어요.', '연결을 확인하고 다시 불러와 주세요.'],
@@ -82,10 +82,8 @@ const ALT_TRIP = 'alt-trip';
 const HEART_22 = `<svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${HEART_PATH}"/></svg>`;
 
 const WEEKDAYS = '일월화수목금토';
-/** "10월 1일 목요일": tomorrow's date — or today's before 4 a.m., when "내일" still means the coming day. */
-export function dateLabel(now: Date): string {
-  const d = new Date(now.getTime());
-  if (d.getHours() >= 4) d.setDate(d.getDate() + 1);
+/** "9월 30일 수요일": today's date (ADR-0059). */
+export function dateLabel(d: Date): string {
   return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
 }
 

@@ -82,7 +82,7 @@ describe('위치 — 거절·지연·제주 밖', () => {
     await tap('[data-mood="rest"]');
     expect($('#sheet').hidden).toBe(true);
     expect($('.notice-t')?.textContent).toBe('위치 권한이 꺼져 있어요.');
-    expect($('.notice-b')?.textContent).toContain('내일 갈 동네');
+    expect($('.notice-b')?.textContent).toContain('동네를 고르면');
     expect($('.notice-f')?.textContent).toBe('위치를 쓰려면 브라우저 설정에서 위치 권한을 켜 주세요.');
     expect($$('#cards [data-area]').map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label + a.landmark));
     expect($('#basis').textContent).toBe('지역 고르기');
@@ -131,7 +131,7 @@ describe('위치 — 거절·지연·제주 밖', () => {
     render({ locate: () => Promise.reject(new LocateError('outside')) });
     await tap('[data-mood="new"]');
     expect($('.notice-t')?.textContent).toBe('지금은 제주 밖이에요.');
-    expect($('.notice-b')?.textContent).toBe('내일 갈 동네를 고르면 거기서 가까운 곳을 보여 드려요.');
+    expect($('.notice-b')?.textContent).toBe('동네를 고르면 거기서 가까운 곳을 보여 드려요.');
     expect($('#sheet').hidden).toBe(true);
     expect(document.body.textContent).not.toContain('계세요');
   });
@@ -1026,9 +1026,9 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     expect($('#savedTitle .count').textContent).toBe('2');
   });
 
-  it('date line: tomorrow, or today before 4 a.m. ("내일" at 1 a.m. is the coming day)', () => {
+  it('date line: today, at any hour (ADR-0059)', () => {
     render({ today: () => new Date(2026, 8, 30, 22, 0) });
-    expect($('#date').textContent).toBe('10월 1일 목요일');
+    expect($('#date').textContent).toBe('9월 30일 수요일');
     render({ today: () => new Date(2026, 9, 1, 1, 30) });
     expect($('#date').textContent).toBe('10월 1일 목요일');
   });
