@@ -188,18 +188,23 @@ main { flex: 1; display: flex; flex-direction: column; }
 .heart svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
 .heart[aria-pressed="true"] { color: var(--accent); }
 .heart[aria-pressed="true"] svg { fill: currentColor; }
+/* 길찾기 (ADR-0067): a full-width line under the meta, the text on the card's left edge like the booking link. Tapped
+   often (from a passenger seat): drawn 44 like every .tbtn, a 48px hit area 4px left and 4px down (design.md T2),
+   into the margin before the booking link / 위로 · 아래로 line; a square box, so its rounded corners count too */
+.go { grid-area: go; position: relative; z-index: 1; justify-self: start; margin: 4px 0 0 -8px; }
+.go::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 .book { grid-area: book; position: relative; z-index: 1; justify-self: start; margin: 4px 0 -8px -8px; white-space: normal; }
 .hint { grid-area: hint; margin: 8px 0 0; color: var(--muted); text-wrap: pretty; }
 
-.card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "book book" "hint hint"; }
+.card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }
 .card.lead .ph { aspect-ratio: 3 / 2; border-radius: var(--r-photo); margin-bottom: 12px; }
 .card.lead .name { font-size: 1.25rem; line-height: 1.35; font-weight: 700; }
 /* the booking link and the first-save hint run the full card width, under the photo too */
 .card.row {
   --thumb: clamp(80px, 24vw, 104px);
   grid-template-columns: var(--thumb) minmax(0, 1fr) 44px;
-  grid-template-areas: "ph name heart" "ph reason reason" "ph meta meta" "book book book" "hint hint hint" "ctl ctl ctl";
-  grid-template-rows: auto auto 1fr auto auto auto;
+  grid-template-areas: "ph name heart" "ph reason reason" "ph meta meta" "go go go" "book book book" "hint hint hint" "ctl ctl ctl";
+  grid-template-rows: auto auto 1fr auto auto auto auto;
 }
 .card.row .ph { width: var(--thumb); aspect-ratio: 1; border-radius: var(--r-thumb); align-self: start; }
 /* 320: two siblings ("… 절로 가는길 - 정진의 길" / "- 인욕의 길") would clamp to the same two lines. The name
@@ -208,11 +213,11 @@ main { flex: 1; display: flex; flex-direction: column; }
 .card.row .alias { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .card.row .name:has(.alias) { -webkit-line-clamp: 3; line-clamp: 3; }
 .card.row .reason { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
-.card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint"; }
-.card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
+.card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }
+.card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
 /* em = .picks font size (15px → 270px). A 320px phone at default text (288px) is not caught: photo beside */
 @container (max-width: 18em) {
-  .card.row:not(.noimg):not(.ghost) { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
+  .card.row:not(.noimg):not(.ghost) { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
   .card.row:not(.noimg):not(.ghost) .ph { width: auto; aspect-ratio: 2 / 1; margin-bottom: 12px; }
 }
 

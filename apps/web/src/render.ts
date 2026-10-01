@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
-import { bookingUrl, kakaoUrl } from './links';
+import { bookingUrl, directionsUrl, kakaoUrl } from './links';
 import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
@@ -29,6 +29,8 @@ export const COPY = {
   map: '카카오맵',
   mapAria: (name: string) => `${name}, 카카오맵에서 보기`,
   heartAria: (name: string) => `${name} 저장`,
+  go: '길찾기',
+  goAria: (name: string) => `${name}, 카카오맵 자동차 길찾기`,
   book: '마이리얼트립에서 예약 찾아보기',
   bookAria: (name: string) => `${name}, 마이리얼트립에서 예약 찾아보기`,
   firstSave: '저장한 곳은 맨 위 하트 버튼에 모여요.',
@@ -404,6 +406,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // 장날 only on the results, for the day being viewed (ADR-0066)
     const market = !day && spot.market ? marketText(spot.market, whenDay(s), s.when !== 'now') : null;
     if (meta || dest || indoor || market) card.append(metaEl(meta, dest, indoor, market));
+    // 길찾기 (ADR-0067): car directions in one tap, on every card; the card itself stays the place page
+    card.append(el(doc, 'a', { class: 'tbtn go', href: directionsUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(name) }, COPY.go));
     if (spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
     }

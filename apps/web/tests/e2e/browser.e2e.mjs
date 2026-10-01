@@ -1916,7 +1916,7 @@ const hitMeasure = (targetSel) => {
   const sheet = document.querySelector('#sheet:not([hidden]) .sheet');
   return { n: targets.length, small, overlap, blocked, over: de.scrollWidth - de.clientWidth, sheetOver: sheet ? sheet.scrollWidth - sheet.clientWidth : 0 };
 };
-await check('T2-hit', 'at 320·390: card heart, 바꾸기·돌아가기, 식사 tabs, 언제 options, 위로·아래로·다른 날로, 이 날로 each reach a ≥ 48×48 area that no other control overlaps or covers; drawn size unchanged (44); no sideways scroll', async () => {
+await check('T2-hit', 'at 320·390: card heart, 길찾기, 바꾸기·돌아가기, 식사 tabs, 언제 options, 위로·아래로·다른 날로, 이 날로 each reach a ≥ 48×48 area that no other control overlaps or covers; drawn size unchanged (44); no sideways scroll', async () => {
   const problems = [];
   const today = seoulDay();
   const [a, b, c] = SPOT_IDS;
@@ -1949,10 +1949,10 @@ await check('T2-hit', 'at 320·390: card heart, 바꾸기·돌아가기, 식사 
     };
     await tapText(page, '[data-mood="food"]');
     await waitCards(page);
-    await measure('results', '.card .heart, #results .change, #foodSub .tab', 3 + 1 + 2);
+    await measure('results', '.card .heart, .card .go, #results .change, #foodSub .tab', 3 + 3 + 1 + 2);
     await tapText(page, '#saved');
     await page.waitForSelector('#savedView .card:not(.ghost)');
-    await measure('saved', '#savedView .heart, #savedView .back, #savedView .ctl .tbtn', 3 + 1 + 7);
+    await measure('saved', '#savedView .heart, #savedView .go, #savedView .back, #savedView .ctl .tbtn', 3 + 3 + 1 + 7);
     await tapText(page, '#basis');
     await tapText(page, '#sheet [data-action="pick-day"]');
     await measure('basis sheet', '#sheet .when-row .opt, #sheet [data-action="day-ok"]', 3 + 1);
@@ -2238,6 +2238,78 @@ await check('K-inapp', 'KakaoTalk in-app browser: one calm notice under the mood
   await page.reload();
   await page.waitForSelector('#home .mood');
   assert(!(await visible(page, '#homeNote')), 'came back after a reload');
+  await ctx.close();
+});
+
+await check('DR-go', '길찾기 (ADR-0067) at 320·390 × light·dark: one per card on the results and the saved list, one line, drawn 44 (its 48 hit area: T2-hit), inside its card, Kakao car-directions link; no sideways scroll', async () => {
+  const problems = [];
+  for (const width of [320, 390])
+    for (const dark of [false, true]) {
+      const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, dark, storage: { 'jeju.region': '성산', 'jeju.basis': 'region', 'jeju.hintSeen': true } });
+      const measure = (sel) =>
+        page.$$eval(sel, (cards) => {
+          const de = document.documentElement;
+          return {
+            over: de.scrollWidth - de.clientWidth,
+            cards: cards.map((c) => {
+              const go = c.querySelectorAll('a.go');
+              const a = go[0];
+              if (!a) return { n: 0 };
+              a.scrollIntoView({ block: 'center' });
+              const r = a.getBoundingClientRect();
+              const cr = c.getBoundingClientRect();
+              const range = document.createRange();
+              range.selectNodeContents(a);
+              return {
+                n: go.length,
+                h: r.height,
+                lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size,
+                inCard: r.right <= cr.right + 0.5 && r.left >= cr.left - 8.5,
+                href: a.getAttribute('href'),
+                hit: document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('a') === a,
+              };
+            }),
+          };
+        });
+      const tag = `${width} ${dark ? 'dark' : 'light'}`;
+      await tapText(page, '[data-mood="new"]');
+      await waitCards(page);
+      await tapText(page, '#cards .card .heart');
+      for (const [where, sel] of [['results', '#cards .card:not(.ghost)'], ['saved', '#savedView .card:not(.ghost)']]) {
+        if (where === 'saved') {
+          await tapText(page, '#saved');
+          await page.waitForSelector(sel);
+        }
+        await page.evaluate((s) => document.querySelector(s)?.scrollIntoView({ block: 'center' }), sel);
+        const r = await measure(sel);
+        if (r.over > 0) problems.push(`${tag} ${where} overflows ${r.over}px`);
+        for (const c of r.cards) {
+          if (c.n !== 1) problems.push(`${tag} ${where}: ${c.n} 길찾기`);
+          else if (Math.round(c.h) !== 44 || c.lines !== 1 || !c.inCard || !c.hit || !/^https:\/\/map\.kakao\.com\/link\/to\/[^/]+,33\.\d+,126\.\d+$/.test(c.href)) problems.push(`${tag} ${where}: ${JSON.stringify(c)}`);
+        }
+      }
+      if (width === 320 && !dark) await shot(page, 'go-saved-320');
+      await ctx.close();
+    }
+  assert(!problems.length, problems.join(' | '));
+});
+
+await check('DL-open', 'deep link /?mood=walk&area=aewol&reach=drive60&indoor=1 opens the results for 애월 (no location asked), the query leaves the address, a reload keeps the same 3, back = the moods', async () => {
+  const { ctx, page } = await fresh({ geo: { mode: 'deny' } });
+  await page.goto(`${BASE}?mood=walk&area=aewol&reach=drive60&indoor=1`);
+  await waitCards(page);
+  const first = await names(page);
+  const url = new URL(page.url());
+  assert(url.search === '' && url.pathname === '/', `address ${page.url()}`);
+  const label = await page.textContent('#basis');
+  assert(label.includes('애월'), `label ${label}`);
+  const indoor = await page.$$eval('#cards .card .indoor', (e) => e.length);
+  assert(indoor >= 1, `실내 ${indoor}`);
+  await page.reload();
+  await waitCards(page);
+  assert(JSON.stringify(await names(page)) === JSON.stringify(first), 'reload changed the cards');
+  await back(page);
+  assert((await hstate(page))?.view === 'home' && (await visible(page, '#home .mood')), `back: ${JSON.stringify(await hstate(page))}`);
   await ctx.close();
 });
 

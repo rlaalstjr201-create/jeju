@@ -4,6 +4,7 @@
 import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './dates';
+import { readDeepLink, type DeepLink } from './deeplink';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
 import { bookingUrl, kakaoUrl } from './links';
@@ -329,6 +330,36 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (b.entries) dispatch({ type: 'keep', keep: { restore: { k: 'ask', entries: b.entries } } });
     // 비 와요 rode along (ADR-0065): this session starts with it on
     if (b.indoor) setIndoor(true);
+  }
+  /** A deep link (`/?mood=…&area=…`, ADR-0067): read once, and the query goes from the address at once (like
+   * `#s=`), so a reload, back or forward follows the usual rules. Applied only on a fresh first-screen entry. */
+  function takeDeepLink(apply: boolean): DeepLink | null {
+    const loc = win?.location;
+    if (!loc?.search) return null;
+    const link = readDeepLink(loc.search, state.today);
+    try {
+      win!.history.replaceState(win!.history.state, '', loc.pathname + loc.hash);
+    } catch {
+      /* sandboxed */
+    }
+    return apply ? link : null;
+  }
+  /** As if chosen in the basis sheet: 얼마나, 비 와요, 언제 and 기준 kept as there; the mood is tapped after. */
+  function applyDeepLink(link: DeepLink) {
+    if (link.reach && link.reach !== state.reach) {
+      dispatch({ type: 'reach', reach: link.reach });
+      store.setReach(link.reach);
+    }
+    if (link.indoor !== undefined) setIndoor(link.indoor);
+    if (link.when) setWhen(link.when);
+    if (link.area === 'here') {
+      dispatch({ type: 'basis', basis: 'gps' });
+      store.setBasis('gps');
+    } else if (link.area) {
+      dispatch({ type: 'basis', basis: 'region', region: link.area });
+      store.setBasis('region');
+      store.setRegion(link.area);
+    }
   }
   function mergeBackup() {
     const r = state.keep.restore;
@@ -667,12 +698,13 @@ export function mountApp(doc: Document, deps: Deps): App {
     const b = buttonIn(e, els.main);
     if (b && !state.overlay) onMainButton(b);
   });
-  // 카카오맵 (the card's name link) and 예약 links: counted, then the browser opens them as usual.
+  // 카카오맵 (the card's name link), 길찾기 and 예약 links: counted, then the browser opens them as usual.
   on(els.main, 'click', (e) => {
     const a = (e.target as Element | null)?.closest?.('a');
     const id = a && els.main.contains(a) ? a.closest<HTMLElement>('.card[data-id]')?.dataset.id : undefined;
     if (!a || !id) return;
-    if (a.classList.contains('card-link')) countLink('map', id);
+    // 길찾기 (ADR-0067) leaves for 카카오맵 too: the same event
+    if (a.classList.contains('card-link') || a.classList.contains('go')) countLink('map', id);
     else if (a.classList.contains('book')) countLink('book', id);
   });
   on(els.basis, 'click', () => {
@@ -838,6 +870,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     delete early.__early;
     delete early.__tap;
   }
+  const link = takeDeepLink(nav.initial.view === 'home');
+  if (link) applyDeepLink(link);
   const rec = nav.initial.view !== 'home' ? store.readSession() : null;
   if (nav.initial.view === 'cards' && rec) {
     // The same mood again: its 3 cards if they were shown (no rotation), else asked again — a reload during
@@ -852,6 +886,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     // A results entry with nothing to show for it (no session record: storage blocked or cleared): go
     // back past it, so the phone's back button never has an empty entry to swallow.
     nav.back(HOME);
+  } else if (link?.mood) {
+    onMood(link.mood);
   } else if (earlyTap && BUTTONS.includes(earlyTap as Button)) {
     onMood(earlyTap as Button);
   }
