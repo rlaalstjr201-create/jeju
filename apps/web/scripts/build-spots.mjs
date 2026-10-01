@@ -292,7 +292,7 @@ if (unscored.length) {
 for (const s of kept) s.score = scoreById.get(s.id);
 
 // Fact-check corrections (ADR-0063 item 5, review/copy/corrections-NN.json): applied after the fixes and scores,
-// so a removal or a set name/score/kakaoPlaceId wins over every layer above.
+// so a removal or a set name/score/kakaoPlaceId/lat/lng wins over every layer above.
 const corrected = applyCorrections(kept, loadCorrections(copyDir));
 counts.removedByCorrection = kept.length - corrected.length;
 counts.kept = corrected.length;

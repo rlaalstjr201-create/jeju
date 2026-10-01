@@ -93,7 +93,7 @@ export function withinReach(reach: Reach, origin: Point, spot: Point): boolean {
   return reachMinutes(reach, distanceKm(origin, spot)) <= REACH_MAX[reach];
 }
 
-// --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 · 차귀도 1 · 추자도 0
+// --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 6 · 가파도 4 · 마라도 10 · 차귀도 1 · 추자도 0
 // in spots.json. Each one's 길찾기 goes to the pier its boat leaves from (ADR-0069, src/links.ts TERMINALS).
 export type Island = '우도' | '비양도' | '가파도' | '마라도' | '차귀도' | '추자도';
 const ISLANDS: readonly { name: Island; latMin: number; latMax: number; lngMin: number; lngMax: number }[] = [

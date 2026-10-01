@@ -292,7 +292,8 @@ describe('D9 goLink — which 길찾기 a card gets', () => {
 
   it('every island spot, from the main island or with no position → its pier, 「배 타는 곳까지 길찾기」; from the same island → the spot', () => {
     const islandSpots = realSpots.filter((s) => islandOf(s));
-    expect(islandSpots.length).toBe(85);
+    expect(islandSpots.length).toBe(86); // 비양도 itself counts since corrections-02 (ADR-0071)
+    expect(islandOf(realSpots.find((x) => x.name === '비양도')!)).toBe('비양도');
     for (const s of islandSpots) {
       const t = TERMINALS[islandOf(s)!];
       for (const from of [at(33.4996, 126.5312), null]) {

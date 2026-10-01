@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const SETTABLE = new Set(['name', 'score', 'kakaoPlaceId']);
+// lat/lng: a pin moved to where Kakao Map has the place (corrections-02, the 비양도 pin, ADR-0071)
+const SETTABLE = new Set(['name', 'score', 'kakaoPlaceId', 'lat', 'lng']);
 
 /** Every correction record, corrections-NN.json in sorted order. */
 export function loadCorrections(copyDir = resolve(root, 'review/copy')) {
