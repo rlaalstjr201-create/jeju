@@ -327,6 +327,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       /* sandboxed */
     }
     if (b.entries) dispatch({ type: 'keep', keep: { restore: { k: 'ask', entries: b.entries } } });
+    // 비 와요 rode along (ADR-0065): this session starts with it on
+    if (b.indoor) setIndoor(true);
   }
   function mergeBackup() {
     const r = state.keep.restore;
@@ -341,12 +343,12 @@ export function mountApp(doc: Document, deps: Deps): App {
   async function backup() {
     const entries = store.saved();
     if (!entries.length) return;
-    const ok = await copy(backupUrl(home(), entries));
+    const ok = await copy(backupUrl(home(), entries, state.indoor));
     if (!signal.aborted && state.view === 'saved') dispatch({ type: 'keep', keep: { backup: ok ? 'copied' : 'failed' } });
   }
   /** Outside KakaoTalk (its own link does it): the address, with what is saved here, onto the clipboard. */
   async function inappCopy() {
-    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved) : home());
+    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved, state.indoor) : home());
     if (!signal.aborted && state.keep.inappNote) dispatch({ type: 'keep', keep: { inappNote: ok ? 'copied' : 'failed' } });
   }
   let installPrompt: InstallPrompt | null = null;
@@ -488,6 +490,18 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (state.view === 'cards') request('show');
   }
 
+  function setIndoor(on: boolean) {
+    dispatch({ type: 'indoor', on });
+    store.setIndoor(on);
+  }
+  /** 비 와요(실내만) (ADR-0065): like 얼마나 — kept for the session, the sheet closes, the results are picked
+   * again (new request id, rotation from the start). The saved list does not depend on it. */
+  function toggleIndoor() {
+    setIndoor(!state.indoor);
+    closeOverlay();
+    if (state.view === 'cards') request('show');
+  }
+
   function stayHere() {
     if (state.overlay !== 'stay' || state.stayForm.pending) return;
     const token = ++stayToken;
@@ -586,6 +600,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (b.dataset.day) return moveTo(b.dataset.day);
     const reach = b.dataset.reach as Reach | undefined;
     if (reach && REACHES.includes(reach)) return guarded(`reach:${reach}`) ? undefined : changeReach(reach);
+    if (b.dataset.indoor !== undefined) return guarded('indoor') ? undefined : toggleIndoor();
     if (action === 'restay') return openOverlay('stay');
     if (action === 'stay-here') return stayHere();
     const basis = b.dataset.basis;

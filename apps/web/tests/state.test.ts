@@ -322,3 +322,53 @@ describe('얼마나 (ADR-0060) — 범위 변경은 기준 변경과 같은 규�
     expect(other.cards?.how).toBe('new');
   });
 });
+
+describe('비 와요(실내만) (ADR-0065) — 토글은 범위 변경과 같은 규칙', () => {
+  it('starts off unless given; on, the cards are the indoor pick', () => {
+    expect(s0().indoor).toBe(false);
+    const s = pick(s0({ indoor: true }), 'rest', 1);
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest', {}, undefined, 'drive30', true).cards.map((c) => c.spot.id));
+    expect(s.cards?.indoor).toBe(true);
+    expect(s.cards?.list.every((c) => c.spot.indoor)).toBe(true);
+  });
+
+  it('switching it: the cards on hand no longer count, and the next result starts the rotation fresh', () => {
+    let s = pick(s0(), 'walk', 1);
+    s = run(s, { type: 'request', req: 2, intent: 'more', step: 'loading' }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(cardsValid(s)).toBe(true);
+    s = run(s, { type: 'indoor', on: true });
+    expect(s.indoor).toBe(true);
+    expect(cardsValid(s)).toBe(false);
+    s = run(s, { type: 'request', req: 3, intent: 'show', step: 'loading' }, { type: 'resolved', req: 3, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'walk', {}, undefined, 'drive30', true).cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+    expect(s.histories.walk?.seen).toEqual(ids(s));
+    // off again: the outdoor rotation was dropped, a fresh pick
+    s = run(s, { type: 'indoor', on: false }, { type: 'request', req: 4, intent: 'show', step: 'loading' }, { type: 'resolved', req: 4, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'walk').cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+  });
+
+  it('the same value again changes nothing; switching it is an intent (clears the first-save hint)', () => {
+    const s = pick(s0(), 'rest', 1);
+    expect(run(s, { type: 'indoor', on: false })).toBe(s);
+    const hinted = run(s, { type: 'hint', id: ids(s)![0] });
+    expect(run(hinted, { type: 'indoor', on: true }).hintFor).toBeNull();
+  });
+
+  it('the session record carries indoor of its rotation; restored with the other value, it is picked fresh', () => {
+    const s = pick(s0({ indoor: true }), 'food', 1);
+    const rec = sessionOf(s)!;
+    expect(rec.indoor).toBe(true);
+    const same = run(s0({ indoor: true }), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(same)).toEqual(ids(s));
+    expect(same.cards?.how).toBe('restore');
+    const other = run(s0(), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(other)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'food', {}, 'meal').cards.map((c) => c.spot.id));
+    expect(other.cards?.how).toBe('new');
+    // a record written before the toggle (no indoor) belongs to the outdoor rotation
+    const { indoor: _drop, ...old } = sessionOf(pick(s0(), 'food', 1))!;
+    const oldOn = run(s0({ indoor: true }), { type: 'restore', rec: old }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(oldOn.cards?.how).toBe('new');
+  });
+});

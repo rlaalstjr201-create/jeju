@@ -14,7 +14,7 @@ const SUBS: Record<string, Set<string>> = { food: new Set(['meal', 'cafe']), new
 const RANGES = new Set(['walk', '30', '60']);
 const BASES = new Set(['here', 'stay', 'area']);
 const AREA_NAMES = new Set<string>(AREAS.map((a) => a.name));
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'd']);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'd']);
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 
@@ -38,6 +38,7 @@ export function eventProblem(x: unknown): string | null {
   if (o.basis !== undefined && !inSet(BASES, o.basis)) return 'basis';
   if (o.area !== undefined && (o.basis !== 'area' || !inSet(AREA_NAMES, o.area))) return 'area';
   if (o.dated !== undefined && typeof o.dated !== 'boolean') return 'dated';
+  if (o.indoor !== undefined && typeof o.indoor !== 'boolean') return 'indoor';
   return null;
 }
 

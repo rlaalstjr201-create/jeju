@@ -1819,7 +1819,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     render();
     await tap('#basis');
     const heads = $$('#sheet .group-h').map((h) => h.firstElementChild!.textContent);
-    expect(heads).toEqual(['언제', '어디', '얼마나', '제주시 쪽', '서귀포 쪽']);
+    expect(heads).toEqual(['언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']);
     expect(reachRows().map((b) => b.querySelector('.nm')!.textContent)).toEqual(['걸어서', '차로 30분', '차로 1시간']);
     expect(pressedReach()).toEqual(['drive30']);
     // check-mark selection (SPEC 3판): each row carries the check, shown only on the chosen one by CSS
@@ -2077,5 +2077,120 @@ describe('새로운 거 섞어서 · 구경 · 체험', () => {
     expect(cssRule('.tab')).toMatch(/min-height:\s*44px/);
     expect(cssRule('.tab::before')).toMatch(/inset:\s*-2px -8px/);
     expect(html).toMatch(/<div id="newSub" class="tabs" role="group" aria-label="새로운 거 종류" hidden>/);
+  });
+});
+
+describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
+  const toggle = () => $('#sheet [data-indoor]');
+  const indoorNames = (o: Point, b: 'rest' | 'walk' | 'new' | 'food' | 'any', sub?: 'meal' | 'cafe' | 'mix' | 'sight' | 'do') =>
+    pickCards(realSpots, o, b, {}, sub, 'drive30', true).cards.map((c) => c.spot.name);
+
+  it('I3 one row under 얼마나 (before the 동네 index), off by default; the first screen keeps its 5 moods and nothing else to tap', async () => {
+    render();
+    expect($$('#home button')).toHaveLength(5);
+    await tap('#basis');
+    expect($$('#sheet [data-indoor]')).toHaveLength(1);
+    expect(toggle().querySelector('.nm')!.textContent).toBe('비 와요(실내만)');
+    expect(toggle().getAttribute('aria-pressed')).toBe('false');
+    expect(toggle().querySelector('svg.i-check')).not.toBeNull();
+    expect(toggle().closest('.opts')!.getAttribute('aria-labelledby')).toBe('weather-h');
+    expect($('#weather-h').textContent).toBe('날씨');
+    // off: the cards are exactly the ones before the toggle, with no 실내 word
+    await tap('#sheet .sheet-close');
+    await settle();
+    await tap('[data-mood="rest"]');
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
+    expect($$('#cards .indoor')).toHaveLength(0);
+  });
+
+  it('I4 on the results: on, kept for the session (not on the device), the sheet closes (history balanced), the same mood picked anew indoors with 실내 on each card', async () => {
+    render();
+    await tap('[data-mood="rest"]');
+    const depth = window.history.state.depth;
+    await tap('#basis');
+    await tap(toggle());
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect(window.history.state.depth).toBe(depth);
+    expect(window.sessionStorage.getItem('jeju.indoor')).toBe('true');
+    expect(window.localStorage.getItem('jeju.indoor')).toBeNull();
+    expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'rest'));
+    expect(state().cards?.how).toBe('new');
+    expect($$('#cards .card').map((c) => c.querySelector('.meta .indoor')?.textContent)).toEqual(['실내', '실내', '실내']);
+    expect($('#cards .card.lead .meta').textContent).toMatch(/^실내\u00a0· 여기서 /);
+    expect($('#basis').textContent).toBe('여기 근처');
+    await tap('#basis');
+    expect(toggle().getAttribute('aria-pressed')).toBe('true');
+    // off again: the outdoor pick, no 실내, the session key gone
+    await tap(toggle());
+    await settle();
+    expect(window.sessionStorage.getItem('jeju.indoor')).toBeNull();
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
+    expect($$('#cards .indoor')).toHaveLength(0);
+  });
+
+  it('I4 every mood and tab follows it: food·new tabs, 아무거나, 걷기 (widened to indoor 구경) — all indoor, 3 cards', async () => {
+    window.sessionStorage.setItem('jeju.indoor', 'true');
+    render();
+    for (const mood of ['walk', 'new', 'food', 'any'] as const) {
+      await tap('#results .change').catch(() => undefined);
+      await settle();
+      await tap(`[data-mood="${mood}"]`);
+      expect(cardNames(), mood).toEqual(indoorNames(ORIGINS.제주시, mood, mood === 'food' ? 'meal' : mood === 'new' ? 'mix' : undefined));
+      expect($$('#cards .card .indoor'), mood).toHaveLength(3);
+    }
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="new"]');
+    await tap('#newSub [data-sub="sight"]');
+    expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'new', 'sight'));
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="food"]');
+    await tap('#foodSub [data-sub="cafe"]');
+    expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'food', 'cafe'));
+  });
+
+  it('I4 a double tap toggles once; on the saved list it asks for nothing, back on the results the mood is picked indoors', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    await tap('.card .heart');
+    await tap('#saved');
+    await tap('#basis');
+    const t = toggle();
+    advance();
+    t.click();
+    advance(100);
+    t.click();
+    await settle();
+    expect(state().indoor).toBe(true);
+    expect($('#savedView').hidden).toBe(false);
+    expect($$('#savedView .indoor')).toHaveLength(0);
+    await tap('#savedView [data-action="close-saved"]');
+    await settle();
+    expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'walk'));
+  });
+
+  it('I4 a reload on the results keeps it and the same 3; storage blocked, it still applies for the visit', async () => {
+    render();
+    await tap('#basis');
+    await tap(toggle());
+    await settle();
+    await tap('[data-mood="new"]');
+    await tap('#cards .more');
+    const looking = cardNames();
+    render(); // reload
+    await flush();
+    await flush();
+    expect(cardNames()).toEqual(looking);
+    expect(state().indoor).toBe(true);
+    expect($$('#cards .indoor')).toHaveLength(3);
+    reset();
+    render({ storage: null, session: null });
+    await tap('#basis');
+    await tap(toggle());
+    await settle();
+    await tap('[data-mood="rest"]');
+    expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'rest'));
   });
 });

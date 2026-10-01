@@ -384,3 +384,47 @@ describe('얼마나 (ADR-0060) — 범위 저장', () => {
     expect(parseSession(rec)).not.toHaveProperty('reach');
   });
 });
+
+describe('비 와요(실내만) (ADR-0065) — 세션 동안만 기억', () => {
+  const sessionMem = () => new MemStorage();
+
+  it('kept in sessionStorage (jeju.indoor), never in localStorage; off removes it; missing or junk is off', () => {
+    const ses = sessionMem();
+    expect(createStore(mem, ses).load(TODAY).indoor).toBe(false);
+    createStore(mem, ses).setIndoor(true);
+    expect(JSON.parse(ses.getItem(KEYS.indoor)!)).toBe(true);
+    expect(mem.getItem(KEYS.indoor)).toBeNull();
+    expect(createStore(mem, ses).load(TODAY).indoor).toBe(true);
+    createStore(mem, ses).setIndoor(false);
+    expect(ses.getItem(KEYS.indoor)).toBeNull();
+    ses.setItem(KEYS.indoor, '"yes"');
+    expect(createStore(mem, ses).load(TODAY).indoor).toBe(false);
+    // a new session (another tab, the next day) starts off
+    expect(createStore(mem, sessionMem()).load(TODAY).indoor).toBe(false);
+  });
+
+  it('with storage blocked it is simply not kept (the app holds it in memory)', () => {
+    const blocked = createStore(null, null);
+    expect(() => blocked.setIndoor(true)).not.toThrow();
+    expect(blocked.load(TODAY).indoor).toBe(false);
+    const throwing = sessionMem();
+    throwing.setItem = () => {
+      throw new Error('QuotaExceeded');
+    };
+    throwing.getItem = () => {
+      throw new Error('SecurityError');
+    };
+    expect(() => createStore(mem, throwing).setIndoor(true)).not.toThrow();
+    expect(createStore(mem, throwing).load(TODAY).indoor).toBe(false);
+  });
+
+  it('the session record keeps whether its rotation is the indoor one; anything but a boolean is dropped', () => {
+    const origin = { key: 'region:애월', point: { lat: 애월.lat, lng: 애월.lng }, isPoint: false, from: '애월에서' };
+    const rec = { v: 1, mood: 'walk', sub: 'meal', origin, shown: {}, histories: {} };
+    expect(parseSession({ ...rec, indoor: true })?.indoor).toBe(true);
+    expect(parseSession({ ...rec, indoor: false })?.indoor).toBe(false);
+    expect(parseSession({ ...rec, indoor: 'yes' })).not.toHaveProperty('indoor');
+    expect(parseSession(rec)).not.toHaveProperty('indoor');
+    expect(parseSession({ ...rec, origin: null, indoor: true })?.indoor).toBe(true);
+  });
+});

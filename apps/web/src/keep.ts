@@ -7,8 +7,9 @@ import type { SavedEntry } from './types';
 // --- backup link: the saved list after `#s=` (a fragment never reaches a server or its logs) ---
 // Bytes, then base64url. [version 1] then per day: [day: varint days since EPOCH][count: varint][ids…], days
 // ascending, ids in the user's order. An id is [0][16 bytes] when it is a lowercase UUID (every spot id
-// today), else [length 1–255][UTF-8].
+// today), else [length 1–255][UTF-8]. 비 와요(실내만) on (ADR-0065) adds `&r=1` after the list.
 export const BACKUP_HASH = '#s=';
+const INDOOR_FLAG = 'r=1';
 const VERSION = 1;
 const EPOCH: Day = '2020-01-01';
 const MAX_DAY = 36_600; // ~2120
@@ -117,15 +118,18 @@ export function appHome(href: string): string {
   return new URL(import.meta.env.BASE_URL ?? '/', href).href;
 }
 
-/** The app's address with the saved list after `#s=`. */
-export function backupUrl(home: string, entries: readonly SavedEntry[]): string {
-  return `${home.split('#')[0]}${BACKUP_HASH}${encodeBackup(entries)}`;
+/** The app's address with the saved list after `#s=` (and 비 와요 when it is on). */
+export function backupUrl(home: string, entries: readonly SavedEntry[], indoor = false): string {
+  return `${home.split('#')[0]}${BACKUP_HASH}${encodeBackup(entries)}${indoor ? `&${INDOOR_FLAG}` : ''}`;
 }
 
-/** A location hash: not a backup at all, or a backup (entries null when it does not read). */
-export function readBackup(hash: string): { found: false } | { found: true; entries: SavedEntry[] | null } {
+/** A location hash: not a backup at all, or a backup (entries null when it does not read; `indoor` only when
+ * the link says 비 와요 was on). */
+export function readBackup(hash: string): { found: false } | { found: true; entries: SavedEntry[] | null; indoor?: true } {
   if (!hash.startsWith(BACKUP_HASH)) return { found: false };
-  return { found: true, entries: decodeBackup(hash.slice(BACKUP_HASH.length)) };
+  const [list, ...flags] = hash.slice(BACKUP_HASH.length).split('&');
+  const entries = decodeBackup(list);
+  return entries && flags.includes(INDOOR_FLAG) ? { found: true, entries, indoor: true } : { found: true, entries };
 }
 
 // --- in-app browsers (ADR-0063 2b): each keeps its own storage, apart from the phone's browser ---

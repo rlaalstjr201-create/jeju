@@ -66,6 +66,19 @@ describe('backup link: encode / decode', () => {
     expect(dup).toEqual([e(ids[0], '2026-10-01', 0)]);
   });
 
+  it('비 와요 (ADR-0065): on, the link carries &r=1 after the list; off (the default) the link is as before', () => {
+    const list = [e(ids[0], '2026-10-01', 0)];
+    expect(backupUrl('https://p.example/', list)).toBe(backupUrl('https://p.example/', list, false));
+    const on = new URL(backupUrl('https://p.example/', list, true));
+    expect(on.search).toBe('');
+    expect(on.hash.endsWith('&r=1')).toBe(true);
+    expect(readBackup(on.hash)).toEqual({ found: true, entries: list, indoor: true });
+    expect(readBackup(new URL(backupUrl('https://p.example/', list)).hash)).toEqual({ found: true, entries: list });
+    // a flag that is not ours is ignored; the list itself must still read
+    expect(readBackup(`${new URL(backupUrl('https://p.example/', list)).hash}&x=1`)).toEqual({ found: true, entries: list });
+    expect(readBackup('#s=@@&r=1')).toEqual({ found: true, entries: null });
+  });
+
   it('readBackup: only a #s= fragment is a backup', () => {
     expect(readBackup('')).toEqual({ found: false });
     expect(readBackup('#top')).toEqual({ found: false });

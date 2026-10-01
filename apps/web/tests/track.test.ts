@@ -201,6 +201,24 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
   });
 });
 
+describe('비 와요(실내만) (ADR-0065) — 사용 기록의 indoor', () => {
+  it('on: every event says indoor true; off (the default): no indoor field', async () => {
+    window.sessionStorage.setItem('jeju.indoor', 'true');
+    render({ eventsUrl: URL_, beacon });
+    await tap('[data-mood="rest"]');
+    await tap($$('#cards .heart')[0]);
+    hide();
+    expect(events().length).toBeGreaterThan(3);
+    for (const e of events()) expect(e).toMatchObject({ indoor: true });
+    sent.length = 0;
+    reset();
+    render({ eventsUrl: URL_, beacon });
+    await tap('[data-mood="rest"]');
+    hide();
+    for (const e of events()) expect(e).not.toHaveProperty('indoor');
+  });
+});
+
 describe('U3 기록 끄기', () => {
   it('under the saved list footnote: the note and 기록 끄기; off → nothing sent, still off after a reload; 기록 켜기 turns it back on', async () => {
     render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });

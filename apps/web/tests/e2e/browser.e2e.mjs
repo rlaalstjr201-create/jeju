@@ -1180,7 +1180,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
-    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/걸어서/차로 30분/차로 1시간', `sheet rows ${rows.join('/')}`);
+    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/걸어서/차로 30분/차로 1시간/비 와요(실내만)', `sheet rows ${rows.join('/')}`);
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
     await b.page.waitForSelector('#sheet .primary');
@@ -1560,7 +1560,7 @@ await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in t
     const depth = (await hstate(page)).depth;
     await tapText(page, '#basis');
     const heads = await page.$$eval('#sheet .group-h > span:first-child', (els) => els.map((e) => e.textContent));
-    if (heads.join() !== '언제,어디,얼마나,제주시 쪽,서귀포 쪽') problems.push(`${tag} groups ${heads}`);
+    if (heads.join() !== '언제,어디,얼마나,날씨,제주시 쪽,서귀포 쪽') problems.push(`${tag} groups ${heads}`);
     if (width === 390) {
       // right under 어디: all three range rows in view above the sticky 닫기 without scrolling the sheet
       const inView = await page.$eval('#sheet [data-reach="drive60"]', (b) => {
@@ -2009,6 +2009,74 @@ await check('N4-new-tabs', '새로운 거 at 320·390: 섞어서 · 구경 · �
     await waitCards(page);
     if ((await page.getAttribute('#newSub [data-sub="do"]', 'aria-pressed')) !== 'true') problems.push(`${width} reload lost 체험`);
     if ((await names(page)).join() !== doing.join()) problems.push(`${width} reload changed the cards`);
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
+// --- ADR-0065, specs/indoor.md I4: 비 와요(실내만) ---
+await check('I4-indoor', '비 와요(실내만) at 320·390: one row under 얼마나 (off), a ≥ 48×48 area no other control overlaps; on, the sheet closes, history unchanged, 3 indoor cards each saying 실내, no sideways scroll; kept across a reload (session); off again, no 실내', async () => {
+  const problems = [];
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    const { ctx, page } = await fresh({ width, height });
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    if ((await page.$$('#cards .indoor')).length) problems.push(`${width} 실내 while off`);
+    const depth = (await hstate(page)).depth;
+    await tapText(page, '#basis');
+    const row = await page.$eval('#sheet [data-indoor]', (b) => `${b.querySelector('.nm').textContent}:${b.getAttribute('aria-pressed')}:${b.closest('.opts').getAttribute('aria-labelledby')}`);
+    if (row !== '비 와요(실내만):false:weather-h') problems.push(`${width} row ${row}`);
+    const r = await page.evaluate(hitMeasure, '#sheet [data-indoor]');
+    if (r.n !== 1) problems.push(`${width}: ${r.n} toggle targets`);
+    // like every sheet row (얼마나, 어디), the rounded corners of its pressed face are not the button: only the
+    // area and overlap are measured here, and the row's middle must reach it
+    for (const k of ['small', 'overlap']) if (r[k].length) problems.push(`${width} ${k}: ${r[k].join(', ')}`);
+    const mid = await page.$eval('#sheet [data-indoor]', (b) => {
+      b.scrollIntoView({ block: 'center' });
+      const q = b.getBoundingClientRect();
+      return document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2)?.closest('button') === b && q.height >= 48;
+    });
+    if (!mid) problems.push(`${width} toggle covered or under 48`);
+    if (r.over > 0 || r.sheetOver > 0) problems.push(`${width} sheet overflows ${r.over}/${r.sheetOver}`);
+    if (width === 390) await shot(page, '13-indoor-sheet');
+    await page.locator('#sheet [data-indoor]').scrollIntoViewIfNeeded();
+    await tapText(page, '#sheet [data-indoor]');
+    await sleep(250);
+    if (await visible(page, '#sheet .sheet')) problems.push(`${width} sheet still open`);
+    await waitCards(page);
+    const hs = await hstate(page);
+    if (hs.depth !== depth || hs.overlay !== null || hs.view !== 'cards') problems.push(`${width} history ${JSON.stringify(hs)}`);
+    if ((await page.evaluate(() => sessionStorage.getItem('jeju.indoor'))) !== 'true') problems.push(`${width} not kept for the session`);
+    if ((await page.evaluate(() => localStorage.getItem('jeju.indoor'))) !== null) problems.push(`${width} kept on the device`);
+    const look = () =>
+      page.evaluate(async () => {
+        const indoorOf = new Map((await (await fetch('/spots.json')).json()).map((x) => [x.id, x.indoor]));
+        const de = document.documentElement;
+        return {
+          cards: [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => ({ indoor: indoorOf.get(c.dataset.id), word: c.querySelector('.meta .indoor')?.textContent ?? null, metas: c.querySelectorAll('.meta').length })),
+          over: de.scrollWidth - de.clientWidth,
+        };
+      });
+    const on = await look();
+    if (on.cards.length !== 3) problems.push(`${width} ${on.cards.length} cards`);
+    for (const c of on.cards) {
+      if (c.indoor !== true) problems.push(`${width} an outdoor card`);
+      if (c.word !== '실내') problems.push(`${width} card says ${c.word}`);
+      if (c.metas !== 1) problems.push(`${width} ${c.metas} meta lines`);
+    }
+    if (on.over > 0) problems.push(`${width} results overflow ${on.over}`);
+    if (width === 390) await shot(page, '14-indoor-cards');
+    const shown = await names(page);
+    await page.reload();
+    await waitCards(page);
+    if ((await names(page)).join() !== shown.join()) problems.push(`${width} reload changed the cards`);
+    if ((await look()).cards.some((c) => c.word !== '실내')) problems.push(`${width} reload lost 실내`);
+    await tapText(page, '#basis');
+    await page.locator('#sheet [data-indoor]').scrollIntoViewIfNeeded();
+    await tapText(page, '#sheet [data-indoor]');
+    await sleep(250);
+    await waitCards(page);
+    if ((await look()).cards.some((c) => c.word !== null)) problems.push(`${width} 실내 after off`);
     await ctx.close();
   }
   assert(problems.length === 0, problems.join(' | '));

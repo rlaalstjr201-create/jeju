@@ -27,6 +27,9 @@ export const KEYS = {
   /** ADR-0063: the home-screen nudge has been shown once (true). */
   install: 'jeju.installSeen',
   session: 'jeju.session',
+  /** sessionStorage, ADR-0065: 비 와요(실내만) is on (true). Off = missing. Rain is today's matter: never kept
+   * on the device past the session. */
+  indoor: 'jeju.indoor',
 } as const;
 export const MAX_SAVED = 500;
 
@@ -153,6 +156,8 @@ export interface SessionRecord {
   origin: Origin | null;
   /** the range `shown`/`histories` belong to (ADR-0060); missing in records written before it. */
   reach?: Reach;
+  /** whether `shown`/`histories` belong to the indoor pick (ADR-0065); missing = outdoor (written before it). */
+  indoor?: boolean;
   shown: Partial<Record<HistoryKey, string[]>>;
   histories: Histories;
 }
@@ -170,7 +175,13 @@ export function parseSession(v: unknown): SessionRecord | null {
   if (!v || typeof v !== 'object') return null;
   const o = v as Record<string, unknown>;
   if (o.v !== 1 || !BUTTONS.includes(o.mood as Button) || !SUBS.includes(o.sub as Sub)) return null;
-  const base = { v: 1 as const, mood: o.mood as Button, sub: o.sub as Sub, ...(NEW_SUBS.includes(o.newSub as NewSub) ? { newSub: o.newSub as NewSub } : {}) };
+  const base = {
+    v: 1 as const,
+    mood: o.mood as Button,
+    sub: o.sub as Sub,
+    ...(NEW_SUBS.includes(o.newSub as NewSub) ? { newSub: o.newSub as NewSub } : {}),
+    ...(typeof o.indoor === 'boolean' ? { indoor: o.indoor } : {}),
+  };
   // Asked for, nothing shown yet: the mood alone.
   if (o.origin === null) return { ...base, origin: null, shown: {}, histories: {} };
   const og = o.origin as Record<string, unknown> | undefined;
@@ -201,6 +212,8 @@ export function parseSession(v: unknown): SessionRecord | null {
 export interface Loaded {
   basis: Basis;
   reach: Reach;
+  /** 비 와요(실내만), this session (ADR-0065). */
+  indoor: boolean;
   when: When;
   region: AreaName | null;
   stay: Stay | null;
@@ -219,6 +232,8 @@ export interface Store {
   load(today: Day): Loaded;
   setBasis(b: Basis): void;
   setReach(r: Reach): void;
+  /** for this session only (sessionStorage); off removes it. */
+  setIndoor(on: boolean): void;
   setWhen(w: When): void;
   setRegion(name: AreaName): void;
   setStay(stay: Stay): void;
@@ -330,6 +345,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       return {
         basis,
         reach,
+        indoor: get(session, KEYS.indoor) === true,
         when,
         region,
         stay,
@@ -342,6 +358,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     },
     setBasis: (b) => void set(local, KEYS.basis, b),
     setReach: (r) => void set(local, KEYS.reach, r),
+    setIndoor: (on) => (on ? void set(session, KEYS.indoor, true) : removeQuietly(session, KEYS.indoor)),
     setWhen: (w) => void set(local, KEYS.when, w),
     setRegion: (name) => void set(local, KEYS.region, name),
     setStay: (stay) => void set(local, KEYS.stay, stay),

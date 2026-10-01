@@ -360,6 +360,80 @@ describe('S34 한 바퀴 (wrapped)', () => {
   });
 });
 
+describe('비 와요(실내만) (ADR-0065, specs/indoor.md)', () => {
+  const LISTS: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['food', 'meal'], ['food', 'cafe'], ['any']];
+  const inList = (b: Button, sub: Tab | undefined, s: Spot) => s.mood === b && (!sub || sub === 'mix' || s.sub === sub);
+
+  it('I2 15 areas × 3 ranges × 8 lists → 3 distinct cards, all indoor (빈손 0); none beyond the range when 3 or more indoor are in it', () => {
+    let checked = 0;
+    for (const area of AREAS) {
+      for (const [b, sub] of LISTS) {
+        for (const reach of REACHES) {
+          const why = `${area.name} / ${b}${sub ? `:${sub}` : ''} / ${reach}`;
+          const { cards } = pickCards(realSpots, area, b, {}, sub, reach, true);
+          expect(cards, why).toHaveLength(3);
+          expect(new Set(cards.map((c) => c.spot.id)).size, why).toBe(3);
+          for (const c of cards) {
+            expect(c.spot.indoor, `${why} / ${c.spot.name}`).toBe(true);
+            if (b === 'any' || b === 'walk') continue; // 아무거나 draws per mood; 걷기 widens to 구경 (below)
+            expect(inList(b, sub, c.spot), `${why} / ${c.spot.name}`).toBe(true);
+            const near = realSpots.filter((s) => s.indoor && inList(b, sub, s) && withinReach(reach, area, s));
+            if (near.length >= 3) expect(withinReach(reach, area, c.spot), `${why} / ${c.spot.name}`).toBe(true);
+          }
+          checked++;
+        }
+      }
+    }
+    expect(checked).toBe(15 * 8 * 3);
+  });
+
+  it('I2 걷기 has fewer than 3 indoor places on the island: it widens to indoor 구경', () => {
+    const walkIndoor = realSpots.filter((s) => s.mood === 'walk' && s.indoor);
+    expect(walkIndoor.length).toBeLessThan(3);
+    for (const area of AREAS) {
+      for (const reach of REACHES) {
+        const { cards } = pickCards(realSpots, area, 'walk', {}, undefined, reach, true);
+        for (const c of cards) expect(c.spot.mood === 'walk' || (c.spot.mood === 'new' && c.spot.sub === 'sight'), area.name).toBe(true);
+      }
+    }
+    // with 3 or more indoor walk places, no widening to 구경
+    const mk = (id: string, mood: 'walk' | 'new', km: number): Spot => ({
+      id, name: id, lat: 33.5, lng: 126.5 + km / 92.8, mood, ...(mood === 'new' ? { sub: 'sight' as const } : {}), indoor: true,
+      reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: null, bookable: false, score: 3,
+    });
+    const o = { lat: 33.5, lng: 126.5 };
+    const three = [mk('w1', 'walk', 1), mk('w2', 'walk', 2), mk('w3', 'walk', 3), mk('s1', 'new', 0.5)];
+    expect(pickCards(three, o, 'walk', {}, undefined, 'drive30', true).cards.map((c) => c.spot.id).sort()).toEqual(['w1', 'w2', 'w3']);
+    expect(pickCards(three.filter((s) => s.id !== 'w3'), o, 'walk', {}, undefined, 'drive30', true).cards.map((c) => c.spot.id).sort()).toEqual(['s1', 'w1', 'w2']);
+  });
+
+  it('I2 아무거나 never shows the same place twice, even when 걷기 widened to 구경', () => {
+    for (const area of AREAS) {
+      for (const reach of REACHES) {
+        let h: Histories = {};
+        for (let tap = 0; tap < 3; tap++) {
+          const r = pickCards(realSpots, area, 'any', h, undefined, reach, true);
+          expect(new Set(r.cards.map((c) => c.spot.id)).size, `${area.name} / ${reach} / ${tap}`).toBe(r.cards.length);
+          h = r.histories;
+        }
+      }
+    }
+  });
+
+  it('I3 off is the default and the same as before: indoor false / missing = every place', () => {
+    for (const area of AREAS.slice(0, 5)) {
+      for (const [b, sub] of LISTS) {
+        const ids = (indoor?: boolean) => pickCards(realSpots, area, b, {}, sub, 'drive30', indoor).cards.map((c) => c.spot.id);
+        expect(ids(false), `${area.name} / ${b}`).toEqual(ids());
+      }
+    }
+    // a spot without the field counts as outdoor
+    const s = { ...realSpots.find((x) => x.mood === 'rest')! };
+    delete s.indoor;
+    expect(pickCards([s], s, 'rest', {}, undefined, 'drive30', true).cards).toEqual([]);
+  });
+});
+
 describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () => {
   /** the results screen's 8 lists: 4 moods (food as 식사 / 카페·디저트, new as 섞어서 / 구경 / 체험) and 아무거나 */
   const SIX: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['food', 'meal'], ['food', 'cafe'], ['any']];

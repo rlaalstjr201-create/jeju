@@ -33,7 +33,16 @@ describe('U4 받는 쪽 — 검증', () => {
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
   });
 
+  it('accepts 비 와요 (ADR-0065): indoor true when it is on, and nothing when it is off', () => {
+    const on = contextOf({ view: 'cards', mood: 'rest', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d, indoor: true });
+    expect(on).toEqual({ mood: 'rest', ...base, indoor: true });
+    expect(contextOf({ view: 'cards', mood: 'rest', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d, indoor: false })).toEqual({ mood: 'rest', ...base });
+    const batch: UsageEvent[] = [{ e: 'tap', ...on }, { e: 'shown', id: ID, ...on }];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+  });
+
   it.each([
+    ['indoor not a boolean', [{ e: 'map', id: ID, d, indoor: 'yes' }], 400],
     ['not JSON', '[{', 400],
     ['an object, not an array', { e: 'map', id: ID, d }, 400],
     ['an empty array', [], 400],

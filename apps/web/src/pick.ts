@@ -26,6 +26,8 @@ export interface Spot {
   sub?: Sub | NewKind;
   /** 만족도 1~5 (ADR-0060, specs/ranking.md): orders the cards, never shown. */
   score: number;
+  /** 실내 (ADR-0065): what 비 와요(실내만) keeps; missing = outdoor. */
+  indoor?: boolean;
 }
 
 export interface Point {
@@ -154,10 +156,15 @@ const byRank = (a: Ranked, b: Ranked) => b.spot.score - a.spot.score || a.trip -
  * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
  * the nearest 3 on the whole island (빈손 없음).
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH): Ranked[] {
+export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false): Ranked[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
-  const all = spots
-    .filter((s) => s.mood === mood && (want === 'mix' || s.sub === want))
+  let list = spots.filter((s) => s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true));
+  // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
+  // 구경 — places walked round inside.
+  if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight')) {
+    list = [...list, ...spots.filter((s) => s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
+  }
+  const all = list
     .map((spot) => {
       const km = distanceKm(origin, spot);
       return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km) };
@@ -199,7 +206,7 @@ export const tabOf = (button: Button | null, sub: Sub, newTab: NewSub): Tab | un
 
 /**
  * tab only applies to the 'food' button (meal | cafe, defaults to 'meal') and the 'new' button (mix | sight | do,
- * defaults to 'mix'); ignored otherwise.
+ * defaults to 'mix'); ignored otherwise. `indoor` (비 와요, ADR-0065): only indoor places.
  * `wrapped` = this tap shows a place already seen in this round, or is the first tap after the pool ran
  * out — i.e. everything nearby has been shown once and the rotation starts over (상태 줄 한 바퀴 문장).
  */
@@ -210,6 +217,7 @@ export function pickCards(
   histories: Histories = {},
   tab?: Tab,
   reach: Reach = DEFAULT_REACH,
+  indoor = false,
 ): { cards: Card[]; histories: Histories; wrapped: boolean } {
   const key = historyKey(button, tab);
   const h = histories[key];
@@ -217,11 +225,16 @@ export function pickCards(
   let poolIds: string[];
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach));
-    picked = pools.map((p) => rotate(p, h)[0]).filter((c): c is Ranked => !!c);
+    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor));
+    // one card per mood, never the same place twice (걷기 may have widened to 구경 indoors)
+    picked = [];
+    for (const p of pools) {
+      const c = rotate(p, h).find((x) => !picked.some((y) => y.spot.id === x.spot.id));
+      if (c) picked.push(c);
+    }
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, tab, reach);
+    const p = pool(spots, origin, button, tab, reach, indoor);
     picked = rotate(p, h).slice(0, CARD_COUNT);
     poolIds = p.map((c) => c.spot.id);
   }

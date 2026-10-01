@@ -66,6 +66,10 @@ export const COPY = {
   /** 얼마나 (ADR-0060): the range, under 어디. Not in the basis label. */
   reachHead: '얼마나',
   reach: { walk: '걸어서', drive30: '차로 30분', drive60: '차로 1시간' } satisfies Record<Reach, string>,
+  /** 비 와요(실내만) (ADR-0065): one row under 얼마나, and the cards' word while it is on. */
+  weatherHead: '날씨',
+  indoorToggle: '비 와요(실내만)',
+  indoor: '실내',
   whenNow: '지금',
   pickDay: '날짜 고르기',
   /** where the browser has no picker: the date field is shown and applies only on this (or Enter). */
@@ -350,8 +354,13 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     return ph;
   }
 
-  function metaEl(meta: string | null, dest: boolean): HTMLElement {
+  /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14). */
+  function metaEl(meta: string | null, dest: boolean, indoor = false): HTMLElement {
     const metaEl = el(doc, 'p', { class: 'meta' });
+    if (indoor) {
+      metaEl.append(el(doc, 'span', { class: 'indoor' }, COPY.indoor));
+      if (meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    }
     if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
     // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
     // "… 5분 ·" and the next starts with "카카오맵", never with "·".
@@ -384,7 +393,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     if (day) heart.dataset.date = day;
     heart.innerHTML = HEART_22;
     card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
-    if (meta || dest) card.append(metaEl(meta, dest));
+    // 실내 only on the results, only while 비 와요 picked them (ADR-0065)
+    const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
+    if (meta || dest || indoor) card.append(metaEl(meta, dest, indoor));
     if (spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
     }
@@ -687,7 +698,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   /** Where a link to this app carries what is saved here (the in-app browser's way out). */
   const shareUrl = (s: State) => {
     const home = appHome(doc.defaultView?.location.href ?? 'https://localhost/');
-    return s.saved.length ? backupUrl(home, s.saved) : home;
+    return s.saved.length ? backupUrl(home, s.saved, s.indoor) : home;
   };
   function renderKeep(s: State) {
     const k = s.keep;
@@ -737,7 +748,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // Only what the user changes in a sheet. News that arrives while it is open — a 숙소 GPS failure, a GPS
     // denial — is patched in place (patchSheet): a rebuild under the finger would reset its scroll and focus.
     const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
-    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.when}|${s.today}|${move}`;
+    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}`;
   }
 
   /** A thin-rule list of rows under its own group heading (the 언제 / 어디 / 얼마나 parts of the basis sheet). */
@@ -794,6 +805,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
       // The same thin-rule rows with a check. Choosing one closes the sheet.
       optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));
+      // 비 와요(실내만) (ADR-0065): one row of its own, the same thin-rule option with a check when on. Choosing it
+      // closes the sheet, like 얼마나.
+      optGroup(panel, 'weather-h', COPY.weatherHead, [optRow(option(COPY.indoorToggle, null, { 'data-indoor': '', 'aria-pressed': String(s.indoor) }))]);
       areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
     } else if (overlay === 'move') {
       // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.

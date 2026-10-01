@@ -24,6 +24,8 @@ export interface UsageEvent {
   area?: AreaName;
   /** a day other than today was chosen (date mode). */
   dated?: boolean;
+  /** 비 와요(실내만) was on (ADR-0065); missing = off. */
+  indoor?: boolean;
   /** Jeju calendar day, no time. */
   d: Day;
 }
@@ -45,6 +47,7 @@ export function contextOf(s: {
   region: AreaName | null;
   when: When;
   today: Day;
+  indoor?: boolean;
 }): Omit<UsageEvent, 'e' | 'id'> {
   const basis = BASIS[s.basis];
   return {
@@ -55,6 +58,7 @@ export function contextOf(s: {
     basis,
     ...(basis === 'area' && s.region ? { area: s.region } : {}),
     dated: s.when !== 'now',
+    ...(s.indoor ? { indoor: true } : {}),
     d: s.today,
   };
 }

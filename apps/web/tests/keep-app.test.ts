@@ -175,6 +175,27 @@ describe('2c backup link', () => {
     }
   });
 
+  it('비 와요 (ADR-0065): on, 링크로 백업 carries it; opening that link starts the session with it on', async () => {
+    save([{ id: A, date: today, order: 0 }]);
+    sessionStorage.setItem('jeju.indoor', 'true');
+    const copy = vi.fn(async (_text: string) => true);
+    render({ userAgent: DESKTOP, copy });
+    await openSaved();
+    await tap('#savedView [data-action="backup"]');
+    await flush();
+    const url = copy.mock.calls[0][0];
+    expect(url.endsWith('&r=1')).toBe(true);
+    expect(decodeBackup(url.split(BACKUP_HASH)[1].split('&')[0])).toEqual([{ id: A, date: today, order: 0 }]);
+    reset();
+    window.history.replaceState(null, '', url.slice(location.origin.length));
+    render({ userAgent: DESKTOP });
+    expect(location.hash).toBe('');
+    await until(() => shown('#homeNote'));
+    expect(sessionStorage.getItem('jeju.indoor')).toBe('true');
+    await cards();
+    expect($$('#cards .card .meta .indoor').length).toBe(3);
+  });
+
   it('pasted into an open tab (only the fragment changes): asked too', async () => {
     render({ userAgent: DESKTOP });
     window.history.replaceState(null, '', `/${backupUrl('x', [{ id: A, date: today, order: 0 }])}`);
