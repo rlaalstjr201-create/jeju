@@ -13,6 +13,12 @@ export function cleanReason(s: string): string {
   return cleanName(s).replace(/돈까스/g, '돈가스').replace(/[\s.。．｡]+$/, '');
 }
 
+function validMarket(m: unknown): boolean {
+  if (!m || typeof m !== 'object') return false;
+  const { days, label } = m as Record<string, unknown>;
+  return Array.isArray(days) && days.every((d) => Number.isInteger(d)) && typeof label === 'string' && label.length > 0;
+}
+
 /** Drops records the app cannot render; normalizes names and reasons. The shipped file already passes S1'. */
 export function normalizeSpots(raw: unknown): Spot[] {
   if (!Array.isArray(raw)) throw new Error('spots.json is not an array');
@@ -29,7 +35,15 @@ export function normalizeSpots(raw: unknown): Spot[] {
     const why = cleanReason(reason);
     // 만족도 (ADR-0060): the shipped file always has 1–5; anything else ranks as the middle (모르면 3).
     const score = Number.isInteger(r.score) && (r.score as number) >= 1 && (r.score as number) <= 5 ? (r.score as number) : 3;
-    out.push(clean === name && why === reason && score === r.score ? spot : { ...spot, name: clean, reason: why, score });
+    // 오일장 (ADR-0066): a rule the app cannot read is dropped — the place stays, without 장날.
+    const badMarket = 'market' in r && !validMarket(r.market);
+    if (clean === name && why === reason && score === r.score && !badMarket) {
+      out.push(spot);
+      continue;
+    }
+    const fixed: Spot = { ...spot, name: clean, reason: why, score };
+    if (badMarket) delete fixed.market;
+    out.push(fixed);
   }
   return out;
 }

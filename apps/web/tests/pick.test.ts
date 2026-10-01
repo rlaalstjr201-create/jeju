@@ -434,6 +434,62 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md)', () => {
   });
 });
 
+describe('오일장 장날 (ADR-0066, specs/market-days.md M3)', () => {
+  const o = { lat: 33.5, lng: 126.5 };
+  const mk = (id: string, km: number, score: number, market?: Spot['market']): Spot => ({
+    id, name: id, lat: 33.5, lng: 126.5 + km / 92.8, mood: 'new', sub: 'sight', indoor: false,
+    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: null, bookable: false, score,
+    ...(market ? { market } : {}),
+  });
+  const JEJU = { days: [2, 7, 12, 17, 22, 27], label: '2·7일' };
+  const DAEJEONG = { days: [1, 6, 11, 16, 21, 26, 31], label: '1·6일', noFirstAfter31: true };
+  const ids = (spots: Spot[], day?: string) => pickCards(spots, o, 'new', {}, 'sight', 'drive30', false, day).cards.map((c) => c.spot.id);
+
+  it('on a market day the market leads the cards with the same score; its score is not raised', () => {
+    const spots = [mk('a', 1, 4), mk('b', 2, 4), mk('m', 5, 4, JEJU), mk('top', 9, 5)];
+    expect(ids(spots, '2026-10-02')).toEqual(['top', 'm', 'a']);
+    // not a market day: the usual order (score → trip → id), the far market falls out of the 3
+    expect(ids(spots, '2026-10-03')).toEqual(['top', 'a', 'b']);
+    // no day given: as before
+    expect(ids(spots)).toEqual(['top', 'a', 'b']);
+    // a lower score never jumps ahead
+    expect(ids([mk('a', 1, 4), mk('b', 2, 4), mk('c', 3, 4), mk('m', 1, 3, JEJU)], '2026-10-02')).toEqual(['a', 'b', 'c']);
+    expect(pickCards(spots, o, 'new', {}, 'sight', 'drive30', false, '2026-10-02').cards.find((c) => c.spot.id === 'm')!.spot.score).toBe(4);
+  });
+
+  it('a market the source says is closed that day (대정, the 1st after a 31-day month) is left out; other days it stays', () => {
+    const spots = [mk('d', 1, 5, DAEJEONG), mk('a', 2, 3), mk('b', 3, 3), mk('c', 4, 3)];
+    expect(ids(spots, '2026-11-01')).toEqual(['a', 'b', 'c']);
+    expect(ids(spots, '2026-10-31')).toEqual(['d', 'a', 'b']);
+    expect(ids(spots, '2026-11-02')).toEqual(['d', 'a', 'b']); // off, not closed: kept
+    expect(ids(spots, '2026-10-01')).toEqual(['d', 'a', 'b']); // September has 30 days
+  });
+
+  it('M3 real data: the 9 markets are 구경; on 대정\'s closed day 15 areas × 3 ranges × 새로운 거 3 tabs and 아무거나 still give 3 distinct cards, never 대정', () => {
+    const markets = realSpots.filter((s) => s.market);
+    expect(markets).toHaveLength(9);
+    const daejeong = markets.find((s) => s.name === '대정오일시장')!;
+    for (const day of ['2026-11-01', '2026-10-31', '2026-10-02']) {
+      for (const area of AREAS) {
+        for (const reach of REACHES) {
+          for (const [b, sub] of [['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['any']] as [Button, Tab?][]) {
+            const why = `${day} / ${area.name} / ${reach} / ${b}:${sub ?? ''}`;
+            const { cards } = pickCards(realSpots, area, b, {}, sub, reach, false, day);
+            expect(cards, why).toHaveLength(3);
+            expect(new Set(cards.map((c) => c.spot.id)).size, why).toBe(3);
+            if (day === '2026-11-01') expect(cards.some((c) => c.spot.id === daejeong.id), why).toBe(false);
+          }
+        }
+      }
+    }
+    // on its market day, 대정 is first among the same score near 대정
+    const near = { lat: daejeong.lat, lng: daejeong.lng };
+    const first = pickCards(realSpots, near, 'new', {}, 'sight', 'walk', false, '2026-10-31').cards;
+    const same = first.filter((c) => c.spot.score === daejeong.score);
+    expect(same[0]?.spot.id).toBe(daejeong.id);
+  });
+});
+
 describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () => {
   /** the results screen's 8 lists: 4 moods (food as 식사 / 카페·디저트, new as 섞어서 / 구경 / 체험) and 아무거나 */
   const SIX: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['food', 'meal'], ['food', 'cafe'], ['any']];

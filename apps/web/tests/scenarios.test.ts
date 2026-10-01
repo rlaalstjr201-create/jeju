@@ -2194,3 +2194,70 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
     expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'rest'));
   });
 });
+
+describe('오일장 「오늘 열려요」 (ADR-0066, specs/market-days.md M4)', () => {
+  let wall = new Date('2026-10-02T09:00:00+09:00'); // 제주민속 2·7일
+  const at = (iso: string) => (wall = new Date(iso));
+  const markets = fileSpots.filter((s) => s.market);
+  const jeju = markets.find((s) => s.name === '제주민속오일시장')!;
+  const hamdeok = markets.find((s) => s.name === '함덕민속오일시장')!;
+  /** only the markets and the rest places, so the 구경 cards near 제주시 are markets */
+  const open = () => render({ today: () => wall, loadSpots: () => Promise.resolve(fileSpots.filter((s) => s.market || s.mood === 'rest')) });
+  const words = (): Record<string, string | null> => Object.fromEntries($$('#cards .card').map((c) => [c.dataset.id!, c.querySelector('.meta .market')?.textContent ?? null]));
+  beforeEach(() => {
+    at('2026-10-02T09:00:00+09:00');
+  });
+
+  it('now mode: 오늘 장 서는 날 on the market open today, 장날: {label} on the others, first in the meta line', async () => {
+    open();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="sight"]');
+    const w = words();
+    expect(Object.keys(w)).toHaveLength(3);
+    expect(w[jeju.id]).toBe('오늘 장 서는 날');
+    expect(w[hamdeok.id]).toBe('장날: 1·6일');
+    expect(Object.values(w).every((x) => x === '오늘 장 서는 날' || /^장날: \d+·\d+일$/.test(x!))).toBe(true);
+    const lead = $('#cards .card.lead .meta').textContent!;
+    expect(lead.startsWith(`${w[$('#cards .card.lead').dataset.id!]} · `)).toBe(true);
+  });
+
+  it('date mode: 이날 장 서는 날 for the chosen day; changing the day changes the words at once', async () => {
+    window.localStorage.setItem('jeju.when', JSON.stringify('2026-10-06')); // 함덕 1·6일, not 제주민속
+    open();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="sight"]');
+    expect(words()[hamdeok.id]).toBe('이날 장 서는 날');
+    expect(words()[jeju.id]).toBe('장날: 2·7일');
+    await tap('#basis');
+    await tap('#sheet [data-when="now"]'); // back to 지금 (10/2): 제주민속 today
+    expect(words()[jeju.id]).toBe('오늘 장 서는 날');
+    expect(words()[hamdeok.id]).toBe('장날: 1·6일');
+  });
+
+  it('midnight: the words follow the new today', async () => {
+    at('2026-10-01T23:59:00+09:00');
+    open();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="sight"]');
+    expect(words()[jeju.id]).toBe('장날: 2·7일');
+    expect(words()[hamdeok.id]).toBe('오늘 장 서는 날');
+    at('2026-10-02T00:00:05+09:00');
+    document.dispatchEvent(new Event('visibilitychange'));
+    expect(words()[jeju.id]).toBe('오늘 장 서는 날');
+    expect(words()[hamdeok.id]).toBe('장날: 1·6일');
+  });
+
+  it('not on other cards, nor in the saved list', async () => {
+    open();
+    await tap('[data-mood="rest"]');
+    expect($$('#cards .meta .market')).toHaveLength(0);
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="sight"]');
+    await tap('#cards .card .heart');
+    await tap('#saved');
+    expect($$('#savedView .card')).toHaveLength(1);
+    expect($$('#savedView .market')).toHaveLength(0);
+  });
+});

@@ -1,6 +1,6 @@
 /**
  * 새로운 거 sub (ADR-0064, specs/new-sub.md): every mood:'new' spot gets sub 'sight' (구경) or 'do' (체험).
- * experience → do; sightseeing·cultural_space → sight; cafe·restaurant → the hand call in review/copy/new-sub.json.
+ * experience → do; sightseeing·cultural_space·shopping(오일장) → sight; cafe·restaurant → the hand call in review/copy/new-sub.json.
  * build-spots.mjs applies the rule; run this file directly to apply it to the shipped public/spots.json in place
  * (adds sub to new spots only, at the key position build-spots.mjs would give it). Idempotent.
  */
@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const BY_CATEGORY = { experience: 'do', sightseeing: 'sight', cultural_space: 'sight' };
+// shopping: the five-day markets (오일장, ADR-0066) — walked round, 구경.
+const BY_CATEGORY = { experience: 'do', sightseeing: 'sight', cultural_space: 'sight', shopping: 'sight' };
 
 /** Source category by id, from review/input/batch-NNN.json. */
 export function loadCategories(inputDir = resolve(root, 'review/input')) {
@@ -37,8 +38,17 @@ export function applyNewSub(spots, categories = loadCategories(), calls = loadNe
   return spots.map((s) => {
     if (s.mood !== 'new') return s;
     const sub = newSub(s.id, categories.get(s.id), calls);
-    const { score, sub: _old, ...rest } = s;
-    return score === undefined ? { ...rest, sub } : { ...rest, sub, score };
+    if (!('score' in s)) {
+      const { sub: _old, ...rest } = s;
+      return { ...rest, sub };
+    }
+    const out = {};
+    for (const [k, v] of Object.entries(s)) {
+      if (k === 'sub') continue;
+      if (k === 'score') out.sub = sub;
+      out[k] = v;
+    }
+    return out;
   });
 }
 

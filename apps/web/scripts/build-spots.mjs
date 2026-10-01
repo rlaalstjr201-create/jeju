@@ -12,6 +12,7 @@ import { dirname, resolve } from 'node:path';
 import { applyCorrections, loadCorrections } from './apply-corrections.mjs';
 import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
 import { applyIndoor, loadIndoorCalls } from './indoor.mjs';
+import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from './markets.mjs';
 import { loadNewSubCalls, newSub } from './new-sub.mjs';
 import { positionProblems } from './positions.mjs';
 import { reasonPunctuationProblem, shipReason } from './reason.mjs';
@@ -109,6 +110,8 @@ for (const f of batchFiles(outDir)) {
 for (const f of readdirSync(outDir).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
   for (const v of readJson(resolve(outDir, f))) verdictById.set(v.id, v);
 }
+// 오일장 (ADR-0066): review/input/batch-900.json's verdicts are committed in review/market/verdicts.json.
+for (const v of loadMarketVerdicts()) verdictById.set(v.id, v);
 
 // --- load food sub-type verdicts (meal|cafe), out-NN.json arrays of {id, sub} ---
 const SUBS = new Set(['meal', 'cafe']);
@@ -329,6 +332,9 @@ if (stops.length) {
 
 // 실내 (ADR-0065, review/copy/indoor.json): last, on the spots that ship. A place with no call stops the build.
 kept = applyIndoor(kept, new Map(inputItems.map((i) => [i.id, i.category])), loadIndoorCalls(resolve(copyDir, 'indoor.json')));
+
+// 장날 (ADR-0066, review/copy/market-days.json): last, on the markets that ship. A market with no rule stops the build.
+kept = applyMarketDays(kept, loadMarketDays(resolve(copyDir, 'market-days.json')), new Map(inputItems.map((i) => [i.id, i.category])));
 
 writeFileSync(outPath, JSON.stringify(kept));
 

@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { mountApp, type App, type Deps } from '../src/app';
+import { dayOf } from '../src/dates';
 import { pickCards, type Button, type Point, type Reach, type Tab } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
@@ -77,7 +78,10 @@ export const shownMood = () => {
     .map((b) => b.dataset.mood);
 };
 /** What a first pick shows (default range 차로 30분 unless given). */
-export const expectedNames = (o: Point, b: Button, sub?: Tab, reach?: Reach) => pickCards(realSpots, o, b, {}, sub, reach).cards.map((c) => c.spot.name);
+/** The day the app picks for (지금 = today in Jeju, from the real clock unless a test passes `today`): 오일장 rank
+ * by it (ADR-0066). */
+export const today = () => dayOf(new Date());
+export const expectedNames = (o: Point, b: Button, sub?: Tab, reach?: Reach) => pickCards(realSpots, o, b, {}, sub, reach, false, today()).cards.map((c) => c.spot.name);
 
 /** A promise with its resolve/reject exposed. */
 export function deferred<T>() {

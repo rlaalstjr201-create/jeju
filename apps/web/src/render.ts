@@ -5,8 +5,9 @@ import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { bookingUrl, kakaoUrl } from './links';
+import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, type SavedRow, type State } from './state';
+import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
@@ -354,11 +355,16 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     return ph;
   }
 
-  /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14). */
-  function metaEl(meta: string | null, dest: boolean, indoor = false): HTMLElement {
+  /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14).
+   * `market`: a five-day market's day words (ADR-0066), in the same place and the same way. */
+  function metaEl(meta: string | null, dest: boolean, indoor = false, market: string | null = null): HTMLElement {
     const metaEl = el(doc, 'p', { class: 'meta' });
     if (indoor) {
       metaEl.append(el(doc, 'span', { class: 'indoor' }, COPY.indoor));
+      if (market || meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    }
+    if (market) {
+      metaEl.append(el(doc, 'span', { class: 'market' }, market));
       if (meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
     }
     if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
@@ -395,7 +401,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
     // 실내 only on the results, only while 비 와요 picked them (ADR-0065)
     const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
-    if (meta || dest || indoor) card.append(metaEl(meta, dest, indoor));
+    // 장날 only on the results, for the day being viewed (ADR-0066)
+    const market = !day && spot.market ? marketText(spot.market, whenDay(s), s.when !== 'now') : null;
+    if (meta || dest || indoor || market) card.append(metaEl(meta, dest, indoor, market));
     if (spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
     }
@@ -474,7 +482,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   }
 
   function resultsSigOf(s: State, b: ResultsBody): string {
-    if (b.k === 'cards') return `cards|${s.cards!.seq}`;
+    // a market's day words follow the day being viewed (ADR-0066): redrawn when it changes, only if one is shown
+    if (b.k === 'cards') return `cards|${s.cards!.seq}${s.cards!.list.some((c) => c.spot.market) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
     if (b.k === 'notice') {
       const p = s.phase;
       const detail = p.k === 'noOrigin' ? p.why : p.k === 'loadError' ? String(p.offline) : '';

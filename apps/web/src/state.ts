@@ -358,7 +358,8 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
       seq: same ? s.seq : seq,
     };
   }
-  const r = pickCards(spots, origin.point, mood, histories, tabNow(s), s.reach, s.indoor);
+  // 오일장 (ADR-0066): the day being viewed (지금 = today) decides which markets open and which are closed.
+  const r = pickCards(spots, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s));
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;

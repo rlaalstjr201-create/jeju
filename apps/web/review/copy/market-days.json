@@ -1,0 +1,261 @@
+{
+  "accessed": "2026-10-01",
+  "rule": "장날은 비짓제주 원문(상세 페이지 이용안내·본문, 테마여행 「제주전통시장 <오일장-제주시편>」「<오일장-서귀포시편>」)으로 정하고 카카오맵 장소 정보로 확인했다. 운영시간은 비짓제주가 고정 시간을 적고 카카오와 어긋나지 않을 때만 표시한다(해당 0곳). 장날이 아닌 날 닫는다고 원문이 적은 곳은 없다 — 출처가 닫는다고 한 날은 대정의 「31일 다음 1일」뿐이다.",
+  "themes": [
+    {
+      "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012136",
+      "title": "제주전통시장 <오일장-제주시편>"
+    },
+    {
+      "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012134",
+      "title": "제주전통시장 <오일장-서귀포시편>"
+    }
+  ],
+  "markets": [
+    {
+      "id": "5fec87c2-fb29-5b0a-a2ef-87febaa30e67",
+      "name": "제주민속오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500748",
+      "days": [
+        2,
+        7,
+        12,
+        17,
+        22,
+        27
+      ],
+      "label": "2·7일",
+      "usedescinfo": "장날 : 매월 2일, 7일, 12일, 17일, 22일, 27일",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012136",
+      "themeQuote": "매월 2일, 7일에 장이 열린다",
+      "hours": null,
+      "closedOffDays": false,
+      "note": null,
+      "kakao": {
+        "url": "https://place.map.kakao.com/12140282",
+        "name": "제주시민속오일시장",
+        "status": "Y",
+        "days": "매달 2일,7일,12일,17일,22일,27일",
+        "distanceM": 104
+      }
+    },
+    {
+      "id": "f754e861-e902-5bcb-8cae-b5a2c205f8bd",
+      "name": "서귀포향토오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500732",
+      "days": [
+        4,
+        9,
+        14,
+        19,
+        24,
+        29
+      ],
+      "label": "4·9일",
+      "usedescinfo": "장날 : 매월 4일, 9일, 14일, 19일, 24일, 29일",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012134",
+      "themeQuote": "1995년 개설되어 매월 4일, 9일마다 장이 열린다",
+      "hours": null,
+      "closedOffDays": false,
+      "note": null,
+      "kakao": {
+        "url": "https://place.map.kakao.com/13324524",
+        "name": "서귀포향토오일시장",
+        "status": "Y",
+        "days": "매월 4, 9, 14, 19, 24, 29 오일장이 열립니다\n운영시간 오전08:00~오후21:00",
+        "distanceM": 78
+      }
+    },
+    {
+      "id": "b3898a07-339a-5c58-a262-5083df9da486",
+      "name": "한림민속오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500759",
+      "days": [
+        4,
+        9,
+        14,
+        19,
+        24,
+        29
+      ],
+      "label": "4·9일",
+      "usedescinfo": "장열리는 날 : 4,9일",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012136",
+      "themeQuote": null,
+      "hours": null,
+      "closedOffDays": false,
+      "note": "카카오 장소 정보에 장날 문구가 없다(영업시간만). 비짓제주 이용안내 「장열리는 날 : 4,9일」을 따른다.",
+      "kakao": {
+        "url": "https://place.map.kakao.com/19397053",
+        "name": "한림민속5일시장",
+        "status": "Y",
+        "days": null,
+        "distanceM": 8
+      }
+    },
+    {
+      "id": "9c8fa331-23cc-5a95-a34c-5f452fd09973",
+      "name": "세화해녀민속오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000021519",
+      "days": [
+        5,
+        10,
+        15,
+        20,
+        25,
+        30
+      ],
+      "label": "5·10일",
+      "usedescinfo": "별도의 운영시간이 없음, 점포 별 운영시간 상이 (대략 8시부터 15시)",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012136",
+      "themeQuote": "매월 5일, 10일에 열리는 시장으로",
+      "hours": null,
+      "closedOffDays": false,
+      "note": "이용안내 「별도의 운영시간이 없음, 점포 별 운영시간 상이 (대략 8시부터 15시)」 — 고정 운영시간이 아니라 표시하지 않는다.",
+      "kakao": {
+        "url": "https://place.map.kakao.com/17600338",
+        "name": "세화민속오일시장",
+        "status": "Y",
+        "days": "매월 5,10일(5일,10일,15일,20일,25일,30일)",
+        "distanceM": 28
+      }
+    },
+    {
+      "id": "2a6bdee7-decc-579b-997c-9c67774b8844",
+      "name": "함덕민속오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000021182",
+      "days": [
+        1,
+        6,
+        11,
+        16,
+        21,
+        26
+      ],
+      "label": "1·6일",
+      "usedescinfo": "매월 1일, 6일, 11일, 16일, 21일, 26일 열림",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012136",
+      "themeQuote": null,
+      "hours": null,
+      "closedOffDays": false,
+      "note": "비짓제주는 1·6·11·16·21·26일을 날짜로 나열한다(31일 없음). 카카오는 「매월 끝자리 1, 6일」이라 31일이 들어가는지 알 수 없다 — 비짓제주의 나열을 따른다(31일은 장날 아님).",
+      "kakao": {
+        "url": "https://place.map.kakao.com/18526099",
+        "name": "함덕오일시장",
+        "status": "Y",
+        "days": "매월 끝자리 1, 6일",
+        "distanceM": 9
+      }
+    },
+    {
+      "id": "e71ffaea-ac80-53b2-8cf1-475b3152e24a",
+      "name": "고성오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500714",
+      "days": [
+        4,
+        9,
+        14,
+        19,
+        24,
+        29
+      ],
+      "label": "4·9일",
+      "usedescinfo": "장 열리는 날 : 매월 4, 9, 14, 19, 24, 29일",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012134",
+      "themeQuote": null,
+      "hours": null,
+      "closedOffDays": false,
+      "note": null,
+      "kakao": {
+        "url": "https://place.map.kakao.com/11696879",
+        "name": "고성오일시장",
+        "status": "Y",
+        "days": "4, 9, 14, 19, 24, 29일  8:00~1400 ",
+        "distanceM": 53
+      }
+    },
+    {
+      "id": "2942dd0f-fd88-52bd-90b1-ddd205d04159",
+      "name": "대정오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012266",
+      "days": [
+        1,
+        6,
+        11,
+        16,
+        21,
+        26,
+        31
+      ],
+      "label": "1·6일",
+      "noFirstAfter31": true,
+      "usedescinfo": null,
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012134",
+      "themeQuote": "대정 오일장은 매월 1일, 6일에 장이 열린다. 다만 31일이 있는 달에는 31일에 문을 열고, 다음 1일에는 열리지 않으니 참고하는 것이 좋겠다.",
+      "hours": null,
+      "closedOffDays": false,
+      "note": "31일이 있는 달은 31일에 열고 다음 달 1일에는 열리지 않는다(비짓제주 본문·테마여행, 카카오 「31일이 있는 달은 31일에 열고 1일에 휴무」). 그 1일은 출처가 닫는다고 한 날이라 후보에서 뺀다.",
+      "kakao": {
+        "url": "https://place.map.kakao.com/18525728",
+        "name": "대정오일시장",
+        "status": "Y",
+        "days": "매월 1, 6, 11, 16, 21, 26일(31일이 있는 달은 31일에 열고 1일에 휴무)",
+        "distanceM": 8
+      }
+    },
+    {
+      "id": "b0f9d9ad-e704-5925-b725-3ed6636f8a98",
+      "name": "중문향토오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500752",
+      "days": [
+        3,
+        8,
+        13,
+        18,
+        23,
+        28
+      ],
+      "label": "3·8일",
+      "usedescinfo": "장날 : 매월 3일, 8일, 13일, 18일, 23일, 28일, 이용시간 08:00~17:00 *점포별 상이(탄력적 운영)",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012134",
+      "themeQuote": null,
+      "hours": null,
+      "closedOffDays": false,
+      "note": "이용안내 「이용시간 08:00~17:00 *점포별 상이(탄력적 운영)」. 카카오는 08:00~18:00이라 출처끼리 다르다 — 운영시간은 표시하지 않는다.",
+      "kakao": {
+        "url": "https://place.map.kakao.com/25020856",
+        "name": "중문향토오일시장",
+        "status": "Y",
+        "days": "매월 끝자리 3, 8일",
+        "distanceM": 22
+      }
+    },
+    {
+      "id": "6e9c3ebe-fc16-5584-a32b-51e8ff87fd3d",
+      "name": "표선오일시장",
+      "source": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500755",
+      "days": [
+        2,
+        7,
+        12,
+        17,
+        22,
+        27
+      ],
+      "label": "2·7일",
+      "usedescinfo": "장 열리는 날 : 매월 2, 7, 12, 27, 22, 27일 / 작은 시장이라서 빨리 닫힙니다. 고정된 영업시간은 없으며, 주로 2~4시 사이에 폐장.",
+      "theme": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000012134",
+      "themeQuote": "매월 2일, 7일에 열리는",
+      "hours": null,
+      "closedOffDays": false,
+      "note": "이용안내 「매월 2, 7, 12, 27, 22, 27일」은 17일을 27일로 잘못 적은 것으로 보고 본문 「매월 2일, 7일」과 카카오 「매월 끝자리 2, 7일」로 2·7일(17일 포함)을 정했다.",
+      "kakao": {
+        "url": "https://place.map.kakao.com/18525430",
+        "name": "표선민속오일시장",
+        "status": "Y",
+        "days": "매월 끝자리 2, 7일",
+        "distanceM": 21
+      }
+    }
+  ]
+}

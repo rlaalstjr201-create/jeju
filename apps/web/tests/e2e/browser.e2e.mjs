@@ -2082,6 +2082,57 @@ await check('I4-indoor', '비 와요(실내만) at 320·390: one row under 얼�
   assert(problems.length === 0, problems.join(' | '));
 });
 
+// --- ADR-0066, specs/market-days.md M4: 오일장 장날 ---
+await check('M4-market', '오일장 at 320·390 on 2026-10-02 (KST): 구경 cards near 제주시 are markets, each with one meta line starting with its day words (제주민속 오늘 장 서는 날, 함덕 장날: 1·6일), no sideways scroll; 날짜 모드 10/6 turns 함덕 into 이날 장 서는 날', async () => {
+  const problems = [];
+  const all = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));
+  const only = JSON.stringify(all.filter((s) => s.market || s.mood === 'rest'));
+  const byName = new Map(all.filter((s) => s.market).map((s) => [s.name, s.id]));
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    const { ctx, page } = await fresh({ width, height });
+    await page.clock.setFixedTime(new Date('2026-10-02T09:00:00+09:00'));
+    await ctx.route((u) => u.pathname.endsWith('/spots.json'), (r) => r.fulfill({ status: 200, contentType: 'application/json', body: only }));
+    await page.reload();
+    await tapText(page, '[data-mood="new"]');
+    await waitCards(page);
+    await tapText(page, '[data-sub="sight"]');
+    await waitCards(page);
+    const look = () =>
+      page.evaluate(() => {
+        const de = document.documentElement;
+        return {
+          cards: [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => ({
+            id: c.dataset.id,
+            word: c.querySelector('.meta .market')?.textContent ?? null,
+            first: c.querySelector('.meta')?.firstElementChild?.className ?? null,
+            metas: c.querySelectorAll('.meta').length,
+          })),
+          over: de.scrollWidth - de.clientWidth,
+        };
+      });
+    const now = await look();
+    if (now.cards.length !== 3) problems.push(`${width} ${now.cards.length} cards`);
+    for (const c of now.cards) {
+      if (!c.word) problems.push(`${width} a card without its day words`);
+      if (c.first !== 'market') problems.push(`${width} meta starts with ${c.first}`);
+      if (c.metas !== 1) problems.push(`${width} ${c.metas} meta lines`);
+    }
+    const word = (cards, name) => cards.find((c) => c.id === byName.get(name))?.word;
+    if (word(now.cards, '제주민속오일시장') !== '오늘 장 서는 날') problems.push(`${width} 제주민속 says ${word(now.cards, '제주민속오일시장')}`);
+    if (word(now.cards, '함덕민속오일시장') !== '장날: 1·6일') problems.push(`${width} 함덕 says ${word(now.cards, '함덕민속오일시장')}`);
+    if (now.over > 0) problems.push(`${width} results overflow ${now.over}`);
+    if (width === 390) await shot(page, '15-market-cards');
+    await page.evaluate(() => localStorage.setItem('jeju.when', JSON.stringify('2026-10-06')));
+    await page.reload();
+    await waitCards(page);
+    const dated = await look();
+    if (word(dated.cards, '함덕민속오일시장') !== '이날 장 서는 날') problems.push(`${width} 날짜 모드 함덕 says ${word(dated.cards, '함덕민속오일시장')}`);
+    if (dated.over > 0) problems.push(`${width} dated overflow ${dated.over}`);
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 // --- ADR-0063: hosting (no SPA fallback, 404.html, absolute paths) and keeping saves without a login ---
 const KAKAO_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 10.8.5';
 await check('K-404', 'an unknown address gets 404.html (status 404, a way home), never a blank page; /privacy is a page; with the worker installed a 404 stays a 404; index.html served at a deep address (a fallback) runs the app (absolute asset paths)', async () => {

@@ -11,6 +11,7 @@ import { distanceKm } from '../src/pick';
 import { applyCorrections, loadCorrections } from '../scripts/apply-corrections.mjs';
 import { applyIndoor, indoorOf, loadIndoorCalls } from '../scripts/indoor.mjs';
 import { applyNewSub, loadCategories, loadNewSubCalls, newSub } from '../scripts/new-sub.mjs';
+import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from '../scripts/markets.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -19,9 +20,9 @@ const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 11 fields (food, new: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
-      const expectedFields = s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS;
+      const expectedFields = [...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS), ...('market' in s ? ['market'] : [])];
       return (
         Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
         !(s.lat >= 33.1 && s.lat <= 33.6 && s.lng >= 126.1 && s.lng <= 127.0) ||
@@ -34,8 +35,8 @@ describe("S1' 레코드 형식", () => {
     expect(bad.map((s) => s.id)).toEqual([]);
   });
 
-  it('만족도 점수 (ADR-0060): all 2,955 have an integer score 1–5, the one in review/score/score-NN.json (or a fact-check correction)', () => {
-    expect(fileSpots).toHaveLength(2955);
+  it('만족도 점수 (ADR-0060): all 2,964 have an integer score 1–5, the one in review/score/score-NN.json (or a fact-check correction)', () => {
+    expect(fileSpots).toHaveLength(2964);
     const bad = fileSpots.filter((s) => !Number.isInteger(s.score) || s.score < 1 || s.score > 5);
     expect(bad.map((s) => s.id)).toEqual([]);
     const recorded = new Map<string, number>();
@@ -44,6 +45,15 @@ describe("S1' 레코드 형식", () => {
     }
     for (const c of loadCorrections()) if (typeof c.fields.score === 'number') recorded.set(c.id, c.fields.score);
     expect(fileSpots.filter((s) => recorded.get(s.id) !== s.score).map((s) => s.id)).toEqual([]);
+  });
+
+  it('a malformed 오일장 rule is dropped at load (the place stays, without 장날); a valid one is kept (ADR-0066)', () => {
+    const m = fileSpots.find((s) => s.market)!;
+    const [ok, noLabel, badDays] = normalizeSpots([m, { ...m, id: 'x', market: { days: [2] } }, { ...m, id: 'y', market: { days: ['2'], label: '2·7일' } }]);
+    expect(ok.market).toEqual(m.market);
+    expect(ok).toBe(m);
+    expect('market' in noLabel).toBe(false);
+    expect('market' in badDays).toBe(false);
   });
 
   it('a record whose score is missing or out of range loads as 3 (모르면 3); a valid one is kept', () => {
@@ -63,20 +73,20 @@ describe("S1' 레코드 형식", () => {
     expect(fileSpots.some((s) => s.sub === 'cafe')).toBe(true);
   });
 
-  it('N1 (ADR-0064): all 508 새로운 거 spots have sub sight|do — experience → do, sightseeing·cultural_space → sight, cafe·restaurant as review/copy/new-sub.json', () => {
+  it('N1 (ADR-0064): all 517 새로운 거 spots have sub sight|do — experience → do, sightseeing·cultural_space·shopping(오일장, ADR-0066) → sight, cafe·restaurant as review/copy/new-sub.json', () => {
     const news = fileSpots.filter((s) => s.mood === 'new');
-    expect(news).toHaveLength(508);
+    expect(news).toHaveLength(517);
     expect(news.filter((s) => s.sub !== 'sight' && s.sub !== 'do').map((s) => s.id)).toEqual([]);
     const categories = loadCategories();
     const calls = loadNewSubCalls();
     expect(calls.size).toBe(46);
     const expected = (id: string) => {
       const c = categories.get(id);
-      return c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' ? 'sight' : calls.get(id);
+      return c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' || c === 'shopping' ? 'sight' : calls.get(id);
     };
     expect(news.filter((s) => s.sub !== expected(s.id)).map((s) => s.id)).toEqual([]);
     // every cafe·restaurant new spot has a recorded call (with its basis), and the call file names only those
-    const handCalled = news.filter((s) => !['experience', 'sightseeing', 'cultural_space'].includes(categories.get(s.id)!));
+    const handCalled = news.filter((s) => !['experience', 'sightseeing', 'cultural_space', 'shopping'].includes(categories.get(s.id)!));
     expect(handCalled.map((s) => s.id).sort()).toEqual([...calls.keys()].sort());
     const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/new-sub.json'), 'utf8')) as { basis: string }[];
     expect(raw.filter((v) => !v.basis?.trim())).toEqual([]);
@@ -89,9 +99,10 @@ describe("S1' 레코드 형식", () => {
     expect(() => newSub('x', 'cafe', new Map())).toThrow(/no sub/);
     expect(newSub('x', 'experience', new Map())).toBe('do');
     expect(newSub('x', 'cultural_space', new Map())).toBe('sight');
+    expect(newSub('x', 'shopping', new Map())).toBe('sight');
   });
 
-  it('I1 (ADR-0065): all 2,955 spots have indoor true|false — cafe·restaurant indoor unless review/copy/indoor.json says otherwise, every other place by a recorded call', () => {
+  it('I1 (ADR-0065): all 2,964 spots have indoor true|false — cafe·restaurant indoor unless review/copy/indoor.json says otherwise, every other place by a recorded call', () => {
     expect(fileSpots.filter((s) => typeof s.indoor !== 'boolean').map((s) => s.id)).toEqual([]);
     const categories = loadCategories();
     const calls = loadIndoorCalls();
@@ -104,7 +115,7 @@ describe("S1' 레코드 형식", () => {
     expect(raw.filter((v) => typeof v.indoor !== 'boolean' || !v.basis?.trim())).toEqual([]);
     expect(raw.every((v) => fileSpots.some((s) => s.id === v.id))).toBe(true);
     expect(fileSpots.filter((s) => s.indoor)).toHaveLength(2080);
-    expect(fileSpots.filter((s) => !s.indoor)).toHaveLength(875);
+    expect(fileSpots.filter((s) => !s.indoor)).toHaveLength(884);
   });
 
   it('I1: the indoor rule is idempotent on the shipped file, build-spots.mjs applies it, and an uncalled place stops it', () => {
@@ -149,6 +160,52 @@ describe("S1' 레코드 형식", () => {
   });
 });
 
+describe('M1 오일장 (ADR-0066, specs/market-days.md)', () => {
+  const markets = fileSpots.filter((s) => 'market' in s);
+  const doc = JSON.parse(readFileSync(resolve(root, 'review/copy/market-days.json'), 'utf8')) as {
+    accessed: string;
+    markets: { id: string; name: string; source: string; days: number[]; label: string; noFirstAfter31?: boolean; kakao: { url: string; status: string; distanceM: number } }[];
+  };
+  const input = JSON.parse(readFileSync(resolve(root, 'review/input/batch-900.json'), 'utf8')) as { id: string; category: string; source: string }[];
+
+  it('9 markets ship, all 새로운 거 · 구경, outdoor, not bookable, scored, from the VisitJeju shopping batch', () => {
+    expect(markets.map((s) => s.name).sort()).toEqual(
+      ['고성오일시장', '대정오일시장', '서귀포향토오일시장', '세화해녀민속오일시장', '제주민속오일시장', '중문향토오일시장', '표선오일시장', '한림민속오일시장', '함덕민속오일시장'].sort(),
+    );
+    expect(markets.map((s) => s.id).sort()).toEqual(input.map((i) => i.id).sort());
+    for (const s of markets) {
+      expect([s.mood, s.sub, s.indoor, s.bookable], s.name).toEqual(['new', 'sight', false, false]);
+      expect(s.score, s.name).toBeGreaterThanOrEqual(1);
+    }
+    expect(input.every((i) => i.category === 'shopping' && i.source.startsWith('https://www.visitjeju.net/kr/detail/view?contentsid='))).toBe(true);
+  });
+
+  it('each market carries the rule in review/copy/market-days.json, with its VisitJeju URL, access date and Kakao check', () => {
+    expect(doc.accessed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(doc.markets).toHaveLength(9);
+    for (const m of doc.markets) {
+      const s = markets.find((x) => x.id === m.id)!;
+      expect(s.market, m.name).toEqual({ days: m.days, label: m.label, ...(m.noFirstAfter31 ? { noFirstAfter31: true } : {}) });
+      expect(m.source).toBe(input.find((i) => i.id === m.id)!.source);
+      expect(m.kakao.url).toBe(`https://place.map.kakao.com/${s.kakaoPlaceId}`);
+      expect(m.kakao.status).toBe('Y');
+      expect(m.kakao.distanceM).toBeLessThan(150);
+      expect(m.days.every((d) => Number.isInteger(d) && d >= 1 && d <= 31)).toBe(true);
+    }
+    // only 대정 has the 31st exception
+    expect(doc.markets.filter((m) => m.noFirstAfter31).map((m) => m.name)).toEqual(['대정오일시장']);
+  });
+
+  it('the market rule is idempotent on the shipped file, build-spots.mjs applies it, and a missing or unshipped rule stops it', () => {
+    expect(JSON.stringify(applyMarketDays(fileSpots))).toBe(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/kept = applyMarketDays\(kept/);
+    const rules = loadMarketDays();
+    const market = markets[0];
+    expect(() => applyMarketDays(fileSpots, new Map([...rules].filter(([id]) => id !== market.id)))).toThrow(/no market-days rule/);
+    expect(() => applyMarketDays(fileSpots.filter((s) => s.id !== market.id), rules)).toThrow(/not shipped/);
+  });
+});
+
 describe("S1' 완전성 (review/input 대비)", () => {
   const inputIds = new Set<string>();
   for (const f of readdirSync(resolve(root, 'review/input')).filter((f) => /^batch-\d{3}\.json$/.test(f))) {
@@ -170,6 +227,7 @@ describe("S1' 완전성 (review/input 대비)", () => {
     for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
       for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
     }
+    for (const v of loadMarketVerdicts()) verdictIds.add(v.id); // 오일장 (ADR-0066): their verdicts are committed
     const missing = [...inputIds].filter((id) => !verdictIds.has(id)).sort();
     expect(missing).toEqual([]);
   });
@@ -310,9 +368,9 @@ describe('팩트체크 수정 (ADR-0063 5, review/copy/corrections-NN.json, revi
     expect(byId.get('e90d95bc-3a57-4d72-b0b5-3e212c97f378')?.kakaoPlaceId).toBe('688113173');
   });
 
-  it('applying them again changes nothing (idempotent); 2,959 shipped before, minus the removals', () => {
+  it('applying them again changes nothing (idempotent); 2,959 shipped before, minus the removals, plus the 9 오일장 (ADR-0066)', () => {
     expect(applyCorrections(fileSpots, corrections)).toEqual(fileSpots);
-    expect(fileSpots).toHaveLength(2959 - corrections.filter((c) => c.action === 'remove').length);
+    expect(fileSpots).toHaveLength(2959 - corrections.filter((c) => c.action === 'remove').length + 9);
   });
 });
 

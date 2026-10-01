@@ -1,4 +1,6 @@
 // Card selection (plan OQ 1·2·4). Pure functions, no DOM.
+import type { Day } from './dates';
+import { marketDay, type Market } from './market';
 
 export type Mood = 'rest' | 'walk' | 'new' | 'food';
 export type Button = Mood | 'any';
@@ -28,6 +30,8 @@ export interface Spot {
   score: number;
   /** 실내 (ADR-0065): what 비 와요(실내만) keeps; missing = outdoor. */
   indoor?: boolean;
+  /** 오일장 장날 (ADR-0066): set on the five-day markets only. */
+  market?: Market;
 }
 
 export interface Point {
@@ -148,17 +152,22 @@ export function travelText(t: Travel, from?: string): string {
 interface Ranked extends Card {
   /** the trip in the range's terms (sort key only) */
   trip: number;
+  /** a market on its market day (ADR-0066): first among the same score (sort key only) */
+  open: boolean;
 }
-/** specs/ranking.md: score high to low, then the shorter trip, then id. */
-const byRank = (a: Ranked, b: Ranked) => b.spot.score - a.spot.score || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
+/** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then the shorter trip, then id. */
+const byRank = (a: Ranked, b: Ranked) =>
+  b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
 
 /**
  * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
- * the nearest 3 on the whole island (빈손 없음).
+ * the nearest 3 on the whole island (빈손 없음). `day` (ADR-0066): the day being viewed — a market the source
+ * says is closed that day is left out, one on its market day ranks first among the same score.
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false): Ranked[] {
+export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day): Ranked[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
-  let list = spots.filter((s) => s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true));
+  const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
+  let list = spots.filter((s) => s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
   // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
   // 구경 — places walked round inside.
   if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight')) {
@@ -167,11 +176,11 @@ export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach:
   const all = list
     .map((spot) => {
       const km = distanceKm(origin, spot);
-      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km) };
+      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open' };
     });
   let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
   if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id)).slice(0, CARD_COUNT);
-  return near.map(({ spot, minutes, trip }) => ({ spot, minutes, trip })).sort(byRank);
+  return near.map(({ spot, minutes, trip, open }) => ({ spot, minutes, trip, open })).sort(byRank);
 }
 
 /** Unseen first, then seen, and the cards shown last time at the very back. */
@@ -206,7 +215,8 @@ export const tabOf = (button: Button | null, sub: Sub, newTab: NewSub): Tab | un
 
 /**
  * tab only applies to the 'food' button (meal | cafe, defaults to 'meal') and the 'new' button (mix | sight | do,
- * defaults to 'mix'); ignored otherwise. `indoor` (비 와요, ADR-0065): only indoor places.
+ * defaults to 'mix'); ignored otherwise. `indoor` (비 와요, ADR-0065): only indoor places. `day` (ADR-0066): the
+ * day being viewed, for the market days.
  * `wrapped` = this tap shows a place already seen in this round, or is the first tap after the pool ran
  * out — i.e. everything nearby has been shown once and the rotation starts over (상태 줄 한 바퀴 문장).
  */
@@ -218,6 +228,7 @@ export function pickCards(
   tab?: Tab,
   reach: Reach = DEFAULT_REACH,
   indoor = false,
+  day?: Day,
 ): { cards: Card[]; histories: Histories; wrapped: boolean } {
   const key = historyKey(button, tab);
   const h = histories[key];
@@ -225,7 +236,7 @@ export function pickCards(
   let poolIds: string[];
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor));
+    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor, day));
     // one card per mood, never the same place twice (걷기 may have widened to 구경 indoors)
     picked = [];
     for (const p of pools) {
@@ -234,7 +245,7 @@ export function pickCards(
     }
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, tab, reach, indoor);
+    const p = pool(spots, origin, button, tab, reach, indoor, day);
     picked = rotate(p, h).slice(0, CARD_COUNT);
     poolIds = p.map((c) => c.spot.id);
   }

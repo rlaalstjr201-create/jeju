@@ -7,6 +7,7 @@ import { AREAS, LocateError, bookingUrl, kakaoUrl, mountApp, type App, type Deps
 import { nearestArea } from '../src/areas';
 import { cardTextProblem } from '../src/card-text';
 import { cleanReason } from '../src/data';
+import { dayOf } from '../src/dates';
 import { pickCards, travel, travelText, type Point, type Sub } from '../src/pick';
 import { splitName } from '../src/render';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
@@ -61,7 +62,8 @@ const drawnName = (name: string) => {
 };
 // jsdom has no layout: scrolling is a no-op here.
 window.scrollTo = (() => undefined) as typeof window.scrollTo;
-const expectedNames = (o: Point, b: Parameters<typeof pickCards>[2]) => pickCards(realSpots, o, b).cards.map((c) => c.spot.name);
+// the app picks for today in Jeju (오일장 rank by the day, ADR-0066)
+const expectedNames = (o: Point, b: Parameters<typeof pickCards>[2]) => pickCards(realSpots, o, b, {}, undefined, undefined, false, dayOf(new Date())).cards.map((c) => c.spot.name);
 /** saved ids as stored (jeju.saved.v2), day by day in their order */
 const storedIds = (): string[] => (JSON.parse(window.localStorage.getItem('jeju.saved.v2') ?? '[]') as { id: string }[]).map((e) => e.id);
 
@@ -123,7 +125,7 @@ describe('S3 카드', () => {
       await tap(`[data-mood="${mood}"]`);
       const cards = $$('.card');
       expect(cards).toHaveLength(3);
-      const expected = pickCards(realSpots, origin, mood).cards;
+      const expected = pickCards(realSpots, origin, mood, {}, undefined, undefined, false, dayOf(new Date())).cards;
       const trips = expected.map((c) => travelText(travel(origin, true, c.spot)));
       const same = trips[1] === trips[2];
       const alt = $('#cards .alt');
@@ -188,7 +190,7 @@ describe('S3 카드', () => {
     render();
     for (const mood of MOODS) {
       await tap(`[data-mood="${mood}"]`);
-      const expected = pickCards(realSpots, ORIGINS.제주시, mood).cards;
+      const expected = pickCards(realSpots, ORIGINS.제주시, mood, {}, undefined, undefined, false, dayOf(new Date())).cards;
       const links = $$('.card-link') as HTMLAnchorElement[];
       expect(links).toHaveLength(3);
       links.forEach((a, i) => {
