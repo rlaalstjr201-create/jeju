@@ -88,6 +88,14 @@
           <button class="any" type="button" data-mood="any"><span>아무거나 골라줘</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
           <!-- ADR-0063: a backup link to merge, or the in-app browser notice (filled by render.ts) -->
           <div id="homeNote" class="inform" hidden></div>
+          <!-- for readers without JS (AI crawlers, specs/seo-landing.md OQ3): what the app is, and the static pages (ADR-0072) -->
+          <noscript>
+            <h2>여행계획짜기 귀찮아:제주는 어떤 앱이에요?</h2>
+            <p>여행계획짜기 귀찮아:제주는 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 P(즉흥·무계획형) 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너예요. 일정이나 코스는 짜 드리지 않아요.</p>
+            <p>푹 쉬고 싶어, 좀 걷고 싶어, 새로운 거 해보고 싶어, 맛있는 거 먹고 싶어, 아무거나 골라줘. 다섯 기분 중 하나를 누르면 지금 위치나 숙소, 고른 동네에서 가까운 곳 세 군데를 차로 몇 분인지와 함께 골라 드려요.</p>
+            <p>이 화면은 자바스크립트를 켜야 움직여요. 동네별로 먼저 보려면 <a href="/jeju/">P를 위한 제주 무계획 여행</a>에서 한경, 한림, 애월, 신제주, 구제주, 조천, 구좌, 우도, 대정, 안덕, 중문, 서귀포 시내, 남원, 표선, 성산을 둘러보세요.</p>
+            <p>정보·사진: 비짓제주(제주관광공사)</p>
+          </noscript>
         </section>
         <section id="results" aria-labelledby="crumb" hidden>
           <div class="head">
@@ -106,6 +114,8 @@
           <p id="status" class="status" role="status"></p>
           <div id="cards" class="picks"></div>
           <p class="credit">정보·사진: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" target="_blank" rel="noopener">visitjeju.net</a></p>
+          <!-- OQ3 (ADR-0072): the static pages, one small line under the results -->
+          <p class="landing"><a href="/jeju/">동네별로 둘러보기</a></p>
         </section>
         <section id="savedView" aria-labelledby="savedTitle" hidden>
           <div class="head">

@@ -48,6 +48,8 @@ self.addEventListener('fetch', (event) => {
   // Only this origin's GETs. Usage events (sendBeacon POST, ADR-0061) and other hosts go straight to the
   // network and are never cached.
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+  // The static pages (/jeju/**, ADR-0072) are no part of the app shell: never cached, never answered with the shell.
+  if (/^\/jeju(\/|$)/.test(new URL(req.url).pathname)) return;
 
   // Pages: network first so a new deploy shows up; cached shell when offline, failing, or slow.
   if (req.mode === 'navigate') {

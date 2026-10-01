@@ -155,6 +155,10 @@ main { flex: 1; display: flex; flex-direction: column; }
    --muted (≥ 4.5:1), told apart by its underline */
 .credit a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 #cards:empty ~ .credit { display: none; }
+/* the static pages (ADR-0072, OQ3): one small line under the credit */
+.landing { margin: 8px 0 0; color: var(--muted); }
+.landing a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+#cards:empty ~ .landing { display: none; }
 .about { margin-top: 28px; }
 .about .credit { margin: 0; }
 /* ADR-0063: quiet notices (a backup link to merge, the in-app browser, the home-screen nudge): one or two
