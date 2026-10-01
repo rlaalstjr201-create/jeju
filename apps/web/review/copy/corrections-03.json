@@ -1,0 +1,83 @@
+[
+ {
+  "id": "e1e6ab89-04a0-4602-a9fa-b8cf95e524ac",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "함덕스쿠버: 카카오 장소 247230821은 「우리동네잠수하는형들」(0.444km)라 다른 업체·장소다. 근거: 카카오 이름 '우리동네잠수하는형들' (스킨스쿠버), 거리 0.44km (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/247230821"
+ },
+ {
+  "id": "ed2ae168-0c89-4b01-8a98-a6a255c61b0f",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "스쿠버스쿨: 카카오 장소 374078174은 「코바다이빙스쿨」(0.388km)라 다른 업체·장소다. 근거: 카카오 이름 '코바다이빙스쿨' (스킨스쿠버), 거리 0.39km (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/374078174"
+ },
+ {
+  "id": "27e40a92-4dc0-4458-8cc4-6c2ff50ae319",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "제주다: 카카오 장소 1143921407은 「멀리제주」(0.096km)라 다른 업체·장소다. 근거: 카카오 이름 '멀리제주' (숙박), 거리 0.10km (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/1143921407"
+ },
+ {
+  "id": "5b4b55cd-e8ee-4a25-bfca-173935911877",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "칠머리길: 카카오 장소 1271346327은 「행복주택」(0.1km)라 다른 업체·장소다. 근거: 카카오 이름 '행복주택' (빌라,주택), 거리 0.10km (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/1271346327"
+ },
+ {
+  "id": "1716a75b-1d91-448a-b15c-29ee792bbeb0",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "교래자연휴양림: 카카오 장소 1756716338은 「곶자왈생태체험관」(0.264km)라 다른 업체·장소다. 근거: 카카오 이름 '곶자왈생태체험관' (체험학습장), 거리 0.26km (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/1756716338"
+ },
+ {
+  "id": "7e76e85c-1b91-4cb8-8be5-e4a5cfcc1101",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "세리월드 테마파크: 카카오 장소 978165287은 「워터월드 제주」(0.432km)라 다른 업체·장소다. 근거: 카카오 이름 '워터월드 제주' (테마파크), 거리 0.43km (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/978165287"
+ },
+ {
+  "id": "e799e1f6-1ebb-485b-b8f7-6cf9194d2b9b",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "와그라운드: 카카오 장소 1165201941은 정보가 없다(삭제·없는 장소). 근거: place-api panel3/1165201941 응답에 summary 없음 (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/1165201941"
+ },
+ {
+  "id": "178e431a-0688-4322-9c38-5980b3a7479d",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "제주 캘리아트: 카카오 장소 447353993은 정보가 없다(삭제·없는 장소). 근거: place-api panel3/447353993 응답에 summary 없음 (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/447353993"
+ },
+ {
+  "id": "64c49e69-32bf-43be-84b5-59e6eda46a5a",
+  "action": "set",
+  "fields": {
+   "kakaoPlaceId": null
+  },
+  "reason": "조이다이브: 카카오 장소 27235768은 정보가 없다(삭제·없는 장소). 근거: place-api panel3/27235768 응답에 summary 없음 (checkedAt 2026-10-01). 카드의 카카오맵 링크가 엉뚱한 곳을 열지 않도록 id를 지우고 이름 검색으로 돌린다(ADR-0074, review/booking/data-issues.json).",
+  "evidence": "https://place.map.kakao.com/27235768"
+ }
+]
