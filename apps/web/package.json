@@ -15,7 +15,12 @@
     "check:data": "tsx scripts/check-data.ts",
     "check:slop": "tsx scripts/check-slop.ts",
     "make:icons": "tsx scripts/make-icons.ts",
-    "aggregate:events": "tsx events/aggregate.ts"
+    "aggregate:events": "tsx events/aggregate.ts",
+    "seo:crawl": "node scripts/seo/crawl.mjs",
+    "seo:verify": "node scripts/seo/verify.mjs",
+    "seo:report": "node scripts/seo/report.mjs",
+    "seo:keywords": "node scripts/seo/keywords.mjs",
+    "seo:forecast": "node scripts/seo/forecast.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.19.41",

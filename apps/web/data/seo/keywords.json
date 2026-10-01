@@ -1,0 +1,880 @@
+{
+ "_why": "keyword gate 기록 — 페이지·콘텐츠 작업 전에 이 표를 통과해야 한다. 규칙: scripts/seo/keyword-gate.mjs · 루브릭: .claude/skills/seo-geo/references/keyword-gate.md · 근거: docs/seo/keyword-research-01.md",
+ "rubric_version": 1,
+ "updated": "2026-10-01",
+ "candidates": [
+  {
+   "query": "P의 여행 제주",
+   "cluster": "brand",
+   "brand": true,
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "brunch.co.kr",
+     "allurekorea.com",
+     "yes24.com(같은 제목 책)",
+     "triple.guide"
+    ],
+    "note": "「P의 여행」 단독은 책·밈 기사가 차지. 「제주」를 붙인 형태가 우리 브랜드 검색어"
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "브랜드 존재 확인용. 배포 후 1위가 아니면 색인·엔티티 문제다(경쟁 문제가 아니다).",
+   "landing": "/",
+   "verdict": "brand"
+  },
+  {
+   "query": "P의 여행",
+   "cluster": "brand",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent",
+    "K5_brand_collision"
+   ],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "brunch.co.kr",
+     "allurekorea.com",
+     "artinsight.co.kr",
+     "triple.guide",
+     "bizforms.co.kr",
+     "clien.net",
+     "yes24.com",
+     "ruliweb.com",
+     "news.nate.com"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "p의 여행 뜻",
+     "p의여행계획짜는법"
+    ],
+    "google": [
+     "p의 여행계획",
+     "p의 여행",
+     "p의 여행계획표",
+     "j와 p의 여행"
+    ]
+   },
+   "rationale": "검색 의도가 MBTI 밈(J가 보고 기절한 P의 여행계획)과 동명 도서다. 우리 브랜드로 읽히지 않는다 — 브랜드는 「P의 여행 제주」로 쓴다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "제주도 무계획 여행",
+   "cluster": "P-intent",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "travie.com",
+     "82cook.com",
+     "kkday.com(blog)",
+     "tripskorea.kr",
+     "brunch.co.kr",
+     "triple.guide(라운지 일정)"
+    ],
+    "note": "「계획 없이 제주」·「제주 P 여행 무계획」 표본. 정확히 이 의도를 받는 페이지가 없고 블로그·커뮤니티·OTA 블로그가 섞여 있다"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "제주도 무계획 여행"
+    ]
+   },
+   "rationale": "우리 포지션 그대로의 의도이고 상위가 약하다. 수요는 작다(구글 자동완성 1건) — 유입보다 브랜드 엔티티(GEO)와 허브 문장을 위한 target.",
+   "landing": "/jeju/",
+   "verdict": "target"
+  },
+  {
+   "query": "제주 즉흥 여행",
+   "cluster": "P-intent",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "yongwookha.github.io(개인 블로그)",
+     "kr.trip.com(즉흥여행 가이드)",
+     "tripsoda.com(동행 커뮤니티)"
+    ],
+    "note": "개인 블로그·커뮤니티 위주 — 약하다"
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "의도·경쟁은 좋은데 자동완성 수요가 없다. /jeju/ 허브 본문의 보조 표현으로만 쓰고 별도 페이지는 만들지 않는다.",
+   "landing": "/jeju/",
+   "verdict": "watch"
+  },
+  {
+   "query": "계획 없이 제주 여행",
+   "cluster": "P-intent",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "travie.com(차 없이 여행)",
+     "82cook.com",
+     "kkday.com",
+     "tripskorea.kr(차 없이)"
+    ],
+    "note": "상위가 「차 없이(뚜벅이)」 의도로 흘렀다 — 검색엔진이 이 말을 뚜벅이로 읽는다"
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "수요 0 · 의도가 뚜벅이로 흐른다. 허브 문장에만.",
+   "verdict": "watch"
+  },
+  {
+   "query": "mbti p 여행",
+   "cluster": "P-intent",
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "head": true,
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "triple.guide(P와 J의 여행)",
+     "brunch.co.kr",
+     "gnews.gg.go.kr",
+     "tiktok.com",
+     "myrealtrip.com"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "mbti p",
+     "mbti p j 차이"
+    ],
+    "google": [
+     "mbti p 여행",
+     "mbti p 여행 계획"
+    ]
+   },
+   "rationale": "성향 이야기(P와 J 차이)를 읽으려는 검색이다. 장소 목록을 원하지 않는다. 페이지 대신 GEO 엔티티 문장(「P 여행자를 위한 제주 여행 파트너」)으로 연결만.",
+   "verdict": "kill"
+  },
+  {
+   "query": "p 여행 계획",
+   "cluster": "P-intent",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "head": true,
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "ruliweb.com(짤)",
+     "clien.net",
+     "teamblind.com",
+     "bizforms.co.kr(계획표 양식)"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "p여행"
+    ],
+    "google": [
+     "p 여행계획",
+     "p 여행계획 짤",
+     "p 여행 계획표"
+    ]
+   },
+   "rationale": "짤·계획표 양식 수요. 우리가 줄 것이 없다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "즉흥 여행 추천",
+   "cluster": "P-intent",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "head": true,
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "kr.trip.com",
+     "triple.guide",
+     "tripdoor.kr"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "즉흥 여행지 추천",
+     "즉흥여행 국내"
+    ],
+    "google": [
+     "즉흥 여행 추천"
+    ]
+   },
+   "rationale": "「어디로 떠날까」(목적지 고르기) 의도다. 우리는 제주에 와 있는 사람의 「지금 여기서」다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "제주 지금 가볼만한곳",
+   "cluster": "now",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "kr.hotels.com(Go Guides)",
+     "visitjeju.net",
+     "onuljeju.com",
+     "jigeumjeju.com(언론사)"
+    ],
+    "note": "「지금」이 대개 「이 계절」로 읽힌다(가을 제주 가볼만한곳)"
+   },
+   "demand": {
+    "naver": [
+     "제주 지금 갈만한곳",
+     "제주 지금 가볼만한곳"
+    ],
+    "google": [
+     "제주 지금 가볼만한곳"
+    ]
+   },
+   "rationale": "수요는 있으나 계절 의도 + 포털·OTA·공식 사이트 벽. 「지금」이 우리 뜻(이 순간 여기서)과 다르다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "제주 뭐하지",
+   "cluster": "now",
+   "head": true,
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "kr.hotels.com",
+     "visitjeju.net",
+     "onuljeju.com(「오늘 제주에서 뭐 하지?」 — 같은 개념, 장소 2.5만 곳·기분별·근처 2km)",
+     "jigeumjeju.com"
+    ],
+    "note": "직접 경쟁자 onuljeju.com이 이 문장을 제목으로 쓰고 장소 수가 우리의 8배다"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "제주 뭐하지"
+    ]
+   },
+   "rationale": "의도는 정확히 우리 것이지만 같은 개념의 더 큰 사이트가 문장을 선점했다. 헤드 + 경쟁 0.",
+   "verdict": "kill"
+  },
+  {
+   "query": "제주 오늘 뭐하지",
+   "cluster": "now",
+   "scores": {
+    "demand": 0,
+    "competition": 0,
+    "intent_fit": 2,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K5_brand_collision"
+   ],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "onuljeju.com",
+     "amo.kma.go.kr(날씨)",
+     "news1.kr(오늘의 일정)"
+    ]
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "「오늘제주 — 오늘 제주에서 뭐 하지?」가 그 사이트의 브랜드 문장이다. 이 표현을 쓰면 남의 브랜드 검색을 받는다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "제주 가볼만한곳",
+   "cluster": "head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "triple.guide",
+     "kr.hotels.com",
+     "tripadvisor.com",
+     "visitjeju.net",
+     "kr.trip.com",
+     "korean.visitkorea.or.kr",
+     "forourtour.com"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "(표본 없음)"
+    ],
+    "google": [
+     "(헤드)"
+    ]
+   },
+   "rationale": "지역+일반형 헤드. seoulist에서 이 모양은 계통적으로 졌다(AUC 0.328, 허브 91쿼리 중 39 lost-shape).",
+   "verdict": "kill"
+  },
+  {
+   "query": "제주 근처 갈만한 곳",
+   "cluster": "head",
+   "head": true,
+   "scores": {
+    "demand": 0,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "kr.hotels.com x3",
+     "banksalad.com",
+     "tripadvisor.com",
+     "kkday.com",
+     "forourtour.com"
+    ]
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "「근처」에 지명이 없으면 전국 일반형으로 읽힌다. 수요 0 · 헤드.",
+   "verdict": "kill"
+  },
+  {
+   "query": "성산 근처 체험",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "brunch.co.kr(@klook)",
+     "kr.hotels.com",
+     "namu.wiki",
+     "kr.trip.com x2",
+     "website.co.kr(블로그)"
+    ],
+    "note": "구글 쪽은 OTA 글+위키+블로그 혼합. 네이버는 미관측 — 블로그·플레이스가 강할 가능성이 크다"
+   },
+   "demand": {
+    "naver": [
+     "성산 체험 농장"
+    ],
+    "google": [
+     "성산 체험",
+     "성산 해녀체험",
+     "성산 승마 체험",
+     "성산 감귤 체험"
+    ]
+   },
+   "rationale": "세부 지역 × 기분(새로운 거·체험) 조합 중 수요·의도가 가장 선명하다. 재고 19곳(성산 체험·구경). 우리 각도: 「지금 여기서 차로 N분」 + 3곳만.",
+   "landing": "/jeju/seongsan/new/",
+   "verdict": "target"
+  },
+  {
+   "query": "구좌 산책하기 좋은 곳",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "triple.guide",
+     "visitjeju.net",
+     "expedia.com",
+     "sibmanwon.com",
+     "korean.visitkorea.or.kr",
+     "komoot.com x2"
+    ]
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "경쟁·의도는 괜찮은데 자동완성 수요가 없다. 구좌 지역 페이지의 걷기 절로만.",
+   "verdict": "watch"
+  },
+  {
+   "query": "제주 혼자 쉬기 좋은 곳",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [
+    "K2_data"
+   ],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "v.daum.net",
+     "headlinejeju.co.kr",
+     "brunch.co.kr",
+     "visitjeju.net",
+     "hub.zum.com(kkday)",
+     "kr.trip.com x2"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "제주 혼자 여행",
+     "제주 혼자 카페",
+     "제주 혼자 놀기"
+    ],
+    "google": []
+   },
+   "rationale": "「혼자 가기 좋은」은 우리 데이터에 없는 판정이다(혼자 적합성 필드 없음). 쉬기(rest)는 맞지만 혼자를 약속할 근거가 없다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "애월 비오는날 놀거리",
+   "cluster": "area×condition",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "kills": [
+    "K2_data"
+   ],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "triple.guide(비 오면 좋은 제주)",
+     "kr.trip.com(실내 관광지 총정리)",
+     "gguge.com"
+    ],
+    "note": "「애월 비 오는 날 실내 갈만한 곳」 표본"
+   },
+   "demand": {
+    "naver": [
+     "애월 비오는날 놀거리",
+     "제주 비오는날 서쪽",
+     "제주 비오는날 카페 동쪽"
+    ],
+    "google": [
+     "제주 비오는날 갈만한곳",
+     "비오는날 제주 서쪽"
+    ]
+   },
+   "rationale": "「제주 비오는날」은 자동완성이 가장 두꺼운 묶음이다. 하지만 우리 데이터에 실내/날씨 속성이 없다. ⚠ 실내 여부를 데이터에 넣으면(새 ADR) 가장 먼저 다시 볼 후보.",
+   "verdict": "kill"
+  },
+  {
+   "query": "중문 카페",
+   "cluster": "area×food",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 2,
+    "uniqueness": 0,
+    "inventory": 1
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "triple.guide",
+     "diningcode.com",
+     "siksinhot.com"
+    ],
+    "note": "카페·맛집은 네이버 플레이스·블로그가 지배하는 업종 — 웹문서 자리가 거의 없다"
+   },
+   "demand": {
+    "naver": [
+     "중문 카페 추천",
+     "중문 카페 오션뷰"
+    ],
+    "google": [
+     "중문 카페",
+     "중문 오션뷰 카페"
+    ]
+   },
+   "rationale": "지역+업태 일반형(seoulist lost-shape). 먹기는 우리 차별점이 가장 약한 기분이다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "애월 근처 맛집",
+   "cluster": "area×food",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 2,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "siksinhot.com",
+     "brunch.co.kr",
+     "youtube.com",
+     "forourtour.com",
+     "mindbridge.prestlab.com"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "애월 근처 맛집",
+     "애월 근처 횟집",
+     "애월 근처 흑돼지"
+    ],
+    "google": [
+     "애월 근처 맛집"
+    ]
+   },
+   "rationale": "맛집 헤드 — 네이버 플레이스·블로그 벽. 평점·리뷰 수가 없는 우리가 이길 근거가 없다.",
+   "verdict": "kill"
+  },
+  {
+   "query": "우도 혼자 여행",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
+    "observed": "proxy",
+    "naver_observed": false,
+    "top": [
+     "kr.hotels.com",
+     "triple.guide",
+     "visitjeju.net",
+     "tripadvisor.com",
+     "tourtoctoc.com(배편·전기차 총정리)"
+    ]
+   },
+   "demand": {
+    "naver": [
+     "우도 혼자여행"
+    ],
+    "google": [
+     "우도 혼자 여행"
+    ]
+   },
+   "rationale": "배편·이동 수단·코스를 묻는 실용 의도가 크다 — 장소 3곳 추천과 반만 맞는다.",
+   "verdict": "watch"
+  },
+  {
+   "query": "애월 산책로",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "미관측",
+    "observed": false,
+    "naver_observed": false
+   },
+   "demand": {
+    "naver": [
+     "애월 산책로",
+     "애월 산책로 추천"
+    ],
+    "google": [
+     "애월 산책로",
+     "애월 한담 해안 산책로"
+    ]
+   },
+   "rationale": "대부분 한담 해안 산책로 하나를 찾는 검색이다(의도 1). SERP 관측 전.",
+   "verdict": "watch"
+  },
+  {
+   "query": "서귀포 산책하기 좋은 곳",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "미관측",
+    "observed": false,
+    "naver_observed": false
+   },
+   "demand": {
+    "naver": [
+     "서귀포 산책로 추천"
+    ],
+    "google": [
+     "서귀포 산책하기 좋은 곳"
+    ]
+   },
+   "rationale": "목록 의도·재고 52곳. SERP를 보면 target 후보 1순위.",
+   "landing": "/jeju/seogwipo/walk/",
+   "verdict": "watch"
+  },
+  {
+   "query": "표선 근처 놀거리",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "미관측",
+    "observed": false,
+    "naver_observed": false
+   },
+   "demand": {
+    "naver": [
+     "표선 근처 놀거리",
+     "표선 근처 가볼만한곳"
+    ],
+    "google": [
+     "표선 근처 가볼만한 곳"
+    ]
+   },
+   "rationale": "양쪽 자동완성 · 목록 의도 · 재고(걷기 33·새로운 거 33). SERP 관측 전.",
+   "landing": "/jeju/pyoseon/",
+   "verdict": "watch"
+  },
+  {
+   "query": "함덕 근처 가볼만한곳",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "미관측",
+    "observed": false,
+    "naver_observed": false
+   },
+   "demand": {
+    "naver": [
+     "함덕 근처 가볼만한곳"
+    ],
+    "google": [
+     "함덕 근처 가볼만한 곳",
+     "함덕 근처 놀거리"
+    ]
+   },
+   "rationale": "함덕은 「조천」 칸의 대표 지명이다 — 지역 페이지 제목에 대표 지명을 함께 써야 받는다(SPEC D7 landmark). SERP 관측 전.",
+   "landing": "/jeju/jocheon/",
+   "verdict": "watch"
+  },
+  {
+   "query": "성산 근처 가볼만한 곳",
+   "cluster": "area×mood",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-01",
+    "source": "미관측",
+    "observed": false,
+    "naver_observed": false
+   },
+   "demand": {
+    "naver": [
+     "성산 근처 가볼만한"
+    ],
+    "google": [
+     "성산 근처 가볼만한 곳",
+     "성산 근처 놀거리"
+    ]
+   },
+   "rationale": "성산은 1급 관광지라 헤드에 가까울 수 있다. SERP를 보고 head 여부를 정한다.",
+   "landing": "/jeju/seongsan/",
+   "verdict": "watch"
+  }
+ ]
+}
