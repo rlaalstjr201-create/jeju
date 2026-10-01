@@ -1,6 +1,6 @@
 # ADR-0067: 차로 바로 길찾기 · 차 안 사용 전제 · AI 에이전트용 딥링크
 
-Status: Accepted (2026-10-01)
+Status: Accepted (2026-10-01) · Consequences의 걸어서·섬·실기기 한계는 0069로 보완
 
 ## Context
 
