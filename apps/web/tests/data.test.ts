@@ -9,16 +9,17 @@ import { cleanReason, createSpotSource, normalizeSpots } from '../src/data';
 import { bookingUrl, kakaoUrl } from '../src/links';
 import { distanceKm } from '../src/pick';
 import { applyCorrections, loadCorrections } from '../scripts/apply-corrections.mjs';
+import { applyIndoor, indoorOf, loadIndoorCalls } from '../scripts/indoor.mjs';
 import { applyNewSub, loadCategories, loadNewSubCalls, newSub } from '../scripts/new-sub.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
-const FIELDS = ['bookable', 'id', 'image', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason', 'score'];
+const FIELDS = ['bookable', 'id', 'image', 'indoor', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason', 'score'];
 const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 10 fields (food, new: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 11 fields (food, new: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
       const expectedFields = s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS;
       return (
@@ -88,6 +89,31 @@ describe("S1' 레코드 형식", () => {
     expect(() => newSub('x', 'cafe', new Map())).toThrow(/no sub/);
     expect(newSub('x', 'experience', new Map())).toBe('do');
     expect(newSub('x', 'cultural_space', new Map())).toBe('sight');
+  });
+
+  it('I1 (ADR-0065): all 2,955 spots have indoor true|false — cafe·restaurant indoor unless review/copy/indoor.json says otherwise, every other place by a recorded call', () => {
+    expect(fileSpots.filter((s) => typeof s.indoor !== 'boolean').map((s) => s.id)).toEqual([]);
+    const categories = loadCategories();
+    const calls = loadIndoorCalls();
+    const expected = (id: string) => calls.get(id) ?? (categories.get(id) === 'cafe' || categories.get(id) === 'restaurant');
+    expect(fileSpots.filter((s) => s.indoor !== expected(s.id)).map((s) => s.id)).toEqual([]);
+    // every sightseeing·experience·cultural_space spot has its own call, and each call has a basis from the source
+    const unCalled = fileSpots.filter((s) => !['cafe', 'restaurant'].includes(categories.get(s.id)!) && !calls.has(s.id));
+    expect(unCalled.map((s) => s.id)).toEqual([]);
+    const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/indoor.json'), 'utf8')) as { id: string; indoor: unknown; basis: string }[];
+    expect(raw.filter((v) => typeof v.indoor !== 'boolean' || !v.basis?.trim())).toEqual([]);
+    expect(raw.every((v) => fileSpots.some((s) => s.id === v.id))).toBe(true);
+    expect(fileSpots.filter((s) => s.indoor)).toHaveLength(2080);
+    expect(fileSpots.filter((s) => !s.indoor)).toHaveLength(875);
+  });
+
+  it('I1: the indoor rule is idempotent on the shipped file, build-spots.mjs applies it, and an uncalled place stops it', () => {
+    expect(JSON.stringify(applyIndoor(fileSpots))).toBe(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/kept = applyIndoor\(kept/);
+    expect(() => indoorOf('x', 'sightseeing', new Map())).toThrow(/no indoor call/);
+    expect(indoorOf('x', 'cafe', new Map())).toBe(true);
+    expect(indoorOf('x', 'restaurant', new Map([['x', false]]))).toBe(false);
+    expect(indoorOf('x', 'experience', new Map([['x', true]]))).toBe(true);
   });
 
   it("reason is 15~70 chars and has no price/hours/weekday/rating wording (S1')", () => {

@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { applyCorrections, loadCorrections } from './apply-corrections.mjs';
 import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
+import { applyIndoor, loadIndoorCalls } from './indoor.mjs';
 import { loadNewSubCalls, newSub } from './new-sub.mjs';
 import { positionProblems } from './positions.mjs';
 import { reasonPunctuationProblem, shipReason } from './reason.mjs';
@@ -325,6 +326,9 @@ if (stops.length) {
   throw new Error(`spots.json reasons: ${stops.length} punctuation problem(s)\n  ${stops.slice(0, 10).join('\n  ')}\n` +
     'Rewrite them in review/copy/fix-NN.json.');
 }
+
+// 실내 (ADR-0065, review/copy/indoor.json): last, on the spots that ship. A place with no call stops the build.
+kept = applyIndoor(kept, new Map(inputItems.map((i) => [i.id, i.category])), loadIndoorCalls(resolve(copyDir, 'indoor.json')));
 
 writeFileSync(outPath, JSON.stringify(kept));
 
