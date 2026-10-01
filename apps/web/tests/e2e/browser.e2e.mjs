@@ -770,7 +770,10 @@ await check('S31', 'a 32-letter name with an English part in brackets wraps insi
 await check('S51', 'home-screen launch: start_url in a fresh top-level page → first screen, remembered basis and saves; every layer closes without a back button', async () => {
   const { readdirSync, readFileSync } = await import('node:fs');
   const built = readdirSync(join(appDir, 'dist/assets')).map((f) => readFileSync(join(appDir, 'dist/assets', f), 'utf8'));
-  assert(!built.some((s) => /display-mode|standalone/.test(s)), 'the build branches on display-mode');
+  // The installed app works as the page does — the one display-mode check in the build is the home-screen nudge,
+  // which is not shown inside the installed app (ADR-0063 2d).
+  const modes = built.join('\n').match(/display-mode/g) ?? [];
+  assert(modes.length <= 1, `the build branches on display-mode ${modes.length}×`);
   const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
@@ -1964,6 +1967,111 @@ await check('T2-hit', 'at 320·390: card heart, 바꾸기·돌아가기, 식사 
     await ctx.close();
   }
   assert(problems.length === 0, problems.join(' | '));
+});
+
+// --- ADR-0063: hosting (no SPA fallback, 404.html, absolute paths) and keeping saves without a login ---
+const KAKAO_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 10.8.5';
+await check('K-404', 'an unknown address gets 404.html (status 404, a way home), never a blank page; /privacy is a page; with the worker installed a 404 stays a 404; index.html served at a deep address (a fallback) runs the app (absolute asset paths)', async () => {
+  const deep = `${BASE}nope/deep`;
+  const r = await fetch(deep, { headers: { accept: 'text/html' } });
+  assert(r.status === 404, `status ${r.status}`);
+  const priv = await fetch(`${BASE}privacy`);
+  assert(priv.status === 200 && (await priv.text()).includes('개인정보 처리 안내'), `/privacy ${priv.status}`);
+  const { ctx, page } = await fresh({ sw: true });
+  await page.waitForFunction(() => navigator.serviceWorker.controller !== null, null, { timeout: 8000 });
+  await waitCards(await (async () => (await tapText(page, '[data-mood="rest"]'), page))()); // the data is cached now
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  const res = await page.goto(deep);
+  assert(res.status() === 404, `deep link with the worker: ${res.status()}`);
+  assert((await page.textContent('h1')) === '없는 주소예요.', '404 page not shown');
+  await shot(page, '11-404');
+  await page.click('a.tbtn');
+  await page.waitForSelector('#home:not([hidden]) .mood');
+  assert(new URL(page.url()).pathname === '/', `home link went to ${page.url()}`);
+  await ctx.close();
+  // The review's blank page: a host SPA fallback (or the worker's offline shell) serving index.html at a deep
+  // address. With absolute asset paths the app runs there.
+  const shell = readFileSync(join(appDir, 'dist/index.html'));
+  const spa = await fresh();
+  spa.page.on('pageerror', (e) => errors.push(String(e)));
+  await spa.page.route(deep, (route) => route.fulfill({ status: 200, contentType: 'text/html', body: shell }));
+  await spa.page.goto(deep);
+  await spa.page.waitForSelector('#home .mood');
+  await tapText(spa.page, '[data-mood="walk"]');
+  await waitCards(spa.page);
+  await spa.ctx.close();
+  assert(errors.length === 0, `page errors: ${errors.join(' | ')}`);
+});
+
+await check('K-backup', 'saved list (390 light): 링크로 백업 copies a #s= link, the attribution and the privacy link are in its footer; that link opened in another browser asks to merge (hash cleared), 합치기 brings the places over', async () => {
+  const today = seoulDay();
+  const [a, b, c] = SPOT_IDS;
+  const { ctx, page } = await fresh({ storage: { 'jeju.saved.v2': [a, b].map((id, order) => ({ id, date: today, order })).concat([{ id: c, date: seoulDay(1), order: 0 }]) } });
+  await ctx.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: new URL(BASE).origin });
+  await tapText(page, '#saved');
+  await page.waitForSelector('#savedView .card:not(.ghost)');
+  await tapText(page, '#savedView [data-action="backup"]');
+  await page.waitForFunction(() => document.querySelector('#backupNote').textContent.length > 0);
+  const note = await page.textContent('#backupNote');
+  assert(note.startsWith('링크를 복사했어요.'), `note: ${note}`);
+  const link = await page.evaluate(() => navigator.clipboard.readText());
+  assert(link.startsWith(`${BASE}#s=`), `copied ${link}`);
+  assert((await page.textContent('#savedView .about .credit')) === '정보·사진: 비짓제주(제주관광공사)', 'no attribution');
+  assert((await page.getAttribute('#savedView .about a', 'href')) === '/privacy', 'no privacy link');
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  await sleep(100);
+  const footer = await page.evaluate(() => {
+    const vh = innerHeight;
+    const r = (s) => document.querySelector(s).getBoundingClientRect();
+    return ['#savedView .foot', '#savedView .backup', '#savedView .about'].every((s) => r(s).top >= 0 && r(s).bottom <= vh);
+  });
+  assert(footer, 'footer not in view at the bottom');
+  await shot(page, '11-saved-footer');
+  await ctx.close();
+  // another browser (a fresh context = its own storage): one place already here
+  const other = await fresh({ storage: { 'jeju.saved.v2': [{ id: b, date: today, order: 0 }] } });
+  await other.page.goto(link);
+  await other.page.waitForSelector('#homeNote:not([hidden]) [data-action="restore-merge"]');
+  assert(new URL(other.page.url()).hash === '', `hash left in the address: ${other.page.url()}`);
+  const ask = await other.page.textContent('#homeNote p');
+  assert(ask === '링크에 저장한 곳이 3곳 있어요. 이 기기에 합칠까요?', `prompt: ${ask}`);
+  const sizes = await other.page.evaluate(() => [...new Set([...document.querySelectorAll('#home *')].filter((e) => e.offsetParent && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())).map((e) => getComputedStyle(e).fontSize))]);
+  assert(sizes.length <= 3, `first screen text sizes: ${sizes}`);
+  const small = await other.page.$$eval('#homeNote .tbtn', (els) => els.filter((e) => e.getBoundingClientRect().height < 48).length);
+  assert(small === 0, 'a notice button under 48px');
+  await shot(other.page, '11-restore');
+  await tapText(other.page, '#homeNote [data-action="restore-merge"]');
+  const done = await other.page.textContent('#homeNote p');
+  assert(done === '2곳을 합쳤어요. 맨 위 하트 버튼에 모여요.', `done: ${done}`);
+  const stored = await other.page.evaluate(() => JSON.parse(localStorage.getItem('jeju.saved.v2')).length);
+  assert(stored === 3, `stored ${stored}`);
+  await other.ctx.close();
+});
+
+await check('K-inapp', 'KakaoTalk in-app browser: one calm notice under the moods with 브라우저로 열기 (kakaotalk:// link) and 닫기; closed, it stays closed after a reload', async () => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR', userAgent: KAKAO_UA });
+  await ctx.addInitScript(GEO_STUB);
+  const page = await ctx.newPage();
+  await page.goto(BASE);
+  await page.waitForSelector('#homeNote:not([hidden])');
+  assert((await page.textContent('#homeNote p')) === '카카오톡 안에서 저장한 곳은 카카오톡에만 남아요.', 'notice text');
+  const href = await page.getAttribute('#homeNote a[data-action="inapp-open"]', 'href');
+  assert(href === `kakaotalk://web/openExternal?url=${encodeURIComponent(BASE)}`, `href ${href}`);
+  const layout = await page.evaluate(() => {
+    const de = document.documentElement;
+    const n = document.querySelector('#homeNote').getBoundingClientRect();
+    const any = document.querySelector('.any').getBoundingClientRect();
+    return { over: de.scrollWidth - de.clientWidth, below: n.top >= any.bottom, left: Math.round(n.left), inView: n.bottom <= innerHeight, align: getComputedStyle(document.querySelector('#homeNote p')).textAlign };
+  });
+  assert(layout.over === 0 && layout.below && layout.left === 16 && layout.inView && layout.align !== 'center', JSON.stringify(layout));
+  await shot(page, '11-inapp');
+  await tapText(page, '#homeNote [data-action="inapp-close"]');
+  assert(!(await visible(page, '#homeNote')), 'not closed');
+  await page.reload();
+  await page.waitForSelector('#home .mood');
+  assert(!(await visible(page, '#homeNote')), 'came back after a reload');
+  await ctx.close();
 });
 
 await browser.close();

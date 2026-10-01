@@ -5,11 +5,12 @@ import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './dates';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
+import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
 import { bookingUrl, kakaoUrl } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Sub } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
-import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, sessionOf, staticOrigin, whenDay, type Action, type Intent, type State } from './state';
+import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, createStore } from './store';
 import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
@@ -46,6 +47,18 @@ export interface Deps extends GeoDeps {
   eventsUrl?: string;
   /** navigator.sendBeacon (the default when missing). */
   beacon?(url: string, body: string): boolean;
+  /** ADR-0063 2a: ask the browser to keep this site's storage (navigator.storage.persist); once a visit, at
+   * the first save. Missing = not asked. */
+  persist?(): Promise<unknown>;
+  /** the browser's user agent (in-app browser, iOS); navigator.userAgent when missing. */
+  userAgent?: string;
+  /** text onto the clipboard, false when it could not (copyText when missing). */
+  copy?(text: string): Promise<boolean>;
+}
+
+/** The browser's install prompt (Chrome, Edge, Samsung Internet): not in the DOM typings. */
+interface InstallPrompt extends Event {
+  prompt(): Promise<unknown>;
 }
 
 export interface App {
@@ -88,8 +101,23 @@ export function mountApp(doc: Document, deps: Deps): App {
   const renderer = createRenderer(doc, els);
   const clockNow = () => deps.today?.() ?? new Date();
   const today0 = dayOf(clockNow());
-  let state = initialState({ ...store.load(today0), today: today0, offline: !online() });
+  const loaded = store.load(today0);
+  // ADR-0063 2: an in-app browser keeps its own storage (say so, once); the home-screen nudge, once.
   const nav0 = win?.navigator;
+  const ua = deps.userAgent ?? nav0?.userAgent ?? '';
+  const inapp = inAppOf(ua);
+  let standalone = false;
+  try {
+    standalone = !!win?.matchMedia?.('(display-mode: standalone)').matches || (nav0 as { standalone?: boolean } | undefined)?.standalone === true;
+  } catch {
+    /* no matchMedia */
+  }
+  const keep0: Partial<Keep> = {
+    inapp,
+    inappNote: inapp && !loaded.inappSeen ? 'show' : null,
+    install: installHow({ ua, touch: nav0?.maxTouchPoints ?? 0, standalone, prompt: false }),
+  };
+  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0 });
   const tracker = createTracker({
     url: deps.eventsUrl,
     send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
@@ -272,6 +300,79 @@ export function mountApp(doc: Document, deps: Deps): App {
     remember();
   }
 
+  // --- keeping saves without a login (ADR-0063 2) ---
+  let installSeen = loaded.installSeen;
+  let persistAsked = false;
+  /** At the first save of a visit: the browser may then keep this site's storage from being cleared. */
+  function askPersist() {
+    if (persistAsked || !deps.persist) return;
+    persistAsked = true;
+    try {
+      void Promise.resolve(deps.persist()).catch(() => undefined);
+    } catch {
+      /* not offered */
+    }
+  }
+  const copy = (text: string) => (deps.copy ? deps.copy(text) : copyText(doc, text)).catch(() => false);
+  const home = () => appHome(win?.location.href ?? 'https://localhost/');
+  /** A backup link opened here (`#s=…`): ask whether to merge it; the fragment goes from the address at once
+   * (a reload or a shared address does not carry it on). One that does not read is dropped quietly. */
+  function takeBackup() {
+    const loc = win?.location;
+    const b = loc ? readBackup(loc.hash) : null;
+    if (!loc || !b?.found) return;
+    try {
+      win!.history.replaceState(win!.history.state, '', loc.pathname + loc.search);
+    } catch {
+      /* sandboxed */
+    }
+    if (b.entries) dispatch({ type: 'keep', keep: { restore: { k: 'ask', entries: b.entries } } });
+  }
+  function mergeBackup() {
+    const r = state.keep.restore;
+    if (r?.k !== 'ask') return;
+    // places this data no longer has are left behind (once the data is in)
+    const idx = state.spots ? spotIndex(state.spots) : null;
+    const { entries, added } = store.mergeSaved(idx ? r.entries.filter((e) => idx.has(e.id)) : r.entries);
+    dispatch({ type: 'saved', entries });
+    dispatch({ type: 'keep', keep: { restore: { k: 'done', added } } });
+    if (added) askPersist();
+  }
+  async function backup() {
+    const entries = store.saved();
+    if (!entries.length) return;
+    const ok = await copy(backupUrl(home(), entries));
+    if (!signal.aborted && state.view === 'saved') dispatch({ type: 'keep', keep: { backup: ok ? 'copied' : 'failed' } });
+  }
+  /** Outside KakaoTalk (its own link does it): the address, with what is saved here, onto the clipboard. */
+  async function inappCopy() {
+    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved) : home());
+    if (!signal.aborted && state.keep.inappNote) dispatch({ type: 'keep', keep: { inappNote: ok ? 'copied' : 'failed' } });
+  }
+  let installPrompt: InstallPrompt | null = null;
+  async function install() {
+    const p = installPrompt;
+    installPrompt = null;
+    dispatch({ type: 'keep', keep: { nudge: false, install: null } });
+    try {
+      await p?.prompt();
+    } catch {
+      /* already used or refused */
+    }
+  }
+  const KEEP_ACTIONS: Record<string, () => void> = {
+    'restore-merge': mergeBackup,
+    'restore-cancel': () => dispatch({ type: 'keep', keep: { restore: null } }),
+    'inapp-copy': () => void inappCopy(),
+    'inapp-close': () => {
+      store.setInappSeen();
+      dispatch({ type: 'keep', keep: { inappNote: null } });
+    },
+    'nudge-close': () => dispatch({ type: 'keep', keep: { nudge: false } }),
+    install: () => void install(),
+    backup: () => void backup(),
+  };
+
   // --- intents ---
   function onMood(b: Button) {
     // The mood buttons live on the first screen; from the results they are reached only programmatically
@@ -281,6 +382,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!intent) return;
     const from = state.view;
     if (from === 'home') hush();
+    // a merge already answered has said its piece
+    if (state.keep.restore?.k === 'done') dispatch({ type: 'keep', keep: { restore: null } });
     dispatch({ type: 'mood', button: b });
     count('tap');
     if (from === 'home') nav.push(CARDS);
@@ -315,6 +418,13 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'openSaved' });
     nav.push(SAVED);
     request('show');
+    // The home-screen nudge (ADR-0063 2d): once, the first time the saved list opens after a save, where it
+    // is about what was saved. Never in an in-app browser (its notice says where to go) or the installed app.
+    if (!installSeen && state.keep.install && hasSaved(state)) {
+      installSeen = true;
+      store.setInstallSeen();
+      dispatch({ type: 'keep', keep: { nudge: true } });
+    }
   }
   function closeSaved() {
     hush();
@@ -394,6 +504,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const out = day ? state.unsaved.find((e) => e.id === id && e.date === day) : undefined;
     const { entries, added, removed } = store.toggleSaved(id, date, out?.order);
     dispatch({ type: 'saved', entries, removed: day ? removed : null });
+    if (added) askPersist();
     count(added ? 'save' : 'unsave', id, date);
     // The first save on the results screen says once where saved places go; it stays until the next
     // intent (no timer, §6.13).
@@ -487,6 +598,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   function onMainButton(b: HTMLButtonElement) {
+    const keepAct = b.dataset.action ? KEEP_ACTIONS[b.dataset.action] : undefined;
+    if (keepAct) return guarded(`keep:${b.dataset.action}`) ? undefined : keepAct();
     if (b.dataset.mood) return onMood(b.dataset.mood as Button);
     if (b.dataset.sub) return onSub(b.dataset.sub as Sub);
     if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
@@ -627,6 +740,21 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
     }
   });
+  // A backup link pasted into the address bar of an open tab only changes the fragment.
+  on(win, 'hashchange', () => {
+    if (win?.location.hash.startsWith(BACKUP_HASH)) takeBackup();
+  });
+  // Chrome's own install prompt, kept for the nudge's 홈 화면에 추가 (its mini-infobar stays away).
+  on(win, 'beforeinstallprompt', (e) => {
+    if (inapp || standalone) return;
+    e.preventDefault();
+    installPrompt = e as InstallPrompt;
+    if (!state.keep.install) dispatch({ type: 'keep', keep: { install: 'prompt' } });
+  });
+  on(win, 'appinstalled', () => {
+    installPrompt = null;
+    dispatch({ type: 'keep', keep: { install: null, nudge: false } });
+  });
   on(win, 'online', () => {
     dispatch({ type: 'offline', offline: false });
     retryFailedLoad(); // "오프라인이라 목록을 불러오지 못했어요" would be wrong now
@@ -682,6 +810,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
   tick();
   renderer.render(state);
+  takeBackup();
   checkPermission();
   // Taps on the static mood buttons before this module ran: the last one is carried out now.
   const early = win as (Window & EarlyTap) | null;

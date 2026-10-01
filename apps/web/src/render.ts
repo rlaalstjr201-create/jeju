@@ -3,6 +3,7 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
+import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { bookingUrl, kakaoUrl } from './links';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, type SavedRow, type State } from './state';
@@ -88,6 +89,22 @@ export const COPY = {
   announceMore: (n: number) => `다른 ${n}곳 골랐어요.`,
   /** the `아니면` line when both row cards are the same trip ("둘 다 차로 약 5분"). */
   both: (trip: string) => `둘 다 ${trip}`,
+  // ADR-0063: keeping saves without a login
+  backupCopied: '링크를 복사했어요. 다른 브라우저나 기기에서 열면 여기 저장한 곳을 합칠 수 있어요.',
+  backupFailed: '링크를 복사하지 못했어요. 잠시 뒤 다시 눌러 주세요.',
+  restoreAsk: (n: number) => `링크에 저장한 곳이 ${n}곳 있어요. 이 기기에 합칠까요?`,
+  restoreNone: '링크에 있는 곳을 지금 목록에서 찾지 못했어요.',
+  restoreMerge: '합치기',
+  restoreCancel: '그만두기',
+  restoreDone: (n: number) => (n ? `${n}곳을 합쳤어요. 맨 위 하트 버튼에 모여요.` : '새로 합칠 곳이 없어요. 이미 이 기기에 있어요.'),
+  inappName: { kakaotalk: '카카오톡', instagram: '인스타그램', facebook: '페이스북', naver: '네이버 앱', line: '라인', daum: '다음 앱' } satisfies Record<InApp, string>,
+  inappNote: (app: string) => `${app} 안에서 저장한 곳은 ${app}에만 남아요.`,
+  inappOpen: '브라우저로 열기',
+  inappCopied: '링크를 복사했어요. 휴대폰 브라우저 주소창에 붙여 넣어 주세요.',
+  inappFailed: '오른쪽 위 메뉴에서 다른 브라우저로 열어 주세요.',
+  nudge: '홈 화면에 추가하면 저장한 곳이 오래 남아요.',
+  nudgeIos: '공유 버튼에서 ‘홈 화면에 추가’를 눌러 주세요. 지금 저장한 곳은 아래 ‘링크로 백업’으로 옮겨요.',
+  install: '홈 화면에 추가',
 } as const;
 
 /** The mood buttons' own words; the results title repeats the one chosen. */
@@ -171,6 +188,11 @@ export interface Els {
   savedSort: HTMLElement;
   savedList: HTMLElement;
   track: HTMLButtonElement;
+  /** ADR-0063: the first screen's notice (backup to merge, in-app browser), the saved list's nudge and backup. */
+  homeNote: HTMLElement;
+  nudge: HTMLElement;
+  backup: HTMLButtonElement;
+  backupNote: HTMLElement;
   sheet: HTMLElement;
   announce: HTMLElement | null;
   moods: HTMLButtonElement[];
@@ -203,6 +225,10 @@ export function findEls(doc: Document): Els {
     savedSort: q('#savedView > .sort'),
     savedList: q('#savedView > .picks'),
     track: q<HTMLButtonElement>('#savedView [data-action="track"]'),
+    homeNote: q('#homeNote'),
+    nudge: q('#nudge'),
+    backup: q<HTMLButtonElement>('#savedView [data-action="backup"]'),
+    backupNote: q('#backupNote'),
     sheet: q('#sheet'),
     announce: doc.querySelector<HTMLElement>('#announce'),
     moods: [...doc.querySelectorAll<HTMLButtonElement>('button[data-mood]')],
@@ -643,6 +669,67 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     }
   }
 
+  // --- keeping saves without a login (ADR-0063): quiet notices, a sentence or two and text buttons ---
+  let homeSig = '';
+  let nudgeSig = '';
+  const act = (action: string, text: string) => el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': action }, text);
+  function fill(box: HTMLElement, lines: string[], acts: HTMLElement[]) {
+    const nodes: HTMLElement[] = lines.map((t, i) => el(doc, 'p', i === 0 ? { tabindex: '-1' } : {}, t));
+    if (acts.length) {
+      const row = el(doc, 'div', { class: 'acts' });
+      row.append(...acts);
+      nodes.push(row);
+    }
+    box.replaceChildren(...nodes);
+  }
+  /** Where a link to this app carries what is saved here (the in-app browser's way out). */
+  const shareUrl = (s: State) => {
+    const home = appHome(doc.defaultView?.location.href ?? 'https://localhost/');
+    return s.saved.length ? backupUrl(home, s.saved) : home;
+  };
+  function renderKeep(s: State) {
+    const k = s.keep;
+    const r = k.restore;
+    // a backup link's places that this data knows (all of them until the data is in)
+    const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
+    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : '';
+    if (sig !== homeSig) {
+      const focusIn = els.homeNote.contains(doc.activeElement);
+      homeSig = sig;
+      if (r?.k === 'ask' && n) fill(els.homeNote, [COPY.restoreAsk(n)], [act('restore-merge', COPY.restoreMerge), act('restore-cancel', COPY.restoreCancel)]);
+      else if (r?.k === 'ask') fill(els.homeNote, [COPY.restoreNone], [act('restore-cancel', COPY.close)]);
+      else if (r?.k === 'done') fill(els.homeNote, [COPY.restoreDone(r.added)], []);
+      else if (k.inapp && k.inappNote) {
+        const name = COPY.inappName[k.inapp];
+        const lines = [COPY.inappNote(name)];
+        if (k.inappNote === 'copied') lines.push(COPY.inappCopied);
+        else if (k.inappNote === 'failed') lines.push(COPY.inappFailed);
+        // KakaoTalk has its own way out to the phone's browser; elsewhere the link is copied
+        const open = k.inapp === 'kakaotalk' ? el(doc, 'a', { class: 'tbtn', 'data-action': 'inapp-open', href: '#' }, COPY.inappOpen) : act('inapp-copy', COPY.inappOpen);
+        fill(els.homeNote, lines, [open, act('inapp-close', COPY.close)]);
+      } else els.homeNote.replaceChildren();
+      els.homeNote.hidden = !sig;
+      if (r?.k === 'done' && els.announce) els.announce.textContent = COPY.restoreDone(r.added);
+      // the button tapped is gone: the answer (or, with nothing left, the first mood) takes the focus
+      if (focusIn) (els.homeNote.querySelector<HTMLElement>('p') ?? els.moods[0])?.focus({ preventScroll: true });
+    }
+    const out = els.homeNote.querySelector<HTMLAnchorElement>('a[data-action="inapp-open"]');
+    if (out) setAttr(out, 'href', kakaoExternal(shareUrl(s)));
+
+    const nsig = s.view === 'saved' && k.nudge && k.install ? k.install : '';
+    if (nsig !== nudgeSig) {
+      const focusIn = els.nudge.contains(doc.activeElement);
+      nudgeSig = nsig;
+      if (nsig === 'ios') fill(els.nudge, [COPY.nudge, COPY.nudgeIos], [act('nudge-close', COPY.close)]);
+      else if (nsig === 'prompt') fill(els.nudge, [COPY.nudge], [act('install', COPY.install), act('nudge-close', COPY.close)]);
+      else els.nudge.replaceChildren();
+      els.nudge.hidden = !nsig;
+      if (focusIn) els.savedTitle.focus({ preventScroll: true });
+    }
+    els.backup.hidden = !s.saved.length;
+    setText(els.backupNote, k.backup === 'copied' ? COPY.backupCopied : k.backup === 'failed' ? COPY.backupFailed : '');
+  }
+
   // --- sheet ---
   function sheetSigOf(s: State): string {
     // Only what the user changes in a sheet. News that arrives while it is open — a 숙소 GPS failure, a GPS
@@ -897,6 +984,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     renderResults(s);
     renderSaved(s);
     patchCards(s);
+    renderKeep(s);
     renderSheet(s);
     if (els.announce && s.announce.seq !== announceSeq) {
       announceSeq = s.announce.seq;

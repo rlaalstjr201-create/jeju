@@ -37,10 +37,21 @@ function storageOf(name: 'localStorage' | 'sessionStorage'): Storage | null {
   }
 }
 
+/** '/' (vite.config.ts): absolute, so a page served at any address finds its files (ADR-0063). */
+const BASE = import.meta.env.BASE_URL;
+
+/** Ask the browser to keep this site's storage (ADR-0063 2a): no prompt of ours; Chrome and Safari decide by
+ * themselves, and a "no" changes nothing. */
+async function persist(): Promise<void> {
+  const s = navigator.storage;
+  if (!s?.persist || (await s.persisted?.())) return;
+  await s.persist();
+}
+
 const app = mountApp(document, {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
   loadSpots: () =>
-    fetch(`./spots.json?v=${__SPOTS_V__}`).then((r) => {
+    fetch(`${BASE}spots.json?v=${__SPOTS_V__}`).then((r) => {
       if (!r.ok) throw new Error(String(r.status));
       return r.json() as Promise<unknown>;
     }),
@@ -50,6 +61,7 @@ const app = mountApp(document, {
   session: storageOf('sessionStorage'),
   // Anonymous usage counts (ADR-0061): only when the build names a collection address.
   eventsUrl: import.meta.env.VITE_EVENTS_URL,
+  persist,
 });
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
@@ -65,7 +77,7 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   });
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('./sw.js')
+      .register(`${BASE}sw.js`)
       .then((reg) => {
         // A home-screen app that stays resident never navigates, so it would never look for a new
         // deploy. Check when it comes back to the foreground (at most once a minute).

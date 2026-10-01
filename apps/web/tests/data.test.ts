@@ -490,6 +490,6 @@ describe('S51 홈 화면(PWA) 실행 — 매니페스트', () => {
     expect(m.background_color).toBe('#161817');
     for (const i of m.icons) expect(existsSync(resolve(root, 'public', i.src)), i.src).toBe(true);
     const html = readFileSync(resolve(root, 'index.html'), 'utf8');
-    expect(html).toContain('<link rel="manifest" href="./manifest.webmanifest" />');
+    expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest" />'); // absolute: any page address (ADR-0063)
   });
 });

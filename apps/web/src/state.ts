@@ -4,6 +4,7 @@
 import { areaByName, type AreaName } from './areas';
 import { type Day } from './dates';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, type Button, type Card, type Histories, type HistoryKey, type Reach, type Spot, type Sub } from './pick';
+import type { InApp, InstallHow } from './keep';
 import type { SessionRecord } from './store';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
@@ -27,6 +28,23 @@ export interface Shown {
   how: 'new' | 'more' | 'restore';
   /** bumps on every result, so the renderer knows when to scroll/announce. */
   seq: number;
+}
+
+/** Keeping saves without a login (ADR-0063 2): what the quiet notices say. */
+export interface Keep {
+  /** a backup link opened here: asking 합치기 / 그만두기, then how many it added. */
+  restore: { k: 'ask'; entries: SavedEntry[] } | { k: 'done'; added: number } | null;
+  /** the in-app browser this page runs in (null: a real browser). */
+  inapp: InApp | null;
+  /** the in-app notice on the first screen: shown, or shown after 브라우저로 열기 copied the link (or could
+   * not); null once closed. */
+  inappNote: 'show' | 'copied' | 'failed' | null;
+  /** how this browser adds the app to the home screen (null: it can't, or it is the home-screen app). */
+  install: InstallHow | null;
+  /** the home-screen nudge is on the saved list (once, ADR-0063 2d). */
+  nudge: boolean;
+  /** 링크로 백업 in the saved list: what happened to the copy. */
+  backup: 'copied' | 'failed' | null;
 }
 
 export interface State {
@@ -76,6 +94,7 @@ export interface State {
   tracking: boolean;
   stayForm: { pending: boolean; error: NoOrigin | null };
   offline: boolean;
+  keep: Keep;
   /** what the screen reader is told about new cards (render.ts words it); `seq` bumps per announcement. */
   announce: { n: number; more: boolean; seq: number };
   seq: number;
@@ -110,6 +129,7 @@ export type Action =
   | { type: 'hint'; id: string }
   | { type: 'hintSeen' }
   | { type: 'tracking'; on: boolean }
+  | { type: 'keep'; keep: Partial<Keep> }
   | { type: 'imgError'; id: string }
   | { type: 'offline'; offline: boolean }
   | { type: 'permission'; permission: GeoPermission }
@@ -128,6 +148,7 @@ export function initialState(init: {
   hintSeen: boolean;
   tracking?: boolean;
   offline: boolean;
+  keep?: Partial<Keep>;
 }): State {
   return {
     view: 'home',
@@ -161,6 +182,7 @@ export function initialState(init: {
     tracking: init.tracking ?? true,
     stayForm: { pending: false, error: null },
     offline: init.offline,
+    keep: { restore: null, inapp: null, inappNote: null, install: null, nudge: false, backup: null, ...init.keep },
     announce: { n: 0, more: false, seq: 0 },
     seq: 0,
   };
@@ -347,7 +369,8 @@ function enterView(s: State, view: View): State {
   if (view === s.view) return s;
   const next: State = { ...s, view };
   if (view === 'saved') {
-    return { ...next, unsaved: [], pastOpen: false, savedList: null, savedFrom: s.view === 'saved' ? s.savedFrom : s.view, phase: { k: 'idle' } };
+    const keep = s.keep.backup ? { ...s.keep, backup: null } : s.keep; // a new visit to the list, a fresh 링크로 백업
+    return { ...next, keep, unsaved: [], pastOpen: false, savedList: null, savedFrom: s.view === 'saved' ? s.savedFrom : s.view, phase: { k: 'idle' } };
   }
   const left = { ...next, unsaved: [], savedList: null };
   if (view === 'cards') return { ...left, phase: cardsValid(left) ? { k: 'ready' } : { k: 'idle' } };
@@ -454,6 +477,8 @@ function step(s: State, a: Action): State {
       return s.hintSeen ? s : { ...s, hintSeen: true };
     case 'tracking':
       return a.on === s.tracking ? s : { ...s, tracking: a.on };
+    case 'keep':
+      return { ...s, keep: { ...s.keep, ...a.keep } };
     case 'imgError':
       if (s.broken.includes(a.id)) return s;
       return { ...s, broken: [...s.broken, a.id], brokenOffline: s.offline ? [...s.brokenOffline, a.id] : s.brokenOffline };

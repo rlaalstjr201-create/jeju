@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import { buildServiceWorker, spotsVersion } from './scripts/sw-build';
@@ -27,9 +27,44 @@ function serviceWorker(): Plugin {
   };
 }
 
+/** Link previews need absolute URLs: `__SITE__` in index.html becomes the build env SITE_URL (docs/deploy.md),
+ * or nothing (relative) when it is unset. */
+function siteUrl(): Plugin {
+  const site = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
+  return { name: 'site-url', transformIndexHtml: (html) => html.replaceAll('__SITE__', site) };
+}
+
+/** `vite preview` answers like Cloudflare Pages with a 404.html (docs/deploy.md): no SPA fallback — a path
+ * that is no file gets 404.html with status 404. The e2e checks run against this. */
+function pagesNotFound(): Plugin {
+  return {
+    name: 'pages-404',
+    configurePreviewServer(server) {
+      const dist = resolve(server.config.root, server.config.build.outDir);
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          let file = '';
+          try {
+            file = resolve(dist, `.${decodeURIComponent((req.url ?? '/').split('?')[0])}`);
+          } catch {
+            /* a malformed path is no file */
+          }
+          if (file.startsWith(dist) && existsSync(file) && statSync(file).isFile()) return next();
+          res.statusCode = 404;
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.end(readFileSync(resolve(dist, '404.html')));
+        });
+      };
+    },
+  };
+}
+
 export default defineConfig({
-  base: './',
+  // Absolute: index.html served at any path (a deep link, a fallback) still finds /assets/… (ADR-0063).
+  base: '/',
+  // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
+  appType: 'mpa',
   define: { __SPOTS_V__: JSON.stringify(SPOTS_V) },
-  plugins: [serviceWorker()],
+  plugins: [serviceWorker(), siteUrl(), pagesNotFound()],
   build: { target: 'es2020', modulePreload: { polyfill: false } },
 });

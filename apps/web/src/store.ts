@@ -22,6 +22,10 @@ export const KEYS = {
   hint: 'jeju.hintSeen',
   /** 기록 끄기 (ADR-0061): false = no usage events from this device. Missing = on. */
   track: 'jeju.track',
+  /** ADR-0063: the in-app browser notice was closed (true). */
+  inapp: 'jeju.inappSeen',
+  /** ADR-0063: the home-screen nudge has been shown once (true). */
+  install: 'jeju.installSeen',
   session: 'jeju.session',
 } as const;
 export const MAX_SAVED = 500;
@@ -71,6 +75,21 @@ export function normalizeEntries(list: readonly SavedEntry[]): SavedEntry[] {
     }
     return { id: e.id, date: e.date, order: n++ };
   });
+}
+
+/** A backup brought onto this device (ADR-0063): what is here stays as it is; each place missing on its day
+ * goes to the end of that day, in the backup's order. `added` = how many were new. */
+export function mergeEntries(cur: readonly SavedEntry[], incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number } {
+  const have = new Set(cur.map((e) => `${e.id}|${e.date}`));
+  const next = [...cur];
+  let added = 0;
+  for (const e of normalizeEntries(incoming)) {
+    const k = `${e.id}|${e.date}`;
+    if (have.has(k)) continue;
+    have.add(k);
+    next.push({ id: e.id, date: e.date, order: Number.MAX_SAFE_INTEGER - MAX_SAVED + added++ });
+  }
+  return { entries: normalizeEntries(next), added };
 }
 
 /** v2 list: entries with a non-empty id, a real day and a finite order only, then normalized. */
@@ -184,6 +203,9 @@ export interface Loaded {
   hintSeen: boolean;
   /** anonymous usage counts on (ADR-0061); anything but a stored false is on. */
   tracking: boolean;
+  /** ADR-0063: the in-app browser notice was closed / the home-screen nudge was shown. */
+  inappSeen: boolean;
+  installSeen: boolean;
 }
 
 export interface Store {
@@ -197,6 +219,8 @@ export interface Store {
   setStay(stay: Stay): void;
   setHintSeen(): void;
   setTracking(on: boolean): void;
+  setInappSeen(): void;
+  setInstallSeen(): void;
   /** 기록 as stored now (another tab may have switched it). */
   tracking(): boolean;
   // Every saved-list change below is read-modify-write, so two tabs never overwrite each other's hearts.
@@ -209,6 +233,8 @@ export interface Store {
   moveSaved(id: string, date: Day, dir: -1 | 1): SavedEntry[];
   /** To another day, at its end (if it is already there, the two become one). */
   moveToDay(id: string, from: Day, to: Day): SavedEntry[];
+  /** A backup link's places onto this device (mergeEntries). */
+  mergeSaved(incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number };
   readSession(): SessionRecord | null;
   writeSession(rec: SessionRecord): void;
   clearSession(): void;
@@ -296,7 +322,18 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         memory = saved;
         if (!same(rawSaved, saved)) writeSaved(saved);
       }
-      return { basis, reach, when, region, stay, saved, hintSeen: get(local, KEYS.hint) === true, tracking: get(local, KEYS.track) !== false };
+      return {
+        basis,
+        reach,
+        when,
+        region,
+        stay,
+        saved,
+        hintSeen: get(local, KEYS.hint) === true,
+        tracking: get(local, KEYS.track) !== false,
+        inappSeen: get(local, KEYS.inapp) === true,
+        installSeen: get(local, KEYS.install) === true,
+      };
     },
     setBasis: (b) => void set(local, KEYS.basis, b),
     setReach: (r) => void set(local, KEYS.reach, r),
@@ -305,6 +342,8 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     setStay: (stay) => void set(local, KEYS.stay, stay),
     setHintSeen: () => void set(local, KEYS.hint, true),
     setTracking: (on) => void set(local, KEYS.track, on),
+    setInappSeen: () => void set(local, KEYS.inapp, true),
+    setInstallSeen: () => void set(local, KEYS.install, true),
     tracking: () => get(local, KEYS.track) !== false,
     saved: readSaved,
     toggleSaved(id, date, at) {
@@ -339,6 +378,15 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         if (rest.some((e) => e.id === id && e.date === to)) return rest;
         return [...rest, { id, date: to, order: lastOrder(rest, to) }];
       });
+    },
+    mergeSaved(incoming) {
+      let added = 0;
+      const entries = update((cur) => {
+        const m = mergeEntries(cur, incoming);
+        added = m.added;
+        return m.entries;
+      });
+      return { entries, added };
     },
     readSession: () => parseSession(get(session, KEYS.session)),
     writeSession: (rec) => void set(session, KEYS.session, rec),

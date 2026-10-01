@@ -36,7 +36,9 @@ async function navigate(req) {
   const shell = await caches.match(scoped('./'), { cacheName: CACHE });
   const network = fetch(req);
   if (!shell) return network; // first visit: nothing cached to fall back on
-  const fromNetwork = network.then((res) => (res.ok ? res : shell)).catch(() => shell);
+  // A 404 is the host's answer for an address that is no page (404.html, ADR-0063): shown as it is. Only a
+  // failing host (5xx) or no network gets the shell.
+  const fromNetwork = network.then((res) => (res.ok || res.status === 404 ? res : shell)).catch(() => shell);
   const late = new Promise((resolve) => setTimeout(() => resolve(shell), NAV_TIMEOUT_MS));
   return Promise.race([fromNetwork, late]);
 }

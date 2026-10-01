@@ -22,7 +22,7 @@ const base = (over: Partial<SwInput> = {}): SwInput => ({
 describe('S26 배포 직후 — 새 코드와 새 데이터가 함께', () => {
   it('the app fetches spots.json with a content-hash query, and the SW precaches that same URL', () => {
     const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');
-    expect(main).toContain('./spots.json?v=${__SPOTS_V__}');
+    expect(main).toContain('${BASE}spots.json?v=${__SPOTS_V__}');
     const cfg = readFileSync(resolve(root, 'vite.config.ts'), 'utf8');
     expect(cfg).toMatch(/__SPOTS_V__: JSON\.stringify\(SPOTS_V\)/);
     const { precache } = buildServiceWorker(base());
@@ -206,6 +206,14 @@ describe('S23 약한 망 — 내비게이션', () => {
     await expect(sw.navigate()).resolves.toEqual({ ok: true, fresh: true });
   });
 
+  it("ADR-0063: the host's 404 (an unknown address) is shown as it is, not swapped for the app shell", async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const sw = runSw(source, async () => ({ ok: false, status: 404, page: '404.html' }), c);
+    await sw.install();
+    await expect(sw.navigate('https://app.test/nope/deep')).resolves.toEqual({ ok: false, status: 404, page: '404.html' });
+  });
+
   it('S21 first visit offline (nothing cached): the browser\'s own offline page', async () => {
     const c = fakeCaches();
     const { source } = buildServiceWorker(base());
@@ -337,5 +345,18 @@ describe('QA 2026-09-30 — 새 배포가 상주 앱에 닿는 길', () => {
     expect(await runsCachedCode(doc(CSS), cache(CSS), JS)).toBe(false); // new code, same styles
     expect(await runsCachedCode(doc(null), cache(JS), JS)).toBe(true);
     expect(await runsCachedCode(doc(CSS), undefined, JS)).toBe(false);
+  });
+});
+
+describe('ADR-0063 — absolute paths: the page works at any address', () => {
+  it('vite base is "/", and main.ts fetches data and registers the worker from it', () => {
+    const cfg = readFileSync(resolve(root, 'vite.config.ts'), 'utf8');
+    expect(cfg).toMatch(/base: '\/'/);
+    expect(cfg).toMatch(/appType: 'mpa'/); // no SPA fallback in dev/preview either
+    const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');
+    expect(main).toContain('.register(`${BASE}sw.js`)');
+    expect(main).toMatch(/const BASE = import\.meta\.env\.BASE_URL/);
+    const html = readFileSync(resolve(root, 'index.html'), 'utf8');
+    expect(html.match(/(?:href|src)="\.\//g)).toBeNull();
   });
 });

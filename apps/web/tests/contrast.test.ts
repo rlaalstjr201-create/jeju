@@ -44,3 +44,10 @@ describe('date field border contrast (design.md C3)', () => {
     expect(ratio(dark['--line'], dark['--surface'])).toBeLessThan(3);
   });
 });
+
+describe('ADR-0063 3: the attribution line is readable (≥ AA)', () => {
+  it('.credit is --muted on --bg: ≥ 4.5:1 in light and dark', () => {
+    expect(css).toMatch(/\.credit\s*\{[^}]*color:\s*var\(--muted\)/);
+    for (const t of [light, dark]) expect(ratio(t['--muted'], t['--bg'])).toBeGreaterThanOrEqual(4.5);
+  });
+});

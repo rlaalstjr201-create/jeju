@@ -182,6 +182,13 @@ export function checkSlop(root: string, opts: { dist?: boolean } = {}): Violatio
   if (/@font-face|fonts\.googleapis|fonts\.gstatic/.test(indexHtml)) v.push({ rule: 16, file: 'index.html', detail: 'external font' });
   if (SEL_TOKEN.test(indexHtml)) v.push({ rule: 18, file: 'index.html', detail: indexHtml.match(/--sel-[\w-]*/)![0] });
   checkStrings('index.html', htmlStrings(indexHtml), v);
+  // ADR-0063: the host's 404 page and the privacy page are copy and style too (self-contained, own tokens).
+  for (const f of listFiles(join(root, 'public'), /\.html$/)) {
+    const page = read(f);
+    for (const m of page.matchAll(/<style>([\s\S]*?)<\/style>/g)) checkCss(f, m[1], v);
+    if (/@font-face|fonts\.googleapis|fonts\.gstatic/.test(page)) v.push({ rule: 16, file: f, detail: 'external font' });
+    checkStrings(f, htmlStrings(page), v);
+  }
   const manifest = JSON.parse(read(join(root, 'public/manifest.webmanifest'))) as Record<string, unknown>;
   checkStrings('manifest.webmanifest', [manifest.name, manifest.short_name, manifest.description].filter((x): x is string => typeof x === 'string'), v);
   // #17 · #19: the place sentences are on screen as much as the UI copy.

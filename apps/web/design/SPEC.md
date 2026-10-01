@@ -6,6 +6,8 @@
 
 2026-10-01: `design/design.md` 8절 권장 변경 1~4(날짜 입력 글자 16px, 입력 테두리 3:1, 자주 누르는 대상 누름 영역 48, 데이터 타임아웃 10초)를 반영했다(2.1·2.2·3.2·4·6.4·6.5·6.10·6.12·11.2·13·14·15절).
 
+2026-10-01: ADR-0063(배포 준비)을 반영했다. 절대 경로(`base: '/'`)·404 페이지·`_headers`, 로그인 없이 저장 유지(저장소 유지 요청, 인앱 브라우저 안내, 링크로 백업·합치기, 홈 화면 안내 한 번), 출처 한 줄, 개인정보 안내 페이지, 링크 미리보기·maskable 아이콘·favicon·robots(6.1·6.3·6.6·6.12·6.14·9·11.4·12·14·15절, `docs/deploy.md`).
+
 범위는 ADR-0025~0029 그대로다(이름·기준 순간은 ADR-0059로 갱신). 한 화면, 로그인·일정·결제 없음, 데이터 추가 수집 없음, 가격·운영시간·평점 없음. 성공 기준은 `plans/tomorrow-picker.md`의 S9-1~S9-7.
 
 사용자: 계획 없이 제주를 다니다 "지금 여기서 뭐하지?" 할 때 한 손 엄지로, 반쯤 딴생각하며 갈 곳을 고르는 여행자(ADR-0059). 계획을 세우지 않고, 시끄러운 화면을 싫어한다. "AI가 만든 것 같다"는 느낌이 한 번이라도 들면 안 된다.
@@ -256,6 +258,9 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
   <title>P의 여행</title>
   <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161817" media="(prefers-color-scheme: dark)">
+  <!-- 링크 미리보기(ADR-0063): og:type·site_name·title·description·image(1200×630 /og.png)·url·locale, twitter:card summary_large_image·title·description·image.
+       __SITE__는 빌드 환경 변수 SITE_URL로 바뀐다(없으면 상대 경로) -->
+  <!-- 아이콘: /favicon.ico(32), /icons/icon-192.png, apple-touch-icon /icons/icon-180.png, 매니페스트 /manifest.webmanifest. 모두 절대 경로 -->
   <!-- 첫 페인트 번쩍임 방지. 토큰 밖 색 리터럴은 여기만 허용 -->
   <style>html{background:#f6f6f3}@media (prefers-color-scheme:dark){html{background:#161817}}</style>
 </head>
@@ -276,6 +281,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
           <li><button class="mood" type="button" data-mood="food"><span>맛있는 거 먹고 싶어</span>{체크 .i-check}</button></li>
         </ul>
         <button class="any" type="button" data-mood="any"><span>아무거나 골라줘</span>{체크 .i-check}</button>
+        <div id="homeNote" class="inform" hidden></div>          <!-- ADR-0063: 백업 링크 합치기 / 인앱 브라우저 안내(6.14) -->
       </section>
       <section id="results" aria-labelledby="crumb" hidden>
         <div class="head">
@@ -288,18 +294,28 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
         </div>
         <p id="status" class="status" role="status"></p>
         <div id="cards" class="picks"></div>                      <!-- aria-live 없음 -->
+        <p class="credit">정보·사진: 비짓제주(제주관광공사)</p>    <!-- ADR-0063 3. #cards가 비면 숨김 -->
       </section>
       <section id="savedView" aria-labelledby="savedTitle" hidden>
         <div class="head">
           <h1 class="title" id="savedTitle" tabindex="-1">저장한 곳<span class="count"></span></h1>
           <button class="tbtn back" type="button">돌아가기</button>
         </div>
+        <div id="nudge" class="inform" hidden></div>              <!-- ADR-0063: 홈 화면 안내, 한 번(6.14) -->
         <p class="sort"></p>
         <div class="picks"></div>
         <p class="foot">이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.</p>
         <div class="track" hidden>                                  <!-- ADR-0061: VITE_EVENTS_URL가 있을 때만 보임 -->
           <p id="trackNote">어디가 좋았는지 익명으로 세어요.</p>
           <button class="tbtn" type="button" data-action="track" aria-describedby="trackNote">기록 끄기</button>
+        </div>
+        <div class="backup">                                        <!-- ADR-0063: 저장이 있을 때만 버튼 -->
+          <button class="tbtn" type="button" data-action="backup">링크로 백업</button>
+          <p id="backupNote" class="note" role="status"></p>
+        </div>
+        <div class="about">
+          <p class="credit">정보·사진: 비짓제주(제주관광공사)</p>
+          <a class="tbtn" href="/privacy">개인정보 처리 안내</a>
         </div>
       </section>
     </main>
@@ -330,6 +346,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **질문**: `지금 뭐 하고 싶어요?` 24/700, 날짜 줄 아래 4. 320에서도 한 줄(ADR-0059).
 - **기분 목록**: 질문 아래 20. 줄 4개, 목록 좌우를 -8로 넓혀 누름 면이 글자보다 8px 바깥까지 온다. 줄: `min-height: 60px`, 패딩 14/8, 20/600 `--text`, 행간 1.35, 글자 왼쪽(여백 선 x=16에 정확히 맞는다). 가는선은 첫 줄 위, 줄 사이, 마지막 줄 아래(모두 1px `--line`, 좌우 8 들여 글자 폭 선에 맞춤). 틀·면·그림자·꺾쇠 없음. 누르는 동안 `--fill` 면(radius `--r-ctl`).
   - 지난번에 고른 기분(`state.mood`)은 줄 오른쪽 체크(`--text`) + `aria-current="true"`.
+- **안내 자리**(`#homeNote.inform`, ADR-0063): `아무거나 골라줘` 아래 24. 평소엔 `hidden`이라 첫 화면은 질문과 기분 목록뿐이다. 백업 링크로 열었을 때의 합치기 물음, 인앱 브라우저 안내만 여기 온다(6.14). 화면 글자 크기는 그대로 24·20·15.
 - **아무거나 골라줘**: 목록 아래 8, 목록 밖에 떨어진 글자 버튼. 20/400 `--muted`, 밑줄 1px(글자색), `text-underline-offset: 6px`, 높이 ≥ 48, 패딩 0 8 + 왼쪽 마진 -8(글자가 여백 선에). 기분 줄과 크기는 같고 색·굵기·밑줄로 성격이 다른 선택지임을 보인다. 지난번에 `any`였으면 글자 뒤 6px에 체크 + `aria-current="true"`.
 - 권한 요청·팝업·로딩 표시 없음. 위치 권한은 기분을 누를 때 처음 묻는다.
 
@@ -380,6 +397,8 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - 누르면 같은 기분(먹기면 같은 하위)의 다음 3장. 등장 애니메이션 없이 바로 바꾸고, 결과 머리가 화면 밖이면 머리가 상단 줄 바로 아래 오도록 즉시 스크롤(`scrollIntoView({block: 'start'})`, 부드러운 스크롤 없음). 머리가 이미 화면 안이면 스크롤하지 않는다. 포커스는 `h1.crumb`으로.
 - 같은 버튼을 400ms 안에 다시 누르면 무시.
 - 결과가 준비되지 않은 동안(회색 틀·안내)에는 띠가 없다.
+
+- **출처 한 줄**(ADR-0063 3): 결과 끝(띠 아래) `p.credit` `정보·사진: 비짓제주(제주관광공사)`, 위 28, 15/400 `--muted`. 첫 화면에는 두지 않는다(원칙 1: 질문과 기분 목록뿐). `#cards`가 비면(첫 화면 전환 중·빈 결과 자리) 숨는다. 저장한 곳에도 같은 줄(6.12).
 
 ### 6.7 회색 틀(자리 표시)
 
@@ -467,6 +486,9 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - `위로`/`아래로`: 같은 날 안에서 한 칸. 줄 노드는 `{id}|{날짜}` 키로 재사용해 사진을 다시 받지 않고, 누른 버튼에 포커스가 남는다(숨으면 그 줄의 다음 버튼). 400ms 재탭 무시.
 - `다른 날로`: 시트(`어느 날로 옮길까요?`) — 저장이 있는 오늘 이후 날짜들(지금 날짜에 체크) + `날짜 고르기`(6.10과 같은 방식: 오늘~+365, 선택기가 없으면 입력 + `이 날로`/Enter에서만 옮김) + `닫기`. 고르면 그날 끝으로 옮기고(이미 있으면 하나로) 시트가 닫히며 포커스는 새 자리의 그 줄 `다른 날로`. history는 기준 시트와 같다(push, 닫기·뒤로가기 = back). 줄이 없는 채 앞으로가기로 오면 열지 않고 그 항목을 소비한다.
 - 각주(`p.foot`, 위 28, 15/400 `--muted`): `이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.`
+- **링크로 백업**(ADR-0063, 6.14): 각주(와 익명 기록 줄) 아래 4, `.tbtn` `링크로 백업`(왼쪽 -8). 저장이 없으면 숨는다. 누른 뒤 그 아래 `p#backupNote`(`role="status"`, 15/400 `--muted`)에 결과 한 줄. 저장한 곳을 다시 열면 비어 있다.
+- **출처와 개인정보**(`div.about`, 위 28): `p.credit` `정보·사진: 비짓제주(제주관광공사)`(15/400 `--muted`, 5.91:1), 그 아래 `a.tbtn` `개인정보 처리 안내`(`/privacy`, 같은 탭, 왼쪽 -8).
+- **홈 화면 안내**(`#nudge.inform`, 머리 아래 12): 6.14.
 - **익명 사용 기록**(ADR-0061, specs/usage-events.md): 빌드에 `VITE_EVENTS_URL`이 있을 때만(없으면 아무것도 모으지 않으니 문구도 버튼도 없다, 정적 마크업은 `hidden`) 각주 바로 아래 `div.track`(위 4, 15/400 `--muted`)에 한 줄 `어디가 좋았는지 익명으로 세어요.`(`p#trackNote`), 그 아래 `.tbtn` `기록 끄기`(왼쪽 -8로 글자가 각주 왼쪽 선에, `--text`, `aria-describedby="trackNote"`). 누르면 `기록 켜기`로 바뀌고(`aria-pressed` 없음, 글자가 상태) `jeju.track`에 저장. 꺼져 있으면 이벤트를 쌓지도 보내지도 않고, 끄는 순간 쌓인 것도 버린다. 다른 탭에서 끄거나 켜도(`storage` 이벤트의 `jeju.track`, 또는 저장소 비움 `key === null`) 이 탭이 다시 읽어 따른다: 꺼졌으면 먼저 쌓인 것을 버리고, 버튼 글자도 바뀐다(QA r4). 400ms 재탭 무시. 저장소가 막히면 이번 방문 동안 메모리로.
 - 저장이 하나도 없으면 ♥ N이 없어 들어올 수 없다. 데이터에서 모두 사라진 경우만 빈 상태 문장.
 - 닫기: `돌아가기`, ♥ N 다시 누르기, 폰 뒤로가기. 열기 전 화면(첫 화면 또는 보던 3장, 스크롤 위치까지)으로 돌아간다. 새로 뽑지 않는다.
@@ -476,6 +498,15 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - 결과 화면에서 저장이 0→1이 되는 첫 하트에서 **한 번만**(localStorage `jeju.hintSeen`). 그 카드의 안내 줄(`p.hint`, 카드 폭 전체 줄, 위 8, 15/400 `--muted`)에 `저장한 곳은 맨 위 하트 버튼에 모여요.` 같은 문장을 `#announce`에도 넣는다.
 - **타이머로 사라지지 않는다.** 하트가 아닌 다음 의도(다른 3곳 보기, 기분·바꾸기, 식사 탭, 기준 변경, ♥ N, 새로고침 복원)에서 상태 `hintFor`가 비고 다음 그리기에서 빠진다. 사라짐 전환 없음. 졸린 사람이 읽기 전에 없어지지 않고, 레이아웃이 두 번 튀지 않는다.
 - 안내가 떠 있는 동안 하트를 더 눌러도 안내는 그대로다. 저장소가 막혀 있으면 이번 방문 동안만 기억.
+
+### 6.14 기기에 오래 남기기 (ADR-0063 2, 로그인 없음)
+
+모두 문장 한두 줄(첫 줄 `--text`, 다음 줄 `--muted`, 15/400) + 글자 버튼 줄(`.acts`, 위 4, 왼쪽 -8, 사이 8, `.tbtn` 높이 48). 상자·면·그림자·아이콘 없음, 왼쪽 정렬. 한 화면에 하나만 보인다(합치기 물음 > 인앱 안내). 버튼을 눌러 안내가 바뀌거나 사라지면 포커스는 남은 첫 문장(없으면 첫 기분 줄 / 저장한 곳 제목).
+
+- **저장소 유지 요청**: 한 방문의 첫 저장(하트로 담기, 백업 합치기) 때 `navigator.storage.persist()`를 한 번 부른다(이미 `persisted()`면 부르지 않음). 우리 쪽 안내·확인 창 없음, 거절·미지원·오류는 무시.
+- **인앱 브라우저 안내**: UA로 카카오톡(`KAKAOTALK`)·인스타그램(`Instagram`)·페이스북(`FBAN|FBAV|FB_IAB`)·네이버(`NAVER(inapp`)·라인(`Line/숫자`)·다음(`DaumApps`)을 알아본다(`src/keep.ts` `inAppOf`). 첫 화면 안내 자리에 `{앱} 안에서 저장한 곳은 {앱}에만 남아요.` + `브라우저로 열기` · `닫기`. 카카오톡의 `브라우저로 열기`는 링크 `kakaotalk://web/openExternal?url={주소}`, 그 밖은 버튼이 주소를 복사하고 둘째 줄에 `링크를 복사했어요. 휴대폰 브라우저 주소창에 붙여 넣어 주세요.`(복사 실패: `오른쪽 위 메뉴에서 다른 브라우저로 열어 주세요.`). 넘기는 주소에는 저장이 있으면 백업 조각(`#s=…`)을 붙여 저장한 곳이 함께 간다. `닫기`는 `jeju.inappSeen`에 기억(다시 안 뜸). 결과·저장한 곳에서는 보이지 않는다.
+- **링크로 백업 / 합치기**: 저장 목록 v2(`id`, `date`, 날짜 안 순서) 전체를 주소의 `#s=` 뒤에 담아 복사한다(11.4 형식). `#` 뒤는 서버로 가지 않는다. 그런 주소로 열면(또는 열린 탭 주소창에 붙여 넣어 `hashchange`) 조각을 곧바로 주소에서 지우고(`history.replaceState`, history 상태 유지), 읽히면 첫 화면 안내 자리에 `링크에 저장한 곳이 {n}곳 있어요. 이 기기에 합칠까요?` + `합치기` · `그만두기`. n은 데이터에 있는 곳만(데이터가 오기 전엔 전부). 읽히지 않는 링크(형식·버전·길이·날짜 오류)는 조용히 버린다. 데이터에 없는 곳만 남은 링크는 `링크에 있는 곳을 지금 목록에서 찾지 못했어요.` + `닫기`. `합치기`: 이 기기 것은 그대로, 날짜마다 없는 곳만 그 날 끝에 링크 순서대로(데이터에서 사라진 id는 버림), 결과 줄 `{k}곳을 합쳤어요. 맨 위 하트 버튼에 모여요.`(k=0: `새로 합칠 곳이 없어요. 이미 이 기기에 있어요.`)을 `#announce`에도. 다음 기분 탭에서 사라진다.
+- **홈 화면 안내**: 인앱이 아니고 이미 홈 화면 앱(`display-mode: standalone`, iOS `navigator.standalone`)이 아닐 때, 저장이 있는 상태로 저장한 곳을 처음 열면 **한 번만**(`jeju.installSeen`, 보여 준 순간 기록) 머리 아래에. iOS(iPadOS 포함): `홈 화면에 추가하면 저장한 곳이 오래 남아요.` / `공유 버튼에서 ‘홈 화면에 추가’를 눌러 주세요. 지금 저장한 곳은 아래 ‘링크로 백업’으로 옮겨요.`(홈 화면 앱은 Safari와 저장소가 따로라서) + `닫기`. 그 밖은 브라우저가 `beforeinstallprompt`를 준 경우만 첫 문장 + `홈 화면에 추가`(그 프롬프트를 연다) · `닫기`. `beforeinstallprompt`는 늘 `preventDefault`(크롬 미니 바 없음). 둘 다 아니면 안내 없음.
 
 ---
 
@@ -586,6 +617,14 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 | 저장한 곳 각주 | `이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.` |
 | 익명 사용 기록(각주 아래, `VITE_EVENTS_URL`이 있을 때만) | `어디가 좋았는지 익명으로 세어요.` / 글자 버튼 `기록 끄기` ↔ `기록 켜기` |
 | 저장한 곳 빈 상태 | `저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.` |
+| 출처(결과 끝·저장한 곳 아래, ADR-0063) | `정보·사진: 비짓제주(제주관광공사)` |
+| 개인정보 링크(저장한 곳 아래) | `개인정보 처리 안내` |
+| 링크로 백업 | 버튼 `링크로 백업` / 복사됨 `링크를 복사했어요. 다른 브라우저나 기기에서 열면 여기 저장한 곳을 합칠 수 있어요.` / 실패 `링크를 복사하지 못했어요. 잠시 뒤 다시 눌러 주세요.` |
+| 백업 링크로 열었을 때 | `링크에 저장한 곳이 {n}곳 있어요. 이 기기에 합칠까요?` / `합치기` · `그만두기` / `{k}곳을 합쳤어요. 맨 위 하트 버튼에 모여요.` / `새로 합칠 곳이 없어요. 이미 이 기기에 있어요.` / `링크에 있는 곳을 지금 목록에서 찾지 못했어요.` + `닫기` |
+| 인앱 브라우저 안내 | `{앱} 안에서 저장한 곳은 {앱}에만 남아요.`(앱: 카카오톡·인스타그램·페이스북·네이버 앱·라인·다음 앱) / `브라우저로 열기` · `닫기` / `링크를 복사했어요. 휴대폰 브라우저 주소창에 붙여 넣어 주세요.` / `오른쪽 위 메뉴에서 다른 브라우저로 열어 주세요.` |
+| 홈 화면 안내 | `홈 화면에 추가하면 저장한 곳이 오래 남아요.` / iOS 둘째 줄 `공유 버튼에서 ‘홈 화면에 추가’를 눌러 주세요. 지금 저장한 곳은 아래 ‘링크로 백업’으로 옮겨요.` / 버튼 `홈 화면에 추가`(프롬프트가 있을 때) · `닫기` |
+| 404 페이지(`public/404.html`) | 제목 `없는 주소예요.` / `주소가 바뀌었거나 잘못 적힌 것 같아요.` / `처음 화면으로` |
+| 개인정보 안내(`public/privacy.html`, `/privacy`) | 제목 `개인정보 처리 안내`, 무리 `저장한 곳은 이 기기에만` · `위치는 기기 밖으로 나가지 않아요` · `익명 사용 기록` · `접속 기록` · `문의` |
 
 없애는 문구: `{지역}에서 가까운 순`·`여기서 가까운 순`·`위치를 몰라서 저장한 순서대로 보여 드려요.`(날짜 모드), `어디 근처로 볼까요?`(→ `언제 어디 근처로 볼까요?`), `내 주변`, `내 위치`, `숙소 다시 정하기`, `셋 다 …`(첫 장 메타), `{지역}에서 가까운 순이에요.`, `앱 안에서 연 창이라 다른 브라우저에서는 보이지 않아요.`, `한 번 더 누르면 다른 곳을 보여 드려요.`, `어디 기준으로 볼까요?`, `어느 지역에 계세요?`, `위 ⇄에서 지역을 골라 주세요`, `…에 계신 것 같아요`, `지금 위치를 숙소로 저장`, `← 돌아가기`, `추천 장소`(aria-label), `{지역} 기준 ⇄`, `내일 뭐하지`, `내일은 어떤 기분이에요?`, `내일 갈 동네를 고르면 …`(ADR-0059).
 
@@ -732,6 +771,9 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 | `jeju.reach` | `"walk" \| "drive30" \| "drive60"` (ADR-0060) | 그 밖이면 `drive30`(써서 고침). 없으면 `drive30`, 쓰지 않음. 저장소가 막히면 이번 방문 동안 메모리(상태)로 |
 | `jeju.hintSeen` | `true` | 참이면 안내 없음 |
 | `jeju.track` | `true \| false` (ADR-0061) | `false`만 꺼짐, 그 밖(없음 포함)은 켜짐. 저장소가 막히면 이번 방문 동안 메모리(상태)로 |
+| `jeju.inappSeen` | `true` (ADR-0063) | 참이면 인앱 브라우저 안내 없음(`닫기`를 누름) |
+| `jeju.installSeen` | `true` (ADR-0063) | 참이면 홈 화면 안내 없음(한 번 보여 줌) |
+| 주소 조각 `#s=` | 백업 링크(ADR-0063, 저장소 아님) | base64url 바이트: `[버전 1]` 다음 날짜마다 `[varint 2020-01-01부터 날 수][varint 개수 ≥ 1][id…]`(날짜 오름차순, id는 날짜 안 순서). id는 소문자 UUID면 `[0][16바이트]`, 아니면 `[길이 1~255][UTF-8]`. 읽을 때: 문자 `[A-Za-z0-9_-]`만, 2만 자 이하, 버전 1, 날 수 ≤ 36,600, 개수 ≥ 1, 합계 ≤ 500, 바이트가 남거나 모자라지 않음, UTF-8 정상. 하나라도 어기면 통째로 버림. 같은 날 같은 id는 하나. 30곳이 약 690자 |
 
 - 하트 토글은 매번 저장소를 다시 읽고 → 바꾸고 → 쓴다. 두 탭이 서로를 덮지 않는다.
 - 날짜는 모두 제주(Asia/Seoul, UTC+9 고정) 달력 날짜.
@@ -772,7 +814,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 | 더블탭(MINOR) | 400ms 무시 | 11.2 |
 | 접근성(MINOR) | `#app` inert, `#announce`, 하트 이름 고정 + aria-pressed, 묶인 이동 문구 `aria-describedby` | 6.5, 6.10 |
 | 숙소 표시·저장 실패 문구(MINOR) | `애월 숙소`, 오류는 버튼 아래 줄 | 6.10, 6.11 |
-| PWA·인앱·오프라인(MINOR) | D6, 저장한 곳 각주, 오프라인 상태 줄 | 6.12, 11.6 |
+| PWA·인앱·오프라인(MINOR) | D6, 저장한 곳 각주, 오프라인 상태 줄. ADR-0063: 인앱 안내·링크로 백업·홈 화면 안내 | 6.12, 6.14, 11.6 |
 | 글자 200%·카드가 링크인 줄 모름(MINOR) | 상단 flex-wrap + nowrap, 첫 장 밑줄 `카카오맵` | 6.2, 6.5 |
 
 `design/qa/scenarios.md`의 간극 행은 2판의 대응(S02~S60)을 그대로 따르고, 3판에서 바뀐 행은 S40(안내가 다음 갱신까지 남음), S45·S46(접힌 머리가 17px로 더 작아짐), S55(각주 고정 두 문장), S57(밑줄 `카카오맵`)이다.
@@ -794,7 +836,10 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 | `areas.ts` | 15곳에 `landmark` 필드 추가 |
 | `pick.ts` | `travel`, `islandOf`, `walkMinutes`, `pickCards`의 `wrapped` (2판 그대로) |
 | `track.ts` | 익명 사용 기록(ADR-0061): 메모리 큐, 10초·20건·`visibilitychange: hidden`에 `sendBeacon(VITE_EVENTS_URL, JSON 배열)`. 주소가 없으면 no-op, 오프라인이면 버림, 재시도 없음 |
-| `main.ts` | 의존성 주입, SW 등록, `visibilitychange`에서 `reg.update()`, `VITE_EVENTS_URL` 전달 |
+| `main.ts` | 의존성 주입, SW 등록, `visibilitychange`에서 `reg.update()`, `VITE_EVENTS_URL` 전달, `navigator.storage.persist` 전달. 데이터·SW 주소는 `import.meta.env.BASE_URL`(`/`)에서 |
+| `keep.ts` | ADR-0063 2: 백업 링크 `encodeBackup`·`decodeBackup`·`backupUrl`·`readBackup`, 인앱 감지 `inAppOf`·`kakaoExternal`, 홈 화면 방식 `installHow`, `copyText`. 순수 함수(복사만 DOM). 합치기 `mergeEntries`는 `store.ts` |
+| `vite.config.ts` | `base: '/'`(어느 주소에서 index.html이 나가도 `/assets/…`를 찾는다), `appType: 'mpa'`(SPA 폴백 없음), `__SITE__` ← `SITE_URL`, preview가 Pages처럼 모르는 경로에 `404.html`을 404로 |
+| `public/` | `_headers`(캐시 규칙), `404.html`, `privacy.html`, `robots.txt`, `og.png`(1200×630), `favicon.ico`, `icons/icon-180.png`·`icon-maskable-512.png`(`npm run make:icons`가 아이콘과 함께 만든다). 404·개인정보 페이지는 스크립트 없이 같은 토큰을 인라인으로 |
 
 `mountApp(doc, deps)`는 `destroy()`를 돌려준다. 모든 리스너(띠의 IntersectionObserver 포함)는 한 AbortController에 묶어 다시 마운트해도 중복되지 않는다. IntersectionObserver는 `destroy()`에서 `disconnect()`.
 
@@ -805,10 +850,13 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 - 내비게이션: 캐시된 셸이 있으면 `Promise.race([fetch(req), 3초 뒤 캐시 셸])`, 네트워크가 실패해도 캐시 셸. 첫 방문은 네트워크를 기다린다.
 - 데이터: `./spots.json?v={SPOTS_V}`(sha256 앞 10자, vite `define`). PRECACHE에도 같은 URL.
 - 이 출처의 GET만 다룬다. 사용 기록 전송(`sendBeacon` POST, ADR-0061)과 다른 출처 요청은 그대로 네트워크로 가고 캐시하지 않는다.
+- 내비게이션의 404(호스트의 `404.html`, ADR-0063)는 셸로 바꾸지 않고 그대로 보인다. 셸은 네트워크 실패·5xx·3초 지연에만.
+- 등록은 `/sw.js`, 범위 `/`(`base: '/'`). PRECACHE 항목은 범위 기준 상대 경로 그대로.
 
 ### 12.2 매니페스트
 
 - `name`·`short_name`: `P의 여행`(ADR-0059). `theme_color`·`background_color`: 결정 D6(기본 `#161817`).
+- 아이콘: 192·512 `purpose: any`, 그리고 `icons/icon-maskable-512.png` `purpose: maskable`(무늬를 가운데 80%로 줄여 안전 영역 반지름 40% 안, 바다·하늘은 끝까지).
 
 ### 12.3 크기 예산
 
@@ -1110,7 +1158,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 
 ## 14. AI 슬롭 체크리스트 (구현이 통과해야 할 것)
 
-자동 검사는 `scripts/check-slop.ts`(`npm run check:slop`, `tests/slop.test.ts`). 대상: `src/**/*.{ts,css}`, `index.html`, `public/manifest.webmanifest`, `public/spots.json`의 reason, 빌드 뒤 `dist/assets/*.{js,css}`. UI 문자열 = 한글이 든 문자열 리터럴·템플릿과 HTML 텍스트·aria-label.
+자동 검사는 `scripts/check-slop.ts`(`npm run check:slop`, `tests/slop.test.ts`). 대상: `src/**/*.{ts,css}`, `index.html`, `public/manifest.webmanifest`, `public/*.html`(404·개인정보 페이지의 글자와 인라인 `<style>`, ADR-0063), `public/spots.json`의 reason, 빌드 뒤 `dist/assets/*.{js,css}`. UI 문자열 = 한글이 든 문자열 리터럴·템플릿과 HTML 텍스트·aria-label.
 
 | # | 항목 | 확인 | 통과 |
 |---|---|---|---|
@@ -1186,6 +1234,9 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 26. **선택기 없는 날짜 입력**(QA4-datein): `showPicker`를 지운 채 다른 날로 시트·기준 시트 `언제`에서 `날짜 고르기` → 입력(min 오늘, max +365)과 `.tbtn` `이 날로`. 연·월 뒤 일을 한 자리씩 치는 동안 시트는 열려 있고 저장소 불변, +365 넘는 값은 `이 날로`에도 무시, `이 날로`·Enter에서 적용.
 27. **언제 한 줄**(QA4-when-row): 320×568·390×844에서 `지금 · 내일 · 날짜 고르기`가 같은 줄, 칸마다 ≥ 44·채운 면 없음·고른 칸만 체크+600. 열자마자 `어디` 무리 제목이 보이고(스크롤 0), `얼마나`는 스크롤로 `닫기` 위에 닿는다. 390에서 `얼마나`가 스크롤 없이 보이는 것은 R4-range.
 28. **누름 영역 48**(T2-hit): 320×568·390×844, `showPicker` 없음. 결과(먹기)·저장한 곳(한 날에 3곳)·기준 시트(`날짜 고르기`로 입력 연 상태)·다른 날로 시트에서 카드 하트, `바꾸기`·`돌아가기`, 식사 탭, `언제` 칸, `위로`·`아래로`·`다른 날로`, `이 날로` 각각: 누름 영역(요소 상자 ∪ `position: absolute` 가상 요소) ≥ 48×48, 같은 층의 다른 컨트롤(카드 전체 링크 제외) 영역과 겹침 0, 영역 안 2px 격자의 `elementFromPoint`가 모두 그 컨트롤, 그린 높이는 44 그대로, `scrollWidth ≤ clientWidth`(문서·시트).
+29. **404와 절대 경로**(K-404): `/nope/deep` → 404·`없는 주소예요.`, `처음 화면으로` → `/`. `/privacy` 200. 서비스워커가 붙은 뒤에도 404 그대로. index.html을 깊은 주소에서 받아도(호스트·워커 폴백) 앱이 돌고 카드가 나온다. 페이지 오류 0.
+30. **링크로 백업·합치기**(K-backup, 390 라이트): 저장한 곳에서 `링크로 백업` → 클립보드에 `{주소}#s=…`, 결과 줄. 끝까지 내리면 각주·백업·출처·개인정보 링크가 화면 안. 그 링크를 다른 브라우저(새 컨텍스트, 한 곳은 이미 있음)에서 열면 주소의 `#`가 사라지고 `…3곳 있어요…`, 첫 화면 글자 크기 ≤ 3, 안내 버튼 ≥ 48, `합치기` → `2곳을 합쳤어요…`, 저장 3곳.
+31. **인앱 안내**(K-inapp, 카카오톡 UA 390): `아무거나 골라줘` 아래 왼쪽 16에 안내, 화면 안, 가로 넘침 0, `브라우저로 열기` href `kakaotalk://web/openExternal?url={주소}`. `닫기` 뒤 새로고침해도 없음.
 
 ### 15.2 vitest 기대값 변경 (tests/*.test.ts)
 
@@ -1218,6 +1269,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
   | 표선 | 성읍민속마을 | 33.3851, 126.8016 |
   | 성산 | 성산일출봉 | 33.4621, 126.9364 |
 
+- ADR-0063(`tests/keep.test.ts`, `tests/keep-app.test.ts`, `tests/deploy.test.ts`, `tests/sw.test.ts`): 백업 인코딩·디코딩 왕복(순서·UUID 아닌 id), 잘못된 입력(문자·버전·잘림·남는 바이트·날짜·빈 목록·501곳·UTF-8) → null, 합치기(없는 것만, 그 날 끝, 개수), 인앱 감지 표(6앱 × iOS·Android, Safari·Chrome·삼성 인터넷·Chrome iOS는 아님), 홈 화면 방식, `persist` 첫 저장 한 번, 인앱 안내·닫기 기억·카카오 링크·복사, 백업 복사·열기·합치기·그만두기·잘못된 링크·`hashchange`, 홈 화면 안내 한 번(iOS·프롬프트·인앱 아님), 출처·개인정보 링크, `_headers` 규칙, 404·개인정보 페이지 내용, OG·트위터 메타·og.png 1200×630, maskable·favicon·robots, SW가 404를 그대로 넘김, `base: '/'`·절대 경로.
 - 2판의 나머지 테스트(`state.reduce`, `store` 검증, `travel`·`islandOf`, `wrapped`, `destroy()` 뒤 재마운트 시 리스너 한 벌)는 유지. `destroy()` 테스트에 IntersectionObserver `disconnect` 확인을 더한다.
 
 ### 15.3 명령

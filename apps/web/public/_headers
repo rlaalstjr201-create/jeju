@@ -1,0 +1,36 @@
+# Cloudflare Pages response headers (docs/deploy.md, ADR-0063). A path is matched without its query string.
+# No rule for /* on purpose: two rules setting Cache-Control on one path would be joined into one value.
+
+# Content-hashed build files: a new build is a new name.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Always requested as spots.json?v=<content hash> (main.ts, sw.js): new data is a new URL.
+/spots.json
+  Cache-Control: public, max-age=31536000, immutable
+
+# The page, the service worker, the manifest and the plain pages: asked again on every visit, so a deploy shows.
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
+/404.html
+  Cache-Control: no-cache
+/privacy
+  Cache-Control: no-cache
+/privacy.html
+  Cache-Control: no-cache
+
+# Icons, the link preview image, robots.txt: a day.
+/icons/*
+  Cache-Control: public, max-age=86400
+/favicon.ico
+  Cache-Control: public, max-age=86400
+/og.png
+  Cache-Control: public, max-age=86400
+/robots.txt
+  Cache-Control: public, max-age=86400
