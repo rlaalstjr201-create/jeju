@@ -1,13 +1,15 @@
 /* design/SPEC.md §13 (3판). One material per role: things you press are a fill or a single rule, things you
    read (places) are photo + text only, the sheet is the only surface. Selection is a check, weight or an
    underline, never a filled box. Colour literals live only here in :root (and in index.html's first-paint
-   background). */
+   background). ADR-0070: white ground and three colours, 바다 main (fill buttons, check, selected tab,
+   booking-link rule), 귤 accent (saved heart, 아무거나 rule), 현무암 text; the greys are the text mixed into the ground. */
 
 [hidden] { display: none !important; }
 
 :root {
-  --bg: #f6f6f3; --surface: #ffffff; --fill: #ebebe6; --fill-press: #dfdfd9; --line: #e2e2dc; --field-line: #8a8f8c;
-  --text: #1b1d1c; --muted: #5b605e; --accent: #cc3a2f;
+  --bg: #ffffff; --surface: #ffffff; --fill: #f3f3f4; --fill-press: #e8e8e9; --line: #e3e3e4; --field-line: #8a8c8f;
+  --text: #14181f; --muted: #5f6267; --accent: #f06400;
+  --main: #0a6fd6; --on-main: #ffffff; --main-press: #0c62bb; --main-tint: #e6f1fb;
   --scrim: rgb(0 0 0 / 35%); --photo: none;
   --top-h: 52px; --r-ctl: 10px; --r-photo: 12px; --r-thumb: 8px; --r-sheet: 18px;
   --z-top: 5; --z-bar: 2; --z-sheet: 10;
@@ -15,8 +17,9 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161817; --surface: #1f2221; --fill: #2a2e2c; --fill-press: #353a38; --line: #2c302e; --field-line: #6b706d;
-    --text: #e8e8e3; --muted: #a3a8a5; --accent: #ee7e71;
+    --bg: #0f1319; --surface: #1a1e24; --fill: #23272d; --fill-press: #30343a; --line: #33373c; --field-line: #7e8287;
+    --text: #eef1f5; --muted: #b0b3b7; --accent: #ff8a3d;
+    --main: #5aa9ff; --on-main: #0f1319; --main-press: #4d8ed6; --main-tint: #1b2b3e;
     --scrim: rgb(0 0 0 / 55%); --photo: brightness(0.9); /* photos don't glare at night (S49) */
     color-scheme: dark;
   }
@@ -46,7 +49,7 @@ svg { display: block; flex: none; }
 .mood:focus-visible, .sheet-close:focus-visible { outline-offset: -2px; }
 .sr { position: absolute; top: 0; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .i-check { display: none; }
-[aria-current="true"] > .i-check, [aria-pressed="true"] > .i-check { display: block; color: var(--text); }
+[aria-current="true"] > .i-check, [aria-pressed="true"] > .i-check { display: block; color: var(--main); }
 
 /* frame */
 .app {
@@ -103,12 +106,12 @@ main { flex: 1; display: flex; flex-direction: column; }
   width: 100%; min-height: 60px; padding: 14px 8px; border-radius: var(--r-ctl);
   font-size: 1.25rem; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;
 }
-.mood:active { background: var(--fill); }
+.mood:active { background: var(--main-tint); }
 .any {
   align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
   min-height: 48px; margin: 8px 0 0 -8px; padding: 0 8px; border-radius: var(--r-ctl);
   font-size: 1.25rem; line-height: 1.35; font-weight: 400; letter-spacing: -0.01em; color: var(--muted);
-  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--accent);
 }
 .any:active { background: var(--fill); }
 
@@ -123,7 +126,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* "식사" is narrower than a thumb: widen the hit area, not the drawn tab (the gap is 24px, so no overlap) */
 .tab::before { content: ""; position: absolute; inset: -2px -8px; }
 .tab[aria-pressed="true"] { color: var(--text); }
-.tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 2px solid var(--text); }
+.tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 3px solid var(--main); }
 .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
 .status:empty { display: none; }
 .status .tbtn { color: var(--text); }
@@ -193,7 +196,7 @@ main { flex: 1; display: flex; flex-direction: column; }
    into the margin before the booking link / 위로 · 아래로 line; a square box, so its rounded corners count too */
 .go { grid-area: go; position: relative; z-index: 1; justify-self: start; margin: 4px 0 0 -8px; }
 .go::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
-.book { grid-area: book; position: relative; z-index: 1; justify-self: start; margin: 4px 0 -8px -8px; white-space: normal; }
+.book { grid-area: book; position: relative; z-index: 1; justify-self: start; margin: 4px 0 -8px -8px; white-space: normal; text-decoration-color: var(--main); }
 .hint { grid-area: hint; margin: 8px 0 0; color: var(--muted); text-wrap: pretty; }
 
 .card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }
@@ -231,13 +234,13 @@ main { flex: 1; display: flex; flex-direction: column; }
 .day .group-h { margin: 0 0 -8px; }
 .ctl { grid-area: ctl; position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 0 8px; margin: 4px 0 -8px -8px; }
 
-/* fill buttons: 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. Labels left-aligned */
+/* fill buttons (ADR-0070: --main): 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. Labels left-aligned */
 .more, .retry, .primary {
   display: flex; align-items: center; width: 100%; min-height: 52px; padding: 0 16px;
-  border-radius: var(--r-ctl); background: var(--fill);
+  border-radius: var(--r-ctl); background: var(--main); color: var(--on-main);
   font-size: 1.0625rem; line-height: 1.4; font-weight: 600;
 }
-.more:active, .retry:active, .primary:active { background: var(--fill-press); }
+.more:active, .retry:active, .primary:active { background: var(--main-press); }
 .retry { margin-top: 20px; }
 .primary:disabled { cursor: default; }
 .more-bar {

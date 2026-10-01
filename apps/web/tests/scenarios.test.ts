@@ -1211,7 +1211,7 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
   });
 
   it('S49 dark: first paint and splash are dark, photos dimmed a little', () => {
-    expect(html).toMatch(/<style>html\{background:#f6f6f3\}@media \(prefers-color-scheme:dark\)\{html\{background:#161817\}\}<\/style>/);
+    expect(html).toMatch(/<style>html\{background:#ffffff\}@media \(prefers-color-scheme:dark\)\{html\{background:#0f1319\}\}<\/style>/);
     expect(html).toMatch(/name="color-scheme" content="light dark"/);
     expect(css).toMatch(/--photo:\s*brightness\(0\.9\)/);
     expect(cssRule('.ph img')).toMatch(/filter:\s*var\(--photo\)/);

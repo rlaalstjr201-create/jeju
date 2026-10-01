@@ -30,8 +30,8 @@ describe('date field border contrast (design.md C3)', () => {
   });
 
   it.each([
-    ['light', light, '#8a8f8c', 3.29],
-    ['dark', dark, '#6b706d', 3.18],
+    ['light', light, '#8a8c8f', 3.37],
+    ['dark', dark, '#7e8287', 4.33],
   ])('%s: --field-line is %s, ≥ 3:1 on the sheet (--surface) and on --bg', (_, t, hex, onSurface) => {
     expect(t['--field-line']).toBe(hex);
     expect(ratio(t['--field-line'], t['--surface'])).toBeCloseTo(onSurface, 2);
@@ -42,6 +42,22 @@ describe('date field border contrast (design.md C3)', () => {
   it('the old --line border would fail (why the token exists)', () => {
     expect(ratio(light['--line'], light['--surface'])).toBeLessThan(3);
     expect(ratio(dark['--line'], dark['--surface'])).toBeLessThan(3);
+  });
+});
+
+describe('ADR-0070: the main colour and the accent hold WCAG AA', () => {
+  it.each([
+    ['light', light],
+    ['dark', dark],
+  ])('%s: fill-button text ≥ 4.5 (also pressed), main and saved heart ≥ 3 on the ground, body text ≥ 7', (_, t) => {
+    expect(ratio(t['--on-main'], t['--main'])).toBeGreaterThanOrEqual(4.5);
+    expect(ratio(t['--on-main'], t['--main-press'])).toBeGreaterThanOrEqual(4.5);
+    expect(ratio(t['--main'], t['--bg'])).toBeGreaterThanOrEqual(3);
+    expect(ratio(t['--main'], t['--surface'])).toBeGreaterThanOrEqual(3);
+    expect(ratio(t['--accent'], t['--bg'])).toBeGreaterThanOrEqual(3);
+    expect(ratio(t['--text'], t['--bg'])).toBeGreaterThanOrEqual(7);
+    expect(ratio(t['--text'], t['--main-tint'])).toBeGreaterThanOrEqual(7);
+    expect(ratio(t['--muted'], t['--fill-press'])).toBeGreaterThanOrEqual(4.5);
   });
 });
 

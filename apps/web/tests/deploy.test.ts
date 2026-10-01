@@ -55,8 +55,8 @@ describe('404.html', () => {
     expect(html).toContain('<html lang="ko">');
     expect(html).toContain('<h1>없는 주소예요.</h1>');
     expect(html).toMatch(/<a class="tbtn" href="\/">처음 화면으로<\/a>/);
-    expect(html).toContain('--bg: #f6f6f3');
-    expect(html).toContain('--bg: #161817');
+    expect(html).toContain('--bg: #ffffff');
+    expect(html).toContain('--bg: #0f1319');
     expect(html).not.toMatch(/<script/);
     expect(html).toMatch(/name="robots" content="noindex"/);
   });

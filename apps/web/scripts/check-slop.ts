@@ -101,7 +101,8 @@ const WEIGHTS = new Set(['400', '600', '700']);
 const RADII = /^(var\(--r-(ctl|photo|thumb|sheet)\)( var\(--r-(ctl|photo|thumb|sheet)\))*( 0 0)?|6px|4px)$/;
 // #18 (3판): selection is a check, weight or underline — never a filled surface.
 const SEL_TOKEN = /--sel-/;
-const ACCENT_OK = new Set(['.saved-btn svg', '.heart[aria-pressed="true"]']);
+// ADR-0070: the saved hearts and the 아무거나 underline
+const ACCENT_OK = new Set(['.saved-btn svg', '.heart[aria-pressed="true"]', '.any']);
 const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child|\.more-end)$/;
 
 export function checkCss(file: string, css: string, v: Violation[]) {
