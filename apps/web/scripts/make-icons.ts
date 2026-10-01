@@ -1,5 +1,5 @@
-/** Writes the icons (no image library): sun over a calm sea. public/icons/icon-{192,512}.png, the maskable
- * 512 (motif inside the 80% safe zone, ADR-0063), apple-touch 180, favicon.ico (a 32px PNG inside) and the
+/** Writes the icons (no image library): sun over a calm sea, in the ADR-0070 colours (바다 ground, 귤 sun,
+ * white waves). public/icons/icon-{192,512}.png, the maskable 512 (motif inside the 80% safe zone, ADR-0063), apple-touch 180, favicon.ico (a 32px PNG inside) and the
  * 1200×630 link preview public/og.png (the same scene, widened). */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -28,9 +28,9 @@ function chunk(type: string, data: Buffer) {
   return Buffer.concat([len, td, crc]);
 }
 
-const BG = [0x2f, 0x6f, 0x68];
-const SUN = [0xf6, 0xe7, 0xc8];
-const SEA = [0xf6, 0xf3, 0xee];
+const BG = [0x0a, 0x6f, 0xd6]; // --main
+const SUN = [0xf0, 0x64, 0x00]; // --accent
+const SEA = [0xff, 0xff, 0xff];
 
 function color(x: number, y: number): number[] {
   // unit coords 0..1
