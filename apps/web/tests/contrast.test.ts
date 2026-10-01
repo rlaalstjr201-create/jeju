@@ -50,4 +50,10 @@ describe('ADR-0063 3: the attribution line is readable (≥ AA)', () => {
     expect(css).toMatch(/\.credit\s*\{[^}]*color:\s*var\(--muted\)/);
     for (const t of [light, dark]) expect(ratio(t['--muted'], t['--bg'])).toBeGreaterThanOrEqual(4.5);
   });
+
+  it('its visitjeju.net link keeps that colour and is told apart by an underline (1.4.1), not by colour', () => {
+    expect(css).toMatch(/^a \{ color: inherit;/m);
+    expect(css).toMatch(/\.credit a\s*\{[^}]*text-decoration:\s*underline/);
+    expect(css).not.toMatch(/\.credit a\s*\{[^}]*color:/);
+  });
 });

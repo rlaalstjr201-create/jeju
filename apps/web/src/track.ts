@@ -4,7 +4,7 @@
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
 import type { AreaName } from './areas';
 import type { Day } from './dates';
-import type { Button, Reach, Sub } from './pick';
+import type { Button, NewSub, Reach, Sub } from './pick';
 import type { Basis, View, When } from './types';
 
 export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book';
@@ -16,8 +16,8 @@ export interface UsageEvent {
   /** the place (every event but `tap`). */
   id?: string;
   mood?: Button;
-  /** food only: 식사 / 카페·디저트. */
-  sub?: Sub;
+  /** food: 식사 / 카페·디저트; new: 섞어서 / 구경 / 체험 (mix / sight / do, ADR-0064). */
+  sub?: Sub | NewSub;
   range?: Range;
   basis?: BasisKind;
   /** only with an area basis: the area's name, never a position. */
@@ -39,6 +39,7 @@ export function contextOf(s: {
   view: View;
   mood: Button | null;
   sub: Sub;
+  newSub: NewSub;
   reach: Reach;
   basis: Basis;
   region: AreaName | null;
@@ -47,7 +48,9 @@ export function contextOf(s: {
 }): Omit<UsageEvent, 'e' | 'id'> {
   const basis = BASIS[s.basis];
   return {
-    ...(s.view === 'cards' && s.mood ? { mood: s.mood, ...(s.mood === 'food' ? { sub: s.sub } : {}) } : {}),
+    ...(s.view === 'cards' && s.mood
+      ? { mood: s.mood, ...(s.mood === 'food' ? { sub: s.sub } : s.mood === 'new' ? { sub: s.newSub } : {}) }
+      : {}),
     range: RANGE[s.reach],
     basis,
     ...(basis === 'area' && s.region ? { area: s.region } : {}),

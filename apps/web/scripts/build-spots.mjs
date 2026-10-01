@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { applyCorrections, loadCorrections } from './apply-corrections.mjs';
 import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
+import { loadNewSubCalls, newSub } from './new-sub.mjs';
 import { positionProblems } from './positions.mjs';
 import { reasonPunctuationProblem, shipReason } from './reason.mjs';
 
@@ -114,6 +115,9 @@ const subById = new Map();
 for (const f of readdirSync(foodSplitDir).filter((f) => /^out-\d{2}\.json$/.test(f)).sort()) {
   for (const v of readJson(resolve(foodSplitDir, f))) subById.set(v.id, v.sub);
 }
+
+// --- load 새로운 거 sub calls for cafe·restaurant (ADR-0064, review/copy/new-sub.json); the rest follow category ---
+const newSubCalls = loadNewSubCalls(resolve(copyDir, 'new-sub.json'));
 
 // --- load S9-3 copy layer: rewritten reasons, out-NN.json (pass 1) then div1-NN.json / div2-NN.json
 // (diversify-ending passes, later overrides earlier) — arrays of {id, reason}. Plus the pre-rewrite
@@ -249,6 +253,7 @@ for (const item of inputItems) {
     }
     spot.sub = sub;
   }
+  if (v.mood === 'new') spot.sub = newSub(item.id, item.category, newSubCalls);
   kept.push(spot);
   counts.kept++;
   counts.perMood[v.mood]++;

@@ -3,7 +3,7 @@
 // memory for this visit (S27·S28·S29).
 import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
-import { DEFAULT_REACH, REACHES, type Button, type Histories, type History, type HistoryKey, type Reach, type Sub } from './pick';
+import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import type { Basis, Origin, SavedEntry, Stay, When } from './types';
 
 export const KEYS = {
@@ -32,7 +32,9 @@ export const MAX_SAVED = 500;
 
 const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
 const SUBS: readonly Sub[] = ['meal', 'cafe'];
-const HISTORY_KEYS: readonly HistoryKey[] = ['rest', 'walk', 'new', 'any', 'food:meal', 'food:cafe'];
+const HISTORY_KEYS: readonly HistoryKey[] = ['rest', 'walk', 'any', 'food:meal', 'food:cafe', 'new:mix', 'new:sight', 'new:do'];
+/** Records written before the 새로운 거 tabs (ADR-0064) kept that rotation under 'new': it is 섞어서. */
+const LEGACY_KEYS: Partial<Record<HistoryKey, string>> = { 'new:mix': 'new' };
 
 function parse(raw: string | null): unknown {
   if (raw == null) return null;
@@ -145,6 +147,8 @@ export interface SessionRecord {
   v: 1;
   mood: Button;
   sub: Sub;
+  /** 새로운 거 tab (ADR-0064); missing in records written before it (= 섞어서). */
+  newSub?: NewSub;
   /** the point `shown`/`histories` belong to; null = nothing shown yet. */
   origin: Origin | null;
   /** the range `shown`/`histories` belong to (ADR-0060); missing in records written before it. */
@@ -166,7 +170,7 @@ export function parseSession(v: unknown): SessionRecord | null {
   if (!v || typeof v !== 'object') return null;
   const o = v as Record<string, unknown>;
   if (o.v !== 1 || !BUTTONS.includes(o.mood as Button) || !SUBS.includes(o.sub as Sub)) return null;
-  const base = { v: 1 as const, mood: o.mood as Button, sub: o.sub as Sub };
+  const base = { v: 1 as const, mood: o.mood as Button, sub: o.sub as Sub, ...(NEW_SUBS.includes(o.newSub as NewSub) ? { newSub: o.newSub as NewSub } : {}) };
   // Asked for, nothing shown yet: the mood alone.
   if (o.origin === null) return { ...base, origin: null, shown: {}, histories: {} };
   const og = o.origin as Record<string, unknown> | undefined;
@@ -179,9 +183,10 @@ export function parseSession(v: unknown): SessionRecord | null {
   const rawShown = (o.shown ?? {}) as Record<string, unknown>;
   const rawHist = (o.histories ?? {}) as Record<string, unknown>;
   for (const k of HISTORY_KEYS) {
-    const ids = strings(rawShown[k]);
+    const old = LEGACY_KEYS[k];
+    const ids = strings(rawShown[k]) ?? (old ? strings(rawShown[old]) : null);
     if (ids?.length) shown[k] = ids;
-    const h = parseHistory(rawHist[k]);
+    const h = parseHistory(rawHist[k]) ?? (old ? parseHistory(rawHist[old]) : null);
     if (h) histories[k] = h;
   }
   return {

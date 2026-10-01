@@ -140,6 +140,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 .note { margin: 0; color: var(--muted); text-wrap: pretty; }
 .note:empty { display: none; }
 .credit { margin: 28px 0 0; color: var(--muted); }
+/* the source's site, a link inside the sentence (design.md T1: inline links are exempt from 44px); same
+   --muted (≥ 4.5:1), told apart by its underline */
+.credit a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 #cards:empty ~ .credit { display: none; }
 .about { margin-top: 28px; }
 .about .credit { margin: 0; }

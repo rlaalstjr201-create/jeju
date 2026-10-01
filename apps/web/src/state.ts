@@ -3,7 +3,7 @@
 // dropped here, so the last user intent always wins (S36–S38).
 import { areaByName, type AreaName } from './areas';
 import { type Day } from './dates';
-import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, type Button, type Card, type Histories, type HistoryKey, type Reach, type Spot, type Sub } from './pick';
+import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Card, type Histories, type HistoryKey, type NewSub, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
 import type { SessionRecord } from './store';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
@@ -54,6 +54,8 @@ export interface State {
   savedFrom: 'home' | 'cards' | null;
   mood: Button | null;
   sub: Sub;
+  /** 새로운 거 tab (ADR-0064): 섞어서 | 구경 | 체험, kept like `sub`. */
+  newSub: NewSub;
   basis: Basis;
   /** 얼마나 (ADR-0060): the range cards are picked in. */
   reach: Reach;
@@ -71,7 +73,7 @@ export interface State {
   /** the range `histories`/`shown` belong to (null: unknown, e.g. a session record from before ranges). */
   originReach: Reach | null;
   histories: Histories;
-  /** last 3 ids shown per button (+food sub) — brought back when that button is chosen again (S43·S44). */
+  /** last 3 ids shown per button (+food sub, +새로운 거 tab) — brought back when that button is chosen again (S43·S44). */
   shown: Partial<Record<HistoryKey, string[]>>;
   cards: Shown | null;
   /** the saved list is ready to draw: the point its trips are measured from (null = position unknown). */
@@ -102,7 +104,7 @@ export interface State {
 
 export type Action =
   | { type: 'mood'; button: Button }
-  | { type: 'sub'; sub: Sub }
+  | { type: 'sub'; sub: Tab }
   | { type: 'request'; req: number; intent: Intent; step: 'locating' | 'loading' }
   | { type: 'slow'; req: number }
   | { type: 'long'; req: number }
@@ -156,6 +158,7 @@ export function initialState(init: {
     savedFrom: null,
     mood: null,
     sub: 'meal',
+    newSub: 'mix',
     basis: init.basis,
     reach: init.reach ?? DEFAULT_REACH,
     when: init.when && init.when !== 'now' && init.when > init.today ? init.when : 'now',
@@ -190,6 +193,9 @@ export function initialState(init: {
 
 // --- selectors ---
 
+/** The tab the current button's cards are picked under (food sub, 새로운 거 tab, or none). */
+export const tabNow = (s: Pick<State, 'mood' | 'sub' | 'newSub'>): Tab | undefined => tabOf(s.mood, s.sub, s.newSub);
+
 /** The fixed origin for 숙소 / 지역 basis, or null when GPS has to be asked. */
 export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay | null): Origin | null {
   if (basis === 'stay' && stay) {
@@ -211,9 +217,9 @@ export function sameOrigin(a: Origin | null, b: Origin | null): boolean {
   return a.key !== GPS_KEY || distanceKm(a.point, b.point) <= 1;
 }
 
-/** The shown cards still match the current button, sub, basis and range. */
+/** The shown cards still match the current button, tab, basis and range. */
 export function cardsValid(s: State): boolean {
-  if (!s.cards || !s.mood || s.cards.key !== historyKey(s.mood, s.sub) || s.cards.reach !== s.reach) return false;
+  if (!s.cards || !s.mood || s.cards.key !== historyKey(s.mood, tabNow(s)) || s.cards.reach !== s.reach) return false;
   const fixed = staticOrigin(s.basis, s.region, s.stay);
   return fixed ? fixed.key === s.cards.origin.key : s.cards.origin.key === GPS_KEY;
 }
@@ -305,7 +311,7 @@ const cardsFor = (spots: Spot[], ids: string[], point: Origin['point']): Card[] 
 
 function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): State {
   const mood = s.mood!;
-  const key = historyKey(mood, s.sub);
+  const key = historyKey(mood, tabNow(s));
   let { histories, shown } = s;
   let base = s.origin;
   // Another place or another range: the rotation so far no longer applies (plan OQ4, ADR-0060).
@@ -340,7 +346,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
       seq: same ? s.seq : seq,
     };
   }
-  const r = pickCards(spots, origin.point, mood, histories, s.sub, s.reach);
+  const r = pickCards(spots, origin.point, mood, histories, tabNow(s), s.reach);
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;
@@ -391,7 +397,7 @@ function step(s: State, a: Action): State {
       // Set the mood first: whether the cards on hand still apply depends on it.
       return enterView({ ...s, mood: a.button }, 'cards');
     case 'sub':
-      return { ...s, sub: a.sub };
+      return a.sub === 'meal' || a.sub === 'cafe' ? { ...s, sub: a.sub } : { ...s, newSub: a.sub };
     case 'request':
       return { ...s, phase: { k: 'pending', req: a.req, intent: a.intent, step: a.step, slow: false, long: false } };
     case 'slow':
@@ -499,6 +505,7 @@ function step(s: State, a: Action): State {
         ...enterView(s, 'cards'),
         mood: a.rec.mood,
         sub: a.rec.sub,
+        newSub: a.rec.newSub ?? s.newSub,
         origin: a.rec.origin,
         originReach: a.rec.reach ?? null,
         shown: a.rec.shown,
@@ -513,6 +520,6 @@ function step(s: State, a: Action): State {
  * Null when the results are not on screen. */
 export function sessionOf(s: State): SessionRecord | null {
   if (s.view !== 'cards' || !s.mood) return null;
-  const rec: SessionRecord = { v: 1, mood: s.mood, sub: s.sub, origin: s.origin, shown: s.shown, histories: s.histories };
+  const rec: SessionRecord = { v: 1, mood: s.mood, sub: s.sub, newSub: s.newSub, origin: s.origin, shown: s.shown, histories: s.histories };
   return s.originReach ? { ...rec, reach: s.originReach } : rec;
 }

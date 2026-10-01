@@ -18,12 +18,19 @@ const post = (body: unknown, init: RequestInit = {}) =>
 
 describe('U4 받는 쪽 — 검증', () => {
   it('accepts what the app sends: tap, shown, save, unsave, map, book, with an area basis and food sub', async () => {
-    const ctx = contextOf({ view: 'cards', mood: 'food', sub: 'cafe', reach: 'walk', basis: 'region', region: '애월', when: '2026-10-01', today: d });
+    const ctx = contextOf({ view: 'cards', mood: 'food', sub: 'cafe', newSub: 'mix', reach: 'walk', basis: 'region', region: '애월', when: '2026-10-01', today: d });
     expect(ctx).toEqual({ mood: 'food', sub: 'cafe', range: 'walk', basis: 'area', area: '애월', dated: true, d });
     const batch: UsageEvent[] = [{ e: 'tap', ...ctx }, ...(['shown', 'save', 'unsave', 'map', 'book'] as const).map((e) => ({ e, id: ID, ...ctx }))];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
     const res = await handleEvents(post(batch), memoryStore());
     expect(res.status).toBe(204);
+  });
+
+  it.each(['mix', 'sight', 'do'] as const)('accepts 새로운 거 tab sub %s (ADR-0064)', (newSub) => {
+    const ctx = contextOf({ view: 'cards', mood: 'new', sub: 'meal', newSub, reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d });
+    expect(ctx).toEqual({ mood: 'new', sub: newSub, ...base });
+    const batch: UsageEvent[] = [{ e: 'tap', ...ctx }, { e: 'shown', id: ID, ...ctx }];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
   });
 
   it.each([
@@ -42,6 +49,9 @@ describe('U4 받는 쪽 — 검증', () => {
     ['a tap with a place', [{ e: 'tap', mood: 'rest', id: ID, d }], 400],
     ['an unknown mood', [{ e: 'tap', mood: 'sleep', d }], 400],
     ['a sub without food', [{ e: 'tap', mood: 'rest', sub: 'cafe', d }], 400],
+    ['a food sub on new', [{ e: 'tap', mood: 'new', sub: 'cafe', d }], 400],
+    ['a new sub on food', [{ e: 'tap', mood: 'food', sub: 'sight', d }], 400],
+    ['a sub without a mood', [{ e: 'map', id: ID, d, sub: 'mix' }], 400],
     ['an unknown range', [{ e: 'map', id: ID, d, range: '90' }], 400],
     ['an unknown basis', [{ e: 'map', id: ID, d, basis: 'gps' }], 400],
     ['an area without an area basis', [{ e: 'map', id: ID, d, basis: 'stay', area: '애월' }], 400],

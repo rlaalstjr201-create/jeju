@@ -185,6 +185,24 @@ describe('S54 세션 기록 검증', () => {
     });
   });
 
+  it('새로운 거 tab (ADR-0064): newSub round-trips, an unknown one is dropped, new:mix|sight|do histories kept; an older record\'s "new" rotation is 섞어서', () => {
+    const h = { seen: ['a', 'b', 'c'], last: ['a', 'b', 'c'] };
+    const rec = parseSession({
+      v: 1, mood: 'new', sub: 'meal', newSub: 'sight', origin,
+      shown: { 'new:sight': ['a', 'b', 'c'], 'new:do': ['d'], 'new:jump': ['x'] },
+      histories: { 'new:sight': h, 'new:mix': h },
+    });
+    expect(rec).toEqual({
+      v: 1, mood: 'new', sub: 'meal', newSub: 'sight', origin,
+      shown: { 'new:sight': ['a', 'b', 'c'], 'new:do': ['d'] },
+      histories: { 'new:sight': h, 'new:mix': h },
+    });
+    expect(parseSession({ v: 1, mood: 'new', sub: 'meal', newSub: 'jump', origin: null })).toEqual({ v: 1, mood: 'new', sub: 'meal', origin: null, shown: {}, histories: {} });
+    expect(parseSession({ v: 1, mood: 'new', sub: 'meal', origin, shown: { new: ['a', 'b', 'c'] }, histories: { new: h } })).toEqual({
+      v: 1, mood: 'new', sub: 'meal', origin, shown: { 'new:mix': ['a', 'b', 'c'] }, histories: { 'new:mix': h },
+    });
+  });
+
   it('wrong version, unknown mood or broken origin → no record', () => {
     expect(parseSession({ v: 2, mood: 'walk', sub: 'meal', origin })).toBeNull();
     expect(parseSession({ v: 1, mood: 'swim', sub: 'meal', origin })).toBeNull();

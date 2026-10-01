@@ -19,7 +19,7 @@ const s0 = (over: Partial<State> = {}): State => ({
 });
 const run = (s: State, ...actions: Action[]) => actions.reduce(reduce, s);
 /** tap a mood and resolve it with `origin` */
-const pick = (s: State, button: 'rest' | 'walk' | 'food' | 'any', req: number, origin = gps(), intent: 'show' | 'more' = 'show') =>
+const pick = (s: State, button: 'rest' | 'walk' | 'new' | 'food' | 'any', req: number, origin = gps(), intent: 'show' | 'more' = 'show') =>
   run(s, { type: 'mood', button }, { type: 'request', req, intent, step: 'loading' }, { type: 'resolved', req, origin, spots: realSpots });
 const ids = (s: State) => s.cards?.list.map((c) => c.spot.id);
 
@@ -226,6 +226,19 @@ describe('S54 세션 기록', () => {
     expect(sessionOf(s)).toMatchObject({ v: 1, mood: 'walk', sub: 'meal', shown: { walk: ids(s) } });
     const back = run(s0(), { type: 'restore', rec: sessionOf(s)! });
     expect(back).toMatchObject({ view: 'cards', mood: 'walk', shown: { walk: ids(s) } });
+  });
+
+  it('the 새로운 거 tab goes into the record and comes back with it; the sub action sets food or new by value', () => {
+    const tabbed = run(s0(), { type: 'sub', sub: 'do' });
+    expect(tabbed).toMatchObject({ sub: 'meal', newSub: 'do' });
+    expect(run(tabbed, { type: 'sub', sub: 'cafe' })).toMatchObject({ sub: 'cafe', newSub: 'do' });
+    const s = pick(tabbed, 'new', 1);
+    expect(s.cards?.key).toBe('new:do');
+    expect(sessionOf(s)).toMatchObject({ mood: 'new', sub: 'meal', newSub: 'do', shown: { 'new:do': ids(s) } });
+    expect(run(s0(), { type: 'restore', rec: sessionOf(s)! })).toMatchObject({ mood: 'new', newSub: 'do' });
+    // a record from before the tabs keeps whatever tab is current (섞어서 at mount)
+    const { newSub: _, ...old } = sessionOf(s)!;
+    expect(run(s0(), { type: 'restore', rec: old }).newSub).toBe('mix');
   });
 });
 

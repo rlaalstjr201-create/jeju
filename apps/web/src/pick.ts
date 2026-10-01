@@ -4,6 +4,13 @@ export type Mood = 'rest' | 'walk' | 'new' | 'food';
 export type Button = Mood | 'any';
 /** food-only sub-type: 식사 | 카페·디저트 (ADR-0028 update). */
 export type Sub = 'meal' | 'cafe';
+/** new-only kind (ADR-0064): 구경 | 체험. */
+export type NewKind = 'sight' | 'do';
+/** 새로운 거 tab: 섞어서 (every kind) | 구경 | 체험. */
+export type NewSub = 'mix' | NewKind;
+export const NEW_SUBS: readonly NewSub[] = ['mix', 'sight', 'do'];
+/** The tab a button's cards are picked under: the food sub, the 새로운 거 tab, or none. */
+export type Tab = Sub | NewSub;
 
 export interface Spot {
   id: string;
@@ -15,8 +22,8 @@ export interface Spot {
   image: string;
   kakaoPlaceId: string | null;
   bookable: boolean;
-  /** set iff mood === 'food' */
-  sub?: Sub;
+  /** food: meal | cafe; new: sight | do (ADR-0064); unset otherwise. */
+  sub?: Sub | NewKind;
   /** 만족도 1~5 (ADR-0060, specs/ranking.md): orders the cards, never shown. */
   score: number;
 }
@@ -31,14 +38,15 @@ export interface Card {
   minutes: number;
 }
 
-/** Per-button memory of what was shown, so a re-tap moves on (plan OQ4). food keeps meal/cafe history separately. */
+/** Per-button memory of what was shown, so a re-tap moves on (plan OQ4). food keeps meal/cafe history
+ * separately, new keeps mix/sight/do separately (ADR-0064). */
 export interface History {
   seen: string[];
   last: string[];
   /** set on the tap that exhausted the pool; the next tap is the first of a new round (`wrapped`). */
   restarted?: boolean;
 }
-export type HistoryKey = Exclude<Button, 'food'> | `food:${Sub}`;
+export type HistoryKey = Exclude<Button, 'food' | 'new'> | `food:${Sub}` | `new:${NewSub}`;
 export type Histories = Partial<Record<HistoryKey, History>>;
 
 export const CARD_COUNT = 3;
@@ -146,9 +154,10 @@ const byRank = (a: Ranked, b: Ranked) => b.spot.score - a.spot.score || a.trip -
  * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
  * the nearest 3 on the whole island (빈손 없음).
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, sub?: Sub, reach: Reach = DEFAULT_REACH): Ranked[] {
+export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH): Ranked[] {
+  const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const all = spots
-    .filter((s) => s.mood === mood && (mood !== 'food' || s.sub === (sub ?? 'meal')))
+    .filter((s) => s.mood === mood && (want === 'mix' || s.sub === want))
     .map((spot) => {
       const km = distanceKm(origin, spot);
       return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km) };
@@ -178,10 +187,19 @@ function remember(h: History | undefined, shown: Card[], poolIds: string[]): His
   return { seen, last: ids };
 }
 
-export const historyKey = (button: Button, sub?: Sub): HistoryKey => (button === 'food' ? `food:${sub ?? 'meal'}` : button);
+const foodSub = (tab?: Tab): Sub => (tab === 'cafe' ? 'cafe' : 'meal');
+const newSub = (tab?: Tab): NewSub => (tab === 'sight' || tab === 'do' ? tab : 'mix');
+
+export const historyKey = (button: Button, tab?: Tab): HistoryKey =>
+  button === 'food' ? `food:${foodSub(tab)}` : button === 'new' ? `new:${newSub(tab)}` : button;
+
+/** The tab that applies to `button`: the food sub for food, the 새로운 거 tab for new, none otherwise. */
+export const tabOf = (button: Button | null, sub: Sub, newTab: NewSub): Tab | undefined =>
+  button === 'food' ? sub : button === 'new' ? newTab : undefined;
 
 /**
- * sub only applies to the 'food' button (defaults to 'meal'); ignored otherwise.
+ * tab only applies to the 'food' button (meal | cafe, defaults to 'meal') and the 'new' button (mix | sight | do,
+ * defaults to 'mix'); ignored otherwise.
  * `wrapped` = this tap shows a place already seen in this round, or is the first tap after the pool ran
  * out — i.e. everything nearby has been shown once and the rotation starts over (상태 줄 한 바퀴 문장).
  */
@@ -190,10 +208,10 @@ export function pickCards(
   origin: Point,
   button: Button,
   histories: Histories = {},
-  sub?: Sub,
+  tab?: Tab,
   reach: Reach = DEFAULT_REACH,
 ): { cards: Card[]; histories: Histories; wrapped: boolean } {
-  const key = historyKey(button, sub);
+  const key = historyKey(button, tab);
   const h = histories[key];
   let picked: Ranked[];
   let poolIds: string[];
@@ -203,7 +221,7 @@ export function pickCards(
     picked = pools.map((p) => rotate(p, h)[0]).filter((c): c is Ranked => !!c);
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, sub, reach);
+    const p = pool(spots, origin, button, tab, reach);
     picked = rotate(p, h).slice(0, CARD_COUNT);
     poolIds = p.map((c) => c.spot.id);
   }

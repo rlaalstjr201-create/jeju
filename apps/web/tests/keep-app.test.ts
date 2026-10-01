@@ -233,10 +233,22 @@ describe('3·4 attribution and privacy', () => {
     save([{ id: A, date: today, order: 0 }]);
     render({ userAgent: DESKTOP });
     await cards();
-    expect($('#results .credit').textContent).toBe('정보·사진: 비짓제주(제주관광공사)');
+    const credit = '정보·사진: 비짓제주(제주관광공사) · visitjeju.net';
+    const site = (where: string) => {
+      const links = [...document.querySelectorAll<HTMLAnchorElement>(`${where} .credit a`)];
+      expect(links, where).toHaveLength(1);
+      const [l] = links;
+      expect(l.textContent).toBe('visitjeju.net');
+      expect(l.getAttribute('href')).toBe('https://www.visitjeju.net');
+      expect(l.getAttribute('target')).toBe('_blank');
+      expect(l.getAttribute('rel')).toBe('noopener');
+    };
+    expect($('#results .credit').textContent).toBe(credit);
+    site('#results');
     await openSaved();
-    expect($('#savedView .credit').textContent).toBe('정보·사진: 비짓제주(제주관광공사)');
-    const a = $<HTMLAnchorElement>('#savedView .about a');
+    expect($('#savedView .credit').textContent).toBe(credit);
+    site('#savedView');
+    const a = $<HTMLAnchorElement>('#savedView .about > a');
     expect(a.getAttribute('href')).toBe('/privacy');
     expect(a.textContent).toBe('개인정보 처리 안내');
   });

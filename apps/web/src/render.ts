@@ -6,7 +6,7 @@ import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { bookingUrl, kakaoUrl } from './links';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, type SavedRow, type State } from './state';
+import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
@@ -182,6 +182,7 @@ export interface Els {
   crumb: HTMLElement;
   status: HTMLElement;
   foodSub: HTMLElement;
+  newSub: HTMLElement;
   cards: HTMLElement;
   savedTitle: HTMLElement;
   savedCount: HTMLElement;
@@ -219,6 +220,7 @@ export function findEls(doc: Document): Els {
     crumb: q('#crumb'),
     status: q('#status'),
     foodSub: q('#foodSub'),
+    newSub: q('#newSub'),
     cards: q('#cards'),
     savedTitle: q('#savedTitle'),
     savedCount: q('#savedTitle > .count'),
@@ -259,7 +261,7 @@ function setText(e: Element, text: string) {
 type ResultsBody = { k: 'blank' } | { k: 'keep' } | { k: 'ghost' } | { k: 'cards' } | { k: 'notice'; kind: 'noOrigin' | 'loadError' | 'empty' };
 type SavedBody = { k: 'none' } | { k: 'head' } | { k: 'keep' } | { k: 'ghost' } | { k: 'list' } | { k: 'error' };
 
-/** `showing`: the key (mood + food sub) whose cards/notice/frame is on screen now, or null. */
+/** `showing`: the key (mood + food sub / 새로운 거 tab) whose cards/notice/frame is on screen now, or null. */
 function resultsBodyOf(s: State, showing: string | null): ResultsBody {
   const p = s.phase;
   if (s.view === 'home') return { k: 'blank' };
@@ -268,7 +270,7 @@ function resultsBodyOf(s: State, showing: string | null): ResultsBody {
   // stay until the new ones land. Another mood or sub never borrows the old cards. After 300ms, a still frame —
   // unless the cards on screen still answer this mood, sub and basis (the same mood tapped again re-checks
   // GPS): those stay, rather than turning grey and coming back as the same 3.
-  const same = !!s.mood && showing === historyKey(s.mood, s.sub);
+  const same = !!s.mood && showing === historyKey(s.mood, tabNow(s));
   if (p.k === 'pending') {
     if (same && cardsValid(s)) return { k: 'keep' };
     return p.slow ? { k: 'ghost' } : same ? { k: 'keep' } : { k: 'blank' };
@@ -477,7 +479,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const sig = resultsSigOf(s, b);
     if (sig === resultsSig) return;
     resultsSig = sig;
-    resultsShowing = b.k === 'blank' || !s.mood ? null : b.k === 'cards' ? s.cards!.key : historyKey(s.mood, s.sub);
+    resultsShowing = b.k === 'blank' || !s.mood ? null : b.k === 'cards' ? s.cards!.key : historyKey(s.mood, tabNow(s));
     switch (b.k) {
       case 'blank':
         els.cards.replaceChildren();
@@ -970,7 +972,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // The mood chosen last time is ticked on the first screen.
     for (const b of els.moods) setAttr(b, 'aria-current', b.dataset.mood === s.mood ? 'true' : null);
     els.foodSub.hidden = !(s.view === 'cards' && s.mood === 'food');
-    for (const b of els.subs) setAttr(b, 'aria-pressed', String(b.dataset.sub === s.sub));
+    els.newSub.hidden = !(s.view === 'cards' && s.mood === 'new');
+    for (const b of els.subs) setAttr(b, 'aria-pressed', String(b.dataset.sub === s.sub || b.dataset.sub === s.newSub));
 
     const st = statusOf(s);
     const statusKey = `${st.text}|${st.chooseArea}`;

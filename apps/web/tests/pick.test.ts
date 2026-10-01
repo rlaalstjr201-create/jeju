@@ -1,7 +1,7 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
-import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, pickCards, reachMinutes, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type Reach, type Spot, type Sub } from '../src/pick';
+import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, pickCards, reachMinutes, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick';
 import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
 
 /** specs/ranking.md 정렬 키: 점수 내림차순 → 이동 시간 오름차순 → id. */
@@ -111,6 +111,73 @@ describe('food sub-type split (식사 | 카페·디저트)', () => {
     pickCards(spots, origin, 'food', h, 'cafe'); // cafe tap must not touch the meal history
     const meal2 = pickCards(spots, origin, 'food', h, 'meal');
     expect(meal2.cards.map((c) => c.spot.id).sort()).toEqual(meal1.cards.map((c) => c.spot.id).sort());
+  });
+});
+
+describe('새로운 거 섞어서 · 구경 · 체험 (ADR-0064, specs/new-sub.md)', () => {
+  const TABS: NewSub[] = ['mix', 'sight', 'do'];
+
+  it('N2 15 areas × 3 ranges × 3 tabs → 3 distinct cards (빈손 0); 구경 = sight only, 체험 = do only, 섞어서 = any kind', () => {
+    let checked = 0;
+    for (const area of AREAS) {
+      for (const reach of REACHES) {
+        for (const tab of TABS) {
+          const why = `${area.name} / ${reach} / ${tab}`;
+          const { cards } = pickCards(realSpots, area, 'new', {}, tab, reach);
+          expect(cards, why).toHaveLength(3);
+          expect(new Set(cards.map((c) => c.spot.id)).size, why).toBe(3);
+          for (const c of cards) {
+            expect(c.spot.mood, why).toBe('new');
+            if (tab !== 'mix') expect(c.spot.sub, why).toBe(tab);
+          }
+          checked++;
+        }
+      }
+    }
+    expect(checked).toBe(15 * 3 * 3);
+  });
+
+  it('N3 섞어서 is the default and the same as before the tabs: no tab = mix, and the pool is every new spot', () => {
+    for (const area of AREAS) {
+      for (const reach of REACHES) {
+        const ids = (tab?: NewSub) => pickCards(realSpots, area, 'new', {}, tab, reach).cards.map((c) => c.spot.id);
+        expect(ids(), `${area.name} / ${reach}`).toEqual(ids('mix'));
+      }
+    }
+    // the food sub never filters 새로운 거, and the 새로운 거 tab never filters food
+    const o = AREAS[0];
+    expect(pickCards(realSpots, o, 'new', {}, 'cafe').cards).toEqual(pickCards(realSpots, o, 'new', {}, 'mix').cards);
+    expect(pickCards(realSpots, o, 'food', {}, 'sight').cards).toEqual(pickCards(realSpots, o, 'food', {}, 'meal').cards);
+  });
+
+  it('아무거나 takes its 새로운 거 card from the mixed pool whatever tab was last used', () => {
+    const o = AREAS[3];
+    const a = pickCards(realSpots, o, 'any', {}, 'sight');
+    const b = pickCards(realSpots, o, 'any', {}, 'do');
+    const c = pickCards(realSpots, o, 'any');
+    expect(a.cards).toEqual(c.cards);
+    expect(b.cards).toEqual(c.cards);
+    expect(Object.keys(c.histories)).toEqual(['any']);
+  });
+
+  it('history keys new:mix / new:sight / new:do; each tab rotates on its own', () => {
+    const mk = (i: number, sub: 'sight' | 'do'): Spot => ({
+      id: `${sub}${i}`, name: `${sub}${i}`, lat: 33.5, lng: 126.5 + i * 0.001, mood: 'new', sub,
+      reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: String(3000 + i), bookable: false, score: 3,
+    });
+    // exactly 3 sight + 3 do → without history each tab always brings back the same 3
+    const spots = [0, 1, 2].flatMap((i) => [mk(i, 'sight'), mk(i, 'do')]);
+    const origin = { lat: 33.5, lng: 126.5 };
+    const sight1 = pickCards(spots, origin, 'new', {}, 'sight');
+    expect(Object.keys(sight1.histories)).toEqual(['new:sight']);
+    const mix = pickCards(spots, origin, 'new', sight1.histories, 'mix');
+    const doo = pickCards(spots, origin, 'new', mix.histories, 'do');
+    expect(Object.keys(doo.histories).sort()).toEqual(['new:do', 'new:mix', 'new:sight']);
+    expect(doo.cards.every((c) => c.spot.sub === 'do')).toBe(true);
+    // 섞어서 and 체험 taps in between do not advance 구경
+    const sight2 = pickCards(spots, origin, 'new', doo.histories, 'sight');
+    expect(sight2.cards.map((c) => c.spot.id).sort()).toEqual(sight1.cards.map((c) => c.spot.id).sort());
+    expect(sight2.wrapped).toBe(true);
   });
 });
 
@@ -294,11 +361,11 @@ describe('S34 한 바퀴 (wrapped)', () => {
 });
 
 describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () => {
-  /** the 6 buttons of the results screen: 4 moods (food as 식사 / 카페·디저트) and 아무거나 */
-  const SIX: [Button, Sub?][] = [['rest'], ['walk'], ['new'], ['food', 'meal'], ['food', 'cafe'], ['any']];
-  const poolOf = (b: Button, sub?: Sub) =>
-    realSpots.filter((s) => (b === 'any' ? ['rest', 'walk', 'new'].includes(s.mood) : s.mood === b && (b !== 'food' || s.sub === sub)));
-  const label = (a: string, b: Button, sub: Sub | undefined, reach: Reach) => `${a} / ${b}${sub ? `:${sub}` : ''} / ${reach}`;
+  /** the results screen's 8 lists: 4 moods (food as 식사 / 카페·디저트, new as 섞어서 / 구경 / 체험) and 아무거나 */
+  const SIX: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['food', 'meal'], ['food', 'cafe'], ['any']];
+  const poolOf = (b: Button, sub?: Tab) =>
+    realSpots.filter((s) => (b === 'any' ? ['rest', 'walk', 'new'].includes(s.mood) : s.mood === b && (!sub || sub === 'mix' || s.sub === sub)));
+  const label = (a: string, b: Button, sub: Tab | undefined, reach: Reach) => `${a} / ${b}${sub ? `:${sub}` : ''} / ${reach}`;
 
   it('ranges: 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간; default 차로 30분', () => {
     expect(REACHES).toEqual(['walk', 'drive30', 'drive60']);
@@ -313,7 +380,7 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
     expect(withinReach('drive60', o, east(34))).toBe(false); // 65
   });
 
-  it('R2 15 areas × 6 buttons × 3 ranges → 3 distinct cards; none beyond the range when 3 or more are in it', () => {
+  it('R2·N2 15 areas × 8 lists × 3 ranges → 3 distinct cards; none beyond the range when 3 or more are in it', () => {
     let checked = 0;
     for (const area of AREAS) {
       for (const [b, sub] of SIX) {
@@ -331,7 +398,7 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
         }
       }
     }
-    expect(checked).toBe(15 * 6 * 3);
+    expect(checked).toBe(15 * 8 * 3);
   });
 
   it('R3 within one range the first card scores at least as high as the cards after it (every area, button, range)', () => {

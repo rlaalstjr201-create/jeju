@@ -10,7 +10,7 @@ export const MAX_EVENTS = 50;
 
 const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book']);
 const MOODS = new Set(['rest', 'walk', 'new', 'food', 'any']);
-const SUBS = new Set(['meal', 'cafe']);
+const SUBS: Record<string, Set<string>> = { food: new Set(['meal', 'cafe']), new: new Set(['mix', 'sight', 'do']) };
 const RANGES = new Set(['walk', '30', '60']);
 const BASES = new Set(['here', 'stay', 'area']);
 const AREA_NAMES = new Set<string>(AREAS.map((a) => a.name));
@@ -33,7 +33,7 @@ export function eventProblem(x: unknown): string | null {
     if (!inSet(MOODS, o.mood)) return 'tap without mood';
   } else if (typeof o.id !== 'string' || !ID.test(o.id)) return 'id';
   if (o.mood !== undefined && !inSet(MOODS, o.mood)) return 'mood';
-  if (o.sub !== undefined && (!inSet(SUBS, o.sub) || o.mood !== 'food')) return 'sub';
+  if (o.sub !== undefined && !(typeof o.mood === 'string' && SUBS[o.mood] && inSet(SUBS[o.mood], o.sub))) return 'sub';
   if (o.range !== undefined && !inSet(RANGES, o.range)) return 'range';
   if (o.basis !== undefined && !inSet(BASES, o.basis)) return 'basis';
   if (o.area !== undefined && (o.basis !== 'area' || !inSet(AREA_NAMES, o.area))) return 'area';

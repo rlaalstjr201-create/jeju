@@ -136,7 +136,8 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
     const ids = cardIds() as string[];
     expect(ids).toContain(exp.id);
     const d = current().state().today;
-    const ctx = { mood, ...(mood === 'food' ? { sub: 'meal' } : {}), range: '30', basis: 'here', dated: false, d };
+    const sub = mood === 'food' ? 'meal' : mood === 'new' ? 'mix' : null;
+    const ctx = { mood, ...(sub ? { sub } : {}), range: '30', basis: 'here', dated: false, d };
     const heart = $(`#cards .card[data-id="${exp.id}"] .heart`);
     await tap(heart); // save
     await tap(heart); // unsave
@@ -160,7 +161,7 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
       { e: 'book', id: exp.id, ...ctx },
     ]);
     const keys = new Set(events().flatMap((e) => Object.keys(e)));
-    expect([...keys].sort()).toEqual(['basis', 'd', 'dated', 'e', 'id', 'mood', 'range', ...(mood === 'food' ? ['sub'] : [])].sort());
+    expect([...keys].sort()).toEqual(['basis', 'd', 'dated', 'e', 'id', 'mood', 'range', ...(sub ? ['sub'] : [])].sort());
     expect(JSON.stringify(sent)).not.toMatch(/lat|lng|point|origin|\d+\.\d{3,}|T\d\d:/);
   });
 

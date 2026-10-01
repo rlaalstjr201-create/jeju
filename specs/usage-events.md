@@ -8,7 +8,7 @@
 
 - `e`: `shown` | `save` | `unsave` | `map` | `book` | `tap`(기분 탭)
 - `id`: 장소 id (shown/save/unsave/map/book)
-- `mood`, `sub`, `range`(walk/30/60), `basis`(here/stay/area), `dated`(날짜 모드 여부 true/false)
+- `mood`, `sub`(food: meal/cafe, new: mix/sight/do — ADR-0064), `range`(walk/30/60), `basis`(here/stay/area), `dated`(날짜 모드 여부 true/false)
 - `d`: 로컬 날짜 `YYYY-MM-DD` (시각 없음)
 - 좌표·숙소·지역 이름 이외의 위치·식별자 없음. 지역 기준일 때만 `area` 이름 허용.
 

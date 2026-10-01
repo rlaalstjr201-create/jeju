@@ -1925,3 +1925,157 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     }
   });
 });
+
+// ADR-0064, specs/new-sub.md N3·N4: 새로운 거 섞어서 · 구경 · 체험 — the 먹기 tabs' part and rules.
+describe('새로운 거 섞어서 · 구경 · 체험', () => {
+  const newTabs = () => $$('#newSub [data-sub]');
+  const pressedTab = () => newTabs().filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.sub);
+  const subsOnScreen = () => cardIds().map((id) => realSpots.find((s) => s.id === id)?.sub);
+
+  it('N3 the first screen is unchanged; the tabs show only on 새로운 거 results, 섞어서 by default with the same 3 as before', async () => {
+    render();
+    expect($$('#home [data-mood]')).toHaveLength(5);
+    expect($('#newSub').hidden).toBe(true);
+    for (const mood of ['rest', 'walk', 'food', 'any'] as const) {
+      await tap(`[data-mood="${mood}"]`);
+      expect($('#newSub').hidden, mood).toBe(true);
+    }
+    await tap('[data-mood="new"]');
+    expect($('#newSub').hidden).toBe(false);
+    expect($('#foodSub').hidden).toBe(true);
+    expect($('#newSub').getAttribute('role')).toBe('group');
+    expect($('#newSub').getAttribute('aria-label')).toBe('새로운 거 종류');
+    expect(newTabs().map((b) => b.textContent)).toEqual(['섞어서', '구경', '체험']);
+    expect(newTabs().every((b) => b.classList.contains('tab') && b.getAttribute('type') === 'button')).toBe(true);
+    expect(pressedTab()).toEqual(['mix']);
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new'));
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', 'mix'));
+  });
+
+  it('N4 구경 / 체험 show only that kind; back to 섞어서 brings back the same 3; each tab rotates on its own; no history entry', async () => {
+    render();
+    await tap('[data-mood="new"]');
+    const mix1 = cardNames();
+    const depth = window.history.state.depth;
+    await tap('[data-sub="sight"]');
+    expect(pressedTab()).toEqual(['sight']);
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', 'sight'));
+    expect(subsOnScreen()).toEqual(['sight', 'sight', 'sight']);
+    const sight1 = cardNames();
+    await tap('[data-sub="do"]');
+    expect(pressedTab()).toEqual(['do']);
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', 'do'));
+    expect(subsOnScreen()).toEqual(['do', 'do', 'do']);
+    await tap('[data-sub="mix"]');
+    expect(cardNames()).toEqual(mix1);
+    expect(window.history.state.depth).toBe(depth);
+    await tap('[data-sub="sight"]');
+    expect(cardNames()).toEqual(sight1);
+    await tap('#cards .more');
+    const sight2 = cardNames();
+    expect(sight2.filter((n) => sight1.includes(n))).toEqual([]);
+    expect(subsOnScreen()).toEqual(['sight', 'sight', 'sight']);
+    expect(Object.keys(state().histories).sort()).toEqual(['new:do', 'new:mix', 'new:sight']);
+    // the tab already chosen again is a no-op
+    await tap('[data-sub="sight"]');
+    expect(cardNames()).toEqual(sight2);
+  });
+
+  it('N4 a double tap on a tab is one tap; tabs switched while loading: only the last one counts', async () => {
+    const later = deferred<unknown>();
+    let calls = 0;
+    render({ loadSpots: () => (++calls === 1 ? Promise.resolve(fileSpots) : later.promise) });
+    await tap('[data-mood="new"]');
+    advance();
+    $('[data-sub="sight"]').click();
+    await flush();
+    $('[data-sub="sight"]').click(); // same instant: the 2nd half of a double tap
+    await flush();
+    await flush();
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', 'sight'));
+    expect(state().histories['new:sight']?.seen).toHaveLength(3);
+    // GPS slow: 체험 then 구경 before either lands → 구경 only
+    const gps = deferred<Point>();
+    const gps2 = deferred<Point>();
+    let n = 0;
+    window.history.replaceState(null, '');
+    window.sessionStorage.clear();
+    render({ locate: () => (++n === 1 ? Promise.resolve(ORIGINS.제주시) : n === 2 ? gps.promise : gps2.promise) });
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="do"]');
+    await tap('[data-sub="sight"]');
+    gps2.resolve(ORIGINS.제주시);
+    await flush();
+    await flush();
+    gps.resolve(ORIGINS.서귀포); // the older request lands last
+    await flush();
+    await flush();
+    expect(pressedTab()).toEqual(['sight']);
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', 'sight'));
+  });
+
+  it('N4 the tab is remembered: 바꾸기 and back to 새로운 거 keeps 구경 (and its 3); the food tab is its own', async () => {
+    render();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="do"]');
+    const doing = cardNames();
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="food"]');
+    expect($('[data-sub="meal"]').getAttribute('aria-pressed')).toBe('true');
+    await tap('[data-sub="cafe"]');
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="new"]');
+    expect(pressedTab()).toEqual(['do']);
+    expect(cardNames()).toEqual(doing);
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="food"]');
+    expect($('[data-sub="cafe"]').getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('N4 reload / discarded tab: the same tab and the same 3 come back; a reload while it loads keeps the tab too', async () => {
+    render();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="sight"]');
+    await tap('#cards .more');
+    const looking = cardNames();
+    render();
+    await flush();
+    await flush();
+    expect(pressedMoods()).toEqual(['new']);
+    expect(pressedTab()).toEqual(['sight']);
+    expect(cardNames()).toEqual(looking);
+    expect(JSON.parse(window.sessionStorage.getItem('jeju.session')!).newSub).toBe('sight');
+    // switched to 체험 and reloaded before its cards came
+    const slow = deferred<unknown>();
+    let calls = 0;
+    render({ loadSpots: () => (++calls === 1 ? Promise.resolve(fileSpots) : slow.promise) });
+    await flush();
+    await flush();
+    await tap('[data-sub="do"]');
+    render();
+    await flush();
+    await flush();
+    expect(pressedTab()).toEqual(['do']);
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new', 'do'));
+  });
+
+  it('N4 아무거나 draws from the mixed 새로운 거 pool, whichever tab was last chosen', async () => {
+    render();
+    await tap('[data-mood="new"]');
+    await tap('[data-sub="sight"]');
+    await tap('#results .change');
+    await settle();
+    await tap('[data-mood="any"]');
+    expect($('#newSub').hidden).toBe(true);
+    expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'any'));
+  });
+
+  it('N4 the tabs use the 먹기 tab rule: 44px tall, a 48px hit area (::before inset -2px -8px)', () => {
+    expect(cssRule('.tab')).toMatch(/min-height:\s*44px/);
+    expect(cssRule('.tab::before')).toMatch(/inset:\s*-2px -8px/);
+    expect(html).toMatch(/<div id="newSub" class="tabs" role="group" aria-label="새로운 거 종류" hidden>/);
+  });
+});

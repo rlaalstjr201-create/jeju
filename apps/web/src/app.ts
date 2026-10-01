@@ -8,7 +8,7 @@ import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult 
 import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
 import { bookingUrl, kakaoUrl } from './links';
 import { HOME, createNav } from './nav';
-import { REACHES, type Button, type Reach, type Sub } from './pick';
+import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, createStore } from './store';
@@ -407,8 +407,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     nav.back(HOME);
   }
 
-  function onSub(sub: Sub) {
-    if (guarded(`sub:${sub}`) || state.view !== 'cards' || state.mood !== 'food' || state.sub === sub) return;
+  /** 식사 | 카페·디저트 on 먹기, 섞어서 | 구경 | 체험 on 새로운 거 (ADR-0064): the same rules. */
+  function onSub(sub: Tab) {
+    const forMood = sub === 'meal' || sub === 'cafe' ? 'food' : 'new';
+    const current = forMood === 'food' ? state.sub : state.newSub;
+    if (guarded(`sub:${sub}`) || state.view !== 'cards' || state.mood !== forMood || current === sub) return;
     dispatch({ type: 'sub', sub });
     request('show');
   }
@@ -601,7 +604,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const keepAct = b.dataset.action ? KEEP_ACTIONS[b.dataset.action] : undefined;
     if (keepAct) return guarded(`keep:${b.dataset.action}`) ? undefined : keepAct();
     if (b.dataset.mood) return onMood(b.dataset.mood as Button);
-    if (b.dataset.sub) return onSub(b.dataset.sub as Sub);
+    if (b.dataset.sub) return onSub(b.dataset.sub as Tab);
     if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
     const action = b.dataset.action;
     if (state.view === 'saved' && b.dataset.id && b.dataset.date) {

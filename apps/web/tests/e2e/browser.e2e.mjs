@@ -1969,6 +1969,51 @@ await check('T2-hit', 'at 320·390: card heart, 바꾸기·돌아가기, 식사 
   assert(problems.length === 0, problems.join(' | '));
 });
 
+// --- ADR-0064, specs/new-sub.md N4: 새로운 거 섞어서 · 구경 · 체험 ---
+await check('N4-new-tabs', '새로운 거 at 320·390: 섞어서 · 구경 · 체험 under the head (섞어서 pressed), each tab a ≥ 48×48 area no other control overlaps, drawn 44; each tab shows 3 cards of its kind, no sideways scroll; the tab survives a reload; history unchanged by a tab', async () => {
+  const problems = [];
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    const { ctx, page } = await fresh({ width, height });
+    await tapText(page, '[data-mood="new"]');
+    await waitCards(page);
+    const labels = await page.$$eval('#newSub .tab', (els) => els.map((e) => `${e.textContent}:${e.getAttribute('aria-pressed')}`));
+    if (labels.join() !== '섞어서:true,구경:false,체험:false') problems.push(`${width} tabs ${labels}`);
+    if (await visible(page, '#foodSub')) problems.push(`${width} food tabs shown`);
+    const r = await page.evaluate(hitMeasure, '#newSub .tab');
+    if (r.n !== 3) problems.push(`${width}: ${r.n} tab targets`);
+    for (const k of ['small', 'overlap', 'blocked']) if (r[k].length) problems.push(`${width} ${k}: ${r[k].join(', ')}`);
+    const drawn = await page.$$eval('#newSub .tab', (els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
+    if (drawn.some((h) => h !== 44)) problems.push(`${width} drawn ${drawn}`);
+    const depth = (await hstate(page)).depth;
+    const kinds = () =>
+      page.evaluate(async () => {
+        const subOf = new Map((await (await fetch('/spots.json')).json()).map((x) => [x.id, x.sub]));
+        return [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => subOf.get(c.dataset.id));
+      });
+    for (const sub of ['sight', 'do', 'mix']) {
+      await tapText(page, `#newSub [data-sub="${sub}"]`);
+      await waitCards(page);
+      const now = await kinds();
+      if (now.length !== 3) problems.push(`${width} ${sub}: ${now.length} cards`);
+      if (sub !== 'mix' && now.some((k) => k !== sub)) problems.push(`${width} ${sub}: cards of kind ${now}`);
+      const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      if (over > 0) problems.push(`${width} ${sub} overflows ${over}`);
+      if ((await page.getAttribute(`#newSub [data-sub="${sub}"]`, 'aria-pressed')) !== 'true') problems.push(`${width} ${sub} not pressed`);
+      if (width === 390 && sub === 'sight') await shot(page, '12-new-tabs');
+    }
+    if ((await hstate(page)).depth !== depth) problems.push(`${width} a tab pushed history`);
+    await tapText(page, '#newSub [data-sub="do"]');
+    await waitCards(page);
+    const doing = await names(page);
+    await page.reload();
+    await waitCards(page);
+    if ((await page.getAttribute('#newSub [data-sub="do"]', 'aria-pressed')) !== 'true') problems.push(`${width} reload lost 체험`);
+    if ((await names(page)).join() !== doing.join()) problems.push(`${width} reload changed the cards`);
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 // --- ADR-0063: hosting (no SPA fallback, 404.html, absolute paths) and keeping saves without a login ---
 const KAKAO_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 10.8.5';
 await check('K-404', 'an unknown address gets 404.html (status 404, a way home), never a blank page; /privacy is a page; with the worker installed a 404 stays a 404; index.html served at a deep address (a fallback) runs the app (absolute asset paths)', async () => {
@@ -2017,8 +2062,11 @@ await check('K-backup', 'saved list (390 light): 링크로 백업 copies a #s= l
   assert(note.startsWith('링크를 복사했어요.'), `note: ${note}`);
   const link = await page.evaluate(() => navigator.clipboard.readText());
   assert(link.startsWith(`${BASE}#s=`), `copied ${link}`);
-  assert((await page.textContent('#savedView .about .credit')) === '정보·사진: 비짓제주(제주관광공사)', 'no attribution');
-  assert((await page.getAttribute('#savedView .about a', 'href')) === '/privacy', 'no privacy link');
+  assert((await page.textContent('#savedView .about .credit')) === '정보·사진: 비짓제주(제주관광공사) · visitjeju.net', 'no attribution');
+  const site = await page.$eval('#savedView .about .credit a', (a) => ({ href: a.getAttribute('href'), target: a.target, rel: a.rel, color: getComputedStyle(a).color, p: getComputedStyle(a.parentElement).color, line: getComputedStyle(a).textDecorationLine }));
+  assert(site.href === 'https://www.visitjeju.net' && site.target === '_blank' && site.rel === 'noopener', `site link ${JSON.stringify(site)}`);
+  assert(site.color === site.p && site.line === 'underline', `site link look ${JSON.stringify(site)}`);
+  assert((await page.getAttribute('#savedView .about > a', 'href')) === '/privacy', 'no privacy link');
   await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
   await sleep(100);
   const footer = await page.evaluate(() => {

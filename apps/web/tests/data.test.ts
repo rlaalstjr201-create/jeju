@@ -9,6 +9,7 @@ import { cleanReason, createSpotSource, normalizeSpots } from '../src/data';
 import { bookingUrl, kakaoUrl } from '../src/links';
 import { distanceKm } from '../src/pick';
 import { applyCorrections, loadCorrections } from '../scripts/apply-corrections.mjs';
+import { applyNewSub, loadCategories, loadNewSubCalls, newSub } from '../scripts/new-sub.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -17,9 +18,9 @@ const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 10 fields (food: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 10 fields (food, new: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
-      const expectedFields = s.mood === 'food' ? FOOD_FIELDS : FIELDS;
+      const expectedFields = s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS;
       return (
         Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
         !(s.lat >= 33.1 && s.lat <= 33.6 && s.lng >= 126.1 && s.lng <= 127.0) ||
@@ -52,13 +53,41 @@ describe("S1' 레코드 형식", () => {
     expect(wrong.score).toBe(3);
   });
 
-  it("food spots all have sub ∈ {meal, cafe}; non-food spots have no sub field", () => {
+  it("food spots all have sub ∈ {meal, cafe}; rest·walk spots have no sub field", () => {
     const badFood = fileSpots.filter((s) => s.mood === 'food' && s.sub !== 'meal' && s.sub !== 'cafe');
     expect(badFood.map((s) => s.id)).toEqual([]);
-    const badNonFood = fileSpots.filter((s) => s.mood !== 'food' && 'sub' in s);
+    const badNonFood = fileSpots.filter((s) => (s.mood === 'rest' || s.mood === 'walk') && 'sub' in s);
     expect(badNonFood.map((s) => s.id)).toEqual([]);
     expect(fileSpots.some((s) => s.sub === 'meal')).toBe(true);
     expect(fileSpots.some((s) => s.sub === 'cafe')).toBe(true);
+  });
+
+  it('N1 (ADR-0064): all 508 새로운 거 spots have sub sight|do — experience → do, sightseeing·cultural_space → sight, cafe·restaurant as review/copy/new-sub.json', () => {
+    const news = fileSpots.filter((s) => s.mood === 'new');
+    expect(news).toHaveLength(508);
+    expect(news.filter((s) => s.sub !== 'sight' && s.sub !== 'do').map((s) => s.id)).toEqual([]);
+    const categories = loadCategories();
+    const calls = loadNewSubCalls();
+    expect(calls.size).toBe(46);
+    const expected = (id: string) => {
+      const c = categories.get(id);
+      return c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' ? 'sight' : calls.get(id);
+    };
+    expect(news.filter((s) => s.sub !== expected(s.id)).map((s) => s.id)).toEqual([]);
+    // every cafe·restaurant new spot has a recorded call (with its basis), and the call file names only those
+    const handCalled = news.filter((s) => !['experience', 'sightseeing', 'cultural_space'].includes(categories.get(s.id)!));
+    expect(handCalled.map((s) => s.id).sort()).toEqual([...calls.keys()].sort());
+    const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/new-sub.json'), 'utf8')) as { basis: string }[];
+    expect(raw.filter((v) => !v.basis?.trim())).toEqual([]);
+    expect(news.some((s) => s.sub === 'sight') && news.some((s) => s.sub === 'do')).toBe(true);
+  });
+
+  it('N1: the new-sub rule is idempotent on the shipped file, build-spots.mjs applies it, and an unknown case stops it', () => {
+    expect(JSON.stringify(applyNewSub(fileSpots))).toBe(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/if \(v\.mood === 'new'\) spot\.sub = newSub\(/);
+    expect(() => newSub('x', 'cafe', new Map())).toThrow(/no sub/);
+    expect(newSub('x', 'experience', new Map())).toBe('do');
+    expect(newSub('x', 'cultural_space', new Map())).toBe('sight');
   });
 
   it("reason is 15~70 chars and has no price/hours/weekday/rating wording (S1')", () => {

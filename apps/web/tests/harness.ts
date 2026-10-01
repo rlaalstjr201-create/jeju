@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { mountApp, type App, type Deps } from '../src/app';
-import { pickCards, type Button, type Point, type Reach, type Sub } from '../src/pick';
+import { pickCards, type Button, type Point, type Reach, type Tab } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
 export const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
@@ -77,7 +77,7 @@ export const shownMood = () => {
     .map((b) => b.dataset.mood);
 };
 /** What a first pick shows (default range 차로 30분 unless given). */
-export const expectedNames = (o: Point, b: Button, sub?: Sub, reach?: Reach) => pickCards(realSpots, o, b, {}, sub, reach).cards.map((c) => c.spot.name);
+export const expectedNames = (o: Point, b: Button, sub?: Tab, reach?: Reach) => pickCards(realSpots, o, b, {}, sub, reach).cards.map((c) => c.spot.name);
 
 /** A promise with its resolve/reject exposed. */
 export function deferred<T>() {
