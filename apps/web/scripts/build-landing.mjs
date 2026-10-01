@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+// Static landing pages after `vite build` (specs/seo-landing.md, ADR-0072). Run with tsx (it imports the app's TS rules):
+//   tsx scripts/build-landing.mjs                 dist/jeju/**, sitemap, robots Sitemap line, _redirects; then the quality bar
+//   tsx scripts/build-landing.mjs --write-slugs   give new places a slug in data/landing/slugs.json (npm run landing:slugs)
+// Env: SITE_URL (absolute canonical/sitemap; empty = relative), LANDING_PHOTOS=0 (no VisitJeju photos, ADR-0072).
+// Exit 1 when a place has no slug, or the quality bar fails: a run of source text on a page (L4), two pages too alike,
+// a place page with too little of its own text, or a photo that is not a VisitJeju hotlink.
+import { execFileSync } from 'node:child_process';
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { normalizeSpots } from '../src/data.ts';
+import { judge } from './seo/keyword-gate.mjs';
+import {
+  assignSlugs, buildSite, copiedReasons, ownShare, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
+} from './landing.ts';
+
+const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const SLUGS = join(APP, 'data/landing/slugs.json');
+/** The quality bar (specs/seo-landing.md 「품질 기준」). Set before the first build's numbers were seen; see the spec. */
+export const BAR = { maxSimilarity: 0.8, minOwnShare: 0.3, minNearby: 3, sourceRun: 20 };
+const PHOTO_HOST = 'https://api.cdn.visitjeju.net/';
+
+const argv = process.argv.slice(2);
+const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
+const fail = [];
+
+const registry = existsSync(SLUGS) ? read(SLUGS) : { slugs: {} };
+if (argv.includes('--write-slugs')) {
+  const spots = normalizeSpots(read(join(APP, 'public/spots.json')));
+  const added = assignSlugs(spots, registry.slugs);
+  const slugs = Object.fromEntries(Object.entries({ ...registry.slugs, ...added }).sort(([a], [b]) => a.localeCompare(b)));
+  mkdirSync(dirname(SLUGS), { recursive: true });
+  writeFileSync(SLUGS, `${JSON.stringify({ _why: 'Place page addresses (ADR-0072). An entry never changes and a slug is never reused; area = the first address, for 301s.', slugs }, null, 1)}\n`);
+  console.log(`slugs: ${Object.keys(added).length} added, ${Object.keys(slugs).length} in ${SLUGS.slice(APP.length + 1)}`);
+  process.exit(0);
+}
+
+const DIST = resolve(APP, argv.includes('--dist') ? argv[argv.indexOf('--dist') + 1] : 'dist');
+if (!existsSync(join(DIST, 'spots.json'))) {
+  console.error(`build-landing: ${DIST}/spots.json not found — run vite build first`);
+  process.exit(1);
+}
+const spots = normalizeSpots(read(join(DIST, 'spots.json')));
+const missing = spots.filter((s) => !registry.slugs[s.id]);
+if (missing.length) {
+  console.error(`build-landing: ${missing.length} place(s) have no address yet (${missing.slice(0, 3).map((s) => s.name).join(', ')} …). Run npm run landing:slugs and commit data/landing/slugs.json.`);
+  process.exit(1);
+}
+
+// Source text the reasons were written from (review/input: VisitJeju introduction, and the summary and comment made from it).
+const sources = new Map();
+for (const f of readdirSync(join(APP, 'review/input')).filter((x) => x.endsWith('.json'))) {
+  for (const r of read(join(APP, 'review/input', f))) sources.set(r.id, [r.intro, r.summary, r.comment].filter((t) => typeof t === 'string' && t));
+}
+const exclude = copiedReasons(spots, (id) => sources.get(id) ?? [], BAR.sourceRun);
+
+// 2단계: only the 조합 whose search words are keyword-gate targets (data/seo/keywords.json, judged again here).
+const keywords = read(join(APP, 'data/seo/keywords.json'));
+const combos = (keywords.candidates ?? []).flatMap((c) => {
+  const m = /^\/jeju\/([a-z]+)\/(rest|walk|new|food)\/$/.exec(c.landing ?? '');
+  return m && judge(c).verdict === 'target' ? [{ area: m[1], mood: m[2], query: c.query }] : [];
+});
+
+const site = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
+const photos = process.env.LANDING_PHOTOS !== '0';
+let dataDate = null;
+try {
+  dataDate = execFileSync('git', ['log', '-1', '--format=%cs', '--', 'public/spots.json'], { cwd: APP }).toString().trim() || null;
+} catch {
+  /* no git: no date */
+}
+
+const { pages, places, redirects } = buildSite({ spots, slugs: registry.slugs, exclude, combos, site, photos, dataDate });
+
+// --- write -----------------------------------------------------------------------------------------------------
+for (const p of pages) {
+  const dir = join(DIST, p.path);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), p.html);
+}
+writeFileSync(join(DIST, CSS_PATH), readFileSync(join(APP, 'src/landing.css')));
+const urls = ['/', '/privacy', ...pages.map((p) => p.path)];
+for (const [f, body] of Object.entries(sitemapFiles(urls, site, dataDate))) writeFileSync(join(DIST, f), body);
+const robots = join(DIST, 'robots.txt');
+if (site && existsSync(robots) && !/^Sitemap:/m.test(readFileSync(robots, 'utf8'))) {
+  writeFileSync(robots, `${readFileSync(robots, 'utf8').replace(/\n*$/, '\n')}\nSitemap: ${site}/sitemap.xml\n`);
+}
+if (redirects.length) writeFileSync(join(DIST, '_redirects'), `${redirects.join('\n')}\n`);
+
+// --- the quality bar -------------------------------------------------------------------------------------------
+const copies = sourceCopies(pages, [...sources.values()].flat(), spots.map((s) => s.name), BAR.sourceRun);
+for (const c of copies.slice(0, 10)) fail.push(`source text on ${c.path}: ${c.run}`);
+if (copies.length > 10) fail.push(`… ${copies.length} pages with source text`);
+
+const alike = similarPairs(pages, BAR.maxSimilarity);
+for (const x of alike.slice(0, 10)) fail.push(`too alike (${x.sim.toFixed(3)} ≥ ${BAR.maxSimilarity}): ${x.a} ${x.b}`);
+const closest = similarPairs(pages, 0.5)[0];
+
+const placePages = pages.filter((p) => p.kind === 'place');
+const own = ownShare(placePages).sort((a, b) => a.share - b.share);
+for (const o of own.filter((x) => x.share < BAR.minOwnShare).slice(0, 10)) fail.push(`thin: ${o.path} own text ${(o.share * 100).toFixed(1)}% < ${BAR.minOwnShare * 100}%`);
+for (const p of placePages) {
+  const near = (p.html.match(/<ul class="near">([\s\S]*?)<\/ul>/)?.[1].match(/<li>/g) ?? []).length;
+  if (near < BAR.minNearby) fail.push(`thin: ${p.path} has ${near} nearby places`);
+}
+for (const p of pages) {
+  for (const m of p.html.matchAll(/<img\b[^>]*\ssrc="([^"]*)"/g)) {
+    if (!photos) fail.push(`photo with LANDING_PHOTOS=0: ${p.path}`);
+    else if (!m[1].startsWith(PHOTO_HOST)) fail.push(`photo not a VisitJeju hotlink: ${p.path} ${m[1]}`);
+  }
+  if (!/비짓제주\(제주관광공사\)/.test(p.html)) fail.push(`no credit: ${p.path}`);
+}
+
+const size = (dir) => readdirSync(dir, { withFileTypes: true }).reduce((n, e) => n + (e.isDirectory() ? size(join(dir, e.name)) : statSync(join(dir, e.name)).size), 0);
+const count = pages.reduce((a, p) => ({ ...a, [p.kind]: (a[p.kind] ?? 0) + 1 }), {});
+console.log(`landing: ${pages.length} pages (${Object.entries(count).map(([k, n]) => `${k} ${n}`).join(' · ')}), ${(size(join(DIST, 'jeju')) / 1048576).toFixed(1)} MB, photos ${photos ? 'on (hotlink)' : 'off'}, site ${site || '(relative)'}`);
+console.log(`  places ${places.length} of ${spots.length}; no page (reason repeats ${BAR.sourceRun}+ characters of its source): ${exclude.size}${exclude.size ? ` — ${spots.filter((s) => exclude.has(s.id)).map((s) => s.name).join(', ')}` : ''}`);
+console.log(`  closest pair ${closest ? `${closest.sim.toFixed(3)} ${closest.a} ${closest.b}` : '< 0.5'} (bar < ${BAR.maxSimilarity}); least own text ${own.length ? `${(own[0].share * 100).toFixed(1)}% ${own[0].path}` : '-'} (bar ≥ ${BAR.minOwnShare * 100}%)`);
+console.log(`  source-text runs: ${copies.length}; sitemap ${urls.length} URLs; redirects ${redirects.length}`);
+if (fail.length) {
+  for (const f of fail) console.error(`  FAIL ${f}`);
+  process.exit(1);
+}

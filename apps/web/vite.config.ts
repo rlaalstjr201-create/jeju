@@ -50,6 +50,8 @@ function pagesNotFound(): Plugin {
             /* a malformed path is no file */
           }
           if (file.startsWith(dist) && existsSync(file) && statSync(file).isFile()) return next();
+          // a folder with an index.html is a page, as on Pages (the static landing pages /jeju/**, ADR-0072)
+          if (file.startsWith(dist) && existsSync(resolve(file, 'index.html'))) return next();
           res.statusCode = 404;
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.end(readFileSync(resolve(dist, '404.html')));

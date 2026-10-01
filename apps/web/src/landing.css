@@ -1,0 +1,82 @@
+/* Static landing pages (/jeju/**, ADR-0072): the same tokens as style.css (ADR-0070), no script. Copied to
+   dist/jeju/landing.css by scripts/build-landing.mjs; never imported by the app. Places are photo + text, links
+   are underlined text, the one call to action is the --main fill (.go), like the app's primary button. */
+
+:root {
+  --bg: #ffffff; --fill: #f3f3f4; --line: #e3e3e4; --text: #14181f; --muted: #5f6267;
+  --main: #0a6fd6; --on-main: #ffffff; --main-press: #0c62bb; --photo: none;
+  --r-ctl: 10px; --r-photo: 12px; --r-thumb: 8px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1319; --fill: #23272d; --line: #33373c; --text: #eef1f5; --muted: #b0b3b7;
+    --main: #5aa9ff; --on-main: #0f1319; --main-press: #4d8ed6; --photo: brightness(0.9);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
+  font-size: 0.9375rem; line-height: 1.5; font-weight: 400; word-break: keep-all; overflow-wrap: break-word;
+}
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 6px; }
+
+.top, main, .foot {
+  max-width: 480px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right));
+}
+.top { display: flex; align-items: center; min-height: 52px; padding-top: env(safe-area-inset-top); }
+.brand { font-weight: 700; text-decoration: none; }
+main { padding-bottom: 8px; }
+.foot { padding-bottom: max(28px, env(safe-area-inset-bottom)); color: var(--muted); }
+.foot p { margin: 4px 0 0; }
+.foot .credit { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); }
+
+.crumbs ol { display: flex; flex-wrap: wrap; gap: 0 6px; margin: 0; padding: 0; list-style: none; color: var(--muted); }
+.crumbs li + li::before { content: "›"; margin-right: 6px; }
+.crumbs a { text-decoration: none; }
+
+h1 { margin: 12px 0 0; font-size: 1.5rem; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+h2 { margin: 32px 0 0; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; }
+h3 { margin: 20px 0 0; font-size: 1.0625rem; line-height: 1.4; font-weight: 600; }
+p { margin: 8px 0 0; text-wrap: pretty; }
+.lead { margin-top: 12px; font-size: 1.0625rem; }
+.meta { color: var(--muted); }
+b { font-weight: 600; }
+
+/* the call to action: the app's primary button (ADR-0070 3) */
+.go {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 16px; border-radius: var(--r-ctl);
+  background: var(--main); color: var(--on-main); font-weight: 600; text-decoration: none;
+}
+.go:active { background: var(--main-press); }
+.tbtn {
+  display: inline-flex; align-items: center; min-height: 48px; margin-left: -8px; padding: 0 8px; border-radius: var(--r-ctl);
+  font-weight: 600; text-underline-offset: 4px;
+}
+.tbtn:active { background: var(--fill); }
+.links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.links .tbtn { margin-left: 0; }
+
+ul, ol { margin: 8px 0 0; padding: 0; list-style: none; }
+.areas li, .moods li, .near li, .facts li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.areas a, .near a { font-weight: 600; }
+.facts b { display: block; color: var(--muted); font-weight: 400; }
+.idx { display: flex; flex-wrap: wrap; gap: 0 12px; }
+.idx li { padding: 4px 0; }
+
+/* a listed place: thumb + text (the app's row card) */
+.row { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: 600; }
+.row p { margin: 2px 0 0; }
+.row .meta { margin-top: 4px; }
+.ph { flex: none; overflow: hidden; background: var(--fill); }
+.ph img { display: block; width: 100%; height: 100%; object-fit: cover; filter: var(--photo); }
+.ph.sq { width: 72px; aspect-ratio: 1; align-self: flex-start; border-radius: var(--r-thumb); }
+.ph.hero { margin-top: 16px; aspect-ratio: 3 / 2; border-radius: var(--r-photo); }
+.ph.hero + .meta { margin-top: 4px; }

@@ -44,7 +44,16 @@ const genericAnchors = [...pages.values()].flatMap((p) => p.links.filter((l) => 
 // ── ② 사이트맵 대조 ───────────────────────────────────────────
 let sitemap = null;
 if (files['sitemap.xml'] != null) {
-  const urls = new Set([...files['sitemap.xml'].matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => normUrl(m[1].trim(), ORIGIN)).filter(Boolean));
+  const locsOf = (xml) => [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+  let locs = locsOf(files['sitemap.xml']);
+  // a sitemap index (build-landing.mjs splits past 45,000 URLs): read the child sitemaps from dist
+  if (/<sitemapindex\b/.test(files['sitemap.xml'])) {
+    locs = locs.flatMap((l) => {
+      const f = path.join(DIST, new URL(l, 'http://local').pathname);
+      return fs.existsSync(f) ? locsOf(fs.readFileSync(f, 'utf8')) : [];
+    });
+  }
+  const urls = new Set(locs.map((u) => normUrl(u, ORIGIN)).filter(Boolean));
   sitemap = {
     n: urls.size,
     missing_from_dist: [...urls].filter((u) => !pages.has(u)),

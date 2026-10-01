@@ -191,6 +191,8 @@ export function checkSlop(root: string, opts: { dist?: boolean } = {}): Violatio
     if (/@font-face|fonts\.googleapis|fonts\.gstatic/.test(page)) v.push({ rule: 16, file: f, detail: 'external font' });
     checkStrings(f, htmlStrings(page), v);
   }
+  // ADR-0072: the static landing pages' copy lives in their generator (its stylesheet is src/landing.css, above).
+  checkStrings('scripts/landing.ts', uiStrings(read(join(root, 'scripts/landing.ts'))), v);
   const manifest = JSON.parse(read(join(root, 'public/manifest.webmanifest'))) as Record<string, unknown>;
   checkStrings('manifest.webmanifest', [manifest.name, manifest.short_name, manifest.description].filter((x): x is string => typeof x === 'string'), v);
   // #17 · #19: the place sentences are on screen as much as the UI copy.
