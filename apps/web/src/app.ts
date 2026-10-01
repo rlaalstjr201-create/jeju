@@ -7,7 +7,7 @@ import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './date
 import { readDeepLink, type DeepLink } from './deeplink';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
-import { bookingUrl, kakaoUrl } from './links';
+import { MAP_APPS, bookingUrl, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
@@ -183,6 +183,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'tracking', on });
     store.setTracking(on);
   }
+  /** 지도 앱 (ADR-0071): the cards' links follow at once; kept on this device. */
+  function setMapApp(app: MapApp) {
+    dispatch({ type: 'mapApp', app });
+    store.setMapApp(app);
+  }
 
   /** Same control again within `delays.guard` → ignored (double tap = one tap, S35). Hearts are toggles and not guarded. */
   const lastTap = new Map<string, number>();
@@ -330,6 +335,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (b.entries) dispatch({ type: 'keep', keep: { restore: { k: 'ask', entries: b.entries } } });
     // 비 와요 rode along (ADR-0065): this session starts with it on
     if (b.indoor) setIndoor(true);
+    // so did a map app other than 네이버지도 (ADR-0071)
+    if (b.mapApp) setMapApp(b.mapApp);
   }
   /** A deep link (`/?mood=…&area=…`, ADR-0067): read once, and the query goes from the address at once (like
    * `#s=`), so a reload, back or forward follows the usual rules. Applied only on a fresh first-screen entry. */
@@ -374,12 +381,12 @@ export function mountApp(doc: Document, deps: Deps): App {
   async function backup() {
     const entries = store.saved();
     if (!entries.length) return;
-    const ok = await copy(backupUrl(home(), entries, state.indoor));
+    const ok = await copy(backupUrl(home(), entries, state.indoor, state.mapApp));
     if (!signal.aborted && state.view === 'saved') dispatch({ type: 'keep', keep: { backup: ok ? 'copied' : 'failed' } });
   }
   /** Outside KakaoTalk (its own link does it): the address, with what is saved here, onto the clipboard. */
   async function inappCopy() {
-    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved, state.indoor) : home());
+    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved, state.indoor, state.mapApp) : home());
     if (!signal.aborted && state.keep.inappNote) dispatch({ type: 'keep', keep: { inappNote: ok ? 'copied' : 'failed' } });
   }
   let installPrompt: InstallPrompt | null = null;
@@ -682,6 +689,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (!guarded('track')) setTracking(!state.tracking);
       return;
     }
+    if (action === 'map-app') {
+      const app = b.dataset.app as MapApp;
+      if (MAP_APPS.includes(app) && !guarded(`map-app:${app}`)) setMapApp(app);
+      return;
+    }
     const area = areaByName(b.dataset.area);
     if (area && !guarded(`area:${area.name}`)) {
       hush();
@@ -698,12 +710,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     const b = buttonIn(e, els.main);
     if (b && !state.overlay) onMainButton(b);
   });
-  // 카카오맵 (the card's name link), 길찾기 and 예약 links: counted, then the browser opens them as usual.
+  // the map app's place link (the card's name), 길찾기 and 예약 links: counted, then the browser opens them as usual.
   on(els.main, 'click', (e) => {
     const a = (e.target as Element | null)?.closest?.('a');
     const id = a && els.main.contains(a) ? a.closest<HTMLElement>('.card[data-id]')?.dataset.id : undefined;
     if (!a || !id) return;
-    // 길찾기 (ADR-0067) leaves for 카카오맵 too: the same event
+    // 길찾기 (ADR-0067) leaves for the map app too: the same event
     if (a.classList.contains('card-link') || a.classList.contains('go')) countLink('map', id);
     else if (a.classList.contains('book')) countLink('book', id);
   });
@@ -781,6 +793,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (s.storageArea && deps.storage && s.storageArea !== deps.storage) return;
     if (s.key === KEYS.savedV2 || s.key === null) dispatch({ type: 'saved', entries: store.saved() });
     if (s.key === KEYS.hint && s.newValue === 'true') dispatch({ type: 'hintSeen' });
+    if (s.key === KEYS.mapApp || s.key === null) dispatch({ type: 'mapApp', app: store.mapApp() });
     // 기록 끄기 in another tab stops this one too: what it queued goes, nothing more is sent (ADR-0061).
     if (deps.storage && (s.key === KEYS.track || s.key === null)) {
       const on = store.tracking();

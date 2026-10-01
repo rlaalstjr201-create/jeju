@@ -5,6 +5,7 @@ import { areaByName, type AreaName } from './areas';
 import { type Day } from './dates';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Card, type Histories, type HistoryKey, type NewSub, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
+import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
@@ -100,6 +101,8 @@ export interface State {
   hintFor: string | null;
   /** anonymous usage counts on (기록 끄기 / 기록 켜기, ADR-0061). */
   tracking: boolean;
+  /** the map app the cards open (ADR-0071). */
+  mapApp: MapApp;
   stayForm: { pending: boolean; error: NoOrigin | null };
   offline: boolean;
   keep: Keep;
@@ -138,6 +141,7 @@ export type Action =
   | { type: 'hint'; id: string }
   | { type: 'hintSeen' }
   | { type: 'tracking'; on: boolean }
+  | { type: 'mapApp'; app: MapApp }
   | { type: 'keep'; keep: Partial<Keep> }
   | { type: 'imgError'; id: string }
   | { type: 'offline'; offline: boolean }
@@ -157,6 +161,7 @@ export function initialState(init: {
   saved: SavedEntry[];
   hintSeen: boolean;
   tracking?: boolean;
+  mapApp?: MapApp;
   offline: boolean;
   keep?: Partial<Keep>;
 }): State {
@@ -193,6 +198,7 @@ export function initialState(init: {
     hintSeen: init.hintSeen,
     hintFor: null,
     tracking: init.tracking ?? true,
+    mapApp: init.mapApp ?? DEFAULT_MAP_APP,
     stayForm: { pending: false, error: null },
     offline: init.offline,
     keep: { restore: null, inapp: null, inappNote: null, install: null, nudge: false, backup: null, ...init.keep },
@@ -499,6 +505,8 @@ function step(s: State, a: Action): State {
       return s.hintSeen ? s : { ...s, hintSeen: true };
     case 'tracking':
       return a.on === s.tracking ? s : { ...s, tracking: a.on };
+    case 'mapApp':
+      return a.app === s.mapApp ? s : { ...s, mapApp: a.app };
     case 'keep':
       return { ...s, keep: { ...s.keep, ...a.keep } };
     case 'imgError':

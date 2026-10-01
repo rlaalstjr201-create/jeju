@@ -518,28 +518,28 @@ describe('섬·이름·지도 링크', () => {
 
   // Changed on purpose (QA 2026-09-30): "· 카카오맵" three times on one screen was the repeated meta §14
   // forbids. The first card says it in words; every card is the same whole-card link, and each link says
-  // so to a screen reader ("{이름}, 카카오맵에서 보기").
-  it('S57 the first card says where a tap goes (카카오맵), every card links there, no arrow glyph', async () => {
+  // so to a screen reader ("{이름}, 카카오맵에서 보기"). ADR-0071: the words follow the chosen map app (네이버지도 first).
+  it('S57 the first card says where a tap goes (네이버지도, ADR-0071 default), every card links there, no arrow glyph', async () => {
     render();
     await tap('[data-mood="walk"]');
     const cards = $$('#cards .card');
     expect(cards).toHaveLength(3);
-    expect($$('#cards .card .dest').map((d) => d.textContent)).toEqual(['카카오맵']);
+    expect($$('#cards .card .dest').map((d) => d.textContent)).toEqual(['네이버지도']);
     expect(cards[0].querySelector('.dest')).not.toBeNull();
     for (const c of cards) {
       const a = c.querySelector<HTMLAnchorElement>('.card-link')!;
-      expect(a.href).toMatch(/^https:\/\/(place\.map|map)\.kakao\.com\//);
-      expect(a.getAttribute('aria-label')).toMatch(/, 카카오맵에서 보기$/);
+      expect(a.href).toMatch(/^https:\/\/map\.naver\.com\/p\/search\//);
+      expect(a.getAttribute('aria-label')).toMatch(/, 네이버지도에서 보기$/);
     }
     // "·" is held to the trip by a no-break space; the break opportunity is after it, so no line starts with "·"
     const meta = cards[0].querySelector('.meta')!;
     expect(meta.querySelector('.sep')?.textContent).toBe(' ·');
-    expect(meta.textContent).toMatch(/ · 카카오맵$/);
+    expect(meta.textContent).toMatch(/ · 네이버지도$/);
     expect(cssRule('.meta .dest')).toMatch(/white-space:\s*nowrap/);
     // the saved list keeps it on every row (a list sorted by distance, §6.11)
     await tap('.card .heart');
     await tap('#saved');
-    expect($$('#savedView .card .dest').map((d) => d.textContent)).toEqual(['카카오맵']);
+    expect($$('#savedView .card .dest').map((d) => d.textContent)).toEqual(['네이버지도']);
     expect($('#cards').textContent).not.toMatch(/[↗→]/);
   });
 });

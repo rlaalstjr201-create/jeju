@@ -125,6 +125,14 @@
             <button class="tbtn" type="button" data-action="backup">링크로 백업</button>
             <p id="backupNote" class="note" role="status"></p>
           </div>
+          <!-- ADR-0071: the map app the cards open; one line, remembered on this device -->
+          <div class="mapapp" role="group" aria-labelledby="mapAppLabel">
+            <p id="mapAppLabel">지도 앱</p>
+            <button class="tbtn" type="button" data-action="map-app" data-app="naver" aria-pressed="true">네이버지도</button>
+            <button class="tbtn" type="button" data-action="map-app" data-app="kakao" aria-pressed="false">카카오맵</button>
+            <button class="tbtn" type="button" data-action="map-app" data-app="tmap" aria-pressed="false">TMAP</button>
+          </div>
+          <p id="mapAppNote" class="note" role="status"></p>
           <div class="about">
             <p class="credit">정보·사진: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" target="_blank" rel="noopener">visitjeju.net</a></p>
             <a class="tbtn" href="/privacy">개인정보 처리 안내</a>

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError, bookingUrl, kakaoUrl, mountApp, type App, type Deps } from '../src/app';
+import { naverSearchUrl } from '../src/links';
 import { nearestArea } from '../src/areas';
 import { cardTextProblem } from '../src/card-text';
 import { cleanReason } from '../src/data';
@@ -134,15 +135,15 @@ describe('S3 카드', () => {
         const { spot, minutes } = expected[i];
         expect(card.querySelector('img')?.getAttribute('src')).toBe(spot.image);
         expect(card.querySelector('.name')?.textContent).toBe(drawnName(spot.name));
-        expect(card.querySelector('.card-link')?.getAttribute('aria-label')).toBe(`${spot.name}, 카카오맵에서 보기`);
+        expect(card.querySelector('.card-link')?.getAttribute('aria-label')).toBe(`${spot.name}, 네이버지도에서 보기`);
         expect(card.querySelector('.reason')?.textContent).toBe(cleanReason(spot.reason));
         expect(trips[i]).toMatch(/^(차로|걸어서) 약 \d+분$/);
         if (trips[i].includes('차로')) expect(trips[i]).toContain(`약 ${minutes}분`);
         if (i === 0) {
           const meta = `여기서 ${trips[0]}`;
           expect(card.querySelector('.travel')?.textContent).toBe(meta);
-          // "·" held to the trip by a no-break space, then a normal space before 카카오맵
-          expect(card.querySelector('.meta')?.textContent).toBe(`${meta} · 카카오맵`);
+          // "·" held to the trip by a no-break space, then a normal space before 네이버지도 (ADR-0071 default)
+          expect(card.querySelector('.meta')?.textContent).toBe(`${meta} · 네이버지도`);
         } else if (same) {
           expect(card.querySelector('.meta')).toBeNull();
           expect(card.querySelector('.card-link')?.getAttribute('aria-describedby')).toBe('alt-trip');
@@ -186,7 +187,8 @@ describe('S3 카드', () => {
     expect(repeated).toEqual([]);
   }, 120_000);
 
-  it('card link = kakao place page, or a name-search fallback when kakaoPlaceId is null; target=_blank rel=noopener', async () => {
+  // Changed on purpose (ADR-0071): the default map app is 네이버지도, whose card link is the "{이름} 제주" search.
+  it('card link = Naver Map search (default app); target=_blank rel=noopener', async () => {
     render();
     for (const mood of MOODS) {
       await tap(`[data-mood="${mood}"]`);
@@ -194,7 +196,7 @@ describe('S3 카드', () => {
       const links = $$('.card-link') as HTMLAnchorElement[];
       expect(links).toHaveLength(3);
       links.forEach((a, i) => {
-        expect(a.getAttribute('href')).toBe(kakaoUrl(expected[i].spot));
+        expect(a.getAttribute('href')).toBe(naverSearchUrl(expected[i].spot));
         expect(a.getAttribute('target')).toBe('_blank');
         expect(a.getAttribute('rel')).toBe('noopener');
       });
@@ -721,7 +723,7 @@ describe('S8-4 저장 목록', () => {
     expect($$('#savedView .card').map((c) => c.getAttribute('data-id'))).toEqual([realSpots[0].id]);
     // no position: no trip, the first row says only where a tap goes
     expect($('#savedView .sort')?.textContent).toBe('');
-    expect($('#savedView .meta')?.textContent).toBe('카카오맵');
+    expect($('#savedView .meta')?.textContent).toBe('네이버지도');
     await tap('#basis');
     await tap('#sheet [data-area="애월"]');
     await settle();

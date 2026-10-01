@@ -4,6 +4,7 @@
 import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
+import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import type { Basis, Origin, SavedEntry, Stay, When } from './types';
 
 export const KEYS = {
@@ -22,6 +23,8 @@ export const KEYS = {
   hint: 'jeju.hintSeen',
   /** 기록 끄기 (ADR-0061): false = no usage events from this device. Missing = on. */
   track: 'jeju.track',
+  /** 지도 앱 (ADR-0071): 'naver' | 'kakao' | 'tmap'. Missing = 네이버지도. */
+  mapApp: 'jeju.mapApp',
   /** ADR-0063: the in-app browser notice was closed (true). */
   inapp: 'jeju.inappSeen',
   /** ADR-0063: the home-screen nudge has been shown once (true). */
@@ -111,6 +114,11 @@ export function parseEntries(v: unknown): SavedEntry[] {
 /** 'now', or a day after today. Today or earlier is 'now' again (the day has come or gone). */
 export function parseWhen(v: unknown, today: Day): When {
   return isDay(v) && v > today ? v : 'now';
+}
+
+/** 네이버지도 · 카카오맵 · TMAP; anything else is 네이버지도 (ADR-0071). */
+export function parseMapApp(v: unknown): MapApp {
+  return MAP_APPS.includes(v as MapApp) ? (v as MapApp) : DEFAULT_MAP_APP;
 }
 
 /** 걸어서 · 차로 30분 · 차로 1시간; anything else is the default 차로 30분. */
@@ -221,6 +229,8 @@ export interface Loaded {
   hintSeen: boolean;
   /** anonymous usage counts on (ADR-0061); anything but a stored false is on. */
   tracking: boolean;
+  /** 지도 앱 (ADR-0071). */
+  mapApp: MapApp;
   /** ADR-0063: the in-app browser notice was closed / the home-screen nudge was shown. */
   inappSeen: boolean;
   installSeen: boolean;
@@ -239,10 +249,13 @@ export interface Store {
   setStay(stay: Stay): void;
   setHintSeen(): void;
   setTracking(on: boolean): void;
+  setMapApp(app: MapApp): void;
   setInappSeen(): void;
   setInstallSeen(): void;
   /** 기록 as stored now (another tab may have switched it). */
   tracking(): boolean;
+  /** 지도 앱 as stored now (another tab may have changed it). */
+  mapApp(): MapApp;
   // Every saved-list change below is read-modify-write, so two tabs never overwrite each other's hearts.
   /** Current saved entries, re-read from storage (another tab may have changed them). */
   saved(): SavedEntry[];
@@ -352,6 +365,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         saved,
         hintSeen: get(local, KEYS.hint) === true,
         tracking: get(local, KEYS.track) !== false,
+        mapApp: parseMapApp(get(local, KEYS.mapApp)),
         inappSeen: get(local, KEYS.inapp) === true,
         installSeen: get(local, KEYS.install) === true,
       };
@@ -364,9 +378,11 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     setStay: (stay) => void set(local, KEYS.stay, stay),
     setHintSeen: () => void set(local, KEYS.hint, true),
     setTracking: (on) => void set(local, KEYS.track, on),
+    setMapApp: (app) => void set(local, KEYS.mapApp, app),
     setInappSeen: () => void set(local, KEYS.inapp, true),
     setInstallSeen: () => void set(local, KEYS.install, true),
     tracking: () => get(local, KEYS.track) !== false,
+    mapApp: () => parseMapApp(get(local, KEYS.mapApp)),
     saved: readSaved,
     toggleSaved(id, date, at) {
       let removed: SavedEntry | null = null;

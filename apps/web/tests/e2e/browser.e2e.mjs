@@ -974,7 +974,7 @@ await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown (no 
   await ctx.close();
 });
 
-await check('QA-meta', 'meta: one trip line per screen when all three match; at 195px no line starts with "·"; 카카오맵 once', async () => {
+await check('QA-meta', 'meta: one trip line per screen when all three match; at 195px no line starts with "·"; the map app (네이버지도) once', async () => {
   const { ctx, page } = await fresh({ width: 195, height: 422, storage: { 'jeju.region': '성산', 'jeju.basis': 'region' } });
   for (const mood of ['rest', 'walk', 'food']) {
     await tapText(page, `[data-mood="${mood}"]`);
@@ -994,7 +994,7 @@ await check('QA-meta', 'meta: one trip line per screen when all three match; at 
       if (alt) trips.push(alt.replace(/^둘 다 /, ''));
       return { trips, dests: document.querySelectorAll('#cards .dest').length, sepAtLineStart };
     });
-    assert(r.dests === 1, `${mood}: 카카오맵 ${r.dests} times`);
+    assert(r.dests === 1, `${mood}: the map app ${r.dests} times`);
     assert(!r.sepAtLineStart, `${mood}: a line starts with "·"`);
     const bare = r.trips.map((t) => t.replace(/^\S+에서 /, ''));
     assert(!bare.some((t) => bare.filter((x) => x === t).length >= 3), `${mood}: ${r.trips.join(' / ')}`);
@@ -1189,7 +1189,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
   }
 });
 
-await check('3-23', 'trip lines: 애월 · 푹 쉬고 싶어 — first card "애월에서 … · 카카오맵"; equal rows said once on 아니면 with aria-describedby; 카카오맵 once', async () => {
+await check('3-23', 'trip lines: 애월 · 푹 쉬고 싶어 — first card "애월에서 … · 네이버지도"; equal rows said once on 아니면 with aria-describedby; 네이버지도 once', async () => {
   const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
@@ -1200,10 +1200,10 @@ await check('3-23', 'trip lines: 애월 · 푹 쉬고 싶어 — first card "애
       alt: document.querySelector('#cards .alt').textContent,
       rowMetas: document.querySelectorAll('#cards .card.row .meta').length,
       described: [...document.querySelectorAll('#cards .card.row .card-link')].map((a) => a.getAttribute('aria-describedby')),
-      maps: (document.getElementById('results').innerText.match(/카카오맵/g) ?? []).length,
+      maps: (document.getElementById('results').innerText.match(/네이버지도/g) ?? []).length,
     }));
-    assert(r.lead.startsWith('애월에서 ') && r.lead.endsWith('카카오맵'), `lead meta "${r.lead}"`);
-    assert(r.maps === 1, `카카오맵 ${r.maps} times`);
+    assert(r.lead.startsWith('애월에서 ') && r.lead.endsWith('네이버지도'), `lead meta "${r.lead}"`);
+    assert(r.maps === 1, `네이버지도 ${r.maps} times`);
     if (r.alt.includes('둘 다 ')) {
       grouped++;
       assert(r.rowMetas === 0 && r.described.every((d) => d === 'alt-trip'), `grouped but rows ${r.rowMetas} metas, ${r.described}`);
@@ -1626,8 +1626,8 @@ await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in t
 });
 
 // --- 익명 사용 기록 (ADR-0061, specs/usage-events.md U1) ---
-await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart, 카카오맵, the saved list (no note, no 기록 끄기) and hiding the page make no request but to this origin, the photo host and the link hosts; sendBeacon is never called', async () => {
-  const LINK_HOSTS = ['map.kakao.com', 'place.map.kakao.com', 'www.myrealtrip.com'];
+await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart, the map link (네이버지도), the saved list (no note, no 기록 끄기) and hiding the page make no request but to this origin, the photo host and the link hosts; sendBeacon is never called', async () => {
+  const LINK_HOSTS = ['map.naver.com', 'm.map.naver.com', 'map.kakao.com', 'place.map.kakao.com', 'www.myrealtrip.com'];
   const allowed = new Set([new URL(BASE).host, 'api.cdn.visitjeju.net', ...LINK_HOSTS]);
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
   await ctx.addInitScript(GEO_STUB);
@@ -1668,7 +1668,7 @@ await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart
   await ctx.close();
   const other = seen.filter((r) => !allowed.has(r.host));
   const posts = seen.filter((r) => r.method !== 'GET');
-  assert(seen.some((r) => LINK_HOSTS.includes(r.host)), 'the 카카오맵 link did not open (nothing exercised)');
+  assert(seen.some((r) => LINK_HOSTS.includes(r.host)), 'the map link did not open (nothing exercised)');
   assert(other.length === 0, `requests elsewhere: ${other.map((r) => r.url).join(', ')}`);
   assert(posts.length === 0, `non-GET requests: ${posts.map((r) => `${r.method} ${r.url}`).join(', ')}`);
   assert(beacons === 0, `sendBeacon called ${beacons}×`);
@@ -2285,7 +2285,7 @@ await check('DR-go', '길찾기 (ADR-0067) at 320·390 × light·dark: one per c
         if (r.over > 0) problems.push(`${tag} ${where} overflows ${r.over}px`);
         for (const c of r.cards) {
           if (c.n !== 1) problems.push(`${tag} ${where}: ${c.n} 길찾기`);
-          else if (Math.round(c.h) !== 44 || c.lines !== 1 || !c.inCard || !c.hit || !/^https:\/\/map\.kakao\.com\/link\/to\/[^/]+,33\.\d+,126\.\d+$/.test(c.href)) problems.push(`${tag} ${where}: ${JSON.stringify(c)}`);
+          else if (Math.round(c.h) !== 44 || c.lines !== 1 || !c.inCard || !c.hit || !/^https:\/\/map\.naver\.com\/p\/directions\/-\/126\.\d+,33\.\d+,[^/]+,,\/-\/(car|walk)$/.test(c.href)) problems.push(`${tag} ${where}: ${JSON.stringify(c)}`);
         }
       }
       if (width === 320 && !dark) await shot(page, 'go-saved-320');
@@ -2294,7 +2294,7 @@ await check('DR-go', '길찾기 (ADR-0067) at 320·390 × light·dark: one per c
   assert(!problems.length, problems.join(' | '));
 });
 
-await check('DR-ferry', '길찾기 (ADR-0069) at 320·390: the 차귀도 card from 한경 says 배 타는 곳까지 길찾기 on one line, drawn 44, to the pier (link/to); with 걸어서 from 구제주 the food cards take Kakao walking directions (no start); no sideways scroll', async () => {
+await check('DR-ferry', '길찾기 (ADR-0069, ADR-0071) at 320·390: the 차귀도 card from 한경 says 배 타는 곳까지 길찾기 on one line, drawn 44, to the pier; with 걸어서 from 구제주 the food cards take Naver walking directions (no start); no sideways scroll', async () => {
   const problems = [];
   for (const width of [320, 390]) {
     for (const reach of ['drive30', 'walk']) {
@@ -2319,8 +2319,8 @@ await check('DR-ferry', '길찾기 (ADR-0069) at 320·390: the 차귀도 card fr
       for (const g of r.go) if (g.h !== 44 || g.lines !== 1) problems.push(`${tag}: ${JSON.stringify(g)}`);
       if (reach === 'drive30') {
         const ferry = r.go.filter((g) => g.text === '배 타는 곳까지 길찾기');
-        if (ferry.length !== 1 || !ferry[0].href.startsWith('https://map.kakao.com/link/to/' + encodeURIComponent('자구내포구 차귀도 유람선') + ',33.30931,126.16537')) problems.push(`${tag} ferry: ${JSON.stringify(r.go)}`);
-      } else if (!r.go.every((g) => /^https:\/\/m\.map\.kakao\.com\/scheme\/route\?ep=33\.\d+,126\.\d+&en=[^&]+&by=foot$/.test(g.href))) problems.push(`${tag} no walking link: ${JSON.stringify(r.go)}`);
+        if (ferry.length !== 1 || ferry[0].href !== 'https://map.naver.com/p/directions/-/126.16537,33.30931,' + encodeURIComponent('자구내포구 차귀도 유람선') + ',,/-/car') problems.push(`${tag} ferry: ${JSON.stringify(r.go)}`);
+      } else if (!r.go.every((g) => /^https:\/\/map\.naver\.com\/p\/directions\/-\/126\.\d+,33\.\d+,[^/]+,,\/-\/walk$/.test(g.href))) problems.push(`${tag} no walking link: ${JSON.stringify(r.go)}`);
       if (width === 320 && reach === 'drive30') await shot(page, 'go-ferry-320');
       await ctx.close();
     }
@@ -2345,6 +2345,100 @@ await check('DL-open', 'deep link /?mood=walk&area=aewol&reach=drive60&indoor=1 
   await back(page);
   assert((await hstate(page))?.view === 'home' && (await visible(page, '#home .mood')), `back: ${JSON.stringify(await hstate(page))}`);
   await ctx.close();
+});
+
+// --- 지도 앱 (ADR-0071) and ♥ N open as an underline (ADR-0070, decided) ---
+await check('MA-line', '지도 앱 (ADR-0071) at 320·390, light·dark: 지도 앱 · 네이버지도 · 카카오맵 · TMAP on one line at the foot of 저장한 곳, each 44 tall, no sideways scroll; not on the first screen; 카카오맵 tapped = underlined, kept after a reload, and the cards open Kakao', async () => {
+  const problems = [];
+  for (const width of [320, 390]) {
+    for (const dark of [false, true]) {
+      const { ctx, page } = await fresh({ width, dark, storage: { 'jeju.region': '애월', 'jeju.basis': 'region', 'jeju.hintSeen': true } });
+      const tag = `${width} ${dark ? 'dark' : 'light'}`;
+      if (await page.$('#home .mapapp, #results .mapapp')) problems.push(`${tag}: the setting is outside 저장한 곳`);
+      await tapText(page, '[data-mood="rest"]');
+      await waitCards(page);
+      await tapText(page, '#cards .card .heart');
+      await tapText(page, '#saved');
+      await page.waitForSelector('#savedView .card:not(.ghost)');
+      const m = await page.evaluate(() => {
+        const box = document.querySelector('#savedView .mapapp');
+        box.scrollIntoView({ block: 'center' });
+        const items = [box.querySelector('p'), ...box.querySelectorAll('button')].map((e) => e.getBoundingClientRect());
+        const de = document.documentElement;
+        return { over: de.scrollWidth - de.clientWidth, tops: items.map((r) => Math.round(r.top + r.height / 2)), hs: items.slice(1).map((r) => Math.round(r.height)) };
+      });
+      if (m.over > 0) problems.push(`${tag}: overflows ${m.over}px`);
+      if (new Set(m.tops).size !== 1) problems.push(`${tag}: not one line ${JSON.stringify(m.tops)}`);
+      if (m.hs.some((h) => h < 44)) problems.push(`${tag}: heights ${m.hs}`);
+      if (width === 320 && !dark) await shot(page, 'map-app-320');
+      if (width === 390 && !dark) {
+        await tapText(page, '#savedView [data-app="kakao"]');
+        await page.reload();
+        await page.waitForSelector('#savedView .card:not(.ghost)');
+        const k = await page.evaluate(() => {
+          const b = document.querySelector('#savedView [data-app="kakao"]');
+          const cs = getComputedStyle(b);
+          return { pressed: b.getAttribute('aria-pressed'), line: cs.textDecorationLine, thick: cs.textDecorationThickness, href: document.querySelector('#savedView .card-link').getAttribute('href'), dest: document.querySelector('#savedView .dest')?.textContent };
+        });
+        if (k.pressed !== 'true' || !k.line.includes('underline') || k.thick !== '3px') problems.push(`${tag} kakao chosen: ${JSON.stringify(k)}`);
+        if (!/^https:\/\/(place\.map|map)\.kakao\.com\//.test(k.href) || k.dest !== '카카오맵') problems.push(`${tag} kakao links: ${JSON.stringify(k)}`);
+      }
+      await ctx.close();
+    }
+  }
+  assert(!problems.length, problems.join(' | '));
+});
+
+await check('HN-open', '♥ N open (ADR-0070, decided): no fill, a 3px main-colour underline like a tab; the heart measured on what is really under it ≥ 3:1 in light and dark', async () => {
+  const problems = [];
+  const lum = ([r, g, b]) => {
+    const f = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  };
+  const ratio = (a, b) => {
+    const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
+    return (x + 0.05) / (y + 0.05);
+  };
+  for (const dark of [false, true]) {
+    const { ctx, page } = await fresh({ dark, storage: { 'jeju.region': '애월', 'jeju.basis': 'region', 'jeju.hintSeen': true } });
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    await tapText(page, '#cards .card .heart');
+    await tapText(page, '#saved');
+    await page.waitForSelector('#savedView .card:not(.ghost)');
+    await page.mouse.move(0, 0);
+    const r = await page.evaluate(() => {
+      const rgb = (c) => c.match(/\d+(\.\d+)?/g).slice(0, 4).map(Number);
+      const btn = document.querySelector('#saved');
+      const under = (el) => {
+        for (let e = el; e; e = e.parentElement) {
+          const c = rgb(getComputedStyle(e).backgroundColor);
+          if (c.length < 4 || c[3] > 0) return c.slice(0, 3);
+        }
+        return [255, 255, 255];
+      };
+      const after = getComputedStyle(btn, '::after');
+      return {
+        pressed: btn.getAttribute('aria-pressed'),
+        own: getComputedStyle(btn).backgroundColor,
+        heart: rgb(getComputedStyle(btn.querySelector('svg')).color).slice(0, 3),
+        ground: under(btn),
+        rule: { w: after.borderBottomWidth, c: rgb(after.borderBottomColor).slice(0, 3), content: after.content },
+      };
+    });
+    const tag = dark ? 'dark' : 'light';
+    const heart = ratio(r.heart, r.ground);
+    const rule = ratio(r.rule.c, r.ground);
+    console.log(`      HN-open ${tag}: heart ${heart.toFixed(2)}:1, underline ${rule.toFixed(2)}:1 on rgb(${r.ground})`);
+    if (r.pressed !== 'true') problems.push(`${tag}: not pressed`);
+    if (!/rgba\(0, 0, 0, 0\)|transparent/.test(r.own)) problems.push(`${tag}: filled ${r.own}`);
+    if (r.rule.w !== '3px' || r.rule.content === 'none') problems.push(`${tag}: rule ${JSON.stringify(r.rule)}`);
+    if (heart < 3) problems.push(`${tag}: heart ${heart.toFixed(2)}`);
+    if (rule < 3) problems.push(`${tag}: underline ${rule.toFixed(2)}`);
+    if (!dark) await shot(page, 'saved-open-underline');
+    await ctx.close();
+  }
+  assert(!problems.length, problems.join(' | '));
 });
 
 await browser.close();

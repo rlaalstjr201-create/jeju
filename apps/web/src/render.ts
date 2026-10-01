@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
-import { bookingUrl, goLink, kakaoUrl } from './links';
+import { MAP_APP_NAME, bookingUrl, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
@@ -26,11 +26,12 @@ export const COPY = {
   offline: '오프라인이라 사진은 안 보여요.',
   or: '아니면',
   more: '다른 3곳 보기',
-  map: '카카오맵',
-  mapAria: (name: string) => `${name}, 카카오맵에서 보기`,
+  /** where a tap on the card goes (ADR-0071): the app of its place link */
+  map: (app: MapApp) => MAP_APP_NAME[placeApp(app)],
+  mapAria: (name: string, app: MapApp) => `${name}, ${MAP_APP_NAME[placeApp(app)]}에서 보기`,
   heartAria: (name: string) => `${name} 저장`,
-  /** 길찾기 (ADR-0067, ADR-0069): the words are goLink's; this says where to and how. */
-  goAria: (name: string, foot: boolean, pier?: string) => `${name}, ${pier ? `배 타는 곳 ${pier}까지 ` : ''}카카오맵 ${foot ? '도보' : '자동차'} 길찾기`,
+  /** 길찾기 (ADR-0067, ADR-0069, ADR-0071): the words are goLink's; this says where to, in which app and how. */
+  goAria: (name: string, foot: boolean, app: MapApp, pier?: string) => `${name}, ${pier ? `배 타는 곳 ${pier}까지 ` : ''}${MAP_APP_NAME[app]} ${foot ? '도보' : '자동차'} 길찾기`,
   book: '마이리얼트립에서 예약 찾아보기',
   bookAria: (name: string) => `${name}, 마이리얼트립에서 예약 찾아보기`,
   firstSave: '저장한 곳은 맨 위 하트 버튼에 모여요.',
@@ -51,6 +52,8 @@ export const COPY = {
   trackNote: '어디가 좋았는지 익명으로 세어요.',
   trackOff: '기록 끄기',
   trackOn: '기록 켜기',
+  /** ADR-0071: TMAP opens only as an app (no web page to fall back on). */
+  tmapNote: 'TMAP은 앱이 있어야 열려요. 걸어서 가는 길은 네이버지도로 열어요.',
   today: '오늘',
   tomorrow: '내일',
   past: '지난 날',
@@ -196,6 +199,9 @@ export interface Els {
   savedSort: HTMLElement;
   savedList: HTMLElement;
   track: HTMLButtonElement;
+  /** ADR-0071: 지도 앱 at the foot of 저장한 곳 */
+  mapApps: HTMLButtonElement[];
+  mapAppNote: HTMLElement;
   /** ADR-0063: the first screen's notice (backup to merge, in-app browser), the saved list's nudge and backup. */
   homeNote: HTMLElement;
   nudge: HTMLElement;
@@ -234,6 +240,8 @@ export function findEls(doc: Document): Els {
     savedSort: q('#savedView > .sort'),
     savedList: q('#savedView > .picks'),
     track: q<HTMLButtonElement>('#savedView [data-action="track"]'),
+    mapApps: [...doc.querySelectorAll<HTMLButtonElement>('#savedView [data-action="map-app"]')],
+    mapAppNote: q('#mapAppNote'),
     homeNote: q('#homeNote'),
     nudge: q('#nudge'),
     backup: q<HTMLButtonElement>('#savedView [data-action="backup"]'),
@@ -340,7 +348,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
   // --- cards ---
   const tripOf = (origin: Origin, c: Card) => travel(origin.point, origin.isPoint, c.spot);
-  /** Results meta (§7): the first card always says where from and that a tap opens 카카오맵. The two row cards'
+  /** Results meta (§7): the first card always says where from and which map app a tap opens. The two row cards'
    * trip is said once on the `아니면` line when it is the same ("아니면 · 둘 다 차로 약 5분") and the rows then
    * have no meta line; otherwise each row says its own trip, without the "from". */
   function resultMetas(origin: Origin, list: Card[]): { metas: (string | null)[]; both: string | null } {
@@ -359,7 +367,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
   /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14).
    * `market`: a five-day market's day words (ADR-0066), in the same place and the same way. */
-  function metaEl(meta: string | null, dest: boolean, indoor = false, market: string | null = null): HTMLElement {
+  function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null): HTMLElement {
     const metaEl = el(doc, 'p', { class: 'meta' });
     if (indoor) {
       metaEl.append(el(doc, 'span', { class: 'indoor' }, COPY.indoor));
@@ -374,19 +382,24 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // "… 5분 ·" and the next starts with "카카오맵", never with "·".
     if (meta && dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
     // Says where a tap on the card goes (S57); no arrow glyph.
-    if (dest) metaEl.append(el(doc, 'span', { class: 'dest', 'aria-hidden': 'true' }, COPY.map));
+    if (dest) metaEl.append(el(doc, 'span', { class: 'dest', 'aria-hidden': 'true' }, COPY.map(dest)));
     return metaEl;
   }
 
-  /** `meta`: the trip (null = none); `dest`: also say where a tap goes ("카카오맵"); `day`: a saved-list row,
+  /** `meta`: the trip (null = none); `dest`: also say where a tap goes (the map app, "네이버지도"); `day`: a saved-list row,
    * whose heart is about that day. */
   /** 길찾기 (ADR-0067, ADR-0069) from `origin` (null = no position yet), in the range `reach`: written on a new
    * card and patched on a reused saved row. */
-  function setGo(a: HTMLElement, spot: Spot, origin: Origin | null, reach: Reach) {
-    const g = goLink(spot, origin?.point ?? null, reach === 'walk', origin?.isPoint ?? false);
+  function setGo(a: HTMLElement, spot: Spot, origin: Origin | null, reach: Reach, app: MapApp) {
+    const g = goLink(spot, origin?.point ?? null, reach === 'walk', origin?.isPoint ?? false, app);
     setAttr(a, 'href', g.href);
-    setAttr(a, 'aria-label', COPY.goAria(spot.name.trim(), g.mode === 'foot', g.terminal));
+    setAttr(a, 'aria-label', COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal));
     setText(a, g.text);
+  }
+  /** The card's own link (name and photo) in the chosen app (ADR-0071): written on a new card, patched on a reused row. */
+  function setPlace(a: HTMLElement, spot: Spot, app: MapApp) {
+    setAttr(a, 'href', placeUrl(spot, app));
+    setAttr(a, 'aria-label', COPY.mapAria(spot.name.trim(), app));
   }
 
   function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string, day?: Day): HTMLElement {
@@ -397,7 +410,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     if (!broken) card.append(photoEl(spot, eager));
     // The name's link covers the whole card (::after); heart and booking link sit above it (S8-3).
     const title = el(doc, 'h2', { class: 'name' });
-    const link = el(doc, 'a', { class: 'card-link', href: kakaoUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.mapAria(name) });
+    const link = el(doc, 'a', { class: 'card-link', target: '_blank', rel: 'noopener' });
+    setPlace(link, spot, s.mapApp);
     // A row whose trip went to the `아니면` line hears it with the card (§6.5).
     if (describedBy) link.setAttribute('aria-describedby', describedBy);
     const { main, alias } = splitName(name);
@@ -414,10 +428,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
     // 장날 only on the results, for the day being viewed (ADR-0066)
     const market = !day && spot.market ? marketText(spot.market, whenDay(s), s.when !== 'now') : null;
-    if (meta || dest || indoor || market) card.append(metaEl(meta, dest, indoor, market));
+    if (meta || dest || indoor || market) card.append(metaEl(meta, dest ? s.mapApp : null, indoor, market));
     // 길찾기 (ADR-0067, ADR-0069): directions in one tap, on every card; the card itself stays the place page
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
-    if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach);
+    if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
     card.append(go);
     if (spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
@@ -498,7 +512,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
   function resultsSigOf(s: State, b: ResultsBody): string {
     // a market's day words follow the day being viewed (ADR-0066): redrawn when it changes, only if one is shown
-    if (b.k === 'cards') return `cards|${s.cards!.seq}${s.cards!.list.some((c) => c.spot.market) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
+    if (b.k === 'cards') return `cards|${s.cards!.seq}|${s.mapApp}${s.cards!.list.some((c) => c.spot.market) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
     if (b.k === 'notice') {
       const p = s.phase;
       const detail = p.k === 'noOrigin' ? p.why : p.k === 'loadError' ? String(p.offline) : '';
@@ -564,12 +578,13 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       card.append(ctl);
       rowNodes.set(key, card);
     }
-    setGo(card.querySelector<HTMLElement>(':scope > .go')!, spot, s.savedList?.origin ?? null, s.reach);
-    const metaKey = `${meta ?? ''}|${dest}`;
+    setGo(card.querySelector<HTMLElement>(':scope > .go')!, spot, s.savedList?.origin ?? null, s.reach, s.mapApp);
+    setPlace(card.querySelector<HTMLElement>('.card-link')!, spot, s.mapApp);
+    const metaKey = `${meta ?? ''}|${dest}|${s.mapApp}`;
     if (card.dataset.meta !== metaKey) {
       card.dataset.meta = metaKey;
       card.querySelector(':scope > .meta')?.remove();
-      if (meta || dest) card.querySelector(':scope > .reason')!.after(metaEl(meta, dest));
+      if (meta || dest) card.querySelector(':scope > .reason')!.after(metaEl(meta, dest ? s.mapApp : null));
     }
     // a row taken out in this visit keeps only its (empty) heart: nothing to move
     const ctl = card.querySelector<HTMLElement>(':scope > .ctl')!;
@@ -583,7 +598,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const { upcoming, past } = savedDays(s);
     const o = s.savedList!.origin;
     const days = [...upcoming, ...(s.pastOpen ? past : [])].map((d) => `${d.day}:${d.rows.map((r) => `${r.entry.id}${r.live ? '' : '~'}`).join(',')}`);
-    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${s.reach}|${past.length}|${s.pastOpen}|${days.join(';')}`;
+    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${s.reach}|${s.mapApp}|${past.length}|${s.pastOpen}|${days.join(';')}`;
   }
 
   function savedListNodes(s: State): HTMLElement[] {
@@ -723,7 +738,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   /** Where a link to this app carries what is saved here (the in-app browser's way out). */
   const shareUrl = (s: State) => {
     const home = appHome(doc.defaultView?.location.href ?? 'https://localhost/');
-    return s.saved.length ? backupUrl(home, s.saved, s.indoor) : home;
+    return s.saved.length ? backupUrl(home, s.saved, s.indoor, s.mapApp) : home;
   };
   function renderKeep(s: State) {
     const k = s.keep;
@@ -1003,6 +1018,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     setAttr(els.saved, 'aria-label', COPY.savedAria(n));
     setAttr(els.saved, 'aria-pressed', String(inSaved));
     setText(els.track, s.tracking ? COPY.trackOff : COPY.trackOn);
+    for (const b of els.mapApps) setAttr(b, 'aria-pressed', String(b.dataset.app === s.mapApp));
+    setText(els.mapAppNote, s.mapApp === 'tmap' ? COPY.tmapNote : '');
 
     els.home.hidden = s.view !== 'home';
     els.results.hidden = s.view !== 'cards';

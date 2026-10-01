@@ -143,6 +143,12 @@ main { flex: 1; display: flex; flex-direction: column; }
 .backup { margin-top: 4px; }
 .backup .tbtn, .about .tbtn { margin-left: -8px; }
 .note { margin: 0; color: var(--muted); text-wrap: pretty; }
+/* ADR-0071: 지도 앱 — one line of text buttons; the chosen one in weight and a 3px --main rule (like a tab), the
+   others plain muted words; never a filled box */
+.mapapp { display: flex; flex-wrap: wrap; align-items: center; gap: 0 2px; margin-top: 4px; color: var(--muted); }
+.mapapp p { margin: 0 6px 0 0; }
+.mapapp .tbtn { font-weight: 400; text-decoration: none; }
+.mapapp .tbtn[aria-pressed="true"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--main); }
 .note:empty { display: none; }
 .credit { margin: 28px 0 0; color: var(--muted); }
 /* the source's site, a link inside the sentence (design.md T1: inline links are exempt from 44px); same

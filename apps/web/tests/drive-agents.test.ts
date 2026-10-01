@@ -7,7 +7,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, areaByName } from '../src/areas';
 import { addDays } from '../src/dates';
 import { readDeepLink } from '../src/deeplink';
-import { TERMINALS, directionsUrl, goLink, kakaoUrl, walkDirectionsUrl } from '../src/links';
+import { backupUrl, readBackup } from '../src/keep';
+import { MAP_APPS, TERMINALS, directionsUrl, goLink, kakaoUrl, naverDirectionsUrl, naverSearchUrl, placeUrl, tmapUrl, walkDirectionsUrl } from '../src/links';
 import { islandOf, pickCards } from '../src/pick';
 import { realSpots } from './fixtures';
 import { $, $$, current, flush, render, reset, settle, tap, today } from './harness';
@@ -52,7 +53,8 @@ describe('D2 길찾기 on every card', () => {
   });
   afterEach(() => document.removeEventListener('click', noNav));
 
-  it('results: one 길찾기 per card, after the meta and before the booking link; the card link and 카카오맵 stay', async () => {
+  // Changed on purpose (ADR-0071): the default app is 네이버지도 — its card link (search) and its words.
+  it('results: one 길찾기 per card, after the meta and before the booking link; the card link and 네이버지도 stay', async () => {
     render();
     await tap('[data-mood="new"]');
     const cards = $$('#cards .card:not(.ghost)');
@@ -68,14 +70,14 @@ describe('D2 길찾기 on every card', () => {
       expect(go[0].getAttribute('href')).toBe(want.href);
       expect(go[0].getAttribute('target')).toBe('_blank');
       expect(go[0].getAttribute('rel')).toBe('noopener');
-      expect(go[0].getAttribute('aria-label')).toBe(`${s.name.trim()}, 카카오맵 ${want.mode === 'foot' ? '도보' : '자동차'} 길찾기`);
-      expect(c.querySelector('.card-link')!.getAttribute('href')).toBe(kakaoUrl(s));
+      expect(go[0].getAttribute('aria-label')).toBe(`${s.name.trim()}, 네이버지도 ${want.mode === 'foot' ? '도보' : '자동차'} 길찾기`);
+      expect(c.querySelector('.card-link')!.getAttribute('href')).toBe(naverSearchUrl(s));
       const meta = c.querySelector('.meta');
       if (meta) expect(meta.compareDocumentPosition(go[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       const book = c.querySelector('a.book');
       if (book) expect(go[0].compareDocumentPosition(book) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     }
-    expect($$('#cards .dest').map((d) => d.textContent)).toEqual(['카카오맵']);
+    expect($$('#cards .dest').map((d) => d.textContent)).toEqual(['네이버지도']);
   });
 
   it('saved list rows have it too', async () => {
@@ -283,11 +285,11 @@ describe('D9 goLink — which 길찾기 a card gets', () => {
   it('walking reach and within it → foot; beyond it (the whole-island fill) → car; a card under 1km from a position → foot', () => {
     const near = at(main.lat + 0.005, main.lng); // ~550m
     const far = at(main.lat - 0.2, main.lng); // ~22km
-    expect(goLink(main, near, true, false)).toMatchObject({ mode: 'foot', text: '길찾기', href: walkDirectionsUrl(main) });
-    expect(goLink(main, far, true, false)).toMatchObject({ mode: 'car', href: directionsUrl(main) });
-    expect(goLink(main, near, false, false)).toMatchObject({ mode: 'car', href: directionsUrl(main) });
-    expect(goLink(main, near, false, true)).toMatchObject({ mode: 'foot', href: walkDirectionsUrl(main) });
-    expect(goLink(main, null, true, true)).toMatchObject({ mode: 'car', href: directionsUrl(main) });
+    expect(goLink(main, near, true, false, 'kakao')).toMatchObject({ mode: 'foot', text: '길찾기', href: walkDirectionsUrl(main) });
+    expect(goLink(main, far, true, false, 'kakao')).toMatchObject({ mode: 'car', href: directionsUrl(main) });
+    expect(goLink(main, near, false, false, 'kakao')).toMatchObject({ mode: 'car', href: directionsUrl(main) });
+    expect(goLink(main, near, false, true, 'kakao')).toMatchObject({ mode: 'foot', href: walkDirectionsUrl(main) });
+    expect(goLink(main, null, true, true, 'kakao')).toMatchObject({ mode: 'car', href: directionsUrl(main) });
   });
 
   it('every island spot, from the main island or with no position → its pier, 「배 타는 곳까지 길찾기」; from the same island → the spot', () => {
@@ -297,7 +299,7 @@ describe('D9 goLink — which 길찾기 a card gets', () => {
     for (const s of islandSpots) {
       const t = TERMINALS[islandOf(s)!];
       for (const from of [at(33.4996, 126.5312), null]) {
-        const g = goLink(s, from, false, false);
+        const g = goLink(s, from, false, false, 'kakao');
         expect(g.text, s.name).toBe('배 타는 곳까지 길찾기');
         expect(g.terminal).toBe(t.name);
         expect(g.href).toBe(directionsUrl({ ...s, name: t.name, lat: t.lat, lng: t.lng }));
@@ -314,14 +316,17 @@ describe('D9 goLink — which 길찾기 a card gets', () => {
     expect(Object.keys(TERMINALS).sort()).toEqual(['가파도', '마라도', '비양도', '우도', '차귀도', '추자도'].sort());
   });
 
-  it('no link ever carries the start: the position is never in an href', () => {
+  it('no link ever carries the start: the position is never in an href (every map app)', () => {
     const from = at(33.51234, 126.52345);
     for (const s of realSpots.slice(0, 400).concat(realSpots.filter((x) => islandOf(x)))) {
       for (const walk of [true, false]) {
-        const { href } = goLink(s, from, walk, true);
-        expect(href).not.toContain('33.51234');
-        expect(href).not.toContain('126.52345');
-        expect(href).not.toMatch(/[?&]sp=/);
+        for (const app of MAP_APPS) {
+          const { href } = goLink(s, from, walk, true, app);
+          expect(href).not.toContain('33.51234');
+          expect(href).not.toContain('126.52345');
+          expect(href).not.toMatch(/[?&]sp=/);
+          expect(href).not.toMatch(/\/directions\/[^-]/); // Naver: the start slot stays `-`
+        }
       }
     }
   });
@@ -335,7 +340,7 @@ describe('D10 the app: 걸어서 cards walk, island cards go to the pier', () =>
     return render();
   };
 
-  it('?area=here&reach=walk: every card 길찾기 is Kakao walking directions, said 도보', async () => {
+  it('?area=here&reach=walk: every card 길찾기 is Naver walking directions (default app), said 도보', async () => {
     open('?mood=food&area=here&reach=walk');
     await until(() => $$('#cards .card:not(.ghost)').length === 3);
     const { origin } = current().state().cards!;
@@ -345,11 +350,11 @@ describe('D10 the app: 걸어서 cards walk, island cards go to the pier', () =>
       const want = goLink(s, origin.point, true, origin.isPoint);
       expect(go.getAttribute('href')).toBe(want.href);
       if (want.mode === 'foot') {
-        expect(go.getAttribute('href')).toMatch(/^https:\/\/m\.map\.kakao\.com\/scheme\/route\?ep=.*&by=foot$/);
-        expect(go.getAttribute('aria-label')).toBe(`${s.name.trim()}, 카카오맵 도보 길찾기`);
+        expect(go.getAttribute('href')).toMatch(/^https:\/\/map\.naver\.com\/p\/directions\/-\/126\.\d+,33\.\d+,[^/]+,,\/-\/walk$/);
+        expect(go.getAttribute('aria-label')).toBe(`${s.name.trim()}, 네이버지도 도보 길찾기`);
       }
     }
-    expect($$('#cards a.go').some((a) => a.getAttribute('href')!.endsWith('by=foot'))).toBe(true);
+    expect($$('#cards a.go').some((a) => a.getAttribute('href')!.endsWith('/walk'))).toBe(true);
   });
 
   it('the 차귀도 card seen from 한경 → 「배 타는 곳까지 길찾기」 to 자구내포구; a 우도 card seen from 우도 → the place itself', async () => {
@@ -361,8 +366,8 @@ describe('D10 the app: 걸어서 cards walk, island cards go to the pier', () =>
     const go = isle.querySelector<HTMLAnchorElement>('a.go')!;
     const t = TERMINALS.차귀도;
     expect(go.textContent).toBe('배 타는 곳까지 길찾기');
-    expect(go.getAttribute('href')).toBe(`https://map.kakao.com/link/to/${encodeURIComponent(t.name)},${t.lat},${t.lng}`);
-    expect(go.getAttribute('aria-label')).toBe(`차귀도, 배 타는 곳 ${t.name}까지 카카오맵 자동차 길찾기`);
+    expect(go.getAttribute('href')).toBe(`https://map.naver.com/p/directions/-/${t.lng},${t.lat},${encodeURIComponent(t.name)},,/-/car`);
+    expect(go.getAttribute('aria-label')).toBe(`차귀도, 배 타는 곳 ${t.name}까지 네이버지도 자동차 길찾기`);
     for (const c of $$('#cards .card').filter((x) => x !== isle)) expect(c.querySelector('a.go')!.textContent).toBe('길찾기');
 
     reset();
@@ -373,5 +378,111 @@ describe('D10 the app: 걸어서 cards walk, island cards go to the pier', () =>
     const udo = $$('#cards .card').filter((c) => islandOf(realSpots.find((x) => x.id === c.dataset.id)!) === '우도');
     expect(udo.length).toBeGreaterThan(0);
     for (const c of udo) expect(c.querySelector('a.go')!.textContent).toBe('길찾기');
+  });
+});
+
+// ADR-0071: 네이버지도 first; 카카오맵 · TMAP chosen at the foot of 저장한 곳, remembered, carried in the backup link.
+describe('D11 지도 앱 — Naver Map by default, Kakao Map or TMAP by choice', () => {
+  const s = { ...spot, name: '협재해수욕장', lat: 33.394, lng: 126.239, kakaoPlaceId: '8159415' };
+
+  it('Naver: directions with the end only (start `-`), car or walk; place info = the "{이름} 제주" search', () => {
+    expect(naverDirectionsUrl(s, 'car')).toBe(`https://map.naver.com/p/directions/-/126.239,33.394,${encodeURIComponent('협재해수욕장')},,/-/car`);
+    expect(naverDirectionsUrl(s, 'foot')).toBe(`https://map.naver.com/p/directions/-/126.239,33.394,${encodeURIComponent('협재해수욕장')},,/-/walk`);
+    expect(naverDirectionsUrl({ ...s, name: '우연히,그곳 / 카페' }, 'car')).toContain(`/-/126.239,33.394,${encodeURIComponent('우연히 그곳 카페')},,/-/car`);
+    expect(naverSearchUrl(s)).toBe(`https://map.naver.com/p/search/${encodeURIComponent('협재해수욕장 제주')}`);
+    expect(naverSearchUrl({ ...s, name: '서귀포 올레시장' })).toBe(`https://map.naver.com/p/search/${encodeURIComponent('서귀포 올레시장')}`);
+    expect(naverDirectionsUrl({ ...s, lat: NaN }, 'car')).toBe(naverSearchUrl(s));
+  });
+
+  it('TMAP: its app scheme, end only (goalx = lng, goaly = lat); no coordinates → the Naver search', () => {
+    expect(tmapUrl(s)).toBe(`tmap://route?goalname=${encodeURIComponent('협재해수욕장')}&goalx=126.239&goaly=33.394`);
+    expect(tmapUrl({ ...s, lat: 37.5, lng: 127 })).toBe(naverSearchUrl(s));
+  });
+
+  it('placeUrl: Kakao keeps its place page; Naver and TMAP open the Naver search', () => {
+    expect(placeUrl(s, 'kakao')).toBe(kakaoUrl(s));
+    expect(placeUrl(s, 'naver')).toBe(naverSearchUrl(s));
+    expect(placeUrl(s, 'tmap')).toBe(naverSearchUrl(s));
+  });
+
+  it('goLink per app: car · walk · pier; TMAP walks open in Naver (its scheme has no walking mode)', () => {
+    const near = { lat: s.lat + 0.005, lng: s.lng };
+    expect(goLink(s, near, true, false)).toMatchObject({ app: 'naver', mode: 'foot', href: naverDirectionsUrl(s, 'foot') });
+    expect(goLink(s, null, false, false)).toMatchObject({ app: 'naver', mode: 'car', href: naverDirectionsUrl(s, 'car') });
+    expect(goLink(s, near, true, false, 'kakao')).toMatchObject({ app: 'kakao', href: walkDirectionsUrl(s) });
+    expect(goLink(s, null, false, false, 'tmap')).toMatchObject({ app: 'tmap', mode: 'car', href: tmapUrl(s) });
+    expect(goLink(s, near, true, false, 'tmap')).toMatchObject({ app: 'naver', mode: 'foot', href: naverDirectionsUrl(s, 'foot') });
+    const isle = realSpots.find((x) => islandOf(x) === '우도')!;
+    const t = TERMINALS.우도;
+    const pier = { ...isle, name: t.name, lat: t.lat, lng: t.lng };
+    for (const app of MAP_APPS) {
+      const g = goLink(isle, null, false, false, app);
+      expect(g.text).toBe('배 타는 곳까지 길찾기');
+      expect(g.href).toBe(app === 'kakao' ? directionsUrl(pier) : app === 'tmap' ? tmapUrl(pier) : naverDirectionsUrl(pier, 'car'));
+    }
+  });
+
+  it('the setting: one line at the foot of 저장한 곳, 네이버지도 pressed first; a tap switches every link, is kept, and rides in the backup', async () => {
+    render();
+    await tap('[data-mood="rest"]');
+    await tap($$('#cards .heart')[0]);
+    await tap('#saved');
+    await until(() => $$('#savedView .card:not(.ghost)').length === 1);
+    const btns = $$('#savedView .mapapp button');
+    expect(btns.map((b) => b.textContent)).toEqual(['네이버지도', '카카오맵', 'TMAP']);
+    expect(btns.map((b) => b.getAttribute('aria-pressed'))).toEqual(['true', 'false', 'false']);
+    expect($('#savedView .mapapp').closest('#savedView')).not.toBeNull();
+    const row = $('#savedView .card');
+    const id = row.dataset.id!;
+    const sp = realSpots.find((x) => x.id === id)!;
+    expect(row.querySelector('.card-link')!.getAttribute('href')).toBe(naverSearchUrl(sp));
+
+    await tap('#savedView [data-app="kakao"]');
+    expect(btns.map((b) => b.getAttribute('aria-pressed'))).toEqual(['false', 'true', 'false']);
+    expect(window.localStorage.getItem('jeju.mapApp')).toBe('"kakao"');
+    expect(row.querySelector('.card-link')!.getAttribute('href')).toBe(kakaoUrl(sp));
+    expect(row.querySelector('.card-link')!.getAttribute('aria-label')).toBe(`${sp.name.trim()}, 카카오맵에서 보기`);
+    expect(row.querySelector('.dest')?.textContent).toBe('카카오맵');
+    expect(row.querySelector('a.go')!.getAttribute('aria-label')).toMatch(/카카오맵 (자동차|도보) 길찾기$/);
+    expect($('#mapAppNote').textContent).toBe('');
+
+    await tap('#savedView [data-app="tmap"]');
+    expect($('#mapAppNote').textContent).toContain('TMAP은 앱이 있어야 열려요');
+    expect(row.querySelector('.dest')?.textContent).toBe('네이버지도');
+    const st = current().state();
+    const o = st.savedList!.origin;
+    expect(row.querySelector('a.go')!.getAttribute('href')).toBe(goLink(sp, o?.point ?? null, st.reach === 'walk', o?.isPoint ?? false, 'tmap').href);
+
+    // back on the results the cards follow too
+    await tap('[data-action="close-saved"]');
+    await until(() => $$('#cards .card:not(.ghost)').length === 3);
+    expect($('#cards .dest')?.textContent).toBe('네이버지도');
+    await tap('#saved');
+    await tap('#savedView [data-app="kakao"]');
+    await tap('[data-action="close-saved"]');
+    await until(() => $$('#cards .card:not(.ghost)').length === 3);
+    expect($('#cards .dest')?.textContent).toBe('카카오맵');
+    for (const a of $$('#cards .card-link')) expect(a.getAttribute('href')).toMatch(/^https:\/\/(place\.map|map)\.kakao\.com\//);
+
+    // kept: a new visit starts with 카카오맵
+    current().destroy();
+    render();
+    expect(current().state().mapApp).toBe('kakao');
+  });
+
+  it('backup link: &m=kakao / &m=tmap when not 네이버지도 (the default link is as before); opening one switches the app', async () => {
+    const list = [{ id: realSpots[0].id, date: TODAY, order: 0 }];
+    expect(backupUrl('https://p.example/', list)).toBe(backupUrl('https://p.example/', list, false, 'naver'));
+    const k = new URL(backupUrl('https://p.example/', list, true, 'kakao'));
+    expect(k.hash.endsWith('&r=1&m=kakao')).toBe(true);
+    expect(readBackup(k.hash)).toEqual({ found: true, entries: list, indoor: true, mapApp: 'kakao' });
+    expect(readBackup(`${new URL(backupUrl('https://p.example/', list)).hash}&m=bogus`)).toEqual({ found: true, entries: list });
+    reset();
+    window.history.replaceState(null, '', `/${backupUrl('x', list, false, 'tmap')}`);
+    render();
+    await settle();
+    expect(current().state().mapApp).toBe('tmap');
+    expect(window.localStorage.getItem('jeju.mapApp')).toBe('"tmap"');
+    window.history.replaceState(null, '', '/');
   });
 });

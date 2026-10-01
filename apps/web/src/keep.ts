@@ -1,15 +1,18 @@
 // Keeping saves without a login (ADR-0063 2): the backup link, in-app browser detection and the home-screen
 // nudge's kind. Pure functions, no DOM state; app.ts wires them up.
 import { addDays, isDay, type Day } from './dates';
+import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { MAX_SAVED, normalizeEntries } from './store';
 import type { SavedEntry } from './types';
 
 // --- backup link: the saved list after `#s=` (a fragment never reaches a server or its logs) ---
 // Bytes, then base64url. [version 1] then per day: [day: varint days since EPOCH][count: varint][ids…], days
 // ascending, ids in the user's order. An id is [0][16 bytes] when it is a lowercase UUID (every spot id
-// today), else [length 1–255][UTF-8]. 비 와요(실내만) on (ADR-0065) adds `&r=1` after the list.
+// today), else [length 1–255][UTF-8]. 비 와요(실내만) on (ADR-0065) adds `&r=1` after the list; a map app other
+// than 네이버지도 (ADR-0071) adds `&m=kakao` or `&m=tmap`.
 export const BACKUP_HASH = '#s=';
 const INDOOR_FLAG = 'r=1';
+const MAP_FLAG = 'm=';
 const VERSION = 1;
 const EPOCH: Day = '2020-01-01';
 const MAX_DAY = 36_600; // ~2120
@@ -118,18 +121,21 @@ export function appHome(href: string): string {
   return new URL(import.meta.env.BASE_URL ?? '/', href).href;
 }
 
-/** The app's address with the saved list after `#s=` (and 비 와요 when it is on). */
-export function backupUrl(home: string, entries: readonly SavedEntry[], indoor = false): string {
-  return `${home.split('#')[0]}${BACKUP_HASH}${encodeBackup(entries)}${indoor ? `&${INDOOR_FLAG}` : ''}`;
+/** The app's address with the saved list after `#s=` (and 비 와요 when it is on, the map app when it is not 네이버지도). */
+export function backupUrl(home: string, entries: readonly SavedEntry[], indoor = false, mapApp: MapApp = DEFAULT_MAP_APP): string {
+  const app = mapApp !== DEFAULT_MAP_APP ? `&${MAP_FLAG}${mapApp}` : '';
+  return `${home.split('#')[0]}${BACKUP_HASH}${encodeBackup(entries)}${indoor ? `&${INDOOR_FLAG}` : ''}${app}`;
 }
 
 /** A location hash: not a backup at all, or a backup (entries null when it does not read; `indoor` only when
- * the link says 비 와요 was on). */
-export function readBackup(hash: string): { found: false } | { found: true; entries: SavedEntry[] | null; indoor?: true } {
+ * the link says 비 와요 was on; `mapApp` only when the link names one). */
+export function readBackup(hash: string): { found: false } | { found: true; entries: SavedEntry[] | null; indoor?: true; mapApp?: MapApp } {
   if (!hash.startsWith(BACKUP_HASH)) return { found: false };
   const [list, ...flags] = hash.slice(BACKUP_HASH.length).split('&');
   const entries = decodeBackup(list);
-  return entries && flags.includes(INDOOR_FLAG) ? { found: true, entries, indoor: true } : { found: true, entries };
+  if (!entries) return { found: true, entries };
+  const app = flags.find((f) => f.startsWith(MAP_FLAG))?.slice(MAP_FLAG.length) as MapApp | undefined;
+  return { found: true, entries, ...(flags.includes(INDOOR_FLAG) ? { indoor: true as const } : {}), ...(app && MAP_APPS.includes(app) ? { mapApp: app } : {}) };
 }
 
 // --- in-app browsers (ADR-0063 2b): each keeps its own storage, apart from the phone's browser ---
