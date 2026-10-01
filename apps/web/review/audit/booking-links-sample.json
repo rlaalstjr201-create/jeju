@@ -1,0 +1,3301 @@
+{
+ "meta": {
+  "title": "예약 링크 표본 조사 01",
+  "date": "2026-10-01",
+  "doc": "docs/research/booking-links-01.md",
+  "population": "public/spots.json bookable=true 385곳 (new 308, walk 45, rest 26, food 6)",
+  "sample": {
+   "seed": 20261001,
+   "method": "id 정렬 후 random.Random(20261001): new(하기) 40 + walk 5 + rest 5, 나머지에서 15지역(가까운 중심) 순서를 섞어 지역마다 1곳씩 10곳(area-mix). 총 60곳"
+  },
+  "verdicts": {
+   "일치": "링크가 이 장소의 예약 또는 상세 소개 페이지로 간다(근거 기록)",
+   "부분": "운영자 SNS·네이버 지도 링크 등, 공식 채널이지만 예약·상세 소개 페이지는 아님",
+   "불일치": "다른 장소·업체로 간다",
+   "죽은 링크": "요청 실패/404/인증서 오류/카카오에 없는 장소",
+   "미확인": "요청은 했으나 판단 근거가 부족",
+   "없음": "찾지 못함"
+  },
+  "groups": {
+   "a": "공식 소개·예약(비짓제주 상세·홈페이지·reservelink, 카카오 홈페이지·카카오 예약, 네이버 예약 버튼·홈페이지)",
+   "b": "마이리얼트립 직접 상품",
+   "c": "카카오 장소 페이지"
+  },
+  "blocked": [
+   "Klook(www.klook.com/ko/search) HTTP 403",
+   "KKday(www.kkday.com/ko/product/productlist) HTTP 403",
+   "map.naver.com /p/api/search HTTP 403 → m.search.naver.com HTML로 대체",
+   "place.map.kakao.com/main/v HTTP 403 Restricted User Agent → place-api.map.kakao.com/places/panel3 (pf: web 헤더)로 대체"
+  ]
+ },
+ "spots": [
+  {
+   "id": "6aad382d-c1fc-4acd-a3bb-35617d5ab602",
+   "name": "제주 더팔팔농장",
+   "mood": "new",
+   "area": "성산",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022173",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주 더팔팔농장' → 제목 '제주 더팔팔농장', 좌표 거리 0.0km. 전화 없음"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[제주] 최남단 감귤체험농장', '[제주] 제주 최남단 체험감귤농장', '[제주] 더 숲 아로마 앤 테라피']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%20%EB%8D%94%ED%8C%94%ED%8C%94%EB%86%8D%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/416053296",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '더팔팔농장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "83012e0a-5dc6-4cf7-8848-afec52600ab3",
+   "name": "서귀포 궁도장(천지정)",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500318",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '서귀포 궁도장(천지정)' → 제목 '서귀포 궁도장(천지정)', 좌표 거리 0.0km. 전화 064-739-5444"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[서귀포시] 제주 건강과 성 박물관', '[제주] 살아있는 생물 조개박스 지정일 픽업/택배발송', '[전국/택배] 캠핑 조개구이 밀키트 (지정일 배송/픽업)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%84%9C%EA%B7%80%ED%8F%AC%20%EA%B6%81%EB%8F%84%EC%9E%A5%28%EC%B2%9C%EC%A7%80%EC%A0%95%29",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/17807455",
+     "verdict": "일치",
+     "evidence": "\"강창학종합경기장 천지정\", 전화 064-739-5444 = 비짓제주 전화"
+    }
+   ]
+  },
+  {
+   "id": "96311a1c-857d-4a1c-9e05-24040286e383",
+   "name": "뱅듸승마클럽",
+   "mood": "new",
+   "area": "조천",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000015855",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '뱅듸승마클럽' → 제목 '뱅듸승마클럽', 좌표 거리 0.0km. 전화 010-6847-8221"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/cht0301",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/baengdui_horseback/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['다낭 - 바나힐 골프 클럽 ', '다낭 - 몽고메리 골프클럽 ', '다낭 - 남호이안 빈펄 골프클럽 (무료-중식세트 포함)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%B1%85%EB%93%B8%EC%8A%B9%EB%A7%88%ED%81%B4%EB%9F%BD",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/519265785",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '뱅듸승마클럽', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "e1e6ab89-04a0-4602-a9fa-b8cf95e524ac",
+   "name": "함덕스쿠버",
+   "mood": "new",
+   "area": "조천",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000015888",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '함덕스쿠버' → 제목 '함덕스쿠버 다이빙&서핑&스노클&전동스쿠터', 좌표 거리 0.0km. 전화 010-4841-3294"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1654816",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '함덕스쿠버 다이빙&서핑&스노클&전동스쿠터' (좌표 0.022km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: []"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%95%A8%EB%8D%95%EC%8A%A4%EC%BF%A0%EB%B2%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/247230821",
+     "verdict": "불일치",
+     "evidence": "데이터의 kakaoPlaceId 247230821 = \"우리동네잠수하는형들\"(다른 업체, 네이버에도 별도 업체로 32m 거리에 있음)"
+    }
+   ]
+  },
+  {
+   "id": "f9b88c30-7f7a-4ef2-9de9-e594c22c073b",
+   "name": "중문골프장",
+   "mood": "new",
+   "area": "중문",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%A4%91%EB%AC%B8%EA%B3%A8%ED%94%84%EC%9E%A5",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://jungmungolf.visitkorea.or.kr",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '중문골프장'"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[선착순 이벤트 진행🔥] 발리 한다라CC 골프장 18홀 (그린피,카트비, 캐디피 포함)', '제주 서귀포 제주제트 주상절리 중문 제트보트', '[중문] 제주 중문승마공원 이용권']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A4%91%EB%AC%B8%EA%B3%A8%ED%94%84%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/22018448",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '중문골프장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "a34cd71d-60bb-46e2-9cac-040bfdfcc322",
+   "name": "우도올레보트",
+   "mood": "new",
+   "area": "우도",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000018956",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '우도올레보트' → 제목 '우도올레보트', 좌표 거리 1.759km. 전화 0507-1487-1126"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['우도전기차, 전동차, 전기 바이크,전기자전거,코코,사이드카 종일대여', '[우도] 자유롭게 내리고 타는 우도 해안도로 순환버스 티켓', '[제주] 성산포유람선&우도선상낚시']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%9A%B0%EB%8F%84%EC%98%AC%EB%A0%88%EB%B3%B4%ED%8A%B8",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/981222412",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '우도올레보트', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "3934dcf4-b852-4fb4-a961-127ecb2ee3ab",
+   "name": "너도나도 ATV",
+   "mood": "new",
+   "area": "조천",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000015836",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '너도나도 ATV' → 제목 '너도나도 ATV', 좌표 거리 6.322km. 전화 010-7563-7254"
+    },
+    {
+     "source": "visitjeju_reservelink",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.naver.com/booking/12/bizes/849186/items/4880001?theme=place&service-target=map-pc&area=bmp",
+     "verdict": "미확인",
+     "evidence": "비짓제주 검색 응답 reservelink 필드(네이버 예약). 네이버 검색의 현재 예약(bizes/1420097)과 업체 번호가 다르고, 비짓제주 좌표가 우리 좌표와 6.3km 다름 → 이전·중복 등록 가능성 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1420097",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '너도나도 ATV 제주' 단일 장소 '너도나도 ATV'(제주 제주시 조천읍 비자림로 1065)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[올인클루시브] 우붓: 프리미엄 시설을 갖춘 아융 강 래프팅 + ATV 쿼드 바이크 어드벤', \"[엔터로마야경]🥇'밤'하늘의 '별'을 따서 '너'에게 줄게 ✨[박재벌 Family's]\", '[몽골/짧고알찬2박3일/단독투어] 너랑나랑 별보러가자! 미니사막,테를지! ']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%84%88%EB%8F%84%EB%82%98%EB%8F%84%20ATV",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1690363195",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '너도나도ATV', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "fdf89224-a74a-4768-976c-7b6d8913d829",
+   "name": "핸즈웍스",
+   "mood": "new",
+   "area": "한림",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000007916",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '핸즈웍스' → 제목 '핸즈웍스', 좌표 거리 0.007km. 전화 없음"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "http://blog.naver.com/handsworks9",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "http://blog.naver.com/wingduck_911",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[맨리 출발] 시드니 하버 요트 크루즈 1.5시간 + 핸즈온 세일링 체험', '[시드니] 맨리 출발 2.5시간 핸즈온 요트 크루즈 + 하버 브리지·오페라 하우스 조망', '[하와이] 노스쇼어 집라인 - 클라임 웍스 (오아후 액티비티/투어)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%95%B8%EC%A6%88%EC%9B%8D%EC%8A%A4",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1478852553",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '핸즈웍스', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "47a0a178-54cd-4fb1-8368-bfab1a55dab4",
+   "name": "문서프",
+   "mood": "new",
+   "area": "애월",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022941",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '문서프' → 제목 '제주도서핑 문서프', 좌표 거리 0.0km. 전화 010-4757-3364"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "www.moonsurf.kr/",
+     "verdict": "죽은 링크",
+     "evidence": "HTTP 000 curl: (6) Could not resolve host: www.moonsurf.kr"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://instagram.com/moonsurf_jeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/moonsurf",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/ticketStore/22055",
+     "verdict": "일치",
+     "evidence": "카카오 장소 27598301 패널 응답 안의 카카오 예약 링크(is_available_booking=True) / 요청 결과 HTTP 000 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/229868",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '제주도서핑 문서프' (좌표 0.005km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['나트랑 깜란 코코서프 서핑 강습 (영어 강사,무료 서핑보드 대여)', '강화자 가이드와 함께하는 우피치 미술관 집중투어 (시내 핵심+메디치가문,총 5시간30분) ', '[픽업 무료 선착순이벤트] 렘푸양 사원(천국의문) 포함 발리 동부 투어 / 사진천재 와얀']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%AC%B8%EC%84%9C%ED%94%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/27598301",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '제주도서핑 문서프', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "5637e1dc-ed50-4203-b33c-b82b6e544960",
+   "name": "고포잇다이브센터",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000011554",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '고포잇다이브센터' → 제목 '고포잇다이브 스쿠버다이빙', 좌표 거리 0.0km. 전화 010-5326-3709"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[한국어/오전] 이브 가이드와 포르투 시내 반나절 정복 투어 ', '🇬🇧  런던 아카이브 도시탐험! ', '[서귀포] 여행지에서의 추억을 라탄으로 잇다, 수다창고 라탄 원데이 클래스']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EA%B3%A0%ED%8F%AC%EC%9E%87%EB%8B%A4%EC%9D%B4%EB%B8%8C%EC%84%BC%ED%84%B0",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "25a16336-715d-4ce0-bcba-94b31f6c6edd",
+   "name": "생약누리",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000012631",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '생약누리' → 제목 '생약누리', 좌표 거리 0.0km. 전화 064-717-8770"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://nifds.go.kr/hmrm/kr/index.do",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '생약누리'"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://nifds.go.kr/hmrm",
+     "verdict": "미확인",
+     "evidence": "연결 재설정(프록시/서버, 같은 도메인의 다른 주소는 정상)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/jeju_mfds_hmrm",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['시드니 올인원 투어 콤보 - [입국부터 출국까지] 공항픽업 투어+블루마운틴+포트스테판+샌딩', '[대치] 섬세한 호텔급 서비스와 테크닉으로 누리는 깊은 휴식', '[강화도] 바닷가인근 누리워터파크(수영장/슬라이드/샤워실완비)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%83%9D%EC%95%BD%EB%88%84%EB%A6%AC",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/787416340",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '생약누리', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "3d103517-770c-4953-ace5-c587fa5e90ea",
+   "name": "강정천유원지",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500024",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '강정천유원지' → 제목 '강정천유원지', 좌표 거리 0.0km. 전화 064-760-4802"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[매일출발 15년 1.5만회 진행]라스베가스웰컴사인+3대 캐년 당일투어 실제후기 3천3백+', '[❤️빨간바지❤️] 런던 대영박물관 도슨트투어│후기3천4백│어린이할인| 매일출발', '[편안한 투어] 디즈니 랜드  픽업/샌딩 고급밴 서비스 (유원지 내 가이드 가능)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EA%B0%95%EC%A0%95%EC%B2%9C%EC%9C%A0%EC%9B%90%EC%A7%80",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/17809535",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '강정천유원지', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "10d8d509-54a9-4d4e-881d-25e6d574c405",
+   "name": "애월스쿠버다이빙스쿨",
+   "mood": "new",
+   "area": "애월",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000010135",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '애월스쿠버다이빙스쿨' → 제목 '애월스쿠버', 좌표 거리 0.0km. 전화 010-5226-9101"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://scubacorea.co.kr",
+     "verdict": "죽은 링크",
+     "evidence": "HTTP 000 curl: (6) Could not resolve host: scubacorea.co.kr"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/3827717",
+     "verdict": "일치",
+     "evidence": "판매자(partner.name) \"애월스쿠버\" = 비짓제주 제목 \"애월스쿠버\"(직접 판매). 주소 애월로13길 45는 다른 출처와 미대조"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%95%A0%EC%9B%94%EC%8A%A4%EC%BF%A0%EB%B2%84%EB%8B%A4%EC%9D%B4%EB%B9%99%EC%8A%A4%EC%BF%A8",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/983409620",
+     "verdict": "일치",
+     "evidence": "kakaoPlaceId 없음. 카카오 이름 검색 '애월스쿠버' → '애월스쿠버' (거리 0.005km)"
+    }
+   ]
+  },
+  {
+   "id": "562086c2-063f-4c64-8b48-8fc384fbf4c4",
+   "name": "강정어촌계",
+   "mood": "new",
+   "area": "중문",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EA%B0%95%EC%A0%95%EC%96%B4%EC%B4%8C%EA%B3%84",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['다낭 참섬 투어 (다낭호이안 픽업 드랍 호핑 어촌마을 스노클링)', '[더블린] 호스 어촌마을 반나절 해안 투어 + 절벽 워킹', '마삭슬록 어촌의 블루 그로토 & 선데이 마켓']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EA%B0%95%EC%A0%95%EC%96%B4%EC%B4%8C%EA%B3%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/436560601",
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 436560601 = \"강정어촌계식당\"(어촌계 식당). 체험 프로그램 소개 페이지인지 확인 불가"
+    }
+   ]
+  },
+  {
+   "id": "c5925e89-9ae1-4a53-b068-fa22453565d0",
+   "name": "예래생태체험관",
+   "mood": "new",
+   "area": "중문",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000008159",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '예래생태체험관' → 제목 '예래생태체험관', 좌표 거리 0.0km. 전화 없음"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://eco.jejuyerae.com/",
+     "verdict": "죽은 링크",
+     "evidence": "HTTP 000 curl: (6) Could not resolve host: eco.jejuyerae.com"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['Wait-A-While Night Tour : 플래티푸스, 트리 캔버스 & 레인보리스', '[충남] 국립생태원', '세계적 환경도시 프라이부르크에서 함께하는 검은 숲, 친환경 생태 지구 여행']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%98%88%EB%9E%98%EC%83%9D%ED%83%9C%EC%B2%B4%ED%97%98%EA%B4%80",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/25461458",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '예래생태체험관', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "9d44ab0d-bb0d-45d8-b440-bdf810db1bf0",
+   "name": "스누피가든",
+   "mood": "new",
+   "area": "표선",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000010956",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '스누피가든' → 제목 '스누피가든', 좌표 거리 0.0km. 전화 (+82)064-805-1118"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://www.snoopygarden.com",
+     "verdict": "미확인",
+     "evidence": "HTTP 403(봇 차단 추정, 브라우저 확인 필요)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/snoopygarden_jeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/ticketStore/40698",
+     "verdict": "일치",
+     "evidence": "카카오 장소 852041742 패널 응답 안의 카카오 예약 링크(is_available_booking=True) / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/384281",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '스누피가든 제주' 단일 장소 '스누피가든'(제주 제주시 구좌읍 금백조로 930)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6117026",
+     "verdict": "일치",
+     "evidence": "판매자 놀유니버스(재판매). 상품 본문 주소 \"구좌읍 금백조로 930\" = 카카오 장소 주소"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%8A%A4%EB%88%84%ED%94%BC%EA%B0%80%EB%93%A0",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/852041742",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '스누피가든', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "648961d5-e515-4308-9583-f7d6e13e1316",
+   "name": "유리바닥보트",
+   "mood": "new",
+   "area": "안덕",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000013356",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '유리바닥보트' → 제목 '유리바닥보트', 좌표 거리 0.0km. 전화 0507-1495-0890"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "네이버 플레이스",
+     "url": "https://map.naver.com/p/entry/place/1041783297",
+     "verdict": "부분",
+     "evidence": "홈페이지 칸에 네이버 지도 장소 링크가 들어 있음(공식 사이트 아님)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/jeju_glassboat",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/jejuglassbottomboat",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.youtube.com/@glassboat_jeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "스마트스토어",
+     "url": "https://smartstore.naver.com/glassboat",
+     "verdict": "미확인",
+     "evidence": "네이버 스마트스토어(판매 상품 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://clip.naver.com/@glassboat_jeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1000697",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '유리바닥보트 제주' 단일 장소 '유리바닥보트'(제주 서귀포시 안덕면 화순해안로106번길 8 1층)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6117865",
+     "verdict": "일치",
+     "evidence": "판매자 투어패스(재판매). 본문 주소 \"안덕면 화순해안로106번길 8\" = 카카오 장소 주소"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%9C%A0%EB%A6%AC%EB%B0%94%EB%8B%A5%EB%B3%B4%ED%8A%B8",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1489963785",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '유리바닥보트', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "89772bbe-805f-47dc-9ee1-38045cd4c223",
+   "name": "해병 3·4기 호국관",
+   "mood": "new",
+   "area": "대정",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000012965",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '해병 3·4기 호국관' → 제목 '해병3,4기호국관', 좌표 거리 0.0km. 전화 없음"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['⟬34,000원특가⟭⟬불만족시100%환불⟭ 체스키 당일투어//럭셔리 노란버스+한국인 가이드', '[두바이] 프라이빗 요트 크루즈 34피트 + 무제한 생수 + 전용 선장', '[후기작성多] 북해도 노보리베츠 온천마을 모아이 도야호 삿포로 버스투어 와쿠와쿠2호선']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%95%B4%EB%B3%91%203%C2%B74%EA%B8%B0%20%ED%98%B8%EA%B5%AD%EA%B4%80",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1257040972",
+     "verdict": "일치",
+     "evidence": "kakaoPlaceId 없음. 카카오 이름 검색 '해병3,4기호국관' → '해병 3,4기 호국관' (거리 0.015km)"
+    }
+   ]
+  },
+  {
+   "id": "569aa361-86a8-4d3a-8c4e-66d13cde4256",
+   "name": "초원승마클럽 승마체험/활쏘기체험",
+   "mood": "new",
+   "area": "중문",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000013469",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '초원승마클럽 승마체험/활쏘기체험' → 제목 '초원승마클럽 승마체험/활쏘기체험', 좌표 거리 0.0km. 전화 0507-1353-9485"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "네이버 플레이스",
+     "url": "https://map.naver.com/p/entry/place/1723416949?c=15.00,0,0,0,dh",
+     "verdict": "부분",
+     "evidence": "홈페이지 칸에 네이버 지도 장소 링크가 들어 있음(공식 사이트 아님)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[즉시확정] 히로시마 활쏘기 체험 (궁도복 착용, 사진 촬영)', '단체 경쟁 사격 대회 — 활쏘기·도끼 던지기·크로스보우 등 9가지 종목', '푸켓 인터네셔널 승마 클럽']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%B4%88%EC%9B%90%EC%8A%B9%EB%A7%88%ED%81%B4%EB%9F%BD%20%EC%8A%B9%EB%A7%88%EC%B2%B4%ED%97%98/%ED%99%9C%EC%8F%98%EA%B8%B0%EC%B2%B4%ED%97%98",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "f154e83c-3726-4a6a-9059-4bc64279a396",
+   "name": "제주바다체험장",
+   "mood": "new",
+   "area": "구좌",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500554",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주바다체험장' → 제목 '제주바다체험장', 좌표 거리 0.0km. 전화 064-784-5757"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://land201kr.alltheway.kr",
+     "verdict": "죽은 링크",
+     "evidence": "HTTP 503 "
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/6/bizes/1022769/search",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '제주바다체험장 제주' 단일 장소 '제주바다체험장'(제주 제주시 구좌읍 일주동로 1921)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6114929",
+     "verdict": "일치",
+     "evidence": "판매자 VPASS(재판매). 본문 주소 \"구좌읍 일주동로 1921\", 문의전화 064-784-5757 = 비짓제주 전화"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EB%B0%94%EB%8B%A4%EC%B2%B4%ED%97%98%EC%9E%A5",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/8577985",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '제주바다체험장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "7411896d-094c-4b31-bc01-092f37d3abf3",
+   "name": "포레스트 사파리",
+   "mood": "new",
+   "area": "조천",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%ED%8F%AC%EB%A0%88%EC%8A%A4%ED%8A%B8%20%EC%82%AC%ED%8C%8C%EB%A6%AC",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/forest.safari/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/196102",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '포레스트 사파리 제주' 단일 장소 '포레스트 공룡사파리'(제주 제주시 조천읍 선교로 474-1)의 예약 버튼. 네이버 \"포레스트 공룡사파리\" 도로명 선교로 474-1 = 카카오 \"포레스트사파리\" 주소 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6117754",
+     "verdict": "일치",
+     "evidence": "판매자 투어패스(재판매). 본문 \"조천읍 선교로 포레스트사파리\" = 카카오 포레스트사파리(선교로 474-1)"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%8F%AC%EB%A0%88%EC%8A%A4%ED%8A%B8%20%EC%82%AC%ED%8C%8C%EB%A6%AC",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1144766060",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '포레스트사파리', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "70eb4ec2-0cbe-4de0-ab32-bf38f29887a6",
+   "name": "홀리데이 다이빙 코리아",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%ED%99%80%EB%A6%AC%EB%8D%B0%EC%9D%B4%20%EB%8B%A4%EC%9D%B4%EB%B9%99%20%EC%BD%94%EB%A6%AC%EC%95%84",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/divingkorea/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/shamil",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[1박2일]이탈리아남부투어#최대23인#홀리데이인호텔숙박#아말피코스트페리탑승#카프리푸른동굴', 'LA코리아타운🇰🇷 스토리텔링 도보투어(2시간) / 역사,문화,경제 등 알쓸신잡 이색투어', '[파타야골프]원파티오 코리아타운 호텔 3색골프#품격골프 #고품격골프 #파타야골프']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%99%80%EB%A6%AC%EB%8D%B0%EC%9D%B4%20%EB%8B%A4%EC%9D%B4%EB%B9%99%20%EC%BD%94%EB%A6%AC%EC%95%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1352365977",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '홀리데이다이빙코리아', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "609e2239-a3b2-4974-adfa-af5aa53a2487",
+   "name": "제주해양사업단",
+   "mood": "new",
+   "area": "대정",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022556",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주해양사업단' → 제목 '제주해양사업단', 좌표 거리 0.0km. 전화 010-2980-5105"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "스마트스토어",
+     "url": "https://smartstore.naver.com/jejuswc",
+     "verdict": "미확인",
+     "evidence": "네이버 스마트스토어(판매 상품 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[제주 애월] 제주 퐁당해양레저 스피드보트/제트스키 이용권', '[애월] 제주 퐁당해양레저 제트보트 이용권 ', '[안덕] 형제섬 호핑투어(요트), 동남아도 부럽지 않아 ']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%ED%95%B4%EC%96%91%EC%82%AC%EC%97%85%EB%8B%A8",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "7e819017-e8b0-4a39-85c0-41e7a3062a73",
+   "name": "비고르서프",
+   "mood": "new",
+   "area": "대정",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000015859",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '비고르서프' → 제목 '제주도서핑 비고르서프', 좌표 거리 0.0km. 전화 0507-1446-4801"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://litt.ly/vigorsurf",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/vigorsurf/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/154035",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '제주도서핑 비고르서프' (좌표 0.001km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['나트랑 깜란 코코서프 서핑 강습 (영어 강사,무료 서핑보드 대여)', '월정리해변 정면으로 아주 가까운 (도보 2초) 서프샵입니다 :)', '오션서프에서 소수 인원으로 서핑 강습을! (초급/중급/고급) (강원/양양)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%B9%84%EA%B3%A0%EB%A5%B4%EC%84%9C%ED%94%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/478150622",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '제주도서핑 비고르서프', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "09106245-a807-4ac7-8dee-100ed19236d0",
+   "name": "서귀포잠수함(대국해저관광)",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500329",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '서귀포잠수함(대국해저관광)' → 제목 '서귀포잠수함', 좌표 거리 0.0km. 전화 064-732-6060"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://submarine.co.kr/submarine/egovSubmarineList.do",
+     "verdict": "죽은 링크",
+     "evidence": "https 인증서 이름 불일치(브라우저 경고). http://www.submarine.co.kr 는 정상"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://www.submarine.co.kr",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '서귀포잠수함'"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/ticketStore/161341",
+     "verdict": "일치",
+     "evidence": "카카오 장소 7940952 패널 응답 안의 카카오 예약 링크(is_available_booking=False) / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/28690",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '서귀포잠수함' (좌표 0.01km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6114894",
+     "verdict": "일치",
+     "evidence": "판매자 VPASS(재판매). 문의전화 064-732-6060 = 비짓제주 전화"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%84%9C%EA%B7%80%ED%8F%AC%EC%9E%A0%EC%88%98%ED%95%A8%28%EB%8C%80%EA%B5%AD%ED%95%B4%EC%A0%80%EA%B4%80%EA%B4%91%29",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/7940952",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '서귀포잠수함', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "692b9015-8940-4908-afb2-898601938b78",
+   "name": "아일랜드에프",
+   "mood": "new",
+   "area": "우도",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%95%84%EC%9D%BC%EB%9E%9C%EB%93%9C%EC%97%90%ED%94%84",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[아일랜드 금까기] #아일랜드패스5일 #아일랜드전역완주 - 더블린골웨이코크', '[아일랜드 드라이빙 금까기] #아일랜드오토렌터카 #모허절벽드라이브 - 초록섬아일랜드를달리는감성드라이브', '[런던 | 에딘버러 | 더블린 금까기] #에든버러고성열차 #브리튼아일랜드3국 - 영국과아일랜드핵심도시여행']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%95%84%EC%9D%BC%EB%9E%9C%EB%93%9C%EC%97%90%ED%94%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "e9259253-7a92-44f2-b2eb-ea521c6ac6dc",
+   "name": "제주아리온승마장",
+   "mood": "new",
+   "area": "안덕",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000015185",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주아리온승마장' → 제목 '제주아리온승마장', 좌표 거리 0.0km. 전화 0507-1497-2016"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/mamatteul",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "http://www.instagram.com/jeju_arion",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[당일가능] 제주신화월드 스카이 온 파이브 다이닝 뷔페 식사권', '[제주] 제주신화월드 스카이온파이브다이닝', '[표선] 제주 화산 송이로 만드는 나만의 도자기 만들기 ']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EC%95%84%EB%A6%AC%EC%98%A8%EC%8A%B9%EB%A7%88%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/113667955",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '아리온승마장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "7062b4ce-d2b9-4b36-8fe9-3d77dc9389c2",
+   "name": "서프서프",
+   "mood": "new",
+   "area": "구좌",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000015874",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '서프서프' → 제목 '서프서프', 좌표 거리 0.0km. 전화 0507-1366-3987"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://cafe.naver.com/surfsurfwoljeong",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/surfsurf_jeju/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/712767",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '월정 서프서프' (좌표 0.003km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/4747198",
+     "verdict": "일치",
+     "evidence": "판매자(partner.name) \"서프서프\"(직접 판매), 본문 주소 \"구좌읍 해맞이해안로 468\"(월정리)"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%84%9C%ED%94%84%EC%84%9C%ED%94%84",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/652337634",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '서프서프', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "7264548b-627b-4799-ba68-6efc82ab697f",
+   "name": "빛의 섬 루미버스",
+   "mood": "new",
+   "area": "표선",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000013520",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '빛의 섬 루미버스' → 제목 '빛의 섬 루미버스', 좌표 거리 0.0km. 전화 0507-1411-5688"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://lumiverse.kr/",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '빛의 섬 루미버스'"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/lumiverse.jeju/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.youtube.com/@Lumiverse_jeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1351670",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '빛의 섬 루미버스 제주' 단일 장소 '빛의 섬 루미버스'(제주 서귀포시 표선면 민속해안로 631-34 제주민속촌 야간개장)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[빅아일랜드] 한인가이드+노쇼핑+화산국립공원+섬일주+하루투어+오아후 출발 항공포+한인가이드', '[빅아일랜드]1박/2박-호텔포함,마우나케아별자리,화산국립공원,핵심섬일주,국내선항공 포함', '[파리] 야간 이층 버스 투어 — 오픈탑에서 만나는 빛의 도시 2시간']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%B9%9B%EC%9D%98%20%EC%84%AC%20%EB%A3%A8%EB%AF%B8%EB%B2%84%EC%8A%A4",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/373975033",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '빛의섬루미버스', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "d204f37b-21e0-4056-9adb-9115cdb10677",
+   "name": "다이나믹메이즈",
+   "mood": "new",
+   "area": "표선",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000021429",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '다이나믹메이즈' → 제목 '다이나믹메이즈 제주', 좌표 거리 0.0km. 전화 064-805-0906/0910"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://www.dynamicmaze.com",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 'None'"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/dynamicmaze_jeju/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/ticketStore/21717",
+     "verdict": "일치",
+     "evidence": "카카오 장소 1527411751 패널 응답 안의 카카오 예약 링크(is_available_booking=False) / 요청 결과 HTTP 000 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/25573",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '다이나믹메이즈 제주' 단일 장소 '다이나믹메이즈 제주'(제주 서귀포시 표선면 번영로 2644)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6114931",
+     "verdict": "일치",
+     "evidence": "판매자 VPASS(재판매). 본문 주소 \"표선면 번영로 2644\", 064-787-8774 = 카카오 장소 주소·전화"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9%EB%A9%94%EC%9D%B4%EC%A6%88",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1527411751",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '다이나믹메이즈 제주도성읍점', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "c02bd550-2019-40b0-bd64-7c8027b600df",
+   "name": "하효살롱 협동조합",
+   "mood": "new",
+   "area": "남원",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000015887",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '하효살롱 협동조합' → 제목 '하효살롱협동조합', 좌표 거리 0.0km. 전화 064-732-8181"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://www.하효맘.com",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '하효맘'"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/6/bizes/892639",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '하효살롱협동조합' (좌표 0.017km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[포르투] 도루 강 크루즈 + 와인 시음 + 전통 점심 :: 1959년 첫 와인 협동조합 투어', '[마라케시] 에사우이라 소그룹 당일 투어 + 아르간 오일 협동조합 방문', '[마라케시] 에사우이라 당일 여행 + 아르간 협동조합 방문 (점심 식사 옵션)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%95%98%ED%9A%A8%EC%82%B4%EB%A1%B1%20%ED%98%91%EB%8F%99%EC%A1%B0%ED%95%A9",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/209526699",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '하효살롱', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "548c2ddd-901f-435d-8799-f69ba925ef25",
+   "name": "넌걸어난탈래",
+   "mood": "new",
+   "area": "우도",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000018946",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '넌걸어난탈래' → 제목 '넌걸어난탈래', 좌표 거리 0.0km. 전화 064-783-0456"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/1505893",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '넌걸어난탈래' (좌표 0.007km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[당일투어/소규모/맛집투어/별사진/가성비] 그랜드캐년의 인생샷과 신혼여행의 하루나들이!', '발리에서 처음하는 서핑 1:1 맞춤 강습, 꾸타, 레기안', '[오르세/이연호 가이드] 나에게 말을거는 그림, 오르세미술관 투어(+오랑주리추가)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%84%8C%EA%B1%B8%EC%96%B4%EB%82%9C%ED%83%88%EB%9E%98",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1829678794",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '넌걸어난탈래', 이름 검색으로 찾음(거리 0.006km)"
+    }
+   ]
+  },
+  {
+   "id": "a1bc27e5-a129-4de4-9f28-808ca987ad30",
+   "name": "(주)제주해양레저 투명카약",
+   "mood": "new",
+   "area": "애월",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%28%EC%A3%BC%29%EC%A0%9C%EC%A3%BC%ED%95%B4%EC%96%91%EB%A0%88%EC%A0%80%20%ED%88%AC%EB%AA%85%EC%B9%B4%EC%95%BD",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['모튼 아일랜드  (액티비티 3종: 스노클링, 샌드보딩, 투명카약) :: 호주/브리즈번', '[찐후기 내돈내산인정!  놀고!먹고!찍고! 거북이스노클링+해양5종]  옵션:선셋스노클링 ', '[하와이 올인원 프리미엄 럭셔리선셋 크루즈 ]+거북이스노클링+5종 해양스포츠 + 칵테일파티']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%28%EC%A3%BC%29%EC%A0%9C%EC%A3%BC%ED%95%B4%EC%96%91%EB%A0%88%EC%A0%80%20%ED%88%AC%EB%AA%85%EC%B9%B4%EC%95%BD",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "da43cc29-ba90-4e08-8f71-c1d23266b8e7",
+   "name": "도시해녀",
+   "mood": "new",
+   "area": "애월",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000015146",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '도시해녀' → 제목 '도시해녀', 좌표 거리 0.0km. 전화 010-2313-7412"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://pf.kakao.com/_txjtwj",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/love01925",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "http://instagram.com/city.diver",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/348098",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '도시해녀 제주' 단일 장소 '도시해녀'(제주 제주시 애월읍 하귀미수포길 16-1 1층 도시해녀)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[안덕] 사계 바당에서 삼춘들과,  제주 해녀 물질 체험', '포항가볼만한곳 포항해녀체험 호미곶해녀체험', '[서귀포] 해녀체험  체험다이빙  스노클링 (당일사용가능)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%8F%84%EC%8B%9C%ED%95%B4%EB%85%80",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/500701459",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '도시해녀', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "18f3dadd-a1b6-4108-b9be-a71357c5b9d5",
+   "name": "레이저서바이벌M",
+   "mood": "new",
+   "area": "신제주",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000011113",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '레이저서바이벌M' → 제목 '레이저서바이벌M', 좌표 거리 0.0km. 전화 0507-1329-3098"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "www.instargam.com/lasersurvival_M",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://instagram.com/lasersurvival_m",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/615663",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '레이저서바이벌M' (좌표 0.009km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[세부/VIP 단독] 굿바이 시티투어 - 유적지 3곳+레아신전+맛집 2곳+ 쇼핑몰+마사지', '[★당일사용★] 제주 서귀포 윈드1947 서바이벌 이용권', '[강원] 짚라인&서바이벌&어드벤처를 한곳에 홍천 가리산레포츠파크']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%A0%88%EC%9D%B4%EC%A0%80%EC%84%9C%EB%B0%94%EC%9D%B4%EB%B2%8CM",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/736608622",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '레이저서바이벌M', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "beeec3e9-5776-4003-b79f-2c33e6b9c87b",
+   "name": "현사포구",
+   "mood": "new",
+   "area": "신제주",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000021167",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '현사포구' → 제목 '현사포구', 좌표 거리 0.0km. 전화 --"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[전남 완도] 청해포구 촬영장 입장권', '[서울 마포구 용강맛길 미식투어]소주투어', '빈몸ok!서귀포 범섬 자체 보트로 안전하게 지켜주는 제주도스킨다이빙체험(스노클링셋트,호핑)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%98%84%EC%82%AC%ED%8F%AC%EA%B5%AC",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/20196627",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '현사포구', 이름 검색으로 찾음(거리 0.958km)"
+    }
+   ]
+  },
+  {
+   "id": "a1c8cc52-e68a-48a6-9dbe-86af19ca8d06",
+   "name": "에이스서프",
+   "mood": "new",
+   "area": "구좌",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%97%90%EC%9D%B4%EC%8A%A4%EC%84%9C%ED%94%84",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['토론토 ↔ 퀘벡 시티 픽업 샌딩 - 편도 | 양쪽 출발 가능 [에이스투어] 2026 신차', '토론토 공항 ↔ 나이아가라 픽업-샌딩 (편도상품) 양쪽 출발가능 [에이스 투어] 26년신차', '토론토 공항 다운타운 노스욕 편도 픽업 샌딩 | 양쪽 출발가능 한인 [에이스투어]26년신차']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%97%90%EC%9D%B4%EC%8A%A4%EC%84%9C%ED%94%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "fc26c42e-5d2d-4995-98db-a348361bdfb2",
+   "name": "백제사",
+   "mood": "new",
+   "area": "애월",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022068",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '백제사' → 제목 '백제사', 좌표 거리 5.622km. 전화 064-746-8009"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[매일출발 15년 1.5만회 진행]라스베가스웰컴사인+3대 캐년 당일투어 실제후기 3천3백+', '[❤️빨간바지❤️] 런던 대영박물관 도슨트투어│후기3천4백│어린이할인| 매일출발', '후쿠오카 공항 → 호텔 캐리어 배송 서비스 델리백 (DELIBAG)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%B0%B1%EC%A0%9C%EC%82%AC",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/8313570",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '백제사', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "d526360f-1e8e-487c-9ab5-38db13281458",
+   "name": "공방:하루_반",
+   "mood": "new",
+   "area": "구좌",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000010713",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '공방:하루_반' → 제목 '공방 하루반', 좌표 거리 0.0km. 전화 064-803-0066"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/haru_barn.official/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[당일투어/소규모/맛집투어/별사진/가성비] 그랜드캐년의 인생샷과 신혼여행의 하루나들이!', '[빅아일랜드] 한인가이드+노쇼핑+화산국립공원+섬일주+하루투어+오아후 출발 항공포+한인가이드', '[알찬하루투어] 요세미티국립공원/가족같은 소수 인원(아침, 간식, 점심, 하이킹, 사진)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EA%B3%B5%EB%B0%A9%3A%ED%95%98%EB%A3%A8_%EB%B0%98",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "37a6c8bf-3e16-47bb-8c4d-53205c4994b4",
+   "name": "제주컨트리클럽",
+   "mood": "new",
+   "area": "구제주",
+   "stratum": "do",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%A0%9C%EC%A3%BC%EC%BB%A8%ED%8A%B8%EB%A6%AC%ED%81%B4%EB%9F%BD",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://thesiena.co.kr/content/cc",
+     "verdict": "미확인",
+     "evidence": "HTTP 403(봇 차단 추정, 브라우저 확인 필요)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['체험 스쿠버 다이빙은 즐거운 사람들과 함께!!! 제주다이브클럽 (서귀포)', '[파르나스호텔,김포] 제주에어카텔2박3일 #신규특급호텔#와인1병제공#자차보험포함', '[다인리조트,김포] 제주에어카텔2박3일 #애월바다앞위치#고급자차보험포함']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EC%BB%A8%ED%8A%B8%EB%A6%AC%ED%81%B4%EB%9F%BD",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1758640947",
+     "verdict": "일치",
+     "evidence": "kakaoPlaceId 1758640947 = \"더 시에나 제주 컨트리클럽\", 좌표 38m 차이(명칭 변경으로 판단)"
+    }
+   ]
+  },
+  {
+   "id": "21664bdc-fd60-41c4-af0b-487e2de88dfc",
+   "name": "테우마을 수원리 농어촌체험마을",
+   "mood": "walk",
+   "area": "한림",
+   "stratum": "walk",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%ED%85%8C%EC%9A%B0%EB%A7%88%EC%9D%84%20%EC%88%98%EC%9B%90%EB%A6%AC%20%EB%86%8D%EC%96%B4%EC%B4%8C%EC%B2%B4%ED%97%98%EB%A7%88%EC%9D%84",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['수원 지동마을 골목여행', '[경기/수원] 5m 잠수풀에서 누구나 즐길 수 있는 체험 프리다이빙!', '[경기/협의] 누구나 다 배울 수 있는 Basic 프리다이빙! (레벨1/1일 과정) ']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%85%8C%EC%9A%B0%EB%A7%88%EC%9D%84%20%EC%88%98%EC%9B%90%EB%A6%AC%20%EB%86%8D%EC%96%B4%EC%B4%8C%EC%B2%B4%ED%97%98%EB%A7%88%EC%9D%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "f36621a9-ba1f-4e9b-8b19-00813f2eaf4e",
+   "name": "북촌리 4.3길",
+   "mood": "walk",
+   "area": "조천",
+   "stratum": "walk",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000010374",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '북촌리 4.3길' → 제목 '제주조천북촌마을4.3길(북촌마을4.3길가는길)', 좌표 거리 0.0km. 전화 064-783-4303"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://43archives.or.kr/viewHistoricSiteD.do?historicSiteSeq=39",
+     "verdict": "죽은 링크",
+     "evidence": "HTTP 404 "
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['서울 도보 투어: 궁궐, 인앙산 자락길, 서촌, 북촌', '[서울스냅] - 고즈넉한,북촌한옥마을에서 스낵스냅', '교토 미야마정 북촌.아마노하시라테이트.이네 펀보 당일치기 투어']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%B6%81%EC%B4%8C%EB%A6%AC%204.3%EA%B8%B8",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "9f98fe17-4e41-4f76-a680-dc17990f5e98",
+   "name": "풋감마을 소길리 농어촌체험마을",
+   "mood": "walk",
+   "area": "애월",
+   "stratum": "walk",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%ED%92%8B%EA%B0%90%EB%A7%88%EC%9D%84%20%EC%86%8C%EA%B8%B8%EB%A6%AC%20%EB%86%8D%EC%96%B4%EC%B4%8C%EC%B2%B4%ED%97%98%EB%A7%88%EC%9D%84",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[길리] 길리트라왕안프라이빗 스노쿨링 호핑투어 (단독투어/ 롬복 가이드협회 한국어가이드)', '[길리] 길리섬 체험다이빙 투어 (롬복 승기기 출발/한국어 진행)', '써니 서프 스쿨 길리 트라왕안 롬복에서 즐기는 서핑 강습']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%92%8B%EA%B0%90%EB%A7%88%EC%9D%84%20%EC%86%8C%EA%B8%B8%EB%A6%AC%20%EB%86%8D%EC%96%B4%EC%B4%8C%EC%B2%B4%ED%97%98%EB%A7%88%EC%9D%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "7dadf496-c978-4d32-9bee-c6442f68e982",
+   "name": "제주올레 6코스",
+   "mood": "walk",
+   "area": "서귀포시내",
+   "stratum": "walk",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000020298",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주올레 6코스' → 제목 '제주올레길6코스', 좌표 거리 0.0km. 전화 064-762-2190"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://www.jejuolle.org/trail/kor/olle_trail/default.asp?search_idx=8",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '제주올레트레일'"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['2026 원도심 도보투어 (해설사와 함께하는 성안올레)', '[제주] 아이올레인포레스트', '[대만 택시투어]  예스진지 6~11시간 단독투어 승하차장소/투어코스 자유선택']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EC%98%AC%EB%A0%88%206%EC%BD%94%EC%8A%A4",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/8015963",
+     "verdict": "일치",
+     "evidence": "kakaoPlaceId 없음. 카카오 이름 검색 '제주올레 6코스' → '올레길 6코스(쇠소깍-서귀포 올레)' (거리 1.52km) — 코스(선형) 장소라 대표 좌표와 1.5km 차이, 이름 일치"
+    }
+   ]
+  },
+  {
+   "id": "3bc97e39-06a2-4027-aa35-f6abbef84a85",
+   "name": "돈내코유원지",
+   "mood": "walk",
+   "area": "서귀포시내",
+   "stratum": "walk",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000019601",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '돈내코유원지' → 제목 '돈내코유원지', 좌표 거리 0.097km. 전화 064-733-1584"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[편안한 투어] 디즈니 랜드  픽업/샌딩 고급밴 서비스 (유원지 내 가이드 가능)', '세이부엔 유원지 1일권', '[놀이공원] 세이부엔 유원지 입장권 + 프리패스']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%8F%88%EB%82%B4%EC%BD%94%EC%9C%A0%EC%9B%90%EC%A7%80",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/7832439",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '돈내코유원지', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+   "name": "아침미소목장",
+   "mood": "rest",
+   "area": "구제주",
+   "stratum": "rest",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000020230",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '아침미소목장' → 제목 '아침미소목장', 좌표 거리 0.134km. 전화 064-727-2545"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://morningsmile.co.kr/",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '농업회사법인 주식회사 아침미소'"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/morningsmile_dairy_farm/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/tincrest_cafe",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/msmssmile",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "스마트스토어",
+     "url": "https://smartstore.naver.com/morningfarm",
+     "verdict": "미확인",
+     "evidence": "네이버 스마트스토어(판매 상품 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['\"매일출발\" [1박2일 아침 10시 LA출발-LA해산] 그랜드캐년투어/앤텔롭/홀스슈/은하수', '[오붓한 소그룹💚 All Day 블루마운틴] 아침동물원부터 폭포트레킹, 별보기까지!', '매일출발[2박3일 아침 10시 LA출발→베가스해산] 그랜드캐년투어 6대 명소·BBQ·은하수']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%95%84%EC%B9%A8%EB%AF%B8%EC%86%8C%EB%AA%A9%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/12697401",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '아침미소목장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "f56438fe-55e2-4ea4-aa57-83b4ed81eda2",
+   "name": "제주돌하르방캠핑장",
+   "mood": "rest",
+   "area": "한경",
+   "stratum": "rest",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%A0%9C%EC%A3%BC%EB%8F%8C%ED%95%98%EB%A5%B4%EB%B0%A9%EC%BA%A0%ED%95%91%EC%9E%A5",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/abuelo_jeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/3/bizes/691423/search",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '제주돌하르방캠핑장 제주' 단일 장소 '돌하르방캠핑장'(제주 제주시 한경면 낙수로 271-40 돌하르방캠핑장)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[파르나스호텔,김포] 제주에어카텔2박3일 #신규특급호텔#와인1병제공#자차보험포함', '[다인리조트,김포] 제주에어카텔2박3일 #애월바다앞위치#고급자차보험포함', '[다인오세아노호텔,김포] 제주에어카텔2박3일 #초특가#애월바다앞#자차보험포함']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EB%8F%8C%ED%95%98%EB%A5%B4%EB%B0%A9%EC%BA%A0%ED%95%91%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/25491832",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '돌하르방캠핑장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "282b91cf-ae0b-49d2-87d5-76a67ce78a94",
+   "name": "개떼목장",
+   "mood": "rest",
+   "area": "안덕",
+   "stratum": "rest",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EA%B0%9C%EB%96%BC%EB%AA%A9%EC%9E%A5",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[로컬페이지] 발리카삭+나팔링 정어리떼(베이스캠프/전담가이드/샤워&점심/고프로12)', '[보홀] 나팔링 히낙다난 동굴 스노클링 (오전 오후 픽업드랍 정어리떼 프리다이빙)', '[실속에실속] 나팔링 정어리떼 스노클링 (오전/오후 픽드랍 프리다이빙 한국인전용 단독조인)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EA%B0%9C%EB%96%BC%EB%AA%A9%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "ecd9ce57-bffb-4f5e-9616-c3b0f1f5ba4d",
+   "name": "제주플래티늄카라반",
+   "mood": "rest",
+   "area": "애월",
+   "stratum": "rest",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000019866",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주플래티늄카라반' → 제목 '제주플래티늄카라반', 좌표 거리 0.0km. 전화 064-805-9999"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "jejuptcar.com/main",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '�������� �Ϻ�ī��ݰ� �Բ� ���� �߾��� ���� ���ֿ����� ��⼼��~'"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://jejuptcar.com",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '�������� �Ϻ�ī��ݰ� �Բ� ���� �߾��� ���� ���ֿ����� ��⼼��~'"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://jejuptcar.com/main/index.html",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '�������� �Ϻ�ī��ݰ� �Բ� ���� �߾��� ���� ���ֿ����� ��⼼��~'"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/accommodation/298907",
+     "verdict": "일치",
+     "evidence": "카카오 장소 26864928 패널 응답 안의 카카오 예약 링크(is_available_booking=False) / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/3/bizes/158149/search",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '제주플래티늄카라반 제주' 단일 장소 '제주플래티늄카라반'(제주 제주시 애월읍 하귀미수포길 5-8 제주플래티늄카라반)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[파르나스호텔,김포] 제주에어카텔2박3일 #신규특급호텔#와인1병제공#자차보험포함', '[다인리조트,김포] 제주에어카텔2박3일 #애월바다앞위치#고급자차보험포함', '[다인오세아노호텔,김포] 제주에어카텔2박3일 #초특가#애월바다앞#자차보험포함']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%ED%94%8C%EB%9E%98%ED%8B%B0%EB%8A%84%EC%B9%B4%EB%9D%BC%EB%B0%98",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/26864928",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '제주플래티늄카라반', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "f99252e1-6ce1-48fb-bd9e-fc645c559489",
+   "name": "환상숲곶자왈 담앙족욕",
+   "mood": "rest",
+   "area": "한경",
+   "stratum": "rest",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000010338",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '환상숲곶자왈 담앙족욕' → 제목 '환상숲곶자왈 담앙족욕', 좌표 거리 0.0km. 전화 064-772-2848"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "http://www.jejupark.co.kr/",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '환상숲곶자왈공원'"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['신비로운 제주 곶자왈 숲을 걸으며 이야기를 듣고 인생사진도 남겨보세요', '[제주시] 수푸루지와  One-day 숲토리텔링 힐링투어 - 제주 곶자왈 트레킹', '인도네시아 반둥 당일투어 탕쿠반 프라후(온천수 계란, 족욕), 오키드 포레스트 플로팅 마켓']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%99%98%EC%83%81%EC%88%B2%EA%B3%B6%EC%9E%90%EC%99%88%20%EB%8B%B4%EC%95%99%EC%A1%B1%EC%9A%95",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "c5028947-2389-4290-bfa9-5276407489c2",
+   "name": "새별프렌즈 (새별헤이요목장)",
+   "mood": "new",
+   "area": "애월",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%83%88%EB%B3%84%ED%94%84%EB%A0%8C%EC%A6%88%20%28%EC%83%88%EB%B3%84%ED%97%A4%EC%9D%B4%EC%9A%94%EB%AA%A9%EC%9E%A5%29",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/sb_friends_jeju/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/ticketStore/1280",
+     "verdict": "일치",
+     "evidence": "카카오 장소 336100555 패널 응답 안의 카카오 예약 링크(is_available_booking=True) / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/1100192",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '새별프렌즈' (좌표 0.033km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[10월 한정] 🍀Real 오픈런 블루마운틴  페더데일 90분 + 쿼카먹이제공', '[숙소픽업,히든스팟,아우구스티너예약]드레스덴&작센스위스투어의 아이콘! 리얼리뷰2100+', '[뉴욕] 더 프렌즈™ 체험 입장권 :: 상징적인 오렌지 소파에서 포즈까지']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%83%88%EB%B3%84%ED%94%84%EB%A0%8C%EC%A6%88%20%28%EC%83%88%EB%B3%84%ED%97%A4%EC%9D%B4%EC%9A%94%EB%AA%A9%EC%9E%A5%29",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/336100555",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '새별프렌즈', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "64c49e69-32bf-43be-84b5-59e6eda46a5a",
+   "name": "조이다이브",
+   "mood": "new",
+   "area": "서귀포시내",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022037",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '조이다이브' → 제목 '보홀 조이다이브', 좌표 거리 0.01km. 전화 010-5135-1004"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/joydivejeju",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/6/bizes/153855",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '보홀 조이다이브' (좌표 0.003km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['현직 런던 큐레이터의 내셔널갤러리 딥다이브 by 헌스트립스', '[소수정예] 박물관학 전공자와 떠나는 대영박물관 딥다이브 by 헌스트립스', '슈퍼 닌텐도 월드 입장 확약권 + 유니버설 스튜디오 재팬 1일권 + 간사이 조이패스']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A1%B0%EC%9D%B4%EB%8B%A4%EC%9D%B4%EB%B8%8C",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/27235768",
+     "verdict": "죽은 링크",
+     "evidence": "kakaoPlaceId 27235768 → API 응답 \"카카오맵에 존재하지 않는 장소입니다.\""
+    }
+   ]
+  },
+  {
+   "id": "300c6b89-0a3a-4305-aaef-4b709ced34d1",
+   "name": "문화공간 휴",
+   "mood": "new",
+   "area": "구제주",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000013495",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '문화공간 휴' → 제목 '문화공간 휴', 좌표 거리 0.0km. 전화 0507-1353-9837"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/jeju_hue_hanbok/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[즉시확정] 오키나와 류큐무라 민속촌 (전통이 살아있는 현지문화 체험공간)', '[시내 워킹/한국어] 부다페스트 매일투어/도보&대중교통 체험/개인수신기/역사문화', '[황금연휴 프로모션|즉시발권] 썬월드 바나힐 입장권 + 무제한 케이블카 탑승 (다낭 필수 코스, 종일권 3일권으로 현장 업그레이드 가능)']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%AC%B8%ED%99%94%EA%B3%B5%EA%B0%84%20%ED%9C%B4",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1223385978",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '문화공간 휴', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "034f49a4-9876-4a34-beed-6550e08afa04",
+   "name": "토이승마장",
+   "mood": "new",
+   "area": "안덕",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_200000000015201",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '토이승마장' → 제목 '제주 토이 승마장', 좌표 거리 0.042km. 전화 0507-1417-0357"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://blog.naver.com/oooox2001",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1428918",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '토이승마장 제주' 단일 장소 '제주 토이 승마장'(제주 서귀포시 안덕면 동광로 265-14 제주 토이 승마장)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[비엔나] 스페인 승마학교 리피잔 공연 — 450년 전통 바로크 겨울 승마장에서', '[경기 이천] 파밀리에 승마장 승마체험(입장권/승마체험/레슨/재활)', '[인천/영종도] 나만의 아트토이 만들기 원데이클래스']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%86%A0%EC%9D%B4%EC%8A%B9%EB%A7%88%EC%9E%A5",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1542160051",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '제주토이승마장', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "8968b8fa-d2b3-46d2-a1dc-cd18b5f26d8c",
+   "name": "퍼시픽 마리나 요트투어",
+   "mood": "new",
+   "area": "중문",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500465",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '퍼시픽 마리나 요트투어' → 제목 '퍼시픽 마리나 요트투어', 좌표 거리 0.0km. 전화 1544-2988"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "공식 홈페이지",
+     "url": "https://www.resom.co.kr/pacific/main/main.asp",
+     "verdict": "일치",
+     "evidence": "HTTP 200, 제목 '�۽��� ����'"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/1700588",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '퍼시픽 마리나 요트투어' (좌표 0.1km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6212223",
+     "verdict": "일치",
+     "evidence": "판매자 놀유니버스(재판매). 현장문의 1544-2988 = 비짓제주 전화, 주소 색달동 2950-4"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%ED%8D%BC%EC%8B%9C%ED%94%BD%20%EB%A7%88%EB%A6%AC%EB%82%98%20%EC%9A%94%ED%8A%B8%ED%88%AC%EC%96%B4",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "4a381cd8-99df-41ee-9ef8-04c9e865d5bf",
+   "name": "낙타트래킹",
+   "mood": "new",
+   "area": "표선",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022171",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '낙타트래킹' → 제목 '낙타트래킹', 좌표 거리 0.0km. 전화 064-787-2256"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/jeju__camel__trekking/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "http://www.facebook.com/jejuponyvalley",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://booking.kakao.com/detail/ticketStore/11840",
+     "verdict": "일치",
+     "evidence": "카카오 장소 265774663 패널 응답 안의 카카오 예약 링크(is_available_booking=False) / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/5/bizes/84419",
+     "verdict": "일치",
+     "evidence": "네이버 검색 '낙타트래킹 제주' 단일 장소 '낙타트래킹'(제주 서귀포시 표선면 번영로 2564-21)의 예약 버튼.  / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": "https://experiences.myrealtrip.com/products/6117783",
+     "verdict": "일치",
+     "evidence": "판매자 투어패스(재판매). 본문 주소 \"표선면 번영로 2564-21\" = 카카오 장소 주소"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EB%82%99%ED%83%80%ED%8A%B8%EB%9E%98%ED%82%B9",
+     "verdict": "일치",
+     "evidence": "검색 결과에 해당 상품이 보임"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/265774663",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '낙타트래킹', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "70b56d20-b38d-44ae-96d0-73b94f5f99a3",
+   "name": "위디 탭댄스 스튜디오",
+   "mood": "new",
+   "area": "대정",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%9C%84%EB%94%94%20%ED%83%AD%EB%8C%84%EC%8A%A4%20%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[숙소픽업,히든스팟,아우구스티너예약]드레스덴&작센스위스투어의 아이콘! 리얼리뷰2100+', '[발리] 울루와뚜 케착 댄스 & 파이어쇼 - 절벽 위 석양 문화공연', '[소렌토] 100마리 물개와 위디씨드래곤 스노클링 2시간 :: 점심 포함']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%9C%84%EB%94%94%20%ED%83%AD%EB%8C%84%EC%8A%A4%20%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: []"
+    }
+   ]
+  },
+  {
+   "id": "2b3b70e1-74a4-4527-8425-4e051d351795",
+   "name": "제주지프",
+   "mood": "new",
+   "area": "조천",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000013960",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '제주지프' → 제목 '제주지프', 좌표 거리 0.0km. 전화 0507-1436-0385"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[파르나스호텔,김포] 제주에어카텔2박3일 #신규특급호텔#와인1병제공#자차보험포함', '[다인리조트,김포] 제주에어카텔2박3일 #애월바다앞위치#고급자차보험포함', '[다인오세아노호텔,김포] 제주에어카텔2박3일 #초특가#애월바다앞#자차보험포함']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EC%A7%80%ED%94%84",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": null,
+     "verdict": "미확인",
+     "evidence": "kakaoPlaceId 없음, 카카오 이름 검색에서 1km 안 같은 이름 장소 못 찾음. 후보: [['지프 제주점', '1977541151', 13.18], ['지프 제주전시장 프리마모터스', '1589767309', 14.43], ['지프', '495484468', 16.69], ['이레저버기카', '545211512', 31.68], ['JEEP 서귀점', '1582903983', 34.01]]"
+    }
+   ]
+  },
+  {
+   "id": "b4cefb2b-de0a-4309-a7cd-84d3646db87a",
+   "name": "솔티 오렌지",
+   "mood": "new",
+   "area": "성산",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_300000000016090",
+     "verdict": "일치",
+     "evidence": "비짓제주 사이트 검색 '솔티 오렌지' → 제목 '솔티오렌지', 좌표 거리 0.0km. 전화 0507-1498-0926"
+    },
+    {
+     "source": "visitjeju_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://www.instagram.com/salty__orange/",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "kakao_homepage",
+     "group": "a",
+     "kind": "운영자 SNS·블로그",
+     "url": "https://pf.kakao.com/_qxmnxos",
+     "verdict": "부분",
+     "evidence": "운영자 계정으로 보이나 예약·상세 소개 페이지는 아님(내용 미검증)"
+    },
+    {
+     "source": "naver_booking",
+     "group": "a",
+     "kind": "예약",
+     "url": "https://m.booking.naver.com/booking/6/bizes/855679",
+     "verdict": "일치",
+     "evidence": "네이버 검색 목록 '솔티오렌지' (좌표 0.011km)의 예약 링크 / 요청 결과 HTTP 200 (예약 앱은 SPA라 상품 판매 중 여부는 미검증)"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: []"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%86%94%ED%8B%B0%20%EC%98%A4%EB%A0%8C%EC%A7%80",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/1398702514",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '솔티오렌지', 데이터의 kakaoPlaceId"
+    }
+   ]
+  },
+  {
+   "id": "7a7d93f0-2e1a-4a5e-9ed8-537fb6628f2e",
+   "name": "제주유리의성",
+   "mood": "new",
+   "area": "한경",
+   "stratum": "area-mix",
+   "candidates": [
+    {
+     "source": "visitjeju_detail",
+     "group": "a",
+     "kind": "공공 공식 소개",
+     "url": "https://www.visitjeju.net/kr/search?q=%EC%A0%9C%EC%A3%BC%EC%9C%A0%EB%A6%AC%EC%9D%98%EC%84%B1",
+     "verdict": "미확인",
+     "evidence": "비짓제주 사이트 검색 결과(SSR)에 같은 이름 항목이 없거나 목록이 비어 옴. OPEN API 키가 있으면 contentsid로 재확인 가능"
+    },
+    {
+     "source": "myrealtrip_product",
+     "group": "b",
+     "kind": "마이리얼트립 상품",
+     "url": null,
+     "verdict": "없음",
+     "evidence": "통합·투어 탭 검색에 이 장소 이름(또는 판매자)이 든 상품 없음. 통합 검색 상위: ['[파르나스호텔,김포] 제주에어카텔2박3일 #신규특급호텔#와인1병제공#자차보험포함', '[다인리조트,김포] 제주에어카텔2박3일 #애월바다앞위치#고급자차보험포함', '[다인오세아노호텔,김포] 제주에어카텔2박3일 #초특가#애월바다앞#자차보험포함']"
+    },
+    {
+     "source": "myrealtrip_search(현재 링크)",
+     "group": "b",
+     "kind": "검색",
+     "url": "https://www.myrealtrip.com/search?q=%EC%A0%9C%EC%A3%BC%EC%9C%A0%EB%A6%AC%EC%9D%98%EC%84%B1",
+     "verdict": "불일치",
+     "evidence": "검색 결과가 이 장소와 무관한 상품(해외 투어 포함)이거나 0건"
+    },
+    {
+     "source": "kakao_place",
+     "group": "c",
+     "kind": "장소 정보",
+     "url": "https://place.map.kakao.com/8064310",
+     "verdict": "일치",
+     "evidence": "카카오 장소 이름 '제주 유리의성', 데이터의 kakaoPlaceId"
+    }
+   ]
+  }
+ ]
+}
