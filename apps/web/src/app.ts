@@ -7,7 +7,7 @@ import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './date
 import { readDeepLink, type DeepLink } from './deeplink';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
-import { MAP_APPS, bookingUrl, kakaoUrl, type MapApp } from './links';
+import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
@@ -16,7 +16,7 @@ import { KEYS, createStore } from './store';
 import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
-export { AREAS, LocateError, bookingUrl, inJeju, kakaoUrl };
+export { AREAS, LocateError, inJeju, kakaoUrl };
 export type { NoOrigin as LocateFailure } from './types';
 
 export interface Delays {

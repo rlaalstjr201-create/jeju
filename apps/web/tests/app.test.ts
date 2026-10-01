@@ -3,9 +3,9 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { BOOKING_LINKS_ENABLED } from '../src/links';
-import { AREAS, LocateError, bookingUrl, kakaoUrl, mountApp, type App, type Deps } from '../src/app';
-import { naverSearchUrl } from '../src/links';
+import { AREAS, LocateError, kakaoUrl, mountApp, type App, type Deps } from '../src/app';
+import { bookLink, naverSearchUrl } from '../src/links';
+import { listed } from '../src/pick';
 import { nearestArea } from '../src/areas';
 import { cardTextProblem } from '../src/card-text';
 import { cleanReason } from '../src/data';
@@ -216,26 +216,48 @@ describe('S3 카드', () => {
     );
   });
 
-  it('no booking link on any card while paused (ADR-0073): 20 combos + a bookable spot on screen', async () => {
-    expect(BOOKING_LINKS_ENABLED).toBe(false);
+  it('booking link (ADR-0074): on every 체험 card, one verified route with honest words; none elsewhere; never the 마이리얼트립 search', async () => {
+    const check = () => {
+      for (const li of $$('.card')) {
+        const spot = realSpots.find((s) => s.id === li.getAttribute('data-id'))!;
+        const book = li.querySelectorAll<HTMLAnchorElement>('a.book');
+        if (spot.mood === 'new' && spot.sub === 'do') expect(spot.book, spot.name).toBeTruthy();
+        if (!spot.book) {
+          expect(book).toHaveLength(0);
+          continue;
+        }
+        expect(book).toHaveLength(1);
+        const want = bookLink(spot)!;
+        expect(book[0].getAttribute('href')).toBe(spot.book.u);
+        expect(book[0].textContent).toBe(want.text);
+        expect(['네이버로 예약하기', '마이리얼트립에서 예약', '홈페이지에서 예약 확인', '전화로 예약']).toContain(want.text);
+        expect(book[0].getAttribute('aria-label')).toBe(`${spot.name.trim()}, ${want.text}`);
+        expect(book[0].getAttribute('rel')).toBe('noopener');
+        expect(book[0].getAttribute('target')).toBe(spot.book.u.startsWith('tel:') ? null : '_blank');
+      }
+      expect($('#cards')?.innerHTML).not.toContain('myrealtrip.com/search');
+      return $$('a.book').length;
+    };
+    let seen = 0;
     for (const origin of Object.values(ORIGINS)) {
       render({ locate: () => Promise.resolve(origin) });
       for (const mood of MOODS) {
         await tap(`[data-mood="${mood}"]`);
         expect($$('.card')).toHaveLength(3);
-        expect($$('a.book')).toHaveLength(0);
-        expect($('#cards')?.textContent).not.toContain('마이리얼트립');
+        seen += check();
       }
     }
+    expect(seen).toBeGreaterThan(0);
 
-    // one bookable + two non-bookable spots of the same mood on the same screen: still no link
-    const exp = realSpots.find((s) => s.bookable)!;
-    const others = realSpots.filter((s) => s.mood === exp.mood && !s.bookable).slice(0, 2);
+    // one 체험 with a route + two places without one, on the same screen
+    const exp = realSpots.find((s) => s.book?.k === 'naver')!;
+    const others = realSpots.filter((s) => s.mood === exp.mood && !s.book && listed(s)).slice(0, 2);
     render({ loadSpots: () => Promise.resolve([exp, ...others]), locate: () => Promise.resolve(exp) });
     await tap(`[data-mood="${exp.mood}"]`);
     expect($$('.card')).toHaveLength(3);
-    expect($$('a.book')).toHaveLength(0);
-    expect(bookingUrl(exp)).toBe(`https://www.myrealtrip.com/search?q=${encodeURIComponent(exp.name.trim())}`);
+    expect(check()).toBe(1);
+    expect($('.card a.book')?.closest('.card')?.getAttribute('data-id')).toBe(exp.id);
+    expect($('.card a.book')?.textContent).toBe('네이버로 예약하기');
     expect(kakaoUrl(exp)).toBe(
       exp.kakaoPlaceId
         ? `https://place.map.kakao.com/${exp.kakaoPlaceId}`

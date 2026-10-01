@@ -1029,19 +1029,6 @@ await check('3-17', 'row cards: at 320×568 default text the photo sits beside t
   }
 });
 
-await check('3-18', 'booking link paused (ADR-0073): no .book and no 마이리얼트립 on any card at 320 and 390', async () => {
-  for (const width of [320, 390]) {
-    for (const mood of ['new', 'food', 'rest']) {
-      const { ctx, page } = await fresh({ width, storage: { 'jeju.hintSeen': true } });
-      await tapText(page, `[data-mood="${mood}"]`);
-      await waitCards(page);
-      const r = await page.$$eval('#cards', (els) => ({ book: document.querySelectorAll('#cards .book').length, text: els[0].textContent.includes('마이리얼트립') }));
-      assert(r.book === 0 && !r.text, `${width} ${mood}: book ${r.book} text ${r.text}`);
-      await ctx.close();
-    }
-  }
-});
-
 await check('3-19', '다른 3곳 bar: at 320×568 the button is on screen and the bar floats with its rule; at the end it rests 28px under the last card, no rule', async () => {
   const { ctx, page } = await fresh({ width: 320, height: 568 });
   await tapText(page, '[data-mood="rest"]');
@@ -1944,6 +1931,59 @@ await check('T2-hit', 'at 320·390: card heart, 길찾기, 바꾸기·돌아가�
     for (const [tag, hs] of Object.entries(want)) if (hs.some((h) => h !== 44)) problems.push(`${width} ${tag} drawn heights ${hs}`);
     await ctx.close();
   }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
+// 3-18 sits here: it measures hit areas with hitMeasure (defined above).
+await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every 체험 card has one, one line, drawn 44 with a ≥ 48×48 area no other control covers, named, noopener; no 마이리얼트립 search; no sideways scroll', async () => {
+  const problems = [];
+  const KIND_TEXT = ['네이버로 예약하기', '마이리얼트립에서 예약', '홈페이지에서 예약 확인', '전화로 예약'];
+  const seenText = new Set();
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    for (const [area] of AREA_ORDER) {
+      const { ctx, page } = await fresh({ width, height, storage: { 'jeju.region': area.replace(' ', ''), 'jeju.basis': 'region', 'jeju.hintSeen': true } });
+      await tapText(page, '[data-mood="new"]');
+      await waitCards(page);
+      await tapText(page, '#newSub [data-sub="do"]');
+      await waitCards(page);
+      const r = await page.evaluate(() => {
+        const range = document.createRange();
+        return [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => {
+          const a = c.querySelectorAll('a.book');
+          const b = a[0];
+          if (!b) return { n: 0 };
+          range.selectNodeContents(b);
+          const name = c.querySelector('.name').textContent.trim();
+          return {
+            n: a.length,
+            lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size,
+            h: Math.round(b.getBoundingClientRect().height),
+            text: b.textContent,
+            href: b.getAttribute('href'),
+            rel: b.getAttribute('rel'),
+            target: b.getAttribute('target'),
+            named: (b.getAttribute('aria-label') ?? '').startsWith(name.replace(/\s*\(.*$/, '')) && b.getAttribute('aria-label').endsWith(b.textContent),
+            inCard: b.getBoundingClientRect().right <= c.getBoundingClientRect().right + 0.5,
+          };
+        });
+      });
+      for (const b of r) {
+        if (b.n !== 1) { problems.push(`${width} ${area}: ${b.n} booking links on a 체험 card`); continue; }
+        seenText.add(b.text);
+        if (b.lines !== 1 || b.h !== 44 || !b.inCard) problems.push(`${width} ${area}: ${b.text} lines ${b.lines} h ${b.h} inCard ${b.inCard}`);
+        if (!KIND_TEXT.includes(b.text) || b.rel !== 'noopener' || !b.named) problems.push(`${width} ${area}: ${b.text} rel ${b.rel} named ${b.named}`);
+        if (b.href.startsWith('tel:') ? b.target !== null : b.target !== '_blank') problems.push(`${width} ${area}: target ${b.target} for ${b.href}`);
+        if (/myrealtrip\.com\/search/.test(b.href)) problems.push(`${width} ${area}: search link ${b.href}`);
+      }
+      const hit = await page.evaluate(hitMeasure, '#cards .card .heart, #cards .card .go, #cards .card .book');
+      if (hit.n !== 9) problems.push(`${width} ${area}: ${hit.n} targets`);
+      for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${width} ${area} ${k}: ${hit[k].join(', ')}`);
+      if (hit.over > 0) problems.push(`${width} ${area} overflows ${hit.over}`);
+      if (width === 320 && area === '애월') await shot(page, 'book-320');
+      await ctx.close();
+    }
+  }
+  if (seenText.size < 2) problems.push(`only ${[...seenText]} seen`);
   assert(problems.length === 0, problems.join(' | '));
 });
 

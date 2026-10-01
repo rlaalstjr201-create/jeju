@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cardTextProblem, PRICE_HOURS } from '../src/card-text';
 import { cleanReason, createSpotSource, normalizeSpots } from '../src/data';
-import { bookingUrl, kakaoUrl } from '../src/links';
+import { kakaoUrl, naverSearchUrl } from '../src/links';
 import { distanceKm } from '../src/pick';
 import { applyCorrections, loadCorrections } from '../scripts/apply-corrections.mjs';
 import { applyIndoor, indoorOf, loadIndoorCalls } from '../scripts/indoor.mjs';
@@ -20,9 +20,14 @@ const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
-      const expectedFields = [...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS), ...('market' in s ? ['market'] : [])];
+      const expectedFields = [
+        ...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS),
+        ...('market' in s ? ['market'] : []),
+        ...('book' in s ? ['book'] : []),
+        ...('hide' in s ? ['hide'] : []),
+      ];
       return (
         Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
         !(s.lat >= 33.1 && s.lat <= 33.6 && s.lng >= 126.1 && s.lng <= 127.0) ||
@@ -79,15 +84,20 @@ describe("S1' 레코드 형식", () => {
     expect(news.filter((s) => s.sub !== 'sight' && s.sub !== 'do').map((s) => s.id)).toEqual([]);
     const categories = loadCategories();
     const calls = loadNewSubCalls();
-    expect(calls.size).toBe(46);
+    // 46 cafe·restaurant calls + 9 experience places with no operator moved to 구경 (ADR-0074)
+    expect(calls.size).toBe(55);
     const expected = (id: string) => {
       const c = categories.get(id);
-      return c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' || c === 'shopping' ? 'sight' : calls.get(id);
+      return calls.get(id) ?? (c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' || c === 'shopping' ? 'sight' : undefined);
     };
     expect(news.filter((s) => s.sub !== expected(s.id)).map((s) => s.id)).toEqual([]);
-    // every cafe·restaurant new spot has a recorded call (with its basis), and the call file names only those
+    // every cafe·restaurant new spot has a recorded call (with its basis); the other calls are the 9 moves
     const handCalled = news.filter((s) => !['experience', 'sightseeing', 'cultural_space', 'shopping'].includes(categories.get(s.id)!));
-    expect(handCalled.map((s) => s.id).sort()).toEqual([...calls.keys()].sort());
+    expect(handCalled.map((s) => s.id).filter((id) => !calls.has(id))).toEqual([]);
+    const moved = [...calls.keys()].filter((id) => categories.get(id) === 'experience');
+    expect(moved).toHaveLength(9);
+    expect(moved.every((id) => calls.get(id) === 'sight')).toBe(true);
+    expect(handCalled.length + moved.length).toBe(calls.size);
     const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/new-sub.json'), 'utf8')) as { basis: string }[];
     expect(raw.filter((v) => !v.basis?.trim())).toEqual([]);
     expect(news.some((s) => s.sub === 'sight') && news.some((s) => s.sub === 'do')).toBe(true);
@@ -98,6 +108,7 @@ describe("S1' 레코드 형식", () => {
     expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/if \(v\.mood === 'new'\) spot\.sub = newSub\(/);
     expect(() => newSub('x', 'cafe', new Map())).toThrow(/no sub/);
     expect(newSub('x', 'experience', new Map())).toBe('do');
+    expect(newSub('x', 'experience', new Map([['x', 'sight']]))).toBe('sight');
     expect(newSub('x', 'cultural_space', new Map())).toBe('sight');
     expect(newSub('x', 'shopping', new Map())).toBe('sight');
   });
@@ -263,7 +274,7 @@ describe('S32 이름 공백', () => {
     const [a, b] = normalizeSpots(raw);
     expect(a.name).toBe('아일랜드 터프팅');
     expect(b.name).toBe('뚱보조개');
-    for (const url of [kakaoUrl(raw[0]), bookingUrl(raw[0]), bookingUrl(raw[1])]) {
+    for (const url of [kakaoUrl(raw[0]), naverSearchUrl(raw[0]), naverSearchUrl(raw[1])]) {
       expect(url).not.toMatch(/(%09|%20|%E3%80%80)+($|&)/);
       expect(url).not.toMatch(/=(%20|%09)/);
     }

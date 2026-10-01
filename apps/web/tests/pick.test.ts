@@ -1,7 +1,7 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
-import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, pickCards, reachMinutes, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick';
+import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, listed, pickCards, reachMinutes, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick';
 import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
 
 /** specs/ranking.md 정렬 키: 점수 내림차순 → 이동 시간 오름차순 → id. */
@@ -61,7 +61,7 @@ describe('S2 real data: 4 origins × 5 buttons', () => {
     if (button === 'any') return;
     // 'food' with no sub given defaults to 'meal' (S2/S3 toggle default).
     const best = realSpots
-      .filter((s) => s.mood === button && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
+      .filter((s) => listed(s) && s.mood === button && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
       .map((spot) => ({ spot }))
       .sort(byRank(origin, DEFAULT_REACH))
       .slice(0, 3)
@@ -363,7 +363,7 @@ describe('S34 한 바퀴 (wrapped)', () => {
 
 describe('비 와요(실내만) (ADR-0065, specs/indoor.md)', () => {
   const LISTS: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['food', 'meal'], ['food', 'cafe'], ['any']];
-  const inList = (b: Button, sub: Tab | undefined, s: Spot) => s.mood === b && (!sub || sub === 'mix' || s.sub === sub);
+  const inList = (b: Button, sub: Tab | undefined, s: Spot) => listed(s) && s.mood === b && (!sub || sub === 'mix' || s.sub === sub);
 
   it('I2 15 areas × 3 ranges × 8 lists → 3 distinct cards, all indoor (빈손 0); none beyond the range when 3 or more indoor are in it', () => {
     let checked = 0;
@@ -495,7 +495,7 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
   /** the results screen's 8 lists: 4 moods (food as 식사 / 카페·디저트, new as 섞어서 / 구경 / 체험) and 아무거나 */
   const SIX: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['food', 'meal'], ['food', 'cafe'], ['any']];
   const poolOf = (b: Button, sub?: Tab) =>
-    realSpots.filter((s) => (b === 'any' ? ['rest', 'walk', 'new'].includes(s.mood) : s.mood === b && (!sub || sub === 'mix' || s.sub === sub)));
+    realSpots.filter((s) => listed(s) && (b === 'any' ? ['rest', 'walk', 'new'].includes(s.mood) : s.mood === b && (!sub || sub === 'mix' || s.sub === sub)));
   const label = (a: string, b: Button, sub: Tab | undefined, reach: Reach) => `${a} / ${b}${sub ? `:${sub}` : ''} / ${reach}`;
 
   it('ranges: 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간; default 차로 30분', () => {

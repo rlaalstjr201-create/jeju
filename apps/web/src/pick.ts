@@ -32,7 +32,21 @@ export interface Spot {
   indoor?: boolean;
   /** 오일장 장날 (ADR-0066): set on the five-day markets only. */
   market?: Market;
+  /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
+  book?: Book;
+  /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */
+  hide?: string;
 }
+
+export type BookKind = 'naver' | 'mrt' | 'visitjeju' | 'homepage' | 'phone';
+export interface Book {
+  k: BookKind;
+  u: string;
+}
+
+/** ADR-0074: a place the picks may show — not hidden, and a 체험 only with a verified booking route (a 체험 card
+ * that cannot lead to a reservation is no use). */
+export const listed = (s: Spot): boolean => !s.hide && !(s.mood === 'new' && s.sub === 'do' && !s.book);
 
 export interface Point {
   lat: number;
@@ -170,11 +184,11 @@ const byRank = (a: Ranked, b: Ranked) =>
 export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day): Ranked[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
-  let list = spots.filter((s) => s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
+  let list = spots.filter((s) => listed(s) && s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
   // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
   // 구경 — places walked round inside.
   if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight')) {
-    list = [...list, ...spots.filter((s) => s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
+    list = [...list, ...spots.filter((s) => listed(s) && s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
   }
   const all = list
     .map((spot) => {

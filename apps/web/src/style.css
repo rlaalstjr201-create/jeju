@@ -209,6 +209,8 @@ main { flex: 1; display: flex; flex-direction: column; }
 .go { grid-area: go; position: relative; z-index: 1; justify-self: start; margin: 4px 0 0 -8px; }
 .go::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 .book { grid-area: book; position: relative; z-index: 1; justify-self: start; margin: 4px 0 -8px -8px; white-space: normal; text-decoration-color: var(--main); }
+/* 예약 (ADR-0074): a 48px hit area like 길찾기 — 4px left and 4px down, never right (page edge) nor up (길찾기's own) */
+.book::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 .hint { grid-area: hint; margin: 8px 0 0; color: var(--muted); text-wrap: pretty; }
 
 .card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }

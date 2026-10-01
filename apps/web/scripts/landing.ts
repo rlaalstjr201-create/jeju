@@ -4,8 +4,8 @@
 // 지역 배정 = nearestArea, 이동 시간 = travel/travelText, 지도 링크 = goLink/naverSearchUrl (ADR-0071 네이버지도 기본).
 import { AREAS, AREA_GROUPS, nearestArea, type Area } from '../src/areas';
 import { cleanName } from '../src/data';
-import { goLink, naverSearchUrl, TERMINALS } from '../src/links';
-import { distanceKm, islandOf, travel, travelText, type Mood, type Spot } from '../src/pick';
+import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';
+import { distanceKm, islandOf, listed, travel, travelText, type Mood, type Spot } from '../src/pick';
 import { visibleText } from './seo/crawl-parse.mjs';
 
 export const BRAND = '여행계획짜기 귀찮아:제주';
@@ -194,6 +194,8 @@ export function buildSite(input: SiteInput): Site {
     const reg = input.slugs[spot.id];
     if (!reg) throw new Error(`no slug for ${spot.id} (${spot.name}): run npm run landing:slugs`);
     if (exclude.has(spot.id)) continue;
+    // ADR-0074: only what the app can pick — a 체험 without a verified booking route gets no page
+    if (!listed(spot)) continue;
     const area = nearestArea(spot);
     const url = `${areaPath(area)}${reg.slug}/`;
     places.push({ spot, area, slug: reg.slug, url });
@@ -455,6 +457,8 @@ function placePage(ctx: Ctx, p: Place): string {
     .slice(0, NEARBY)
     .map(({ x }) => x);
   const go = goLink(s, null, false, false, 'naver');
+  // 예약 (ADR-0074): the same verified route as the app's 체험 card
+  const book = bookLink(s);
   const island = islandOf(s);
   const facts = [
     `<li><b>동네</b> <a href="${areaPath(a)}">${esc(areaTitle(a))}</a>, ${esc(travelText(travel(a, false, s), `${a.label} 중심에서`))}</li>`,
@@ -467,7 +471,7 @@ function placePage(ctx: Ctx, p: Place): string {
 ${thumb(ctx, s, 'hero', `${name} 사진`, true)}${ctx.photos && s.image ? '\n<p class="meta">사진: 비짓제주(제주관광공사)</p>' : ''}
 <p class="lead">${esc(s.reason)}</p>
 <ul class="facts">${facts.join('')}</ul>
-<p class="links"><a class="go" href="${esc(go.href)}" rel="noopener">네이버지도로 ${go.text}</a> <a class="tbtn" href="${esc(naverSearchUrl(s))}" rel="noopener">네이버지도에서 보기</a></p>
+<p class="links"><a class="go" href="${esc(go.href)}" rel="noopener">네이버지도로 ${go.text}</a> <a class="tbtn" href="${esc(naverSearchUrl(s))}" rel="noopener">네이버지도에서 보기</a>${book ? ` <a class="tbtn" href="${esc(book.href)}" rel="noopener" aria-label="${esc(book.aria)}">${esc(book.text)}</a>` : ''}</p>
 <p><a class="tbtn" href="${appLink(a, s.mood)}">앱에서 근처 3곳 받기</a></p>
 <h2>가까운 곳</h2>
 <ul class="near">${nearby

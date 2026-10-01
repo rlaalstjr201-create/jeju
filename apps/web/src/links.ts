@@ -1,7 +1,7 @@
 // Outbound links (ADR-0025: 예약은 외부 링크; ADR-0071: 지도 앱은 네이버지도 기본, 카카오맵 · TMAP 선택).
 import { inJeju } from './areas';
 import { cleanName } from './data';
-import { distanceKm, islandOf, withinReach, type Island, type Point, type Spot } from './pick';
+import { distanceKm, islandOf, withinReach, type BookKind, type Island, type Point, type Spot } from './pick';
 
 // No kakaoPlaceId → Kakao Map name search (ADR-0028). Short names ('담다', '회심') match places all over
 // Korea, so the query is scoped to 제주 unless the name already says where it is (S56). To switch to an
@@ -102,8 +102,20 @@ export function goLink(s: Spot, from: Point | null, walk: boolean, isPoint: bool
   return { href, text: t ? '배 타는 곳까지 길찾기' : '길찾기', mode: foot ? 'foot' : 'car', terminal: t?.name, app: via };
 }
 
-/** ADR-0073: the 마이리얼트립 name-search link reached a real product for only 17% of the spots, so cards do not show
- * it until per-spot verified routes exist. `bookable` and `bookingUrl` stay for a later data-driven version. */
-export const BOOKING_LINKS_ENABLED = false;
-
-export const bookingUrl = (s: Spot) => `https://www.myrealtrip.com/search?q=${encodeURIComponent(cleanName(s.name))}`;
+/** 예약 (ADR-0074, replaces ADR-0073's pause): a 체험 card's one verified route, with honest words for where it goes.
+ * 네이버 예약 opens the operator's booking page; 마이리얼트립 a product page (never a search); a homepage was only seen to
+ * be the operator's live site, so it says 예약 확인; phone is a tel: link. 비짓제주's link is said by where it leads
+ * (its one route today is a 네이버 예약 page). No route → null (such a 체험 is not picked, pick.ts `listed`). */
+export function bookLink(s: Spot): { href: string; text: string; aria: string } | null {
+  const b = s.book;
+  if (!b) return null;
+  const via = b.k === 'visitjeju' ? (/^https:\/\/(m\.)?booking\.naver\.com\//.test(b.u) ? 'naver' : 'homepage') : b.k;
+  const text = BOOK_TEXT[via];
+  return { href: b.u, text, aria: `${cleanName(s.name)}, ${text}` };
+}
+const BOOK_TEXT: Record<Exclude<BookKind, 'visitjeju'>, string> = {
+  naver: '네이버로 예약하기',
+  mrt: '마이리얼트립에서 예약',
+  homepage: '홈페이지에서 예약 확인',
+  phone: '전화로 예약',
+};

@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
-import { BOOKING_LINKS_ENABLED, MAP_APP_NAME, bookingUrl, goLink, placeApp, placeUrl, type MapApp } from './links';
+import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
@@ -32,8 +32,6 @@ export const COPY = {
   heartAria: (name: string) => `${name} 저장`,
   /** 길찾기 (ADR-0067, ADR-0069, ADR-0071): the words are goLink's; this says where to, in which app and how. */
   goAria: (name: string, foot: boolean, app: MapApp, pier?: string) => `${name}, ${pier ? `배 타는 곳 ${pier}까지 ` : ''}${MAP_APP_NAME[app]} ${foot ? '도보' : '자동차'} 길찾기`,
-  book: '마이리얼트립에서 예약 찾아보기',
-  bookAria: (name: string) => `${name}, 마이리얼트립에서 예약 찾아보기`,
   firstSave: '저장한 곳은 맨 위 하트 버튼에 모여요.',
   noOrigin: {
     denied: '위치 권한이 꺼져 있어요.',
@@ -433,10 +431,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
     if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
     card.append(go);
-    // Paused (ADR-0073): no booking link until per-spot verified routes exist.
-    if (BOOKING_LINKS_ENABLED && spot.bookable) {
-      card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
-    }
+    // 예약 (ADR-0074): a 체험's one verified route, under 길찾기 — 네이버 예약, 마이리얼트립 상품, 홈페이지 or 전화 (tel:).
+    const book = bookLink(spot);
+    if (book) card.append(el(doc, 'a', { class: 'tbtn book', href: book.href, ...(book.href.startsWith('tel:') ? {} : { target: '_blank' }), rel: 'noopener', 'aria-label': book.aria }, book.text));
     return card;
   }
 

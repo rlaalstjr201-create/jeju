@@ -320,5 +320,77 @@
     "category": "cafe",
     "sub": "sight",
     "basis": "멘트에 따라 커피 가격이 달라지는 재미있는 카페"
+  },
+  {
+    "id": "5cb97216-e1bd-442a-b8a7-7c55fd18d148",
+    "name": "김녕세기알해변",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「스노쿨링, 물멍, 걷기... 뭘 해도 좋은 ‘세기알해변’」, 태그 제주해변·제주바다. 해변이라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "f998ffb6-4157-413a-8e36-5b4a39622e8f",
+    "name": "세화항",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「제주의 동쪽 바다에 있는 낚시 명소」, 태그 자연경관. 항구라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "ac930db7-94fe-44cd-919c-cea430c71e1d",
+    "name": "태웃개",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「요즘 핫한 스노쿨링 ‘태웃개’.. 바닷물과 용천수도 공존」, 태그 제주해수욕장·제주해변. 바닷가라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "89772bbe-805f-47dc-9ee1-38045cd4c223",
+    "name": "해병 3·4기 호국관",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「…발자취를 기념하기 위한 호국관」, 태그 안보견학·전시. 둘러보는 기념관이다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "1a44a46d-ade2-4689-adbd-3befd2b0613f",
+    "name": "구두미포구",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「낮에는 스노쿨링과 다이버 성지... 저녁엔 일몰스팟... ‘구두미포구’」, 태그 제주해변·제주올레길. 포구라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "8a052be4-e577-4820-8203-009e14b87d46",
+    "name": "성산오조리해안",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「제주에서 조개잡이 체험장으로 유명한 성산 오조리 해안」, 태그 해변·경관/포토·포토스팟. 해안이라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "0f3f96ab-b028-49ba-9619-9bed33f2b9be",
+    "name": "도두항",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「제주공항과 가까운 낚시하기 좋은 포구」, 태그 휴식/힐링. 포구라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "beeec3e9-5776-4003-b79f-2c33e6b9c87b",
+    "name": "현사포구",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「낚시꾼들이 애정하는 한치 포인트」, 태그 일몰·올레·자연경관. 포구라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "72bbdf18-12f3-42cf-bdc5-3277bcd7855d",
+    "name": "협재포구",
+    "category": "experience",
+    "sub": "sight",
+    "basis": "비짓제주 요약 「비양도를 바라보며 즐기는 바다낚시」, 태그 해변·포구·자연경관. 포구라 예약할 운영자가 없다",
+    "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
   }
 ]

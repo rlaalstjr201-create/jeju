@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { applyCorrections, loadCorrections } from './apply-corrections.mjs';
 import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
+import { applyBooking, loadBookingCalls, loadBookRoutes } from './booking.mjs';
 import { applyIndoor, loadIndoorCalls } from './indoor.mjs';
 import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from './markets.mjs';
 import { loadNewSubCalls, newSub } from './new-sub.mjs';
@@ -335,6 +336,10 @@ kept = applyIndoor(kept, new Map(inputItems.map((i) => [i.id, i.category])), loa
 
 // 장날 (ADR-0066, review/copy/market-days.json): last, on the markets that ship. A market with no rule stops the build.
 kept = applyMarketDays(kept, loadMarketDays(resolve(copyDir, 'market-days.json')), new Map(inputItems.map((i) => [i.id, i.category])));
+
+// 체험 예약 경로 (ADR-0074, review/booking/routes.json + review/copy/booking.json): last, on the 체험 that ship.
+// A 체험 with neither a verified route nor a recorded call stops the build.
+kept = applyBooking(kept, loadBookRoutes(resolve(root, 'review/booking/routes.json')), loadBookingCalls(resolve(copyDir, 'booking.json')));
 
 writeFileSync(outPath, JSON.stringify(kept));
 

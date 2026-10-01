@@ -1,6 +1,8 @@
 /**
  * 새로운 거 sub (ADR-0064, specs/new-sub.md): every mood:'new' spot gets sub 'sight' (구경) or 'do' (체험).
  * experience → do; sightseeing·cultural_space·shopping(오일장) → sight; cafe·restaurant → the hand call in review/copy/new-sub.json.
+ * A recorded call wins over the category: the 9 포구·해변·기념관 the VisitJeju source lists as experience but that
+ * have no operator to book are 구경 (ADR-0074, docs/research/booking-links-02.md §3).
  * build-spots.mjs applies the rule; run this file directly to apply it to the shipped public/spots.json in place
  * (adds sub to new spots only, at the key position build-spots.mjs would give it). Idempotent.
  */
@@ -21,14 +23,14 @@ export function loadCategories(inputDir = resolve(root, 'review/input')) {
   return out;
 }
 
-/** cafe·restaurant calls by id, from review/copy/new-sub.json. */
+/** Recorded calls by id (cafe·restaurant, and experience places moved to 구경), from review/copy/new-sub.json. */
 export function loadNewSubCalls(path = resolve(root, 'review/copy/new-sub.json')) {
   return new Map(JSON.parse(readFileSync(path, 'utf8')).map((v) => [v.id, v.sub]));
 }
 
 /** 'sight' | 'do' for a new spot; throws when neither the category nor a recorded call decides it. */
 export function newSub(id, category, calls) {
-  const sub = BY_CATEGORY[category] ?? calls.get(id);
+  const sub = calls.get(id) ?? BY_CATEGORY[category];
   if (sub !== 'sight' && sub !== 'do') throw new Error(`new spot ${id} (${category}) has no sub (sight|do) — add it to review/copy/new-sub.json`);
   return sub;
 }

@@ -3,6 +3,7 @@
 // in the app with a fake sendBeacon (which events, once each, no position).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { FLUSH_AT, FLUSH_MS, createTracker, type UsageEvent } from '../src/track';
+import { listed } from '../src/pick';
 import { realSpots } from './fixtures';
 import { $, $$, advance, cardIds, current, flush, render, reset, tap } from './harness';
 
@@ -95,8 +96,9 @@ beforeEach(() => {
 });
 afterEach(() => document.removeEventListener('click', noNav));
 
-const exp = realSpots.find((s) => s.bookable)!;
-const others = realSpots.filter((s) => s.mood === exp.mood && !s.bookable).slice(0, 5);
+// a 체험 with a verified booking route (ADR-0074), among places of its mood without one
+const exp = realSpots.find((s) => s.book && !s.book.u.startsWith('tel:'))!;
+const others = realSpots.filter((s) => s.mood === exp.mood && !s.book && listed(s)).slice(0, 5);
 const spots = () => Promise.resolve([exp, ...others]);
 
 describe('U1 수집 주소가 없으면 보내지 않는다', () => {
@@ -105,6 +107,7 @@ describe('U1 수집 주소가 없으면 보내지 않는다', () => {
     await tap(`[data-mood="${exp.mood}"]`);
     await tap($$('#cards .heart')[0]);
     $('#cards .card-link').click();
+    $('#cards a.book')?.click();
     hide();
     expect(beacon).not.toHaveBeenCalled();
   });
@@ -146,7 +149,7 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
     advance(100);
     link.click();
     advance();
-    expect($$('#cards a.book')).toHaveLength(0); // booking link paused (ADR-0073)
+    $(`#cards .card[data-id="${exp.id}"] a.book`).click();
     await flush();
     expect(beacon).not.toHaveBeenCalled(); // batched until 10s / 20 events / hidden
     hide();
@@ -157,6 +160,7 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
       { e: 'save', id: exp.id, ...ctx },
       { e: 'unsave', id: exp.id, ...ctx },
       { e: 'map', id: ids[1], ...ctx },
+      { e: 'book', id: exp.id, ...ctx },
     ]);
     const keys = new Set(events().flatMap((e) => Object.keys(e)));
     expect([...keys].sort()).toEqual(['basis', 'd', 'dated', 'e', 'id', 'mood', 'range', ...(sub ? ['sub'] : [])].sort());
@@ -243,6 +247,7 @@ describe('U3 기록 끄기', () => {
     await tap(`[data-mood="${exp.mood}"]`);
     await tap($$('#cards .heart')[0]);
     $('#cards .card-link').click();
+    $('#cards a.book')?.click();
     hide();
     expect(beacon).not.toHaveBeenCalled();
 

@@ -18,7 +18,7 @@ async function until(cond: () => boolean) {
   for (let i = 0; i < 50 && !cond(); i++) await flush();
   expect(cond()).toBe(true);
 }
-const spot = realSpots.find((s) => !s.bookable)!;
+const spot = realSpots.find((s) => !s.bookable && !s.book)!;
 
 describe('D1 directionsUrl — Kakao car directions to the spot, from where the phone is', () => {
   it('coordinates → map.kakao.com/link/to/{name},{lat},{lng}', () => {
@@ -54,7 +54,7 @@ describe('D2 길찾기 on every card', () => {
   afterEach(() => document.removeEventListener('click', noNav));
 
   // Changed on purpose (ADR-0071): the default app is 네이버지도 — its card link (search) and its words.
-  it('results: one 길찾기 per card, after the meta, with no booking link (ADR-0073); the card link and 네이버지도 stay', async () => {
+  it('results: one 길찾기 per card, after the meta and before the booking link (ADR-0074); the card link and 네이버지도 stay', async () => {
     render();
     await tap('[data-mood="new"]');
     const cards = $$('#cards .card:not(.ghost)');
@@ -75,7 +75,8 @@ describe('D2 길찾기 on every card', () => {
       const meta = c.querySelector('.meta');
       if (meta) expect(meta.compareDocumentPosition(go[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       const book = c.querySelector('a.book');
-      expect(book).toBeNull();
+      expect(!!book).toBe(!!s.book);
+      if (book) expect(go[0].compareDocumentPosition(book) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     }
     expect($$('#cards .dest').map((d) => d.textContent)).toEqual(['네이버지도']);
   });
