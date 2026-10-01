@@ -16,6 +16,7 @@
 - 카테고리 → sub: experience → `do`, sightseeing·cultural_space → `sight`.
 - cafe·restaurant 46곳: 원문(summary·tags)에 체험 활동(만들기, 클래스, 체험, 승마 등)이 중심이면 `do`, 아니면 `sight`. 판정과 근거는 `review/copy/new-sub.json`.
 - 빌드 스크립트가 같은 규칙을 적용하고, 출하본에도 적용.
+- 갱신(ADR-0074, `specs/booking-routes.md`): 기록된 판정이 카테고리보다 먼저다. 운영자가 없는 포구·해변·항구·기념관 9곳(비짓제주 분류 experience)은 `review/copy/new-sub.json`에 근거와 함께 `sight`로 둔다. 체험 탭·섞어서는 확인된 예약 경로(`book`)가 있는 체험만 보인다. N2의 체험 탭 3장은 모두 경로가 있다.
 
 ## 성공 기준
 

@@ -1,6 +1,6 @@
 # ADR-0058: 리빌딩 이전 제약 재판정 (apps/web "내일 뭐하지")
 
-Status: Accepted (2026-09-30) — ADR-0025·0027·0028·0029와 `plans/tomorrow-picker.md` 일부를 갱신
+Status: Accepted (2026-09-30) — ADR-0025·0027·0028·0029와 `plans/tomorrow-picker.md` 일부를 갱신. "예약은 마이리얼트립만(`bookable`)"은 ADR-0073이 멈추고 ADR-0074(체험마다 확인된 경로 하나)가 대체했다(2026-10-01)
 
 ## Context
 
