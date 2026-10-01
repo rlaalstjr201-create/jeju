@@ -22,10 +22,11 @@
 |---|---|
 | 홈 `/` | `WebSite`(name, alternateName, url, inLanguage ko) + `WebApplication`(applicationCategory TravelApplication, operatingSystem Web, offers 0 KRW, description = 엔티티 한 줄, areaServed 제주특별자치도, inLanguage ko) |
 | 허브 `/jeju/` | `CollectionPage` + `ItemList`(15개 지역 페이지) + `BreadcrumbList` |
-| 지역 `/jeju/<area>/` | `TouristDestination`(name, geo, containedInPlace 제주특별자치도) + 기분별 `ItemList`(ListItem → `TouristAttraction`·`Restaurant`·`CafeOrCoffeeShop`, name, geo; url은 카카오맵) + `BreadcrumbList` |
+| 지역 `/jeju/<area>/` | `TouristDestination`(name, geo, containedInPlace 제주특별자치도) + 기분별 `ItemList`(ListItem → `TouristAttraction`·`Restaurant`·`CafeOrCoffeeShop`, name, geo; url은 장소 페이지) + `BreadcrumbList` |
+| 장소 `/jeju/<area>/<place>/` | `TouristAttraction`·`Restaurant`·`CafeOrCoffeeShop`(name, description=우리 이유, geo, url, hasMap, image, containedInPlace=지역) + `BreadcrumbList` (ADR-0072) |
 
 - 장소 `description`에 비짓제주 원문을 넣지 않는다. 우리 `reason` 문장만.
-- `image`는 넣지 않는다(제3자 사진, `docs/licensing-visitjeju.md`).
+- `image`는 비짓제주 CDN 핫링크 URL만, 사진 모드일 때만(ADR-0072 — `LANDING_PHOTOS=0`이면 빠진다. 제3자 사진, `docs/licensing-visitjeju.md`).
 - 점수(`score`)를 `aggregateRating`으로 내보내지 않는다 — 리뷰 기반 평점이 아니고 화면에도 없다(ADR-0060).
 
 ## robots.txt 목표 모양

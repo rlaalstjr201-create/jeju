@@ -15,6 +15,7 @@ Git 연결(GitHub `rlaalstjr201-create/jeju`) 기준. 의존성은 저장소 루
 | Build output directory | `apps/web/dist` |
 | 환경 변수 `NODE_VERSION` | `22` |
 | 환경 변수 `SITE_URL` | 사이트 주소, 끝 `/` 없이. 예: `https://p-trip.pages.dev` 또는 커스텀 도메인. 링크 미리보기(`og:image`·`og:url`)를 절대 주소로 만든다. 없으면 상대 경로(카카오톡 미리보기에 사진이 빠질 수 있음) |
+| 환경 변수 `LANDING_PHOTOS` | 보통은 **넣지 않는다**(정적 랜딩에 비짓제주 사진 핫링크). `0`이면 랜딩(`/jeju/**`)의 사진·`og:image`·JSON-LD `image`를 모두 빼고 출처를 `정보:`로 바꾼다 — 제주관광공사 회신이 거절이거나 상업화를 정했을 때(ADR-0072 3) |
 | 환경 변수 `VITE_EVENTS_URL` | **넣지 않는다.** 없으면 익명 기록을 모으지도 보내지도 않고, 저장한 곳의 기록 문구·`기록 끄기`도 숨는다. 수집기(영속 저장·크기/빈도 제한)를 붙인 뒤 새 결정으로 켠다 |
 
 Production·Preview 두 환경에 같은 값을 넣는다(Preview의 `SITE_URL`은 비워도 된다).
@@ -22,7 +23,9 @@ Production·Preview 두 환경에 같은 값을 넣는다(Preview의 `SITE_URL`�
 빌드 결과에 함께 나가는 것(`apps/web/public/`):
 
 - `_headers`: 캐시 규칙. 해시 파일(`/assets/*`)과 `/spots.json`(늘 `?v=해시`로 요청) 1년 immutable, `/`·`/index.html`·`/sw.js`·`/manifest.webmanifest`·`/404.html`·`/privacy` no-cache, 아이콘·`og.png`·`favicon.ico`·`robots.txt` 하루. `/*` 규칙은 두지 않는다(같은 헤더가 둘이면 Pages가 값을 이어 붙인다).
-- `404.html`: 있으면 Pages가 SPA 폴백을 끄고 모르는 경로에 이 페이지를 404로 준다. `_redirects`는 두지 않는다.
+- `404.html`: 있으면 Pages가 SPA 폴백을 끄고 모르는 경로에 이 페이지를 404로 준다. `public/`에 `_redirects`는 두지 않는다(빌드가 지역을 옮긴 장소 페이지의 301만 `dist/_redirects`에 쓴다, ADR-0072).
+
+빌드가 만드는 것(`scripts/build-landing.mjs`, `vite build` 뒤): 정적 랜딩 `dist/jeju/**`(허브·지역 15·조합·장소 페이지, `landing.css`), `sitemap.xml`, `SITE_URL`이 있으면 `robots.txt`의 `Sitemap:` 줄. 품질 기준(원문 0건·쌍 유사도·자기 본문 비율, `specs/seo-landing.md`)을 어기거나 주소 없는 장소가 있으면 빌드가 실패한다 — 새 장소는 `npm run landing:slugs -w @jeju/web` 뒤 `apps/web/data/landing/slugs.json`을 커밋한다.
 - `privacy.html`(`/privacy`), `robots.txt`, `og.png`(1200×630), `favicon.ico`, maskable 아이콘.
 
 HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Always Use HTTPS"를 켠다. 압축(brotli)은 Pages가 알아서 한다.

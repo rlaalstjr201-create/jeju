@@ -81,8 +81,8 @@ K1 의도 불일치 · K2 데이터에 없는 속성 필요(실내·날씨·영�
 ## 4. GEO — 생성형 엔진에 인용되기
 
 - 크롤러 접근: robots.txt에서 OAI-SearchBot·ChatGPT-User·PerplexityBot·ClaudeBot·Claude-SearchBot·Google-Extended·Yeti·Bingbot을 막지 않는다. Cloudflare의 AI 크롤러 차단 설정(대시보드)도 확인한다 — robots.txt와 별개다.
-- **JS를 안 도는 크롤러가 읽을 정적 본문**이 본체다. 지금 홈은 정적 본문 161자, 장소 2,955곳은 JS만 그린다. 정적 랜딩(`specs/seo-landing.md`)이 GEO의 바탕이다.
-- 구조화 데이터는 화면과 같은 내용만: 홈 WebSite + WebApplication, 허브·지역 페이지 ItemList(장소는 TouristAttraction 등) + BreadcrumbList, 지역 TouristDestination. FAQPage는 구글 리치결과가 정부·보건 사이트로 제한됐으므로 리치결과를 기대하지 않는다 — 화면에 실제 Q&A가 있을 때만.
+- **JS를 안 도는 크롤러가 읽을 정적 본문**이 본체다. 정적 랜딩(`specs/seo-landing.md`, ADR-0072)이 GEO의 바탕이다 — 허브·지역 15·조합(target만)·장소마다 한 쪽, 빌드가 원문 0건·쌍 유사도·자기 본문 비율을 잰다.
+- 구조화 데이터는 화면과 같은 내용만: 홈 WebSite + WebApplication, 허브·지역 페이지 ItemList(장소는 TouristAttraction 등) + BreadcrumbList, 지역 TouristDestination, 장소 페이지 TouristAttraction·Restaurant·CafeOrCoffeeShop + GeoCoordinates(`aggregateRating` 없음). FAQPage는 구글 리치결과가 정부·보건 사이트로 제한됐으므로 리치결과를 기대하지 않는다 — 화면에 실제 Q&A가 있을 때만.
 - llms.txt는 유지하되 **성과 지표가 아니다**(구글은 쓰지 않는다고 명시, Ahrefs 실측 유효 llms.txt의 97%가 요청 0건).
 - **딥링크**(ADR-0067): `/?mood=&area=&reach=&date=&indoor=`가 결과를 바로 연다. 값의 단일 출처는 `src/deeplink.ts`·`src/areas.ts`(slug)이고, `public/llms.txt` 표와 홈 JSON-LD `SearchAction.urlTemplate`이 같아야 한다(`tests/drive-agents.test.ts`). 랜딩의 「앱에서 3곳 받기」는 이 링크를 쓴다(`specs/seo-landing.md` OQ4). 공개 API·MCP는 아직 없다.
 - Bing 색인이 ChatGPT 검색·Copilot의 바탕이다 — Bing Webmaster Tools(GSC 가져오기) + IndexNow를 배포 후 연결한다.
@@ -91,8 +91,8 @@ K1 의도 불일치 · K2 데이터에 없는 속성 필요(실내·날씨·영�
 ## 5. 라이선스 — 정적 페이지에서 지킬 것 (`docs/licensing-visitjeju.md`)
 
 - 비짓제주 원문(소개·태그 문장)을 싣지 않는다. 쓰는 것: 장소명·좌표·우리 이유 문장(`reason`)·만족도 점수로 고른 순서.
-- 사진은 재호스팅하지 않는다. 정적 페이지에는 사진을 넣지 않는 것을 기본으로 한다(이미지 검색 색인이 제3자 사진을 우리 페이지에 묶는다).
-- 모든 페이지 하단에 `정보: 비짓제주(제주관광공사) · visitjeju.net`.
+- 사진은 재호스팅하지 않는다. 정적 랜딩·장소 페이지는 비짓제주 CDN **핫링크**로 사진을 쓴다(ADR-0072, 사용자 결정). 공사의 서면 확인 전이라 빌드 환경변수 `LANDING_PHOTOS=0` 하나로 모두 뺄 수 있다 — 이미지 검색 색인이 제3자 사진을 우리 페이지에 묶는 위험은 남아 있다. 사진을 늘리는 개입을 제안하지 않는다.
+- 모든 페이지 하단에 `정보·사진: 비짓제주(제주관광공사) · visitjeju.net`(사진 없는 모드는 `정보:`).
 - 광고·제휴 링크를 붙이면 상업적 이용 쟁점이 생긴다 — SEO 개입으로 수익화를 제안하지 않는다.
 
 ## 6. 가동 순서
