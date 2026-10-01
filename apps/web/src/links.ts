@@ -102,4 +102,8 @@ export function goLink(s: Spot, from: Point | null, walk: boolean, isPoint: bool
   return { href, text: t ? '배 타는 곳까지 길찾기' : '길찾기', mode: foot ? 'foot' : 'car', terminal: t?.name, app: via };
 }
 
+/** ADR-0073: the 마이리얼트립 name-search link reached a real product for only 17% of the spots, so cards do not show
+ * it until per-spot verified routes exist. `bookable` and `bookingUrl` stay for a later data-driven version. */
+export const BOOKING_LINKS_ENABLED = false;
+
 export const bookingUrl = (s: Spot) => `https://www.myrealtrip.com/search?q=${encodeURIComponent(cleanName(s.name))}`;

@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
-import { MAP_APP_NAME, bookingUrl, goLink, placeApp, placeUrl, type MapApp } from './links';
+import { BOOKING_LINKS_ENABLED, MAP_APP_NAME, bookingUrl, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
@@ -433,7 +433,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
     if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
     card.append(go);
-    if (spot.bookable) {
+    // Paused (ADR-0073): no booking link until per-spot verified routes exist.
+    if (BOOKING_LINKS_ENABLED && spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
     }
     return card;

@@ -54,7 +54,7 @@ describe('D2 길찾기 on every card', () => {
   afterEach(() => document.removeEventListener('click', noNav));
 
   // Changed on purpose (ADR-0071): the default app is 네이버지도 — its card link (search) and its words.
-  it('results: one 길찾기 per card, after the meta and before the booking link; the card link and 네이버지도 stay', async () => {
+  it('results: one 길찾기 per card, after the meta, with no booking link (ADR-0073); the card link and 네이버지도 stay', async () => {
     render();
     await tap('[data-mood="new"]');
     const cards = $$('#cards .card:not(.ghost)');
@@ -75,7 +75,7 @@ describe('D2 길찾기 on every card', () => {
       const meta = c.querySelector('.meta');
       if (meta) expect(meta.compareDocumentPosition(go[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       const book = c.querySelector('a.book');
-      if (book) expect(go[0].compareDocumentPosition(book) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(book).toBeNull();
     }
     expect($$('#cards .dest').map((d) => d.textContent)).toEqual(['네이버지도']);
   });

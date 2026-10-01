@@ -1029,38 +1029,16 @@ await check('3-17', 'row cards: at 320×568 default text the photo sits beside t
   }
 });
 
-await check('3-18', 'booking link: one line at 320 and 390, on the first card and on a row card', async () => {
+await check('3-18', 'booking link paused (ADR-0073): no .book and no 마이리얼트립 on any card at 320 and 390', async () => {
   for (const width of [320, 390]) {
-    const seen = { lead: 0, row: 0 };
-    const bad = [];
-    for (const [area] of AREA_ORDER) {
-      if (seen.lead && seen.row) break;
-      const { ctx, page } = await fresh({ width, storage: { 'jeju.region': area.replace(' ', ''), 'jeju.basis': 'region', 'jeju.hintSeen': true } });
-      await tapText(page, '[data-mood="new"]');
+    for (const mood of ['new', 'food', 'rest']) {
+      const { ctx, page } = await fresh({ width, storage: { 'jeju.hintSeen': true } });
+      await tapText(page, `[data-mood="${mood}"]`);
       await waitCards(page);
-      for (let i = 0; i < 4; i++) {
-        const r = await page.$$eval('#cards .card .book', (els) =>
-          els.map((a) => {
-            const range = document.createRange();
-            range.selectNodeContents(a);
-            return { kind: a.closest('.card').classList.contains('lead') ? 'lead' : 'row', lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size };
-          }),
-        );
-        for (const b of r) {
-          seen[b.kind]++;
-          if (b.lines !== 1) bad.push(`${width} ${area} ${b.kind}: ${b.lines} lines`);
-        }
-        if (seen.lead && seen.row) {
-          if (width === 320) await shot(page, 'book-320');
-          break;
-        }
-        await tapText(page, '#cards .more');
-        await sleep(150);
-      }
+      const r = await page.$$eval('#cards', (els) => ({ book: document.querySelectorAll('#cards .book').length, text: els[0].textContent.includes('마이리얼트립') }));
+      assert(r.book === 0 && !r.text, `${width} ${mood}: book ${r.book} text ${r.text}`);
       await ctx.close();
     }
-    assert(seen.lead && seen.row, `${width}: no bookable card found (lead ${seen.lead}, row ${seen.row})`);
-    assert(!bad.length, bad.join(' | '));
   }
 });
 

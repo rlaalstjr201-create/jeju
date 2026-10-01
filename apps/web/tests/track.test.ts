@@ -105,7 +105,6 @@ describe('U1 수집 주소가 없으면 보내지 않는다', () => {
     await tap(`[data-mood="${exp.mood}"]`);
     await tap($$('#cards .heart')[0]);
     $('#cards .card-link').click();
-    $('#cards a.book')?.click();
     hide();
     expect(beacon).not.toHaveBeenCalled();
   });
@@ -147,7 +146,7 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
     advance(100);
     link.click();
     advance();
-    $(`#cards .card[data-id="${exp.id}"] a.book`).click();
+    expect($$('#cards a.book')).toHaveLength(0); // booking link paused (ADR-0073)
     await flush();
     expect(beacon).not.toHaveBeenCalled(); // batched until 10s / 20 events / hidden
     hide();
@@ -158,7 +157,6 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
       { e: 'save', id: exp.id, ...ctx },
       { e: 'unsave', id: exp.id, ...ctx },
       { e: 'map', id: ids[1], ...ctx },
-      { e: 'book', id: exp.id, ...ctx },
     ]);
     const keys = new Set(events().flatMap((e) => Object.keys(e)));
     expect([...keys].sort()).toEqual(['basis', 'd', 'dated', 'e', 'id', 'mood', 'range', ...(sub ? ['sub'] : [])].sort());

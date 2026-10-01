@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { BOOKING_LINKS_ENABLED } from '../src/links';
 import { AREAS, LocateError, bookingUrl, kakaoUrl, mountApp, type App, type Deps } from '../src/app';
 import { naverSearchUrl } from '../src/links';
 import { nearestArea } from '../src/areas';
@@ -215,42 +216,26 @@ describe('S3 카드', () => {
     );
   });
 
-  it('MyRealTrip link only on bookable (experience) cards: 20 combos + a mixed "new" set', async () => {
-    const check = () => {
-      for (const li of $$('.card')) {
-        const id = li.getAttribute('data-id')!;
-        const spot = realSpots.find((s) => s.id === id)!;
-        const book = li.querySelector('a.book');
-        if (spot.bookable) {
-          expect(book?.getAttribute('href')).toBe(bookingUrl(spot));
-          expect(book?.getAttribute('href')).toBe(`https://www.myrealtrip.com/search?q=${encodeURIComponent(spot.name)}`);
-          expect(book?.getAttribute('target')).toBe('_blank');
-          expect(book?.getAttribute('rel')).toBe('noopener');
-        } else {
-          expect(book).toBeNull();
-        }
-      }
-      return $$('a.book').length;
-    };
-    let seenBook = 0;
+  it('no booking link on any card while paused (ADR-0073): 20 combos + a bookable spot on screen', async () => {
+    expect(BOOKING_LINKS_ENABLED).toBe(false);
     for (const origin of Object.values(ORIGINS)) {
       render({ locate: () => Promise.resolve(origin) });
       for (const mood of MOODS) {
         await tap(`[data-mood="${mood}"]`);
         expect($$('.card')).toHaveLength(3);
-        seenBook += check();
+        expect($$('a.book')).toHaveLength(0);
+        expect($('#cards')?.textContent).not.toContain('마이리얼트립');
       }
     }
-    expect(seenBook).toBeGreaterThan(0);
 
-    // one bookable + two non-bookable spots of the same mood on the same screen
+    // one bookable + two non-bookable spots of the same mood on the same screen: still no link
     const exp = realSpots.find((s) => s.bookable)!;
     const others = realSpots.filter((s) => s.mood === exp.mood && !s.bookable).slice(0, 2);
     render({ loadSpots: () => Promise.resolve([exp, ...others]), locate: () => Promise.resolve(exp) });
     await tap(`[data-mood="${exp.mood}"]`);
     expect($$('.card')).toHaveLength(3);
-    expect(check()).toBe(1);
-    expect($('.card a.book')?.closest('.card')?.getAttribute('data-id')).toBe(exp.id);
+    expect($$('a.book')).toHaveLength(0);
+    expect(bookingUrl(exp)).toBe(`https://www.myrealtrip.com/search?q=${encodeURIComponent(exp.name.trim())}`);
     expect(kakaoUrl(exp)).toBe(
       exp.kakaoPlaceId
         ? `https://place.map.kakao.com/${exp.kakaoPlaceId}`
