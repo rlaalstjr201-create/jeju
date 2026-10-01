@@ -2,7 +2,7 @@
 
 ## 0. 배포 직전 최종 점검 (2026-10-01, 현재 상태)
 
-브랜치 `master-ejxmjq` → Cloudflare Pages Production branch `main`. 설정은 `docs/deploy.md`. 1~6절은 같은 날 앞선 1차 점검 기록이다(거기서 **막힘**이던 것은 모두 해소: 출처 표시·`_headers`·`404.html`·OG·아이콘·저장 유지·개인정보 안내·팩트체크 보정, ADR-0063).
+브랜치 `master-ejxmjq` → Cloudflare Pages Production branch `master`. 설정은 `docs/deploy.md`. 1~6절은 같은 날 앞선 1차 점검 기록이다(거기서 **막힘**이던 것은 모두 해소: 출처 표시·`_headers`·`404.html`·OG·아이콘·저장 유지·개인정보 안내·팩트체크 보정, ADR-0063).
 
 ### 막힘: 0건
 

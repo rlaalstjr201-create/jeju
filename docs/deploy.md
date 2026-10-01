@@ -9,7 +9,7 @@ Git 연결(GitHub `rlaalstjr201-create/jeju`) 기준. 의존성은 저장소 루
 | 항목 | 값 |
 |---|---|
 | 프로젝트 이름 | 사용자가 정한다. `<프로젝트>.pages.dev`가 된다(로마자만, 예: `gyehoek-gwichana`) |
-| Production branch | `main` |
+| Production branch | `master` |
 | Framework preset | None |
 | Root directory (고급) | `/` (저장소 루트. Pages가 루트 `package-lock.json`으로 `npm ci`) |
 | Build command | `npm run build -w @jeju/web` — `vite build && tsx scripts/build-landing.mjs`라 정적 랜딩·`sitemap.xml`까지 만든다(깨끗한 `--depth 1` 클론에서 `npm ci` → 이 명령 성공 확인, 2026-10-01) |
