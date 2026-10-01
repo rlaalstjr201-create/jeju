@@ -73,6 +73,7 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('<h2>문의</h2>');
     expect(html).toMatch(/<a class="tbtn" href="\/">처음 화면으로<\/a>/);
     expect(html).not.toMatch(/<script/);
+    expect(html).toContain('<link rel="canonical" href="__SITE__/privacy" />');
   });
 });
 
@@ -93,6 +94,8 @@ describe('link previews, icons, robots (ADR-0063 Consequences)', () => {
     const cfg = readFileSync(resolve(root, 'vite.config.ts'), 'utf8');
     expect(cfg).toMatch(/process\.env\.SITE_URL/);
     expect(cfg).toMatch(/replaceAll\('__SITE__', site\)/);
+    expect(cfg).toMatch(/privacy\.html/);
+    expect(html).toContain('<link rel="canonical" href="__SITE__/" />');
   });
 
   it('a maskable icon (its own file) in the manifest; favicon.ico and apple-touch-icon exist and are linked', () => {

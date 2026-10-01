@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import { buildServiceWorker, spotsVersion } from './scripts/sw-build';
@@ -31,7 +31,17 @@ function serviceWorker(): Plugin {
  * or nothing (relative) when it is unset. */
 function siteUrl(): Plugin {
   const site = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
-  return { name: 'site-url', transformIndexHtml: (html) => html.replaceAll('__SITE__', site) };
+  let outDir = '';
+  return {
+    name: 'site-url',
+    transformIndexHtml: (html) => html.replaceAll('__SITE__', site),
+    configResolved: (c) => void (outDir = resolve(c.root, c.build.outDir)),
+    // public/privacy.html is copied as is: its canonical gets the same address after the copy (SEO, as the landing pages)
+    closeBundle() {
+      const f = resolve(outDir, 'privacy.html');
+      if (existsSync(f)) writeFileSync(f, readFileSync(f, 'utf8').replaceAll('__SITE__', site));
+    },
+  };
 }
 
 /** `vite preview` answers like Cloudflare Pages with a 404.html (docs/deploy.md): no SPA fallback — a path
