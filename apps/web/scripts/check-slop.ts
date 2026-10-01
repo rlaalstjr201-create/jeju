@@ -90,6 +90,8 @@ const WORDS =
 const FORMAL = /[습입됩합]니다|십시오/; // 합쇼체: 해요체 only (§9)
 // 15 · 17 · 20 · 24px, written in rem so a larger browser text size (or root font-size 200%) scales them.
 const FONT_SIZES = new Set(['0.9375rem', '1.0625rem', '1.25rem', '1.5rem']);
+/** The one exception (SPEC §3.2, design.md F2): the fallback date field, never under 16px or iOS zooms in. */
+const fontSizeOk = (selector: string, size: string) => FONT_SIZES.has(size) || (selector === '.date-in' && size.replace(/\s+/g, '') === 'max(1rem,16px)');
 /** design/SPEC.md §10 forms that make a place sentence read as a template ("~하기 좋아요", 인생샷 …),
  * with the 3판 additions (겉바속촉, 돈까스, 아름다운, 여유를 누려요, 공간이에요).
  * "공기 좋은" is a noun + adjective, not the "~기 좋은" template; "…에 있어요" is not "~에 있어(서)". */
@@ -111,7 +113,7 @@ export function checkCss(file: string, css: string, v: Violation[]) {
     const sels = r.selector.split(',').map((s) => s.trim());
     const isRoot = r.selector === ':root';
     for (const m of r.body.matchAll(/content:\s*"([^"]*)"/g)) if (SYMBOLS.test(m[1])) add(2, `${r.selector} content ${m[1]}`);
-    for (const m of r.body.matchAll(/font-size:\s*([^;]+)/g)) if (!FONT_SIZES.has(m[1].trim())) add(7, `${r.selector} font-size ${m[1]}`);
+    for (const m of r.body.matchAll(/font-size:\s*([^;]+)/g)) if (!fontSizeOk(r.selector, m[1].trim())) add(7, `${r.selector} font-size ${m[1]}`);
     for (const m of r.body.matchAll(/font-weight:\s*([^;]+)/g)) if (!WEIGHTS.has(m[1].trim())) add(8, `${r.selector} font-weight ${m[1]}`);
     if (!isRoot && /#[0-9a-f]{3,8}\b|rgba?\(/i.test(r.body)) add(9, `${r.selector} colour literal`);
     if (/var\(--accent\)/.test(r.body) && !sels.every((s) => ACCENT_OK.has(s))) add(10, `${r.selector} uses --accent`);

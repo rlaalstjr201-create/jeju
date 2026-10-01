@@ -1862,6 +1862,110 @@ await check('QA4-when-row', '언제 is one compact row (지금 · 내일 · 날�
   assert(problems.length === 0, problems.join(' | '));
 });
 
+// --- hit areas of the controls tapped most (design.md T2) ---
+// A control's hit area is its box joined with any absolutely positioned ::before/::after it draws (the card's
+// own whole-card link excepted, which lies under everything on purpose).
+const hitMeasure = (targetSel) => {
+  const layer = document.querySelector('#sheet:not([hidden]) .sheet') ?? document;
+  const shown = (e) => e.offsetParent !== null && !e.closest('[inert]') && !e.closest('[hidden]') && !e.classList.contains('sr') && (layer === document ? !e.closest('#sheet') : true);
+  const area = (el) => {
+    const r = el.getBoundingClientRect();
+    const b = { left: r.left, top: r.top, right: r.right, bottom: r.bottom };
+    if (el.matches('.card-link')) return b;
+    for (const p of ['::before', '::after']) {
+      const cs = getComputedStyle(el, p);
+      if (cs.content === 'none' || cs.position !== 'absolute' || cs.pointerEvents === 'none') continue;
+      const v = (k) => (Number.isFinite(parseFloat(cs[k])) ? parseFloat(cs[k]) : 0);
+      b.left = Math.min(b.left, r.left + v('left'));
+      b.top = Math.min(b.top, r.top + v('top'));
+      b.right = Math.max(b.right, r.right - v('right'));
+      b.bottom = Math.max(b.bottom, r.bottom - v('bottom'));
+    }
+    return b;
+  };
+  const label = (e) => `${e.dataset.action || e.dataset.when || e.dataset.sub || e.className}"${e.textContent.trim().slice(0, 8)}"`;
+  const targets = [...layer.querySelectorAll(targetSel)].filter(shown);
+  const others = [...layer.querySelectorAll('button, a[href], input')].filter((e) => shown(e) && !e.matches('.card-link'));
+  const small = [];
+  const overlap = [];
+  const blocked = [];
+  for (const t of targets) {
+    t.scrollIntoView({ block: 'center' });
+    const a = area(t);
+    const w = a.right - a.left;
+    const h = a.bottom - a.top;
+    if (w < 47.5 || h < 47.5) small.push(`${label(t)} ${Math.round(w)}×${Math.round(h)}`);
+    for (const o of others) {
+      if (o === t || o.contains(t) || t.contains(o)) continue;
+      const b = area(o);
+      const x = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+      const y = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+      if (x > 0.5 && y > 0.5) overlap.push(`${label(t)} × ${label(o)} ${Math.round(x)}×${Math.round(y)}`);
+    }
+    // every point of the area reaches this control (nothing covers part of it)
+    let miss = 0;
+    for (let x = a.left + 0.5; x < a.right; x += 2)
+      for (let y = a.top + 0.5; y < a.bottom; y += 2) if (document.elementFromPoint(x, y)?.closest('button, a, input') !== t) miss++;
+    if (miss) blocked.push(`${label(t)} ${miss} points`);
+  }
+  scrollTo(0, 0);
+  const de = document.documentElement;
+  const sheet = document.querySelector('#sheet:not([hidden]) .sheet');
+  return { n: targets.length, small, overlap, blocked, over: de.scrollWidth - de.clientWidth, sheetOver: sheet ? sheet.scrollWidth - sheet.clientWidth : 0 };
+};
+await check('T2-hit', 'at 320·390: card heart, 바꾸기·돌아가기, 식사 tabs, 언제 options, 위로·아래로·다른 날로, 이 날로 each reach a ≥ 48×48 area that no other control overlaps or covers; drawn size unchanged (44); no sideways scroll', async () => {
+  const problems = [];
+  const today = seoulDay();
+  const [a, b, c] = SPOT_IDS;
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    const ctx = await browser.newContext({ viewport: { width, height }, serviceWorkers: 'block', locale: 'ko-KR' });
+    await ctx.addInitScript(GEO_STUB);
+    // no date picker: 날짜 고르기 shows the date field and 이 날로 under the 언제 row
+    await ctx.addInitScript(() => {
+      delete HTMLInputElement.prototype.showPicker;
+    });
+    await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+    const page = await ctx.newPage();
+    await page.goto(BASE);
+    await page.evaluate(
+      ({ a, b, c, today }) => {
+        localStorage.clear();
+        localStorage.setItem('jeju.saved.v2', JSON.stringify([a, b, c].map((id, order) => ({ id, date: today, order }))));
+      },
+      { a, b, c, today },
+    );
+    await page.reload();
+    const want = {};
+    const measure = async (tag, sel, n) => {
+      const r = await page.evaluate(hitMeasure, sel);
+      if (r.n < n) problems.push(`${width} ${tag}: ${r.n} targets (want ≥ ${n})`);
+      for (const k of ['small', 'overlap', 'blocked']) if (r[k].length) problems.push(`${width} ${tag} ${k}: ${r[k].join(', ')}`);
+      if (r.over > 0 || r.sheetOver > 0) problems.push(`${width} ${tag} overflows ${r.over}/${r.sheetOver}`);
+      const drawn = await page.$$eval(sel, (els) => els.filter((e) => e.offsetParent !== null).map((e) => Math.round(e.getBoundingClientRect().height)));
+      want[tag] = drawn;
+    };
+    await tapText(page, '[data-mood="food"]');
+    await waitCards(page);
+    await measure('results', '.card .heart, #results .change, #foodSub .tab', 3 + 1 + 2);
+    await tapText(page, '#saved');
+    await page.waitForSelector('#savedView .card:not(.ghost)');
+    await measure('saved', '#savedView .heart, #savedView .back, #savedView .ctl .tbtn', 3 + 1 + 7);
+    await tapText(page, '#basis');
+    await tapText(page, '#sheet [data-action="pick-day"]');
+    await measure('basis sheet', '#sheet .when-row .opt, #sheet [data-action="day-ok"]', 3 + 1);
+    if (width === 320) await shot(page, 'hit-basis-320');
+    await tapText(page, '#sheet .sheet-close');
+    await sleep(450);
+    await tapText(page, `#savedView .card[data-id="${b}"] [data-action="move-day"]`);
+    await tapText(page, '#sheet [data-action="pick-day"]');
+    await measure('move sheet', '#sheet [data-action="day-ok"]', 1);
+    // the drawn buttons keep their 44px (only the hit area grew)
+    for (const [tag, hs] of Object.entries(want)) if (hs.some((h) => h !== 44)) problems.push(`${width} ${tag} drawn heights ${hs}`);
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 await browser.close();
 server.kill();
 

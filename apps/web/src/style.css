@@ -6,7 +6,7 @@
 [hidden] { display: none !important; }
 
 :root {
-  --bg: #f6f6f3; --surface: #ffffff; --fill: #ebebe6; --fill-press: #dfdfd9; --line: #e2e2dc;
+  --bg: #f6f6f3; --surface: #ffffff; --fill: #ebebe6; --fill-press: #dfdfd9; --line: #e2e2dc; --field-line: #8a8f8c;
   --text: #1b1d1c; --muted: #5b605e; --accent: #cc3a2f;
   --scrim: rgb(0 0 0 / 35%); --photo: none;
   --top-h: 52px; --r-ctl: 10px; --r-photo: 12px; --r-thumb: 8px; --r-sheet: 18px;
@@ -15,7 +15,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161817; --surface: #1f2221; --fill: #2a2e2c; --fill-press: #353a38; --line: #2c302e;
+    --bg: #161817; --surface: #1f2221; --fill: #2a2e2c; --fill-press: #353a38; --line: #2c302e; --field-line: #6b706d;
     --text: #e8e8e3; --muted: #a3a8a5; --accent: #ee7e71;
     --scrim: rgb(0 0 0 / 55%); --photo: brightness(0.9); /* photos don't glare at night (S49) */
     color-scheme: dark;
@@ -79,6 +79,14 @@ main { flex: 1; display: flex; flex-direction: column; }
   text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--muted);
 }
 .tbtn:active { background: var(--fill); }
+/* tapped often (design.md T2): a 48px hit area around the 44px button, drawn size and layout unchanged.
+   바꾸기 / 돌아가기 grow 2px up and down (still clear of ♥ N above and the 식사 tabs 8px below); 위로 · 아래로 · 다른 날로
+   and 이 날로 grow 4px left (half the 8px gap before them; 위로 is 46px wide; never right, which would count as
+   overflow of the button) and 4px down only, into the margin under them (not up: the row card's booking link
+   and the 언제 row sit right above) */
+.change, .back, .ctl .tbtn, .date-fb .tbtn { position: relative; }
+.change::before, .back::before { content: ""; position: absolute; inset: -2px 0; }
+.ctl .tbtn::before, .date-fb .tbtn::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 
 /* first screen: the question and the moods sit in the lower two thirds, under the thumb */
 #home { flex: 1; display: flex; flex-direction: column; }
@@ -113,7 +121,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .tabs { display: flex; gap: 24px; margin-top: 8px; border-bottom: 1px solid var(--line); }
 .tab { position: relative; min-height: 44px; padding: 0 2px; font-weight: 600; color: var(--muted); }
 /* "식사" is narrower than a thumb: widen the hit area, not the drawn tab (the gap is 24px, so no overlap) */
-.tab::before { content: ""; position: absolute; inset: 0 -8px; }
+.tab::before { content: ""; position: absolute; inset: -2px -8px; }
 .tab[aria-pressed="true"] { color: var(--text); }
 .tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 2px solid var(--text); }
 .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
@@ -153,6 +161,9 @@ main { flex: 1; display: flex; flex-direction: column; }
   grid-area: heart; position: relative; z-index: 1; width: 44px; height: 44px; margin: -10px -10px -10px 0;
   justify-self: end; align-self: start; display: grid; place-items: center; color: var(--muted);
 }
+/* 48px hit area (design.md T2): 4px left, over the column gap, and 4px down; not up, where the row card above
+   ends, nor right, where it would overflow the button and the page edge */
+.heart::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 .heart svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
 .heart[aria-pressed="true"] { color: var(--accent); }
 .heart[aria-pressed="true"] svg { fill: currentColor; }
@@ -265,12 +276,15 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 .when-row { gap: 0; }
 .when-row .opt { flex: 0 1 auto; width: auto; min-height: 44px; justify-content: flex-start; }
 .when-row .opt + .opt::before { content: "·"; content: "·" / ""; color: var(--muted); }
+/* 48px tall to the finger (design.md T2): 4px up into the heading's margin, not down onto the date field */
+.when-row .opt::after { content: ""; position: absolute; inset: -4px 0 0; }
 /* 날짜 고르기 where the browser has no picker to open: the date field and 이 날로, on their own line */
 .date-fb { display: contents; }
 .date-fb.open { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; margin: 0 0 8px 8px; }
 .date-in {
   flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px;
-  font: inherit; color: var(--text); background: none; border: 1px solid var(--line); border-radius: var(--r-ctl);
+  font: inherit; font-size: max(1rem, 16px); /* iOS zooms into a field under 16px (design.md F2) */
+  color: var(--text); background: none; border: 1px solid var(--field-line); border-radius: var(--r-ctl);
 }
 
 /* bottom sheet: its own layer above the cards' hearts, links and the 다른 3곳 bar */

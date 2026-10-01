@@ -1,5 +1,5 @@
 // spots.json loader. Memoized on success only: a failed fetch (offline first visit, flaky Wi-Fi, 5xx) is
-// forgotten so the next tap or "다시 불러오기" fetches again (S24). Each wait times out after 15s; a download
+// forgotten so the next tap or "다시 불러오기" fetches again (S24). Each wait times out after 10s (design.md M2); a download
 // that lands after that is still kept.
 import type { Mood, Spot, Sub } from './pick';
 
@@ -45,10 +45,10 @@ export interface SpotSource {
  * `onLoad`: called once, when the list first arrives — also when it arrives after every caller has given up
  * waiting for it (a slow download that outlived its timeout), so the app can use it then.
  */
-export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 15000, onLoad?: (spots: Spot[]) => void): SpotSource {
+export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 10000, onLoad?: (spots: Spot[]) => void): SpotSource {
   let value: Spot[] | null = null;
   /** The download new callers join. The timeout only ends a caller's wait: the download keeps going, and the
-   * first one to land is kept — a slow network is not sent round a 15s error loop though a full copy arrived.
+   * first one to land is kept — a slow network is not sent round a 10s error loop though a full copy arrived.
    * A caller that times out unjoins it, so the next one starts afresh (a hung request is never the only hope). */
   let current: Promise<Spot[]> | null = null;
   const waiting = new Set<(spots: Spot[]) => void>();

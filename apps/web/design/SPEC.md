@@ -4,6 +4,8 @@
 
 지금 코드는 2판(시안 A 기준, 같은 날 20:42)을 따른다. 2판에서 QA로 확인한 동작(history, 요청 id, 저장소, 서비스워커, 회색 틀, 섬 문구 등)은 대부분 그대로 두고, **0.3절의 변경 목록이 구현 작업 목록**이다.
 
+2026-10-01: `design/design.md` 8절 권장 변경 1~4(날짜 입력 글자 16px, 입력 테두리 3:1, 자주 누르는 대상 누름 영역 48, 데이터 타임아웃 10초)를 반영했다(2.1·2.2·3.2·4·6.4·6.5·6.10·6.12·11.2·13·14·15절).
+
 범위는 ADR-0025~0029 그대로다(이름·기준 순간은 ADR-0059로 갱신). 한 화면, 로그인·일정·결제 없음, 데이터 추가 수집 없음, 가격·운영시간·평점 없음. 성공 기준은 `plans/tomorrow-picker.md`의 S9-1~S9-7.
 
 사용자: 계획 없이 제주를 다니다 "지금 여기서 뭐하지?" 할 때 한 손 엄지로, 반쯤 딴생각하며 갈 곳을 고르는 여행자(ADR-0059). 계획을 세우지 않고, 시끄러운 화면을 싫어한다. "AI가 만든 것 같다"는 느낌이 한 번이라도 들면 안 된다.
@@ -106,6 +108,7 @@ C를 1위로 둔 두 심사가 꼽은 장점은 "장소가 주인공"이라는 �
 | `--fill` | `#ebebe6` | `#2a2e2c` | 면 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`), 사진 자리, 회색 틀, 목록 줄·글자 버튼 누름, ♥ N 눌림 |
 | `--fill-press` | `#dfdfd9` | `#353a38` | 면 버튼을 누르는 동안 |
 | `--line` | `#e2e2dc` | `#2c302e` | 목록 가는선, 식사 탭 아래 선, 떠 있는 띠 위 선, 시트 `닫기` 위 선 |
+| `--field-line` | `#8a8f8c` | `#6b706d` | 날짜 대체 입력(`.date-in`) 테두리만. 테두리 말고는 칸을 알아볼 단서가 없어 3:1 이상(2.2, design.md C3) |
 | `--text` | `#1b1d1c` | `#e8e8e3` | 본문·제목·버튼 글자, 체크, 포커스 링, 선택 탭 밑줄 |
 | `--muted` | `#5b605e` | `#a3a8a5` | 메타·보조 문장·날짜·대표 지명·무리 제목·빈 하트 선·꺾쇠·밑줄 색 |
 | `--accent` | `#cc3a2f` | `#ee7e71` | 저장된 하트, ♥ N의 하트. 이 두 곳 말고는 쓰지 않는다 |
@@ -134,8 +137,10 @@ C를 1위로 둔 두 심사가 꼽은 장점은 "장소가 주인공"이라는 �
 | 면 vs 바탕(참고) | `--fill` on `--bg` | 1.10 | 1.30 | 없음 |
 | 면 vs 시트(참고) | `--fill` on `--surface` | 1.20 | 1.17 | 없음 |
 | 가는선 vs 바탕(참고) | `--line` on `--bg` | 1.20 | 1.33 | 없음 |
+| 날짜 입력 칸 테두리(비텍스트) | `--field-line` on `--surface` | 3.29 | 3.18 | 3 |
+| 날짜 입력 칸 테두리(참고, 시트 밖에 놓일 때) | `--field-line` on `--bg` | 3.04 | 3.54 | 3 |
 
-면·가는선 경계는 WCAG 요구 대상이 아니다. 버튼과 목록 줄은 글자로 식별된다. 그래서 면 버튼 글자는 `--muted`가 아닌 `--text` 600으로 쓴다. 다크 본문 글자 상대 휘도 0.80, 바탕 0.009로 순백·순검정이 아니다.
+면·가는선 경계는 WCAG 요구 대상이 아니다. 버튼과 목록 줄은 글자로 식별된다. **예외는 입력 칸 테두리**다: 빈 날짜 입력 칸(`.date-in`)은 테두리 말고는 식별할 단서가 없으므로 WCAG 1.4.11에 따라 `--field-line`으로 3:1 이상을 둔다(`--line`이면 1.30 / 1.20). 그래서 면 버튼 글자는 `--muted`가 아닌 `--text` 600으로 쓴다. 다크 본문 글자 상대 휘도 0.80, 바탕 0.009로 순백·순검정이 아니다.
 
 ### 2.3 그 밖의 토큰
 
@@ -152,7 +157,7 @@ C를 1위로 둔 두 심사가 꼽은 장점은 "장소가 주인공"이라는 �
 
 시간: 누름 120ms, 시트 등장 240ms `cubic-bezier(0.2, 0.8, 0.2, 1)` / 퇴장 190ms `ease-in`, 딤 200ms `ease-out` / 160ms `ease-in`.
 
-간격 단계: 2 · 4 · 8 · 12 · 16 · 20 · 24 · 28. 이 밖의 값은 쓰지 않는다. 예외는 44px 탭 영역의 글자를 여백 선에 맞추는 음수 마진(-8, -10)과 줄 누름 면을 여백 밖으로 8px 넓히는 -8.
+간격 단계: 2 · 4 · 8 · 12 · 16 · 20 · 24 · 28. 이 밖의 값은 쓰지 않는다. 예외는 44px 탭 영역의 글자를 여백 선에 맞추는 음수 마진(-8, -10)과 줄 누름 면을 여백 밖으로 8px 넓히는 -8, 그리고 누름 영역만 48로 넓히는 가상 요소의 `inset`(-2, -4, 탭은 좌우 -8; 4절).
 
 ---
 
@@ -179,6 +184,7 @@ iOS는 Apple SD Gothic Neo, Android는 시스템 Noto Sans CJK KR(sans-serif 폴
 
 - 한 화면 크기: 첫 화면 24·20·15, 결과 20·17·15, 저장한 곳 20·17·15, 시트 20·17·15. 세 단계를 넘지 않는다.
 - 15px 미만 없음. 15px 이하에는 음수 자간을 주지 않는다.
+- **예외 하나**: 날짜 대체 입력 `.date-in`은 `font: inherit` 뒤 `font-size: max(1rem, 16px)`(기본 16px). iOS Safari는 16px 미만 입력 칸에 포커스가 가면 화면을 확대하고 풀지 않는다(design.md F2). 이 칸에는 글자 노드가 없어 "한 화면 세 단계" 셈에 들지 않는다. 14절 #7도 이 한 곳만 허용한다.
 - 굵기는 400·600·700만. 위계는 600과 700의 차이가 아니라 크기와 `--muted`로 만든다(안드로이드는 600을 700으로 붙일 수 있다). 결과 화면에서 고른 기분(17/600)과 첫 장 이름(20/700)은 크기로 갈린다.
 - 여백·탭 영역은 px, 글자는 rem. rem이라 브라우저 글자 크기 설정과 루트 200%에서 모든 글자가 함께 커진다.
 - 숫자(♥ N, 날짜, 메타, 개수)는 `font-variant-numeric: tabular-nums`.
@@ -208,6 +214,15 @@ body { word-break: keep-all; overflow-wrap: break-word; }
 - 첫 화면: 세로 flex, 위 빈칸 : 아래 빈칸 = 5 : 2(`flex: 5 1 24px` / `flex: 2 1 0`). 질문과 기분 목록이 화면 아래 2/3에 앉는다. 첫 기분 줄 윗변 390×844 약 y=415, 320×568 약 y=218.
 - 결과 화면 세로 간격: 상단 줄 → 머리 4, 머리(44) → 식사 탭 8, 머리·탭 → 상태 줄 12, 머리·탭·상태 → 첫 카드 16, 첫 장 사진 → 이름 12, 이름 → 이유 2, 이유 → 메타 4, 메타 → 예약 링크 4, 첫 장 → `아니면` 28, `아니면` → 줄 카드 12, 줄 카드 사이 20, 마지막 카드 → `다른 3곳 보기` 버튼 28.
 - 줄 카드: 사진 `clamp(80px, 24vw, 104px)` 정사각(320에서 80, 390에서 약 94), 사진과 글 사이 12.
+- **누름 영역**(design.md T1·T2): 모든 탭 대상은 높이 ≥ 44. 자주 누르는 것 — 카드 하트, `바꾸기`·`돌아가기`, 식사 탭, `언제` 칸, `위로`·`아래로`·`다른 날로`, `이 날로` — 는 누름 영역 ≥ 48×48이다. 그린 크기(44)와 배치는 그대로 두고, `position: absolute`인 빈 가상 요소로 누름 영역만 넓힌다(아래 표). 넓힌 영역은 이웃 컨트롤의 영역과 겹치지 않고(320·390 기본 글자) 가로 넘침을 만들지 않는다. 상단 줄의 기준·♥ N은 드문 보조 행동이라 44(T4). 그 밖의 대상은 1~2판 그대로.
+
+  | 대상 | 가상 요소 | 넓히는 쪽 | 이유 |
+  |---|---|---|---|
+  | 카드 하트(44×44) | `.heart::before { inset: 0 0 -4px -4px }` | 왼쪽 4(열 사이 12 안), 아래 4 | 위는 줄 카드 사이(20) 안에서 앞 카드의 `위로`·예약 링크가 끝나는 자리. 오른쪽은 버튼 밖 넘침(`scrollWidth`)과 화면 끝 |
+  | `바꾸기`·`돌아가기` | `::before { inset: -2px 0 }` | 위아래 2 | 폭은 이미 48 넘음. 상단 줄·식사 탭과 4 이상 떨어짐 |
+  | 식사 탭 | `.tab::before { inset: -2px -8px }` | 위아래 2, 좌우 8 | `식사`가 44보다 좁다. 탭 사이 24라 겹치지 않음 |
+  | `언제` 칸 | `.when-row .opt::after { inset: -4px 0 0 }` | 위 4 | 칸끼리 맞닿아 좌우로 못 넓힘. 아래는 날짜 입력 줄 |
+  | `위로`·`아래로`·`다른 날로`, `이 날로` | `::before { inset: 0 0 -4px -4px }` | 왼쪽 4(사이 8의 절반), 아래 4 | `위로`가 약 46px 폭. 위는 예약 링크·`언제` 줄, 오른쪽은 버튼 밖 넘침 |
 - 확인값(계산, e2e에서 실측): 320×568에서 첫 장 이름 아랫변 약 y=347, 메타 아랫변 약 y=421(식사 탭이 있으면 +53). 375×667에서 이름 아랫변 약 y=384. 390×844에서 이름 아랫변 약 y=394, `다른 3곳 보기`는 모든 폭에서 첫 화면 안(띠가 떠서 버튼이 약 y=780~832).
 
 ---
@@ -321,9 +336,9 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 ### 6.4 결과 머리
 
 - **고른 기분**(`h1.crumb`): 기분 문구 그대로(`푹 쉬고 싶어` … `아무거나 골라줘`). 17/600 `--text`. 결과 화면에서 첫 장 이름(20/700)보다 작다. `tabindex="-1"`로 결과가 뜨면 포커스를 받는다(링은 `:focus-visible`일 때만).
-- **바꾸기**: 머리 오른쪽 끝, `.tbtn`(15/600 `--text`, 밑줄 1px `--muted`, offset 4, 높이 44, 패딩 0 8, 오른쪽 마진 -8). 누르면 첫 화면(기분 목록). `aria-label="기분 바꾸기"`.
+- **바꾸기**: 머리 오른쪽 끝, `.tbtn`(15/600 `--text`, 밑줄 1px `--muted`, offset 4, 높이 44, 패딩 0 8, 오른쪽 마진 -8). 누름 영역 48(`::before`로 위아래 2씩, 4절). 누르면 첫 화면(기분 목록). `aria-label="기분 바꾸기"`.
 - 머리 줄: `display: flex; align-items: center; justify-content: space-between`, 높이 44(글자 버튼이 정함), 상단 줄 아래 4, `scroll-margin-top: var(--top-h)`.
-- **식사 \| 카페·디저트**(맛있는 거 먹고 싶어일 때만): 머리 아래 8. 글자 탭 두 개, 왼쪽 정렬, 탭 사이 24, 탭 높이 44, 15/600. 선택 탭은 `--text` + 아래 2px `--text` 밑줄(글자 폭), 다른 탭은 `--muted`. 탭 줄 아래 1px `--line`. 탭 누름 영역은 `::before { inset: 0 -8px }`로 좌우 8씩 넓힌다(`식사`가 44px보다 좁다). 면·알약 없음. `aria-pressed`로 상태.
+- **식사 \| 카페·디저트**(맛있는 거 먹고 싶어일 때만): 머리 아래 8. 글자 탭 두 개, 왼쪽 정렬, 탭 사이 24, 탭 높이 44, 15/600. 선택 탭은 `--text` + 아래 2px `--text` 밑줄(글자 폭), 다른 탭은 `--muted`. 탭 줄 아래 1px `--line`. 탭 누름 영역은 `::before { inset: -2px -8px }`로 좌우 8, 위아래 2씩 넓혀 48 이상(`식사`가 44px보다 좁다, 4절). 면·알약 없음. `aria-pressed`로 상태.
 - **상태 줄**(`#status`, `role="status"`): 15/400 `--muted`, 위 12. 비어 있으면 `display: none`. flex-wrap, 항목 사이 12. `지역으로 고르기`는 이 줄 안의 `.tbtn`. 들어가는 문구는 9절.
 
 ### 6.5 장소 카드
@@ -351,7 +366,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **좁은 폭**: 3.3절의 `@container (max-width: 18em)`이면 줄 카드도 사진이 위로 가고 2:1이 된다(글자를 키웠을 때만).
 - **카드 전체가 지도 링크**: 이름의 `<a>`를 `::after { inset: 0 }`로 카드 전체에 편다. 하트와 예약 링크는 `position: relative; z-index: 1`. 키보드 포커스 링은 카드 전체(`.card:has(.card-link:focus-visible)`에 2px `--text`, offset 4, radius `--r-photo`). 누르는 동안 사진과 이름 `opacity: .72`.
 - **스크린리더**: 링크 이름은 `{이름}, 카카오맵에서 보기`. 이동 문구가 `아니면` 줄로 묶인 줄 카드는 링크에 `aria-describedby="alt-trip"`을 붙인다(묶은 문구를 카드와 함께 듣는다).
-- **하트**: 44×44 버튼, 이름 오른쪽(사진 위가 아니다). `margin: -10px -10px -10px 0`로 이름 첫 줄 높이와 오른쪽 여백 선에 맞춘다. 빈 하트 `--muted` 선 1.8, 저장 `--accent` 채움. `aria-label`은 `{이름} 저장`으로 고정, 상태는 `aria-pressed`로만. 누르면 그 하트와 ♥ N만 바뀐다. 카드 노드를 다시 만들지 않는다(사진이 깜빡이지 않는다). 토스트·폭죽 없음.
+- **하트**: 44×44 버튼, 이름 오른쪽(사진 위가 아니다). `margin: -10px -10px -10px 0`로 이름 첫 줄 높이와 오른쪽 여백 선에 맞춘다. 누름 영역은 48×48(`::before { inset: 0 0 -4px -4px }`, 4절). 빈 하트 `--muted` 선 1.8, 저장 `--accent` 채움. `aria-label`은 `{이름} 저장`으로 고정, 상태는 `aria-pressed`로만. 누르면 그 하트와 ♥ N만 바뀐다. 카드 노드를 다시 만들지 않는다(사진이 깜빡이지 않는다). 토스트·폭죽 없음.
 - **예약 링크**(bookable만): `.tbtn`(15/600 `--text`, 밑줄 1px `--muted`), 높이 44, 왼쪽 마진 -8(글자가 카드 왼쪽 선에), 아래 마진 -8, `white-space: normal`(글자 200%에서는 줄바꿈 허용). 아이콘 없음.
 - **사진 실패**: 이미지 `error`를 받으면 그 스팟 id를 세션 동안 `broken`에 넣고 사진 칸을 통째로 뺀 글 카드(`.noimg`)로 그린다. 회색 빈 상자를 남기지 않는다. 다시 그려도 사진 칸이 되살아나지 않는다(오프라인 예외는 11.6).
 - **이름 나눔**: 줄 카드는 `X - Y`와 괄호 별칭을 같은 규칙으로 나눈다(3.3절): 앞부분은 두 줄까지·말줄임, 별칭은 자기 줄에 통째로(이름 칸 3줄). 그래서 앞부분이 같은 이름도 구분된다.
@@ -410,9 +425,9 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - 내용(위에서 아래로):
   1. 제목 `언제 어디 근처로 볼까요?` 20/700, 아래 16. `tabindex="-1"`.
   2. **언제**(무리 제목 `p.group-h` `언제`, 제목 바로 아래라 위 여백 0) + 가는선 **한 줄**(`div.optrow.when-row`)에 칸 셋을 나란히(specs/date-mode.md, QA r4: 320×568에서 `어디`가 더 빨리 보이게):
-     - `지금 · 내일 · 날짜 고르기`. 칸은 내용 폭(`flex: 0 1 auto`), 높이 ≥ 44, 둘째 칸부터 앞에 `--muted` `·`(CSS `content: "·" / ""`, 읽지 않음). 고른 칸은 이름 600 + 체크(`aria-pressed`). 채운 면 없음. 글자가 크면 칸이 다음 줄로 넘어간다.
+     - `지금 · 내일 · 날짜 고르기`. 칸은 내용 폭(`flex: 0 1 auto`), 높이 ≥ 44(누름 영역은 `::after`로 위 4를 더해 48, 4절), 둘째 칸부터 앞에 `--muted` `·`(CSS `content: "·" / ""`, 읽지 않음). 고른 칸은 이름 600 + 체크(`aria-pressed`). 채운 면 없음. 글자가 크면 칸이 다음 줄로 넘어간다.
      - `날짜 고르기`: 누르면 브라우저 날짜 선택기(`<input type="date" min="{오늘}" max="{오늘+365}">`의 `showPicker()`, 날짜는 Asia/Seoul). 입력은 줄 안에 시각적으로 숨겨 두고(`.sr`, `tabindex=-1`), 선택기가 고른 날(`change`)을 바로 적용한다. 내일이 아닌 날을 골랐으면 그 칸 둘째 줄에 `10월 3일 토요일`.
-     - **선택기가 없을 때**(`showPicker`가 없거나 실패): 입력 자체를 줄 아래 자기 줄에 보이고(`.date-in`, 높이 ≥ 44) 오른쪽에 `.tbtn` `이 날로`를 두고 입력에 포커스를 준다. 한 자리씩 치면 일의 첫 자리에서 이미 온전한 날짜가 되므로 `change`로는 적용하지 않고, **`이 날로` 또는 Enter에서만** 적용한다. 오늘 전·오늘+365 뒤의 값은 무시(아무것도 바뀌지 않고 시트도 그대로).
+     - **선택기가 없을 때**(`showPicker`가 없거나 실패): 입력 자체를 줄 아래 자기 줄에 보이고(`.date-in`, 높이 ≥ 44, 글자 16px(3.2 예외), 테두리 1px `--field-line`(2.2, 3:1 이상)) 오른쪽에 `.tbtn` `이 날로`(누름 영역 48, 4절)를 두고 입력에 포커스를 준다. 한 자리씩 치면 일의 첫 자리에서 이미 온전한 날짜가 되므로 `change`로는 적용하지 않고, **`이 날로` 또는 Enter에서만** 적용한다. 오늘 전·오늘+365 뒤의 값은 무시(아무것도 바뀌지 않고 시트도 그대로).
      - 누르면 바로 적용(라벨·하트)하고 **시트는 닫지 않는다**(이어서 어디를 고를 수 있게). history 변화·요청 없음(카드는 날짜와 무관, ADR-0027). 400ms 재탭 무시.
   3. **어디**(무리 제목 `어디`) 옵션 목록(`div.opts`, 가는선 목록, 좌우 -8): 줄 두 개, 각 줄(`div.optrow`)은 위 1px `--line`, 목록 끝에 닫는 선.
      - `지금 있는 곳`: 칸(`button.opt`, 6.9와 같은 칸) 둘째 줄은 권한 거절이 알려졌을 때만 `위치 권한이 꺼져 있어요`. GPS 기준이면 선택.
@@ -442,12 +457,12 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 
 - ♥ N을 누르면 열린다. 여기서 하트를 풀어도(빼기) 줄은 그 자리에 남고 하트만 빈다(되돌리기, 다시 누르면 같은 자리로). 그 줄은 옮기기 버튼이 숨는다. 다시 열면 빠진다.
 - 상단 줄은 그대로(기준 버튼 왼쪽, ♥ N 오른쪽에 눌림 표시).
-- 머리: `h1.title` `저장한 곳` 20/700 + 개수(`span.count`, 오늘 이후 수, `--muted` 600, 제목 뒤 6, tabular-nums), 오른쪽 `.tbtn` `돌아가기`(바꾸기와 같은 자리·모양).
+- 머리: `h1.title` `저장한 곳` 20/700 + 개수(`span.count`, 오늘 이후 수, `--muted` 600, 제목 뒤 6, tabular-nums), 오른쪽 `.tbtn` `돌아가기`(바꾸기와 같은 자리·모양·누름 영역 48).
 - 정렬 라벨은 없앤다(`… 가까운 순`, `위치를 몰라서 …`). `p.sort`는 빈 상태 문장에만 쓴다.
 - **날짜 구역**(`section.day`, 세로 flex gap 20, 구역 사이 +8): 저장이 있는 날만. 순서는 오늘 → 이후 날짜 오름차순 → 맨 아래 `지난 날`. 구역 머리(`h2`, `.day-h`) 15/600 `--muted`: `오늘`, `내일`, `10월 3일 금요일`.
 - **지난 날**: 접힌 채 머리 줄 오른쪽 `.tbtn` `펼치기`(`aria-expanded`), 펼치면 `접기`, 그 아래 날마다 무리 제목(`p.group-h`, `9월 28일 월요일`)과 줄. 열 때마다 접힌 상태로 시작.
 - 날짜 안 순서는 사용자가 정한 순서(담은 순서가 처음 값). 가까운 순 정렬 없음.
-- 줄: 줄 카드(6.5) + 카드 폭 전체 줄(`div.ctl`, 위 4, 왼쪽 -8)에 `.tbtn` `위로`·`아래로`·`다른 날로`(왼쪽 정렬, 사이 8, 높이 44). 첫 줄은 `위로`, 끝 줄은 `아래로`가 숨는다. aria `{이름}, 위로` 등. 하트는 그 날짜의 빼기(`data-date`).
+- 줄: 줄 카드(6.5) + 카드 폭 전체 줄(`div.ctl`, 위 4, 왼쪽 -8)에 `.tbtn` `위로`·`아래로`·`다른 날로`(왼쪽 정렬, 사이 8, 높이 44, 누름 영역 48×48: 왼쪽 4·아래 4, 4절). 첫 줄은 `위로`, 끝 줄은 `아래로`가 숨는다. aria `{이름}, 위로` 등. 하트는 그 날짜의 빼기(`data-date`).
 - 메타: 이동 문구. 출발지는 그날이 아니라 **현재 기준**. 첫 줄만 출발지를 붙이고(`애월에서 차로 약 5분`) `카카오맵`도 첫 줄에만. 나머지는 `차로 약 5분`. 위치를 모르면(권한 거절·실패·제주 밖, GPS가 3초 안에 답하지 않음) 이동 문구 없이 첫 줄에 `카카오맵`만. 시트를 저절로 띄우지 않는다.
 - `위로`/`아래로`: 같은 날 안에서 한 칸. 줄 노드는 `{id}|{날짜}` 키로 재사용해 사진을 다시 받지 않고, 누른 버튼에 포커스가 남는다(숨으면 그 줄의 다음 버튼). 400ms 재탭 무시.
 - `다른 날로`: 시트(`어느 날로 옮길까요?`) — 저장이 있는 오늘 이후 날짜들(지금 날짜에 체크) + `날짜 고르기`(6.10과 같은 방식: 오늘~+365, 선택기가 없으면 입력 + `이 날로`/Enter에서만 옮김) + `닫기`. 고르면 그날 끝으로 옮기고(이미 있으면 하나로) 시트가 닫히며 포커스는 새 자리의 그 줄 `다른 날로`. history는 기준 시트와 같다(push, 닫기·뒤로가기 = back). 줄이 없는 채 앞으로가기로 오면 열지 않고 그 항목을 소비한다.
@@ -681,7 +696,7 @@ interface Stay { lat: number; lng: number; area: AreaName; source: 'gps' | 'area
 
 - 400ms 안의 같은 컨트롤 재탭은 무시한다: 기분 줄, 아무거나, 다른 3곳 보기, 식사 탭, 지역 칸, 바꾸기, 돌아가기, ♥ N. 하트는 토글이라 제외.
 - GPS 요청: `enableHighAccuracy: false`, `timeout: 8000`, `maximumAge: 600000`. Permissions API가 `denied`를 알려 주면 `getCurrentPosition`을 부르지 않고 바로 `noOrigin: denied`. 권한 창을 방치하면 브라우저 timeout이 돌지 않으므로, 3초 뒤 상태 줄에 `지역으로 고르기`가 붙는다.
-- 데이터 요청: `getSpots()`는 성공했을 때만 메모한다. 실패는 기억하지 않아 다음 의도(또는 `다시 불러오기`)가 새로 받는다. 요청마다 15초 타임아웃. 앱을 열 때 미리 한 번 받아 둔다.
+- 데이터 요청: `getSpots()`는 성공했을 때만 메모한다. 실패는 기억하지 않아 다음 의도(또는 `다시 불러오기`)가 새로 받는다. 요청마다 10초 타임아웃(design.md M2, Nielsen의 10초 한계). 10초가 지나면 6.8의 목록 실패 안내와 `다시 불러오기`. 늦게라도 받은 목록은 버리지 않고 메모해 바로 쓴다. 앱을 열 때 미리 한 번 받아 둔다.
 - GPS와 데이터는 동시에 시작한다. `pending.step`은 위치를 기다리는 동안 `locating`, 위치가 온 뒤 데이터를 기다리면 `loading`.
 - 결과 화면 몸통은 `phase`에서 나온다: `pending`(300ms 전 이전 내용 유지, 뒤 회색 틀) / `ready`(카드 + 띠) / `noOrigin`(6.8 안내 + 색인) / `loadError`(6.8 + 다시 불러오기) / `empty`(6.8 + 색인).
 - 상태 줄: `pending.slow && step = locating`이면 `위치 확인 중…`, `long`이면 `지역으로 고르기` 추가. `ready`이면서 `wrapped`면 한 바퀴 문장. `offline`이면 오프라인 문장(한 바퀴 문장 뒤에 이어서).
@@ -775,7 +790,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 | `effects.ts` | `resolveOrigin(basis, signal)`, `getSpots(signal)`. UI 없음 |
 | `nav.ts` | 11.3 |
 | `store.ts` | 11.4 |
-| `data.ts` | `getSpots` 성공만 메모, 15초 타임아웃, `?v=` 버전 URL |
+| `data.ts` | `getSpots` 성공만 메모, 10초 타임아웃(늦게 온 목록도 메모), `?v=` 버전 URL |
 | `areas.ts` | 15곳에 `landmark` 필드 추가 |
 | `pick.ts` | `travel`, `islandOf`, `walkMinutes`, `pickCards`의 `wrapped` (2판 그대로) |
 | `track.ts` | 익명 사용 기록(ADR-0061): 메모리 큐, 10초·20건·`visibilitychange: hidden`에 `sendBeacon(VITE_EVENTS_URL, JSON 배열)`. 주소가 없으면 no-op, 오프라인이면 버림, 재시도 없음 |
@@ -816,7 +831,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 [hidden] { display: none !important; }
 
 :root {
-  --bg: #f6f6f3; --surface: #ffffff; --fill: #ebebe6; --fill-press: #dfdfd9; --line: #e2e2dc;
+  --bg: #f6f6f3; --surface: #ffffff; --fill: #ebebe6; --fill-press: #dfdfd9; --line: #e2e2dc; --field-line: #8a8f8c;
   --text: #1b1d1c; --muted: #5b605e; --accent: #cc3a2f;
   --scrim: rgb(0 0 0 / 35%); --photo: none;
   --top-h: 52px; --r-ctl: 10px; --r-photo: 12px; --r-thumb: 8px; --r-sheet: 18px;
@@ -825,7 +840,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161817; --surface: #1f2221; --fill: #2a2e2c; --fill-press: #353a38; --line: #2c302e;
+    --bg: #161817; --surface: #1f2221; --fill: #2a2e2c; --fill-press: #353a38; --line: #2c302e; --field-line: #6b706d;
     --text: #e8e8e3; --muted: #a3a8a5; --accent: #ee7e71;
     --scrim: rgb(0 0 0 / 55%); --photo: brightness(0.9);
     color-scheme: dark;
@@ -883,6 +898,10 @@ main { flex: 1; display: flex; flex-direction: column; }
   text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--muted);
 }
 .tbtn:active { background: var(--fill); }
+/* 자주 누르는 글자 버튼: 그린 크기(44)와 배치는 그대로, 누름 영역만 48(design.md T2) */
+.change, .back, .ctl .tbtn, .date-fb .tbtn { position: relative; }
+.change::before, .back::before { content: ""; position: absolute; inset: -2px 0; }
+.ctl .tbtn::before, .date-fb .tbtn::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 
 /* 첫 화면 */
 #home { flex: 1; display: flex; flex-direction: column; }
@@ -916,7 +935,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .title .count { margin-left: 6px; color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
 .tabs { display: flex; gap: 24px; margin-top: 8px; border-bottom: 1px solid var(--line); }
 .tab { position: relative; min-height: 44px; padding: 0 2px; font-weight: 600; color: var(--muted); }
-.tab::before { content: ""; position: absolute; inset: 0 -8px; }
+.tab::before { content: ""; position: absolute; inset: -2px -8px; }
 .tab[aria-pressed="true"] { color: var(--text); }
 .tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 2px solid var(--text); }
 .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
@@ -950,6 +969,7 @@ main { flex: 1; display: flex; flex-direction: column; }
   grid-area: heart; position: relative; z-index: 1; width: 44px; height: 44px; margin: -10px -10px -10px 0;
   justify-self: end; align-self: start; display: grid; place-items: center; color: var(--muted);
 }
+.heart::before { content: ""; position: absolute; inset: 0 0 -4px -4px; } /* 누름 영역 48×48, 위·오른쪽으로는 넓히지 않음 */
 .heart svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
 .heart[aria-pressed="true"] { color: var(--accent); }
 .heart[aria-pressed="true"] svg { fill: currentColor; }
@@ -1039,10 +1059,11 @@ main { flex: 1; display: flex; flex-direction: column; }
 .when-row { gap: 0; }
 .when-row .opt { flex: 0 1 auto; width: auto; min-height: 44px; justify-content: flex-start; }
 .when-row .opt + .opt::before { content: "·"; content: "·" / ""; color: var(--muted); }
+.when-row .opt::after { content: ""; position: absolute; inset: -4px 0 0; } /* 누름 영역 48, 위로만(아래는 날짜 입력) */
 /* 선택기가 없을 때: 입력과 이 날로가 자기 줄에 */
 .date-fb { display: contents; }
 .date-fb.open { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; margin: 0 0 8px 8px; }
-.date-in { flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px; font: inherit; color: var(--text); background: none; border: 1px solid var(--line); border-radius: var(--r-ctl); }
+.date-in { flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px; font: inherit; font-size: max(1rem, 16px); color: var(--text); background: none; border: 1px solid var(--field-line); border-radius: var(--r-ctl); }
 
 /* 시트: 카드의 하트·링크·띠보다 위 */
 #sheet { position: relative; z-index: var(--z-sheet); }
@@ -1099,7 +1120,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 | 4 | AI·과장 낱말 | UI 문자열에서 `AI\|맞춤\|알고리즘\|추천\|당신\|완벽한\|특별한\|최고의\|숨은\|인생샷\|힐링\|감성\|잊지 못할\|다양한\|매력적인\|엄선\|딱 맞는\|어떨까요\|도와드릴게요\|걱정 마세요\|되어집니다\|가능합니다\|할 수 있습니다` | 0건 |
 | 5 | 존댓말 층위 | UI 문자열에서 `[습입됩합]니다\|십시오` | 0건. 반말 어미는 기분 5개 문구에서만 |
 | 6 | 마침표 규칙(UI) | 9절의 문장형 문구는 `요.`로 끝나고, 명사로 끝나는 문자열은 `.`로 끝나지 않는다 | 0건 위반 |
-| 7 | 글자 크기 | CSS `font-size` | `0.9375rem·1.0625rem·1.25rem·1.5rem`만 |
+| 7 | 글자 크기 | CSS `font-size` | `0.9375rem·1.0625rem·1.25rem·1.5rem`만. 예외 하나: `.date-in`의 `max(1rem, 16px)`(3.2) |
 | 8 | 굵기 | CSS `font-weight` | `400·600·700`만 |
 | 9 | 색 리터럴 | CSS의 `#hex`·`rgb(` | `:root` 토큰 블록과 index.html 인라인 `html` 바탕에만 |
 | 10 | accent 역할 | `var(--accent)` 사용처 | `.saved-btn svg`, `.heart[aria-pressed="true"]` 두 곳뿐 |
@@ -1164,6 +1185,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 25. **긴 기준 라벨**(QA4-label): `jeju.when`=12월 25일·지역 서귀포 시내로 320 × 150%·200%, 390 × 200%에서 `scrollWidth === clientWidth`, 라벨 오른쪽 변이 화면 안, 말줄임 없음, ♥ N이 같은 막대, 두 버튼 ≥ 44.
 26. **선택기 없는 날짜 입력**(QA4-datein): `showPicker`를 지운 채 다른 날로 시트·기준 시트 `언제`에서 `날짜 고르기` → 입력(min 오늘, max +365)과 `.tbtn` `이 날로`. 연·월 뒤 일을 한 자리씩 치는 동안 시트는 열려 있고 저장소 불변, +365 넘는 값은 `이 날로`에도 무시, `이 날로`·Enter에서 적용.
 27. **언제 한 줄**(QA4-when-row): 320×568·390×844에서 `지금 · 내일 · 날짜 고르기`가 같은 줄, 칸마다 ≥ 44·채운 면 없음·고른 칸만 체크+600. 열자마자 `어디` 무리 제목이 보이고(스크롤 0), `얼마나`는 스크롤로 `닫기` 위에 닿는다. 390에서 `얼마나`가 스크롤 없이 보이는 것은 R4-range.
+28. **누름 영역 48**(T2-hit): 320×568·390×844, `showPicker` 없음. 결과(먹기)·저장한 곳(한 날에 3곳)·기준 시트(`날짜 고르기`로 입력 연 상태)·다른 날로 시트에서 카드 하트, `바꾸기`·`돌아가기`, 식사 탭, `언제` 칸, `위로`·`아래로`·`다른 날로`, `이 날로` 각각: 누름 영역(요소 상자 ∪ `position: absolute` 가상 요소) ≥ 48×48, 같은 층의 다른 컨트롤(카드 전체 링크 제외) 영역과 겹침 0, 영역 안 2px 격자의 `elementFromPoint`가 모두 그 컨트롤, 그린 높이는 44 그대로, `scrollWidth ≤ clientWidth`(문서·시트).
 
 ### 15.2 vitest 기대값 변경 (tests/*.test.ts)
 
@@ -1173,6 +1195,8 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 - 첫 저장 안내: 3초 뒤 사라짐 테스트 → 가짜 타이머로 10초가 지나도 남고, 다음 의도에서 사라짐.
 - 결과 머리: `.title` → `.crumb`.
 - 지역 선택: `.opt` 칸 15개의 텍스트가 `{지역 표기}{대표 지명}`, 선택 칸 `aria-pressed="true"`. 채운 면 기대(있다면) 삭제.
+- 입력 테두리 대비(`tests/contrast.test.ts`): `style.css`의 라이트·다크 `--field-line`이 `--surface`·`--bg`와 3:1 이상(3.29 / 3.18), `.date-in` 테두리가 이 토큰.
+- 데이터 타임아웃(`tests/data.test.ts`): `DELAYS.dataTimeout === 10000`, `createSpotSource` 기본값으로 9,999ms에는 기다리는 중이고 10,000ms에 `timeout`, 12초에 온 목록은 메모되고 `onLoad`가 한 번.
 - 데이터(`tests/data.test.ts`): reason이 `.`로 끝나지 않음, `돈까스` 0건, 3판 금지어 0건(파이프라인 재작성 뒤).
 - 새로 추가: 대표 지명 좌표가 그 지역으로 가장 가깝다(`nearestArea`). 좌표는 다음 15개로 고정한다.
 

@@ -307,6 +307,37 @@ describe('S24 목록 로드 — 실패는 기억하지 않는다 (audit MAJOR)',
       expect(onLoad).not.toHaveBeenCalled();
     });
   });
+
+  describe('design.md M2 — the data wait gives up at 10s, not 15s (Nielsen 10s limit)', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('the app passes 10000ms', async () => {
+      const { DELAYS } = await import('../src/app');
+      expect(DELAYS.dataTimeout).toBe(10_000);
+    });
+
+    it('the default wait is 10s: still waiting at 9999ms, timed out at 10000ms; a copy landing at 12s is still kept', async () => {
+      vi.useFakeTimers();
+      const onLoad = vi.fn();
+      const src = createSpotSource(() => new Promise((r) => setTimeout(() => r(fileSpots.slice(0, 2)), 12_000)), undefined, onLoad);
+      let settled = false;
+      const first = src.get();
+      first.then(
+        () => (settled = true),
+        () => (settled = true),
+      );
+      await vi.advanceTimersByTimeAsync(9_999);
+      expect(settled).toBe(false);
+      await vi.advanceTimersByTimeAsync(1);
+      await expect(first).rejects.toThrow('timeout');
+      await vi.advanceTimersByTimeAsync(2_000);
+      expect(onLoad).toHaveBeenCalledTimes(1);
+      expect(src.peek()).toHaveLength(2);
+      src.dispose();
+    });
+  });
 });
 
 describe('QA 2026-09-30 중복 — 한 곳이 두 번 나가지 않는다', () => {

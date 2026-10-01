@@ -30,7 +30,7 @@ export interface Delays {
   quiet: number;
   dataTimeout: number;
 }
-export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 15000 };
+export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 10000 };
 
 export interface Deps extends GeoDeps {
   loadSpots(): Promise<unknown>;

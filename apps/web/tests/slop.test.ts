@@ -35,6 +35,12 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
     expect(v.some((x) => x.rule === 9 && x.detail.startsWith(':root'))).toBe(false);
   });
 
+  it('#7: only the fallback date field may be max(1rem, 16px) (iOS zoom, design.md F2)', () => {
+    const v: Violation[] = [];
+    checkCss('probe.css', '.date-in { font-size: max(1rem, 16px); } .date-in{font-size:max(1rem,16px)} .opt { font-size: max(1rem, 16px); } .date-in { font-size: 1rem; }', v);
+    expect(v.map((x) => `${x.rule} ${x.detail}`)).toEqual(['7 .opt font-size max(1rem, 16px)', '7 .date-in font-size 1rem']);
+  });
+
   it('3판: any centred text counts (#14); the saved button may fill; decimals are not a second sentence (#19)', () => {
     const v: Violation[] = [];
     checkCss('probe.css', '.more { text-align: center; } .saved-btn[aria-pressed="true"] { background: var(--ink); }', v);
