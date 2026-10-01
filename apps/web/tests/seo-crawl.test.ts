@@ -34,7 +34,7 @@ describe('normUrl / fileToUrl', () => {
 });
 
 const PAGE = `<!doctype html><html lang="ko"><head>
-<title>애월에서 지금 갈 만한 곳 · 제주 P의 여행</title>
+<title>애월에서 지금 갈 만한 곳 · 여행계획짜기 귀찮아:제주</title>
 <meta name="description" content="계획 없이 애월에 있다면 기분 하나로 고르세요.">
 <link rel="canonical" href="${O}/jeju/aewol">
 <meta property="og:url" content="${O}/jeju/aewol">
@@ -50,7 +50,7 @@ const PAGE = `<!doctype html><html lang="ko"><head>
 describe('parsePage', () => {
   const p = parsePage(PAGE, O);
   it('reads title, description, canonical, lang, og', () => {
-    expect(p.title).toBe("애월에서 지금 갈 만한 곳 · 제주 P의 여행");
+    expect(p.title).toBe("애월에서 지금 갈 만한 곳 · 여행계획짜기 귀찮아:제주");
     expect(p.description).toContain('애월');
     expect(p.canonical).toBe('/jeju/aewol');
     expect(p.lang).toBe('ko');
@@ -119,14 +119,14 @@ const site = (html: Record<string, string>, files: Record<string, string | null>
 };
 
 describe('auditSite', () => {
-  const SHELL = '<!doctype html><html lang="ko"><head><title>P의 여행</title><meta property="og:url" content="/"></head><body><h1>지금 뭐 하고 싶어요?</h1></body></html>';
+  const SHELL = '<!doctype html><html lang="ko"><head><title>여행계획짜기 귀찮아</title><meta property="og:url" content="/"></head><body><h1>지금 뭐 하고 싶어요?</h1></body></html>';
   it('the current app shell: thin, no origin, no landing, no canonical, no JSON-LD, title without 제주', () => {
     const ids = site({ '/': SHELL }, {}, '');
     for (const id of ['page:/:thin-shell', 'site:no-origin', 'site:no-landing-pages', 'page:/:no-canonical', 'page:/:no-jsonld', 'page:/:title-no-jeju', 'page:/:og-url-relative', 'site:no-sitemap', 'site:no-robots', 'site:no-llms-txt']) expect(ids, id).toContain(id);
   });
   it('a complete landing page raises nothing page-level (false-positive check)', () => {
     const ids = site({ '/jeju/aewol': PAGE }, {
-      'robots.txt': `User-agent: *\nAllow: /\nSitemap: ${O}/sitemap.xml`, 'sitemap.xml': `<urlset><url><loc>${O}/jeju/aewol</loc></url></urlset>`, 'llms.txt': '# P의 여행\n',
+      'robots.txt': `User-agent: *\nAllow: /\nSitemap: ${O}/sitemap.xml`, 'sitemap.xml': `<urlset><url><loc>${O}/jeju/aewol</loc></url></urlset>`, 'llms.txt': '# 여행계획짜기 귀찮아:제주\n',
     });
     expect(ids.filter((i) => i.startsWith('page:/jeju/aewol'))).toEqual([]);
     expect(ids.filter((i) => i.startsWith('site:'))).toEqual([]);
@@ -139,8 +139,8 @@ describe('auditSite', () => {
   });
   it('404 must be noindex; the privacy page is exempt from title/JSON-LD checks', () => {
     const ids = site({
-      '/404.html': '<html lang="ko"><head><title>P의 여행</title></head><body></body></html>',
-      '/privacy': `<html lang="ko"><head><title>개인정보 처리 안내 · P의 여행</title><meta name="description" content="x"><link rel="canonical" href="${O}/privacy"></head><body><h1>x</h1></body></html>`,
+      '/404.html': '<html lang="ko"><head><title>여행계획짜기 귀찮아:제주</title></head><body></body></html>',
+      '/privacy': `<html lang="ko"><head><title>개인정보 처리 안내 · 여행계획짜기 귀찮아:제주</title><meta name="description" content="x"><link rel="canonical" href="${O}/privacy"></head><body><h1>x</h1></body></html>`,
     });
     expect(ids).toContain('page:/404.html:indexable');
     expect(ids.filter((i) => i.startsWith('page:/privacy'))).toEqual([]);

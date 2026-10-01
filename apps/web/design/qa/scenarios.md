@@ -1,4 +1,4 @@
-# 시나리오 표 — P의 여행 (S9-2)
+# 시나리오 표 — 여행계획짜기 귀찮아:제주 (S9-2)
 
 기준: `src/app.ts`·`src/main.ts`·`src/pick.ts`·`sw/sw.js`·`src/style.css` 코드 읽기 + 로컬 프리뷰(`vite preview`, 390×844·320×568, 라이트·다크) 확인. 2026-09-30. 화면은 design/SPEC.md 3판(커밋 4f087b5·80dc252) 기준이다(2판과 다른 문구·배치는 3판을 따름).
 사용자: 밤에 침대에서 한 손, 반쯤 딴생각. 계획 안 세움. 시끄러운 화면 싫어함.
@@ -59,7 +59,7 @@
 | S48 | 글자 200% | 잘림 없음, 상단 정돈 | 상단 버튼은 nowrap이고 줄이 바뀜(♥와 숫자가 나뉘지 않음), 동네 색인은 1열, 200%(화면 확대·루트 글자 크기 둘 다)에서 가로 넘침·잘림 없음, 시트는 화면 안(scenarios `S48 large text: …`, e2e `S48`) | 없음 |
 | S49 | 다크 모드 | 밤에 눈부시지 않게 | 첫 페인트·스플래시 모두 어두움(index.html 인라인 배경 #161817, manifest `background_color` #161817), 사진 brightness 0.9, 다크 토큰은 녹회색(순검정·순백 아님)(scenarios `S49 dark: first paint and splash are dark …`, data.test `S51 홈 화면(PWA) 실행 — 매니페스트`의 `opens standalone … dark splash (D6)`, e2e `S9-4`의 다크 행렬은 넘침·44px만 봄) | 작음 — 다크에서 실제 배경색·밝은 면 여부를 브라우저로 재는 테스트는 없음(CSS 문자열 계약과 손계산 대비뿐) |
 | S50 | 동작 줄이기 | 움직임 없음 | 움직임은 `prefers-reduced-motion: no-preference` 안에서만(슬롭 규칙 13). 동작 줄이기에선 시트가 즉시 나타나고 사라지며 닫힘 대기도 0ms. 카드 등장 애니메이션은 애초에 없음, 첫 저장 안내도 전환 없음(scenarios `sheet: slides away over 190ms when motion is allowed …`, `first-save hint: no fade; …`, e2e `motion`, slop.test) | 없음 |
-| **S51** | PWA 단독 실행 | 앱처럼 바로, 기준 기억 | 매니페스트(standalone, start_url이 scope 안, 아이콘 존재)는 `data.test.ts`. 브라우저: start_url을 새 최상위 페이지로 열면(sessionStorage·history 비어 있음, localStorage 공유) 첫 화면, `애월 근처`·♥ 1 유지. 뒤로 버튼이 없는 iOS 단독 실행을 위해 시트 `닫기`·`돌아가기`·`바꾸기`로 모든 층을 페이지 안에서 닫음. 빌드에 display-mode 분기 없음(e2e `S51`; 헤드리스 Chrome은 display-mode를 흉내 내지 못한다) | 없음 |
+| **S51** | PWA 단독 실행 | 앱처럼 바로, 기준 기억 | 매니페스트(standalone, start_url이 scope 안, 아이콘 존재, 이름 `여행계획짜기 귀찮아:제주`·아이콘 아래 이름 `계획귀찮아`(ADR-0068))는 `data.test.ts`. 브라우저: start_url을 새 최상위 페이지로 열면(sessionStorage·history 비어 있음, localStorage 공유) 첫 화면, `애월 근처`·♥ 1 유지. 뒤로 버튼이 없는 iOS 단독 실행을 위해 시트 `닫기`·`돌아가기`·`바꾸기`로 모든 층을 페이지 안에서 닫음. 빌드에 display-mode 분기 없음(e2e `S51`; 헤드리스 Chrome은 display-mode를 흉내 내지 못한다) | 없음 |
 | S52 | 가로 회전 | 레이아웃 유지 | 844×390·667×375 × 라이트·다크: 480px 한 줄 가운데, 가로 넘침 0, `#crumb`(결과 머리) 화면 안, 시트는 높이 88dvh 이하로 안에서 스크롤·`닫기` 보임, 맨 아래 `성산`까지 스크롤해 고를 수 있음(e2e `S52`) | 없음 |
 | S53 | 카드 눌러 카카오맵 → 돌아옴(탭 유지) | 보던 카드 그대로 | 카드 링크는 target=_blank rel=noopener라 원래 탭 유지(app.test `card link = kakao place page, or a name-search fallback … target=_blank rel=noopener`) | 없음 |
 | S54 | 돌아왔더니 브라우저가 탭을 버리고 새로고침 / 당겨서 새로고침 | 방금 보던 3장이 그대로 | 세션 기록으로 새로고침·탭 폐기 뒤 같은 3장과 눌린 기분 복원, 1km 넘게 움직였으면 새로 뽑음(scenarios `S54` 두 건, e2e `S54`, state.test·store.test `S54 세션 기록`) | 없음 |
@@ -113,7 +113,7 @@
 | K3 | 인앱·다른 브라우저·새 폰으로 옮기기 | 로그인 없이 저장한 곳을 옮긴다 | 저장한 곳 아래 `링크로 백업` → `#s=` 조각에 v2 목록(약 23자/곳). 열면 조각을 주소에서 지우고 `…{n}곳 있어요. 이 기기에 합칠까요?` → `합치기`(없는 것만 그 날 끝, 사라진 장소 버림) / `그만두기`. 잘못된 링크는 조용히 버림(keep.test, keep-app.test `2c`, e2e `K-backup`) | 없음 |
 | K4 | 저장 뒤 저장한 곳을 처음 엶 | 홈 화면에 추가하면 오래 남는다는 걸 한 번만 | iOS는 공유 버튼 안내 + 백업으로 옮기라는 한 줄, 그 밖은 `beforeinstallprompt`가 있을 때만 `홈 화면에 추가` 버튼. 인앱·설치한 앱에서는 없음. `jeju.installSeen`(keep-app.test `2d`) | 없음 |
 | K5 | 데이터·사진 출처, 개인정보 | 화면에 출처, 처리 안내 페이지 | 결과 끝과 저장한 곳 아래 `정보·사진: 비짓제주(제주관광공사) · visitjeju.net`(5.91:1, `visitjeju.net`은 `https://www.visitjeju.net` 새 탭 링크·`rel="noopener"`, 같은 색에 밑줄, 문장 속 링크라 44 규칙 예외; contrast.test·keep-app.test `3·4`·e2e `K-backup`), 저장한 곳 아래 `개인정보 처리 안내` → `/privacy`(기기 저장, 위치 비전송, 익명 기록 내용·끄기, 접속 기록, 문의)(keep-app.test `3·4`, deploy.test, e2e `K-backup`) | 문의처는 GitHub 이슈(사용자 확인) |
-| K6 | 카카오톡에 주소 공유 | 제목·설명·사진이 있는 미리보기 | OG·트위터 메타, `og.png` 1200×630, 빌드 환경 변수 `SITE_URL`로 절대 주소(deploy.test). 실제 미리보기는 배포 뒤 카카오 공유 디버거로(docs/deploy.md) | 배포 뒤 확인 |
+| K6 | 카카오톡에 주소 공유 | 제목·설명·사진이 있는 미리보기 | OG·트위터 메타(제목 `여행계획짜기 귀찮아:제주`, 설명 첫마디 `P를 위한 무계획 여행.`, ADR-0068), `og.png` 1200×630, 빌드 환경 변수 `SITE_URL`로 절대 주소(deploy.test). 실제 미리보기는 배포 뒤 카카오 공유 디버거로(docs/deploy.md) | 배포 뒤 확인 |
 | N1 | 새로운 거 508곳의 종류(ADR-0064, specs/new-sub.md) | 모두 `sub`가 `sight`(구경) 또는 `do`(체험) | 체험(experience) → `do`, 관광지·문화공간 → `sight`, 카페·식당 46곳은 `review/copy/new-sub.json`의 판정(근거 포함). `scripts/new-sub.mjs`가 같은 규칙을 빌드(`build-spots.mjs`)와 출하본에 적용(review/out이 없어 출하본에 직접, 새로운 거에 `sub`만 더함). 구경 186·체험 322(data.test `N1 …` 두 건) | 없음 |
 | N2 | 15지역 × 3범위 × 3탭(섞어서·구경·체험) | 카드 3장, 빈손 없음 | 135조합 모두 서로 다른 3장, 구경은 `sight`만·체험은 `do`만, 모자라면 범위를 넓혀 채움(pick.test `N2 …`, `R2·N2 …`) | 없음 |
 | N3 | 새로운 거의 기본과 첫 화면 | 첫 화면 버튼 수·첫 탭 흐름 그대로, 기본 `섞어서` = 탭 전과 같은 3장 | 첫 화면 기분 5개 그대로, 새로운 거 결과에만 탭(`#newSub`, 그룹 aria `새로운 거 종류`), `섞어서` 눌림, 카드는 탭 없이 뽑은 것과 같음. 아무거나는 어느 탭이든 섞어서 풀에서 한 장(pick.test `N3 …`·`아무거나 …`, scenarios `N3 …`·`N4 아무거나 …`) | 없음 |

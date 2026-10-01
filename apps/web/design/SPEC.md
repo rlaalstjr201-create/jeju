@@ -261,7 +261,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <title>P의 여행</title>
+  <title>여행계획짜기 귀찮아:제주</title>
   <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161817" media="(prefers-color-scheme: dark)">
   <!-- 링크 미리보기(ADR-0063): og:type·site_name·title·description·image(1200×630 /og.png)·url·locale, twitter:card summary_large_image·title·description·image.
@@ -596,8 +596,9 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 
 | 자리 | 문구 |
 |---|---|
-| 문서 제목·매니페스트 name/short_name | `P의 여행` (ADR-0059) |
-| 설명(meta description·매니페스트 description) | `기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요.` |
+| 문서 제목·매니페스트 name | `여행계획짜기 귀찮아:제주` (ADR-0068) |
+| 매니페스트 short_name(홈 화면 아이콘 아래) | `계획귀찮아` (ADR-0068, 사용자 확인 대기) |
+| 설명(meta description·매니페스트 description) | `P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요.` |
 | 날짜 | `9월 30일 수요일` 형식, 오늘 날짜 |
 | 질문 | `지금 뭐 하고 싶어요?` |
 | 기분 | `푹 쉬고 싶어` / `좀 걷고 싶어` / `새로운 거 해보고 싶어` / `맛있는 거 먹고 싶어` / `아무거나 골라줘` |
@@ -876,7 +877,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 ### 12.2 매니페스트
 
-- `name`·`short_name`: `P의 여행`(ADR-0059). `theme_color`·`background_color`: 결정 D6(기본 `#161817`).
+- `name`: `여행계획짜기 귀찮아:제주`, `short_name`: `계획귀찮아`(ADR-0068). `theme_color`·`background_color`: 결정 D6(기본 `#161817`).
 - 아이콘: 192·512 `purpose: any`, 그리고 `icons/icon-maskable-512.png` `purpose: maskable`(무늬를 가운데 80%로 줄여 안전 영역 반지름 40% 안, 바다·하늘은 끝까지).
 
 ### 12.3 크기 예산

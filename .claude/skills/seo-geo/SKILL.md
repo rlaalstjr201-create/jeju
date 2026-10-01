@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-description: P의 여행(apps/web) SEO·GEO 작업 입구 — 「지금 무엇을 먼저 고치고 어떤 검색어를 노리고 버릴까」. 배포 전 점검, 랜딩 페이지·문구·title·구조화 데이터·llms.txt 작업 착수 전, 검색어 후보 검토(keyword gate), 배포 후 주간 점검(GSC·네이버 서치어드바이저·AI 답변 관측)에 쓴다. 판정 규칙의 단일 출처는 .claude/agents/seo-analyst.md다.
+description: 여행계획짜기 귀찮아:제주(apps/web) SEO·GEO 작업 입구 — 「지금 무엇을 먼저 고치고 어떤 검색어를 노리고 버릴까」. 배포 전 점검, 랜딩 페이지·문구·title·구조화 데이터·llms.txt 작업 착수 전, 검색어 후보 검토(keyword gate), 배포 후 주간 점검(GSC·네이버 서치어드바이저·AI 답변 관측)에 쓴다. 판정 규칙의 단일 출처는 .claude/agents/seo-analyst.md다.
 ---
 
 # seo-geo — 입구

@@ -4,7 +4,7 @@
  "updated": "2026-10-01",
  "candidates": [
   {
-   "query": "P의 여행 제주",
+   "query": "여행계획짜기 귀찮아:제주",
    "cluster": "brand",
    "brand": true,
    "scores": {
@@ -17,22 +17,22 @@
    "kills": [],
    "serp": {
     "checked_at": "2026-10-01",
-    "source": "WebSearch(미국 엔진 프록시 — 구글 KR·네이버 아님)",
-    "observed": "proxy",
-    "naver_observed": false,
+    "source": "네이버 통합검색 HTML(curl, 「여행계획짜기 귀찮아 제주」·「여행계획짜기 귀찮아」)",
+    "observed": "naver",
+    "naver_observed": true,
     "top": [
-     "brunch.co.kr",
-     "allurekorea.com",
-     "yes24.com(같은 제목 책)",
-     "triple.guide"
+     "kmong.com(여행 계획 대행 판매)",
+     "youtube.com",
+     "gall.dcinside.com",
+     "instiz.net"
     ],
-    "note": "「P의 여행」 단독은 책·밈 기사가 차지. 「제주」를 붙인 형태가 우리 브랜드 검색어"
+    "note": "같은 이름의 앱·서비스·책 없음. 커뮤니티 글과 여행 계획 대행 상품뿐 — 주인이 없는 말. 옛 이름 「P의 여행 제주」는 ADR-0068로 버렸다"
    },
    "demand": {
     "naver": [],
     "google": []
    },
-   "rationale": "브랜드 존재 확인용. 배포 후 1위가 아니면 색인·엔티티 문제다(경쟁 문제가 아니다).",
+   "rationale": "브랜드 존재 확인용(ADR-0068 새 이름). 배포 후 1위가 아니면 색인·엔티티 문제다(경쟁 문제가 아니다).",
    "landing": "/",
    "verdict": "brand"
   },
@@ -79,7 +79,7 @@
      "j와 p의 여행"
     ]
    },
-   "rationale": "검색 의도가 MBTI 밈(J가 보고 기절한 P의 여행계획)과 동명 도서다. 우리 브랜드로 읽히지 않는다 — 브랜드는 「P의 여행 제주」로 쓴다.",
+   "rationale": "검색 의도가 MBTI 밈(J가 보고 기절한 P의 여행계획)과 동명 도서다. 우리 브랜드로 읽히지 않는다. 옛 이름이라 ADR-0068로 「여행계획짜기 귀찮아:제주」로 바꿨다.",
    "verdict": "kill"
   },
   {
