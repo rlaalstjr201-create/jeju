@@ -2441,6 +2441,91 @@ await check('HN-open', '♥ N open (ADR-0070, decided): no fill, a 3px main-colo
   assert(!problems.length, problems.join(' | '));
 });
 
+// --- static landing pages (ADR-0072, specs/seo-landing.md): built by scripts/build-landing.mjs ---
+await check('LP1', 'hub → area → place: 200, no script, fits 390px (light and dark), every link on them answers; the deep link opens the app on that area', async () => {
+  const problems = [];
+  for (const dark of [false, true]) {
+    const { ctx, page } = await fresh({ dark });
+    const tag = dark ? 'dark' : 'light';
+    const visit = async (path) => {
+      const res = await page.goto(new URL(path, BASE).href);
+      if (res?.status() !== 200) problems.push(`${tag} ${path}: ${res?.status()}`);
+      const r = await page.evaluate(() => ({
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        scripts: [...document.scripts].filter((s) => s.type !== 'application/ld+json').length,
+        h1: document.querySelectorAll('h1').length,
+        bg: getComputedStyle(document.body).backgroundColor,
+        links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
+      }));
+      if (r.overflow > 0) problems.push(`${tag} ${path}: ${r.overflow}px sideways`);
+      if (r.scripts) problems.push(`${tag} ${path}: ${r.scripts} script(s)`);
+      if (r.h1 !== 1) problems.push(`${tag} ${path}: ${r.h1} h1`);
+      if (r.bg !== (dark ? 'rgb(15, 19, 25)' : 'rgb(255, 255, 255)')) problems.push(`${tag} ${path}: background ${r.bg}`);
+      return r.links;
+    };
+    const hubLinks = await visit('/jeju/');
+    if (!dark) await shot(page, 'landing-hub-390-light');
+    const areaLinks = await visit('/jeju/aewol/');
+    if (!dark) await shot(page, 'landing-area-390-light');
+    const place = areaLinks.find((h) => /^\/jeju\/aewol\/[a-z0-9-]+\/$/.test(h) && !/\/(rest|walk|new|food)\/$/.test(h));
+    const placeLinks = await visit(place);
+    if (!dark) await shot(page, 'landing-place-390-light');
+    if (!dark) {
+      const all = [...new Set([...hubLinks, ...areaLinks.slice(0, 80), ...placeLinks])];
+      const bad = await page.evaluate(async (hrefs) => {
+        const out = [];
+        for (const h of hrefs) {
+          const r = await fetch(h, { redirect: 'manual' });
+          if (r.status !== 200) out.push(`${h} ${r.status}`);
+        }
+        return out;
+      }, all);
+      problems.push(...bad.map((b) => `link ${b}`));
+      // 앱에서 근처 3곳 받기 → /?area=aewol&mood=… → the app's results for 애월
+      await page.goto(new URL(place, BASE).href);
+      await page.locator('a[href^="/?area=aewol&mood="]').first().click();
+      await waitCards(page);
+      const label = await page.textContent('#basis');
+      if (!label.includes('애월')) problems.push(`deep link opened on "${label}"`);
+    }
+    await ctx.close();
+  }
+  assert(!problems.length, problems.join(' | '));
+});
+
+await check('LP2', 'the service worker leaves /jeju/** alone: not cached, and offline it is not answered with the app shell', async () => {
+  const { ctx, page } = await fresh({ sw: true });
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+  });
+  await page.reload();
+  await sleep(300);
+  await page.goto(new URL('/jeju/', BASE).href);
+  const cached = await page.evaluate(async () => {
+    const out = [];
+    for (const k of await caches.keys()) for (const r of await (await caches.open(k)).keys()) if (new URL(r.url).pathname.startsWith('/jeju')) out.push(r.url);
+    return out;
+  });
+  assert(!cached.length, `cached: ${cached.join(', ')}`);
+  await ctx.setOffline(true);
+  const shell = await page
+    .goto(new URL('/jeju/aewol/', BASE).href, { timeout: 8000 })
+    .then(() => page.locator('[data-mood="rest"]').count())
+    .catch(() => 0);
+  await ctx.setOffline(false);
+  assert(shell === 0, 'offline /jeju/aewol/ got the app shell');
+  await ctx.close();
+});
+
+await check('LP3', 'an address under /jeju/ that is no page: 404 with the 404 page, which links home and to /jeju/', async () => {
+  const { ctx, page } = await fresh();
+  const res = await page.goto(new URL('/jeju/aewol/no-such-place/', BASE).href);
+  assert(res?.status() === 404, `status ${res?.status()}`);
+  const hrefs = await page.$$eval('a', (as) => as.map((a) => a.getAttribute('href')));
+  assert(hrefs.includes('/') && hrefs.includes('/jeju/'), `links ${hrefs}`);
+  await ctx.close();
+});
+
 await browser.close();
 server.kill();
 

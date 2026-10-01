@@ -239,6 +239,22 @@ describe('U 익명 사용 기록 (ADR-0061) — 서비스워커는 이벤트 요
   });
 });
 
+describe('정적 랜딩 (ADR-0072) — 서비스워커는 /jeju/**를 건드리지 않는다', () => {
+  it('pages and their stylesheet under /jeju go to the network as they are; the app and its files are still handled', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const res = { ok: true, clone: () => res };
+    const sw = runSw(source, async () => res, c);
+    await sw.install();
+    for (const u of ['https://app.test/jeju/', 'https://app.test/jeju', 'https://app.test/jeju/aewol/', 'https://app.test/jeju/aewol/some-place/', 'https://app.test/jeju/landing.css']) {
+      expect(sw.handles(u), u).toBe(false);
+    }
+    expect(sw.handles('https://app.test/')).toBe(true);
+    expect(sw.handles('https://app.test/assets/index-abc.js')).toBe(true);
+    expect(sw.handles('https://app.test/jejudo.png')).toBe(true);
+  });
+});
+
 describe('PWA 상주 앱 갱신', () => {
   it('main.ts checks for a new deploy when the app comes back to the foreground', () => {
     const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');
