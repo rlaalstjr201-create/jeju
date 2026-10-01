@@ -32,6 +32,42 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/icons/icon-192.png" type="image/png" />
     <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <!-- for search engines and AI agents (ADR-0067): what the app is, and the deep link that opens a result (public/llms.txt) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "__SITE__/#website",
+            "name": "P의 여행",
+            "alternateName": ["P의 여행 제주", "제주 P 여행"],
+            "url": "__SITE__/",
+            "inLanguage": "ko"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "__SITE__/#app",
+            "name": "P의 여행",
+            "url": "__SITE__/",
+            "description": "P의 여행은 계획 없이 다니는 P 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너다.",
+            "applicationCategory": "TravelApplication",
+            "operatingSystem": "Web",
+            "inLanguage": "ko",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+            "areaServed": { "@type": "AdministrativeArea", "name": "제주특별자치도" },
+            "isPartOf": { "@id": "__SITE__/#website" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "description": "기분(mood: rest·walk·new·food·any), 세부 지역(area: aewol 등 15곳 또는 here), 범위(reach: walk·drive30·drive60), 날짜(date: YYYY-MM-DD), 실내만(indoor: 1)으로 갈 만한 곳 3곳을 바로 연다. 값은 /llms.txt 참고.",
+              "target": { "@type": "EntryPoint", "urlTemplate": "__SITE__/?mood={mood}&area={area}&reach={reach}&date={date}&indoor={indoor}" },
+              "query-input": ["required name=mood", "optional name=area", "optional name=reach", "optional name=date", "optional name=indoor"]
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="app" class="app">

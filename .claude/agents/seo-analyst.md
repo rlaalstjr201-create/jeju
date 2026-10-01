@@ -84,6 +84,7 @@ K1 의도 불일치 · K2 데이터에 없는 속성 필요(실내·날씨·영�
 - **JS를 안 도는 크롤러가 읽을 정적 본문**이 본체다. 지금 홈은 정적 본문 161자, 장소 2,955곳은 JS만 그린다. 정적 랜딩(`specs/seo-landing.md`)이 GEO의 바탕이다.
 - 구조화 데이터는 화면과 같은 내용만: 홈 WebSite + WebApplication, 허브·지역 페이지 ItemList(장소는 TouristAttraction 등) + BreadcrumbList, 지역 TouristDestination. FAQPage는 구글 리치결과가 정부·보건 사이트로 제한됐으므로 리치결과를 기대하지 않는다 — 화면에 실제 Q&A가 있을 때만.
 - llms.txt는 유지하되 **성과 지표가 아니다**(구글은 쓰지 않는다고 명시, Ahrefs 실측 유효 llms.txt의 97%가 요청 0건).
+- **딥링크**(ADR-0067): `/?mood=&area=&reach=&date=&indoor=`가 결과를 바로 연다. 값의 단일 출처는 `src/deeplink.ts`·`src/areas.ts`(slug)이고, `public/llms.txt` 표와 홈 JSON-LD `SearchAction.urlTemplate`이 같아야 한다(`tests/drive-agents.test.ts`). 랜딩의 「앱에서 3곳 받기」는 이 링크를 쓴다(`specs/seo-landing.md` OQ4). 공개 API·MCP는 아직 없다.
 - Bing 색인이 ChatGPT 검색·Copilot의 바탕이다 — Bing Webmaster Tools(GSC 가져오기) + IndexNow를 배포 후 연결한다.
 - AI 답변 관측은 고정 질문 묶음 × 엔진 × 3회(`.claude/skills/seo-geo/references/measurement.md`). 1회 결과·크롤러 방문을 성과로 읽지 않는다.
 
