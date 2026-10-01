@@ -215,6 +215,62 @@ KIPRIS는 전체 류 검색 후 결과의 류 표시로 9·35·39·42·43류를 
 - 도메인 RDAP: `https://rdap.verisign.com/com/v1/domain/<이름>.com` · `https://rdap.nic.or.kr/domain/<이름>.kr` · `https://pubapi.registry.google/rdap/domain/<이름>.app`
 - 네이버: `https://search.naver.com/search.naver?query=<후보>` (curl HTML) — 근거 페이지: https://letsnowgo.app/ · https://blog.naver.com/taekstory/224372054995 · https://www.abn.co.kr/tv/tvProgramEndView.do?progseq=13 · https://blog.naver.com/iamdesigner · https://www.siksinhot.com/P/1905005
 
+## 8. 확정 이름 「여행계획짜기 귀찮아:제주」 겹침 점검 (2026-10-01)
+
+전제: 이름은 사용자가 확정했다(정식 「여행계획짜기 귀찮아:제주」, 콜론 뒤는 지역이라 부산 등으로 바뀐다. 약칭 후보 「계획귀찮아」). 목적은 탈락 판정이 아니라 **위험과 대응**이다. 방법은 §2~§4와 같다. 조회일 모두 **2026-10-01**.
+
+### 8-1. 결과
+
+| 축 | 확인한 것 | 결과 |
+|---|---|---|
+| KIPRIS(전체 류, 결과의 류 표시로 9/35/39/42/43류를 읽음) | 여행계획짜기귀찮아 · 여행계획귀찮아 · 계획귀찮아 · 귀찮아제주 · 여행귀찮아 · 귀찮은여행 · 귀찮아플랜 · 계획귀찮 · 여행계획짜기 · 짜기귀찮아 | **전부 0건**. 대조: 야놀자 868건(검색 정상) |
+| KIPRIS 「귀찮아·귀찮」(22건) | 우리 류에 살아 있는 근접 권리 | 같은 이름은 없다. 근접: **「귀찮 귀곤한 인생」 9류 등록**(김보민, 이모티콘·내려받기 파일 등, 2019, 유사 가능성 낮음 — 미확인) · 「귀찮Go」(41류, 2024)·「귀찮지만GO」(2024)·「귀찮요리」(2023)는 **포기**라 죽은 권리 · 「안귀찮은」(침구류로 추정, 등록) · 「영앤귀찮」(화장품, 2026-08-27 출원). 모두 우리 류 밖이거나 죽은 권리 |
+| KIPRIS 「여행계획」 | 「"여행계획"」 구문 259건 | **「여행계획」은 여행업 지정상품 문구**로 흔히 쓰인다(예: 허블리 「여행계획/알선 및 예약업」). 상표 자체가 아니라 설명어다. 근접 출원: **「Yeohaengjunbini」(출원 2026-02-23, 강나경, 「여행계획」 앱 9류)**, 「가챠고(GachaGo)」(2026-06-11, 지도·여행경로 앱 9류) — 표장이 달라 충돌은 아니나 같은 개념의 신규 출원이다 |
+| App Store(iTunes API, kr) | 여행계획짜기 귀찮아 · 여행계획 귀찮아 · 여행계획짜기 귀찮아 제주 · 귀찮아 여행 · 귀찮아 제주 · 여행 귀찮아 | **같은 이름 0건**. 「계획귀찮아」·「귀찮아」 검색에 걸린 앱: 「귀찮아 가계부」(HSIN WEI LEE, 2026-08-28), 「이따 - 시간 잡아주는 AI 할일앱」(Kyung Ryeol Baek, 2026-05-28), 「긍정적인 귀찮군」(2025-11-21). 모두 가계부·할일 앱이라 여행 개념 아님. 「여행계획」은 트리플·트립노트·J플래너·트랩플랜·울룰루 등 기존 플래너가 차지 |
+| Google Play(검색 HTML, hl=ko·gl=KR) | 여행계획짜기 귀찮아 · 계획귀찮아 · 귀찮아 여행 · 귀찮아 | 같은 이름 없음(상위 앱: 스마트래블, 울룰루, **여행짜기 - AI 여행 일정 플래너**(`com.peppercode.yeohaengjjagi`), 트립노트, 트리플). 「여행짜기」가 이름이 가장 가깝지만 다른 말이다. 「계획귀찮아」는 루틴·할일 앱 위주 |
+| 네이버 통합검색(curl HTML 1회) | 「여행계획짜기 귀찮아」 · 「계획귀찮아」 · 「귀찮아 제주」 | **브랜드 주인 없음**. 결과 전부 카페 글(「J인데 여행계획 짜기 귀찮아요」, 「여행 계획짜기 귀찮음…」)과 제주어 「실프다(귀찮다)」. 이 문구는 **사람들이 실제로 치고 쓰는 말**이라 검색 의도와는 맞고, 광고·카페 글과 경쟁하게 된다 |
+| YouTube | 채널 검색 「여행계획짜기 귀찮아」 · 「계획귀찮아」, 핸들 | 같은 이름 채널 없음(「귀찮은 보니」 등 별개). 핸들 `@gwichana` **사용 중(200)**, `@gyehoekgwichana` 비어 있음(404) |
+| Instagram | `instagram.com/gwichana/` | 로그인 벽(302)이라 **미확인**. 앱에서 `gwichana`·`gwichanha`·`gyehoekgwichana`를 직접 검색 |
+| 도메인(RDAP) | 아래 표 | 아래 |
+
+도메인(RDAP 404 = 비어 있음. 대조: naver.com·naver.kr 200으로 조회 방식 정상):
+
+| 후보(로마자) | .com | .kr | .app |
+|---|---|---|---|
+| gwichana(구어 표기) | 비어 있음 | 비어 있음 | 비어 있음 |
+| gwichanha(국어 로마자 표기 RR) | 비어 있음 | 비어 있음 | 비어 있음 |
+| gyehoekgwichana | 비어 있음 | 비어 있음 | 비어 있음 |
+| yeohaenggwichana | 비어 있음 | 비어 있음 | 비어 있음 |
+| gwichana-jeju · yeohaeng-gwichana · planbother | 비어 있음 | 비어 있음 | 비어 있음 |
+
+### 8-2. 위험과 대응
+
+1. **상표 충돌 위험은 낮다**: 같은 표장·같은 류의 살아 있는 권리가 없다. 위험은 충돌이 아니라 **(a) 먼저 출원당하는 것, (b) 식별력 부족으로 거절되는 것**이다.
+2. **(b) 식별력**: 「여행계획짜기」는 상품 설명에 가깝고 「귀찮아」는 흔한 구어다. 문장형 이름이라 거절·보정 요구가 올 가능성이 있다(**미확인, 변리사 판단**). 대응: **글자 상표와 로고(도형 결합)를 함께 출원**하고, 약칭 「계획귀찮아」도 따로 출원한다. 콜론 뒤 「:제주」는 지역이 바뀌므로 **출원 대상에서 뺀다**.
+3. **출원 시기**: 한국은 선출원주의다. 이번 조사 시점에 0건이므로 **출시·공개 홍보 전에, 가능하면 이번 주 안에** 낸다. 류는 **9(앱)·39(여행 알선·정보 제공)·42(소프트웨어 서비스)** 우선, 35·43류는 필요하면 추가. 비용·우선심사 요건은 **미확인**(KIPRIS·특허고객상담 또는 변리사에서 확인). 공개 전 출원은 검색에 안 보이므로 출원 직전에 한 번 더 조회한다.
+4. **도메인**: 이번 조사 기준 모두 비어 있다. 권고: **gwichana.com + gwichana.kr + gwichana.app**을 우선 확보하고, 로마자 표기가 갈리므로 **gwichanha.com**(RR 표기)을 방어용으로 같이 잡는다. 서비스가 「제주→전국」으로 가므로 도메인에 지역명(-jeju)은 넣지 않는다. 긴 gyehoekgwichana·yeohaenggwichana는 .com 하나씩만 선택. 등록 가능 여부·프리미엄 가격은 **미확인**(등록 대행사에서 확인).
+5. **핸들**: YouTube `@gwichana`는 이미 쓰인다 → `@gyehoekgwichana`나 `@gwichana_trip` 계열로. Instagram은 **미확인**.
+6. **검색**: 브랜드 검색어가 비어 있어 이길 수 있다. 다만 「여행계획 짜기 귀찮아」는 일반 문장이라 카페 글이 섞인다. 앱 안·랜딩에 **정식 이름을 일관되게 쓰고**(약칭 혼용 최소화) 네이버 서치어드바이저·구글에 등록한다. 「계획귀찮아」 약칭은 루틴·할일 앱과 검색이 섞인다.
+7. **스토어 혼동**: 「귀찮아 가계부」·「이따」와 이름 일부가 겹치나 개념이 달라 혼동 가능성은 낮다. 이름에 부제 「여행」을 붙여 구분한다.
+
+### 8-3. 미확인·한계
+
+- KIPRIS: §2-1과 같은 화면용 요청, 공개 전 출원 미반영. 유사 발음은 변형 검색어(귀챠나 등)로만 봤고 칭호(발음) 정식 검색은 하지 않았다. 「귀차나」는 357,068건이 나와 검색 방식이 무의미해(전체 일치 아님) 쓰지 않았다. 「귀찮」 결과 22건은 전부 읽었다.
+- App Store는 iTunes Search API 상위 결과, Play는 검색 HTML 상위 결과만 읽었다. Play 앱 상세의 다운로드 수는 확인하지 못했다.
+- 네이버는 curl HTML 1회 표본(광고·블록 순서는 분석하지 않음). Instagram 미확인. YouTube는 검색 HTML 표본.
+- 도메인은 RDAP 404일 뿐 등록 가능 보증이 아니다.
+- 법적 판단이 아니다.
+
+### 8-4. 출처 (조회 2026-10-01)
+
+- KIPRIS: `POST https://www.kipris.or.kr/kdtj/grrt1000a.do?method=searchTM` (§2-1 방식)
+- App Store: `https://itunes.apple.com/search?term=<검색어>&country=kr&entity=software`
+- Google Play: `https://play.google.com/store/search?q=<검색어>&c=apps&hl=ko&gl=KR` · https://play.google.com/store/apps/details?id=com.peppercode.yeohaengjjagi&hl=ko
+- 네이버: `https://search.naver.com/search.naver?query=<검색어>` · https://cafe.naver.com/skybluezw4rh/14888822 · https://cafe.naver.com/mindy7857/5457679
+- YouTube: `https://www.youtube.com/results?search_query=<검색어>&sp=EgIQAg%253D%253D` · `https://www.youtube.com/@gwichana`
+- Instagram: https://www.instagram.com/gwichana/ (302, 미확인)
+- RDAP: https://rdap.verisign.com/com/v1/domain/<이름>.com · https://pubapi.registry.google/rdap/domain/<이름>.app · https://rdap.nic.or.kr/domain/<이름>.kr
+
 ## 출처 목록 (조회 2026-10-01)
 
 - App Store: https://apps.apple.com/kr/app/id6806749553 · https://apps.apple.com/kr/app/id6777857291 · https://apps.apple.com/kr/app/id6806508654 · https://apps.apple.com/kr/app/id6805714195 · https://apps.apple.com/kr/app/id6651825231 · https://apps.apple.com/kr/app/id6790246818 (세곳) · iTunes API https://itunes.apple.com/search · https://itunes.apple.com/lookup
