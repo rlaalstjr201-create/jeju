@@ -12,6 +12,8 @@
 
 2026-10-01: ADR-0067(`specs/drive-and-agents.md`)을 반영했다. 차 안 사용 전제(1절 원칙 13), 카드마다 `길찾기`(카카오맵 자동차 길찾기, 6.5·9절), 딥링크 `/?mood=…&area=…`(11.3절).
 
+2026-10-01: ADR-0070(색 「바다·귤」, `design/palette.md` 후보 A)을 반영했다. 흰 바탕 + 3색(메인 바다·포인트 귤·글자 현무암), **주 버튼은 회색 채움에서 메인 색 채움으로**. 선택은 여전히 체크·굵기·밑줄이고 색은 그 표시를 칠할 뿐이다(1·2.1·2.2·6.1·6.3·6.4·6.5·6.6·6.8·6.9·6.11·8·12.2·13·14·16절).
+
 범위는 ADR-0025~0029 그대로다(이름·기준 순간은 ADR-0059로 갱신). 한 화면, 로그인·일정·결제 없음, 데이터 추가 수집 없음, 가격·운영시간·평점 없음. 성공 기준은 `plans/tomorrow-picker.md`의 S9-1~S9-7.
 
 사용자: 계획 없이 제주를 다니다 "지금 여기서 뭐하지?" 할 때 한 손 엄지로, 반쯤 딴생각하며 갈 곳을 고르는 여행자(ADR-0059). 계획을 세우지 않고, 시끄러운 화면을 싫어한다. "AI가 만든 것 같다"는 느낌이 한 번이라도 들면 안 된다.
@@ -90,15 +92,15 @@ C를 1위로 둔 두 심사가 꼽은 장점은 "장소가 주인공"이라는 �
 
 1. **한 번에 하나.** 첫 화면은 질문 하나와 기분 목록. 결과 화면은 고른 기분 한 줄과 세 곳. 기분을 고르면 질문과 목록은 접힌다.
 2. **엄지 쪽에 주 행동, 위쪽 모서리에 보조 행동.** 기분 목록과 `다른 3곳 보기`는 화면 아래쪽. 위쪽 두 모서리에는 기준(왼쪽)과 저장(오른쪽)만.
-3. **역할마다 재질 하나.** 행동 버튼은 면(`--fill`) 하나. 고르는 목록(기분·동네·시트 옵션)은 가는선 줄. 보조 행동은 밑줄 글자. 읽는 것(장소)은 사진과 글자만, 상자 없음. 떠 있는 것(시트)만 `--surface`와 둥근 윗모서리. 그림자는 어디에도 없다.
-4. **색은 두 역할뿐.** 먹색(`--text`)은 선택 표시(체크·굵기·밑줄)와 글자, 동백 빨강(`--accent`)은 저장한 하트. 채운 면으로 선택을 표시하지 않는다. 거리·링크·메타·아이콘에는 색을 쓰지 않는다. 나머지 색은 장소 사진이 맡는다.
+3. **역할마다 재질 하나.** 행동 버튼은 메인 색 면(`--main`) 하나(ADR-0070). 고르는 목록(기분·동네·시트 옵션)은 가는선 줄. 보조 행동은 밑줄 글자. 읽는 것(장소)은 사진과 글자만, 상자 없음. 떠 있는 것(시트)만 `--surface`와 둥근 윗모서리. 그림자는 어디에도 없다.
+4. **흰 바탕에 세 색**(ADR-0070). 현무암(`--text`)은 글자, 바다(`--main`)는 누르는 것(주 버튼 면)과 선택 표시(체크·선택 탭 밑줄)·예약 링크 밑줄, 귤(`--accent`)은 마음에 든 것(저장 하트)과 `아무거나 골라줘` 밑줄. 회색은 글자색을 바탕에 섞어 만든다. **선택은 색만으로 보이지 않는다**: 체크·굵기·밑줄이 선택을 표시하고 색은 그 표시를 칠할 뿐이다. 채운 면으로 선택을 표시하지 않는다. 귤은 글자 색으로 쓰지 않는다(흰 바탕 위 4.5 미달). 거리·메타·그 밖의 아이콘에는 색을 쓰지 않는다. 나머지 색은 장소 사진이 맡는다.
 5. **장소가 주인공.** 결과 화면에서 가장 큰 글자는 첫 장 이름이다. 사용자가 이미 아는 기분은 작게 접는다.
 6. **반복은 한 번만 말한다.** 같은 이동 문구는 묶어서 한 번, 지도 목적지(`카카오맵`)는 한 화면에 한 번.
 7. **간격이 묶음을 만든다.** 묶음 안 2~12px, 묶음 사이 16~28px.
 8. **진짜 재료만.** 실제 사진, 실제 지명, 계산한 이동 시간(추정이면 `약`). 사진이 없으면 사진 칸을 통째로 뺀다.
 9. **상태는 정직하게, 짧게.** 로딩·실패·권한 거절·제주 밖·오프라인은 각각 다른 한두 줄과 다음 행동 하나. 300ms 안에 끝나면 아무것도 띄우지 않는다.
 10. **반복 동작에는 움직임 없음.** 카드 등장 애니메이션은 없다. 움직이는 것은 시트·딤과 누름 반응뿐. 동작 줄이기면 전부 끈다.
-11. **밤이 기본.** 다크는 순검정이 아닌 녹회색, 사진 밝기 0.9, 밝은 면 반전 없음. 첫 페인트부터 배경색이 맞는다.
+11. **밤이 기본.** 다크는 순검정이 아닌 남색 기운의 현무암(`#0f1319`), 사진 밝기 0.9, 밝은 면 반전 없음. 첫 페인트부터 배경색이 맞는다.
 12. **기억하되 티 내지 않는다.** 기준·숙소·저장·보던 카드는 조용히 복원한다. 자기 알림 문구 없음.
 13. **고르는 사람은 동승자, 운전자는 길 안내만 본다**(ADR-0067). 제주 여행은 대개 차로 다닌다. 운전 중에 읽거나 입력해야 하는 기능은 만들지 않는다 — 운전자가 보는 화면은 카카오맵 내비뿐이다. 첫 탭은 한 탭(기분 하나 → 3곳), 카드에서 길 안내까지 한 탭(`길찾기`), 자주 누르는 대상은 누름 영역 48px 이상(4절, design.md T2).
 
@@ -110,44 +112,51 @@ C를 1위로 둔 두 심사가 꼽은 장점은 "장소가 주인공"이라는 �
 
 | 토큰 | 라이트 | 다크 | 쓰는 곳 |
 |---|---|---|---|
-| `--bg` | `#f6f6f3` | `#161817` | 화면·상단 줄·`다른 3곳 보기` 띠 바탕, `html` 바탕 |
-| `--surface` | `#ffffff` | `#1f2221` | 시트만 |
-| `--fill` | `#ebebe6` | `#2a2e2c` | 면 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`), 사진 자리, 회색 틀, 목록 줄·글자 버튼 누름, ♥ N 눌림 |
-| `--fill-press` | `#dfdfd9` | `#353a38` | 면 버튼을 누르는 동안 |
-| `--line` | `#e2e2dc` | `#2c302e` | 목록 가는선, 식사 탭 아래 선, 떠 있는 띠 위 선, 시트 `닫기` 위 선 |
-| `--field-line` | `#8a8f8c` | `#6b706d` | 날짜 대체 입력(`.date-in`) 테두리만. 테두리 말고는 칸을 알아볼 단서가 없어 3:1 이상(2.2, design.md C3) |
-| `--text` | `#1b1d1c` | `#e8e8e3` | 본문·제목·버튼 글자, 체크, 포커스 링, 선택 탭 밑줄 |
-| `--muted` | `#5b605e` | `#a3a8a5` | 메타·보조 문장·날짜·대표 지명·무리 제목·빈 하트 선·꺾쇠·밑줄 색 |
-| `--accent` | `#cc3a2f` | `#ee7e71` | 저장된 하트, ♥ N의 하트. 이 두 곳 말고는 쓰지 않는다 |
+| `--bg` | `#ffffff` | `#0f1319` | 화면·상단 줄·`다른 3곳 보기` 띠 바탕, `html` 바탕 |
+| `--surface` | `#ffffff` | `#1a1e24` | 시트만 |
+| `--fill` | `#f3f3f4` | `#23272d` | 사진 자리, 회색 틀, 목록 줄(기분 제외)·글자 버튼 누름, ♥ N 눌림 |
+| `--fill-press` | `#e8e8e9` | `#30343a` | (예비) 회색 면을 누르는 동안. 지금 쓰는 곳 없음 |
+| `--line` | `#e3e3e4` | `#33373c` | 목록 가는선, 식사 탭 아래 선, 떠 있는 띠 위 선, 시트 `닫기` 위 선 |
+| `--field-line` | `#8a8c8f` | `#7e8287` | 날짜 대체 입력(`.date-in`) 테두리만. 테두리 말고는 칸을 알아볼 단서가 없어 3:1 이상(2.2, design.md C3) |
+| `--text` | `#14181f` | `#eef1f5` | 본문·제목·글자 버튼 글자, 포커스 링 (현무암) |
+| `--muted` | `#5f6267` | `#b0b3b7` | 메타·보조 문장·날짜·대표 지명·무리 제목·빈 하트 선·꺾쇠·글자 버튼 밑줄 색 |
+| `--main` | `#0a6fd6` | `#5aa9ff` | (바다) 면 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`) 채움, 체크, 선택 탭 밑줄 3px, 예약 링크 밑줄 |
+| `--on-main` | `#ffffff` | `#0f1319` | 면 버튼 글자(다크는 밝은 바다 위라 어두운 글자) |
+| `--main-press` | `#0c62bb` | `#4d8ed6` | 면 버튼을 누르는 동안 |
+| `--main-tint` | `#e6f1fb` | `#1b2b3e` | 기분 줄을 누르는 동안(메인 10%) |
+| `--accent` | `#f06400` | `#ff8a3d` | (귤) 저장된 하트, ♥ N의 하트, `아무거나 골라줘` 밑줄 2px. 이 세 곳 말고는 쓰지 않는다. 글자 색으로 쓰지 않는다 |
 | `--scrim` | `rgb(0 0 0 / 35%)` | `rgb(0 0 0 / 55%)` | 시트 뒤 딤. 반투명은 여기에만 |
 | `--photo` | `none` | `brightness(0.9)` | 장소 사진 `filter` |
 
-`--sel-bg`·`--sel-fg`는 없앤다. 다크에서 채운 선택 칸은 밝게 하면 전등처럼 켜지고(2판 QA), 중간 회색(`#8e938f`)으로 낮추면 다른 칸과 한눈에 구분되지 않았다(심사 2, 대비 5.76). 선택은 체크 아이콘과 굵기로만 보인다.
+회색(`--fill`·`--fill-press`·`--line`·`--field-line`·`--muted`)은 새 색이 아니라 `--text`를 바탕에 섞은 값이다(라이트 보조 글자 68%·채움 5%·선 12%, 다크 72%·9%·16%, `design/palette.md` 3절). `--sel-bg`·`--sel-fg`는 없앤다. 다크에서 채운 선택 칸은 밝게 하면 전등처럼 켜지고(2판 QA), 중간 회색(`#8e938f`)으로 낮추면 다른 칸과 한눈에 구분되지 않았다(심사 2, 대비 5.76). 선택은 체크 아이콘과 굵기로만 보인다.
 
 ### 2.2 대비 (WCAG 2.x 상대 휘도로 계산)
 
 | 쓰는 곳 | 짝 | 라이트 | 다크 | 기준 |
 |---|---|---|---|---|
-| 본문·제목 | `--text` on `--bg` | 15.65 | 14.51 | 4.5 (목표 7) |
-| 시트 글자 | `--text` on `--surface` | 16.95 | 13.05 | 4.5 |
-| 면 버튼 글자, 누른 목록 줄 이름 | `--text` on `--fill` | 14.17 | 11.20 | 4.5 |
-| 누른 면 버튼 글자 | `--text` on `--fill-press` | 12.67 | 9.42 | 4.5 |
-| 메타·보조·`아무거나 골라줘` | `--muted` on `--bg` | 5.91 | 7.39 | 4.5 |
-| 시트 대표 지명·보조·`닫기` | `--muted` on `--surface` | 6.40 | 6.65 | 4.5 |
-| 누른 목록 줄 대표 지명 | `--muted` on `--fill` | 5.35 | 5.70 | 4.5 |
-| 누른 면 위 보조(해당 시) | `--muted` on `--fill-press` | 4.79 | 4.80 | 4.5 |
-| 저장된 하트(비텍스트) | `--accent` on `--bg` | 4.60 | 6.68 | 3 |
-| 시트 위 하트(참고) | `--accent` on `--surface` | 4.98 | 6.00 | 3 |
-| ♥ N 눌림 면 위 하트 | `--accent` on `--fill` | 4.17 | 5.15 | 3 |
-| 빈 하트 선·꺾쇠·체크(비텍스트) | `--muted`/`--text` on `--bg` | 5.91 / 15.65 | 7.39 / 14.51 | 3 |
-| 포커스 링·선택 탭 밑줄(비텍스트) | `--text` on `--bg` | 15.65 | 14.51 | 3 |
-| 면 vs 바탕(참고) | `--fill` on `--bg` | 1.10 | 1.30 | 없음 |
-| 면 vs 시트(참고) | `--fill` on `--surface` | 1.20 | 1.17 | 없음 |
-| 가는선 vs 바탕(참고) | `--line` on `--bg` | 1.20 | 1.33 | 없음 |
-| 날짜 입력 칸 테두리(비텍스트) | `--field-line` on `--surface` | 3.29 | 3.18 | 3 |
-| 날짜 입력 칸 테두리(참고, 시트 밖에 놓일 때) | `--field-line` on `--bg` | 3.04 | 3.54 | 3 |
+| 본문·제목 | `--text` on `--bg` | 17.79 | 16.44 | 4.5 (목표 7) |
+| 시트 글자 | `--text` on `--surface` | 17.79 | 14.77 | 4.5 |
+| 누른 목록 줄 이름 | `--text` on `--fill` | 16.05 | 13.24 | 4.5 |
+| 누른 기분 줄 | `--text` on `--main-tint` | 15.54 | 12.68 | 4.5 |
+| 면 버튼 글자 | `--on-main` on `--main` | 4.93 | 7.59 | 4.5 |
+| 누른 면 버튼 글자 | `--on-main` on `--main-press` | 6.03 | 5.46 | 4.5 |
+| 메타·보조·`아무거나 골라줘` | `--muted` on `--bg` | 6.12 | 8.85 | 4.5 |
+| 시트 대표 지명·보조·`닫기` | `--muted` on `--surface` | 6.12 | 7.95 | 4.5 |
+| 누른 목록 줄 대표 지명 | `--muted` on `--fill` | 5.52 | 7.13 | 4.5 |
+| 회색 누름 면 위 보조(최저, 해당 시) | `--muted` on `--fill-press` | 5.00 | 5.95 | 4.5 |
+| 체크·선택 탭 밑줄·예약 링크 밑줄(비텍스트) | `--main` on `--bg` | 4.93 | 7.59 | 3 |
+| 시트 위 체크(비텍스트) | `--main` on `--surface` | 4.93 | 6.82 | 3 |
+| 저장된 하트·`아무거나` 밑줄(비텍스트) | `--accent` on `--bg` | 3.22 | 7.94 | 3 |
+| ♥ N 눌림 면 위 하트 | `--accent` on `--fill` | **2.90** | 6.40 | 3 (라이트 미달, ADR-0070 결정 대기) |
+| 빈 하트 선·꺾쇠(비텍스트) | `--muted` on `--bg` | 6.12 | 8.85 | 3 |
+| 포커스 링(비텍스트) | `--text` on `--bg` | 17.79 | 16.44 | 3 |
+| 면 vs 바탕(참고) | `--fill` on `--bg` | 1.11 | 1.24 | 없음 |
+| 면 vs 시트(참고) | `--fill` on `--surface` | 1.11 | 1.12 | 없음 |
+| 가는선 vs 바탕(참고) | `--line` on `--bg` | 1.28 | 1.55 | 없음 |
+| 날짜 입력 칸 테두리(비텍스트) | `--field-line` on `--surface` | 3.37 | 4.33 | 3 |
+| 날짜 입력 칸 테두리(참고, 시트 밖에 놓일 때) | `--field-line` on `--bg` | 3.37 | 4.82 | 3 |
 
-면·가는선 경계는 WCAG 요구 대상이 아니다. 버튼과 목록 줄은 글자로 식별된다. **예외는 입력 칸 테두리**다: 빈 날짜 입력 칸(`.date-in`)은 테두리 말고는 식별할 단서가 없으므로 WCAG 1.4.11에 따라 `--field-line`으로 3:1 이상을 둔다(`--line`이면 1.30 / 1.20). 그래서 면 버튼 글자는 `--muted`가 아닌 `--text` 600으로 쓴다. 다크 본문 글자 상대 휘도 0.80, 바탕 0.009로 순백·순검정이 아니다.
+면·가는선 경계는 WCAG 요구 대상이 아니다. 버튼과 목록 줄은 글자로 식별된다. **예외는 입력 칸 테두리**다: 빈 날짜 입력 칸(`.date-in`)은 테두리 말고는 식별할 단서가 없으므로 WCAG 1.4.11에 따라 `--field-line`으로 3:1 이상을 둔다(`--line`이면 1.28 / 1.55). 면 버튼 글자는 `--on-main` 600이다. 빠듯한 곳은 라이트 면 버튼 글자(4.93)와 라이트 하트(3.22)다. 다크 본문 글자 상대 휘도 0.87, 바탕 0.006으로 순백·순검정이 아니다.
 
 ### 2.3 그 밖의 토큰
 
@@ -262,13 +271,13 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
   <title>여행계획짜기 귀찮아:제주</title>
-  <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#161817" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)">
   <!-- 링크 미리보기(ADR-0063): og:type·site_name·title·description·image(1200×630 /og.png)·url·locale, twitter:card summary_large_image·title·description·image.
        __SITE__는 빌드 환경 변수 SITE_URL로 바뀐다(없으면 상대 경로) -->
   <!-- 아이콘: /favicon.ico(32), /icons/icon-192.png, apple-touch-icon /icons/icon-180.png, 매니페스트 /manifest.webmanifest. 모두 절대 경로 -->
   <!-- 첫 페인트 번쩍임 방지. 토큰 밖 색 리터럴은 여기만 허용 -->
-  <style>html{background:#f6f6f3}@media (prefers-color-scheme:dark){html{background:#161817}}</style>
+  <style>html{background:#ffffff}@media (prefers-color-scheme:dark){html{background:#0f1319}}</style>
 </head>
 <body>
   <div id="app" class="app">                                   <!-- 시트가 열리면 inert -->
@@ -355,10 +364,10 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 
 - **날짜 줄**: 15/400 `--muted`, `{M}월 {D}일 {요일}요일`(예: `9월 30일 수요일`). 제주(Asia/Seoul) 날짜의 오늘(ADR-0059, 04:00 기준 내일 규칙 없앰). 저장한 곳의 `오늘`과 같은 날이라 기기 시간대와 관계없다. 자정이 지나면(자정 타이머, 앱이 앞으로 돌아올 때) 바뀐다. JS 전에는 빈 줄이지만 `min-height: 1.5em`으로 자리를 잡는다.
 - **질문**: `지금 뭐 하고 싶어요?` 24/700, 날짜 줄 아래 4. 320에서도 한 줄(ADR-0059).
-- **기분 목록**: 질문 아래 20. 줄 4개, 목록 좌우를 -8로 넓혀 누름 면이 글자보다 8px 바깥까지 온다. 줄: `min-height: 60px`, 패딩 14/8, 20/600 `--text`, 행간 1.35, 글자 왼쪽(여백 선 x=16에 정확히 맞는다). 가는선은 첫 줄 위, 줄 사이, 마지막 줄 아래(모두 1px `--line`, 좌우 8 들여 글자 폭 선에 맞춤). 틀·면·그림자·꺾쇠 없음. 누르는 동안 `--fill` 면(radius `--r-ctl`).
-  - 지난번에 고른 기분(`state.mood`)은 줄 오른쪽 체크(`--text`) + `aria-current="true"`.
+- **기분 목록**: 질문 아래 20. 줄 4개, 목록 좌우를 -8로 넓혀 누름 면이 글자보다 8px 바깥까지 온다. 줄: `min-height: 60px`, 패딩 14/8, 20/600 `--text`, 행간 1.35, 글자 왼쪽(여백 선 x=16에 정확히 맞는다). 가는선은 첫 줄 위, 줄 사이, 마지막 줄 아래(모두 1px `--line`, 좌우 8 들여 글자 폭 선에 맞춤). 틀·면·그림자·꺾쇠 없음. 누르는 동안 `--main-tint` 면(radius `--r-ctl`, ADR-0070).
+  - 지난번에 고른 기분(`state.mood`)은 줄 오른쪽 체크(`--main`) + `aria-current="true"`.
 - **안내 자리**(`#homeNote.inform`, ADR-0063): `아무거나 골라줘` 아래 24. 평소엔 `hidden`이라 첫 화면은 질문과 기분 목록뿐이다. 백업 링크로 열었을 때의 합치기 물음, 인앱 브라우저 안내만 여기 온다(6.14). 화면 글자 크기는 그대로 24·20·15.
-- **아무거나 골라줘**: 목록 아래 8, 목록 밖에 떨어진 글자 버튼. 20/400 `--muted`, 밑줄 1px(글자색), `text-underline-offset: 6px`, 높이 ≥ 48, 패딩 0 8 + 왼쪽 마진 -8(글자가 여백 선에). 기분 줄과 크기는 같고 색·굵기·밑줄로 성격이 다른 선택지임을 보인다. 지난번에 `any`였으면 글자 뒤 6px에 체크 + `aria-current="true"`.
+- **아무거나 골라줘**: 목록 아래 8, 목록 밖에 떨어진 글자 버튼. 20/400 `--muted`, 밑줄 2px `--accent`(ADR-0070), `text-underline-offset: 6px`, 높이 ≥ 48, 패딩 0 8 + 왼쪽 마진 -8(글자가 여백 선에). 기분 줄과 크기는 같고 색·굵기·밑줄로 성격이 다른 선택지임을 보인다. 지난번에 `any`였으면 글자 뒤 6px에 체크 + `aria-current="true"`.
 - 권한 요청·팝업·로딩 표시 없음. 위치 권한은 기분을 누를 때 처음 묻는다.
 
 ### 6.4 결과 머리
@@ -366,7 +375,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **고른 기분**(`h1.crumb`): 기분 문구 그대로(`푹 쉬고 싶어` … `아무거나 골라줘`). 17/600 `--text`. 결과 화면에서 첫 장 이름(20/700)보다 작다. `tabindex="-1"`로 결과가 뜨면 포커스를 받는다(링은 `:focus-visible`일 때만).
 - **바꾸기**: 머리 오른쪽 끝, `.tbtn`(15/600 `--text`, 밑줄 1px `--muted`, offset 4, 높이 44, 패딩 0 8, 오른쪽 마진 -8). 누름 영역 48(`::before`로 위아래 2씩, 4절). 누르면 첫 화면(기분 목록). `aria-label="기분 바꾸기"`.
 - 머리 줄: `display: flex; align-items: center; justify-content: space-between`, 높이 44(글자 버튼이 정함), 상단 줄 아래 4, `scroll-margin-top: var(--top-h)`.
-- **식사 \| 카페·디저트**(맛있는 거 먹고 싶어일 때만): 머리 아래 8. 글자 탭 두 개, 왼쪽 정렬, 탭 사이 24, 탭 높이 44, 15/600. 선택 탭은 `--text` + 아래 2px `--text` 밑줄(글자 폭), 다른 탭은 `--muted`. 탭 줄 아래 1px `--line`. 탭 누름 영역은 `::before { inset: -2px -8px }`로 좌우 8, 위아래 2씩 넓혀 48 이상(`식사`가 44px보다 좁다, 4절). 면·알약 없음. `aria-pressed`로 상태.
+- **식사 \| 카페·디저트**(맛있는 거 먹고 싶어일 때만): 머리 아래 8. 글자 탭 두 개, 왼쪽 정렬, 탭 사이 24, 탭 높이 44, 15/600. 선택 탭은 `--text` + 아래 3px `--main` 밑줄(글자 폭, ADR-0070), 다른 탭은 `--muted`. 탭 줄 아래 1px `--line`. 탭 누름 영역은 `::before { inset: -2px -8px }`로 좌우 8, 위아래 2씩 넓혀 48 이상(`식사`가 44px보다 좁다, 4절). 면·알약 없음. `aria-pressed`로 상태.
 - **섞어서 · 구경 · 체험**(새로운 거 해보고 싶어일 때만, ADR-0064, `specs/new-sub.md`): 식사 탭과 같은 부품(`div#newSub.tabs`, `role="group"`, aria `새로운 거 종류`)·자리(머리 아래 8)·모양·누름 영역(`.tab::before`, 48 이상)·`aria-pressed`. 탭 세 개 `섞어서`·`구경`·`체험`, 기본 `섞어서`. `섞어서` = 종류 무관 새로운 거 전체(탭 전과 같은 3장), `구경` = `sub: sight`만, `체험` = `sub: do`만. 정렬·범위·넓히기(빈손 없음)·로테이션 규칙은 같고, 로테이션 기록은 탭마다 따로(`new:mix`·`new:sight`·`new:do`). 고른 탭은 다음 새로운 거까지 기억하고(식사 탭과 따로), 새로고침 복원에서도 같은 탭. `아무거나`는 탭과 관계없이 섞어서 풀에서 한 장. 첫 화면 버튼 수와 첫 탭 흐름은 그대로.
 - **상태 줄**(`#status`, `role="status"`): 15/400 `--muted`, 위 12. 비어 있으면 `display: none`. flex-wrap, 항목 사이 12. `지역으로 고르기`는 이 줄 안의 `.tbtn`. 들어가는 문구는 9절.
 
@@ -400,7 +409,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **스크린리더**: 링크 이름은 `{이름}, 카카오맵에서 보기`. 이동 문구가 `아니면` 줄로 묶인 줄 카드는 링크에 `aria-describedby="alt-trip"`을 붙인다(묶은 문구를 카드와 함께 듣는다).
 - **하트**: 44×44 버튼, 이름 오른쪽(사진 위가 아니다). `margin: -10px -10px -10px 0`로 이름 첫 줄 높이와 오른쪽 여백 선에 맞춘다. 누름 영역은 48×48(`::before { inset: 0 0 -4px -4px }`, 4절). 빈 하트 `--muted` 선 1.8, 저장 `--accent` 채움. `aria-label`은 `{이름} 저장`으로 고정, 상태는 `aria-pressed`로만. 누르면 그 하트와 ♥ N만 바뀐다. 카드 노드를 다시 만들지 않는다(사진이 깜빡이지 않는다). 토스트·폭죽 없음.
 - **길찾기**(ADR-0067, 모든 카드·저장한 곳 줄): 메타 아래 4, 예약 링크 위, 카드 폭 전체 줄. `.tbtn`(그린 높이 44, 왼쪽 마진 -8), 누름 영역 48×48(`::before { inset: 0 0 -4px -4px }`, 4절). 링크는 `https://map.kakao.com/link/to/{이름},{위도},{경도}` — 모바일은 카카오가 공식 모바일웹 스킴(`m.map.kakao.com/scheme/route?ep=…&by=car`)으로 넘겨 앱이 있으면 앱, 없으면 모바일웹의 자동차 길찾기를 현재 위치에서 연다. 이름의 쉼표·빗금은 공백으로. 좌표가 없으면 이름 검색 링크. 카드 전체 링크(장소 페이지)와 첫 장 메타의 `카카오맵`은 그대로다. 사용 기록은 `map`.
-- **예약 링크**(bookable만): `.tbtn`(15/600 `--text`, 밑줄 1px `--muted`), 높이 44, 왼쪽 마진 -8(글자가 카드 왼쪽 선에), 아래 마진 -8, `white-space: normal`(글자 200%에서는 줄바꿈 허용). 아이콘 없음.
+- **예약 링크**(bookable만): `.tbtn`(15/600 `--text`, 밑줄 1px `--main`, ADR-0070), 높이 44, 왼쪽 마진 -8(글자가 카드 왼쪽 선에), 아래 마진 -8, `white-space: normal`(글자 200%에서는 줄바꿈 허용). 아이콘 없음.
 - **사진 실패**: 이미지 `error`를 받으면 그 스팟 id를 세션 동안 `broken`에 넣고 사진 칸을 통째로 뺀 글 카드(`.noimg`)로 그린다. 회색 빈 상자를 남기지 않는다. 다시 그려도 사진 칸이 되살아나지 않는다(오프라인 예외는 11.6).
 - **이름 나눔**: 줄 카드는 `X - Y`와 괄호 별칭을 같은 규칙으로 나눈다(3.3절): 앞부분은 두 줄까지·말줄임, 별칭은 자기 줄에 통째로(이름 칸 3줄). 그래서 앞부분이 같은 이름도 구분된다.
 - **이름**: 빌드에서 trim된 값을 쓰고 앱에서도 `name.trim()` 한 번 더.
@@ -409,7 +418,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 
 - `.more-bar`: `.picks`의 마지막 자식. `position: sticky; bottom: 0; z-index: var(--z-bar)`, 좌우 -16으로 앱 폭 전체, 패딩 12 16 `max(12px, env(safe-area-inset-bottom))`, 바탕 `--bg`. 목록이 화면보다 길면 화면 아래 엄지 자리에 떠 있고, 끝까지 내리면 마지막 카드 아래 제자리(버튼 윗변이 카드에서 28)에 선다.
 - 떠 있을 때만 띠 위 1px `--line`: 띠 안 맨 아래의 1px 표지(`.more-end`, `position: absolute; bottom: -1px`)를 `IntersectionObserver`(root = 뷰포트, threshold 0)로 보고, 표지가 화면 밖이면 띠에 `.stuck`을 붙인다. 선은 `::before`의 `border-top-color`만 바꿔 높이가 변하지 않는다. 스크롤 핸들러 없음.
-- 버튼 `.more`: 폭 100%, 높이 52, radius `--r-ctl`, `--fill` 면, 17/600 `--text`, **글자 왼쪽 정렬**(패딩 0 16). 누르는 동안 `--fill-press` + `scale(0.98)`.
+- 버튼 `.more`: 폭 100%, 높이 52, radius `--r-ctl`, `--main` 면, 17/600 `--on-main`(ADR-0070), **글자 왼쪽 정렬**(패딩 0 16). 누르는 동안 `--main-press` + `scale(0.98)`.
 - 누르면 같은 기분(먹기면 같은 하위)의 다음 3장. 등장 애니메이션 없이 바로 바꾸고, 결과 머리가 화면 밖이면 머리가 상단 줄 바로 아래 오도록 즉시 스크롤(`scrollIntoView({block: 'start'})`, 부드러운 스크롤 없음). 머리가 이미 화면 안이면 스크롤하지 않는다. 포커스는 `h1.crumb`으로.
 - 같은 버튼을 400ms 안에 다시 누르면 무시.
 - 결과가 준비되지 않은 동안(회색 틀·안내)에는 띠가 없다.
@@ -427,7 +436,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 시트를 저절로 띄우지 않는다. 결과 머리 아래, 카드 자리에 그린다.
 
 - 구조: 안내 제목(`p.notice-t`, 17/600 `--text`, 마침표 있음) + 설명(`p.notice-b`, 15/400 `--muted`, 위 4) + 다음 행동 하나: 동네 색인(6.9, 무리 두 개) 또는 `다시 불러오기` 버튼 + (권한 거절일 때만) 권한 켜는 방법 한 줄(`p.notice-f`, 15/400 `--muted`, 위 20).
-- **다시 불러오기**(`.retry`): `다른 3곳 보기`와 같은 모양(폭 100%, 52, `--fill`, 17/600, 왼쪽 정렬), 설명 아래 20. 누르면 `spots.json`을 새로 요청한다.
+- **다시 불러오기**(`.retry`): `다른 3곳 보기`와 같은 모양(폭 100%, 52, `--main`, 17/600 `--on-main`, 왼쪽 정렬), 설명 아래 20. 누르면 `spots.json`을 새로 요청한다.
 - 색인 칸을 누르면 그 지역이 기준이 되고(저장) 같은 자리에 바로 카드가 뜬다. 시트·history 변화 없음.
 
 ### 6.9 동네 색인 (결과 자리·기준 시트·숙소 시트 공용)
@@ -435,7 +444,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **무리 제목**(`p.group-h`): `display: flex; justify-content: space-between; align-items: baseline`, 위 24 아래 8, 15/600 `--muted`. 첫 무리는 오른쪽 끝에 `서쪽부터`(15/400 `--muted`). 가운뎃점 없음.
 - **색인**(`div.areas`, `role="group"`, `aria-labelledby`=무리 제목 id): `display: grid; grid-template-columns: repeat(auto-fill, minmax(max(8.5em, 50%), 1fr)); margin: 0 -8px`. 기본 2열, 글자가 커지면(8.5em > 칸 폭) 1열. 칸 사이 세로선 없음.
 - **칸**(`button.opt`): `min-height: 56px`, 패딩 8, `display: flex; align-items: center; justify-content: space-between; gap: 8px`, 왼쪽 정렬. 안쪽: `<span><span class="nm">{지역 표기}</span><span class="lm">{대표 지명}</span></span>` + 체크(`.i-check`). 이름 17/400 `--text` 행간 1.35, 대표 지명 15/400 `--muted` 행간 1.35(둘 다 `display: block`). 칸 위 1px `--line`(`::before`, 좌우 8 들임), 색인 끝에 닫는 선 하나(`.areas::after`, 모든 열에 걸침, 좌우 8 들임). 누르는 동안 `--fill`(radius `--r-ctl`). 배경 면 없음.
-- **선택 칸**: `aria-pressed="true"`, 이름 600 + 오른쪽 체크(`--text`). 면·반전 없음.
+- **선택 칸**: `aria-pressed="true"`, 이름 600 + 오른쪽 체크(`--main`). 면·반전 없음.
 - 순서(서→동, 경도순)와 대표 지명(여행자가 아는 이름 하나):
 
   | 제주시 쪽 | 대표 지명 | 서귀포 쪽 | 대표 지명 |
@@ -479,7 +488,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 ### 6.11 숙소 시트
 
 - 기준 시트와 같은 틀. 제목 `숙소가 어디예요?`, 아래 설명 `한 번 정하면 이 기기에 기억해 둘게요.`(15/400 `--muted`, 제목과 -8, 아래 16).
-- 주요 버튼 `지금 위치를 숙소로`(`button.primary`): `다른 3곳 보기`와 같은 모양(폭 100%, 52, `--fill`, 17/600 `--text`, 왼쪽 정렬). 누르면 글자가 `위치 확인 중…`으로 바뀌고 `disabled`.
+- 주요 버튼 `지금 위치를 숙소로`(`button.primary`): `다른 3곳 보기`와 같은 모양(폭 100%, 52, `--main`, 17/600 `--on-main`, 왼쪽 정렬). 누르면 글자가 `위치 확인 중…`으로 바뀌고 `disabled`.
 - 실패하면 버튼은 원래 글자로 돌아오고, 버튼 아래 별도 줄(`p.form-err`, 위 8, 15/400 `--text`, `role="alert"`)에 사유 문장. 버튼 글자를 덮지 않는다.
 - 그 아래 동네 색인 두 무리. 지역을 누르면 그 지역 중심을 숙소로 저장(`source: 'area'`). 지금 숙소가 지역으로 정해져 있으면 그 칸이 선택.
 - 저장하면 기준이 숙소가 되고 시트가 닫힌다. 결과·저장한 곳은 기준 시트와 같이 갱신.
@@ -578,7 +587,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 | 시트 | `translateY(100%)→0`, 240ms `cubic-bezier(0.2, 0.8, 0.2, 1)` | 역방향 190ms `ease-in` |
 | 딤 | 투명도 0→1, 200ms `ease-out` | 160ms `ease-in` |
 | 면 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`) 누름 | `scale(0.98)` + 배경색, 120ms `ease-out` | |
-| 목록 줄(기분·동네·시트 옵션)·글자 버튼·상단 버튼 누름 | 배경 `--fill`만, 120ms `ease-out`(크기 변화 없음) | |
+| 목록 줄(기분·동네·시트 옵션)·글자 버튼·상단 버튼 누름 | 배경 `--fill`만(기분 줄은 `--main-tint`), 120ms `ease-out`(크기 변화 없음) | |
 | 하트 누름 | SVG `scale(0.88)`, 120ms `ease-out` | |
 | 첫 저장 안내 | 즉시 | 다음 그리기에서 즉시 빠짐 |
 | 카드(처음·다른 3곳·복원), `다른 3곳 보기` 띠의 선 | 없음 | 없음 |
@@ -877,7 +886,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 ### 12.2 매니페스트
 
-- `name`: `여행계획짜기 귀찮아:제주`, `short_name`: `계획귀찮아`(ADR-0068). `theme_color`·`background_color`: 결정 D6(기본 `#161817`).
+- `name`: `여행계획짜기 귀찮아:제주`, `short_name`: `계획귀찮아`(ADR-0068). `theme_color`·`background_color`: 결정 D6(기본 `#0f1319`, ADR-0070).
 - 아이콘: 192·512 `purpose: any`, 그리고 `icons/icon-maskable-512.png` `purpose: maskable`(무늬를 가운데 80%로 줄여 안전 영역 반지름 40% 안, 바다·하늘은 끝까지).
 
 ### 12.3 크기 예산
@@ -901,8 +910,9 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 [hidden] { display: none !important; }
 
 :root {
-  --bg: #f6f6f3; --surface: #ffffff; --fill: #ebebe6; --fill-press: #dfdfd9; --line: #e2e2dc; --field-line: #8a8f8c;
-  --text: #1b1d1c; --muted: #5b605e; --accent: #cc3a2f;
+  --bg: #ffffff; --surface: #ffffff; --fill: #f3f3f4; --fill-press: #e8e8e9; --line: #e3e3e4; --field-line: #8a8c8f;
+  --text: #14181f; --muted: #5f6267; --accent: #f06400;
+  --main: #0a6fd6; --on-main: #ffffff; --main-press: #0c62bb; --main-tint: #e6f1fb;
   --scrim: rgb(0 0 0 / 35%); --photo: none;
   --top-h: 52px; --r-ctl: 10px; --r-photo: 12px; --r-thumb: 8px; --r-sheet: 18px;
   --z-top: 5; --z-bar: 2; --z-sheet: 10;
@@ -910,8 +920,9 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161817; --surface: #1f2221; --fill: #2a2e2c; --fill-press: #353a38; --line: #2c302e; --field-line: #6b706d;
-    --text: #e8e8e3; --muted: #a3a8a5; --accent: #ee7e71;
+    --bg: #0f1319; --surface: #1a1e24; --fill: #23272d; --fill-press: #30343a; --line: #33373c; --field-line: #7e8287;
+    --text: #eef1f5; --muted: #b0b3b7; --accent: #ff8a3d;
+    --main: #5aa9ff; --on-main: #0f1319; --main-press: #4d8ed6; --main-tint: #1b2b3e;
     --scrim: rgb(0 0 0 / 55%); --photo: brightness(0.9);
     color-scheme: dark;
   }
@@ -934,7 +945,7 @@ svg { display: block; flex: none; }
 [tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
 .sr { position: absolute; top: 0; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .i-check { display: none; }
-[aria-current="true"] > .i-check, [aria-pressed="true"] > .i-check { display: block; color: var(--text); }
+[aria-current="true"] > .i-check, [aria-pressed="true"] > .i-check { display: block; color: var(--main); }
 
 /* 틀 */
 .app {
@@ -988,12 +999,12 @@ main { flex: 1; display: flex; flex-direction: column; }
   width: 100%; min-height: 60px; padding: 14px 8px; border-radius: var(--r-ctl);
   font-size: 1.25rem; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;
 }
-.mood:active { background: var(--fill); }
+.mood:active { background: var(--main-tint); }
 .any {
   align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
   min-height: 48px; margin: 8px 0 0 -8px; padding: 0 8px; border-radius: var(--r-ctl);
   font-size: 1.25rem; line-height: 1.35; font-weight: 400; letter-spacing: -0.01em; color: var(--muted);
-  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--accent);
 }
 .any:active { background: var(--fill); }
 
@@ -1007,7 +1018,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .tab { position: relative; min-height: 44px; padding: 0 2px; font-weight: 600; color: var(--muted); }
 .tab::before { content: ""; position: absolute; inset: -2px -8px; }
 .tab[aria-pressed="true"] { color: var(--text); }
-.tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 2px solid var(--text); }
+.tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 3px solid var(--main); }
 .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
 .status:empty { display: none; }
 .status .tbtn { color: var(--text); }
@@ -1043,7 +1054,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .heart svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
 .heart[aria-pressed="true"] { color: var(--accent); }
 .heart[aria-pressed="true"] svg { fill: currentColor; }
-.book { grid-area: book; position: relative; z-index: 1; justify-self: start; margin: 4px 0 -8px -8px; white-space: normal; }
+.book { grid-area: book; position: relative; z-index: 1; justify-self: start; margin: 4px 0 -8px -8px; white-space: normal; text-decoration-color: var(--main); }
 .hint { grid-area: hint; margin: 8px 0 0; color: var(--muted); text-wrap: pretty; }
 
 .card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "book book" "hint hint"; }
@@ -1065,13 +1076,13 @@ main { flex: 1; display: flex; flex-direction: column; }
   .card.row:not(.noimg):not(.ghost) .ph { width: auto; aspect-ratio: 2 / 1; margin-bottom: 12px; }
 }
 
-/* 면 버튼: 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. 라벨 왼쪽 정렬 */
+/* 면 버튼(ADR-0070: --main): 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. 라벨 왼쪽 정렬 */
 .more, .retry, .primary {
   display: flex; align-items: center; width: 100%; min-height: 52px; padding: 0 16px;
-  border-radius: var(--r-ctl); background: var(--fill);
+  border-radius: var(--r-ctl); background: var(--main); color: var(--on-main);
   font-size: 1.0625rem; line-height: 1.4; font-weight: 600;
 }
-.more:active, .retry:active, .primary:active { background: var(--fill-press); }
+.more:active, .retry:active, .primary:active { background: var(--main-press); }
 .retry { margin-top: 20px; }
 .primary:disabled { cursor: default; }
 .more-bar {
@@ -1193,7 +1204,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 | 7 | 글자 크기 | CSS `font-size` | `0.9375rem·1.0625rem·1.25rem·1.5rem`만. 예외 하나: `.date-in`의 `max(1rem, 16px)`(3.2) |
 | 8 | 굵기 | CSS `font-weight` | `400·600·700`만 |
 | 9 | 색 리터럴 | CSS의 `#hex`·`rgb(` | `:root` 토큰 블록과 index.html 인라인 `html` 바탕에만 |
-| 10 | accent 역할 | `var(--accent)` 사용처 | `.saved-btn svg`, `.heart[aria-pressed="true"]` 두 곳뿐 |
+| 10 | accent 역할 | `var(--accent)` 사용처 | `.saved-btn svg`, `.heart[aria-pressed="true"]`, `.any`(밑줄, ADR-0070) 세 곳뿐 |
 | 11 | 반투명 | `rgb(… / N%)`·`opacity` | `--scrim` 토큰, 누름 표시 `0.72`, `@keyframes fade`만. 2판의 `.hint.leaving`은 삭제 |
 | 12 | 모서리 | `border-radius` | 토큰 4개 + 포커스 링 6px + 회색 틀 막대 4px만 |
 | 13 | 움직임 | `animation\|transition` | 모두 `prefers-reduced-motion: no-preference` 안, 길이 ≤ 240ms, `.card` 선택자에는 없음 |
@@ -1316,7 +1327,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 | D3 | 하트 위치: 사진 오른쪽 위 → 이름 오른쪽 | 이름 오른쪽(세 심사 공통) | ADR-0029 본문 문구 |
 | D4 | 카카오 ID 없는 748곳: 이름 검색 → 좌표 핀 `https://map.kakao.com/link/map/{이름},{lat},{lng}` | 현행 이름 검색 + trim, 이름에 `제주`·`서귀포`가 없으면 `제주 ` 접두(S56) | ADR-0028 |
 | D5 | 어제 고른 지역 기준을 하루 지나면 GPS로 되돌릴지 | 되돌리지 않음. 라벨과 첫 장 메타로 드러내기만 | ADR-0029 해석 |
-| D6 | 매니페스트 `background_color`·`theme_color` | `#161817`(밤 기준) | 없음 |
+| D6 | 매니페스트 `background_color`·`theme_color` | `#0f1319`(밤 기준, ADR-0070에서 값만 바뀜) | 없음 |
 | D7 | 동네 칸의 대표 지명 15개(화면 문구만, 데이터 수집 없음) | 넣는다(세 심사 공통) | ADR-0029 지역 목록에 없는 새 문구 |
 
 이동 시간은 `약`으로 쓴다(`쯤` 아님). 날짜 줄은 넣는다(버튼이 아니라 첫 화면 인터랙티브 요소 수는 그대로).

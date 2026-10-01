@@ -75,15 +75,15 @@
 
 **C1. 모든 글자는 바탕과 4.5:1 이상이다(지금 쓰는 모든 바탕 조합: `--bg`·`--surface`·`--fill`·`--fill-press`).** [B]
 - 근거: WCAG 1.4.3, AA ([W3C](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)). KWCAG 2.2 "텍스트 콘텐츠의 명도 대비" 4.5:1.
-- SPEC 3판: **일치**(최저는 `--muted` on `--fill-press` 4.79 / 4.80).
+- SPEC 3판: **일치**(ADR-0070 「바다·귤」 기준 최저는 면 버튼 글자 `--on-main` on `--main` 라이트 4.93, 다크는 `--on-main` on `--main-press` 5.46. 보조 글자 최저는 `--muted` on `--fill-press` 5.00 / 5.95).
 
 **C2. 읽는 본문은 7:1 이상이다(AAA). 보조 글자는 4.5:1 이상이면 된다.** [B]
 - 근거: WCAG 1.4.6 Contrast (Enhanced), AAA.
-- SPEC 3판: **일치.** 본문(`--text`)이 15.65 / 14.51이다. `--muted`는 라이트 5.91(AAA 미달)이지만 보조 글자라 규칙 안이다.
+- SPEC 3판: **일치.** 본문(`--text`)이 17.79 / 16.44다(ADR-0070). `--muted`는 라이트 6.12(AAA 미달)이지만 보조 글자라 규칙 안이다.
 
 **C3. 입력 칸처럼 테두리가 있어야 무엇인지 알 수 있는 컨트롤은 테두리가 인접색과 3:1 이상이다.** [B]
 - 근거: WCAG 1.4.11 Non-text Contrast, AA. "컴포넌트를 식별하는 데 필요한 시각 정보"는 3:1 이상이어야 한다 ([W3C](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)).
-- SPEC 3판: **일치**(2026-10-01 반영). 날짜 대체 입력 `.date-in`의 테두리는 새 토큰 `--field-line`(라이트 `#8a8f8c`, 다크 `#6b706d`)이라 시트(`--surface`) 위에서 3.29 / 3.18이다(전에는 `--line`으로 1.30 / 1.20). SPEC 2.2절에 "입력 칸 테두리는 예외"를 적었다. 포커스 링(15.65)과 체크도 일치한다.
+- SPEC 3판: **일치**(2026-10-01 반영). 날짜 대체 입력 `.date-in`의 테두리는 새 토큰 `--field-line`(ADR-0070 라이트 `#8a8c8f`, 다크 `#7e8287`)이라 시트(`--surface`) 위에서 3.37 / 4.33이다(`--line`이면 1.28 / 1.55). SPEC 2.2절에 "입력 칸 테두리는 예외"를 적었다. 포커스 링(17.79)과 체크(`--main` 4.93 / 7.59)도 일치한다. 예외 하나: 저장한 곳 화면의 ♥ N 눌림 면(`--fill`) 위 귤 하트가 라이트 2.90이다(ADR-0070 결정 대기).
 
 **C4. (비규범) APCA 기준으로 15~17px/400 글자는 Lc 75 이상, 보조 글자는 Lc 60 이상이다.** [C]
 - 근거: APCA(WCAG 3 초안의 후보 대비 공식, 아직 표준이 아님). 본문 글자는 Lc 75가 최소이고 Lc 90을 선호한다. Lc 60은 본문이 아닌 글자의 최소값이다 ([APCA 문서](https://git.apcacontrast.com/documentation/APCA_in_a_Nutshell.html)). WCAG 2 공식은 어두운 바탕의 대비를 과대평가한다는 것이 APCA 쪽 주장이다 ([Why APCA](https://git.apcacontrast.com/documentation/WhyAPCA.html)). Dobres, Chahine, Reimer 2017(Applied Ergonomics 60, 흘끗 읽기 과제): 밤 조명에서는 어두운 바탕의 작은 글자가 특히 읽기 어려웠다 ([SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5231071)).
@@ -96,15 +96,15 @@
   | `--muted` on `--surface` | 6.40 / 82 | 6.65 / **52** |
   | `--muted` on `--fill-press` | 4.79 / 63 | 4.80 / **47** |
 
-- SPEC 3판: **라이트 일치, 다크 불일치.** 다크 `--muted`(15/400 메타·설명·각주)는 WCAG 2로는 7.39라 넉넉해 보이지만 APCA로는 Lc 53이다. 이 앱의 기본 사용 상황(밤, 반쯤 딴생각)이 Dobres 2017의 불리한 조건과 겹친다.
+- SPEC 3판: **라이트 일치, 다크 불일치.** 다크 `--muted`(15/400 메타·설명·각주)는 WCAG 2로는 7.39라 넉넉해 보이지만 APCA로는 Lc 53이다(위 표는 ADR-0070 이전 값. ADR-0070은 다크 `--muted`를 `#b0b3b7`, 바탕 위 8.85로 밝혔고 APCA는 다시 재지 않았다). 이 앱의 기본 사용 상황(밤, 반쯤 딴생각)이 Dobres 2017의 불리한 조건과 겹친다.
 
 **C5. 다크 테마는 시스템 설정을 따르고, 순검정 바탕과 순백 글자는 쓰지 않는다.** [A]+[B]
 - 근거: Piepenbrock, Mayr, Buchner 2013(Ergonomics, 청년·고령자): 밝은 바탕에 어두운 글자(양극성)에서 교정 읽기가 더 정확했다. 이 이점은 동공이 작아지는 데서 온다 ([PDF](https://www.psychologie.hhu.de/fileadmin/redaktion/Oeffentliche_Medien/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Psychologie/AAP/Publikationen/2013/Piepenbrock-2013-Positive_display_polarity_is_.pdf)). 그러니 다크를 강제하지 않는다. Material 다크 테마: 바탕은 #121212 계열, 높은 강조 글자는 흰색 87%로 두어 번짐을 피한다 ([Material](https://m2.material.io/design/color/dark-theme.html)). 이 부분은 [B]다.
-- SPEC 3판: **일치.** `prefers-color-scheme`만 따르고 테마 전환은 없다. 바탕 #161817, 글자 #e8e8e3이다. "밤이 기본"은 디자인 우선순위라는 뜻이지 다크를 강제하는 것이 아니다.
+- SPEC 3판: **일치.** `prefers-color-scheme`만 따르고 테마 전환은 없다. 바탕 #0f1319, 글자 #eef1f5다(ADR-0070). "밤이 기본"은 디자인 우선순위라는 뜻이지 다크를 강제하는 것이 아니다.
 
 **C6. 상태는 색만으로 전달하지 않는다.** [B]
 - 근거: WCAG 1.4.1 Use of Color.
-- SPEC 3판: **일치.** 선택은 체크 + 굵기 + `aria-pressed`, 저장은 채움 + 색으로 표시한다.
+- SPEC 3판: **일치.** 선택은 체크 + 굵기 + `aria-pressed`, 저장은 채움 + 색으로 표시한다. ADR-0070(흰 바탕 + 바다·귤·현무암)에서도 그대로다: 체크·선택 탭 밑줄을 바다(`--main`)로 칠할 뿐, 선택을 색이나 채운 면으로 표시하지 않는다. ADR-0070에서 바뀐 규칙은 하나, **주 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`)이 회색 채움(`--fill`)에서 메인 색 채움(`--main`)으로** 바뀐 것이다. 주 버튼은 상태가 아니라 행동이라 이 규칙과 부딪치지 않는다.
 
 ---
 
@@ -193,8 +193,8 @@
 | K5 줄 길이 | 라틴 45~75 | 한글 약 24~29자 | 일치(근거 약) |
 | K6 자간 | ≤15px 음수 없음 | 0 | 일치 |
 | K7 줄바꿈 | keep-all | keep-all | 일치(근거 약) |
-| C1 글자 대비 | ≥4.5 | 최저 4.79 | 일치 |
-| C3 입력 테두리 | ≥3:1 | `.date-in` `--field-line` 3.29 / 3.18 | 일치 |
+| C1 글자 대비 | ≥4.5 | 최저 4.93(ADR-0070 주 버튼 글자) | 일치 |
+| C3 입력 테두리 | ≥3:1 | `.date-in` `--field-line` 3.37 / 4.33 | 일치 |
 | C4 APCA(비규범) | 보조 ≥Lc 60 | 다크 `--muted` Lc 47~53 | **불일치(비규범)** |
 | C5 다크 | 시스템 따름, 순흑백 없음 | 일치 | 일치 |
 | H1 추천 수 | 3 | 3 | 일치 |
