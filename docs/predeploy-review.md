@@ -1,4 +1,64 @@
-# 배포 전 최종 점검 — apps/web "P의 여행"
+# 배포 전 최종 점검 — apps/web 「여행계획짜기 귀찮아:제주」
+
+## 0. 배포 직전 최종 점검 (2026-10-01, 현재 상태)
+
+브랜치 `master-ejxmjq` → Cloudflare Pages Production branch `main`. 설정은 `docs/deploy.md`. 1~6절은 같은 날 앞선 1차 점검 기록이다(거기서 **막힘**이던 것은 모두 해소: 출처 표시·`_headers`·`404.html`·OG·아이콘·저장 유지·개인정보 안내·팩트체크 보정, ADR-0063).
+
+### 막힘: 0건
+
+### 검증 수치
+
+| 항목 | 결과 |
+|---|---|
+| `tsc --noEmit` | 0 오류 |
+| `vitest run` | 697 통과 · 1 건너뜀(`review/out` 없음) |
+| `npm run build`(기본, `SITE_URL=https://example.pages.dev`) | 랜딩 2,972쪽(허브 1·지역 15·조합 1·장소 2,955), 15.5MB, 사진 핫링크. 원문 20자 0건, 가장 닮은 쌍 0.782(<0.80), 최소 자기 본문 48.8%(≥30%), 장소 없는 곳 9(이유가 원문과 20자 이상 겹침) |
+| `LANDING_PHOTOS=0 npm run build` | 같은 2,972쪽, 13.9MB, `<img>` 0 |
+| 깨끗한 클론(`--depth 1`) `npm ci` → `npm run build -w @jeju/web` | 성공, 랜딩·sitemap 포함(= Pages 빌드 명령) |
+| `check:slop` | 0 |
+| e2e(`E2E_CHANNEL=chromium`) | 66/66 (LP1~LP3 랜딩·SW 비개입·404 포함) |
+| `seo:crawl`(`SITE_URL=https://example.pages.dev`) | 감사 0건, 고아 0, 홈에서 도달 불가 0, 깨진 내부 링크 0, sitemap 2,974 URL(누락·초과 0) |
+| `seo:verify -- --strict` · `seo:report -- --validate` | P0 0건 · 기록 검증 통과 |
+
+### 이번에 고친 것
+
+- 홈(`/`)·`/privacy`에 `canonical` 추가(랜딩과 같은 방식: `SITE_URL` 있으면 절대, 없으면 상대). `privacy.html`은 `public/`이라 vite가 복사한 뒤 `__SITE__`를 채운다(`vite.config.ts` `siteUrl`).
+
+### 배포 제약 대조
+
+| 항목 | 결과 |
+|---|---|
+| Pages 파일 수(한도 20,000) | 2,991 |
+| 가장 큰 파일(한도 25MiB) | `spots.json` 1.16MB |
+| `_headers` | 해시 파일·`spots.json` 1년 immutable, 셸·`/privacy`·`/404.html` no-cache. `/jeju/**` HTML·`landing.css`·`sitemap.xml`·`llms.txt`는 규칙 없음 → Pages 기본 `max-age=0, must-revalidate`(해시 없는 이름이라 적절) |
+| 404 | `/nope/deep`·`/jeju/nope/` 모두 `404.html`(404, 홈·허브 링크). SPA 폴백 없음, `_redirects`는 지역 이동 301이 생길 때만(지금 0) |
+| 서비스워커 | `/jeju/**`는 캐시도 셸 응답도 안 함(`sw.js`, e2e LP2). 셸은 7개 그대로(`./`·JS·CSS·`spots.json?v=`·매니페스트·아이콘 2) |
+| 첫 화면 무게 | `index.html` 11.6KB(gz 4.2), JS 72.1KB(gz 28.0), CSS gz 4.2, `spots.json` 1.16MB. 랜딩 때문에 늘어난 것은 `index.html`의 `<noscript>`·canonical 약 1.5KB뿐(랜딩 CSS·페이지는 홈에서 안 불림). JS·spots 증가는 실내·오일장·지도 앱 기능 몫 |
+| 빌드 명령 | `npm run build -w @jeju/web` = `vite build && tsx scripts/build-landing.mjs`(랜딩 포함). `review/input`·`data/landing/slugs.json`·`data/seo/keywords.json` 모두 커밋됨 |
+| 이름·색·지도 | dist에 「P의 여행」 0건. 「카카오맵」은 지도 앱 고르기 이름·`llms.txt`·개인정보 안내의 앱 목록에만(기본 문구는 네이버지도, ADR-0071). 0070 이전 색 hex 17개 dist 0건. `<title>`·`og:site_name`(홈+랜딩 2,972쪽)·매니페스트 `name`·`llms.txt` 첫 줄 모두 `여행계획짜기 귀찮아:제주`, 매니페스트 `theme_color` `#0f1319`는 ADR-0070 6(밤 기준) 그대로 |
+
+### 사용자 할 일 (배포 전후)
+
+1. **Pages 프로젝트 이름·도메인**: `<프로젝트>.pages.dev` 이름을 정하고, 커스텀 도메인을 쓸지 정한다.
+2. **`SITE_URL`**: Production에 그 주소(끝 `/` 없이). 도메인을 나중에 붙이면 바꾸고 다시 배포(canonical·sitemap·OG가 따라감).
+3. **제주관광공사 메일**: 사진 직접 표시(핫링크) 가능 여부 — daemadoo@ijto.or.kr(초안 `docs/licensing-visitjeju.md`). 회신 보관. 거절·조건부면 `LANDING_PHOTOS=0`(ADR-0072 3).
+4. **상표**: 「여행계획짜기 귀찮아」 KIPRIS 검색·출원 여부(ADR-0068 — 검색 안 함, 사용자 결정).
+5. **개인정보 문의처**: `privacy.html` 「문의」가 GitHub 이슈 임시 링크. 이메일로 바꿀지 결정.
+6. **홈 화면 이름** `계획귀찮아`(manifest `short_name`) 확인(ADR-0068 4, 사용자 확인 대기).
+
+### 배포 뒤 점검
+
+- [ ] 스모크: `docs/deploy.md` 3절 curl 목록(헤더·404·canonical·`/jeju/`·sitemap 수·robots `Sitemap:`).
+- [ ] 브라우저: 첫 화면→기분→카드 3장, 콘솔 오류 0, Network에 이 주소·`api.cdn.visitjeju.net`·지도 링크 말고 요청 없음.
+- [ ] 실기기: 아이폰 Safari·홈 화면 앱, 카카오톡 인앱(미리보기 디버거 캐시 초기화), 갤럭시 삼성 인터넷, 길찾기 × 지도 앱 3개(`docs/device-check.md`).
+- [ ] `npm run check:links` 다시(네이버·카카오 링크 동작이 배포 시점에도 같은지).
+- [ ] 네이버 서치어드바이저·GSC: 메타 태그로 소유 확인 → `sitemap.xml` 제출(`docs/deploy.md` 「검색엔진 소유 확인」), `data/seo/config.json` 채움.
+- [ ] GA4: 넣기 전에 결정 먼저 — 지금 개인정보 안내는 「기록 없음」(ADR-0061)이라 넣으면 안내문과 ADR이 함께 바뀌어야 한다.
+- [ ] 1주 뒤 `seo:crawl -- --snapshot`, 주간 점검 `docs/seo/README.md`.
+
+---
+
+## 1차 점검 기록 (2026-10-01 오전, 해소됨 — 근거로 남김)
 
 점검일 2026-10-01. 범위: 코드·빌드·데이터·법/라이선스·호스팅. 등급: **막힘**(배포 전 필수) / **권장**(배포 직후~1주) / **참고**.
 측정: `vite build` 성공(JS 55KB·gz 21KB, CSS gz 4KB, spots.json 1.08MB), vitest 484 통과, tsc 0 오류, headless Chromium(390px, 위치 허용)으로 `vite preview` 실행 — 콘솔 오류 0(정상 경로), 카드 3장 표시, alt 없는 img 0, 이름 없는 버튼 0, SW 제어 ✓, `navigator.storage.persisted()` = false.
