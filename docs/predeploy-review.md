@@ -41,7 +41,7 @@
 
 1. **Pages 프로젝트 이름·도메인**: `<프로젝트>.pages.dev` 이름을 정하고, 커스텀 도메인을 쓸지 정한다.
 2. **`SITE_URL`**: Production에 그 주소(끝 `/` 없이). 도메인을 나중에 붙이면 바꾸고 다시 배포(canonical·sitemap·OG가 따라감).
-3. **제주관광공사 메일**: 사진 직접 표시(핫링크) 가능 여부 — daemadoo@ijto.or.kr(초안 `docs/licensing-visitjeju.md`). 회신 보관. 거절·조건부면 `LANDING_PHOTOS=0`(ADR-0072 3).
+3. ~~제주관광공사 메일~~ **완료(2026-10-01)**: 사진 이용 가능 확인. 회신 원문은 사용자 보관(`docs/licensing-visitjeju.md` 4절).
 4. **상표**: 「여행계획짜기 귀찮아」 KIPRIS 검색·출원 여부(ADR-0068 — 검색 안 함, 사용자 결정).
 5. **개인정보 문의처**: `privacy.html` 「문의」가 GitHub 이슈 임시 링크. 이메일로 바꿀지 결정.
 6. **홈 화면 이름** `계획귀찮아`(manifest `short_name`) 확인(ADR-0068 4, 사용자 확인 대기).

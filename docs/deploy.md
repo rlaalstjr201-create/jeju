@@ -48,8 +48,8 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 
 - [ ] `apps/web`에서 `npx tsc --noEmit`, `npx vitest run`, `npm run build`(기본·`LANDING_PHOTOS=0` 둘 다), `npm run check:slop`, e2e(`npm run e2e`), `SITE_URL=… npm run seo:crawl`(감사 0건) 모두 통과. 최근 결과는 `docs/predeploy-review.md` 0절.
 - [ ] `privacy.html`의 문의처가 맞는지(지금은 GitHub 이슈 링크).
-- [ ] 제주관광공사(064-740-6000)에 오픈API 사진 직접 표시 가능 여부 문의·회신 보관(ADR-0063 3, 사용자).
-- [ ] Pages 환경 변수: `SITE_URL` 있음, `VITE_EVENTS_URL` 없음. `LANDING_PHOTOS`는 공사 회신 전 기본(사진 켬) — 회신이 거절이면 `0`.
+- [x] 제주관광공사 사진 이용 가능 확인(2026-10-01, 회신 사용자 보관).
+- [ ] Pages 환경 변수: `SITE_URL` 있음, `VITE_EVENTS_URL` 없음. `LANDING_PHOTOS`는 넣지 않는다(사진 켬, 공사 확인 완료).
 
 ## 3. 배포 뒤 스모크 (`SITE`=사이트 주소)
 
