@@ -8,6 +8,7 @@ import { cardTextProblem, PRICE_HOURS } from '../src/card-text';
 import { cleanReason, createSpotSource, normalizeSpots } from '../src/data';
 import { bookingUrl, kakaoUrl } from '../src/links';
 import { distanceKm } from '../src/pick';
+import { applyCorrections, loadCorrections } from '../scripts/apply-corrections.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -31,14 +32,15 @@ describe("S1' 레코드 형식", () => {
     expect(bad.map((s) => s.id)).toEqual([]);
   });
 
-  it('만족도 점수 (ADR-0060): all 2,959 have an integer score 1–5, the one in review/score/score-NN.json', () => {
-    expect(fileSpots).toHaveLength(2959);
+  it('만족도 점수 (ADR-0060): all 2,955 have an integer score 1–5, the one in review/score/score-NN.json (or a fact-check correction)', () => {
+    expect(fileSpots).toHaveLength(2955);
     const bad = fileSpots.filter((s) => !Number.isInteger(s.score) || s.score < 1 || s.score > 5);
     expect(bad.map((s) => s.id)).toEqual([]);
     const recorded = new Map<string, number>();
     for (const f of readdirSync(resolve(root, 'review/score')).filter((f) => /^score-\d{2}\.json$/.test(f)).sort()) {
       for (const v of JSON.parse(readFileSync(resolve(root, 'review/score', f), 'utf8')) as { id: string; score: number }[]) recorded.set(v.id, v.score);
     }
+    for (const c of loadCorrections()) if (typeof c.fields.score === 'number') recorded.set(c.id, c.fields.score);
     expect(fileSpots.filter((s) => recorded.get(s.id) !== s.score).map((s) => s.id)).toEqual([]);
   });
 
@@ -228,6 +230,34 @@ describe('3판 이유 문장 — 빌드 규칙 (design/SPEC.md §10·§12.4, 0.3
       expect(REASON_BANNED.test(f.reason) || reasonPunctuationProblem(shipReason(f.reason)) !== null, f.reason).toBe(false);
       expect(f.basis.length, f.id).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('팩트체크 수정 (ADR-0063 5, review/copy/corrections-NN.json, review/audit/factcheck-01.md)', () => {
+  const corrections = loadCorrections();
+  const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+
+  it('every correction is applied: removed ids are gone, set fields ship as recorded', () => {
+    expect(corrections.length).toBeGreaterThan(0);
+    for (const c of corrections) {
+      if (c.action === 'remove') expect(byId.has(c.id), c.id).toBe(false);
+      else expect(byId.get(c.id), c.id).toMatchObject(c.fields);
+      expect(c.reason.length, c.id).toBeGreaterThan(0);
+      expect(c.evidence, c.id).toMatch(/^https:\/\//);
+    }
+  });
+
+  it('corrections-01: 4 removed (제주오누이·이중섭미술관·대향연탄구이·함덕백사장 & 서우봉), 박물관은 살아있다 renamed 3, 한림바다체험마을 placeId', () => {
+    for (const id of ['5c45ab11-a6e8-467e-875e-476249a75af8', 'a18eacff-7684-4936-aa11-a778dda648c4', 'bacecf0d-3a2c-4168-9135-51e1895df54f', '1444066b-5005-482b-9ee3-26601b74c664']) {
+      expect(byId.has(id), id).toBe(false);
+    }
+    expect(byId.get('7896e435-5d0d-444e-a815-eb1622f4ab55')).toMatchObject({ name: '박물관은 살아있다', score: 3 });
+    expect(byId.get('e90d95bc-3a57-4d72-b0b5-3e212c97f378')?.kakaoPlaceId).toBe('688113173');
+  });
+
+  it('applying them again changes nothing (idempotent); 2,959 shipped before, minus the removals', () => {
+    expect(applyCorrections(fileSpots, corrections)).toEqual(fileSpots);
+    expect(fileSpots).toHaveLength(2959 - corrections.filter((c) => c.action === 'remove').length);
   });
 });
 

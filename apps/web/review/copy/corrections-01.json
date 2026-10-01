@@ -1,0 +1,44 @@
+[
+ {
+  "id": "5c45ab11-a6e8-467e-875e-476249a75af8",
+  "action": "remove",
+  "fields": {},
+  "reason": "제주오누이: 카카오·다이닝코드 어디에도 구좌(월정리)의 이 가게가 없어 있는지 확인할 수 없다. comment의 찐빵집은 제주시의 다른 가게(오누이찐빵).",
+  "evidence": "https://map.kakao.com/?q=제주오누이"
+ },
+ {
+  "id": "a18eacff-7684-4936-aa11-a778dda648c4",
+  "action": "remove",
+  "fields": {},
+  "reason": "이중섭미술관: 카카오 장소명이 '이중섭미술관 (휴관중)', 후기에 2027년 2월까지 휴관. 재개관 때 다시 확인한다. 초가는 별도 spot 이중섭거주지로 계속 나간다.",
+  "evidence": "https://place.map.kakao.com/8045145"
+ },
+ {
+  "id": "bacecf0d-3a2c-4168-9135-51e1895df54f",
+  "action": "remove",
+  "fields": {},
+  "reason": "대향연탄구이: 이 이름으로는 카카오·다이닝코드에 없다. 이전·개명한 대향흑돼지라는 근거가 후기 하나뿐이라 갱신 대신 제거한다.",
+  "evidence": "https://map.kakao.com/?q=대향연탄구이"
+ },
+ {
+  "id": "1444066b-5005-482b-9ee3-26601b74c664",
+  "action": "remove",
+  "fields": {},
+  "reason": "함덕백사장 & 서우봉: 카카오에 이 4·3 유적의 단독 항목이 없고, 핀이 함덕해수욕장 해변 위(우리 함덕해수욕장 spot에서 약 125m)라 이웃 spot과 겹친다.",
+  "evidence": "https://map.kakao.com/?q=함덕 4.3"
+ },
+ {
+  "id": "7896e435-5d0d-444e-a815-eb1622f4ab55",
+  "action": "set",
+  "fields": { "name": "박물관은 살아있다", "score": 3 },
+  "reason": "박물관은 살아있다: 카카오에서 운영 중. 이름의 '(2026.03.03~05.28:임시휴관)'은 기간이 지나 지우고, 그 꼬리표 때문에 2로 내렸던 점수를 3으로 되돌린다.",
+  "evidence": "https://place.map.kakao.com/17583646"
+ },
+ {
+  "id": "e90d95bc-3a57-4d72-b0b5-3e212c97f378",
+  "action": "set",
+  "fields": { "kakaoPlaceId": "688113173" },
+  "reason": "한림바다체험마을: 카카오 제주체험마을(한림해안로 200, 핀과 5m), 테우낚시 체험 판매 중.",
+  "evidence": "https://place.map.kakao.com/688113173"
+ }
+]

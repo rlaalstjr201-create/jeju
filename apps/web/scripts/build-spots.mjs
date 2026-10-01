@@ -9,6 +9,7 @@
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { applyCorrections, loadCorrections } from './apply-corrections.mjs';
 import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
 import { positionProblems } from './positions.mjs';
 import { reasonPunctuationProblem, shipReason } from './reason.mjs';
@@ -280,6 +281,14 @@ if (unscored.length) {
     unscored.slice(0, 10).map((s) => `${s.id} ${s.name}`).join('\n  '));
 }
 for (const s of kept) s.score = scoreById.get(s.id);
+
+// Fact-check corrections (ADR-0063 item 5, review/copy/corrections-NN.json): applied after the fixes and scores,
+// so a removal or a set name/score/kakaoPlaceId wins over every layer above.
+const corrected = applyCorrections(kept, loadCorrections(copyDir));
+counts.removedByCorrection = kept.length - corrected.length;
+counts.kept = corrected.length;
+for (const s of kept) if (!corrected.some((c) => c.id === s.id)) counts.perMood[s.mood]--;
+kept = corrected;
 
 // A fix may name a Kakao place another spot already carries (the same building, or a wrong source id):
 // the map link would open someone else's page, so the fixed spot falls back to a name search.
