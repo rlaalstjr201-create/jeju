@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
-import { bookingUrl, directionsUrl, kakaoUrl } from './links';
+import { bookingUrl, goLink, kakaoUrl } from './links';
 import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
@@ -29,8 +29,8 @@ export const COPY = {
   map: '카카오맵',
   mapAria: (name: string) => `${name}, 카카오맵에서 보기`,
   heartAria: (name: string) => `${name} 저장`,
-  go: '길찾기',
-  goAria: (name: string) => `${name}, 카카오맵 자동차 길찾기`,
+  /** 길찾기 (ADR-0067, ADR-0069): the words are goLink's; this says where to and how. */
+  goAria: (name: string, foot: boolean, pier?: string) => `${name}, ${pier ? `배 타는 곳 ${pier}까지 ` : ''}카카오맵 ${foot ? '도보' : '자동차'} 길찾기`,
   book: '마이리얼트립에서 예약 찾아보기',
   bookAria: (name: string) => `${name}, 마이리얼트립에서 예약 찾아보기`,
   firstSave: '저장한 곳은 맨 위 하트 버튼에 모여요.',
@@ -380,6 +380,15 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
   /** `meta`: the trip (null = none); `dest`: also say where a tap goes ("카카오맵"); `day`: a saved-list row,
    * whose heart is about that day. */
+  /** 길찾기 (ADR-0067, ADR-0069) from `origin` (null = no position yet), in the range `reach`: written on a new
+   * card and patched on a reused saved row. */
+  function setGo(a: HTMLElement, spot: Spot, origin: Origin | null, reach: Reach) {
+    const g = goLink(spot, origin?.point ?? null, reach === 'walk', origin?.isPoint ?? false);
+    setAttr(a, 'href', g.href);
+    setAttr(a, 'aria-label', COPY.goAria(spot.name.trim(), g.mode === 'foot', g.terminal));
+    setText(a, g.text);
+  }
+
   function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string, day?: Day): HTMLElement {
     const { spot } = c;
     const name = spot.name.trim();
@@ -406,8 +415,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // 장날 only on the results, for the day being viewed (ADR-0066)
     const market = !day && spot.market ? marketText(spot.market, whenDay(s), s.when !== 'now') : null;
     if (meta || dest || indoor || market) card.append(metaEl(meta, dest, indoor, market));
-    // 길찾기 (ADR-0067): car directions in one tap, on every card; the card itself stays the place page
-    card.append(el(doc, 'a', { class: 'tbtn go', href: directionsUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(name) }, COPY.go));
+    // 길찾기 (ADR-0067, ADR-0069): directions in one tap, on every card; the card itself stays the place page
+    const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
+    if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach);
+    card.append(go);
     if (spot.bookable) {
       card.append(el(doc, 'a', { class: 'tbtn book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
     }
@@ -553,6 +564,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       card.append(ctl);
       rowNodes.set(key, card);
     }
+    setGo(card.querySelector<HTMLElement>(':scope > .go')!, spot, s.savedList?.origin ?? null, s.reach);
     const metaKey = `${meta ?? ''}|${dest}`;
     if (card.dataset.meta !== metaKey) {
       card.dataset.meta = metaKey;
@@ -571,7 +583,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const { upcoming, past } = savedDays(s);
     const o = s.savedList!.origin;
     const days = [...upcoming, ...(s.pastOpen ? past : [])].map((d) => `${d.day}:${d.rows.map((r) => `${r.entry.id}${r.live ? '' : '~'}`).join(',')}`);
-    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${past.length}|${s.pastOpen}|${days.join(';')}`;
+    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${s.reach}|${past.length}|${s.pastOpen}|${days.join(';')}`;
   }
 
   function savedListNodes(s: State): HTMLElement[] {

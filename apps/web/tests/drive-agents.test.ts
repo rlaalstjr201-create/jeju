@@ -7,8 +7,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, areaByName } from '../src/areas';
 import { addDays } from '../src/dates';
 import { readDeepLink } from '../src/deeplink';
-import { directionsUrl, kakaoUrl } from '../src/links';
-import { pickCards } from '../src/pick';
+import { TERMINALS, directionsUrl, goLink, kakaoUrl, walkDirectionsUrl } from '../src/links';
+import { islandOf, pickCards } from '../src/pick';
 import { realSpots } from './fixtures';
 import { $, $$, current, flush, render, reset, settle, tap, today } from './harness';
 
@@ -57,16 +57,18 @@ describe('D2 길찾기 on every card', () => {
     await tap('[data-mood="new"]');
     const cards = $$('#cards .card:not(.ghost)');
     expect(cards).toHaveLength(3);
+    const { origin, reach } = current().state().cards!;
     for (const c of cards) {
       const s = realSpots.find((x) => x.id === c.dataset.id)!;
       const go = c.querySelectorAll<HTMLAnchorElement>('a.go');
+      const want = goLink(s, origin.point, reach === 'walk', origin.isPoint);
       expect(go).toHaveLength(1);
-      expect(go[0].textContent).toBe('길찾기');
+      expect(go[0].textContent).toBe(want.text);
       expect(go[0].classList.contains('tbtn')).toBe(true);
-      expect(go[0].getAttribute('href')).toBe(directionsUrl(s));
+      expect(go[0].getAttribute('href')).toBe(want.href);
       expect(go[0].getAttribute('target')).toBe('_blank');
       expect(go[0].getAttribute('rel')).toBe('noopener');
-      expect(go[0].getAttribute('aria-label')).toBe(`${s.name.trim()}, 카카오맵 자동차 길찾기`);
+      expect(go[0].getAttribute('aria-label')).toBe(`${s.name.trim()}, 카카오맵 ${want.mode === 'foot' ? '도보' : '자동차'} 길찾기`);
       expect(c.querySelector('.card-link')!.getAttribute('href')).toBe(kakaoUrl(s));
       const meta = c.querySelector('.meta');
       if (meta) expect(meta.compareDocumentPosition(go[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
@@ -84,7 +86,8 @@ describe('D2 길찾기 on every card', () => {
     await until(() => $$('#savedView .card:not(.ghost)').length === 1);
     const row = $('#savedView .card');
     const s = realSpots.find((x) => x.id === row.dataset.id)!;
-    expect(row.querySelector('a.go')?.getAttribute('href')).toBe(directionsUrl(s));
+    const o = current().state().savedList!.origin!;
+    expect(row.querySelector('a.go')?.getAttribute('href')).toBe(goLink(s, o.point, current().state().reach === 'walk', o.isPoint).href);
   });
 
   it('a tap on 길찾기 is counted as `map` (ADR-0061), a double tap once', async () => {
@@ -256,5 +259,118 @@ describe('D6 what agents read: llms.txt and the home JSON-LD', () => {
     expect(tpl).toBe('__SITE__/?mood={mood}&area={area}&reach={reach}&date={date}&indoor={indoor}');
     const filled = tpl.replace('__SITE__/', '').replace('{mood}', 'walk').replace('{area}', 'aewol').replace('{reach}', 'drive30').replace('{date}', '2026-10-01').replace('{indoor}', '1');
     expect(readDeepLink(filled, '2026-10-01')).toEqual({ mood: 'walk', area: '애월', reach: 'drive30', when: 'now', indoor: true });
+  });
+});
+
+// ADR-0069: 걸어서 → Kakao walking directions; a small island's card → the pier its boat leaves from.
+describe('D8 walkDirectionsUrl — Kakao walking directions with no start (the phone stays private)', () => {
+  it('m.map.kakao.com/scheme/route?ep={lat},{lng}&en={name}&by=foot, no sp', () => {
+    const s = { ...spot, name: '동문재래시장', lat: 33.5122, lng: 126.5272 };
+    const u = walkDirectionsUrl(s);
+    expect(u).toBe(`https://m.map.kakao.com/scheme/route?ep=33.5122,126.5272&en=${encodeURIComponent('동문재래시장')}&by=foot`);
+    expect(new URL(u).searchParams.has('sp')).toBe(false);
+  });
+  it('no usable coordinates → the name search, like directionsUrl', () => {
+    const s = { ...spot, lat: NaN, lng: NaN };
+    expect(walkDirectionsUrl(s)).toBe(directionsUrl(s));
+  });
+});
+
+describe('D9 goLink — which 길찾기 a card gets', () => {
+  const at = (lat: number, lng: number) => ({ lat, lng });
+  const main = realSpots.find((s) => !islandOf(s) && s.lat > 33.5 && s.lat < 33.52)!;
+
+  it('walking reach and within it → foot; beyond it (the whole-island fill) → car; a card under 1km from a position → foot', () => {
+    const near = at(main.lat + 0.005, main.lng); // ~550m
+    const far = at(main.lat - 0.2, main.lng); // ~22km
+    expect(goLink(main, near, true, false)).toMatchObject({ mode: 'foot', text: '길찾기', href: walkDirectionsUrl(main) });
+    expect(goLink(main, far, true, false)).toMatchObject({ mode: 'car', href: directionsUrl(main) });
+    expect(goLink(main, near, false, false)).toMatchObject({ mode: 'car', href: directionsUrl(main) });
+    expect(goLink(main, near, false, true)).toMatchObject({ mode: 'foot', href: walkDirectionsUrl(main) });
+    expect(goLink(main, null, true, true)).toMatchObject({ mode: 'car', href: directionsUrl(main) });
+  });
+
+  it('every island spot, from the main island or with no position → its pier, 「배 타는 곳까지 길찾기」; from the same island → the spot', () => {
+    const islandSpots = realSpots.filter((s) => islandOf(s));
+    expect(islandSpots.length).toBe(85);
+    for (const s of islandSpots) {
+      const t = TERMINALS[islandOf(s)!];
+      for (const from of [at(33.4996, 126.5312), null]) {
+        const g = goLink(s, from, false, false);
+        expect(g.text, s.name).toBe('배 타는 곳까지 길찾기');
+        expect(g.terminal).toBe(t.name);
+        expect(g.href).toBe(directionsUrl({ ...s, name: t.name, lat: t.lat, lng: t.lng }));
+      }
+      expect(goLink(s, s, false, true)).toMatchObject({ text: '길찾기', terminal: undefined });
+    }
+  });
+
+  it('piers: one per island, on the main island, inside Jeju (link/to, not the name search)', () => {
+    for (const [island, t] of Object.entries(TERMINALS)) {
+      expect(islandOf(t), island).toBeNull();
+      expect(directionsUrl({ ...spot, ...t }), island).toMatch(/^https:\/\/map\.kakao\.com\/link\/to\//);
+    }
+    expect(Object.keys(TERMINALS).sort()).toEqual(['가파도', '마라도', '비양도', '우도', '차귀도', '추자도'].sort());
+  });
+
+  it('no link ever carries the start: the position is never in an href', () => {
+    const from = at(33.51234, 126.52345);
+    for (const s of realSpots.slice(0, 400).concat(realSpots.filter((x) => islandOf(x)))) {
+      for (const walk of [true, false]) {
+        const { href } = goLink(s, from, walk, true);
+        expect(href).not.toContain('33.51234');
+        expect(href).not.toContain('126.52345');
+        expect(href).not.toMatch(/[?&]sp=/);
+      }
+    }
+  });
+});
+
+describe('D10 the app: 걸어서 cards walk, island cards go to the pier', () => {
+  beforeEach(() => reset());
+  afterEach(() => window.history.replaceState(null, '', '/'));
+  const open = (q: string) => {
+    window.history.replaceState(null, '', `/${q}`);
+    return render();
+  };
+
+  it('?area=here&reach=walk: every card 길찾기 is Kakao walking directions, said 도보', async () => {
+    open('?mood=food&area=here&reach=walk');
+    await until(() => $$('#cards .card:not(.ghost)').length === 3);
+    const { origin } = current().state().cards!;
+    for (const c of $$('#cards .card')) {
+      const s = realSpots.find((x) => x.id === c.dataset.id)!;
+      const go = c.querySelector<HTMLAnchorElement>('a.go')!;
+      const want = goLink(s, origin.point, true, origin.isPoint);
+      expect(go.getAttribute('href')).toBe(want.href);
+      if (want.mode === 'foot') {
+        expect(go.getAttribute('href')).toMatch(/^https:\/\/m\.map\.kakao\.com\/scheme\/route\?ep=.*&by=foot$/);
+        expect(go.getAttribute('aria-label')).toBe(`${s.name.trim()}, 카카오맵 도보 길찾기`);
+      }
+    }
+    expect($$('#cards a.go').some((a) => a.getAttribute('href')!.endsWith('by=foot'))).toBe(true);
+  });
+
+  it('the 차귀도 card seen from 한경 → 「배 타는 곳까지 길찾기」 to 자구내포구; a 우도 card seen from 우도 → the place itself', async () => {
+    // the one main-island area whose results hold an island place (한경 · 새로운 거 · 차로 30분)
+    expect(pickCards(realSpots, areaByName('한경')!, 'new', {}, undefined, 'drive30', false, TODAY).cards.some((c) => islandOf(c.spot) === '차귀도')).toBe(true);
+    open('?mood=new&area=hangyeong&reach=drive30');
+    await until(() => $$('#cards .card:not(.ghost)').length === 3);
+    const isle = $$('#cards .card').find((c) => islandOf(realSpots.find((x) => x.id === c.dataset.id)!) === '차귀도')!;
+    const go = isle.querySelector<HTMLAnchorElement>('a.go')!;
+    const t = TERMINALS.차귀도;
+    expect(go.textContent).toBe('배 타는 곳까지 길찾기');
+    expect(go.getAttribute('href')).toBe(`https://map.kakao.com/link/to/${encodeURIComponent(t.name)},${t.lat},${t.lng}`);
+    expect(go.getAttribute('aria-label')).toBe(`차귀도, 배 타는 곳 ${t.name}까지 카카오맵 자동차 길찾기`);
+    for (const c of $$('#cards .card').filter((x) => x !== isle)) expect(c.querySelector('a.go')!.textContent).toBe('길찾기');
+
+    reset();
+    const 우도 = areaByName('우도')!;
+    const m = (['rest', 'walk', 'new', 'food', 'any'] as const).find((x) => pickCards(realSpots, 우도, x, {}, undefined, 'drive30', false, TODAY).cards.some((c) => islandOf(c.spot) === '우도'))!;
+    open(`?mood=${m}&area=udo&reach=drive30`);
+    await until(() => $$('#cards .card:not(.ghost)').length === 3);
+    const udo = $$('#cards .card').filter((c) => islandOf(realSpots.find((x) => x.id === c.dataset.id)!) === '우도');
+    expect(udo.length).toBeGreaterThan(0);
+    for (const c of udo) expect(c.querySelector('a.go')!.textContent).toBe('길찾기');
   });
 });

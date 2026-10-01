@@ -2294,6 +2294,40 @@ await check('DR-go', '길찾기 (ADR-0067) at 320·390 × light·dark: one per c
   assert(!problems.length, problems.join(' | '));
 });
 
+await check('DR-ferry', '길찾기 (ADR-0069) at 320·390: the 차귀도 card from 한경 says 배 타는 곳까지 길찾기 on one line, drawn 44, to the pier (link/to); with 걸어서 from 구제주 the food cards take Kakao walking directions (no start); no sideways scroll', async () => {
+  const problems = [];
+  for (const width of [320, 390]) {
+    for (const reach of ['drive30', 'walk']) {
+      const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, storage: { 'jeju.region': reach === 'walk' ? '구제주' : '한경', 'jeju.basis': 'region', 'jeju.reach': reach, 'jeju.hintSeen': true } });
+      await tapText(page, reach === 'walk' ? '[data-mood="food"]' : '[data-mood="new"]');
+      await waitCards(page);
+      const r = await page.$$eval('#cards .card:not(.ghost) a.go', (as) => {
+        const de = document.documentElement;
+        return {
+          over: de.scrollWidth - de.clientWidth,
+          go: as.map((a) => {
+            a.scrollIntoView({ block: 'center' });
+            const b = a.getBoundingClientRect();
+            const range = document.createRange();
+            range.selectNodeContents(a);
+            return { text: a.textContent, href: a.getAttribute('href'), h: Math.round(b.height), lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size };
+          }),
+        };
+      });
+      const tag = `${width} ${reach}`;
+      if (r.over > 0) problems.push(`${tag} overflows ${r.over}px`);
+      for (const g of r.go) if (g.h !== 44 || g.lines !== 1) problems.push(`${tag}: ${JSON.stringify(g)}`);
+      if (reach === 'drive30') {
+        const ferry = r.go.filter((g) => g.text === '배 타는 곳까지 길찾기');
+        if (ferry.length !== 1 || !ferry[0].href.startsWith('https://map.kakao.com/link/to/' + encodeURIComponent('자구내포구 차귀도 유람선') + ',33.30931,126.16537')) problems.push(`${tag} ferry: ${JSON.stringify(r.go)}`);
+      } else if (!r.go.every((g) => /^https:\/\/m\.map\.kakao\.com\/scheme\/route\?ep=33\.\d+,126\.\d+&en=[^&]+&by=foot$/.test(g.href))) problems.push(`${tag} no walking link: ${JSON.stringify(r.go)}`);
+      if (width === 320 && reach === 'drive30') await shot(page, 'go-ferry-320');
+      await ctx.close();
+    }
+  }
+  assert(!problems.length, problems.join(' | '));
+});
+
 await check('DL-open', 'deep link /?mood=walk&area=aewol&reach=drive60&indoor=1 opens the results for 애월 (no location asked), the query leaves the address, a reload keeps the same 3, back = the moods', async () => {
   const { ctx, page } = await fresh({ geo: { mode: 'deny' } });
   await page.goto(`${BASE}?mood=walk&area=aewol&reach=drive60&indoor=1`);

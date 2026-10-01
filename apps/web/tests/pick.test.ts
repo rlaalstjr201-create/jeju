@@ -271,13 +271,13 @@ describe('S2 이동시간 공식: 직선거리 × 1.3 ÷ 40km/h × 60, 5분 단�
 describe('S33 섬 스팟 — 배가 필요한 곳은 차로 몇 분이라고 하지 않는다', () => {
   const areas = (n: string) => AREAS.find((a) => a.name === n)!;
 
-  it('islandOf catches exactly 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 in spots.json', () => {
+  it('islandOf catches exactly 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 · 차귀도 1 in spots.json', () => {
     const counts: Record<string, number> = {};
     for (const s of realSpots) {
       const i = islandOf(s);
       if (i) counts[i] = (counts[i] ?? 0) + 1;
     }
-    expect(counts).toEqual({ 우도: 65, 비양도: 5, 가파도: 4, 마라도: 10 });
+    expect(counts).toEqual({ 우도: 65, 비양도: 5, 가파도: 4, 마라도: 10, 차귀도: 1 });
   });
 
   it('main-island edge spots (성산포·종달·협재·금능·모슬포) stay on the main island', () => {

@@ -93,13 +93,16 @@ export function withinReach(reach: Reach, origin: Point, spot: Point): boolean {
   return reachMinutes(reach, distanceKm(origin, spot)) <= REACH_MAX[reach];
 }
 
-// --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 in spots.json.
-export type Island = '우도' | '비양도' | '가파도' | '마라도';
+// --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 · 차귀도 1 · 추자도 0
+// in spots.json. Each one's 길찾기 goes to the pier its boat leaves from (ADR-0069, src/links.ts TERMINALS).
+export type Island = '우도' | '비양도' | '가파도' | '마라도' | '차귀도' | '추자도';
 const ISLANDS: readonly { name: Island; latMin: number; latMax: number; lngMin: number; lngMax: number }[] = [
   { name: '우도', latMin: 33.48, latMax: 33.53, lngMin: 126.93, lngMax: 126.98 },
   { name: '비양도', latMin: 33.4, latMax: 33.42, lngMin: 126.22, lngMax: 126.24 },
   { name: '가파도', latMin: 33.16, latMax: 33.18, lngMin: 126.26, lngMax: 126.28 },
   { name: '마라도', latMin: 33.11, latMax: 33.125, lngMin: 126.26, lngMax: 126.275 },
+  { name: '차귀도', latMin: 33.305, latMax: 33.32, lngMin: 126.135, lngMax: 126.155 },
+  { name: '추자도', latMin: 33.9, latMax: 34.0, lngMin: 126.25, lngMax: 126.4 },
 ];
 /** The small island a point is on, or null for the main island. */
 export function islandOf(p: Point): Island | null {
