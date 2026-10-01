@@ -53,6 +53,8 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 
 ## 3. 배포 뒤 스모크 (`SITE`=사이트 주소)
 
+명령어 점검은 한 번에: `SITE=https://… bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것).
+
 명령으로:
 
 - [ ] `curl -sI $SITE/` → `200`, `cache-control: no-cache`. `/sw.js`, `/manifest.webmanifest`도 `no-cache`.
