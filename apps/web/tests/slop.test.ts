@@ -41,10 +41,11 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
     expect(v.map((x) => `${x.rule} ${x.detail}`)).toEqual(['7 .opt font-size max(1rem, 16px)', '7 .date-in font-size 1rem']);
   });
 
-  it('3판: any centred text counts (#14); the saved button may fill; decimals are not a second sentence (#19)', () => {
+  // Changed on purpose (ADR-0070, decided): the saved button no longer may fill (#18)
+  it('3판: any centred text counts (#14); the saved button may not fill either; decimals are not a second sentence (#19)', () => {
     const v: Violation[] = [];
     checkCss('probe.css', '.more { text-align: center; } .saved-btn[aria-pressed="true"] { background: var(--ink); }', v);
-    expect(v.map((x) => x.rule)).toEqual([14]);
+    expect(v.map((x) => x.rule)).toEqual([14, 18]);
     const r: Violation[] = [];
     checkReasons('probe.json', [{ id: 'a', reason: '제주4.3평화공원에서 4.3의 역사를 기억해요' }, { id: 'b', reason: '약 17.5km 이어지는 올레길' }], r);
     expect(r).toEqual([]);
@@ -81,9 +82,10 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
       checkCss('probe.css', css, v);
       expect(v.map((x) => x.rule), css).toEqual([18]);
     }
+    // Changed on purpose (ADR-0070, decided): ♥ N's open state was the one fill allowed; it is an underline now
     const v: Violation[] = [];
     checkCss('probe.css', ".saved-btn[aria-pressed='true'] { background: var(--fill); }", v);
-    expect(v).toEqual([]);
+    expect(v.map((x) => x.rule)).toEqual([18]);
   });
 
   it('#18 also catches a bare attribute, the i flag and aria-current="page"; a cleared background passes', () => {

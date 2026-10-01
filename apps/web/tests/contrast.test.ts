@@ -61,6 +61,19 @@ describe('ADR-0070: the main colour and the accent hold WCAG AA', () => {
   });
 });
 
+describe('ADR-0070 (decided): ♥ N open is an underline, so its heart sits on the ground, not on --fill', () => {
+  it('no fill on .saved-btn[aria-pressed="true"]; a 3px --main rule; heart and rule ≥ 3 on --bg in light and dark', () => {
+    const open = [...css.matchAll(/([^{}]*\.saved-btn\[aria-pressed="true"\][^{]*)\{([^}]*)\}/g)];
+    expect(open.length).toBeGreaterThan(0);
+    for (const [, , body] of open) expect(body).not.toMatch(/background/);
+    expect(open.map((m) => m[2]).join(' ')).toMatch(/border-bottom:\s*3px solid var\(--main\)/);
+    for (const t of [light, dark]) {
+      expect(ratio(t['--accent'], t['--bg'])).toBeGreaterThanOrEqual(3);
+      expect(ratio(t['--main'], t['--bg'])).toBeGreaterThanOrEqual(3);
+    }
+  });
+});
+
 describe('ADR-0063 3: the attribution line is readable (≥ AA)', () => {
   it('.credit is --muted on --bg: ≥ 4.5:1 in light and dark', () => {
     expect(css).toMatch(/\.credit\s*\{[^}]*color:\s*var\(--muted\)/);

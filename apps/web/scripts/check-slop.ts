@@ -133,7 +133,8 @@ export function checkCss(file: string, css: string, v: Violation[]) {
     for (const m of r.body.matchAll(/(^|[;\s])height:\s*([^;]+)/g)) {
       if (!sels.every((s) => FIXED_HEIGHT_OK.test(s))) add(15, `${r.selector} height ${m[2]}`);
     }
-    const pressedFill = sels.some((s) => /\[aria-(pressed|current)(=["']?(true|page)["']?(\s+i)?)?\]/.test(s) && !s.startsWith('.saved-btn'));
+    // ADR-0070 (decided): ♥ N's open state is an underline too, so no selector is exempt any more
+    const pressedFill = sels.some((s) => /\[aria-(pressed|current)(=["']?(true|page)["']?(\s+i)?)?\]/.test(s));
     const fills = [...r.body.matchAll(/(^|[;\s])background(-color)?\s*:\s*([^;]+)/g)].some((m) => !/^(none|transparent|initial)$/.test(m[3].trim()));
     if (pressedFill && fills) add(18, `${r.selector} fills the selection`);
   }
