@@ -53,6 +53,18 @@ img { display: block; object-fit: cover; background: var(--fill); }
 .row b { display: block; font-size: 17px; }
 .row .meta { display: block; }
 
+/* 2판 오늘 줄: 누를 수 있는 줄은 파란 글자 + ›, 아닌 줄은 회색 */
+.today2 { display: grid; gap: 2px; }
+.today2 p { margin: 0; }
+.t-date { color: var(--muted); }
+.t-date b { color: var(--text); }
+.t-row { display: flex; align-items: center; gap: 6px; min-height: 40px; color: var(--muted); }
+.t-row a { color: var(--main); font-weight: 600; margin-left: auto; }
+.t-row.act { color: var(--text); }
+.t-row.act b { color: var(--main); }
+.t-row .go { margin-left: auto; color: var(--main); font-size: 20px; }
+.ic { width: 16px; height: 16px; color: var(--accent); flex: none; }
+
 .foot { color: var(--muted); padding: 24px 16px 8px; font-size: 15px; }
 .foot a { text-decoration: underline; }
 .note { position: fixed; right: 8px; bottom: 8px; background: #14181f; color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 6px; opacity: .85; z-index: 9; }

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A′안 · 흰 바탕, 고친 판</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  /* A′: 판정 문서의 「조건부」 고침 반영. 사진은 지금 동네에서 실제로 나올 상위 2곳, 44px 이상 */
+  .intro { padding: 4px 16px 0; }
+  .intro .today2 { padding: 6px 14px; border-radius: 12px; background: var(--fill); }
+  .ask { padding: 24px 16px 4px; }
+  .moods { margin: 8px 0 0; padding: 0 16px; list-style: none; }
+  .mood { display: flex; align-items: center; gap: 12px; min-height: 84px; border-bottom: 1px solid var(--line); }
+  .moods li:first-child .mood { border-top: 1px solid var(--line); }
+  .mood .txt { flex: 1; min-width: 0; }
+  .mood b { display: block; font-size: 20px; }
+  .mood small { display: block; color: var(--muted); font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pair { display: flex; gap: 4px; flex: none; }
+  .pair img { width: 52px; height: 52px; border-radius: var(--r-thumb); }
+  .any-wrap { padding: 4px 16px 0; }
+  section.more { padding: 40px 16px 0; }
+  section.more .sub { margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="basis" href="#"><span id="basis">여기 근처</span> <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4l4 4 4-4"/></svg></a>
+    <span class="brand">계획귀찮아 · 제주</span>
+  </header>
+  <div class="intro"><div class="today2" id="today"></div></div>
+  <div class="ask">
+    <h1 class="h1">지금 뭐 하고 싶어요?</h1>
+    <p class="sub">하나 고르면 근처 3곳을 골라 드려요</p>
+  </div>
+  <ul class="moods" id="moods"></ul>
+  <div class="any-wrap"><a class="any" id="any" href="#">아무거나 골라줘</a></div>
+
+  <section class="more" id="market">
+    <h2 class="h2">오늘 장 서는 곳</h2>
+    <p class="sub">차로 30분 안, 오늘 장이 서는 오일장</p>
+    <div class="list"></div>
+  </section>
+  <section class="more">
+    <h2 class="h2">다른 동네 둘러보기</h2>
+    <p class="sub">여행 중 다음에 갈 동네를 미리 볼 때</p>
+    <div class="areas" id="areas"></div>
+  </section>
+  <p class="foot">정보·사진: 비짓제주(제주관광공사) · <a href="#">소개</a> · <a href="#">개인정보</a></p>
+</div>
+<span class="note">A′안 목업</span>
+<script src="mock2.js"></script>
+<script>
+  load().then(() => {
+    document.getElementById('basis').textContent = `${AREA.name} 근처`;
+    today(document.getElementById('today'), 'a2.html');
+    document.getElementById('moods').innerHTML = Object.keys(LABEL).map(m => {
+      const top = moodPool(m).slice(0, 2);
+      return `<li><a class="mood" href="result2.html?${keep({ mood: m })}"><span class="txt"><b>${LABEL[m]}</b><small>예: ${top.map(c => c.s.name).join(', ')}</small></span>
+        <span class="pair" aria-hidden="true">${top.map(c => `<img src="${c.s.image}" alt="">`).join('')}</span></a></li>`;
+    }).join('');
+    document.getElementById('any').href = `result2.html?${keep({ mood: 'any' })}`;
+    markets(document.getElementById('market'));
+    areas(document.getElementById('areas'));
+  });
+</script>
+</body>
+</html>

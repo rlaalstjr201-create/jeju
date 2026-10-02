@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>홈 개편 2판 비교</title>
+<style>
+  body { margin: 0; padding: 24px; background: #e9eaec; font-family: -apple-system, "Pretendard Variable", "Noto Sans KR", "Malgun Gothic", sans-serif; color: #14181f; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { margin: 0 0 12px; color: #5f6267; }
+  form { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-bottom: 20px; }
+  label { display: inline-flex; gap: 6px; align-items: center; }
+  select, input { font: inherit; }
+  .row { display: flex; gap: 24px; overflow-x: auto; padding: 8px 8px 12px; }
+  figure { margin: 0; flex: none; }
+  figcaption { font-weight: 700; margin-bottom: 8px; }
+  figcaption span { font-weight: 400; color: #5f6267; }
+  iframe { width: 390px; height: 844px; border: 0; border-radius: 28px; background: #fff; box-shadow: 0 0 0 8px #14181f; }
+</style>
+</head>
+<body>
+  <h1>홈 개편 2판 (A′·B′) — docs/research/ux-audit/mockup-judgment.md 「조건부」 고침 반영</h1>
+  <p>사진·장소는 고른 동네에서 앱과 같은 규칙으로 실제 나올 곳. 비 소식은 가정값(실제 연동은 새 ADR).</p>
+  <form id="f">
+    <label>동네 <select name="area"></select></label>
+    <label>지금 시각 <select name="t"><option>14:00</option><option>16:30</option><option>19:30</option></select></label>
+    <label><input type="checkbox" name="rain" value="1"> 비 소식 있음</label>
+  </form>
+  <div class="row">
+    <figure><figcaption>지금 <span>배포본</span></figcaption><iframe src="https://gwichana-jeju.pages.dev/"></iframe></figure>
+    <figure><figcaption>A′ <span>흰 바탕</span></figcaption><iframe data-src="a2.html"></iframe></figure>
+    <figure><figcaption>B′ <span>회색 바탕 + 흰 판</span></figcaption><iframe data-src="b2.html"></iframe></figure>
+    <figure><figcaption>결과 A′ <span>맛있는 거</span></figcaption><iframe data-src="result2.html?mood=food"></iframe></figure>
+    <figure><figcaption>결과 B′ <span>맛있는 거</span></figcaption><iframe data-src="result2.html?mood=food&v=b"></iframe></figure>
+  </div>
+<script>
+  const names = ['한경','한림','애월','신제주','구제주','조천','구좌','우도','대정','안덕','중문','서귀포 시내','남원','표선','성산'];
+  const f = document.getElementById('f');
+  f.area.innerHTML = names.map(n => `<option${n === '구제주' ? ' selected' : ''}>${n}</option>`).join('');
+  function apply() {
+    const q = new URLSearchParams({ area: f.area.value, t: f.t.value });
+    if (f.rain.checked) q.set('rain', '1');
+    document.querySelectorAll('iframe[data-src]').forEach(i => {
+      const [p, s] = i.dataset.src.split('?');
+      const qq = new URLSearchParams(s); q.forEach((v, k) => qq.set(k, v));
+      i.src = `${p}?${qq}`;
+    });
+  }
+  f.addEventListener('change', apply); apply();
+</script>
+</body>
+</html>

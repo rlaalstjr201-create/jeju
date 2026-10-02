@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결과 화면 · 고친 판</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  /* 길찾기 버튼은 큰 카드만. 작은 카드는 카드 전체가 길찾기. 파란 채움은 바닥 「다른 3곳 보기」 하나 */
+  .head { padding: 4px 16px 0; display: flex; align-items: baseline; justify-content: space-between; }
+  .head a { color: var(--main); font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; }
+  .why { padding: 4px 16px 0; color: var(--muted); margin: 0; }
+  .why a { text-decoration: underline; }
+  .big { padding: 0 16px; margin-top: 16px; }
+  .big img { width: 100%; aspect-ratio: 3 / 2; border-radius: var(--r-photo); }
+  .name { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .name b { font-size: 20px; }
+  .heart { width: 44px; height: 44px; display: grid; place-items: center; color: var(--muted); }
+  .heart svg { width: 22px; height: 22px; }
+  .reason { margin: 2px 0 0; }
+  .big .meta { margin: 4px 0 12px; }
+  .big .btn-go { width: 100%; min-height: 48px; }
+  .alt { margin: 40px 0 0; padding: 0 16px 4px; color: var(--muted); font-weight: 600; }
+  .small { display: flex; gap: 12px; padding: 12px 0; margin: 0 16px; }
+  .small + .small { border-top: 1px solid var(--line); }
+  .small img { width: 88px; height: 88px; border-radius: var(--r-thumb); flex: none; }
+  .small .body { flex: 1; min-width: 0; }
+  .small b { font-size: 17px; }
+  .small .meta { margin: 2px 0 0; }
+  .small .goto { color: var(--main); font-weight: 600; margin-top: 4px; display: inline-flex; gap: 4px; align-items: center; }
+  .small .goto svg { width: 14px; height: 14px; }
+  .bar { position: sticky; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: var(--bg); }
+  .v-b { background: var(--page); }
+  .v-b .top, .v-b .bar { background: var(--page); }
+  .v-b .big, .v-b .smalls { background: #fff; border-radius: var(--r-panel); margin: 12px 12px 0; padding: 12px; }
+  .v-b .alt { margin-top: 24px; }
+  .v-b .small { margin: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="basis" href="#"><span id="basis"></span> <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4l4 4 4-4"/></svg></a>
+    <a class="heart" href="#" aria-label="저장한 곳"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></a>
+  </header>
+  <div class="head"><h1 class="h1" id="title"></h1><a id="back" href="#">바꾸기</a></div>
+  <p class="why">차로 30분 안에서, 소개글로 볼 때 가 볼 만한 곳부터 골랐어요 · <a href="#">어떻게 고르나요</a></p>
+  <div id="cards"></div>
+  <div class="bar"><a class="btn-main" href="#">다른 3곳 보기</a></div>
+  <p class="foot">정보·사진: 비짓제주(제주관광공사)</p>
+</div>
+<span class="note" id="note"></span>
+<script src="mock2.js"></script>
+<script>
+  const B = Q.get('v') === 'b';
+  if (B) document.body.classList.add('v-b');
+  document.getElementById('note').textContent = B ? 'B′ 결과 목업' : 'A′ 결과 목업';
+  const mood = Q.get('mood') || 'food';
+  const H = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+  load().then(() => {
+    document.getElementById('basis').innerHTML = `${AREA.name} 근처${INDOOR ? ' <small>· 실내만</small>' : ''}`;
+    document.getElementById('back').href = `${B ? 'b2' : 'a2'}.html?${keep()}`;
+    let picks;
+    if (mood === 'any') {
+      picks = [];
+      for (const m of ['rest', 'walk', 'new']) { const c = moodPool(m).find(x => !picks.some(y => y.s.id === x.s.id)); if (c) picks.push(c); }
+      document.getElementById('title').textContent = '아무거나 골라 봤어요';
+    } else if (mood === 'sunset') {
+      picks = pool(SPOTS, { max: 45, test: s => /노을|일몰|석양|해넘이/.test(s.reason) }).slice(0, 3);
+      document.getElementById('title').textContent = '노을 볼 곳';
+      document.querySelector('.why').textContent = '차로 45분 안, 소개글에 노을이 나오는 곳 (목업: 실제로는 노을 속성 데이터 필요)';
+    } else {
+      picks = moodPool(mood).slice(0, 3);
+      document.getElementById('title').textContent = LABEL[mood];
+    }
+    const meta = c => `${c.s.indoor ? '실내 · ' : ''}${openToday(c.s) ? '오늘 장 서는 날 · ' : ''}${AREA.name}에서 차로 약 ${fmt(c.min)}`;
+    const [first, ...rest] = picks;
+    const same = rest.length && rest.every(c => c.min === rest[0].min);
+    document.getElementById('cards').innerHTML =
+      `<div class="big"><img src="${first.s.image}" alt="${first.s.name}">
+        <div class="name"><b>${first.s.name}</b><span class="heart">${H}</span></div>
+        <p class="reason">${first.s.reason}</p><p class="meta">${meta(first)}</p>
+        <a class="btn-go" href="#">${GO_ICON}길찾기</a></div>` +
+      (rest.length ? `<p class="alt">아니면${same ? ` · 둘 다 차로 약 ${fmt(rest[0].min)}` : ''}</p>
+       <div class="smalls">${rest.map(c => `<a class="small" href="#"><img src="${c.s.image}" alt="${c.s.name}"><span class="body">
+         <b>${c.s.name}</b><p class="reason">${c.s.reason}</p><p class="meta">${meta(c)}</p><span class="goto">${GO_ICON}길찾기</span></span></a>`).join('')}</div>` : '');
+  });
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@
     {
       "name": "design-mockups",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4319", "--directory", "apps/web/design"],
+      "runtimeArgs": ["-m", "http.server", "4319", "--directory", "apps/web"],
       "port": 4319
     }
   ]
