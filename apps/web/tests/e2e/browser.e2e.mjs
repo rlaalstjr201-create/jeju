@@ -1691,6 +1691,48 @@ await check('QA4-label', 'top bar with a date label (12월 25일 · 서귀포 �
   assert(problems.length === 0, problems.join(' | '));
 });
 
+await check('U1-indoor-label', 'top bar with 실내만 on (ADR-0075: 서귀포 시내 근처 · 실내만, and with a day in front) at 390·320 × 100%: one line; at 320 × 200% and 195 (page zoom 200%): no sideways scroll, wraps without cutting, no line starts with "·", ♥ N on the same bar', async () => {
+  const problems = [];
+  for (const [width, pct, day] of [[390, 100, false], [320, 100, false], [390, 100, true], [320, 200, false], [320, 200, true], [195, 100, false]]) {
+    const tag = `${width}×${pct}%${day ? ' day' : ''}`;
+    const { ctx, page } = await fresh({ width, height: 700, storage: { ...(day ? { 'jeju.when': xmasDay() } : {}), 'jeju.basis': 'region', 'jeju.region': '서귀포시내', 'jeju.saved.v2': [{ id: SPOT_IDS[0], date: seoulDay(), order: 0 }] } });
+    await page.evaluate(() => sessionStorage.setItem('jeju.indoor', 'true'));
+    await page.reload();
+    if (pct !== 100) await page.addStyleTag({ content: `html { font-size: ${pct}% }` });
+    await sleep(100);
+    const r = await page.evaluate(() => {
+      const de = document.documentElement;
+      const b = document.querySelector('#basis');
+      const text = b.querySelector('span');
+      const range = document.createRange();
+      range.selectNodeContents(text);
+      const br = b.getBoundingClientRect();
+      const sr = document.querySelector('#saved').getBoundingClientRect();
+      const top = document.querySelector('.top').getBoundingClientRect();
+      return {
+        label: text.textContent,
+        over: de.scrollWidth - de.clientWidth,
+        textRight: text.getBoundingClientRect().right,
+        cw: de.clientWidth,
+        lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size,
+        cut: text.scrollWidth > text.clientWidth + 1,
+        nw: [...text.querySelectorAll('.nw')].map((e) => e.getClientRects().length),
+        sameBar: sr.top < br.bottom && sr.bottom > br.top && sr.bottom <= top.bottom + 0.5,
+      };
+    });
+    const want = `${day ? '12월 25일 · ' : ''}서귀포 시내 근처 · 실내만`;
+    if (r.label !== want) problems.push(`${tag} label "${r.label}"`);
+    if (r.over > 0 || r.textRight > r.cw + 0.5) problems.push(`${tag} overflow ${r.over}, right ${Math.round(r.textRight)}`);
+    if (r.cut) problems.push(`${tag} label cut`);
+    if (pct === 100 && width >= 320 && !day && r.lines !== 1) problems.push(`${tag} ${r.lines} lines`);
+    if (r.nw.some((n) => n !== 1)) problems.push(`${tag} a "·" split from its word: ${r.nw}`);
+    if (!r.sameBar) problems.push(`${tag} ♥ N not on the label's bar`);
+    if (width === 390 && pct === 100 && !day) await shot(page, 'indoor-label-390');
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 await check('QA4-datein', 'no showPicker: 날짜 고르기 shows the date field with 이 날로 (min today, max +365); typing a day digit by digit applies nothing until 이 날로 or Enter; out of range is ignored — in the 다른 날로 sheet and the basis sheet 언제', async () => {
   const problems = [];
   const today = seoulDay();
@@ -1909,8 +1951,10 @@ await check('T2-hit', 'at 320·390: card heart, 길찾기, 바꾸기·돌아가�
       if (r.n < n) problems.push(`${width} ${tag}: ${r.n} targets (want ≥ ${n})`);
       for (const k of ['small', 'overlap', 'blocked']) if (r[k].length) problems.push(`${width} ${tag} ${k}: ${r[k].join(', ')}`);
       if (r.over > 0 || r.sheetOver > 0) problems.push(`${width} ${tag} overflows ${r.over}/${r.sheetOver}`);
-      const drawn = await page.$$eval(sel, (els) => els.filter((e) => e.offsetParent !== null).map((e) => Math.round(e.getBoundingClientRect().height)));
-      want[tag] = drawn;
+      const drawn = await page.$$eval(sel, (els) => els.filter((e) => e.offsetParent !== null).map((e) => [e.matches('.card.lead .go'), Math.round(e.getBoundingClientRect().height)]));
+      // ADR-0075: the first card's 길찾기 is drawn 48 on purpose; everything else keeps 44
+      want[tag] = drawn.filter(([lead]) => !lead).map(([, h]) => h);
+      for (const [lead, h] of drawn) if (lead && h !== 48) problems.push(`${width} ${tag} first card 길찾기 drawn ${h}`);
     };
     await tapText(page, '[data-mood="food"]');
     await waitCards(page);
@@ -2280,6 +2324,7 @@ await check('DR-go', '길찾기 (ADR-0067) at 320·390 × light·dark: one per c
               range.selectNodeContents(a);
               return {
                 n: go.length,
+                lead: c.classList.contains('lead'),
                 h: r.height,
                 lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size,
                 inCard: r.right <= cr.right + 0.5 && r.left >= cr.left - 8.5,
@@ -2303,7 +2348,8 @@ await check('DR-go', '길찾기 (ADR-0067) at 320·390 × light·dark: one per c
         if (r.over > 0) problems.push(`${tag} ${where} overflows ${r.over}px`);
         for (const c of r.cards) {
           if (c.n !== 1) problems.push(`${tag} ${where}: ${c.n} 길찾기`);
-          else if (Math.round(c.h) !== 44 || c.lines !== 1 || !c.inCard || !c.hit || !/^https:\/\/map\.naver\.com\/p\/directions\/-\/126\.\d+,33\.\d+,[^/]+,,\/-\/(car|walk)$/.test(c.href)) problems.push(`${tag} ${where}: ${JSON.stringify(c)}`);
+          // ADR-0075: the first card's is the filled 48 line, the others the 44 text button
+          else if (Math.round(c.h) !== (c.lead ? 48 : 44) || c.lines !== 1 || !c.inCard || !c.hit || !/^https:\/\/map\.naver\.com\/p\/directions\/-\/126\.\d+,33\.\d+,[^/]+,,\/-\/(car|walk)$/.test(c.href)) problems.push(`${tag} ${where}: ${JSON.stringify(c)}`);
         }
       }
       if (width === 320 && !dark) await shot(page, 'go-saved-320');
@@ -2328,13 +2374,13 @@ await check('DR-ferry', '길찾기 (ADR-0069, ADR-0071) at 320·390: the 차귀�
             const b = a.getBoundingClientRect();
             const range = document.createRange();
             range.selectNodeContents(a);
-            return { text: a.textContent, href: a.getAttribute('href'), h: Math.round(b.height), lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size };
+            return { text: a.textContent, href: a.getAttribute('href'), lead: !!a.closest('.card.lead'), h: Math.round(b.height), lines: new Set([...range.getClientRects()].map((x) => Math.round(x.top))).size };
           }),
         };
       });
       const tag = `${width} ${reach}`;
       if (r.over > 0) problems.push(`${tag} overflows ${r.over}px`);
-      for (const g of r.go) if (g.h !== 44 || g.lines !== 1) problems.push(`${tag}: ${JSON.stringify(g)}`);
+      for (const g of r.go) if (g.h !== (g.lead ? 48 : 44) || g.lines !== 1) problems.push(`${tag}: ${JSON.stringify(g)}`);
       if (reach === 'drive30') {
         const ferry = r.go.filter((g) => g.text === '배 타는 곳까지 길찾기');
         if (ferry.length !== 1 || ferry[0].href !== 'https://map.naver.com/p/directions/-/126.16537,33.30931,' + encodeURIComponent('자구내포구 차귀도 유람선') + ',,/-/car') problems.push(`${tag} ferry: ${JSON.stringify(r.go)}`);

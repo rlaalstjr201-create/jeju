@@ -6,7 +6,7 @@ import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
-import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
+import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
@@ -18,12 +18,21 @@ export const COPY = {
   basisNoGps: '지역 고르기',
   /** a day chosen in the basis sheet goes in front ("내일 · 애월 근처", "10월 3일 · 숙소 근처"). */
   basisWhen: (day: string, where: string) => `${day} · ${where}`,
+  /** 비 와요(실내만) on (ADR-0075): said after the place ("구제주 근처 · 실내만"). */
+  basisIndoor: (where: string) => `${where} · 실내만`,
   basisAria: (label: string) => `${label}, 기준 바꾸기`,
   savedAria: (n: number) => `저장한 곳 ${n}개`,
   locating: '위치 확인 중…',
   chooseArea: '지역으로 고르기',
   wrapped: '이 근처는 다 봤어요. 처음 본 곳부터 다시 보여 드려요.',
   offline: '오프라인이라 사진은 안 보여요.',
+  /** 고르는 방식 (ADR-0075): one quiet line over the cards. `reach` null = the range was widened to the nearest 3
+   * (빈손 없음, pick.ts pool), so the line says that instead of a range it did not keep. */
+  how: (reach: string | null, indoor: boolean) =>
+    reach
+      ? `${indoor ? `${reach} 안의 실내 중에서, ` : `${reach} 안에서, `}소개글로 볼 때 가 볼 만한 곳부터 골랐어요.`
+      : `범위 안에 맞는 곳이 적어서 가장 가까운 ${indoor ? '실내 ' : ''}곳으로 골랐어요.`,
+  howReach: { walk: '걸어서 15분', drive30: '차로 30분', drive60: '차로 1시간' } satisfies Record<Reach, string>,
   or: '아니면',
   more: '다른 3곳 보기',
   /** where a tap on the card goes (ADR-0071): the app of its place link */
@@ -155,9 +164,9 @@ function whereLabel(s: State): string {
   if (s.basis === 'region' && s.region) return COPY.basisRegion(areaLabel(s.region));
   return s.lastFail ? COPY.basisNoGps : COPY.basisGps;
 }
-/** 지금: the place only. A chosen day goes in front: "내일 · 애월 근처", "10월 3일 · 숙소 근처". */
+/** 지금: the place only. A chosen day goes in front: "내일 · 애월 근처", "10월 3일 · 숙소 근처"; 실내만 after. */
 export function basisLabel(s: State): string {
-  const where = whereLabel(s);
+  const where = s.indoor ? COPY.basisIndoor(whereLabel(s)) : whereLabel(s);
   if (s.when === 'now') return where;
   return COPY.basisWhen(s.when === addDays(s.today, 1) ? COPY.tomorrow : shortDay(s.when), where);
 }
@@ -176,6 +185,14 @@ export function statusOf(s: State): { text: string; chooseArea: boolean } {
   return { text: '', chooseArea: false };
 }
 
+/** 고르는 방식 (ADR-0075): only while the cards show. The range is said only if every card is inside it. */
+export function howOf(s: State): string {
+  const c = s.cards;
+  if (s.view !== 'cards' || s.phase.k !== 'ready' || !c) return '';
+  const inReach = c.list.every((x) => withinReach(c.reach, c.origin.point, x.spot));
+  return COPY.how(inReach ? COPY.howReach[c.reach] : null, c.indoor);
+}
+
 export interface Els {
   app: HTMLElement;
   main: HTMLElement;
@@ -188,6 +205,7 @@ export interface Els {
   saved: HTMLButtonElement;
   savedN: HTMLElement;
   crumb: HTMLElement;
+  how: HTMLElement;
   status: HTMLElement;
   foodSub: HTMLElement;
   newSub: HTMLElement;
@@ -229,6 +247,7 @@ export function findEls(doc: Document): Els {
     saved: q<HTMLButtonElement>('#saved'),
     savedN: q('#saved > .n'),
     crumb: q('#crumb'),
+    how: q('#how'),
     status: q('#status'),
     foodSub: q('#foodSub'),
     newSub: q('#newSub'),
@@ -1000,10 +1019,20 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const yBefore = s.view !== shownView ? (win?.scrollY ?? 0) : 0;
     const label = basisLabel(s);
     if (els.basisText.textContent !== label) {
-      // the day and its "·" stay together: a label wrapped at large text never starts a line with "·"
-      const i = label.indexOf(' · ');
-      if (i < 0) els.basisText.textContent = label;
-      else els.basisText.replaceChildren(el(doc, 'span', { class: 'nw' }, label.slice(0, i + 2)), label.slice(i + 2));
+      // the day and its "·" stay together, and so do the place's last word and the "·" before 실내만: a label
+      // wrapped at large text never starts a line with "·"
+      const parts = label.split(' · ');
+      if (parts.length === 1) els.basisText.textContent = label;
+      else {
+        const nodes: (string | HTMLElement)[] = [];
+        parts.forEach((p, i) => {
+          if (i === parts.length - 1) return void nodes.push(p);
+          const k = i === 0 && s.when !== 'now' ? 0 : p.lastIndexOf(' ') + 1;
+          if (k) nodes.push(p.slice(0, k));
+          nodes.push(el(doc, 'span', { class: 'nw' }, `${p.slice(k)} ·`), ' ');
+        });
+        els.basisText.replaceChildren(...nodes);
+      }
     }
     setAttr(els.basis, 'aria-label', COPY.basisAria(label));
 
@@ -1029,6 +1058,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     els.newSub.hidden = !(s.view === 'cards' && s.mood === 'new');
     for (const b of els.subs) setAttr(b, 'aria-pressed', String(b.dataset.sub === s.sub || b.dataset.sub === s.newSub));
 
+    const how = howOf(s);
+    setText(els.how, how);
+    els.how.hidden = !how;
     const st = statusOf(s);
     const statusKey = `${st.text}|${st.chooseArea}`;
     if (statusKey !== lastStatus) {

@@ -129,6 +129,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 .tab::before { content: ""; position: absolute; inset: -2px -8px; }
 .tab[aria-pressed="true"] { color: var(--text); }
 .tab[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 3px solid var(--main); }
+/* 고르는 방식 (ADR-0075): one quiet line, not live (the cards are announced on their own) */
+.how { margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
+.how + .status { margin-top: 4px; }
 .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
 .status:empty { display: none; }
 .status .tbtn { color: var(--text); }
@@ -174,7 +177,8 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* places: photo and text, no box */
 .picks { display: flex; flex-direction: column; gap: 20px; margin-top: 16px; container-type: inline-size; }
 .picks:empty { display: none; }
-.alt { margin: 8px 0 -8px; color: var(--muted); text-wrap: pretty; }
+/* 40 under the first card (ADR-0075): the list's 20 gap and 20 more */
+.alt { margin: 20px 0 -8px; color: var(--muted); text-wrap: pretty; }
 .alt b { font-weight: 600; }
 .card { position: relative; display: grid; column-gap: 12px; }
 .ph { grid-area: ph; overflow: hidden; background: var(--fill); }
@@ -216,6 +220,11 @@ main { flex: 1; display: flex; flex-direction: column; }
 .card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }
 .card.lead .ph { aspect-ratio: 3 / 2; border-radius: var(--r-photo); margin-bottom: 12px; }
 .card.lead .name { font-size: 1.25rem; line-height: 1.35; font-weight: 700; }
+/* the first card's 길찾기 (ADR-0075): the card's width, drawn 48 (its hit area is its own square box, so the rounded
+   corners count), --text on --main-tint (--main on the tint is 4.3:1, under AA); the row cards' stays the 44 text button */
+.card.lead .go { justify-self: stretch; justify-content: center; min-height: 48px; margin: 4px 0 0; background: var(--main-tint); color: var(--text); text-decoration: none; }
+.card.lead .go::before { inset: 0; }
+.card.lead .go:active { background: var(--fill); }
 /* the booking link and the first-save hint run the full card width, under the photo too */
 .card.row {
   --thumb: clamp(80px, 24vw, 104px);

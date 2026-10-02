@@ -4,7 +4,7 @@
 // in tests/e2e/browser.e2e.mjs (Chromium).
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
-import { islandOf, pickCards, type Point } from '../src/pick';
+import { islandOf, pickCards, withinReach, type Point } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, render, reset, settle, shownMood, tap, wait } from './harness';
 
@@ -2118,7 +2118,7 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
     expect(state().cards?.how).toBe('new');
     expect($$('#cards .card').map((c) => c.querySelector('.meta .indoor')?.textContent)).toEqual(['실내', '실내', '실내']);
     expect($('#cards .card.lead .meta').textContent).toMatch(/^실내\u00a0· 여기서 /);
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('여기 근처 · 실내만'); // ADR-0075 (was "여기 근처": 실내만 now said in the top bar)
     await tap('#basis');
     expect(toggle().getAttribute('aria-pressed')).toBe('true');
     // off again: the outdoor pick, no 실내, the session key gone
@@ -2192,6 +2192,82 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
     await settle();
     await tap('[data-mood="rest"]');
     expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'rest'));
+  });
+});
+
+describe('결과 화면 (ADR-0075, plans/home-refresh.md U1)', () => {
+  const how = () => $('#how');
+
+  it('#basis says 실내만 after the place while indoor is on, also with a day in front; the "·" never starts a line', async () => {
+    window.sessionStorage.setItem('jeju.indoor', 'true');
+    window.localStorage.setItem('jeju.region', JSON.stringify('서귀포시내'));
+    window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
+    render();
+    expect($('#basis').textContent).toBe('서귀포 시내 근처 · 실내만');
+    expect($('#basis').getAttribute('aria-label')).toBe('서귀포 시내 근처 · 실내만, 기준 바꾸기');
+    expect($$('#basis .nw').map((e) => e.textContent)).toEqual(['근처 ·']);
+    await tap('[data-mood="rest"]');
+    await tap('#basis');
+    await tap('#sheet [data-indoor]');
+    await settle();
+    expect($('#basis').textContent).toBe('서귀포 시내 근처');
+    expect($$('#basis .nw')).toHaveLength(0);
+  });
+
+  it('the line over the cards: the range, then how; 실내 when indoor; not live, hidden off the cards (home, saved list)', async () => {
+    render();
+    expect(how().hidden).toBe(true);
+    await tap('[data-mood="rest"]');
+    expect(how().hidden).toBe(false);
+    expect(how().textContent).toBe('차로 30분 안에서, 소개글로 볼 때 가 볼 만한 곳부터 골랐어요.');
+    expect(how().getAttribute('role')).toBeNull();
+    expect(how().getAttribute('aria-live')).toBeNull();
+    expect(how().nextElementSibling).toBe($('#status'));
+    await tap('#basis');
+    await tap('#sheet [data-indoor]');
+    await settle();
+    expect(how().textContent).toBe('차로 30분 안의 실내 중에서, 소개글로 볼 때 가 볼 만한 곳부터 골랐어요.');
+    await tap('.card .heart');
+    await tap('#saved');
+    expect(how().textContent).toBe('');
+    expect(how().hidden).toBe(true);
+    await tap('#savedView [data-action="close-saved"]');
+    await settle();
+    expect(how().hidden).toBe(false);
+    await tap('#results .change');
+    await settle();
+    expect(how().hidden).toBe(true);
+  });
+
+  it.each([
+    ['walk', '걸어서 15분 안에서, '],
+    ['drive60', '차로 1시간 안에서, '],
+  ] as const)('the range %s is said in its own words', async (reach, words) => {
+    window.localStorage.setItem('jeju.reach', JSON.stringify(reach));
+    render();
+    await tap('[data-mood="food"]');
+    expect(state().cards!.list.every((c) => withinReach(reach, ORIGINS.제주시, c.spot))).toBe(true);
+    expect(how().textContent).toBe(`${words}소개글로 볼 때 가 볼 만한 곳부터 골랐어요.`);
+  });
+
+  it('widened to the nearest 3 on the island (a card past the range): says it took the nearest, not a range it did not keep', async () => {
+    const far = fileSpots.filter((s) => s.mood !== 'rest' || !withinReach('drive30', ORIGINS.제주시, s));
+    render({ loadSpots: () => Promise.resolve(far) });
+    await tap('[data-mood="rest"]');
+    expect(cardNames()).toHaveLength(3);
+    expect(how().textContent).toBe('범위 안에 맞는 곳이 적어서 가장 가까운 곳으로 골랐어요.');
+  });
+
+  it('the first card\'s 길찾기 is the filled 48 line; the row cards\' and the saved rows\' stay the 44 text button', async () => {
+    render();
+    await tap('[data-mood="rest"]');
+    expect($$('#cards .card.lead a.go')).toHaveLength(1);
+    expect($$('#cards .card.row a.go')).toHaveLength(2);
+    expect(cssRule('.card.lead .go')).toMatch(/min-height:\s*48px/);
+    expect(cssRule('.card.lead .go')).toMatch(/background:\s*var\(--main-tint\)/);
+    expect(cssRule('.card.lead .go')).toMatch(/color:\s*var\(--text\)/);
+    expect(cssRule('.go')).not.toMatch(/min-height|background/);
+    expect(cssRule('.alt')).toMatch(/margin:\s*20px 0 -8px/); // 20 gap + 20 = 40 under the first card
   });
 });
 

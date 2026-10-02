@@ -74,6 +74,17 @@ describe('ADR-0070 (decided): ♥ N open is an underline, so its heart sits on t
   });
 });
 
+describe('ADR-0075: the first card\'s 길찾기 is --text on --main-tint (--main there would miss AA)', () => {
+  it('.card.lead .go fills with --main-tint and writes --text: ≥ 4.5:1 in light and dark', () => {
+    expect(css).toMatch(/\.card\.lead \.go\s*\{[^}]*background:\s*var\(--main-tint\)[^}]*color:\s*var\(--text\)/);
+    for (const t of [light, dark]) {
+      expect(ratio(t['--text'], t['--main-tint'])).toBeGreaterThanOrEqual(4.5);
+      expect(ratio(t['--text'], t['--fill'])).toBeGreaterThanOrEqual(4.5); // pressed
+    }
+    expect(ratio(light['--main'], light['--main-tint'])).toBeLessThan(4.5);
+  });
+});
+
 describe('ADR-0063 3: the attribution line is readable (≥ AA)', () => {
   it('.credit is --muted on --bg: ≥ 4.5:1 in light and dark', () => {
     expect(css).toMatch(/\.credit\s*\{[^}]*color:\s*var\(--muted\)/);
