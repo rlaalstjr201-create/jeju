@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결과 화면 · 제안 적용</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  /* 바로 가능(A1~A9) 적용: 헤더에 실내 표시, 왜 이 3곳, 길찾기 카드 안 버튼, 간격 두 단계 */
+  .head { padding: 4px 16px 0; }
+  .head .line { display: flex; align-items: baseline; justify-content: space-between; }
+  .head .line a { color: var(--main); font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; }
+  .tabs { display: flex; gap: 20px; padding: 0 16px; border-bottom: 1px solid var(--line); margin-top: 4px; }
+  .tabs span { padding: 10px 0; color: var(--muted); font-weight: 600; }
+  .tabs .on { color: var(--text); box-shadow: inset 0 -2px var(--main); }
+  .why { padding: 12px 16px 0; color: var(--muted); }
+  .why a { text-decoration: underline; }
+  .card { padding: 0 16px; }
+  .big { margin-top: 16px; }
+  .big img { width: 100%; aspect-ratio: 3 / 2; border-radius: var(--r-photo); }
+  .name { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .name b { font-size: 20px; }
+  .heart { width: 44px; height: 44px; display: grid; place-items: center; color: var(--muted); }
+  .heart svg { width: 22px; height: 22px; }
+  .reason { margin: 2px 0 0; font-size: 15px; }
+  .card .meta { margin: 4px 0 12px; }
+  .big .btn-go { width: 100%; min-height: 48px; }
+  .alt { margin-top: 40px; padding: 0 16px 8px; color: var(--muted); font-weight: 600; }
+  .small { display: flex; gap: 12px; padding: 12px 16px; }
+  .small + .small { border-top: 1px solid var(--line); margin: 0 16px; padding: 12px 0; }
+  .small img { width: 96px; height: 96px; border-radius: var(--r-thumb); flex: none; }
+  .small .body { flex: 1; min-width: 0; }
+  .small b { font-size: 17px; }
+  .small .meta { margin: 2px 0 8px; }
+  .small .btn-go { min-height: 40px; padding: 0 14px; }
+  .bar { position: sticky; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 30%); }
+  /* B안 결과: 연회색 바탕 + 흰 판 */
+  .v-b { background: var(--page); }
+  .v-b .top, .v-b .bar { background: var(--page); }
+  .v-b .tabs { border: 0; }
+  .v-b .card.big, .v-b .smalls { background: #fff; border-radius: var(--r-panel); margin: 12px 12px 0; padding: 12px; }
+  .v-b .alt { margin-top: 24px; }
+  .v-b .smalls .small { margin: 0; padding: 4px 0; }
+  .v-b .smalls .small + .small { margin-top: 12px; padding-top: 12px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="basis" href="#">구제주 근처 <small>· 실내만</small> <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4l4 4 4-4"/></svg></a>
+    <a class="heart" href="#" aria-label="저장한 곳"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></a>
+  </header>
+  <div class="head">
+    <div class="line"><h1 class="h1">맛있는 거 먹고 싶어</h1><a href="a.html">바꾸기</a></div>
+  </div>
+  <div class="tabs"><span class="on">식사</span><span>카페·디저트</span></div>
+  <p class="why">가까운 순으로, 비짓제주가 소개한 곳에서 골랐어요 · <a href="#">어떻게 고르나요</a></p>
+  <div id="cards"></div>
+  <div class="bar"><a class="btn-main" href="#">다른 3곳 보기</a></div>
+  <p class="foot">정보·사진: 비짓제주(제주관광공사)</p>
+</div>
+<span class="note" id="note">결과 목업</span>
+<script src="data.js"></script>
+<script src="mock.js"></script>
+<script>
+  const b = new URLSearchParams(location.search).get('v') === 'b';
+  if (b) { document.body.classList.add('v-b'); document.getElementById('note').textContent = 'B안 결과 목업'; }
+  else document.getElementById('note').textContent = 'A안 결과 목업';
+  const H = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+  const [first, ...rest] = D.moods.food.slice(1, 4); // 아피스, 정성듬뿍 제주국, 물항식당
+  const meta = p => `${p.indoor ? '실내 · ' : ''}구제주에서 차로 약 ${mins(p.km)}분`;
+  document.getElementById('cards').innerHTML =
+    `<div class="card big"><img src="${first.image}" alt="${first.name}">
+      <div class="name"><b>${first.name}</b><span class="heart">${H}</span></div>
+      <p class="reason">${first.reason}</p><p class="meta">${meta(first)}</p>
+      <a class="btn-go" href="#">${GO}길찾기</a></div>
+     <p class="alt">아니면 · 둘 다 차로 약 5분</p>
+     <div class="smalls">${rest.map(p => `<div class="small"><img src="${p.image}" alt="${p.name}"><div class="body">
+       <b>${p.name}</b><p class="reason">${p.reason}</p><p class="meta">${meta(p)}</p><a class="btn-go" href="#">${GO}길찾기</a></div></div>`).join('')}</div>`;
+</script>
+</body>
+</html>

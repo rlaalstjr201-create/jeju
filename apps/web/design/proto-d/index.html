@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>홈 개편 목업 비교</title>
+<style>
+  body { margin: 0; padding: 24px; background: #e9eaec; font-family: -apple-system, "Pretendard Variable", "Noto Sans KR", "Malgun Gothic", sans-serif; color: #14181f; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { margin: 0 0 20px; color: #5f6267; }
+  .row { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 12px; }
+  figure { margin: 0; flex: none; }
+  figcaption { font-weight: 700; margin-bottom: 8px; }
+  figcaption span { font-weight: 400; color: #5f6267; }
+  iframe { width: 390px; height: 844px; border: 0; border-radius: 28px; background: #fff; box-shadow: 0 0 0 8px #14181f; }
+</style>
+</head>
+<body>
+  <h1>홈 개편 목업 (docs/research/ux-audit/report.md 제안 적용)</h1>
+  <p>390×844. 각 화면은 안에서 스크롤된다. 현재 앱은 실제 배포본이다.</p>
+  <div class="row">
+    <figure><figcaption>지금 <span>배포본</span></figcaption><iframe src="https://gwichana-jeju.pages.dev/"></iframe></figure>
+    <figure><figcaption>A안 <span>흰 바탕 유지 · 오늘 줄 · 사진 모자이크</span></figcaption><iframe src="a.html"></iframe></figure>
+    <figure><figcaption>B안 <span>회색 바탕 + 흰 판 · 사진 타일</span></figcaption><iframe src="b.html"></iframe></figure>
+    <figure><figcaption>결과 A <span>길찾기 버튼 · 실내 표시 · 왜 3곳</span></figcaption><iframe src="result.html"></iframe></figure>
+    <figure><figcaption>결과 B</figcaption><iframe src="result.html?v=b"></iframe></figure>
+  </div>
+</body>
+</html>

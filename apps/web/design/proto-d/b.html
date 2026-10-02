@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B안 · 확실하게</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  /* B안: 연회색 바탕 + 흰 판. 맨 위 지역 사진, 기분은 사진 타일 2×2 */
+  body { background: var(--page); }
+  .top { background: var(--page); }
+  .panel { background: #fff; border-radius: var(--r-panel); margin: 0 12px 12px; padding: 16px; }
+  .hero { padding: 0; overflow: hidden; }
+  .hero img { width: 100%; height: 176px; }
+  .hero .in { padding: 14px 16px 16px; }
+  .hero .h2 { margin-bottom: 6px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 6px; padding: 0; list-style: none; }
+  .tile { display: block; }
+  .tile img { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-photo); }
+  .tile b { display: block; font-size: 17px; margin-top: 6px; line-height: 1.35; }
+  .panel .any { width: 100%; justify-content: center; margin-top: 6px; border-radius: 12px; background: var(--main-tint); font-size: 17px; font-weight: 700; min-height: 52px; }
+  .panel .sub { margin-bottom: 10px; }
+  .foot { padding-top: 12px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="basis" href="#">여기 근처 <small>· 구제주</small> <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4l4 4 4-4"/></svg></a>
+    <span class="brand">계획귀찮아 · 제주</span>
+  </header>
+
+  <div class="panel hero">
+    <img id="hero" alt="">
+    <div class="in">
+      <h2 class="h2">오늘 구제주 근처</h2>
+      <div class="today" id="today"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h1 class="h1">지금 뭐 하고 싶어요?</h1>
+    <ul class="tiles" id="tiles"></ul>
+    <a class="any" href="result.html?v=b">아무거나 골라줘</a>
+  </div>
+
+  <div class="panel">
+    <h2 class="h2">오늘 장 서는 곳</h2>
+    <p class="sub">제주 오일장은 날짜 끝자리로 열려요</p>
+    <div id="markets"></div>
+  </div>
+
+  <div class="panel">
+    <h2 class="h2">동네별로 둘러보기</h2>
+    <p class="sub">15곳, 누르면 그 동네 장소를 모아 봐요</p>
+    <div class="areas" id="areas"></div>
+  </div>
+
+  <p class="foot">정보·사진: 비짓제주(제주관광공사) · <a href="#">소개</a> · <a href="#">개인정보</a><br>날씨 값은 목업 예시(실제 연동은 새 ADR 필요)</p>
+</div>
+<span class="note">B안 목업</span>
+<script src="data.js"></script>
+<script src="mock.js"></script>
+<script>
+  document.getElementById('hero').src = D.moods.rest[2].image; // 용두암
+  document.getElementById('hero').alt = '용두암';
+  renderToday(document.getElementById('today'), true);
+  const tiles = [['rest', 0, '푹 쉬고 싶어'], ['walk', 0, '좀 걷고 싶어'], ['new', 0, '새로운 거 해보고 싶어'], ['food', 2, '맛있는 거 먹고 싶어']];
+  document.getElementById('tiles').innerHTML = tiles.map(([k, i, t]) =>
+    `<li><a class="tile" href="result.html?v=b"><img src="${D.moods[k][i].image}" alt=""><b>${t}</b></a></li>`).join('');
+  renderMarkets(document.getElementById('markets'));
+  renderAreas(document.getElementById('areas'));
+</script>
+</body>
+</html>

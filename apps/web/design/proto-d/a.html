@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A안 · 부드럽게</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  /* A안: 흰 바탕 유지. 빈칸 자리에 오늘 줄, 기분 줄 오른쪽에 작은 사진 모자이크, 아래로 장날·동네 */
+  .intro { padding: 8px 16px 0; }
+  .intro .today { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--fill); }
+  .ask { padding: 28px 16px 4px; }
+  .ask .sub { margin-top: 2px; }
+  .moods { margin: 8px 0 0; padding: 0 16px; list-style: none; }
+  .mood { display: flex; align-items: center; justify-content: space-between; min-height: 84px; border-bottom: 1px solid var(--line); }
+  .mood:first-child { border-top: 1px solid var(--line); }
+  .mood b { font-size: 20px; }
+  .mosaic { display: grid; grid-template-columns: 30px 30px; gap: 3px; flex: none; }
+  .mosaic img { width: 30px; height: 30px; border-radius: 6px; }
+  .any-wrap { padding: 4px 16px 0; }
+  section.more { padding: 40px 16px 0; }
+  section.more .sub { margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="basis" href="#">여기 근처 <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4l4 4 4-4"/></svg></a>
+    <span class="brand">계획귀찮아 · 제주</span>
+  </header>
+
+  <div class="intro">
+    <div class="today" id="today"></div>
+  </div>
+
+  <div class="ask">
+    <h1 class="h1">지금 뭐 하고 싶어요?</h1>
+    <p class="sub">하나 고르면 근처 3곳을 골라 드려요</p>
+  </div>
+  <ul class="moods" id="moods"></ul>
+  <div class="any-wrap"><a class="any" href="result.html">아무거나 골라줘</a></div>
+
+  <section class="more">
+    <h2 class="h2">오늘 장 서는 곳</h2>
+    <p class="sub">제주 오일장은 날짜 끝자리로 열려요</p>
+    <div id="markets"></div>
+  </section>
+
+  <section class="more">
+    <h2 class="h2">동네별로 둘러보기</h2>
+    <p class="sub">15곳, 누르면 그 동네 장소를 모아 봐요</p>
+    <div class="areas" id="areas"></div>
+  </section>
+
+  <p class="foot">정보·사진: 비짓제주(제주관광공사) · <a href="#">소개</a> · <a href="#">개인정보</a></p>
+</div>
+<span class="note">A안 목업</span>
+<script src="data.js"></script>
+<script src="mock.js"></script>
+<script>
+  renderToday(document.getElementById('today'), false);
+  const labels = { rest: '푹 쉬고 싶어', walk: '좀 걷고 싶어', new: '새로운 거 해보고 싶어', food: '맛있는 거 먹고 싶어' };
+  document.getElementById('moods').innerHTML = Object.entries(labels).map(([k, t]) =>
+    `<li><a class="mood" href="result.html"><b>${t}</b><span class="mosaic" aria-hidden="true">${D.moods[k].map(p => `<img src="${p.image}" alt="">`).join('')}</span></a></li>`).join('');
+  renderMarkets(document.getElementById('markets'));
+  renderAreas(document.getElementById('areas'));
+</script>
+</body>
+</html>

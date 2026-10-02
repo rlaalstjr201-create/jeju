@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "-w", "apps/web", "--", "--port", "4318", "--strictPort"],
       "port": 4318
+    },
+    {
+      "name": "design-mockups",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4319", "--directory", "apps/web/design"],
+      "port": 4319
     }
   ]
 }

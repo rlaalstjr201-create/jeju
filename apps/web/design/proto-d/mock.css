@@ -1,0 +1,58 @@
+/* proto-d 목업 공용. 앱 토큰(src/style.css :root)을 그대로 쓰고, B안 전용 바탕색만 더한다. */
+:root {
+  --bg: #ffffff; --fill: #f3f3f4; --line: #e3e3e4;
+  --text: #14181f; --muted: #5f6267; --accent: #f06400;
+  --main: #0a6fd6; --on-main: #ffffff; --main-tint: #e6f1fb;
+  --page: #f3f4f5; /* B안: 연회색 바탕 (ADR-0070 변경 후보) */
+  --r-photo: 12px; --r-thumb: 8px; --r-panel: 16px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-size: 15px; line-height: 1.5; word-break: keep-all;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; object-fit: cover; background: var(--fill); }
+.app { max-width: 448px; margin: 0 auto; min-height: 100dvh; padding-bottom: 32px; }
+
+/* 머리줄 */
+.top { position: sticky; top: 0; z-index: 5; height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: inherit; }
+.basis { display: flex; align-items: center; gap: 4px; font-weight: 600; min-height: 44px; }
+.basis small { font-weight: 400; color: var(--muted); font-size: 15px; }
+.chev { width: 12px; height: 12px; }
+.brand { font-size: 15px; color: var(--muted); }
+
+/* 공통 글자 */
+.h1 { font-size: 24px; font-weight: 700; margin: 0; line-height: 1.35; }
+.h2 { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+.sub { color: var(--muted); margin: 0; }
+.meta { color: var(--muted); }
+
+/* 오늘 줄 */
+.today { display: flex; flex-wrap: wrap; gap: 2px 12px; color: var(--muted); }
+.today b { color: var(--text); font-weight: 600; }
+.sun { display: inline-flex; align-items: center; gap: 4px; }
+.sun svg { width: 16px; height: 16px; color: var(--accent); }
+
+/* 행동 */
+.btn-main { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 12px; background: var(--main); color: var(--on-main); font-weight: 700; font-size: 17px; }
+.btn-go { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--main-tint); color: var(--main); font-weight: 700; }
+.btn-go svg { width: 16px; height: 16px; }
+.any { display: inline-flex; align-items: center; min-height: 48px; font-size: 20px; color: var(--main); font-weight: 600; }
+
+/* 동네 타일 */
+.areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 8px; }
+.area img { width: 100%; aspect-ratio: 1; border-radius: var(--r-thumb); }
+.area b { display: block; margin-top: 6px; font-size: 15px; }
+.area span { display: block; color: var(--muted); font-size: 15px; line-height: 1.3; }
+
+/* 장날 줄 */
+.row { display: flex; gap: 12px; align-items: center; min-height: 72px; }
+.row img { width: 64px; height: 64px; border-radius: var(--r-thumb); flex: none; }
+.row b { display: block; font-size: 17px; }
+.row .meta { display: block; }
+
+.foot { color: var(--muted); padding: 24px 16px 8px; font-size: 15px; }
+.foot a { text-decoration: underline; }
+.note { position: fixed; right: 8px; bottom: 8px; background: #14181f; color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 6px; opacity: .85; z-index: 9; }
