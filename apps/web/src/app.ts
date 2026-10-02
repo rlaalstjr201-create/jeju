@@ -5,13 +5,13 @@ import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
-import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
+import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
-import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, createStore } from './store';
 import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
@@ -55,6 +55,8 @@ export interface Deps extends GeoDeps {
   userAgent?: string;
   /** text onto the clipboard, false when it could not (copyText when missing). */
   copy?(text: string): Promise<boolean>;
+  /** fetch for 비 소식 (/api/rain, ADR-0076); missing = never asked. */
+  fetch?: Fetch;
 }
 
 /** The browser's install prompt (Chrome, Edge, Samsung Internet): not in the DOM typings. */
@@ -152,6 +154,22 @@ export function mountApp(doc: Document, deps: Deps): App {
     state = reduce(state, a);
     renderer.render(state);
     countShown();
+    askRain();
+  }
+
+  // --- 비 소식 (ADR-0076): once per area the home speaks for; the session keeps an answer 30 minutes ---
+  let rainAsked: string | null = null;
+  function askRain() {
+    const area = rainArea(state);
+    if (!area || area === rainAsked || !deps.fetch) return;
+    rainAsked = area;
+    const kept = store.readRain(clockNow().getTime());
+    if (kept?.area === area) return dispatch({ type: 'rain', area, rain: kept.rain });
+    fetchRain(area, deps.fetch).then((rain) => {
+      if (rain === null || signal.aborted) return;
+      store.writeRain({ v: 1, area, at: clockNow().getTime(), rain });
+      dispatch({ type: 'rain', area, rain });
+    });
   }
 
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
@@ -671,6 +689,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
       return;
     }
+    // 비 소식 on 오늘 판: 실내만 on (실내만 볼까요?) or off again (모두 보기) — the same switch as the sheet's (ADR-0065)
+    if (action === 'rain-indoor' || action === 'rain-all') {
+      if (!guarded('indoor')) setIndoor(action === 'rain-indoor');
+      return;
+    }
     if (action === 'more') return onMore();
     if (action === 'change') return onChange();
     if (action === 'choose-area') return openOverlay('basis');
@@ -884,6 +907,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
   tick();
   renderer.render(state);
+  askRain();
   takeBackup();
   checkPermission();
   // Taps on the static mood buttons before this module ran: the last one is carried out now.

@@ -2145,6 +2145,49 @@ await check('I4-indoor', '비 와요(실내만) at 320·390: one row under 얼�
 });
 
 // --- ADR-0066, specs/market-days.md M4: 오일장 장날 ---
+await check('R5-rain', '비 소식 (ADR-0076) at 390, 애월 basis: /api/rain answering rain → one row on 오늘 판 (비 소식 · 실내만 볼까요?, 날씨: 기상청), asked with the area name only; tapped, 실내만 is on (#basis · 실내만, history unchanged) and the row says so with 모두 보기; a 204 → no rain row; no sideways scroll', async () => {
+  const problems = [];
+  const asked = [];
+  const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
+  await page.route('**/api/rain*', (r) => {
+    asked.push(new URL(r.request().url()).search);
+    return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: true }) });
+  });
+  await page.reload();
+  const row = page.locator('#today [data-action="rain-indoor"]');
+  await row.waitFor({ timeout: 5000 });
+  const text = (await row.textContent()).replace(/ /g, ' ');
+  if (text !== '비 소식 · 실내만 볼까요? 날씨: 기상청') problems.push(`row "${text}"`);
+  if (asked.join() !== '?area=aewol') problems.push(`asked ${asked.join()}`);
+  if ((await row.boundingBox()).height < 44) problems.push('row under 44');
+  const depth = (await hstate(page)).depth;
+  await tapText(page, '#today [data-action="rain-indoor"]');
+  const basis = (await page.textContent('#basis')).replace(/ /g, ' ');
+  if (!basis.includes('· 실내만')) problems.push(`#basis "${basis}"`);
+  if ((await hstate(page)).depth !== depth) problems.push('history moved');
+  if ((await page.evaluate(() => sessionStorage.getItem('jeju.indoor'))) !== 'true') problems.push('indoor not kept');
+  const on = (await page.textContent('#today .act')).replace(/ /g, ' ');
+  if (on !== '비 소식이 있어 실내만 보고 있어요 날씨: 기상청모두 보기') problems.push(`on "${on}"`);
+  if ((await page.locator('#today [data-action="rain-all"]').boundingBox()).height < 44) problems.push('모두 보기 under 44');
+  if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) problems.push('sideways scroll');
+  await shot(page, 'R5-rain');
+  await ctx.close();
+
+  const none = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
+  let hits = 0;
+  await none.page.route('**/api/rain*', (r) => {
+    hits++;
+    return r.fulfill({ status: 204, headers: { 'Cache-Control': 'no-store' } });
+  });
+  await none.page.reload();
+  await none.page.waitForSelector('#homeMore .credit', { timeout: 5000 });
+  await sleep(300);
+  if (hits !== 1) problems.push(`204 run asked ${hits} times`);
+  if (await none.page.$('#today .rain')) problems.push('204 → a rain row');
+  await none.ctx.close();
+  assert(!problems.length, problems.join('; '));
+});
+
 await check('M4-market', '오일장 at 320·390 on 2026-10-02 (KST): 구경 cards near 제주시 are markets, each with one meta line starting with its day words (제주민속 오늘 장 서는 날, 함덕 장날: 1·6일), no sideways scroll; 날짜 모드 10/6 turns 함덕 into 이날 장 서는 날', async () => {
   const problems = [];
   const all = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));

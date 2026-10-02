@@ -50,6 +50,8 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
   // The static pages (/jeju/**, ADR-0072) are no part of the app shell: never cached, never answered with the shell.
   if (/^\/jeju(\/|$)/.test(new URL(req.url).pathname)) return;
+  // The rain function (/api/**, ADR-0076): network only — a stale forecast must never come from the cache.
+  if (new URL(req.url).pathname.startsWith('/api/')) return;
 
   // Pages: network first so a new deploy shows up; cached shell when offline, failing, or slow.
   if (req.mode === 'navigate') {

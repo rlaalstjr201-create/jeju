@@ -62,6 +62,8 @@ const app = mountApp(document, {
   // Anonymous usage counts (ADR-0061): only when the build names a collection address.
   eventsUrl: import.meta.env.VITE_EVENTS_URL,
   persist,
+  // 비 소식 (ADR-0076): the area's name only, to this site's own function
+  fetch: (url, init) => fetch(url, init),
 });
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {

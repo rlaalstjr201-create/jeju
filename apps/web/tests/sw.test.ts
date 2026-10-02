@@ -255,6 +255,21 @@ describe('정적 랜딩 (ADR-0072) — 서비스워커는 /jeju/**를 건드리�
   });
 });
 
+describe('비 소식 (ADR-0076) — 서비스워커는 /api/**를 건드리지 않는다', () => {
+  it('/api/rain goes to the network as it is (never cached); a file merely named api still is handled', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const res = { ok: true, clone: () => res };
+    const sw = runSw(source, async () => res, c);
+    await sw.install();
+    for (const u of ['https://app.test/api/rain?area=aewol', 'https://app.test/api/rain', 'https://app.test/api/other']) {
+      expect(sw.handles(u), u).toBe(false);
+    }
+    expect(sw.handles('https://app.test/apiary.png')).toBe(true);
+    expect(sw.handles('https://app.test/')).toBe(true);
+  });
+});
+
 describe('PWA 상주 앱 갱신', () => {
   it('main.ts checks for a new deploy when the app comes back to the foreground', () => {
     const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');

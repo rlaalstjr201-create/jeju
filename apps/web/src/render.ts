@@ -3,7 +3,7 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
-import { homeOrigin, moodExamples, openMarkets, otherAreas, sunPoint, todayActs, type MarketRow } from './home';
+import { homeOrigin, moodExamples, openMarkets, otherAreas, rainNow, sunPoint, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
@@ -134,6 +134,11 @@ export const COPY = {
   areasHead: '다른 동네 둘러보기',
   example: (names: string[]) => `예: ${names.join(', ')}`,
   homeCredit: '정보·사진: 비짓제주(제주관광공사)',
+  // 비 소식 (ADR-0076): only when it will rain; the source next to it
+  rainAsk: '비 소식 · 실내만 볼까요?',
+  rainOn: '비 소식이 있어 실내만 보고 있어요',
+  rainAll: '모두 보기',
+  rainFrom: '날씨: 기상청',
 } as const;
 
 /** The mood buttons' own words; the results title repeats the one chosen. */
@@ -841,6 +846,21 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     return a;
   }
 
+  /** 비 소식: 실내만 볼까요? turns 실내만 on (ADR-0065's switch); with it on already, says so and offers 모두 보기. */
+  function rainRow(indoor: boolean): HTMLElement {
+    const txt = el(doc, 'span', { class: 'txt' });
+    txt.append(indoor ? COPY.rainOn : COPY.rainAsk, ' ', el(doc, 'span', { class: 'src' }, COPY.rainFrom));
+    if (indoor) {
+      const row = el(doc, 'div', { class: 'act rain' });
+      row.append(txt, el(doc, 'button', { type: 'button', class: 'all', 'data-action': 'rain-all' }, COPY.rainAll));
+      return row;
+    }
+    const b = el(doc, 'button', { type: 'button', class: 'act rain', 'data-action': 'rain-indoor' });
+    b.append(txt);
+    b.insertAdjacentHTML('beforeend', ARROW);
+    return b;
+  }
+
   function marketSection(s: State, rows: MarketRow[], origin: Origin | null, dated: boolean): HTMLElement {
     const sec = el(doc, 'section', { id: 'market', class: 'more-sec', 'aria-labelledby': 'market-h' });
     sec.append(el(doc, 'h2', { id: 'market-h', tabindex: '-1' }, COPY.marketHead(dated)));
@@ -880,7 +900,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   function homeSigOf(s: State, origin: Origin | null): string {
     // a GPS fix that moved is another place: its own photos, markets and 동네
     const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length].join('|');
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s)].join('|');
   }
 
   function renderHome(s: State) {
@@ -896,12 +916,13 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const { spots } = s;
     const day = whenDay(s);
     const markets = spots ? openMarkets(spots, origin, day) : [];
-    const acts = todayActs(markets);
-    const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...acts.slice(1).map((a) => COPY.marketFold(dated, a.row.spot.name.trim()))];
+    const acts = todayActs(markets, rainNow(s));
+    const folded = acts.slice(1).filter((a): a is Extract<TodayAct, { k: 'market' }> => a.k === 'market');
+    const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...folded.map((a) => COPY.marketFold(dated, a.row.spot.name.trim()))];
     // "·" held to the word before it by a no-break space (§3.2): a line never starts with "·"
     setText(els.todayFacts, facts.map((f) => `\u00a0· ${f}`).join(''));
     els.today.querySelector(':scope > .act')?.remove();
-    if (acts[0]) els.today.append(todayRow(acts[0].row, dated));
+    if (acts[0]) els.today.append(acts[0].k === 'rain' ? rainRow(s.indoor) : todayRow(acts[0].row, dated));
     // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
     els.today.classList.toggle('wait', !spots);
 

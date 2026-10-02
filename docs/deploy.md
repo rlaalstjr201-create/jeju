@@ -1,10 +1,27 @@
 # 배포 — Cloudflare Pages (apps/web 「여행계획짜기 귀찮아:제주」)
 
-ADR-0063 1. 정적 사이트 하나, 서버 코드 없음. 이름은 ADR-0068, 정적 랜딩(`/jeju/**`)은 ADR-0072. 익명 기록 수집기(ADR-0061)는 나중에 같은 주소의 Functions로 붙인다(그 전엔 `VITE_EVENTS_URL` 미설정).
+ADR-0063 1. 정적 사이트 하나에 서버 코드는 비 소식 함수 `/api/rain` 하나뿐(ADR-0076, `apps/web/functions/`). 이름은 ADR-0068, 정적 랜딩(`/jeju/**`)은 ADR-0072. 익명 기록 수집기(ADR-0061)는 나중에 같은 주소의 Functions로 붙인다(그 전엔 `VITE_EVENTS_URL` 미설정).
 
 ## 1. Pages 프로젝트 설정
 
-Git 연결(GitHub `rlaalstjr201-create/jeju`) 기준. 의존성은 저장소 루트의 npm workspaces(`package-lock.json`)에 있다.
+### 실제 배포: 직접 업로드 (wrangler)
+
+프로젝트 `gwichana-jeju`는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
+
+```sh
+npm run build                                          # dist/ (빌드 환경 변수는 아래 표와 같다)
+npx wrangler pages deploy dist --project-name gwichana-jeju
+```
+
+- `apps/web/functions/`(비 소식 `/api/rain`, ADR-0076)는 이 명령을 돌린 디렉터리 기준으로 찾아 같이 올라간다. 그래서 반드시 `apps/web`에서 돌린다. 함수는 앱 번들과 별개라 50KB 예산에 들어가지 않는다.
+- 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name gwichana-jeju`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
+- 로컬에서 함수까지 보기: `npx wrangler pages dev dist --port 8788` → `/api/rain?area=aewol`이 키 없이 204, `?area=nope`이 400.
+
+### Git 연결로 바꿀 때
+
+GitHub `rlaalstjr201-create/jeju` 기준. 의존성은 저장소 루트의 npm workspaces(`package-lock.json`)에 있다.
+
+> **주의**: Git 연결 빌드는 `functions/`를 Root directory(아래 표에서는 저장소 루트) 기준으로 찾는다. 지금 위치(`apps/web/functions/`)로는 함수가 배포되지 않아 비 소식이 조용히 사라진다. Root directory를 `apps/web`로 하거나 함수를 그 빌드의 루트로 옮긴다.
 
 | 항목 | 값 |
 |---|---|

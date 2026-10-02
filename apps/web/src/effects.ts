@@ -44,3 +44,27 @@ export async function resolveOrigin(basis: Basis, region: AreaName | null, stay:
   if (!r.ok) return r;
   return { ok: true, origin: { key: GPS_KEY, point: r.point, isPoint: true, from: '여기서' } };
 }
+
+/** fetch, as far as 비 소식 needs it. */
+export type Fetch = (url: string, init?: { signal?: AbortSignal }) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;
+
+/** 비 소식 (ADR-0076): will it rain in `area` (slug) within 3 hours. Only the area's name leaves the device.
+ * null — nothing to show — for a 204 (no key, the agency failing), an error, a non-JSON answer (no function
+ * here: the host's 404 page) or no answer within `timeoutMs`. */
+export async function fetchRain(area: string, get: Fetch, timeoutMs = 3000): Promise<boolean | null> {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), timeoutMs);
+  try {
+    const res = await Promise.race([
+      get(`/api/rain?area=${encodeURIComponent(area)}`, { signal: ctl.signal }),
+      new Promise<never>((_, reject) => ctl.signal.addEventListener('abort', () => reject(new Error('timeout')))),
+    ]);
+    if (res.status !== 200) return null;
+    const body = (await res.json()) as { rain?: unknown } | null;
+    return typeof body?.rain === 'boolean' ? body.rain : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}

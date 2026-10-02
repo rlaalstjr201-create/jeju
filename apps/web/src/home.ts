@@ -3,15 +3,13 @@ import { AREAS, nearestArea, type Area, type AreaName } from './areas';
 import type { Day } from './dates';
 import { marketDay } from './market';
 import { distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Mood, type Point, type Spot } from './pick';
-import { GPS_KEY, staticOrigin, whenDay, type State } from './state';
+import { rainArea, whenDay, type State } from './state';
 import type { Origin } from './types';
 
 /** 제주시청: the sunset's place when the basis is not known yet. */
 const CITY_HALL: Point = { lat: 33.4996, lng: 126.5312 };
 
-/** The basis the home speaks for: 지역·숙소 centre, else this session's GPS fix (never a region origin read as GPS). */
-export const homeOrigin = (s: State): Origin | null =>
-  staticOrigin(s.basis, s.region, s.stay) ?? (s.origin?.key === GPS_KEY ? s.origin : null);
+export { homeOrigin } from './state';
 
 export const sunPoint = (origin: Origin | null): Point => origin?.point ?? CITY_HALL;
 
@@ -40,12 +38,15 @@ export function openMarkets(spots: Spot[], origin: Origin | null, day: Day): Mar
     .map(({ spot }) => ({ spot, where: travelText(travel(origin.point, origin.isPoint, spot)) }));
 }
 
-/** 오늘 판's second line: at most one row, the one that is gone soonest if missed (ADR-0075 2) — 비 소식 (U5)
- * goes in front of the market. The others fold into the grey date line. */
-export type TodayAct = { k: 'market'; row: MarketRow };
-export function todayActs(markets: MarketRow[]): TodayAct[] {
-  return markets.length ? [{ k: 'market', row: markets[0] }] : [];
+/** 오늘 판's second line: at most one row, the one that is gone soonest if missed (ADR-0075 2) — 비 소식
+ * (ADR-0076) goes in front of the market. The others fold into the grey date line. */
+export type TodayAct = { k: 'rain' } | { k: 'market'; row: MarketRow };
+export function todayActs(markets: MarketRow[], rain = false): TodayAct[] {
+  return [...(rain ? [{ k: 'rain' } as const] : []), ...(markets.length ? [{ k: 'market', row: markets[0] } as const] : [])];
 }
+
+/** 비 소식 shows: it rains (pop ≥ 60) in the area the home speaks for now. */
+export const rainNow = (s: State): boolean => !!s.rain?.rain && s.rain.area === rainArea(s);
 
 export interface AreaTile {
   area: Area;

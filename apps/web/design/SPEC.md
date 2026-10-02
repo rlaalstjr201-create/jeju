@@ -910,7 +910,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 ### 12.3 크기 예산
 
-빌드 JS+CSS gzip ≤ 50KB(S9-5). 웹폰트 0. 외부 요청은 사진 CDN과 링크 이동, 그리고 빌드에 `VITE_EVENTS_URL`이 있을 때만 익명 사용 기록(ADR-0061). 받는 쪽(`events/`)은 앱 번들에 들어가지 않는다.
+빌드 JS+CSS gzip ≤ 50KB(S9-5). 웹폰트 0. 외부 요청은 사진 CDN과 링크 이동, 그리고 빌드에 `VITE_EVENTS_URL`이 있을 때만 익명 사용 기록(ADR-0061). 받는 쪽(`events/`)은 앱 번들에 들어가지 않는다. 비 소식(ADR-0076): 지금 모드에서 기준 동네가 있을 때만 같은 출처 `GET /api/rain?area=<slug>`를 한 번 부른다(동네 이름만, 좌표·식별자 없음, 3초 타임아웃, `sessionStorage['jeju.rain']` 30분). 기상청 요청은 그 함수(`functions/api/rain.ts`)가 하고, 함수는 앱 번들 예산에 들어가지 않는다. 서비스워커는 `/api/**`를 건드리지 않는다.
 
 ### 12.4 데이터 빌드 (scripts/build-spots.mjs)
 

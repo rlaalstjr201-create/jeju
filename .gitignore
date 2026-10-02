@@ -116,3 +116,6 @@ label-studio-data/
 .playwright-mcp/
 apps/web/dist-qa/
 apps/web/design/qa/shots-*/
+
+# wrangler 로컬 상태(pages dev)
+.wrangler/

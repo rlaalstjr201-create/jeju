@@ -1,7 +1,7 @@
 // Device storage (ADR-0026: no login, everything stays on this device). Every read is validated and
 // repaired; every access is try/catch'd, and when storage is missing or throws the app keeps working from
 // memory for this visit (S27·S28·S29).
-import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
+import { AREAS, LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
@@ -33,6 +33,8 @@ export const KEYS = {
   /** sessionStorage, ADR-0065: 비 와요(실내만) is on (true). Off = missing. Rain is today's matter: never kept
    * on the device past the session. */
   indoor: 'jeju.indoor',
+  /** sessionStorage, ADR-0076: the last 비 소식 answer `{ v: 1, area, at, rain }`, good for 30 minutes. */
+  rain: 'jeju.rain',
 } as const;
 export const MAX_SAVED = 500;
 
@@ -217,6 +219,27 @@ export function parseSession(v: unknown): SessionRecord | null {
   };
 }
 
+// --- sessionStorage: the last 비 소식 answer (ADR-0076), so a reload or a return to the home within half an hour
+// asks nothing again. ---
+export interface RainRecord {
+  v: 1;
+  /** the area slug it was asked for */
+  area: string;
+  /** when it was asked (ms since epoch) */
+  at: number;
+  rain: boolean;
+}
+export const RAIN_TTL_MS = 30 * 60_000;
+
+/** A record for one of the 15 areas, asked less than 30 minutes before `now` (not in the future); else null. */
+export function parseRain(v: unknown, now: number): RainRecord | null {
+  if (!v || typeof v !== 'object') return null;
+  const o = v as Record<string, unknown>;
+  if (o.v !== 1 || !AREAS.some((a) => a.slug === o.area) || !isNum(o.at) || typeof o.rain !== 'boolean') return null;
+  if (o.at > now || now - o.at >= RAIN_TTL_MS) return null;
+  return { v: 1, area: o.area as string, at: o.at, rain: o.rain };
+}
+
 export interface Loaded {
   basis: Basis;
   reach: Reach;
@@ -271,6 +294,9 @@ export interface Store {
   readSession(): SessionRecord | null;
   writeSession(rec: SessionRecord): void;
   clearSession(): void;
+  /** the last 비 소식 answer if still fresh at `now` (parseRain). */
+  readRain(now: number): RainRecord | null;
+  writeRain(rec: RainRecord): void;
 }
 
 export function createStore(local: Storage | null, session: Storage | null): Store {
@@ -429,6 +455,8 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     readSession: () => parseSession(get(session, KEYS.session)),
     writeSession: (rec) => void set(session, KEYS.session, rec),
     clearSession: () => removeQuietly(session, KEYS.session),
+    readRain: (now) => parseRain(get(session, KEYS.rain), now),
+    writeRain: (rec) => void set(session, KEYS.rain, rec),
   };
 }
 

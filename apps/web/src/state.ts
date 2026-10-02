@@ -1,7 +1,7 @@
 // App state as data + a pure reducer. No DOM, no storage, no timers — the controller (app.ts) runs the
 // effects and feeds their results back in as actions tagged with a request id; results for an old id are
 // dropped here, so the last user intent always wins (S36–S38).
-import { areaByName, type AreaName } from './areas';
+import { areaByName, nearestArea, type AreaName } from './areas';
 import { type Day } from './dates';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Card, type Histories, type HistoryKey, type NewSub, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
@@ -108,6 +108,9 @@ export interface State {
   keep: Keep;
   /** what the screen reader is told about new cards (render.ts words it); `seq` bumps per announcement. */
   announce: { n: number; more: boolean; seq: number };
+  /** 비 소식 (ADR-0076): the last answer, for the area (slug) it was asked for; shown only while that is still
+   * `rainArea`. */
+  rain: { area: string; rain: boolean } | null;
   seq: number;
 }
 
@@ -146,7 +149,9 @@ export type Action =
   | { type: 'imgError'; id: string }
   | { type: 'offline'; offline: boolean }
   | { type: 'permission'; permission: GeoPermission }
-  | { type: 'restore'; rec: SessionRecord };
+  | { type: 'restore'; rec: SessionRecord }
+  /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
+  | { type: 'rain'; area: string; rain: boolean };
 
 export const GPS_KEY = 'gps';
 
@@ -203,6 +208,7 @@ export function initialState(init: {
     offline: init.offline,
     keep: { restore: null, inapp: null, inappNote: null, install: null, nudge: false, backup: null, ...init.keep },
     announce: { n: 0, more: false, seq: 0 },
+    rain: null,
     seq: 0,
   };
 }
@@ -225,6 +231,18 @@ export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay |
   const area = basis === 'region' ? areaByName(region) : null;
   if (area) return { key: `region:${area.name}`, point: { lat: area.lat, lng: area.lng }, isPoint: false, from: `${area.label}에서` };
   return null;
+}
+
+/** The basis the home speaks for: 지역·숙소 centre, else this session's GPS fix (never a region origin read as GPS). */
+export const homeOrigin = (s: State): Origin | null =>
+  staticOrigin(s.basis, s.region, s.stay) ?? (s.origin?.key === GPS_KEY ? s.origin : null);
+
+/** 비 소식 (ADR-0076): the one area (slug) the forecast is asked for — the region, the area nearest the 숙소, or
+ * nearest this session's GPS fix; none without a basis, or in date mode (the forecast is about the next 3 hours). */
+export function rainArea(s: State): string | null {
+  if (s.when !== 'now') return null;
+  const o = homeOrigin(s);
+  return o ? nearestArea(o.point).slug : null;
 }
 
 /** Same basis/place, and for GPS within ~1km (jitter keeps the rotation, plan OQ4). */
@@ -524,6 +542,8 @@ function step(s: State, a: Action): State {
       if (a.permission === 'denied') return s.lastFail ? s : { ...s, lastFail: 'denied' };
       if ((a.permission === 'granted' || a.permission === 'prompt') && s.lastFail === 'denied') return { ...s, lastFail: null };
       return s;
+    case 'rain':
+      return a.area === rainArea(s) ? { ...s, rain: { area: a.area, rain: a.rain } } : s;
     case 'restore':
       return {
         ...enterView(s, 'cards'),

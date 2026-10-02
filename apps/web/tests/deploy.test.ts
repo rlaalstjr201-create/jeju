@@ -70,6 +70,10 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('좌표를 기기 밖으로 보내지 않아요');
     expect(html).toContain('수집 주소를 넣어 배포했을 때만 켜져요');
     expect(html).toContain('‘기록 끄기’를 누르면 바로 멈추고');
+    // 비 소식 (ADR-0076): the one thing that goes to a server, and what does not
+    expect(html).toContain('동네 이름 하나만 보내요');
+    expect(html).toContain('좌표는 보내지 않아요');
+    expect(html).toContain('Cloudflare 접속 기록에 남을 수 있어요');
     expect(html).toContain('<h2>문의</h2>');
     expect(html).toMatch(/<a class="tbtn" href="\/">처음 화면으로<\/a>/);
     expect(html).not.toMatch(/<script/);
