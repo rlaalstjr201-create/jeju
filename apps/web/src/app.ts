@@ -719,6 +719,16 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (a.classList.contains('card-link') || a.classList.contains('go')) countLink('map', id);
     else if (a.classList.contains('book')) countLink('book', id);
   });
+  // 오늘 판's market row (ADR-0075): down to 오늘 장 서는 곳 without touching the address or history (home stays depth 0)
+  on(els.main, 'click', (e) => {
+    const a = (e.target as Element | null)?.closest?.('a[data-action="to-market"]');
+    if (!a || state.overlay) return;
+    e.preventDefault();
+    const head = doc.getElementById('market-h');
+    if (!head) return;
+    if (typeof head.scrollIntoView === 'function') head.scrollIntoView({ block: 'start' });
+    head.focus({ preventScroll: true });
+  });
   on(els.basis, 'click', () => {
     if (!state.overlay && !guarded('basis')) openOverlay('basis');
   });
@@ -762,7 +772,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     (e) => {
       const img = e.target as HTMLElement;
       if (img.tagName !== 'IMG') return;
-      const id = img.closest<HTMLElement>('.card[data-id]')?.dataset.id;
+      // a card's photo, or one of the home's (ADR-0075), which carries the id itself
+      const id = img.closest<HTMLElement>('.card[data-id], #home img[data-id]')?.dataset.id;
       if (id) dispatch({ type: 'imgError', id });
     },
     true,

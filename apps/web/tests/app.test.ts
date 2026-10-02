@@ -83,7 +83,9 @@ describe('S3 첫 화면', () => {
     const els = interactive();
     expect(els).toHaveLength(6);
     const moods = $$('[data-mood]');
-    expect(moods.map((b) => b.textContent)).toEqual([
+    // Changed on purpose (ADR-0075 3): a mood row also carries 「예:」 once the data is in, so its name is read
+    // from its own span (the 아무거나 button keeps its plain span)
+    expect(moods.map((b) => b.querySelector('.label, span')!.textContent)).toEqual([
       '푹 쉬고 싶어',
       '좀 걷고 싶어',
       '새로운 거 해보고 싶어',

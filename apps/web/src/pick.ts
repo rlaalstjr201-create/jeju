@@ -176,12 +176,8 @@ interface Ranked extends Card {
 const byRank = (a: Ranked, b: Ranked) =>
   b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
 
-/**
- * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
- * the nearest 3 on the whole island (빈손 없음). `day` (ADR-0066): the day being viewed — a market the source
- * says is closed that day is left out, one on its market day ranks first among the same score.
- */
-export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day): Ranked[] {
+/** The places one mood may show, wherever they are: `pool`'s filters (tab, 비 와요, a market closed on `day`). */
+function candidates(spots: Spot[], mood: Mood, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
   let list = spots.filter((s) => listed(s) && s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
@@ -190,7 +186,22 @@ export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach:
   if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight')) {
     list = [...list, ...spots.filter((s) => listed(s) && s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
   }
-  const all = list
+  return list;
+}
+
+/** No origin yet (ADR-0075 3, the home's 「예:」 before GPS has answered): the whole island, score then id. */
+export function islandTop(spots: Spot[], mood: Mood, tab?: Tab, indoor = false, day?: Day): Spot[] {
+  return candidates(spots, mood, tab, indoor, day).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
+}
+
+/**
+ * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
+ * the nearest 3 on the whole island (빈손 없음). `day` (ADR-0066): the day being viewed — a market the source
+ * says is closed that day is left out, one on its market day ranks first among the same score.
+ */
+export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day): Ranked[] {
+  const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
+  const all = candidates(spots, mood, tab, indoor, day)
     .map((spot) => {
       const km = distanceKm(origin, spot);
       return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open' };

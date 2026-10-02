@@ -78,17 +78,23 @@
       </header>
       <main id="main">
         <section id="home" aria-labelledby="ask">
-          <p class="date" id="date"></p>
+          <p class="brand">여행계획짜기 귀찮아:제주</p>
+          <!-- 오늘 판 (ADR-0075 2): the date and folded grey facts; render.ts adds the one row to tap, if any -->
+          <div class="today" id="today"><p class="today-line"><span id="date"></span><span class="facts"></span></p></div>
           <h1 class="ask" id="ask">지금 뭐 하고 싶어요?</h1>
+          <p class="lede">하나 고르면 근처 3곳을 골라 드려요.</p>
+          <!-- each row's 「예:」 and two photos come with the data (render.ts); the label is its own span -->
           <ul class="moods">
-            <li><button class="mood" type="button" data-mood="rest"><span>푹 쉬고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
-            <li><button class="mood" type="button" data-mood="walk"><span>좀 걷고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
-            <li><button class="mood" type="button" data-mood="new"><span>새로운 거 해보고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
-            <li><button class="mood" type="button" data-mood="food"><span>맛있는 거 먹고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="rest"><span class="txt"><span class="label">푹 쉬고 싶어</span></span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="walk"><span class="txt"><span class="label">좀 걷고 싶어</span></span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="new"><span class="txt"><span class="label">새로운 거 해보고 싶어</span></span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="food"><span class="txt"><span class="label">맛있는 거 먹고 싶어</span></span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
           </ul>
           <button class="any" type="button" data-mood="any"><span>아무거나 골라줘</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
           <!-- ADR-0063: a backup link to merge, or the in-app browser notice (filled by render.ts) -->
           <div id="homeNote" class="inform" hidden></div>
+          <!-- ADR-0075 4: 오늘 장 서는 곳 and 다른 동네 둘러보기, drawn once the data is in (render.ts) -->
+          <div id="homeMore" class="home-more"></div>
           <!-- for readers without JS (AI crawlers, specs/seo-landing.md OQ3): what the app is, and the static pages (ADR-0072) -->
           <noscript>
             <h2>여행계획짜기 귀찮아:제주는 어떤 앱이에요?</h2>

@@ -74,7 +74,8 @@ export const shownMood = () => {
   if ($('#results').hidden) return [];
   const t = $('#crumb').textContent;
   return $$('button[data-mood]')
-    .filter((b) => b.textContent === t)
+    // a mood row's name is its own span: the row also says 「예: …」 once the data is in (ADR-0075 3)
+    .filter((b) => (b.querySelector('.label') ?? b).textContent === t)
     .map((b) => b.dataset.mood);
 };
 /** What a first pick shows (default range 차로 30분 unless given). */

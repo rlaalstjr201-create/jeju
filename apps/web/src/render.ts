@@ -3,11 +3,13 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
+import { homeOrigin, moodExamples, openMarkets, otherAreas, sunPoint, todayActs, type MarketRow } from './home';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
+import { sunsetText } from './sun';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
@@ -122,6 +124,16 @@ export const COPY = {
   nudge: '홈 화면에 추가하면 저장한 곳이 오래 남아요.',
   nudgeIos: '공유 버튼에서 ‘홈 화면에 추가’를 눌러 주세요. 지금 저장한 곳은 아래 ‘링크로 백업’으로 옮겨요.',
   install: '홈 화면에 추가',
+  // 홈 A′ (ADR-0075): 오늘 판, the moods' examples, the two sections under 아무거나
+  sunset: (time: string) => `해 지는 시각 ${time}`,
+  /** `dated`: a chosen day, not today (date mode) — said 이날, like the market cards (market.ts). */
+  todayWord: (dated: boolean) => (dated ? '이날' : '오늘'),
+  /** a market folded into the grey line when another row took the one place to tap */
+  marketFold: (dated: boolean, name: string) => `${dated ? '이날' : '오늘'} ${name} 장날`,
+  marketHead: (dated: boolean) => `${dated ? '이날' : '오늘'} 장 서는 곳`,
+  areasHead: '다른 동네 둘러보기',
+  example: (names: string[]) => `예: ${names.join(', ')}`,
+  homeCredit: '정보·사진: 비짓제주(제주관광공사)',
 } as const;
 
 /** The mood buttons' own words; the results title repeats the one chosen. */
@@ -218,6 +230,10 @@ export interface Els {
   /** ADR-0071: 지도 앱 at the foot of 저장한 곳 */
   mapApps: HTMLButtonElement[];
   mapAppNote: HTMLElement;
+  /** ADR-0075: 오늘 판, its grey facts, and the sections under the moods */
+  today: HTMLElement;
+  todayFacts: HTMLElement;
+  homeMore: HTMLElement;
   /** ADR-0063: the first screen's notice (backup to merge, in-app browser), the saved list's nudge and backup. */
   homeNote: HTMLElement;
   nudge: HTMLElement;
@@ -259,6 +275,9 @@ export function findEls(doc: Document): Els {
     track: q<HTMLButtonElement>('#savedView [data-action="track"]'),
     mapApps: [...doc.querySelectorAll<HTMLButtonElement>('#savedView [data-action="map-app"]')],
     mapAppNote: q('#mapAppNote'),
+    today: q('#today'),
+    todayFacts: q('#today .facts'),
+    homeMore: q('#homeMore'),
     homeNote: q('#homeNote'),
     nudge: q('#nudge'),
     backup: q<HTMLButtonElement>('#savedView [data-action="backup"]'),
@@ -740,7 +759,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   }
 
   // --- keeping saves without a login (ADR-0063): quiet notices, a sentence or two and text buttons ---
-  let homeSig = '';
+  let noteSig = '';
   let nudgeSig = '';
   const act = (action: string, text: string) => el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': action }, text);
   function fill(box: HTMLElement, lines: string[], acts: HTMLElement[]) {
@@ -763,9 +782,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // a backup link's places that this data knows (all of them until the data is in)
     const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
     const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : '';
-    if (sig !== homeSig) {
+    if (sig !== noteSig) {
       const focusIn = els.homeNote.contains(doc.activeElement);
-      homeSig = sig;
+      noteSig = sig;
       if (r?.k === 'ask' && n) fill(els.homeNote, [COPY.restoreAsk(n)], [act('restore-merge', COPY.restoreMerge), act('restore-cancel', COPY.restoreCancel)]);
       else if (r?.k === 'ask') fill(els.homeNote, [COPY.restoreNone], [act('restore-cancel', COPY.close)]);
       else if (r?.k === 'done') fill(els.homeNote, [COPY.restoreDone(r.added)], []);
@@ -798,6 +817,114 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     }
     els.backup.hidden = !s.saved.length;
     setText(els.backupNote, k.backup === 'copied' ? COPY.backupCopied : k.backup === 'failed' ? COPY.backupFailed : '');
+  }
+
+  // --- 홈 A′ (ADR-0075): 오늘 판, the moods' 「예:」 and photos, the sections under 아무거나. Redrawn only when
+  // what they show changes (the data, basis, range, 실내, the day, the tabs, the map app). Nothing with a photo
+  // or a link is drawn before the data is in: the rows' min-height holds the place, no grey slots (§14). ---
+  let homeSig = '';
+  let homeSpots: Spot[] | null = null;
+  let todayText = '';
+  let homeDated = false;
+  const ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  /** `data-id`: a photo that fails is remembered like a card's (app.ts) and the next draw skips it. */
+  const homePhoto = (spot: Spot, lazy: boolean) =>
+    el(doc, 'img', { src: spot.image, alt: '', ...(lazy ? { loading: 'lazy' } : {}), decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': spot.id });
+
+  function todayRow(row: MarketRow, dated: boolean): HTMLElement {
+    // a jump to 오늘 장 서는 곳 below (app.ts scrolls; the address and history stay as they are)
+    const a = el(doc, 'a', { class: 'act', href: '#market', 'data-action': 'to-market' });
+    const txt = el(doc, 'span');
+    txt.append(`${COPY.todayWord(dated)} `, el(doc, 'b', {}, row.spot.name.trim()), ` 장날\u00a0· ${row.where}`);
+    a.append(txt);
+    a.insertAdjacentHTML('beforeend', ARROW);
+    return a;
+  }
+
+  function marketSection(s: State, rows: MarketRow[], origin: Origin | null, dated: boolean): HTMLElement {
+    const sec = el(doc, 'section', { id: 'market', class: 'more-sec', 'aria-labelledby': 'market-h' });
+    sec.append(el(doc, 'h2', { id: 'market-h', tabindex: '-1' }, COPY.marketHead(dated)));
+    const list = el(doc, 'ul', { class: 'mk-list' });
+    for (const { spot, where } of rows) {
+      // 길찾기 to the market in one tap (ADR-0067), in the chosen map app
+      const g = goLink(spot, origin?.point ?? null, false, origin?.isPoint ?? false, s.mapApp);
+      const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal) });
+      const txt = el(doc, 'span', { class: 'txt' });
+      txt.append(el(doc, 'span', { class: 'nm' }, spot.name.trim()), el(doc, 'span', { class: 'meta' }, `${marketText(spot.market!, whenDay(s), dated)}\u00a0· ${where}`));
+      a.append(homePhoto(spot, true), txt);
+      const li = el(doc, 'li');
+      li.append(a);
+      list.append(li);
+    }
+    sec.append(list);
+    return sec;
+  }
+
+  function areasSection(s: State, spots: Spot[], origin: Origin | null): HTMLElement {
+    const sec = el(doc, 'section', { class: 'more-sec', 'aria-labelledby': 'areas-h' });
+    sec.append(el(doc, 'h2', { id: 'areas-h' }, COPY.areasHead));
+    const grid = el(doc, 'ul', { class: 'tiles' });
+    // the area pages (ADR-0072): plain links, no history of ours
+    for (const { area, photo } of otherAreas(spots, origin, s.broken)) {
+      const a = el(doc, 'a', { class: 'tile', href: `/jeju/${area.slug}/` });
+      if (photo) a.append(homePhoto(photo, true));
+      a.append(el(doc, 'span', { class: 'nm' }, area.label), el(doc, 'span', { class: 'lm' }, area.landmark));
+      const li = el(doc, 'li');
+      li.append(a);
+      grid.append(li);
+    }
+    sec.append(grid);
+    return sec;
+  }
+
+  function homeSigOf(s: State, origin: Origin | null): string {
+    // a GPS fix that moved is another place: its own photos, markets and 동네
+    const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length].join('|');
+  }
+
+  function renderHome(s: State) {
+    const dated = s.when !== 'now';
+    homeDated = dated;
+    // date mode (specs/date-mode.md): the board is about the day being viewed
+    setText(els.date, dated ? longDay(s.when) : todayText);
+    const origin = homeOrigin(s);
+    const sig = homeSigOf(s, origin);
+    if (sig === homeSig && s.spots === homeSpots) return;
+    homeSig = sig;
+    homeSpots = s.spots;
+    const { spots } = s;
+    const day = whenDay(s);
+    const markets = spots ? openMarkets(spots, origin, day) : [];
+    const acts = todayActs(markets);
+    const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...acts.slice(1).map((a) => COPY.marketFold(dated, a.row.spot.name.trim()))];
+    // "·" held to the word before it by a no-break space (§3.2): a line never starts with "·"
+    setText(els.todayFacts, facts.map((f) => `\u00a0· ${f}`).join(''));
+    els.today.querySelector(':scope > .act')?.remove();
+    if (acts[0]) els.today.append(todayRow(acts[0].row, dated));
+    // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
+    els.today.classList.toggle('wait', !spots);
+
+    for (const b of els.moods) {
+      const mood = b.dataset.mood;
+      if (!mood || mood === 'any') continue;
+      b.querySelector('.ex')?.remove();
+      b.querySelector('.pair')?.remove();
+      const ex = spots ? moodExamples(s, spots, origin, mood as Exclude<Button, 'any'>) : [];
+      if (!ex.length) continue;
+      // 「예:」 — an example, not a promise (ADR-0075 3)
+      b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, COPY.example(ex.map((x) => splitName(x.name.trim()).main))));
+      const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
+      pair.append(...ex.map((x) => homePhoto(x, false)));
+      b.querySelector('.i-check')!.before(pair);
+    }
+
+    const nodes: HTMLElement[] = [];
+    if (spots) {
+      if (markets.length) nodes.push(marketSection(s, markets, origin, dated));
+      nodes.push(areasSection(s, spots, origin), el(doc, 'p', { class: 'credit' }, COPY.homeCredit));
+    }
+    els.homeMore.replaceChildren(...nodes);
   }
 
   // --- sheet ---
@@ -1073,6 +1200,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     renderResults(s);
     renderSaved(s);
     patchCards(s);
+    renderHome(s);
     renderKeep(s);
     renderSheet(s);
     if (els.announce && s.announce.seq !== announceSeq) {
@@ -1085,7 +1213,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
   return {
     render,
-    setDate: (text) => setText(els.date, text),
+    setDate: (text) => {
+      todayText = text;
+      if (!homeDated) setText(els.date, text);
+    },
     dispose() {
       io?.disconnect();
       io = null;

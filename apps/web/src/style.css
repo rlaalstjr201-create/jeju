@@ -93,22 +93,39 @@ main { flex: 1; display: flex; flex-direction: column; }
 .change::before, .back::before { content: ""; position: absolute; inset: -2px 0; }
 .ctl .tbtn::before, .date-fb .tbtn::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 
-/* first screen: the question and the moods sit in the lower two thirds, under the thumb */
+/* first screen (ADR-0075 A′, no empty top any more): app name, 오늘 판, the question and its line, the moods with
+   two photos each, 아무거나; under them 오늘 장 서는 곳, 다른 동네 둘러보기 and the credit. Sizes 24·20·15 only. */
 #home { flex: 1; display: flex; flex-direction: column; }
-#home::before { content: ""; flex: 5 1 24px; min-height: 24px; }
-#home::after { content: ""; flex: 2 1 0; min-height: 16px; }
-.date { margin: 0; min-height: 1.5em; color: var(--muted); font-variant-numeric: tabular-nums; }
-.ask { margin: 4px 0 0; font-size: 1.5rem; line-height: 1.3; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
-.moods { list-style: none; margin: 20px -8px 0; padding: 0; }
+.brand { margin: 4px 0 0; color: var(--muted); }
+.today { margin-top: 8px; padding: 8px 14px; border-radius: var(--r-ctl); background: var(--fill); }
+/* the second line's place, held until the data is in (the moods do not move under the thumb) */
+.today.wait { min-height: calc(1.5em + 52px); }
+.today-line { margin: 0; min-height: 1.5em; color: var(--muted); font-variant-numeric: tabular-nums; text-wrap: pretty; }
+#date { color: var(--text); font-weight: 600; }
+.today .act { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; margin: 0 -14px -8px; padding: 0 14px; border-radius: var(--r-ctl); }
+.today .act b { font-weight: 600; }
+.today .act svg { color: var(--muted); }
+.today .act:active { background: var(--fill-press); }
+.ask { margin: 24px 0 0; font-size: 1.5rem; line-height: 1.3; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+.lede { margin: 4px 0 0; color: var(--muted); text-wrap: pretty; }
+.moods { list-style: none; margin: 16px -8px 0; padding: 0; }
 .moods li { position: relative; }
 .moods li::before { content: ""; position: absolute; top: 0; left: 8px; right: 8px; border-top: 1px solid var(--line); }
 .moods::after { content: ""; display: block; margin: 0 8px; border-top: 1px solid var(--line); }
 .mood {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  width: 100%; min-height: 60px; padding: 14px 8px; border-radius: var(--r-ctl);
+  width: 100%; min-height: 84px; padding: 14px 8px; border-radius: var(--r-ctl);
   font-size: 1.25rem; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;
 }
 .mood:active { background: var(--main-tint); }
+/* 「예: A, B」 under the name and the two photos the cards would start with (ADR-0075 3); 84 tall from the start */
+.mood .txt { flex: 1; min-width: 0; }
+.mood .label { display: block; }
+.mood .ex { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 0.9375rem; line-height: 1.5; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.pair { display: flex; gap: 4px; flex: none; }
+.pair img { display: block; width: 52px; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-thumb); filter: var(--photo); }
+/* too narrow for the photos beside the name (page zoom 200%): the words keep the row */
+@media (max-width: 299px) { .pair { display: none; } }
 .any {
   align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
   min-height: 48px; margin: 8px 0 0 -8px; padding: 0 8px; border-radius: var(--r-ctl);
@@ -116,6 +133,21 @@ main { flex: 1; display: flex; flex-direction: column; }
   text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--accent);
 }
 .any:active { background: var(--fill); }
+/* the two sections under 아무거나 (ADR-0075 4): headings 20/700, rows and tiles 15, photos only once loaded */
+.home-more:empty { display: none; }
+.more-sec { margin-top: 40px; scroll-margin-top: var(--top-h); }
+.more-sec h2 { margin: 0 0 8px; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; scroll-margin-top: calc(var(--top-h) + 8px); }
+.mk-list, .tiles { list-style: none; margin: 0; padding: 0; }
+.mk { display: flex; align-items: center; gap: 12px; min-height: 76px; margin: 0 -8px; padding: 6px 8px; border-radius: var(--r-ctl); }
+.mk:active, .tile:active { background: var(--fill); }
+.mk img { display: block; flex: none; width: 64px; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-thumb); filter: var(--photo); }
+.mk .txt { min-width: 0; }
+.mk .nm, .tile .nm { display: block; font-weight: 600; }
+.mk .meta, .tile .lm { display: block; color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 8px; }
+.tile { display: block; min-height: 44px; border-radius: var(--r-thumb); }
+.tile img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; margin-bottom: 6px; border-radius: var(--r-thumb); filter: var(--photo); }
+.home-more .credit { margin-top: 40px; }
 
 /* results / saved list heading */
 .head { display: flex; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 4px; scroll-margin-top: var(--top-h); }

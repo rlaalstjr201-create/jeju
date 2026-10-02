@@ -1196,7 +1196,8 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
     expect(cssRule('.heart')).toMatch(/width:\s*44px/);
     expect(cssRule('.heart')).toMatch(/height:\s*44px/);
     expect(cssRule('.more')).toMatch(/min-height:\s*52px/);
-    expect(cssRule('.mood')).toMatch(/min-height:\s*60px/);
+    // Changed on purpose (ADR-0075 3): a mood row now holds 「예:」 and two 52px photos, so it is 84 tall from the start
+    expect(cssRule('.mood')).toMatch(/min-height:\s*84px/);
     expect(cssRule('.opt')).toMatch(/min-height:\s*56px/);
     expect(cssRule('button')).toMatch(/touch-action:\s*manipulation/);
   });
