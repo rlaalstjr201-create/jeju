@@ -134,3 +134,15 @@ describe('홈 A′ (ADR-0075)', () => {
     expect($('[data-mood="rest"] .pair img')).toBe(img);
   });
 });
+
+// independent review 2026-10-03: a GPS fix the label no longer stands for (지역 고르기 after a failed ask)
+describe('homeOrigin — the home never speaks for a place its label does not name', () => {
+  it('GPS basis: the session fix while it holds; none after a later failed ask', async () => {
+    const { homeOrigin, initialState, GPS_KEY } = await import('../src/state');
+    const s0 = initialState({ basis: 'gps', region: null, stay: null, saved: [], hintSeen: true, offline: false, today: '2026-10-03' });
+    const fix = { key: GPS_KEY, point: { lat: 33.5, lng: 126.53 }, isPoint: true, from: '여기서' };
+    expect(homeOrigin({ ...s0, origin: fix })).toBe(fix);
+    expect(homeOrigin({ ...s0, origin: fix, lastFail: 'denied' })).toBeNull();
+    expect(homeOrigin({ ...s0, origin: { ...fix, key: 'region:애월' } })).toBeNull();
+  });
+});

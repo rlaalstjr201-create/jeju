@@ -48,7 +48,7 @@ describe('fetchRain — anything but a JSON answer is nothing to show', () => {
     expect(f.mock.calls[0][0]).toBe('/api/rain?area=aewol');
     expect(await fetchRain('aewol', rainFetch(false))).toBe(false);
   });
-  it('204, a 404 HTML page (no function), a thrown error, a body without rain, or no answer in 3s → null', async () => {
+  it('204, a 404 HTML page (no function), a thrown error, a body without rain, or no answer in 5s (longer than the 4s the function waits for the agency) → null', async () => {
     expect(await fetchRain('aewol', rainFetch(204))).toBeNull();
     expect(await fetchRain('aewol', async () => ({ ok: false, status: 404, json: async () => JSON.parse('<!doctype html>') }))).toBeNull();
     expect(await fetchRain('aewol', async () => Promise.reject(new TypeError('offline')))).toBeNull();
@@ -56,7 +56,7 @@ describe('fetchRain — anything but a JSON answer is nothing to show', () => {
     vi.useFakeTimers();
     try {
       const p = fetchRain('aewol', () => new Promise(() => undefined));
-      vi.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(5000);
       expect(await p).toBeNull();
     } finally {
       vi.useRealTimers();
@@ -148,6 +148,71 @@ describe('홈의 비 소식 줄 (mounted)', () => {
     await flush();
     expect(f).not.toHaveBeenCalled();
     expect($('#today .act')).toBeNull();
+  });
+
+  // independent review 2026-10-03: the answer used to be asked once per area for the whole session
+  describe('the answer ages: asked again after 30 minutes (5 after a failure), also when the app comes back', () => {
+    const back = () => document.dispatchEvent(new Event('visibilitychange'));
+    const answers = (...xs: (boolean | number)[]) => {
+      const f = rainFetch(false);
+      for (const x of xs) f.mockResolvedValueOnce(typeof x === 'number' ? { ok: false, status: x, json: async () => Promise.reject(new Error('no body')) } : json({ area: 'x', pop: 70, rain: x }));
+      return f;
+    };
+
+    it('no rain at 10:00, rain at 10:31 → the row shows after the app comes back', async () => {
+      region('애월');
+      let t = T0;
+      const f = answers(false, true);
+      render({ today: () => new Date(t), fetch: f });
+      await flush();
+      await flush();
+      expect(f).toHaveBeenCalledTimes(1);
+      t += 10 * 60_000;
+      back();
+      await flush();
+      expect(f).toHaveBeenCalledTimes(1); // 10 minutes old: still good
+      t += 21 * 60_000;
+      back();
+      await flush();
+      await flush();
+      expect(f).toHaveBeenCalledTimes(2);
+      expect($('#today [data-action="rain-indoor"]')).not.toBeNull();
+    });
+
+    it('a failed ask is tried again after 5 minutes, not 30, and not before', async () => {
+      region('애월');
+      let t = T0;
+      const f = answers(204, true);
+      render({ today: () => new Date(t), fetch: f });
+      await flush();
+      await flush();
+      t += 4 * 60_000;
+      back();
+      await flush();
+      expect(f).toHaveBeenCalledTimes(1);
+      t += 2 * 60_000;
+      back();
+      await flush();
+      await flush();
+      expect(f).toHaveBeenCalledTimes(2);
+      expect($('#today [data-action="rain-indoor"]')).not.toBeNull();
+    });
+
+    it('rain at 10:00, then the agency fails at 10:31 → the old row does not stay up', async () => {
+      region('애월');
+      let t = T0;
+      const f = answers(true, 204);
+      render({ today: () => new Date(t), fetch: f });
+      await flush();
+      await flush();
+      expect($('#today [data-action="rain-indoor"]')).not.toBeNull();
+      t += 31 * 60_000;
+      back();
+      await flush();
+      await flush();
+      expect(f).toHaveBeenCalledTimes(2);
+      expect($('#today [data-action="rain-indoor"]')).toBeNull();
+    });
   });
 
   it('숙소 basis asks the area nearest the 숙소; only the area name is sent, never the point', async () => {

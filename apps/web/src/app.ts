@@ -12,7 +12,7 @@ import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
-import { KEYS, createStore } from './store';
+import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
@@ -157,17 +157,30 @@ export function mountApp(doc: Document, deps: Deps): App {
     askRain();
   }
 
-  // --- 비 소식 (ADR-0076): once per area the home speaks for; the session keeps an answer 30 minutes ---
-  let rainAsked: string | null = null;
+  // --- 비 소식 (ADR-0076): asked for the area the home speaks for, again once an answer is 30 minutes old (or 5
+  // minutes after a failed ask); the session keeps an answer 30 minutes. One ask in flight at a time. ---
+  const RAIN_RETRY_MS = 5 * 60_000;
+  let rainAsked: { area: string; at: number; ok: boolean } | null = null;
+  let rainBusy = false;
   function askRain() {
     const area = rainArea(state);
-    if (!area || area === rainAsked || !deps.fetch) return;
-    rainAsked = area;
-    const kept = store.readRain(clockNow().getTime());
-    if (kept?.area === area) return dispatch({ type: 'rain', area, rain: kept.rain });
+    if (!area || !deps.fetch || rainBusy) return;
+    const now = clockNow().getTime();
+    if (rainAsked?.area === area && now - rainAsked.at < (rainAsked.ok ? RAIN_TTL_MS : RAIN_RETRY_MS)) return;
+    const kept = store.readRain(now);
+    if (kept?.area === area) {
+      rainAsked = { area, at: kept.at, ok: true };
+      return dispatch({ type: 'rain', area, rain: kept.rain });
+    }
+    rainBusy = true;
     fetchRain(area, deps.fetch).then((rain) => {
-      if (rain === null || signal.aborted) return;
-      store.writeRain({ v: 1, area, at: clockNow().getTime(), rain });
+      rainBusy = false;
+      if (signal.aborted) return;
+      const at = clockNow().getTime();
+      rainAsked = { area, at, ok: rain !== null };
+      // a failed ask after an expired answer must not leave the old rain row up for hours
+      if (rain === null) return void (state.rain?.area === area && state.rain.rain && dispatch({ type: 'rain', area, rain: false }));
+      store.writeRain({ v: 1, area, at, rain });
       dispatch({ type: 'rain', area, rain });
     });
   }
@@ -745,8 +758,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   // 오늘 판's market row (ADR-0075): down to 오늘 장 서는 곳 without touching the address or history (home stays depth 0)
   on(els.main, 'click', (e) => {
     const a = (e.target as Element | null)?.closest?.('a[data-action="to-market"]');
-    if (!a || state.overlay) return;
-    e.preventDefault();
+    if (!a) return;
+    e.preventDefault(); // never the #market jump: it would push a history entry (home stays depth 0)
+    if (state.overlay) return;
     const head = doc.getElementById('market-h');
     if (!head) return;
     if (typeof head.scrollIntoView === 'function') head.scrollIntoView({ block: 'start' });
@@ -863,6 +877,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (doc.visibilityState !== 'visible') return;
     tick();
     checkPermission();
+    askRain(); // an answer may have grown old while the app was in the background
   });
 
   /** A new day in Jeju (the midnight timer, or back in the foreground): the date line, and a chosen day

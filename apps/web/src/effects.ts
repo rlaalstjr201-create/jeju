@@ -51,7 +51,7 @@ export type Fetch = (url: string, init?: { signal?: AbortSignal }) => Promise<{ 
 /** 비 소식 (ADR-0076): will it rain in `area` (slug) within 3 hours. Only the area's name leaves the device.
  * null — nothing to show — for a 204 (no key, the agency failing), an error, a non-JSON answer (no function
  * here: the host's 404 page) or no answer within `timeoutMs`. */
-export async function fetchRain(area: string, get: Fetch, timeoutMs = 3000): Promise<boolean | null> {
+export async function fetchRain(area: string, get: Fetch, timeoutMs = 5000): Promise<boolean | null> {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), timeoutMs);
   try {

@@ -49,7 +49,7 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
 
   const out = new Response(JSON.stringify({ area: area.slug, pop, rain: pop >= 60, base: `${base.base_date}${base.base_time}`, from: '기상청' }), {
     status: 200,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=1800' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=0, s-maxage=1800' },
   });
   if (cache) {
     const put = cache.put(cacheKey, out.clone()).catch(() => undefined);

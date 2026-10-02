@@ -21,7 +21,7 @@ Status: Accepted (2026-10-03). ADR-0058 「외부 요청 제한」과 SPEC §12.
    - 응답: `{ area, pop, rain: pop >= 60, base, from: "기상청" }`.
 2. **키**: 환경 비밀 `KMA_SERVICE_KEY`(`wrangler pages secret put`). 키가 없거나 기상청이 실패하면 `204`와 `no-store`를 돌려주고, 앱은 줄을 숨긴다.
 3. **캐시**:
-   - 함수 쪽: 동네 × 발표 시각으로 엣지 캐시하고, `Cache-Control: public, max-age=1800`.
+   - 함수 쪽: 동네 × 발표 시각으로 엣지 캐시하고, `Cache-Control: public, max-age=0, s-maxage=1800`(브라우저는 저장하지 않는다 — 리뷰 반영 2026-10-03).
    - 서비스워커: `/api/`는 캐시하지 않는다(네트워크만).
    - 앱: `sessionStorage`에 30분 저장한다.
 4. **개인정보**:

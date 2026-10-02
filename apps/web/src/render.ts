@@ -871,7 +871,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal) });
       const txt = el(doc, 'span', { class: 'txt' });
       txt.append(el(doc, 'span', { class: 'nm' }, spot.name.trim()), el(doc, 'span', { class: 'meta' }, `${marketText(spot.market!, whenDay(s), dated)}\u00a0· ${where}`));
-      a.append(homePhoto(spot, true), txt);
+      if (spot.image && !s.broken.includes(spot.id)) a.append(homePhoto(spot, true));
+      a.append(txt);
       const li = el(doc, 'li');
       li.append(a);
       list.append(li);

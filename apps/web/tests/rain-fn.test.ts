@@ -109,14 +109,14 @@ describe('onRequestGet', () => {
     expect(res.headers.get('Cache-Control')).toBe('no-store');
     expect(f).not.toHaveBeenCalled();
   });
-  it('upstream success → 200 JSON with public max-age=1800; asks for the area\'s grid and the right issuance', async () => {
+  it('upstream success → 200 JSON with edge-only s-maxage=1800 (browsers keep nothing); asks for the area\'s grid and the right issuance', async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(at('2026-10-03T14:20'));
     const f = vi.fn(async (_u: string) => new Response(JSON.stringify(body([pop('20261003', '1500', 60), pop('20261003', '1600', 30)]))));
     vi.stubGlobal('fetch', f);
     const res = await onRequestGet({ request: req('?area=seogwipo'), env: { KMA_SERVICE_KEY: 'a+b/c==' } });
     expect(res.status).toBe(200);
-    expect(res.headers.get('Cache-Control')).toBe('public, max-age=1800');
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=1800');
     expect(await res.json()).toEqual({ area: 'seogwipo', pop: 60, rain: true, base: '202610031400', from: '기상청' });
     const u = new URL(f.mock.calls[0][0]);
     expect(u.origin + u.pathname).toBe('https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst');

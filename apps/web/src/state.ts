@@ -233,9 +233,10 @@ export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay |
   return null;
 }
 
-/** The basis the home speaks for: 지역·숙소 centre, else this session's GPS fix (never a region origin read as GPS). */
+/** The basis the home speaks for: 지역·숙소 centre, else this session's GPS fix (never a region origin read as GPS,
+ * and not a fix the label no longer stands for: after a failed ask it reads 지역 고르기). */
 export const homeOrigin = (s: State): Origin | null =>
-  staticOrigin(s.basis, s.region, s.stay) ?? (s.origin?.key === GPS_KEY ? s.origin : null);
+  staticOrigin(s.basis, s.region, s.stay) ?? (s.origin?.key === GPS_KEY && !(s.basis === 'gps' && s.lastFail) ? s.origin : null);
 
 /** 비 소식 (ADR-0076): the one area (slug) the forecast is asked for — the region, the area nearest the 숙소, or
  * nearest this session's GPS fix; none without a basis, or in date mode (the forecast is about the next 3 hours). */
