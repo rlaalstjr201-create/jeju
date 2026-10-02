@@ -1,0 +1,4 @@
+# 바이트 그대로 읽히는 파일은 OS와 무관하게 LF (Windows core.autocrlf=true에서 _headers 파싱·llms.txt 첫 줄 테스트가 깨짐, 2026-10-03)
+apps/web/public/_headers text eol=lf
+apps/web/public/*.txt text eol=lf
+*.sh text eol=lf
