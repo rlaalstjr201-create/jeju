@@ -55,21 +55,22 @@ async function load() {
 }
 
 /** 오늘 줄: 행동이 생길 때만 줄을 보탠다. 날짜는 늘, 비·노을·장날은 조건이 맞을 때만 누를 수 있는 줄로. */
+// 누를 수 있는 줄은 한 번에 하나(mockup-fixes.md 2). 우선순위 = 놓치면 사라지는 순서: 비(모든 추천이 바뀜) →
+// 노을(시간 한정) → 장날(하루 종일). 나머지는 회색 한 줄로 접는다. 판의 높이는 늘 두 줄.
 function today(el, page) {
-  const rows = [`<p class="t-date"><b>10월 2일 금요일</b></p>`];
-  if (RAIN) {
-    rows.push(INDOOR
-      ? `<p class="t-row">☂ 비 소식이 있어 <b>실내만</b> 보고 있어요 <a href="${page}?${keep({ indoor: '' })}">모두 보기</a></p>`
-      : `<a class="t-row act" href="${page}?${keep({ indoor: 1 })}">☂ 오후에 비 소식 · <b>실내만 볼까요?</b><span class="go">›</span></a>`);
-  }
   const left = toMin(SUNSET) - toMin(NOW);
   const sunset = SPOTS && pool(SPOTS, { max: 45, test: s => /노을|일몰|석양|해넘이/.test(s.reason) });
-  if (left > 0 && left <= 150 && sunset.length && !INDOOR) {
-    rows.push(`<a class="t-row act" href="result2.html?${keep({ mood: 'sunset' })}">${SUN_ICON} 해 지기 ${fmt(left)} 전 · <b>노을 볼 곳 ${Math.min(3, sunset.length)}</b><span class="go">›</span></a>`);
-  } else rows.push(`<p class="t-row">${SUN_ICON} 해 지는 시각 ${SUNSET}</p>`);
   const mk = SPOTS && pool(SPOTS, { test: s => openToday(s) })[0];
-  if (mk) rows.push(`<a class="t-row act" href="#market">오늘 <b>${mk.s.name}</b> 장날 · 차로 약 ${fmt(mk.min)}<span class="go">›</span></a>`);
-  el.innerHTML = rows.join('');
+  const cands = [];
+  if (RAIN) cands.push(INDOOR
+    ? { act: `<p class="t-row">☂ 비 소식이 있어 <b>실내만</b> 보고 있어요 <a href="${page}?${keep({ indoor: '' })}">모두 보기</a></p>`, rest: '비 소식' }
+    : { act: `<a class="t-row act" href="${page}?${keep({ indoor: 1 })}">☂ 오후에 비 소식 · <b>실내만 볼까요?</b><span class="go">›</span></a>`, rest: '비 소식' });
+  if (left > 0 && left <= 150 && sunset.length >= 3 && !INDOOR)
+    cands.push({ act: `<a class="t-row act" href="result2.html?${keep({ mood: 'sunset' })}">${SUN_ICON} 해 지기 ${fmt(left)} 전 · <b>노을 볼 곳</b><span class="go">›</span></a>`, rest: `해 지기 ${fmt(left)} 전` });
+  if (mk) cands.push({ act: `<a class="t-row act" href="#market">오늘 <b>${mk.s.name}</b> 장날 · 차로 약 ${fmt(mk.min)}<span class="go">›</span></a>`, rest: `오늘 ${mk.s.name.replace(/민속|향토/g, '')} 장날` });
+  const [first, ...others] = cands;
+  const quiet = [...others.map(c => c.rest), ...(cands.some(c => c.rest.startsWith('해 지기')) ? [] : [`해 지는 시각 ${SUNSET}`])];
+  el.innerHTML = `<p class="t-date"><b>10월 2일 금요일</b>${quiet.length ? ` · ${quiet.join(' · ')}` : ''}</p>` + (first ? first.act : '');
 }
 const SUN_ICON = '<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="9" r="3"/><path d="M8 2v2M2.5 9h1.5M12 9h1.5M3.8 4.8l1 1M12.2 4.8l-1 1M2 13h12"/></svg>';
 const GO_ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8l10-5-4 10-1.5-4z"/></svg>';
