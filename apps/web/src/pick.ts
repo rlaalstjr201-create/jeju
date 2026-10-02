@@ -1,9 +1,18 @@
 // Card selection (plan OQ 1·2·4). Pure functions, no DOM.
+import type { Day } from './dates';
+import { marketDay, type Market } from './market';
 
 export type Mood = 'rest' | 'walk' | 'new' | 'food';
 export type Button = Mood | 'any';
 /** food-only sub-type: 식사 | 카페·디저트 (ADR-0028 update). */
 export type Sub = 'meal' | 'cafe';
+/** new-only kind (ADR-0064): 구경 | 체험. */
+export type NewKind = 'sight' | 'do';
+/** 새로운 거 tab: 섞어서 (every kind) | 구경 | 체험. */
+export type NewSub = 'mix' | NewKind;
+export const NEW_SUBS: readonly NewSub[] = ['mix', 'sight', 'do'];
+/** The tab a button's cards are picked under: the food sub, the 새로운 거 tab, or none. */
+export type Tab = Sub | NewSub;
 
 export interface Spot {
   id: string;
@@ -15,9 +24,29 @@ export interface Spot {
   image: string;
   kakaoPlaceId: string | null;
   bookable: boolean;
-  /** set iff mood === 'food' */
-  sub?: Sub;
+  /** food: meal | cafe; new: sight | do (ADR-0064); unset otherwise. */
+  sub?: Sub | NewKind;
+  /** 만족도 1~5 (ADR-0060, specs/ranking.md): orders the cards, never shown. */
+  score: number;
+  /** 실내 (ADR-0065): what 비 와요(실내만) keeps; missing = outdoor. */
+  indoor?: boolean;
+  /** 오일장 장날 (ADR-0066): set on the five-day markets only. */
+  market?: Market;
+  /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
+  book?: Book;
+  /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */
+  hide?: string;
 }
+
+export type BookKind = 'naver' | 'mrt' | 'visitjeju' | 'homepage' | 'phone';
+export interface Book {
+  k: BookKind;
+  u: string;
+}
+
+/** ADR-0074: a place the picks may show — not hidden, and a 체험 only with a verified booking route (a 체험 card
+ * that cannot lead to a reservation is no use). */
+export const listed = (s: Spot): boolean => !s.hide && !(s.mood === 'new' && s.sub === 'do' && !s.book);
 
 export interface Point {
   lat: number;
@@ -29,19 +58,25 @@ export interface Card {
   minutes: number;
 }
 
-/** Per-button memory of what was shown, so a re-tap moves on (plan OQ4). food keeps meal/cafe history separately. */
+/** Per-button memory of what was shown, so a re-tap moves on (plan OQ4). food keeps meal/cafe history
+ * separately, new keeps mix/sight/do separately (ADR-0064). */
 export interface History {
   seen: string[];
   last: string[];
   /** set on the tap that exhausted the pool; the next tap is the first of a new round (`wrapped`). */
   restarted?: boolean;
 }
-export type HistoryKey = Exclude<Button, 'food'> | `food:${Sub}`;
+export type HistoryKey = Exclude<Button, 'food' | 'new'> | `food:${Sub}` | `new:${NewSub}`;
 export type Histories = Partial<Record<HistoryKey, History>>;
 
 export const CARD_COUNT = 3;
-export const MAX_MINUTES = 60;
 const ANY_MOODS: Mood[] = ['rest', 'walk', 'new'];
+
+/** 얼마나 (ADR-0060): 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간. */
+export type Reach = 'walk' | 'drive30' | 'drive60';
+export const REACHES: readonly Reach[] = ['walk', 'drive30', 'drive60'];
+export const DEFAULT_REACH: Reach = 'drive30';
+const REACH_MAX: Record<Reach, number> = { walk: 15, drive30: 30, drive60: 60 };
 
 export function distanceKm(a: Point, b: Point): number {
   const R = 6371;
@@ -64,13 +99,24 @@ export function walkMinutes(km: number): number {
   return Math.max(5, Math.round(raw / 5) * 5);
 }
 
-// --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 5 · 가파도 4 · 마라도 10 in spots.json.
-export type Island = '우도' | '비양도' | '가파도' | '마라도';
+/** The trip in the range's own terms: on foot for 걸어서, by car otherwise. */
+export function reachMinutes(reach: Reach, km: number): number {
+  return reach === 'walk' ? walkMinutes(km) : driveMinutes(km);
+}
+export function withinReach(reach: Reach, origin: Point, spot: Point): boolean {
+  return reachMinutes(reach, distanceKm(origin, spot)) <= REACH_MAX[reach];
+}
+
+// --- Islands (S33): fixed boxes, no data collection. 우도 65 · 비양도 6 · 가파도 4 · 마라도 10 · 차귀도 1 · 추자도 0
+// in spots.json. Each one's 길찾기 goes to the pier its boat leaves from (ADR-0069, src/links.ts TERMINALS).
+export type Island = '우도' | '비양도' | '가파도' | '마라도' | '차귀도' | '추자도';
 const ISLANDS: readonly { name: Island; latMin: number; latMax: number; lngMin: number; lngMax: number }[] = [
   { name: '우도', latMin: 33.48, latMax: 33.53, lngMin: 126.93, lngMax: 126.98 },
   { name: '비양도', latMin: 33.4, latMax: 33.42, lngMin: 126.22, lngMax: 126.24 },
   { name: '가파도', latMin: 33.16, latMax: 33.18, lngMin: 126.26, lngMax: 126.28 },
   { name: '마라도', latMin: 33.11, latMax: 33.125, lngMin: 126.26, lngMax: 126.275 },
+  { name: '차귀도', latMin: 33.305, latMax: 33.32, lngMin: 126.135, lngMax: 126.155 },
+  { name: '추자도', latMin: 33.9, latMax: 34.0, lngMin: 126.25, lngMax: 126.4 },
 ];
 /** The small island a point is on, or null for the main island. */
 export function islandOf(p: Point): Island | null {
@@ -120,26 +166,46 @@ export function travelText(t: Travel, from?: string): string {
   }
 }
 
+interface Ranked extends Card {
+  /** the trip in the range's terms (sort key only) */
+  trip: number;
+  /** a market on its market day (ADR-0066): first among the same score (sort key only) */
+  open: boolean;
+}
+/** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then the shorter trip, then id. */
+const byRank = (a: Ranked, b: Ranked) =>
+  b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
+
 /**
- * Candidates for one mood, nearest first. Normally everything within an hour's drive;
- * if that leaves fewer than 3, widen to the nearest 3 on the whole island (빈손 없음).
+ * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
+ * the nearest 3 on the whole island (빈손 없음). `day` (ADR-0066): the day being viewed — a market the source
+ * says is closed that day is left out, one on its market day ranks first among the same score.
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, sub?: Sub): Card[] {
-  const sorted = spots
-    .filter((s) => s.mood === mood && (mood !== 'food' || s.sub === (sub ?? 'meal')))
-    .map((spot) => ({ spot, km: distanceKm(origin, spot) }))
-    .sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id))
-    .map(({ spot, km }) => ({ spot, minutes: driveMinutes(km) }));
-  const near = sorted.filter((c) => c.minutes <= MAX_MINUTES);
-  return near.length >= CARD_COUNT ? near : sorted.slice(0, CARD_COUNT);
+export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day): Ranked[] {
+  const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
+  const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
+  let list = spots.filter((s) => listed(s) && s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
+  // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
+  // 구경 — places walked round inside.
+  if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight')) {
+    list = [...list, ...spots.filter((s) => listed(s) && s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
+  }
+  const all = list
+    .map((spot) => {
+      const km = distanceKm(origin, spot);
+      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open' };
+    });
+  let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
+  if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id)).slice(0, CARD_COUNT);
+  return near.map(({ spot, minutes, trip, open }) => ({ spot, minutes, trip, open })).sort(byRank);
 }
 
 /** Unseen first, then seen, and the cards shown last time at the very back. */
-function rotate(cards: Card[], h: History | undefined): Card[] {
+function rotate(cards: Ranked[], h: History | undefined): Ranked[] {
   if (!h) return cards;
   const seen = new Set(h.seen);
   const last = new Set(h.last);
-  const rank = (c: Card) => (last.has(c.spot.id) ? 2 : seen.has(c.spot.id) ? 1 : 0);
+  const rank = (c: Ranked) => (last.has(c.spot.id) ? 2 : seen.has(c.spot.id) ? 1 : 0);
   return cards
     .map((c, i) => ({ c, i }))
     .sort((a, b) => rank(a.c) - rank(b.c) || a.i - b.i)
@@ -154,10 +220,20 @@ function remember(h: History | undefined, shown: Card[], poolIds: string[]): His
   return { seen, last: ids };
 }
 
-export const historyKey = (button: Button, sub?: Sub): HistoryKey => (button === 'food' ? `food:${sub ?? 'meal'}` : button);
+const foodSub = (tab?: Tab): Sub => (tab === 'cafe' ? 'cafe' : 'meal');
+const newSub = (tab?: Tab): NewSub => (tab === 'sight' || tab === 'do' ? tab : 'mix');
+
+export const historyKey = (button: Button, tab?: Tab): HistoryKey =>
+  button === 'food' ? `food:${foodSub(tab)}` : button === 'new' ? `new:${newSub(tab)}` : button;
+
+/** The tab that applies to `button`: the food sub for food, the 새로운 거 tab for new, none otherwise. */
+export const tabOf = (button: Button | null, sub: Sub, newTab: NewSub): Tab | undefined =>
+  button === 'food' ? sub : button === 'new' ? newTab : undefined;
 
 /**
- * sub only applies to the 'food' button (defaults to 'meal'); ignored otherwise.
+ * tab only applies to the 'food' button (meal | cafe, defaults to 'meal') and the 'new' button (mix | sight | do,
+ * defaults to 'mix'); ignored otherwise. `indoor` (비 와요, ADR-0065): only indoor places. `day` (ADR-0066): the
+ * day being viewed, for the market days.
  * `wrapped` = this tap shows a place already seen in this round, or is the first tap after the pool ran
  * out — i.e. everything nearby has been shown once and the rotation starts over (상태 줄 한 바퀴 문장).
  */
@@ -166,23 +242,32 @@ export function pickCards(
   origin: Point,
   button: Button,
   histories: Histories = {},
-  sub?: Sub,
+  tab?: Tab,
+  reach: Reach = DEFAULT_REACH,
+  indoor = false,
+  day?: Day,
 ): { cards: Card[]; histories: Histories; wrapped: boolean } {
-  const key = historyKey(button, sub);
+  const key = historyKey(button, tab);
   const h = histories[key];
-  let cards: Card[];
+  let picked: Ranked[];
   let poolIds: string[];
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = ANY_MOODS.map((m) => pool(spots, origin, m));
-    cards = pools.map((p) => rotate(p, h)[0]).filter((c): c is Card => !!c);
-    cards.sort((a, b) => distanceKm(origin, a.spot) - distanceKm(origin, b.spot));
+    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor, day));
+    // one card per mood, never the same place twice (걷기 may have widened to 구경 indoors)
+    picked = [];
+    for (const p of pools) {
+      const c = rotate(p, h).find((x) => !picked.some((y) => y.spot.id === x.spot.id));
+      if (c) picked.push(c);
+    }
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, sub);
-    cards = rotate(p, h).slice(0, CARD_COUNT);
+    const p = pool(spots, origin, button, tab, reach, indoor, day);
+    picked = rotate(p, h).slice(0, CARD_COUNT);
     poolIds = p.map((c) => c.spot.id);
   }
+  // The rotation decides which 3; they are shown best first (R3), the score itself never.
+  const cards: Card[] = picked.sort(byRank).map(({ spot, minutes }) => ({ spot, minutes }));
   const wrapped = !!h && (!!h.restarted || cards.some((c) => h.seen.includes(c.spot.id)));
   return { cards, histories: { ...histories, [key]: remember(h, cards, poolIds) }, wrapped };
 }

@@ -2,7 +2,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { mountApp, type App, type Deps } from '../src/app';
-import { pickCards, type Button, type Point, type Sub } from '../src/pick';
+import { dayOf } from '../src/dates';
+import { pickCards, type Button, type Point, type Reach, type Tab } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
 export const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
@@ -36,7 +37,8 @@ export function render(deps: Partial<Deps> = {}): App {
     now: () => clock,
     // `long` (the 지역으로 고르기 escape) is off unless a test asks for it: a real-time 30ms timer fired
     // during a busy run's awaits and made exact status checks flaky (QA 2026-09-30, S02).
-    delays: { slow: 0, long: 10_000, settle: 300, hint: 40 },
+    delays: { slow: 0, long: 10_000, settle: 300 },
+
     ...deps,
   });
   return app;
@@ -70,12 +72,16 @@ export const cardNames = (): string[] => cardIds().map((id) => nameById.get(id!)
 /** The mood whose results are on screen ([] on the first screen / saved list). */
 export const shownMood = () => {
   if ($('#results').hidden) return [];
-  const t = $('#resultsTitle').textContent;
+  const t = $('#crumb').textContent;
   return $$('button[data-mood]')
     .filter((b) => b.textContent === t)
     .map((b) => b.dataset.mood);
 };
-export const expectedNames = (o: Point, b: Button, sub?: Sub) => pickCards(realSpots, o, b, {}, sub).cards.map((c) => c.spot.name);
+/** What a first pick shows (default range 차로 30분 unless given). */
+/** The day the app picks for (지금 = today in Jeju, from the real clock unless a test passes `today`): 오일장 rank
+ * by it (ADR-0066). */
+export const today = () => dayOf(new Date());
+export const expectedNames = (o: Point, b: Button, sub?: Tab, reach?: Reach) => pickCards(realSpots, o, b, {}, sub, reach, false, today()).cards.map((c) => c.spot.name);
 
 /** A promise with its resolve/reject exposed. */
 export function deferred<T>() {

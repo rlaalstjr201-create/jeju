@@ -1,19 +1,35 @@
 // spots.json loader. Memoized on success only: a failed fetch (offline first visit, flaky Wi-Fi, 5xx) is
-// forgotten so the next tap or "다시 불러오기" fetches again (S24). Each wait times out after 15s; a download
+// forgotten so the next tap or "다시 불러오기" fetches again (S24). Each wait times out after 10s (design.md M2); a download
 // that lands after that is still kept.
-import type { Mood, Spot, Sub } from './pick';
+import type { BookKind, Mood, Spot, Sub } from './pick';
 
 const MOODS: readonly Mood[] = ['rest', 'walk', 'new', 'food'];
 const SUBS: readonly Sub[] = ['meal', 'cafe'];
+const BOOK_KINDS: readonly BookKind[] = ['naver', 'mrt', 'visitjeju', 'homepage', 'phone'];
 /** Collapse any run of whitespace (tabs, U+3000 …) and trim — the build does this too (S32). */
 export const cleanName = (s: string) => s.replace(/\s+/g, ' ').trim();
-/** A sentence ending in 요 gets one full stop; a noun ending gets none (design/SPEC.md §10·§12.4). */
+/** A reason is a card caption: no final full stop whatever the ending, 돈까스 spelled 돈가스 (design/SPEC.md
+ * §10·§12.4, 3판). Same rule as the build's shipReason (scripts/reason.mjs). */
 export function cleanReason(s: string): string {
-  const t = cleanName(s).replace(/[.。]+$/, '');
-  return t.endsWith('요') ? `${t}.` : t;
+  return cleanName(s).replace(/돈까스/g, '돈가스').replace(/[\s.。．｡]+$/, '');
 }
 
-/** Drops records the app cannot render; normalizes names and reasons. The shipped file already passes S1'. */
+function validMarket(m: unknown): boolean {
+  if (!m || typeof m !== 'object') return false;
+  const { days, label } = m as Record<string, unknown>;
+  return Array.isArray(days) && days.every((d) => Number.isInteger(d)) && typeof label === 'string' && label.length > 0;
+}
+
+/** A booking route the card can link to (ADR-0074): a known kind and an https/http page, or tel: for phone. */
+function validBook(b: unknown): boolean {
+  if (!b || typeof b !== 'object') return false;
+  const { k, u } = b as Record<string, unknown>;
+  if (!BOOK_KINDS.includes(k as BookKind) || typeof u !== 'string') return false;
+  return k === 'phone' ? /^tel:\+?\d{7,13}$/.test(u) : /^https?:\/\//.test(u);
+}
+
+/** Drops records the app cannot render and places marked hidden (ADR-0074: closed); normalizes names and reasons.
+ * The shipped file already passes S1'. */
 export function normalizeSpots(raw: unknown): Spot[] {
   if (!Array.isArray(raw)) throw new Error('spots.json is not an array');
   const out: Spot[] = [];
@@ -24,10 +40,24 @@ export function normalizeSpots(raw: unknown): Spot[] {
     if (typeof lat !== 'number' || typeof lng !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lng)) continue;
     if (!MOODS.includes(mood as Mood)) continue;
     if (mood === 'food' && !SUBS.includes(r.sub as Sub)) continue;
+    if (r.hide) continue;
     const spot = r as unknown as Spot;
     const clean = cleanName(name);
     const why = cleanReason(reason);
-    out.push(clean === name && why === reason ? spot : { ...spot, name: clean, reason: why });
+    // 만족도 (ADR-0060): the shipped file always has 1–5; anything else ranks as the middle (모르면 3).
+    const score = Number.isInteger(r.score) && (r.score as number) >= 1 && (r.score as number) <= 5 ? (r.score as number) : 3;
+    // 오일장 (ADR-0066): a rule the app cannot read is dropped — the place stays, without 장날.
+    const badMarket = 'market' in r && !validMarket(r.market);
+    // 예약 경로 (ADR-0074): a route the app cannot open is dropped — the 체험 then leaves the picks.
+    const badBook = 'book' in r && !validBook(r.book);
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook) {
+      out.push(spot);
+      continue;
+    }
+    const fixed: Spot = { ...spot, name: clean, reason: why, score };
+    if (badMarket) delete fixed.market;
+    if (badBook) delete fixed.book;
+    out.push(fixed);
   }
   return out;
 }
@@ -43,10 +73,10 @@ export interface SpotSource {
  * `onLoad`: called once, when the list first arrives — also when it arrives after every caller has given up
  * waiting for it (a slow download that outlived its timeout), so the app can use it then.
  */
-export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 15000, onLoad?: (spots: Spot[]) => void): SpotSource {
+export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 10000, onLoad?: (spots: Spot[]) => void): SpotSource {
   let value: Spot[] | null = null;
   /** The download new callers join. The timeout only ends a caller's wait: the download keeps going, and the
-   * first one to land is kept — a slow network is not sent round a 15s error loop though a full copy arrived.
+   * first one to land is kept — a slow network is not sent round a 10s error loop though a full copy arrived.
    * A caller that times out unjoins it, so the next one starts afresh (a hung request is never the only hope). */
   let current: Promise<Spot[]> | null = null;
   const waiting = new Set<(spots: Spot[]) => void>();

@@ -2,17 +2,22 @@
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
-import { bookingUrl, kakaoUrl } from './links';
-import { historyKey, travel, travelText, type Button, type Card } from './pick';
-import { GPS_KEY, cardsValid, savedCount, type State } from './state';
+import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
+import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
+import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
+import { marketText } from './market';
+import { REACHES, historyKey, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick';
+import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
 export const COPY = {
-  basisGps: '내 주변',
+  basisGps: '여기 근처',
   basisStay: '숙소 근처',
   basisRegion: (label: string) => `${label} 근처`,
   basisNoGps: '지역 고르기',
+  /** a day chosen in the basis sheet goes in front ("내일 · 애월 근처", "10월 3일 · 숙소 근처"). */
+  basisWhen: (day: string, where: string) => `${day} · ${where}`,
   basisAria: (label: string) => `${label}, 기준 바꾸기`,
   savedAria: (n: number) => `저장한 곳 ${n}개`,
   locating: '위치 확인 중…',
@@ -21,18 +26,19 @@ export const COPY = {
   offline: '오프라인이라 사진은 안 보여요.',
   or: '아니면',
   more: '다른 3곳 보기',
-  map: '카카오맵',
-  mapAria: (name: string) => `${name}, 카카오맵에서 보기`,
+  /** where a tap on the card goes (ADR-0071): the app of its place link */
+  map: (app: MapApp) => MAP_APP_NAME[placeApp(app)],
+  mapAria: (name: string, app: MapApp) => `${name}, ${MAP_APP_NAME[placeApp(app)]}에서 보기`,
   heartAria: (name: string) => `${name} 저장`,
-  book: '마이리얼트립에서 예약 찾아보기',
-  bookAria: (name: string) => `${name}, 마이리얼트립에서 예약 찾아보기`,
+  /** 길찾기 (ADR-0067, ADR-0069, ADR-0071): the words are goLink's; this says where to, in which app and how. */
+  goAria: (name: string, foot: boolean, app: MapApp, pier?: string) => `${name}, ${pier ? `배 타는 곳 ${pier}까지 ` : ''}${MAP_APP_NAME[app]} ${foot ? '도보' : '자동차'} 길찾기`,
   firstSave: '저장한 곳은 맨 위 하트 버튼에 모여요.',
   noOrigin: {
     denied: '위치 권한이 꺼져 있어요.',
     unavailable: '위치를 확인하지 못했어요.',
     outside: '지금은 제주 밖이에요.',
   } satisfies Record<NoOrigin, string>,
-  noOriginBody: '내일 갈 동네를 고르면 거기서 가까운 곳을 보여 드려요.',
+  noOriginBody: '동네를 고르면 거기서 가까운 곳을 보여 드려요.',
   deniedHow: '위치를 쓰려면 브라우저 설정에서 위치 권한을 켜 주세요.',
   empty: ['이 근처에는 보여 드릴 곳이 없어요.', '다른 동네를 골라 주세요.'],
   loadError: ['목록을 불러오지 못했어요.', '연결을 확인하고 다시 불러와 주세요.'],
@@ -40,17 +46,44 @@ export const COPY = {
   retry: '다시 불러오기',
   westFirst: '서쪽부터',
   savedEmpty: '저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.',
-  savedUnsorted: '위치를 몰라서 저장한 순서대로 보여 드려요.',
-  savedNearHere: '지금 있는 곳에서 가까운 순이에요.',
-  savedNear: (from: string) => `${from} 가까운 순이에요.`,
-  savedFoot: '이 브라우저에만 저장돼요.',
-  savedFootInApp: '앱 안에서 연 창이라 다른 브라우저에서는 보이지 않아요.',
-  basisSheet: '어디 근처로 볼까요?',
-  gpsOption: '내 위치',
+  /** ADR-0061: the saved list's note on anonymous counting, and its switch. */
+  trackNote: '어디가 좋았는지 익명으로 세어요.',
+  trackOff: '기록 끄기',
+  trackOn: '기록 켜기',
+  /** ADR-0071: TMAP opens only as an app (no web page to fall back on). */
+  tmapNote: 'TMAP은 앱이 있어야 열려요. 걸어서 가는 길은 네이버지도로 열어요.',
+  today: '오늘',
+  tomorrow: '내일',
+  past: '지난 날',
+  pastOpen: '펼치기',
+  pastClose: '접기',
+  up: '위로',
+  down: '아래로',
+  moveDay: '다른 날로',
+  upAria: (name: string) => `${name}, 위로`,
+  downAria: (name: string) => `${name}, 아래로`,
+  moveDayAria: (name: string) => `${name}, 다른 날로`,
+  moveSheet: '어느 날로 옮길까요?',
+  basisSheet: '언제 어디 근처로 볼까요?',
+  whenHead: '언제',
+  whereHead: '어디',
+  /** 얼마나 (ADR-0060): the range, under 어디. Not in the basis label. */
+  reachHead: '얼마나',
+  reach: { walk: '걸어서', drive30: '차로 30분', drive60: '차로 1시간' } satisfies Record<Reach, string>,
+  /** 비 와요(실내만) (ADR-0065): one row under 얼마나, and the cards' word while it is on. */
+  weatherHead: '날씨',
+  indoorToggle: '비 와요(실내만)',
+  indoor: '실내',
+  whenNow: '지금',
+  pickDay: '날짜 고르기',
+  /** where the browser has no picker: the date field is shown and applies only on this (or Enter). */
+  dayOk: '이 날로',
+  gpsOption: '지금 있는 곳',
   gpsOff: '위치 권한이 꺼져 있어요',
   stayOption: '숙소',
+  stayArea: (label: string) => `${label} 숙소`,
   stayUnset: '처음 한 번만 정해요',
-  restay: '숙소 다시 정하기',
+  restay: '다시 정하기',
   staySheet: '숙소가 어디예요?',
   stayNote: '한 번 정하면 이 기기에 기억해 둘게요.',
   stayHere: '지금 위치를 숙소로',
@@ -62,8 +95,24 @@ export const COPY = {
   close: '닫기',
   announce: (n: number) => `${n}곳 골랐어요.`,
   announceMore: (n: number) => `다른 ${n}곳 골랐어요.`,
-  /** the first card's meta when every card on screen is the same trip ("셋 다 애월에서 차로 약 5분"). */
-  together: (n: number) => (n === 2 ? '둘 다' : '셋 다'),
+  /** the `아니면` line when both row cards are the same trip ("둘 다 차로 약 5분"). */
+  both: (trip: string) => `둘 다 ${trip}`,
+  // ADR-0063: keeping saves without a login
+  backupCopied: '링크를 복사했어요. 다른 브라우저나 기기에서 열면 여기 저장한 곳을 합칠 수 있어요.',
+  backupFailed: '링크를 복사하지 못했어요. 잠시 뒤 다시 눌러 주세요.',
+  restoreAsk: (n: number) => `링크에 저장한 곳이 ${n}곳 있어요. 이 기기에 합칠까요?`,
+  restoreNone: '링크에 있는 곳을 지금 목록에서 찾지 못했어요.',
+  restoreMerge: '합치기',
+  restoreCancel: '그만두기',
+  restoreDone: (n: number) => (n ? `${n}곳을 합쳤어요. 맨 위 하트 버튼에 모여요.` : '새로 합칠 곳이 없어요. 이미 이 기기에 있어요.'),
+  inappName: { kakaotalk: '카카오톡', instagram: '인스타그램', facebook: '페이스북', naver: '네이버 앱', line: '라인', daum: '다음 앱' } satisfies Record<InApp, string>,
+  inappNote: (app: string) => `${app} 안에서 저장한 곳은 ${app}에만 남아요.`,
+  inappOpen: '브라우저로 열기',
+  inappCopied: '링크를 복사했어요. 휴대폰 브라우저 주소창에 붙여 넣어 주세요.',
+  inappFailed: '오른쪽 위 메뉴에서 다른 브라우저로 열어 주세요.',
+  nudge: '홈 화면에 추가하면 저장한 곳이 오래 남아요.',
+  nudgeIos: '공유 버튼에서 ‘홈 화면에 추가’를 눌러 주세요. 지금 저장한 곳은 아래 ‘링크로 백업’으로 옮겨요.',
+  install: '홈 화면에 추가',
 } as const;
 
 /** The mood buttons' own words; the results title repeats the one chosen. */
@@ -77,32 +126,40 @@ export const MOOD_LABEL: Record<Button, string> = {
 
 const HEART_PATH =
   'M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z';
+const CHECK = '<svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+/** the `아니면` line's shared trip; the row links point at it with aria-describedby. */
+const ALT_TRIP = 'alt-trip';
 const HEART_22 = `<svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${HEART_PATH}"/></svg>`;
 
-const WEEKDAYS = '일월화수목금토';
-/** "10월 1일 목요일": tomorrow's date — or today's before 4 a.m., when "내일" still means the coming day. */
-export function dateLabel(now: Date): string {
-  const d = new Date(now.getTime());
-  if (d.getHours() >= 4) d.setDate(d.getDate() + 1);
-  return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
+/** "9월 30일 수요일": today's date in Jeju (ADR-0059, Asia/Seoul like the saved days). */
+export function dateLabel(d: Date): string {
+  return longDay(dayOf(d));
 }
 
-/** "더럭초등학교(구, 더럭분교)" → name + "(구, 더럭분교)" shown smaller and never broken inside (§3.3). */
+/** A saved-list day: "오늘", "내일", "10월 3일 금요일". */
+export function dayName(today: Day, day: Day): string {
+  if (day === today) return COPY.today;
+  if (day === addDays(today, 1)) return COPY.tomorrow;
+  return longDay(day);
+}
+
+/** "더럭초등학교(구, 더럭분교)" → name + "(구, 더럭분교)" shown smaller and never broken inside (§3.3). So is
+ * the part after " - " ("… 절로 가는길 - 정진의 길"): it is what tells a course from its siblings. */
 export function splitName(name: string): { main: string; alias: string | null } {
-  const m = /^(.+?)\s*([(（].+[)）])$/.exec(name);
+  const m = /^(.+?)\s*([(（].+[)）])$/.exec(name) ?? /^(.+?)\s+(-\s+.+)$/.exec(name);
   return m ? { main: m[1], alias: m[2] } : { main: name, alias: null };
 }
 
-export function basisLabel(s: State): string {
+function whereLabel(s: State): string {
   if (s.basis === 'stay' && s.stay) return COPY.basisStay;
   if (s.basis === 'region' && s.region) return COPY.basisRegion(areaLabel(s.region));
   return s.lastFail ? COPY.basisNoGps : COPY.basisGps;
 }
-
-export function savedSortText(origin: Origin | null): string {
-  if (!origin) return COPY.savedUnsorted;
-  if (origin.key === GPS_KEY) return COPY.savedNearHere;
-  return COPY.savedNear(origin.from);
+/** 지금: the place only. A chosen day goes in front: "내일 · 애월 근처", "10월 3일 · 숙소 근처". */
+export function basisLabel(s: State): string {
+  const where = whereLabel(s);
+  if (s.when === 'now') return where;
+  return COPY.basisWhen(s.when === addDays(s.today, 1) ? COPY.tomorrow : shortDay(s.when), where);
 }
 
 /** Status line under the results heading: one short line, plus an escape hatch while GPS is slow (S04·S05). */
@@ -130,15 +187,24 @@ export interface Els {
   basisText: HTMLElement;
   saved: HTMLButtonElement;
   savedN: HTMLElement;
-  resultsTitle: HTMLElement;
+  crumb: HTMLElement;
   status: HTMLElement;
   foodSub: HTMLElement;
+  newSub: HTMLElement;
   cards: HTMLElement;
   savedTitle: HTMLElement;
   savedCount: HTMLElement;
   savedSort: HTMLElement;
   savedList: HTMLElement;
-  savedFoot: HTMLElement;
+  track: HTMLButtonElement;
+  /** ADR-0071: 지도 앱 at the foot of 저장한 곳 */
+  mapApps: HTMLButtonElement[];
+  mapAppNote: HTMLElement;
+  /** ADR-0063: the first screen's notice (backup to merge, in-app browser), the saved list's nudge and backup. */
+  homeNote: HTMLElement;
+  nudge: HTMLElement;
+  backup: HTMLButtonElement;
+  backupNote: HTMLElement;
   sheet: HTMLElement;
   announce: HTMLElement | null;
   moods: HTMLButtonElement[];
@@ -162,15 +228,22 @@ export function findEls(doc: Document): Els {
     basisText: q('#basis > span'),
     saved: q<HTMLButtonElement>('#saved'),
     savedN: q('#saved > .n'),
-    resultsTitle: q('#resultsTitle'),
+    crumb: q('#crumb'),
     status: q('#status'),
     foodSub: q('#foodSub'),
+    newSub: q('#newSub'),
     cards: q('#cards'),
     savedTitle: q('#savedTitle'),
     savedCount: q('#savedTitle > .count'),
     savedSort: q('#savedView > .sort'),
     savedList: q('#savedView > .picks'),
-    savedFoot: q('#savedView > .foot'),
+    track: q<HTMLButtonElement>('#savedView [data-action="track"]'),
+    mapApps: [...doc.querySelectorAll<HTMLButtonElement>('#savedView [data-action="map-app"]')],
+    mapAppNote: q('#mapAppNote'),
+    homeNote: q('#homeNote'),
+    nudge: q('#nudge'),
+    backup: q<HTMLButtonElement>('#savedView [data-action="backup"]'),
+    backupNote: q('#backupNote'),
     sheet: q('#sheet'),
     announce: doc.querySelector<HTMLElement>('#announce'),
     moods: [...doc.querySelectorAll<HTMLButtonElement>('button[data-mood]')],
@@ -201,7 +274,7 @@ function setText(e: Element, text: string) {
 type ResultsBody = { k: 'blank' } | { k: 'keep' } | { k: 'ghost' } | { k: 'cards' } | { k: 'notice'; kind: 'noOrigin' | 'loadError' | 'empty' };
 type SavedBody = { k: 'none' } | { k: 'head' } | { k: 'keep' } | { k: 'ghost' } | { k: 'list' } | { k: 'error' };
 
-/** `showing`: the key (mood + food sub) whose cards/notice/frame is on screen now, or null. */
+/** `showing`: the key (mood + food sub / 새로운 거 tab) whose cards/notice/frame is on screen now, or null. */
 function resultsBodyOf(s: State, showing: string | null): ResultsBody {
   const p = s.phase;
   if (s.view === 'home') return { k: 'blank' };
@@ -210,7 +283,7 @@ function resultsBodyOf(s: State, showing: string | null): ResultsBody {
   // stay until the new ones land. Another mood or sub never borrows the old cards. After 300ms, a still frame —
   // unless the cards on screen still answer this mood, sub and basis (the same mood tapped again re-checks
   // GPS): those stay, rather than turning grey and coming back as the same 3.
-  const same = !!s.mood && showing === historyKey(s.mood, s.sub);
+  const same = !!s.mood && showing === historyKey(s.mood, tabNow(s));
   if (p.k === 'pending') {
     if (same && cardsValid(s)) return { k: 'keep' };
     return p.slow ? { k: 'ghost' } : same ? { k: 'keep' } : { k: 'blank' };
@@ -236,7 +309,7 @@ export interface Renderer {
   dispose(): void;
 }
 
-export function createRenderer(doc: Document, els: Els, env: { inApp: boolean }): Renderer {
+export function createRenderer(doc: Document, els: Els): Renderer {
   const win = doc.defaultView;
   const timers = new Set<ReturnType<typeof setTimeout>>();
   const later = (ms: number, fn: () => void) => {
@@ -273,19 +346,14 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
 
   // --- cards ---
   const tripOf = (origin: Origin, c: Card) => travel(origin.point, origin.isPoint, c.spot);
-  const metaFor = (origin: Origin | null, c: Card, withFrom: boolean) =>
-    origin ? travelText(tripOf(origin, c), withFrom ? origin.from : undefined) : null;
-  /** Results meta (§7, §14): the first card says where from and that a tap opens 카카오맵, the rows only their
-   * own trip. When every card is the same trip (most screens: "차로 약 5분" three times) it is said once, on
-   * the first card ("셋 다 …"), and the rows have no meta line. */
-  function resultMetas(origin: Origin, list: Card[]): (string | null)[] {
+  /** Results meta (§7): the first card always says where from and which map app a tap opens. The two row cards'
+   * trip is said once on the `아니면` line when it is the same ("아니면 · 둘 다 차로 약 5분") and the rows then
+   * have no meta line; otherwise each row says its own trip, without the "from". */
+  function resultMetas(origin: Origin, list: Card[]): { metas: (string | null)[]; both: string | null } {
     const trips = list.map((c) => travelText(tripOf(origin, c)));
-    const one = list.length > 1 && trips.every((t) => t === trips[0]);
-    return list.map((c, i) => {
-      if (i > 0) return one ? null : trips[i];
-      const lead = metaFor(origin, c, true)!;
-      return one ? `${COPY.together(list.length)} ${lead}` : lead;
-    });
+    const both = list.length === 3 && trips[1] === trips[2] ? trips[1] : null;
+    const metas = list.map((c, i) => (i === 0 ? travelText(tripOf(origin, c), origin.from) : both ? null : trips[i]));
+    return { metas, both };
   }
 
   function photoEl(spot: Card['spot'], eager: boolean): HTMLElement {
@@ -295,8 +363,44 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
     return ph;
   }
 
-  /** `meta`: the trip (null = none); `dest`: also say where a tap goes ("카카오맵"). */
-  function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean): HTMLElement {
+  /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14).
+   * `market`: a five-day market's day words (ADR-0066), in the same place and the same way. */
+  function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null): HTMLElement {
+    const metaEl = el(doc, 'p', { class: 'meta' });
+    if (indoor) {
+      metaEl.append(el(doc, 'span', { class: 'indoor' }, COPY.indoor));
+      if (market || meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    }
+    if (market) {
+      metaEl.append(el(doc, 'span', { class: 'market' }, market));
+      if (meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    }
+    if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
+    // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
+    // "… 5분 ·" and the next starts with "카카오맵", never with "·".
+    if (meta && dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    // Says where a tap on the card goes (S57); no arrow glyph.
+    if (dest) metaEl.append(el(doc, 'span', { class: 'dest', 'aria-hidden': 'true' }, COPY.map(dest)));
+    return metaEl;
+  }
+
+  /** `meta`: the trip (null = none); `dest`: also say where a tap goes (the map app, "네이버지도"); `day`: a saved-list row,
+   * whose heart is about that day. */
+  /** 길찾기 (ADR-0067, ADR-0069) from `origin` (null = no position yet), in the range `reach`: written on a new
+   * card and patched on a reused saved row. */
+  function setGo(a: HTMLElement, spot: Spot, origin: Origin | null, reach: Reach, app: MapApp) {
+    const g = goLink(spot, origin?.point ?? null, reach === 'walk', origin?.isPoint ?? false, app);
+    setAttr(a, 'href', g.href);
+    setAttr(a, 'aria-label', COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal));
+    setText(a, g.text);
+  }
+  /** The card's own link (name and photo) in the chosen app (ADR-0071): written on a new card, patched on a reused row. */
+  function setPlace(a: HTMLElement, spot: Spot, app: MapApp) {
+    setAttr(a, 'href', placeUrl(spot, app));
+    setAttr(a, 'aria-label', COPY.mapAria(spot.name.trim(), app));
+  }
+
+  function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string, day?: Day): HTMLElement {
     const { spot } = c;
     const name = spot.name.trim();
     const broken = s.broken.includes(spot.id);
@@ -304,29 +408,53 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
     if (!broken) card.append(photoEl(spot, eager));
     // The name's link covers the whole card (::after); heart and booking link sit above it (S8-3).
     const title = el(doc, 'h2', { class: 'name' });
-    const link = el(doc, 'a', { class: 'card-link', href: kakaoUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.mapAria(name) });
+    const link = el(doc, 'a', { class: 'card-link', target: '_blank', rel: 'noopener' });
+    setPlace(link, spot, s.mapApp);
+    // A row whose trip went to the `아니면` line hears it with the card (§6.5).
+    if (describedBy) link.setAttribute('aria-describedby', describedBy);
     const { main, alias } = splitName(name);
-    link.append(main);
-    if (alias) link.append(' ', el(doc, 'span', { class: 'alias' }, alias));
+    // with an alias, the name is its own span: a row card cuts it at two lines so the alias always shows
+    if (alias) link.append(el(doc, 'span', { class: 'base' }, main), ' ', el(doc, 'span', { class: 'alias' }, alias));
+    else link.append(main);
     title.append(link);
     // Name fixed, state only in aria-pressed (S59).
-    const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(s.saved.includes(spot.id)), 'aria-label': COPY.heartAria(name) });
+    const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(isSaved(s, spot.id, day)), 'aria-label': COPY.heartAria(name) });
+    if (day) heart.dataset.date = day;
     heart.innerHTML = HEART_22;
     card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
-    if (meta || dest) {
-      const metaEl = el(doc, 'p', { class: 'meta' });
-      if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
-      // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
-      // "… 5분 ·" and the next starts with "카카오맵", never with "·".
-      if (meta && dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
-      // Says where a tap on the card goes (S57); no arrow glyph.
-      if (dest) metaEl.append(el(doc, 'span', { class: 'dest', 'aria-hidden': 'true' }, COPY.map));
-      card.append(metaEl);
-    }
-    if (spot.bookable) {
-      card.append(el(doc, 'a', { class: 'book', href: bookingUrl(spot), target: '_blank', rel: 'noopener', 'aria-label': COPY.bookAria(name) }, COPY.book));
-    }
+    // 실내 only on the results, only while 비 와요 picked them (ADR-0065)
+    const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
+    // 장날 only on the results, for the day being viewed (ADR-0066)
+    const market = !day && spot.market ? marketText(spot.market, whenDay(s), s.when !== 'now') : null;
+    if (meta || dest || indoor || market) card.append(metaEl(meta, dest ? s.mapApp : null, indoor, market));
+    // 길찾기 (ADR-0067, ADR-0069): directions in one tap, on every card; the card itself stays the place page
+    const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
+    if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
+    card.append(go);
+    // 예약 (ADR-0074): a 체험's one verified route, under 길찾기 — 네이버 예약, 마이리얼트립 상품, 홈페이지 or 전화 (tel:).
+    const book = bookLink(spot);
+    if (book) card.append(el(doc, 'a', { class: 'tbtn book', href: book.href, ...(book.href.startsWith('tel:') ? {} : { target: '_blank' }), rel: 'noopener', 'aria-label': book.aria }, book.text));
     return card;
+  }
+
+  /** "다른 3곳 보기" in a sticky bar at the end of the list (§6.6). One node, reused while results show; the
+   * rule above it shows only while it floats — seen by watching a 1px marker at its bottom, no scroll handler. */
+  let bar: HTMLElement | null = null;
+  let io: IntersectionObserver | null = null;
+  function moreBar(): HTMLElement {
+    if (bar) return bar;
+    bar = el(doc, 'div', { class: 'more-bar' });
+    const end = el(doc, 'span', { class: 'more-end', 'aria-hidden': 'true' });
+    bar.append(el(doc, 'button', { type: 'button', class: 'more', 'data-action': 'more' }, COPY.more), end);
+    const IO = win?.IntersectionObserver;
+    if (IO) {
+      const b = bar;
+      // rootMargin -1px: floating, the marker's top edge touches the viewport's bottom edge, and an
+      // edge-adjacent target counts as intersecting in Chrome — it must count as off screen.
+      io = new IO((es) => b.classList.toggle('stuck', !es[es.length - 1].isIntersecting), { threshold: 0, rootMargin: '0px 0px -1px 0px' });
+      io.observe(end);
+    }
+    return bar;
   }
 
   function ghostCard(kind: 'lead' | 'row'): HTMLElement {
@@ -339,15 +467,28 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
 
   function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: AreaName | null) {
     AREA_GROUPS.forEach(({ group, heading }, i) => {
-      const h = el(doc, 'h3', { class: 'group-h' });
+      // ids per place: the inline index and a sheet's can be in the document at the same time
+      const id = `areas-${where}-${group}`;
+      const h = el(doc, 'p', { class: 'group-h', id });
       h.append(el(doc, 'span', {}, heading));
       if (i === 0) h.append(el(doc, 'span', { class: 'order' }, COPY.westFirst));
-      const grid = el(doc, 'div', { class: 'areas' });
+      const grid = el(doc, 'div', { class: 'areas', role: 'group', 'aria-labelledby': id });
       for (const a of AREAS.filter((x) => x.group === group)) {
-        grid.append(el(doc, 'button', { type: 'button', class: 'opt', 'data-area': a.name, 'data-where': where, 'aria-pressed': String(a.name === selected) }, a.label));
+        grid.append(option(a.label, a.landmark, { 'data-area': a.name, 'data-where': where, 'aria-pressed': String(a.name === selected) }));
       }
       parent.append(h, grid);
     });
+  }
+
+  /** A thin-rule list row (area index, sheet options): name, a quieter second line, a check when chosen. */
+  function option(label: string, sub: string | null, attrs: Record<string, string>): HTMLButtonElement {
+    const b = el(doc, 'button', { type: 'button', class: 'opt', ...attrs });
+    const text = el(doc, 'span');
+    text.append(el(doc, 'span', { class: 'nm' }, label));
+    if (sub) text.append(el(doc, 'span', { class: 'lm' }, sub));
+    b.append(text);
+    b.insertAdjacentHTML('beforeend', CHECK);
+    return b;
   }
 
   function notice(s: State, kind: 'noOrigin' | 'loadError' | 'empty'): HTMLElement {
@@ -368,7 +509,8 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
   }
 
   function resultsSigOf(s: State, b: ResultsBody): string {
-    if (b.k === 'cards') return `cards|${s.cards!.seq}`;
+    // a market's day words follow the day being viewed (ADR-0066): redrawn when it changes, only if one is shown
+    if (b.k === 'cards') return `cards|${s.cards!.seq}|${s.mapApp}${s.cards!.list.some((c) => c.spot.market) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
     if (b.k === 'notice') {
       const p = s.phase;
       const detail = p.k === 'noOrigin' ? p.why : p.k === 'loadError' ? String(p.offline) : '';
@@ -384,7 +526,7 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
     const sig = resultsSigOf(s, b);
     if (sig === resultsSig) return;
     resultsSig = sig;
-    resultsShowing = b.k === 'blank' || !s.mood ? null : b.k === 'cards' ? s.cards!.key : historyKey(s.mood, s.sub);
+    resultsShowing = b.k === 'blank' || !s.mood ? null : b.k === 'cards' ? s.cards!.key : historyKey(s.mood, tabNow(s));
     switch (b.k) {
       case 'blank':
         els.cards.replaceChildren();
@@ -394,13 +536,19 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
         break;
       case 'cards': {
         const { list, origin } = s.cards!;
-        const metas = resultMetas(origin, list);
+        const { metas, both } = resultMetas(origin, list);
         const nodes: HTMLElement[] = [];
         list.forEach((c, i) => {
-          if (i === 1 && list.length > 2) nodes.push(el(doc, 'p', { class: 'alt' }, COPY.or));
-          nodes.push(cardEl(s, c, i === 0 ? 'lead' : 'row', metas[i], i === 0, i === 0));
+          if (i === 1) {
+            // "아니면" — and the two rows' shared trip, said once ("아니면 · 둘 다 차로 약 5분")
+            const alt = el(doc, 'p', { class: 'alt' });
+            alt.append(el(doc, 'b', {}, COPY.or));
+            if (both) alt.append(' · ', el(doc, 'span', { id: ALT_TRIP }, COPY.both(both)));
+            nodes.push(alt);
+          }
+          nodes.push(cardEl(s, c, i === 0 ? 'lead' : 'row', metas[i], i === 0, i === 0, i > 0 && both ? ALT_TRIP : undefined));
         });
-        nodes.push(el(doc, 'button', { type: 'button', class: 'more', 'data-action': 'more' }, COPY.more));
+        nodes.push(moreBar());
         els.cards.replaceChildren(...nodes);
         break;
       }
@@ -410,44 +558,132 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
     }
   }
 
+  // --- saved list (§6.12): by day. Rows are keyed `${id}|${day}` and reused, so moving one never reloads
+  // a photo; the meta and the 위로/아래로 buttons are patched on each draw. ---
+  const rowNodes = new Map<string, HTMLElement>();
+
+  function savedRowEl(s: State, spot: Spot, row: SavedRow, pos: { first: boolean; last: boolean }, meta: string | null, dest: boolean): HTMLElement {
+    const { entry } = row;
+    const key = `${entry.id}|${entry.date}`;
+    let card = rowNodes.get(key);
+    if (!card) {
+      card = cardEl(s, { spot, minutes: 0 }, 'row', null, false, false, undefined, entry.date);
+      const name = spot.name.trim();
+      const ctl = el(doc, 'div', { class: 'ctl' });
+      const btn = (action: string, text: string, aria: string) =>
+        el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': action, 'data-id': entry.id, 'data-date': entry.date, 'aria-label': aria }, text);
+      ctl.append(btn('up', COPY.up, COPY.upAria(name)), btn('down', COPY.down, COPY.downAria(name)), btn('move-day', COPY.moveDay, COPY.moveDayAria(name)));
+      card.append(ctl);
+      rowNodes.set(key, card);
+    }
+    setGo(card.querySelector<HTMLElement>(':scope > .go')!, spot, s.savedList?.origin ?? null, s.reach, s.mapApp);
+    setPlace(card.querySelector<HTMLElement>('.card-link')!, spot, s.mapApp);
+    const metaKey = `${meta ?? ''}|${dest}|${s.mapApp}`;
+    if (card.dataset.meta !== metaKey) {
+      card.dataset.meta = metaKey;
+      card.querySelector(':scope > .meta')?.remove();
+      if (meta || dest) card.querySelector(':scope > .reason')!.after(metaEl(meta, dest ? s.mapApp : null));
+    }
+    // a row taken out in this visit keeps only its (empty) heart: nothing to move
+    const ctl = card.querySelector<HTMLElement>(':scope > .ctl')!;
+    ctl.hidden = !row.live;
+    ctl.querySelector<HTMLElement>('[data-action="up"]')!.hidden = pos.first;
+    ctl.querySelector<HTMLElement>('[data-action="down"]')!.hidden = pos.last;
+    return card;
+  }
+
+  function savedListSig(s: State): string {
+    const { upcoming, past } = savedDays(s);
+    const o = s.savedList!.origin;
+    const days = [...upcoming, ...(s.pastOpen ? past : [])].map((d) => `${d.day}:${d.rows.map((r) => `${r.entry.id}${r.live ? '' : '~'}`).join(',')}`);
+    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${s.reach}|${s.mapApp}|${past.length}|${s.pastOpen}|${days.join(';')}`;
+  }
+
+  function savedListNodes(s: State): HTMLElement[] {
+    const { upcoming, past } = savedDays(s);
+    const o = s.savedList!.origin;
+    const idx = spotIndex(s.spots!);
+    const used = new Set<string>();
+    let first = true;
+    // The first row says where the trips are measured from (the current basis, not that day's) and where a
+    // tap goes; the others say only their trip. Without a position there is no trip.
+    const rowsOf = (rows: SavedRow[]) => {
+      const live = rows.filter((r) => r.live);
+      return rows.map((r) => {
+        const spot = idx.get(r.entry.id)!;
+        const i = live.indexOf(r);
+        const meta = o ? travelText(travel(o.point, o.isPoint, spot), first ? o.from : undefined) : null;
+        const node = savedRowEl(s, spot, r, { first: i <= 0, last: i === live.length - 1 }, meta, first);
+        first = false;
+        used.add(`${r.entry.id}|${r.entry.date}`);
+        return node;
+      });
+    };
+    const nodes: HTMLElement[] = [];
+    for (const d of upcoming) {
+      const id = `day-${d.day}`;
+      const sec = el(doc, 'section', { class: 'day', 'aria-labelledby': id });
+      sec.append(el(doc, 'h2', { class: 'day-h', id }, dayName(s.today, d.day)), ...rowsOf(d.rows));
+      nodes.push(sec);
+    }
+    if (past.length) {
+      // 지난 날: folded at the bottom; opened, each day under its own date
+      const sec = el(doc, 'section', { class: 'day past', 'aria-labelledby': 'day-past' });
+      const head = el(doc, 'div', { class: 'day-h' });
+      head.append(
+        el(doc, 'h2', { id: 'day-past' }, COPY.past),
+        el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'past', 'aria-expanded': String(s.pastOpen) }, s.pastOpen ? COPY.pastClose : COPY.pastOpen),
+      );
+      sec.append(head);
+      if (s.pastOpen) for (const d of past) sec.append(el(doc, 'p', { class: 'group-h' }, longDay(d.day)), ...rowsOf(d.rows));
+      nodes.push(sec);
+    }
+    for (const k of [...rowNodes.keys()]) if (!used.has(k)) rowNodes.delete(k);
+    return nodes;
+  }
+
+  /** The control that had focus before the list was redrawn, or its stand-in: the same button in its new
+   * place, the row's next visible control when it hid (위로 on the new first row), the new 펼치기/접기. */
+  function refocus(active: HTMLElement) {
+    const same = (b: HTMLElement) => b.dataset.action === active.dataset.action && b.dataset.id === active.dataset.id && b.dataset.date === active.dataset.date;
+    const shown = (b: Element | null | undefined): b is HTMLElement => !!b && b.isConnected && !(b as HTMLElement).hidden && !b.closest('[hidden]');
+    let t: HTMLElement | null | undefined = shown(active) ? active : [...els.savedList.querySelectorAll<HTMLElement>('button[data-action]')].find(same);
+    if (!shown(t)) t = active.closest('.card')?.querySelector<HTMLElement>('.ctl button:not([hidden])') ?? active.closest('.card')?.querySelector<HTMLElement>('.heart');
+    if (shown(t) && doc.activeElement !== t) t.focus();
+  }
+
   function renderSaved(s: State) {
     const b = savedBodyOf(s, savedShowing);
     if (b.k === 'keep') return;
-    const list = b.k === 'list' ? s.savedList! : null;
-    const sig = b.k === 'list' ? `list|${list!.seq}` : b.k === 'error' ? `error|${s.phase.k === 'loadError' && s.phase.offline}` : b.k;
+    const sig = b.k === 'list' ? `list|${savedListSig(s)}` : b.k === 'error' ? `error|${s.phase.k === 'loadError' && s.phase.offline}` : b.k;
+    const n = savedCount(s);
+    setText(els.savedCount, b.k === 'list' && n ? String(n) : '');
     if (sig === savedSig) return;
     savedSig = sig;
     savedShowing = b.k === 'list' || b.k === 'error' || b.k === 'ghost';
-    let count = '';
-    let sort = '';
-    let foot = '';
-    const nodes: HTMLElement[] = [];
+    // read before the rows are taken into their new sections (moving the focused one drops its focus)
+    const active = doc.activeElement as HTMLElement | null;
+    const inside = !!active && els.savedList.contains(active);
+    let empty = '';
+    let nodes: HTMLElement[] = [];
     if (b.k === 'ghost') {
-      const n = Math.min(Math.max(s.snapshot?.length ?? 1, 1), 3);
-      for (let i = 0; i < n; i++) nodes.push(ghostCard('row'));
+      const k = Math.min(Math.max(s.saved.length, 1), 3);
+      for (let i = 0; i < k; i++) nodes.push(ghostCard('row'));
     } else if (b.k === 'error') {
       nodes.push(notice(s, 'loadError'));
-    } else if (list) {
-      if (list.list.length) {
-        count = String(list.list.length);
-        sort = savedSortText(list.origin);
-        // Every row says where from: the list is sorted by distance (§6.11).
-        for (const c of list.list) nodes.push(cardEl(s, c, 'row', metaFor(list.origin, c, true), true, false));
-        foot = env.inApp ? `${COPY.savedFoot} ${COPY.savedFootInApp}` : COPY.savedFoot;
-      } else {
-        sort = COPY.savedEmpty;
-      }
+    } else if (b.k === 'list') {
+      nodes = savedListNodes(s);
+      if (!nodes.length) empty = COPY.savedEmpty;
     }
-    setText(els.savedCount, count);
-    setText(els.savedSort, sort);
-    setText(els.savedFoot, foot);
+    if (b.k !== 'list') rowNodes.clear();
+    setText(els.savedSort, empty);
     els.savedList.replaceChildren(...nodes);
+    if (inside) refocus(active!);
   }
 
   /** Hearts, broken photos and the first-save hint are patched in place — cards are never rebuilt for them. */
   function patchCards(s: State) {
-    const on = new Set(s.saved);
-    for (const h of els.main.querySelectorAll<HTMLButtonElement>('.heart[data-id]')) setAttr(h, 'aria-pressed', String(on.has(h.dataset.id!)));
+    for (const h of els.main.querySelectorAll<HTMLButtonElement>('.heart[data-id]')) setAttr(h, 'aria-pressed', String(isSaved(s, h.dataset.id!, h.dataset.date)));
     if (s.broken !== patchedBroken) {
       const was = patchedBroken;
       patchedBroken = s.broken;
@@ -460,61 +696,165 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
       }
       // Back online: a card that lost its photo only for want of a connection gets it back in place.
       if (was.length > s.broken.length) {
-        const shownCards = [...(s.cards?.list ?? []), ...(s.savedList?.list ?? [])];
+        const idx = s.spots ? spotIndex(s.spots) : null;
         for (const card of els.main.querySelectorAll<HTMLElement>('.card.noimg[data-id]')) {
-          const c = broken.has(card.dataset.id!) ? null : shownCards.find((x) => x.spot.id === card.dataset.id);
-          if (!c) continue;
+          const id = card.dataset.id!;
+          const spot = broken.has(id) ? null : (s.cards?.list.find((x) => x.spot.id === id)?.spot ?? idx?.get(id));
+          if (!spot) continue;
           card.classList.remove('noimg');
-          card.prepend(photoEl(c.spot, false));
+          card.prepend(photoEl(spot, false));
         }
       }
     }
-    for (const n of els.main.querySelectorAll<HTMLElement>('.hint:not(.leaving)')) {
-      if (n.parentElement?.dataset.id !== s.hintFor) leave(n);
+    // The first-save hint (results only) stays until the next intent clears `hintFor` — no timer, no fade
+    // (§6.13): it goes at once with the next draw.
+    for (const n of els.main.querySelectorAll<HTMLElement>('.hint')) {
+      if (n.parentElement?.dataset.id !== s.hintFor) n.remove();
     }
-    if (s.hintFor) {
-      const box = s.view === 'saved' ? els.savedList : els.cards;
-      const card = [...box.querySelectorAll<HTMLElement>('.card[data-id]')].find((c) => c.dataset.id === s.hintFor);
-      if (card && !card.querySelector('.hint')) card.append(el(doc, 'p', { class: 'hint', 'aria-live': 'polite' }, COPY.firstSave));
+    if (s.hintFor && s.view === 'cards') {
+      const card = [...els.cards.querySelectorAll<HTMLElement>('.card[data-id]')].find((c) => c.dataset.id === s.hintFor);
+      if (card && !card.querySelector('.hint')) {
+        card.append(el(doc, 'p', { class: 'hint' }, COPY.firstSave));
+        if (els.announce) els.announce.textContent = COPY.firstSave;
+      }
     }
   }
-  function leave(n: HTMLElement) {
-    if (!motion()) {
-      n.remove();
-      return;
+
+  // --- keeping saves without a login (ADR-0063): quiet notices, a sentence or two and text buttons ---
+  let homeSig = '';
+  let nudgeSig = '';
+  const act = (action: string, text: string) => el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': action }, text);
+  function fill(box: HTMLElement, lines: string[], acts: HTMLElement[]) {
+    const nodes: HTMLElement[] = lines.map((t, i) => el(doc, 'p', i === 0 ? { tabindex: '-1' } : {}, t));
+    if (acts.length) {
+      const row = el(doc, 'div', { class: 'acts' });
+      row.append(...acts);
+      nodes.push(row);
     }
-    n.classList.add('leaving');
-    later(150, () => n.remove());
+    box.replaceChildren(...nodes);
+  }
+  /** Where a link to this app carries what is saved here (the in-app browser's way out). */
+  const shareUrl = (s: State) => {
+    const home = appHome(doc.defaultView?.location.href ?? 'https://localhost/');
+    return s.saved.length ? backupUrl(home, s.saved, s.indoor, s.mapApp) : home;
+  };
+  function renderKeep(s: State) {
+    const k = s.keep;
+    const r = k.restore;
+    // a backup link's places that this data knows (all of them until the data is in)
+    const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
+    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : '';
+    if (sig !== homeSig) {
+      const focusIn = els.homeNote.contains(doc.activeElement);
+      homeSig = sig;
+      if (r?.k === 'ask' && n) fill(els.homeNote, [COPY.restoreAsk(n)], [act('restore-merge', COPY.restoreMerge), act('restore-cancel', COPY.restoreCancel)]);
+      else if (r?.k === 'ask') fill(els.homeNote, [COPY.restoreNone], [act('restore-cancel', COPY.close)]);
+      else if (r?.k === 'done') fill(els.homeNote, [COPY.restoreDone(r.added)], []);
+      else if (k.inapp && k.inappNote) {
+        const name = COPY.inappName[k.inapp];
+        const lines = [COPY.inappNote(name)];
+        if (k.inappNote === 'copied') lines.push(COPY.inappCopied);
+        else if (k.inappNote === 'failed') lines.push(COPY.inappFailed);
+        // KakaoTalk has its own way out to the phone's browser; elsewhere the link is copied
+        const open = k.inapp === 'kakaotalk' ? el(doc, 'a', { class: 'tbtn', 'data-action': 'inapp-open', href: '#' }, COPY.inappOpen) : act('inapp-copy', COPY.inappOpen);
+        fill(els.homeNote, lines, [open, act('inapp-close', COPY.close)]);
+      } else els.homeNote.replaceChildren();
+      els.homeNote.hidden = !sig;
+      if (r?.k === 'done' && els.announce) els.announce.textContent = COPY.restoreDone(r.added);
+      // the button tapped is gone: the answer (or, with nothing left, the first mood) takes the focus
+      if (focusIn) (els.homeNote.querySelector<HTMLElement>('p') ?? els.moods[0])?.focus({ preventScroll: true });
+    }
+    const out = els.homeNote.querySelector<HTMLAnchorElement>('a[data-action="inapp-open"]');
+    if (out) setAttr(out, 'href', kakaoExternal(shareUrl(s)));
+
+    const nsig = s.view === 'saved' && k.nudge && k.install ? k.install : '';
+    if (nsig !== nudgeSig) {
+      const focusIn = els.nudge.contains(doc.activeElement);
+      nudgeSig = nsig;
+      if (nsig === 'ios') fill(els.nudge, [COPY.nudge, COPY.nudgeIos], [act('nudge-close', COPY.close)]);
+      else if (nsig === 'prompt') fill(els.nudge, [COPY.nudge], [act('install', COPY.install), act('nudge-close', COPY.close)]);
+      else els.nudge.replaceChildren();
+      els.nudge.hidden = !nsig;
+      if (focusIn) els.savedTitle.focus({ preventScroll: true });
+    }
+    els.backup.hidden = !s.saved.length;
+    setText(els.backupNote, k.backup === 'copied' ? COPY.backupCopied : k.backup === 'failed' ? COPY.backupFailed : '');
   }
 
   // --- sheet ---
   function sheetSigOf(s: State): string {
     // Only what the user changes in a sheet. News that arrives while it is open — a 숙소 GPS failure, a GPS
     // denial — is patched in place (patchSheet): a rebuild under the finger would reset its scroll and focus.
-    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}`;
+    const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
+    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}`;
   }
 
-  function option(label: string, sub: string | null, attrs: Record<string, string>): HTMLButtonElement {
-    const b = el(doc, 'button', { type: 'button', class: 'opt', ...attrs }, label);
-    if (sub) b.append(el(doc, 'span', { class: 'sub' }, sub));
-    return b;
+  /** A thin-rule list of rows under its own group heading (the 언제 / 어디 / 얼마나 parts of the basis sheet). */
+  function optGroup(parent: HTMLElement, id: string, heading: string | null, rows: HTMLElement[]): HTMLElement {
+    const opts = el(doc, 'div', { class: 'opts', role: 'group' });
+    if (heading) {
+      const h = el(doc, 'p', { class: 'group-h', id });
+      h.append(el(doc, 'span', {}, heading));
+      parent.append(h);
+      opts.setAttribute('aria-labelledby', id);
+    }
+    opts.append(...rows);
+    parent.append(opts);
+    return opts;
+  }
+  function optRow(...children: HTMLElement[]): HTMLElement {
+    const row = el(doc, 'div', { class: 'optrow' });
+    row.append(...children);
+    return row;
+  }
+  /** 날짜 고르기: an option that opens the browser's own date picker (today to a year on), with the native
+   * input kept beside it. Where showPicker() is missing the input itself is shown with 이 날로 (app.ts). */
+  function pickDay(s: State, picked: Day | null): HTMLElement[] {
+    const input = el(doc, 'input', { type: 'date', class: 'sr', min: s.today, max: addDays(s.today, DAYS_AHEAD), tabindex: '-1', 'aria-hidden': 'true', 'aria-label': COPY.pickDay, 'data-action': 'day-input' });
+    input.value = picked ?? '';
+    const box = el(doc, 'div', { class: 'date-fb' });
+    box.append(input, el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'day-ok', hidden: '' }, COPY.dayOk));
+    return [option(COPY.pickDay, picked ? longDay(picked) : null, { 'data-action': 'pick-day', 'aria-pressed': String(!!picked) }), box];
   }
 
   function buildSheet(s: State) {
     const overlay = s.overlay!;
     const scrim = el(doc, 'div', { class: 'scrim', 'data-action': 'close' });
     const panel = el(doc, 'section', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
-    panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, overlay === 'basis' ? COPY.basisSheet : COPY.staySheet));
+    const title = overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : COPY.staySheet;
+    panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
-      const pair = el(doc, 'div', { class: 'pair' });
-      pair.append(
-        // its "위치 권한이 꺼져 있어요" line comes and goes in patchSheet
-        option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') }),
-        option(COPY.stayOption, s.stay ? areaLabel(s.stay.area) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }),
+      // 언제 (specs/date-mode.md): 지금 · 내일 · 날짜 고르기 on one compact row, so 어디 comes sooner.
+      // Choosing one keeps the sheet open for 어디.
+      const tomorrow = addDays(s.today, 1);
+      const picked = s.when !== 'now' && s.when !== tomorrow ? s.when : null;
+      const when = optRow(
+        option(COPY.whenNow, null, { 'data-when': 'now', 'aria-pressed': String(s.when === 'now') }),
+        option(COPY.tomorrow, null, { 'data-when': tomorrow, 'aria-pressed': String(s.when === tomorrow) }),
+        ...pickDay(s, picked),
       );
-      panel.append(pair);
-      if (s.stay) panel.append(el(doc, 'button', { type: 'button', class: 'restay', 'data-action': 'restay' }, COPY.restay));
+      when.classList.add('when-row');
+      optGroup(panel, 'when-h', COPY.whenHead, [when]);
+      // 어디: a thin-rule list of two rows; 다시 정하기 sits at the end of the 숙소 row, beside its option (§6.10).
+      // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
+      const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
+      if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
+      optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow]);
+      // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
+      // The same thin-rule rows with a check. Choosing one closes the sheet.
+      optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));
+      // 비 와요(실내만) (ADR-0065): one row of its own, the same thin-rule option with a check when on. Choosing it
+      // closes the sheet, like 얼마나.
+      optGroup(panel, 'weather-h', COPY.weatherHead, [optRow(option(COPY.indoorToggle, null, { 'data-indoor': '', 'aria-pressed': String(s.indoor) }))]);
       areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
+    } else if (overlay === 'move') {
+      // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.
+      const from = s.moveTarget?.date ?? '';
+      const days = [...new Set(s.saved.map((e) => e.date).filter((d) => d >= s.today))].sort();
+      optGroup(panel, 'move-h', null, [
+        ...days.map((d) => optRow(option(dayName(s.today, d), null, { 'data-day': d, 'aria-pressed': String(d === from) }))),
+        optRow(...pickDay(s, null)),
+      ]);
     } else {
       panel.append(
         el(doc, 'p', { class: 'note' }, COPY.stayNote),
@@ -530,9 +870,9 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
   function patchSheet(s: State) {
     const gps = els.sheet.querySelector<HTMLButtonElement>('[data-basis="gps"]');
     if (gps) {
-      const sub = gps.querySelector('.sub');
+      const sub = gps.querySelector('.lm');
       if (s.lastFail === 'denied') {
-        if (!sub) gps.append(el(doc, 'span', { class: 'sub' }, COPY.gpsOff));
+        if (!sub) gps.querySelector('.nm')!.after(el(doc, 'span', { class: 'lm' }, COPY.gpsOff));
       } else sub?.remove();
     }
     const here = els.sheet.querySelector<HTMLButtonElement>('[data-action="stay-here"]');
@@ -594,7 +934,12 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
         els.sheet.classList.add('closing');
         closeTimer = later(190, done);
       } else done();
-      const back = opener?.isConnected && !opener.closest('[hidden]') ? opener : els.basis;
+      // 다른 날로 moved its row: the row (a new node, keyed by its new day) gets the focus back
+      const moved =
+        opener && !opener.isConnected && opener.dataset.action === 'move-day' && s.moveTarget
+          ? [...els.savedList.querySelectorAll<HTMLElement>('[data-action="move-day"]')].find((b) => b.dataset.id === s.moveTarget!.id && b.dataset.date === s.moveTarget!.date)
+          : null;
+      const back = opener?.isConnected && !opener.closest('[hidden]') ? opener : (moved ?? els.basis);
       opener = null;
       back.focus?.({ preventScroll: true });
     }
@@ -615,7 +960,7 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
   };
   function focusView(view: View) {
     const target =
-      view === 'cards' ? els.resultsTitle : view === 'saved' ? els.savedTitle : (els.moods.find((b) => b.getAttribute('aria-current') === 'true') ?? els.moods[0]);
+      view === 'cards' ? els.crumb : view === 'saved' ? els.savedTitle : (els.moods.find((b) => b.getAttribute('aria-current') === 'true') ?? els.moods[0]);
     target?.focus({ preventScroll: true });
   }
   /** Screens change instantly and start at the top; closing the saved list goes back to where you were. */
@@ -644,35 +989,45 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
     if (!c || c.seq === revealedSeq) return;
     revealedSeq = c.seq;
     if (c.how === 'restore' || !win) return;
-    const head = els.resultsTitle.parentElement!;
-    const r = els.resultsTitle.getBoundingClientRect();
+    const head = els.crumb.parentElement!;
+    const r = els.crumb.getBoundingClientRect();
     const topBar = els.basis.parentElement!.getBoundingClientRect().bottom;
     if ((r.top < topBar || r.top > win.innerHeight) && typeof head.scrollIntoView === 'function') head.scrollIntoView({ block: 'start' });
-    if (c.how === 'more' || lostFocus()) els.resultsTitle.focus({ preventScroll: true });
+    if (c.how === 'more' || lostFocus()) els.crumb.focus({ preventScroll: true });
   }
 
   function render(s: State) {
     const yBefore = s.view !== shownView ? (win?.scrollY ?? 0) : 0;
     const label = basisLabel(s);
-    setText(els.basisText, label);
+    if (els.basisText.textContent !== label) {
+      // the day and its "·" stay together: a label wrapped at large text never starts a line with "·"
+      const i = label.indexOf(' · ');
+      if (i < 0) els.basisText.textContent = label;
+      else els.basisText.replaceChildren(el(doc, 'span', { class: 'nw' }, label.slice(0, i + 2)), label.slice(i + 2));
+    }
     setAttr(els.basis, 'aria-label', COPY.basisAria(label));
 
     const n = savedCount(s);
     const inSaved = s.view === 'saved';
-    // Stays visible while the list is open, even at 0, so the toggle never vanishes under the thumb.
-    els.saved.hidden = n === 0 && !inSaved;
+    // Counts today and later; shown while anything is saved (지난 날 stays reachable) and while the list is
+    // open, even at 0, so the toggle never vanishes under the thumb.
+    els.saved.hidden = !hasSaved(s) && !inSaved;
     setText(els.savedN, String(n));
     setAttr(els.saved, 'aria-label', COPY.savedAria(n));
     setAttr(els.saved, 'aria-pressed', String(inSaved));
+    setText(els.track, s.tracking ? COPY.trackOff : COPY.trackOn);
+    for (const b of els.mapApps) setAttr(b, 'aria-pressed', String(b.dataset.app === s.mapApp));
+    setText(els.mapAppNote, s.mapApp === 'tmap' ? COPY.tmapNote : '');
 
     els.home.hidden = s.view !== 'home';
     els.results.hidden = s.view !== 'cards';
     els.savedView.hidden = !inSaved;
-    if (s.mood) setText(els.resultsTitle, MOOD_LABEL[s.mood]);
+    if (s.mood) setText(els.crumb, MOOD_LABEL[s.mood]);
     // The mood chosen last time is ticked on the first screen.
     for (const b of els.moods) setAttr(b, 'aria-current', b.dataset.mood === s.mood ? 'true' : null);
     els.foodSub.hidden = !(s.view === 'cards' && s.mood === 'food');
-    for (const b of els.subs) setAttr(b, 'aria-pressed', String(b.dataset.sub === s.sub));
+    els.newSub.hidden = !(s.view === 'cards' && s.mood === 'new');
+    for (const b of els.subs) setAttr(b, 'aria-pressed', String(b.dataset.sub === s.sub || b.dataset.sub === s.newSub));
 
     const st = statusOf(s);
     const statusKey = `${st.text}|${st.chooseArea}`;
@@ -680,12 +1035,13 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
       lastStatus = statusKey;
       els.status.replaceChildren();
       if (st.text) els.status.append(el(doc, 'span', {}, st.text));
-      if (st.chooseArea) els.status.append(el(doc, 'button', { type: 'button', class: 'link', 'data-action': 'choose-area' }, COPY.chooseArea));
+      if (st.chooseArea) els.status.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'choose-area' }, COPY.chooseArea));
     }
 
     renderResults(s);
     renderSaved(s);
     patchCards(s);
+    renderKeep(s);
     renderSheet(s);
     if (els.announce && s.announce.seq !== announceSeq) {
       announceSeq = s.announce.seq;
@@ -699,6 +1055,8 @@ export function createRenderer(doc: Document, els: Els, env: { inApp: boolean })
     render,
     setDate: (text) => setText(els.date, text),
     dispose() {
+      io?.disconnect();
+      io = null;
       for (const t of timers) clearTimeout(t);
       timers.clear();
     },

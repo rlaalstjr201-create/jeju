@@ -69,12 +69,13 @@ export function activated(worker: Worker | null | undefined, maxMs = 10_000): Pr
  * `current()` for the browser: once the new worker has activated, this page's own content-hashed script
  * (`script`, its import.meta.url) and stylesheet are still in the cache — only the new build's cache is left
  * then, so they are the new build's. (An index.html-only edit changes neither and waits for the next launch.)
+ * `worker`: the one that just took over — by default this page's controller at the time of the check.
  */
 export async function runsCachedCode(
   doc: Pick<Document, 'querySelector'>,
   cache: Pick<CacheStorage, 'match'> | undefined,
   script: string,
-  worker?: Worker | null,
+  worker: Worker | null | undefined = globalThis.navigator?.serviceWorker?.controller,
 ): Promise<boolean> {
   if (!cache) return false;
   await activated(worker);

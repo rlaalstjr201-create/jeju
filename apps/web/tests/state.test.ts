@@ -2,20 +2,24 @@
 import { describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
 import { pickCards } from '../src/pick';
-import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, savedCount, sessionOf, staticOrigin, type Action, type State } from '../src/state';
+import { basisIsCurrent, cardsValid, hasSaved, initialState, isSaved, moodIntent, reduce, savedCount, savedDays, sessionOf, staticOrigin, whenDay, type Action, type State } from '../src/state';
 import type { Point } from '../src/pick';
-import type { Origin } from '../src/types';
+import type { Origin, SavedEntry } from '../src/types';
 import { ORIGINS, realSpots } from './fixtures';
 
 const 애월 = AREAS.find((a) => a.name === '애월')!;
 const gps = (p: Point = ORIGINS.제주시): Origin => ({ key: 'gps', point: p, isPoint: true, from: '여기서' });
+const TODAY = '2026-09-30';
+const TOMORROW = '2026-10-01';
+/** entries of one day, in the order given */
+const on = (date: string, ...ids: string[]): SavedEntry[] => ids.map((id, order) => ({ id, date, order }));
 const s0 = (over: Partial<State> = {}): State => ({
-  ...initialState({ basis: 'gps', region: null, stay: null, saved: [], hintSeen: false, offline: false }),
+  ...initialState({ basis: 'gps', today: TODAY, region: null, stay: null, saved: [], hintSeen: false, offline: false }),
   ...over,
 });
 const run = (s: State, ...actions: Action[]) => actions.reduce(reduce, s);
 /** tap a mood and resolve it with `origin` */
-const pick = (s: State, button: 'rest' | 'walk' | 'food' | 'any', req: number, origin = gps(), intent: 'show' | 'more' = 'show') =>
+const pick = (s: State, button: 'rest' | 'walk' | 'new' | 'food' | 'any', req: number, origin = gps(), intent: 'show' | 'more' = 'show') =>
   run(s, { type: 'mood', button }, { type: 'request', req, intent, step: 'loading' }, { type: 'resolved', req, origin, spots: realSpots });
 const ids = (s: State) => s.cards?.list.map((c) => c.spot.id);
 
@@ -109,31 +113,109 @@ describe('GPS 실패 기억 (S07)', () => {
 });
 
 describe('저장 목록 상태', () => {
-  it('opening snapshots the saved ids and remembers where it came from', () => {
-    let s = pick(s0({ saved: ['b', 'a'] }), 'rest', 1);
+  it('opening remembers where it came from; a row taken out there stays (undo) until the list is reopened', () => {
+    let s = pick(s0({ saved: on(TODAY, 'b', 'a') }), 'rest', 1);
     s = run(s, { type: 'openSaved' });
-    expect(s).toMatchObject({ view: 'saved', snapshot: ['b', 'a'], savedFrom: 'cards' });
-    s = run(s, { type: 'saved', ids: ['a'] }); // unsaved in the list: the row stays (undo path)
-    expect(s.snapshot).toEqual(['b', 'a']);
+    expect(s).toMatchObject({ view: 'saved', unsaved: [], savedFrom: 'cards' });
+    s = run(s, { type: 'saved', entries: on(TODAY, 'a'), removed: { id: 'b', date: TODAY, order: 0 } });
+    expect(s.unsaved).toEqual([{ id: 'b', date: TODAY, order: 0 }]);
+    s = run(s, { type: 'spots', spots: realSpots });
     s = run(s, { type: 'closeSaved' });
-    expect(s).toMatchObject({ view: 'cards', snapshot: null, phase: { k: 'ready' } });
+    expect(s).toMatchObject({ view: 'cards', unsaved: [], phase: { k: 'ready' } });
   });
 
   it('S42 ♥ N counts only ids still in the data once it is loaded; storage list untouched', () => {
-    const s = s0({ saved: ['gone', realSpots[0].id] });
+    const s = s0({ saved: on(TODAY, 'gone', realSpots[0].id) });
     expect(savedCount(s)).toBe(2);
     const loaded = run(s, { type: 'spots', spots: realSpots });
     expect(savedCount(loaded)).toBe(1);
-    expect(loaded.saved).toEqual(['gone', realSpots[0].id]);
+    expect(loaded.saved).toEqual(on(TODAY, 'gone', realSpots[0].id));
   });
 
-  it('saved list without a position keeps saved order', () => {
+  it('saved list without a position is still shown (origin null)', () => {
     const [a, b] = realSpots;
-    let s = run(s0({ saved: [a.id, b.id] }), { type: 'openSaved' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
+    let s = run(s0({ saved: on(TODAY, a.id, b.id) }), { type: 'openSaved' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
     s = run(s, { type: 'located', req: 1, why: 'denied' }, { type: 'resolved', req: 1, origin: null, spots: realSpots });
-    expect(s.savedList?.list.map((c) => c.spot.id)).toEqual([a.id, b.id]);
+    expect(savedDays(s).upcoming[0].rows.map((r) => r.entry.id)).toEqual([a.id, b.id]);
     expect(s.savedList?.origin).toBeNull();
     expect(s.lastFail).toBe('denied');
+  });
+});
+
+describe('날짜 모드 (specs/date-mode.md)', () => {
+  const [a, b, c] = realSpots.map((x) => x.id);
+
+  it('D2 a heart goes to the chosen day: 지금 = today; filled only for that day', () => {
+    const s = s0({ saved: [...on(TODAY, a), ...on(TOMORROW, b)] });
+    expect(whenDay(s)).toBe(TODAY);
+    expect(isSaved(s, a)).toBe(true);
+    expect(isSaved(s, b)).toBe(false);
+    const t = run(s, { type: 'when', when: TOMORROW });
+    expect(whenDay(t)).toBe(TOMORROW);
+    expect(isSaved(t, a)).toBe(false);
+    expect(isSaved(t, b)).toBe(true);
+    expect(isSaved(t, a, TODAY)).toBe(true);
+  });
+
+  it('the chosen day is kept only while it is still ahead (mount)', () => {
+    const at = (when: string) => initialState({ basis: 'gps', when, today: TODAY, region: null, stay: null, saved: [], hintSeen: false, offline: false }).when;
+    expect(at(TOMORROW)).toBe(TOMORROW);
+    expect(at(TODAY)).toBe('now');
+    expect(at('2026-09-29')).toBe('now');
+  });
+
+  it('D5 midnight: a chosen day that has come goes back to 지금; a later one stays', () => {
+    let s = run(s0(), { type: 'when', when: TOMORROW });
+    s = run(s, { type: 'today', today: TOMORROW });
+    expect(s).toMatchObject({ today: TOMORROW, when: 'now' });
+    s = run(s0(), { type: 'when', when: '2026-10-05' }, { type: 'today', today: TOMORROW });
+    expect(s.when).toBe('2026-10-05');
+    s = run(s0(), { type: 'when', when: TOMORROW }, { type: 'today', today: '2026-10-03' });
+    expect(s.when).toBe('now');
+  });
+
+  it('D5 ♥ N counts today and later; the days gone by are not counted but keep ♥ N reachable', () => {
+    const s = s0({ saved: [...on('2026-09-29', a, b), ...on(TODAY, c), ...on(TOMORROW, a)] });
+    expect(savedCount(s)).toBe(2);
+    const later = run(s, { type: 'today', today: '2026-10-02' });
+    expect(savedCount(later)).toBe(0);
+    expect(hasSaved(later)).toBe(true);
+    expect(hasSaved(s0())).toBe(false);
+  });
+
+  it('D3 the saved list by day: today, later days in date order, then the days gone by; each day in its order', () => {
+    const s = run(s0({ saved: [...on('2026-10-05', c), ...on('2026-09-28', a), ...on(TOMORROW, b, a), ...on(TODAY, c, a)] }), { type: 'spots', spots: realSpots });
+    const { upcoming, past } = savedDays(s);
+    expect(upcoming.map((d) => [d.day, d.rows.map((r) => r.entry.id)])).toEqual([
+      [TODAY, [c, a]],
+      [TOMORROW, [b, a]],
+      ['2026-10-05', [c]],
+    ]);
+    expect(past.map((d) => d.day)).toEqual(['2026-09-28']);
+  });
+
+  it('D3 a row taken out stays where it was (heart empty) while the list is open; put back, it is live again', () => {
+    let s = run(s0({ saved: on(TODAY, a, b, c) }), { type: 'spots', spots: realSpots }, { type: 'openSaved' });
+    s = run(s, { type: 'saved', entries: on(TODAY, a, c), removed: { id: b, date: TODAY, order: 1 } });
+    expect(savedDays(s).upcoming[0].rows.map((r) => [r.entry.id, r.live])).toEqual([
+      [a, true],
+      [b, false],
+      [c, true],
+    ]);
+    s = run(s, { type: 'saved', entries: on(TODAY, a, b, c) });
+    expect(s.unsaved).toEqual([]);
+  });
+
+  it('다른 날로 is a sheet of a saved row: without one (a forward after a reload) it does not open', () => {
+    const s = run(s0({ saved: on(TODAY, a) }), { type: 'openSaved' });
+    expect(run(s, { type: 'overlay', overlay: 'move' }).overlay).toBeNull();
+    const t = run(s, { type: 'moveTarget', id: a, date: TODAY }, { type: 'overlay', overlay: 'move' });
+    expect(t.overlay).toBe('move');
+  });
+
+  it('choosing a day is an intent: it clears the first-save hint', () => {
+    const s = run(pick(s0(), 'rest', 1), { type: 'hint', id: a });
+    expect(run(s, { type: 'when', when: TOMORROW }).hintFor).toBeNull();
   });
 });
 
@@ -144,6 +226,19 @@ describe('S54 세션 기록', () => {
     expect(sessionOf(s)).toMatchObject({ v: 1, mood: 'walk', sub: 'meal', shown: { walk: ids(s) } });
     const back = run(s0(), { type: 'restore', rec: sessionOf(s)! });
     expect(back).toMatchObject({ view: 'cards', mood: 'walk', shown: { walk: ids(s) } });
+  });
+
+  it('the 새로운 거 tab goes into the record and comes back with it; the sub action sets food or new by value', () => {
+    const tabbed = run(s0(), { type: 'sub', sub: 'do' });
+    expect(tabbed).toMatchObject({ sub: 'meal', newSub: 'do' });
+    expect(run(tabbed, { type: 'sub', sub: 'cafe' })).toMatchObject({ sub: 'cafe', newSub: 'do' });
+    const s = pick(tabbed, 'new', 1);
+    expect(s.cards?.key).toBe('new:do');
+    expect(sessionOf(s)).toMatchObject({ mood: 'new', sub: 'meal', newSub: 'do', shown: { 'new:do': ids(s) } });
+    expect(run(s0(), { type: 'restore', rec: sessionOf(s)! })).toMatchObject({ mood: 'new', newSub: 'do' });
+    // a record from before the tabs keeps whatever tab is current (섞어서 at mount)
+    const { newSub: _, ...old } = sessionOf(s)!;
+    expect(run(s0(), { type: 'restore', rec: old }).newSub).toBe('mix');
   });
 });
 
@@ -179,5 +274,101 @@ describe('QA 2026-09-30 — 세션 기록·위치 대기', () => {
     const more = run(s, { type: 'request', req: 2, intent: 'more', step: 'loading' }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
     expect(more.announce).toMatchObject({ n: 3, more: true });
     expect(more.announce.seq).toBeGreaterThan(s.announce.seq);
+  });
+});
+
+describe('얼마나 (ADR-0060) — 범위 변경은 기준 변경과 같은 규칙', () => {
+  it('starts at 차로 30분 unless given; the cards are picked in the current range', () => {
+    expect(s0().reach).toBe('drive30');
+    const s = pick(s0({ reach: 'walk' }), 'rest', 1);
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest', {}, undefined, 'walk').cards.map((c) => c.spot.id));
+    expect(s.cards?.reach).toBe('walk');
+  });
+
+  it('another range: the cards on hand no longer count, and the next result starts the rotation fresh', () => {
+    let s = pick(s0(), 'rest', 1);
+    s = run(s, { type: 'request', req: 2, intent: 'more', step: 'loading' }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(cardsValid(s)).toBe(true);
+    s = run(s, { type: 'reach', reach: 'drive60' });
+    expect(s.reach).toBe('drive60');
+    expect(cardsValid(s)).toBe(false);
+    s = run(s, { type: 'request', req: 3, intent: 'show', step: 'loading' }, { type: 'resolved', req: 3, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest', {}, undefined, 'drive60').cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+    expect(Object.keys(s.histories)).toEqual(['rest']);
+    expect(s.histories.rest?.seen).toEqual(ids(s));
+    // back to the first range: the rotation there was dropped too (like a basis change), a fresh pick again
+    s = run(s, { type: 'reach', reach: 'drive30' }, { type: 'request', req: 4, intent: 'show', step: 'loading' }, { type: 'resolved', req: 4, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest').cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+  });
+
+  it('the same range again changes nothing; choosing one is an intent (clears the first-save hint)', () => {
+    const s = pick(s0(), 'rest', 1);
+    expect(run(s, { type: 'reach', reach: 'drive30' })).toBe(s);
+    const hinted = run(s, { type: 'hint', id: ids(s)![0] });
+    expect(run(hinted, { type: 'reach', reach: 'walk' }).hintFor).toBeNull();
+  });
+
+  it('the session record carries the range of its rotation; restored in another range, it is picked fresh', () => {
+    const s = pick(s0({ reach: 'walk' }), 'walk', 1);
+    const rec = sessionOf(s)!;
+    expect(rec.reach).toBe('walk');
+    const same = run(s0({ reach: 'walk' }), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(same)).toEqual(ids(s));
+    expect(same.cards?.how).toBe('restore');
+    const other = run(s0({ reach: 'drive60' }), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(other)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'walk', {}, undefined, 'drive60').cards.map((c) => c.spot.id));
+    expect(other.cards?.how).toBe('new');
+  });
+});
+
+describe('비 와요(실내만) (ADR-0065) — 토글은 범위 변경과 같은 규칙', () => {
+  it('starts off unless given; on, the cards are the indoor pick', () => {
+    expect(s0().indoor).toBe(false);
+    const s = pick(s0({ indoor: true }), 'rest', 1);
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'rest', {}, undefined, 'drive30', true).cards.map((c) => c.spot.id));
+    expect(s.cards?.indoor).toBe(true);
+    expect(s.cards?.list.every((c) => c.spot.indoor)).toBe(true);
+  });
+
+  it('switching it: the cards on hand no longer count, and the next result starts the rotation fresh', () => {
+    let s = pick(s0(), 'walk', 1);
+    s = run(s, { type: 'request', req: 2, intent: 'more', step: 'loading' }, { type: 'resolved', req: 2, origin: gps(), spots: realSpots });
+    expect(cardsValid(s)).toBe(true);
+    s = run(s, { type: 'indoor', on: true });
+    expect(s.indoor).toBe(true);
+    expect(cardsValid(s)).toBe(false);
+    s = run(s, { type: 'request', req: 3, intent: 'show', step: 'loading' }, { type: 'resolved', req: 3, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'walk', {}, undefined, 'drive30', true).cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+    expect(s.histories.walk?.seen).toEqual(ids(s));
+    // off again: the outdoor rotation was dropped, a fresh pick
+    s = run(s, { type: 'indoor', on: false }, { type: 'request', req: 4, intent: 'show', step: 'loading' }, { type: 'resolved', req: 4, origin: gps(), spots: realSpots });
+    expect(ids(s)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'walk').cards.map((c) => c.spot.id));
+    expect(s.cards?.how).toBe('new');
+  });
+
+  it('the same value again changes nothing; switching it is an intent (clears the first-save hint)', () => {
+    const s = pick(s0(), 'rest', 1);
+    expect(run(s, { type: 'indoor', on: false })).toBe(s);
+    const hinted = run(s, { type: 'hint', id: ids(s)![0] });
+    expect(run(hinted, { type: 'indoor', on: true }).hintFor).toBeNull();
+  });
+
+  it('the session record carries indoor of its rotation; restored with the other value, it is picked fresh', () => {
+    const s = pick(s0({ indoor: true }), 'food', 1);
+    const rec = sessionOf(s)!;
+    expect(rec.indoor).toBe(true);
+    const same = run(s0({ indoor: true }), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(same)).toEqual(ids(s));
+    expect(same.cards?.how).toBe('restore');
+    const other = run(s0(), { type: 'restore', rec }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(ids(other)).toEqual(pickCards(realSpots, ORIGINS.제주시, 'food', {}, 'meal').cards.map((c) => c.spot.id));
+    expect(other.cards?.how).toBe('new');
+    // a record written before the toggle (no indoor) belongs to the outdoor rotation
+    const { indoor: _drop, ...old } = sessionOf(pick(s0(), 'food', 1))!;
+    const oldOn = run(s0({ indoor: true }), { type: 'restore', rec: old }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
+    expect(oldOn.cards?.how).toBe('new');
   });
 });

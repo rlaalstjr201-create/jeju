@@ -1,4 +1,6 @@
-/** Writes public/icons/icon-{192,512}.png (no image library): sun over a calm sea. */
+/** Writes the icons (no image library): sun over a calm sea, in the ADR-0070 colours (바다 ground, 귤 sun,
+ * white waves). public/icons/icon-{192,512}.png, the maskable 512 (motif inside the 80% safe zone, ADR-0063), apple-touch 180, favicon.ico (a 32px PNG inside) and the
+ * 1200×630 link preview public/og.png (the same scene, widened). */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -26,9 +28,9 @@ function chunk(type: string, data: Buffer) {
   return Buffer.concat([len, td, crc]);
 }
 
-const BG = [0x2f, 0x6f, 0x68];
-const SUN = [0xf6, 0xe7, 0xc8];
-const SEA = [0xf6, 0xf3, 0xee];
+const BG = [0x0a, 0x6f, 0xd6]; // --main
+const SUN = [0xf0, 0x64, 0x00]; // --accent
+const SEA = [0xff, 0xff, 0xff];
 
 function color(x: number, y: number): number[] {
   // unit coords 0..1
@@ -38,24 +40,26 @@ function color(x: number, y: number): number[] {
   return BG;
 }
 
-function png(size: number) {
+/** `paint(x, y)` in pixels → RGB, 4×4 supersampled. */
+function png(size: number, w = size, paint = (x: number, y: number) => color(x / size, y / size)) {
+  const h = size;
   const ss = 4;
-  const raw = Buffer.alloc((size * 3 + 1) * size);
-  for (let y = 0; y < size; y++) {
-    raw[y * (size * 3 + 1)] = 0;
-    for (let x = 0; x < size; x++) {
+  const raw = Buffer.alloc((w * 3 + 1) * h);
+  for (let y = 0; y < h; y++) {
+    raw[y * (w * 3 + 1)] = 0;
+    for (let x = 0; x < w; x++) {
       const acc = [0, 0, 0];
       for (let sy = 0; sy < ss; sy++)
         for (let sx = 0; sx < ss; sx++) {
-          const c = color((x + (sx + 0.5) / ss) / size, (y + (sy + 0.5) / ss) / size);
+          const c = paint(x + (sx + 0.5) / ss, y + (sy + 0.5) / ss);
           for (let i = 0; i < 3; i++) acc[i] += c[i];
         }
-      for (let i = 0; i < 3; i++) raw[y * (size * 3 + 1) + 1 + x * 3 + i] = Math.round(acc[i] / ss / ss);
+      for (let i = 0; i < 3; i++) raw[y * (w * 3 + 1) + 1 + x * 3 + i] = Math.round(acc[i] / ss / ss);
     }
   }
   const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(size, 0);
-  ihdr.writeUInt32BE(size, 4);
+  ihdr.writeUInt32BE(w, 0);
+  ihdr.writeUInt32BE(h, 4);
   ihdr[8] = 8; // bit depth
   ihdr[9] = 2; // RGB
   return Buffer.concat([
@@ -66,6 +70,31 @@ function png(size: number) {
   ]);
 }
 
+/** An .ico holding one PNG (every current browser reads it). */
+function ico(pngData: Buffer, size: number) {
+  const head = Buffer.alloc(22);
+  head.writeUInt16LE(0, 0);
+  head.writeUInt16LE(1, 2); // icon
+  head.writeUInt16LE(1, 4); // one image
+  head[6] = size;
+  head[7] = size;
+  head.writeUInt16LE(1, 10); // planes
+  head.writeUInt16LE(32, 12); // bits per pixel
+  head.writeUInt32LE(pngData.length, 14);
+  head.writeUInt32LE(22, 18);
+  return Buffer.concat([head, pngData]);
+}
+
 mkdirSync(out, { recursive: true });
 for (const size of [192, 512]) writeFileSync(resolve(out, `icon-${size}.png`), png(size));
+writeFileSync(resolve(out, 'icon-180.png'), png(180));
+// maskable: the launcher crops to a circle or squircle; the motif shrinks to 80% around the centre so it
+// stays inside the safe zone (radius 40%), the sea and sky run on to the edge
+const M = 512;
+writeFileSync(resolve(out, 'icon-maskable-512.png'), png(M, M, (x, y) => color((x / M - 0.5) / 0.8 + 0.5, (y / M - 0.5) / 0.8 + 0.5)));
+writeFileSync(resolve(here, '../public/favicon.ico'), ico(png(32), 32));
+// link preview 1200×630: the square motif in the middle, the waves running across the width
+const OG_W = 1200;
+const OG_H = 630;
+writeFileSync(resolve(here, '../public/og.png'), png(OG_H, OG_W, (x, y) => color((x - (OG_W - OG_H) / 2) / OG_H, y / OG_H)));
 console.log('icons written');

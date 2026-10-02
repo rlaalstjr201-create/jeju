@@ -1,0 +1,67 @@
+{
+ "_why": "최신 SEO 진단의 개입 큐. 작업자가 여기서 집어 들고, check가 있는 항목은 npm run seo:verify가 해소 여부를 본다.",
+ "generated": "2026-10-01",
+ "from_run": "2026-10-01T1610",
+ "items": [
+  {
+   "rank": 1,
+   "sort_id": "home-noscript",
+   "title": "홈 <noscript>에 브랜드 정의 문장과 /jeju/ 허브 링크를 넣는다",
+   "severity": "P0",
+   "queue_kind": "content",
+   "keyword": "여행계획짜기 귀찮아:제주",
+   "check": "page:/:thin-shell",
+   "where": "apps/web/index.html (다른 작업자 소유 — 제안만, docs/seo/audit-01.md a-3)",
+   "verify": "다음 빌드의 seo:crawl에서 page:/:thin-shell 발견이 사라진다(홈 본문 300자 이상).",
+   "from_run": "2026-10-01T1610"
+  },
+  {
+   "rank": 2,
+   "sort_id": "jeju-hub",
+   "title": "/jeju/ 허브(「P를 위한 제주 무계획 여행」) 1장을 빌드 때 정적으로 만든다",
+   "severity": "P0",
+   "queue_kind": "landing",
+   "keyword": "제주도 무계획 여행",
+   "check": "site:no-landing-pages",
+   "where": "specs/seo-landing.md 1단계 — 새 빌드 스크립트(vite.config.ts·public 비접촉)",
+   "verify": "다음 빌드 dist/jeju/index.html이 존재하고 seo:crawl에서 site:no-landing-pages 발견이 사라진다.",
+   "from_run": "2026-10-01T1610"
+  },
+  {
+   "rank": 3,
+   "sort_id": "site-url",
+   "title": "Cloudflare Pages 빌드 환경변수 SITE_URL을 정한 도메인으로 설정한다",
+   "severity": "P0",
+   "queue_kind": "config",
+   "keyword": null,
+   "check": "site:no-origin",
+   "where": "Cloudflare Pages 프로젝트 설정(사람) — 도메인 결정이 먼저",
+   "verify": "SITE_URL=<도메인> npm run build 뒤 seo:crawl에서 site:no-origin 발견이 사라진다.",
+   "from_run": "2026-10-01T1610"
+  },
+  {
+   "rank": 4,
+   "sort_id": "home-jsonld",
+   "title": "홈에 WebSite + WebApplication JSON-LD를 넣는다(브랜드 정의 문장·inLanguage ko·areaServed 제주)",
+   "severity": "P1",
+   "queue_kind": "structured",
+   "keyword": null,
+   "check": "page:/:no-jsonld",
+   "where": "apps/web/index.html (제안만, docs/seo/audit-01.md a-2)",
+   "verify": "다음 빌드의 seo:crawl에서 page:/:no-jsonld 발견이 사라지고 홈 JSON-LD 타입에 WebApplication이 있다.",
+   "from_run": "2026-10-01T1610"
+  },
+  {
+   "rank": 5,
+   "sort_id": "home-title",
+   "title": "홈 title·description에 「제주」와 P(무계획·즉흥) 포지션을 넣는다",
+   "severity": "P1",
+   "queue_kind": "meta",
+   "keyword": "여행계획짜기 귀찮아:제주",
+   "check": "page:/:title-no-jeju",
+   "where": "apps/web/index.html <title>·description·og:title (제안만, docs/seo/audit-01.md a-1)",
+   "verify": "다음 빌드의 seo:crawl에서 page:/:title-no-jeju 발견이 사라진다.",
+   "from_run": "2026-10-01T1610"
+  }
+ ]
+}

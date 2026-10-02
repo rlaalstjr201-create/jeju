@@ -1,7 +1,7 @@
 /**
  * Merge review/input/batch-NNN.json + review/out/batch-NNN.json (verdicts) + review/out/adj-NNN.json
- * (adjudications, override by id) + review/copy/* (S9-3 reason rewrite layer) into public/spots.json
- * (ADR-0028, plan "전 항목 검수" / "전체 QA·디자인 개편", spec S1'/S9-3).
+ * (adjudications, override by id) + review/copy/* (S9-3 reason rewrite layer) + review/score/* (만족도 점수,
+ * ADR-0060) into public/spots.json (ADR-0028, plan "전 항목 검수" / "전체 QA·디자인 개편", spec S1'/S9-3).
  *
  * Read-only over review/*; does not call any model. Run once per merge; re-run is safe (idempotent —
  * always rebuilds spots.json from the same inputs).
@@ -9,8 +9,14 @@
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { dropDuplicates } from './duplicates.mjs';
+import { applyCorrections, loadCorrections } from './apply-corrections.mjs';
+import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
+import { applyBooking, loadBookingCalls, loadBookRoutes } from './booking.mjs';
+import { applyIndoor, loadIndoorCalls } from './indoor.mjs';
+import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from './markets.mjs';
+import { loadNewSubCalls, newSub } from './new-sub.mjs';
 import { positionProblems } from './positions.mjs';
+import { reasonPunctuationProblem, shipReason } from './reason.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -77,10 +83,9 @@ const len = (s) => [...s].length;
 // Some source names carry leading/trailing spaces, tabs or U+3000 — they end up in map/booking search
 // URLs (S32). Collapse any whitespace run and trim; src/data.ts applies the same rule at load time.
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
-// Reason punctuation (design/SPEC.md §12.4): drop any final full stop, then a sentence ending in 요 gets
-// one; a noun ending gets none. src/data.ts applies the same rule at load time.
-const bareReason = (s) => cleanName(s).replace(/[.。]+$/, '');
-const punctuate = (s) => (s.endsWith('요') ? `${s}.` : s);
+// Reason as shipped (design/SPEC.md §10·§12.4, 3판): whitespace cleaned, 돈까스 → 돈가스, no final full
+// stop whatever the ending (scripts/reason.mjs).
+const bareReason = shipReason;
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
@@ -106,6 +111,8 @@ for (const f of batchFiles(outDir)) {
 for (const f of readdirSync(outDir).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
   for (const v of readJson(resolve(outDir, f))) verdictById.set(v.id, v);
 }
+// 오일장 (ADR-0066): review/input/batch-900.json's verdicts are committed in review/market/verdicts.json.
+for (const v of loadMarketVerdicts()) verdictById.set(v.id, v);
 
 // --- load food sub-type verdicts (meal|cafe), out-NN.json arrays of {id, sub} ---
 const SUBS = new Set(['meal', 'cafe']);
@@ -113,6 +120,9 @@ const subById = new Map();
 for (const f of readdirSync(foodSplitDir).filter((f) => /^out-\d{2}\.json$/.test(f)).sort()) {
   for (const v of readJson(resolve(foodSplitDir, f))) subById.set(v.id, v.sub);
 }
+
+// --- load 새로운 거 sub calls for cafe·restaurant (ADR-0064, review/copy/new-sub.json); the rest follow category ---
+const newSubCalls = loadNewSubCalls(resolve(copyDir, 'new-sub.json'));
 
 // --- load S9-3 copy layer: rewritten reasons, out-NN.json (pass 1) then div1-NN.json / div2-NN.json
 // (diversify-ending passes, later overrides earlier) — arrays of {id, reason}. Plus the pre-rewrite
@@ -135,6 +145,11 @@ for (const f of readdirSync(copyDir).filter((f) => /^input-\d{2}\.json$/.test(f)
 for (const id of COPY_REVERT) {
   if (copyOldReasonById.has(id)) copyReasonById.set(id, copyOldReasonById.get(id));
 }
+// fix-02.json (SPEC 3판 §10): rewrites of the sentences carrying the 3판 banned forms (겉바속촉, 아름다운,
+// 여유를 누려요, 공간이에요) and of the two two-sentence reasons, each from that spot's review/input text.
+// fix-03.json (S9-3 faithfulness audit, review/audit/s9-3-faithfulness.md): the 5 borderline reasons plus
+// the same "갓 잡은" overreach at 제주할망밥상 차귀도점·애월점, rewritten back to what review/input supports.
+// Sorted glob → applied after fix-02.
 // fix-NN.json (QA 2026-09-30): hand edits that take the design/SPEC.md §10 banned forms ("~하기 좋아요",
 // 인생샷, 힐링, 다양한 …) out of a sentence without adding anything the old sentence did not say. Applied
 // last, so it also covers ids reverted above.
@@ -150,6 +165,15 @@ const geoDir = resolve(root, 'review/geo');
 const geoById = new Map();
 for (const f of ['regeocode.json', 'manual.json']) {
   for (const v of readJson(resolve(geoDir, f))) geoById.set(v.id, v);
+}
+
+// --- load the 만족도 점수 (ADR-0060, specs/ranking.md): score-NN.json arrays of {id, score, basis}, later files
+// override earlier by id. Every shipped spot must have an integer 1–5; the score orders the cards and is never
+// shown. ---
+const scoreDir = resolve(root, 'review/score');
+const scoreById = new Map();
+for (const f of readdirSync(scoreDir).filter((f) => /^score-\d{2}\.json$/.test(f)).sort()) {
+  for (const v of readJson(resolve(scoreDir, f))) scoreById.set(v.id, v.score);
 }
 
 // --- merge ---
@@ -220,7 +244,7 @@ for (const item of inputItems) {
     lat: geo ? geo.lat : item.lat,
     lng: geo ? geo.lng : item.lng,
     mood: v.mood,
-    reason: punctuate(reason),
+    reason,
     image: item.image,
     // a fix names the place it found (placeId) or says the source id is wrong (null); otherwise keep it
     kakaoPlaceId: geo && geo.placeId !== undefined ? geo.placeId : item.kakaoPlaceId ?? null,
@@ -234,12 +258,20 @@ for (const item of inputItems) {
     }
     spot.sub = sub;
   }
+  if (v.mood === 'new') spot.sub = newSub(item.id, item.category, newSubCalls);
   kept.push(spot);
   counts.kept++;
   counts.perMood[v.mood]++;
 }
 
 // The same place listed twice in the source (scripts/duplicates.mjs): only the record kept for it ships.
+// A typo twin (one-character name difference, ≤ TYPO_RADIUS_M apart) with no DUPLICATES entry stops the build.
+const twins = unresolvedTwins(kept);
+if (twins.length) {
+  throw new Error(`spots.json duplicates: ${twins.length} unresolved typo twin(s)\n  ` +
+    twins.map(([a, b]) => `${a.id} ${a.name} / ${b.id} ${b.name}`).join('\n  ') +
+    '\nAdd a DUPLICATES entry in scripts/duplicates.mjs naming the record to keep.');
+}
 const merged = dropDuplicates(kept);
 for (const s of kept) {
   if (merged.includes(s)) continue;
@@ -248,6 +280,25 @@ for (const s of kept) {
   counts.perMood[s.mood]--;
 }
 kept = merged;
+
+// 만족도 점수 last (after the duplicates are gone: only shipped spots are scored). A missing one stops the build.
+const unscored = kept.filter((s) => {
+  const score = scoreById.get(s.id);
+  return !Number.isInteger(score) || score < 1 || score > 5;
+});
+if (unscored.length) {
+  throw new Error(`spots.json scores: ${unscored.length} spot(s) without an integer 1–5 in review/score/score-NN.json\n  ` +
+    unscored.slice(0, 10).map((s) => `${s.id} ${s.name}`).join('\n  '));
+}
+for (const s of kept) s.score = scoreById.get(s.id);
+
+// Fact-check corrections (ADR-0063 item 5, review/copy/corrections-NN.json): applied after the fixes and scores,
+// so a removal or a set name/score/kakaoPlaceId/lat/lng wins over every layer above.
+const corrected = applyCorrections(kept, loadCorrections(copyDir));
+counts.removedByCorrection = kept.length - corrected.length;
+counts.kept = corrected.length;
+for (const s of kept) if (!corrected.some((c) => c.id === s.id)) counts.perMood[s.mood]--;
+kept = corrected;
 
 // A fix may name a Kakao place another spot already carries (the same building, or a wrong source id):
 // the map link would open someone else's page, so the fixed spot falls back to a name search.
@@ -268,6 +319,27 @@ if (problems.length) {
   throw new Error(`spots.json positions: ${problems.length} problem(s)\n  ${problems.slice(0, 10).join('\n  ')}\n` +
     'Run scripts/regeocode.ts (and review review/geo) before building.');
 }
+
+// Guard: one sentence per caption, no full stop (§10, §14 #19). A second sentence needs a rewrite in
+// review/copy/fix-NN.json, not a machine edit.
+const stops = kept.flatMap((s) => {
+  const p = reasonPunctuationProblem(s.reason);
+  return p ? [`${s.id} ${p}: ${s.reason}`] : [];
+});
+if (stops.length) {
+  throw new Error(`spots.json reasons: ${stops.length} punctuation problem(s)\n  ${stops.slice(0, 10).join('\n  ')}\n` +
+    'Rewrite them in review/copy/fix-NN.json.');
+}
+
+// 실내 (ADR-0065, review/copy/indoor.json): last, on the spots that ship. A place with no call stops the build.
+kept = applyIndoor(kept, new Map(inputItems.map((i) => [i.id, i.category])), loadIndoorCalls(resolve(copyDir, 'indoor.json')));
+
+// 장날 (ADR-0066, review/copy/market-days.json): last, on the markets that ship. A market with no rule stops the build.
+kept = applyMarketDays(kept, loadMarketDays(resolve(copyDir, 'market-days.json')), new Map(inputItems.map((i) => [i.id, i.category])));
+
+// 체험 예약 경로 (ADR-0074, review/booking/routes.json + review/copy/booking.json): last, on the 체험 that ship.
+// A 체험 with neither a verified route nor a recorded call stops the build.
+kept = applyBooking(kept, loadBookRoutes(resolve(root, 'review/booking/routes.json')), loadBookingCalls(resolve(copyDir, 'booking.json')));
 
 writeFileSync(outPath, JSON.stringify(kept));
 

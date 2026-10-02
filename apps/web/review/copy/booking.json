@@ -1,0 +1,303 @@
+[
+ {
+  "id": "8ba8e1df-ab20-4e2c-b080-35aff062137c",
+  "name": "술도가제주바당",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "6821d659-b8c0-4fb5-84da-b3c03f312c32",
+  "name": "제주에인감귤밭",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "90365401-616c-435a-a4bf-955275a7bbb4",
+  "name": "고마워토토 아뜰리에",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "c6ab62fe-a1e8-47bd-9838-36ef8a65687e",
+  "name": "효선떡방",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "5c71a373-c385-42f0-802c-4724034d49b1",
+  "name": "물메쉼팡",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "98f67cea-5c97-4eee-9034-c66435a3dc8f",
+  "name": "더 콘테나",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "8f19c2d1-916a-40a9-b0cb-c640bdbe7a1e",
+  "name": "미스틱3도",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "2e716dfc-7bb8-4470-b5dd-da0622b27526",
+  "name": "효은디저트 산방산카페점",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "b2d873eb-c97e-4443-b3bc-8d5a09f60f88",
+  "name": "제주이야기",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "0110f371-2406-4ff0-835e-2dcbea79be12",
+  "name": "마로니에 미니골프카페",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "d354be50-497b-41f9-a6f4-4d4b80ca4768",
+  "name": "애월전분공장",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "714af3a2-0de6-41a7-9abe-d425ad569485",
+  "name": "어린왕자감귤밭",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "f19e4935-798a-4973-aa85-d5dc54757185",
+  "name": "피커스 제주",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "d6389b17-63ae-4d83-a7df-c0af73d66110",
+  "name": "알프스제주",
+  "call": "noroute",
+  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
+  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+ },
+ {
+  "id": "3545f51d-3a9d-4eb9-acfd-a1a8b0916ff1",
+  "name": "라이크더윈드 스튜디오",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "fa4c03d3-c881-475d-9a41-4b925430607e",
+  "name": "제이원카트클럽",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "692b9015-8940-4908-afb2-898601938b78",
+  "name": "아일랜드에프",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "786e5896-dbe4-47e3-86c7-e489bef31b48",
+  "name": "플레이박스VR",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "29581028-16a1-43e8-897d-487d2cebfebb",
+  "name": "와우다이버스 스쿠버다이빙",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "939e6872-b97f-4305-a20e-b598c3e4b88c",
+  "name": "잠수타기다이브클럽",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "872fba2e-a09b-45b1-ba24-dc07e9f45550",
+  "name": "미요캔들",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "965825b5-35ee-4a74-a18d-eab877cc1c90",
+  "name": "애월 한담 카약",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "7cc36f09-d640-4a11-9a26-80227d963abf",
+  "name": "유리멘탈 스튜디오",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "039b92fd-f73b-4112-8341-ff81cd325176",
+  "name": "998서프 삼양",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "118e73a3-caba-4f47-b3c2-ceb428dcf245",
+  "name": "푸른바다 체험낚시",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "568ffbf0-1d1e-468e-b15a-cd741fe83a92",
+  "name": "노을승마장",
+  "call": "noroute",
+  "reason": "비짓제주에는 있지만 확인된 예약 경로(네이버·마이리얼트립·비짓제주·홈페이지·전화)가 없다. 체험·섞어서에서 뺀다(다른 화면에는 원래 나오지 않는다)",
+  "evidence": "routes.json: 경로 후보 없음"
+ },
+ {
+  "id": "2600bbac-9781-4737-be36-12cc8ed768d3",
+  "name": "동산농원 딸기체험장",
+  "call": "noroute",
+  "reason": "비짓제주에는 있지만 확인된 예약 경로(네이버·마이리얼트립·비짓제주·홈페이지·전화)가 없다. 체험·섞어서에서 뺀다(다른 화면에는 원래 나오지 않는다)",
+  "evidence": "routes.json: homepage rejected-sns"
+ },
+ {
+  "id": "2b389b50-8f11-4fac-8bb3-966f729d6bc4",
+  "name": "사슴공방",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "e5177747-02a5-479a-9d74-2a19a20707e5",
+  "name": "신효베스트마을",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "6aad382d-c1fc-4acd-a3bb-35617d5ab602",
+  "name": "제주 더팔팔농장",
+  "call": "noroute",
+  "reason": "비짓제주에는 있지만 확인된 예약 경로(네이버·마이리얼트립·비짓제주·홈페이지·전화)가 없다. 체험·섞어서에서 뺀다(다른 화면에는 원래 나오지 않는다)",
+  "evidence": "routes.json: 경로 후보 없음"
+ },
+ {
+  "id": "daae3dbc-eef6-4242-bf22-cf57804885ee",
+  "name": "비엠엘 병만랜드",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "13c9b253-8951-4a53-87f8-31b385b5eeb3",
+  "name": "그제바람 윈드서핑패들보드",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "dab21c57-a942-415b-86b1-50191dd43fb3",
+  "name": "마원",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "8804eaaf-ee40-4bb8-aaad-ce5fb5bc2f12",
+  "name": "제주해바라기공방",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "e22e602c-db45-463e-b810-46b40e714044",
+  "name": "색놀이터 그린점",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "70b56d20-b38d-44ae-96d0-73b94f5f99a3",
+  "name": "위디 탭댄스 스튜디오",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "2c2fb1b9-c9b7-4558-b6e5-56f2efaccf03",
+  "name": "토이레저",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "ed2ae168-0c89-4b01-8a98-a6a255c61b0f",
+  "name": "스쿠버스쿨",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "76227d24-5e83-45a9-a98b-a0019b608b51",
+  "name": "해녀이호",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "c064752e-c336-4524-90a7-98aa39cb070e",
+  "name": "로봇플래닛",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "62ac4d25-f1f5-4687-88b9-5a9f0824b533",
+  "name": "라온주 실내체험동물원",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "8ab1c9f5-f985-4130-b056-d317b827b2f1",
+  "name": "라이더스랩",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "a1c8cc52-e68a-48a6-9dbe-86af19ca8d06",
+  "name": "에이스서프",
+  "call": "closed",
+  "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
+  "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ }
+]

@@ -1,0 +1,18 @@
+{
+  "_meta": {
+    "purpose": "SEO 기준선·층 정의. seoulist data/seo-model.json의 jeju판. 배포 전이라 measured 블록이 비어 있다.",
+    "principle": "절대 유입을 예측하지 않는다. 기준선은 배포 후 GSC 확정 데이터 28일(첫 노출일 기준)이 쌓인 뒤에만 깐다 — 런칭 주 표본 기준선은 seoulist에서 18배 빗나갔다(docs/seo/seoulist-postmortem.md §4).",
+    "as_of": null,
+    "window_days": 28,
+    "baseline_valid": false,
+    "reenable": "배포 + GSC 연결 + 확정 28일 → measured 채우고 as_of·baseline_valid 갱신 → seo:forecast 허용"
+  },
+  "layers": {
+    "home": { "pattern": "/", "what": "앱 셸. 브랜드 검색어(여행계획짜기 귀찮아:제주)를 받는다" },
+    "hub": { "pattern": "/jeju/", "what": "P를 위한 제주 무계획 여행 (specs/seo-landing.md 1단계)" },
+    "area": { "pattern": "/jeju/<area>/", "what": "세부 지역 15쪽" },
+    "combo": { "pattern": "/jeju/<area>/<mood>/", "what": "keyword gate target인 조합만" },
+    "utility": { "pattern": "/privacy", "what": "검색어를 받지 않는 안내 페이지" }
+  },
+  "measured": null
+}

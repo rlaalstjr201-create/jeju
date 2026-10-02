@@ -6,19 +6,28 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cardTextProblem, PRICE_HOURS } from '../src/card-text';
 import { cleanReason, createSpotSource, normalizeSpots } from '../src/data';
-import { bookingUrl, kakaoUrl } from '../src/links';
+import { kakaoUrl, naverSearchUrl } from '../src/links';
 import { distanceKm } from '../src/pick';
+import { applyCorrections, loadCorrections } from '../scripts/apply-corrections.mjs';
+import { applyIndoor, indoorOf, loadIndoorCalls } from '../scripts/indoor.mjs';
+import { applyNewSub, loadCategories, loadNewSubCalls, newSub } from '../scripts/new-sub.mjs';
+import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from '../scripts/markets.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
-const FIELDS = ['bookable', 'id', 'image', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason'];
+const FIELDS = ['bookable', 'id', 'image', 'indoor', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason', 'score'];
 const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 9 fields (food: +sub), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
-      const expectedFields = s.mood === 'food' ? FOOD_FIELDS : FIELDS;
+      const expectedFields = [
+        ...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS),
+        ...('market' in s ? ['market'] : []),
+        ...('book' in s ? ['book'] : []),
+        ...('hide' in s ? ['hide'] : []),
+      ];
       return (
         Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
         !(s.lat >= 33.1 && s.lat <= 33.6 && s.lng >= 126.1 && s.lng <= 127.0) ||
@@ -31,13 +40,102 @@ describe("S1' 레코드 형식", () => {
     expect(bad.map((s) => s.id)).toEqual([]);
   });
 
-  it("food spots all have sub ∈ {meal, cafe}; non-food spots have no sub field", () => {
+  it('만족도 점수 (ADR-0060): all 2,964 have an integer score 1–5, the one in review/score/score-NN.json (or a fact-check correction)', () => {
+    expect(fileSpots).toHaveLength(2964);
+    const bad = fileSpots.filter((s) => !Number.isInteger(s.score) || s.score < 1 || s.score > 5);
+    expect(bad.map((s) => s.id)).toEqual([]);
+    const recorded = new Map<string, number>();
+    for (const f of readdirSync(resolve(root, 'review/score')).filter((f) => /^score-\d{2}\.json$/.test(f)).sort()) {
+      for (const v of JSON.parse(readFileSync(resolve(root, 'review/score', f), 'utf8')) as { id: string; score: number }[]) recorded.set(v.id, v.score);
+    }
+    for (const c of loadCorrections()) if (typeof c.fields.score === 'number') recorded.set(c.id, c.fields.score);
+    expect(fileSpots.filter((s) => recorded.get(s.id) !== s.score).map((s) => s.id)).toEqual([]);
+  });
+
+  it('a malformed 오일장 rule is dropped at load (the place stays, without 장날); a valid one is kept (ADR-0066)', () => {
+    const m = fileSpots.find((s) => s.market)!;
+    const [ok, noLabel, badDays] = normalizeSpots([m, { ...m, id: 'x', market: { days: [2] } }, { ...m, id: 'y', market: { days: ['2'], label: '2·7일' } }]);
+    expect(ok.market).toEqual(m.market);
+    expect(ok).toBe(m);
+    expect('market' in noLabel).toBe(false);
+    expect('market' in badDays).toBe(false);
+  });
+
+  it('a record whose score is missing or out of range loads as 3 (모르면 3); a valid one is kept', () => {
+    const base = fileSpots[0];
+    const [kept, missing, wrong] = normalizeSpots([base, { ...base, id: 'x', score: undefined }, { ...base, id: 'y', score: 9 }]);
+    expect(kept.score).toBe(base.score);
+    expect(missing.score).toBe(3);
+    expect(wrong.score).toBe(3);
+  });
+
+  it("food spots all have sub ∈ {meal, cafe}; rest·walk spots have no sub field", () => {
     const badFood = fileSpots.filter((s) => s.mood === 'food' && s.sub !== 'meal' && s.sub !== 'cafe');
     expect(badFood.map((s) => s.id)).toEqual([]);
-    const badNonFood = fileSpots.filter((s) => s.mood !== 'food' && 'sub' in s);
+    const badNonFood = fileSpots.filter((s) => (s.mood === 'rest' || s.mood === 'walk') && 'sub' in s);
     expect(badNonFood.map((s) => s.id)).toEqual([]);
     expect(fileSpots.some((s) => s.sub === 'meal')).toBe(true);
     expect(fileSpots.some((s) => s.sub === 'cafe')).toBe(true);
+  });
+
+  it('N1 (ADR-0064): all 517 새로운 거 spots have sub sight|do — experience → do, sightseeing·cultural_space·shopping(오일장, ADR-0066) → sight, cafe·restaurant as review/copy/new-sub.json', () => {
+    const news = fileSpots.filter((s) => s.mood === 'new');
+    expect(news).toHaveLength(517);
+    expect(news.filter((s) => s.sub !== 'sight' && s.sub !== 'do').map((s) => s.id)).toEqual([]);
+    const categories = loadCategories();
+    const calls = loadNewSubCalls();
+    // 46 cafe·restaurant calls + 9 experience places with no operator moved to 구경 (ADR-0074)
+    expect(calls.size).toBe(55);
+    const expected = (id: string) => {
+      const c = categories.get(id);
+      return calls.get(id) ?? (c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' || c === 'shopping' ? 'sight' : undefined);
+    };
+    expect(news.filter((s) => s.sub !== expected(s.id)).map((s) => s.id)).toEqual([]);
+    // every cafe·restaurant new spot has a recorded call (with its basis); the other calls are the 9 moves
+    const handCalled = news.filter((s) => !['experience', 'sightseeing', 'cultural_space', 'shopping'].includes(categories.get(s.id)!));
+    expect(handCalled.map((s) => s.id).filter((id) => !calls.has(id))).toEqual([]);
+    const moved = [...calls.keys()].filter((id) => categories.get(id) === 'experience');
+    expect(moved).toHaveLength(9);
+    expect(moved.every((id) => calls.get(id) === 'sight')).toBe(true);
+    expect(handCalled.length + moved.length).toBe(calls.size);
+    const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/new-sub.json'), 'utf8')) as { basis: string }[];
+    expect(raw.filter((v) => !v.basis?.trim())).toEqual([]);
+    expect(news.some((s) => s.sub === 'sight') && news.some((s) => s.sub === 'do')).toBe(true);
+  });
+
+  it('N1: the new-sub rule is idempotent on the shipped file, build-spots.mjs applies it, and an unknown case stops it', () => {
+    expect(JSON.stringify(applyNewSub(fileSpots))).toBe(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/if \(v\.mood === 'new'\) spot\.sub = newSub\(/);
+    expect(() => newSub('x', 'cafe', new Map())).toThrow(/no sub/);
+    expect(newSub('x', 'experience', new Map())).toBe('do');
+    expect(newSub('x', 'experience', new Map([['x', 'sight']]))).toBe('sight');
+    expect(newSub('x', 'cultural_space', new Map())).toBe('sight');
+    expect(newSub('x', 'shopping', new Map())).toBe('sight');
+  });
+
+  it('I1 (ADR-0065): all 2,964 spots have indoor true|false — cafe·restaurant indoor unless review/copy/indoor.json says otherwise, every other place by a recorded call', () => {
+    expect(fileSpots.filter((s) => typeof s.indoor !== 'boolean').map((s) => s.id)).toEqual([]);
+    const categories = loadCategories();
+    const calls = loadIndoorCalls();
+    const expected = (id: string) => calls.get(id) ?? (categories.get(id) === 'cafe' || categories.get(id) === 'restaurant');
+    expect(fileSpots.filter((s) => s.indoor !== expected(s.id)).map((s) => s.id)).toEqual([]);
+    // every sightseeing·experience·cultural_space spot has its own call, and each call has a basis from the source
+    const unCalled = fileSpots.filter((s) => !['cafe', 'restaurant'].includes(categories.get(s.id)!) && !calls.has(s.id));
+    expect(unCalled.map((s) => s.id)).toEqual([]);
+    const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/indoor.json'), 'utf8')) as { id: string; indoor: unknown; basis: string }[];
+    expect(raw.filter((v) => typeof v.indoor !== 'boolean' || !v.basis?.trim())).toEqual([]);
+    expect(raw.every((v) => fileSpots.some((s) => s.id === v.id))).toBe(true);
+    expect(fileSpots.filter((s) => s.indoor)).toHaveLength(2080);
+    expect(fileSpots.filter((s) => !s.indoor)).toHaveLength(884);
+  });
+
+  it('I1: the indoor rule is idempotent on the shipped file, build-spots.mjs applies it, and an uncalled place stops it', () => {
+    expect(JSON.stringify(applyIndoor(fileSpots))).toBe(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/kept = applyIndoor\(kept/);
+    expect(() => indoorOf('x', 'sightseeing', new Map())).toThrow(/no indoor call/);
+    expect(indoorOf('x', 'cafe', new Map())).toBe(true);
+    expect(indoorOf('x', 'restaurant', new Map([['x', false]]))).toBe(false);
+    expect(indoorOf('x', 'experience', new Map([['x', true]]))).toBe(true);
   });
 
   it("reason is 15~70 chars and has no price/hours/weekday/rating wording (S1')", () => {
@@ -73,18 +171,56 @@ describe("S1' 레코드 형식", () => {
   });
 });
 
+describe('M1 오일장 (ADR-0066, specs/market-days.md)', () => {
+  const markets = fileSpots.filter((s) => 'market' in s);
+  const doc = JSON.parse(readFileSync(resolve(root, 'review/copy/market-days.json'), 'utf8')) as {
+    accessed: string;
+    markets: { id: string; name: string; source: string; days: number[]; label: string; noFirstAfter31?: boolean; kakao: { url: string; status: string; distanceM: number } }[];
+  };
+  const input = JSON.parse(readFileSync(resolve(root, 'review/input/batch-900.json'), 'utf8')) as { id: string; category: string; source: string }[];
+
+  it('9 markets ship, all 새로운 거 · 구경, outdoor, not bookable, scored, from the VisitJeju shopping batch', () => {
+    expect(markets.map((s) => s.name).sort()).toEqual(
+      ['고성오일시장', '대정오일시장', '서귀포향토오일시장', '세화해녀민속오일시장', '제주민속오일시장', '중문향토오일시장', '표선오일시장', '한림민속오일시장', '함덕민속오일시장'].sort(),
+    );
+    expect(markets.map((s) => s.id).sort()).toEqual(input.map((i) => i.id).sort());
+    for (const s of markets) {
+      expect([s.mood, s.sub, s.indoor, s.bookable], s.name).toEqual(['new', 'sight', false, false]);
+      expect(s.score, s.name).toBeGreaterThanOrEqual(1);
+    }
+    expect(input.every((i) => i.category === 'shopping' && i.source.startsWith('https://www.visitjeju.net/kr/detail/view?contentsid='))).toBe(true);
+  });
+
+  it('each market carries the rule in review/copy/market-days.json, with its VisitJeju URL, access date and Kakao check', () => {
+    expect(doc.accessed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(doc.markets).toHaveLength(9);
+    for (const m of doc.markets) {
+      const s = markets.find((x) => x.id === m.id)!;
+      expect(s.market, m.name).toEqual({ days: m.days, label: m.label, ...(m.noFirstAfter31 ? { noFirstAfter31: true } : {}) });
+      expect(m.source).toBe(input.find((i) => i.id === m.id)!.source);
+      expect(m.kakao.url).toBe(`https://place.map.kakao.com/${s.kakaoPlaceId}`);
+      expect(m.kakao.status).toBe('Y');
+      expect(m.kakao.distanceM).toBeLessThan(150);
+      expect(m.days.every((d) => Number.isInteger(d) && d >= 1 && d <= 31)).toBe(true);
+    }
+    // only 대정 has the 31st exception
+    expect(doc.markets.filter((m) => m.noFirstAfter31).map((m) => m.name)).toEqual(['대정오일시장']);
+  });
+
+  it('the market rule is idempotent on the shipped file, build-spots.mjs applies it, and a missing or unshipped rule stops it', () => {
+    expect(JSON.stringify(applyMarketDays(fileSpots))).toBe(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+    expect(readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8')).toMatch(/kept = applyMarketDays\(kept/);
+    const rules = loadMarketDays();
+    const market = markets[0];
+    expect(() => applyMarketDays(fileSpots, new Map([...rules].filter(([id]) => id !== market.id)))).toThrow(/no market-days rule/);
+    expect(() => applyMarketDays(fileSpots.filter((s) => s.id !== market.id), rules)).toThrow(/not shipped/);
+  });
+});
+
 describe("S1' 완전성 (review/input 대비)", () => {
   const inputIds = new Set<string>();
   for (const f of readdirSync(resolve(root, 'review/input')).filter((f) => /^batch-\d{3}\.json$/.test(f))) {
     for (const item of JSON.parse(readFileSync(resolve(root, 'review/input', f), 'utf8'))) inputIds.add(item.id);
-  }
-  // Same merge order as build-spots.mjs: batch verdicts first, then adj overrides by id.
-  const verdictIds = new Set<string>();
-  for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^batch-\d{3}\.json$/.test(f)).sort()) {
-    for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
-  }
-  for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
-    for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
   }
 
   it('every kept spot exists as a prefilter-passing input item', () => {
@@ -92,7 +228,17 @@ describe("S1' 완전성 (review/input 대비)", () => {
     expect(inputIds.size).toBeGreaterThan(0);
   });
 
-  it('every prefilter-passing input item has a verdict (batch or adj) — 0 missing (plan S1\' 100% coverage)', () => {
+  // review/out (the verdicts) is not committed: on a clean checkout only this check is skipped.
+  it.skipIf(!existsSync(resolve(root, 'review/out')))('every prefilter-passing input item has a verdict (batch or adj) — 0 missing (plan S1\' 100% coverage)', () => {
+    // Same merge order as build-spots.mjs: batch verdicts first, then adj overrides by id.
+    const verdictIds = new Set<string>();
+    for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^batch-\d{3}\.json$/.test(f)).sort()) {
+      for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
+    }
+    for (const f of readdirSync(resolve(root, 'review/out')).filter((f) => /^adj-\d{3}\.json$/.test(f)).sort()) {
+      for (const v of JSON.parse(readFileSync(resolve(root, 'review/out', f), 'utf8'))) verdictIds.add(v.id);
+    }
+    for (const v of loadMarketVerdicts()) verdictIds.add(v.id); // 오일장 (ADR-0066): their verdicts are committed
     const missing = [...inputIds].filter((id) => !verdictIds.has(id)).sort();
     expect(missing).toEqual([]);
   });
@@ -128,7 +274,7 @@ describe('S32 이름 공백', () => {
     const [a, b] = normalizeSpots(raw);
     expect(a.name).toBe('아일랜드 터프팅');
     expect(b.name).toBe('뚱보조개');
-    for (const url of [kakaoUrl(raw[0]), bookingUrl(raw[0]), bookingUrl(raw[1])]) {
+    for (const url of [kakaoUrl(raw[0]), naverSearchUrl(raw[0]), naverSearchUrl(raw[1])]) {
       expect(url).not.toMatch(/(%09|%20|%E3%80%80)+($|&)/);
       expect(url).not.toMatch(/=(%20|%09)/);
     }
@@ -144,18 +290,98 @@ describe('S32 이름 공백', () => {
 });
 
 describe('이유 문장 마침표 (design/SPEC.md §10·§12.4)', () => {
-  it('a sentence ending in 요 gets exactly one full stop; a noun ending gets none; whitespace is cleaned', () => {
-    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요')).toBe('카페와 아트샵을 한 공간에서 둘러봐요.');
-    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요..')).toBe('카페와 아트샵을 한 공간에서 둘러봐요.');
+  it('no final full stop whatever the ending (3판); 돈까스 → 돈가스; whitespace is cleaned', () => {
+    // 3판: no full stop after 요 either (was: "…둘러봐요.")
+    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요')).toBe('카페와 아트샵을 한 공간에서 둘러봐요');
+    expect(cleanReason('카페와 아트샵을 한 공간에서 둘러봐요..')).toBe('카페와 아트샵을 한 공간에서 둘러봐요');
+    expect(cleanReason('겉은 바삭한 돈까스')).toBe('겉은 바삭한 돈가스');
     expect(cleanReason('  봄마다 벚꽃 축제가 열리는  길. ')).toBe('봄마다 벚꽃 축제가 열리는 길');
     expect(cleanReason('애월 하가리의 전망 좋은 카페')).toBe('애월 하가리의 전망 좋은 카페');
   });
 
-  it('every shipped reason, as drawn, follows the rule', () => {
-    for (const s of normalizeSpots(fileSpots)) {
-      if (s.reason.endsWith('요.')) continue;
-      expect(s.reason, s.reason).not.toMatch(/[.요]$/);
+  it('every shipped reason, as drawn, follows the rule (3판: no final full stop, as the build ships it)', () => {
+    for (const s of normalizeSpots(fileSpots)) expect(s.reason, s.reason).not.toMatch(/[.。]$/);
+  });
+});
+
+describe('3판 이유 문장 — 빌드 규칙 (design/SPEC.md §10·§12.4, 0.3 #16)', () => {
+  it('shipReason: no final full stop whatever the ending, 돈까스 → 돈가스, whitespace cleaned, idempotent', async () => {
+    const { shipReason } = await import('../scripts/reason.mjs');
+    expect(shipReason('돌담과 귤밭 사이에서 크로플을 먹어요.')).toBe('돌담과 귤밭 사이에서 크로플을 먹어요');
+    expect(shipReason('  봄마다 벚꽃 축제가 열리는  길 . ')).toBe('봄마다 벚꽃 축제가 열리는 길');
+    expect(shipReason('수제 돈까스와 우동집이에요。')).toBe('수제 돈가스와 우동집이에요');
+    expect(shipReason('약 17.5km 이어지는 올레길')).toBe('약 17.5km 이어지는 올레길');
+    for (const s of fileSpots) expect(shipReason(s.reason), s.id).toBe(s.reason);
+  });
+
+  it('the build uses it and refuses a two-sentence reason', async () => {
+    const build = readFileSync(resolve(root, 'scripts/build-spots.mjs'), 'utf8');
+    expect(build).toMatch(/const bareReason = shipReason;/);
+    expect(build).not.toMatch(/punctuate/);
+    expect(build).toMatch(/reasonPunctuationProblem\(s\.reason\)/);
+    const { reasonPunctuationProblem } = await import('../scripts/reason.mjs');
+    expect(reasonPunctuationProblem('딱새우김밥과 양념새우컵밥. 포장해 가도 돼요')).toBe('full stop mid-sentence');
+    expect(reasonPunctuationProblem('기념관 영상과 전시로 4.3의 역사를 기억해요')).toBeNull();
+  });
+
+  it('every shipped reason: no full stop at the end or mid-sentence, no 돈까스, no 3판 banned form', async () => {
+    const { reasonPunctuationProblem } = await import('../scripts/reason.mjs');
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const bad = fileSpots.filter((s) => reasonPunctuationProblem(s.reason) || /돈까스|겉바속촉|아름다운|여유를 누려요|공간이에요/.test(s.reason) || REASON_BANNED.test(s.reason));
+    expect(bad.map((s) => `${s.id}: ${s.reason}`)).toEqual([]);
+  });
+
+  it('every review/copy/fix-02.json rewrite ships as written and replaces a sentence that broke the 3판 rule', async () => {
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const { reasonPunctuationProblem, shipReason } = await import('../scripts/reason.mjs');
+    const fix = JSON.parse(readFileSync(resolve(root, 'review/copy/fix-02.json'), 'utf8')) as { id: string; reason: string; was: string }[];
+    const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+    for (const f of fix) {
+      expect(byId.get(f.id)?.reason, f.id).toBe(shipReason(f.reason));
+      expect(REASON_BANNED.test(f.was) || reasonPunctuationProblem(shipReason(f.was)) !== null, f.was).toBe(true);
     }
+  });
+
+  it('every review/copy/fix-03.json rewrite (S9-3 audit borderline + 할망밥상 branches) ships as written and differs from what it replaced', async () => {
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const { reasonPunctuationProblem, shipReason } = await import('../scripts/reason.mjs');
+    const fix = JSON.parse(readFileSync(resolve(root, 'review/copy/fix-03.json'), 'utf8')) as { id: string; reason: string; was: string; basis: string }[];
+    expect(fix).toHaveLength(7);
+    const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+    for (const f of fix) {
+      expect(byId.get(f.id)?.reason, f.id).toBe(shipReason(f.reason));
+      expect(shipReason(f.was), f.id).not.toBe(shipReason(f.reason));
+      expect(REASON_BANNED.test(f.reason) || reasonPunctuationProblem(shipReason(f.reason)) !== null, f.reason).toBe(false);
+      expect(f.basis.length, f.id).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('팩트체크 수정 (ADR-0063 5, review/copy/corrections-NN.json, review/audit/factcheck-01.md)', () => {
+  const corrections = loadCorrections();
+  const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+
+  it('every correction is applied: removed ids are gone, set fields ship as recorded', () => {
+    expect(corrections.length).toBeGreaterThan(0);
+    for (const c of corrections) {
+      if (c.action === 'remove') expect(byId.has(c.id), c.id).toBe(false);
+      else expect(byId.get(c.id), c.id).toMatchObject(c.fields);
+      expect(c.reason.length, c.id).toBeGreaterThan(0);
+      expect(c.evidence, c.id).toMatch(/^https:\/\//);
+    }
+  });
+
+  it('corrections-01: 4 removed (제주오누이·이중섭미술관·대향연탄구이·함덕백사장 & 서우봉), 박물관은 살아있다 renamed 3, 한림바다체험마을 placeId', () => {
+    for (const id of ['5c45ab11-a6e8-467e-875e-476249a75af8', 'a18eacff-7684-4936-aa11-a778dda648c4', 'bacecf0d-3a2c-4168-9135-51e1895df54f', '1444066b-5005-482b-9ee3-26601b74c664']) {
+      expect(byId.has(id), id).toBe(false);
+    }
+    expect(byId.get('7896e435-5d0d-444e-a815-eb1622f4ab55')).toMatchObject({ name: '박물관은 살아있다', score: 3 });
+    expect(byId.get('e90d95bc-3a57-4d72-b0b5-3e212c97f378')?.kakaoPlaceId).toBe('688113173');
+  });
+
+  it('applying them again changes nothing (idempotent); 2,959 shipped before, minus the removals, plus the 9 오일장 (ADR-0066)', () => {
+    expect(applyCorrections(fileSpots, corrections)).toEqual(fileSpots);
+    expect(fileSpots).toHaveLength(2959 - corrections.filter((c) => c.action === 'remove').length + 9);
   });
 });
 
@@ -235,6 +461,37 @@ describe('S24 목록 로드 — 실패는 기억하지 않는다 (audit MAJOR)',
       expect(onLoad).not.toHaveBeenCalled();
     });
   });
+
+  describe('design.md M2 — the data wait gives up at 10s, not 15s (Nielsen 10s limit)', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('the app passes 10000ms', async () => {
+      const { DELAYS } = await import('../src/app');
+      expect(DELAYS.dataTimeout).toBe(10_000);
+    });
+
+    it('the default wait is 10s: still waiting at 9999ms, timed out at 10000ms; a copy landing at 12s is still kept', async () => {
+      vi.useFakeTimers();
+      const onLoad = vi.fn();
+      const src = createSpotSource(() => new Promise((r) => setTimeout(() => r(fileSpots.slice(0, 2)), 12_000)), undefined, onLoad);
+      let settled = false;
+      const first = src.get();
+      first.then(
+        () => (settled = true),
+        () => (settled = true),
+      );
+      await vi.advanceTimersByTimeAsync(9_999);
+      expect(settled).toBe(false);
+      await vi.advanceTimersByTimeAsync(1);
+      await expect(first).rejects.toThrow('timeout');
+      await vi.advanceTimersByTimeAsync(2_000);
+      expect(onLoad).toHaveBeenCalledTimes(1);
+      expect(src.peek()).toHaveLength(2);
+      src.dispose();
+    });
+  });
 });
 
 describe('QA 2026-09-30 중복 — 한 곳이 두 번 나가지 않는다', () => {
@@ -273,7 +530,8 @@ describe('QA 2026-09-30 중복 — 한 곳이 두 번 나가지 않는다', () =
 
 describe('S60 이유 문장 어미 (S9-3 파이프라인 몫, design/SPEC.md §10)', () => {
   // The reason sentences are rewritten by the S9-3 pipeline (model rewrite + faithfulness audit), not by
-  // app code. Baseline 77.2% end in "~수 있어요"; the S9-3 gate is ≤20% and no ending above 25%.
+  // app code. Baseline 77.2% end in "~수 있어요"; the S9-3 gate is ≤20%. The "no ending above 25%"
+  // metric was dropped (ADR-0058).
   // Classifier: strip trailing space/punctuation, match the common 해요체 endings first (longest — "수
   // 있어요" — before its own suffix "있어요"), else bucket by the reason's last syllable (mostly noun
   // endings: "~집", "~카페", "~길" …).
@@ -283,13 +541,11 @@ describe('S60 이유 문장 어미 (S9-3 파이프라인 몫, design/SPEC.md §1
     return bare.match(ENDING)?.[1] ?? bare.slice(-1);
   }
 
-  it('no single ending exceeds 25% of all reasons, and "~수 있어요" is at most 20%', () => {
+  it('"~수 있어요" is at most 20% of all reasons', () => {
     const shares = new Map<string, number>();
     for (const s of fileSpots) shares.set(ending(s.reason), (shares.get(ending(s.reason)) ?? 0) + 1);
     const total = fileSpots.length;
     expect(total).toBeGreaterThan(0);
-    const over25 = [...shares.entries()].filter(([, n]) => n / total > 0.25);
-    expect(over25.map(([e, n]) => `${e}: ${((n / total) * 100).toFixed(1)}%`)).toEqual([]);
     const soIsseoyo = shares.get('수 있어요') ?? 0;
     expect(soIsseoyo / total).toBeLessThanOrEqual(0.2);
   });
@@ -353,11 +609,11 @@ describe('S51 홈 화면(PWA) 실행 — 매니페스트', () => {
     const m = JSON.parse(readFileSync(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
     expect(m.display).toBe('standalone');
     expect(new URL(m.start_url, 'https://x.test/app/').href.startsWith(new URL(m.scope, 'https://x.test/app/').href)).toBe(true);
-    expect(m.name).toBe('내일 뭐하지');
-    expect(m.short_name).toBe('내일 뭐하지');
-    expect(m.background_color).toBe('#151718');
+    expect(m.name).toBe('여행계획짜기 귀찮아:제주');
+    expect(m.short_name).toBe('계획귀찮아'); // under the home-screen icon: short (ADR-0068)
+    expect(m.background_color).toBe('#0f1319');
     for (const i of m.icons) expect(existsSync(resolve(root, 'public', i.src)), i.src).toBe(true);
     const html = readFileSync(resolve(root, 'index.html'), 'utf8');
-    expect(html).toContain('<link rel="manifest" href="./manifest.webmanifest" />');
+    expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest" />'); // absolute: any page address (ADR-0063)
   });
 });

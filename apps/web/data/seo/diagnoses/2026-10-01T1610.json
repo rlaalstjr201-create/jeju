@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "run_id": "2026-10-01T1610",
+  "graded": null,
+  "diagnosed_at": "2026-10-01",
+  "phase": "pre-deploy",
+  "window": null,
+  "summary": "첫 가동(배포 전). GSC·GA4·네이버 미연결이라 수요 층은 자동완성·SERP 표본(docs/seo/keyword-research-01.md)으로만 봤다. 감사 13건(P0 3 · P1 9 · P2 1) 중 정렬 규칙 상위 5건만 개입으로 올렸다(첫 가동이라 해소율이 없어 상한 5). 나머지는 docs/seo/audit-01.md (a)표에 있고 다음 가동에서 다시 정렬한다. 콘텐츠·랜딩 개입은 keyword gate target만 가리킨다 — target은 「제주도 무계획 여행」·「성산 근처 체험」 둘뿐이다.",
+  "instruments": [
+    { "name": "seo:crawl", "status": "ok", "note": "dist 3쪽 · 색인 대상 2 · 감사 13건(P0 3)" },
+    { "name": "seo:keywords", "status": "ok", "note": "후보 25 · target 2 · brand 1 · watch 9 · kill 13 · 검증 오류 0" },
+    { "name": "seo:verify", "status": "ok", "note": "큐 없음(첫 가동) · 예측 0건" },
+    { "name": "gsc", "status": "stub", "note": "속성 미등록" },
+    { "name": "naver-search-advisor", "status": "stub", "note": "속성 미등록" },
+    { "name": "serp-sample", "status": "ok", "note": "WebSearch 20건(미국 엔진 프록시) · 네이버·구글 KR SERP 직접 조회는 차단됨 · 자동완성 40여 건" }
+  ],
+  "grading": [],
+  "interventions": [
+    {
+      "rank": 1,
+      "title": "홈 <noscript>에 브랜드 정의 문장과 /jeju/ 허브 링크를 넣는다",
+      "severity": "P0",
+      "qualifies": "seo:crawl:page:/:thin-shell",
+      "cause_layer": "GEO",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "home-noscript",
+      "check": "page:/:thin-shell",
+      "queue_kind": "content",
+      "keyword": "P의 여행 제주",
+      "where": "apps/web/index.html (다른 작업자 소유 — 제안만, docs/seo/audit-01.md a-3)",
+      "evidence": "seo:crawl — 홈 정적 본문 161자, 장소 2,955곳은 JS가 spots.json에서 그린다. GPTBot·ClaudeBot·PerplexityBot은 JS를 돌리지 않는다.",
+      "why_now": "seo:crawl의 본문 글자 수와 seo:keywords의 brand 판정(「P의 여행」 단독은 동명 도서·밈에 밀림)을 겹치면, AI가 「P의 여행 = 제주 무계획 여행 파트너」를 읽을 문장이 사이트 어디에도 없다.",
+      "verify": "다음 빌드의 seo:crawl에서 page:/:thin-shell 발견이 사라진다(홈 본문 300자 이상)."
+    },
+    {
+      "rank": 2,
+      "title": "/jeju/ 허브(「P를 위한 제주 무계획 여행」) 1장을 빌드 때 정적으로 만든다",
+      "severity": "P0",
+      "qualifies": "seo:crawl:site:no-landing-pages + keywords:target",
+      "cause_layer": "수요",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "jeju-hub",
+      "check": "site:no-landing-pages",
+      "queue_kind": "landing",
+      "keyword": "제주도 무계획 여행",
+      "where": "specs/seo-landing.md 1단계 — 새 빌드 스크립트(vite.config.ts·public 비접촉)",
+      "evidence": "seo:keywords target 「제주도 무계획 여행」 8/10(구글 자동완성 有 · 상위는 블로그·커뮤니티·OTA 블로그 혼합 · 이 의도를 정확히 받는 페이지 없음).",
+      "why_now": "seo:crawl의 site:no-landing-pages(검색어가 도착할 자리 0)와 seo:keywords의 target 2건이 같은 결론이다 — 받을 페이지 없이는 어떤 검색어도 이길 수 없다.",
+      "verify": "다음 빌드 dist/jeju/index.html이 존재하고 seo:crawl에서 site:no-landing-pages 발견이 사라진다."
+    },
+    {
+      "rank": 3,
+      "title": "Cloudflare Pages 빌드 환경변수 SITE_URL을 정한 도메인으로 설정한다",
+      "severity": "P0",
+      "qualifies": "seo:crawl:site:no-origin",
+      "cause_layer": "공유",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "site-url",
+      "check": "site:no-origin",
+      "queue_kind": "config",
+      "where": "Cloudflare Pages 프로젝트 설정(사람) — 도메인 결정이 먼저",
+      "evidence": "seo:crawl — og:url \"/\" · og:image \"/og.png\" 상대경로, canonical 없음. index.html의 __SITE__가 빈 값으로 치환됐다.",
+      "why_now": "seo:crawl의 공유 층 발견 3건(site:no-origin·og-url·og-image)과 seo:verify의 P0 목록이 같은 원인 하나를 가리킨다. 이것 없이는 canonical·sitemap도 절대 URL을 못 쓴다.",
+      "verify": "SITE_URL=<도메인> npm run build 뒤 seo:crawl에서 site:no-origin 발견이 사라진다."
+    },
+    {
+      "rank": 4,
+      "title": "홈에 WebSite + WebApplication JSON-LD를 넣는다(브랜드 정의 문장·inLanguage ko·areaServed 제주)",
+      "severity": "P1",
+      "qualifies": "seo:crawl:page:/:no-jsonld",
+      "cause_layer": "GEO",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "home-jsonld",
+      "check": "page:/:no-jsonld",
+      "queue_kind": "structured",
+      "where": "apps/web/index.html (제안만, docs/seo/audit-01.md a-2)",
+      "evidence": "seo:crawl — 홈·privacy 모두 JSON-LD 0개.",
+      "why_now": "seo:crawl의 구조화 데이터 0과 seo:keywords의 「P의 여행」 K5(동명 도서) 판정을 겹치면, 엔티티를 기계가 읽게 선언하는 것이 브랜드 혼동을 줄이는 가장 싼 수단이다.",
+      "verify": "다음 빌드의 seo:crawl에서 page:/:no-jsonld 발견이 사라지고 홈 JSON-LD 타입에 WebApplication이 있다."
+    },
+    {
+      "rank": 5,
+      "title": "홈 title·description에 「제주」와 P(무계획·즉흥) 포지션을 넣는다",
+      "severity": "P1",
+      "qualifies": "seo:crawl:page:/:title-no-jeju",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "home-title",
+      "check": "page:/:title-no-jeju",
+      "queue_kind": "meta",
+      "keyword": "P의 여행 제주",
+      "where": "apps/web/index.html <title>·description·og:title (제안만, docs/seo/audit-01.md a-1)",
+      "evidence": "seo:crawl — title \"P의 여행\"(제주 없음). seo:keywords — 「P의 여행」 단독 SERP는 brunch·allure·yes24(동명 도서)가 차지.",
+      "why_now": "seo:crawl의 title 발견과 seo:keywords brand 판정이 함께 말한다 — 「P의 여행」만으로는 검색 결과 제목에서 제주 여행 도구로 읽히지 않는다.",
+      "verify": "다음 빌드의 seo:crawl에서 page:/:title-no-jeju 발견이 사라진다."
+    }
+  ],
+  "investigate": [
+    "watch 9건 중 SERP 미관측 5건(서귀포 산책하기 좋은 곳·표선 근처 놀거리·함덕 근처 가볼만한곳·성산 근처 가볼만한 곳·애월 산책로) — 네이버 SERP를 사람이 브라우저로 보고 keywords.json serp를 채운다. 그 전에는 랜딩 문구를 그 검색어에 맞추지 않는다.",
+    "onuljeju.com(「오늘 제주에서 뭐 하지?」, 장소 약 2.5만, 기분별·근처 2km) — 같은 개념의 직접 경쟁자. 우리 차별점(P·무계획·3곳만·이동 시간)이 그쪽 페이지와 실제로 다른지 SERP·화면으로 대조."
+  ],
+  "not_touching": [
+    "kill 13건(제주 가볼만한곳·제주 뭐하지·애월 근처 맛집·중문 카페 등 헤드 / mbti p 여행·p 여행 계획 등 밈 의도 / 비오는날·혼자 등 데이터에 없는 속성) — 페이지·문구를 만들지 않는다. 근거 data/seo/keywords.json.",
+    "seo:forecast — 기준선이 없다. 배포·GSC 연결·확정 28일 전에는 예측을 쓰지 않는다(seoulist 런칭 주 기준선 무효 사고)."
+  ],
+  "failed": [
+    "네이버·구글 KR SERP 직접 조회 — search.naver.com WebFetch 불가, google.com 응답 판독 불가. WebSearch(미국 엔진)로 대체했고 competition 점수는 최대 1로 제한했다.",
+    "네이버 자동완성 node fetch — 이 컨테이너의 egress 정책이 node를 막는다(curl은 통과). 사용자 기기에서는 seo:keywords --suggest가 동작한다."
+  ],
+  "repo_changes": [
+    "?? apps/web/scripts/seo/ · apps/web/data/seo/ · apps/web/tests/seo-*.test.ts · .claude/agents/seo-analyst.md · .claude/skills/seo-geo/ · docs/seo/ · specs/seo-landing.md",
+    " M apps/web/package.json (seo:* 스크립트)"
+  ]
+}

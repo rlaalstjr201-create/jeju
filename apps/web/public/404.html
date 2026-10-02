@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex" />
+    <title>여행계획짜기 귀찮아:제주</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <!-- The host's answer for an address that is no page (ADR-0063, no SPA fallback). Self-contained: the
+         same tokens as src/style.css, no script. -->
+    <style>
+      :root { --bg: #ffffff; --fill: #f3f3f4; --text: #14181f; --muted: #5f6267; --r-ctl: 10px; color-scheme: light; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #0f1319; --fill: #23272d; --text: #eef1f5; --muted: #b0b3b7; color-scheme: dark; }
+      }
+      * { box-sizing: border-box; }
+      html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      body {
+        margin: 0; background: var(--bg); color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
+        font-size: 0.9375rem; line-height: 1.5; font-weight: 400; word-break: keep-all; overflow-wrap: break-word;
+      }
+      main { max-width: 480px; margin: 0 auto; padding: 52px max(16px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+      h1 { margin: 0; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+      p { margin: 4px 0 0; color: var(--muted); text-wrap: pretty; }
+      a { color: inherit; }
+      .tbtn {
+        display: inline-flex; align-items: center; min-height: 48px; margin: 16px 0 0 -8px; padding: 0 8px; border-radius: var(--r-ctl);
+        font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--muted);
+      }
+      .tbtn:active { background: var(--fill); }
+      :focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>없는 주소예요.</h1>
+      <p>주소가 바뀌었거나 잘못 적힌 것 같아요.</p>
+      <a class="tbtn" href="/">처음 화면으로</a>
+      <a class="tbtn" href="/jeju/">동네별로 둘러보기</a>
+    </main>
+  </body>
+</html>

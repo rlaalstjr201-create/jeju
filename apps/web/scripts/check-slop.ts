@@ -2,6 +2,7 @@
 // dist/ exists). `npm run check:slop` prints every violation; tests/slop.test.ts runs the same checks.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { reasonPunctuationProblem } from './reason.mjs';
 
 export interface Violation {
   rule: number;
@@ -89,30 +90,36 @@ const WORDS =
 const FORMAL = /[습입됩합]니다|십시오/; // 합쇼체: 해요체 only (§9)
 // 15 · 17 · 20 · 24px, written in rem so a larger browser text size (or root font-size 200%) scales them.
 const FONT_SIZES = new Set(['0.9375rem', '1.0625rem', '1.25rem', '1.5rem']);
-/** design/SPEC.md §10 forms that make a place sentence read as a template ("~하기 좋아요", 인생샷 …).
+/** The one exception (SPEC §3.2, design.md F2): the fallback date field, never under 16px or iOS zooms in. */
+const fontSizeOk = (selector: string, size: string) => FONT_SIZES.has(size) || (selector === '.date-in' && size.replace(/\s+/g, '') === 'max(1rem,16px)');
+/** design/SPEC.md §10 forms that make a place sentence read as a template ("~하기 좋아요", 인생샷 …),
+ * with the 3판 additions (겉바속촉, 돈까스, 아름다운, 여유를 누려요, 공간이에요).
  * "공기 좋은" is a noun + adjective, not the "~기 좋은" template; "…에 있어요" is not "~에 있어(서)". */
 export const REASON_BANNED =
-  /(?<!공)기 좋아요|(?<!공)기 좋은|인생샷|힐링|다양한|특별한|완벽한|최고의|숨은 보석|숨은 명소|감성 넘치는|잊지 못할|매력적인|[을를] 통해|에 있어서|할 수 있습니다|가능합니다|되어집니다|여유를 즐겨요/;
+  /(?<!공)기 좋아요|(?<!공)기 좋은|인생샷|힐링|다양한|특별한|완벽한|최고의|숨은 보석|숨은 명소|감성 넘치는|잊지 못할|매력적인|[을를] 통해|에 있어서|할 수 있습니다|가능합니다|되어집니다|여유를 즐겨요|겉바속촉|돈까스|아름다운|여유를 누려요|공간이에요/;
 const WEIGHTS = new Set(['400', '600', '700']);
 const RADII = /^(var\(--r-(ctl|photo|thumb|sheet)\)( var\(--r-(ctl|photo|thumb|sheet)\))*( 0 0)?|6px|4px)$/;
-const CENTERED = new Set(['.more', '.retry', '.primary', '.sheet-close']);
-const ACCENT_OK = new Set(['.saved-btn svg', '.heart[aria-pressed="true"]']);
-const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child)$/;
+// #18 (3판): selection is a check, weight or underline — never a filled surface.
+const SEL_TOKEN = /--sel-/;
+// ADR-0070: the saved hearts and the 아무거나 underline
+const ACCENT_OK = new Set(['.saved-btn svg', '.heart[aria-pressed="true"]', '.any']);
+const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child|\.more-end)$/;
 
 export function checkCss(file: string, css: string, v: Violation[]) {
   const add = (rule: number, detail: string) => v.push({ rule, file, detail });
   if (SHADOW.test(css)) add(1, css.match(SHADOW)![0]);
   if (/@font-face|fonts\.googleapis|cdn/.test(css)) add(16, 'external font');
+  if (SEL_TOKEN.test(css)) add(18, css.match(/--sel-[\w-]*/)![0]);
   for (const r of cssRules(css)) {
     const sels = r.selector.split(',').map((s) => s.trim());
     const isRoot = r.selector === ':root';
     for (const m of r.body.matchAll(/content:\s*"([^"]*)"/g)) if (SYMBOLS.test(m[1])) add(2, `${r.selector} content ${m[1]}`);
-    for (const m of r.body.matchAll(/font-size:\s*([^;]+)/g)) if (!FONT_SIZES.has(m[1].trim())) add(7, `${r.selector} font-size ${m[1]}`);
+    for (const m of r.body.matchAll(/font-size:\s*([^;]+)/g)) if (!fontSizeOk(r.selector, m[1].trim())) add(7, `${r.selector} font-size ${m[1]}`);
     for (const m of r.body.matchAll(/font-weight:\s*([^;]+)/g)) if (!WEIGHTS.has(m[1].trim())) add(8, `${r.selector} font-weight ${m[1]}`);
     if (!isRoot && /#[0-9a-f]{3,8}\b|rgba?\(/i.test(r.body)) add(9, `${r.selector} colour literal`);
     if (/var\(--accent\)/.test(r.body) && !sels.every((s) => ACCENT_OK.has(s))) add(10, `${r.selector} uses --accent`);
     for (const m of r.body.matchAll(/opacity:\s*([^;]+)/g)) {
-      const ok = m[1].trim() === '0.72' || (m[1].trim() === '0' && (r.selector === '.hint.leaving' || r.selector.startsWith('@keyframes')));
+      const ok = m[1].trim() === '0.72' || (m[1].trim() === '0' && r.selector.startsWith('@keyframes'));
       if (!ok) add(11, `${r.selector} opacity ${m[1]}`);
     }
     if (!isRoot && /rgb\([^)]*\/[^)]*\)/.test(r.body)) add(11, `${r.selector} translucent colour`);
@@ -122,10 +129,14 @@ export function checkCss(file: string, css: string, v: Violation[]) {
       for (const d of r.body.matchAll(/(\d+)ms/g)) if (Number(d[1]) > 240) add(13, `${r.selector} ${d[0]}`);
       if (sels.some((s) => /(^|\s)\.card\b/.test(s))) add(13, `${r.selector} animates a card`);
     }
-    if (/text-align:\s*center/.test(r.body) && !sels.every((s) => CENTERED.has(s))) add(14, `${r.selector} centred`);
+    if (/text-align:\s*center/.test(r.body)) add(14, `${r.selector} centred`);
     for (const m of r.body.matchAll(/(^|[;\s])height:\s*([^;]+)/g)) {
       if (!sels.every((s) => FIXED_HEIGHT_OK.test(s))) add(15, `${r.selector} height ${m[2]}`);
     }
+    // ADR-0070 (decided): ♥ N's open state is an underline too, so no selector is exempt any more
+    const pressedFill = sels.some((s) => /\[aria-(pressed|current)(=["']?(true|page)["']?(\s+i)?)?\]/.test(s));
+    const fills = [...r.body.matchAll(/(^|[;\s])background(-color)?\s*:\s*([^;]+)/g)].some((m) => !/^(none|transparent|initial)$/.test(m[3].trim()));
+    if (pressedFill && fills) add(18, `${r.selector} fills the selection`);
   }
 }
 
@@ -139,6 +150,16 @@ export function checkStrings(file: string, strings: string[], v: Violation[]) {
     if (FORMAL.test(s)) add(5, s);
     // a noun ending never takes a full stop (only "…요." sentences do)
     if (/[가-힣]\.$/.test(s) && !/요\.$/.test(s)) add(6, s);
+  }
+}
+
+/** #17 banned forms and #19 punctuation (3판: no full stop, one sentence) over the shipped reasons. */
+export function checkReasons(file: string, spots: readonly { id: string; reason: string }[], v: Violation[]) {
+  for (const s of spots) {
+    const m = s.reason.match(REASON_BANNED);
+    if (m) v.push({ rule: 17, file, detail: `${m[0]} in ${s.id}: ${s.reason}` });
+    const p = reasonPunctuationProblem(s.reason);
+    if (p) v.push({ rule: 19, file, detail: `${p} in ${s.id}: ${s.reason}` });
   }
 }
 
@@ -156,23 +177,32 @@ export function checkSlop(root: string, opts: { dist?: boolean } = {}): Violatio
   for (const f of listFiles(join(root, 'src'), /\.ts$/)) {
     const code = read(f);
     if (SHADOW.test(code)) v.push({ rule: 1, file: f, detail: code.match(SHADOW)![0] });
+    if (SEL_TOKEN.test(code)) v.push({ rule: 18, file: f, detail: code.match(/--sel-[\w-]*/)![0] });
     checkStrings(f, uiStrings(code), v);
   }
   const indexHtml = read(join(root, 'index.html'));
   if (/@font-face|fonts\.googleapis|fonts\.gstatic/.test(indexHtml)) v.push({ rule: 16, file: 'index.html', detail: 'external font' });
+  if (SEL_TOKEN.test(indexHtml)) v.push({ rule: 18, file: 'index.html', detail: indexHtml.match(/--sel-[\w-]*/)![0] });
   checkStrings('index.html', htmlStrings(indexHtml), v);
+  // ADR-0063: the host's 404 page and the privacy page are copy and style too (self-contained, own tokens).
+  for (const f of listFiles(join(root, 'public'), /\.html$/)) {
+    const page = read(f);
+    for (const m of page.matchAll(/<style>([\s\S]*?)<\/style>/g)) checkCss(f, m[1], v);
+    if (/@font-face|fonts\.googleapis|fonts\.gstatic/.test(page)) v.push({ rule: 16, file: f, detail: 'external font' });
+    checkStrings(f, htmlStrings(page), v);
+  }
+  // ADR-0072: the static landing pages' copy lives in their generator (its stylesheet is src/landing.css, above).
+  checkStrings('scripts/landing.ts', uiStrings(read(join(root, 'scripts/landing.ts'))), v);
   const manifest = JSON.parse(read(join(root, 'public/manifest.webmanifest'))) as Record<string, unknown>;
   checkStrings('manifest.webmanifest', [manifest.name, manifest.short_name, manifest.description].filter((x): x is string => typeof x === 'string'), v);
-  // #17: the place sentences are on screen as much as the UI copy.
-  for (const s of JSON.parse(read(join(root, 'public/spots.json'))) as { id: string; reason: string }[]) {
-    const m = s.reason.match(REASON_BANNED);
-    if (m) v.push({ rule: 17, file: 'spots.json', detail: `${m[0]} in ${s.id}: ${s.reason}` });
-  }
+  // #17 · #19: the place sentences are on screen as much as the UI copy.
+  checkReasons('spots.json', JSON.parse(read(join(root, 'public/spots.json'))), v);
   if (opts.dist) {
     for (const f of listFiles(join(root, 'dist/assets'), /\.css$/)) {
       const css = read(f);
       if (SHADOW.test(css)) v.push({ rule: 1, file: f, detail: css.match(SHADOW)![0] });
       if (/@font-face|fonts\.googleapis/.test(css)) v.push({ rule: 16, file: f, detail: 'external font' });
+      if (SEL_TOKEN.test(css)) v.push({ rule: 18, file: f, detail: css.match(/--sel-[\w-]*/)![0] });
     }
     for (const f of listFiles(join(root, 'dist/assets'), /\.js$/)) checkStrings(f, uiStrings(read(f)), v);
   }

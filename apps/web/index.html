@@ -4,56 +4,150 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <title>내일 뭐하지</title>
-    <meta name="description" content="기분을 고르면 제주에서 내일 갈 곳 세 군데를 골라 드려요." />
-    <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#151718" media="(prefers-color-scheme: dark)" />
+    <title>여행계획짜기 귀찮아:제주</title>
+    <meta name="description" content="P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)" />
     <!-- first paint already in the right background, no white flash at night (S49). The only colour literals outside the CSS tokens. -->
-    <style>html{background:#f7f7f5}@media (prefers-color-scheme:dark){html{background:#151718}}</style>
+    <style>html{background:#ffffff}@media (prefers-color-scheme:dark){html{background:#0f1319}}</style>
     <!-- a mood tapped before the app script has run (slow first visit) is kept; the app carries it out once loaded -->
     <script>(function(w){w.__early=function(e){var b=e.target&&e.target.closest&&e.target.closest('[data-mood]');if(b)w.__tap=b.getAttribute('data-mood')};w.addEventListener('click',w.__early,true)})(window)</script>
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" href="./icons/icon-192.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <!-- link previews (KakaoTalk, X, …): __SITE__ is the site's address from the build env SITE_URL (docs/deploy.md), empty = relative -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="여행계획짜기 귀찮아:제주" />
+    <meta property="og:title" content="여행계획짜기 귀찮아:제주" />
+    <meta property="og:description" content="P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta property="og:image" content="__SITE__/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="여행계획짜기 귀찮아:제주" />
+    <meta property="og:url" content="__SITE__/" />
+    <link rel="canonical" href="__SITE__/" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="여행계획짜기 귀찮아:제주" />
+    <meta name="twitter:description" content="P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta name="twitter:image" content="__SITE__/og.png" />
+    <!-- absolute paths: the page works at any address (a deep link, a host or worker fallback; ADR-0063) -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <!-- for search engines and AI agents (ADR-0067): what the app is, and the deep link that opens a result (public/llms.txt) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "__SITE__/#website",
+            "name": "여행계획짜기 귀찮아:제주",
+            "alternateName": ["여행계획짜기 귀찮아", "여행계획짜기 귀찮아 제주", "계획귀찮아"],
+            "url": "__SITE__/",
+            "inLanguage": "ko"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "__SITE__/#app",
+            "name": "여행계획짜기 귀찮아:제주",
+            "url": "__SITE__/",
+            "description": "여행계획짜기 귀찮아:제주는 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 P 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너다.",
+            "applicationCategory": "TravelApplication",
+            "operatingSystem": "Web",
+            "inLanguage": "ko",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+            "areaServed": { "@type": "AdministrativeArea", "name": "제주특별자치도" },
+            "isPartOf": { "@id": "__SITE__/#website" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "description": "기분(mood: rest·walk·new·food·any), 세부 지역(area: aewol 등 15곳 또는 here), 범위(reach: walk·drive30·drive60), 날짜(date: YYYY-MM-DD), 실내만(indoor: 1)으로 갈 만한 곳 3곳을 바로 연다. 값은 /llms.txt 참고.",
+              "target": { "@type": "EntryPoint", "urlTemplate": "__SITE__/?mood={mood}&area={area}&reach={reach}&date={date}&indoor={indoor}" },
+              "query-input": ["required name=mood", "optional name=area", "optional name=reach", "optional name=date", "optional name=indoor"]
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="app" class="app">
       <header class="top">
-        <button id="basis" class="basis" type="button" aria-haspopup="dialog" aria-label="내 주변, 기준 바꾸기"><span>내 주변</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button id="basis" class="basis" type="button" aria-haspopup="dialog" aria-label="여기 근처, 기준 바꾸기"><span>여기 근처</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button id="saved" class="saved-btn" type="button" aria-pressed="false" aria-label="저장한 곳 0개" hidden><svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z"/></svg><span class="n">0</span></button>
       </header>
       <main id="main">
         <section id="home" aria-labelledby="ask">
           <p class="date" id="date"></p>
-          <h1 class="ask" id="ask">내일은 어떤 기분이에요?</h1>
+          <h1 class="ask" id="ask">지금 뭐 하고 싶어요?</h1>
           <ul class="moods">
-            <li><button class="mood" type="button" data-mood="rest"><span>푹 쉬고 싶어</span><svg class="i-go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
-            <li><button class="mood" type="button" data-mood="walk"><span>좀 걷고 싶어</span><svg class="i-go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
-            <li><button class="mood" type="button" data-mood="new"><span>새로운 거 해보고 싶어</span><svg class="i-go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
-            <li><button class="mood" type="button" data-mood="food"><span>맛있는 거 먹고 싶어</span><svg class="i-go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="rest"><span>푹 쉬고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="walk"><span>좀 걷고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="new"><span>새로운 거 해보고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
+            <li><button class="mood" type="button" data-mood="food"><span>맛있는 거 먹고 싶어</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>
           </ul>
           <button class="any" type="button" data-mood="any"><span>아무거나 골라줘</span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+          <!-- ADR-0063: a backup link to merge, or the in-app browser notice (filled by render.ts) -->
+          <div id="homeNote" class="inform" hidden></div>
+          <!-- for readers without JS (AI crawlers, specs/seo-landing.md OQ3): what the app is, and the static pages (ADR-0072) -->
+          <noscript>
+            <h2>여행계획짜기 귀찮아:제주는 어떤 앱이에요?</h2>
+            <p>여행계획짜기 귀찮아:제주는 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 P(즉흥·무계획형) 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너예요. 일정이나 코스는 짜 드리지 않아요.</p>
+            <p>푹 쉬고 싶어, 좀 걷고 싶어, 새로운 거 해보고 싶어, 맛있는 거 먹고 싶어, 아무거나 골라줘. 다섯 기분 중 하나를 누르면 지금 위치나 숙소, 고른 동네에서 가까운 곳 세 군데를 차로 몇 분인지와 함께 골라 드려요.</p>
+            <p>이 화면은 자바스크립트를 켜야 움직여요. 동네별로 먼저 보려면 <a href="/jeju/">P를 위한 제주 무계획 여행</a>에서 한경, 한림, 애월, 신제주, 구제주, 조천, 구좌, 우도, 대정, 안덕, 중문, 서귀포 시내, 남원, 표선, 성산을 둘러보세요.</p>
+            <p>정보·사진: 비짓제주(제주관광공사)</p>
+          </noscript>
         </section>
-        <section id="results" aria-labelledby="resultsTitle" hidden>
+        <section id="results" aria-labelledby="crumb" hidden>
           <div class="head">
-            <h1 class="title" id="resultsTitle" tabindex="-1"></h1>
-            <button class="change" type="button" data-action="change" aria-label="기분 바꾸기">바꾸기</button>
+            <h1 class="crumb" id="crumb" tabindex="-1"></h1>
+            <button class="tbtn change" type="button" data-action="change" aria-label="기분 바꾸기">바꾸기</button>
           </div>
           <div id="foodSub" class="tabs" role="group" aria-label="먹을 것 종류" hidden>
             <button class="tab" type="button" data-sub="meal" aria-pressed="true">식사</button>
             <button class="tab" type="button" data-sub="cafe" aria-pressed="false">카페·디저트</button>
           </div>
+          <div id="newSub" class="tabs" role="group" aria-label="새로운 거 종류" hidden>
+            <button class="tab" type="button" data-sub="mix" aria-pressed="true">섞어서</button>
+            <button class="tab" type="button" data-sub="sight" aria-pressed="false">구경</button>
+            <button class="tab" type="button" data-sub="do" aria-pressed="false">체험</button>
+          </div>
           <p id="status" class="status" role="status"></p>
           <div id="cards" class="picks"></div>
+          <p class="credit">정보·사진: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" target="_blank" rel="noopener">visitjeju.net</a></p>
+          <!-- OQ3 (ADR-0072): the static pages, one small line under the results -->
+          <p class="landing"><a href="/jeju/">동네별로 둘러보기</a></p>
         </section>
         <section id="savedView" aria-labelledby="savedTitle" hidden>
           <div class="head">
             <h1 class="title" id="savedTitle" tabindex="-1">저장한 곳<span class="count"></span></h1>
-            <button class="change" type="button" data-action="close-saved">돌아가기</button>
+            <button class="tbtn back" type="button" data-action="close-saved">돌아가기</button>
           </div>
+          <!-- ADR-0063: the home-screen nudge, once (filled by render.ts) -->
+          <div id="nudge" class="inform" hidden></div>
           <p class="sort"></p>
           <div class="picks"></div>
-          <p class="foot"></p>
+          <p class="foot">이 브라우저에만 저장돼요. 다른 기기나 앱에서는 안 보여요.</p>
+          <div class="track" hidden>
+            <p id="trackNote">어디가 좋았는지 익명으로 세어요.</p>
+            <button class="tbtn" type="button" data-action="track" aria-describedby="trackNote">기록 끄기</button>
+          </div>
+          <div class="backup">
+            <button class="tbtn" type="button" data-action="backup">링크로 백업</button>
+            <p id="backupNote" class="note" role="status"></p>
+          </div>
+          <!-- ADR-0071: the map app the cards open; one line, remembered on this device -->
+          <div class="mapapp" role="group" aria-labelledby="mapAppLabel">
+            <p id="mapAppLabel">지도 앱</p>
+            <button class="tbtn" type="button" data-action="map-app" data-app="naver" aria-pressed="true">네이버지도</button>
+            <button class="tbtn" type="button" data-action="map-app" data-app="kakao" aria-pressed="false">카카오맵</button>
+            <button class="tbtn" type="button" data-action="map-app" data-app="tmap" aria-pressed="false">TMAP</button>
+          </div>
+          <p id="mapAppNote" class="note" role="status"></p>
+          <div class="about">
+            <p class="credit">정보·사진: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" target="_blank" rel="noopener">visitjeju.net</a></p>
+            <a class="tbtn" href="/privacy">개인정보 처리 안내</a>
+          </div>
         </section>
       </main>
     </div>

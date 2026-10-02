@@ -3,16 +3,20 @@
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
 import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
+import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './dates';
+import { readDeepLink, type DeepLink } from './deeplink';
 import { LocateError, locateGps, resolveOrigin, type GeoDeps, type OriginResult } from './effects';
-import { bookingUrl, kakaoUrl } from './links';
+import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
+import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
-import type { Button, Sub } from './pick';
+import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
-import { basisIsCurrent, cardsValid, initialState, moodIntent, reduce, sessionOf, staticOrigin, type Action, type Intent, type State } from './state';
+import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, createStore } from './store';
-import type { Basis, Route, Stay } from './types';
+import { contextOf, createTracker, type EventName } from './track';
+import type { Basis, Route, Stay, When } from './types';
 
-export { AREAS, LocateError, bookingUrl, inJeju, kakaoUrl };
+export { AREAS, LocateError, inJeju, kakaoUrl };
 export type { NoOrigin as LocateFailure } from './types';
 
 export interface Delays {
@@ -22,15 +26,13 @@ export interface Delays {
   long: number;
   /** same control tapped again within this window is ignored (S35). */
   guard: number;
-  /** how long the first-save hint stays (S40). */
-  hint: number;
   /** give up waiting for a self-caused popstate after this long. */
   settle: number;
   /** after a tap changes the screen, the 2nd tap of a double tap is swallowed (it would land on a card link). */
   quiet: number;
   dataTimeout: number;
 }
-export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, hint: 3000, settle: 1000, quiet: 300, dataTimeout: 15000 };
+export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 10000 };
 
 export interface Deps extends GeoDeps {
   loadSpots(): Promise<unknown>;
@@ -38,11 +40,26 @@ export interface Deps extends GeoDeps {
   /** sessionStorage — the cards being looked at survive a reload / discarded tab (S54). */
   session?: Storage | null;
   online?(): boolean;
-  userAgent?: string;
   now?(): number;
-  /** wall clock for the date line (defaults to the device clock). */
+  /** wall clock for the date line and the saved days (defaults to the device clock; read as Asia/Seoul). */
   today?(): Date;
   delays?: Partial<Delays>;
+  /** where anonymous usage counts go (VITE_EVENTS_URL, ADR-0061); missing = nothing is kept or sent. */
+  eventsUrl?: string;
+  /** navigator.sendBeacon (the default when missing). */
+  beacon?(url: string, body: string): boolean;
+  /** ADR-0063 2a: ask the browser to keep this site's storage (navigator.storage.persist); once a visit, at
+   * the first save. Missing = not asked. */
+  persist?(): Promise<unknown>;
+  /** the browser's user agent (in-app browser, iOS); navigator.userAgent when missing. */
+  userAgent?: string;
+  /** text onto the clipboard, false when it could not (copyText when missing). */
+  copy?(text: string): Promise<boolean>;
+}
+
+/** The browser's install prompt (Chrome, Edge, Samsung Internet): not in the DOM typings. */
+interface InstallPrompt extends Event {
+  prompt(): Promise<unknown>;
 }
 
 export interface App {
@@ -62,8 +79,6 @@ interface EarlyTap {
   __early?: EventListener;
   __tap?: string;
 }
-/** KakaoTalk / Instagram / Facebook / Naver / Line in-app browsers keep their own storage (S55). */
-const IN_APP = /KAKAOTALK|Instagram|FBAN|FBAV|NAVER\(inapp|Line\//;
 
 export function mountApp(doc: Document, deps: Deps): App {
   const win = doc.defaultView;
@@ -73,7 +88,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     target?.addEventListener(type, fn, { signal, capture });
 
   const delays: Delays = { ...DELAYS, ...deps.delays };
-  const now = deps.now ?? (() => Date.now());
+  // Monotonic: a device clock stepped back (NTP, manual change) must not stretch the double-tap windows.
+  const now = deps.now ?? (() => performance.now());
   const online = () => deps.online?.() ?? win?.navigator.onLine ?? true;
   const els = findEls(doc);
   const store = createStore(deps.storage, deps.session ?? null);
@@ -83,8 +99,37 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'spots', spots });
     retryFailedLoad();
   });
-  const renderer = createRenderer(doc, els, { inApp: IN_APP.test(deps.userAgent ?? win?.navigator.userAgent ?? '') });
-  let state = initialState({ ...store.load(), offline: !online() });
+  const renderer = createRenderer(doc, els);
+  const clockNow = () => deps.today?.() ?? new Date();
+  const today0 = dayOf(clockNow());
+  const loaded = store.load(today0);
+  // ADR-0063 2: an in-app browser keeps its own storage (say so, once); the home-screen nudge, once.
+  const nav0 = win?.navigator;
+  const ua = deps.userAgent ?? nav0?.userAgent ?? '';
+  const inapp = inAppOf(ua);
+  let standalone = false;
+  try {
+    standalone = !!win?.matchMedia?.('(display-mode: standalone)').matches || (nav0 as { standalone?: boolean } | undefined)?.standalone === true;
+  } catch {
+    /* no matchMedia */
+  }
+  const keep0: Partial<Keep> = {
+    inapp,
+    inappNote: inapp && !loaded.inappSeen ? 'show' : null,
+    install: installHow({ ua, touch: nav0?.maxTouchPoints ?? 0, standalone, prompt: false }),
+  };
+  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0 });
+  const tracker = createTracker({
+    url: deps.eventsUrl,
+    send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
+    enabled: () => state.tracking,
+    online,
+    doc,
+    signal,
+  });
+  // The note and 기록 끄기 only where something is collected: without an address they would say what isn't so.
+  const trackBox = els.track.parentElement;
+  if (trackBox) trackBox.hidden = !deps.eventsUrl;
 
   const timers = new Set<ReturnType<typeof setTimeout>>();
   function later(ms: number, fn: () => void) {
@@ -106,6 +151,42 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (signal.aborted) return;
     state = reduce(state, a);
     renderer.render(state);
+    countShown();
+  }
+
+  // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
+  /** `day`: the day a heart is about (dated = not today). */
+  function count(e: EventName, id?: string, day?: Day) {
+    tracker.track({ e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}) });
+  }
+  /** Each new set of 3 on screen, once: a re-render, the same 3 brought back or restored after a reload are
+   * not shown again. */
+  let shownSeq = 0;
+  function countShown() {
+    const c = state.cards;
+    if (!c || c.seq === shownSeq || state.view !== 'cards' || state.phase.k !== 'ready') return;
+    shownSeq = c.seq;
+    if (c.how === 'restore') return;
+    for (const card of c.list) count('shown', card.spot.id);
+  }
+  /** A link tapped twice (a 2nd tab opening) counts once. */
+  const lastLink = new Map<string, number>();
+  function countLink(e: 'map' | 'book', id: string) {
+    const key = `${e}:${id}`;
+    const t = now();
+    const prev = lastLink.get(key);
+    lastLink.set(key, t);
+    if (prev === undefined || t - prev >= delays.guard) count(e, id);
+  }
+  function setTracking(on: boolean) {
+    if (!on) tracker.drop();
+    dispatch({ type: 'tracking', on });
+    store.setTracking(on);
+  }
+  /** 지도 앱 (ADR-0071): the cards' links follow at once; kept on this device. */
+  function setMapApp(app: MapApp) {
+    dispatch({ type: 'mapApp', app });
+    store.setMapApp(app);
   }
 
   /** Same control again within `delays.guard` → ignored (double tap = one tap, S35). Hearts are toggles and not guarded. */
@@ -218,8 +299,119 @@ export function mountApp(doc: Document, deps: Deps): App {
       r = { view: 'home', overlay: null };
     }
     dispatch({ type: 'route', route: r });
+    // Forward onto a 다른 날로 entry whose row is gone (a reload): step back off it, like a stale results entry.
+    if (r.overlay === 'move' && state.overlay !== 'move') nav.back({ view: state.view, overlay: null });
     if (state.view !== prev.view) enteredView();
+    // Forward onto the results after 바꾸기 (which cleared the record): a reload here must come back to them.
+    remember();
   }
+
+  // --- keeping saves without a login (ADR-0063 2) ---
+  let installSeen = loaded.installSeen;
+  let persistAsked = false;
+  /** At the first save of a visit: the browser may then keep this site's storage from being cleared. */
+  function askPersist() {
+    if (persistAsked || !deps.persist) return;
+    persistAsked = true;
+    try {
+      void Promise.resolve(deps.persist()).catch(() => undefined);
+    } catch {
+      /* not offered */
+    }
+  }
+  const copy = (text: string) => (deps.copy ? deps.copy(text) : copyText(doc, text)).catch(() => false);
+  const home = () => appHome(win?.location.href ?? 'https://localhost/');
+  /** A backup link opened here (`#s=…`): ask whether to merge it; the fragment goes from the address at once
+   * (a reload or a shared address does not carry it on). One that does not read is dropped quietly. */
+  function takeBackup() {
+    const loc = win?.location;
+    const b = loc ? readBackup(loc.hash) : null;
+    if (!loc || !b?.found) return;
+    try {
+      win!.history.replaceState(win!.history.state, '', loc.pathname + loc.search);
+    } catch {
+      /* sandboxed */
+    }
+    if (b.entries) dispatch({ type: 'keep', keep: { restore: { k: 'ask', entries: b.entries } } });
+    // 비 와요 rode along (ADR-0065): this session starts with it on
+    if (b.indoor) setIndoor(true);
+    // so did a map app other than 네이버지도 (ADR-0071)
+    if (b.mapApp) setMapApp(b.mapApp);
+  }
+  /** A deep link (`/?mood=…&area=…`, ADR-0067): read once, and the query goes from the address at once (like
+   * `#s=`), so a reload, back or forward follows the usual rules. Applied only on a fresh first-screen entry. */
+  function takeDeepLink(apply: boolean): DeepLink | null {
+    const loc = win?.location;
+    if (!loc?.search) return null;
+    const link = readDeepLink(loc.search, state.today);
+    try {
+      win!.history.replaceState(win!.history.state, '', loc.pathname + loc.hash);
+    } catch {
+      /* sandboxed */
+    }
+    return apply ? link : null;
+  }
+  /** As if chosen in the basis sheet: 얼마나, 비 와요, 언제 and 기준 kept as there; the mood is tapped after. */
+  function applyDeepLink(link: DeepLink) {
+    if (link.reach && link.reach !== state.reach) {
+      dispatch({ type: 'reach', reach: link.reach });
+      store.setReach(link.reach);
+    }
+    if (link.indoor !== undefined) setIndoor(link.indoor);
+    if (link.when) setWhen(link.when);
+    if (link.area === 'here') {
+      dispatch({ type: 'basis', basis: 'gps' });
+      store.setBasis('gps');
+    } else if (link.area) {
+      dispatch({ type: 'basis', basis: 'region', region: link.area });
+      store.setBasis('region');
+      store.setRegion(link.area);
+    }
+  }
+  function mergeBackup() {
+    const r = state.keep.restore;
+    if (r?.k !== 'ask') return;
+    // places this data no longer has are left behind (once the data is in)
+    const idx = state.spots ? spotIndex(state.spots) : null;
+    const { entries, added } = store.mergeSaved(idx ? r.entries.filter((e) => idx.has(e.id)) : r.entries);
+    dispatch({ type: 'saved', entries });
+    dispatch({ type: 'keep', keep: { restore: { k: 'done', added } } });
+    if (added) askPersist();
+  }
+  async function backup() {
+    const entries = store.saved();
+    if (!entries.length) return;
+    const ok = await copy(backupUrl(home(), entries, state.indoor, state.mapApp));
+    if (!signal.aborted && state.view === 'saved') dispatch({ type: 'keep', keep: { backup: ok ? 'copied' : 'failed' } });
+  }
+  /** Outside KakaoTalk (its own link does it): the address, with what is saved here, onto the clipboard. */
+  async function inappCopy() {
+    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved, state.indoor, state.mapApp) : home());
+    if (!signal.aborted && state.keep.inappNote) dispatch({ type: 'keep', keep: { inappNote: ok ? 'copied' : 'failed' } });
+  }
+  let installPrompt: InstallPrompt | null = null;
+  async function install() {
+    const p = installPrompt;
+    installPrompt = null;
+    dispatch({ type: 'keep', keep: { nudge: false, install: null } });
+    try {
+      await p?.prompt();
+    } catch {
+      /* already used or refused */
+    }
+  }
+  const KEEP_ACTIONS: Record<string, () => void> = {
+    'restore-merge': mergeBackup,
+    'restore-cancel': () => dispatch({ type: 'keep', keep: { restore: null } }),
+    'inapp-copy': () => void inappCopy(),
+    'inapp-close': () => {
+      store.setInappSeen();
+      dispatch({ type: 'keep', keep: { inappNote: null } });
+    },
+    'nudge-close': () => dispatch({ type: 'keep', keep: { nudge: false } }),
+    install: () => void install(),
+    backup: () => void backup(),
+  };
 
   // --- intents ---
   function onMood(b: Button) {
@@ -230,7 +422,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!intent) return;
     const from = state.view;
     if (from === 'home') hush();
+    // a merge already answered has said its piece
+    if (state.keep.restore?.k === 'done') dispatch({ type: 'keep', keep: { restore: null } });
     dispatch({ type: 'mood', button: b });
+    count('tap');
     if (from === 'home') nav.push(CARDS);
     request(intent);
   }
@@ -252,8 +447,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     nav.back(HOME);
   }
 
-  function onSub(sub: Sub) {
-    if (guarded(`sub:${sub}`) || state.view !== 'cards' || state.mood !== 'food' || state.sub === sub) return;
+  /** 식사 | 카페·디저트 on 먹기, 섞어서 | 구경 | 체험 on 새로운 거 (ADR-0064): the same rules. */
+  function onSub(sub: Tab) {
+    const forMood = sub === 'meal' || sub === 'cafe' ? 'food' : 'new';
+    const current = forMood === 'food' ? state.sub : state.newSub;
+    if (guarded(`sub:${sub}`) || state.view !== 'cards' || state.mood !== forMood || current === sub) return;
     dispatch({ type: 'sub', sub });
     request('show');
   }
@@ -263,6 +461,13 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'openSaved' });
     nav.push(SAVED);
     request('show');
+    // The home-screen nudge (ADR-0063 2d): once, the first time the saved list opens after a save, where it
+    // is about what was saved. Never in an in-app browser (its notice says where to go) or the installed app.
+    if (!installSeen && state.keep.install && hasSaved(state)) {
+      installSeen = true;
+      store.setInstallSeen();
+      dispatch({ type: 'keep', keep: { nudge: true } });
+    }
   }
   function closeSaved() {
     hush();
@@ -284,7 +489,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function hush() {
     quietUntil = Math.max(quietUntil, now() + delays.quiet);
   }
-  function openOverlay(kind: 'basis' | 'stay') {
+  function openOverlay(kind: 'basis' | 'stay' | 'move') {
     if (state.overlay === kind) return;
     const was = state.overlay;
     stayToken++;
@@ -313,6 +518,28 @@ export function mountApp(doc: Document, deps: Deps): App {
     else request('show');
   }
 
+  /** 얼마나 (ADR-0060): like another basis — saved, the sheet closes, the results are picked again (new request
+   * id, rotation from the start). The saved list does not depend on it. The range in use again just closes. */
+  function changeReach(reach: Reach) {
+    if (reach === state.reach) return closeOverlay();
+    dispatch({ type: 'reach', reach });
+    store.setReach(reach);
+    closeOverlay();
+    if (state.view === 'cards') request('show');
+  }
+
+  function setIndoor(on: boolean) {
+    dispatch({ type: 'indoor', on });
+    store.setIndoor(on);
+  }
+  /** 비 와요(실내만) (ADR-0065): like 얼마나 — kept for the session, the sheet closes, the results are picked
+   * again (new request id, rotation from the start). The saved list does not depend on it. */
+  function toggleIndoor() {
+    setIndoor(!state.indoor);
+    closeOverlay();
+    if (state.view === 'cards') request('show');
+  }
+
   function stayHere() {
     if (state.overlay !== 'stay' || state.stayForm.pending) return;
     const token = ++stayToken;
@@ -324,19 +551,94 @@ export function mountApp(doc: Document, deps: Deps): App {
     });
   }
 
-  function onHeart(id: string) {
-    const { ids, added } = store.toggleSaved(id);
-    dispatch({ type: 'saved', ids });
-    if (added && !state.hintSeen) {
+  /** `day`: a saved-list row's heart (that day); a card's heart is about the day chosen now (지금 = today). */
+  function onHeart(id: string, day?: Day) {
+    tick(); // past midnight with the timer asleep: the heart goes to the real today
+    const date = day ?? whenDay(state);
+    // putting back a row taken out in this visit: where it was
+    const out = day ? state.unsaved.find((e) => e.id === id && e.date === day) : undefined;
+    const { entries, added, removed } = store.toggleSaved(id, date, out?.order);
+    dispatch({ type: 'saved', entries, removed: day ? removed : null });
+    if (added) askPersist();
+    count(added ? 'save' : 'unsave', id, date);
+    // The first save on the results screen says once where saved places go; it stays until the next
+    // intent (no timer, §6.13).
+    if (added && !state.hintSeen && state.view === 'cards') {
       store.setHintSeen();
       dispatch({ type: 'hint', id });
-      later(delays.hint, () => dispatch({ type: 'hintDone', id }));
     }
+  }
+
+  /** 언제 in the basis sheet: applied at once (label, hearts), the sheet stays open for 어디. No request:
+   * the cards do not depend on the day (ADR-0027). */
+  function setWhen(w: When) {
+    const when: When = w === 'now' || !isDay(w) || w <= state.today ? 'now' : w;
+    if (when === state.when) return;
+    dispatch({ type: 'when', when });
+    store.setWhen(when);
+  }
+
+  /** 날짜 고르기: the browser's own picker; where it cannot be opened, the date field itself is shown with
+   * 이 날로 beside it. Typed a digit at a time it is a real date long before it is the one meant (the day's
+   * first digit), so there it applies only on 이 날로 or Enter, never on `change`. */
+  function pickDay(b: HTMLElement) {
+    const input = b.parentElement?.querySelector<HTMLInputElement>('input[type="date"]');
+    if (!input) return;
+    try {
+      if (typeof input.showPicker !== 'function') throw new Error('no picker');
+      input.showPicker();
+    } catch {
+      input.classList.remove('sr');
+      input.classList.add('date-in');
+      input.removeAttribute('tabindex');
+      input.removeAttribute('aria-hidden');
+      input.parentElement?.classList.add('open');
+      const ok = input.parentElement?.querySelector<HTMLElement>('[data-action="day-ok"]');
+      if (ok) ok.hidden = false;
+      input.focus();
+    }
+  }
+  /** A day from today to a year on; anything else (typed past the field's min/max) is ignored. */
+  function onDayPicked(value: string) {
+    if (!isDay(value) || value < state.today || value > addDays(state.today, DAYS_AHEAD)) return;
+    if (state.overlay === 'basis') setWhen(value);
+    else if (state.overlay === 'move') moveTo(value);
+  }
+
+  // --- saved list rows: 위로 / 아래로 / 다른 날로 / 지난 날 ---
+  function moveRow(id: string, day: Day, dir: -1 | 1) {
+    if (guarded(`${dir}:${id}|${day}`)) return;
+    hush(); // the row moves under the finger: a 2nd tap must not land on the one that took its place
+    dispatch({ type: 'saved', entries: store.moveSaved(id, day, dir) });
+  }
+  function openMove(id: string, day: Day) {
+    if (guarded('move-day')) return;
+    dispatch({ type: 'moveTarget', id, date: day });
+    openOverlay('move');
+  }
+  function moveTo(day: Day) {
+    const t = state.moveTarget;
+    if (state.overlay !== 'move' || !t) return;
+    if (day !== t.date && day >= state.today) {
+      dispatch({ type: 'saved', entries: store.moveToDay(t.id, t.date, day) });
+      dispatch({ type: 'moveTarget', id: t.id, date: day }); // focus goes back to the row in its new day
+    }
+    closeOverlay();
   }
 
   function onSheetButton(b: HTMLElement) {
     const action = b.dataset.action;
     if (action === 'close') return closeOverlay();
+    if (action === 'pick-day') return guarded('pick-day') ? undefined : pickDay(b);
+    if (action === 'day-ok') {
+      const input = b.parentElement?.querySelector<HTMLInputElement>('input[type="date"]');
+      return input ? onDayPicked(input.value) : undefined;
+    }
+    if (b.dataset.when) return guarded(`when:${b.dataset.when}`) ? undefined : setWhen(b.dataset.when);
+    if (b.dataset.day) return moveTo(b.dataset.day);
+    const reach = b.dataset.reach as Reach | undefined;
+    if (reach && REACHES.includes(reach)) return guarded(`reach:${reach}`) ? undefined : changeReach(reach);
+    if (b.dataset.indoor !== undefined) return guarded('indoor') ? undefined : toggleIndoor();
     if (action === 'restay') return openOverlay('stay');
     if (action === 'stay-here') return stayHere();
     const basis = b.dataset.basis;
@@ -352,19 +654,44 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   function onMainButton(b: HTMLButtonElement) {
+    const keepAct = b.dataset.action ? KEEP_ACTIONS[b.dataset.action] : undefined;
+    if (keepAct) return guarded(`keep:${b.dataset.action}`) ? undefined : keepAct();
     if (b.dataset.mood) return onMood(b.dataset.mood as Button);
-    if (b.dataset.sub) return onSub(b.dataset.sub as Sub);
-    if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id);
+    if (b.dataset.sub) return onSub(b.dataset.sub as Tab);
+    if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
     const action = b.dataset.action;
+    if (state.view === 'saved' && b.dataset.id && b.dataset.date) {
+      if (action === 'up' || action === 'down') return moveRow(b.dataset.id, b.dataset.date, action === 'up' ? -1 : 1);
+      if (action === 'move-day') return openMove(b.dataset.id, b.dataset.date);
+    }
+    if (action === 'past') {
+      if (!guarded('past') && state.view === 'saved') {
+        hush(); // the days gone by open under the finger
+        dispatch({ type: 'pastOpen', open: !state.pastOpen });
+      }
+      return;
+    }
     if (action === 'more') return onMore();
     if (action === 'change') return onChange();
     if (action === 'choose-area') return openOverlay('basis');
     if (action === 'retry') {
-      if (!guarded('retry')) request('show');
+      if (!guarded('retry')) {
+        hush(); // the cards replace the notice under the finger
+        request('show');
+      }
       return;
     }
     if (action === 'close-saved') {
       if (!guarded('close-saved') && state.view === 'saved') closeSaved();
+      return;
+    }
+    if (action === 'track') {
+      if (!guarded('track')) setTracking(!state.tracking);
+      return;
+    }
+    if (action === 'map-app') {
+      const app = b.dataset.app as MapApp;
+      if (MAP_APPS.includes(app) && !guarded(`map-app:${app}`)) setMapApp(app);
       return;
     }
     const area = areaByName(b.dataset.area);
@@ -383,6 +710,15 @@ export function mountApp(doc: Document, deps: Deps): App {
     const b = buttonIn(e, els.main);
     if (b && !state.overlay) onMainButton(b);
   });
+  // the map app's place link (the card's name), 길찾기 and 예약 links: counted, then the browser opens them as usual.
+  on(els.main, 'click', (e) => {
+    const a = (e.target as Element | null)?.closest?.('a');
+    const id = a && els.main.contains(a) ? a.closest<HTMLElement>('.card[data-id]')?.dataset.id : undefined;
+    if (!a || !id) return;
+    // 길찾기 (ADR-0067) leaves for the map app too: the same event
+    if (a.classList.contains('card-link') || a.classList.contains('go')) countLink('map', id);
+    else if (a.classList.contains('book')) countLink('book', id);
+  });
   on(els.basis, 'click', () => {
     if (!state.overlay && !guarded('basis')) openOverlay('basis');
   });
@@ -396,6 +732,17 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (t.dataset?.action === 'close') return closeOverlay(); // scrim
     const b = buttonIn(e, els.sheet);
     if (b && !b.disabled) onSheetButton(b);
+  });
+  // The browser's picker reports the day once, on `change`; the shown field (no picker) waits for 이 날로 / Enter.
+  on(els.sheet, 'change', (e) => {
+    const t = e.target as HTMLInputElement;
+    if (t.type === 'date' && !t.classList.contains('date-in')) onDayPicked(t.value);
+  });
+  on(els.sheet, 'keydown', (e) => {
+    const t = e.target as HTMLInputElement;
+    if ((e as KeyboardEvent).key !== 'Enter' || t.type !== 'date' || !t.classList.contains('date-in')) return;
+    e.preventDefault();
+    onDayPicked(t.value);
   });
   on(
     doc,
@@ -428,7 +775,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       closeOverlay();
     } else if (k.key === 'Tab') {
       // Focus stays inside the sheet (inert covers modern browsers; this covers the rest, S58).
-      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled])')];
+      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"])')];
       if (!f.length) return;
       const i = f.indexOf(doc.activeElement as HTMLElement);
       if (k.shiftKey && i <= 0) {
@@ -440,12 +787,36 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
     }
   });
-  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write).
+  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write); so does 기록.
   on(win, 'storage', (e) => {
     const s = e as StorageEvent;
     if (s.storageArea && deps.storage && s.storageArea !== deps.storage) return;
-    if (s.key === KEYS.saved || s.key === null) dispatch({ type: 'saved', ids: store.saved() });
+    if (s.key === KEYS.savedV2 || s.key === null) dispatch({ type: 'saved', entries: store.saved() });
     if (s.key === KEYS.hint && s.newValue === 'true') dispatch({ type: 'hintSeen' });
+    if (s.key === KEYS.mapApp || s.key === null) dispatch({ type: 'mapApp', app: store.mapApp() });
+    // 기록 끄기 in another tab stops this one too: what it queued goes, nothing more is sent (ADR-0061).
+    if (deps.storage && (s.key === KEYS.track || s.key === null)) {
+      const on = store.tracking();
+      if (on !== state.tracking) {
+        if (!on) tracker.drop();
+        dispatch({ type: 'tracking', on });
+      }
+    }
+  });
+  // A backup link pasted into the address bar of an open tab only changes the fragment.
+  on(win, 'hashchange', () => {
+    if (win?.location.hash.startsWith(BACKUP_HASH)) takeBackup();
+  });
+  // Chrome's own install prompt, kept for the nudge's 홈 화면에 추가 (its mini-infobar stays away).
+  on(win, 'beforeinstallprompt', (e) => {
+    if (inapp || standalone) return;
+    e.preventDefault();
+    installPrompt = e as InstallPrompt;
+    if (!state.keep.install) dispatch({ type: 'keep', keep: { install: 'prompt' } });
+  });
+  on(win, 'appinstalled', () => {
+    installPrompt = null;
+    dispatch({ type: 'keep', keep: { install: null, nudge: false } });
   });
   on(win, 'online', () => {
     dispatch({ type: 'offline', offline: false });
@@ -456,12 +827,27 @@ export function mountApp(doc: Document, deps: Deps): App {
   // what the browser says about location permission.
   on(doc, 'visibilitychange', () => {
     if (doc.visibilityState !== 'visible') return;
-    showDate();
+    tick();
     checkPermission();
   });
 
-  function showDate() {
-    renderer.setDate(dateLabel(deps.today?.() ?? new Date()));
+  /** A new day in Jeju (the midnight timer, or back in the foreground): the date line, and a chosen day
+   * that has now come or gone goes back to 지금 (D5); saves of days gone by move to 지난 날. */
+  let midnight: ReturnType<typeof setTimeout> | null = null;
+  function tick() {
+    const now = clockNow();
+    const day = dayOf(now);
+    if (day !== state.today) {
+      const was = state.when;
+      dispatch({ type: 'today', today: day });
+      if (state.when !== was) store.setWhen(state.when);
+    }
+    renderer.setDate(dateLabel(now));
+    if (midnight) {
+      clearTimeout(midnight);
+      timers.delete(midnight);
+    }
+    midnight = later(msToNextDay(now) + 1000, tick);
   }
   function checkPermission() {
     if (!deps.geoPermission || state.basis !== 'gps') return;
@@ -485,8 +871,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   } catch {
     /* sandboxed */
   }
-  showDate();
+  tick();
   renderer.render(state);
+  takeBackup();
   checkPermission();
   // Taps on the static mood buttons before this module ran: the last one is carried out now.
   const early = win as (Window & EarlyTap) | null;
@@ -496,6 +883,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     delete early.__early;
     delete early.__tap;
   }
+  const link = takeDeepLink(nav.initial.view === 'home');
+  if (link) applyDeepLink(link);
   const rec = nav.initial.view !== 'home' ? store.readSession() : null;
   if (nav.initial.view === 'cards' && rec) {
     // The same mood again: its 3 cards if they were shown (no rotation), else asked again — a reload during
@@ -510,6 +899,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     // A results entry with nothing to show for it (no session record: storage blocked or cleared): go
     // back past it, so the phone's back button never has an empty entry to swallow.
     nav.back(HOME);
+  } else if (link?.mood) {
+    onMood(link.mood);
   } else if (earlyTap && BUTTONS.includes(earlyTap as Button)) {
     onMood(earlyTap as Button);
   }

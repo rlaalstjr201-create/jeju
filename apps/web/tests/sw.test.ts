@@ -22,7 +22,7 @@ const base = (over: Partial<SwInput> = {}): SwInput => ({
 describe('S26 배포 직후 — 새 코드와 새 데이터가 함께', () => {
   it('the app fetches spots.json with a content-hash query, and the SW precaches that same URL', () => {
     const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');
-    expect(main).toContain('./spots.json?v=${__SPOTS_V__}');
+    expect(main).toContain('${BASE}spots.json?v=${__SPOTS_V__}');
     const cfg = readFileSync(resolve(root, 'vite.config.ts'), 'utf8');
     expect(cfg).toMatch(/__SPOTS_V__: JSON\.stringify\(SPOTS_V\)/);
     const { precache } = buildServiceWorker(base());
@@ -128,6 +128,12 @@ function runSw(source: string, fetchImpl: (req: unknown) => Promise<unknown>, ca
       listeners.fetch(e);
       return done();
     },
+    /** true when the worker answered the request itself (respondWith). */
+    handles(url: string, init: { method?: string } = {}) {
+      let responded = false;
+      listeners.fetch({ request: new FakeRequest(url, init), respondWith: () => (responded = true), waitUntil: () => undefined });
+      return responded;
+    },
   };
 }
 
@@ -200,11 +206,52 @@ describe('S23 약한 망 — 내비게이션', () => {
     await expect(sw.navigate()).resolves.toEqual({ ok: true, fresh: true });
   });
 
+  it("ADR-0063: the host's 404 (an unknown address) is shown as it is, not swapped for the app shell", async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const sw = runSw(source, async () => ({ ok: false, status: 404, page: '404.html' }), c);
+    await sw.install();
+    await expect(sw.navigate('https://app.test/nope/deep')).resolves.toEqual({ ok: false, status: 404, page: '404.html' });
+  });
+
   it('S21 first visit offline (nothing cached): the browser\'s own offline page', async () => {
     const c = fakeCaches();
     const { source } = buildServiceWorker(base());
     const sw = runSw(source, () => Promise.reject(new TypeError('offline')), c);
     await expect(sw.navigate()).rejects.toThrow('offline');
+  });
+});
+
+describe('U 익명 사용 기록 (ADR-0061) — 서비스워커는 이벤트 요청을 건드리지 않는다', () => {
+  it('a sendBeacon POST, same-origin or not, goes straight to the network: never answered from or put in the cache', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const fetched: unknown[] = [];
+    const sw = runSw(source, async (r) => (fetched.push(r), { ok: true }), c);
+    await sw.install();
+    const before = JSON.stringify([...(await c.api.keys())]);
+    expect(sw.handles('https://app.test/events', { method: 'POST' })).toBe(false);
+    expect(sw.handles('https://events.example/e', { method: 'POST' })).toBe(false);
+    expect(sw.handles('https://events.example/e')).toBe(false);
+    expect(fetched).toHaveLength(0);
+    expect(await c.api.match('https://app.test/events', { cacheName: (await c.api.keys())[0] })).toBeUndefined();
+    expect(JSON.stringify([...(await c.api.keys())])).toBe(before);
+  });
+});
+
+describe('정적 랜딩 (ADR-0072) — 서비스워커는 /jeju/**를 건드리지 않는다', () => {
+  it('pages and their stylesheet under /jeju go to the network as they are; the app and its files are still handled', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const res = { ok: true, clone: () => res };
+    const sw = runSw(source, async () => res, c);
+    await sw.install();
+    for (const u of ['https://app.test/jeju/', 'https://app.test/jeju', 'https://app.test/jeju/aewol/', 'https://app.test/jeju/aewol/some-place/', 'https://app.test/jeju/landing.css']) {
+      expect(sw.handles(u), u).toBe(false);
+    }
+    expect(sw.handles('https://app.test/')).toBe(true);
+    expect(sw.handles('https://app.test/assets/index-abc.js')).toBe(true);
+    expect(sw.handles('https://app.test/jejudo.png')).toBe(true);
   });
 });
 
@@ -314,5 +361,18 @@ describe('QA 2026-09-30 — 새 배포가 상주 앱에 닿는 길', () => {
     expect(await runsCachedCode(doc(CSS), cache(CSS), JS)).toBe(false); // new code, same styles
     expect(await runsCachedCode(doc(null), cache(JS), JS)).toBe(true);
     expect(await runsCachedCode(doc(CSS), undefined, JS)).toBe(false);
+  });
+});
+
+describe('ADR-0063 — absolute paths: the page works at any address', () => {
+  it('vite base is "/", and main.ts fetches data and registers the worker from it', () => {
+    const cfg = readFileSync(resolve(root, 'vite.config.ts'), 'utf8');
+    expect(cfg).toMatch(/base: '\/'/);
+    expect(cfg).toMatch(/appType: 'mpa'/); // no SPA fallback in dev/preview either
+    const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');
+    expect(main).toContain('.register(`${BASE}sw.js`)');
+    expect(main).toMatch(/const BASE = import\.meta\.env\.BASE_URL/);
+    const html = readFileSync(resolve(root, 'index.html'), 'utf8');
+    expect(html.match(/(?:href|src)="\.\//g)).toBeNull();
   });
 });

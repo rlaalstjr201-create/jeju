@@ -3,10 +3,14 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AREAS, LocateError, bookingUrl, kakaoUrl, mountApp, type App, type Deps } from '../src/app';
+import { AREAS, LocateError, kakaoUrl, mountApp, type App, type Deps } from '../src/app';
+import { bookLink, naverSearchUrl } from '../src/links';
+import { listed } from '../src/pick';
+import { nearestArea } from '../src/areas';
 import { cardTextProblem } from '../src/card-text';
 import { cleanReason } from '../src/data';
-import { distanceKm, pickCards, travel, travelText, type Point, type Sub } from '../src/pick';
+import { dayOf } from '../src/dates';
+import { pickCards, travel, travelText, type Point, type Sub } from '../src/pick';
 import { splitName } from '../src/render';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
@@ -60,7 +64,10 @@ const drawnName = (name: string) => {
 };
 // jsdom has no layout: scrolling is a no-op here.
 window.scrollTo = (() => undefined) as typeof window.scrollTo;
-const expectedNames = (o: Point, b: Parameters<typeof pickCards>[2]) => pickCards(realSpots, o, b).cards.map((c) => c.spot.name);
+// the app picks for today in Jeju (오일장 rank by the day, ADR-0066)
+const expectedNames = (o: Point, b: Parameters<typeof pickCards>[2]) => pickCards(realSpots, o, b, {}, undefined, undefined, false, dayOf(new Date())).cards.map((c) => c.spot.name);
+/** saved ids as stored (jeju.saved.v2), day by day in their order */
+const storedIds = (): string[] => (JSON.parse(window.localStorage.getItem('jeju.saved.v2') ?? '[]') as { id: string }[]).map((e) => e.id);
 
 beforeEach(() => {
   app?.destroy();
@@ -84,8 +91,8 @@ describe('S3 첫 화면', () => {
       '아무거나 골라줘',
     ]);
     expect(els).toEqual(expect.arrayContaining([...moods, $('#basis')]));
-    expect($('#basis').textContent).toBe('내 주변');
-    expect($('#basis').getAttribute('aria-label')).toBe('내 주변, 기준 바꾸기');
+    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').getAttribute('aria-label')).toBe('여기 근처, 기준 바꾸기');
   });
 
   it('the 5 mood buttons are in the static HTML itself (ADR-0028) — shown before data loads', () => {
@@ -105,9 +112,10 @@ describe('S3 첫 화면', () => {
 describe('S3 카드', () => {
   // Changed on purpose (S12·S57, design/SPEC.md §7): the first card says where the time is measured
   // from ("여기서 …"), a spot under 1km from a GPS fix reads "걸어서", and the first card ends with where a
-  // tap goes (" · 카카오맵"). When all three are the same trip it is said once ("셋 다 …", QA 2026-09-30:
-  // "차로 약 5분" three times on one screen carried no information). The time formula is unchanged.
-  it('tap → 3 cards, each with image, name, reason, "차로 약 N분" (first card with its origin, said once if all equal)', async () => {
+  // tap goes (" · 카카오맵"). 3판 (§7): the first card always keeps its own line; when the two row cards
+  // are the same trip it is said once on the 아니면 line ("아니면 · 둘 다 …") and the rows have no meta
+  // (was: "셋 다 …" on the first card). The time formula is unchanged.
+  it('tap → 3 cards, each with image, name, reason, "차로 약 N분" (first card with its origin, rows said once if equal)', async () => {
     // one origin where the three trips differ, one where they are all the same
     for (const [origin, mood] of [
       [ORIGINS.제주시, 'walk'],
@@ -119,26 +127,30 @@ describe('S3 카드', () => {
       await tap(`[data-mood="${mood}"]`);
       const cards = $$('.card');
       expect(cards).toHaveLength(3);
-      const expected = pickCards(realSpots, origin, mood).cards;
+      const expected = pickCards(realSpots, origin, mood, {}, undefined, undefined, false, dayOf(new Date())).cards;
       const trips = expected.map((c) => travelText(travel(origin, true, c.spot)));
-      const same = trips.every((t) => t === trips[0]);
+      const same = trips[1] === trips[2];
+      const alt = $('#cards .alt');
+      expect(alt.textContent).toBe(same ? `아니면\u00a0· 둘 다 ${trips[1]}` : '아니면');
       cards.forEach((card, i) => {
         const { spot, minutes } = expected[i];
         expect(card.querySelector('img')?.getAttribute('src')).toBe(spot.image);
         expect(card.querySelector('.name')?.textContent).toBe(drawnName(spot.name));
-        expect(card.querySelector('.card-link')?.getAttribute('aria-label')).toBe(`${spot.name}, 카카오맵에서 보기`);
+        expect(card.querySelector('.card-link')?.getAttribute('aria-label')).toBe(`${spot.name}, 네이버지도에서 보기`);
         expect(card.querySelector('.reason')?.textContent).toBe(cleanReason(spot.reason));
         expect(trips[i]).toMatch(/^(차로|걸어서) 약 \d+분$/);
         if (trips[i].includes('차로')) expect(trips[i]).toContain(`약 ${minutes}분`);
         if (i === 0) {
-          const meta = `${same ? '셋 다 ' : ''}여기서 ${trips[0]}`;
+          const meta = `여기서 ${trips[0]}`;
           expect(card.querySelector('.travel')?.textContent).toBe(meta);
-          // "·" held to the trip by a no-break space, then a normal space before 카카오맵
-          expect(card.querySelector('.meta')?.textContent).toBe(`${meta} · 카카오맵`);
+          // "·" held to the trip by a no-break space, then a normal space before 네이버지도 (ADR-0071 default)
+          expect(card.querySelector('.meta')?.textContent).toBe(`${meta} · 네이버지도`);
         } else if (same) {
           expect(card.querySelector('.meta')).toBeNull();
+          expect(card.querySelector('.card-link')?.getAttribute('aria-describedby')).toBe('alt-trip');
         } else {
           expect(card.querySelector('.meta')?.textContent).toBe(trips[i]);
+          expect(card.querySelector('.card-link')?.hasAttribute('aria-describedby')).toBe(false);
         }
       });
     }
@@ -150,8 +162,9 @@ describe('S3 카드', () => {
     const repeated: string[] = [];
     const check = (label: string) => {
       screens++;
-      // each trip as drawn, "셋 다 " / "애월에서 " taken off so the lead compares with the rows
-      const lines = $$('#cards .card .travel').map((e) => e.textContent!.replace(/^(셋|둘) 다 /, '').replace(/^\S+ ?\S*에서 /, ''));
+      // each trip as drawn (the rows' shared one on the 아니면 line), "둘 다 " / "애월에서 " taken off so the
+      // lead compares with the rows
+      const lines = $$('#cards .card .travel, #alt-trip').map((e) => e.textContent!.replace(/^둘 다 /, '').replace(/^\S+ ?\S*에서 /, ''));
       const dests = $$('#cards .card .dest').length;
       if (lines.some((t) => lines.filter((x) => x === t).length >= 3) || dests !== 1) repeated.push(`${label}: ${lines.join(' / ')}`);
     };
@@ -175,15 +188,16 @@ describe('S3 카드', () => {
     expect(repeated).toEqual([]);
   }, 120_000);
 
-  it('card link = kakao place page, or a name-search fallback when kakaoPlaceId is null; target=_blank rel=noopener', async () => {
+  // Changed on purpose (ADR-0071): the default map app is 네이버지도, whose card link is the "{이름} 제주" search.
+  it('card link = Naver Map search (default app); target=_blank rel=noopener', async () => {
     render();
     for (const mood of MOODS) {
       await tap(`[data-mood="${mood}"]`);
-      const expected = pickCards(realSpots, ORIGINS.제주시, mood).cards;
+      const expected = pickCards(realSpots, ORIGINS.제주시, mood, {}, undefined, undefined, false, dayOf(new Date())).cards;
       const links = $$('.card-link') as HTMLAnchorElement[];
       expect(links).toHaveLength(3);
       links.forEach((a, i) => {
-        expect(a.getAttribute('href')).toBe(kakaoUrl(expected[i].spot));
+        expect(a.getAttribute('href')).toBe(naverSearchUrl(expected[i].spot));
         expect(a.getAttribute('target')).toBe('_blank');
         expect(a.getAttribute('rel')).toBe('noopener');
       });
@@ -202,42 +216,48 @@ describe('S3 카드', () => {
     );
   });
 
-  it('MyRealTrip link only on bookable (experience) cards: 20 combos + a mixed "new" set', async () => {
+  it('booking link (ADR-0074): on every 체험 card, one verified route with honest words; none elsewhere; never the 마이리얼트립 search', async () => {
     const check = () => {
       for (const li of $$('.card')) {
-        const id = li.getAttribute('data-id')!;
-        const spot = realSpots.find((s) => s.id === id)!;
-        const book = li.querySelector('a.book');
-        if (spot.bookable) {
-          expect(book?.getAttribute('href')).toBe(bookingUrl(spot));
-          expect(book?.getAttribute('href')).toBe(`https://www.myrealtrip.com/search?q=${encodeURIComponent(spot.name)}`);
-          expect(book?.getAttribute('target')).toBe('_blank');
-          expect(book?.getAttribute('rel')).toBe('noopener');
-        } else {
-          expect(book).toBeNull();
+        const spot = realSpots.find((s) => s.id === li.getAttribute('data-id'))!;
+        const book = li.querySelectorAll<HTMLAnchorElement>('a.book');
+        if (spot.mood === 'new' && spot.sub === 'do') expect(spot.book, spot.name).toBeTruthy();
+        if (!spot.book) {
+          expect(book).toHaveLength(0);
+          continue;
         }
+        expect(book).toHaveLength(1);
+        const want = bookLink(spot)!;
+        expect(book[0].getAttribute('href')).toBe(spot.book.u);
+        expect(book[0].textContent).toBe(want.text);
+        expect(['네이버로 예약하기', '마이리얼트립에서 예약', '홈페이지에서 예약 확인', '전화로 예약']).toContain(want.text);
+        expect(book[0].getAttribute('aria-label')).toBe(`${spot.name.trim()}, ${want.text}`);
+        expect(book[0].getAttribute('rel')).toBe('noopener');
+        expect(book[0].getAttribute('target')).toBe(spot.book.u.startsWith('tel:') ? null : '_blank');
       }
+      expect($('#cards')?.innerHTML).not.toContain('myrealtrip.com/search');
       return $$('a.book').length;
     };
-    let seenBook = 0;
+    let seen = 0;
     for (const origin of Object.values(ORIGINS)) {
       render({ locate: () => Promise.resolve(origin) });
       for (const mood of MOODS) {
         await tap(`[data-mood="${mood}"]`);
         expect($$('.card')).toHaveLength(3);
-        seenBook += check();
+        seen += check();
       }
     }
-    expect(seenBook).toBeGreaterThan(0);
+    expect(seen).toBeGreaterThan(0);
 
-    // one bookable + two non-bookable spots of the same mood on the same screen
-    const exp = realSpots.find((s) => s.bookable)!;
-    const others = realSpots.filter((s) => s.mood === exp.mood && !s.bookable).slice(0, 2);
+    // one 체험 with a route + two places without one, on the same screen
+    const exp = realSpots.find((s) => s.book?.k === 'naver')!;
+    const others = realSpots.filter((s) => s.mood === exp.mood && !s.book && listed(s)).slice(0, 2);
     render({ loadSpots: () => Promise.resolve([exp, ...others]), locate: () => Promise.resolve(exp) });
     await tap(`[data-mood="${exp.mood}"]`);
     expect($$('.card')).toHaveLength(3);
     expect(check()).toBe(1);
     expect($('.card a.book')?.closest('.card')?.getAttribute('data-id')).toBe(exp.id);
+    expect($('.card a.book')?.textContent).toBe('네이버로 예약하기');
     expect(kakaoUrl(exp)).toBe(
       exp.kakaoPlaceId
         ? `https://place.map.kakao.com/${exp.kakaoPlaceId}`
@@ -305,7 +325,7 @@ describe('S3 위치', () => {
     expect($$('.card')).toHaveLength(0);
     expect($('#sheet').hidden).toBe(true);
     const areaBtns = $$('#cards [data-area]').filter(visible);
-    expect(areaBtns.map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label));
+    expect(areaBtns.map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label + a.landmark));
     expect(areaBtns).toHaveLength(15);
     const jeju = AREAS.filter((a) => a.group === 'jeju');
     const seogwipo = AREAS.filter((a) => a.group === 'seogwipo');
@@ -324,7 +344,7 @@ describe('S3 위치', () => {
     await tap('#basis'); // basis sheet: 내 위치 / 숙소 / 15개 지역
     await tap('#sheet [data-basis="stay"]'); // no 숙소 yet → registration sheet
     expect($$('#sheet button').filter(visible).map((b) => b.textContent)).toEqual(
-      expect.arrayContaining(['지금 위치를 숙소로', ...AREAS.map((a) => a.label)]),
+      expect.arrayContaining(['지금 위치를 숙소로', ...AREAS.map((a) => a.label + a.landmark)]),
     );
     const 성산 = AREAS.find((a) => a.name === '성산')!;
     await tap('#sheet [data-area="성산"]');
@@ -368,7 +388,7 @@ describe('S3 위치', () => {
     await tap('#basis');
     await tap('#sheet [data-basis="gps"]');
     expect($('#sheet').hidden).toBe(true);
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'any'));
 
     await tap('#basis');
@@ -386,7 +406,7 @@ describe('S3 위치', () => {
     await tap('#basis');
     await tap('#sheet [data-basis="gps"]');
     expect($('#sheet').hidden).toBe(true);
-    expect($('#basis').textContent).toBe('내 주변');
+    expect($('#basis').textContent).toBe('여기 근처');
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
   });
 
@@ -522,16 +542,54 @@ describe('S8-2 위치 전환 시트', () => {
     expect($('#sheet [data-basis="gps"]')).not.toBeNull();
     expect($('#sheet [data-basis="stay"]')).not.toBeNull();
     const headings = $$('#sheet .group-h > span:first-child').map((h) => h.textContent);
-    expect(headings).toEqual(['제주시 쪽', '서귀포 쪽']);
+    expect(headings).toEqual(['언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']); // 얼마나: ADR-0060
     expect($('#sheet .group-h .order')?.textContent).toBe('서쪽부터');
     const areaBtns = $$('#sheet [data-area]').filter(visible) as HTMLElement[];
     expect(areaBtns.map((b) => b.dataset.area)).toEqual(AREAS.map((a) => a.name));
-    expect(areaBtns.map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label));
+    expect(areaBtns.map((b) => b.textContent)).toEqual(AREAS.map((a) => a.label + a.landmark));
     // west → east inside each group, so the grid reads like a map
     for (const g of ['jeju', 'seogwipo']) {
       const lngs = AREAS.filter((a) => a.group === g).map((a) => a.lng);
       expect(lngs).toEqual([...lngs].sort((a, b) => a - b));
     }
+  });
+
+  // 3판 (§6.9, D7): each area cell names one place a traveller knows; that place's centre is nearest to the
+  // area's own centre (so the landmark never points at the neighbour). Coordinates fixed in SPEC §15.2.
+  it('area landmarks: 15 fixed places, each nearest to its own area; the sheet index shows name + landmark, choice by weight + check only', async () => {
+    const PLACES: [string, string, number, number][] = [
+      ['한경', '수월봉', 33.2948, 126.1635],
+      ['한림', '협재', 33.3938, 126.2397],
+      ['애월', '한담', 33.46, 126.3105],
+      ['신제주', '공항 근처', 33.507, 126.4929],
+      ['구제주', '동문시장', 33.5119, 126.5268],
+      ['조천', '함덕', 33.5432, 126.67],
+      ['구좌', '월정리', 33.5566, 126.795],
+      ['우도', '배로 가는 섬', 33.5141, 126.9586],
+      ['대정', '모슬포', 33.2189, 126.2486],
+      ['안덕', '산방산', 33.2366, 126.3129],
+      ['중문', '주상절리', 33.2383, 126.4259],
+      ['서귀포시내', '올레시장', 33.2497, 126.5634],
+      ['남원', '위미', 33.2707, 126.6636],
+      ['표선', '성읍', 33.3851, 126.8016],
+      ['성산', '일출봉', 33.4621, 126.9364],
+    ];
+    expect(PLACES.map((p) => p[0])).toEqual(AREAS.map((a) => a.name));
+    for (const [name, landmark, lat, lng] of PLACES) {
+      expect(nearestArea({ lat, lng }).name, name).toBe(name);
+      expect(AREAS.find((a) => a.name === name)?.landmark).toBe(landmark);
+    }
+    window.localStorage.setItem('jeju.region', JSON.stringify('애월'));
+    window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
+    render();
+    await tap('#basis');
+    const cells = $$('#sheet .areas .opt') as HTMLElement[];
+    expect(cells).toHaveLength(15);
+    expect(cells.map((c) => `${c.querySelector('.nm')?.textContent}|${c.querySelector('.lm')?.textContent}`)).toEqual(AREAS.map((a) => `${a.label}|${a.landmark}`));
+    expect(cells.filter((c) => c.getAttribute('aria-pressed') === 'true').map((c) => c.dataset.area)).toEqual(['애월']);
+    for (const c of cells) expect(c.querySelector('.i-check')).not.toBeNull();
+    // each group is labelled by its heading
+    for (const g of $$('#sheet .areas')) expect(document.getElementById(g.getAttribute('aria-labelledby')!)?.classList.contains('group-h')).toBe(true);
   });
 
   // D1 (design/SPEC.md §16): the label reads "<지역> 근처".
@@ -577,13 +635,13 @@ describe('S8-3 하트', () => {
     await flush();
     expect(heart.getAttribute('aria-pressed')).toBe('true');
     expect(navigated).toBe(false);
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([id]);
+    expect(storedIds()).toEqual([id]);
 
     heart.click();
     await flush();
     expect(heart.getAttribute('aria-pressed')).toBe('false');
     expect(navigated).toBe(false);
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([]);
+    expect(storedIds()).toEqual([]);
   });
 
   it('saves persist across a fresh render (localStorage)', async () => {
@@ -592,7 +650,7 @@ describe('S8-3 하트', () => {
     const id = $('.card')!.getAttribute('data-id')!;
     ($('.card .heart') as HTMLButtonElement).click();
     await flush();
-    expect(JSON.parse(window.localStorage.getItem('jeju.saved')!)).toEqual([id]);
+    expect(storedIds()).toEqual([id]);
 
     render();
     await tap('[data-mood="walk"]');
@@ -609,7 +667,9 @@ describe('S8-4 저장 목록', () => {
     expect(els).toHaveLength(6); // 5 moods + basis, same as S3 (saved button absent)
   });
 
-  it('"♥ N" appears once N > 0, opens saved-first list nearest-first from the current basis, allows unsave and 돌아가기', async () => {
+  // Changed on purpose (specs/date-mode.md): the list is in the order the user set (saved order to begin with),
+  // no longer nearest first.
+  it('"♥ N" appears once N > 0, opens the saved list in saved order under 오늘, allows unsave and 돌아가기', async () => {
     render({ locate: () => Promise.resolve(ORIGINS.제주시) });
     await tap('[data-mood="rest"]');
     const restId = $('.card')!.getAttribute('data-id')!;
@@ -627,14 +687,8 @@ describe('S8-4 저장 목록', () => {
     const savedList = $$('#savedView .card');
     expect(savedList).toHaveLength(2);
     const shownIds = savedList.map((c) => c.getAttribute('data-id'));
-    // saved ids are newest-first ([newId, restId]); the app's sort is stable, so ties break by that order too.
-    const savedIds = JSON.parse(window.localStorage.getItem('jeju.saved')!) as string[];
-    const expectedOrder = savedIds
-      .map((id) => realSpots.find((s) => s.id === id)!)
-      .sort((a, b) => distanceKm(ORIGINS.제주시, a) - distanceKm(ORIGINS.제주시, b))
-      .map((s) => s.id);
-    expect(shownIds).toEqual(expectedOrder);
-    expect(new Set(shownIds)).toEqual(new Set([restId, newId]));
+    expect(shownIds).toEqual([restId, newId]);
+    expect($$('#savedView .day-h').map((h) => h.textContent)).toEqual(['오늘']);
 
     // unsave one from the saved list: stays visible with an outline heart (undo path) until the
     // list is reopened — it does not disappear immediately (MINOR).
@@ -646,7 +700,7 @@ describe('S8-4 저장 목록', () => {
     expect($('#saved').textContent).toBe('1');
 
     // 돌아가기 restores the mood screen it came from
-    await tap('#savedView .change');
+    await tap('#savedView .back');
     expect($('#savedView').hidden).toBe(true);
     expect($$('.card')).toHaveLength(3);
 
@@ -667,21 +721,23 @@ describe('S8-4 저장 목록', () => {
 
   // Changed on purpose (no dead end, no sheet popping up by itself): without a position the saved list
   // opens right away in saved order and says so; choosing an area via ⇄ re-sorts it in place.
-  it('gps basis, locate denied: ♥ N shows the saved list in saved order, and picking an area via ⇄ keeps it open, re-sorted (no dead end)', async () => {
+  it('gps basis, locate denied: ♥ N shows the saved list, and picking an area via ⇄ keeps it open, trips from there (no dead end)', async () => {
     window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id]));
     render({ locate: () => Promise.reject(new LocateError('denied')) });
     expect($('#saved').textContent).toBe('1');
     await tap('#saved');
     expect($('#sheet').hidden).toBe(true);
     expect($$('#savedView .card').map((c) => c.getAttribute('data-id'))).toEqual([realSpots[0].id]);
-    expect($('#savedView .sort')?.textContent).toBe('위치를 몰라서 저장한 순서대로 보여 드려요.');
+    // no position: no trip, the first row says only where a tap goes
+    expect($('#savedView .sort')?.textContent).toBe('');
+    expect($('#savedView .meta')?.textContent).toBe('네이버지도');
     await tap('#basis');
     await tap('#sheet [data-area="애월"]');
     await settle();
     expect($('#sheet').hidden).toBe(true);
     expect($('#savedView').hidden).toBe(false);
     expect($$('#savedView .card').map((c) => c.getAttribute('data-id'))).toEqual([realSpots[0].id]);
-    expect($('#savedView .sort')?.textContent).toBe('애월에서 가까운 순이에요.');
+    expect($('#savedView .travel')?.textContent).toMatch(/^애월에서 /);
     expect($('#basis').textContent).toBe('애월 근처');
   });
 
@@ -706,7 +762,7 @@ describe('S8-4 저장 목록', () => {
     ($('.card .heart') as HTMLButtonElement).click();
     await flush();
     await tap('#saved');
-    await tap('#savedView .change');
+    await tap('#savedView .back');
     expect($('#savedView').hidden).toBe(true);
     expect(cardNames()).toEqual(before);
   });
@@ -761,7 +817,7 @@ describe('S8-4 저장 목록', () => {
     await flush();
     await flush();
 
-    await tap('#savedView .change');
+    await tap('#savedView .back');
     expect($('#savedView').hidden).toBe(true);
     // must show walk's cards (freshly computed), not rest's stale ones, and not crash
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'walk'));
@@ -817,9 +873,9 @@ describe('S8-4 위치 — GPS 실패 안내 (UX fix #4 → S03)', () => {
     expect($('#sheet').hidden).toBe(true);
     expect($$('.card')).toHaveLength(0);
     expect($('#results').hidden).toBe(false);
-    expect($('#resultsTitle').textContent).toBe('푹 쉬고 싶어');
+    expect($('#crumb').textContent).toBe('푹 쉬고 싶어');
     expect($('.notice-t')?.textContent).toBe('위치 권한이 꺼져 있어요.');
-    expect($('.notice-b')?.textContent).toBe('내일 갈 동네를 고르면 거기서 가까운 곳을 보여 드려요.');
+    expect($('.notice-b')?.textContent).toBe('동네를 고르면 거기서 가까운 곳을 보여 드려요.');
     expect($$('#cards [data-area]')).toHaveLength(15);
   });
 });
