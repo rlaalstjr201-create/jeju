@@ -116,7 +116,14 @@
    },
    "rationale": "우리 포지션 그대로의 의도이고 상위가 약하다. 수요는 작다(구글 자동완성 1건) — 유입보다 브랜드 엔티티(GEO)와 허브 문장을 위한 target.",
    "landing": "/jeju/",
-   "verdict": "target"
+   "verdict": "target",
+   "track": [
+    {
+     "week": "2026-10-03",
+     "gsc": "check_failed",
+     "naver": "not_found"
+    }
+   ]
   },
   {
    "query": "제주 즉흥 여행",
@@ -506,7 +513,14 @@
    },
    "rationale": "세부 지역 × 기분(새로운 거·체험) 조합 중 수요·의도가 가장 선명하다. 재고 19곳(성산 체험·구경). 우리 각도: 「지금 여기서 차로 N분」 + 3곳만.",
    "landing": "/jeju/seongsan/new/",
-   "verdict": "target"
+   "verdict": "target",
+   "track": [
+    {
+     "week": "2026-10-03",
+     "gsc": "check_failed",
+     "naver": "not_found"
+    }
+   ]
   },
   {
    "query": "구좌 산책하기 좋은 곳",
