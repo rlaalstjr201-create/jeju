@@ -1,0 +1,80 @@
+{
+ "measuredAt": "2026-10-04",
+ "seed": 20261004,
+ "rng": "mulberry32, Fisher-Yates over candidate order (125), first max(7,ceil(5%))",
+ "sampleSize": 7,
+ "judge": "별도 서브에이전트, 1차 판정 미열람, 원문 7건만 열람",
+ "agreement": {
+  "total": "6/7",
+  "pct": 85.7,
+  "perKind": {
+   "tangerine": {
+    "n": 4,
+    "agree": 3
+   },
+   "silvergrass": {
+    "n": 1,
+    "agree": 1
+   },
+   "hydrangea": {
+    "n": 1,
+    "agree": 1
+   },
+   "camellia": {
+    "n": 1,
+    "agree": 1
+   }
+  }
+ },
+ "items": [
+  {
+   "id": "d6eb95c1-27f9-4b3d-9df6-4c6acb8ef8c5",
+   "kind": "tangerine",
+   "first": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "id": "6aac16dc-7870-4568-bedb-9c7114940ddd",
+   "kind": "tangerine",
+   "first": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "id": "714af3a2-0de6-41a7-9abe-d425ad569485",
+   "kind": "tangerine",
+   "first": "keep",
+   "blind": "drop",
+   "agree": false
+  },
+  {
+   "id": "f693b5a8-0fae-49ea-aaa2-9a4702a59ce9",
+   "kind": "silvergrass",
+   "first": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "id": "aa983e52-cc91-4018-94d3-3d1a5d569b26",
+   "kind": "tangerine",
+   "first": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "id": "472f0d4d-f6af-4a46-9685-eb8f10c27e4e",
+   "kind": "hydrangea",
+   "first": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "id": "559ca7c8-e04a-428d-9a4e-3606efc54b71",
+   "kind": "camellia",
+   "first": "keep",
+   "blind": "keep",
+   "agree": true
+  }
+ ]
+}
