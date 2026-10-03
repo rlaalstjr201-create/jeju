@@ -510,15 +510,20 @@ await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 / 다시 불
   // 다시 불러오기 once the list can load: the cards take the notice's place under the finger
   const two = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   await two.page.route('**/spots.json*', (r) => r.fulfill({ status: 503, body: 'down' }));
+  await two.page.clock.install();
   await two.page.reload();
   await tapText(two.page, '[data-mood="rest"]');
   await two.page.waitForSelector('.notice .retry');
   await two.page.unroute('**/spots.json*');
   const box = await two.page.locator('.notice .retry').boundingBox();
   const [x, y] = [box.x + box.width / 2, box.y + box.height / 2];
+  // Page time stands still from the tap: the 2nd tap comes within the app's double-tap window however long
+  // the 1.2MB list takes to load on a busy machine (a fixed 150ms wait failed whenever it took longer).
+  await two.page.clock.pauseAt((await two.page.evaluate(() => Date.now())) + 1000);
   await two.page.mouse.click(x, y);
-  await sleep(150);
-  assert(await two.page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.card-link'), [x, y]), 'no card under the finger');
+  await two.page
+    .waitForFunction(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.card-link'), [x, y], { timeout: 5000 })
+    .catch(() => assert(false, 'no card under the finger'));
   await two.page.mouse.click(x, y, { clickCount: 2 });
   await sleep(400);
   assert(two.ctx.pages().length === 1, `${two.ctx.pages().length - 1} tab(s) opened by a double tap on 다시 불러오기`);
