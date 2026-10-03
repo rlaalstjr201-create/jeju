@@ -2,3 +2,6 @@
 apps/web/public/_headers text eol=lf
 apps/web/public/*.txt text eol=lf
 *.sh text eol=lf
+# shebang 스크립트(vitest가 `#!…node\r`를 못 읽음, 유닉스에선 `node\r` 실행 불가)와 테스트가 정규식으로 읽는 wrangler.toml
+apps/web/scripts/**/*.mjs text eol=lf
+apps/web/wrangler.toml text eol=lf

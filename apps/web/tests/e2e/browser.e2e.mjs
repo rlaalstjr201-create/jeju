@@ -90,7 +90,9 @@ const pw = await loadPlaywright();
 const server = await startPreview();
 const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? 'chrome', headless: true });
 
-async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {} } = {}) {
+// `route(ctx)`: routes in place before the page that gets `storage` loads. Routing after fresh() and reloading
+// is racy for requests that page sends itself: under load one can reach the network after the route is up.
+async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {}, route } = {}) {
   const ctx = await browser.newContext({
     viewport: { width, height },
     colorScheme: dark ? 'dark' : 'light',
@@ -99,6 +101,7 @@ async function fresh({ width = 390, height = 844, dark = false, sw = false, geo,
   });
   await ctx.addInitScript(GEO_STUB);
   await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  if (route) await route(ctx);
   const page = await ctx.newPage();
   await page.goto('about:blank');
   await page.goto(BASE);
@@ -495,8 +498,12 @@ await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 / 다시 불
   await waitCards(page);
   const first = await names(page);
   await sleep(400);
+  // a slow phone (CPU 20× slower): the 2nd tap waits behind the render the 1st one caused, past 300ms
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 20 });
   await page.locator('#cards .more').dblclick();
   await sleep(400);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   assert(ctx.pages().length === 1, `${ctx.pages().length - 1} tab(s) opened by a double tap`);
   const second = await names(page);
   assert(second.every((n) => !first.includes(n)), 'the next 3 overlap the first 3');
@@ -507,15 +514,20 @@ await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 / 다시 불
   // 다시 불러오기 once the list can load: the cards take the notice's place under the finger
   const two = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   await two.page.route('**/spots.json*', (r) => r.fulfill({ status: 503, body: 'down' }));
+  await two.page.clock.install();
   await two.page.reload();
   await tapText(two.page, '[data-mood="rest"]');
   await two.page.waitForSelector('.notice .retry');
   await two.page.unroute('**/spots.json*');
   const box = await two.page.locator('.notice .retry').boundingBox();
   const [x, y] = [box.x + box.width / 2, box.y + box.height / 2];
+  // Page time stands still from the tap: the 2nd tap comes within the app's double-tap window however long
+  // the 1.2MB list takes to load on a busy machine (a fixed 150ms wait failed whenever it took longer).
+  await two.page.clock.pauseAt((await two.page.evaluate(() => Date.now())) + 1000);
   await two.page.mouse.click(x, y);
-  await sleep(150);
-  assert(await two.page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.card-link'), [x, y]), 'no card under the finger');
+  await two.page
+    .waitForFunction(([x, y]) => !!document.elementFromPoint(x, y)?.closest('.card-link'), [x, y], { timeout: 5000 })
+    .catch(() => assert(false, 'no card under the finger'));
   await two.page.mouse.click(x, y, { clickCount: 2 });
   await sleep(400);
   assert(two.ctx.pages().length === 1, `${two.ctx.pages().length - 1} tab(s) opened by a double tap on 다시 불러오기`);
@@ -2246,14 +2258,17 @@ await check('I4-indoor', '비 와요(실내만) at 320·390: one row under 얼�
 await check('R5-rain', '비 소식 (ADR-0076) at 390, 애월 basis: /api/rain answering rain → one row on 오늘 판 (비 소식 · 실내만 볼까요?, 날씨: 기상청), asked with the area name only; tapped, 실내만 is on (#basis · 실내만, history unchanged) and the row says so with 모두 보기; a 204 → no rain row; no sideways scroll', async () => {
   const problems = [];
   const asked = [];
-  const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
-  await page.route('**/api/rain*', (r) => {
-    asked.push(new URL(r.request().url()).search);
-    return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: true }) });
+  const { ctx, page } = await fresh({
+    storage: { 'jeju.region': '애월', 'jeju.basis': 'region' },
+    route: (c) =>
+      c.route('**/api/rain*', (r) => {
+        asked.push(new URL(r.request().url()).search);
+        return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: true }) });
+      }),
   });
-  await page.reload();
   const row = page.locator('#today [data-action="rain-indoor"]');
-  await row.waitFor({ timeout: 5000 });
+  // the row can show before the spots are in; their arrival redraws the board (.wait goes) and replaces it
+  await page.locator('#today:not(.wait) [data-action="rain-indoor"]').waitFor({ timeout: 5000 });
   const text = (await row.textContent()).replace(/ /g, ' ');
   if (text !== '비 소식 · 실내만 볼까요? 날씨: 기상청') problems.push(`row "${text}"`);
   if (asked.join() !== '?area=aewol') problems.push(`asked ${asked.join()}`);
@@ -2271,13 +2286,15 @@ await check('R5-rain', '비 소식 (ADR-0076) at 390, 애월 basis: /api/rain an
   await shot(page, 'R5-rain');
   await ctx.close();
 
-  const none = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   let hits = 0;
-  await none.page.route('**/api/rain*', (r) => {
-    hits++;
-    return r.fulfill({ status: 204, headers: { 'Cache-Control': 'no-store' } });
+  const none = await fresh({
+    storage: { 'jeju.region': '애월', 'jeju.basis': 'region' },
+    route: (c) =>
+      c.route('**/api/rain*', (r) => {
+        hits++;
+        return r.fulfill({ status: 204, headers: { 'Cache-Control': 'no-store' } });
+      }),
   });
-  await none.page.reload();
   await none.page.waitForSelector('#homeMore .credit', { timeout: 5000 });
   await sleep(300);
   if (hits !== 1) problems.push(`204 run asked ${hits} times`);

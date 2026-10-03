@@ -95,6 +95,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   const delays: Delays = { ...DELAYS, ...deps.delays };
   // Monotonic: a device clock stepped back (NTP, manual change) must not stretch the double-tap windows.
   const now = deps.now ?? (() => performance.now());
+  /** When a tap happened, not when it was handled: on a slow phone the 2nd tap of a double tap waits behind the
+   * render the 1st one caused, and by then the window has passed. Event time shares only the app's own clock. */
+  const tapTime = (e: Event) => (!deps.now && e.timeStamp > 0 ? Math.min(e.timeStamp, now()) : now());
   const online = () => deps.online?.() ?? win?.navigator.onLine ?? true;
   const els = findEls(doc);
   const store = createStore(deps.storage, deps.session ?? null);
@@ -803,7 +806,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     'click',
     (e) => {
       // Only pointer taps (detail ≥ 1); a keyboard Enter/Space (detail 0) is always deliberate.
-      if (now() >= quietUntil || (e as MouseEvent).detail === 0) return;
+      if (tapTime(e) >= quietUntil || (e as MouseEvent).detail === 0) return;
       e.preventDefault();
       e.stopImmediatePropagation();
     },
