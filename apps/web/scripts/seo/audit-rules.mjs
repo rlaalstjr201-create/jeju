@@ -93,7 +93,7 @@ export function auditSite({ pages, files, origin, spotCount = 0 }) {
   if (files['llms.txt'] == null) out.push(F('site:no-llms-txt', 'P2', 'GEO',
     'llms.txt가 없다. 비용 0의 요약 파일이지만 성과 지표는 아니다(구글은 쓰지 않는다고 명시).',
     'public/llms.txt — 브랜드 정의·기분 5개·세부 지역 15곳·데이터 출처·랜딩 링크(docs/seo/audit-01.md 부록 초안).'));
-  else if (!/여행계획짜기 귀찮아/.test(files['llms.txt'])) out.push(F('site:llms-no-brand', 'P2', 'GEO', 'llms.txt에 브랜드명 「여행계획짜기 귀찮아:제주」가 없다.', '첫 줄 # 여행계획짜기 귀찮아:제주'));
+  else if (!/여행귀:제주/.test(files['llms.txt'])) out.push(F('site:llms-no-brand', 'P2', 'GEO', 'llms.txt에 브랜드명 「여행귀:제주」가 없다.', '첫 줄 # 여행귀:제주'));
 
   if (files._headers != null && /X-Robots-Tag:\s*[^\n]*noindex/i.test(files._headers)) {
     // 어느 경로에 붙었는지까지는 보지 않는다 — 있다는 사실만으로 사람이 볼 값어치가 있다.
@@ -113,7 +113,7 @@ export function auditSite({ pages, files, origin, spotCount = 0 }) {
     if (!p.title) out.push(F(`page:${u}:no-title`, 'P0', '색인', 'title이 없다.', '<title> 추가', u));
     else if (!utility && !/제주/.test(p.title)) out.push(F(`page:${u}:title-no-jeju`, 'P1', '색인',
       `title "${p.title}"에 「제주」가 없다. 검색 결과 제목만 보고는 제주 여행 도구인지 모른다.`,
-      'title에 제주와 P(무계획·즉흥) 포지션을 넣는다. 예: 「여행계획짜기 귀찮아:제주」(이름에 제주)', u));
+      'title에 제주와 P(무계획·즉흥) 포지션을 넣는다. 예: 「여행귀:제주」(이름에 제주)', u));
     if (!p.description) out.push(F(`page:${u}:no-description`, 'P1', '색인', 'meta description이 없다.', '한 문장 설명 추가', u));
     else if (p.description.length > 160) out.push(F(`page:${u}:description-long`, 'P2', '색인', `description ${p.description.length}자 — 잘린다.`, '80자 안팎으로', u));
     if (!p.canonicalRaw) out.push(F(`page:${u}:no-canonical`, 'P1', '색인', 'canonical이 없다.', `<link rel="canonical" href="https://<도메인>${u === '/' ? '/' : u}">`, u));

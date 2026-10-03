@@ -25,6 +25,12 @@ chk "og.png image/png"         "$(hdr "$SITE/og.png")" 'content-type: image/png'
 curl -sS -m 20 "$SITE/" | grep -q "og:image\" content=\"$SITE/og.png" && ok "og:image 절대 주소" || bad "og:image 절대 주소"
 curl -sS -m 20 "$SITE/" | grep -q 'rel="canonical"' && ok "canonical" || bad "canonical"
 curl -sS -m 20 "$SITE/robots.txt" | grep -qi '^Allow: /' && ok "robots Allow" || bad "robots Allow"
-curl -sS -m 20 "$SITE/llms.txt" | grep -q '여행계획짜기 귀찮아' && ok "llms.txt 이름" || bad "llms.txt 이름"
-curl -sS -m 20 "$SITE/" | grep -q 'P의 여행' && bad "옛 이름 남음" || ok "옛 이름 0"
+curl -sS -m 20 "$SITE/llms.txt" | grep -q '^# 여행귀:제주' && ok "llms.txt 이름" || bad "llms.txt 이름"
+# 옛 이름 0 (ADR-0077): 「여행계획짜기 귀찮아」는 JSON-LD alternateName 안에서만 허용. 줄을 합친 뒤 그 배열만 지우고 찾는다.
+old=0
+for p in / /llms.txt /privacy /jeju/ /jeju/aewol/ /manifest.webmanifest /nope/deep; do
+  curl -sS -m 20 "$SITE$p" | tr '\n' ' ' | sed -E 's/"alternateName"[[:space:]]*:[[:space:]]*\[[^]]*\]//g' \
+    | grep -qE 'P의 여행|여행계획짜기 귀찮아|계획귀찮아' && { old=1; echo "     옛 이름: $p"; }
+done
+[ $old = 0 ] && ok "옛 이름 0" || bad "옛 이름 남음"
 exit $fail

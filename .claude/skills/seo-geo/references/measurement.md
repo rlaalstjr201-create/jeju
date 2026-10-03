@@ -17,7 +17,7 @@
 
 | 주기 | 무엇 | 누가 |
 |---|---|---|
-| 배포 직후 1회 | `SITE_URL=… npm run build` → `seo:crawl` P0 0건 확인 → 연결 4종 → Cloudflare AI 크롤러 설정 확인 → 브랜드 검색어 「여행계획짜기 귀찮아:제주」 색인 확인 | 사람 |
+| 배포 직후 1회 | `SITE_URL=… npm run build` → `seo:crawl` P0 0건 확인 → 연결 4종 → Cloudflare AI 크롤러 설정 확인 → 브랜드 검색어 「여행귀:제주」 색인 확인 | 사람 |
 | 주 1회(월) | keywords.json target마다 `track[]`에 그 주 구글 평균 순위·노출·클릭(GSC query 차원)과 네이버 순위(서치어드바이저·직접 검색) 한 줄 → `npm run seo:keywords -- --track` | 사람 10분 |
 | 격주 | seo-analyst 가동(진단 기록·채점·큐) | 에이전트 |
 | 월 1회 | AI 답변 관측(아래) · watch 후보 SERP 재관찰 · 새 후보 자동완성 | 사람 + 에이전트 |
@@ -55,7 +55,7 @@ target이 2주 연속 판정 `kill`·`pivot`이면 keywords.json에서 그 후�
 | Q6 | 제주 즉흥 여행할 때 쓰기 좋은 앱이나 사이트 |
 | Q7 | 함덕 근처 지금 가볼 만한 곳 |
 | Q8 | 제주에서 기분 따라 갈 곳 추천해 주는 서비스 있어? |
-| B1(브랜드, 진단용) | 여행계획짜기 귀찮아:제주 앱이 뭐야? |
+| B1(브랜드, 진단용) | 여행귀:제주 앱이 뭐야? |
 
 엔진: ChatGPT(검색 켬) · Perplexity · Gemini · 네이버(AI 브리핑이 뜨는 검색어로) · Claude. 조합마다 3회, 같은 날.
 기록: `apps/web/data/seo/ai-observations.jsonl` 한 줄 = 한 응답 `{date, engine, prompt_id, run, search_triggered, brand_mentioned, recommended, cited_urls[], our_url_cited, accuracy, competitors[]}`. 답변 전문은 저장하지 않는다.

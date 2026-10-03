@@ -8,12 +8,12 @@ import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';
 import { distanceKm, islandOf, listed, travel, travelText, type Mood, type Spot } from '../src/pick';
 import { visibleText } from './seo/crawl-parse.mjs';
 
-export const BRAND = '여행계획짜기 귀찮아:제주';
+export const BRAND = '여행귀:제주';
 /** seo-analyst §0 — the entity sentence, word for word (here in 해요체 for the page body). */
 export const ENTITY =
-  '여행계획짜기 귀찮아:제주는 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 P(즉흥·무계획형) 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너예요.';
+  '여행귀:제주는 여행 계획 짜기 귀찮은 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너예요.';
 /** The same sentence as index.html's JSON-LD (plain style, as seo-analyst §0 writes it). */
-const ENTITY_LD = ENTITY.replace('P(즉흥·무계획형) 여행자', 'P 여행자').replace(/예요(?=\.$)/, '다');
+const ENTITY_LD = ENTITY.replace(/예요(?=\.$)/, '다');
 export const HUB = '/jeju/';
 export const CSS_PATH = '/jeju/landing.css';
 /** OQ6: places per mood on an area page; 2단계 조합 쪽. */

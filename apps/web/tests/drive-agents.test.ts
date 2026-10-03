@@ -237,7 +237,7 @@ describe('D6 what agents read: llms.txt and the home JSON-LD', () => {
 
   it('llms.txt: brand first, every deep-link value the app reads, source, what we do not do', () => {
     const t = read('public/llms.txt');
-    expect(t.startsWith('# 여행계획짜기 귀찮아:제주\n')).toBe(true);
+    expect(t.startsWith('# 여행귀:제주\n')).toBe(true);
     for (const a of AREAS) expect(t, a.slug).toContain(`${a.slug}(`);
     for (const v of ['rest', 'walk', 'new', 'food', 'any', 'here', 'drive30', 'drive60', 'indoor', 'YYYY-MM-DD']) expect(t, v).toContain(v);
     expect(t).toContain('비짓제주(제주관광공사)');
@@ -256,7 +256,7 @@ describe('D6 what agents read: llms.txt and the home JSON-LD', () => {
     const graph = blocks[0]['@graph'] as Record<string, unknown>[];
     expect(graph.map((g) => g['@type'])).toEqual(['WebSite', 'WebApplication']);
     const app = graph[1] as { name: string; potentialAction: { '@type': string; target: { urlTemplate: string } } };
-    expect(app.name).toBe('여행계획짜기 귀찮아:제주');
+    expect(app.name).toBe('여행귀:제주');
     expect(app.potentialAction['@type']).toBe('SearchAction');
     const tpl = app.potentialAction.target.urlTemplate;
     expect(tpl).toBe('__SITE__/?mood={mood}&area={area}&reach={reach}&date={date}&indoor={indoor}');

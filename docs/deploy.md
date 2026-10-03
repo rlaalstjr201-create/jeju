@@ -1,21 +1,32 @@
-# 배포 — Cloudflare Pages (apps/web 「여행계획짜기 귀찮아:제주」)
+# 배포 — Cloudflare Pages (apps/web 「여행귀:제주」)
 
-ADR-0063 1. 정적 사이트 하나에 서버 코드는 비 소식 함수 `/api/rain` 하나뿐(ADR-0076, `apps/web/functions/`). 이름은 ADR-0068, 정적 랜딩(`/jeju/**`)은 ADR-0072. 익명 기록 수집기(ADR-0061)는 나중에 같은 주소의 Functions로 붙인다(그 전엔 `VITE_EVENTS_URL` 미설정).
+ADR-0063 1. 정적 사이트 하나에 서버 코드는 비 소식 함수 `/api/rain` 하나뿐(ADR-0076, `apps/web/functions/`). 이름·주소는 ADR-0077(ADR-0068 대체), 정적 랜딩(`/jeju/**`)은 ADR-0072. 익명 기록 수집기(ADR-0061)는 나중에 같은 주소의 Functions로 붙인다(그 전엔 `VITE_EVENTS_URL` 미설정).
 
 ## 1. Pages 프로젝트 설정
 
 ### 실제 배포: 직접 업로드 (wrangler)
 
-프로젝트 `gwichana-jeju`는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
+프로젝트 `yeogwi`(https://yeogwi.pages.dev)는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
 
 ```sh
-npm run build                                          # dist/ (빌드 환경 변수는 아래 표와 같다)
-npx wrangler pages deploy dist --project-name gwichana-jeju
+SITE_URL=https://yeogwi.pages.dev npm run build       # dist/ (빌드 환경 변수는 아래 표와 같다)
+npx wrangler pages deploy dist --project-name yeogwi
 ```
 
 - `apps/web/functions/`(비 소식 `/api/rain`, ADR-0076)는 이 명령을 돌린 디렉터리 기준으로 찾아 같이 올라간다. 그래서 반드시 `apps/web`에서 돌린다. 함수는 앱 번들과 별개라 50KB 예산에 들어가지 않는다.
-- 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name gwichana-jeju`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
+- 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name yeogwi`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
 - 로컬에서 함수까지 보기: `npx wrangler pages dev dist --port 8788` → `/api/rain?area=aewol`이 키 없이 204, `?area=nope`이 400.
+
+### 옛 주소 넘기기 (gwichana-jeju → yeogwi, ADR-0077 6)
+
+옛 프로젝트 `gwichana-jeju`에는 앱 대신 `_redirects` 한 줄만 올린다. 모든 경로가 새 주소의 같은 경로로 301된다. 프로젝트는 지우지 않는다.
+
+```sh
+mkdir -p /tmp/yeogwi-redirect
+printf '/* https://yeogwi.pages.dev/:splat 301\n' > /tmp/yeogwi-redirect/_redirects
+npx wrangler pages deploy /tmp/yeogwi-redirect --project-name gwichana-jeju
+curl -sI https://gwichana-jeju.pages.dev/jeju/aewol/ | grep -iE '^(HTTP|location)'   # 301, location: https://yeogwi.pages.dev/jeju/aewol/
+```
 
 ### Git 연결로 바꿀 때
 
@@ -25,7 +36,7 @@ GitHub `rlaalstjr201-create/jeju` 기준. 의존성은 저장소 루트의 npm w
 
 | 항목 | 값 |
 |---|---|
-| 프로젝트 이름 | 사용자가 정한다. `<프로젝트>.pages.dev`가 된다(로마자만, 예: `gyehoek-gwichana`) |
+| 프로젝트 이름 | 사용자가 정한다. `<프로젝트>.pages.dev`가 된다(로마자만, 지금은 `yeogwi`) |
 | Production branch | `master` |
 | Framework preset | None |
 | Root directory (고급) | `/` (저장소 루트. Pages가 루트 `package-lock.json`으로 `npm ci`) |
@@ -70,7 +81,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 
 ## 3. 배포 뒤 스모크 (`SITE`=사이트 주소)
 
-명령어 점검은 한 번에: `SITE=https://… bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것).
+명령어 점검은 한 번에: `SITE=https://yeogwi.pages.dev bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것).
 
 명령으로:
 

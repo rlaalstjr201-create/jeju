@@ -28,9 +28,9 @@ When evaluating any feature, design decision, or scope call, apply these 11 crit
 | B5 | Non-destructive | Automation never overwrites Traveller intent. |
 | B6 | Familiar | Respects Korean user patterns (찜하기, 카카오, etc.). |
 
-## 웹 앱(~~내일 뭐하지~~ ~~P의 여행~~ 여행계획짜기 귀찮아:제주)
+## 웹 앱(~~내일 뭐하지~~ ~~P의 여행~~ ~~여행계획짜기 귀찮아:제주~~ 여행귀:제주)
 
-앱 이름 `여행계획짜기 귀찮아:제주`(부제 「P를 위한 무계획 여행」, 홈 화면 아이콘 아래 `계획귀찮아`. ADR-0068이 ADR-0059 1번을 대체). 다른 지역으로 넓히면 콜론 뒤만 바꾼다(`여행계획짜기 귀찮아:부산`). 계획 없이 다니는 여행자가 "지금 여기서 뭐하지?" 할 때 켜는 파트너. 기준 순간은 "지금"이고 날짜 줄은 오늘 날짜다(ADR-0025의 "밤에 내일 뭐하지?"를 대체). 날짜별 보관은 v2. 출처: ADR-0059.
+앱 이름 `여행귀:제주`(부제 「P를 위한 무계획 여행」, 홈 화면 아이콘 아래 `여행귀`, 첫 화면 이름 줄 「여행귀:제주 · 여행 계획 짜기 귀찮을 때」. 주소 `yeogwi.pages.dev`. ADR-0077이 ADR-0068 1·2·4·5를 대체). 다른 지역으로 넓히면 콜론 뒤만 바꾼다(`여행귀:부산`). 계획 없이 다니는 여행자가 "지금 여기서 뭐하지?" 할 때 켜는 파트너. 기준 순간은 "지금"이고 날짜 줄은 오늘 날짜다(ADR-0025의 "밤에 내일 뭐하지?"를 대체). 날짜별 보관은 v2. 출처: ADR-0059.
 
 `apps/web`의 용어. 아래 "Language" 절의 Traveller·Spot·Shortlist 등 정의는 이전 코드베이스(`apps/api`, `apps/mobile`)에 적용된다. 웹 앱에는 로그인·계정이 없고(ADR-0026), 데이터는 고정 JSON이다(ADR-0027, ADR-0058로 완화).
 
