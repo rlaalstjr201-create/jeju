@@ -18,7 +18,7 @@
 | 1 | 정합성 점검 고침 반영·배포·실화면 확인(홈 위치 처리, 기록 안내, IndexNow 날짜, 옛 주소 SW 해제, 스플래시, 문서 정리) | in-progress | 지금 서비스가 목적과 어긋난 채로 두지 않는다 | `docs/coherence-audit-2026-10-03.md` |
 | 2 | 5초 사용자 시험 5~10명(첫 화면 → 「뭐 하는 앱?」, 밥집 하나 정하기 시간) | ready-for-human | 목적이 「단번에」 읽히는지는 사람만 확인할 수 있다. 확장 전에 핵심을 검증한다 | `mockup-judgment.md` §5 통과 기준 |
 | 3 | e2e 기존 실패 2개 + 흔들리는 1건 | in-progress(별도 세션) | 검증 장치가 흔들리면 이후 모든 단계의 신호가 흐려진다 | 세션 칩 2개 |
-| 4 | 축제·행사·시기 이벤트(스팸 아닌 방식) — 조사·설계 → ADR → Light Spec → 빌드 | in-progress(조사) | 제주 안에서 「지금」 가치를 키우는 가장 싼 확장. 데이터 출처가 TourAPI와 겹쳐 6번의 준비도 된다 | `.scratch/seasonal-events/issues/01-research-and-adr.md` |
+| 4 | 축제·행사·시기 이벤트(스팸 아닌 방식) — 결정 완료(2026-10-03): 계절 명소 먼저 → 축제(두 출처 교차, 모드별 날짜, 닫기 없이 상한). 다음: 용어 grilling → ADR → Light Spec | ready-for-agent(계절 판정은 원문 환경) | 제주 안에서 「지금」 가치를 키우는 가장 싼 확장. 데이터 출처가 TourAPI와 겹쳐 6번의 준비도 된다 | `.scratch/seasonal-events/issues/01-research-and-adr.md` |
 | 5 | 첫 실사용 데이터 2주 관찰(D1·GA4·네이버, 주간 점검 보고서) | waiting | 확장 우선순위를 실제 사용으로 정한다. 그 전엔 짐작이다 | ADR-0078, 0079 |
 | 6 | 전국 확장 시범: data.go.kr 「한국관광공사_국문 관광정보 서비스_GW」 활용 신청(사람) → 부산·강릉·경주 중 1곳 Light Spec → 빌드 | ready-for-human(키 신청) → ready-for-agent | 출처 조사 완료. 비짓제주와 같은 구조라 옮기기 쉽다 | `data-sources-korea-japan.md` §0·§5(공사 문의 8문항) |
 | 7 | 일본 실현성 측정: 도시 1곳에서 Wikidata 장소 중 Commons 사진이 있는 비율 | ready-for-agent | 사진 비율이 낮으면 방식 자체가 성립하지 않으니 먼저 잰다 | 같은 문서 §0 |
