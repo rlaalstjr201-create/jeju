@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "run_id": "2026-10-03T1755",
+  "graded": "2026-10-01T1610",
+  "diagnosed_at": "2026-10-03",
+  "phase": "post-deploy",
+  "window": { "start": "2026-10-03", "end": "2026-10-03" },
+  "rerun_reason": "직전 기록(10-01)이 3일 이내지만 그 사이 배포(yeogwi.pages.dev)와 이름 변경(ADR-0077)이 있었고, 사용자가 배포 후 첫 기준선 점검을 요청했다.",
+  "summary": "배포 후 첫 점검(기준선). 지난 큐 5건은 전부 해소(해소율 100% → 개입 상한 5). SITE_URL=https://yeogwi.pages.dev 빌드에서 seo:crawl 감사 0건 — 2,932쪽(색인 대상 2,931), 사이트맵 2,931 URL과 일치, 고아·깨진 링크 0. 실사이트도 canonical·og:url 절대 URL, robots 전체 허용, AI·Yeti·Bing 크롤러 UA 모두 200, 옛 gwichana-jeju.pages.dev는 301. 엔티티 문장은 홈 JSON-LD·llms.txt·/jeju/ 허브에 같은 말로 들어 있다. P0/P1 기술 결함은 없다. 남은 일은 측정 쪽이다 — config.json이 비어 seo:verify가 GSC·네이버를 「미설정」으로 읽고, GSC 조달 함수(gscLayerStats)는 null만 돌려주는 자리표시이며, Bing은 상태 점검에도 없다. keywords.json의 brand 「여행귀:제주」는 SERP 기록이 옛 이름(여행계획짜기 귀찮아) 관찰 그대로라 새 이름 판정에 섞여 있다. target 2건은 indexed_at·track이 비어 순위 추적이 「색인 확인 전 wait」에 머문다. GSC 노출 데이터가 아직 없어 영향 노출은 전부 null이다.",
+  "instruments": [
+    { "name": "build", "status": "ok", "note": "SITE_URL=https://yeogwi.pages.dev — landing 2,929쪽(hub 1 · area 15 · combo 1 · place 2,912), 원문 반복 0, 최근접 쌍 0.773(<0.8), 사이트맵 2,931" },
+    { "name": "seo:crawl", "status": "ok", "note": "SITE_URL 지정 실행: 감사 0건 · 사이트맵 누락 0 · 고아 0. SITE_URL 없이 먼저 돌린 실행은 site:no-origin P0 1건을 냈으나 로컬 env 누락 탓이고 실사이트는 절대 URL이다 — SITE_URL 실행을 기준으로 삼았다" },
+    { "name": "seo:keywords", "status": "ok", "note": "후보 25 · target 2 · brand 1 · watch 9 · kill 13 · 검증 오류 0 · --track: target 2건 모두 wait(색인 확인 전)" },
+    { "name": "seo:verify", "status": "ok", "note": "SITE_URL 지정: 큐 5/5 해소(100%) · 감사 P0 0 · 예측 0 · 외부 소스 gsc/ga4/naver 모두 미연결(config 미설정), bing은 점검 항목 자체가 없음" },
+    { "name": "live-check(curl)", "status": "ok", "note": "https://yeogwi.pages.dev — 홈·/jeju/ canonical 절대 URL, robots Allow /, sitemap 200·2,931 loc, OAI-SearchBot·PerplexityBot·ClaudeBot·Yeti·bingbot UA 모두 200, gwichana-jeju.pages.dev 301" },
+    { "name": "gsc", "status": "stub", "note": "URL 접두어 속성 소유확인·사이트맵 제출 완료(사용자 보고, 상태 「가져올 수 없음」 제출 직후). API 자격증명 없음 · scripts/seo/gsc.mjs gscLayerStats는 null 반환 자리표시" },
+    { "name": "naver-search-advisor", "status": "skip", "note": "소유확인·사이트맵·홈 수집 요청 완료(사용자 보고). API 없음 — 수동 기록 대상" },
+    { "name": "naver-serp(curl)", "status": "fail", "note": "search.naver.com 「여행귀:제주」 HTTP 403 — 확인 실패(재시도 안 함). 경쟁 없음으로 읽지 않는다" },
+    { "name": "naver-autocomplete(curl)", "status": "ok", "note": "「여행귀」: 자체 제안 0, corrected_query=1, 제안은 걸리버여행기·여행길·여행기 등 — 「여행기」 교정 계열(1회 관측)" },
+    { "name": "websearch-proxy", "status": "ok", "note": "1회 「여행귀」 따옴표 검색(미국 엔진 프록시): 같은 이름의 앱·서비스·책 없음 — 여행 앱 일반 결과만" }
+  ],
+  "grading": [
+    { "rank": 1, "verdict": "맞았다", "why": "seo:verify — page:/:thin-shell 해소. 홈 정적 본문 552자, 엔티티 문장 포함. 기록의 keyword는 옛 이름(기록 「P의 여행 제주」, 큐 「여행계획짜기 귀찮아:제주」)이라 지금 브랜드가 아니다 — 이행 결과는 새 이름으로 반영됐다" },
+    { "rank": 2, "verdict": "맞았다", "why": "seo:verify — site:no-landing-pages 해소. dist/jeju/index.html 존재, 실사이트 200·canonical 절대 URL. 검색어 성과는 색인 전이라 아직 채점하지 않는다" },
+    { "rank": 3, "verdict": "맞았다", "why": "SITE_URL 지정 seo:crawl에서 site:no-origin 해소 + 실사이트 curl로 canonical·og:url·og:image가 https://yeogwi.pages.dev 절대 URL임을 확인(Cloudflare 빌드 env 반영)" },
+    { "rank": 4, "verdict": "맞았다", "why": "seo:verify — page:/:no-jsonld 해소. 홈 JSON-LD WebSite·WebApplication·SearchAction, description이 엔티티 문장과 같다" },
+    { "rank": 5, "verdict": "맞았다", "why": "seo:verify — page:/:title-no-jeju 해소. title 「여행귀:제주」. 기록 당시 근거였던 「P의 여행」은 이름 변경으로 사라졌다" }
+  ],
+  "interventions": [
+    {
+      "rank": 1,
+      "title": "keywords.json brand 「여행귀:제주」의 SERP 기록을 새 이름 관찰로 갈아 끼운다(옛 이름 관찰 제거)",
+      "severity": "P1",
+      "qualifies": "seo:keywords:brand 여행귀:제주 — serp.source가 「여행계획짜기 귀찮아」 검색 기록",
+      "cause_layer": "배분",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "brand-serp-reset",
+      "queue_kind": "other",
+      "where": "apps/web/data/seo/keywords.json 후보 「여행귀:제주」(조사 기록 — seo-analyst 또는 사람)",
+      "evidence": "seo:keywords — brand 항목 serp.checked_at 2026-10-01, source 「네이버 통합검색 HTML(curl, 여행계획짜기 귀찮아 제주·여행계획짜기 귀찮아)」, naver_observed=true, competition 1, rationale은 ADR-0068 인용. 이번 새 이름 관찰: 네이버 SERP curl 403(확인 실패), 네이버 자동완성 「여행귀」 자체 제안 0·「여행기」 교정 계열, WebSearch 프록시 동명 주체 없음.",
+      "why_now": "keywords.json의 brand 판정 근거와 이번 자동완성·프록시 관찰이 서로 다른 이름을 본 것이다. 배포 후 브랜드 검색 1위 여부를 색인·엔티티 문제로 읽으려면 새 이름 기준선이 있어야 한다. 네이버를 직접 못 봤으므로 observed=proxy, naver_observed=false로 적는다(경쟁 점수 최대 1 유지).",
+      "verify": "keywords.json 「여행귀:제주」의 serp.checked_at이 2026-10-03 이후이고 source에 「여행귀」가 들어 있으며, seo:keywords 검증 오류 0이다."
+    },
+    {
+      "rank": 2,
+      "title": "data/seo/config.json에 site_url·gsc.property(URL 접두어)·naver.site를 채운다",
+      "severity": "P1",
+      "qualifies": "seo:verify:sources — gsc·naver 「config 미설정」, origin은 SITE_URL env 없이는 (없음)",
+      "cause_layer": "배분",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "config-sources",
+      "queue_kind": "config",
+      "where": "apps/web/data/seo/config.json — site_url https://yeogwi.pages.dev · gsc.property https://yeogwi.pages.dev/ (pages.dev는 DNS를 못 만지므로 sc-domain이 아니라 URL 접두어, _todo 문구도 고침) · naver.site https://yeogwi.pages.dev · bing.site는 연결 후",
+      "evidence": "seo:verify — gsc 「config.gsc.property 미설정」, naver 「config.naver.site 미설정」. SITE_URL 없이 돌리면 origin (없음) → site:no-origin P0 오탐 1건.",
+      "why_now": "seo:verify의 sources 미설정과 seo:crawl의 env 의존 오탐이 같은 빈칸(config.json) 하나에서 나온다. GSC·서치어드바이저 등록은 이미 끝났으니 값만 옮기면 된다.",
+      "verify": "SITE_URL 없이 돌린 npm run seo:verify가 origin https://yeogwi.pages.dev를 출력하고, gsc 줄이 「자격증명 환경변수 GSC_CREDENTIALS 없음」, naver 줄이 「수동 기록」 문구다."
+    },
+    {
+      "rank": 3,
+      "title": "GSC 조달 함수 gscLayerStats를 구현한다(28일 page 차원·query 차원, 서비스 계정)",
+      "severity": "P1",
+      "qualifies": "seo:verify:sources gsc 미연결 + scripts/seo/gsc.mjs gscLayerStats 자리표시(null 반환)",
+      "cause_layer": "배분",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "gsc-fetch",
+      "queue_kind": "other",
+      "where": "코드: apps/web/scripts/seo/gsc.mjs · 사람: GCP 서비스 계정 생성 → GSC 속성 https://yeogwi.pages.dev/ 에 사용자(제한 권한)로 추가 → 키 JSON 경로를 환경변수 GSC_CREDENTIALS에",
+      "evidence": "gsc.mjs 30행 gscLayerStats()가 TODO-after-deploy로 null만 돌려준다 — 자격증명을 넣어도 노출·순위가 들어오지 않는다. seo:keywords --track은 target 2건 모두 track 비어 wait.",
+      "why_now": "pivotOf는 색인 4주 뒤부터 google_pos·impressions로 판정하는데 이 함수가 비어 있으면 4주 뒤에도 판정할 데이터가 없다. 확정 28일 기준선(seo:forecast)도 여기에 걸려 있다. query 차원으로 페이지 총량을 합산하지 않도록 page 차원을 따로 받는다.",
+      "verify": "GSC_CREDENTIALS를 설정한 환경에서 seo:verify의 gsc 줄이 연결로 바뀌고, gscLayerStats()가 null이 아닌 page 차원 배열을 돌려준다(행 0이어도 배열)."
+    },
+    {
+      "rank": 4,
+      "title": "target 랜딩 2쪽(/jeju/, /jeju/seongsan/new/) 색인 요청 후 keywords.json에 indexed_at을 적는다",
+      "severity": "P1",
+      "qualifies": "seo:keywords --track — target 2건 「색인 확인 전」 wait",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "index-targets",
+      "queue_kind": "config",
+      "keyword": "제주도 무계획 여행",
+      "where": "사람: GSC URL 검사 → 색인 생성 요청(https://yeogwi.pages.dev/jeju/ , https://yeogwi.pages.dev/jeju/seongsan/new/) · 네이버 서치어드바이저 웹 페이지 수집 요청(같은 두 URL — 지금은 홈만 요청됨) → 색인 확인 날짜를 keywords.json 각 target의 indexed_at에, 주 1회 track에 week·google_pos·naver_pos·impressions·clicks 한 줄씩",
+      "evidence": "seo:keywords --track — 「제주도 무계획 여행」「성산 근처 체험」 둘 다 「색인 확인 전 — GSC URL 검사·네이버 웹문서 노출 확인이 먼저」. 사이트맵 2,931 URL 중 장소 페이지가 2,912쪽이다.",
+      "why_now": "pivotOf의 4주·8주 시계는 indexed_at에서 시작한다. target 2건과 사이트맵 2,931 URL을 겹치면, target 랜딩을 따로 밀지 않으면 장소 페이지 사이에서 수집이 늦어질 수 있고 시계도 안 돈다.",
+      "verify": "seo:keywords -- --track이 target 2건에 대해 「색인 확인 전」이 아니라 「색인 N주」 문구로 판정한다."
+    },
+    {
+      "rank": 5,
+      "title": "Bing Webmaster Tools(GSC 가져오기)·IndexNow를 연결하고 seo:verify 외부 소스에 bing 줄을 더한다",
+      "severity": "P2",
+      "qualifies": "seo:verify:sources — bing 점검 항목 없음 · config.bing.site 빈 값",
+      "cause_layer": "크롤",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "bing-indexnow",
+      "queue_kind": "config",
+      "where": "사람: bing.com/webmasters에서 GSC 가져오기로 https://yeogwi.pages.dev/ 등록·사이트맵 확인 · 코드: scripts/seo/gsc.mjs sourcesStatus에 bing 항목(config.bing.site 기준) · IndexNow 키 파일 public/<key>.txt는 제안만(public은 사람이 반영)",
+      "evidence": "seo:verify 외부 소스 출력이 gsc·ga4·naver 3줄뿐 — config.json에 bing 블록이 있어도 상태를 보고하지 않는다. config.bing.site 빈 값.",
+      "why_now": "seo-analyst 4절: Bing 색인이 ChatGPT 검색·Copilot의 바탕이다. GSC 등록이 끝난 지금이 가져오기 한 번으로 연결되는 때이고, 상태 점검에 줄이 없으면 다음 가동이 연결 여부를 채점할 수 없다.",
+      "verify": "seo:verify 외부 소스에 bing 줄이 생기고 config.bing.site가 https://yeogwi.pages.dev이다."
+    }
+  ],
+  "investigate": [
+    "네이버 자동완성에서 「여행귀」가 「여행기」 교정 계열로만 나온다(corrected_query=1, 1회 관측). 「여행귀:제주」·「여행귀 제주」를 네이버에서 쳤을 때 「여행기」로 자동 교정되는지 사람이 브라우저로 확인해 keywords.json brand serp에 적는다 — 교정되면 브랜드 검색 유입이 샌다(이름을 바꾸자는 것이 아니라 확인 대상).",
+    "GSC 사이트맵 상태 「가져올 수 없음」 — 제출 직후 흔한 상태다. 다음 가동 때 「성공」·발견 URL 2,931인지 본다. 계속 실패면 sitemap.xml(단일 파일 2,931 URL, Content-Type application/xml 확인됨)부터.",
+    "brand 「여행귀:제주」는 pivotOf가 target만 추적해 추적 구조가 없다. 브랜드 1위 여부를 track에 같은 모양으로 적을지 정한다.",
+    "홈 meta description이 엔티티 문장과 다르다(「P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요.」). JSON-LD·llms.txt·허브는 같은 말. 포지션 규칙(0절)과 스니펫 길이 중 무엇을 따를지 — 감사 id가 없어 개입 자격 없음.",
+    "watch 5건(표선 근처 놀거리·함덕 근처 가볼만한곳·성산 근처 가볼만한 곳·애월 산책로·서귀포 산책하기 좋은 곳) 네이버 SERP 미관측 — 사람이 브라우저로 보고 serp를 채워야 target 여부를 판정한다."
+  ],
+  "not_touching": [
+    "kill 13건(헤드·밈·데이터에 없는 속성) — 페이지·문구를 만들지 않는다.",
+    "seo:forecast — GSC 확정 28일 기준선 전에는 예측하지 않는다.",
+    "장소 페이지 26곳 미생성(원문 20자 이상 반복 9곳 등) — 라이선스 가드가 의도대로 동작한 결과다.",
+    "사진 핫링크 — 늘리는 개입을 제안하지 않는다(5절)."
+  ],
+  "failed": [
+    "네이버 통합검색 「여행귀:제주」 curl — HTTP 403. 확인 실패이며 경쟁 없음으로 읽지 않는다. 재시도하지 않았다.",
+    "GSC 노출·순위 — API 자격증명 없음 + 조달 함수 미구현. 영향 노출은 전부 null."
+  ],
+  "repo_changes": ["?? apps/web/data/seo/diagnoses/2026-10-03T1755.json", " M apps/web/data/seo/queue.json (seo:report --queue)"]
+}

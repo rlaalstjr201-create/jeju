@@ -75,6 +75,20 @@
 
 상세: `.claude/skills/seo-geo/references/measurement.md`, `naver.md`.
 
+## 주간 운영 (매주 월요일 아침, ADR-0079)
+
+측정은 기계가, 고침은 로컬 커밋까지, 배포·push는 사람이 한다. 순서(apps/web에서):
+
+1. `SITE_URL=https://yeogwi.pages.dev npm run build` → `npm run seo:crawl` · `npm run seo:verify`
+2. `node scripts/seo/rank-naver.mjs` → `data/seo/rank/naver-YYYY-MM-DD.json` (막히면 `check_failed`, 같은 날 다시 재지 않는다. `--dry`는 목록만)
+3. GSC 「실적 → 검색어」(지난 7일)를 크롬에서 읽어 `data/seo/gsc/YYYY-MM-DD.json`에 저장 — `{date_range:{start,end}, rows:[{query, clicks, impressions, ctr, position}]}`
+4. `node scripts/seo/gsc-import.mjs --gsc data/seo/gsc/YYYY-MM-DD.json` → target `track[]` 한 줄 + `seo:keywords --track` 판정 + 「밀림」 경보(3계단 넘게 하락·10위 밖으로, 색인 4주 안은 보류). 못 읽은 칸은 「확인 실패」로 남긴다
+5. seo-analyst 진단(`seo:report`)
+6. 자동 조치 범위만 고친다: meta → title·description, push → 내부 링크·본문 보강, 구조화 데이터·llms.txt 정합, 사이트맵·IndexNow. 새 랜딩·검색어 판정 변경·브랜드 문장·ADR감은 제안만
+7. 테스트·`check:slop`·`seo:crawl`·`seo:verify` 통과 시 로컬 커밋(push·배포는 승인 후)
+8. `node scripts/seo/indexnow.mjs dry` — 배포 뒤 승인되면 `send`(seed 이후 추가·변경 URL만. 키: `public/<키>.txt`, 상태: `data/seo/indexnow-state.json`)
+9. 보고 `docs/seo/weekly/YYYY-MM-DD.md` — 순위 표·판정·한 일·승인 대기·확인 실패, 분석 리포트(ADR-0078 6) 링크
+
 ## 하지 않는 것
 
 유료 SERP·검색량 API · 절대 유입 예측 · 배포 전 기준선 예측 · 헤드 검색어용 페이지 · 비짓제주 원문/사진 재게시 · llms.txt·크롤러 방문을 성과로 읽기 · 1회 AI 답변을 성과로 읽기.

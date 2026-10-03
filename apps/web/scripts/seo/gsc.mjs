@@ -17,12 +17,15 @@ export function sourcesStatus(cfg = loadConfig(), env = process.env) {
   const gsc = cfg.gsc || {};
   const ga4 = cfg.ga4 || {};
   const naver = cfg.naver || {};
+  const bing = cfg.bing || {};
   return [
     s('gsc', Boolean(gsc.property && env[gsc.credentials_env || 'GSC_CREDENTIALS']),
-      gsc.property ? `자격증명 환경변수 ${gsc.credentials_env || 'GSC_CREDENTIALS'} 없음` : 'config.gsc.property 미설정 — 배포 후 속성 등록'),
+      gsc.property ? `자격증명 환경변수 ${gsc.credentials_env || 'GSC_CREDENTIALS'} 없음 — 순위는 주간 GSC 실적 화면 읽기 → gsc-import.mjs(API 실측 아님)` : 'config.gsc.property 미설정 — 배포 후 속성 등록'),
     s('ga4', Boolean(ga4.property_id && env[ga4.credentials_env || 'GA4_CREDENTIALS']),
       ga4.property_id ? `자격증명 환경변수 ${ga4.credentials_env || 'GA4_CREDENTIALS'} 없음` : 'config.ga4.property_id 미설정 — 도입 여부부터 결정(ADR-0061 익명 기록과 겹침)'),
-    s('naver', false, naver.site ? '서치어드바이저는 공개 API가 없다 — 웹 화면에서 주 1회 수동 기록(data/seo/keywords.json track)' : 'config.naver.site 미설정 — 배포 후 사이트 등록'),
+    // 「연결」은 순위 관찰 경로가 있다는 뜻이다. 서치어드바이저 노출·클릭 수치는 여전히 없다(모르면 0이 아니다).
+    s('naver', Boolean(naver.site), naver.site ? '주간 Playwright 통합검색 관찰(rank-naver.mjs)로 순위만 연결 — 서치어드바이저 노출·클릭은 API 없음' : 'config.naver.site 미설정 — 배포 후 사이트 등록'),
+    s('bing', false, bing.site ? '등록됨 — 조회 연결 없음' : 'config.bing.site 미설정 — Bing Webmaster Tools(GSC 가져오기) 등록 전. IndexNow는 등록 없이 전달된다'),
   ];
 }
 
