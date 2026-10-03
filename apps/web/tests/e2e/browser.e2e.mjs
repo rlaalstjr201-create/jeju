@@ -498,8 +498,12 @@ await check('S35-ghost', 'double tap on a mood / 다른 3곳 보기 / 다시 불
   await waitCards(page);
   const first = await names(page);
   await sleep(400);
+  // a slow phone (CPU 20× slower): the 2nd tap waits behind the render the 1st one caused, past 300ms
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 20 });
   await page.locator('#cards .more').dblclick();
   await sleep(400);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   assert(ctx.pages().length === 1, `${ctx.pages().length - 1} tab(s) opened by a double tap`);
   const second = await names(page);
   assert(second.every((n) => !first.includes(n)), 'the next 3 overlap the first 3');
