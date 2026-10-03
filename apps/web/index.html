@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <title>여행귀:제주</title>
-    <meta name="description" content="P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <title>여행귀:제주 · P를 위한 여행동반자</title>
+    <meta name="description" content="P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)" />
     <!-- first paint already in the right background, no white flash at night (S49). The only colour literals outside the CSS tokens. -->
@@ -19,8 +19,8 @@
     <!-- link previews (KakaoTalk, X, …): __SITE__ is the site's address from the build env SITE_URL (docs/deploy.md), empty = relative -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="여행귀:제주" />
-    <meta property="og:title" content="여행귀:제주" />
-    <meta property="og:description" content="P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta property="og:title" content="여행귀:제주 · P를 위한 여행동반자" />
+    <meta property="og:description" content="P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
     <meta property="og:image" content="__SITE__/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -29,8 +29,8 @@
     <link rel="canonical" href="__SITE__/" />
     <meta property="og:locale" content="ko_KR" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="여행귀:제주" />
-    <meta name="twitter:description" content="P를 위한 무계획 여행. 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta name="twitter:title" content="여행귀:제주 · P를 위한 여행동반자" />
+    <meta name="twitter:description" content="P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
     <meta name="twitter:image" content="__SITE__/og.png" />
     <!-- absolute paths: the page works at any address (a deep link, a host or worker fallback; ADR-0063) -->
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -55,7 +55,7 @@
             "@id": "__SITE__/#app",
             "name": "여행귀:제주",
             "url": "__SITE__/",
-            "description": "여행귀:제주는 여행 계획 짜기 귀찮은 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너다.",
+            "description": "여행귀:제주는 여행 계획 짜기 귀찮은 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 무계획 여행 앱이다.",
             "applicationCategory": "TravelApplication",
             "operatingSystem": "Web",
             "inLanguage": "ko",
@@ -82,7 +82,7 @@
       </header>
       <main id="main">
         <section id="home" aria-labelledby="ask">
-          <p class="brand">여행귀:제주 · 여행 계획 짜기 귀찮을 때</p>
+          <p class="brand">여행귀:제주 · P를 위한 여행동반자</p>
           <!-- 오늘 판 (ADR-0075 2): the date and folded grey facts; render.ts adds the one row to tap, if any -->
           <div class="today" id="today"><p class="today-line"><span id="date"></span><span class="facts"></span></p></div>
           <h1 class="ask" id="ask">지금 뭐 하고 싶어요?</h1>
@@ -102,7 +102,7 @@
           <!-- for readers without JS (AI crawlers, specs/seo-landing.md OQ3): what the app is, and the static pages (ADR-0072) -->
           <noscript>
             <h2>여행귀:제주는 어떤 앱이에요?</h2>
-            <p>여행귀:제주는 여행 계획 짜기 귀찮은 P를 위한 무계획 여행 앱으로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 여행 파트너예요. 일정이나 코스는 짜 드리지 않아요.</p>
+            <p>여행귀:제주는 여행 계획 짜기 귀찮은 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 무계획 여행 앱이에요. 일정이나 코스는 짜 드리지 않아요.</p>
             <p>푹 쉬고 싶어, 좀 걷고 싶어, 새로운 거 해보고 싶어, 맛있는 거 먹고 싶어, 아무거나 골라줘. 다섯 기분 중 하나를 누르면 지금 위치나 숙소, 고른 동네에서 가까운 곳 세 군데를 차로 몇 분인지와 함께 골라 드려요.</p>
             <p>이 화면은 자바스크립트를 켜야 움직여요. 동네별로 먼저 보려면 <a href="/jeju/">P를 위한 제주 무계획 여행</a>에서 한경, 한림, 애월, 신제주, 구제주, 조천, 구좌, 우도, 대정, 안덕, 중문, 서귀포 시내, 남원, 표선, 성산을 둘러보세요.</p>
             <p>정보·사진: 비짓제주(제주관광공사)</p>
