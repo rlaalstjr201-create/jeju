@@ -2,6 +2,8 @@
 
 Status: Accepted (2026-10-01)
 
+Superseded by ADR-0077 (2026-10-03): 1·2·4·5는 ADR-0077(이름 「여행귀:제주」), 3(부제)은 ADR-0077 Amendment 1(태그라인 「P를 위한 여행동반자」)이 대체했다.
+
 ## Context
 
 ADR-0059 1번은 앱 이름을 `P의 여행`으로 정했다. 출시 전 이름 조사(`docs/research/name-01.md`, 2026-10-01)에서 다음이 나왔다.

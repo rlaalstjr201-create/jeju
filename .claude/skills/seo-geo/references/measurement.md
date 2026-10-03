@@ -4,12 +4,14 @@
 
 ## 연결 (한 번)
 
+연결 상태(2026-10-03, `apps/web/data/seo/config.json` 기준): GSC URL 접두어 속성 `https://yeogwi.pages.dev/` 확인·사이트맵 제출(API 미연결, 주간 작업이 화면을 읽음) · 네이버 서치어드바이저 확인·사이트맵 제출·`/` 수집 요청 · Bing 미등록 · GA4 도입됨(아래 표).
+
 | 소스 | 무엇 | 저장소에 남길 것(비밀 아님) |
 |---|---|---|
 | Google Search Console | 도메인 속성(`sc-domain:<도메인>`, DNS TXT) · 사이트맵 제출 · URL 검사로 `/`·`/jeju/` 색인 요청 | `data/seo/config.json` `gsc.property`. 서비스 계정 JSON은 저장소 밖, 경로를 환경변수 `GSC_CREDENTIALS`에 |
 | 네이버 서치어드바이저 | 사이트 등록·소유 확인·사이트맵·수집 요청 (`naver.md`) | `naver.site`. API 없음 — 수동 기록 |
 | Bing Webmaster Tools | GSC에서 가져오기 · IndexNow 키 | `bing.site`. ChatGPT 검색·Copilot의 색인 바탕 |
-| GA4 | **도입 여부부터 결정** — ADR-0061 익명 기록과 privacy.html 문구가 이미 있다. 넣으면 개인정보 안내를 고쳐야 한다 | `ga4.property_id` |
+| GA4 | **도입됨(ADR-0078)** — 속성 「여행귀:제주」, 측정 ID `G-P8DN26LKBC`(공개 ID, `apps/web/scripts/analytics-env.ts` `SITE_IDS`). 개인정보 안내는 ADR-0078에 맞춰 고쳤다. 실적 API는 미연결 | `ga4.property_id`(현재 config는 빈 칸·옛 TODO 문구 — 갱신 필요) |
 
 연결 후 `apps/web/scripts/seo/gsc.mjs`의 `gscLayerStats()`를 구현한다(seoulist `scripts/lib/gsc.mjs` 참고). GSC 확정 데이터는 2~3일 늦다 — 미확정 구간으로 채점하지 않는다.
 

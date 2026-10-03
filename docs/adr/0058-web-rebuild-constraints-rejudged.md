@@ -2,6 +2,8 @@
 
 Status: Accepted (2026-09-30) — ADR-0025·0027·0028·0029와 `plans/tomorrow-picker.md` 일부를 갱신. "예약은 마이리얼트립만(`bookable`)"은 ADR-0073이 멈추고 ADR-0074(체험마다 확인된 경로 하나)가 대체했다(2026-10-01)
 
+Amended by ADR-0076·ADR-0078 (2026-10-03): 「외부 요청 제한」에 비 소식 Pages Function(ADR-0076)과 분석 두 곳 GA4·네이버 애널리틱스(ADR-0078)를 예외로 더했다.
+
 ## Context
 
 `plans/tomorrow-picker.md`, `specs/tomorrow-picker.md`, ADR-0025~0029는 리빌딩(ADR-0028·0029, SPEC 3판) 전에 쓰였다. 출하 코드·데이터와 문서가 여러 곳에서 어긋난다(기분 4 vs 5, 지역 4 vs 15, `paid` vs `bookable`, 라벨 `기준` vs `근처` 등). ADR-0057에서 gzip 120KB를 폐기하며 "리빌딩 이전 제약은 재판정 대상"이라 했고, 이 ADR이 그 재판정 결과다.

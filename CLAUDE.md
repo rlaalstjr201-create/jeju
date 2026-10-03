@@ -2,7 +2,7 @@
 
 # CLAUDE.md
 
-> Jeju Travel All-in-One 프로젝트.
+> 여행귀:제주 — P를 위한 여행동반자 (https://yeogwi.pages.dev)
 
 ## 행동 원칙
 
@@ -23,7 +23,7 @@
 | 4. Plan | `plans/<feature>.md` | 아키텍처·포트·어댑터 결정 시 |
 | 5. Plan Review | — | — |
 | 6. Sub-agent build | — | — |
-| 7. Cross-model review (Codex) | `codex_review.md` | MAJOR 해소 결정 시 |
+| 7. Cross-model review (Codex) — Codex를 쓸 수 없으면 Claude 독립 리뷰로 대신하고 그 사실을 기록(ADR-0058) | `codex_review.md` | MAJOR 해소 결정 시 |
 | 8. Architecture improve | `architecture_review.md` | 구조 리팩토링 결정 시 |
 
 **단계 건너뛰지 마. 현재 단계 모르면 사용자에게 물어.**
