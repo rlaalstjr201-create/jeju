@@ -970,7 +970,7 @@ await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown (no 
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card:not(.ghost)', { timeout: 4500 });
   assert((await page.locator('#savedView .travel').count()) === 0, 'a trip without a position');
-  assert((await page.textContent('#basis')) === '여기 근처', 'a wait is not a failure');
+  assert((await page.textContent('#basis')) === '내 위치 근처', 'a wait is not a failure');
   await ctx.close();
 });
 
@@ -1453,7 +1453,7 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
       // D1: the first screen as before (the ♥ N is there because something is saved)
       const first = await page.$$eval('main button:not([hidden]), header button:not([hidden]), .top button:not([hidden])', (els) => els.filter((e) => e.offsetParent !== null).length);
       if (first !== 7) problems.push(`${tag} first screen has ${first} controls`);
-      if ((await page.textContent('#basis')).trim() !== '여기 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
+      if ((await page.textContent('#basis')).trim() !== '내 위치 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
       if ((await page.textContent('#saved')).trim() !== '3') problems.push(`${tag} ♥ ${await page.textContent('#saved')}`);
       // D2: 언제 → 내일
       await tapText(page, '#basis');
@@ -1468,7 +1468,7 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
       await tapText(page, '#sheet .sheet-close');
       await sleep(250);
       const label = (await page.textContent('#basis')).trim();
-      if (label !== '내일 · 여기 근처') problems.push(`${tag} label "${label}"`);
+      if (label !== '내일 · 내 위치 근처') problems.push(`${tag} label "${label}"`);
       await tapText(page, '[data-mood="rest"]');
       await waitCards(page);
       await measure(page, `${tag} results`);
@@ -1570,7 +1570,7 @@ await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in t
     await waitCards(page);
     const hs = await hstate(page);
     if (hs.depth !== depth || hs.overlay !== null || hs.view !== 'cards') problems.push(`${tag} history ${JSON.stringify(hs)}`);
-    if ((await page.textContent('#basis')).trim() !== '여기 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
+    if ((await page.textContent('#basis')).trim() !== '내 위치 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
     if ((await page.evaluate(() => localStorage.getItem('jeju.reach'))) !== '"drive60"') problems.push(`${tag} not stored`);
     const after = await names(page);
     if (after.length !== 3) problems.push(`${tag} ${after.length} cards`);

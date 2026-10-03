@@ -466,7 +466,7 @@ describe('저장소 값 손상 (S29)', () => {
     window.localStorage.setItem('jeju.basis', JSON.stringify('teleport'));
     window.localStorage.setItem('jeju.saved', JSON.stringify([realSpots[0].id, realSpots[0].id]));
     render();
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     expect($('#saved').textContent).toBe('1');
     await tap('#saved');
     expect(cardIds()).toEqual([realSpots[0].id]);
@@ -485,7 +485,7 @@ describe('저장소 값 손상 (S29)', () => {
     window.localStorage.setItem('jeju.stay', JSON.stringify({ lat: 0, lng: 0, label: '' }));
     window.localStorage.setItem('jeju.basis', JSON.stringify('stay'));
     render();
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
   });
 });
 
@@ -624,7 +624,7 @@ describe('연타·겹친 요청', () => {
     await flush();
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
     expect($('.notice')).toBeNull();
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
   });
 });
 
@@ -1050,7 +1050,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     permission = 'granted';
     document.dispatchEvent(new Event('visibilitychange'));
     await flush();
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
   });
 
   // Changed on purpose (3판 §6.13): no fade, no timer — the hint goes with the next intent, at once.
@@ -1364,7 +1364,7 @@ describe('QA 2026-09-30 — 다른 3곳 보기·저장 목록·사진', () => {
     await wait(40); // delays.long = 30 here (3s in the app)
     expect(cardIds()).toEqual([a.id, b.id]);
     expect($$('#savedView .travel')).toHaveLength(0);
-    expect($('#basis').textContent).toBe('여기 근처'); // nothing failed; it just didn't answer
+    expect($('#basis').textContent).toBe('내 위치 근처'); // nothing failed; it just didn't answer
   });
 
   it('photos lost while offline come back once online (in place), a photo broken while online stays dropped', async () => {
@@ -1493,7 +1493,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     await flush();
     await flush();
     await flush();
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     expect($('.notice')).toBeNull();
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
   });
@@ -1570,10 +1570,10 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     at('2026-09-30T12:00:00+09:00');
   });
 
-  it('D1 the first screen is as before: same interactive elements, label 여기 근처, no date in it', () => {
+  it('D1 the first screen is as before: same interactive elements, label 내 위치 근처, no date in it', () => {
     open();
     expect(interactiveCount()).toBe(6);
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     expect($('#saved').hidden).toBe(true);
   });
 
@@ -1592,7 +1592,7 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     expect(window.history.state).toEqual(entry); // no history change: still the sheet's entry
     expect($('#sheet [data-when="2026-10-01"]').getAttribute('aria-pressed')).toBe('true');
     expect(document.activeElement).toBe($('#sheet [data-when="2026-10-01"]'));
-    expect($('#basis').textContent).toBe('내일 · 여기 근처');
+    expect($('#basis').textContent).toBe('내일 · 내 위치 근처');
     expect(JSON.parse(window.localStorage.getItem('jeju.when')!)).toBe(TOMORROW);
     await tap('#sheet [data-area="애월"]');
     await settle();
@@ -1607,16 +1607,16 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     const input = $<HTMLInputElement>('#sheet input[type="date"]');
     input.value = '2026-10-03';
     input.dispatchEvent(new Event('change', { bubbles: true }));
-    expect($('#basis').textContent).toBe('10월 3일 · 여기 근처');
+    expect($('#basis').textContent).toBe('10월 3일 · 내 위치 근처');
     expect($('#sheet [data-action="pick-day"]').getAttribute('aria-pressed')).toBe('true');
     expect($('#sheet [data-action="pick-day"] .lm').textContent).toBe('10월 3일 토요일');
     const again = $<HTMLInputElement>('#sheet input[type="date"]');
     again.value = '2026-09-29';
     again.dispatchEvent(new Event('change', { bubbles: true }));
-    expect($('#basis').textContent).toBe('10월 3일 · 여기 근처'); // before today: ignored
+    expect($('#basis').textContent).toBe('10월 3일 · 내 위치 근처'); // before today: ignored
     again.value = TODAY;
     again.dispatchEvent(new Event('change', { bubbles: true }));
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
   });
 
   it('날짜 고르기 with no showPicker (older browsers): the date field itself shows and takes the focus', async () => {
@@ -1766,11 +1766,11 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     seed([[a, TODAY], [b, TOMORROW]]);
     window.localStorage.setItem('jeju.when', JSON.stringify(TOMORROW));
     open();
-    expect($('#basis').textContent).toBe('내일 · 여기 근처');
+    expect($('#basis').textContent).toBe('내일 · 내 위치 근처');
     expect($('#saved').textContent).toBe('2');
     at('2026-10-01T00:00:05+09:00');
     document.dispatchEvent(new Event('visibilitychange'));
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     expect(JSON.parse(window.localStorage.getItem('jeju.when')!)).toBe('now');
     expect($('#date').textContent).toBe('10월 1일 목요일');
     expect($('#saved').textContent).toBe('1');
@@ -1780,7 +1780,7 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
       ['지난 날펼치기', []],
     ]);
     open(); // and a reload the day after
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
   });
 
   it('D5 the midnight timer itself moves the day on (no need to leave the app)', async () => {
@@ -1789,10 +1789,10 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
       at('2026-09-30T23:59:00+09:00');
       window.localStorage.setItem('jeju.when', JSON.stringify(TOMORROW));
       open();
-      expect($('#basis').textContent).toBe('내일 · 여기 근처');
+      expect($('#basis').textContent).toBe('내일 · 내 위치 근처');
       at('2026-10-01T00:00:02+09:00');
       vi.advanceTimersByTime(61_000);
-      expect($('#basis').textContent).toBe('여기 근처');
+      expect($('#basis').textContent).toBe('내 위치 근처');
       expect($('#date').textContent).toBe('10월 1일 목요일');
     } finally {
       vi.useRealTimers();
@@ -1826,7 +1826,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     // check-mark selection (SPEC 3판): each row carries the check, shown only on the chosen one by CSS
     for (const b of reachRows()) expect(b.querySelector('svg.i-check')).not.toBeNull();
     expect(reachRows()[0].closest('.opts')!.getAttribute('aria-labelledby')).toBe('reach-h');
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
   });
 
   it('R4 choosing a range on the results: stored, the sheet closes (history balanced), the same mood picked anew in that range; the label is unchanged', async () => {
@@ -1842,7 +1842,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     expect(JSON.parse(window.localStorage.getItem('jeju.reach')!)).toBe('drive60');
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest', undefined, 'drive60'));
     expect(state().cards?.how).toBe('new');
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     // the rotation carries on inside the new range
     const first = cardNames();
     await tap('#cards .more');
@@ -2119,7 +2119,7 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
     expect(state().cards?.how).toBe('new');
     expect($$('#cards .card').map((c) => c.querySelector('.meta .indoor')?.textContent)).toEqual(['실내', '실내', '실내']);
     expect($('#cards .card.lead .meta').textContent).toMatch(/^실내\u00a0· 여기서 /);
-    expect($('#basis').textContent).toBe('여기 근처 · 실내만'); // ADR-0075 (was "여기 근처": 실내만 now said in the top bar)
+    expect($('#basis').textContent).toBe('내 위치 근처 · 실내만'); // ADR-0075 (was "여기 근처": 실내만 now said in the top bar)
     await tap('#basis');
     expect(toggle().getAttribute('aria-pressed')).toBe('true');
     // off again: the outdoor pick, no 실내, the session key gone

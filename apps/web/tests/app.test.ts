@@ -93,8 +93,8 @@ describe('S3 첫 화면', () => {
       '아무거나 골라줘',
     ]);
     expect(els).toEqual(expect.arrayContaining([...moods, $('#basis')]));
-    expect($('#basis').textContent).toBe('여기 근처');
-    expect($('#basis').getAttribute('aria-label')).toBe('여기 근처, 기준 바꾸기');
+    expect($('#basis').textContent).toBe('내 위치 근처');
+    expect($('#basis').getAttribute('aria-label')).toBe('내 위치 근처, 기준 바꾸기');
   });
 
   it('the 5 mood buttons are in the static HTML itself (ADR-0028) — shown before data loads', () => {
@@ -390,7 +390,7 @@ describe('S3 위치', () => {
     await tap('#basis');
     await tap('#sheet [data-basis="gps"]');
     expect($('#sheet').hidden).toBe(true);
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'any'));
 
     await tap('#basis');
@@ -408,7 +408,7 @@ describe('S3 위치', () => {
     await tap('#basis');
     await tap('#sheet [data-basis="gps"]');
     expect($('#sheet').hidden).toBe(true);
-    expect($('#basis').textContent).toBe('여기 근처');
+    expect($('#basis').textContent).toBe('내 위치 근처');
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest'));
   });
 

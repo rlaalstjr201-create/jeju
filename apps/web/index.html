@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <title>여행귀:제주 · P를 위한 여행동반자</title>
-    <meta name="description" content="P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta name="description" content="지금 내 위치 근처에서 갈 만한 곳 3곳, 누르면 바로 길찾기. P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분 하나로 제주에서 지금 갈 곳을 골라 드려요." />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)" />
     <!-- first paint already in the right background, no white flash at night (S49). The only colour literals outside the CSS tokens. -->
@@ -20,7 +20,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="여행귀:제주" />
     <meta property="og:title" content="여행귀:제주 · P를 위한 여행동반자" />
-    <meta property="og:description" content="P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta property="og:description" content="지금 내 위치 근처에서 갈 만한 곳 3곳, 누르면 바로 길찾기. P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분 하나로 제주에서 지금 갈 곳을 골라 드려요." />
     <meta property="og:image" content="__SITE__/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -30,7 +30,7 @@
     <meta property="og:locale" content="ko_KR" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="여행귀:제주 · P를 위한 여행동반자" />
-    <meta name="twitter:description" content="P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분을 고르면 제주에서 지금 갈 만한 곳 세 군데를 골라 드려요." />
+    <meta name="twitter:description" content="지금 내 위치 근처에서 갈 만한 곳 3곳, 누르면 바로 길찾기. P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분 하나로 제주에서 지금 갈 곳을 골라 드려요." />
     <meta name="twitter:image" content="__SITE__/og.png" />
     <!-- absolute paths: the page works at any address (a deep link, a host or worker fallback; ADR-0063) -->
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -77,7 +77,7 @@
   <body>
     <div id="app" class="app">
       <header class="top">
-        <button id="basis" class="basis" type="button" aria-haspopup="dialog" aria-label="여기 근처, 기준 바꾸기"><span>여기 근처</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button id="basis" class="basis" type="button" aria-haspopup="dialog" aria-label="내 위치 근처, 기준 바꾸기"><span>내 위치 근처</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button id="saved" class="saved-btn" type="button" aria-pressed="false" aria-label="저장한 곳 0개" hidden><svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z"/></svg><span class="n">0</span></button>
       </header>
       <main id="main">
@@ -86,7 +86,7 @@
           <!-- 오늘 판 (ADR-0075 2): the date and folded grey facts; render.ts adds the one row to tap, if any -->
           <div class="today" id="today"><p class="today-line"><span id="date"></span><span class="facts"></span></p></div>
           <h1 class="ask" id="ask">지금 뭐 하고 싶어요?</h1>
-          <p class="lede">하나 고르면 근처 3곳을 골라 드려요.</p>
+          <p class="lede">지금 내 위치 근처에서 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 바로 길찾기로 가요.</p>
           <!-- each row's 「예:」 and two photos come with the data (render.ts); the label is its own span -->
           <ul class="moods">
             <li><button class="mood" type="button" data-mood="rest"><span class="txt"><span class="label">푹 쉬고 싶어</span></span><svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></li>

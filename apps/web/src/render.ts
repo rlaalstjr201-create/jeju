@@ -14,7 +14,7 @@ import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
 export const COPY = {
-  basisGps: '여기 근처',
+  basisGps: '내 위치 근처',
   basisStay: '숙소 근처',
   basisRegion: (label: string) => `${label} 근처`,
   basisNoGps: '지역 고르기',
