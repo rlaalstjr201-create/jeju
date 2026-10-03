@@ -90,7 +90,9 @@ const pw = await loadPlaywright();
 const server = await startPreview();
 const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? 'chrome', headless: true });
 
-async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {} } = {}) {
+// `route(ctx)`: routes in place before the page that gets `storage` loads. Routing after fresh() and reloading
+// is racy for requests that page sends itself: under load one can reach the network after the route is up.
+async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {}, route } = {}) {
   const ctx = await browser.newContext({
     viewport: { width, height },
     colorScheme: dark ? 'dark' : 'light',
@@ -99,6 +101,7 @@ async function fresh({ width = 390, height = 844, dark = false, sw = false, geo,
   });
   await ctx.addInitScript(GEO_STUB);
   await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  if (route) await route(ctx);
   const page = await ctx.newPage();
   await page.goto('about:blank');
   await page.goto(BASE);
@@ -2246,14 +2249,17 @@ await check('I4-indoor', '비 와요(실내만) at 320·390: one row under 얼�
 await check('R5-rain', '비 소식 (ADR-0076) at 390, 애월 basis: /api/rain answering rain → one row on 오늘 판 (비 소식 · 실내만 볼까요?, 날씨: 기상청), asked with the area name only; tapped, 실내만 is on (#basis · 실내만, history unchanged) and the row says so with 모두 보기; a 204 → no rain row; no sideways scroll', async () => {
   const problems = [];
   const asked = [];
-  const { ctx, page } = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
-  await page.route('**/api/rain*', (r) => {
-    asked.push(new URL(r.request().url()).search);
-    return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: true }) });
+  const { ctx, page } = await fresh({
+    storage: { 'jeju.region': '애월', 'jeju.basis': 'region' },
+    route: (c) =>
+      c.route('**/api/rain*', (r) => {
+        asked.push(new URL(r.request().url()).search);
+        return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: true }) });
+      }),
   });
-  await page.reload();
   const row = page.locator('#today [data-action="rain-indoor"]');
-  await row.waitFor({ timeout: 5000 });
+  // the row can show before the spots are in; their arrival redraws the board (.wait goes) and replaces it
+  await page.locator('#today:not(.wait) [data-action="rain-indoor"]').waitFor({ timeout: 5000 });
   const text = (await row.textContent()).replace(/ /g, ' ');
   if (text !== '비 소식 · 실내만 볼까요? 날씨: 기상청') problems.push(`row "${text}"`);
   if (asked.join() !== '?area=aewol') problems.push(`asked ${asked.join()}`);
@@ -2271,13 +2277,15 @@ await check('R5-rain', '비 소식 (ADR-0076) at 390, 애월 basis: /api/rain an
   await shot(page, 'R5-rain');
   await ctx.close();
 
-  const none = await fresh({ storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
   let hits = 0;
-  await none.page.route('**/api/rain*', (r) => {
-    hits++;
-    return r.fulfill({ status: 204, headers: { 'Cache-Control': 'no-store' } });
+  const none = await fresh({
+    storage: { 'jeju.region': '애월', 'jeju.basis': 'region' },
+    route: (c) =>
+      c.route('**/api/rain*', (r) => {
+        hits++;
+        return r.fulfill({ status: 204, headers: { 'Cache-Control': 'no-store' } });
+      }),
   });
-  await none.page.reload();
   await none.page.waitForSelector('#homeMore .credit', { timeout: 5000 });
   await sleep(300);
   if (hits !== 1) problems.push(`204 run asked ${hits} times`);
