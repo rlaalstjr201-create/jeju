@@ -11,7 +11,7 @@ import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
-import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
 import { contextOf, createTracker, type EventName } from './track';
@@ -912,7 +912,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       (permission) => {
         if (signal.aborted) return;
         dispatch({ type: 'permission', permission });
-        // Location turned back on in settings while the results say it is off: the label says 내 주변 again,
+        if (permission === 'granted') locateHome();
+        // Location turned back on in settings while the results say it is off: the label says 내 위치 근처 again,
         // so the cards come too, instead of a notice that now contradicts it.
         const p = state.phase;
         const on = permission === 'granted' || permission === 'prompt';
@@ -920,6 +921,19 @@ export function mountApp(doc: Document, deps: Deps): App {
       },
       () => undefined,
     );
+  }
+
+  /** ADR-0075 Amendment 1: location already allowed, so the home reads it without a prompt — its examples, market
+   * row and 비 소식 are then about where the user is. Never asked here: the first prompt stays at a mood tap. A
+   * failure says nothing (the label is not changed by a read nobody asked for). */
+  let homeLocating = false;
+  function locateHome() {
+    if (homeLocating || state.view !== 'home' || state.basis !== 'gps' || homeOrigin(state)) return;
+    homeLocating = true;
+    void locateGps(deps).then((r) => {
+      homeLocating = false;
+      if (r.ok) dispatch({ type: 'homeFix', point: r.point });
+    });
   }
 
   // --- mount: restore what this history entry was showing (S18·S54) ---

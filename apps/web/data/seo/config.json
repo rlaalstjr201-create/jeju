@@ -1,8 +1,30 @@
 {
   "_why": "SEO 계기 설정. 비밀값은 넣지 않는다 — 자격증명은 환경변수 이름만 적는다. 배포 후 docs/seo/README.md 순서대로 채운다.",
   "site_url": "https://yeogwi.pages.dev",
-  "gsc": { "property": "https://yeogwi.pages.dev/", "credentials_env": "GSC_CREDENTIALS", "verified_at": "2026-10-03", "sitemap_submitted_at": "2026-10-03", "_note": "URL 접두어 속성. 서비스 계정이 없어 API 미연결 — 주간 작업이 GSC 실적 화면(크롬)을 읽어 data/seo/gsc/YYYY-MM-DD.json → scripts/seo/gsc-import.mjs (ADR-0079 1)" },
-  "ga4": { "property_id": "", "credentials_env": "GA4_CREDENTIALS", "_todo": "TODO-after-deploy: 도입 여부 결정 필요 — 개인정보 안내(privacy.html)·ADR-0061과 충돌 검토" },
-  "naver": { "site": "https://yeogwi.pages.dev", "verified_at": "2026-10-03", "sitemap_submitted_at": "2026-10-03", "collect_requested": ["/ (2026-10-03)"], "_note": "서치어드바이저는 공개 API가 없다 — 순위는 주간 Playwright 통합검색 관찰(scripts/seo/rank-naver.mjs, ADR-0079 1)" },
-  "bing": { "site": "", "_todo": "TODO: Bing Webmaster Tools(GSC 가져오기) — Copilot·ChatGPT 검색의 색인 소스. IndexNow(api.indexnow.org)는 등록 없이도 빙에 전달된다" }
+  "gsc": {
+    "property": "https://yeogwi.pages.dev/",
+    "credentials_env": "GSC_CREDENTIALS",
+    "verified_at": "2026-10-03",
+    "sitemap_submitted_at": "2026-10-03",
+    "_note": "URL 접두어 속성. 서비스 계정이 없어 API 미연결 — 주간 작업이 GSC 실적 화면(크롬)을 읽어 data/seo/gsc/YYYY-MM-DD.json → scripts/seo/gsc-import.mjs (ADR-0079 1)"
+  },
+  "ga4": {
+    "measurement_id": "G-P8DN26LKBC",
+    "property_id": "",
+    "credentials_env": "GA4_CREDENTIALS",
+    "_note": "도입 완료(ADR-0078, 2026-10-03, 속성 「여행귀:제주」). property_id·서비스 계정은 GA4 Data API를 붙일 때만 필요 — 그 전엔 주간 작업이 GA4 화면을 읽는다(ADR-0079)."
+  },
+  "naver": {
+    "site": "https://yeogwi.pages.dev",
+    "verified_at": "2026-10-03",
+    "sitemap_submitted_at": "2026-10-03",
+    "collect_requested": [
+      "/ (2026-10-03)"
+    ],
+    "_note": "서치어드바이저는 공개 API가 없다 — 순위는 주간 Playwright 통합검색 관찰(scripts/seo/rank-naver.mjs, ADR-0079 1)"
+  },
+  "bing": {
+    "site": "",
+    "_todo": "TODO: Bing Webmaster Tools(GSC 가져오기) — Copilot·ChatGPT 검색의 색인 소스. IndexNow(api.indexnow.org)는 등록 없이도 빙에 전달된다"
+  }
 }

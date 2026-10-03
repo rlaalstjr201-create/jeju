@@ -2,7 +2,7 @@
 // applies anything, so a late GPS answer can never open a sheet or overwrite newer cards (S37·S38).
 import type { AreaName } from './areas';
 import type { Point } from './pick';
-import { GPS_KEY, staticOrigin } from './state';
+import { gpsOrigin, staticOrigin } from './state';
 import type { Basis, GeoPermission, NoOrigin, Origin, Stay } from './types';
 
 export type { GeoPermission };
@@ -42,7 +42,7 @@ export async function resolveOrigin(basis: Basis, region: AreaName | null, stay:
   if (fixed) return { ok: true, origin: fixed };
   const r = await locateGps(deps);
   if (!r.ok) return r;
-  return { ok: true, origin: { key: GPS_KEY, point: r.point, isPoint: true, from: '여기서' } };
+  return { ok: true, origin: gpsOrigin(r.point) };
 }
 
 /** fetch, as far as 비 소식 needs it. */

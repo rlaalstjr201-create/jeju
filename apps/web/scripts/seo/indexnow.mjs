@@ -7,7 +7,7 @@
 //   node scripts/seo/indexnow.mjs send [--live]   그 URL만 전송 → 상태 갱신. 키 파일이 라이브에 있어야 한다.
 // 사이트맵: 기본 dist/sitemap.xml(빌드 결과 = 배포할 것) · --live면 https://yeogwi.pages.dev/sitemap.xml.
 // 키: public/<32자 16진수>.txt (내용 = 키). 상태: data/seo/indexnow-state.json.
-// 주의: lastmod가 사이트 전체 데이터 날짜 하나라 데이터를 갱신하면 전 URL이 「변경」이 된다 — dry로 먼저 본다.
+// lastmod는 페이지마다 그 페이지 본문이 마지막으로 바뀐 날이다(data/landing/lastmod.json, 감사 D4) — 바뀐 페이지만 「변경」이 된다.
 
 import fs from 'node:fs';
 import path from 'node:path';

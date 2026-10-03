@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
-  assignSlugs, buildSite, copiedReasons, ENTITY, ownShare, romanize, similarPairs, sitemapFiles, slugBase, sourceCopies, type SlugRegistry,
+  assignSlugs, buildSite, contentHash, copiedReasons, ENTITY, kstDay, pageLastmods, ownShare, romanize, similarPairs, sitemapFiles, slugBase, sourceCopies, type SlugRegistry,
 } from '../scripts/landing';
 import { parseJsonLd } from '../scripts/seo/crawl-parse.mjs';
 import type { Spot } from '../src/pick';
@@ -152,5 +152,49 @@ describe('품질 기준', () => {
     expect(Object.keys(split)).toEqual(['sitemap-1.xml', 'sitemap-2.xml', 'sitemap.xml']);
     expect(split['sitemap.xml']).toContain('<sitemapindex');
     expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-2.xml</loc>');
+  });
+
+  it('sitemap: each page its own lastmod; an index file its URLs\' latest', () => {
+    const one = sitemapFiles(['/', '/a/'], 'https://x.test', { '/': '2026-10-01', '/a/': '2026-10-03' })['sitemap.xml'];
+    expect(one).toContain('<loc>https://x.test/</loc><lastmod>2026-10-01</lastmod>');
+    expect(one).toContain('<loc>https://x.test/a/</loc><lastmod>2026-10-03</lastmod>');
+    const split = sitemapFiles(['/', '/a/', '/b/'], 'https://x.test', { '/': '2026-10-01', '/a/': '2026-10-03', '/b/': '2026-10-02' }, 2);
+    expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-1.xml</loc><lastmod>2026-10-03</lastmod>');
+    expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-2.xml</loc><lastmod>2026-10-02</lastmod>');
+  });
+});
+
+describe('per-page lastmod (audit D4): only a page whose content changed gets a new date', () => {
+  const page = (main: string, foot = '장소 정보 기준 2026-10-01.') => `<head><title>t</title></head><body><main>${main}</main><footer>${foot}</footer></body>`;
+
+  it('contentHash: the <main> only — not the footer\'s data date, the site address or the photos', () => {
+    const h = contentHash(page('<a href="https://x.test/jeju/">애월</a><img src="https://p/1.jpg" alt="">'), 'https://x.test');
+    expect(contentHash(page('<a href="/jeju/">애월</a>', '장소 정보 기준 2026-10-09.'), '')).toBe(h);
+    expect(contentHash(page('<a href="/jeju/">한림</a>'), '')).not.toBe(h);
+  });
+
+  it('pageLastmods: no record yet → every page at the old data date (nothing changes for IndexNow)', () => {
+    expect(pageLastmods(null, { '/': 'a', '/x/': 'b' }, '2026-10-03', '2026-10-01')).toEqual({
+      '/': { hash: 'a', lastmod: '2026-10-01' },
+      '/x/': { hash: 'b', lastmod: '2026-10-01' },
+    });
+  });
+
+  it('pageLastmods: same hash keeps its day; changed or new → today; gone → dropped; a second run is the same', () => {
+    const prev = { '/': { hash: 'a', lastmod: '2026-10-01' }, '/x/': { hash: 'b', lastmod: '2026-10-01' }, '/gone/': { hash: 'g', lastmod: '2026-10-01' } };
+    const next = pageLastmods(prev, { '/': 'a', '/x/': 'B', '/new/': 'n' }, '2026-10-03', '2026-10-01');
+    expect(next).toEqual({
+      '/': { hash: 'a', lastmod: '2026-10-01' },
+      '/new/': { hash: 'n', lastmod: '2026-10-03' },
+      '/x/': { hash: 'B', lastmod: '2026-10-03' },
+    });
+    // idempotent: the same build again (same day or a later one) writes the same record
+    expect(pageLastmods(next, { '/': 'a', '/x/': 'B', '/new/': 'n' }, '2026-10-03', '2026-10-01')).toEqual(next);
+    expect(JSON.stringify(pageLastmods(next, { '/new/': 'n', '/x/': 'B', '/': 'a' }, '2026-10-05', null))).toBe(JSON.stringify(next));
+  });
+
+  it('kstDay: the date in Jeju', () => {
+    expect(kstDay(new Date('2026-10-02T15:00:00Z'))).toBe('2026-10-03');
+    expect(kstDay(new Date('2026-10-02T14:59:59Z'))).toBe('2026-10-02');
   });
 });

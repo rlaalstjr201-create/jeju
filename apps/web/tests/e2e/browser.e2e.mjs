@@ -2286,6 +2286,57 @@ await check('R5-rain', '비 소식 (ADR-0076) at 390, 애월 basis: /api/rain an
   assert(!problems.length, problems.join('; '));
 });
 
+await check('H1-home-geo', 'ADR-0075 Amendment 1 at 390: location already allowed (real permission, a fix near 애월) → the home reads it with no prompt; 「예:」 examples within reach of 애월, 비 소식 asked for aewol, label 내 위치 근처. Not allowed → never read on the home, 「제주 인기:」, no market row', async () => {
+  const problems = [];
+  const AEWOL = { latitude: 33.4475, longitude: 126.3678 };
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR', permissions: ['geolocation'], geolocation: AEWOL });
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  const asked = [];
+  await ctx.route('**/api/rain*', (r) => {
+    asked.push(new URL(r.request().url()).search);
+    return r.fulfill({ status: 204, headers: { 'Cache-Control': 'no-store' } });
+  });
+  const page = await ctx.newPage();
+  await page.goto(BASE);
+  await page.waitForFunction(() => /^예: /.test(document.querySelector('[data-mood="rest"] .ex')?.textContent ?? ''), null, { timeout: 8000 }).catch(() => problems.push('no 「예:」 with a fix'));
+  const ex = await page.$$eval('.moods .ex', (els) => els.map((e) => e.textContent));
+  const far = await page.evaluate(async ({ ex, at }) => {
+    const spots = await (await fetch('/spots.json')).json();
+    const km = (s) => Math.hypot((s.lat - at.latitude) * 111, (s.lng - at.longitude) * 92.7);
+    const out = [];
+    for (const line of ex) {
+      for (const n of line.replace(/^예: /, '').split(', ')) {
+        const hits = spots.filter((s) => s.name.trim().startsWith(n));
+        if (!hits.length || Math.min(...hits.map(km)) > 25) out.push(n);
+      }
+    }
+    return out;
+  }, { ex, at: AEWOL });
+  if (far.length) problems.push(`examples not near 애월: ${far.join(', ')}`);
+  const label = (await page.textContent('#basis')).trim();
+  if (label !== '내 위치 근처') problems.push(`label "${label}"`);
+  if (!asked.includes('?area=aewol')) problems.push(`rain asked ${asked.join() || 'never'}`);
+  await shot(page, 'H1-home-geo');
+  await ctx.close();
+
+  const { ctx: c2, page: p2 } = await fresh(); // the stub says 'prompt'
+  await c2.addInitScript(() => {
+    const g = navigator.geolocation;
+    const get = g.getCurrentPosition.bind(g);
+    window.__geoCalls = 0;
+    g.getCurrentPosition = (...a) => { window.__geoCalls++; return get(...a); };
+  });
+  await p2.reload();
+  await p2.waitForSelector('#homeMore .credit', { timeout: 5000 });
+  await sleep(300);
+  if ((await p2.evaluate(() => window.__geoCalls)) !== 0) problems.push('read the position on the home without permission');
+  const ex2 = await p2.textContent('[data-mood="rest"] .ex');
+  if (!/^제주 인기: /.test(ex2 ?? '')) problems.push(`no-fix example "${ex2}"`);
+  if (await p2.$('#today .act')) problems.push('a row on 오늘 판 without a basis');
+  await c2.close();
+  assert(!problems.length, problems.join('; '));
+});
+
 await check('M4-market', '오일장 at 320·390 on 2026-10-02 (KST): 구경 cards near 제주시 are markets, each with one meta line starting with its day words (제주민속 오늘 장 서는 날, 함덕 장날: 1·6일), no sideways scroll; 날짜 모드 10/6 turns 함덕 into 이날 장 서는 날', async () => {
   const problems = [];
   const all = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));

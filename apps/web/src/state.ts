@@ -3,7 +3,7 @@
 // dropped here, so the last user intent always wins (S36–S38).
 import { areaByName, nearestArea, type AreaName } from './areas';
 import { type Day } from './dates';
-import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Card, type Histories, type HistoryKey, type NewSub, type Reach, type Spot, type Sub, type Tab } from './pick';
+import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
@@ -149,11 +149,14 @@ export type Action =
   | { type: 'imgError'; id: string }
   | { type: 'offline'; offline: boolean }
   | { type: 'permission'; permission: GeoPermission }
+  /** a position read on the home without asking: permission was already granted (ADR-0075 Amendment 1) */
+  | { type: 'homeFix'; point: Point }
   | { type: 'restore'; rec: SessionRecord }
   /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
   | { type: 'rain'; area: string; rain: boolean };
 
 export const GPS_KEY = 'gps';
+export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoint: true, from: '여기서' });
 
 export function initialState(init: {
   basis: Basis;
@@ -543,6 +546,13 @@ function step(s: State, a: Action): State {
       if (a.permission === 'denied') return s.lastFail ? s : { ...s, lastFail: 'denied' };
       if ((a.permission === 'granted' || a.permission === 'prompt') && s.lastFail === 'denied') return { ...s, lastFail: null };
       return s;
+    case 'homeFix': {
+      if (s.basis !== 'gps' || homeOrigin(s)) return s;
+      const fix = gpsOrigin(a.point);
+      if (sameOrigin(s.origin, fix)) return { ...s, lastFail: null };
+      // the rotation so far belongs to another point (as resolveCards would decide)
+      return { ...s, lastFail: null, origin: fix, originReach: s.reach, originIndoor: s.indoor, histories: {}, shown: {} };
+    }
     case 'rain':
       return a.area === rainArea(s) ? { ...s, rain: { area: a.area, rain: a.rain } } : s;
     case 'restore':

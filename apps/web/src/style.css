@@ -178,6 +178,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* ADR-0061: under the footnote, the note on anonymous counting and its switch (기록 끄기 / 기록 켜기) */
 .track { margin-top: 4px; color: var(--muted); }
 .track p { margin: 0; text-wrap: pretty; }
+.track p a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .track .tbtn { margin-left: -8px; color: var(--text); }
 /* ADR-0063: 링크로 백업 under the footnote, then where the places and photos come from and the privacy page */
 .backup { margin-top: 4px; }

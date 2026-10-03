@@ -12,11 +12,12 @@ import { fileURLToPath } from 'node:url';
 import { normalizeSpots } from '../src/data.ts';
 import { judge } from './seo/keyword-gate.mjs';
 import {
-  assignSlugs, buildSite, copiedReasons, ownShare, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
+  assignSlugs, buildSite, contentHash, copiedReasons, kstDay, ownShare, pageLastmods, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
 } from './landing.ts';
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SLUGS = join(APP, 'data/landing/slugs.json');
+const LASTMOD = join(APP, 'data/landing/lastmod.json');
 /** The quality bar (specs/seo-landing.md 「품질 기준」). Set before the first build's numbers were seen; see the spec. */
 export const BAR = { maxSimilarity: 0.8, minOwnShare: 0.3, minNearby: 3, sourceRun: 20 };
 const PHOTO_HOST = 'https://api.cdn.visitjeju.net/';
@@ -81,7 +82,19 @@ for (const p of pages) {
 }
 writeFileSync(join(DIST, CSS_PATH), readFileSync(join(APP, 'src/landing.css')));
 const urls = ['/', '/privacy', ...pages.map((p) => p.path)];
-for (const [f, body] of Object.entries(sitemapFiles(urls, site, dataDate))) writeFileSync(join(DIST, f), body);
+// Each page's lastmod is the day what it says last changed (audit D4): data/landing/lastmod.json keeps a hash per
+// page; a second build on the same day writes the same file. Commit it with the data.
+const today = kstDay(new Date());
+const hashes = Object.fromEntries([
+  ['/', contentHash(readFileSync(join(DIST, 'index.html'), 'utf8'), site)],
+  ['/privacy', contentHash(readFileSync(join(DIST, 'privacy.html'), 'utf8'), site)],
+  ...pages.map((p) => [p.path, contentHash(p.html, site)]),
+]);
+const lastmods = pageLastmods(existsSync(LASTMOD) ? read(LASTMOD).pages : null, hashes, today, dataDate);
+const lastmodJson = `${JSON.stringify({ _why: 'Sitemap lastmod per page (audit D4): the day its <main> last changed. Written by the build; commit it.', pages: lastmods }, null, 1)}\n`;
+if (!existsSync(LASTMOD) || readFileSync(LASTMOD, 'utf8') !== lastmodJson) writeFileSync(LASTMOD, lastmodJson);
+const changedToday = Object.values(lastmods).filter((e) => e.lastmod === today).length;
+for (const [f, body] of Object.entries(sitemapFiles(urls, site, Object.fromEntries(Object.entries(lastmods).map(([k, v]) => [k, v.lastmod]))))) writeFileSync(join(DIST, f), body);
 const robots = join(DIST, 'robots.txt');
 if (site && existsSync(robots) && !/^Sitemap:/m.test(readFileSync(robots, 'utf8'))) {
   writeFileSync(robots, `${readFileSync(robots, 'utf8').replace(/\n*$/, '\n')}\nSitemap: ${site}/sitemap.xml\n`);
@@ -117,7 +130,7 @@ const count = pages.reduce((a, p) => ({ ...a, [p.kind]: (a[p.kind] ?? 0) + 1 }),
 console.log(`landing: ${pages.length} pages (${Object.entries(count).map(([k, n]) => `${k} ${n}`).join(' · ')}), ${(size(join(DIST, 'jeju')) / 1048576).toFixed(1)} MB, photos ${photos ? 'on (hotlink)' : 'off'}, site ${site || '(relative)'}`);
 console.log(`  places ${places.length} of ${spots.length}; no page (reason repeats ${BAR.sourceRun}+ characters of its source): ${exclude.size}${exclude.size ? ` — ${spots.filter((s) => exclude.has(s.id)).map((s) => s.name).join(', ')}` : ''}`);
 console.log(`  closest pair ${closest ? `${closest.sim.toFixed(3)} ${closest.a} ${closest.b}` : '< 0.5'} (bar < ${BAR.maxSimilarity}); least own text ${own.length ? `${(own[0].share * 100).toFixed(1)}% ${own[0].path}` : '-'} (bar ≥ ${BAR.minOwnShare * 100}%)`);
-console.log(`  source-text runs: ${copies.length}; sitemap ${urls.length} URLs; redirects ${redirects.length}`);
+console.log(`  source-text runs: ${copies.length}; sitemap ${urls.length} URLs (lastmod today: ${changedToday}); redirects ${redirects.length}`);
 if (fail.length) {
   for (const f of fail) console.error(`  FAIL ${f}`);
   process.exit(1);

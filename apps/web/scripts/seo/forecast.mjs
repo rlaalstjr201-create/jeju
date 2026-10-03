@@ -2,7 +2,7 @@
 // 사전등록 예측 기록 — TODO-after-deploy.
 //
 // seoulist scripts/seo-forecast.mjs는 GSC 28일 기준선과 널 모델(no_change·trend)을 기록하고, 지평 후 seo-verify가
-// 널을 이겼는지로 채점한다. P의 여행은 아직 배포 전이라 기준선이 없다 — 기준선 없이 예측을 쓰면 런칭 주
+// 널을 이겼는지로 채점한다. 여행귀:제주는 2026-10-02에 배포했고 GSC 확정 데이터 28일이 아직 없다 — 기준선 없이 예측을 쓰면 런칭 주
 // 2일 표본으로 기준선을 깔았던 seoulist 사고(data/seo-model.json baseline_invalidated)를 처음부터 반복한다.
 //
 // 언제 켜나: 배포 + GSC 연결 + 확정 데이터 28일(첫 노출일 기준). 그 전에는 아무것도 쓰지 않는다.

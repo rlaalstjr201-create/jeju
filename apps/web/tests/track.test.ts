@@ -125,8 +125,9 @@ describe('U1 수집 주소가 없으면 보내지 않는다', () => {
     await tap($$('#cards .heart')[0]);
     await tap('#saved');
     expect($('#savedView .track').hidden).toBe(false);
-    expect($('#trackNote').textContent).toBe('어디가 좋았는지 익명으로 세어요.');
+    expect($('#trackNote').textContent).toBe('써 본 기록을 남겨요(GA4·네이버 애널리틱스 포함). 자세히');
     expect($('#savedView [data-action="track"]').textContent).toBe('기록 끄기');
+    expect($('#trackNote a')?.getAttribute('href')).toBe('/privacy'); // D2: what is recorded, in full
   });
 });
 
@@ -230,7 +231,7 @@ describe('U3 기록 끄기', () => {
     const btn = () => $<HTMLButtonElement>('#savedView [data-action="track"]');
     expect($('#savedView .foot').nextElementSibling).toBe(btn().parentElement);
     expect(btn().parentElement!.hidden).toBe(false);
-    expect($('#trackNote').textContent).toBe('어디가 좋았는지 익명으로 세어요.');
+    expect($('#trackNote').textContent).toBe('써 본 기록을 남겨요(GA4·네이버 애널리틱스 포함). 자세히');
     expect(btn().textContent).toBe('기록 끄기');
     expect(btn().classList.contains('tbtn')).toBe(true);
     await tap(btn());

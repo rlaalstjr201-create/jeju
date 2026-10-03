@@ -605,13 +605,13 @@ describe('QA 2026-09-30 이유 문장 — §10 금지 어형 0건', () => {
 });
 
 describe('S51 홈 화면(PWA) 실행 — 매니페스트', () => {
-  it('opens standalone at the app root, within scope, with both icons present; dark splash (D6)', () => {
+  it('opens standalone at the app root, within scope, with both icons present; white splash like the app (ADR-0070, audit D7)', () => {
     const m = JSON.parse(readFileSync(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
     expect(m.display).toBe('standalone');
     expect(new URL(m.start_url, 'https://x.test/app/').href.startsWith(new URL(m.scope, 'https://x.test/app/').href)).toBe(true);
     expect(m.name).toBe('여행귀:제주');
     expect(m.short_name).toBe('여행귀'); // under the home-screen icon: short (ADR-0077)
-    expect(m.background_color).toBe('#0f1319');
+    expect(m.background_color).toBe('#ffffff');
     for (const i of m.icons) expect(existsSync(resolve(root, 'public', i.src)), i.src).toBe(true);
     const html = readFileSync(resolve(root, 'index.html'), 'utf8');
     expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest" />'); // absolute: any page address (ADR-0063)

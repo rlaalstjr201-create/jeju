@@ -2,6 +2,7 @@
 // page per place under /jeju/<area>/<place-slug>/. Pure functions, no files: scripts/build-landing.mjs reads the
 // inputs, calls buildSite() and the checks below, and writes dist/. The rules the app uses are imported, not copied:
 // 지역 배정 = nearestArea, 이동 시간 = travel/travelText, 지도 링크 = goLink/naverSearchUrl (ADR-0071 네이버지도 기본).
+import { createHash } from 'node:crypto';
 import { AREAS, AREA_GROUPS, nearestArea, type Area } from '../src/areas';
 import { cleanName } from '../src/data';
 import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';
@@ -501,20 +502,59 @@ ${thumb(ctx, s, 'hero', `${name} 사진`, true)}${ctx.photos && s.image ? '\n<p 
 }
 
 // --- sitemap ----------------------------------------------------------------------------------------------------
-/** sitemap.xml, or (more than `max` URLs, the protocol's limit is 50,000) an index plus sitemap-N.xml files. */
-export function sitemapFiles(paths: string[], site: string, lastmod: string | null, max = 45000): Record<string, string> {
+/** sitemap.xml, or (more than `max` URLs, the protocol's limit is 50,000) an index plus sitemap-N.xml files.
+ * `lastmod`: one date for every URL, or each page's own (pageLastmods); an index file gets its URLs' latest. */
+export function sitemapFiles(paths: string[], site: string, lastmod: string | null | Record<string, string>, max = 45000): Record<string, string> {
   const head = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  const mod = lastmod ? `<lastmod>${lastmod}</lastmod>` : '';
+  const dateOf = (p: string) => (typeof lastmod === 'string' ? lastmod : lastmod?.[p] ?? null);
+  const tag = (d: string | null) => (d ? `<lastmod>${d}</lastmod>` : '');
   const urlset = (ps: string[]) =>
-    `${head}<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ps.map((p) => `<url><loc>${esc(`${site}${p}`)}</loc>${mod}</url>`).join('\n')}\n</urlset>\n`;
+    `${head}<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ps.map((p) => `<url><loc>${esc(`${site}${p}`)}</loc>${tag(dateOf(p))}</url>`).join('\n')}\n</urlset>\n`;
   if (paths.length <= max) return { 'sitemap.xml': urlset(paths) };
   const out: Record<string, string> = {};
-  for (let i = 0; i * max < paths.length; i++) out[`sitemap-${i + 1}.xml`] = urlset(paths.slice(i * max, (i + 1) * max));
+  const latest: Record<string, string | null> = {};
+  for (let i = 0; i * max < paths.length; i++) {
+    const ps = paths.slice(i * max, (i + 1) * max);
+    out[`sitemap-${i + 1}.xml`] = urlset(ps);
+    latest[`sitemap-${i + 1}.xml`] = ps.map(dateOf).reduce<string | null>((a, d) => (d && (!a || d > a) ? d : a), null);
+  }
   out['sitemap.xml'] = `${head}<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${Object.keys(out)
-    .map((f) => `<sitemap><loc>${esc(`${site}/${f}`)}</loc>${mod}</sitemap>`)
+    .map((f) => `<sitemap><loc>${esc(`${site}/${f}`)}</loc>${tag(latest[f])}</sitemap>`)
     .join('\n')}\n</sitemapindex>\n`;
   return out;
 }
+
+// --- per-page lastmod (audit D4, ADR-0079 4: IndexNow sends only pages that changed) --------------------------------
+export interface LastmodEntry {
+  hash: string;
+  lastmod: string;
+}
+/** What a page says, for telling whether it changed: its <main> (the shared header, footer with the data date, and
+ * head are left out), with the site address and photos taken out — a SITE_URL or LANDING_PHOTOS=0 build is the same
+ * page. */
+export function contentHash(html: string, site: string): string {
+  let main = html.match(/<main\b[^>]*>([\s\S]*)<\/main>/)?.[1] ?? html;
+  if (site) main = main.split(site).join('');
+  main = main.replace(/<img\b[^>]*>/g, '').replace(/<p class="meta">사진: [^<]*<\/p>/g, '');
+  // and the boxes they sat in (`<div class="ph sq"></div>`), now empty; the photo's credit line went with it
+  for (let was = ''; was !== main; ) [was, main] = [main, main.replace(/<(\w+)\b[^>]*>\s*<\/\1>/g, '')];
+  main = main.replace(/\s+/g, ' ');
+  return createHash('sha256').update(main).digest('hex').slice(0, 16);
+}
+/** Each page's lastmod: kept while its hash is the same, `today` when it changed or is new. With no record yet
+ * (`prev` null) every page starts at `start` (the data date the sitemap used before), so the first run changes
+ * nothing for IndexNow. Pages that are gone are dropped. Same input, same output (idempotent). */
+export function pageLastmods(prev: Record<string, LastmodEntry> | null, hashes: Record<string, string>, today: string, start: string | null): Record<string, LastmodEntry> {
+  const out: Record<string, LastmodEntry> = {};
+  for (const path of Object.keys(hashes).sort()) {
+    const hash = hashes[path];
+    const old = prev?.[path];
+    out[path] = { hash, lastmod: old && old.hash === hash ? old.lastmod : prev ? today : start ?? today };
+  }
+  return out;
+}
+/** Today in Jeju (Asia/Seoul, UTC+9, no DST). */
+export const kstDay = (now: Date) => new Date(now.getTime() + 9 * 3600_000).toISOString().slice(0, 10);
 
 // --- checks (the quality bar, specs/seo-landing.md 「품질 기준」) ------------------------------------------------
 /** Whitespace-free visible text — what the checks compare. */

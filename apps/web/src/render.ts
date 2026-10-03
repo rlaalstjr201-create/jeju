@@ -57,8 +57,7 @@ export const COPY = {
   retry: '다시 불러오기',
   westFirst: '서쪽부터',
   savedEmpty: '저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.',
-  /** ADR-0061: the saved list's note on anonymous counting, and its switch. */
-  trackNote: '어디가 좋았는지 익명으로 세어요.',
+  /** ADR-0061: the saved list's usage-record switch (its note is static in index.html, ADR-0078). */
   trackOff: '기록 끄기',
   trackOn: '기록 켜기',
   /** ADR-0071: TMAP opens only as an app (no web page to fall back on). */
@@ -133,6 +132,8 @@ export const COPY = {
   marketHead: (dated: boolean) => `${dated ? '이날' : '오늘'} 장 서는 곳`,
   areasHead: '다른 동네 둘러보기',
   example: (names: string[]) => `예: ${names.join(', ')}`,
+  /** no basis yet (GPS, no fix this session): the island's best, not said to be near (ADR-0075 Amendment 1) */
+  examplePopular: (names: string[]) => `제주 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 비짓제주(제주관광공사)',
   // 비 소식 (ADR-0076): only when it will rain; the source next to it
   rainAsk: '비 소식 · 실내만 볼까요?',
@@ -917,7 +918,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const { spots } = s;
     const day = whenDay(s);
     const markets = spots ? openMarkets(spots, origin, day) : [];
-    const acts = todayActs(markets, rainNow(s));
+    // without a basis no market goes on the board under 「내 위치 근처」: it could be across the island (ADR-0075
+    // Amendment 1); the 오늘 장 서는 곳 section below still lists them, each with its area
+    const acts = todayActs(origin ? markets : [], rainNow(s));
     const folded = acts.slice(1).filter((a): a is Extract<TodayAct, { k: 'market' }> => a.k === 'market');
     const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...folded.map((a) => COPY.marketFold(dated, a.row.spot.name.trim()))];
     // "·" held to the word before it by a no-break space (§3.2): a line never starts with "·"
@@ -934,8 +937,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       b.querySelector('.pair')?.remove();
       const ex = spots ? moodExamples(s, spots, origin, mood as Exclude<Button, 'any'>) : [];
       if (!ex.length) continue;
-      // 「예:」 — an example, not a promise (ADR-0075 3)
-      b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, COPY.example(ex.map((x) => splitName(x.name.trim()).main))));
+      // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
+      const names = ex.map((x) => splitName(x.name.trim()).main);
+      b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : COPY.examplePopular(names)));
       const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
       pair.append(...ex.map((x) => homePhoto(x, false)));
       b.querySelector('.i-check')!.before(pair);
