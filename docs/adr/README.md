@@ -97,4 +97,4 @@
 | 0077 | [0077-rename-yeohaenggwi.md](0077-rename-yeohaenggwi.md) | 이름 「여행귀:제주」, 주소 yeogwi.pages.dev (ADR-0068 1·2·4·5 대체) | Accepted (2026-10-03) |  |
 | 0078 | [0078-analytics-always-on.md](0078-analytics-always-on.md) | 분석은 셋(GA4 · 네이버 애널리틱스 · 자체 익명 기록), 꺼진 채로는 배포하지 않는다 | Accepted (2026-10-03) |  |
 | 0079 | [0079-weekly-seo-rank-ops.md](0079-weekly-seo-rank-ops.md) | 주간 SEO·순위 운영 — 측정은 기계가, 고침은 커밋까지, 배포는 사람이 | Accepted (2026-10-03) |  |
-| 0080 | [0080-seasonal-spots.md](0080-seasonal-spots.md) | 계절 명소(철) 1단계 — 원문으로 판정한 곳에만, 그해 관측일 또는 원문이 말한 달에만, 카드 메타 줄 글자 하나 | Proposed (2026-10-03, 2026-10-04 개정) |  |
+| 0080 | [0080-seasonal-spots.md](0080-seasonal-spots.md) | 계절 명소(철) 1단계 — 원문으로 판정한 곳에만, 그해 관측일 또는 원문이 말한 달에만, 카드 메타 줄 글자 하나 | Accepted (2026-10-04) |  |
