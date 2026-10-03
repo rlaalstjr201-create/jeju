@@ -107,6 +107,7 @@ describe('onRequestGet', () => {
     const res = await onRequestGet({ request: req('?area=aewol'), env: {} });
     expect(res.status).toBe(204);
     expect(res.headers.get('Cache-Control')).toBe('no-store');
+    expect(res.headers.get('X-Rain-Reason')).toBe('no-key');
     expect(f).not.toHaveBeenCalled();
   });
   it('upstream success → 200 JSON with edge-only s-maxage=1800 (browsers keep nothing); asks for the area\'s grid and the right issuance', async () => {
@@ -124,20 +125,43 @@ describe('onRequestGet', () => {
       serviceKey: 'a+b/c==', dataType: 'JSON', numOfRows: '1000', pageNo: '1', base_date: '20261003', base_time: '1400', nx: '53', ny: '33',
     });
   });
-  it('upstream error (HTTP error, XML error body, non-OK resultCode, network failure) → 204 no-store', async () => {
-    const answers = [
-      async () => new Response('down', { status: 502 }),
-      async () => new Response('<OpenAPI_ServiceResponse><cmmMsgHeader><errMsg>SERVICE ERROR</errMsg></cmmMsgHeader></OpenAPI_ServiceResponse>'),
-      async () => new Response(JSON.stringify(body([], '03'))),
-      async () => {
-        throw new TypeError('network');
-      },
+  it('the 인코딩 key pasted instead of the 디코딩 one is decoded first, so it is not encoded twice', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(at('2026-10-03T14:20'));
+    const f = vi.fn(async (_u: string) => new Response(JSON.stringify(body([pop('20261003', '1500', 10)]))));
+    vi.stubGlobal('fetch', f);
+    const res = await onRequestGet({ request: req('?area=aewol'), env: { KMA_SERVICE_KEY: ' a%2Bb%2Fc%3D%3D ' } });
+    expect(res.status).toBe(200);
+    expect(new URL(f.mock.calls[0][0]).searchParams.get('serviceKey')).toBe('a+b/c==');
+  });
+  it('upstream error (HTTP error, XML error body, non-OK resultCode, network failure) → 204 no-store, the reason in X-Rain-Reason and never the key', async () => {
+    const answers: [() => Promise<Response>, string][] = [
+      [async () => new Response('down', { status: 502 }), 'http 502'],
+      [
+        async () =>
+          new Response(JSON.stringify({ OpenAPI_ServiceResponse: { cmmMsgHeader: { errMsg: 'SERVICE_KEY_IS_NOT_REGISTERED_ERROR', returnAuthMsg: '등록되지 않은 서비스키', returnReasonCode: '30' } } }), { status: 403 }),
+        'http 403 gw',
+      ],
+      [
+        async () =>
+          new Response('<OpenAPI_ServiceResponse><cmmMsgHeader><errMsg>SERVICE ERROR</errMsg><returnAuthMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</returnAuthMsg><returnReasonCode>30</returnReasonCode></cmmMsgHeader></OpenAPI_ServiceResponse>'),
+        'gw SERVICE_KEY_IS_NOT_REGISTERED_ERROR',
+      ],
+      [async () => new Response(JSON.stringify(body([], '03'))), 'result 03 x'],
+      [
+        async () => {
+          throw new TypeError('network');
+        },
+        'network',
+      ],
     ];
-    for (const a of answers) {
+    for (const [a, why] of answers) {
       vi.stubGlobal('fetch', vi.fn(a));
-      const res = await onRequestGet({ request: req('?area=aewol'), env: { KMA_SERVICE_KEY: 'k' } });
+      const res = await onRequestGet({ request: req('?area=aewol'), env: { KMA_SERVICE_KEY: 'secret-key' } });
       expect(res.status).toBe(204);
       expect(res.headers.get('Cache-Control')).toBe('no-store');
+      expect(res.headers.get('X-Rain-Reason'), why).toMatch(new RegExp(`^${why.split(' ').slice(0, 2).join(' ')}`));
+      expect([...res.headers].join(' ')).not.toContain('secret-key');
     }
   });
 });
