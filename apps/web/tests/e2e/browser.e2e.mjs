@@ -1640,6 +1640,104 @@ await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart
   assert(!noted, 'the note / 기록 끄기 shows though nothing is collected');
 });
 
+await check('A1-analytics', 'ADR-0078, a build with the three analytics settings: after load GA4 (gtag.js with the id) and 네이버 wcslog.js are requested (route-mocked), a mood tap reaches GA4 as mood_tap and hiding the page POSTs /api/events, nothing carries a coordinate; with 기록 끄기 on, none of the three is requested at all', async () => {
+  const { mkdtempSync, rmSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const http = await import('node:http');
+  const { extname } = await import('node:path');
+  const GA = 'G-E2ETEST01';
+  const tmp = mkdtempSync(join(tmpdir(), 'yeogwi-analytics-'));
+  const out = join(tmp, 'dist');
+  const vite = join(dirname(createRequire(join(appDir, 'package.json')).resolve('vite/package.json')), 'bin', 'vite.js');
+  const env = { ...process.env, VITE_GA4_ID: GA, VITE_NAVER_WA: 'e2e-wa', VITE_EVENTS_URL: '/api/events' };
+  delete env.SITE_URL;
+  execSync(`"${process.execPath}" "${vite}" build --outDir "${out}" --emptyOutDir --logLevel error`, { cwd: appDir, env, stdio: 'pipe' });
+  const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png' };
+  const posts = [];
+  const srv = http.createServer((req, res) => {
+    const p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+    if (p === '/api/events') {
+      let body = '';
+      req.on('data', (c) => (body += c));
+      req.on('end', () => {
+        posts.push({ method: req.method, body });
+        res.writeHead(204).end();
+      });
+      return;
+    }
+    let body;
+    try {
+      body = readFileSync(join(out, p.endsWith('/') ? `${p}index.html` : p));
+    } catch {
+      return void res.writeHead(404).end();
+    }
+    res.writeHead(200, { 'content-type': TYPES[extname(p)] ?? 'text/html' }).end(body);
+  });
+  await new Promise((r) => srv.listen(0, r));
+  const url = `http://localhost:${srv.address().port}/`;
+  const ANALYTICS = /googletagmanager\.com|google-analytics\.com|wcs\.naver\.(net|com)/;
+  async function run(trackOff) {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
+    await ctx.addInitScript(GEO_STUB);
+    if (trackOff) await ctx.addInitScript(() => localStorage.setItem('jeju.track', 'false'));
+    await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+    // stand-ins, never the real network: gtag.js keeps the dataLayer; wcslog.js notes that wcs_do ran
+    await ctx.route('https://www.googletagmanager.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: 'window.__gtagLoaded = 1;' }));
+    await ctx.route('https://*.google-analytics.com/**', (r) => r.fulfill({ status: 204, body: '' }));
+    await ctx.route('https://wcs.pstatic.net/**', (r) =>
+      r.fulfill({ status: 200, contentType: 'text/javascript', body: 'window.wcs = { inflow: function () {} }; window.wcs_do = function () { window.__wcsDo = (window.__wcsDo || 0) + 1; };' }),
+    );
+    const seen = [];
+    ctx.on('request', (r) => seen.push({ url: r.url(), body: r.postData() ?? '' }));
+    const page = await ctx.newPage();
+    await page.goto(url, { waitUntil: 'load' });
+    await sleep(300);
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+      document.dispatchEvent(new Event('visibilitychange'));
+      delete document.visibilityState;
+    });
+    await sleep(500);
+    const win = await page.evaluate((ga) => ({
+      dataLayer: JSON.stringify((window.dataLayer ?? []).map((a) => Array.from(a))),
+      gtagLoaded: window.__gtagLoaded ?? 0,
+      wcsDo: window.__wcsDo ?? 0,
+      wa: window.wcs_add?.wa ?? null,
+      disabled: window[`ga-disable-${ga}`],
+      noted: !document.querySelector('#savedView .track')?.hidden,
+    }), GA);
+    await ctx.close();
+    return { seen, win };
+  }
+  try {
+    const on = await run(false);
+    const gaReq = on.seen.filter((r) => r.url.startsWith(`https://www.googletagmanager.com/gtag/js?id=${GA}`));
+    assert(gaReq.length === 1, `gtag.js requests: ${gaReq.length}`);
+    assert(on.seen.filter((r) => r.url.startsWith('https://wcs.pstatic.net/wcslog.js')).length === 1, 'wcslog.js not requested once');
+    assert(on.win.gtagLoaded === 1 && on.win.wcsDo === 1 && on.win.wa === 'e2e-wa', `scripts not run: ${JSON.stringify(on.win)}`);
+    assert(on.win.dataLayer.includes(`["config","${GA}"`), `no GA4 config: ${on.win.dataLayer}`);
+    assert(/\["event","mood_tap",\{[^}]*"mood":"rest"/.test(on.win.dataLayer), `no mood_tap: ${on.win.dataLayer}`);
+    assert(on.win.noted, 'the note / 기록 끄기 is hidden though analytics is on');
+    const ours = posts.filter((p) => p.method === 'POST');
+    assert(ours.length === 1 && JSON.parse(ours[0].body).some((e) => e.e === 'tap' && e.mood === 'rest'), `POST /api/events: ${JSON.stringify(posts)}`);
+    const coord = /lat|lng|\b3[34]\.\d{3,}|\b12[67]\.\d{3,}/;
+    const leaked = [...on.seen.filter((r) => ANALYTICS.test(r.url) || r.url.includes('/api/events')).map((r) => r.url + r.body), on.win.dataLayer, ...ours.map((p) => p.body)].filter((s) => coord.test(s));
+    assert(leaked.length === 0, `a coordinate went out: ${leaked.join(' | ').slice(0, 300)}`);
+
+    posts.length = 0;
+    const off = await run(true);
+    const sent = off.seen.filter((r) => ANALYTICS.test(r.url));
+    assert(sent.length === 0, `기록 끄기 on, still requested: ${sent.map((r) => r.url).join(', ')}`);
+    assert(off.win.dataLayer === '[]' && off.win.wa === null && off.win.disabled === true, `기록 끄기 on, still set up: ${JSON.stringify(off.win)}`);
+    assert(posts.length === 0, `기록 끄기 on, /api/events still got ${posts.length}`);
+  } finally {
+    srv.close();
+    rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
 // --- QA r4 ---
 /** The next 12월 25일 that is neither today nor tomorrow: the longest date label. */
 const xmasDay = () => {

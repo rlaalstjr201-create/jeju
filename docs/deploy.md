@@ -1,6 +1,6 @@
 # 배포 — Cloudflare Pages (apps/web 「여행귀:제주」)
 
-ADR-0063 1. 정적 사이트 하나에 서버 코드는 비 소식 함수 `/api/rain` 하나뿐(ADR-0076, `apps/web/functions/`). 이름·주소는 ADR-0077(ADR-0068 대체), 정적 랜딩(`/jeju/**`)은 ADR-0072. 익명 기록 수집기(ADR-0061)는 나중에 같은 주소의 Functions로 붙인다(그 전엔 `VITE_EVENTS_URL` 미설정).
+ADR-0063 1. 정적 사이트 하나에 서버 코드는 Functions 둘(`apps/web/functions/`): 비 소식 `/api/rain`(ADR-0076)과 익명 기록 수집기 `/api/events`(ADR-0061·ADR-0078, D1 `yeogwi-events`). 이름·주소는 ADR-0077(ADR-0068 대체), 정적 랜딩(`/jeju/**`)은 ADR-0072. 분석은 GA4·네이버 애널리틱스·자체 기록 셋이고, 꺼진 채로는 운영 빌드가 되지 않는다(ADR-0078).
 
 ## 1. Pages 프로젝트 설정
 
@@ -9,13 +9,20 @@ ADR-0063 1. 정적 사이트 하나에 서버 코드는 비 소식 함수 `/api/
 프로젝트 `yeogwi`(https://yeogwi.pages.dev)는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
 
 ```sh
-SITE_URL=https://yeogwi.pages.dev npm run build       # dist/ (빌드 환경 변수는 아래 표와 같다)
+# 처음 한 번, 그리고 migrations/에 새 파일이 생길 때: D1 테이블 만들기
+npx wrangler d1 migrations apply yeogwi-events --remote
+
+SITE_URL=https://yeogwi.pages.dev npm run build   # dist/ (표 참고)
 npx wrangler pages deploy dist --project-name yeogwi
+SITE=https://yeogwi.pages.dev bash scripts/smoke.sh                                                               # 아래 3
 ```
+
+- `VITE_EVENTS_URL`은 `SITE_URL`이 있으면 기본 `/api/events`라 넣지 않아도 된다. 셋(`VITE_GA4_ID`·`VITE_NAVER_WA`·`VITE_EVENTS_URL`) 중 하나라도 비면 빌드가 이름을 대고 실패한다(`scripts/analytics-env.ts`). 공개 ID(GA4 `G-P8DN26LKBC`, 네이버 `1caa51952fb5230`)는 `scripts/analytics-env.ts` `SITE_IDS`에 있어 `SITE_URL`만 주면 채워진다. 같은 이름 환경 변수가 있으면 그것이 이긴다.
+- `apps/web/wrangler.toml`이 프로젝트 이름·`pages_build_output_dir`·D1 바인딩(`EVENTS_DB` → `yeogwi-events`)을 정한다. 비밀은 넣지 않는다.
 
 - `apps/web/functions/`(비 소식 `/api/rain`, ADR-0076)는 이 명령을 돌린 디렉터리 기준으로 찾아 같이 올라간다. 그래서 반드시 `apps/web`에서 돌린다. 함수는 앱 번들과 별개라 50KB 예산에 들어가지 않는다.
 - 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name yeogwi`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
-- 로컬에서 함수까지 보기: `npx wrangler pages dev dist --port 8788` → `/api/rain?area=aewol`이 키 없이 204, `?area=nope`이 400.
+- 로컬에서 함수까지 보기: `npx wrangler d1 migrations apply yeogwi-events --local` 뒤 `npx wrangler pages dev dist --port 8788`(D1은 `wrangler.toml` 바인딩의 로컬 사본, `apps/web/.wrangler/`) → `/api/rain?area=aewol`이 키 없이 204, `?area=nope`이 400, `POST /api/events`(유효한 배열)가 204, `/api/events/health`가 `{"last24h":n}`. 끝나면 `.wrangler/`를 지운다.
 
 ### 옛 주소 넘기기 (gwichana-jeju → yeogwi, ADR-0077 6)
 
@@ -45,7 +52,9 @@ GitHub `rlaalstjr201-create/jeju` 기준. 의존성은 저장소 루트의 npm w
 | 환경 변수 `NODE_VERSION` | `22` |
 | 환경 변수 `SITE_URL` | 사이트 주소, 끝 `/` 없이. 예: `https://<프로젝트>.pages.dev` 또는 커스텀 도메인. 링크 미리보기(`og:image`·`og:url`), 모든 페이지의 `canonical`(홈·`/privacy`·`/jeju/**`), JSON-LD `url`, `sitemap.xml`, `robots.txt`의 `Sitemap:` 줄을 절대 주소로 만든다. 없으면 상대 경로(카카오톡 미리보기에 사진이 빠지고, 검색엔진은 canonical·sitemap을 못 믿는다). **커스텀 도메인을 붙이면 그 주소로 바꾸고 다시 배포**한다(`*.pages.dev`도 계속 열리지만 canonical이 도메인을 가리킨다) |
 | 환경 변수 `LANDING_PHOTOS` | 보통은 **넣지 않는다**(정적 랜딩에 비짓제주 사진 핫링크). `0`이면 랜딩(`/jeju/**`)의 사진·`og:image`·JSON-LD `image`를 모두 빼고 출처를 `정보:`로 바꾼다 — 제주관광공사 회신이 거절이거나 상업화를 정했을 때(ADR-0072 3) |
-| 환경 변수 `VITE_EVENTS_URL` | **넣지 않는다.** 없으면 익명 기록을 모으지도 보내지도 않고, 저장한 곳의 기록 문구·`기록 끄기`도 숨는다. 수집기(영속 저장·크기/빈도 제한)를 붙인 뒤 새 결정으로 켠다 |
+| 환경 변수 `VITE_GA4_ID` | `G-P8DN26LKBC` (GA4 속성 「여행귀:제주」, ADR-0078). `SITE_URL`이 있으면 필수 |
+| 환경 변수 `VITE_NAVER_WA` | 네이버 애널리틱스 사이트 ID. 기본값 `1caa51952fb5230`(`SITE_IDS`), 다른 사이트에 쓸 때만 넣는다 |
+| 환경 변수 `VITE_EVENTS_URL` | `/api/events`(같은 출처 수집기). `SITE_URL`이 있으면 이 값이 기본이라 생략해도 된다. 비워 두면 빌드가 실패한다 |
 
 Production·Preview 두 환경에 같은 값을 넣는다(Preview의 `SITE_URL`은 비워도 된다 — Pages가 미리보기 주소에 `X-Robots-Tag: noindex`를 붙인다).
 
@@ -77,11 +86,12 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 - [ ] `apps/web`에서 `npx tsc --noEmit`, `npx vitest run`, `npm run build`(기본·`LANDING_PHOTOS=0` 둘 다), `npm run check:slop`, e2e(`npm run e2e`), `SITE_URL=… npm run seo:crawl`(감사 0건) 모두 통과. 최근 결과는 `docs/predeploy-review.md` 0절.
 - [ ] `privacy.html`의 문의처가 맞는지(지금은 GitHub 이슈 링크).
 - [x] 제주관광공사 사진 이용 가능 확인(2026-10-01, 회신 사용자 보관).
-- [ ] Pages 환경 변수: `SITE_URL` 있음, `VITE_EVENTS_URL` 없음. `LANDING_PHOTOS`는 넣지 않는다(사진 켬, 공사 확인 완료).
+- [ ] 빌드 환경 변수: `SITE_URL`, `VITE_GA4_ID=G-P8DN26LKBC`, `VITE_NAVER_WA`(네이버 ID), `VITE_EVENTS_URL=/api/events`(생략 시 기본). `LANDING_PHOTOS`는 넣지 않는다(사진 켬, 공사 확인 완료).
+- [ ] D1 마이그레이션 적용: `npx wrangler d1 migrations apply yeogwi-events --remote`(이미 적용됐으면 `No migrations to apply`).
 
 ## 3. 배포 뒤 스모크 (`SITE`=사이트 주소)
 
-명령어 점검은 한 번에: `SITE=https://yeogwi.pages.dev bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것).
+명령어 점검은 한 번에: `SITE=https://yeogwi.pages.dev bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것). 분석 셋도 본다: 홈 HTML에 GA4 ID와 `naver-wa=`, `/api/events/health` 200 JSON, 작은 배열 `POST /api/events` 204(확인용 기분 탭 1건이 기록에 더해진다).
 
 명령으로:
 
@@ -97,9 +107,10 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 브라우저로(데스크톱 Chrome):
 
 - [ ] 첫 화면 → 기분 → 카드 3장, 콘솔 오류 0. DevTools Application: 서비스워커 활성, 매니페스트에 maskable 아이콘 경고 없음.
-- [ ] 저장한 곳 아래에 `정보·사진: 비짓제주(제주관광공사)`, `개인정보 처리 안내`, `링크로 백업`. 결과 화면 맨 아래에도 출처 한 줄. `기록 끄기`는 **보이지 않아야** 한다(수집 꺼짐).
+- [ ] 저장한 곳 아래에 `정보·사진: 비짓제주(제주관광공사)`, `개인정보 처리 안내`, `링크로 백업`. 결과 화면 맨 아래에도 출처 한 줄. `어디가 좋았는지 익명으로 세어요.`와 `기록 끄기`가 **보여야** 한다.
 - [ ] `링크로 백업` → 다른 브라우저(또는 시크릿 창)에 붙여 넣기 → `합치기` → ♥ N이 같다. 주소창에서 `#s=…`가 사라진다.
-- [ ] Network 탭: 이 주소·`api.cdn.visitjeju.net`(사진) 말고는 요청 없음, POST 없음.
+- [ ] Network 탭: 이 주소·`api.cdn.visitjeju.net`(사진) 말고는 `load` 뒤 `googletagmanager.com/gtag/js`·`google-analytics.com/g/collect`·`wcs.pstatic.net`뿐. 기분을 누르고 탭을 숨기면 `POST /api/events` 204. GA4 실시간 보고서와 네이버 애널리틱스 실시간에 방문 1이 보인다.
+- [ ] `기록 끄기` → 새로고침: GA4·네이버 요청 0, `/api/events` 0.
 - [ ] 새 배포 한 번 더(문구 하나 바꿔서) → 열어 둔 탭이 첫 화면에서 새 코드로 바뀐다(S65).
 
 실기기(ADR-0063 Consequences):
@@ -111,6 +122,8 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 - [ ] 다크 모드에서 404·개인정보 페이지도 어두운 바탕.
 - [ ] 길찾기(자동차·도보·배 타는 곳) × 지도 앱 3개 점검: `docs/device-check.md`(ADR-0069·0071). 그 전에 `npm run check:links`(네이버·카카오 링크가 그대로인지).
 
-검색(배포 당일~1주): 네이버 서치어드바이저·GSC 등록과 사이트맵 제출(위 「검색엔진 소유 확인」), GA4는 도입 여부부터 결정(ADR-0061과 겹침). 주간 점검은 `docs/seo/README.md`.
+검색(배포 당일~1주): 네이버 서치어드바이저·GSC 등록과 사이트맵 제출(위 「검색엔진 소유 확인」). 주간 점검은 `docs/seo/README.md`.
+
+분석(ADR-0078): 매일 `npm run analytics:health -w @jeju/web`(로컬 예약 작업)이 자체 기록 지난 24시간 0건이거나 수집기에 닿지 않으면 한 줄 이유와 함께 실패한다. 주간 점검에서 `npm run analytics:report -w @jeju/web`(`wrangler login` 필요, D1 읽기만)로 `docs/analytics/YYYY-MM-DD.md`를 만들고, GA4·네이버 대시보드의 지난 7일 사용자 수를 같이 적는다.
 
 남은 일(배포 직후~1주): 오류 집계(새 결정 필요), Lighthouse, 한국 통신사별 응답 지연 실측(무료 플랜 우회 사례).

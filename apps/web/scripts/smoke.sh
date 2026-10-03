@@ -33,4 +33,16 @@ for p in / /llms.txt /privacy /jeju/ /jeju/aewol/ /manifest.webmanifest /nope/de
     | grep -qE 'P의 여행|여행계획짜기 귀찮아|계획귀찮아' && { old=1; echo "     옛 이름: $p"; }
 done
 [ $old = 0 ] && ok "옛 이름 0" || bad "옛 이름 남음"
+# 분석 셋이 켜져 배포됐는지 (ADR-0078 2). 확인용 기분 탭 1건이 오늘 기록에 더해진다.
+home=$(curl -sS -m 20 "$SITE/")
+echo "$home" | grep -q 'G-P8DN26LKBC' && ok "GA4 ID 있음" || bad "GA4 ID 없음"
+echo "$home" | grep -qE 'naver-wa=[^" ]+' && ok "네이버 wa 있음" || bad "네이버 wa 없음"
+hc=$(curl -sS -m 20 -o /dev/null -w '%{http_code}' "$SITE/api/events/health")
+hb=$(curl -sS -m 20 "$SITE/api/events/health")
+[ "$hc" = 200 ] && echo "$hb" | grep -qE '^\{"last24h":[0-9]+\}$' && ok "/api/events/health $hb" || bad "/api/events/health $hc $hb"
+# 받는 쪽이 살아 있는지만 본다: 형식이 틀린 묶음은 검증에서 400이 나고 아무것도 쌓이지 않는다
+# (진짜 기록을 보내면 운영 집계가 점검 횟수만큼 부푼다)
+code=$(curl -sS -m 20 -o /dev/null -w '%{http_code}' -X POST -H 'content-type: application/json' \
+  --data '[{"e":"smoke"}]' "$SITE/api/events")
+[ "$code" = 400 ] && ok "POST /api/events 살아 있음(검증 400, 쌓지 않음)" || bad "POST /api/events $code"
 exit $fail

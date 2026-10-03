@@ -1,4 +1,5 @@
 import './style.css';
+import { createAnalytics } from './analytics';
 import { LocateError, inJeju, mountApp } from './app';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
@@ -61,6 +62,8 @@ const app = mountApp(document, {
   session: storageOf('sessionStorage'),
   // Anonymous usage counts (ADR-0061): only when the build names a collection address.
   eventsUrl: import.meta.env.VITE_EVENTS_URL,
+  // GA4 · 네이버 애널리틱스 (ADR-0078): added after load, only while 기록 is on
+  analytics: createAnalytics(window, { ga4: import.meta.env.VITE_GA4_ID, naverWa: import.meta.env.VITE_NAVER_WA }),
   persist,
   // 비 소식 (ADR-0076): the area's name only, to this site's own function
   fetch: (url, init) => fetch(url, init),

@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
+import { analyticsEnv, type AnalyticsEnv } from './scripts/analytics-env';
 import { buildServiceWorker, spotsVersion } from './scripts/sw-build';
 
 const root = __dirname;
@@ -71,12 +72,28 @@ function pagesNotFound(): Plugin {
   };
 }
 
-export default defineConfig({
+/** ADR-0078: the analytics ids into the app (import.meta.env) and a marker into the page head that smoke.sh
+ * reads, so a deploy shows what it measures. Unset (dev, tests): nothing is loaded or sent. */
+function analytics(env: AnalyticsEnv | null): Plugin {
+  if (!env) return { name: 'analytics' }; // dev server: Vite's own VITE_* env as is
+  return {
+    name: 'analytics',
+    config: () => ({ define: Object.fromEntries(Object.entries(env).map(([k, v]) => [`import.meta.env.${k}`, JSON.stringify(v)])) }),
+    transformIndexHtml: (html) =>
+      env.VITE_GA4_ID || env.VITE_NAVER_WA
+        ? html.replace('</head>', `  <meta name="analytics" content="ga4=${env.VITE_GA4_ID} naver-wa=${env.VITE_NAVER_WA}" />
+  </head>`)
+        : html,
+  };
+}
+
+export default defineConfig(({ command }) => ({
   // Absolute: index.html served at any path (a deep link, a fallback) still finds /assets/… (ADR-0063).
   base: '/',
   // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
   appType: 'mpa',
   define: { __SPOTS_V__: JSON.stringify(SPOTS_V) },
-  plugins: [serviceWorker(), siteUrl(), pagesNotFound()],
+  // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
+  plugins: [serviceWorker(), siteUrl(), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   build: { target: 'es2020', modulePreload: { polyfill: false } },
-});
+}));

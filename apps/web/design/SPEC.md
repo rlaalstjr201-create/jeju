@@ -910,7 +910,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 ### 12.3 크기 예산
 
-빌드 JS+CSS gzip ≤ 50KB(S9-5). 웹폰트 0. 외부 요청은 사진 CDN과 링크 이동, 그리고 빌드에 `VITE_EVENTS_URL`이 있을 때만 익명 사용 기록(ADR-0061). 받는 쪽(`events/`)은 앱 번들에 들어가지 않는다. 비 소식(ADR-0076): 지금 모드에서 기준 동네가 있을 때만 같은 출처 `GET /api/rain?area=<slug>`를 한 번 부른다(동네 이름만, 좌표·식별자 없음, 3초 타임아웃, `sessionStorage['jeju.rain']` 30분). 기상청 요청은 그 함수(`functions/api/rain.ts`)가 하고, 함수는 앱 번들 예산에 들어가지 않는다. 서비스워커는 `/api/**`를 건드리지 않는다.
+빌드 JS+CSS gzip ≤ 50KB(S9-5). 웹폰트 0. 외부 요청은 사진 CDN과 링크 이동, 그리고 사용 기록 셋(ADR-0078): 같은 출처 `POST /api/events`(익명 기록, ADR-0061 형식, `sendBeacon`), GA4(`www.googletagmanager.com/gtag/js` → `google-analytics.com` 수집), 네이버 애널리틱스(`wcs.pstatic.net/wcslog.js`). 운영 빌드(`SITE_URL`)는 `VITE_GA4_ID`·`VITE_NAVER_WA`·`VITE_EVENTS_URL`(기본 `/api/events`) 중 하나라도 비면 실패한다. 두 외부 스크립트는 `load` 뒤 `async`로 붙고 이 예산에 들어가지 않는다. 기록 끄기가 켜져 있으면 셋 다 아무것도 보내지 않고, 외부 스크립트도 불러오지 않는다(런타임에 끄면 `ga-disable-<ID>`). GA4에는 기분 탭·지도 열기·저장만 장소 id와 기분·범위·기준 종류·날짜 모드 여부로 보낸다. 좌표는 어디로도 보내지 않는다. 받는 쪽(`events/`, `functions/api/events/`)은 앱 번들에 들어가지 않는다. 비 소식(ADR-0076): 지금 모드에서 기준 동네가 있을 때만 같은 출처 `GET /api/rain?area=<slug>`를 한 번 부른다(동네 이름만, 좌표·식별자 없음, 3초 타임아웃, `sessionStorage['jeju.rain']` 30분). 기상청 요청은 그 함수(`functions/api/rain.ts`)가 하고, 함수는 앱 번들 예산에 들어가지 않는다. 서비스워커는 `/api/**`를 건드리지 않는다.
 
 ### 12.4 데이터 빌드 (scripts/build-spots.mjs)
 

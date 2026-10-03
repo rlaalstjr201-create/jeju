@@ -68,8 +68,15 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('<h1>개인정보 처리 안내</h1>');
     expect(html).toContain('브라우저 저장소에만 있어요');
     expect(html).toContain('좌표를 기기 밖으로 보내지 않아요');
-    expect(html).toContain('수집 주소를 넣어 배포했을 때만 켜져요');
     expect(html).toContain('‘기록 끄기’를 누르면 바로 멈추고');
+    // ADR-0078 4: GA4 and 네이버 애널리틱스 named, their cookies and connection data said, no coordinates, how to turn off
+    expect(html).not.toContain('수집 주소를 넣어 배포했을 때만 켜져요');
+    expect(html).toContain('Google 애널리틱스(GA4)');
+    expect(html).toContain('네이버 애널리틱스');
+    expect(html).toContain('두 서비스는 쿠키를 쓰고, 접속 IP와 브라우저 정보 같은 접속 정보를 각 회사 서버에서 처리해요');
+    expect(html).toContain('좌표는 이 세 곳 어디로도 보내지 않아요');
+    expect(html).toContain('세 곳 모두 멈춰요');
+    expect(html).toContain('스크립트를 아예 불러오지 않아요');
     // 비 소식 (ADR-0076): the one thing that goes to a server, and what does not
     expect(html).toContain('동네 이름 하나만 보내요');
     expect(html).toContain('좌표는 보내지 않아요');
@@ -114,5 +121,21 @@ describe('link previews, icons, robots (ADR-0063 Consequences)', () => {
 
   it('robots.txt allows everything', () => {
     expect(text('robots.txt')).toBe('User-agent: *\nAllow: /\n');
+  });
+});
+
+describe('wrangler.toml (ADR-0078)', () => {
+  const toml = readFileSync(resolve(root, 'wrangler.toml'), 'utf8');
+
+  it('the Pages project yeogwi, dist as output, the D1 counters bound as EVENTS_DB with their migrations', () => {
+    expect(toml).toMatch(/^name = "yeogwi"$/m);
+    expect(toml).toMatch(/^pages_build_output_dir = "dist"$/m);
+    expect(toml).toMatch(/^compatibility_date = "\d{4}-\d\d-\d\d"$/m);
+    expect(toml).toMatch(/binding = "EVENTS_DB"\ndatabase_name = "yeogwi-events"\ndatabase_id = "[0-9a-f-]{36}"/);
+    expect(existsSync(resolve(root, 'migrations/0001_events.sql'))).toBe(true);
+  });
+
+  it('no secret and no [vars] in it (KMA_SERVICE_KEY stays a Pages secret)', () => {
+    expect(toml).not.toMatch(/KMA_SERVICE_KEY\s*=|\[vars\]|api_token|secret\s*=/i);
   });
 });

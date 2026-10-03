@@ -15,7 +15,7 @@
 ## 클라이언트
 
 - `src/track.ts`: `track(event)` → 메모리 큐, 10초 또는 20건마다, 그리고 `visibilitychange: hidden`에 `navigator.sendBeacon(ENDPOINT, JSON 배열)`.
-- `ENDPOINT` = 빌드 환경변수 `VITE_EVENTS_URL`. 없으면 no-op(개발·테스트 기본).
+- `ENDPOINT` = 빌드 환경변수 `VITE_EVENTS_URL`. 없으면 no-op(개발·테스트 기본). 운영 빌드(`SITE_URL`)는 기본 `/api/events`이고, 비우면 빌드가 실패한다(ADR-0078).
 - 끄기: 저장 목록 각주 아래 `기록 끄기`/`기록 켜기` 글자 버튼, 값은 로컬 저장. 꺼져 있으면 큐도 쌓지 않음.
 - 고지 문구: `어디가 좋았는지 익명으로 세어요` (저장 목록 각주에 한 줄).
 - `shown`은 같은 화면 3장당 한 번(재렌더 중복 없음). 같은 이벤트 두 번 탭은 한 번만.

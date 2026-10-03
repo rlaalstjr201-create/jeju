@@ -1,0 +1,13 @@
+# Cloudflare Pages project `yeogwi` (docs/deploy.md, ADR-0078). Deployed from apps/web:
+#   npx wrangler pages deploy dist --project-name yeogwi
+# No secrets here: KMA_SERVICE_KEY stays a Pages secret (`wrangler pages secret put`).
+name = "yeogwi"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+# Anonymous usage counters (functions/api/events). Schema: migrations/0001_events.sql
+[[d1_databases]]
+binding = "EVENTS_DB"
+database_name = "yeogwi-events"
+database_id = "5cc57c18-dcf0-45f9-a64d-37b8a059c5ad"
+migrations_dir = "migrations"

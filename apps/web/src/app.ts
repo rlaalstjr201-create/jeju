@@ -13,6 +13,7 @@ import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
+import type { Analytics } from './analytics';
 import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
@@ -46,6 +47,8 @@ export interface Deps extends GeoDeps {
   delays?: Partial<Delays>;
   /** where anonymous usage counts go (VITE_EVENTS_URL, ADR-0061); missing = nothing is kept or sent. */
   eventsUrl?: string;
+  /** GA4 · 네이버 애널리틱스 (ADR-0078); missing = neither is loaded. */
+  analytics?: Analytics | null;
   /** navigator.sendBeacon (the default when missing). */
   beacon?(url: string, body: string): boolean;
   /** ADR-0063 2a: ask the browser to keep this site's storage (navigator.storage.persist); once a visit, at
@@ -129,9 +132,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     doc,
     signal,
   });
+  deps.analytics?.setEnabled(state.tracking);
   // The note and 기록 끄기 only where something is collected: without an address they would say what isn't so.
   const trackBox = els.track.parentElement;
-  if (trackBox) trackBox.hidden = !deps.eventsUrl;
+  if (trackBox) trackBox.hidden = !deps.eventsUrl && !deps.analytics;
 
   const timers = new Set<ReturnType<typeof setTimeout>>();
   function later(ms: number, fn: () => void) {
@@ -188,7 +192,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
   /** `day`: the day a heart is about (dated = not today). */
   function count(e: EventName, id?: string, day?: Day) {
-    tracker.track({ e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}) });
+    const ev = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}) };
+    tracker.track(ev);
+    if (state.tracking) deps.analytics?.event(ev);
   }
   /** Each new set of 3 on screen, once: a re-render, the same 3 brought back or restored after a reload are
    * not shown again. */
@@ -211,6 +217,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
   function setTracking(on: boolean) {
     if (!on) tracker.drop();
+    deps.analytics?.setEnabled(on);
     dispatch({ type: 'tracking', on });
     store.setTracking(on);
   }
@@ -847,6 +854,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       const on = store.tracking();
       if (on !== state.tracking) {
         if (!on) tracker.drop();
+        deps.analytics?.setEnabled(on);
         dispatch({ type: 'tracking', on });
       }
     }
