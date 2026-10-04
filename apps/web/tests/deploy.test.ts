@@ -86,6 +86,16 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).not.toMatch(/<script/);
     expect(html).toContain('<link rel="canonical" href="__SITE__/privacy" />');
   });
+
+  it('의견 보내기 (ADR-0081): what is sent and kept, what is not, the home line and 기록 끄기', () => {
+    const html = text('privacy.html');
+    expect(html).toContain('<h2>의견 보내기</h2>');
+    expect(html).toContain('직접 보낸 ‘의견 보내기’뿐이에요');
+    expect(html).toContain('날짜(시각 없이)만 붙여 저장해요');
+    expect(html).toContain('접속 IP, 브라우저 정보, 쿠키, 위치, 장소 번호, 기기 번호는 저장하지 않아요');
+    expect(html).toContain('이 기기에만 적어 둬요');
+    expect(html).toContain('기록을 꺼 두면 설문 줄은 나오지 않아요');
+  });
 });
 
 describe('link previews, icons, robots (ADR-0063 Consequences)', () => {
