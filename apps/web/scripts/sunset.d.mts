@@ -30,9 +30,11 @@ export declare function candidates<T extends { id: string; name: string; mood: s
 export declare function sampleIds(ids: string[], seed?: number, frac?: number): string[];
 export declare function loadSunsetCalls(dir?: string): SunsetLoaded;
 export declare function basisProblems(calls: SunsetCall[], inputs: Map<string, SourceItem>): string[];
+export type SunsetPlace = { view: number[]; sea?: number[] };
+export declare function placeWith(coast: Coast): (spot: { mood: string; name: string; lat: number; lng: number }) => SunsetPlace;
 export declare function viewWith(coast: Coast): (spot: { mood: string; name: string; lat: number; lng: number }) => number[];
 export declare function applySunset<T extends { id: string }>(
   spots: T[],
   loaded?: SunsetLoaded,
-  viewOf?: (spot: T) => number[],
-): (T & { sunsetView?: number[] })[];
+  viewOf?: (spot: T) => number[] | SunsetPlace,
+): (T & { sunsetView?: number[]; sunsetSea?: number[] })[];

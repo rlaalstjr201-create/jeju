@@ -53,17 +53,21 @@ export function duskNow(clock: number | null, p: Point, day: Day): boolean {
   return clock >= set - DUSK_LEAD_MIN && clock < set;
 }
 
-/** Places confirmed to see the sunset at `day`'s azimuth, within 차로 45분 of the basis (no ferry), nearest first. */
+/** Places confirmed to see the sunset at `day`'s azimuth, within 차로 45분 of the basis (no ferry): those the
+ * calculation sees setting over the sea first, then 오름·text-only ones (Amendment 1); nearest first in each. */
 export function sunsetSpots(spots: Spot[], origin: Origin, day: Day): MarketRow[] {
   const az = sunsetBucket(origin.point, day);
-  const out: { spot: Spot; minutes: number; km: number; where: string }[] = [];
+  const out: { spot: Spot; tier: number; km: number; where: string }[] = [];
   for (const spot of spots) {
     if (!listed(spot) || !spot.sunsetView?.includes(az)) continue;
     const t = travel(origin.point, origin.isPoint, spot);
     if ((t.kind !== 'drive' && t.kind !== 'walk') || t.minutes > SUNSET_DRIVE_MAX) continue;
-    out.push({ spot, minutes: t.minutes, km: distanceKm(origin.point, spot), where: travelText(t) });
+    const tier = !spot.sunsetSea || spot.sunsetSea.includes(az) ? 0 : 1;
+    out.push({ spot, tier, km: distanceKm(origin.point, spot), where: travelText(t) });
   }
-  return out.sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id)).map(({ spot, where }) => ({ spot, where }));
+  return out
+    .sort((a, b) => a.tier - b.tier || a.km - b.km || a.spot.id.localeCompare(b.spot.id))
+    .map(({ spot, where }) => ({ spot, where }));
 }
 
 /** 오늘 판's second line: at most one row, the one that is gone soonest if missed (ADR-0075 2) — 비 소식

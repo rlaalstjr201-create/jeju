@@ -57,6 +57,27 @@ describe('duskNow / sunsetSpots / todayActs', () => {
     expect(rows.map((r) => r.spot.id)).toEqual(['near', 'edge']);
     expect(rows[1].where).toBe('차로 약 45분');
   });
+  it('Amendment 1: a place seen setting over the sea comes before a nearer inland 오름; then nearest first', () => {
+    const origin = { key: 'region:한림', point: p, isPoint: false, from: '한림에서' } as never;
+    const east = (km: number) => p.lng + km / (111.32 * Math.cos((p.lat * Math.PI) / 180));
+    const s = (id: string, km: number, over: Partial<Spot>) =>
+      ({ ...plain[0], id, hide: undefined, mood: 'walk', lat: p.lat, lng: east(km), sunsetSea: undefined, ...over }) as Spot;
+    const rows = sunsetSpots(
+      [
+        s('oreum', 2, { sunsetView: [242, 264, 298], sunsetSea: [] }),
+        s('coast', 15, { sunsetView: [264] }),
+        s('oreumSea', 10, { sunsetView: [242, 264, 298], sunsetSea: [264] }),
+        s('text', 3, { sunsetView: [242, 264, 298], sunsetSea: [298] }),
+      ],
+      origin,
+      DAY,
+    );
+    expect(rows.map((r) => r.spot.id)).toEqual(['oreumSea', 'coast', 'oreum', 'text']);
+  });
+  it('a sunsetSea the app cannot read is dropped, the place stays on its sunsetView', () => {
+    const bad = normalizeSpots([{ ...plain[0], sunsetView: [264], sunsetSea: [270] }, { ...plain[1], sunsetView: [264], sunsetSea: [] }]);
+    expect(bad.map((s) => [s.sunsetView, s.sunsetSea ?? null])).toEqual([[[264], null], [[264], []]]);
+  });
   it('a sunsetView the app cannot read is dropped, the place stays', () => {
     const bad = normalizeSpots([{ ...plain[0], sunsetView: [270] }, { ...plain[1], sunsetView: [] }, { ...plain[2], sunsetView: [242, 298] }]);
     expect(bad.map((s) => s.sunsetView ?? null)).toEqual([null, null, [242, 298]]);

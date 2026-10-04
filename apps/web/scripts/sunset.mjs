@@ -4,8 +4,9 @@
  * the latest round), and only when that round's blind re-judging passed (review/sunset/audit-NN.json,
  * agreement.pass). The azimuths come from the frozen coastline (data/coast/jeju-coast.geojson, sunset-geo.mjs);
  * an 오름 candidate, or a confirmed place the calculation does not see, gets all three (its height or its text
- * stands in for the calculation). Never on 오일장. A judgment for a place that does not ship stops the run. No
- * basis text is copied.
+ * stands in for the calculation); such a filled place also gets `sunsetSea`, the calculation's own azimuths (maybe
+ * none), so the app can put places seen setting over the sea first (Amendment 1). Never on 오일장. A judgment
+ * for a place that does not ship stops the run. No basis text is copied.
  *
  * build-spots.mjs applies it after 철; run this file directly to apply it to the shipped public/spots.json in place
  * (after `season`, before a 체험's booking fields; nothing else changes). Idempotent.
@@ -115,37 +116,48 @@ export function applySunset(spots, { calls, pass } = loadSunsetCalls(), viewOf =
     const spot = byId.get(c.id);
     if (!spot) throw new Error(`sunset judgment for ${c.id}, which is not shipped — remove it from review/sunset`);
     if (!pass || !c.sunset || spot.market) continue;
-    add.set(c.id, viewOf(spot));
+    const got = viewOf(spot);
+    add.set(c.id, Array.isArray(got) ? { view: got } : got);
   }
   return spots.map((s) => {
-    const { sunsetView: _old, ...rest } = s;
-    const view = add.get(s.id);
+    const { sunsetView: _old, sunsetSea: _oldSea, ...rest } = s;
+    const { view, sea } = add.get(s.id) ?? {};
     if (!view?.length) return rest;
+    const extra = sea ? { sunsetView: view, sunsetSea: sea } : { sunsetView: view };
     const out = {};
     let placed = false;
     for (const [k, v] of Object.entries(rest)) {
       if (!placed && BOOKING_KEYS.has(k)) {
-        out.sunsetView = view;
+        Object.assign(out, extra);
         placed = true;
       }
       out[k] = v;
     }
-    if (!placed) out.sunsetView = view;
+    if (!placed) Object.assign(out, extra);
     return out;
   });
 }
 
-/** The azimuths for a confirmed place: the calculation's, or all three for an 오름 or a place it does not see. */
-export function viewWith(coast) {
+/**
+ * A confirmed place's { view, sea? }: view is the calculation's azimuths, or all three for an 오름 or a place it
+ * does not see; sea (the calculation's own, maybe []) only when view was filled in like that (Amendment 1).
+ */
+export function placeWith(coast) {
   return (spot) => {
     const az = sunsetAzimuths(spot, coast);
-    return isOreum(spot) || !az.length ? [...AZIMUTHS] : az;
+    const view = isOreum(spot) || !az.length ? [...AZIMUTHS] : az;
+    return view.join() === az.join() ? { view } : { view, sea: az };
   };
+}
+
+/** The azimuths for a confirmed place: the calculation's, or all three for an 오름 or a place it does not see. */
+export function viewWith(coast) {
+  return (spot) => placeWith(coast)(spot).view;
 }
 
 function defaultView() {
   let coast = null;
-  return (spot) => viewWith((coast ??= loadCoast()))(spot);
+  return (spot) => placeWith((coast ??= loadCoast()))(spot);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -164,7 +176,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     if (bad.length) throw new Error(`sunset basis problems:\n${bad.join('\n')}`);
     const after = applySunset(before, loaded);
     const by = Object.fromEntries(AZIMUTHS.map((az) => [az, after.filter((s) => s.sunsetView?.includes(az)).length]));
-    const n = after.filter((s) => s.sunsetView).length;
+    const n = `${after.filter((s) => s.sunsetView).length} (sunsetSea ${after.filter((s) => s.sunsetSea).length})`;
     if (JSON.stringify(after) === JSON.stringify(before)) console.log(`spots.json unchanged (${after.length}); sunsetView ${n} ${JSON.stringify(by)} (audit pass: ${loaded.pass})`);
     else {
       writeFileSync(path, JSON.stringify(after));

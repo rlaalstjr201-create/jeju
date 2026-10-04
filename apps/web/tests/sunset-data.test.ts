@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { applySunset, basisProblems, loadInputs, loadSunsetCalls, sampleIds, viewWith, type SunsetCall } from '../scripts/sunset.mjs';
+import { applySunset, basisProblems, loadInputs, loadSunsetCalls, placeWith, sampleIds, viewWith, type SunsetCall } from '../scripts/sunset.mjs';
 import { prepareCoast } from '../scripts/sunset-geo.mjs';
 import { fileSpots } from './fixtures';
 
@@ -11,7 +11,7 @@ const shipped = JSON.parse(readFileSync(resolve(root, 'public/spots.json'), 'utf
 const audit = JSON.parse(readFileSync(resolve(root, 'review/sunset/audit-01.json'), 'utf8'));
 const candidates = JSON.parse(readFileSync(resolve(root, 'review/sunset/candidates.json'), 'utf8')) as { id: string }[];
 
-type S = { id: string; name: string; lat: number; lng: number; mood: string; market?: unknown; sunsetView?: number[]; book?: unknown };
+type S = { id: string; name: string; lat: number; lng: number; mood: string; market?: unknown; sunsetView?: number[]; sunsetSea?: number[]; book?: unknown };
 const spot = (id: string, over: Partial<S> = {}): S => ({ id, name: id, lat: 33.3, lng: 126.001, mood: 'walk', ...over });
 const call = (id: string, sunset = true): SunsetCall => ({ id, sunset, basis: 'x' });
 const ALL = () => [242, 264, 298];
@@ -53,6 +53,21 @@ describe('V3 shipped spots.json', () => {
     }
     expect(JSON.stringify(shipped)).not.toMatch(/"basis"/);
   });
+  it('Amendment 1: sunsetSea only on a filled-in place (all three listed), right after sunsetView, never equal to it', () => {
+    const loaded = loadSunsetCalls();
+    const once = applySunset(fileSpots, loaded) as (typeof shipped[number] & { sunsetSea?: number[] })[];
+    expect(once.map((s) => s.sunsetSea ?? null)).toEqual((shipped as typeof once).map((s) => s.sunsetSea ?? null));
+    const sea = once.filter((s) => s.sunsetSea);
+    expect(sea.length).toBeGreaterThan(0);
+    for (const s of sea) {
+      expect(s.sunsetView).toEqual([242, 264, 298]);
+      expect(s.sunsetSea!.join()).not.toBe(s.sunsetView!.join());
+      expect(s.sunsetSea!.every((a) => [242, 264, 298].includes(a))).toBe(true);
+      const keys = Object.keys(s);
+      expect(keys[keys.indexOf('sunsetView') + 1]).toBe('sunsetSea');
+    }
+    expect(once.filter((s) => !s.sunsetView).every((s) => !s.sunsetSea)).toBe(true);
+  });
 });
 
 describe('applySunset (fixtures)', () => {
@@ -80,6 +95,20 @@ describe('applySunset (fixtures)', () => {
     expect(view(spot('n', { lat: 33.4995, lng: 126.02 }))).toEqual([298]);
     expect(view(spot('inland', { lat: 33.3, lng: 126.2 }))).toEqual([242, 264, 298]);
     expect(view(spot('o', { name: '새별오름', lat: 33.4995, lng: 126.02 }))).toEqual([242, 264, 298]);
+  });
+  it('Amendment 1: placeWith gives sea (the calculation\'s own) only when the view was filled in; applySunset ships it and takes an old one off', () => {
+    const coast = prepareCoast([[[126.0, 33.2], [126.5, 33.2], [126.5, 33.5], [126.0, 33.5], [126.0, 33.2]]]);
+    const place = placeWith(coast);
+    expect(place(spot('n', { lat: 33.4995, lng: 126.02 }))).toEqual({ view: [298] });
+    expect(place(spot('inland', { lat: 33.3, lng: 126.2 }))).toEqual({ view: [242, 264, 298], sea: [] });
+    expect(place(spot('o', { name: '새별오름', lat: 33.4995, lng: 126.02 }))).toEqual({ view: [242, 264, 298], sea: [298] });
+    const out = applySunset([{ ...spot('a'), season: [], book: { k: 'naver' } }, { ...spot('b', { sunsetSea: [242] }), season: [], book: undefined }], { calls: [call('a'), call('b')], pass: true }, (s) =>
+      s.id === 'a' ? { view: [242, 264, 298], sea: [264] } : [298],
+    );
+    expect(Object.keys(out[0]).slice(-4)).toEqual(['season', 'sunsetView', 'sunsetSea', 'book']);
+    expect(out[0].sunsetSea).toEqual([264]);
+    expect(out[1]).not.toHaveProperty('sunsetSea');
+    expect(JSON.stringify(applySunset(out, { calls: [call('a'), call('b')], pass: true }, (s) => (s.id === 'a' ? { view: [242, 264, 298], sea: [264] } : [298])))).toBe(JSON.stringify(out));
   });
   it('basisProblems: missing, too long, not in the source', () => {
     const inputs = new Map([['a', { id: 'a', name: '바닷가 정자', tags: ['노을'], intro: null, comment: '저녁 하늘이 곱다', summary: null }]]);
