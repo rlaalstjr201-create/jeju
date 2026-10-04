@@ -95,6 +95,8 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('접속 IP, 브라우저 정보, 쿠키, 위치, 장소 번호, 기기 번호는 저장하지 않아요');
     expect(html).toContain('이 기기에만 적어 둬요');
     expect(html).toContain('기록을 꺼 두면 설문 줄은 나오지 않아요');
+    expect(html).toContain('보낸 의견은 1년이 지나면 지워요. 누가 보냈는지 알 수 없어서 내 의견만 골라 지울 수는 없어요.');
+    expect(html).toContain('다 답하지 않아도 되고');
   });
 });
 

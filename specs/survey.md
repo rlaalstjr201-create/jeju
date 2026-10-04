@@ -29,23 +29,24 @@
 - 오버레이 `feedback`. 다른 시트처럼 휴대폰 뒤로·Esc·바깥 누름·`닫기`로 닫히고, 뒤 화면은 `inert`.
 - 제목 h2 「써 보니 어땠어요?」, 안내 `p.note` 「하나만 답해도 돼요. 글은 500자까지, 이름·연락처는 쓰지 마세요.」
 - 질문 셋(모두 선택). 고르는 줄은 `.opt` 모양의 `label` 안에 진짜 `input`(radio/checkbox, 화면에는 `.sr`)을 두고, 고르면 기존 체크 표시와 굵기로 보인다.
-  1. `fieldset` 「골라 준 곳에 실제로 갔나요?」: 갔어요(`went`) · 안 갔어요(`not`) · 아직(`yet`). 하나만.
-  2. `fieldset` 「불편했던 점」 옆 「여러 개 골라도 돼요」: 생각보다 멀었어요(`far`) · 가 보니 닫혀 있었어요(`closed`) · 골라 준 곳이 별로였어요(`meh`) · 위치가 잘 안 잡혔어요(`gps`) · 느리거나 잘 안 열렸어요(`slow`). 그 아래 `textarea` 「그 밖에 불편했던 점」(`maxlength=500`, `rows=3`).
+  1. 무리 제목 `p.group-h` + `div.opts[role=radiogroup]`(`aria-labelledby`) 「골라 준 곳에 실제로 갔나요?」: 갔어요(`went`) · 안 갔어요(`not`) · 아직(`yet`). 하나만.
+  2. 무리 제목 + `div.opts[role=group]` 「불편했던 점」 옆 「여러 개 골라도 돼요」: 생각보다 멀었어요(`far`) · 가 보니 닫혀 있었어요(`closed`) · 골라 준 곳이 별로였어요(`meh`) · 위치가 잘 안 잡혔어요(`gps`) · 느리거나 잘 안 열렸어요(`slow`). 그 아래 `textarea` 「그 밖에 불편했던 점」(`maxlength=500`, `rows=3`).
   3. `textarea` 「있었으면 하는 것」(`maxlength=500`, `rows=3`).
 - `.primary` 「보내기」, 그 아래 기존 `sheet-close` 「닫기」.
 - 보내기:
   - 아무것도 고르지 않고 글도 비어 있으면(공백만도 빈 것) 보내지 않고 닫는다.
   - 아니면 `POST /api/feedback`(JSON) 한 번, 결과를 기다리지 않는다. 시트는 바로 「고마워요」(h2)와 「보내 주신 의견은 다음에 고칠 것을 고를 때 읽어요.」로 바뀌고 `닫기`만 남는다. 실패·오프라인이어도 같다(재시도 없음).
 - 보내는 본문: `{ went?, pains?, pain?, wish?, v }`. 글은 앞뒤 공백을 지우고 비면 뺀다. `v` = 앱 버전(빌드 때 git 짧은 해시, 없으면 `dev`). 날짜·위치·장소 id·기기 식별자는 보내지 않는다.
-- 주소: 빌드의 `/api/feedback`(같은 출처). 서비스워커는 `/api/**`를 건드리지 않는다(그대로).
+- 주소: 빌드의 `/api/feedback`(같은 출처), `content-type: application/json`, `credentials: 'omit'`. 서비스워커는 `/api/**`를 건드리지 않는다(그대로).
 
 ## 받는 쪽
 
 - `apps/web/events/feedback.ts`: 호스트 비종속 `handleFeedback(req, store, now)`.
-  - POST만(405). 선언 길이·실제 길이 4KB 초과 413. JSON 아니거나 객체 아니면 400.
+  - POST만(405). `content-type`이 `application/json`으로 시작하지 않으면 415(다른 사이트의 폼 POST 차단). 길이 머리 없으면 411, 선언 길이 4KB 초과 413, 본문은 흘려 읽다가 4KB를 넘는 순간 413. JSON 아니거나 객체 아니면 400.
   - 필드는 `went`·`pains`·`pain`·`wish`·`v`만(그 밖은 400). `went` ∈ {went, not, yet}. `pains`는 알려진 값만, 중복 없이 1~5개. `pain`·`wish`는 문자열 1~500자(UTF-16 단위, 앞뒤 공백 지운 뒤 비면 400). `v`는 `^[0-9a-z.-]{1,20}$`. 답이 하나도 없으면 400.
   - 날짜는 서버가 정한다(제주 날짜 `YYYY-MM-DD`, 시각 없음).
-  - 하루 저장 상한 **200건**(제주 날짜 기준). 넘으면 저장하지 않고 204.
+  - 글에 제어 문자·양방향 제어 문자(U+0000~0008, 000B~001F, 007F, 202A~202E, 2066~2069)가 있으면 400. 줄바꿈·탭은 된다.
+  - 하루 저장 상한 **200건**(제주 날짜 기준). 넘으면 저장하지 않고 204, `counters`에 (날짜, `feedback:capped`, `capped`) 횟수만 1 더한다. 이 행은 인기 집계·`/api/events/health`에서 뺀다.
   - 저장 204. 요청의 본문 말고는 아무것도 읽지 않는다(IP·UA·쿠키·헤더 저장 없음).
 - `functions/api/feedback.ts`: 바인딩 `EVENTS_DB`로 `d1FeedbackStore` → `handleFeedback`. 저장소 없음 503, 예외 503, 모두 `Cache-Control: no-store`.
 - `migrations/0002_feedback.sql`: 표 `feedback(day, went, pains, pain, wish, v)`, `day` 색인. 시각·IP 칼럼 없음. 상한 검사와 넣기는 한 문장(`INSERT … SELECT … WHERE (SELECT COUNT(*) …) < 200`).
@@ -53,7 +54,9 @@
 ## 읽기
 
 - `apps/web/scripts/feedback-report.mjs`: `npx wrangler d1 execute yeogwi-events --remote --json`으로 최근 28일(기본, `--days N`)을 읽어 표준 출력에만 쓴다. 날짜별 응답 수, 질문 1·2 선택 수, 글 원문(날짜와 함께). 파일을 쓰지 않는다. 응답 수가 적으면 그렇게 말한다.
-- `--count-since YYYY-MM-DD`: 그날 이후 응답 수 한 줄(주간 작업의 「설문 새 응답 수」용).
+- `--count-since YYYY-MM-DD`: 그날 이후 응답 수 한 줄(주간 작업의 「설문 새 응답 수」용). 상한에 막힌 것이 있으면 「상한 도달 N건」도.
+- 사용자 글은 제어·양방향 문자를 지우고 `[사용자 글] …`로 표시해 찍는다(데이터로만 읽힌다).
+- **보관 1년**(ADR-0081 Amendment 1): `--prune`이 365일 지난 행을 `DELETE`한다(`--remote`). 주간 작업이 돌린다. 개별 삭제는 할 수 없다(누가 보냈는지 모른다).
 - 주간 작업(ADR-0079) 지시문은 저장소 밖(`~/.claude/scheduled-tasks/yeogwi-weekly-seo/SKILL.md`)에 있어 거기에 한 줄을 더한다.
 
 ## 개인정보 안내

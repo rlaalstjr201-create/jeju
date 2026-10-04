@@ -883,6 +883,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     const k = e as KeyboardEvent;
     if (!state.overlay) return;
     if (k.key === 'Escape') {
+      // 의견 보내기: Esc never throws away what is being typed (an IME composing, or words in a box)
+      if (k.isComposing || [...els.sheet.querySelectorAll('textarea')].some((t) => t.value.trim())) return;
       k.preventDefault();
       closeOverlay();
     } else if (k.key === 'Tab') {

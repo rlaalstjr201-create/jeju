@@ -55,6 +55,34 @@ describe('F1 홈 한 줄 — 조건', () => {
     expect(rec().shown).toBe(3);
   });
 
+  it('home → cards → home again in the same visit counts that visit once', async () => {
+    localStorage.setItem(KEY, JSON.stringify({ map: true }));
+    await visit();
+    expect(rec().shown).toBe(1);
+    await tap('[data-mood="rest"]');
+    expect($('#home').hidden).toBe(true);
+    await tap('[data-action="change"]');
+    expect(line()).not.toBeNull();
+    await tap('[data-mood="walk"]');
+    await tap('[data-action="change"]');
+    expect(rec().shown).toBe(1);
+  });
+
+  it('Esc keeps the sheet open while words are in a box or an IME is composing; otherwise it closes', async () => {
+    localStorage.setItem(KEY, JSON.stringify({ map: true }));
+    await visit();
+    await tap(line()!);
+    const esc = (init: KeyboardEventInit = {}) => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, ...init }));
+    esc({ isComposing: true });
+    expect(current().state().overlay).toBe('feedback');
+    ($('#fb-wish') as HTMLTextAreaElement).value = '주차';
+    esc();
+    expect(current().state().overlay).toBe('feedback');
+    ($('#fb-wish') as HTMLTextAreaElement).value = '';
+    esc();
+    expect(current().state().overlay).toBeNull();
+  });
+
   it('tapped: the sheet opens, the line is gone for good (sent or not)', async () => {
     localStorage.setItem(KEY, JSON.stringify({ map: true }));
     await visit();
