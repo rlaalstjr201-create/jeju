@@ -1658,7 +1658,7 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
   const http = await import('node:http');
   const { extname } = await import('node:path');
   const GA = 'G-E2ETEST01';
-  const tmp = mkdtempSync(join(tmpdir(), 'yeogwi-analytics-'));
+  const tmp = mkdtempSync(join(tmpdir(), 'yeochana-analytics-'));
   const out = join(tmp, 'dist');
   const vite = join(dirname(createRequire(join(appDir, 'package.json')).resolve('vite/package.json')), 'bin', 'vite.js');
   const env = { ...process.env, VITE_GA4_ID: GA, VITE_NAVER_WA: 'e2e-wa', VITE_EVENTS_URL: '/api/events' };

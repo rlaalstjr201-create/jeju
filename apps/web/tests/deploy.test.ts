@@ -139,8 +139,8 @@ describe('link previews, icons, robots (ADR-0063 Consequences)', () => {
 describe('wrangler.toml (ADR-0078)', () => {
   const toml = readFileSync(resolve(root, 'wrangler.toml'), 'utf8');
 
-  it('the Pages project yeogwi, dist as output, the D1 counters bound as EVENTS_DB with their migrations', () => {
-    expect(toml).toMatch(/^name = "yeogwi"$/m);
+  it('the Pages project yeochana, dist as output, the D1 counters bound as EVENTS_DB with their migrations', () => {
+    expect(toml).toMatch(/^name = "yeochana"$/m);
     expect(toml).toMatch(/^pages_build_output_dir = "dist"$/m);
     expect(toml).toMatch(/^compatibility_date = "\d{4}-\d\d-\d\d"$/m);
     expect(toml).toMatch(/binding = "EVENTS_DB"\ndatabase_name = "yeogwi-events"\ndatabase_id = "[0-9a-f-]{36}"/);

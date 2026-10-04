@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { analyticsEnv } from '../scripts/analytics-env';
 
-const SITE = 'https://yeogwi.pages.dev';
+const SITE = 'https://yeochana.pages.dev';
 const ALL = { SITE_URL: SITE, VITE_GA4_ID: 'G-P8DN26LKBC', VITE_NAVER_WA: 'abc123', VITE_EVENTS_URL: '/api/events' };
 
 describe('analyticsEnv (build guard)', () => {

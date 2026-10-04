@@ -11,7 +11,7 @@ import { onRequest } from '../functions/api/feedback';
 /** what the app sends: JSON with its type and length; `headers` may override either */
 const post = (body: unknown, headers: Record<string, string> = {}) => {
   const text = typeof body === 'string' ? body : JSON.stringify(body);
-  return new Request('https://yeogwi.pages.dev/api/feedback', {
+  return new Request('https://yeochana.pages.dev/api/feedback', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'content-length': String(new TextEncoder().encode(text).length), ...headers },
     body: text,

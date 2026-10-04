@@ -4,14 +4,14 @@
 
 ## 연결 (한 번)
 
-연결 상태(2026-10-03, `apps/web/data/seo/config.json` 기준): GSC URL 접두어 속성 `https://yeogwi.pages.dev/` 확인·사이트맵 제출(API 미연결, 주간 작업이 화면을 읽음) · 네이버 서치어드바이저 확인·사이트맵 제출·`/` 수집 요청 · Bing 미등록 · GA4 도입됨(아래 표).
+연결 상태(2026-10-03, `apps/web/data/seo/config.json` 기준): GSC URL 접두어 속성 `https://yeochana.pages.dev/` 확인·사이트맵 제출(API 미연결, 주간 작업이 화면을 읽음) · 네이버 서치어드바이저 확인·사이트맵 제출·`/` 수집 요청 · Bing 미등록 · GA4 도입됨(아래 표).
 
 | 소스 | 무엇 | 저장소에 남길 것(비밀 아님) |
 |---|---|---|
 | Google Search Console | 도메인 속성(`sc-domain:<도메인>`, DNS TXT) · 사이트맵 제출 · URL 검사로 `/`·`/jeju/` 색인 요청 | `data/seo/config.json` `gsc.property`. 서비스 계정 JSON은 저장소 밖, 경로를 환경변수 `GSC_CREDENTIALS`에 |
 | 네이버 서치어드바이저 | 사이트 등록·소유 확인·사이트맵·수집 요청 (`naver.md`) | `naver.site`. API 없음 — 수동 기록 |
 | Bing Webmaster Tools | GSC에서 가져오기 · IndexNow 키 | `bing.site`. ChatGPT 검색·Copilot의 색인 바탕 |
-| GA4 | **도입됨(ADR-0078)** — 속성 「여행귀:제주」, 측정 ID `G-P8DN26LKBC`(공개 ID, `apps/web/scripts/analytics-env.ts` `SITE_IDS`). 개인정보 안내는 ADR-0078에 맞춰 고쳤다. 실적 API는 미연결 | `ga4.property_id`(현재 config는 빈 칸·옛 TODO 문구 — 갱신 필요) |
+| GA4 | **도입됨(ADR-0078)** — 속성 「여차나:제주」, 측정 ID `G-P8DN26LKBC`(공개 ID, `apps/web/scripts/analytics-env.ts` `SITE_IDS`). 개인정보 안내는 ADR-0078에 맞춰 고쳤다. 실적 API는 미연결 | `ga4.property_id`(현재 config는 빈 칸·옛 TODO 문구 — 갱신 필요) |
 
 연결 후 `apps/web/scripts/seo/gsc.mjs`의 `gscLayerStats()`를 구현한다(seoulist `scripts/lib/gsc.mjs` 참고). GSC 확정 데이터는 2~3일 늦다 — 미확정 구간으로 채점하지 않는다.
 
@@ -19,7 +19,7 @@
 
 | 주기 | 무엇 | 누가 |
 |---|---|---|
-| 배포 직후 1회 | `SITE_URL=… npm run build` → `seo:crawl` P0 0건 확인 → 연결 4종 → Cloudflare AI 크롤러 설정 확인 → 브랜드 검색어 「여행귀:제주」 색인 확인 | 사람 |
+| 배포 직후 1회 | `SITE_URL=… npm run build` → `seo:crawl` P0 0건 확인 → 연결 4종 → Cloudflare AI 크롤러 설정 확인 → 브랜드 검색어 「여차나:제주」 색인 확인 | 사람 |
 | 주 1회(월) | keywords.json target마다 `track[]`에 그 주 구글 평균 순위·노출·클릭(GSC query 차원)과 네이버 순위(서치어드바이저·직접 검색) 한 줄 → `npm run seo:keywords -- --track` | 사람 10분 |
 | 격주 | seo-analyst 가동(진단 기록·채점·큐) | 에이전트 |
 | 월 1회 | AI 답변 관측(아래) · watch 후보 SERP 재관찰 · 새 후보 자동완성 | 사람 + 에이전트 |
@@ -57,7 +57,7 @@ target이 2주 연속 판정 `kill`·`pivot`이면 keywords.json에서 그 후�
 | Q6 | 제주 즉흥 여행할 때 쓰기 좋은 앱이나 사이트 |
 | Q7 | 함덕 근처 지금 가볼 만한 곳 |
 | Q8 | 제주에서 기분 따라 갈 곳 추천해 주는 서비스 있어? |
-| B1(브랜드, 진단용) | 여행귀:제주 앱이 뭐야? |
+| B1(브랜드, 진단용) | 여차나:제주 앱이 뭐야? |
 
 엔진: ChatGPT(검색 켬) · Perplexity · Gemini · 네이버(AI 브리핑이 뜨는 검색어로) · Claude. 조합마다 3회, 같은 날.
 기록: `apps/web/data/seo/ai-observations.jsonl` 한 줄 = 한 응답 `{date, engine, prompt_id, run, search_triggered, brand_mentioned, recommended, cited_urls[], our_url_cited, accuracy, competitors[]}`. 답변 전문은 저장하지 않는다.

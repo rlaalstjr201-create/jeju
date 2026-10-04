@@ -5,7 +5,7 @@
 //   node scripts/seo/indexnow.mjs seed [--live]   지금 사이트맵의 URL·lastmod를 「이미 아는 것」으로 기록만(전송 0)
 //   node scripts/seo/indexnow.mjs dry  [--live]   seed 이후 추가·변경된 URL 목록만(전송 0)
 //   node scripts/seo/indexnow.mjs send [--live]   그 URL만 전송 → 상태 갱신. 키 파일이 라이브에 있어야 한다.
-// 사이트맵: 기본 dist/sitemap.xml(빌드 결과 = 배포할 것) · --live면 https://yeogwi.pages.dev/sitemap.xml.
+// 사이트맵: 기본 dist/sitemap.xml(빌드 결과 = 배포할 것) · --live면 https://yeochana.pages.dev/sitemap.xml.
 // 키: public/<32자 16진수>.txt (내용 = 키). 상태: data/seo/indexnow-state.json.
 // lastmod는 페이지마다 그 페이지 본문이 마지막으로 바뀐 날이다(data/landing/lastmod.json, 감사 D4) — 바뀐 페이지만 「변경」이 된다.
 
@@ -18,7 +18,7 @@ const [mode] = process.argv.slice(2);
 const { has } = argOf(process.argv.slice(2));
 if (!['seed', 'dry', 'send'].includes(mode)) { console.error('사용: indexnow.mjs seed|dry|send [--live]'); process.exit(2); }
 
-const ORIGIN = originOf() || 'https://yeogwi.pages.dev';
+const ORIGIN = originOf() || 'https://yeochana.pages.dev';
 const HOST = new URL(ORIGIN).host;
 const STATE = path.join(DATA, 'indexnow-state.json');
 const ENDPOINTS = ['https://searchadvisor.naver.com/indexnow', 'https://api.indexnow.org/indexnow'];

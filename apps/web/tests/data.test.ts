@@ -610,8 +610,8 @@ describe('S51 홈 화면(PWA) 실행 — 매니페스트', () => {
     const m = JSON.parse(readFileSync(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
     expect(m.display).toBe('standalone');
     expect(new URL(m.start_url, 'https://x.test/app/').href.startsWith(new URL(m.scope, 'https://x.test/app/').href)).toBe(true);
-    expect(m.name).toBe('여행귀:제주');
-    expect(m.short_name).toBe('여행귀'); // under the home-screen icon: short (ADR-0077)
+    expect(m.name).toBe('여차나:제주');
+    expect(m.short_name).toBe('여차나'); // under the home-screen icon: short (ADR-0082)
     expect(m.background_color).toBe('#ffffff');
     for (const i of m.icons) expect(existsSync(resolve(root, 'public', i.src)), i.src).toBe(true);
     const html = readFileSync(resolve(root, 'index.html'), 'utf8');

@@ -8,7 +8,7 @@
     "reenable": "배포 + GSC 연결 + 확정 28일 → measured 채우고 as_of·baseline_valid 갱신 → seo:forecast 허용"
   },
   "layers": {
-    "home": { "pattern": "/", "what": "앱 셸. 브랜드 검색어(여행귀:제주)를 받는다" },
+    "home": { "pattern": "/", "what": "앱 셸. 브랜드 검색어(여차나:제주)를 받는다" },
     "hub": { "pattern": "/jeju/", "what": "P를 위한 제주 무계획 여행 (specs/seo-landing.md 1단계)" },
     "area": { "pattern": "/jeju/<area>/", "what": "세부 지역 15쪽" },
     "combo": { "pattern": "/jeju/<area>/<mood>/", "what": "keyword gate target인 조합만" },

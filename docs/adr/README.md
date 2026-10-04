@@ -7,7 +7,7 @@
 0025~0029는 번호가 겹친다. 같은 번호에 두 계열이 있다.
 
 - **옛 방향(2026-05)**: 큐레이션·발굴 파이프라인(apps/api·apps/mobile 시절). 예: `0029-phase0-hidden-gem-discovery.md`.
-- **새 방향(2026-09-30~)**: 폰 우선 웹 apps/web(현재 여행귀:제주). 예: `0029-destination-areas-and-saves.md`.
+- **새 방향(2026-09-30~)**: 폰 우선 웹 apps/web(현재 여차나:제주). 예: `0029-destination-areas-and-saves.md`.
 
 그래서 0025~0029를 가리킬 때는 「ADR-0029」가 아니라 **파일 이름**으로 쓴다(예: `0029-destination-areas-and-saves.md`). 0030 이후는 번호만 써도 된다. 결번: 0036·0039·0046·0048. 83파일, 번호 76개.
 
@@ -94,7 +94,7 @@
 | 0074 | [0074-verified-booking-routes-for-experiences.md](0074-verified-booking-routes-for-experiences.md) | 체험 카드는 장소별로 확인된 예약 경로 하나를 단다 — 경로 없는 체험은 체험 탭에서 뺀다 | Accepted (2026-10-01) |  |
 | 0075 | [0075-home-refresh-today-and-photos.md](0075-home-refresh-today-and-photos.md) | 홈 개편 A′ — 오늘 판, 기분 줄 사진, 아래 두 묶음. 결과 화면 작은 고침 | Accepted (2026-10-03) |  |
 | 0076 | [0076-rain-prompt-via-pages-function.md](0076-rain-prompt-via-pages-function.md) | 비 소식은 기상청 단기예보를 Pages Function 하나로 받는다 — 동네 이름만 보낸다 | Accepted (2026-10-03) |  |
-| 0077 | [0077-rename-yeohaenggwi.md](0077-rename-yeohaenggwi.md) | 이름 「여행귀:제주」, 주소 yeogwi.pages.dev (ADR-0068 1·2·4·5 대체) | Accepted (2026-10-03) |  |
+| 0077 | [0077-rename-yeohaenggwi.md](0077-rename-yeohaenggwi.md) | 이름 「여행귀:제주」, 주소 yeogwi.pages.dev (ADR-0068 1·2·4·5 대체) | Superseded by ADR-0082 |  |
 | 0078 | [0078-analytics-always-on.md](0078-analytics-always-on.md) | 분석은 셋(GA4 · 네이버 애널리틱스 · 자체 익명 기록), 꺼진 채로는 배포하지 않는다 | Accepted (2026-10-03) |  |
 | 0079 | [0079-weekly-seo-rank-ops.md](0079-weekly-seo-rank-ops.md) | 주간 SEO·순위 운영 — 측정은 기계가, 고침은 커밋까지, 배포는 사람이 | Accepted (2026-10-03) |  |
 | 0080 | [0080-seasonal-spots.md](0080-seasonal-spots.md) | 계절 명소(철) 1단계 — 원문으로 판정한 곳에만, 그해 관측일 또는 원문이 말한 달에만, 카드 메타 줄 글자 하나 | Accepted (2026-10-04) |  |

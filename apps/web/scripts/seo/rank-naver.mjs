@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 네이버 통합검색 순위 관찰(ADR-0079 1) — Playwright로 keywords.json의 target·watch·brand 검색어를 검색해
-// 우리 주소(yeogwi.pages.dev, 아무 경로)가 처음 나오는 블록과 순위를 기록한다.
+// 우리 주소(yeochana.pages.dev, 아무 경로)가 처음 나오는 블록과 순위를 기록한다.
 //
 // 사용 (apps/web에서; playwright-core + Chrome 또는 Chromium — tests/e2e와 같은 방식으로 찾는다):
 //   node scripts/seo/rank-naver.mjs --dry                     검색어 목록만(네트워크 0)
@@ -17,7 +17,7 @@ import { execSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { DATA, argOf, localDay } from './load-dist.mjs';
 
-const HOST = 'yeogwi.pages.dev';
+const HOST = 'yeochana.pages.dev';
 const { has, val } = argOf(process.argv.slice(2));
 
 const doc = JSON.parse(fs.readFileSync(path.join(DATA, 'keywords.json'), 'utf8'));

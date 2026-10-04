@@ -1,6 +1,6 @@
 // 크롤 파싱의 단일 출처 — 네트워크도 파일도 건드리지 않는 순수 함수.
 // crawl.mjs·verify.mjs가 쓰고 tests/seo-crawl.test.ts가 픽스처로 검증한다.
-// (seoulist scripts/lib/crawl-parse.mjs를 여행귀:제주에 맞춰 옮김: hreflang 없음(ko 단일), Cloudflare Pages
+// (seoulist scripts/lib/crawl-parse.mjs를 여차나:제주에 맞춰 옮김: hreflang 없음(ko 단일), Cloudflare Pages
 //  pretty URL(/privacy.html → /privacy), JSON-LD·OG·보이는 글자 수 추가.)
 //
 // 정규식 파싱이다. HTML 일반이 아니라 우리 빌드가 내는 모양만 읽는다.

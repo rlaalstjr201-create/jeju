@@ -1,38 +1,40 @@
-# 배포 — Cloudflare Pages (apps/web 「여행귀:제주」)
+# 배포 — Cloudflare Pages (apps/web 「여차나:제주」)
 
-ADR-0063 1. 정적 사이트 하나에 서버 코드는 Functions 둘(`apps/web/functions/`): 비 소식 `/api/rain`(ADR-0076)과 익명 기록 수집기 `/api/events`(ADR-0061·ADR-0078, D1 `yeogwi-events`). 이름·주소는 ADR-0077(ADR-0068 대체), 정적 랜딩(`/jeju/**`)은 ADR-0072. 분석은 GA4·네이버 애널리틱스·자체 기록 셋이고, 꺼진 채로는 운영 빌드가 되지 않는다(ADR-0078).
+ADR-0063 1. 정적 사이트 하나에 서버 코드는 Functions 둘(`apps/web/functions/`): 비 소식 `/api/rain`(ADR-0076)과 익명 기록 수집기 `/api/events`(ADR-0061·ADR-0078, D1 `yeogwi-events`). 이름·주소는 ADR-0082(ADR-0077 대체), 정적 랜딩(`/jeju/**`)은 ADR-0072. 분석은 GA4·네이버 애널리틱스·자체 기록 셋이고, 꺼진 채로는 운영 빌드가 되지 않는다(ADR-0078).
 
 ## 1. Pages 프로젝트 설정
 
 ### 실제 배포: 직접 업로드 (wrangler)
 
-프로젝트 `yeogwi`(https://yeogwi.pages.dev)는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
+프로젝트 `yeochana`(https://yeochana.pages.dev)는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
 
 ```sh
 # 처음 한 번, 그리고 migrations/에 새 파일이 생길 때: D1 테이블 만들기
 npx wrangler d1 migrations apply yeogwi-events --remote
 
-SITE_URL=https://yeogwi.pages.dev npm run build   # dist/ (표 참고)
-npx wrangler pages deploy dist --project-name yeogwi
-SITE=https://yeogwi.pages.dev bash scripts/smoke.sh                                                               # 아래 3
+SITE_URL=https://yeochana.pages.dev npm run build   # dist/ (표 참고)
+npx wrangler pages deploy dist --project-name yeochana
+SITE=https://yeochana.pages.dev bash scripts/smoke.sh                                                               # 아래 3
 ```
 
 - `VITE_EVENTS_URL`은 `SITE_URL`이 있으면 기본 `/api/events`라 넣지 않아도 된다. 셋(`VITE_GA4_ID`·`VITE_NAVER_WA`·`VITE_EVENTS_URL`) 중 하나라도 비면 빌드가 이름을 대고 실패한다(`scripts/analytics-env.ts`). 공개 ID(GA4 `G-P8DN26LKBC`, 네이버 `1caa51952fb5230`)는 `scripts/analytics-env.ts` `SITE_IDS`에 있어 `SITE_URL`만 주면 채워진다. 같은 이름 환경 변수가 있으면 그것이 이긴다.
 - `apps/web/wrangler.toml`이 프로젝트 이름·`pages_build_output_dir`·D1 바인딩(`EVENTS_DB` → `yeogwi-events`)을 정한다. 비밀은 넣지 않는다.
 
 - `apps/web/functions/`(비 소식 `/api/rain`, ADR-0076)는 이 명령을 돌린 디렉터리 기준으로 찾아 같이 올라간다. 그래서 반드시 `apps/web`에서 돌린다. 함수는 앱 번들과 별개라 50KB 예산에 들어가지 않는다.
-- 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name yeogwi`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
+- 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name yeochana`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
 - 로컬에서 함수까지 보기: `npx wrangler d1 migrations apply yeogwi-events --local` 뒤 `npx wrangler pages dev dist --port 8788`(D1은 `wrangler.toml` 바인딩의 로컬 사본, `apps/web/.wrangler/`) → `/api/rain?area=aewol`이 키 없이 204, `?area=nope`이 400, `POST /api/events`(유효한 배열)가 204, `/api/events/health`가 `{"last24h":n}`. 끝나면 `.wrangler/`를 지운다.
 
-### 옛 주소 넘기기 (gwichana-jeju → yeogwi, ADR-0077 6)
+### 옛 주소 넘기기 (yeogwi·gwichana-jeju → yeochana, ADR-0082 6)
 
-옛 프로젝트 `gwichana-jeju`에는 앱 대신 `_redirects` 한 줄만 올린다. 모든 경로가 새 주소의 같은 경로로 301된다. 프로젝트는 지우지 않는다.
+옛 프로젝트 `yeogwi`와 `gwichana-jeju` 둘 다에 앱 대신 넘기기 사이트(`apps/web/scripts/redirect-site/`)를 올린다. `/sw.js`만 그 자리에서 200으로 내주고(스스로 해제하는 서비스워커), 나머지 모든 경로는 새 주소의 같은 경로로 바로 301된다. 두 번 거쳐 넘기지 않는다. 프로젝트는 지우지 않는다. 저장소 안에서 바로 올리면 `apps/web/wrangler.toml`이 끼어드니 밖으로 복사하고, Windows(`core.autocrlf=true`) 작업 사본의 CRLF는 `tr -d '\r'`로 LF로 바꾼다. 자세한 확인은 그 폴더 README.
 
 ```sh
-mkdir -p /tmp/yeogwi-redirect
-printf '/* https://yeogwi.pages.dev/:splat 301\n' > /tmp/yeogwi-redirect/_redirects
-npx wrangler pages deploy /tmp/yeogwi-redirect --project-name gwichana-jeju
-curl -sI https://gwichana-jeju.pages.dev/jeju/aewol/ | grep -iE '^(HTTP|location)'   # 301, location: https://yeogwi.pages.dev/jeju/aewol/
+rm -rf /tmp/old-redirect && mkdir /tmp/old-redirect
+for f in _redirects sw.js; do tr -d '\r' < apps/web/scripts/redirect-site/$f > /tmp/old-redirect/$f; done
+cd /tmp/old-redirect
+npx wrangler pages deploy . --project-name yeogwi --branch master
+npx wrangler pages deploy . --project-name gwichana-jeju --branch master
+for p in yeogwi gwichana-jeju; do curl -sI https://$p.pages.dev/jeju/aewol/ | grep -iE '^(HTTP|location)'; done   # 301, location: https://yeochana.pages.dev/jeju/aewol/
 ```
 
 ### Git 연결로 바꿀 때
@@ -43,7 +45,7 @@ GitHub `rlaalstjr201-create/jeju` 기준. 의존성은 저장소 루트의 npm w
 
 | 항목 | 값 |
 |---|---|
-| 프로젝트 이름 | 사용자가 정한다. `<프로젝트>.pages.dev`가 된다(로마자만, 지금은 `yeogwi`) |
+| 프로젝트 이름 | 사용자가 정한다. `<프로젝트>.pages.dev`가 된다(로마자만, 지금은 `yeochana`) |
 | Production branch | `master` |
 | Framework preset | None |
 | Root directory (고급) | `/` (저장소 루트. Pages가 루트 `package-lock.json`으로 `npm ci`) |
@@ -52,7 +54,7 @@ GitHub `rlaalstjr201-create/jeju` 기준. 의존성은 저장소 루트의 npm w
 | 환경 변수 `NODE_VERSION` | `22` |
 | 환경 변수 `SITE_URL` | 사이트 주소, 끝 `/` 없이. 예: `https://<프로젝트>.pages.dev` 또는 커스텀 도메인. 링크 미리보기(`og:image`·`og:url`), 모든 페이지의 `canonical`(홈·`/privacy`·`/jeju/**`), JSON-LD `url`, `sitemap.xml`, `robots.txt`의 `Sitemap:` 줄을 절대 주소로 만든다. 없으면 상대 경로(카카오톡 미리보기에 사진이 빠지고, 검색엔진은 canonical·sitemap을 못 믿는다). **커스텀 도메인을 붙이면 그 주소로 바꾸고 다시 배포**한다(`*.pages.dev`도 계속 열리지만 canonical이 도메인을 가리킨다) |
 | 환경 변수 `LANDING_PHOTOS` | 보통은 **넣지 않는다**(정적 랜딩에 비짓제주 사진 핫링크). `0`이면 랜딩(`/jeju/**`)의 사진·`og:image`·JSON-LD `image`를 모두 빼고 출처를 `정보:`로 바꾼다 — 제주관광공사 회신이 거절이거나 상업화를 정했을 때(ADR-0072 3) |
-| 환경 변수 `VITE_GA4_ID` | `G-P8DN26LKBC` (GA4 속성 「여행귀:제주」, ADR-0078). `SITE_URL`이 있으면 필수 |
+| 환경 변수 `VITE_GA4_ID` | `G-P8DN26LKBC` (GA4 속성 「여차나:제주」, ADR-0078·ADR-0082 7). `SITE_URL`이 있으면 필수 |
 | 환경 변수 `VITE_NAVER_WA` | 네이버 애널리틱스 사이트 ID. 기본값 `1caa51952fb5230`(`SITE_IDS`), 다른 사이트에 쓸 때만 넣는다 |
 | 환경 변수 `VITE_EVENTS_URL` | `/api/events`(같은 출처 수집기). `SITE_URL`이 있으면 이 값이 기본이라 생략해도 된다. 비워 두면 빌드가 실패한다 |
 
@@ -91,7 +93,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 
 ## 3. 배포 뒤 스모크 (`SITE`=사이트 주소)
 
-명령어 점검은 한 번에: `SITE=https://yeogwi.pages.dev bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것). 분석 셋도 본다: 홈 HTML에 GA4 ID와 `naver-wa=`, `/api/events/health` 200 JSON, 작은 배열 `POST /api/events` 204(확인용 기분 탭 1건이 기록에 더해진다).
+명령어 점검은 한 번에: `SITE=https://yeochana.pages.dev bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것). 분석 셋도 본다: 홈 HTML에 GA4 ID와 `naver-wa=`, `/api/events/health` 200 JSON, 작은 배열 `POST /api/events` 204(확인용 기분 탭 1건이 기록에 더해진다).
 
 명령으로:
 

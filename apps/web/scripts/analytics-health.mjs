@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Daily check (ADR-0078 2): has the site's own anonymous record counted anything lately? For a scheduled task:
 // exit 0 and one OK line when it has; exit 1 and one Korean line saying why when not.
-//   node scripts/analytics-health.mjs [site]     (site defaults to $SITE, then https://yeogwi.pages.dev)
-const site = (process.argv[2] ?? process.env.SITE ?? 'https://yeogwi.pages.dev').replace(/\/+$/, '');
+//   node scripts/analytics-health.mjs [site]     (site defaults to $SITE, then https://yeochana.pages.dev)
+const site = (process.argv[2] ?? process.env.SITE ?? 'https://yeochana.pages.dev').replace(/\/+$/, '');
 const url = `${site}/api/events/health`;
 
 function fail(why) {

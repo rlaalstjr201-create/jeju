@@ -1,7 +1,7 @@
-# Cloudflare Pages project `yeogwi` (docs/deploy.md, ADR-0078). Deployed from apps/web:
-#   npx wrangler pages deploy dist --project-name yeogwi
+# Cloudflare Pages project `yeochana` (docs/deploy.md, ADR-0078, ADR-0082). Deployed from apps/web:
+#   npx wrangler pages deploy dist --project-name yeochana
 # No secrets here: KMA_SERVICE_KEY stays a Pages secret (`wrangler pages secret put`).
-name = "yeogwi"
+name = "yeochana"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-09-01"
 

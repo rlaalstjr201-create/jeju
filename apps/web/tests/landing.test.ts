@@ -111,7 +111,7 @@ describe('페이지', () => {
     const aewol = s.pages.find((p) => p.path === '/jeju/aewol/')!.html;
     expect(aewol).toContain('한담 해안 산책로를 따라 카페가 이어져요');
     for (const p of s.places.filter((x) => x.area.slug === 'aewol')) expect(aewol).toContain(`href="${p.url}"`);
-    expect(aewol).toContain('<title>애월(한담) 근처, 지금 갈 만한 곳 · 여행귀:제주</title>');
+    expect(aewol).toContain('<title>애월(한담) 근처, 지금 갈 만한 곳 · 여차나:제주</title>');
   });
 
   it('a place left out by the quality bar gets no page and no link', () => {

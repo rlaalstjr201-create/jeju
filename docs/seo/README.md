@@ -1,6 +1,6 @@
-# SEO·GEO — 여행귀:제주
+# SEO·GEO — 여차나:제주
 
-검색(구글·네이버)과 생성형 엔진(ChatGPT·Perplexity·Gemini·Claude·네이버 AI 브리핑)에서 여행귀:제주(https://yeogwi.pages.dev)가 찾아지고 인용되게 하는 루프.
+검색(구글·네이버)과 생성형 엔진(ChatGPT·Perplexity·Gemini·Claude·네이버 AI 브리핑)에서 여차나:제주(https://yeochana.pages.dev)가 찾아지고 인용되게 하는 루프.
 설계는 seoulist의 SEO 시스템을 옮기고, 그 프로젝트가 **검색어 경쟁에서 진 이유**(`seoulist-postmortem.md`)를 규칙으로 막았다.
 
 | 무엇 | 어디 |
@@ -17,9 +17,9 @@
 
 ## 포지션 (모든 문구의 바탕)
 
-> **여행귀:제주는 여행 계획 짜기 귀찮은 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 무계획 여행 앱이다.**
+> **여차나:제주는 여차하면 나서는 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 무계획 여행 앱이다.**
 
-태그라인 「P를 위한 여행동반자」, 목적 문장 「지금 내 위치 근처에서 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 바로 길찾기로 가요.」(ADR-0077 Amendment 1·2). 문장의 단일 출처는 `.claude/skills/seo-geo/references/positioning.md`. 브랜드 검색어는 「여행귀:제주」(`keywords.json` brand). 헤드(「제주 가볼만한곳」「○○ 맛집」)는 노리지 않는다. 검색 유입은 세부 지역 × 기분 롱테일(「성산 근처 체험」), P·무계획 의도는 브랜드·GEO 연결용.
+태그라인 「P를 위한 여행동반자」, 목적 문장 「지금 내 위치 근처에서 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 바로 길찾기로 가요.」(ADR-0077 Amendment 1·2). 문장의 단일 출처는 `.claude/skills/seo-geo/references/positioning.md`. 브랜드 검색어는 「여차나:제주」(`keywords.json` brand). 헤드(「제주 가볼만한곳」「○○ 맛집」)는 노리지 않는다. 검색 유입은 세부 지역 × 기분 롱테일(「성산 근처 체험」), P·무계획 의도는 브랜드·GEO 연결용.
 
 ## 루프
 
@@ -79,7 +79,7 @@
 
 측정은 기계가, 고침은 로컬 커밋까지, 배포·push는 사람이 한다. 순서(apps/web에서):
 
-1. `SITE_URL=https://yeogwi.pages.dev npm run build` → `npm run seo:crawl` · `npm run seo:verify`
+1. `SITE_URL=https://yeochana.pages.dev npm run build` → `npm run seo:crawl` · `npm run seo:verify`
 2. `node scripts/seo/rank-naver.mjs` → `data/seo/rank/naver-YYYY-MM-DD.json` (막히면 `check_failed`, 같은 날 다시 재지 않는다. `--dry`는 목록만)
 3. GSC 「실적 → 검색어」(지난 7일)를 크롬에서 읽어 `data/seo/gsc/YYYY-MM-DD.json`에 저장 — `{date_range:{start,end}, rows:[{query, clicks, impressions, ctr, position}]}`
 4. `node scripts/seo/gsc-import.mjs --gsc data/seo/gsc/YYYY-MM-DD.json` → target `track[]` 한 줄 + `seo:keywords --track` 판정 + 「밀림」 경보(3계단 넘게 하락·10위 밖으로, 색인 4주 안은 보류). 못 읽은 칸은 「확인 실패」로 남긴다
