@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
@@ -7,6 +8,15 @@ import { buildServiceWorker, spotsVersion } from './scripts/sw-build';
 const root = __dirname;
 const PUBLIC_SHELL = ['spots.json', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 const SPOTS_V = spotsVersion(readFileSync(resolve(root, 'public/spots.json')));
+/** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
+function appVersion(): string {
+  try {
+    const v = execSync('git rev-parse --short HEAD', { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    return /^[0-9a-f]{4,20}$/.test(v) ? v : 'dev';
+  } catch {
+    return 'dev';
+  }
+}
 
 /** Emits sw.js with the built file list, without a PWA plugin (plan: 직접 작성). */
 function serviceWorker(): Plugin {
@@ -92,7 +102,7 @@ export default defineConfig(({ command }) => ({
   base: '/',
   // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
   appType: 'mpa',
-  define: { __SPOTS_V__: JSON.stringify(SPOTS_V) },
+  define: { __SPOTS_V__: JSON.stringify(SPOTS_V), __APP_V__: JSON.stringify(appVersion()) },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [serviceWorker(), siteUrl(), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   build: { target: 'es2020', modulePreload: { polyfill: false } },

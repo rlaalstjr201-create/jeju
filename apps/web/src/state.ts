@@ -111,6 +111,10 @@ export interface State {
   /** 비 소식 (ADR-0076): the last answer, for the area (slug) it was asked for; shown only while that is still
    * `rainArea`. */
   rain: { area: string; rain: boolean } | null;
+  /** ADR-0081: the home's survey line may show this visit (src/survey.ts surveyDue; drawn only while 기록 is on). */
+  surveyLine: boolean;
+  /** the 의견 보내기 sheet was sent: it says 고마워요 until closed. */
+  feedbackSent: boolean;
   seq: number;
 }
 
@@ -153,7 +157,10 @@ export type Action =
   | { type: 'homeFix'; point: Point }
   | { type: 'restore'; rec: SessionRecord }
   /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
-  | { type: 'rain'; area: string; rain: boolean };
+  | { type: 'rain'; area: string; rain: boolean }
+  /** ADR-0081: the survey line was tapped (gone for good). */
+  | { type: 'surveyTapped' }
+  | { type: 'feedbackSent' };
 
 export const GPS_KEY = 'gps';
 export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoint: true, from: '여기서' });
@@ -172,6 +179,7 @@ export function initialState(init: {
   mapApp?: MapApp;
   offline: boolean;
   keep?: Partial<Keep>;
+  surveyLine?: boolean;
 }): State {
   return {
     view: 'home',
@@ -212,6 +220,8 @@ export function initialState(init: {
     keep: { restore: null, inapp: null, inappNote: null, install: null, nudge: false, backup: null, ...init.keep },
     announce: { n: 0, more: false, seq: 0 },
     rain: null,
+    surveyLine: init.surveyLine ?? false,
+    feedbackSent: false,
     seq: 0,
   };
 }
@@ -485,7 +495,7 @@ function step(s: State, a: Action): State {
       // 다른 날로 belongs to a row of the saved list: without one (a forward after a reload) there is none.
       const overlay = a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved') ? null : a.overlay;
       if (overlay === s.overlay) return s;
-      return { ...s, overlay, stayForm: { pending: false, error: null } };
+      return { ...s, overlay, stayForm: { pending: false, error: null }, feedbackSent: false };
     }
     case 'basis':
       return {
@@ -555,6 +565,10 @@ function step(s: State, a: Action): State {
     }
     case 'rain':
       return a.area === rainArea(s) ? { ...s, rain: { area: a.area, rain: a.rain } } : s;
+    case 'surveyTapped':
+      return s.surveyLine ? { ...s, surveyLine: false } : s;
+    case 'feedbackSent':
+      return s.overlay === 'feedback' ? { ...s, feedbackSent: true } : s;
     case 'restore':
       return {
         ...enterView(s, 'cards'),

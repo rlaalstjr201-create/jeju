@@ -182,7 +182,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .track .tbtn { margin-left: -8px; color: var(--text); }
 /* ADR-0063: 링크로 백업 under the footnote, then where the places and photos come from and the privacy page */
 .backup { margin-top: 4px; }
-.backup .tbtn, .about .tbtn { margin-left: -8px; }
+.backup .tbtn, .about .tbtn, .feedback .tbtn { margin-left: -8px; }
 .note { margin: 0; color: var(--muted); text-wrap: pretty; }
 /* ADR-0071: 지도 앱 — one line of text buttons; the chosen one in weight and a 3px --main rule (like a tab), the
    others plain muted words; never a filled box */
@@ -390,6 +390,17 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 .sheet h2 { margin: 0 0 16px; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
 .sheet .note { margin: -8px 0 16px; color: var(--muted); }
 .form-err { margin: 8px 0 0; }
+/* 의견 보내기 (ADR-0081): the same option rows with a real radio / checkbox inside (visually hidden); chosen =
+   the check and weight, as an aria-pressed option. Two text boxes like the date field; 보내기 the fill button */
+.opt:has(> input:checked) > .i-check { display: block; color: var(--main); }
+.opt:has(> input:checked) .nm { font-weight: 600; }
+.opt:has(> input:focus-visible) { outline: 2px solid var(--text); outline-offset: -2px; }
+/* the text boxes are also .date-in (its 16px floor, line and colours); here only what differs */
+.fb-in { display: block; width: 100%; padding: 8px; resize: vertical; }
+.fb-send { margin-top: 24px; }
+/* ADR-0081: the home's last line, quiet like 동네별로 둘러보기 */
+.survey { margin: 28px 0 0; }
+.survey .tbtn { margin-left: -8px; font-weight: 400; color: var(--muted); white-space: normal; }
 .sheet-close {
   position: sticky; bottom: 0; display: flex; align-items: center; width: calc(100% + 32px); margin: 24px -16px 0;
   min-height: calc(56px + env(safe-area-inset-bottom)); padding: 0 16px env(safe-area-inset-bottom);

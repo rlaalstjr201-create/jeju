@@ -5,6 +5,7 @@ import { AREAS, LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } 
 import { isDay, type Day } from './dates';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
+import { parseSurvey, type SurveyRec } from './survey';
 import type { Basis, Origin, SavedEntry, Stay, When } from './types';
 
 export const KEYS = {
@@ -29,6 +30,8 @@ export const KEYS = {
   inapp: 'jeju.inappSeen',
   /** ADR-0063: the home-screen nudge has been shown once (true). */
   install: 'jeju.installSeen',
+  /** ADR-0081: the home's survey line `{ map?, shown?, tapped? }` (src/survey.ts), this device only. */
+  survey: 'jeju.survey',
   session: 'jeju.session',
   /** sessionStorage, ADR-0065: 비 와요(실내만) is on (true). Off = missing. Rain is today's matter: never kept
    * on the device past the session. */
@@ -279,6 +282,10 @@ export interface Store {
   tracking(): boolean;
   /** 지도 앱 as stored now (another tab may have changed it). */
   mapApp(): MapApp;
+  /** ADR-0081: the survey line's record, as stored now. */
+  survey(): SurveyRec;
+  /** read-modify-write of that record. */
+  updateSurvey(fn: (rec: SurveyRec) => SurveyRec): void;
   // Every saved-list change below is read-modify-write, so two tabs never overwrite each other's hearts.
   /** Current saved entries, re-read from storage (another tab may have changed them). */
   saved(): SavedEntry[];
@@ -409,6 +416,8 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     setInstallSeen: () => void set(local, KEYS.install, true),
     tracking: () => get(local, KEYS.track) !== false,
     mapApp: () => parseMapApp(get(local, KEYS.mapApp)),
+    survey: () => parseSurvey(get(local, KEYS.survey)),
+    updateSurvey: (fn) => void set(local, KEYS.survey, fn(parseSurvey(get(local, KEYS.survey)))),
     saved: readSaved,
     toggleSaved(id, date, at) {
       let removed: SavedEntry | null = null;

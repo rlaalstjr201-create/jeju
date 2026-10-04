@@ -11,6 +11,7 @@ import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import { sunsetText } from './sun';
+import { PAINS, TEXT_MAX, WENT } from './survey';
 import type { NoOrigin, Origin, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
@@ -104,6 +105,26 @@ export const COPY = {
     outside: '지금은 제주 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
   } satisfies Record<NoOrigin, string>,
   close: '닫기',
+  // ADR-0081: the survey (specs/survey.md). The home line, the sheet and its 고마워요.
+  surveyLine: '써 보니 어땠어요? 1분 설문',
+  feedbackSheet: '써 보니 어땠어요?',
+  feedbackNote: '하나만 답해도 돼요. 글은 500자까지, 이름·연락처는 쓰지 마세요.',
+  wentHead: '골라 준 곳에 실제로 갔나요?',
+  went: { went: '갔어요', not: '안 갔어요', yet: '아직' } satisfies Record<(typeof WENT)[number], string>,
+  painHead: '불편했던 점',
+  painMany: '여러 개 골라도 돼요',
+  pains: {
+    far: '생각보다 멀었어요',
+    closed: '가 보니 닫혀 있었어요',
+    meh: '골라 준 곳이 별로였어요',
+    gps: '위치가 잘 안 잡혔어요',
+    slow: '느리거나 잘 안 열렸어요',
+  } satisfies Record<(typeof PAINS)[number], string>,
+  painText: '그 밖에 불편했던 점',
+  wishText: '있었으면 하는 것',
+  send: '보내기',
+  thanks: '고마워요',
+  thanksNote: '보내 주신 의견은 다음에 고칠 것을 고를 때 읽어요.',
   announce: (n: number) => `${n}곳 골랐어요.`,
   announceMore: (n: number) => `다른 ${n}곳 골랐어요.`,
   /** the `아니면` line when both row cards are the same trip ("둘 다 차로 약 5분"). */
@@ -966,10 +987,27 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     els.homeMore.replaceChildren(...nodes);
   }
 
+  /** ADR-0081: one text button at the very bottom of the home, only while it is due and 기록 is on. Absent
+   * otherwise (the home is then exactly as it was). */
+  let surveyEl: HTMLElement | null = null;
+  function renderSurvey(s: State) {
+    const on = s.surveyLine && s.tracking;
+    if (on && !surveyEl) {
+      surveyEl = el(doc, 'p', { class: 'survey' });
+      surveyEl.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'survey' }, COPY.surveyLine));
+      els.homeMore.after(surveyEl);
+    } else if (!on && surveyEl) {
+      surveyEl.remove();
+      surveyEl = null;
+    }
+  }
+
   // --- sheet ---
   function sheetSigOf(s: State): string {
     // Only what the user changes in a sheet. News that arrives while it is open — a 숙소 GPS failure, a GPS
     // denial — is patched in place (patchSheet): a rebuild under the finger would reset its scroll and focus.
+    // 의견 보내기 keeps what is typed: rebuilt only when it turns into 고마워요
+    if (s.overlay === 'feedback') return `feedback|${s.feedbackSent}`;
     const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
     return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}`;
   }
@@ -1002,11 +1040,36 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     return [option(COPY.pickDay, picked ? longDay(picked) : null, { 'data-action': 'pick-day', 'aria-pressed': String(!!picked) }), box];
   }
 
+  /** 의견 보내기 (ADR-0081): the option rows hold a real radio / checkbox (the browser keeps what is chosen, so
+   * nothing is lost while it is open); two text boxes; 보내기. app.ts reads it all on 보내기. */
+  function feedbackForm(panel: HTMLElement) {
+    const choice = (type: 'radio' | 'checkbox', name: string, value: string, label: string) => {
+      const row = el(doc, 'label', { class: 'opt' });
+      const text = el(doc, 'span');
+      text.append(el(doc, 'span', { class: 'nm' }, label));
+      row.append(el(doc, 'input', { type, name, value, class: 'sr' }), text);
+      row.insertAdjacentHTML('beforeend', CHECK);
+      return optRow(row);
+    };
+    const box = (id: string, label: string) => {
+      const wrap = el(doc, 'div', { class: 'fb-box' });
+      wrap.append(el(doc, 'label', { class: 'group-h', for: id }, label), el(doc, 'textarea', { id, class: 'date-in fb-in', rows: '3', maxlength: String(TEXT_MAX), 'data-fb': id }));
+      return wrap;
+    };
+    panel.append(el(doc, 'p', { class: 'note' }, COPY.feedbackNote));
+    optGroup(panel, 'went-h', COPY.wentHead, WENT.map((w) => choice('radio', 'fb-went', w, COPY.went[w]))).setAttribute('role', 'radiogroup');
+    optGroup(panel, 'pain-h', COPY.painHead, PAINS.map((p) => choice('checkbox', 'fb-pain', p, COPY.pains[p])));
+    panel.querySelector('#pain-h')?.append(el(doc, 'span', { class: 'order' }, COPY.painMany));
+    panel.append(box('fb-pain-text', COPY.painText), box('fb-wish', COPY.wishText));
+    panel.append(el(doc, 'button', { type: 'button', class: 'primary fb-send', 'data-action': 'feedback-send' }, COPY.send));
+  }
+
   function buildSheet(s: State) {
     const overlay = s.overlay!;
     const scrim = el(doc, 'div', { class: 'scrim', 'data-action': 'close' });
     const panel = el(doc, 'section', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
-    const title = overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : COPY.staySheet;
+    const title =
+      overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : overlay === 'feedback' ? (s.feedbackSent ? COPY.thanks : COPY.feedbackSheet) : COPY.staySheet;
     panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
       // 언제 (specs/date-mode.md): 지금 · 내일 · 날짜 고르기 on one compact row, so 어디 comes sooner.
@@ -1040,6 +1103,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
         ...days.map((d) => optRow(option(dayName(s.today, d), null, { 'data-day': d, 'aria-pressed': String(d === from) }))),
         optRow(...pickDay(s, null)),
       ]);
+    } else if (overlay === 'feedback') {
+      if (s.feedbackSent) panel.append(el(doc, 'p', { class: 'note' }, COPY.thanksNote));
+      else feedbackForm(panel);
     } else {
       panel.append(
         el(doc, 'p', { class: 'note' }, COPY.stayNote),
@@ -1240,6 +1306,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     renderSaved(s);
     patchCards(s);
     renderHome(s);
+    renderSurvey(s);
     renderKeep(s);
     renderSheet(s);
     if (els.announce && s.announce.seq !== announceSeq) {

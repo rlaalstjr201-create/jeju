@@ -15,6 +15,7 @@ import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
+import { feedbackBody, surveyDue } from './survey';
 import { contextOf, createTracker, type EventName } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
@@ -61,6 +62,10 @@ export interface Deps extends GeoDeps {
   copy?(text: string): Promise<boolean>;
   /** fetch for 비 소식 (/api/rain, ADR-0076); missing = never asked. */
   fetch?: Fetch;
+  /** 의견 보내기 (ADR-0081): POST this JSON to /api/feedback, not waited for; missing = nothing is sent. */
+  postFeedback?(body: string): void;
+  /** the app's version, sent with 의견 보내기 ('dev' when missing). */
+  appVersion?: string;
 }
 
 /** The browser's install prompt (Chrome, Edge, Samsung Internet): not in the DOM typings. */
@@ -127,7 +132,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     inappNote: inapp && !loaded.inappSeen ? 'show' : null,
     install: installHow({ ua, touch: nav0?.maxTouchPoints ?? 0, standalone, prompt: false }),
   };
-  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0 });
+  // ADR-0081: read once at mount, so a map opened in this visit brings the survey line only next time
+  const survey0 = store.survey();
+  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0) });
   const tracker = createTracker({
     url: deps.eventsUrl,
     send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
@@ -161,6 +168,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (signal.aborted) return;
     state = reduce(state, a);
     renderer.render(state);
+    countSurvey();
     countShown();
     askRain();
   }
@@ -218,12 +226,49 @@ export function mountApp(doc: Document, deps: Deps): App {
   /** A link tapped twice (a 2nd tab opening) counts once. */
   const lastLink = new Map<string, number>();
   function countLink(e: 'map' | 'book', id: string) {
+    if (e === 'map') markMap();
     const key = `${e}:${id}`;
     const t = now();
     const prev = lastLink.get(key);
     lastLink.set(key, t);
     if (prev === undefined || t - prev >= delays.guard) count(e, id, undefined, e === 'map' ? seasonShown(id) : null);
   }
+  // --- the survey (ADR-0081, specs/survey.md): all on this device; only 보내기 sends anything ---
+  let mapMarked = !!survey0.map;
+  /** a map opened on this device (local only): the survey line may show from the next visit */
+  function markMap() {
+    if (mapMarked) return;
+    mapMarked = true;
+    store.updateSurvey((r) => ({ ...r, map: true }));
+  }
+  let surveyCounted = false;
+  /** a visit in which the line was drawn on the home counts once (3 such visits, then it stops) */
+  function countSurvey() {
+    if (surveyCounted || !state.surveyLine || !state.tracking || state.view !== 'home') return;
+    surveyCounted = true;
+    store.updateSurvey((r) => ({ ...r, shown: (r.shown ?? 0) + 1 }));
+  }
+  function openSurvey() {
+    if (guarded('survey')) return;
+    store.updateSurvey((r) => ({ ...r, tapped: true }));
+    dispatch({ type: 'surveyTapped' });
+    openOverlay('feedback');
+  }
+  /** 보내기: nothing chosen or written closes; otherwise one POST, not waited for, and 고마워요 whatever happens */
+  function sendFeedback() {
+    if (state.overlay !== 'feedback' || state.feedbackSent || guarded('feedback-send')) return;
+    const checked = (name: string) => [...els.sheet.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)].map((i) => i.value);
+    const text = (id: string) => els.sheet.querySelector<HTMLTextAreaElement>(`#${id}`)?.value ?? '';
+    const body = feedbackBody({ went: checked('fb-went')[0] ?? null, pains: checked('fb-pain'), pain: text('fb-pain-text'), wish: text('fb-wish') }, deps.appVersion ?? 'dev');
+    if (!body) return closeOverlay();
+    try {
+      deps.postFeedback?.(JSON.stringify(body));
+    } catch {
+      /* the app never depends on it */
+    }
+    dispatch({ type: 'feedbackSent' });
+  }
+
   function setTracking(on: boolean) {
     if (!on) tracker.drop();
     deps.analytics?.setEnabled(on);
@@ -536,7 +581,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function hush() {
     quietUntil = Math.max(quietUntil, now() + delays.quiet);
   }
-  function openOverlay(kind: 'basis' | 'stay' | 'move') {
+  function openOverlay(kind: 'basis' | 'stay' | 'move' | 'feedback') {
     if (state.overlay === kind) return;
     const was = state.overlay;
     stayToken++;
@@ -688,6 +733,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (b.dataset.indoor !== undefined) return guarded('indoor') ? undefined : toggleIndoor();
     if (action === 'restay') return openOverlay('stay');
     if (action === 'stay-here') return stayHere();
+    if (action === 'feedback-send') return sendFeedback();
     const basis = b.dataset.basis;
     if (basis === 'gps') return basisIsCurrent(state, 'gps') ? closeOverlay() : changeBasis({ basis: 'gps' });
     if (basis === 'stay') {
@@ -741,6 +787,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (!guarded('track')) setTracking(!state.tracking);
       return;
     }
+    if (action === 'survey') return openSurvey();
+    if (action === 'feedback') return guarded('feedback') ? undefined : openOverlay('feedback');
     if (action === 'map-app') {
       const app = b.dataset.app as MapApp;
       if (MAP_APPS.includes(app) && !guarded(`map-app:${app}`)) setMapApp(app);
@@ -839,7 +887,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       closeOverlay();
     } else if (k.key === 'Tab') {
       // Focus stays inside the sheet (inert covers modern browsers; this covers the rest, S58).
-      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"])')];
+      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"]), textarea')];
       if (!f.length) return;
       const i = f.indexOf(doc.activeElement as HTMLElement);
       if (k.shiftKey && i <= 0) {
@@ -953,6 +1001,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
   tick();
   renderer.render(state);
+  countSurvey();
   askRain();
   takeBackup();
   checkPermission();

@@ -1,5 +1,7 @@
 /** sha256 of public/spots.json (first 10 hex chars), injected by vite.config.ts. */
 declare const __SPOTS_V__: string;
+/** the commit the app was built from (git short hash, 'dev' without git), injected by vite.config.ts; sent with 의견 보내기. */
+declare const __APP_V__: string;
 
 interface ImportMetaEnv {
   /** collection address for anonymous usage counts (ADR-0061); unset = nothing is sent. */

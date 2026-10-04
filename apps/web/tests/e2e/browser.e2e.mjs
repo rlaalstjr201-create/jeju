@@ -2796,6 +2796,78 @@ await check('HN-open', '♥ N open (ADR-0070, decided): no fill, a 3px main-colo
 });
 
 // --- static landing pages (ADR-0072, specs/seo-landing.md): built by scripts/build-landing.mjs ---
+await check('SV1-survey', '설문 (ADR-0081) at 320·390 × light·dark: after a map link opened, the next visit ends the home with 「써 보니 어땠어요? 1분 설문」 (44px, no sideways scroll); it opens the sheet, 보내기 posts the answers to /api/feedback (route-mocked) and says 고마워요; the line is gone after, also on the next visit', async () => {
+  const problems = [];
+  for (const width of [320, 390]) {
+    for (const dark of [false, true]) {
+      const tag = `${width}${dark ? '-dark' : ''}`;
+      const posted = [];
+      const { ctx, page } = await fresh({
+        width,
+        height: 700,
+        dark,
+        route: (c) =>
+          c.route('**/api/feedback', (r) => {
+            posted.push({ method: r.request().method(), type: r.request().headers()['content-type'], body: r.request().postData() });
+            return r.fulfill({ status: 204 });
+          }),
+      });
+      // a map link opened (the map app itself is not left for: the link's default is stopped here)
+      await page.evaluate(() => document.addEventListener('click', (e) => e.target.closest?.('a.card-link') && e.preventDefault(), true));
+      await tapText(page, '[data-mood="rest"]');
+      await waitCards(page);
+      await tapText(page, '#cards .card .card-link');
+      await tapText(page, '[data-action="change"]');
+      if (await page.locator('#home .survey').count()) problems.push(`${tag}: line in the same visit`);
+      await page.reload();
+      await page.waitForSelector('#home .survey .tbtn', { timeout: 5000 });
+      const look = await page.evaluate(() => {
+        const b = document.querySelector('#home .survey .tbtn');
+        const r = b.getBoundingClientRect();
+        return { text: b.textContent, h: r.height, last: document.querySelector('#home .survey').previousElementSibling?.id, over: document.documentElement.scrollWidth - innerWidth };
+      });
+      if (look.text !== '써 보니 어땠어요? 1분 설문') problems.push(`${tag}: line "${look.text}"`);
+      if (look.h < 44) problems.push(`${tag}: line ${look.h}px tall`);
+      if (look.last !== 'homeMore') problems.push(`${tag}: line after ${look.last}`);
+      if (look.over > 0) problems.push(`${tag}: home overflow ${look.over}`);
+      await page.locator('#home .survey').scrollIntoViewIfNeeded();
+      await shot(page, `home-line-${tag}`);
+      await tapText(page, '#home .survey .tbtn');
+      await page.waitForSelector('#sheet .sheet #sheet-title');
+      const sheet = await page.evaluate(() => {
+        const box = document.querySelector('#sheet .sheet');
+        const small = [...box.querySelectorAll('label.opt, textarea, button')].filter((e) => e.getBoundingClientRect().height < 44).map((e) => e.className || e.tagName);
+        return { title: document.querySelector('#sheet-title').textContent, over: box.scrollWidth - box.clientWidth, small };
+      });
+      if (sheet.title !== '써 보니 어땠어요?') problems.push(`${tag}: sheet "${sheet.title}"`);
+      if (sheet.over > 0) problems.push(`${tag}: sheet overflow ${sheet.over}`);
+      if (sheet.small.length) problems.push(`${tag}: under 44px ${sheet.small}`);
+      await tapText(page, '#sheet label.opt:has(input[value="went"])');
+      await tapText(page, '#sheet label.opt:has(input[value="far"])');
+      await page.fill('#fb-wish', '주차 정보');
+      await page.evaluate(() => (document.querySelector('#sheet .sheet').scrollTop = 0));
+      await shot(page, `form-${tag}`);
+      await tapText(page, '#sheet [data-action="feedback-send"]');
+      await sleep(200);
+      if ((await page.textContent('#sheet-title')) !== '고마워요') problems.push(`${tag}: no 고마워요`);
+      if (posted.length !== 1) problems.push(`${tag}: ${posted.length} posts`);
+      else {
+        const b = JSON.parse(posted[0].body);
+        if (posted[0].method !== 'POST' || !posted[0].type?.startsWith('application/json')) problems.push(`${tag}: ${posted[0].method} ${posted[0].type}`);
+        if (b.went !== 'went' || b.pains?.join() !== 'far' || b.wish !== '주차 정보' || !/^[0-9a-z.-]{1,20}$/.test(b.v) || Object.keys(b).length !== 4) problems.push(`${tag}: body ${posted[0].body}`);
+      }
+      await shot(page, `thanks-${tag}`);
+      await tapText(page, '#sheet .sheet-close');
+      if (await page.locator('#home .survey').count()) problems.push(`${tag}: line still there after`);
+      await page.reload();
+      await page.waitForSelector('#homeMore .credit');
+      if (await page.locator('#home .survey').count()) problems.push(`${tag}: line back on the next visit`);
+      await ctx.close();
+    }
+  }
+  assert(!problems.length, problems.join('; '));
+});
+
 await check('LP1', 'hub → area → place: 200, no script, fits 390px (light and dark), every link on them answers; the deep link opens the app on that area', async () => {
   const problems = [];
   for (const dark of [false, true]) {
