@@ -1,0 +1,179 @@
+{
+ "measuredAt": "2026-10-04",
+ "criteria": "criteria-03.md",
+ "seed": 20261004,
+ "rng": "mulberry32, Fisher-Yates over sorted ids",
+ "judge": "별도 서브에이전트(general-purpose), criteria-03 벚꽃 규칙·원문만 열람, 1·2·3차 판정 미열람, id는 P01~P12로 가림",
+ "provenance": "perKind.cherry만 이번 3차 감사 결과. 나머지 종류는 audit-02.json(criteria-02)의 결과를 바꾸지 않고 옮김. season.mjs가 최신 season-NN/audit-NN을 함께 읽기 때문.",
+ "places": 12,
+ "keepPairs": 6,
+ "missingAnswers": [],
+ "agreement": {
+  "cherry": "6/6",
+  "perKind": {
+   "tangerine": {
+    "n": 11,
+    "agree": 11,
+    "pct": 100,
+    "pass": true,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "muhly": {
+    "n": 2,
+    "agree": 2,
+    "pct": 100,
+    "pass": false,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "camellia": {
+    "n": 11,
+    "agree": 9,
+    "pct": 81.8,
+    "pass": false,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "hydrangea": {
+    "n": 11,
+    "agree": 8,
+    "pct": 72.7,
+    "pass": false,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "cherry": {
+    "n": 6,
+    "agree": 6,
+    "pct": 100,
+    "pass": true,
+    "source": "audit-03 (3차 블라인드 감사)"
+   },
+   "rapeseed": {
+    "n": 7,
+    "agree": 7,
+    "pct": 100,
+    "pass": true,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "maple": {
+    "n": 6,
+    "agree": 5,
+    "pct": 83.3,
+    "pass": false,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "plum": {
+    "n": 3,
+    "agree": 3,
+    "pct": 100,
+    "pass": true,
+    "source": "audit-02 (그대로 옮김)"
+   },
+   "silvergrass": {
+    "n": 8,
+    "agree": 8,
+    "pct": 100,
+    "pass": true,
+    "source": "audit-02 (그대로 옮김)"
+   }
+  }
+ },
+ "droppedButBlindKeep": 0,
+ "allAgree": "12/12",
+ "items": [
+  {
+   "pid": "P02",
+   "id": "38e90517-f145-4f22-9fae-678e15fcf37f",
+   "kind": "cherry",
+   "round3": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "pid": "P11",
+   "id": "f2126c7f-da2c-406a-ad5f-4a0342770e1d",
+   "kind": "cherry",
+   "round3": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "pid": "P07",
+   "id": "c122cd13-6b19-4537-a307-1c1dd1fc0cf8",
+   "kind": "cherry",
+   "round3": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "pid": "P08",
+   "id": "1fb1e051-c1a7-4252-bcc5-6a5a02e8e323",
+   "kind": "cherry",
+   "round3": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "pid": "P01",
+   "id": "6dc355f8-b042-43b5-bc9c-d1dbfc8c7b2f",
+   "kind": "cherry",
+   "round3": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "pid": "P10",
+   "id": "e9109a1f-bee6-477f-bea9-95407d0710a2",
+   "kind": "cherry",
+   "round3": "keep",
+   "blind": "keep",
+   "agree": true
+  },
+  {
+   "pid": "P06",
+   "id": "3adfdf36-9cf3-4847-b0cf-f82f7e34b3e8",
+   "kind": "cherry",
+   "round3": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "pid": "P09",
+   "id": "16296bce-c3ff-4372-b385-222018cf54de",
+   "kind": "cherry",
+   "round3": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "pid": "P04",
+   "id": "5e0cc81e-af09-459d-a5d6-50464ba71922",
+   "kind": "cherry",
+   "round3": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "pid": "P03",
+   "id": "08201fa6-0c8c-4ceb-8cd6-adbe3a4b4279",
+   "kind": "cherry",
+   "round3": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "pid": "P05",
+   "id": "66a4d4d9-125b-4a24-9641-0233ef236187",
+   "kind": "cherry",
+   "round3": "drop",
+   "blind": "drop",
+   "agree": true
+  },
+  {
+   "pid": "P12",
+   "id": "c5925e89-9ae1-4a53-b068-fa22453565d0",
+   "kind": "cherry",
+   "round3": "drop",
+   "blind": "drop",
+   "agree": true
+  }
+ ]
+}
