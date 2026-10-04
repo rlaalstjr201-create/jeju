@@ -99,3 +99,4 @@
 | 0079 | [0079-weekly-seo-rank-ops.md](0079-weekly-seo-rank-ops.md) | 주간 SEO·순위 운영 — 측정은 기계가, 고침은 커밋까지, 배포는 사람이 | Accepted (2026-10-03) |  |
 | 0080 | [0080-seasonal-spots.md](0080-seasonal-spots.md) | 계절 명소(철) 1단계 — 원문으로 판정한 곳에만, 그해 관측일 또는 원문이 말한 달에만, 카드 메타 줄 글자 하나 | Accepted (2026-10-04) |  |
 | 0081 | [0081-in-app-survey.md](0081-in-app-survey.md) | 써 본 사람에게만 묻는 짧은 설문, 글자 한 줄로, 자체 D1에 | Accepted (2026-10-04) |  |
+| 0082 | [0082-rename-yeochana.md](0082-rename-yeochana.md) | 이름 「여차나:제주」, 주소 yeochana.pages.dev (ADR-0077 대체) | Accepted (2026-10-04) |  |

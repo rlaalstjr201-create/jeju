@@ -1,6 +1,6 @@
 # ADR-0077: 이름 「여행귀:제주」, 주소 yeogwi.pages.dev (ADR-0068 1·2·4·5 대체)
 
-Status: Accepted (2026-10-03)
+Status: Superseded by ADR-0082(2026-10-04, 이름·주소). 이전: Accepted (2026-10-03)
 
 ## Context
 
