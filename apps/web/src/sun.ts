@@ -7,8 +7,8 @@ const rad = Math.PI / 180;
 /** KST, no daylight saving. */
 const TZ_HOURS = 9;
 
-/** Minutes after midnight UTC of `day` at which the sun sets at `p`, for the sun's position at `utcMin`. */
-function setAt(p: Point, day: Day, utcMin: number): number {
+/** The sun's declination (radians) and the equation of time (minutes) at `utcMin` on `day`. */
+function solar(day: Day, utcMin: number): { decl: number; eqTime: number } {
   const [y, m, d] = day.split('-').map(Number);
   const jd = Date.UTC(y, m - 1, d) / 86400000 + 2440587.5 + utcMin / 1440;
   const t = (jd - 2451545) / 36525; // Julian centuries since J2000
@@ -25,6 +25,12 @@ function setAt(p: Point, day: Day, utcMin: number): number {
   const eqTime =
     (4 / rad) *
     (v * Math.sin(2 * l0 * rad) - 2 * e * Math.sin(ma * rad) + 4 * e * v * Math.sin(ma * rad) * Math.cos(2 * l0 * rad) - 0.5 * v * v * Math.sin(4 * l0 * rad) - 1.25 * e * e * Math.sin(2 * ma * rad));
+  return { decl, eqTime };
+}
+
+/** Minutes after midnight UTC of `day` at which the sun sets at `p`, for the sun's position at `utcMin`. */
+function setAt(p: Point, day: Day, utcMin: number): number {
+  const { decl, eqTime } = solar(day, utcMin);
   // 90.833°: the sun's upper edge on the horizon, with refraction
   const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(p.lat * rad) * Math.cos(decl)) - Math.tan(p.lat * rad) * Math.tan(decl)) / rad;
   return 720 - 4 * p.lng - eqTime + 4 * ha;
@@ -34,6 +40,18 @@ function setAt(p: Point, day: Day, utcMin: number): number {
 export function sunsetMinutes(p: Point, day: Day): number {
   const first = setAt(p, day, 18 * 60 - TZ_HOURS * 60);
   return setAt(p, day, first) + TZ_HOURS * 60;
+}
+
+/** 노을 볼 곳 (ADR-0083): the sunset's azimuth (degrees from north) at `p` on `day`, the geometric horizon. */
+export function sunsetAzimuth(p: Point, day: Day): number {
+  const { decl } = solar(day, 18 * 60 - TZ_HOURS * 60);
+  return 360 - Math.acos(Math.sin(decl) / Math.cos(p.lat * rad)) / rad;
+}
+
+/** The one of `sunsetView`'s three azimuths (242·264·298) nearest the day's sunset. */
+export function sunsetBucket(p: Point, day: Day): number {
+  const az = sunsetAzimuth(p, day);
+  return [242, 264, 298].reduce((best, a) => (Math.abs(a - az) < Math.abs(best - az) ? a : best));
 }
 
 /** "18:16" */

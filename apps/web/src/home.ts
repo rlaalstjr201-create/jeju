@@ -4,6 +4,7 @@ import type { Day } from './dates';
 import { marketDay } from './market';
 import { distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Mood, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
+import { sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
 
 /** 제주시청: the sunset's place when the basis is not known yet. */
@@ -38,11 +39,43 @@ export function openMarkets(spots: Spot[], origin: Origin | null, day: Day): Mar
     .map(({ spot }) => ({ spot, where: travelText(travel(origin.point, origin.isPoint, spot)) }));
 }
 
+/** 노을 볼 곳 (ADR-0083): from 2시간 30분 before the sunset until it, with 3 or more confirmed places within 차로 45분. */
+export const DUSK_LEAD_MIN = 150;
+export const SUNSET_DRIVE_MAX = 45;
+export const SUNSET_MIN = 3;
+/** the most rows the 노을 볼 곳 section lists */
+export const SUNSET_LIST_MAX = 5;
+
+/** The 노을 window: `clock` (minutes after midnight KST) is within 2시간 30분 before the sunset at `p`, and before it. */
+export function duskNow(clock: number | null, p: Point, day: Day): boolean {
+  if (clock == null) return false;
+  const set = sunsetMinutes(p, day);
+  return clock >= set - DUSK_LEAD_MIN && clock < set;
+}
+
+/** Places confirmed to see the sunset at `day`'s azimuth, within 차로 45분 of the basis (no ferry), nearest first. */
+export function sunsetSpots(spots: Spot[], origin: Origin, day: Day): MarketRow[] {
+  const az = sunsetBucket(origin.point, day);
+  const out: { spot: Spot; minutes: number; km: number; where: string }[] = [];
+  for (const spot of spots) {
+    if (!listed(spot) || !spot.sunsetView?.includes(az)) continue;
+    const t = travel(origin.point, origin.isPoint, spot);
+    if ((t.kind !== 'drive' && t.kind !== 'walk') || t.minutes > SUNSET_DRIVE_MAX) continue;
+    out.push({ spot, minutes: t.minutes, km: distanceKm(origin.point, spot), where: travelText(t) });
+  }
+  return out.sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id)).map(({ spot, where }) => ({ spot, where }));
+}
+
 /** 오늘 판's second line: at most one row, the one that is gone soonest if missed (ADR-0075 2) — 비 소식
- * (ADR-0076) goes in front of the market. The others fold into the grey date line. */
-export type TodayAct = { k: 'rain' } | { k: 'market'; row: MarketRow };
-export function todayActs(markets: MarketRow[], rain = false): TodayAct[] {
-  return [...(rain ? [{ k: 'rain' } as const] : []), ...(markets.length ? [{ k: 'market', row: markets[0] } as const] : [])];
+ * (ADR-0076), then 노을 볼 곳 (ADR-0083, never under rain, only with 3 or more places), then the market. The
+ * others fold into the grey date line. */
+export type TodayAct = { k: 'rain' } | { k: 'sunset'; rows: MarketRow[] } | { k: 'market'; row: MarketRow };
+export function todayActs(markets: MarketRow[], rain = false, sunset: MarketRow[] = []): TodayAct[] {
+  return [
+    ...(rain ? [{ k: 'rain' } as const] : []),
+    ...(!rain && sunset.length >= SUNSET_MIN ? [{ k: 'sunset', rows: sunset } as const] : []),
+    ...(markets.length ? [{ k: 'market', row: markets[0] } as const] : []),
+  ];
 }
 
 /** 비 소식 shows: it rains (pop ≥ 60) in the area the home speaks for now. */

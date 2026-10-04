@@ -111,6 +111,9 @@ export interface State {
   /** 비 소식 (ADR-0076): the last answer, for the area (slug) it was asked for; shown only while that is still
    * `rainArea`. */
   rain: { area: string; rain: boolean } | null;
+  /** 노을 줄 (ADR-0083): the time of day in Jeju, minutes after midnight KST, as the app last read it (opening, back in
+   * front, midnight, and the moments 노을 볼 곳 opens and closes); null before it is read. */
+  clock: number | null;
   /** ADR-0081: the home's survey line may show this visit (src/survey.ts surveyDue; drawn only while 기록 is on). */
   surveyLine: boolean;
   /** the 의견 보내기 sheet was sent: it says 고마워요 until closed. */
@@ -158,6 +161,8 @@ export type Action =
   | { type: 'restore'; rec: SessionRecord }
   /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
   | { type: 'rain'; area: string; rain: boolean }
+  /** the time of day was read (ADR-0083). */
+  | { type: 'clock'; clock: number }
   /** ADR-0081: the survey line was tapped (gone for good). */
   | { type: 'surveyTapped' }
   | { type: 'feedbackSent' };
@@ -180,6 +185,7 @@ export function initialState(init: {
   offline: boolean;
   keep?: Partial<Keep>;
   surveyLine?: boolean;
+  clock?: number;
 }): State {
   return {
     view: 'home',
@@ -220,6 +226,7 @@ export function initialState(init: {
     keep: { restore: null, inapp: null, inappNote: null, install: null, nudge: false, backup: null, ...init.keep },
     announce: { n: 0, more: false, seq: 0 },
     rain: null,
+    clock: init.clock ?? null,
     surveyLine: init.surveyLine ?? false,
     feedbackSent: false,
     seq: 0,
@@ -563,6 +570,8 @@ function step(s: State, a: Action): State {
       // the rotation so far belongs to another point (as resolveCards would decide)
       return { ...s, lastFail: null, origin: fix, originReach: s.reach, originIndoor: s.indoor, histories: {}, shown: {} };
     }
+    case 'clock':
+      return a.clock === s.clock ? s : { ...s, clock: a.clock };
     case 'rain':
       return a.area === rainArea(s) ? { ...s, rain: { area: a.area, rain: a.rain } } : s;
     case 'surveyTapped':

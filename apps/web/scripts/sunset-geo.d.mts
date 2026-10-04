@@ -1,0 +1,12 @@
+export declare const AZIMUTHS: number[];
+export declare const NEAR_M: number;
+export declare const FAR_M: number;
+type Ring = number[][];
+type Coast = { ring: Ring; box: number[] }[];
+export declare function prepareCoast(rings: Ring[]): Coast;
+export declare function ringsOf(geojson: unknown): Ring[];
+export declare function landOf(p: { lat: number; lng: number }, coast: Coast): number;
+export declare function along(p: { lat: number; lng: number }, az: number, m: number): { lat: number; lng: number };
+export declare function rayClear(p: { lat: number; lng: number }, az: number, coast: Coast, home?: number): boolean;
+export declare function seesSunset(p: { lat: number; lng: number }, az: number, coast: Coast): boolean;
+export declare function sunsetAzimuths(p: { lat: number; lng: number }, coast: Coast): number[];

@@ -21,6 +21,9 @@ function validMarket(m: unknown): boolean {
   return Array.isArray(days) && days.every((d) => Number.isInteger(d)) && typeof label === 'string' && label.length > 0;
 }
 
+/** 노을 볼 곳 (ADR-0083): a non-empty list of the three azimuths. */
+const validSunset = (v: unknown): boolean => Array.isArray(v) && v.length > 0 && v.every((a) => a === 242 || a === 264 || a === 298);
+
 /** A booking route the card can link to (ADR-0074): a known kind and an https/http page, or tel: for phone. */
 function validBook(b: unknown): boolean {
   if (!b || typeof b !== 'object') return false;
@@ -53,7 +56,9 @@ export function normalizeSpots(raw: unknown): Spot[] {
     const badBook = 'book' in r && !validBook(r.book);
     // 철 (ADR-0080): a season the app cannot read is dropped — the place stays, without 철.
     const badSeason = 'season' in r && !validSeason(r.season);
-    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason) {
+    // 노을 (ADR-0083): a list the app cannot read is dropped — the place stays, off the 노을 row.
+    const badSunset = 'sunsetView' in r && !validSunset(r.sunsetView);
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset) {
       out.push(spot);
       continue;
     }
@@ -61,6 +66,7 @@ export function normalizeSpots(raw: unknown): Spot[] {
     if (badMarket) delete fixed.market;
     if (badBook) delete fixed.book;
     if (badSeason) delete fixed.season;
+    if (badSunset) delete fixed.sunsetView;
     out.push(fixed);
   }
   return out;

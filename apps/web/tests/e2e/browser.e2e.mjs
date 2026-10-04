@@ -2485,6 +2485,56 @@ await check('SE1-season', '철 (ADR-0080) at 320·390: with 유채꽃 in March a
   assert(problems.length === 0, problems.join(' | '));
 });
 
+await check('SU1-sunset', '노을 볼 곳 (ADR-0083) at 320·390, light and dark: 한경 basis on 2026-10-03, an hour before the sunset 오늘 판 says 노을 볼 곳 N곳 · 차로 45분 안 and the tap goes down to its section (address unchanged), three hours before only 해 지는 시각; no sideways scroll', async () => {
+  const problems = [];
+  const dir = join(appDir, 'design/qa/sunset');
+  mkdirSync(dir, { recursive: true });
+  const storage = { 'jeju.basis': 'region', 'jeju.region': '한경' };
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    for (const dark of [false, true]) {
+      const { ctx, page } = await fresh({ width, height, dark, storage });
+      await page.clock.setFixedTime(new Date('2026-10-03T12:00:00+09:00'));
+      await page.reload();
+      await page.waitForSelector('#today:not(.wait)');
+      const hm = /해 지는 시각 (\d\d):(\d\d)/.exec((await page.textContent('#today .facts')) ?? '');
+      if (!hm) {
+        problems.push(`${width} no sunset time`);
+        await ctx.close();
+        continue;
+      }
+      const at = (minus) => new Date(Date.parse(`2026-10-03T${hm[1]}:${hm[2]}:00+09:00`) - minus * 60_000);
+      const look = () =>
+        page.evaluate(() => ({
+          act: document.querySelector('#today .act')?.textContent ?? null,
+          rows: document.querySelectorAll('#sunset .mk').length,
+          over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        }));
+      await page.clock.setFixedTime(at(60));
+      await page.reload();
+      await page.waitForSelector('#today:not(.wait)');
+      const on = await look();
+      if (!/^노을 볼 곳 \d+곳 · 차로 45분 안$/.test(on.act ?? '')) problems.push(`${width}${dark ? ' dark' : ''} -1h row "${on.act}"`);
+      if (on.rows < 3) problems.push(`${width} -1h section rows ${on.rows}`);
+      if (on.over > 0) problems.push(`${width} -1h overflow ${on.over}`);
+      await page.screenshot({ path: join(dir, `sunset-row-${width}${dark ? '-dark' : ''}.png`) });
+      const url = page.url();
+      await tapText(page, '#today .act');
+      if (page.url() !== url) problems.push(`${width} the tap changed the address to ${page.url()}`);
+      if ((await page.evaluate(() => document.activeElement?.id)) !== 'sunset-h') problems.push(`${width} the tap did not reach 노을 볼 곳`);
+      await page.screenshot({ path: join(dir, `sunset-section-${width}${dark ? '-dark' : ''}.png`) });
+      await page.clock.setFixedTime(at(180));
+      await page.reload();
+      await page.waitForSelector('#today:not(.wait)');
+      const off = await look();
+      if (off.act !== null) problems.push(`${width} -3h row "${off.act}"`);
+      if (off.rows !== 0) problems.push(`${width} -3h section shown`);
+      if (!dark) await page.screenshot({ path: join(dir, `sunset-off-${width}.png`) });
+      await ctx.close();
+    }
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 // --- ADR-0063: hosting (no SPA fallback, 404.html, absolute paths) and keeping saves without a login ---
 const KAKAO_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 10.8.5';
 await check('K-404', 'an unknown address gets 404.html (status 404, a way home), never a blank page; /privacy is a page; with the worker installed a 404 stays a 404; index.html served at a deep address (a fallback) runs the app (absolute asset paths)', async () => {

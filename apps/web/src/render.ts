@@ -3,7 +3,7 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
-import { homeOrigin, moodExamples, openMarkets, otherAreas, rainNow, sunPoint, todayActs, type MarketRow, type TodayAct } from './home';
+import { duskNow, homeOrigin, moodExamples, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
@@ -157,6 +157,10 @@ export const COPY = {
   /** no basis yet (GPS, no fix this session): the island's best, not said to be near (ADR-0075 Amendment 1) */
   examplePopular: (names: string[]) => `제주 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 비짓제주(제주관광공사)',
+  // 노을 볼 곳 (ADR-0083): only in the hours before the sunset, with 3 or more places
+  sunsetPlaces: '노을 볼 곳',
+  sunsetCount: (n: number) => ` ${n}곳 · 차로 45분 안`,
+  sunsetCredit: ' · 해안선 © OpenStreetMap contributors',
   // 비 소식 (ADR-0076): only when it will rain; the source next to it
   rainAsk: '비 소식 · 실내만 볼까요?',
   rainOn: '비 소식이 있어 실내만 보고 있어요',
@@ -881,6 +885,36 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     return a;
   }
 
+  /** 노을 볼 곳 N곳 · 차로 45분 안: a jump to the 노을 볼 곳 section below, like the market row (ADR-0083). */
+  function sunsetRow(n: number): HTMLElement {
+    const a = el(doc, 'a', { class: 'act', href: '#sunset', 'data-action': 'to-sunset' });
+    const txt = el(doc, 'span');
+    txt.append(el(doc, 'b', {}, COPY.sunsetPlaces), COPY.sunsetCount(n));
+    a.append(txt);
+    a.insertAdjacentHTML('beforeend', ARROW);
+    return a;
+  }
+
+  /** 노을 볼 곳: the nearest few, each 길찾기 in one tap like the market rows. */
+  function sunsetSection(s: State, rows: MarketRow[], origin: Origin): HTMLElement {
+    const sec = el(doc, 'section', { id: 'sunset', class: 'more-sec', 'aria-labelledby': 'sunset-h' });
+    sec.append(el(doc, 'h2', { id: 'sunset-h', tabindex: '-1' }, COPY.sunsetPlaces));
+    const list = el(doc, 'ul', { class: 'mk-list' });
+    for (const { spot, where } of rows.slice(0, SUNSET_LIST_MAX)) {
+      const g = goLink(spot, origin.point, false, origin.isPoint, s.mapApp);
+      const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal) });
+      const txt = el(doc, 'span', { class: 'txt' });
+      txt.append(el(doc, 'span', { class: 'nm' }, spot.name.trim()), el(doc, 'span', { class: 'meta' }, where));
+      if (spot.image && !s.broken.includes(spot.id)) a.append(homePhoto(spot, true));
+      a.append(txt);
+      const li = el(doc, 'li');
+      li.append(a);
+      list.append(li);
+    }
+    sec.append(list);
+    return sec;
+  }
+
   /** 비 소식: 실내만 볼까요? turns 실내만 on (ADR-0065's switch); with it on already, says so and offers 모두 보기. */
   function rainRow(indoor: boolean): HTMLElement {
     const txt = el(doc, 'span', { class: 'txt' });
@@ -936,7 +970,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   function homeSigOf(s: State, origin: Origin | null): string {
     // a GPS fix that moved is another place: its own photos, markets and 동네
     const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s)].join('|');
+    const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk].join('|');
   }
 
   function renderHome(s: State) {
@@ -954,13 +989,17 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const markets = spots ? openMarkets(spots, origin, day) : [];
     // without a basis no market goes on the board under 「내 위치 근처」: it could be across the island (ADR-0075
     // Amendment 1); the 오늘 장 서는 곳 section below still lists them, each with its area
-    const acts = todayActs(origin ? markets : [], rainNow(s));
+    // 노을 볼 곳 (ADR-0083): today only, with a basis, in the hours before the sunset there
+    const sunset = spots && origin && !dated && duskNow(s.clock, origin.point, day) ? sunsetSpots(spots, origin, day) : [];
+    const acts = todayActs(origin ? markets : [], rainNow(s), sunset);
+    const sunsetOn = acts.some((a) => a.k === 'sunset');
     const folded = acts.slice(1).filter((a): a is Extract<TodayAct, { k: 'market' }> => a.k === 'market');
     const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...folded.map((a) => COPY.marketFold(dated, a.row.spot.name.trim()))];
     // "·" held to the word before it by a no-break space (§3.2): a line never starts with "·"
     setText(els.todayFacts, facts.map((f) => `\u00a0· ${f}`).join(''));
     els.today.querySelector(':scope > .act')?.remove();
-    if (acts[0]) els.today.append(acts[0].k === 'rain' ? rainRow(s.indoor) : todayRow(acts[0].row, dated));
+    const first = acts[0];
+    if (first) els.today.append(first.k === 'rain' ? rainRow(s.indoor) : first.k === 'sunset' ? sunsetRow(first.rows.length) : todayRow(first.row, dated));
     // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
     els.today.classList.toggle('wait', !spots);
 
@@ -981,8 +1020,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
     const nodes: HTMLElement[] = [];
     if (spots) {
+      if (sunsetOn && origin) nodes.push(sunsetSection(s, sunset, origin));
       if (markets.length) nodes.push(marketSection(s, markets, origin, dated));
-      nodes.push(areasSection(s, spots, origin), el(doc, 'p', { class: 'credit' }, COPY.homeCredit));
+      // the coastline the 노을 places were worked out from (ODbL): credited while they are shown
+      nodes.push(areasSection(s, spots, origin), el(doc, 'p', { class: 'credit' }, sunsetOn ? COPY.homeCredit + COPY.sunsetCredit : COPY.homeCredit));
     }
     els.homeMore.replaceChildren(...nodes);
   }

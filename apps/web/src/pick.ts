@@ -35,6 +35,8 @@ export interface Spot {
   market?: Market;
   /** 철 (ADR-0080): the months the source names, or this year's observed window. Never on a market or 먹기. */
   season?: Season[];
+  /** 노을 볼 곳 (ADR-0083): the sunset azimuths (242·264·298) the place was confirmed to see the sun go down at. */
+  sunsetView?: number[];
   /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
   book?: Book;
   /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */

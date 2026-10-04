@@ -3,7 +3,7 @@
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
 import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
-import { DAYS_AHEAD, addDays, dayOf, isDay, msToNextDay, type Day } from './dates';
+import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
@@ -11,6 +11,8 @@ import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
+import { DUSK_LEAD_MIN, sunPoint } from './home';
+import { sunsetMinutes } from './sun';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
@@ -134,7 +136,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   };
   // ADR-0081: read once at mount, so a map opened in this visit brings the survey line only next time
   const survey0 = store.survey();
-  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0) });
+  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0), clock: minuteOf(clockNow()) });
   const tracker = createTracker({
     url: deps.eventsUrl,
     send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
@@ -171,6 +173,38 @@ export function mountApp(doc: Document, deps: Deps): App {
     countSurvey();
     countShown();
     askRain();
+    duskTimer();
+  }
+
+  /** 노을 줄 (ADR-0083): one timer to the next moment 노을 볼 곳 opens (2시간 30분 before the sunset at the home's
+   * point) or closes (the sunset), set again when that point or the day changes. No minute-by-minute ticking. */
+  let duskKey = '';
+  let duskAt: ReturnType<typeof setTimeout> | null = null;
+  /** before (0), in (1) or after (2) the 노을 window at the home's point today; -1 unknown */
+  function duskPhase(clock: number | null): number {
+    if (clock == null) return -1;
+    const set = sunsetMinutes(sunPoint(homeOrigin(state)), state.today);
+    return clock < set - DUSK_LEAD_MIN ? 0 : clock < set ? 1 : 2;
+  }
+  function duskTimer() {
+    const p = sunPoint(homeOrigin(state));
+    const key = `${p.lat},${p.lng}|${state.today}`;
+    if (key === duskKey) return;
+    duskKey = key;
+    if (duskAt) {
+      clearTimeout(duskAt);
+      timers.delete(duskAt);
+      duskAt = null;
+    }
+    const now = minuteOf(clockNow());
+    const set = sunsetMinutes(p, state.today);
+    const next = now < set - DUSK_LEAD_MIN ? set - DUSK_LEAD_MIN : now < set ? set : null;
+    if (next == null) return; // after the sunset: the midnight tick reads the clock again
+    duskAt = later((next - now) * 60_000 + 500, () => {
+      duskAt = null;
+      duskKey = '';
+      dispatch({ type: 'clock', clock: minuteOf(clockNow()) });
+    });
   }
 
   // --- 비 소식 (ADR-0076): asked for the area the home speaks for, again once an answer is 30 minutes old (or 5
@@ -821,11 +855,12 @@ export function mountApp(doc: Document, deps: Deps): App {
   });
   // 오늘 판's market row (ADR-0075): down to 오늘 장 서는 곳 without touching the address or history (home stays depth 0)
   on(els.main, 'click', (e) => {
-    const a = (e.target as Element | null)?.closest?.('a[data-action="to-market"]');
+    // 노을 볼 곳's row (ADR-0083) the same way, down to its section
+    const a = (e.target as Element | null)?.closest?.('a[data-action="to-market"], a[data-action="to-sunset"]');
     if (!a) return;
     e.preventDefault(); // never the #market jump: it would push a history entry (home stays depth 0)
     if (state.overlay) return;
-    const head = doc.getElementById('market-h');
+    const head = doc.getElementById(a.getAttribute('data-action') === 'to-sunset' ? 'sunset-h' : 'market-h');
     if (!head) return;
     if (typeof head.scrollIntoView === 'function') head.scrollIntoView({ block: 'start' });
     head.focus({ preventScroll: true });
@@ -959,6 +994,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (state.when !== was) store.setWhen(state.when);
     }
     renderer.setDate(dateLabel(now));
+    // the time of day for 노을 볼 곳 (ADR-0083), and its timer from this moment
+    // (a dispatch only when that moves it across an edge of the window — nothing else redraws)
+    duskKey = '';
+    if (duskPhase(minuteOf(now)) !== duskPhase(state.clock)) dispatch({ type: 'clock', clock: minuteOf(now) });
+    else duskTimer();
     if (midnight) {
       clearTimeout(midnight);
       timers.delete(midnight);

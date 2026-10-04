@@ -25,6 +25,11 @@ export function isDay(v: unknown): v is Day {
   return Number.isFinite(t) && new Date(t).toISOString().slice(0, 10) === v;
 }
 
+/** The Seoul time of day of an instant, in minutes after midnight (with fractions). */
+export function minuteOf(d: Date): number {
+  return ((d.getTime() + KST) % DAY_MS) / 60_000;
+}
+
 /** Milliseconds until the next Seoul midnight. */
 export function msToNextDay(d: Date): number {
   return DAY_MS - ((d.getTime() + KST) % DAY_MS);

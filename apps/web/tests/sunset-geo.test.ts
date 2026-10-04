@@ -1,8 +1,6 @@
 // 노을 볼 곳 기하 (ADR-0083, specs/sunset-view.md 「계산」) on a made-up coastline: a main island, two small islands.
 import { describe, expect, it } from 'vitest';
-// @ts-expect-error plain .mjs build script
 import { landOf, prepareCoast, rayClear, seesSunset, sunsetAzimuths } from '../scripts/sunset-geo.mjs';
-// @ts-expect-error plain .mjs build script
 import { simplify, stitch } from '../scripts/coast-freeze.mjs';
 
 const box = (x0: number, y0: number, x1: number, y1: number) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]];
