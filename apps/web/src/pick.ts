@@ -1,6 +1,7 @@
 // Card selection (plan OQ 1·2·4). Pure functions, no DOM.
 import type { Day } from './dates';
 import { marketDay, type Market } from './market';
+import type { Season } from './season';
 
 export type Mood = 'rest' | 'walk' | 'new' | 'food';
 export type Button = Mood | 'any';
@@ -32,6 +33,8 @@ export interface Spot {
   indoor?: boolean;
   /** 오일장 장날 (ADR-0066): set on the five-day markets only. */
   market?: Market;
+  /** 철 (ADR-0080): the months the source names, or this year's observed window. Never on a market or 먹기. */
+  season?: Season[];
   /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
   book?: Book;
   /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */

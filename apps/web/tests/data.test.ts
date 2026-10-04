@@ -20,11 +20,12 @@ const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074; 철: +season, ADR-0080), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
       const expectedFields = [
         ...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS),
         ...('market' in s ? ['market'] : []),
+        ...('season' in s ? ['season'] : []),
         ...('book' in s ? ['book'] : []),
         ...('hide' in s ? ['hide'] : []),
       ];

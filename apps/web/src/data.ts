@@ -2,6 +2,7 @@
 // forgotten so the next tap or "다시 불러오기" fetches again (S24). Each wait times out after 10s (design.md M2); a download
 // that lands after that is still kept.
 import type { BookKind, Mood, Spot, Sub } from './pick';
+import { validSeason } from './season';
 
 const MOODS: readonly Mood[] = ['rest', 'walk', 'new', 'food'];
 const SUBS: readonly Sub[] = ['meal', 'cafe'];
@@ -50,13 +51,16 @@ export function normalizeSpots(raw: unknown): Spot[] {
     const badMarket = 'market' in r && !validMarket(r.market);
     // 예약 경로 (ADR-0074): a route the app cannot open is dropped — the 체험 then leaves the picks.
     const badBook = 'book' in r && !validBook(r.book);
-    if (clean === name && why === reason && score === r.score && !badMarket && !badBook) {
+    // 철 (ADR-0080): a season the app cannot read is dropped — the place stays, without 철.
+    const badSeason = 'season' in r && !validSeason(r.season);
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason) {
       out.push(spot);
       continue;
     }
     const fixed: Spot = { ...spot, name: clean, reason: why, score };
     if (badMarket) delete fixed.market;
     if (badBook) delete fixed.book;
+    if (badSeason) delete fixed.season;
     out.push(fixed);
   }
   return out;
