@@ -1,7 +1,7 @@
 // Card selection (plan OQ 1·2·4). Pure functions, no DOM.
 import type { Day } from './dates';
 import { marketDay, type Market } from './market';
-import type { Season } from './season';
+import { seasonOn, type Season } from './season';
 
 export type Mood = 'rest' | 'walk' | 'new' | 'food';
 export type Button = Mood | 'any';
@@ -174,10 +174,13 @@ interface Ranked extends Card {
   trip: number;
   /** a market on its market day (ADR-0066): first among the same score (sort key only) */
   open: boolean;
+  /** in season that day (ADR-0080): next among the same score (sort key only) */
+  inSeason: boolean;
 }
-/** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then the shorter trip, then id. */
+/** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then a place in season (ADR-0080),
+ * then the shorter trip, then id. */
 const byRank = (a: Ranked, b: Ranked) =>
-  b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
+  b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || Number(b.inSeason) - Number(a.inSeason) || a.trip - b.trip || a.spot.id.localeCompare(b.spot.id);
 
 /** The places one mood may show, wherever they are: `pool`'s filters (tab, 비 와요, a market closed on `day`). */
 function candidates(spots: Spot[], mood: Mood, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
@@ -207,11 +210,11 @@ export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach:
   const all = candidates(spots, mood, tab, indoor, day)
     .map((spot) => {
       const km = distanceKm(origin, spot);
-      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open' };
+      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open', inSeason: !!day && seasonOn(spot.season, day) !== null };
     });
   let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
   if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id)).slice(0, CARD_COUNT);
-  return near.map(({ spot, minutes, trip, open }) => ({ spot, minutes, trip, open })).sort(byRank);
+  return near.map(({ spot, minutes, trip, open, inSeason }) => ({ spot, minutes, trip, open, inSeason })).sort(byRank);
 }
 
 /** Unseen first, then seen, and the cards shown last time at the very back. */

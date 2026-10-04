@@ -67,7 +67,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* a long label ("12월 25일 · 서귀포 시내 근처" at 200%) wraps inside the button; ♥ N stays on the bar */
 .basis { min-width: 0; margin-left: -8px; padding: 0 8px; }
 .basis > span { min-width: 0; text-wrap: balance; }
-.basis .nw { white-space: nowrap; }
+.basis .nw, .meta .nw { white-space: nowrap; }
 .saved-btn { flex: none; white-space: nowrap; }
 .basis svg { color: var(--muted); }
 .saved-btn { margin-left: auto; margin-right: -8px; padding: 0 10px; min-width: 44px; justify-content: center; font-variant-numeric: tabular-nums; }

@@ -2338,3 +2338,87 @@ describe('오일장 「오늘 열려요」 (ADR-0066, specs/market-days.md M4)',
     expect($$('#savedView .market')).toHaveLength(0);
   });
 });
+
+describe('철 (ADR-0080, specs/seasonal-spots.md S4)', () => {
+  let wall = new Date('2026-03-10T09:00:00+09:00');
+  const at = (iso: string) => (wall = new Date(iso));
+  /** the rest places, each with 유채꽃 in March and a fixed 벚꽃 window */
+  const seasoned = fileSpots
+    .filter((s) => s.mood === 'rest')
+    .map((s) => ({ ...s, season: [{ kind: 'cherry' as const, from: '2026-04-08', to: '2026-04-12' }, { kind: 'rapeseed' as const, months: [3] }] }));
+  const fake = () => ({ event: vi.fn(), setEnabled: vi.fn() });
+  const open = (analytics = fake()) => (render({ today: () => wall, loadSpots: () => Promise.resolve(seasoned), analytics }), analytics);
+  const words = () => $$('#cards .card').map((c) => c.querySelector('.meta .season')?.textContent ?? null);
+  beforeEach(() => {
+    at('2026-03-10T09:00:00+09:00');
+  });
+
+  it('now mode in March: 유채꽃 철 on each card, first in the one meta line, held together with its separator', async () => {
+    open();
+    await tap('[data-mood="rest"]');
+    expect(words()).toEqual(['유채꽃 철', '유채꽃 철', '유채꽃 철']);
+    for (const c of $$('#cards .card')) {
+      expect(c.querySelectorAll('.meta')).toHaveLength(1);
+      const first = c.querySelector('.meta')!.firstElementChild!;
+      expect(first.className).toBe('nw');
+      expect(first.querySelector('.season')).toBeTruthy();
+    }
+    expect($('#cards .card.lead .meta').textContent!.startsWith('유채꽃 철 · ')).toBe(true);
+  });
+
+  it('the observed window: in on 4/10 (벚꽃 철), nothing on 4/20', async () => {
+    at('2026-04-10T09:00:00+09:00');
+    open();
+    await tap('[data-mood="rest"]');
+    expect(words()).toEqual(['벚꽃 철', '벚꽃 철', '벚꽃 철']);
+    reset();
+    at('2026-04-20T09:00:00+09:00');
+    open();
+    await tap('[data-mood="rest"]');
+    expect(words()).toEqual([null, null, null]);
+    expect($$('#cards .nw')).toHaveLength(0);
+  });
+
+  it('date mode: the chosen day; back to 지금 changes the words at once', async () => {
+    window.localStorage.setItem('jeju.when', JSON.stringify('2026-04-10'));
+    open();
+    await tap('[data-mood="rest"]');
+    expect(words()).toEqual(['벚꽃 철', '벚꽃 철', '벚꽃 철']);
+    await tap('#basis');
+    await tap('#sheet [data-when="now"]');
+    expect(words()).toEqual(['유채꽃 철', '유채꽃 철', '유채꽃 철']);
+  });
+
+  it('실내 on: 실내 · 유채꽃 철 · …', async () => {
+    window.sessionStorage.setItem('jeju.indoor', 'true');
+    open();
+    await tap('[data-mood="rest"]');
+    expect($('#cards .card.lead .meta').textContent!.startsWith('실내 · 유채꽃 철 · ')).toBe(true);
+  });
+
+  it('shown and map events carry season only while the card shows it; never in the saved list', async () => {
+    const a = open();
+    await tap('[data-mood="rest"]');
+    const shown = a.event.mock.calls.map(([ev]) => ev).filter((ev) => ev.e === 'shown');
+    expect(shown).toHaveLength(3);
+    expect(shown.every((ev) => ev.season === 'rapeseed')).toBe(true);
+    const click = new MouseEvent('click', { bubbles: true, cancelable: true });
+    window.addEventListener('click', (e) => e.preventDefault(), { capture: true, once: true });
+    $('#cards .card.lead .card-link').dispatchEvent(click);
+    expect(a.event).toHaveBeenLastCalledWith(expect.objectContaining({ e: 'map', season: 'rapeseed' }));
+    await tap('#cards .card .heart');
+    expect(a.event).toHaveBeenLastCalledWith(expect.not.objectContaining({ season: expect.anything() }));
+    await tap('#saved');
+    expect($$('#savedView .card')).toHaveLength(1);
+    expect($$('#savedView .season')).toHaveLength(0);
+  });
+
+  it('out of season: no season field on the events', async () => {
+    at('2026-05-10T09:00:00+09:00');
+    const a = open();
+    await tap('[data-mood="rest"]');
+    const shown = a.event.mock.calls.map(([ev]) => ev).filter((ev) => ev.e === 'shown');
+    expect(shown).toHaveLength(3);
+    expect(shown.some((ev) => 'season' in ev)).toBe(false);
+  });
+});

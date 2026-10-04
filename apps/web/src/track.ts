@@ -5,6 +5,7 @@
 import type { AreaName } from './areas';
 import type { Day } from './dates';
 import type { Button, NewSub, Reach, Sub } from './pick';
+import type { SeasonKind } from './season';
 import type { Basis, View, When } from './types';
 
 export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book';
@@ -26,6 +27,8 @@ export interface UsageEvent {
   dated?: boolean;
   /** 비 와요(실내만) was on (ADR-0065); missing = off. */
   indoor?: boolean;
+  /** shown and map only: the kind whose 철 words the card showed (ADR-0080); missing = none. */
+  season?: SeasonKind;
   /** Jeju calendar day, no time. */
   d: Day;
 }

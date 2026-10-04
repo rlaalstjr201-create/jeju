@@ -7,6 +7,7 @@ import { homeOrigin, moodExamples, openMarkets, otherAreas, rainNow, sunPoint, t
 import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
+import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import { sunsetText } from './sun';
@@ -408,12 +409,20 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   }
 
   /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14).
-   * `market`: a five-day market's day words (ADR-0066), in the same place and the same way. */
-  function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null): HTMLElement {
+   * `market`: a five-day market's day words (ADR-0066), in the same place and the same way.
+   * `season`: the 철 words (ADR-0080), after 실내, held together with their separator so they never split. */
+  function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null, season: string | null = null): HTMLElement {
     const metaEl = el(doc, 'p', { class: 'meta' });
     if (indoor) {
       metaEl.append(el(doc, 'span', { class: 'indoor' }, COPY.indoor));
-      if (market || meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+      if (season || market || meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+    }
+    if (season) {
+      const nw = el(doc, 'span', { class: 'nw' });
+      nw.append(el(doc, 'span', { class: 'season' }, season));
+      if (market || meta || dest) nw.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'));
+      metaEl.append(nw);
+      if (market || meta || dest) metaEl.append(' ');
     }
     if (market) {
       metaEl.append(el(doc, 'span', { class: 'market' }, market));
@@ -470,7 +479,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
     // 장날 only on the results, for the day being viewed (ADR-0066)
     const market = !day && spot.market ? marketText(spot.market, whenDay(s), s.when !== 'now') : null;
-    if (meta || dest || indoor || market) card.append(metaEl(meta, dest ? s.mapApp : null, indoor, market));
+    // 철 only on the results, for the day being viewed (ADR-0080)
+    const inSeason = day ? null : seasonOn(spot.season, whenDay(s));
+    const season = inSeason ? seasonText(inSeason) : null;
+    if (meta || dest || indoor || market || season) card.append(metaEl(meta, dest ? s.mapApp : null, indoor, market, season));
     // 길찾기 (ADR-0067, ADR-0069): directions in one tap, on every card; the card itself stays the place page
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
     if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
@@ -553,8 +565,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   }
 
   function resultsSigOf(s: State, b: ResultsBody): string {
-    // a market's day words follow the day being viewed (ADR-0066): redrawn when it changes, only if one is shown
-    if (b.k === 'cards') return `cards|${s.cards!.seq}|${s.mapApp}${s.cards!.list.some((c) => c.spot.market) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
+    // a market's day words and 철 (ADR-0066, ADR-0080) follow the day being viewed: redrawn when it changes, only if
+    // one may be shown
+    if (b.k === 'cards') return `cards|${s.cards!.seq}|${s.mapApp}${s.cards!.list.some((c) => c.spot.market || c.spot.season) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
     if (b.k === 'notice') {
       const p = s.phase;
       const detail = p.k === 'noOrigin' ? p.why : p.k === 'loadError' ? String(p.offline) : '';

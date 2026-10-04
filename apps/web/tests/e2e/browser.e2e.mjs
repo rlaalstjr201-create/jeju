@@ -2409,6 +2409,82 @@ await check('M4-market', '오일장 at 320·390 on 2026-10-02 (KST): 구경 card
   assert(problems.length === 0, problems.join(' | '));
 });
 
+await check('SE1-season', '철 (ADR-0080) at 320·390: with 유채꽃 in March and a 벚꽃 window on every 쉬기 place, on 2026-03-10 (KST) each card has one meta line starting with 유채꽃 철, the words never split, no sideways scroll; 날짜 모드 4/10 says 벚꽃 철, 4/20 nothing; 실내 on reads 실내 · 유채꽃 철; the real 귤 따기 places on 2026-11-10 say 귤 따기 철', async () => {
+  const problems = [];
+  const all = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));
+  const seasoned = JSON.stringify(all.filter((s) => s.mood === 'rest').map((s) => ({ ...s, season: [{ kind: 'cherry', from: '2026-04-08', to: '2026-04-12' }, { kind: 'rapeseed', months: [3] }] })));
+  const real = JSON.stringify(all.filter((s) => s.season));
+  const look = (page) =>
+    page.evaluate(() => {
+      const de = document.documentElement;
+      return {
+        cards: [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => ({
+          word: c.querySelector('.meta .season')?.textContent ?? null,
+          first: c.querySelector('.meta')?.firstElementChild?.className ?? null,
+          meta: c.querySelector('.meta')?.textContent ?? '',
+          metas: c.querySelectorAll('.meta').length,
+          split: [...c.querySelectorAll('.meta .season')].some((e) => new Set([...e.getClientRects()].map((r) => Math.round(r.top))).size > 1),
+        })),
+        over: de.scrollWidth - de.clientWidth,
+      };
+    });
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    const { ctx, page } = await fresh({ width, height });
+    await page.clock.setFixedTime(new Date('2026-03-10T09:00:00+09:00'));
+    await ctx.route((u) => u.pathname.endsWith('/spots.json'), (r) => r.fulfill({ status: 200, contentType: 'application/json', body: seasoned }));
+    await page.reload();
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    const now = await look(page);
+    if (now.cards.length !== 3) problems.push(`${width} ${now.cards.length} cards`);
+    for (const c of now.cards) {
+      if (c.word !== '유채꽃 철') problems.push(`${width} says ${c.word}`);
+      if (c.first !== 'nw') problems.push(`${width} meta starts with ${c.first}`);
+      if (c.metas !== 1) problems.push(`${width} ${c.metas} meta lines`);
+      if (c.split) problems.push(`${width} 철 words split over two lines`);
+    }
+    if (now.over > 0) problems.push(`${width} overflow ${now.over}`);
+    await shot(page, `season-${width}`);
+    for (const [day, want] of [['2026-04-10', '벚꽃 철'], ['2026-04-20', null]]) {
+      await page.evaluate((d) => localStorage.setItem('jeju.when', JSON.stringify(d)), day);
+      await page.reload();
+      await waitCards(page);
+      const dated = await look(page);
+      for (const c of dated.cards) if (c.word !== want) problems.push(`${width} 날짜 모드 ${day} says ${c.word}`);
+      if (dated.over > 0) problems.push(`${width} ${day} overflow ${dated.over}`);
+    }
+    await ctx.close();
+    const r = await fresh({ width, height });
+    await r.page.clock.setFixedTime(new Date('2026-03-10T09:00:00+09:00'));
+    await r.ctx.route((u) => u.pathname.endsWith('/spots.json'), (q) => q.fulfill({ status: 200, contentType: 'application/json', body: seasoned }));
+    await r.page.evaluate(() => sessionStorage.setItem('jeju.indoor', 'true'));
+    await r.page.reload();
+    await tapText(r.page, '[data-mood="rest"]');
+    await waitCards(r.page);
+    const indoor = await look(r.page);
+    if (!indoor.cards[0]?.meta.startsWith('실내 · 유채꽃 철 · ')) problems.push(`${width} 실내 lead meta "${indoor.cards[0]?.meta}"`);
+    if (indoor.over > 0) problems.push(`${width} indoor overflow ${indoor.over}`);
+    await shot(r.page, `season-indoor-${width}`);
+    await r.ctx.close();
+    // the shipped 귤 따기 places (체험) in November
+    const t = await fresh({ width, height });
+    await t.page.clock.setFixedTime(new Date('2026-11-10T09:00:00+09:00'));
+    await t.ctx.route((u) => u.pathname.endsWith('/spots.json'), (r) => r.fulfill({ status: 200, contentType: 'application/json', body: real }));
+    await t.page.reload();
+    await tapText(t.page, '[data-mood="new"]');
+    await waitCards(t.page);
+    await tapText(t.page, '[data-sub="do"]');
+    await waitCards(t.page);
+    const nov = await look(t.page);
+    if (nov.cards.length !== 3) problems.push(`${width} 귤 ${nov.cards.length} cards`);
+    for (const c of nov.cards) if (c.word !== '귤 따기 철') problems.push(`${width} 체험 says ${c.word}`);
+    if (nov.over > 0) problems.push(`${width} 귤 overflow ${nov.over}`);
+    await shot(t.page, `season-tangerine-${width}`);
+    await t.ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 // --- ADR-0063: hosting (no SPA fallback, 404.html, absolute paths) and keeping saves without a login ---
 const KAKAO_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 10.8.5';
 await check('K-404', 'an unknown address gets 404.html (status 404, a way home), never a blank page; /privacy is a page; with the worker installed a 404 stays a 404; index.html served at a deep address (a fallback) runs the app (absolute asset paths)', async () => {

@@ -10,6 +10,7 @@ import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBac
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
+import { seasonOn, type SeasonKind } from './season';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
@@ -193,9 +194,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
-  /** `day`: the day a heart is about (dated = not today). */
-  function count(e: EventName, id?: string, day?: Day) {
-    const ev = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}) };
+  /** `day`: the day a heart is about (dated = not today). `season`: the kind whose 철 words the card showed (ADR-0080). */
+  function count(e: EventName, id?: string, day?: Day, season?: SeasonKind | null) {
+    const ev = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}), ...(season ? { season } : {}) };
     tracker.track(ev);
     if (state.tracking) deps.analytics?.event(ev);
   }
@@ -207,7 +208,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!c || c.seq === shownSeq || state.view !== 'cards' || state.phase.k !== 'ready') return;
     shownSeq = c.seq;
     if (c.how === 'restore') return;
-    for (const card of c.list) count('shown', card.spot.id);
+    for (const card of c.list) count('shown', card.spot.id, undefined, seasonOn(card.spot.season, whenDay(state)));
+  }
+  /** The 철 a results card shows (ADR-0080); none on the saved list. */
+  function seasonShown(id: string): SeasonKind | null {
+    const card = state.view === 'cards' ? state.cards?.list.find((c) => c.spot.id === id) : undefined;
+    return card ? seasonOn(card.spot.season, whenDay(state)) : null;
   }
   /** A link tapped twice (a 2nd tab opening) counts once. */
   const lastLink = new Map<string, number>();
@@ -216,7 +222,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const t = now();
     const prev = lastLink.get(key);
     lastLink.set(key, t);
-    if (prev === undefined || t - prev >= delays.guard) count(e, id);
+    if (prev === undefined || t - prev >= delays.guard) count(e, id, undefined, e === 'map' ? seasonShown(id) : null);
   }
   function setTracking(on: boolean) {
     if (!on) tracker.drop();

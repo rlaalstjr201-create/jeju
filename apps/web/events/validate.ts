@@ -3,6 +3,7 @@
 // time of day can never be stored by accident.
 import { AREAS } from '../src/areas';
 import { isDay } from '../src/dates';
+import { SEASON_KINDS } from '../src/season';
 import type { UsageEvent } from '../src/track';
 
 export const MAX_BYTES = 8 * 1024;
@@ -14,7 +15,8 @@ const SUBS: Record<string, Set<string>> = { food: new Set(['meal', 'cafe']), new
 const RANGES = new Set(['walk', '30', '60']);
 const BASES = new Set(['here', 'stay', 'area']);
 const AREA_NAMES = new Set<string>(AREAS.map((a) => a.name));
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'd']);
+const SEASONS = new Set<string>(SEASON_KINDS);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'd']);
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 
@@ -39,6 +41,7 @@ export function eventProblem(x: unknown): string | null {
   if (o.area !== undefined && (o.basis !== 'area' || !inSet(AREA_NAMES, o.area))) return 'area';
   if (o.dated !== undefined && typeof o.dated !== 'boolean') return 'dated';
   if (o.indoor !== undefined && typeof o.indoor !== 'boolean') return 'indoor';
+  if (o.season !== undefined && !((o.e === 'shown' || o.e === 'map') && inSet(SEASONS, o.season))) return 'season';
   return null;
 }
 

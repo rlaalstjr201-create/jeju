@@ -576,3 +576,41 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
     expect(pickCards(spots, o, 'rest', {}, undefined, 'walk').cards.map((c) => c.spot.id)).toEqual(['mid5', 'near3', 'near3b']);
   });
 });
+
+describe('철 (ADR-0080, specs/seasonal-spots.md S3)', () => {
+  const o = { lat: 33.5, lng: 126.5 };
+  const mk = (id: string, km: number, score: number, extra: Partial<Spot> = {}): Spot => ({
+    id, name: id, lat: 33.5, lng: 126.5 + km / 92.8, mood: 'new', sub: 'sight', indoor: false,
+    reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: null, bookable: false, score, ...extra,
+  });
+  const MARCH: Spot['season'] = [{ kind: 'rapeseed', months: [3] }];
+  const JEJU = { days: [2, 7, 12, 17, 22, 27], label: '2·7일' };
+  const ids = (spots: Spot[], day?: string) => pickCards(spots, o, 'new', {}, 'sight', 'drive30', false, day).cards.map((c) => c.spot.id);
+
+  it('same score: the market on its day, then the place in season, then the rest; never ahead of a higher score', () => {
+    const spots = [mk('a', 1, 4), mk('s', 6, 4, { season: MARCH }), mk('m', 8, 4, { market: JEJU }), mk('top', 9, 5)];
+    expect(ids(spots, '2026-03-02')).toEqual(['top', 'm', 's']);
+    expect(ids(spots, '2026-03-03')).toEqual(['top', 's', 'a']);
+    // out of season and with no day: the usual order (score → trip → id)
+    expect(ids(spots, '2026-04-03')).toEqual(['top', 'a', 's']);
+    expect(ids(spots)).toEqual(['top', 'a', 's']);
+    // a lower score never jumps ahead
+    expect(ids([mk('a', 1, 4), mk('b', 2, 4), mk('c', 3, 4), mk('s', 1, 3, { season: MARCH })], '2026-03-10')).toEqual(['a', 'b', 'c']);
+  });
+
+  it('real data: out of season the order is what it was with no 철; in season 15 areas × 3 ranges × every list still give 3 distinct cards', () => {
+    const plain = realSpots.map(({ season: _s, ...s }) => s as Spot);
+    for (const area of AREAS) {
+      for (const reach of REACHES) {
+        for (const [b, sub] of [['rest'], ['walk'], ['new', 'mix'], ['new', 'sight'], ['new', 'do'], ['any']] as [Button, Tab?][]) {
+          const why = `${area.name} / ${reach} / ${b}:${sub ?? ''}`;
+          const at = (spots: Spot[], day: string) => pickCards(spots, area, b, {}, sub, reach, false, day).cards.map((c) => c.spot.id);
+          expect(at(realSpots, '2026-10-04'), why).toEqual(at(plain, '2026-10-04'));
+          const nov = at(realSpots, '2026-11-10');
+          expect(nov, why).toHaveLength(3);
+          expect(new Set(nov).size, why).toBe(3);
+        }
+      }
+    }
+  });
+});

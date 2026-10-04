@@ -41,6 +41,11 @@ describe('U4 받는 쪽 — 검증', () => {
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
   });
 
+  it('accepts 철 (ADR-0080): season on shown and map, a known kind', () => {
+    const batch: UsageEvent[] = [{ e: 'shown', id: ID, d, season: 'rapeseed' }, { e: 'map', id: ID, d, season: 'tangerine' }];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+  });
+
   it.each([
     ['indoor not a boolean', [{ e: 'map', id: ID, d, indoor: 'yes' }], 400],
     ['not JSON', '[{', 400],
@@ -66,6 +71,8 @@ describe('U4 받는 쪽 — 검증', () => {
     ['an area without an area basis', [{ e: 'map', id: ID, d, basis: 'stay', area: '애월' }], 400],
     ['an unknown area', [{ e: 'map', id: ID, d, basis: 'area', area: '서울' }], 400],
     ['dated not a boolean', [{ e: 'map', id: ID, d, dated: 'yes' }], 400],
+    ['an unknown season kind', [{ e: 'map', id: ID, d, season: 'beach' }], 400],
+    ['a season on a save', [{ e: 'save', id: ID, d, season: 'rapeseed' }], 400],
     ['one bad event among good ones', [{ e: 'map', id: ID, d }, { e: 'map', id: ID, d, lng: 126 }], 400],
     [`more than ${MAX_EVENTS} events`, Array.from({ length: MAX_EVENTS + 1 }, () => ({ e: 'map', id: ID, d })), 413],
     ['more than 8 KB', `[${' '.repeat(8 * 1024)}]`, 413],
