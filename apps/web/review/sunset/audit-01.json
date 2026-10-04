@@ -1,0 +1,726 @@
+{
+ "round": "01",
+ "date": "2026-10-04",
+ "criteria": "criteria.md (commit e4ea728)",
+ "sample": "sample-01.json (seed 20261004, 5% ceil)",
+ "agreement": {
+  "n": 21,
+  "agree": 21,
+  "rate": 1,
+  "threshold": 0.85,
+  "pass": true
+ },
+ "rows": [
+  {
+   "key": "P01",
+   "id": "12879e13-a800-400c-b08e-3a7140d30ed2",
+   "first": true,
+   "audit": true,
+   "reason": "K4: 요약 '제주도를 한눈에 내려다볼 수 있는' — 정상 트인 조망",
+   "agree": true
+  },
+  {
+   "key": "P02",
+   "id": "12a53564-891f-483f-b680-c48e15d4db2f",
+   "first": false,
+   "audit": false,
+   "reason": "D1: '화북포구 동쪽 언덕'은 위치 설명뿐, 바다 전망·노을 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P03",
+   "id": "18a18c25-3b50-43a2-88ab-483d1324abec",
+   "first": false,
+   "audit": false,
+   "reason": "D3/애매: 유람선 체험 중심, 노을 언급 없고 해 질 녘 자리로 뒷받침 안 됨",
+   "agree": true
+  },
+  {
+   "key": "P04",
+   "id": "1a203581-cbd5-42e6-be82-6486e1db7073",
+   "first": false,
+   "audit": false,
+   "reason": "D1: 해수욕장 인근·선착장 앞은 위치 설명뿐, 창밖 바다 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P05",
+   "id": "253008ff-1365-4ff4-8192-e2382852e17a",
+   "first": true,
+   "audit": true,
+   "reason": "K3: '애월 바다가 보이는 오션뷰 자리'",
+   "agree": true
+  },
+  {
+   "key": "P06",
+   "id": "2aae9248-8d36-434e-9157-a86e2baa7226",
+   "first": true,
+   "audit": true,
+   "reason": "K3: 태그 '오션뷰' + 애월 해안가 카페",
+   "agree": true
+  },
+  {
+   "key": "P07",
+   "id": "330afcd8-c6bd-44df-b6d5-d3d8ca47cc34",
+   "first": true,
+   "audit": true,
+   "reason": "K3: '우도 해변 전망을 배경으로' 식사",
+   "agree": true
+  },
+  {
+   "key": "P08",
+   "id": "3c02cb46-419d-4d56-bcf3-4a89282f424e",
+   "first": false,
+   "audit": false,
+   "reason": "D3: 배낚시 체험 중심, 바다 전망·노을 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P09",
+   "id": "5baef0ad-14b7-4e0b-bc87-5703ac574f69",
+   "first": true,
+   "audit": true,
+   "reason": "K3: '월령 바다가 보이는 작은 카페'",
+   "agree": true
+  },
+  {
+   "key": "P10",
+   "id": "5bb85356-d08d-43d7-b5ae-693d5fad0f1b",
+   "first": false,
+   "audit": false,
+   "reason": "D1: 포구는 역사 설명뿐, 바다 전망·노을 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P11",
+   "id": "629c73c8-e21d-4155-8dd4-7c099bca01e2",
+   "first": false,
+   "audit": false,
+   "reason": "D1: 이름·메뉴의 바다/해물뿐, 바다 보인다는 말 없음",
+   "agree": true
+  },
+  {
+   "key": "P12",
+   "id": "771dc469-7ca4-42f9-82c8-ed7c847ae0c9",
+   "first": false,
+   "audit": false,
+   "reason": "D3/애매: 요트투어 출발지 설명뿐, 노을 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P13",
+   "id": "81f6018d-872f-4f3b-a39c-6b2c31a29b0d",
+   "first": false,
+   "audit": false,
+   "reason": "D4: 신당 이야기뿐, 정상 전망 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P14",
+   "id": "9d008440-16f6-444a-89b3-1002e2e0f574",
+   "first": false,
+   "audit": false,
+   "reason": "D2: '일몰 후 조명'은 시간 표현, 노을을 본다는 말 아님; 바다 전망 자리 묘사도 불명확",
+   "agree": true
+  },
+  {
+   "key": "P15",
+   "id": "a20fdc13-d7a6-49e3-b3fb-d64aa400e306",
+   "first": false,
+   "audit": false,
+   "reason": "D4: 오름 형태 설명뿐, 정상 전망 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P16",
+   "id": "a40395cd-17fa-4364-941b-b27f7685a3ba",
+   "first": false,
+   "audit": false,
+   "reason": "D3/애매: 서핑 강습 체험 중심, 노을·해 질 녘 자리 언급 없음",
+   "agree": true
+  },
+  {
+   "key": "P17",
+   "id": "a740db8a-89d4-4717-8a63-430d10c8aacb",
+   "first": true,
+   "audit": true,
+   "reason": "K3: '바다를 바라보며 여유를 즐기기 좋은' 카페",
+   "agree": true
+  },
+  {
+   "key": "P18",
+   "id": "b333eb22-91eb-4e3a-833c-f81eeb9d5c18",
+   "first": true,
+   "audit": true,
+   "reason": "K3: '오션뷰 갈치요리 전문점'",
+   "agree": true
+  },
+  {
+   "key": "P19",
+   "id": "d1ab92e8-b08a-4bad-80a0-98d62038d67f",
+   "first": false,
+   "audit": false,
+   "reason": "D4/애매: '경승이 빼어난'뿐, 정상 트인 조망 명시 없음",
+   "agree": true
+  },
+  {
+   "key": "P20",
+   "id": "dfcc877f-90c3-461b-a79d-be74ae2ad673",
+   "first": true,
+   "audit": true,
+   "reason": "K3: '시원한 바다를 바라보며 커피 한 잔 할 수 있는 오션뷰'",
+   "agree": true
+  },
+  {
+   "key": "P21",
+   "id": "f2c82ee0-ab9a-413d-87f8-52fccae8fba2",
+   "first": false,
+   "audit": false,
+   "reason": "D3/애매: 숲 우거진 섬·전설 설명, 그 자리에서 바다·노을 보는 묘사 없음",
+   "agree": true
+  }
+ ],
+ "auditorInput": {
+  "prompt": "You are an independent judge. Read the JSON file C:\\Users\\rlaal\\AppData\\Local\\Temp\\claude\\C--Users-rlaal-projects-jeju\\91f632af-a1ac-4ec8-a5b3-8e28f1cb4f37\\scratchpad\\sunset-audit-packet.json. Field \"rules\" holds the judging rules (Korean). Field \"places\" holds 21 places, each with a masked key (P01..P21), kind (candidate types: geo / word / oreum), category, indoor, and its source text (name, tags, intro, comment, summary).\n\nApply the rules to each place using only that place's own text; no outside knowledge, no web, no other files. K2/K3 apply only when kind includes \"geo\"; K4 only when kind includes \"oreum\"; K1 always. When unclear, drop.\n\nWrite a JSON array, one record per place in packet order: {\"key\":\"P01\",\"sunset\":true|false,\"reason\":\"one short line (Korean ok) naming the rule (K1-K4 / D1-D4) and why\"} to C:\\Users\\rlaal\\AppData\\Local\\Temp\\claude\\C--Users-rlaal-projects-jeju\\91f632af-a1ac-4ec8-a5b3-8e28f1cb4f37\\scratchpad\\sunset-audit-out.json. Do not read any other file in that folder or the repository. Report only \"done\" and the keep/drop counts.\r\n",
+  "packetSha256": "0feda94661cefe170ce86eafbd8a54c0575616bca6811173112089a5f10d59a4",
+  "packet": {
+   "rules": "## 질문\n\n이 장소에 간 사람이 해 질 녘 그 자리(실외, 또는 바다 쪽 창·테라스)에서 노을이나 해가 지는 하늘을 볼 수 있다고 **원문이** 뒷받침하는가?\n\n원문 = `review/input`의 그 곳 이름·태그·소개(intro)·코멘트·요약. 다른 지식(지도, 기억, 다른 곳 글)은 쓰지 않는다.\n\n## keep (하나라도)\n\n- K1. 원문이 그 장소에서 노을·일몰·석양·해넘이를 본다고 말한다. 모든 후보에 적용.\n- K2. (`geo` 후보만) 원문이 그곳을 바다가 보이는 실외 자리로 묘사한다: 해변·해수욕장·해안도로·포구·방파제·등대·해안 산책로·바닷가 절벽·바다 전망대·바닷가 공원 등.\n- K3. (`geo` 후보 중 카페·식당처럼 건물 안이 중심인 곳) 원문이 그 가게에서 바다가 보인다고 말한다: 오션뷰, 창밖 바다, 바다가 보이는 테라스·루프탑.\n- K4. (`oreum` 후보만) 원문이 정상·꼭대기의 트인 전망을 말한다: 탁 트인 조망, 사방이 보인다, 바다나 섬이 내려다보인다.\n\n## drop\n\n- D1. 바다·노을 말이 메뉴·이름·가게 위치 설명뿐이다. 예(지어낸 것): 「바다향 가득한 해물 칼국수」, 「포구 근처 골목의 고깃집」.\n- D2. 원문의 노을이 그 장소에서 보는 것이 아니다(다른 곳 이야기, 비유, 상품 이름). 해돋이(일출)만 말한다. 예(지어낸 것): 「노을빛 소스를 얹은 디저트」, 「일출 명소로 유명한 봉우리」.\n- D3. 숲·동굴·실내 전시·체험 시설이 중심이고 바다 전망이나 노을 말이 없다.\n- D4. 오름인데 정상 전망 말이 없거나, 숲에 가려 전망이 없다고 한다.\n- **애매하면 drop.** 오늘 줄은 확인된 곳만 권한다(정직성).\n\nkeep 예(지어낸 것): 「해안 산책로 끝 등대에서 바라보는 저녁 하늘」(K1·K2), 「통창 너머로 바다가 펼쳐지는 카페」(K3), 「정상에 오르면 사방이 탁 트여 바다까지 보인다」(K4).",
+   "places": [
+    {
+     "key": "P01",
+     "kind": [
+      "oreum"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "둔지봉",
+     "tags": [
+      "오름",
+      "걷기/등산",
+      "자연경관"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "제주도를 한눈에 내려다볼 수 있는 둔지봉"
+    },
+    {
+     "key": "P02",
+     "kind": [
+      "geo"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "별도연대",
+     "tags": [
+      "문화유적지",
+      "맑음",
+      "문화관광",
+      "역사유적",
+      "어트랙션"
+     ],
+     "intro": "",
+     "comment": "화북포구 동쪽 언덕에 세워진 연대로, 인접한 연대들과 연락하며 적의 침입을 알리는 역할을 했어요.",
+     "summary": "외적의 침입을 막던 별도연대"
+    },
+    {
+     "key": "P03",
+     "kind": [
+      "geo"
+     ],
+     "category": "experience",
+     "indoor": false,
+     "name": "서귀포유람선",
+     "tags": [
+      "액티비티",
+      "부모",
+      "아이",
+      "커플",
+      "친구",
+      "맑음",
+      "체험",
+      "레저/체험",
+      "어린이"
+     ],
+     "intro": "",
+     "comment": "제주투어패스로 추가금 없이 이용할 수 있는 체험이에요. 푸른 바다와 문섬, 범섬을 편안하게 둘러볼 수 있습니다.",
+     "summary": "제주 새섬, 범섬, 외돌개, 정방폭포 서귀포시 추천관광지를 유람선에서 관광할 수 있다."
+    },
+    {
+     "key": "P04",
+     "kind": [
+      "geo"
+     ],
+     "category": "cafe",
+     "indoor": true,
+     "name": "미쿠니",
+     "tags": [
+      "커피",
+      "밀크티",
+      "디저트",
+      "제주카페",
+      "음식",
+      "식당",
+      "카페",
+      "아메리카노",
+      "카페라떼",
+      "플랫화이트",
+      "핸드드립커피",
+      "카푸치노",
+      "에스프레소",
+      "큐브라떼",
+      "라떼",
+      "바닐라라떼",
+      "돌체라뗴",
+      "아인슈페너",
+      "얼그레이",
+      "로얄밀크티",
+      "자몽티",
+      "블랙티",
+      "루이보스",
+      "핫초코",
+      "아이스초코",
+      "자몽에이드",
+      "레몬티",
+      "레몬에이드",
+      "차",
+      "에이드",
+      "카모마일",
+      "티라미수",
+      "마들렌",
+      "쿠키",
+      "케이크"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "삼양해수욕장 인근에 위치한 미쿠니는 가름선착장 앞 아늑한 복층 카페로 2층에는 미쿠니의 낮과 미쿠니의 밤으로 나뉘어 운영되고 있다. 다양한 음료메뉴와 디저트를 판매하고 있다."
+    },
+    {
+     "key": "P05",
+     "kind": [
+      "geo"
+     ],
+     "category": "restaurant",
+     "indoor": true,
+     "name": "랜디스도넛 제주애월점",
+     "tags": [
+      "애월",
+      "도넛"
+     ],
+     "intro": "",
+     "comment": "애월 바다가 보이는 오션뷰 자리에 위치한 미국 도넛 체인점이에요. 영업시간은 09:30-18:30입니다.",
+     "summary": "아이언맨이 사랑한 도넛"
+    },
+    {
+     "key": "P06",
+     "kind": [
+      "geo"
+     ],
+     "category": "cafe",
+     "indoor": true,
+     "name": "트라이브",
+     "tags": [
+      "빈티지소품",
+      "굿즈",
+      "오션뷰",
+      "스풀레",
+      "한라봉소르베에이드",
+      "음식",
+      "카페"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "트라이브는 애월 해안가에 위치한 카페로 제주스러움을 가득 담은 카페다."
+    },
+    {
+     "key": "P07",
+     "kind": [
+      "geo"
+     ],
+     "category": "restaurant",
+     "indoor": true,
+     "name": "우도자연",
+     "tags": [
+      "해물짬뽕",
+      "해물라면",
+      "해물짜장",
+      "회덮밥",
+      "갈치조림",
+      "우럭조림",
+      "음식",
+      "라면",
+      "짬뽕",
+      "짜장면",
+      "쟁반짜장",
+      "탕수육",
+      "볶음밥",
+      "전복죽",
+      "보말칼국수",
+      "보말죽",
+      "칼국수",
+      "물회",
+      "성게비빔밥",
+      "뚝배기",
+      "전복뚝배기",
+      "해산물",
+      "해산물모둠",
+      "문어숙회",
+      "고등어구이",
+      "갈치구이",
+      "고등어조림",
+      "회",
+      "소라회",
+      "소라물회",
+      "전복물회",
+      "해물전골"
+     ],
+     "intro": "",
+     "comment": "우도 해변 전망을 배경으로 자연산 해산물 요리를 맛볼 수 있는 횟집입니다.",
+     "summary": "우도망루등대바로 앞에 위치한 중식과 한식을 다양하게 맛볼 수 있는 우도자연식당"
+    },
+    {
+     "key": "P08",
+     "kind": [
+      "geo"
+     ],
+     "category": "experience",
+     "indoor": false,
+     "name": "제주 이호털보 배낚시",
+     "tags": [
+      "낚시",
+      "액티비티",
+      "친구",
+      "커플",
+      "체험",
+      "레저/체험",
+      "수상레저",
+      "어트랙션"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "현장체험 위주의 낚시로 남녀노소 초보자들도 누구나 즐길 수 있는 곳"
+    },
+    {
+     "key": "P09",
+     "kind": [
+      "geo"
+     ],
+     "category": "cafe",
+     "indoor": true,
+     "name": "R14",
+     "tags": [
+      "한림",
+      "월령리",
+      "스콘",
+      "백년초",
+      "아이스크림",
+      "콜드브루",
+      "허브차",
+      "생딸기우유"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "월령 바다가 보이는 작은 카페"
+    },
+    {
+     "key": "P10",
+     "kind": [
+      "geo"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "조천비석거리",
+     "tags": [
+      "문화유적지",
+      "문화관광",
+      "역사유적",
+      "어트랙션"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "조천은 제주성과 가까운 곳으로 교통수단을 해로에 의존할 당시 목사나 판관 등 많은 관리가 화북, 조천 포구를 이용하였으므로 이들에 대한 치적과 석별의 뜻을 표시하기 위하여 비석을 세웠는데 이 거리를 통칭하여 비석거리라 한다."
+    },
+    {
+     "key": "P11",
+     "kind": [
+      "geo"
+     ],
+     "category": "restaurant",
+     "indoor": true,
+     "name": "바다해찬",
+     "tags": [
+      "한림",
+      "협재",
+      "횟집",
+      "모듬회",
+      "고등어구이",
+      "전복구이",
+      "뿔소라",
+      "전복죽",
+      "전복뚝배기"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "다채로운 해물요리를 맛볼 수 있는 곳"
+    },
+    {
+     "key": "P12",
+     "kind": [
+      "geo"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "무지개요트",
+     "tags": [
+      "요트투어",
+      "제주시",
+      "이색여행",
+      "해양",
+      "크루즈"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "제주시 도두항에서 출발하는 90인승 크루즈급 요트투어"
+    },
+    {
+     "key": "P13",
+     "kind": [
+      "oreum"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "당오름(안덕면)",
+     "tags": [
+      "오름",
+      "걷기/등산",
+      "자연경관",
+      "도보여행",
+      "도보"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "뱀을 신으로 모시던 신당이 있던 오름"
+    },
+    {
+     "key": "P14",
+     "kind": [
+      "geo",
+      "word"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "탐라해상풍력단지",
+     "tags": [
+      "야간명소",
+      "한경면",
+      "포토스팟",
+      "뷰포인트",
+      "야간관광명소"
+     ],
+     "intro": "",
+     "comment": "3MW급 풍력발전기 10기로 구성된 해상풍력 단지로, 2017년 준공 이후 안정적으로 운영 중이에요.",
+     "summary": "매일 일몰 후 10시까지 해상풍력 발전기 조명이 연출되는 야간관광명소"
+    },
+    {
+     "key": "P15",
+     "kind": [
+      "oreum"
+     ],
+     "category": "experience",
+     "indoor": false,
+     "name": "매오름",
+     "tags": [
+      "커플",
+      "혼자",
+      "친구",
+      "맑음",
+      "체험관광",
+      "오름",
+      "휴식/치유",
+      "자연경관",
+      "도보여행",
+      "도보",
+      "어트랙션"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "마치 매가 날개를 펴고 앉아 있는 형태를 띄고 있는 오름\r\n· 서귀포시 표선면 표선리\r\n· 올레15코스"
+    },
+    {
+     "key": "P16",
+     "kind": [
+      "geo"
+     ],
+     "category": "experience",
+     "indoor": false,
+     "name": "바구스서핑스쿨",
+     "tags": [
+      "서핑",
+      "서핑스쿨",
+      "체험",
+      "스포츠",
+      "해양스포츠",
+      "수상레저",
+      "어트랙션"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "에메랄드빛 예쁜 바다로 유명한 애월 곽지해수욕장에서 배우는 서핑"
+    },
+    {
+     "key": "P17",
+     "kind": [
+      "geo"
+     ],
+     "category": "cafe",
+     "indoor": true,
+     "name": "카페콜라",
+     "tags": [
+      "콜라",
+      "체리콕",
+      "고르곤졸라피자",
+      "커피콕",
+      "음식",
+      "커피",
+      "아메리카노",
+      "카푸치노",
+      "카페라떼",
+      "카페모카",
+      "에스프레소",
+      "카라멜마끼아또",
+      "초코라떼",
+      "녹차라떼",
+      "고구마라떼",
+      "프라페",
+      "에이드",
+      "레몬에이드",
+      "블루베리레몬에이드",
+      "딸기스무디",
+      "스무디",
+      "망고스무디",
+      "블루베리스무디",
+      "주스",
+      "토마토주스",
+      "딸기주스",
+      "키위주스",
+      "팥빙수",
+      "케이크",
+      "티라미수",
+      "허니브레드",
+      "브라우니"
+     ],
+     "intro": "",
+     "comment": "콜라를 박물관처럼 전시한 특별한 카페로, 바다를 바라보며 여유를 즐기기 좋은 한림 감성 카페예요.",
+     "summary": "코카콜라를 주제로 한 수집품 전시&테마 카페 - 커피콕, 체리콕이 대표메뉴"
+    },
+    {
+     "key": "P18",
+     "kind": [
+      "geo"
+     ],
+     "category": "restaurant",
+     "indoor": true,
+     "name": "갈치관",
+     "tags": [
+      "제주",
+      "애월",
+      "구엄리",
+      "오션뷰",
+      "제주갈치한상",
+      "갈치요리전문"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "애월에 있는 오션뷰 갈치요리 전문점입니다."
+    },
+    {
+     "key": "P19",
+     "kind": [
+      "oreum"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "천아오름(틍낭오름,天娥岳)",
+     "tags": [
+      "오름",
+      "걷기/등산",
+      "친구",
+      "아이",
+      "흐림",
+      "자연경관",
+      "도보여행",
+      "도보",
+      "어린이"
+     ],
+     "intro": "",
+     "comment": "",
+     "summary": "경승이 빼어난 천아오름"
+    },
+    {
+     "key": "P20",
+     "kind": [
+      "geo"
+     ],
+     "category": "cafe",
+     "indoor": true,
+     "name": "카페나모나모베이커리",
+     "tags": [
+      "도두동",
+      "무지개해안도로",
+      "오션뷰카페",
+      "음식",
+      "카페",
+      "에스프레소",
+      "아메리카노",
+      "카페라떼",
+      "카푸치노",
+      "바닐라라떼",
+      "아인슈페너",
+      "카페모카",
+      "카라멜마끼아또",
+      "아포가토",
+      "더치라떼",
+      "더치커피",
+      "라떼",
+      "허브티",
+      "칵테일",
+      "차",
+      "자몽티",
+      "에이드",
+      "패션후르츠에이드",
+      "아이스크림",
+      "석류차",
+      "석류에이드",
+      "빵",
+      "에그타르트",
+      "와플"
+     ],
+     "intro": "",
+     "comment": "무지개해안도로 앞에 위치해 오션뷰와 함께 편하게 사진을 담을 수 있는 카페입니다.",
+     "summary": "제주공항과 근접한 무지개해안도로에 위치한 베이커리 카페 카페나모나모는 시원한 바다를 바라보며 커피 한 잔 할 수 있는 오션뷰를 자랑한다."
+    },
+    {
+     "key": "P21",
+     "kind": [
+      "geo"
+     ],
+     "category": "sightseeing",
+     "indoor": false,
+     "name": "섶섬",
+     "tags": [
+      "섬",
+      "경관/포토",
+      "휴식/힐링",
+      "자연경관",
+      "섬속의섬",
+      "포토스팟",
+      "공영관광지",
+      "공영관광지인증"
+     ],
+     "intro": "",
+     "comment": "나무들이 우거진 섬이라 불리는 섶섬은 천연기념물로 지정된 서귀포 해양도립공원의 주요 경관지입니다.",
+     "summary": "용이 되려는 꿈을 이루지 못하고 죽은 구렁이에 대한 전설이 전해지는 숲섬, '섶섬'\r\n· 서귀포시 보목동"
+    }
+   ]
+  }
+ }
+}
