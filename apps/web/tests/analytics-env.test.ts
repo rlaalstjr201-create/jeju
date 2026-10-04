@@ -22,7 +22,7 @@ describe('analyticsEnv (build guard)', () => {
   });
 
   it('SITE_URL alone: the site\'s own public ids are filled in (nothing to forget), and an env var still overrides', () => {
-    expect(analyticsEnv({ SITE_URL: SITE })).toEqual({ VITE_GA4_ID: 'G-P8DN26LKBC', VITE_NAVER_WA: '1caa51952fb5230', VITE_EVENTS_URL: '/api/events' });
+    expect(analyticsEnv({ SITE_URL: SITE })).toEqual({ VITE_GA4_ID: 'G-P8DN26LKBC', VITE_NAVER_WA: '1caff08e05278f0', VITE_EVENTS_URL: '/api/events' });
     expect(analyticsEnv({ SITE_URL: SITE, VITE_NAVER_WA: 'other' }).VITE_NAVER_WA).toBe('other');
   });
 

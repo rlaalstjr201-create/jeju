@@ -6,8 +6,8 @@ export const ANALYTICS_KEYS = ['VITE_GA4_ID', 'VITE_NAVER_WA', 'VITE_EVENTS_URL'
 export type AnalyticsEnv = Record<(typeof ANALYTICS_KEYS)[number], string>;
 
 export const DEFAULT_EVENTS_URL = '/api/events';
-/** GA4 web stream and the 네이버 애널리틱스 site (registered 2026-10-03 for https://yeogwi.pages.dev; kept for https://yeochana.pages.dev until Naver issues a new id, ADR-0082 7). */
-export const SITE_IDS = { VITE_GA4_ID: 'G-P8DN26LKBC', VITE_NAVER_WA: '1caa51952fb5230' } as const;
+/** GA4 web stream and the 네이버 애널리틱스 site (네이버 site registered 2026-10-04 for https://yeochana.pages.dev, ADR-0082 7). */
+export const SITE_IDS = { VITE_GA4_ID: 'G-P8DN26LKBC', VITE_NAVER_WA: '1caff08e05278f0' } as const;
 
 export function analyticsEnv(env: Record<string, string | undefined>): AnalyticsEnv {
   const prod = !!env.SITE_URL?.trim();
