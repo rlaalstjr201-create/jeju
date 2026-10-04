@@ -8,7 +8,7 @@
 
 - `e`: `shown` | `save` | `unsave` | `map` | `book` | `tap`(기분 탭)
 - `id`: 장소 id (shown/save/unsave/map/book)
-- `mood`, `sub`(food: meal/cafe, new: mix/sight/do — ADR-0064), `range`(walk/30/60), `basis`(here/stay/area), `dated`(날짜 모드 여부 true/false), `indoor`(비 와요(실내만)가 켜져 있으면 true, 꺼져 있으면 없음 — ADR-0065), `season`(`shown`·`map`에서 그 카드가 철 글자를 보였을 때만 그 종류: cherry/plum/maple/rapeseed/hydrangea/silvergrass/camellia/tangerine/muhly, 없으면 필드 없음 — ADR-0080. D1 카운터 키는 그대로)
+- `mood`, `sub`(food: meal/cafe, new: mix/sight/do — ADR-0064), `range`(walk/30/60), `basis`(here/stay/area), `dated`(날짜 모드 여부 true/false), `indoor`(비 와요(실내만)가 켜져 있으면 true, 꺼져 있으면 없음 — ADR-0065), `season`(`shown`·`map`에서 그 카드가 철 글자를 보였을 때만 그 종류: cherry/plum/maple/rapeseed/hydrangea/silvergrass/camellia/tangerine/muhly, 없으면 필드 없음 — ADR-0080. D1 카운터 키는 그대로. GA4에는 `card_shown`·`map_open`의 `season` 매개변수로 간다 — ADR-0080 8 개정)
 - `d`: 로컬 날짜 `YYYY-MM-DD` (시각 없음)
 - 좌표·숙소·지역 이름 이외의 위치·식별자 없음. 지역 기준일 때만 `area` 이름 허용.
 

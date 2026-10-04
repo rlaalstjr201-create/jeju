@@ -66,13 +66,13 @@ describe('createAnalytics', () => {
     expect(srcs()).toHaveLength(2);
   });
 
-  it('mood / map / save go to GA4 with the place id and plain context; no area, day or position; off at runtime stops them', () => {
+  it('mood / shown / map / save go to GA4 with the place id and plain context; no area, day or position; off at runtime stops them', () => {
     const a = createAnalytics(window, { ga4: GA })!; // jsdom: already loaded
     a.setEnabled(true);
     a.event(ev);
     a.event({ e: 'tap', mood: 'walk', range: 'walk', basis: 'here', dated: true, d: '2026-10-03' });
-    a.event({ ...ev, e: 'shown' });
-    a.event({ ...ev, e: 'map' });
+    a.event({ ...ev, e: 'shown', season: 'tangerine' });
+    a.event({ ...ev, e: 'map', season: 'tangerine' });
     a.setEnabled(false);
     expect(w[`ga-disable-${GA}`]).toBe(true);
     a.event(ev);
@@ -80,7 +80,8 @@ describe('createAnalytics', () => {
     expect(events).toEqual([
       ['event', 'place_save', { place_id: 'p1', mood: 'rest', range: '30', basis: 'area', dated: false }],
       ['event', 'mood_tap', { mood: 'walk', range: 'walk', basis: 'here', dated: true }],
-      ['event', 'map_open', { place_id: 'p1', mood: 'rest', range: '30', basis: 'area', dated: false }],
+      ['event', 'card_shown', { place_id: 'p1', mood: 'rest', range: '30', basis: 'area', dated: false, season: 'tangerine' }],
+      ['event', 'map_open', { place_id: 'p1', mood: 'rest', range: '30', basis: 'area', dated: false, season: 'tangerine' }],
     ]);
     expect(JSON.stringify(w.dataLayer)).not.toMatch(/lat|lng|애월|2026-10-03"/);
     expect(srcs()).toEqual([`https://www.googletagmanager.com/gtag/js?id=${GA}`]); // no naver id: no wcslog

@@ -11,7 +11,7 @@ export interface AnalyticsIds {
 }
 
 export interface Analytics {
-  /** a usage event, mirrored to GA4 when it is one of mood / map / save. */
+  /** a usage event, mirrored to GA4 when it is one of mood / shown / map / save. */
   event(ev: UsageEvent): void;
   /** the 기록 끄기 setting (called at start with the stored value, then on every change). */
   setEnabled(on: boolean): void;
@@ -21,7 +21,8 @@ type Gtag = (...args: unknown[]) => void;
 type Win = Window & Record<string, unknown> & { dataLayer?: unknown[] };
 
 /** GA4 event names for our events; the rest stay ours only. */
-const GA_NAME: Partial<Record<UsageEvent['e'], string>> = { tap: 'mood_tap', map: 'map_open', save: 'place_save' };
+// shown goes too, so 철 cards can be compared with the rest (ADR-0080 8)
+const GA_NAME: Partial<Record<UsageEvent['e'], string>> = { tap: 'mood_tap', shown: 'card_shown', map: 'map_open', save: 'place_save' };
 
 /** The fields GA4 gets: no area name, no day, nothing positional. */
 export function gaParams(ev: UsageEvent): Record<string, string | boolean> {
@@ -32,6 +33,7 @@ export function gaParams(ev: UsageEvent): Record<string, string | boolean> {
   if (ev.range) p.range = ev.range;
   if (ev.basis) p.basis = ev.basis;
   if (ev.dated !== undefined) p.dated = ev.dated;
+  if (ev.season) p.season = ev.season;
   return p;
 }
 
