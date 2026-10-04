@@ -2389,6 +2389,18 @@ describe('철 (ADR-0080, specs/seasonal-spots.md S4)', () => {
     expect(words()).toEqual(['유채꽃 철', '유채꽃 철', '유채꽃 철']);
   });
 
+  it('a row card whose trip went to the 아니면 line: its meta line is the 철 words alone', async () => {
+    // three places at one spot: the two rows share a trip, said once on the 아니면 line
+    const [p, q, r] = seasoned;
+    const three = [{ ...p, score: 5 }, { ...q, lat: p.lat, lng: p.lng, score: 4 }, { ...r, lat: p.lat, lng: p.lng, score: 4 }];
+    render({ today: () => wall, loadSpots: () => Promise.resolve(three), locate: () => Promise.resolve({ lat: p.lat + 0.01, lng: p.lng }) });
+    await tap('[data-mood="rest"]');
+    expect($('#alt-trip')).toBeTruthy();
+    const rows = $$('#cards .card.row');
+    expect(rows).toHaveLength(2);
+    for (const c of rows) expect(c.querySelector('.meta')!.textContent).toBe('유채꽃 철');
+  });
+
   it('실내 on: 실내 · 유채꽃 철 · …', async () => {
     window.sessionStorage.setItem('jeju.indoor', 'true');
     open();
@@ -2411,6 +2423,12 @@ describe('철 (ADR-0080, specs/seasonal-spots.md S4)', () => {
     await tap('#saved');
     expect($$('#savedView .card')).toHaveLength(1);
     expect($$('#savedView .season')).toHaveLength(0);
+    advance();
+    window.addEventListener('click', (e) => e.preventDefault(), { capture: true, once: true });
+    $('#savedView .card-link').dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    const maps = a.event.mock.calls.map(([ev]) => ev).filter((ev) => ev.e === 'map');
+    expect(maps).toHaveLength(2);
+    expect('season' in maps[1]).toBe(false);
   });
 
   it('out of season: no season field on the events', async () => {

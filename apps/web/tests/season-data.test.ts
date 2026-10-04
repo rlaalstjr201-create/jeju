@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { SEASON_KINDS, applySeason, loadSeasonCalls, observedWindow, type Blooms, type SeasonCall, type Station } from '../scripts/season.mjs';
+import { SEASON_KINDS, applySeason, loadBlooms, loadSeasonCalls, loadStations, observedWindow, type Blooms, type SeasonCall, type Station } from '../scripts/season.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -18,11 +18,13 @@ const spot = (id: string, over: Partial<S> = {}): S => ({ id, lat: 33.5, lng: 12
 describe('S1 shipped spots.json', () => {
   const loaded = loadSeasonCalls();
   const seasoned = fileSpots.filter((s) => (s as S).season) as S[];
+  /** the year the shipped file was made for, with the data files as they are (not the run date) */
+  const obs = { stations: loadStations(), blooms: loadBlooms(2026), year: 2026 };
 
   it('is what season.mjs makes, and a second run changes no byte (idempotent)', () => {
-    const once = applySeason(fileSpots, loaded);
+    const once = applySeason(fileSpots, loaded, obs);
     expect(JSON.stringify(once)).toBe(shipped);
-    expect(JSON.stringify(applySeason(once, loaded))).toBe(shipped);
+    expect(JSON.stringify(applySeason(once, loaded, obs))).toBe(shipped);
   });
 
   it('only kinds that passed the audit ship; the pass flags come from the audit file', () => {
@@ -78,6 +80,21 @@ describe('S1 rules on fixtures', () => {
       { id: 'f', kind: 'tangerine', months: null, cultivation: null },
     ), NO_OBS);
     expect(out.every((s) => !s.season)).toBe(true);
+  });
+
+  it('months: duplicates dropped and sorted; [] attaches nothing, also for 귤 따기 (no 11·12 default)', () => {
+    const out = applySeason([spot('a'), spot('b')], calls(
+      { id: 'a', kind: 'rapeseed', months: [3, 2, 3] },
+      { id: 'b', kind: 'tangerine', months: [], cultivation: null },
+    ), NO_OBS);
+    expect(out.map((s) => s.season ?? null)).toEqual([[{ kind: 'rapeseed', months: [2, 3] }], null]);
+  });
+
+  it('months that are not whole months 1~12 stop the run, and so does the same place and kind judged twice', () => {
+    for (const months of [[0], [13], [2.5], ['3'], 3]) {
+      expect(() => applySeason([spot('a')], calls({ id: 'a', kind: 'rapeseed', months } as unknown as SeasonCall), NO_OBS)).toThrow(/whole months/);
+    }
+    expect(() => applySeason([spot('a')], calls({ id: 'a', kind: 'rapeseed', months: [3] }, { id: 'a', kind: 'rapeseed', months: [4] }), NO_OBS)).toThrow(/twice/);
   });
 
   it('a judgment for an id that does not ship stops the run; so does an unknown kind', () => {

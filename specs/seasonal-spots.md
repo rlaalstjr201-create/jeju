@@ -62,7 +62,7 @@ U-bloom 첫 일은 위 「확인 못 함」 넷을 키로 직접 확인하는 �
 ### 가장 가까운 지점
 
 - 지점 좌표: 제주 184 · 고산 185 · 성산 188 · 서귀포 189. 좌표는 U-bloom이 기상청 지점정보에서 읽어 `apps/web/data/season/stations.json`(`{ stn, name, lat, lon, species: [] }`)에 둔다. 손으로 적지 않는다.
-- 「그 종 관측 지점」= 최근 3년 안에 그 종의 관측일이 한 번이라도 있는 지점.
+- 「그 종 관측 지점」= 최근 3년 안에 그 종의 관측일이 한 번이라도 있는 지점. `season.mjs`는 `stations.json`의 `species` 목록만 읽으므로, U-bloom이 그 파일을 만들 때 최근 3년 `blooms-YYYY.json`에서 `species`를 정한다.
 - 장소마다 그 종 관측 지점 중 직선거리로 가장 가까운 곳 하나. 그 지점에 그해 날짜가 없으면 그 장소는 그해 그 종 철이 없다(다른 지점에서 빌리지 않는다).
 - 한라산 중산간처럼 고도가 높은 곳은 해안 지점보다 늦게 핀다. 고도 자료가 없어 1단계는 고려하지 않고, 9절 제보 기준으로 다룬다.
 
@@ -110,7 +110,7 @@ U-bloom 첫 일은 위 「확인 못 함」 넷을 키로 직접 확인하는 �
 
 - `apps/web/review/season/season-NN.json`: `[{ id, kind, months: number[] | null, basis }]`. keep만 적고, drop은 `review/season/drop-NN.json`(`{ id, kind, why }`)에 적어 다시 판정하지 않게 한다.
 - 관측일: `apps/web/data/season/blooms-YYYY.json`, 지점: `apps/web/data/season/stations.json`(위 「관측 데이터」). 종류별 기본 달 파일·해수욕장 파일은 없다.
-- `review/season/audit.json`: 무작위 5%(최소 7곳)를 판정 내용을 보지 않은 다른 판정자가 다시 판정한 결과와 일치율. kind·keep 둘 다 같아야 일치. 종류별 85% 미만이면 그 종류는 싣지 않는다(ADR-0080 9).
+- `review/season/audit-NN.json`(가장 최근 판정 차수 `season-NN.json`과 같은 NN, 1차는 `audit.json`): 무작위 5%(최소 7곳)를 판정 내용을 보지 않은 다른 판정자가 다시 판정한 결과와 일치율. kind·keep 둘 다 같아야 일치. 종류별 85% 미만이면 그 종류는 싣지 않는다(ADR-0080 9). `season.mjs`는 그 파일의 `agreement.perKind[kind].pass`가 true인 종류만 싣는다.
 
 ### 붙이는 규칙(`scripts/season.mjs`)
 

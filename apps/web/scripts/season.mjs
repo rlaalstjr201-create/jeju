@@ -85,7 +85,7 @@ function entryOf(call, spot, obs) {
     const w = observedWindow(spot, call.kind, obs.stations, obs.blooms, obs.year);
     return w && { kind: call.kind, ...w };
   }
-  if (Array.isArray(call.months) && call.months.length) return { kind: call.kind, months: [...call.months].sort((a, b) => a - b) };
+  if (Array.isArray(call.months)) return call.months.length ? { kind: call.kind, months: [...new Set(call.months)].sort((a, b) => a - b) } : null;
   if (call.kind === 'tangerine' && (call.cultivation === '노지' || call.cultivation == null)) return { kind: 'tangerine', months: TANGERINE_OPEN_FIELD };
   return null;
 }
@@ -93,21 +93,26 @@ function entryOf(call, spot, obs) {
 /**
  * Spots with `season` (an array, ADR-0080 5 order) where a passing judgment gives one this year; any old `season`
  * is replaced, so last year's windows never stay. Throws on a judgment for a place that does not ship or an unknown
- * kind. `obs`: { stations, blooms, year } for the observed kinds.
+ * kind, months that are not whole months 1~12, or the same place and kind judged twice. `obs`: { stations, blooms, year } for the observed kinds.
  */
 export function applySeason(spots, { calls, pass } = loadSeasonCalls(), obs = defaultObs()) {
   const byId = new Map(spots.map((s) => [s.id, s]));
   const add = new Map();
+  const seen = new Set();
   for (const c of calls) {
     if (!SEASON_KINDS.includes(c.kind)) throw new Error(`season judgment ${c.id}: unknown kind ${c.kind}`);
+    if (c.months != null && !(Array.isArray(c.months) && c.months.every((m) => Number.isInteger(m) && m >= 1 && m <= 12))) {
+      throw new Error(`season judgment ${c.id} ${c.kind}: months ${JSON.stringify(c.months)} are not whole months 1~12`);
+    }
+    const key = `${c.id}|${c.kind}`;
+    if (seen.has(key)) throw new Error(`season judgment ${c.id} ${c.kind} appears twice — keep one in review/season`);
+    seen.add(key);
     const spot = byId.get(c.id);
     if (!spot) throw new Error(`season judgment for ${c.id}, which is not shipped — remove it from review/season`);
     if (!pass.has(c.kind) || spot.market || spot.mood === 'food') continue;
     const e = entryOf(c, spot, obs);
     if (!e) continue;
-    const list = add.get(c.id) ?? [];
-    if (!list.some((x) => x.kind === e.kind)) list.push(e);
-    add.set(c.id, list);
+    add.set(c.id, [...(add.get(c.id) ?? []), e]);
   }
   return spots.map((s) => {
     const { season: _old, ...rest } = s;

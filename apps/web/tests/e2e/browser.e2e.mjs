@@ -2423,7 +2423,7 @@ await check('SE1-season', '철 (ADR-0080) at 320·390: with 유채꽃 in March a
           first: c.querySelector('.meta')?.firstElementChild?.className ?? null,
           meta: c.querySelector('.meta')?.textContent ?? '',
           metas: c.querySelectorAll('.meta').length,
-          split: [...c.querySelectorAll('.meta .season')].some((e) => new Set([...e.getClientRects()].map((r) => Math.round(r.top))).size > 1),
+          split: [...c.querySelectorAll('.meta .nw')].some((e) => new Set([...e.getClientRects()].map((r) => Math.round(r.top))).size > 1),
         })),
         over: de.scrollWidth - de.clientWidth,
       };

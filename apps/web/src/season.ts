@@ -1,5 +1,5 @@
 // 철 (ADR-0080, specs/seasonal-spots.md): is a place in season on a Jeju day. Static data, no requests.
-import type { Day } from './dates';
+import { isDay, type Day } from './dates';
 
 export type SeasonKind = 'cherry' | 'plum' | 'maple' | 'rapeseed' | 'hydrangea' | 'silvergrass' | 'camellia' | 'tangerine' | 'muhly';
 /** As shipped in spots.json: the whole months the source names, or this year's observed window (Jeju dates). */
@@ -19,8 +19,6 @@ const WORDS: Record<SeasonKind, string> = {
 };
 export const SEASON_KINDS = Object.keys(WORDS) as SeasonKind[];
 
-const isDate = (v: unknown) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v);
-
 /** One entry the app can read: a known kind with months 1~12, or a from ≤ to window. */
 export function validSeason(v: unknown): boolean {
   if (!Array.isArray(v) || !v.length) return false;
@@ -28,7 +26,7 @@ export function validSeason(v: unknown): boolean {
     if (!e || typeof e !== 'object' || !SEASON_KINDS.includes((e as Season).kind)) return false;
     const { months, from, to } = e as Record<string, unknown>;
     if (Array.isArray(months)) return months.length > 0 && months.every((m) => Number.isInteger(m) && m >= 1 && m <= 12);
-    return isDate(from) && isDate(to) && (from as string) <= (to as string);
+    return isDay(from) && isDay(to) && from <= to;
   });
 }
 

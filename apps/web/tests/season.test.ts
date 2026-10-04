@@ -46,7 +46,7 @@ describe('validSeason', () => {
   it('months 1~12 or a from ≤ to window of a known kind', () => {
     expect(validSeason(MARCH)).toBe(true);
     expect(validSeason(CHERRY)).toBe(true);
-    for (const bad of [[], {}, [{ kind: 'beach', months: [7] }], [{ kind: 'rapeseed', months: [] }], [{ kind: 'rapeseed', months: [13] }], [{ kind: 'rapeseed', months: null }], [{ kind: 'cherry', from: '2027-04-02', to: '2027-03-24' }], [{ kind: 'cherry', from: '3월' }]]) {
+    for (const bad of [[], {}, [{ kind: 'beach', months: [7] }], [{ kind: 'rapeseed', months: [] }], [{ kind: 'rapeseed', months: [13] }], [{ kind: 'rapeseed', months: null }], [{ kind: 'cherry', from: '2027-04-02', to: '2027-03-24' }], [{ kind: 'cherry', from: '3월' }], [{ kind: 'cherry', from: '2027-02-30', to: '2027-03-05' }], [{ kind: 'cherry', from: '2027-03-01', to: '2027-13-01' }]]) {
       expect(validSeason(bad)).toBe(false);
     }
   });
