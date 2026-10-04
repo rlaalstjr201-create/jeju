@@ -7,7 +7,7 @@ import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
 const shipped = readFileSync(resolve(root, 'public/spots.json'), 'utf8');
-const audit = JSON.parse(readFileSync(resolve(root, 'review/season/audit-02.json'), 'utf8')) as {
+const audit = JSON.parse(readFileSync(resolve(root, 'review/season/audit-03.json'), 'utf8')) as {
   agreement: { perKind: Record<string, { pass: boolean }> };
 };
 const NO_OBS = { stations: [], blooms: null, year: 2026 };
