@@ -1,0 +1,1042 @@
+{
+ "measuredAt": "2026-10-04T13:26:03.916Z",
+ "city": "Q191130",
+ "criteria": "criteria.md",
+ "status": "ok",
+ "sparqlRows": 228,
+ "readFails": 0,
+ "nonfood": {
+  "n": 109,
+  "photo": 93,
+  "photoPct": 85.3,
+  "usable": 93,
+  "usablePct": 85.3,
+  "licenseReadFail": 0,
+  "ko": 6.4,
+  "jawiki": 82.6
+ },
+ "food": {
+  "n": 2,
+  "photo": 0,
+  "photoPct": 0,
+  "usable": 0,
+  "usablePct": 0,
+  "licenseReadFail": 0,
+  "ko": 0,
+  "jawiki": 0
+ },
+ "verdict": "불성립",
+ "licenses": {
+  "CC BY-SA 4.0": 33,
+  "CC0": 3,
+  "CC BY 2.1 jp": 15,
+  "CC BY 2.5": 13,
+  "Public domain": 3,
+  "CC BY-SA 3.0": 20,
+  "CC BY-SA 2.0": 1,
+  "CC BY-SA 1.0": 1,
+  "CC BY 3.0": 3,
+  "CC BY 4.0": 1
+ },
+ "places": [
+  {
+   "id": "Q117460324",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q119928920",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q125927189",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q126599984",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q126889450",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q130534097",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q511412",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": true,
+   "jawiki": true
+  },
+  {
+   "id": "Q961396",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q998239",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": true,
+   "jawiki": true
+  },
+  {
+   "id": "Q998709",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": true,
+   "jawiki": true
+  },
+  {
+   "id": "Q1157584",
+   "group": "nonfood",
+   "photo": true,
+   "license": "Public domain",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q3242206",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": true,
+   "jawiki": true
+  },
+  {
+   "id": "Q3297759",
+   "group": "nonfood",
+   "photo": true,
+   "license": "Public domain",
+   "usable": true,
+   "ko": true,
+   "jawiki": true
+  },
+  {
+   "id": "Q3342007",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647502",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647504",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647513",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647524",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11648713",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29408072",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q29408184",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q29408209",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q30929207",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q30930335",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q30930603",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q42312666",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": true,
+   "jawiki": false
+  },
+  {
+   "id": "Q43064611",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q43593945",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q48756388",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q84136369",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q84138449",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q84139824",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q84156140",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q104709142",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q112607943",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q136734069",
+   "group": "food",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q136734233",
+   "group": "food",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q140313288",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 2.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q140317473",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q140656129",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC0",
+   "usable": true,
+   "ko": false,
+   "jawiki": false
+  },
+  {
+   "id": "Q17192984",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q17228956",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q18338651",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q18339284",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29407949",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29407991",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29408050",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29408053",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29408194",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q29526365",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926001",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 1.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926005",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926019",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926023",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926021",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926025",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926058",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30926295",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30929002",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30929215",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30930337",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30930363",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30930609",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q30930612",
+   "group": "nonfood",
+   "photo": false,
+   "license": null,
+   "usable": false,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q42898428",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q43593954",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q54152982",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q97657099",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q101001030",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": true,
+   "jawiki": true
+  },
+  {
+   "id": "Q106836680",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q111585833",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q111627974",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q4676340",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q4948416",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q7446985",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11365871",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11369003",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11381102",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11397505",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11420187",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11436507",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11438707",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11439622",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11439679",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11442593",
+   "group": "nonfood",
+   "photo": true,
+   "license": "Public domain",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11452342",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11453044",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11465245",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11490424",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11519973",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11554950",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11554949",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11555598",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11563731",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11566739",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11572689",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11585941",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11585980",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11586008",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11586272",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11586369",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11586386",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11586806",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11606492",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11625080",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.5",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11628335",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11629456",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 2.1 jp",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11629615",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647356",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647436",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY 4.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  },
+  {
+   "id": "Q11647461",
+   "group": "nonfood",
+   "photo": true,
+   "license": "CC BY-SA 3.0",
+   "usable": true,
+   "ko": false,
+   "jawiki": true
+  }
+ ]
+}
