@@ -1,0 +1,1078 @@
+{
+ "meta": {
+  "title": "예약 경로 검수 02 데이터 문제 — 처리 결과 (로드맵 9)",
+  "date": "2026-10-04",
+  "source": "review/booking/data-issues.json (103건)",
+  "outcomes": {
+   "고침": "출하 spots.json을 기존 수정 장치(review/copy/corrections-NN.json → scripts/apply-corrections.mjs)로 고쳤다",
+   "삭제": "출하 화면·랜딩·sitemap 어디에도 안 보인다(hide: closed, ADR-0074). 레코드·슬러그는 ADR-0072에 따라 남긴다",
+   "보류": "그대로 둔다. 이유를 적었다"
+  },
+  "webLookups": 0,
+  "webLookupsNote": "비짓제주 부재는 data-issues.json의 2026-10-01 목록 대조 기록으로 충분해 웹 조회를 하지 않았다",
+  "counts": {
+   "보류": 62,
+   "고침": 10,
+   "삭제": 31
+  },
+  "byField": {
+   "kakaoPlaceId": {
+    "보류": 4,
+    "고침": 10,
+    "삭제": 2
+   },
+   "lat/lng": {
+    "보류": 8,
+    "삭제": 3
+   },
+   "visitjeju": {
+    "삭제": 26,
+    "보류": 23
+   },
+   "visitjeju.homepage": {
+    "보류": 26
+   },
+   "visitjeju.reservelink": {
+    "보류": 1
+   }
+  },
+  "summary": "103건 중 고침 10·삭제 31·보류 62. 새로 고친 것은 쏙인제주 카카오 id 1건뿐이고, 카카오 id 9건은 corrections-03에서, 폐업 의심 숨김은 booking.json(ADR-0074)에서 이미 처리돼 있었다. 좌표 의심 8곳은 옮길 좌표가 저장소에 없어, 죽은 홈페이지·닫힌 예약 27건은 출하 데이터에 쓰이지 않아 보류했다. 비짓제주에서만 사라진 열린 장소는 예약 경로가 확인됐거나 폐업 기준을 채우지 못해 보류."
+ },
+ "issues": [
+  {
+   "n": 0,
+   "id": "53dd20d4-198b-4aca-904a-3fa71daade0f",
+   "name": "Sing Sing Sing",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "보류",
+   "reason": "같은 곳의 표기 차이다. 원천 요약이 실내 롤러스케이트장이고 카카오 「씽씽씽」(인라인스케이트장)이 핀과 53m. id는 맞으므로 고칠 것이 없다",
+   "evidence": "카카오 이름 '씽씽씽' (인라인스케이트장), 거리 0.05km"
+  },
+  {
+   "n": 1,
+   "id": "1716a75b-1d91-448a-b15c-29ee792bbeb0",
+   "name": "교래자연휴양림",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "카카오 이름 '곶자왈생태체험관' (체험학습장), 거리 0.26km"
+  },
+  {
+   "n": 2,
+   "id": "872fba2e-a09b-45b1-ba24-dc07e9f45550",
+   "name": "미요캔들",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074) — 앱·랜딩·sitemap 어디에도 안 보임",
+   "reason": "숨긴 장소라 id를 고쳐도 화면 변화가 없다",
+   "evidence": "카카오 이름 '미요' (생활용품점), 거리 0.03km"
+  },
+  {
+   "n": 3,
+   "id": "67cf5184-e4e7-4ef8-a820-c6f785a2f3b4",
+   "name": "성읍민속마을",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "보류",
+   "reason": "같은 곳의 표기 차이다. 카카오 「제주성읍마을」(민속촌)이 핀과 12m. id는 맞으므로 고칠 것이 없다",
+   "evidence": "카카오 이름 '제주성읍마을' (민속촌), 거리 0.01km"
+  },
+  {
+   "n": 4,
+   "id": "7e76e85c-1b91-4cb8-8be5-e4a5cfcc1101",
+   "name": "세리월드 테마파크",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "카카오 이름 '워터월드 제주' (테마파크), 거리 0.43km"
+  },
+  {
+   "n": 5,
+   "id": "ed2ae168-0c89-4b01-8a98-a6a255c61b0f",
+   "name": "스쿠버스쿨",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "카카오 이름 '코바다이빙스쿨' (스킨스쿠버), 거리 0.39km"
+  },
+  {
+   "n": 6,
+   "id": "def5310a-64c7-4fd0-923f-e8d4054d2faf",
+   "name": "쏙인제주",
+   "field": "kakaoPlaceId",
+   "issue": "kakaoPlaceId 없음 — 카카오 검색으로 찾은 후보 있음",
+   "outcome": "고침",
+   "how": "kakaoPlaceId 540049169 설정 (review/copy/corrections-04.json, scripts/apply-corrections.mjs)",
+   "evidence": "카카오 지도 검색 '쏙인제주' → '쏙인제주' (제주특별자치도 제주시 한경면 신정로 181-30), 좌표 2m"
+  },
+  {
+   "n": 7,
+   "id": "e799e1f6-1ebb-485b-b8f7-6cf9194d2b9b",
+   "name": "와그라운드",
+   "field": "kakaoPlaceId",
+   "issue": "카카오 panel3에 장소 정보 없음(삭제·존재하지 않는 장소)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "place-api panel3/1165201941 응답에 summary 없음"
+  },
+  {
+   "n": 8,
+   "id": "b981d810-7dd0-4014-b6d4-8134b6cd19ac",
+   "name": "제주 바다하늘다이브센터",
+   "field": "kakaoPlaceId",
+   "issue": "좌표가 멀다",
+   "outcome": "보류",
+   "reason": "카카오 이름은 맞지만 좌표가 2.707km 떨어져 있다. 우리 핀과 카카오 중 어느 쪽이 맞는지 가릴 좌표 근거가 저장소에 없다(거리만 기록됨). 카드 링크는 같은 업체로 가므로 해는 작다",
+   "evidence": "카카오 이름 '제주바다하늘다이브센터', 거리 2.71km"
+  },
+  {
+   "n": 9,
+   "id": "178e431a-0688-4322-9c38-5980b3a7479d",
+   "name": "제주 캘리아트",
+   "field": "kakaoPlaceId",
+   "issue": "카카오 panel3에 장소 정보 없음(삭제·존재하지 않는 장소)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "place-api panel3/447353993 응답에 summary 없음"
+  },
+  {
+   "n": 10,
+   "id": "27e40a92-4dc0-4458-8cc4-6c2ff50ae319",
+   "name": "제주다",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "카카오 이름 '멀리제주' (숙박), 거리 0.10km"
+  },
+  {
+   "n": 11,
+   "id": "8a64ccaf-3077-455a-8700-4b1ed40027e3",
+   "name": "제주스런서귀포점",
+   "field": "kakaoPlaceId",
+   "issue": "좌표가 멀다",
+   "outcome": "보류",
+   "reason": "카카오 이름은 맞지만 좌표가 3.346km 떨어져 있다. 우리 핀과 카카오 중 어느 쪽이 맞는지 가릴 좌표 근거가 저장소에 없다(거리만 기록됨). 카드 링크는 같은 업체로 가므로 해는 작다",
+   "evidence": "카카오 이름 '제주스런 서귀포공방', 거리 3.35km"
+  },
+  {
+   "n": 12,
+   "id": "64c49e69-32bf-43be-84b5-59e6eda46a5a",
+   "name": "조이다이브",
+   "field": "kakaoPlaceId",
+   "issue": "카카오 panel3에 장소 정보 없음(삭제·존재하지 않는 장소)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "place-api panel3/27235768 응답에 summary 없음"
+  },
+  {
+   "n": 13,
+   "id": "5b4b55cd-e8ee-4a25-bfca-173935911877",
+   "name": "칠머리길",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "카카오 이름 '행복주택' (빌라,주택), 거리 0.10km"
+  },
+  {
+   "n": 14,
+   "id": "2c2fb1b9-c9b7-4558-b6e5-56f2efaccf03",
+   "name": "토이레저",
+   "field": "kakaoPlaceId",
+   "issue": "kakaoPlaceId 없음 — 카카오 검색으로 찾은 후보 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074) — 앱·랜딩·sitemap 어디에도 안 보임",
+   "reason": "카카오에 같은 이름 후보(29m)가 있지만 운영 중이라는 근거는 아니다. 숨긴 장소라 id를 바꿔도 화면 변화가 없어 손대지 않았다. 되살리려면 예약 경로부터 확인해야 한다",
+   "evidence": "카카오 지도 검색 '토이레저' → '토이레저' (제주특별자치도 서귀포시 안덕면 동광로 267-7), 좌표 29m"
+  },
+  {
+   "n": 15,
+   "id": "e1e6ab89-04a0-4602-a9fa-b8cf95e524ac",
+   "name": "함덕스쿠버",
+   "field": "kakaoPlaceId",
+   "issue": "이름 불일치(다른 업체일 수 있음)",
+   "outcome": "고침",
+   "how": "kakaoPlaceId를 지워 이름 검색으로 돌림 (review/copy/corrections-03.json, 커밋 81e6055, ADR-0074 6)",
+   "evidence": "카카오 이름 '우리동네잠수하는형들' (스킨스쿠버), 거리 0.44km"
+  },
+  {
+   "n": 16,
+   "id": "13bf8924-0fd2-40af-8949-6b9b6f4f2878",
+   "name": "농개",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "카카오 '농개' (제주특별자치도 서귀포시 성산읍 신산리 1177), 1.03km"
+  },
+  {
+   "n": 17,
+   "id": "9d30fa56-55d4-4099-a22d-e6c27ea3288f",
+   "name": "동귀방파제",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "카카오 '동귀방파제' (제주특별자치도 제주시 애월읍 하귀1리 1624-7), 2.87km"
+  },
+  {
+   "n": 18,
+   "id": "ab5bf8e5-b566-400e-abc0-ea5702635f89",
+   "name": "망장포",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "네이버 '망장포' (제주 서귀포시 남원읍 하례리), 0.38km"
+  },
+  {
+   "n": 19,
+   "id": "02e4064c-a4c0-4742-b6b9-64133404c5f0",
+   "name": "법정사",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "네이버 '법정사' (1100로 740-168 법정사), 1.39km"
+  },
+  {
+   "n": 20,
+   "id": "92e85fb0-622d-4de1-9c10-ec07979cc6f6",
+   "name": "서중천탐방로",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "카카오 '서중천 탐방로' (제주특별자치도 서귀포시 남원읍 한남리 1656), 1.49km"
+  },
+  {
+   "n": 21,
+   "id": "9c09b7e6-ca04-4ec9-9890-46918b3a7d9d",
+   "name": "영실기암",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "네이버 '영실기암' (None), 1.48km"
+  },
+  {
+   "n": 22,
+   "id": "29581028-16a1-43e8-897d-487d2cebfebb",
+   "name": "와우다이버스 스쿠버다이빙",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074)",
+   "reason": "네이버에 같은 이름 업체가 서귀동(2.98km)에 네이버 예약과 함께 있다 — 이전했을 수 있다. 새 좌표가 저장소에 없어 되살리지 않았다(후속 후보)",
+   "evidence": "네이버 '와우다이버스 스쿠버다이빙' (태평로442번길 29 (서귀동)), 2.98km, 네이버 예약 있음"
+  },
+  {
+   "n": 23,
+   "id": "7cc36f09-d640-4a11-9a26-80227d963abf",
+   "name": "유리멘탈 스튜디오",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074)",
+   "reason": "숨긴 장소라 좌표를 고쳐도 화면 변화가 없다",
+   "evidence": "카카오 '유리멘탈스튜디오' (제주특별자치도 제주시 한경면 낙수로 12), 0.78km"
+  },
+  {
+   "n": 24,
+   "id": "ac930db7-94fe-44cd-919c-cea430c71e1d",
+   "name": "태웃개",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "네이버 '태웃개' (제주 서귀포시 남원읍 태위로398번길 57), 4.98km"
+  },
+  {
+   "n": 25,
+   "id": "118e73a3-caba-4f47-b3c2-ceb428dcf245",
+   "name": "푸른바다 체험낚시",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074)",
+   "reason": "숨긴 장소라 좌표를 고쳐도 화면 변화가 없다",
+   "evidence": "카카오 '푸른바다체험낚시' (제주특별자치도 서귀포시 남원읍 위미중앙로196번길 6-12), 0.32km"
+  },
+  {
+   "n": 26,
+   "id": "beeec3e9-5776-4003-b79f-2c33e6b9c87b",
+   "name": "현사포구",
+   "field": "lat/lng",
+   "issue": "같은 이름 업체가 300m 밖에 있음 — 좌표가 틀렸거나 이전했을 수 있음(경로는 인정하지 않음)",
+   "outcome": "보류",
+   "reason": "같은 이름 장소의 주소·거리만 기록돼 있고 옮길 좌표가 저장소에 없다. 원천(비짓제주) 핀을 근거 없이 옮기지 않는다. 좌표를 조회해 corrections-NN.json에 lat/lng로 넣으면 고칠 수 있다(ADR-0071 비양도 선례)",
+   "evidence": "카카오 '현사포구' (제주특별자치도 제주시 테우해안로 143), 0.96km"
+  },
+  {
+   "n": 27,
+   "id": "039b92fd-f73b-4112-8341-ff81cd325176",
+   "name": "998서프 삼양",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 28,
+   "id": "562086c2-063f-4c64-8b48-8fc384fbf4c4",
+   "name": "강정어촌계",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 29,
+   "id": "282b91cf-ae0b-49d2-87d5-76a67ce78a94",
+   "name": "개떼목장",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 rest 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 30,
+   "id": "13c9b253-8951-4a53-87f8-31b385b5eeb3",
+   "name": "그제바람 윈드서핑패들보드",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 31,
+   "id": "7a724e15-8357-4fdd-a5d8-375480dc75f2",
+   "name": "라니멜레",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 32,
+   "id": "62ac4d25-f1f5-4687-88b9-5a9f0824b533",
+   "name": "라온주 실내체험동물원",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 33,
+   "id": "8ab1c9f5-f985-4130-b056-d317b827b2f1",
+   "name": "라이더스랩",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 34,
+   "id": "3545f51d-3a9d-4eb9-acfd-a1a8b0916ff1",
+   "name": "라이크더윈드 스튜디오",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 35,
+   "id": "c064752e-c336-4524-90a7-98aa39cb070e",
+   "name": "로봇플래닛",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 36,
+   "id": "ab540b7c-77ee-46cc-8bd5-1d0fb2d84db5",
+   "name": "루미온 포레스트",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 rest 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 37,
+   "id": "dab21c57-a942-415b-86b1-50191dd43fb3",
+   "name": "마원",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 38,
+   "id": "872fba2e-a09b-45b1-ba24-dc07e9f45550",
+   "name": "미요캔들",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 39,
+   "id": "daae3dbc-eef6-4242-bf22-cf57804885ee",
+   "name": "비엠엘 병만랜드",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 40,
+   "id": "2b389b50-8f11-4fac-8bb3-966f729d6bc4",
+   "name": "사슴공방",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 41,
+   "id": "e22e602c-db45-463e-b810-46b40e714044",
+   "name": "색놀이터 그린점",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 42,
+   "id": "2bce3b60-873d-4cbd-a6ae-3e00e67ba298",
+   "name": "서바이벌",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 43,
+   "id": "ed2ae168-0c89-4b01-8a98-a6a255c61b0f",
+   "name": "스쿠버스쿨",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 44,
+   "id": "e5177747-02a5-479a-9d74-2a19a20707e5",
+   "name": "신효베스트마을",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 45,
+   "id": "02c172cf-38a4-4c6c-81ab-82a105ab4572",
+   "name": "아이존액트 볼링장",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(naver, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 46,
+   "id": "692b9015-8940-4908-afb2-898601938b78",
+   "name": "아일랜드에프",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 47,
+   "id": "90aba438-d354-41bf-a512-228e8bcb7939",
+   "name": "알프스승마장포니",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 48,
+   "id": "965825b5-35ee-4a74-a18d-eab877cc1c90",
+   "name": "애월 한담 카약",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 49,
+   "id": "a1c8cc52-e68a-48a6-9dbe-86af19ca8d06",
+   "name": "에이스서프",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 50,
+   "id": "29581028-16a1-43e8-897d-487d2cebfebb",
+   "name": "와우다이버스 스쿠버다이빙",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 51,
+   "id": "8713d03b-88f2-46a3-bede-e7c52ea16ff0",
+   "name": "원앙카라반캠핑장앤야영장",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 rest 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 52,
+   "id": "70b56d20-b38d-44ae-96d0-73b94f5f99a3",
+   "name": "위디 탭댄스 스튜디오",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 53,
+   "id": "7cc36f09-d640-4a11-9a26-80227d963abf",
+   "name": "유리멘탈 스튜디오",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 54,
+   "id": "939e6872-b97f-4305-a20e-b598c3e4b88c",
+   "name": "잠수타기다이브클럽",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 55,
+   "id": "4232613f-f68b-452f-9f31-4795ff526c7f",
+   "name": "저지 예술인 마을",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 walk 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다; 카카오 장소 id 10711279도 있다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 56,
+   "id": "8d653d5a-ded2-4be9-bb3e-93856c770ec8",
+   "name": "제스피 맥주협동조합 양조장",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 food 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 57,
+   "id": "fa4c03d3-c881-475d-9a41-4b925430607e",
+   "name": "제이원카트클럽",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 58,
+   "id": "6a6eea2e-fbe6-499a-bd65-ca9eab339615",
+   "name": "제주 서핑도",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(naver, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 59,
+   "id": "1c45fbbf-fd9a-4f11-8335-0071f9dfdf17",
+   "name": "제주어울림감귤체험농장(제주옥림)",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 60,
+   "id": "d30a07cc-9e4a-4ed5-888f-fbdcfa148e4c",
+   "name": "제주오렌지",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 61,
+   "id": "e664ee12-0753-4fd9-b6f5-b6c5681dc193",
+   "name": "제주올레사진관",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(naver, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 62,
+   "id": "d3d1229d-464d-4258-9fcc-f2ca28156224",
+   "name": "제주웨이브서핑",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(mrt, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 63,
+   "id": "7a7d93f0-2e1a-4a5e-9ed8-537fb6628f2e",
+   "name": "제주유리의성",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 64,
+   "id": "8804eaaf-ee40-4bb8-aaad-ce5fb5bc2f12",
+   "name": "제주해바라기공방",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 65,
+   "id": "618e8a8d-d8f5-4b3f-958d-9091bfba46c7",
+   "name": "제주햇살농원",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 66,
+   "id": "cdf718a5-57d4-4d0d-bdc2-4d16123da61f",
+   "name": "케이제주씨워킹",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 67,
+   "id": "21664bdc-fd60-41c4-af0b-487e2de88dfc",
+   "name": "테우마을 수원리 농어촌체험마을",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 walk 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 68,
+   "id": "2c2fb1b9-c9b7-4558-b6e5-56f2efaccf03",
+   "name": "토이레저",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 69,
+   "id": "118e73a3-caba-4f47-b3c2-ceb428dcf245",
+   "name": "푸른바다 체험낚시",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 70,
+   "id": "786e5896-dbe4-47e3-86c7-e489bef31b48",
+   "name": "플레이박스VR",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 71,
+   "id": "68212f98-75dd-4979-b8f1-4515d06a2a5b",
+   "name": "하도 어촌 체험 마을",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 72,
+   "id": "77c538b3-4945-4b6c-b3a1-aa0dc8c4fa2f",
+   "name": "하례점빵",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 73,
+   "id": "76227d24-5e83-45a9-a98b-a0019b608b51",
+   "name": "해녀이호",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "삭제",
+   "how": "이미 hide: closed (review/copy/booking.json, ADR-0074 — 비짓제주 목록에 없고 네이버 지도 300m 안에도 없음)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 74,
+   "id": "70eb4ec2-0cbe-4de0-ab32-bf38f29887a6",
+   "name": "홀리데이 다이빙 코리아",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "비짓제주 목록에서 내려갔지만 확인된 예약 경로(phone, routes.json accepted)가 있어 운영 중으로 본다. 비짓제주 부재만으로는 폐업 근거가 아니다(ADR-0074 closed 기준은 네이버 지도 미발견까지)",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 75,
+   "id": "f49b9622-61f1-42d9-b709-d4592fd3e8e8",
+   "name": "휘닉스 르쏠레이테라피",
+   "field": "visitjeju",
+   "issue": "비짓제주 콘텐츠 목록(관광지·쇼핑·숙박·음식 전체)에서 사진·이름·좌표로 찾지 못함 — 비공개·삭제됐을 수 있음",
+   "outcome": "보류",
+   "reason": "체험이 아닌 rest 장소라 예약 경로 검수(네이버 지도 대조) 범위 밖이었다. 비짓제주 부재 하나만으로는 ADR-0074 closed 기준(네이버 지도 300m 안 미발견)을 채우지 못한다",
+   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조"
+  },
+  {
+   "n": 76,
+   "id": "487b3d51-49a9-4f91-9f0f-5db703150949",
+   "name": "고사리숲",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://gosari.ejeju.net/, 제목 ''"
+  },
+  {
+   "n": 77,
+   "id": "0a2c758e-5f9d-4bc3-b9d9-1ba20b44f6df",
+   "name": "고흐의 정원",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: mrt). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 https://goghgarden.kr/, 제목 '', 오류 curl: (60) SSL certificate problem: certificate has expired\nMore details here: h"
+  },
+  {
+   "n": 78,
+   "id": "b4fede9c-70ec-4294-80b9-1157314cec74",
+   "name": "골프탕탕",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.thepinx.co.kr/annex/web/sub02_04.px, 제목 ''"
+  },
+  {
+   "n": 79,
+   "id": "71273981-734b-48db-92eb-3627d363f54a",
+   "name": "노루생태관찰원",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.jejusi.go.kr/roedeer/main.do, 제목 ''"
+  },
+  {
+   "n": 80,
+   "id": "bcc4909b-45eb-496a-844a-3c075f95a855",
+   "name": "맛있는 철학자(태반의땅제주)",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.emjeju.com/, 제목 '', 오류 curl: (6) Could not resolve host: www.emjeju.com"
+  },
+  {
+   "n": 81,
+   "id": "47a0a178-54cd-4fb1-8368-bfab1a55dab4",
+   "name": "문서프",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.moonsurf.kr/, 제목 '', 오류 curl: (6) Could not resolve host: www.moonsurf.kr"
+  },
+  {
+   "n": 82,
+   "id": "a40395cd-17fa-4364-941b-b27f7685a3ba",
+   "name": "바구스서핑스쿨",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.jejubagus.com/, 제목 '', 오류 curl: (6) Could not resolve host: www.jejubagus.com"
+  },
+  {
+   "n": 83,
+   "id": "f36621a9-ba1f-4e9b-8b19-00813f2eaf4e",
+   "name": "북촌리 4.3길",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다. 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://43archives.or.kr/viewHistoricSiteD.do?historicSiteSeq=39, 제목 ''"
+  },
+  {
+   "n": 84,
+   "id": "09106245-a807-4ac7-8dee-100ed19236d0",
+   "name": "서귀포잠수함(대국해저관광)",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 https://submarine.co.kr/submarine/egovSubmarineList.do, 제목 '', 오류 curl: (60) SSL: no alternative certificate subject name matches target host name"
+  },
+  {
+   "n": 85,
+   "id": "67cf5184-e4e7-4ef8-a820-c6f785a2f3b4",
+   "name": "성읍민속마을",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다. 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.jeju.go.kr/seongeup/index.htm, 제목 ''"
+  },
+  {
+   "n": 86,
+   "id": "68bd0de3-b62a-4c95-9da8-49fedb07b032",
+   "name": "성읍승마장",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://성읍랜드.com/, 제목 '', 오류 curl: (6) Could not resolve host: xn--hy1b45ci4m0kg.com"
+  },
+  {
+   "n": 87,
+   "id": "10d8d509-54a9-4d4e-881d-25e6d574c405",
+   "name": "애월스쿠버다이빙스쿨",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://scubacorea.co.kr/, 제목 '', 오류 curl: (6) Could not resolve host: scubacorea.co.kr"
+  },
+  {
+   "n": 88,
+   "id": "2660c90d-f312-4ca9-87b1-9f4e168fffe7",
+   "name": "용연카누클럽",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 200, 최종 https://www.hugedomains.com/domain_profile.cfm?d=jejucanoe.com, 제목 'HugeDomains.com' (주차·만료 페이지)"
+  },
+  {
+   "n": 89,
+   "id": "05e12afd-7e1e-4a6c-9cb9-b6c9470ab102",
+   "name": "이로이로공방",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.iroiro.one/, 제목 '', 오류 curl: (6) Could not resolve host: www.iroiro.one"
+  },
+  {
+   "n": 90,
+   "id": "97384b51-f9cf-48d3-af69-801f96a2f5b9",
+   "name": "이호털보네배낚시",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.ihotelbo.co.kr/, 제목 ''"
+  },
+  {
+   "n": 91,
+   "id": "d5bd5d7e-5253-452e-9b0e-dfe1e3616327",
+   "name": "제주 삼양동 유적",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.jeju.go.kr/samyang/index.htm, 제목 ''"
+  },
+  {
+   "n": 92,
+   "id": "3c02cb46-419d-4d56-bcf3-4a89282f424e",
+   "name": "제주 이호털보 배낚시",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: mrt). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.ihotelbo.co.kr/, 제목 ''"
+  },
+  {
+   "n": 93,
+   "id": "27e40a92-4dc0-4458-8cc4-6c2ff50ae319",
+   "name": "제주다",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.kindjejumall.com/, 제목 '', 오류 curl: (6) Could not resolve host: www.kindjejumall.com"
+  },
+  {
+   "n": 94,
+   "id": "f154e83c-3726-4a6a-9059-4bc64279a396",
+   "name": "제주바다체험장",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://land201kr.alltheway.kr/, 제목 ''"
+  },
+  {
+   "n": 95,
+   "id": "aa83ab22-626f-4741-99f0-b28fdd995dc9",
+   "name": "제주불빛정원 테마파크",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.rosestar.kr/, 제목 '', 오류 curl: (6) Could not resolve host: www.rosestar.kr"
+  },
+  {
+   "n": 96,
+   "id": "ab4208ff-3687-43a5-9c21-3dbf5b3f9cca",
+   "name": "제주센트럴파크",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://jejuminiland.alltheway.kr/, 제목 ''"
+  },
+  {
+   "n": 97,
+   "id": "9f6b3687-27cc-43f5-8a16-77af90e1904b",
+   "name": "제주융합과학연구원 체험관",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://www.cisec.or.kr/cisec/0401/sub, 제목 '', 오류 curl: (6) Could not resolve host: www.cisec.or.kr"
+  },
+  {
+   "n": 98,
+   "id": "ea404122-e4a2-4292-ba42-8b7497d4dfa3",
+   "name": "진빌레 밭담길",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다. 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://jejubatdam.jeju.go.kr/, 제목 '', 오류 curl: (6) Could not resolve host: jejubatdam.jeju.go.kr"
+  },
+  {
+   "n": 99,
+   "id": "569aa361-86a8-4d3a-8c4e-66d13cde4256",
+   "name": "초원승마클럽 승마체험/활쏘기체험",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://0.0.0.0/, 제목 '', 오류 curl: (7) Failed to connect to 0.0.0.0 port 80 after 0 ms: Couldn't connect to s"
+  },
+  {
+   "n": 100,
+   "id": "569aa361-86a8-4d3a-8c4e-66d13cde4256",
+   "name": "초원승마클럽 승마체험/활쏘기체험",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: phone). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 0, 최종 http://dh/, 제목 '', 오류 curl: (6) Could not resolve host: dh"
+  },
+  {
+   "n": 101,
+   "id": "a9dd1a13-1530-46d5-9f79-9849e8166edc",
+   "name": "휴애리 자연생활공원",
+   "field": "visitjeju.homepage",
+   "issue": "비짓제주 homepage가 죽은 링크",
+   "outcome": "보류",
+   "reason": "출하 spots.json에 homepage 필드가 없고, 이 죽은 주소는 routes.json에서 rejected-dead라 예약 버튼(book)에도 쓰이지 않는다 (지금 버튼: naver). 원천(비짓제주) 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "비짓제주 homepage / HTTP 503, 최종 http://www.hueree.com/, 제목 ''"
+  },
+  {
+   "n": 102,
+   "id": "3934dcf4-b852-4fb4-a961-127ecb2ee3ab",
+   "name": "너도나도 ATV",
+   "field": "visitjeju.reservelink",
+   "issue": "비짓제주 reservelink가 닫힌 예약 페이지",
+   "outcome": "보류",
+   "reason": "닫힌 예약 링크는 출하에 쓰이지 않는다. 카드 버튼은 따로 확인된 네이버 예약(https://m.booking.naver.com/booking/12/bizes/1420097)이다. 원천 쪽 문제라 우리 데이터에 고칠 곳이 없다",
+   "evidence": "tail/view?contentsid=CNTS_300000000015836 의 SSR 응답엔 이 필드 없음) / HTTP 200, 최종 https://booking.naver.com/booking/12/bizes/849186/items/4880001?theme=place&service-target=map-pc&area=bmp, 제목 '네이버 예약' (업체명 없는 빈 예약 페이지: 닫힌 예약)"
+  }
+ ]
+}

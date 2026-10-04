@@ -1,0 +1,9 @@
+[
+ {
+  "id": "def5310a-64c7-4fd0-923f-e8d4054d2faf",
+  "action": "set",
+  "fields": { "kakaoPlaceId": "540049169" },
+  "reason": "쏙인제주: 카카오 장소 id가 비어 있어 카드의 카카오맵 링크가 이름 검색으로 갔다. 카카오 지도 검색 '쏙인제주'가 같은 이름의 장소 540049169(제주시 한경면 신정로 181-30)를 돌려주고 핀과 2m라 같은 곳이다. 근거: review/booking/data-issues.json suggested (checkedAt 2026-10-01). 로드맵 9 데이터 오류 정리(review/booking/data-issues-resolution.json).",
+  "evidence": "https://place.map.kakao.com/540049169"
+ }
+]
