@@ -43,7 +43,7 @@ export function sunsetMinutes(p: Point, day: Day): number {
 }
 
 /** 노을 볼 곳 (ADR-0083): the sunset's azimuth (degrees from north) at `p` on `day`, the geometric horizon. */
-export function sunsetAzimuth(p: Point, day: Day): number {
+function sunsetAzimuth(p: Point, day: Day): number {
   const { decl } = solar(day, 18 * 60 - TZ_HOURS * 60);
   return 360 - Math.acos(Math.sin(decl) / Math.cos(p.lat * rad)) / rad;
 }

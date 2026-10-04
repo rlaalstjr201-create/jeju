@@ -23,11 +23,9 @@ export interface SeasonObs {
   year: number;
 }
 export declare const SEASON_KINDS: string[];
-export declare const WINDOW_DAYS: Record<string, number>;
 export declare function loadSeasonCalls(dir?: string): { calls: SeasonCall[]; pass: Set<string> };
 export declare function loadBlooms(year: number, dir?: string): Blooms | null;
 export declare function loadStations(dir?: string): Station[];
-export declare function jejuYear(d?: Date): number;
 export declare function observedWindow(
   spot: { lat: number; lng: number },
   species: string,

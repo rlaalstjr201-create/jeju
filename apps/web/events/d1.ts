@@ -3,7 +3,7 @@
 import type { FeedbackStore } from './feedback';
 
 /** the counters row that counts answers the daily cap turned away (ADR-0081); not a place */
-export const FEEDBACK_CAPPED_ID = 'feedback:capped';
+const FEEDBACK_CAPPED_ID = 'feedback:capped';
 import type { Counter, CounterStore } from './store';
 
 export interface D1Stmt {

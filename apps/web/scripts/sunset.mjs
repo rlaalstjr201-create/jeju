@@ -20,12 +20,12 @@ import { AZIMUTHS, prepareCoast, ringsOf, sunsetAzimuths } from './sunset-geo.mj
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const BOOKING_KEYS = new Set(['book', 'hide']);
-export const BASIS_MAX = 40;
+const BASIS_MAX = 40;
 
 const SEA_WORDS = /바다|오션|해변|해안|포구|노을|일몰|석양|해넘이|수평선|해수욕/;
 const SUNSET_WORDS = /노을|일몰|석양|해넘이/;
 
-export function loadCoast(path = resolve(root, 'data/coast/jeju-coast.geojson')) {
+function loadCoast(path = resolve(root, 'data/coast/jeju-coast.geojson')) {
   return prepareCoast(ringsOf(read(path)));
 }
 
@@ -37,12 +37,12 @@ export function loadInputs(dir = resolve(root, 'review/input')) {
 }
 
 /** The source text a judgment reads and a basis must come from: name, tags, intro, comment, summary. */
-export function sourceText(item) {
+function sourceText(item) {
   return [item.name, (item.tags ?? []).join(' '), item.intro ?? '', item.comment ?? '', item.summary ?? ''].join('\n');
 }
 
 /** 오름 후보: 걷기, named 오름 / …봉 / …산. */
-export const isOreum = (spot) => spot.mood === 'walk' && /오름|봉$|봉\(|산$/.test(spot.name.trim());
+const isOreum = (spot) => spot.mood === 'walk' && /오름|봉$|봉\(|산$/.test(spot.name.trim());
 
 /** Who gets judged, by id: [{ id, why: ('geo'|'word'|'oreum')[], az }]. 오일장 and hidden places are left out. */
 export function candidates(spots, inputs, coast) {
@@ -148,11 +148,6 @@ export function placeWith(coast) {
     const view = isOreum(spot) || !az.length ? [...AZIMUTHS] : az;
     return view.join() === az.join() ? { view } : { view, sea: az };
   };
-}
-
-/** The azimuths for a confirmed place: the calculation's, or all three for an 오름 or a place it does not see. */
-export function viewWith(coast) {
-  return (spot) => placeWith(coast)(spot).view;
 }
 
 function defaultView() {

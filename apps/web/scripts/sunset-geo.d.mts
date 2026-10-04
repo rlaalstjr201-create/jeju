@@ -1,6 +1,4 @@
 export declare const AZIMUTHS: number[];
-export declare const NEAR_M: number;
-export declare const FAR_M: number;
 type Ring = number[][];
 type Coast = { ring: Ring; box: number[] }[];
 export declare function prepareCoast(rings: Ring[]): Coast;

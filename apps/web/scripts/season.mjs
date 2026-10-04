@@ -21,7 +21,7 @@ const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
 /** ADR-0080 5: observed kinds first, then the source-text kinds. Also the order a place's entries ship in. */
 export const SEASON_KINDS = ['cherry', 'plum', 'maple', 'rapeseed', 'hydrangea', 'silvergrass', 'camellia', 'tangerine', 'muhly'];
 /** 관측형 window: firstBloom .. firstBloom + N days (both ends, Jeju dates; specs/seasonal-spots.md 「창 규칙」). */
-export const WINDOW_DAYS = { cherry: 9, plum: 13, maple: 20 };
+const WINDOW_DAYS = { cherry: 9, plum: 13, maple: 20 };
 /** 귤 따기 노지·미상 (ADR-0080 결정 D): the whole months of the 노지 harvest. */
 const TANGERINE_OPEN_FIELD = [11, 12];
 // sunsetView·sunsetSea (ADR-0083) come after 철 too: rerunning this file keeps the build's key order
@@ -51,7 +51,7 @@ export function loadStations(dir = resolve(root, 'data/season')) {
 }
 
 /** The Seoul calendar year now. */
-export const jejuYear = (d = new Date()) => new Date(d.getTime() + 9 * 3600_000).getUTCFullYear();
+const jejuYear = (d = new Date()) => new Date(d.getTime() + 9 * 3600_000).getUTCFullYear();
 
 const addDays = (day, n) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 

@@ -14,8 +14,8 @@ const R = 6371000;
 
 /** The three sunset azimuths (degrees from north): 동지 무렵, 봄·가을(10월 초), 하지 무렵. */
 export const AZIMUTHS = [242, 264, 298];
-export const NEAR_M = 300;
-export const FAR_M = 20000;
+const NEAR_M = 300;
+const FAR_M = 20000;
 const SPREAD = [-10, 0, 10];
 
 /** Rings ([[lng, lat], ...] closed) → the shape the tests and the scan use: segments and per-ring boxes. */

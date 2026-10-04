@@ -41,8 +41,8 @@ export function openMarkets(spots: Spot[], origin: Origin | null, day: Day): Mar
 
 /** 노을 볼 곳 (ADR-0083): from 2시간 30분 before the sunset until it, with 3 or more confirmed places within 차로 45분. */
 export const DUSK_LEAD_MIN = 150;
-export const SUNSET_DRIVE_MAX = 45;
-export const SUNSET_MIN = 3;
+const SUNSET_DRIVE_MAX = 45;
+const SUNSET_MIN = 3;
 /** the most rows the 노을 볼 곳 section lists */
 export const SUNSET_LIST_MAX = 5;
 

@@ -1097,7 +1097,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     };
     const box = (id: string, label: string) => {
       const wrap = el(doc, 'div', { class: 'fb-box' });
-      wrap.append(el(doc, 'label', { class: 'group-h', for: id }, label), el(doc, 'textarea', { id, class: 'date-in fb-in', rows: '3', maxlength: String(TEXT_MAX), 'data-fb': id }));
+      wrap.append(el(doc, 'label', { class: 'group-h', for: id }, label), el(doc, 'textarea', { id, class: 'date-in fb-in', rows: '3', maxlength: String(TEXT_MAX) }));
       return wrap;
     };
     panel.append(el(doc, 'p', { class: 'note' }, COPY.feedbackNote));

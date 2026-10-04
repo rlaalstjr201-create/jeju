@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { applySunset, basisProblems, loadInputs, loadSunsetCalls, placeWith, sampleIds, viewWith, type SunsetCall } from '../scripts/sunset.mjs';
+import { applySunset, basisProblems, loadInputs, loadSunsetCalls, placeWith, sampleIds, type SunsetCall } from '../scripts/sunset.mjs';
 import { prepareCoast } from '../scripts/sunset-geo.mjs';
 import { fileSpots } from './fixtures';
 
@@ -88,13 +88,6 @@ describe('applySunset (fixtures)', () => {
     expect(() => applySunset([spot('a')], { calls: [call('z')], pass: true }, ALL)).toThrow(/not shipped/);
     expect(() => applySunset([spot('a')], { calls: [call('a'), call('a')], pass: true }, ALL)).toThrow(/twice/);
     expect(() => applySunset([spot('a')], { calls: [{ id: 'a', sunset: 'yes' as unknown as boolean, basis: 'x' }], pass: true }, ALL)).toThrow(/true\/false/);
-  });
-  it('the calculation decides the azimuths; an 오름 or a place it does not see gets all three', () => {
-    const coast = prepareCoast([[[126.0, 33.2], [126.5, 33.2], [126.5, 33.5], [126.0, 33.5], [126.0, 33.2]]]);
-    const view = viewWith(coast);
-    expect(view(spot('n', { lat: 33.4995, lng: 126.02 }))).toEqual([298]);
-    expect(view(spot('inland', { lat: 33.3, lng: 126.2 }))).toEqual([242, 264, 298]);
-    expect(view(spot('o', { name: '새별오름', lat: 33.4995, lng: 126.02 }))).toEqual([242, 264, 298]);
   });
   it('Amendment 1: placeWith gives sea (the calculation\'s own) only when the view was filled in; applySunset ships it and takes an old one off', () => {
     const coast = prepareCoast([[[126.0, 33.2], [126.5, 33.2], [126.5, 33.5], [126.0, 33.5], [126.0, 33.2]]]);

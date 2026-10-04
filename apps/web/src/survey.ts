@@ -12,7 +12,7 @@ export interface SurveyRec {
 }
 
 /** Visits with the line on screen before it stops by itself. */
-export const SURVEY_VISITS = 3;
+const SURVEY_VISITS = 3;
 
 export function parseSurvey(v: unknown): SurveyRec {
   if (!v || typeof v !== 'object' || Array.isArray(v)) return {};
