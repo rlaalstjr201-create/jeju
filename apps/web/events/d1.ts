@@ -1,6 +1,9 @@
 // The counters in Cloudflare D1 (ADR-0078 1): table `counters` (migrations/0001_events.sql), one row per
 // day × place × event. Only the few D1 calls used here are typed, so the collector needs no Workers types.
 import type { FeedbackStore } from './feedback';
+
+/** the counters row that counts answers the daily cap turned away (ADR-0081); not a place */
+export const FEEDBACK_CAPPED_ID = 'feedback:capped';
 import type { Counter, CounterStore } from './store';
 
 export interface D1Stmt {
@@ -28,9 +31,9 @@ export function d1Store(db: D1Like): CounterStore {
   };
 }
 
-/** Events counted on `day` or later (a primary-key range scan: no ids leave). */
+/** Events counted on `day` or later (a primary-key range scan: no ids leave); the feedback cap count is not one. */
 export async function countSince(db: D1Like, day: string): Promise<number> {
-  const row = await db.prepare('SELECT COALESCE(SUM(n), 0) AS n FROM counters WHERE day >= ?1').bind(day).first<{ n: number }>();
+  const row = await db.prepare("SELECT COALESCE(SUM(n), 0) AS n FROM counters WHERE day >= ?1 AND event != 'capped'").bind(day).first<{ n: number }>();
   return Number(row?.n ?? 0);
 }
 
@@ -46,6 +49,13 @@ export function d1FeedbackStore(db: D1Like): FeedbackStore {
         .bind(row.day, row.went ?? null, row.pains ? JSON.stringify(row.pains) : null, row.pain ?? null, row.wish ?? null, row.v, cap)
         .run()) as { meta?: { changes?: number } } | undefined;
       return (res?.meta?.changes ?? 0) > 0;
+    },
+    // turned away by the cap: one count in the counters table (day × `feedback:capped` × `capped`), nothing else
+    async capped(day) {
+      await db
+        .prepare('INSERT INTO counters (day, id, event, n) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (day, id, event) DO UPDATE SET n = n + excluded.n')
+        .bind(day, FEEDBACK_CAPPED_ID, 'capped', 1)
+        .run();
     },
   };
 }

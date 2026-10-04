@@ -3,7 +3,9 @@
 //   node scripts/feedback-report.mjs                    last 28 days (needs `npx wrangler login`; reads only, remote)
 //   node scripts/feedback-report.mjs --days 7
 //   node scripts/feedback-report.mjs --count-since 2026-10-05   one line: 설문 새 응답 N건 (the weekly task)
-// Nothing is written to a file: the answers' own words never go into the repository.
+//   node scripts/feedback-report.mjs --prune            deletes rows older than 365 days (ADR-0081 Amendment: kept 1 year)
+// Nothing is written to a file: the answers' own words never go into the repository. They are printed inside
+// 「[사용자 글] …」 with control and bidi characters taken out, so they read as data, never as instructions.
 import { execSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +23,14 @@ function day(v) {
 /** the rows from `since` on, oldest first (no double quotes: the same command line in cmd.exe and sh) */
 export const reportSql = (since) => `SELECT day, went, pains, pain, wish, v FROM feedback WHERE day >= '${day(since)}' ORDER BY day, rowid`;
 export const countSql = (since) => `SELECT COUNT(*) AS n FROM feedback WHERE day >= '${day(since)}'`;
+/** answers the daily cap turned away (events/d1.ts: counters id feedback:capped) */
+export const cappedSql = (since) => `SELECT COALESCE(SUM(n), 0) AS n FROM counters WHERE id = 'feedback:capped' AND day >= '${day(since)}'`;
+/** kept 365 days: anything from before `today - 365` goes */
+export const KEEP_DAYS = 365;
+export const pruneSql = (today) => `DELETE FROM feedback WHERE day < '${minus(day(today), KEEP_DAYS)}'`;
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f\u202a-\u202e\u2066-\u2069]/g;
+/** one line of a user's own words, marked as such */
+export const userText = (s) => `[사용자 글] ${String(s).replace(CONTROL, '').replace(/\s+/g, ' ').trim()}`;
 
 function pains(raw) {
   try {
@@ -31,10 +41,11 @@ function pains(raw) {
   }
 }
 
-/** rows: { day, went, pains, pain, wish, v }[] */
-export function renderFeedback(rows, since, today) {
+/** rows: { day, went, pains, pain, wish, v }[]; capped: answers the daily cap turned away */
+export function renderFeedback(rows, since, today, capped = 0) {
   const out = [`설문 응답 ${since}~${today} (서울 날짜): ${rows.length}건`];
-  if (!rows.length) return `${out[0]}\n`;
+  if (capped > 0) out.push(`상한 도달 ${capped}건 (하루 200건을 넘어 저장하지 않은 응답)`);
+  if (!rows.length) return `${out.join('\n')}\n`;
   if (rows.length < 10) out.push(`응답이 ${rows.length}건뿐이라 비율로 결론 내지 않아요.`);
   const byDay = new Map();
   for (const r of rows) byDay.set(r.day, (byDay.get(r.day) ?? 0) + 1);
@@ -50,7 +61,7 @@ export function renderFeedback(rows, since, today) {
   out.push('', '불편했던 점(여러 개):', ...Object.entries(PAINS).map(([k, label]) => `  ${label} ${pain.get(k) ?? 0}`));
   for (const [key, label] of [['pain', '그 밖에 불편했던 점'], ['wish', '있었으면 하는 것']]) {
     const texts = rows.filter((r) => r[key]);
-    out.push('', `${label} (${texts.length}건):`, ...texts.map((r) => `  [${r.day} ${r.v}] ${String(r[key]).replace(/\s+/g, ' ')}`));
+    out.push('', `${label} (${texts.length}건):`, ...texts.map((r) => `  ${r.day} ${String(r.v).replace(CONTROL, '')} ${userText(r[key])}`));
   }
   return `${out.join('\n')}\n`;
 }
@@ -75,13 +86,17 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   };
   const today = seoulDay();
   const countSince = opt('--count-since');
-  if (countSince) {
+  if (args.includes('--prune')) {
+    query(pruneSql(today));
+    console.log(`설문 응답 정리: ${minus(today, KEEP_DAYS)} 전 것을 지웠어요`);
+  } else if (countSince) {
     const n = Number(query(countSql(countSince))[0]?.n ?? 0);
-    console.log(`설문 새 응답 ${n}건 (${countSince} 이후)`);
+    const capped = Number(query(cappedSql(countSince))[0]?.n ?? 0);
+    console.log(`설문 새 응답 ${n}건 (${countSince} 이후)${capped ? `, 상한 도달 ${capped}건` : ''}`);
   } else {
     const days = Number(opt('--days') ?? 28);
     if (!Number.isInteger(days) || days < 1) throw new Error(`--days ${days}`);
     const since = minus(today, days - 1);
-    process.stdout.write(renderFeedback(query(reportSql(since)), since, today));
+    process.stdout.write(renderFeedback(query(reportSql(since)), since, today, Number(query(cappedSql(since))[0]?.n ?? 0)));
   }
 }

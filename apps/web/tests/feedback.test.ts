@@ -1,12 +1,22 @@
 // 의견 보내기 받는 쪽 (ADR-0081, specs/survey.md F3): what is accepted, the daily cap, and that nothing of the
 // request but its answers is stored.
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { d1FeedbackStore, type D1Like } from '../events/d1';
+import { countSince, d1FeedbackStore, type D1Like } from '../events/d1';
 import { FEEDBACK_DAILY_CAP, handleFeedback, memoryFeedbackStore, parseFeedback } from '../events/feedback';
 import { onRequest } from '../functions/api/feedback';
 
-const post = (body: unknown, headers: Record<string, string> = {}) =>
-  new Request('https://yeogwi.pages.dev/api/feedback', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: typeof body === 'string' ? body : JSON.stringify(body) });
+/** what the app sends: JSON with its type and length; `headers` may override either */
+const post = (body: unknown, headers: Record<string, string> = {}) => {
+  const text = typeof body === 'string' ? body : JSON.stringify(body);
+  return new Request('https://yeogwi.pages.dev/api/feedback', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'content-length': String(new TextEncoder().encode(text).length), ...headers },
+    body: text,
+  });
+};
 /** 2026-10-04 23:30 KST */
 const lateNight = () => new Date('2026-10-04T14:30:00Z');
 
@@ -104,5 +114,92 @@ describe('F3 받는 쪽 — 저장', () => {
     const err = await onRequest({ request: post({ went: 'went', v: 'dev' }), env: { EVENTS_DB: broken } });
     expect(err.status).toBe(503);
     expect(err.headers.get('cache-control')).toBe('no-store');
+  });
+});
+
+describe('F3 받는 쪽 — 리뷰 반영', () => {
+  it('JSON only (415 otherwise: a cross-site form cannot post); no length is 411', async () => {
+    const store = memoryFeedbackStore();
+    expect((await handleFeedback(post({ went: 'went', v: 'dev' }, { 'content-type': 'application/x-www-form-urlencoded' }), store)).status).toBe(415);
+    expect((await handleFeedback(post({ went: 'went', v: 'dev' }, { 'content-type': 'text/plain' }), store)).status).toBe(415);
+    const noLength = new Request('https://x/api/feedback', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{"went":"went","v":"dev"}' });
+    expect(noLength.headers.get('content-length')).toBeNull();
+    expect((await handleFeedback(noLength, store)).status).toBe(411);
+    expect((await handleFeedback(post({ went: 'went', v: 'dev' }, { 'content-type': 'application/json; charset=utf-8' }), store)).status).toBe(204);
+  });
+
+  it('a body longer than it said is cut off at 4 KB while it is read (413), nothing stored', async () => {
+    const store = memoryFeedbackStore();
+    let pulled = 0;
+    const chunk = new TextEncoder().encode(' '.repeat(1024));
+    const stream = new ReadableStream<Uint8Array>({
+      pull(c) {
+        pulled++;
+        if (pulled > 100) c.close();
+        else c.enqueue(chunk);
+      },
+    });
+    const req = new Request('https://x/api/feedback', { method: 'POST', headers: { 'content-type': 'application/json', 'content-length': '20' }, body: stream, duplex: 'half' } as RequestInit);
+    expect((await handleFeedback(req, store)).status).toBe(413);
+    expect(pulled).toBeLessThan(10);
+    expect(store.rows).toEqual([]);
+  });
+
+  it.each([
+    ['NUL', 'a\u0000b'],
+    ['bell', 'a\u0007b'],
+    ['carriage return', 'a\rb'],
+    ['escape', 'a\u001b[31mb'],
+    ['DEL', 'a\u007fb'],
+    ['bidi override', 'a\u202eb'],
+    ['bidi isolate', 'a\u2066b'],
+  ])('text with a control or bidi character (%s) is 400', (_, wish) => {
+    expect(parseFeedback(JSON.stringify({ wish, v: 'dev' })).ok).toBe(false);
+  });
+
+  it('a newline and a tab are fine', () => {
+    expect(parseFeedback(JSON.stringify({ wish: '주차\n정보\t있으면', v: 'dev' })).ok).toBe(true);
+  });
+
+  it('an answer the cap turns away is counted (day only), not kept', async () => {
+    const store = memoryFeedbackStore();
+    for (let i = 0; i < FEEDBACK_DAILY_CAP + 2; i++) await handleFeedback(post({ went: 'went', v: 'dev' }), store, lateNight);
+    expect(store.cappedByDay).toEqual(new Map([['2026-10-04', 2]]));
+  });
+});
+
+describe('F3 상한 — 실제 SQLite (node:sqlite, 마이그레이션 그대로)', () => {
+  it('the 201st insert of a day is not kept and is counted under feedback:capped; the next day starts again', async () => {
+    // node:sqlite (Node 22.13+); @types/node 20 has no types for it, so only what is used here
+    type Stmt = { run(...a: unknown[]): { changes: number | bigint }; all(...a: unknown[]): unknown[]; get(...a: unknown[]): unknown };
+    type Sqlite = { exec(sql: string): void; prepare(sql: string): Stmt; close(): void };
+    const { DatabaseSync } = createRequire(import.meta.url)('node:sqlite') as { DatabaseSync: new (path: string) => Sqlite };
+    const sqlite = new DatabaseSync(':memory:');
+    for (const f of ['0001_events.sql', '0002_feedback.sql']) sqlite.exec(readFileSync(resolve(__dirname, '../migrations', f), 'utf8'));
+    const db: D1Like = {
+      prepare(sql) {
+        const st = sqlite.prepare(sql);
+        let args: unknown[] = [];
+        const stmt = {
+          bind: (...a: unknown[]) => ((args = a), stmt),
+          run: async () => ({ meta: { changes: Number(st.run(...args).changes) } }),
+          all: async () => ({ results: st.all(...args) }),
+          first: async () => st.get(...args) ?? null,
+        };
+        return stmt as never;
+      },
+    };
+    const store = d1FeedbackStore(db);
+    for (let i = 0; i < FEEDBACK_DAILY_CAP + 1; i++) expect((await handleFeedback(post({ went: 'went', pains: ['far'], v: 'dev' }), store, lateNight)).status).toBe(204);
+    await handleFeedback(post({ wish: '다음 날', v: 'dev' }), store, () => new Date('2026-10-04T15:00:00Z'));
+    const days = sqlite.prepare('SELECT day, COUNT(*) AS n FROM feedback GROUP BY day ORDER BY day').all();
+    expect(days).toEqual([
+      { day: '2026-10-04', n: FEEDBACK_DAILY_CAP },
+      { day: '2026-10-05', n: 1 },
+    ]);
+    expect(sqlite.prepare('SELECT day, id, event, n FROM counters').all()).toEqual([{ day: '2026-10-04', id: 'feedback:capped', event: 'capped', n: 1 }]);
+    expect(sqlite.prepare('SELECT * FROM feedback LIMIT 1').get()).toEqual({ day: '2026-10-04', went: 'went', pains: '["far"]', pain: null, wish: null, v: 'dev' });
+    expect(await countSince(db, '2026-10-01')).toBe(0); // the cap count is not a usage event (health)
+    sqlite.close();
   });
 });

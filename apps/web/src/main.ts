@@ -69,7 +69,7 @@ const app = mountApp(document, {
   fetch: (url, init) => fetch(url, init),
   // 의견 보내기 (ADR-0081): only when the user presses 보내기; the answers and the version, to this site's own function
   postFeedback: (body) =>
-    void fetch(`${BASE}api/feedback`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, keepalive: true }).catch(() => undefined),
+    void fetch(`${BASE}api/feedback`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, credentials: 'omit', keepalive: true }).catch(() => undefined),
   appVersion: __APP_V__,
 });
 
