@@ -22,6 +22,6 @@
 | 5 | 첫 실사용 데이터 2주 관찰(D1·GA4·네이버, 주간 점검 보고서) | waiting | 확장 우선순위를 실제 사용으로 정한다. 그 전엔 짐작이다 | ADR-0078, 0079 |
 | 6 | 전국 확장 시범: data.go.kr 「한국관광공사_국문 관광정보 서비스_GW」 활용 신청(사람) → 부산·강릉·경주 중 1곳 Light Spec → 빌드 | ready-for-human(키 신청) → ready-for-agent | 출처 조사 완료. 비짓제주와 같은 구조라 옮기기 쉽다 | `data-sources-korea-japan.md` §0·§5(공사 문의 8문항) |
 | 7 | 일본 실현성 측정: 도시 1곳에서 Wikidata 장소 중 Commons 사진이 있는 비율 | done — 불성립(가나자와 93곳·85%, 양 부족). 다음 방향은 주인 결정 `docs/research/japan-feasibility/REPORT.md` | 사진 비율이 낮으면 방식 자체가 성립하지 않으니 먼저 잰다 | 같은 문서 §0 |
-| 8 | 노을 보이는 곳 속성 | ready-for-agent(원문은 `apps/web/review/input`에 있음 — 「review/out 있는 환경에서만」은 틀린 메모였다) | 오늘 판 두 번째 우선순위 줄의 데이터 | `.scratch/home-refresh/issues/01-sunset-view-attribute.md` |
-| 9 | 데이터 오류 103건 중 안전한 것, 원문 근접 이유 문장 9곳 재작성 | ready-for-agent | 품질 부채. 확장 전에 줄인다 | `docs/handoff/2026-10-02-local-resume.md` 남은 작업 2·3 |
+| 8 | 노을 보이는 곳 속성 | done (ADR-0083, 184곳, 2026-10-05 배포) | 오늘 판 두 번째 우선순위 줄의 데이터 | `.scratch/home-refresh/issues/01-sunset-view-attribute.md` |
+| 9 | 데이터 오류 103건 중 안전한 것, 원문 근접 이유 문장 9곳 재작성 | done (b1a037e·6d1ba8a, 보류 62건은 근거 부족으로 기록) | 품질 부채. 확장 전에 줄인다 | `docs/handoff/2026-10-02-local-resume.md` 남은 작업 2·3 |
 | 10 | 수익화(광고·제휴)는 제주관광공사 상업 이용 확인 뒤 | ready-for-human | 사용자·데이터가 생긴 다음 | `docs/licensing-visitjeju.md` |
