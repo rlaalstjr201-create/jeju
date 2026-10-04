@@ -1884,7 +1884,11 @@ await check('QA4-datein', 'no showPicker: 날짜 고르기 shows the date field 
   for (const o of ['ymd', 'mdy', 'dmy']) {
     await probe.setContent('<input type="date">');
     await probe.focus('input');
-    await probe.keyboard.type([...o].map((c) => ({ y: '2003', m: '11', d: '02' })[c]).join(''));
+    // ArrowRight between the parts: the year part takes up to 6 digits, so "2003" does not move on by itself
+    for (const [i, c] of [...o].entries()) {
+      if (i) await probe.keyboard.press('ArrowRight');
+      await probe.keyboard.type({ y: '2003', m: '11', d: '02' }[c]);
+    }
     if ((await probe.inputValue('input')) === '2003-11-02') order = o;
   }
   await probe.close();
@@ -2022,10 +2026,11 @@ const hitMeasure = (targetSel) => {
       const y = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
       if (x > 0.5 && y > 0.5) overlap.push(`${label(t)} × ${label(o)} ${Math.round(x)}×${Math.round(y)}`);
     }
-    // every point of the area reaches this control (nothing covers part of it)
+    // every point of the area reaches this control (nothing covers part of it). Chrome hit-tests whole pixels:
+    // within ~1.3px of an edge at a fraction (지금|내일 meet at 81.27) a point goes to the control next to it.
     let miss = 0;
-    for (let x = a.left + 0.5; x < a.right; x += 2)
-      for (let y = a.top + 0.5; y < a.bottom; y += 2) if (document.elementFromPoint(x, y)?.closest('button, a, input') !== t) miss++;
+    for (let x = a.left + 1.5; x <= a.right - 1.5; x += 2)
+      for (let y = a.top + 1.5; y <= a.bottom - 1.5; y += 2) if (document.elementFromPoint(x, y)?.closest('button, a, input') !== t) miss++;
     if (miss) blocked.push(`${label(t)} ${miss} points`);
   }
   scrollTo(0, 0);
