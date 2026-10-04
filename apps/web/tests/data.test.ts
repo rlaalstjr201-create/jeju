@@ -356,6 +356,28 @@ describe('3판 이유 문장 — 빌드 규칙 (design/SPEC.md §10·§12.4, 0.3
       expect(f.basis.length, f.id).toBeGreaterThan(0);
     }
   });
+
+  it('every review/copy/fix-04.json rewrite (로드맵 9: reasons that repeated 20+ chars of source) ships as written and shares no 20-char run with its source (ADR-0072)', async () => {
+    const { REASON_BANNED } = await import('../scripts/check-slop');
+    const { reasonPunctuationProblem, shipReason } = await import('../scripts/reason.mjs');
+    const { copiedReasons } = await import('../scripts/landing');
+    const fix = JSON.parse(readFileSync(resolve(root, 'review/copy/fix-04.json'), 'utf8')) as { id: string; reason: string; was: string; basis: string }[];
+    expect(fix).toHaveLength(9);
+    const sources = new Map<string, string[]>();
+    for (const f of readdirSync(resolve(root, 'review/input'))) {
+      for (const r of JSON.parse(readFileSync(resolve(root, 'review/input', f), 'utf8')) as Record<string, unknown>[]) {
+        sources.set(r.id as string, [r.intro, r.summary, r.comment].filter((t): t is string => typeof t === 'string' && t.length > 0));
+      }
+    }
+    const byId = new Map(fileSpots.map((s) => [s.id, s] as const));
+    const shipped = fix.map((f) => byId.get(f.id)!);
+    for (const f of fix) {
+      expect(byId.get(f.id)?.reason, f.id).toBe(shipReason(f.reason));
+      expect(REASON_BANNED.test(f.reason) || reasonPunctuationProblem(shipReason(f.reason)) !== null, f.reason).toBe(false);
+      expect(f.basis.length, f.id).toBeGreaterThan(0);
+    }
+    expect([...copiedReasons(shipped, (id) => sources.get(id) ?? [], 20)]).toEqual([]);
+  });
 });
 
 describe('팩트체크 수정 (ADR-0063 5, review/copy/corrections-NN.json, review/audit/factcheck-01.md)', () => {
