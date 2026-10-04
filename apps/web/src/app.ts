@@ -197,6 +197,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       duskAt = null;
     }
     const now = minuteOf(clockNow());
+    // a new point can put now on the other side of an edge (another basis, another sunset): redraw, like tick()
+    if (duskPhase(now) !== duskPhase(state.clock)) {
+      duskKey = '';
+      return dispatch({ type: 'clock', clock: now }); // its own duskTimer() call sets the timer
+    }
     const set = sunsetMinutes(p, state.today);
     const next = now < set - DUSK_LEAD_MIN ? set - DUSK_LEAD_MIN : now < set ? set : null;
     if (next == null) return; // after the sunset: the midnight tick reads the clock again

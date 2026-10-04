@@ -15,7 +15,7 @@ import { applyBooking, loadBookingCalls, loadBookRoutes } from './booking.mjs';
 import { applyIndoor, loadIndoorCalls } from './indoor.mjs';
 import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from './markets.mjs';
 import { applySeason, loadSeasonCalls } from './season.mjs';
-import { applySunset, loadSunsetCalls } from './sunset.mjs';
+import { applySunset, basisProblems, loadSunsetCalls } from './sunset.mjs';
 import { loadNewSubCalls, newSub } from './new-sub.mjs';
 import { positionProblems } from './positions.mjs';
 import { reasonPunctuationProblem, shipReason } from './reason.mjs';
@@ -344,7 +344,10 @@ kept = applySeason(kept, loadSeasonCalls(resolve(root, 'review/season')));
 
 // 노을 볼 곳 (ADR-0083, review/sunset/ + data/coast/): after 철, before the booking fields. Only when the round's blind
 // re-judging passed; a judgment for a place that does not ship stops the build. Same as `node scripts/sunset.mjs`.
-kept = applySunset(kept, loadSunsetCalls(resolve(root, 'review/sunset')));
+const sunsetCalls = loadSunsetCalls(resolve(root, 'review/sunset'));
+const sunsetBad = basisProblems(sunsetCalls.calls, new Map(inputItems.map((i) => [i.id, i])));
+if (sunsetBad.length) throw new Error(`sunset basis problems (review/sunset):\n${sunsetBad.join('\n')}`);
+kept = applySunset(kept, sunsetCalls);
 
 // 체험 예약 경로 (ADR-0074, review/booking/routes.json + review/copy/booking.json): last, on the 체험 that ship.
 // A 체험 with neither a verified route nor a recorded call stops the build.

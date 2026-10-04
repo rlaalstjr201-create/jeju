@@ -256,7 +256,7 @@ describe('3·4 attribution and privacy', () => {
     await cards();
     const credit = '정보·사진: 비짓제주(제주관광공사) · visitjeju.net';
     const site = (where: string) => {
-      const links = [...document.querySelectorAll<HTMLAnchorElement>(`${where} .credit a`)];
+      const links = [...document.querySelectorAll<HTMLAnchorElement>(`${where} .credit a[href*="visitjeju"]`)];
       expect(links, where).toHaveLength(1);
       const [l] = links;
       expect(l.textContent).toBe('visitjeju.net');
@@ -269,7 +269,14 @@ describe('3·4 attribution and privacy', () => {
     await openSaved();
     expect($('#savedView .credit').textContent).toBe(credit);
     site('#savedView');
-    const a = $<HTMLAnchorElement>('#savedView .about > a');
+    // ADR-0083: the coastline 노을 볼 곳 is worked out from (ODbL)
+    const osm = [...document.querySelectorAll<HTMLAnchorElement>('#savedView .credit a[href*="openstreetmap"]')];
+    expect(osm).toHaveLength(1);
+    expect(osm[0].closest('.credit')!.textContent).toBe('해안선: © OpenStreetMap contributors');
+    expect(osm[0].getAttribute('href')).toBe('https://www.openstreetmap.org/copyright');
+    expect(osm[0].getAttribute('target')).toBe('_blank');
+    expect(osm[0].getAttribute('rel')).toBe('noopener');
+    const a =$<HTMLAnchorElement>('#savedView .about > a');
     expect(a.getAttribute('href')).toBe('/privacy');
     expect(a.textContent).toBe('개인정보 처리 안내');
   });

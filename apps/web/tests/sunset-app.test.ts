@@ -80,6 +80,8 @@ describe('오늘 판 노을 줄 (real spots.json)', () => {
     expect($$('#sunset .mk')).toHaveLength(5);
     expect($('#sunset .mk .meta').textContent).toMatch(/^차로 약 \d+분$/);
     expect($('#homeMore > .credit').textContent).toBe('정보·사진: 비짓제주(제주관광공사) · 해안선 © OpenStreetMap contributors');
+    const osm = $<HTMLAnchorElement>('#homeMore > .credit a');
+    expect([osm.getAttribute('href'), osm.getAttribute('target'), osm.getAttribute('rel')]).toEqual(['https://www.openstreetmap.org/copyright', '_blank', 'noopener']);
   });
 
   it('3 hours before: the time only — the home is byte for byte what it is with no sunsetView at all', async () => {
@@ -167,6 +169,29 @@ describe('오늘 판 노을 줄 (real spots.json)', () => {
     now = kst(DAY, set + 0.1);
     await vi.advanceTimersByTimeAsync(DUSK_LEAD_MIN * 60_000);
     expect($('#today .act')).toBeNull();
+  });
+
+  it('a new basis inside its window (but not the old one\'s) brings the row at once, not at the old point\'s edge', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    // GPS, permission granted: the home reads the fix itself (ADR-0075 Amendment 1). Until then the sun is 제주시청's.
+    const gujwa = areaByName('구좌')!;
+    const open = sunsetMinutes(gujwa, DAY) - DUSK_LEAD_MIN; // about a minute before 제주시청's window opens
+    let now = kst(DAY, open - 5);
+    let fix: (p: { lat: number; lng: number }) => void = () => undefined;
+    render({
+      today: () => now,
+      loadSpots: () => Promise.resolve(fileSpots),
+      geoPermission: () => Promise.resolve('granted'),
+      locate: () => new Promise((r) => (fix = r)),
+    } as never);
+    await vi.advanceTimersByTimeAsync(0);
+    expect($('#today .act')).toBeNull();
+    now = kst(DAY, open + 0.3); // inside 구좌's window, still before 제주시청's: no timer has fired
+    await vi.advanceTimersByTimeAsync(5.3 * 60_000);
+    expect($('#today .act')).toBeNull();
+    fix({ lat: gujwa.lat, lng: gujwa.lng });
+    await vi.advanceTimersByTimeAsync(0);
+    expect($('#today .act')?.getAttribute('data-action')).toBe('to-sunset');
   });
 
   it('tapping the row goes down to the section and leaves the address and history alone', async () => {

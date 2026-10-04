@@ -160,7 +160,8 @@ export const COPY = {
   // 노을 볼 곳 (ADR-0083): only in the hours before the sunset, with 3 or more places
   sunsetPlaces: '노을 볼 곳',
   sunsetCount: (n: number) => ` ${n}곳 · 차로 45분 안`,
-  sunsetCredit: ' · 해안선 © OpenStreetMap contributors',
+  sunsetCredit: ' · 해안선 © ',
+  osm: 'OpenStreetMap contributors',
   // 비 소식 (ADR-0076): only when it will rain; the source next to it
   rainAsk: '비 소식 · 실내만 볼까요?',
   rainOn: '비 소식이 있어 실내만 보고 있어요',
@@ -1023,7 +1024,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       if (sunsetOn && origin) nodes.push(sunsetSection(s, sunset, origin));
       if (markets.length) nodes.push(marketSection(s, markets, origin, dated));
       // the coastline the 노을 places were worked out from (ODbL): credited while they are shown
-      nodes.push(areasSection(s, spots, origin), el(doc, 'p', { class: 'credit' }, sunsetOn ? COPY.homeCredit + COPY.sunsetCredit : COPY.homeCredit));
+      const credit = el(doc, 'p', { class: 'credit' }, COPY.homeCredit);
+      if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
+      nodes.push(areasSection(s, spots, origin), credit);
     }
     els.homeMore.replaceChildren(...nodes);
   }
