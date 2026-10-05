@@ -1,67 +1,31 @@
 {
  "_why": "최신 SEO 진단의 개입 큐. 작업자가 여기서 집어 들고, check가 있는 항목은 npm run seo:verify가 해소 여부를 본다.",
- "generated": "2026-10-03",
- "from_run": "2026-10-03T1755",
+ "generated": "2026-10-05",
+ "from_run": "2026-10-05T0656",
  "items": [
   {
    "rank": 1,
-   "sort_id": "brand-serp-reset",
-   "title": "keywords.json brand 「여행귀:제주」의 SERP 기록을 새 이름 관찰로 갈아 끼운다(옛 이름 관찰 제거)",
+   "sort_id": "target-index-request",
+   "title": "target 랜딩 2쪽(/jeju/, /jeju/seongsan/new/)을 GSC URL 검사·네이버 서치어드바이저 수집 요청에 넣고 keywords.json에 indexed_at을 적는다",
    "severity": "P1",
    "queue_kind": "other",
    "keyword": null,
    "check": null,
-   "where": "apps/web/data/seo/keywords.json 후보 「여행귀:제주」(조사 기록 — seo-analyst 또는 사람)",
-   "verify": "keywords.json 「여행귀:제주」의 serp.checked_at이 2026-10-03 이후이고 source에 「여행귀」가 들어 있으며, seo:keywords 검증 오류 0이다.",
-   "from_run": "2026-10-03T1755"
+   "where": "사람 — GSC URL 검사(https://yeochana.pages.dev/jeju/, /jeju/seongsan/new/) · 서치어드바이저 웹 페이지 수집 요청 · data/seo/config.json naver.collect_requested · data/seo/keywords.json indexed_at",
+   "verify": "keywords.json target 2건에 indexed_at이 있고 seo:keywords --track이 wait가 아닌 판정을 낸다",
+   "from_run": "2026-10-05T0656"
   },
   {
    "rank": 2,
-   "sort_id": "config-sources",
-   "title": "data/seo/config.json에 site_url·gsc.property(URL 접두어)·naver.site를 채운다",
-   "severity": "P1",
-   "queue_kind": "config",
-   "keyword": null,
-   "check": null,
-   "where": "apps/web/data/seo/config.json — site_url https://yeogwi.pages.dev · gsc.property https://yeogwi.pages.dev/ (pages.dev는 DNS를 못 만지므로 sc-domain이 아니라 URL 접두어, _todo 문구도 고침) · naver.site https://yeogwi.pages.dev · bing.site는 연결 후",
-   "verify": "SITE_URL 없이 돌린 npm run seo:verify가 origin https://yeogwi.pages.dev를 출력하고, gsc 줄이 「자격증명 환경변수 GSC_CREDENTIALS 없음」, naver 줄이 「수동 기록」 문구다.",
-   "from_run": "2026-10-03T1755"
-  },
-  {
-   "rank": 3,
-   "sort_id": "gsc-fetch",
-   "title": "GSC 조달 함수 gscLayerStats를 구현한다(28일 page 차원·query 차원, 서비스 계정)",
-   "severity": "P1",
-   "queue_kind": "other",
-   "keyword": null,
-   "check": null,
-   "where": "코드: apps/web/scripts/seo/gsc.mjs · 사람: GCP 서비스 계정 생성 → GSC 속성 https://yeogwi.pages.dev/ 에 사용자(제한 권한)로 추가 → 키 JSON 경로를 환경변수 GSC_CREDENTIALS에",
-   "verify": "GSC_CREDENTIALS를 설정한 환경에서 seo:verify의 gsc 줄이 연결로 바뀌고, gscLayerStats()가 null이 아닌 page 차원 배열을 돌려준다(행 0이어도 배열).",
-   "from_run": "2026-10-03T1755"
-  },
-  {
-   "rank": 4,
-   "sort_id": "index-targets",
-   "title": "target 랜딩 2쪽(/jeju/, /jeju/seongsan/new/) 색인 요청 후 keywords.json에 indexed_at을 적는다",
-   "severity": "P1",
-   "queue_kind": "config",
-   "keyword": "제주도 무계획 여행",
-   "check": null,
-   "where": "사람: GSC URL 검사 → 색인 생성 요청(https://yeogwi.pages.dev/jeju/ , https://yeogwi.pages.dev/jeju/seongsan/new/) · 네이버 서치어드바이저 웹 페이지 수집 요청(같은 두 URL — 지금은 홈만 요청됨) → 색인 확인 날짜를 keywords.json 각 target의 indexed_at에, 주 1회 track에 week·google_pos·naver_pos·impressions·clicks 한 줄씩",
-   "verify": "seo:keywords -- --track이 target 2건에 대해 「색인 확인 전」이 아니라 「색인 N주」 문구로 판정한다.",
-   "from_run": "2026-10-03T1755"
-  },
-  {
-   "rank": 5,
-   "sort_id": "bing-indexnow",
-   "title": "Bing Webmaster Tools(GSC 가져오기)·IndexNow를 연결하고 seo:verify 외부 소스에 bing 줄을 더한다",
+   "sort_id": "bing-connect",
+   "title": "Bing Webmaster Tools에 GSC 가져오기로 사이트를 등록하고 config.bing.site를 채운다",
    "severity": "P2",
    "queue_kind": "config",
    "keyword": null,
    "check": null,
-   "where": "사람: bing.com/webmasters에서 GSC 가져오기로 https://yeogwi.pages.dev/ 등록·사이트맵 확인 · 코드: scripts/seo/gsc.mjs sourcesStatus에 bing 항목(config.bing.site 기준) · IndexNow 키 파일 public/<key>.txt는 제안만(public은 사람이 반영)",
-   "verify": "seo:verify 외부 소스에 bing 줄이 생기고 config.bing.site가 https://yeogwi.pages.dev이다.",
-   "from_run": "2026-10-03T1755"
+   "where": "사람 — bing.com/webmasters(GSC 가져오기) · apps/web/data/seo/config.json bing.site = https://yeochana.pages.dev",
+   "verify": "seo:verify 외부 소스 bing 줄이 「등록됨」을 출력한다",
+   "from_run": "2026-10-05T0656"
   }
  ]
 }

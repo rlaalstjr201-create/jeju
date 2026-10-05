@@ -1,0 +1,147 @@
+{
+ "_why": "ADR-0079 1 네이버 통합검색 주간 관찰. position_in_block = 그 블록 안 고유 링크 순서, overall_link_rank = 본문(#main_pack) 고유 외부 링크 순서. check_failed는 「없음」이 아니다.",
+ "date": "2026-10-05",
+ "engine": "naver",
+ "tool": "playwright chrome headless",
+ "host": "yeochana.pages.dev",
+ "summary": {
+  "total": 12,
+  "found": 0,
+  "not_found": 12,
+  "check_failed": 0
+ },
+ "results": [
+  {
+   "query": "여차나:제주",
+   "verdict": "brand",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "제주도 무계획 여행",
+   "verdict": "target",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "제주 즉흥 여행",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "계획 없이 제주 여행",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "성산 근처 체험",
+   "verdict": "target",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "구좌 산책하기 좋은 곳",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "우도 혼자 여행",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "애월 산책로",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "서귀포 산책하기 좋은 곳",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "표선 근처 놀거리",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "함덕 근처 가볼만한곳",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  },
+  {
+   "query": "성산 근처 가볼만한 곳",
+   "verdict": "watch",
+   "date": "2026-10-05",
+   "status": "not_found",
+   "found": false,
+   "block": null,
+   "position_in_block": null,
+   "overall_link_rank": null,
+   "url": null
+  }
+ ]
+}

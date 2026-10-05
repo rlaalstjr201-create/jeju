@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "run_id": "2026-10-05T0656",
+  "graded": "2026-10-03T1755",
+  "diagnosed_at": "2026-10-05",
+  "phase": "post-deploy",
+  "window": {
+    "start": "2026-10-03",
+    "end": "2026-10-05"
+  },
+  "rerun_reason": "직전 기록(10-03)이 3일 이내지만 주간 점검 과제로 요청받았고, 그 사이 도메인(yeochana.pages.dev)·이름(ADR-0082) 변경과 첫 네이버 주간 순위 관찰(naver-2026-10-05)이 생겼다.",
+  "summary": "배포 후 주간 점검. 지난 큐 5건 중 2건 해소(config 채움·brand SERP 기록 갱신), 3건 이행 안 됨(GSC API 조달·target 색인 요청·Bing) — 해소율 40% → 개입 상한 3. seo:crawl 감사 0건(2,940쪽·사이트맵 2,940 일치·고아·깨진 링크 0), seo:verify P0 0, keyword gate 오류 0. 실사이트 robots·sitemap·llms.txt 200, /jeju/·/jeju/seongsan/new/ canonical이 yeochana.pages.dev 절대 URL, llms.txt 첫 문단이 엔티티 문장과 같다. 자동 조치 대상(밀림·meta·내부링크·구조화 데이터·llms.txt 정합)은 없다. 네이버 12개 검색어 모두 not_found이고 구글은 GSC 처리 중이라 확인 실패 — 순위 문제가 아니라 색인 전 단계다(target 2건 --track wait). 남은 일은 색인 확인과 Bing 연결이다.",
+  "instruments": [
+    {
+      "name": "seo:crawl",
+      "status": "ok",
+      "note": "감사 0건 · 2,940쪽 · 사이트맵 2,940 · 누락 0 · 고아 0 · 깨진 내부링크 0 · 일반 앵커 1(홈 → /privacy 「자세히」, 감사 아님)"
+    },
+    {
+      "name": "seo:keywords",
+      "status": "ok",
+      "note": "검증 오류 0 · 주의 0 · --track: target 2건(제주도 무계획 여행·성산 근처 체험) 모두 wait(색인 확인 전)"
+    },
+    {
+      "name": "seo:verify",
+      "status": "ok",
+      "note": "origin https://yeochana.pages.dev · 큐 5건 모두 사람 채점(check 없음) · 예측 0 · gsc/ga4/bing 미연결, naver 연결"
+    },
+    {
+      "name": "naver-rank(playwright)",
+      "status": "ok",
+      "note": "data/seo/rank/naver-2026-10-05.json — 12개 모두 not_found, check_failed 0 (1회 관찰)"
+    },
+    {
+      "name": "gsc",
+      "status": "fail",
+      "note": "실적 데이터 처리 중 — 구글 순위 확인 실패(없음으로 읽지 않는다)"
+    },
+    {
+      "name": "live-check(curl)",
+      "status": "ok",
+      "note": "llms.txt 200·엔티티 문장 일치, robots Allow / · Sitemap yeochana.pages.dev, /jeju/·/jeju/seongsan/new/ title·description·canonical 정상"
+    }
+  ],
+  "grading": [
+    {
+      "rank": 1,
+      "verdict": "맞았다",
+      "why": "keywords.json brand serp.checked_at 2026-10-03, source에 「여행귀:제주」 Playwright 관찰 — verify 조건 충족. 다만 그 뒤 ADR-0082로 이름이 「여차나:제주」가 돼 10-05 관찰(not_found)이 새 기준이다"
+    },
+    {
+      "rank": 2,
+      "verdict": "맞았다",
+      "why": "config.json site_url·gsc.property(URL 접두어)·naver.site가 https://yeochana.pages.dev로 채워졌고 seo:verify가 이 origin을 출력한다"
+    },
+    {
+      "rank": 3,
+      "verdict": "이행 안 됨",
+      "why": "scripts/seo/gsc.mjs gscLayerStats는 여전히 null. ADR-0079가 GSC 화면 읽기 → gsc-import.mjs 경로를 택해 이 항목은 접는다"
+    },
+    {
+      "rank": 4,
+      "verdict": "이행 안 됨",
+      "why": "keywords.json target 2건에 indexed_at 없음, config.naver.collect_requested는 「/」뿐 — seo:keywords --track이 wait"
+    },
+    {
+      "rank": 5,
+      "verdict": "이행 안 됨",
+      "why": "config.bing.site 비어 있음. seo:verify에 bing 줄은 생겼다(부분)"
+    }
+  ],
+  "interventions": [
+    {
+      "rank": 1,
+      "title": "target 랜딩 2쪽(/jeju/, /jeju/seongsan/new/)을 GSC URL 검사·네이버 서치어드바이저 수집 요청에 넣고 keywords.json에 indexed_at을 적는다",
+      "severity": "P1",
+      "qualifies": "seo:keywords --track: target 2건 wait(색인 확인 전)",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "target-index-request",
+      "queue_kind": "other",
+      "where": "사람 — GSC URL 검사(https://yeochana.pages.dev/jeju/, /jeju/seongsan/new/) · 서치어드바이저 웹 페이지 수집 요청 · data/seo/config.json naver.collect_requested · data/seo/keywords.json indexed_at",
+      "evidence": "seo:keywords --track 2건 wait · naver-2026-10-05 12건 not_found · config.naver.collect_requested 「/」 1건",
+      "why_now": "크롤 감사 0건(seo:crawl)인데 네이버 관찰에서 0건 노출 — 크롤 층은 배제됐고 색인 층에서 막혀 있다. 색인 확인 전에는 순위 판정(pivotOf)이 시작되지 않는다",
+      "verify": "keywords.json target 2건에 indexed_at이 있고 seo:keywords --track이 wait가 아닌 판정을 낸다"
+    },
+    {
+      "rank": 2,
+      "title": "Bing Webmaster Tools에 GSC 가져오기로 사이트를 등록하고 config.bing.site를 채운다",
+      "severity": "P2",
+      "qualifies": "seo:verify 외부 소스: bing 미설정",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "bing-connect",
+      "queue_kind": "config",
+      "where": "사람 — bing.com/webmasters(GSC 가져오기) · apps/web/data/seo/config.json bing.site = https://yeochana.pages.dev",
+      "evidence": "seo:verify 「bing — config.bing.site 미설정」 · config.json bing.site \"\"",
+      "why_now": "GSC 소유 확인이 끝나(config.gsc.verified_at 2026-10-03) 가져오기 한 번이면 되고, Bing 색인이 ChatGPT 검색·Copilot의 바탕이라 GEO 층의 유일한 미연결 색인원이다",
+      "verify": "seo:verify 외부 소스 bing 줄이 「등록됨」을 출력한다"
+    }
+  ],
+  "investigate": [
+    "GSC 실적 처리 완료 후 data/seo/gsc/YYYY-MM-DD.json 가져오기(ADR-0079) — 지금은 처리 중이라 구글 순위·노출 확인 실패"
+  ],
+  "not_touching": [
+    "gscLayerStats API 구현 — ADR-0079 수동 가져오기로 대체, 접는다",
+    "홈 → /privacy 「자세히」 일반 앵커 1건 — 감사 아님, target 무관",
+    "kill 13건 · 순위 밀림 없음(두 주 모두 not_found는 밀림이 아니라 색인 전)",
+    "llms.txt에 「비 와요(실내만)」가 있다 — 실내 속성이 생겼다면 keyword gate K2(비 오는 날) 재검토 대상이지만 이번 범위 밖, 다음 키워드 조사에서 본다"
+  ],
+  "failed": [
+    "GSC 구글 순위 — 데이터 처리 중, 확인 실패"
+  ],
+  "repo_changes": [
+    " M data/seo/keywords.json (주간 track 행 — 이번 가동 전 변경)",
+    " M data/seo/queue.json (seo:report --queue)",
+    "?? data/seo/diagnoses/2026-10-05T0656.json",
+    "?? data/seo/rank/naver-2026-10-05.json (이번 가동 전 생성)"
+  ]
+}
