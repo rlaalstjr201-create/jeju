@@ -1686,9 +1686,11 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
     res.writeHead(200, { 'content-type': TYPES[extname(p)] ?? 'text/html' }).end(body);
   });
   await new Promise((r) => srv.listen(0, r));
-  const url = `http://localhost:${srv.address().port}/`;
+  const localUrl = `http://localhost:${srv.address().port}/`;
+  // 로컬 접속은 통계에서 빠지므로(isLocalHost), 실제 방문처럼 보이는 호스트를 같은 서버로 이어 준다
+  const url = 'http://e2e.example.com/';
   const ANALYTICS = /googletagmanager\.com|google-analytics\.com|wcs\.naver\.(net|com)/;
-  async function run(trackOff) {
+  async function run(trackOff, pageUrl = url) {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
     await ctx.addInitScript(GEO_STUB);
     if (trackOff) await ctx.addInitScript(() => localStorage.setItem('jeju.track', 'false'));
@@ -1699,10 +1701,14 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
     await ctx.route('https://wcs.pstatic.net/**', (r) =>
       r.fulfill({ status: 200, contentType: 'text/javascript', body: 'window.wcs = { inflow: function () {} }; window.wcs_do = function () { window.__wcsDo = (window.__wcsDo || 0) + 1; };' }),
     );
+    await ctx.route('http://e2e.example.com/**', async (r) => {
+      const res = await r.fetch({ url: r.request().url().replace('http://e2e.example.com/', localUrl) });
+      await r.fulfill({ response: res });
+    });
     const seen = [];
     ctx.on('request', (r) => seen.push({ url: r.url(), body: r.postData() ?? '' }));
     const page = await ctx.newPage();
-    await page.goto(url, { waitUntil: 'load' });
+    await page.goto(pageUrl, { waitUntil: 'load' });
     await sleep(300);
     await tapText(page, '[data-mood="rest"]');
     await waitCards(page);
@@ -1744,6 +1750,12 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
     assert(sent.length === 0, `기록 끄기 on, still requested: ${sent.map((r) => r.url).join(', ')}`);
     assert(off.win.dataLayer === '[]' && off.win.wa === null && off.win.disabled === true, `기록 끄기 on, still set up: ${JSON.stringify(off.win)}`);
     assert(posts.length === 0, `기록 끄기 on, /api/events still got ${posts.length}`);
+
+    // 로컬 주소(localhost)로 열면 기록이 켜져 있어도 통계 스크립트를 부르지 않는다
+    const local = await run(false, localUrl);
+    const localSent = local.seen.filter((r) => ANALYTICS.test(r.url));
+    assert(localSent.length === 0, `localhost still requested: ${localSent.map((r) => r.url).join(', ')}`);
+    assert(local.win.dataLayer === '[]' && local.win.wa === null, `localhost still set up: ${JSON.stringify(local.win)}`);
   } finally {
     srv.close();
     rmSync(tmp, { recursive: true, force: true });

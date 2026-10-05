@@ -37,6 +37,11 @@ export function gaParams(ev: UsageEvent): Record<string, string | boolean> {
   return p;
 }
 
+/** Our own dev servers and previews: counted nowhere, so 방문 통계 holds real visitors only. */
+export function isLocalHost(hostname: string): boolean {
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]' || hostname.endsWith('.localhost');
+}
+
 export function createAnalytics(win: Window, ids: AnalyticsIds): Analytics | null {
   const ga = ids.ga4?.trim();
   const wa = ids.naverWa?.trim();

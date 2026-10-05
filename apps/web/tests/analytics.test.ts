@@ -2,7 +2,7 @@
 // ADR-0078: GA4 · 네이버 애널리틱스 on the page (after load, only while 기록 is on), and the collector on D1
 // (POST /api/events, GET /api/events/health).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createAnalytics, gaParams, type Analytics } from '../src/analytics';
+import { createAnalytics, gaParams, isLocalHost, type Analytics } from '../src/analytics';
 import type { UsageEvent } from '../src/track';
 import { countSince, d1Store, type D1Like, type D1Stmt } from '../events/d1';
 import { onRequest } from '../functions/api/events/index';
@@ -30,6 +30,13 @@ beforeEach(() => {
 });
 afterEach(() => {
   delete (document as unknown as Record<string, unknown>).readyState;
+});
+
+describe('isLocalHost', () => {
+  it('our own machine only', () => {
+    for (const h of ['localhost', '127.0.0.1', '[::1]', 'app.localhost']) expect(isLocalHost(h)).toBe(true);
+    for (const h of ['yeochana.pages.dev', 'notlocalhost.com', 'localhost.evil.com']) expect(isLocalHost(h)).toBe(false);
+  });
 });
 
 describe('createAnalytics', () => {
