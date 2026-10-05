@@ -1,5 +1,5 @@
 // 라이트하우스 3쪽×3번 측정 → 중앙값 요약 JSON (docs/perf/lighthouse-criteria.md 절차)
-// 사용: node docs/perf/lh.mjs <출력.json> [기준 주소=https://yeochana.pages.dev]
+// 사용: node docs/perf/lh.mjs <출력.json> [기준 주소=https://yeochana.pages.dev] [쪽 목록]
 // 원본 리포트는 OS 임시 폴더(lh-raw-*)에 남고 저장소에는 요약만 쓴다.
 import { execSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
@@ -9,7 +9,8 @@ import { join } from 'node:path';
 const out = process.argv[2];
 const base = (process.argv[3] ?? 'https://yeochana.pages.dev').replace(/\/$/, '');
 if (!out) throw new Error('출력 파일 경로가 필요합니다');
-const PAGES = ['/', '/jeju/', '/jeju/aewol/'];
+// 셋째 인자(쉼표 구분)는 로컬 확인용으로 쪽을 줄일 때만 쓴다. 공식 전·후 측정은 기본 3쪽.
+const PAGES = process.argv[4] ? process.argv[4].split(',') : ['/', '/jeju/', '/jeju/aewol/'];
 const RUNS = 3;
 const CATS = ['performance', 'accessibility', 'best-practices', 'seo'];
 const METRICS = {
