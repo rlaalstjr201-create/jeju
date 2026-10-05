@@ -2,7 +2,7 @@
 import { AREAS, nearestArea, type Area, type AreaName } from './areas';
 import type { Day } from './dates';
 import { marketDay } from './market';
-import { distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Mood, type Point, type Spot } from './pick';
+import { byId, distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Mood, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
 import { sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
@@ -31,11 +31,11 @@ export interface MarketRow {
 /** 오일장 open on `day`: with a basis, within 차로 30분, nearest first; without, all of them by score, with their area. */
 export function openMarkets(spots: Spot[], origin: Origin | null, day: Day): MarketRow[] {
   const open = spots.filter((x) => listed(x) && x.market && marketDay(x.market, day) === 'open');
-  if (!origin) return open.sort((a, b) => b.score - a.score || a.id.localeCompare(b.id)).map((spot) => ({ spot, where: nearestArea(spot).label }));
+  if (!origin) return open.sort((a, b) => b.score - a.score || byId(a.id, b.id)).map((spot) => ({ spot, where: nearestArea(spot).label }));
   return open
     .filter((x) => withinReach('drive30', origin.point, x))
     .map((spot) => ({ spot, km: distanceKm(origin.point, spot) }))
-    .sort((a, b) => a.km - b.km || a.spot.id.localeCompare(b.spot.id))
+    .sort((a, b) => a.km - b.km || byId(a.spot.id, b.spot.id))
     .map(({ spot }) => ({ spot, where: travelText(travel(origin.point, origin.isPoint, spot)) }));
 }
 
@@ -66,7 +66,7 @@ export function sunsetSpots(spots: Spot[], origin: Origin, day: Day): MarketRow[
     out.push({ spot, tier, km: distanceKm(origin.point, spot), where: travelText(t) });
   }
   return out
-    .sort((a, b) => a.tier - b.tier || a.km - b.km || a.spot.id.localeCompare(b.spot.id))
+    .sort((a, b) => a.tier - b.tier || a.km - b.km || byId(a.spot.id, b.spot.id))
     .map(({ spot, where }) => ({ spot, where }));
 }
 
@@ -85,6 +85,8 @@ export function todayActs(markets: MarketRow[], rain = false, sunset: MarketRow[
 /** 비 소식 shows: it rains (pop ≥ 60) in the area the home speaks for now. */
 export const rainNow = (s: State): boolean => !!s.rain?.rain && s.rain.area === rainArea(s);
 
+/** km along a meridian per degree of latitude (distanceKm's earth radius 6371) */
+const KM_PER_LAT_DEG = (6371 * Math.PI) / 180;
 export interface AreaTile {
   area: Area;
   photo: Spot | null;
@@ -96,9 +98,11 @@ export function otherAreas(spots: Spot[], origin: Origin | null, broken: readonl
   const photos = spots.filter((x) => listed(x) && x.image && x.mood !== 'food' && !broken.includes(x.id));
   return AREAS.filter((a) => a.name !== here).map((area) => {
     const near = photos
+      // the latitude gap alone is never longer than the distance: skip those 5km+ apart by it before the sines
+      .filter((spot) => Math.abs(spot.lat - area.lat) * KM_PER_LAT_DEG < 5.01)
       .map((spot) => ({ spot, km: distanceKm(area, spot) }))
       .filter((c) => c.km < 5)
-      .sort((a, b) => b.spot.score - a.spot.score || a.km - b.km || a.spot.id.localeCompare(b.spot.id));
+      .sort((a, b) => b.spot.score - a.spot.score || a.km - b.km || byId(a.spot.id, b.spot.id));
     return { area, photo: near[0]?.spot ?? null };
   });
 }
