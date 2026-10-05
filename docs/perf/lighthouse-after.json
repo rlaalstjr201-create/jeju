@@ -1,0 +1,269 @@
+{
+  "measuredAt": "2026-10-05T08:57:33.404Z",
+  "tool": "npx lighthouse (기본 모바일), 쪽마다 3번, 중앙값",
+  "base": "https://yeochana.pages.dev",
+  "rawDir": "C:\\Users\\rlaal\\AppData\\Local\\Temp\\lh-raw-5uw0fN",
+  "pages": {
+    "/": {
+      "url": "https://yeochana.pages.dev/",
+      "median": {
+        "scores": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 77,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 1175,
+          "CLS": 0.058,
+          "TBT": 157,
+          "FCP": 1148,
+          "SI": 1148
+        }
+      },
+      "runs": [
+        {
+          "scores": {
+            "performance": 98,
+            "accessibility": 100,
+            "best-practices": 77,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 916.346,
+            "CLS": 0.05755016846798591,
+            "TBT": 156.5,
+            "FCP": 916.346,
+            "SI": 1145.8067842744858
+          }
+        },
+        {
+          "scores": {
+            "performance": 88,
+            "accessibility": 100,
+            "best-practices": 77,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 3331.444,
+            "CLS": 0.03266360913047849,
+            "TBT": 241,
+            "FCP": 1231.444,
+            "SI": 1231.444
+          }
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 77,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1174.8825000000002,
+            "CLS": 0.05755016846798591,
+            "TBT": 118.5,
+            "FCP": 1148.3825000000002,
+            "SI": 1148.3825000000002
+          }
+        }
+      ],
+      "topFailing": [
+        {
+          "category": "best-practices",
+          "id": "third-party-cookies",
+          "score": 0,
+          "displayValue": "2 cookies found"
+        },
+        {
+          "category": "best-practices",
+          "id": "inspector-issues",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "category": "performance",
+          "id": "cache-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 17 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "image-delivery-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 597 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "legacy-javascript-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "render-blocking-insight",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "category": "performance",
+          "id": "unused-javascript",
+          "score": 0.5,
+          "displayValue": "Est savings of 72 KiB"
+        }
+      ]
+    },
+    "/jeju/": {
+      "url": "https://yeochana.pages.dev/jeju/",
+      "median": {
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 1090,
+          "CLS": 0,
+          "TBT": 0,
+          "FCP": 967,
+          "SI": 967
+        }
+      },
+      "runs": [
+        {
+          "scores": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1205.382,
+            "CLS": 0,
+            "TBT": 0,
+            "FCP": 966.691,
+            "SI": 966.691
+          }
+        },
+        {
+          "scores": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1089.504,
+            "CLS": 0,
+            "TBT": 4.5,
+            "FCP": 1089.504,
+            "SI": 1089.504
+          }
+        },
+        {
+          "scores": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 960,
+            "CLS": 0,
+            "TBT": 0,
+            "FCP": 960,
+            "SI": 960
+          }
+        }
+      ],
+      "topFailing": [
+        {
+          "category": "performance",
+          "id": "render-blocking-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 20 ms"
+        }
+      ]
+    },
+    "/jeju/aewol/": {
+      "url": "https://yeochana.pages.dev/jeju/aewol/",
+      "median": {
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 1147,
+          "CLS": 0,
+          "TBT": 0,
+          "FCP": 1053,
+          "SI": 2129
+        }
+      },
+      "runs": [
+        {
+          "scores": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1146.992,
+            "CLS": 0,
+            "TBT": 0,
+            "FCP": 1146.992,
+            "SI": 2157.7352020588396
+          }
+        },
+        {
+          "scores": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1215.578,
+            "CLS": 0,
+            "TBT": 0,
+            "FCP": 1052.789,
+            "SI": 2075.8249639702794
+          }
+        },
+        {
+          "scores": {
+            "performance": 100,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1040.354,
+            "CLS": 0,
+            "TBT": 0,
+            "FCP": 1040.354,
+            "SI": 2129.2046298912524
+          }
+        }
+      ],
+      "topFailing": [
+        {
+          "category": "performance",
+          "id": "image-delivery-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 953 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "render-blocking-insight",
+          "score": 0.5,
+          "displayValue": ""
+        }
+      ]
+    }
+  }
+}
