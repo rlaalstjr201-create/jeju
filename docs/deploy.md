@@ -6,15 +6,15 @@ ADR-0063 1. 정적 사이트 하나에 서버 코드는 Functions 둘(`apps/web/
 
 ### 실제 배포: 직접 업로드 (wrangler)
 
-프로젝트 `yeochana`(https://yeochana.pages.dev)는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
+프로젝트 `yeochana`(https://yeochana.com, ADR-0084 — `yeochana.pages.dev`·`www`는 `functions/_middleware.ts`가 301)는 Git 연결 없이 직접 업로드로 올린다. `apps/web`에서:
 
 ```sh
 # 처음 한 번, 그리고 migrations/에 새 파일이 생길 때: D1 테이블 만들기
 npx wrangler d1 migrations apply yeogwi-events --remote
 
-SITE_URL=https://yeochana.pages.dev npm run build   # dist/ (표 참고)
+SITE_URL=https://yeochana.com npm run build   # dist/ (표 참고)
 npx wrangler pages deploy dist --project-name yeochana
-SITE=https://yeochana.pages.dev bash scripts/smoke.sh                                                               # 아래 3
+SITE=https://yeochana.com bash scripts/smoke.sh                                                               # 아래 3
 ```
 
 - `VITE_EVENTS_URL`은 `SITE_URL`이 있으면 기본 `/api/events`라 넣지 않아도 된다. 셋(`VITE_GA4_ID`·`VITE_NAVER_WA`·`VITE_EVENTS_URL`) 중 하나라도 비면 빌드가 이름을 대고 실패한다(`scripts/analytics-env.ts`). 공개 ID(GA4 `G-P8DN26LKBC`, 네이버 `1caff08e05278f0`)는 `scripts/analytics-env.ts` `SITE_IDS`에 있어 `SITE_URL`만 주면 채워진다. 같은 이름 환경 변수가 있으면 그것이 이긴다.
@@ -34,7 +34,7 @@ for f in _redirects sw.js; do tr -d '\r' < apps/web/scripts/redirect-site/$f > /
 cd /tmp/old-redirect
 npx wrangler pages deploy . --project-name yeogwi --branch master
 npx wrangler pages deploy . --project-name gwichana-jeju --branch master
-for p in yeogwi gwichana-jeju; do curl -sI https://$p.pages.dev/jeju/aewol/ | grep -iE '^(HTTP|location)'; done   # 301, location: https://yeochana.pages.dev/jeju/aewol/
+for p in yeogwi gwichana-jeju; do curl -sI https://$p.pages.dev/jeju/aewol/ | grep -iE '^(HTTP|location)'; done   # 301, location: https://yeochana.com/jeju/aewol/
 ```
 
 ### Git 연결로 바꿀 때
@@ -93,7 +93,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 
 ## 3. 배포 뒤 스모크 (`SITE`=사이트 주소)
 
-명령어 점검은 한 번에: `SITE=https://yeochana.pages.dev bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것). 분석 셋도 본다: 홈 HTML에 GA4 ID와 `naver-wa=`, `/api/events/health` 200 JSON, 작은 배열 `POST /api/events` 204(확인용 기분 탭 1건이 기록에 더해진다).
+명령어 점검은 한 번에: `SITE=https://yeochana.com bash apps/web/scripts/smoke.sh` (아래 명령 목록을 자동화한 것). 분석 셋도 본다: 홈 HTML에 GA4 ID와 `naver-wa=`, `/api/events/health` 200 JSON, 작은 배열 `POST /api/events` 204(확인용 기분 탭 1건이 기록에 더해진다).
 
 명령으로:
 

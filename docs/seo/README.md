@@ -1,6 +1,6 @@
 # SEO·GEO — 여차나:제주
 
-검색(구글·네이버)과 생성형 엔진(ChatGPT·Perplexity·Gemini·Claude·네이버 AI 브리핑)에서 여차나:제주(https://yeochana.pages.dev)가 찾아지고 인용되게 하는 루프.
+검색(구글·네이버)과 생성형 엔진(ChatGPT·Perplexity·Gemini·Claude·네이버 AI 브리핑)에서 여차나:제주(https://yeochana.com)가 찾아지고 인용되게 하는 루프.
 설계는 seoulist의 SEO 시스템을 옮기고, 그 프로젝트가 **검색어 경쟁에서 진 이유**(`seoulist-postmortem.md`)를 규칙으로 막았다.
 
 | 무엇 | 어디 |
@@ -79,7 +79,7 @@
 
 측정은 기계가, 고침은 로컬 커밋까지, 배포·push는 사람이 한다. 순서(apps/web에서):
 
-1. `SITE_URL=https://yeochana.pages.dev npm run build` → `npm run seo:crawl` · `npm run seo:verify`
+1. `SITE_URL=https://yeochana.com npm run build` → `npm run seo:crawl` · `npm run seo:verify`
 2. `node scripts/seo/rank-naver.mjs` → `data/seo/rank/naver-YYYY-MM-DD.json` (막히면 `check_failed`, 같은 날 다시 재지 않는다. `--dry`는 목록만)
 3. GSC 「실적 → 검색어」(지난 7일)를 크롬에서 읽어 `data/seo/gsc/YYYY-MM-DD.json`에 저장 — `{date_range:{start,end}, rows:[{query, clicks, impressions, ctr, position}]}`
 4. `node scripts/seo/gsc-import.mjs --gsc data/seo/gsc/YYYY-MM-DD.json` → target `track[]` 한 줄 + `seo:keywords --track` 판정 + 「밀림」 경보(3계단 넘게 하락·10위 밖으로, 색인 4주 안은 보류). 못 읽은 칸은 「확인 실패」로 남긴다

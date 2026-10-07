@@ -100,3 +100,4 @@
 | 0080 | [0080-seasonal-spots.md](0080-seasonal-spots.md) | 계절 명소(철) 1단계 — 원문으로 판정한 곳에만, 그해 관측일 또는 원문이 말한 달에만, 카드 메타 줄 글자 하나 | Accepted (2026-10-04) |  |
 | 0081 | [0081-in-app-survey.md](0081-in-app-survey.md) | 써 본 사람에게만 묻는 짧은 설문, 글자 한 줄로, 자체 D1에 | Accepted (2026-10-04) |  |
 | 0082 | [0082-rename-yeochana.md](0082-rename-yeochana.md) | 이름 「여차나:제주」, 주소 yeochana.pages.dev (ADR-0077 대체) | Accepted (2026-10-04) |  |
+| 0084 | [0084-custom-domain-yeochana-com.md](0084-custom-domain-yeochana-com.md) | 주소 yeochana.com — pages.dev·www는 같은 경로로 301, pages.dev/sw.js만 캐시 걷는 워커 (ADR-0082 주소 부분 대체) | Accepted (2026-10-08) |  |

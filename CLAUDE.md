@@ -2,7 +2,7 @@
 
 # CLAUDE.md
 
-> 여차나:제주 — P를 위한 여행동반자 (https://yeochana.pages.dev)
+> 여차나:제주 — P를 위한 여행동반자 (https://yeochana.com)
 
 ## 행동 원칙
 
