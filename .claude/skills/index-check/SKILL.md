@@ -11,8 +11,8 @@ description: 여차나:제주 색인 상태를 구글 서치콘솔과 네이버 
 
 | | 브라우저 | 읽을 것 |
 |---|---|---|
-| 구글 서치콘솔 | Claude in Chrome (사용자 크롬, 로그인 상태) | `https://search.google.com/search-console/index?resource_id=https%3A%2F%2Fyeochana.pages.dev%2F` 색인 생성 쪽수·미색인 사유 / `…/sitemaps?resource_id=…` 사이트맵 상태·마지막으로 읽은 날짜·발견된 페이지 |
-| 네이버 서치어드바이저 | Playwright MCP (`--user-data-dir C:\Users\rlaal\.playwright-naver`) — 크롬 확장은 naver.com 전체가 막힌다 | `https://searchadvisor.naver.com/console/site/report/crawl?site=https%3A%2F%2Fyeochana.pages.dev` 를 연 뒤 화면이 부른 `api-console/report/*` 응답을 `browser_network_requests`(filter `api-console`) → `browser_network_request`(response-body)로 읽는다. 그래프는 canvas라 글자로 안 나온다 |
+| 구글 서치콘솔 | Claude in Chrome (사용자 크롬, 로그인 상태) | `https://search.google.com/search-console/index?resource_id=https%3A%2F%2Fyeochana.com%2F` 색인 생성 쪽수·미색인 사유 / `…/sitemaps?resource_id=…` 사이트맵 상태·마지막으로 읽은 날짜·발견된 페이지 |
+| 네이버 서치어드바이저 | Playwright MCP (`--user-data-dir C:\Users\rlaal\.playwright-naver`) — 크롬 확장은 naver.com 전체가 막힌다 | `https://searchadvisor.naver.com/console/site/report/crawl?site=https%3A%2F%2Fyeochana.com` 를 연 뒤 화면이 부른 `api-console/report/*` 응답을 `browser_network_requests`(filter `api-console`) → `browser_network_request`(response-body)로 읽는다. 그래프는 canvas라 글자로 안 나온다 |
 
 네이버 응답에서 쓰는 것:
 - `report/crawl/…&count=5`: 날짜별 `pageCount`(수집 쪽수)·`sumErrorCount`. 처음 0이 아닌 날 = 첫 수집일.

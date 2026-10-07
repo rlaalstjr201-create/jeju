@@ -1,12 +1,13 @@
 {
   "_why": "SEO 계기 설정. 비밀값은 넣지 않는다 — 자격증명은 환경변수 이름만 적는다. 배포 후 docs/seo/README.md 순서대로 채운다.",
-  "site_url": "https://yeochana.pages.dev",
+  "site_url": "https://yeochana.com",
   "gsc": {
     "property": "https://yeochana.pages.dev/",
     "credentials_env": "GSC_CREDENTIALS",
     "verified_at": "2026-10-03",
     "sitemap_submitted_at": "2026-10-03",
-    "_note": "URL 접두어 속성. 서비스 계정이 없어 API 미연결 — 주간 작업이 GSC 실적 화면(크롬)을 읽어 data/seo/gsc/YYYY-MM-DD.json → scripts/seo/gsc-import.mjs (ADR-0079 1)"
+    "_note": "URL 접두어 속성. 서비스 계정이 없어 API 미연결 — 주간 작업이 GSC 실적 화면(크롬)을 읽어 data/seo/gsc/YYYY-MM-DD.json → scripts/seo/gsc-import.mjs (ADR-0079 1)",
+    "_moved": "2026-10-08 새 속성 https://yeochana.com/ 추가 전(크롬에서 추가 창이 뜨지 않음). 추가 후 옛 속성에서 주소 변경"
   },
   "ga4": {
     "measurement_id": "G-P8DN26LKBC",
@@ -15,13 +16,12 @@
     "_note": "도입 완료(ADR-0078, 2026-10-03, 속성 「여차나:제주」). property_id·서비스 계정은 GA4 Data API를 붙일 때만 필요 — 그 전엔 주간 작업이 GA4 화면을 읽는다(ADR-0079)."
   },
   "naver": {
-    "site": "https://yeochana.pages.dev",
-    "verified_at": "2026-10-03",
-    "sitemap_submitted_at": "2026-10-03",
-    "collect_requested": [
-      "/ (2026-10-03)"
-    ],
-    "_note": "서치어드바이저는 공개 API가 없다 — 순위는 주간 Playwright 통합검색 관찰(scripts/seo/rank-naver.mjs, ADR-0079 1)"
+    "site": "https://yeochana.com",
+    "verified_at": "2026-10-08",
+    "sitemap_submitted_at": "",
+    "collect_requested": [],
+    "_note": "서치어드바이저는 공개 API가 없다 — 순위는 주간 Playwright 통합검색 관찰(scripts/seo/rank-naver.mjs, ADR-0079 1)",
+    "_moved": "2026-10-08 yeochana.pages.dev → yeochana.com (ADR-0084). 사이트맵 제출은 화면 버튼이 요청을 보내지 않아 미완 — robots.txt Sitemap 줄로 발견은 가능"
   },
   "bing": {
     "site": "",
