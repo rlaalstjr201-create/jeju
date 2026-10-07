@@ -26,7 +26,8 @@
     "analytics_site_url": "https://yeochana.com/ (2026-10-08 수정, wa 1caff08e05278f0 그대로)"
   },
   "bing": {
-    "site": "",
-    "_todo": "TODO: Bing Webmaster Tools(GSC 가져오기) — Copilot·ChatGPT 검색의 색인 소스. IndexNow(api.indexnow.org)는 등록 없이도 빙에 전달된다"
+    "site": "https://yeochana.com/",
+    "registered_at": "2026-10-08",
+    "_note": "GSC에서 가져오기(구글 계정, 서치콘솔 읽기 전용 권한). 사이트맵 https://yeochana.com/sitemap.xml 가져옴·처리 중. 옛 pages.dev 주소·ilson은 가져오지 않음"
   }
 }
