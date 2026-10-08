@@ -10,8 +10,12 @@ const rd = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split(/\r?\n/).
 const KEY = { X: 'B 담고 나중에 나누기', Y: 'A 지금 앱', Z: 'C 날짜 없음' };
 
 const skel = new Map(rd(path.join(ROOT, 'personas-skeleton.jsonl')).map((p) => [p.id, p]));
-const r1 = rd(path.join(W, 'replay-r1.jsonl'));
-const r2 = rd(path.join(W, 'replay-r2.jsonl'));
+const STRICT = process.env.STRICT === '1'; // 수정 2: 처음(엄격) 엔진 재생으로도 같은 판정을 낸다
+const r1 = rd(path.join(W, STRICT ? 'replay-r1-strict.jsonl' : 'replay-r1.jsonl'));
+const r2 = rd(path.join(W, STRICT ? 'replay-r2-strict.jsonl' : 'replay-r2.jsonl'));
+// 엄격 재생 파일엔 답변·행동이 없어 시뮬레이터 출력에서 붙인다
+const outsAll = new Map(fs.readdirSync(W).filter((n) => /^out-r[12]-/.test(n)).flatMap((n) => rd(path.join(W, n))).map((r) => [`${r.id}|${r.flow}|${r.round}`, r]));
+for (const r of [...r1, ...r2]) { const o = outsAll.get(`${r.id}|${r.flow}|${r.round}`); if (o) { r.stuck ??= o.stuck; r.burden ??= o.burden; r.again ??= o.again; r.actions = o.actions; } }
 const rows = [...r1, ...r2];
 
 // --- 부담(bound) 코드: 자유 문장을 규칙 사전으로(R4). 「없음」류면 부담 없음.
@@ -36,7 +40,8 @@ const sel = (o) => rows.filter((r) => Object.entries(o).every(([k, v]) => v === 
 function boot(xs, k, B = 1000) {
   const by = new Map(); for (const r of xs) (by.get(r.id) ?? by.set(r.id, []).get(r.id)).push(r);
   const ids = [...by.keys()]; if (!ids.length) return [NaN, NaN];
-  let seed = 7; const rnd = () => ((seed = (seed * 1103515245 + 12345) >>> 0) / 4294967296);
+  // mulberry32 (처음 쓴 LCG는 부동소수 곱셈 정밀도 손실로 표본이 치우쳐 구간이 점추정을 비켜 갔다)
+  let seed = 7; const rnd = () => { seed = (seed + 0x6d2b79f5) >>> 0; let t = seed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const vals = [];
   for (let b = 0; b < B; b++) { let n = 0, d = 0; for (let i = 0; i < ids.length; i++) { const g = by.get(ids[Math.floor(rnd() * ids.length)]); d += g.length; n += g.filter((r) => r[k]).length; } vals.push(pct(n, d)); }
   vals.sort((a, b) => a - b); return [vals[Math.floor(B * 0.025)], vals[Math.floor(B * 0.975)]];
@@ -87,8 +92,17 @@ P('|---|---|---|---|---|---|---|');
 for (const f of ['Y', 'X', 'Z']) { const xs = sel({ flow: f }).filter((r) => r.bound); const c = (k) => xs.filter((r) => r.boundCodes.includes(k)).length; P(`| ${f} | ${['날짜 정하기', '순서 정하기', '목록 관리', '정해야 하는 압박', '못 찾음', '기타'].map(c).join(' | ')} |`); }
 
 P('\n## 5. 지금 앱(Y)의 「지난 날 접힘」\n');
-const y5 = sel({ flow: 'Y', scenario: 'S5' });
-P(`Y의 S5 ${y5.length}건 중 접힌 지난 날 때문에 막힌 경우 ${y5.filter((r) => r.pastHidden).length}건, 펼치기를 눌러 찾은 경우 ${y5.filter((r) => r.done && r.taps >= 3).length}건(대략). S1 밤에 「내일」을 고르고 담은 비율: ${f1(pct(r1.filter((r) => r.flow === 'Y' && r.scenario === 'S1' && (r.savedAfter ?? []).some((s) => s.day >= 1)).length, r1.filter((r) => r.flow === 'Y' && r.scenario === 'S1' && r.hearts > 0).length))}% (하트 누른 사람 중)`);
+{
+  const meta = new Map(rd(path.join(W, 'r2-meta.jsonl')).map((m) => [`${m.id}|${m.flow}`, m]));
+  const y5 = sel({ flow: 'Y', scenario: 'S5' });
+  const allPast = y5.filter((r) => { const m = meta.get(`${r.id}|Y`); return m && m.saved.length && m.saved.every((s) => s.day < m.day); });
+  const rest = y5.filter((r) => !allPast.includes(r));
+  const toggled = y5.filter((r) => (r.actions ?? []).includes('past_toggle'));
+  P(`- Y의 S5 ${y5.length}건 중 어제 담은 게 전부 「지난 날」로 넘어가 첫 화면이 ♥ 0인 경우 ${allPast.length}건 — done ${f1(rate(allPast, 'done'))}% (오늘·내일 묶음에 남은 경우 ${rest.length}건 — done ${f1(rate(rest, 'done'))}%)`);
+  P(`- 「펼치기」를 실제로 누른 실행 ${toggled.length}건, 그 뒤 성공 ${toggled.filter((r) => r.done).length}건 · 접힌 줄을 눌러 막힌 실행 ${y5.filter((r) => r.pastHidden).length}건`);
+  const s1h = r1.filter((r) => r.flow === 'Y' && r.scenario === 'S1' && r.hearts > 0);
+  P(`- S1 밤에 하트를 누른 Y 실행 ${s1h.length}건 중 「내일」 이후로 담긴 비율 ${f1(pct(s1h.filter((r) => (r.savedAfter ?? []).some((s) => s.day >= 1)).length, s1h.length))}% — 나머지는 「오늘」로 담겨 다음 날 지난 날로 접힌다`);
+}
 
 P('\n## 6. 판정 (사전등록 규칙)\n');
 const Pd = (f) => summary[`P|${f}`], Gd = (f) => summary[`보통|${f}`];

@@ -5,6 +5,7 @@
 // 날짜는 정수 day로만 다룬다(오늘=현재 day, 내일=day+1, 「날짜 고르기」=day+2 로 고정).
 
 export const MOODS = ['rest', 'walk', 'new', 'food', 'any'];
+const SHEET_VERBS = new Set(['when', 'where', 'area', 'reach', 'indoor']);
 
 export function newState(flow, day = 0, saved = [], opts = {}) {
   return { flow, day, needArea: !!opts.needArea, screen: 'home', when: 'now', saved: saved.map((s) => ({ ...s })), shown: [], hearts: [], go: null, invalid: [], taps: 0, pastOpen: false, quit: false };
@@ -55,6 +56,12 @@ export function apply(st, action) {
   const [verb, a1, a2] = String(action).split(':');
   const bad = () => { st.invalid.push(`${st.screen}:${action}`); st.quit = true; return st; };
   const tap = (n = 1) => { st.taps += n; };
+  // 관대한 규칙(수정 2): 그만두기는 어디서나. 시트 밖의 시트 동작은 시트를 다시 연 것으로(+1탭).
+  // 이미 닫힌 시트의 닫기는 헛탭. 시트 안에서 시트 밖 동작이 오면 시트가 닫힌 것으로 보고 그 화면에서 다시 적용.
+  if (verb === 'quit') { st.quit = true; return st; }
+  if ((st.screen === 'home' || st.screen === 'cards') && SHEET_VERBS.has(verb)) { tap(); st.from = st.screen; st.screen = 'basis'; }
+  else if ((st.screen === 'home' || st.screen === 'cards') && verb === 'close') { tap(); return st; }
+  else if (st.screen === 'basis' && !SHEET_VERBS.has(verb) && verb !== 'close' && !st.needArea) { st.screen = st.from ?? 'home'; return apply(st, action); }
   switch (st.screen) {
     case 'home':
       if (verb === 'mood' && MOODS.includes(a1) && st.needArea) { tap(); st.pendingMood = a1; st.screen = 'basis'; st.from = 'home'; return st; } // 제주 밖: 동네부터 고르라고 뜬다

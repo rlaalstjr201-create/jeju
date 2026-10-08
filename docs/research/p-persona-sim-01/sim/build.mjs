@@ -81,10 +81,12 @@ function r1() {
   writeBatches(1, items);
 }
 
-function r2() {
-  const rep = new Map(readJsonl(path.join(W, 'replay-r1.jsonl')).map((r) => [`${r.id}|${r.flow}`, r]));
+function r2(cross = false) {
+  const rep = new Map(readJsonl(path.join(W, cross ? 'replay-cross-r1.jsonl' : 'replay-r1.jsonl')).map((r) => [`${r.id}|${r.flow}`, r]));
+  const only = cross ? new Set(JSON.parse(fs.readFileSync(path.join(W, 'picks.json'), 'utf8')).cross) : null;
   const items = [], meta = [];
   for (const { p, persona, name, narrative } of personas()) {
+    if (only && !only.has(p.id)) continue;
     for (const flow of FLOWS) {
       const r = rep.get(`${p.id}|${flow}`);
       const saved = r?.savedAfter ?? [];
@@ -103,6 +105,12 @@ function r2() {
       meta.push({ id: p.id, flow, day, saved, scenario: sc, first: p.scenario1 });
     }
   }
+  if (cross) {
+    for (const f of FLOWS) fs.writeFileSync(path.join(W, `cross-r2-${f}.jsonl`), items.filter((r) => r.flow === f).map((r) => JSON.stringify(r)).join('\n') + '\n');
+    fs.writeFileSync(path.join(W, 'cross-r2-meta.jsonl'), meta.map((m) => JSON.stringify(m)).join('\n') + '\n');
+    console.log(`cross r2: ${items.length} items`);
+    return;
+  }
   writeBatches(2, items);
   fs.writeFileSync(path.join(W, 'r2-meta.jsonl'), meta.map((m) => JSON.stringify(m)).join('\n') + '\n'); // 재생용(시뮬레이터에게 주지 않는다)
 }
@@ -111,4 +119,5 @@ const cmd = process.argv[2];
 if (cmd === 'flows') flows();
 else if (cmd === 'r1') r1();
 else if (cmd === 'r2') r2();
+else if (cmd === 'r2cross') r2(true);
 else console.error('사용: node sim/build.mjs flows|r1|r2');
