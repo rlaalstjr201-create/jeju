@@ -101,3 +101,4 @@
 | 0081 | [0081-in-app-survey.md](0081-in-app-survey.md) | 써 본 사람에게만 묻는 짧은 설문, 글자 한 줄로, 자체 D1에 | Accepted (2026-10-04) |  |
 | 0082 | [0082-rename-yeochana.md](0082-rename-yeochana.md) | 이름 「여차나:제주」, 주소 yeochana.pages.dev (ADR-0077 대체) | Accepted (2026-10-04) |  |
 | 0084 | [0084-custom-domain-yeochana-com.md](0084-custom-domain-yeochana-com.md) | 주소 yeochana.com — pages.dev·www는 같은 경로로 301, pages.dev/sw.js만 캐시 걷는 워커 (ADR-0082 주소 부분 대체) | Accepted (2026-10-08) |  |
+| 0085 | [0085-saved-flow-events.md](0085-saved-flow-events.md) | 저장 목록 열기·목록에서 연 길찾기(담은 지 날 수, 지난 날 여부)·정리 동작을 기록에 더함, 시각은 여전히 안 보냄 (ADR-0061 확장) | Accepted (2026-10-09) |  |
