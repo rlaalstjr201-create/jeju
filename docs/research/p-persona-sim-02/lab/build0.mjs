@@ -9,8 +9,11 @@ import { AREAS, SPOTS, carMin, rng, newSession } from './screen.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SIM1 = resolve(HERE, '../../p-persona-sim-01');
 const PILOT = process.argv.includes('--pilot');
-const OUT = resolve(HERE, PILOT ? '../work/pilot' : '../work/stage0');
-const R = rng('stage0-2026-10-09');
+// 0b단계(20-stage0-results.md 「다음」, 2026-10-10): 새 240명, 주 모델 Sonnet, 재검사 240명, 1인 호출은 판정 밖 상한 조건
+const S0B = process.argv.includes('--0b');
+const OUT = resolve(HERE, PILOT ? '../work/pilot' : S0B ? '../work/stage0b' : '../work/stage0');
+const MAIN = S0B ? 'sonnet' : 'opus';
+let R = rng('stage0-2026-10-09'); // 패널 고르기는 0단계와 같은 순서(겹치지 않게 다음 칸을 쓴다)
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 
 // ── 패널: 1차 인물 중 서사가 있는 900명에서 층화(P 156 · 보통 84) + 따로 파일럿 4명
@@ -21,8 +24,9 @@ for (const f of readdirSync(resolve(SIM1, 'work')).filter((f) => /^narr-\d\.json
 const withNarr = skel.filter((p) => narr.has(p.id));
 const byGroup = (g) => shuffle(withNarr.filter((p) => p.group === g));
 const P = byGroup('P'), G = byGroup('보통');
-const panel = [...P.slice(0, 156), ...G.slice(0, 84)];
+const panel = S0B ? [...P.slice(158, 314), ...G.slice(86, 170)] : [...P.slice(0, 156), ...G.slice(0, 84)];
 const pilot = [...P.slice(156, 158), ...G.slice(84, 86)];
+if (S0B) R = rng('stage0b-2026-10-10');
 
 // 제약이 동행과 안 맞으면 고친다(1차 한계 수정)
 const ALONE_BAD = ['동행이 옆에서 말을 건다', '아이를 챙기느라 자주 끊긴다'];
@@ -80,7 +84,7 @@ function addCalls(run, people, arms, scenarios, perCall, opts = {}) {
     const order = shuffle(people);
     for (let i = 0; i < order.length; i += perCall) {
       const id = `${run}-${arm}-${sc}-${String(i / perCall + 1).padStart(2, '0')}`;
-      calls.push({ id, run, arm, scenario: sc, model: opts.model ?? 'opus', lang: opts.lang ?? 'ko', narrative: opts.narrative ?? true,
+      calls.push({ id, run, arm, scenario: sc, model: opts.model ?? MAIN, lang: opts.lang ?? 'ko', narrative: opts.narrative ?? true,
         sessions: order.slice(i, i + perCall).map((p) => session(p, arm, sc, run, opts.seedTag)) });
     }
   }
@@ -92,13 +96,13 @@ if (PILOT) {
 } else {
   const ARMS = ['base', 'dup', 'neg', 'L1', 'L2', 'L3'];
   addCalls('main', people, ARMS, ['S1', 'S2', 'S5'], 10);                       // 0-1~0-4
-  addCalls('retest', people.slice(0, 120), ['base', 'L3'], ['S1', 'S2', 'S5'], 10); // 0-5 (같은 카드·같은 시작, 다른 호출)
+  addCalls('retest', S0B ? people : people.slice(0, 120), ['base', 'L3'], ['S1', 'S2', 'S5'], 10); // 0-5 (같은 카드·같은 시작, 다른 호출)
   const sub = people.slice(120, 168);                                            // 0-6·0-7 소패널 48명
   addCalls('per1', sub, ['base', 'L3'], ['S5'], 1);
   addCalls('per50', sub, ['base', 'L3'], ['S5'], 48);
   addCalls('en', sub, ['base', 'L3'], ['S5', 'S1'], 10, { lang: 'en' });
   addCalls('nonarr', sub, ['base', 'L3'], ['S5', 'S1'], 10, { narrative: false });
-  for (const model of ['sonnet', 'haiku', 'fable']) addCalls(`m-${model}`, sub, ['base', 'L3'], ['S5', 'S1'], 10, { model });
+  for (const model of S0B ? ['opus', 'haiku', 'fable'] : ['sonnet', 'haiku', 'fable']) addCalls(`m-${model}`, sub, ['base', 'L3'], ['S5', 'S1'], 10, { model });
 }
 
 mkdirSync(resolve(OUT, 'calls'), { recursive: true });
