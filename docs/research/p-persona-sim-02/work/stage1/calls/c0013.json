@@ -20,12 +20,12 @@
     "saved": [
      {
       "id": "46f1772e-c096-4e9a-8ee0-591bd9808bf5",
-      "day": 0,
+      "day": 2,
       "order": 0
      },
      {
       "id": "d4c9d3a5-aa6d-4178-a0e8-939d83f29a71",
-      "day": 0,
+      "day": 1,
       "order": 1
      },
      {
@@ -41,7 +41,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -49,12 +49,23 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "d4c9d3a5-aa6d-4178-a0e8-939d83f29a71",
+     "from": "saved"
+    },
+    "taps": 7,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:2",
+     "day:tomorrow",
+     "move:1",
+     "day:date",
+     "cal:2",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -75,7 +86,8 @@
       "id": "78873a69-cd44-4373-bdfd-388b76b1a113",
       "day": 0
      }
-    ]
+    ],
+    "moving": "46f1772e-c096-4e9a-8ee0-591bd9808bf5"
    }
   },
   {
@@ -95,12 +107,12 @@
     "saved": [
      {
       "id": "c6fd32c8-8942-48a8-8041-aac1d8190b23",
-      "day": 0,
+      "day": 1,
       "order": 0
      },
      {
       "id": "9b12eee1-db3e-49e7-9a39-a89427f0a654",
-      "day": 0,
+      "day": 1,
       "order": 1
      },
      {
@@ -116,7 +128,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -124,12 +136,22 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "c6fd32c8-8942-48a8-8041-aac1d8190b23",
+     "from": "saved"
+    },
+    "taps": 6,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:1",
+     "day:tomorrow",
+     "move:1",
+     "day:tomorrow",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -150,7 +172,8 @@
       "id": "ced1c16c-2a09-48cf-9997-7b04712ea9d4",
       "day": 0
      }
-    ]
+    ],
+    "moving": "9b12eee1-db3e-49e7-9a39-a89427f0a654"
    }
   },
   {
@@ -170,7 +193,7 @@
     "saved": [
      {
       "id": "73de633e-0aee-4992-8d12-89a7ced2802d",
-      "day": 0,
+      "day": 2,
       "order": 0
      },
      {
@@ -185,13 +208,13 @@
      },
      {
       "id": "0ea3351a-4685-425e-abcb-cad8c938b4d1",
-      "day": 0,
+      "day": 1,
       "order": 3
      }
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -199,12 +222,23 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "0ea3351a-4685-425e-abcb-cad8c938b4d1",
+     "from": "saved"
+    },
+    "taps": 7,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:4",
+     "day:tomorrow",
+     "move:1",
+     "day:date",
+     "cal:2",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -225,7 +259,8 @@
       "id": "0ea3351a-4685-425e-abcb-cad8c938b4d1",
       "day": 0
      }
-    ]
+    ],
+    "moving": "73de633e-0aee-4992-8d12-89a7ced2802d"
    }
   },
   {
@@ -245,12 +280,12 @@
     "saved": [
      {
       "id": "c1cb24d5-c7f1-40ac-9f30-1ffbf5395763",
-      "day": 0,
+      "day": 1,
       "order": 0
      },
      {
       "id": "2e7f8020-aecc-41b6-8694-f14cc91e25e7",
-      "day": 0,
+      "day": 1,
       "order": 1
      },
      {
@@ -266,7 +301,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -274,12 +309,22 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "c1cb24d5-c7f1-40ac-9f30-1ffbf5395763",
+     "from": "saved"
+    },
+    "taps": 6,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:2",
+     "day:tomorrow",
+     "move:1",
+     "day:tomorrow",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -300,7 +345,8 @@
       "id": "7e76e85c-1b91-4cb8-8be5-e4a5cfcc1101",
       "day": 0
      }
-    ]
+    ],
+    "moving": "c1cb24d5-c7f1-40ac-9f30-1ffbf5395763"
    }
   },
   {
@@ -320,12 +366,12 @@
     "saved": [
      {
       "id": "41f2910d-0617-4eba-a1a6-1bf11376cc5e",
-      "day": 0,
+      "day": 1,
       "order": 0
      },
      {
       "id": "8f67b971-8c5d-4aef-bf74-ddce5b38f5db",
-      "day": 0,
+      "day": 2,
       "order": 1
      },
      {
@@ -341,7 +387,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -349,12 +395,23 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "41f2910d-0617-4eba-a1a6-1bf11376cc5e",
+     "from": "saved"
+    },
+    "taps": 7,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:1",
+     "day:tomorrow",
+     "move:1",
+     "day:date",
+     "cal:2",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -375,7 +432,8 @@
       "id": "15e35c36-8637-487e-983f-eeb11ba61c94",
       "day": 0
      }
-    ]
+    ],
+    "moving": "8f67b971-8c5d-4aef-bf74-ddce5b38f5db"
    }
   },
   {
@@ -395,7 +453,7 @@
     "saved": [
      {
       "id": "4d427916-1507-4c2f-8c26-5cd57644d4ed",
-      "day": 0,
+      "day": 1,
       "order": 0
      },
      {
@@ -405,7 +463,7 @@
      },
      {
       "id": "7b4511e3-3d4f-4309-8a65-50bcc73249f1",
-      "day": 0,
+      "day": 1,
       "order": 2
      },
      {
@@ -416,7 +474,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -424,12 +482,22 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "4d427916-1507-4c2f-8c26-5cd57644d4ed",
+     "from": "saved"
+    },
+    "taps": 6,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:3",
+     "day:tomorrow",
+     "move:1",
+     "day:tomorrow",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -450,7 +518,8 @@
       "id": "f116122d-ecd8-4fa5-bb46-6cdf001b5bf4",
       "day": 0
      }
-    ]
+    ],
+    "moving": "4d427916-1507-4c2f-8c26-5cd57644d4ed"
    }
   },
   {
@@ -470,12 +539,12 @@
     "saved": [
      {
       "id": "e7ee29a1-fb20-4c50-9185-094bdb958dc3",
-      "day": 0,
+      "day": 2,
       "order": 0
      },
      {
       "id": "716b2159-74a0-4338-b501-b9efa84f5adb",
-      "day": 0,
+      "day": 2,
       "order": 1
      },
      {
@@ -491,7 +560,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -499,12 +568,24 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "e7ee29a1-fb20-4c50-9185-094bdb958dc3",
+     "from": "saved"
+    },
+    "taps": 8,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:2",
+     "day:date",
+     "cal:2",
+     "move:1",
+     "day:date",
+     "cal:2",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -525,7 +606,8 @@
       "id": "f4a9348e-55a4-448d-8742-aea93b2c9ce3",
       "day": 0
      }
-    ]
+    ],
+    "moving": "e7ee29a1-fb20-4c50-9185-094bdb958dc3"
    }
   },
   {
@@ -545,12 +627,12 @@
     "saved": [
      {
       "id": "739d5ea0-16e0-4f66-8d45-d38bf4a1a693",
-      "day": 0,
+      "day": 1,
       "order": 0
      },
      {
       "id": "2e467a15-0ff0-4ea3-8a9f-d4e980e73bf6",
-      "day": 0,
+      "day": 2,
       "order": 1
      },
      {
@@ -566,7 +648,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -574,12 +656,23 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "739d5ea0-16e0-4f66-8d45-d38bf4a1a693",
+     "from": "saved"
+    },
+    "taps": 7,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:1",
+     "day:tomorrow",
+     "move:1",
+     "day:date",
+     "cal:2",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -600,7 +693,8 @@
       "id": "d5c1d68e-c7be-46fe-a827-34d68e8b80eb",
       "day": 0
      }
-    ]
+    ],
+    "moving": "2e467a15-0ff0-4ea3-8a9f-d4e980e73bf6"
    }
   },
   {
@@ -620,7 +714,7 @@
     "saved": [
      {
       "id": "c942821e-4569-47ef-915f-b99d8e6d1593",
-      "day": 0,
+      "day": 1,
       "order": 0
      },
      {
@@ -630,7 +724,7 @@
      },
      {
       "id": "81f856d7-7195-4004-a092-85891d0e4599",
-      "day": 0,
+      "day": 1,
       "order": 2
      },
      {
@@ -641,7 +735,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -649,12 +743,22 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "c942821e-4569-47ef-915f-b99d8e6d1593",
+     "from": "saved"
+    },
+    "taps": 6,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:3",
+     "day:tomorrow",
+     "move:1",
+     "day:tomorrow",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -675,7 +779,8 @@
       "id": "609e2239-a3b2-4974-adfa-af5aa53a2487",
       "day": 0
      }
-    ]
+    ],
+    "moving": "c942821e-4569-47ef-915f-b99d8e6d1593"
    }
   },
   {
@@ -695,12 +800,12 @@
     "saved": [
      {
       "id": "23fdbd4f-6f96-40db-992a-ddb157b967a7",
-      "day": 0,
+      "day": 2,
       "order": 0
      },
      {
       "id": "b54153e9-e93f-4784-b145-364bff4ae4c4",
-      "day": 0,
+      "day": 1,
       "order": 1
      },
      {
@@ -716,7 +821,7 @@
     ],
     "hour": 20,
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -724,12 +829,23 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "b54153e9-e93f-4784-b145-364bff4ae4c4",
+     "from": "saved"
+    },
+    "taps": 7,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "move:2",
+     "day:tomorrow",
+     "move:1",
+     "day:date",
+     "cal:2",
+     "go:3"
+    ],
     "part": 1,
     "banner": null,
     "parts": [],
@@ -750,7 +866,8 @@
       "id": "7264548b-627b-4799-ba68-6efc82ab697f",
       "day": 0
      }
-    ]
+    ],
+    "moving": "23fdbd4f-6f96-40db-992a-ddb157b967a7"
    }
   }
  ],
