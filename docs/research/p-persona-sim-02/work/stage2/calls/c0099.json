@@ -15,18 +15,24 @@
     "scenario": "NI",
     "area": "서귀포시내",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "0aca8cd7-e0ad-49b4-86c2-7e5f9d92a21b",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 1167,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -34,16 +40,42 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "0aca8cd7-e0ad-49b4-86c2-7e5f9d92a21b",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "0aca8cd7-e0ad-49b4-86c2-7e5f9d92a21b"
+      ],
+      "taps": 2,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:any",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -58,18 +90,24 @@
     "scenario": "NI",
     "area": "중문",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "a95774e8-9f56-43ee-8bc9-9e69fcfce50a",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 577,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -77,16 +115,43 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "a95774e8-9f56-43ee-8bc9-9e69fcfce50a",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "a95774e8-9f56-43ee-8bc9-9e69fcfce50a"
+      ],
+      "taps": 3,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:food",
+       "food:meal",
+       "heart:2",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -101,18 +166,24 @@
     "scenario": "NI",
     "area": "서귀포시내",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "6ef42394-e932-4dcd-988b-d4f7ff13b29d",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 1167,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -120,16 +191,42 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "6ef42394-e932-4dcd-988b-d4f7ff13b29d",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "6ef42394-e932-4dcd-988b-d4f7ff13b29d"
+      ],
+      "taps": 2,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:any",
+       "heart:2",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -144,18 +241,24 @@
     "scenario": "NI",
     "area": "조천",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "0244479f-9911-4126-8c0c-b30b2fe0e95f",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 757,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -163,16 +266,43 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "0244479f-9911-4126-8c0c-b30b2fe0e95f",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "0244479f-9911-4126-8c0c-b30b2fe0e95f"
+      ],
+      "taps": 3,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:food",
+       "food:meal",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -187,35 +317,114 @@
     "scenario": "NI",
     "area": "한림",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "b3898a07-339a-5c58-a262-5083df9da486",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 450,
+    "screen": "cards",
     "when": "now",
     "from": "home",
-    "cards": [],
-    "queue": [],
+    "cards": [
+     "b3898a07-339a-5c58-a262-5083df9da486",
+     "2784b138-0c54-4f3f-bc8f-793b149a074d",
+     "8b890e66-88c2-4073-bfff-d97f9630a190"
+    ],
+    "queue": [
+     "97202ad5-c1f9-473f-b0c8-e1ce84a73a30",
+     "650a0102-d556-439e-bb84-ec9d59a9a03f",
+     "a4f6ec78-cac6-46fd-a09d-97008a0df1f1",
+     "39c78adf-29e5-4ca4-8b56-1bb7015ccfed",
+     "00a8fa60-0aa5-4865-bae0-035caf387942",
+     "da7b63de-9bc1-4958-90bc-cf9c7735d337",
+     "f3d886fc-7379-4709-82e7-3471d8b2521b",
+     "180011b7-3a1d-41f0-acf3-6da28a314a7d",
+     "38ff7ce1-b916-46f7-93b6-971818373de7",
+     "72bbdf18-12f3-42cf-bdc5-3277bcd7855d",
+     "cc07da30-e268-49a6-8464-4b35b0348438",
+     "52fa06e9-4ab6-428a-9fb9-97bb3a528d30",
+     "f9e70ce4-c7da-44d7-9266-88ff757a253b",
+     "2420e1df-5930-4d54-93c4-03b1de2c143a",
+     "cc1ced36-966f-4e44-aa31-977dcd822ccf",
+     "df516c07-796c-483a-b9b8-db707530a6bd",
+     "e90d95bc-3a57-4d72-b0b5-3e212c97f378",
+     "2e209af1-502a-4ef3-9c0a-ddef343cfcab",
+     "6836b73c-e89f-4e17-95bc-54330d612bff",
+     "2104e2ae-10ac-47f3-8c1b-199c6b352415",
+     "5010f20c-d670-4c25-9992-3f9f6d8565a0",
+     "3da2a58c-7c05-45ac-adc4-d10c8e89d10a",
+     "492d7ae2-c91f-416c-b7df-8385398ea9ab",
+     "c1cde825-d769-4bd2-953f-1717c8a71027",
+     "87f7fade-908b-4381-986d-c761fff5ca16",
+     "c6899419-ed17-4981-a6f1-15d43546f17f",
+     "454eb337-9254-41d0-855e-b45dfbb3c312",
+     "ec8a7ac6-5bc2-4344-9418-efcb5e4f9fe3",
+     "7cf8ec67-d00a-406e-b4d9-b9895545ebb8",
+     "3193e30f-8301-4c51-8c3e-537b98cd0661",
+     "fa4a1a20-c67a-4725-91e2-3b380d2c29ab",
+     "041872c4-beb4-442d-aa6b-394486380d81",
+     "a740db8a-89d4-4717-8a63-430d10c8aacb",
+     "6149f012-872c-4be4-bfad-782e084336ad",
+     "3483eece-c634-44ec-9271-827dcb991067",
+     "66a4d4d9-125b-4a24-9641-0233ef236187",
+     "62ac4d25-f1f5-4687-88b9-5a9f0824b533",
+     "734f1934-4041-4415-8f1d-5ec24f66f068",
+     "466a93c7-38f6-4fa9-8147-aaead01e1483",
+     "7a7d93f0-2e1a-4a5e-9ed8-537fb6628f2e",
+     "a1bc27e5-a129-4de4-9f28-808ca987ad30",
+     "93b0dc01-c171-48ae-9ab3-e19752298736"
+    ],
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "b3898a07-339a-5c58-a262-5083df9da486",
+     "from": "cards"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "mood:new",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "b3898a07-339a-5c58-a262-5083df9da486"
+      ],
+      "taps": 2,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:new",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -230,35 +439,116 @@
     "scenario": "NI",
     "area": "구좌",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "940600f2-c72e-432b-b01a-f20993799b83",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 734,
+    "screen": "cards",
     "when": "now",
     "from": "home",
-    "cards": [],
-    "queue": [],
+    "cards": [
+     "603451e2-4fb3-4060-b99f-c3f5c117acd1",
+     "0ed09f83-0107-49d1-88b7-cbf5589e5b92",
+     "471f4411-4bff-4f4f-a602-74ad2f08656b"
+    ],
+    "queue": [
+     "39a7e8d3-7dab-4869-91d8-7b28319d6e0a",
+     "0e48b738-538f-494d-bfb7-0cff1be6d53f",
+     "0868a398-4797-4b06-b45f-504f10a375cb",
+     "e2a2c063-e20f-4ab2-9796-db12a04d7137",
+     "940600f2-c72e-432b-b01a-f20993799b83",
+     "8448abb9-31ed-46fb-b4ec-dc1e4f0ee00a",
+     "a04f4e8c-9645-440f-8e1e-9022775fdba6",
+     "b9377ada-a959-4dbf-9ccf-ead361707fac",
+     "bd8e8fe3-4370-4c7f-90f2-6ad584e27bd1",
+     "ea36bee4-4ff8-4b98-9420-91c35539a76f",
+     "1b107f72-eba8-474e-b6ef-b0726c5bf410",
+     "72629a24-f7a2-4423-bcad-3a2ae654f476",
+     "6eaba035-ca7e-4eb4-b7de-881d41df0196",
+     "ddf3897d-cf0c-4b3a-a0f4-74c41230d567",
+     "b5c3a2f9-9edc-4975-90be-2193a2b8821e",
+     "9f9d190a-97de-49fc-9287-ba52eac550d8",
+     "8f5c769c-b111-4079-ae59-c90369751bc0",
+     "97fd4409-c621-4e3a-a5d6-a1294e60a954",
+     "e1521dd0-3156-40a9-abcc-c7823fa0472b",
+     "c7e6cdab-2b0d-4c2c-b131-7534c9031774",
+     "ecd5bc53-fe4b-42ce-87fb-bcd5c9cb5138",
+     "5b1c3f62-7603-4a4b-865a-c1d806771396",
+     "f6d26bb2-54b5-4963-a5e5-b83b511582fa",
+     "8758c89a-6549-491b-993b-48135ef64137",
+     "0244479f-9911-4126-8c0c-b30b2fe0e95f",
+     "ca595367-c433-4958-959e-bed757af5b05",
+     "66921077-8d42-4bb8-965d-e11fcb0697a1",
+     "92e1dff4-24ff-42d6-bbc2-096e62d28d40",
+     "83e23d8f-6c2c-4cfa-8451-a64f125a3bca",
+     "05633f34-b5a9-41c7-aab6-400c85a04731",
+     "abf884bf-8559-4b11-9424-d6e4160aee3c",
+     "208576fb-9ad4-4ac2-826c-b68524346224",
+     "c52437ed-733b-4662-8537-931786fe57c0",
+     "26bc1d3c-cf89-4ea7-a48e-5876bd7c2875",
+     "768abb94-d644-4aec-9d63-16b9e7d006b5",
+     "6fa34d19-d0ec-4d6c-b43d-6afa415ba0a4",
+     "25be378a-8573-4f93-ac87-e468dfbe8ae8",
+     "6348bcac-f87c-4524-ae68-5255d0e5862a",
+     "c3841e06-d2cd-4e5b-986a-242da2b82811",
+     "d5cf41b9-f868-4810-a056-2cb92ca59619",
+     "2cefac39-c147-4b2b-bb4e-2a253e943153",
+     "6b8d9af2-4474-42a5-b1dd-7c00131bb5dc"
+    ],
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "603451e2-4fb3-4060-b99f-c3f5c117acd1",
+     "from": "cards"
+    },
+    "taps": 3,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "mood:food",
+     "food:meal",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "940600f2-c72e-432b-b01a-f20993799b83"
+      ],
+      "taps": 3,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:food",
+       "food:meal",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -273,35 +563,116 @@
     "scenario": "NI",
     "area": "서귀포시내",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "62227de9-f0e4-4668-9c27-e260bcc9820b",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 280,
+    "screen": "cards",
     "when": "now",
     "from": "home",
-    "cards": [],
-    "queue": [],
+    "cards": [
+     "eb7a6e43-cde1-4e89-83f5-52fcd8a5f930",
+     "211e6e58-06e4-4fe0-8832-b75b05f38f1b",
+     "d26976d0-530e-4af1-8455-871f341b505f"
+    ],
+    "queue": [
+     "822e3ee3-188c-4e20-903e-755b2de60cdb",
+     "ea2d1750-3a5e-4ee0-919c-130aac94013e",
+     "d2166b3b-0c31-4b69-bb26-2df4b63fede1",
+     "ff3fffd5-21dc-4d1b-848b-b1c0c24f0ce2",
+     "77e4dc55-ecf0-475e-8f03-2b5f452b0f42",
+     "2e73bcfd-c288-4bfa-aaf3-cb9e68301fbf",
+     "65fe14e5-b35d-4c7f-8642-72a8824f1610",
+     "cc793e40-1616-42b9-93cd-b075b10660fb",
+     "82514f60-6ad7-4cdd-b3b9-45e03aa16113",
+     "eee8093a-6809-4720-a056-4d4a095adef5",
+     "cd5b5a07-21db-47e0-a613-662c2f722f66",
+     "f3032cfa-6864-47e3-bfb6-6014b3738452",
+     "9de837b2-197c-43e8-8522-136a135a93e1",
+     "9a89c5f5-8c38-4f24-be27-d5f15e641356",
+     "ba360fe2-077d-4195-83b6-f2c771d38bed",
+     "5c7bf63b-2302-4bc2-9f4e-7bcee976c6d5",
+     "fe053e57-b71c-49fe-822c-04f4f45f1791",
+     "62227de9-f0e4-4668-9c27-e260bcc9820b",
+     "57985279-9ffa-4125-ac73-da11ef14a81b",
+     "ac8f6342-3855-4ccd-adbe-84d43e77e16c",
+     "1619563d-2d77-48a5-af41-76528e2e2bb1",
+     "de280e58-36ce-4bb4-969e-cc8a31c6e04d",
+     "3b2dcd95-6d01-4e4e-b2f5-f3003d28d7cd",
+     "fcf39f23-7285-4821-9230-90c452fa1cbc",
+     "c2508e4a-b085-4019-a83d-4e4cbe4684ee",
+     "ecf1be37-b2b9-4b46-a38d-d6f89bcad8d2",
+     "258e0458-5752-4ebf-816f-a5f55de6744c",
+     "9c10370b-3be5-40ee-8096-358acfb776da",
+     "4d9f1582-e036-4e6b-93aa-76b91f1a2855",
+     "843c7a56-e480-46b9-a379-32cdf78d29bc",
+     "66d13537-6992-4daf-a945-211191632162",
+     "c878a2c7-da3c-4bff-a09d-06be1f203fe8",
+     "34441f92-0964-4e2f-8519-eeadb4c85dda",
+     "d48e00bf-7033-4418-abaf-2212c819a2b6",
+     "1d0f442a-8cfd-4bb7-8695-3e0fff91486a",
+     "2916818b-a100-454c-81c6-ea66080014bb",
+     "74b9d943-6bf0-48c9-a175-1d091dc14897",
+     "3c721c57-7988-4947-a22c-c724393dc488",
+     "03f51416-b020-4691-9958-1c901ec378f9",
+     "c5a4a10c-8e44-4749-81ec-c67f6958f7c6",
+     "16e91f0d-1bde-48cb-876a-0de3626fd8ee",
+     "ecae3fb9-37f8-45b7-a782-acc1b89969b3"
+    ],
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "d26976d0-530e-4af1-8455-871f341b505f",
+     "from": "cards"
+    },
+    "taps": 3,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "mood:food",
+     "food:cafe",
+     "go:3"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "62227de9-f0e4-4668-9c27-e260bcc9820b"
+      ],
+      "taps": 3,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:food",
+       "food:cafe",
+       "heart:2",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -316,18 +687,24 @@
     "scenario": "NI",
     "area": "조천",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "7afcac53-0bf2-486f-9a04-f8bb9a74ef9f",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 250,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -335,16 +712,42 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "7afcac53-0bf2-486f-9a04-f8bb9a74ef9f",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "7afcac53-0bf2-486f-9a04-f8bb9a74ef9f"
+      ],
+      "taps": 2,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:walk",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -359,18 +762,24 @@
     "scenario": "NI",
     "area": "신제주",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "d9d5cc05-8d45-45b6-bb52-68cb32333836",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 741,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -378,16 +787,43 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "d9d5cc05-8d45-45b6-bb52-68cb32333836",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "d9d5cc05-8d45-45b6-bb52-68cb32333836"
+      ],
+      "taps": 3,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:food",
+       "food:meal",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   },
   {
@@ -402,18 +838,24 @@
     "scenario": "NI",
     "area": "성산",
     "where": "gps",
-    "day": 0,
-    "dateLabel": "10월 16일 (금)",
-    "saved": [],
-    "hour": 22,
+    "day": 1,
+    "dateLabel": "10월 17일 (토)",
+    "saved": [
+     {
+      "id": "a64a65e8-ff59-47aa-bfac-ce28e8c25ff3",
+      "day": null,
+      "order": 0
+     }
+    ],
+    "hour": 9,
     "next": {
      "day": 1,
      "hour": 9,
      "dateLabel": "10월 17일 (토)",
      "situation": "다음 장면 — 다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다."
     },
-    "randN": 0,
-    "screen": "home",
+    "randN": 156,
+    "screen": "saved",
     "when": "now",
     "from": "home",
     "cards": [],
@@ -421,16 +863,42 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "a64a65e8-ff59-47aa-bfac-ce28e8c25ff3",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "guideShown": false,
-    "log": [],
-    "part": 1,
+    "end": "go",
+    "guideShown": true,
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
+    "part": 2,
     "banner": null,
-    "parts": [],
-    "savedAtStart": []
+    "parts": [
+     {
+      "end": "quit",
+      "hearts": [
+       "a64a65e8-ff59-47aa-bfac-ce28e8c25ff3"
+      ],
+      "taps": 2,
+      "bad": 0,
+      "go": null,
+      "log": [
+       "mood:new",
+       "heart:1",
+       "quit"
+      ]
+     }
+    ],
+    "savedAtStart": [],
+    "toast": null,
+    "part2Start": {
+     "live": 1,
+     "saved": 1
+    }
    }
   }
  ],
