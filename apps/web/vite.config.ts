@@ -45,7 +45,7 @@ function siteUrl(): Plugin {
   let outDir = '';
   return {
     name: 'site-url',
-    transformIndexHtml: (html) => html.replaceAll('__SITE__', site),
+    transformIndexHtml: (html) => html.replaceAll('__SITE__', site).replaceAll('__SPOTS_V__', SPOTS_V),
     configResolved: (c) => void (outDir = resolve(c.root, c.build.outDir)),
     // public/privacy.html is copied as is: its canonical gets the same address after the copy (SEO, as the landing pages)
     closeBundle() {

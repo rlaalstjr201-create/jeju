@@ -11,7 +11,9 @@
     <!-- first paint already in the right background, no white flash at night (S49). The only colour literals outside the CSS tokens. -->
     <style>html{background:#ffffff}@media (prefers-color-scheme:dark){html{background:#0f1319}}</style>
     <!-- a mood tapped before the app script has run (slow first visit) is kept; the app carries it out once loaded -->
-    <script>(function(w){w.__early=function(e){var b=e.target&&e.target.closest&&e.target.closest('[data-mood]');if(b)w.__tap=b.getAttribute('data-mood')};w.addEventListener('click',w.__early,true)})(window)</script>
+    <script>(function(w){w.__early=function(e){var b=e.target&&e.target.closest&&e.target.closest('[data-mood]');if(!b)return;w.__tap=b.getAttribute('data-mood');var o=document.querySelectorAll('.wait-dots');for(var i=0;i<o.length;i++)o[i].remove();var d=document.createElement('span');d.className='wait-dots';d.setAttribute('aria-hidden','true');d.innerHTML='<i></i><i></i><i></i><i></i>';b.setAttribute('aria-busy','true');b.appendChild(d)};w.addEventListener('click',w.__early,true)})(window)</script>
+    <!-- that tap shows four pulsing dots (a slow first visit), after 300 ms so a fast load never flickers; the app removes them -->
+    <style>.wait-dots{display:grid;grid-template-columns:5px 5px;gap:3px;flex:none;margin-left:10px;opacity:0;animation:dots-in 1ms .3s forwards}.wait-dots i{width:5px;height:5px;border-radius:50%;background:var(--accent,currentColor);animation:dots 1s ease-in-out infinite}.wait-dots i:nth-child(2){animation-delay:.25s}.wait-dots i:nth-child(4){animation-delay:.5s}.wait-dots i:nth-child(3){animation-delay:.75s}@media (prefers-reduced-motion:reduce){.wait-dots i{animation:none}}@keyframes dots-in{to{opacity:1}}@keyframes dots{0%,100%{opacity:.25}50%{opacity:1}}</style>
     <!-- search engine ownership (docs/deploy.md 검색엔진): Google Search Console, URL prefix https://yeochana.com/ (ADR-0084) and the old https://yeochana.pages.dev/ -->
     <meta name="google-site-verification" content="mrtEJStpmkIRq2IqvJIGfvSx9kvGq8hqVM8sZREzNGs" />
     <meta name="google-site-verification" content="mX9RxOHk5bDDIeDwAwrxzB3KdjaRmUExOrTrZ73fP0w" />
@@ -34,6 +36,8 @@
     <meta name="twitter:description" content="지금 내 위치 근처에서 갈 만한 곳 3곳, 누르면 바로 길찾기. P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분 하나로 제주에서 지금 갈 곳을 골라 드려요." />
     <meta name="twitter:image" content="__SITE__/og.png" />
     <!-- absolute paths: the page works at any address (a deep link, a host or worker fallback; ADR-0063) -->
+    <!-- the place list starts downloading with the page, not after the app script (it is what the first tap waits for) -->
+    <link rel="preload" href="/spots.json?v=__SPOTS_V__" as="fetch" crossorigin="anonymous" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/icons/icon-192.png" type="image/png" />

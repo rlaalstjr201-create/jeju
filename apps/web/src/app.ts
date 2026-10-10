@@ -1078,6 +1078,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     delete early.__early;
     delete early.__tap;
   }
+  for (const b of doc.querySelectorAll('[data-mood][aria-busy]')) b.removeAttribute('aria-busy');
+  for (const d of doc.querySelectorAll('.wait-dots')) d.remove();
   const link = takeDeepLink(nav.initial.view === 'home');
   if (link) applyDeepLink(link);
   const rec = nav.initial.view !== 'home' ? store.readSession() : null;
