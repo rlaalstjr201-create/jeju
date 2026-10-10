@@ -43,6 +43,7 @@ function flowLines(rows, key) {
   const ops = OPS.map(([op, name]) => [name, id(`arrange:${op}`)]);
   const arranged = ops.reduce((s, [, x]) => s + x, 0);
   const out = [
+    '- 이 절의 카운터는 저장 목록 흐름 기록이 배포된 날부터 쌓여요. 그 전 날은 0이 아니라 기록이 없는 날이에요(창 안 횟수가 적게 보여요).',
     `- Q1 날짜를 고른 상태의 저장: ${saves ? `${dated} / ${saves} (${pct(dated, saves)})` : '저장 0회'}`,
     `- Q2-a 저장 목록 열기 ${opens}회${opens ? ` 중 ♥ 0이면서 지난 날이 접힌 채: ${both} (${pct(both, opens)})` : ''}`,
     `- Q2-b 목록에서 연 길찾기 ${maps}회${maps ? ` — 담은 날 0일 ${ages[0]}, 1일 ${ages[1]}, 2일 이상 ${ages[2]}, 모름 ${ages[3]}; 그중 지난 날 줄 ${past} (${pct(past, maps)})` : ''}`,
@@ -83,8 +84,7 @@ export function renderReport(allRows, names, today) {
       out.push('- 저장 상위(저장 − 해제):');
       for (const [id, n] of top) out.push(`  - ${names.get(id) ?? `(지금 데이터에 없는 곳 ${id})`} ${n}`);
     } else out.push('- 저장 데이터 없음');
-    // the counters are day × place × event: whether date mode was on is not among them (events/handler.ts)
-    out.push('- 날짜 모드 비율: 자체 기록에는 남지 않아요. GA4 `mood_tap`의 `dated` 값으로 봐요.');
+    out.push('- 날짜 모드 비율: 저장은 아래 「저장 목록 흐름」 Q1, 기분 탭은 GA4 `mood_tap`의 `dated` 값으로 봐요.');
     if (taps < 30) out.push(`- 기분 탭이 ${taps}회뿐이라 비율은 참고만 해요.`);
     out.push('');
   }

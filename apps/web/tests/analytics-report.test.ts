@@ -40,7 +40,7 @@ describe('analytics report', () => {
     expect(d7).toContain('  - 사려니숲길 3\n  - (지금 데이터에 없는 곳 gone) 1');
     expect(d7).not.toContain('동문시장');
     expect(d28).toContain('  - 사려니숲길 7\n  - 동문시장 3');
-    expect(md).toContain('날짜 모드 비율: 자체 기록에는 남지 않아요');
+    expect(md).toContain('날짜 모드 비율: 저장은 아래 「저장 목록 흐름」 Q1');
     expect(d7).not.toContain('참고만');
   });
 
