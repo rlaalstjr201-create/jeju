@@ -6,6 +6,7 @@ import { judge, rng } from './flow.mjs';
 
 const DIR = resolve(process.argv[2]);
 const WAVE = process.argv.includes('--wave') ? process.argv[process.argv.indexOf('--wave') + 1] : null;
+const QX = process.argv.includes('--q') ? Number(process.argv[process.argv.indexOf('--q') + 1]) : null;
 const REF = process.argv.includes('--ref') ? process.argv[process.argv.indexOf('--ref') + 1] : 'A';
 const manifest = JSON.parse(readFileSync(resolve(DIR, 'manifest.json'), 'utf8')).filter((c) => !WAVE || c.run === WAVE);
 const meta = new Map(readFileSync(resolve(DIR, 'sessions.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l)).map((m) => [m.sid, m]));
@@ -48,9 +49,9 @@ function paired(arm, sc, key = 'done', B = 4000) {
   for (let k = 0; k < B && people.length; k++) { let s = 0, n = 0; for (let i = 0; i < people.length; i++) { for (const x of people[Math.floor(r() * people.length)]) { s += x; n++; } } boots.push(s / n); }
   boots.sort((x, y) => x - y);
   const q = (p) => boots[Math.min(boots.length - 1, Math.floor(p * boots.length))];
-  return { n: pairs.length, diff: mean(pairs.map((p) => p.d)), lo95: q(0.025), hi95: q(0.975), lo90: q(0.05), hi90: q(0.95), disc: mean(pairs.map((p) => (p.d !== 0 ? 1 : 0))) };
+  return { n: pairs.length, diff: mean(pairs.map((p) => p.d)), lo95: q(0.025), hi95: q(0.975), lo90: q(0.05), hi90: q(0.95), ...(QX ? { loQ: q(QX), hiQ: q(1 - QX) } : {}), disc: mean(pairs.map((p) => (p.d !== 0 ? 1 : 0))) };
 }
-const fmtP = (x) => `${(100 * x.diff).toFixed(1)}%p [95% ${(100 * x.lo95).toFixed(1)}, ${(100 * x.hi95).toFixed(1)}] [90% ${(100 * x.lo90).toFixed(1)}, ${(100 * x.hi90).toFixed(1)}] n=${x.n} 엇갈림 ${pct(x.disc)}%`;
+const fmtP = (x) => `${(100 * x.diff).toFixed(1)}%p [95% ${(100 * x.lo95).toFixed(1)}, ${(100 * x.hi95).toFixed(1)}] [90% ${(100 * x.lo90).toFixed(1)}, ${(100 * x.hi90).toFixed(1)}] n=${x.n} 엇갈림 ${pct(x.disc)}%${x.loQ != null ? ` [${(100 * (1 - 2 * QX)).toFixed(1)}% ${(100 * x.loQ).toFixed(1)}, ${(100 * x.hiQ).toFixed(1)}]` : ''}`;
 
 const out = { dir: DIR, wave: WAVE, ref: REF, sessions: rows.length, ended: valid.length, missing: missing.length, cells: {}, paired: {} };
 console.log(`## 팔 × 상황 (%, ${WAVE ?? '전체'})`);

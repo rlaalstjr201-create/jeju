@@ -95,7 +95,7 @@ const people = SLICE[STAGE].map(person);
 const arms = ARMS_ARG ?? ALL;
 if (STAGE === '1' || STAGE === '1b') addCalls('main', people, arms, ['N', 'P', 'S2'], 10);
 if (STAGE === '2') { addCalls('w1', people.slice(0, 100), arms, ['NI', 'P'], 10); addCalls('w2', people.slice(100), arms, ['NI', 'P'], 10); }
-if (STAGE === '3') for (const rep of [1, 2]) addCalls('main', people, arms, ['NI', 'P', 'S2'], 10, rep);
+if (STAGE === '3') for (const rep of [1]) addCalls('main', people, arms, ['NI', 'P', 'S2'], 10, rep);
 
 mkdirSync(resolve(OUT, 'calls'), { recursive: true });
 const order = shuffle(calls.map((_, i) => i));

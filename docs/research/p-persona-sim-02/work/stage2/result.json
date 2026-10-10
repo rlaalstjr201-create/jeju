@@ -1,0 +1,168 @@
+{
+ "dir": "C:\\Users\\rlaal\\projects\\jeju\\docs\\research\\p-persona-sim-02\\work\\stage2",
+ "wave": null,
+ "ref": "A",
+ "sessions": 1200,
+ "ended": 1200,
+ "missing": 0,
+ "cells": {
+  "A|NI": {
+   "n": 200,
+   "done": 0.255,
+   "stuck": 0,
+   "cap": 0,
+   "bad": 0,
+   "taps": 2.485,
+   "burden": 0.065,
+   "stuckNote": 0.455,
+   "again": 2.975,
+   "nightHeart": 0.93,
+   "live0": 1
+  },
+  "A2|NI": {
+   "n": 200,
+   "done": 0.79,
+   "stuck": 0,
+   "cap": 0,
+   "bad": 0,
+   "taps": 2.07,
+   "burden": 0.065,
+   "stuckNote": 0.255,
+   "again": 3.29,
+   "nightHeart": 0.91,
+   "live0": 0
+  },
+  "B|NI": {
+   "n": 200,
+   "done": 0.835,
+   "stuck": 0,
+   "cap": 0,
+   "bad": 0,
+   "taps": 2.065,
+   "burden": 0.055,
+   "stuckNote": 0.25,
+   "again": 3.315,
+   "nightHeart": 0.95,
+   "live0": 0
+  },
+  "A|P": {
+   "n": 200,
+   "done": 0.655,
+   "stuck": 0,
+   "cap": 0,
+   "bad": 0.005,
+   "taps": 7.1,
+   "burden": 0.8,
+   "stuckNote": 0.755,
+   "again": 2.635,
+   "nightHeart": null,
+   "live0": null
+  },
+  "A2|P": {
+   "n": 200,
+   "done": 0.785,
+   "stuck": 0,
+   "cap": 0,
+   "bad": 0,
+   "taps": 7.775,
+   "burden": 0.78,
+   "stuckNote": 0.8,
+   "again": 2.595,
+   "nightHeart": null,
+   "live0": null
+  },
+  "B|P": {
+   "n": 200,
+   "done": 0.655,
+   "stuck": 0,
+   "cap": 0,
+   "bad": 0,
+   "taps": 6.76,
+   "burden": 0.785,
+   "stuckNote": 0.635,
+   "again": 2.59,
+   "nightHeart": null,
+   "live0": null
+  },
+  "A|NI|hearted": {
+   "n": 186,
+   "done": 0.27419354838709675
+  },
+  "A2|NI|hearted": {
+   "n": 182,
+   "done": 0.8681318681318682
+  },
+  "B|NI|hearted": {
+   "n": 190,
+   "done": 0.8789473684210526
+  }
+ },
+ "paired": {
+  "A2|NI": {
+   "n": 200,
+   "diff": 0.535,
+   "lo95": 0.455,
+   "hi95": 0.61,
+   "lo90": 0.47,
+   "hi90": 0.6,
+   "loQ": 0.445,
+   "hiQ": 0.625,
+   "disc": 0.585
+  },
+  "B|NI": {
+   "n": 200,
+   "diff": 0.58,
+   "lo95": 0.505,
+   "hi95": 0.655,
+   "lo90": 0.515,
+   "hi90": 0.645,
+   "loQ": 0.495,
+   "hiQ": 0.665,
+   "disc": 0.63
+  },
+  "A2|P": {
+   "n": 200,
+   "diff": 0.13,
+   "lo95": 0.05,
+   "hi95": 0.21,
+   "lo90": 0.06,
+   "hi90": 0.2,
+   "loQ": 0.035,
+   "hiQ": 0.225,
+   "disc": 0.38
+  },
+  "B|P": {
+   "n": 200,
+   "diff": 0,
+   "lo95": -0.085,
+   "hi95": 0.085,
+   "lo90": -0.07,
+   "hi90": 0.07,
+   "loQ": -0.1,
+   "hiQ": 0.095,
+   "disc": 0.38
+  },
+  "A2|NI|nightHeart": {
+   "n": 200,
+   "diff": -0.02,
+   "lo95": -0.065,
+   "hi95": 0.025,
+   "lo90": -0.06,
+   "hi90": 0.02,
+   "loQ": -0.07,
+   "hiQ": 0.035,
+   "disc": 0.12
+  },
+  "B|NI|nightHeart": {
+   "n": 200,
+   "diff": 0.02,
+   "lo95": -0.025,
+   "hi95": 0.07,
+   "lo90": -0.02,
+   "hi90": 0.06,
+   "loQ": -0.035,
+   "hiQ": 0.075,
+   "disc": 0.12
+  }
+ }
+}
