@@ -7,11 +7,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { act, attachRand, render } from './screen.mjs';
 
 const [cmd, file, arg] = process.argv.slice(2);
 if (!cmd || !file) { console.error('사용법: node step.mjs brief|show|act|check <call.json> ["s1=코드; s2=코드"]'); process.exit(2); }
 const call = JSON.parse(readFileSync(file, 'utf8'));
+// 1단계부터 흐름 엔진(flow.mjs). engine 칸이 없으면 0단계 엔진
+const { act, attachRand, render } = await import(call.engine === 'flow' ? './flow.mjs' : './screen.mjs');
 // 팔 코드 → 엔진 팔 이름(묶음 폴더 옆 key.json). 상태 파일엔 코드로만 남긴다.
 const KEY = JSON.parse(readFileSync(resolve(dirname(file), '..', 'key.json'), 'utf8'));
 call.sessions.forEach((s, i) => { s.key = `s${i + 1}`; s.code = s.state.arm; s.state.arm = KEY[s.code] ?? s.code; attachRand(s.state); });
@@ -23,7 +24,7 @@ const screenOf = (s) => (s.state.end ? `### ${s.key} — ${ENDED[s.state.end]}` 
 
 if (cmd === 'brief') {
   // 0c부터: 지시문·사람·첫 화면을 한 번에 — 하위 작업의 왕복을 줄인다(토큰 대부분이 왕복마다 다시 읽는 고정 맥락)
-  console.log(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'prompts', `agent-${en ? 'en' : 'ko'}.md`), 'utf8'), '\n---\n');
+  console.log(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'prompts', `agent-${call.engine === 'flow' ? 'flow-' : ''}${en ? 'en' : 'ko'}.md`), 'utf8'), '\n---\n');
   for (const s of call.sessions) {
     const p = call.persons[s.pid];
     const attrs = Object.entries(p.attrs).map(([k, v]) => `${k} ${v}`).join(' · ');
