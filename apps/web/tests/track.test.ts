@@ -2,7 +2,7 @@
 // 익명 사용 기록 (ADR-0061, specs/usage-events.md U1–U3): the tracker on its own (batching, offline, off), and
 // in the app with a fake sendBeacon (which events, once each, no position).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { FLUSH_AT, FLUSH_MS, createTracker, type UsageEvent } from '../src/track';
+import { FLUSH_AT, FLUSH_MS, ageOf, createTracker, type UsageEvent } from '../src/track';
 import { listed } from '../src/pick';
 import { realSpots } from './fixtures';
 import { $, $$, advance, cardIds, current, flush, render, reset, tap } from './harness';
@@ -304,5 +304,136 @@ describe('U3 기록 끄기', () => {
     hide();
     expect(beacon).not.toHaveBeenCalled();
     expect($('#savedView [data-action="track"]').textContent).toBe('기록 켜기');
+  });
+});
+
+// --- 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md F2–F6) ---
+const TODAY = '2026-10-10';
+/** a Jeju wall clock: `hm` on that Jeju day */
+const kst = (day: string, hm = '10:00') => () => new Date(`${day}T${hm}:00+09:00`);
+const row = (id: string, date: string, order: number, at?: string) => ({ id, date, order, ...(at ? { at } : {}) });
+function seed(entries: ReturnType<typeof row>[]) {
+  window.localStorage.setItem('jeju.saved.v2', JSON.stringify(entries));
+}
+const flowRender = () => render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp), today: kst(TODAY) });
+const savedLink = (id: string) => $<HTMLAnchorElement>(`#savedView .card[data-id="${id}"] .card-link`);
+const ctxNow = { range: '30', basis: 'here', dated: false, d: TODAY };
+
+describe('F4 ageOf — 담은 날부터 오늘까지', () => {
+  it('same day 0, yesterday 1, two days 2, three days still 2, no `at` none', () => {
+    expect(ageOf(TODAY, TODAY)).toBe(0);
+    expect(ageOf('2026-10-09', TODAY)).toBe(1);
+    expect(ageOf('2026-10-08', TODAY)).toBe(2);
+    expect(ageOf('2026-10-07', TODAY)).toBe(2);
+    expect(ageOf('2026-09-30', '2026-10-01')).toBe(1); // across a month
+    expect(ageOf(undefined, TODAY)).toBeUndefined();
+  });
+
+  it('a heart at 00:30 in Jeju (still the day before in UTC) is saved on the Jeju day, kept on this device only', async () => {
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp), today: kst(TODAY, '00:30') });
+    await tap(`[data-mood="${exp.mood}"]`);
+    await tap($$('#cards .heart')[0]);
+    const stored = JSON.parse(window.localStorage.getItem('jeju.saved.v2')!) as Record<string, unknown>[];
+    expect(stored).toEqual([expect.objectContaining({ date: TODAY, at: TODAY })]);
+    hide();
+    expect(JSON.stringify(sent)).not.toMatch(/"at"/);
+  });
+});
+
+describe('F2 저장 목록 열기 — open', () => {
+  it('once per opening: re-draws, 지난 날 펼치기 and moving rows add none; ♥ 0 with a folded 지난 날 says live0 and past', async () => {
+    seed([row(others[0].id, '2026-10-08', 0, '2026-10-07')]); // only a day gone by: ♥ 0, 지난 날 folded
+    flowRender();
+    await flush();
+    await tap('#saved');
+    await tap('#savedView [data-action="past"]'); // a re-draw
+    await tap('#savedView [data-action="past"]');
+    await tap('[data-action="close-saved"]');
+    await tap('#saved');
+    hide();
+    const opens = events().filter((e) => e.e === 'open');
+    expect(opens).toEqual([
+      { e: 'open', live0: true, past: true, ...ctxNow },
+      { e: 'open', live0: true, past: true, ...ctxNow },
+    ]);
+  });
+
+  it('something on today and later, nothing gone by: neither live0 nor past', async () => {
+    seed([row(others[0].id, TODAY, 0, TODAY)]);
+    flowRender();
+    await flush();
+    await tap('#saved');
+    hide();
+    expect(events().filter((e) => e.e === 'open')).toEqual([{ e: 'open', ...ctxNow }]);
+  });
+});
+
+describe('F3 저장 목록에서 연 길찾기 — map from saved', () => {
+  it("from: 'saved' with that row's age and past; no `at` → no age; a card's map has none of them", async () => {
+    seed([
+      row(others[0].id, '2026-10-08', 0, '2026-10-07'), // gone by, saved 3 days ago
+      row(others[1].id, TODAY, 0, '2026-10-09'), // today, saved yesterday
+      row(others[2].id, TODAY, 1), // saved before this (or from a backup)
+    ]);
+    flowRender();
+    await flush();
+    await tap('#saved');
+    savedLink(others[1].id).click();
+    advance();
+    savedLink(others[2].id).click();
+    advance();
+    await tap('#savedView [data-action="past"]');
+    savedLink(others[0].id).click();
+    advance();
+    await tap('[data-action="close-saved"]');
+    await tap(`[data-mood="${exp.mood}"]`);
+    const id = cardIds()[0] as string;
+    $(`#cards .card[data-id="${id}"] .card-link`).click();
+    advance();
+    hide();
+    const maps = events().filter((e) => e.e === 'map');
+    expect(maps.slice(0, 3)).toEqual([
+      { e: 'map', id: others[1].id, from: 'saved', age: 1, ...ctxNow },
+      { e: 'map', id: others[2].id, from: 'saved', ...ctxNow },
+      { e: 'map', id: others[0].id, from: 'saved', age: 2, past: true, ...ctxNow },
+    ]);
+    expect(maps[3]).toMatchObject({ e: 'map', id });
+    for (const k of ['from', 'age', 'past']) expect(maps[3]).not.toHaveProperty(k);
+    expect(JSON.stringify(sent)).not.toMatch(/"at"|2026-10-07|2026-10-09/);
+  });
+});
+
+describe('Q3 저장 목록 정리 — arrange', () => {
+  it('위로 / 아래로 / 다른 날로 (moved) / 지난 날 펼치기·접기: one arrange each, no place', async () => {
+    seed([row(others[0].id, TODAY, 0, TODAY), row(others[1].id, TODAY, 1, TODAY), row(others[2].id, '2026-10-08', 0), row(others[3].id, '2026-10-11', 0)]);
+    flowRender();
+    await flush();
+    await tap('#saved');
+    await tap(`#savedView [data-action="down"][data-id="${others[0].id}"]`);
+    await tap(`#savedView [data-action="up"][data-id="${others[0].id}"]`);
+    await tap(`#savedView [data-action="move-day"][data-id="${others[0].id}"]`);
+    await tap('#sheet [data-day="2026-10-11"]');
+    await tap('#savedView [data-action="past"]');
+    await tap('#savedView [data-action="past"]');
+    hide();
+    const arr = events().filter((e) => e.e === 'arrange');
+    expect(arr.map((e) => e.op)).toEqual(['down', 'up', 'move', 'past', 'past']);
+    for (const e of arr) expect(e).toEqual({ e: 'arrange', op: e.op, ...ctxNow });
+  });
+});
+
+describe('F6 기록 끄기 — 새 이벤트도 0건', () => {
+  it('off: opening the list, arranging it and its map links send nothing', async () => {
+    window.localStorage.setItem('jeju.track', 'false');
+    seed([row(others[0].id, TODAY, 0, TODAY), row(others[1].id, TODAY, 1, '2026-10-09'), row(others[2].id, '2026-10-08', 0)]);
+    flowRender();
+    await flush();
+    await tap('#saved');
+    await tap(`#savedView [data-action="down"][data-id="${others[0].id}"]`);
+    await tap('#savedView [data-action="past"]');
+    savedLink(others[1].id).click();
+    advance();
+    hide();
+    expect(beacon).not.toHaveBeenCalled();
   });
 });

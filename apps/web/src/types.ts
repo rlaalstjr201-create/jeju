@@ -27,11 +27,14 @@ export type View = 'home' | 'cards' | 'saved';
 export type Overlay = null | 'basis' | 'stay' | 'move' | 'feedback';
 /** The day hearts go to: 'now' = today (the default), or a later day (specs/date-mode.md). */
 export type When = 'now' | Day;
-/** A saved place on a day. `order` = its place in that day's list (0, 1, 2, …). */
+/** A saved place on a day. `order` = its place in that day's list (0, 1, 2, …). `at` = the day it was saved
+ * (ADR-0085): on this device only — never sent, never in a backup link; missing on rows saved before it was
+ * kept and on rows brought back from a backup. */
 export interface SavedEntry {
   id: string;
   date: Day;
   order: number;
+  at?: Day;
 }
 export interface Route {
   view: View;

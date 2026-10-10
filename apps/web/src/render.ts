@@ -499,6 +499,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // Name fixed, state only in aria-pressed (S59).
     const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(isSaved(s, spot.id, day)), 'aria-label': COPY.heartAria(name) });
     if (day) heart.dataset.date = day;
+    if (day) card.dataset.date = day; // a saved-list row: which one a 길찾기 came from (ADR-0085)
     heart.innerHTML = HEART_22;
     card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
     // 실내 only on the results, only while 비 와요 picked them (ADR-0065)

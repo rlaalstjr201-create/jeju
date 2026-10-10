@@ -14,11 +14,11 @@ import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, sunPoint } from './home';
 import { sunsetMinutes } from './sun';
 import { createRenderer, dateLabel, findEls } from './render';
-import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
 import { feedbackBody, surveyDue } from './survey';
-import { contextOf, createTracker, type EventName } from './track';
+import { ageOf, contextOf, createTracker, type ArrangeOp, type EventName, type UsageEvent } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
 export { AREAS, LocateError, inJeju, kakaoUrl };
@@ -241,9 +241,10 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
-  /** `day`: the day a heart is about (dated = not today). `season`: the kind whose 철 words the card showed (ADR-0080). */
-  function count(e: EventName, id?: string, day?: Day, season?: SeasonKind | null) {
-    const ev = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}), ...(season ? { season } : {}) };
+  /** `day`: the day a heart is about (dated = not today). `season`: the kind whose 철 words the card showed (ADR-0080).
+   * `flow`: the saved-list fields (ADR-0085). */
+  function count(e: EventName, id?: string, day?: Day, season?: SeasonKind | null, flow?: Pick<UsageEvent, 'live0' | 'past' | 'from' | 'age' | 'op'>) {
+    const ev: UsageEvent = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}), ...(season ? { season } : {}), ...flow };
     tracker.track(ev);
     if (state.tracking) deps.analytics?.event(ev);
   }
@@ -262,15 +263,23 @@ export function mountApp(doc: Document, deps: Deps): App {
     const card = state.view === 'cards' ? state.cards?.list.find((c) => c.spot.id === id) : undefined;
     return card ? seasonOn(card.spot.season, whenDay(state)) : null;
   }
+  /** 길찾기 from a saved-list row (ADR-0085): days since that row was saved (never the day itself) and whether
+   * it is under 지난 날. */
+  function savedFlow(id: string, date: Day | undefined): Pick<UsageEvent, 'from' | 'age' | 'past'> | undefined {
+    if (state.view !== 'saved' || !date) return undefined;
+    const entry = state.saved.find((x) => x.id === id && x.date === date) ?? state.unsaved.find((x) => x.id === id && x.date === date);
+    const age = ageOf(entry?.at, state.today);
+    return { from: 'saved', ...(age !== undefined ? { age } : {}), ...(date < state.today ? { past: true as const } : {}) };
+  }
   /** A link tapped twice (a 2nd tab opening) counts once. */
   const lastLink = new Map<string, number>();
-  function countLink(e: 'map' | 'book', id: string) {
+  function countLink(e: 'map' | 'book', id: string, date?: Day) {
     if (e === 'map') markMap();
     const key = `${e}:${id}`;
     const t = now();
     const prev = lastLink.get(key);
     lastLink.set(key, t);
-    if (prev === undefined || t - prev >= delays.guard) count(e, id, undefined, e === 'map' ? seasonShown(id) : null);
+    if (prev === undefined || t - prev >= delays.guard) count(e, id, undefined, e === 'map' ? seasonShown(id) : null, e === 'map' ? savedFlow(id, date) : undefined);
   }
   // --- the survey (ADR-0081, specs/survey.md): all on this device; only 보내기 sends anything ---
   let mapMarked = !!survey0.map;
@@ -590,6 +599,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   function openSaved() {
     hush();
     dispatch({ type: 'openSaved' });
+    // once per opening, here and not on a draw (ADR-0085): ♥ N at 0, a folded 지난 날 line
+    count('open', undefined, undefined, null, { ...(savedCount(state) === 0 ? { live0: true } : {}), ...(savedDays(state).past.length ? { past: true } : {}) });
     nav.push(SAVED);
     request('show');
     // The home-screen nudge (ADR-0063 2d): once, the first time the saved list opens after a save, where it
@@ -688,7 +699,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     const date = day ?? whenDay(state);
     // putting back a row taken out in this visit: where it was
     const out = day ? state.unsaved.find((e) => e.id === id && e.date === day) : undefined;
-    const { entries, added, removed } = store.toggleSaved(id, date, out?.order);
+    // the day it is saved stays on this device (ADR-0085); put back, it keeps the one it had
+    const { entries, added, removed } = store.toggleSaved(id, date, out?.order, out ? out.at : state.today);
     dispatch({ type: 'saved', entries, removed: day ? removed : null });
     if (added) askPersist();
     count(added ? 'save' : 'unsave', id, date);
@@ -741,7 +753,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (guarded(`${dir}:${id}|${day}`)) return;
     hush(); // the row moves under the finger: a 2nd tap must not land on the one that took its place
     dispatch({ type: 'saved', entries: store.moveSaved(id, day, dir) });
+    arranged(dir < 0 ? 'up' : 'down');
   }
+  /** 저장 목록 정리 (ADR-0085): no place */
+  const arranged = (op: ArrangeOp) => count('arrange', undefined, undefined, null, { op });
   function openMove(id: string, day: Day) {
     if (guarded('move-day')) return;
     dispatch({ type: 'moveTarget', id, date: day });
@@ -753,6 +768,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (day !== t.date && day >= state.today) {
       dispatch({ type: 'saved', entries: store.moveToDay(t.id, t.date, day) });
       dispatch({ type: 'moveTarget', id: t.id, date: day }); // focus goes back to the row in its new day
+      arranged('move');
     }
     closeOverlay();
   }
@@ -800,6 +816,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (!guarded('past') && state.view === 'saved') {
         hush(); // the days gone by open under the finger
         dispatch({ type: 'pastOpen', open: !state.pastOpen });
+        arranged('past');
       }
       return;
     }
@@ -852,10 +869,11 @@ export function mountApp(doc: Document, deps: Deps): App {
   // the map app's place link (the card's name), 길찾기 and 예약 links: counted, then the browser opens them as usual.
   on(els.main, 'click', (e) => {
     const a = (e.target as Element | null)?.closest?.('a');
-    const id = a && els.main.contains(a) ? a.closest<HTMLElement>('.card[data-id]')?.dataset.id : undefined;
+    const card = a && els.main.contains(a) ? a.closest<HTMLElement>('.card[data-id]') : null;
+    const id = card?.dataset.id;
     if (!a || !id) return;
-    // 길찾기 (ADR-0067) leaves for the map app too: the same event
-    if (a.classList.contains('card-link') || a.classList.contains('go')) countLink('map', id);
+    // 길찾기 (ADR-0067) leaves for the map app too: the same event; a saved-list row says its day (ADR-0085)
+    if (a.classList.contains('card-link') || a.classList.contains('go')) countLink('map', id, card.dataset.date);
     else if (a.classList.contains('book')) countLink('book', id);
   });
   // 오늘 판's market row (ADR-0075): down to 오늘 장 서는 곳 without touching the address or history (home stays depth 0)

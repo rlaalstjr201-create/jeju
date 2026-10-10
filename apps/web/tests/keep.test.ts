@@ -86,6 +86,22 @@ describe('backup link: encode / decode', () => {
   });
 });
 
+describe('the day saved (ADR-0085 F5) stays on this device', () => {
+  it('a backup link is the same with or without `at`, and reads back without it', () => {
+    const plain = [e(ids[0], '2026-10-01', 0), e(ids[1], '2026-10-02', 0)];
+    const withAt = plain.map((x) => ({ ...x, at: '2026-09-30' }));
+    expect(encodeBackup(withAt)).toBe(encodeBackup(plain));
+    expect(backupUrl('https://example.test/', withAt)).toBe(backupUrl('https://example.test/', plain));
+    expect(decodeBackup(encodeBackup(withAt))).toEqual(plain);
+  });
+
+  it('merging a backup keeps the `at` of rows already here; rows brought in have none', () => {
+    const here = [{ ...e(ids[0], '2026-10-01', 0), at: '2026-09-29' }];
+    const { entries } = mergeEntries(here, [e(ids[0], '2026-10-01', 0), e(ids[1], '2026-10-01', 0)]);
+    expect(entries).toEqual([{ ...e(ids[0], '2026-10-01', 0), at: '2026-09-29' }, e(ids[1], '2026-10-01', 1)]);
+  });
+});
+
 describe('merging a backup into this device', () => {
   it('adds what is missing at the end of its day, in the link order; keeps what is here; counts what was added', () => {
     const here = [e(ids[0], '2026-10-01', 0), e(ids[1], '2026-10-01', 1)];

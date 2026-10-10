@@ -1635,7 +1635,7 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     await tap('[data-mood="rest"]');
     const id = $('.card').dataset.id!;
     await tap('.card .heart');
-    expect(v2()).toEqual([{ id, date: TODAY, order: 0 }]);
+    expect(v2()).toEqual([{ id, date: TODAY, order: 0, at: TODAY }]); // at: the day saved (ADR-0085)
     await tap('#basis');
     await tap('#sheet [data-when="2026-10-01"]');
     await tap('#sheet .sheet-close');
@@ -1644,8 +1644,8 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     await tap('.card .heart');
     expect($('.card .heart').getAttribute('aria-pressed')).toBe('true');
     expect(v2()).toEqual([
-      { id, date: TODAY, order: 0 },
-      { id, date: TOMORROW, order: 0 },
+      { id, date: TODAY, order: 0, at: TODAY },
+      { id, date: TOMORROW, order: 0, at: TODAY },
     ]);
     expect($('#saved').textContent).toBe('2');
   });

@@ -9,14 +9,18 @@ import type { UsageEvent } from '../src/track';
 export const MAX_BYTES = 8 * 1024;
 export const MAX_EVENTS = 50;
 
-const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book']);
+const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange']);
+/** events about the saved list, not a place (ADR-0085): no id, like tap. */
+const NO_PLACE = new Set(['tap', 'open', 'arrange']);
+const OPS = new Set(['up', 'down', 'move', 'past']);
+const AGES = new Set([0, 1, 2]);
 const MOODS = new Set(['rest', 'walk', 'new', 'food', 'any']);
 const SUBS: Record<string, Set<string>> = { food: new Set(['meal', 'cafe']), new: new Set(['mix', 'sight', 'do']) };
 const RANGES = new Set(['walk', '30', '60']);
 const BASES = new Set(['here', 'stay', 'area']);
 const AREA_NAMES = new Set<string>(AREAS.map((a) => a.name));
 const SEASONS = new Set<string>(SEASON_KINDS);
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'd']);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'd']);
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 
@@ -30,9 +34,9 @@ export function eventProblem(x: unknown): string | null {
   if (extra) return `unknown field ${extra}`;
   if (!inSet(EVENTS, o.e)) return 'e';
   if (!isDay(o.d)) return 'd';
-  if (o.e === 'tap') {
-    if (o.id !== undefined) return 'id on tap';
-    if (!inSet(MOODS, o.mood)) return 'tap without mood';
+  if (NO_PLACE.has(o.e as string)) {
+    if (o.id !== undefined) return `id on ${o.e}`;
+    if (o.e === 'tap' && !inSet(MOODS, o.mood)) return 'tap without mood';
   } else if (typeof o.id !== 'string' || !ID.test(o.id)) return 'id';
   if (o.mood !== undefined && !inSet(MOODS, o.mood)) return 'mood';
   if (o.sub !== undefined && !(typeof o.mood === 'string' && SUBS[o.mood] && inSet(SUBS[o.mood], o.sub))) return 'sub';
@@ -42,6 +46,13 @@ export function eventProblem(x: unknown): string | null {
   if (o.dated !== undefined && typeof o.dated !== 'boolean') return 'dated';
   if (o.indoor !== undefined && typeof o.indoor !== 'boolean') return 'indoor';
   if (o.season !== undefined && !((o.e === 'shown' || o.e === 'map') && inSet(SEASONS, o.season))) return 'season';
+  // 저장 목록 흐름 (ADR-0085): each only on its events, `true` / the listed values only
+  const fromSaved = o.e === 'map' && o.from === 'saved';
+  if (o.live0 !== undefined && !(o.e === 'open' && o.live0 === true)) return 'live0';
+  if (o.past !== undefined && !((o.e === 'open' || fromSaved) && o.past === true)) return 'past';
+  if (o.from !== undefined && !fromSaved) return 'from';
+  if (o.age !== undefined && !(fromSaved && AGES.has(o.age as number))) return 'age';
+  if ((o.op !== undefined || o.e === 'arrange') && !(o.e === 'arrange' && inSet(OPS, o.op))) return 'op';
   return null;
 }
 

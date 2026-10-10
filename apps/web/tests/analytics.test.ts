@@ -97,6 +97,22 @@ describe('createAnalytics', () => {
   it('gaParams never carries the area or the day', () => {
     expect(Object.keys(gaParams({ e: 'map', id: 'x', basis: 'area', area: '애월', d: '2026-10-03', indoor: true }))).toEqual(['place_id', 'basis']);
   });
+
+  // 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md F8)
+  it('map_open carries from / age / past; saved_open live0 / past; saved_arrange op — still no area, day or position', () => {
+    const area = { basis: 'area', area: '애월', d: '2026-10-03', range: '30', dated: false } as const;
+    expect(gaParams({ e: 'map', id: 'x', from: 'saved', age: 0, past: true, ...area })).toEqual({ place_id: 'x', range: '30', basis: 'area', dated: false, from: 'saved', age: 0, past: true });
+    expect(gaParams({ e: 'open', live0: true, past: true, ...area })).toEqual({ range: '30', basis: 'area', dated: false, live0: true, past: true });
+    expect(gaParams({ e: 'arrange', op: 'move', ...area })).toEqual({ range: '30', basis: 'area', dated: false, op: 'move' });
+    const a = createAnalytics(window, { ga4: GA })!;
+    a.setEnabled(true);
+    a.event({ e: 'open', live0: true, ...area });
+    a.event({ e: 'arrange', op: 'up', ...area });
+    a.event({ e: 'map', id: 'x', from: 'saved', age: 2, ...area });
+    const events = w.dataLayer!.map((x) => [...x]).filter((c) => c[0] === 'event');
+    expect(events.map((c) => c[1])).toEqual(['saved_open', 'saved_arrange', 'map_open']);
+    expect(JSON.stringify(w.dataLayer)).not.toMatch(/lat|lng|애월|2026-10-03"/);
+  });
 });
 
 describe('in the app', () => {
@@ -180,6 +196,7 @@ describe('POST /api/events → D1', () => {
     expect(await d1Store(db).dump()).toEqual([
       { d, id: 'mood:rest', e: 'tap', n: 2 },
       { d, id: 'p1', e: 'save', n: 1 },
+      { d, id: 'save:now', e: 'save', n: 1 }, // ADR-0085: a save also counts as dated / now
     ]);
     await onRequest({ request: post(JSON.stringify(batch)), env: { EVENTS_DB: db } });
     expect(rows.get(`${d}|mood:rest|tap`)!.n).toBe(4);

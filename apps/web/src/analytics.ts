@@ -11,7 +11,7 @@ export interface AnalyticsIds {
 }
 
 export interface Analytics {
-  /** a usage event, mirrored to GA4 when it is one of mood / shown / map / save. */
+  /** a usage event, mirrored to GA4 when it is one of mood / shown / map / save / the saved list opened or arranged. */
   event(ev: UsageEvent): void;
   /** the 기록 끄기 setting (called at start with the stored value, then on every change). */
   setEnabled(on: boolean): void;
@@ -22,11 +22,19 @@ type Win = Window & Record<string, unknown> & { dataLayer?: unknown[] };
 
 /** GA4 event names for our events; the rest stay ours only. */
 // shown goes too, so 철 cards can be compared with the rest (ADR-0080 8)
-const GA_NAME: Partial<Record<UsageEvent['e'], string>> = { tap: 'mood_tap', shown: 'card_shown', map: 'map_open', save: 'place_save' };
+// the saved list opened and arranged (ADR-0085)
+const GA_NAME: Partial<Record<UsageEvent['e'], string>> = {
+  tap: 'mood_tap',
+  shown: 'card_shown',
+  map: 'map_open',
+  save: 'place_save',
+  open: 'saved_open',
+  arrange: 'saved_arrange',
+};
 
 /** The fields GA4 gets: no area name, no day, nothing positional. */
-export function gaParams(ev: UsageEvent): Record<string, string | boolean> {
-  const p: Record<string, string | boolean> = {};
+export function gaParams(ev: UsageEvent): Record<string, string | number | boolean> {
+  const p: Record<string, string | number | boolean> = {};
   if (ev.id) p.place_id = ev.id;
   if (ev.mood) p.mood = ev.mood;
   if (ev.sub) p.sub = ev.sub;
@@ -34,6 +42,11 @@ export function gaParams(ev: UsageEvent): Record<string, string | boolean> {
   if (ev.basis) p.basis = ev.basis;
   if (ev.dated !== undefined) p.dated = ev.dated;
   if (ev.season) p.season = ev.season;
+  if (ev.from) p.from = ev.from;
+  if (ev.age !== undefined) p.age = ev.age;
+  if (ev.past) p.past = ev.past;
+  if (ev.live0) p.live0 = ev.live0;
+  if (ev.op) p.op = ev.op;
   return p;
 }
 
