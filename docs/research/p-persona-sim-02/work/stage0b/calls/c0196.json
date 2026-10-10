@@ -34,7 +34,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -43,12 +43,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "dab1c80c-5002-4a0d-82a2-59c9c9ab0adc",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:2"
+    ],
     "savedAtStart": [
      {
       "id": "0d4ef772-dc80-4cde-9989-c75f5b70d1a9",

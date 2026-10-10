@@ -6,6 +6,7 @@
 //   node step.mjs check  <call.json>            모두 끝났나, 사후 답(<call>.notes.jsonl)이 다 있나
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { act, attachRand, render } from './screen.mjs';
 
 const [cmd, file, arg] = process.argv.slice(2);
@@ -21,11 +22,16 @@ const ENDED = { go: en ? 'ended: route opened' : '끝: 길찾기 열림', quit: 
 const screenOf = (s) => (s.state.end ? `### ${s.key} — ${ENDED[s.state.end]}` : `### ${s.key} (${s.state.taps}${en ? ' taps' : '번 누름'})\n${render(s.state)}`);
 
 if (cmd === 'brief') {
+  // 0c부터: 지시문·사람·첫 화면을 한 번에 — 하위 작업의 왕복을 줄인다(토큰 대부분이 왕복마다 다시 읽는 고정 맥락)
+  console.log(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'prompts', `agent-${en ? 'en' : 'ko'}.md`), 'utf8'), '\n---\n');
   for (const s of call.sessions) {
     const p = call.persons[s.pid];
     const attrs = Object.entries(p.attrs).map(([k, v]) => `${k} ${v}`).join(' · ');
     console.log(`## ${s.key} — ${p.name}\n${attrs}${call.narrative ? `\n${p.narrative}` : ''}\n${en ? 'Situation' : '상황'}: ${s.situation}\n`);
   }
+  console.log(`---\n${en ? 'First screens' : '첫 화면'}\n`);
+  console.log(call.sessions.filter((s) => !s.state.end).map(screenOf).join('\n\n'));
+  save();
 } else if (cmd === 'show') {
   const open = call.sessions.filter((s) => !s.state.end);
   console.log(open.length ? open.map(screenOf).join('\n\n') : en ? 'All sessions ended.' : '모든 세션이 끝났다.');

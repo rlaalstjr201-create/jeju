@@ -10,8 +10,9 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const SIM1 = resolve(HERE, '../../p-persona-sim-01');
 const PILOT = process.argv.includes('--pilot');
 // 0b단계(20-stage0-results.md 「다음」, 2026-10-10): 새 240명, 주 모델 Sonnet, 재검사 240명, 1인 호출은 판정 밖 상한 조건
-const S0B = process.argv.includes('--0b');
-const OUT = resolve(HERE, PILOT ? '../work/pilot' : S0B ? '../work/stage0b' : '../work/stage0');
+const S0C = process.argv.includes('--0c'); // 0c: 0b와 같은 사람·설계, 시뮬레이터만 가벼운 전용 에이전트(sim-player)
+const S0B = process.argv.includes('--0b') || S0C;
+const OUT = resolve(HERE, PILOT ? '../work/pilot' : S0C ? '../work/stage0c' : S0B ? '../work/stage0b' : '../work/stage0');
 const MAIN = S0B ? 'sonnet' : 'opus';
 let R = rng('stage0-2026-10-09'); // 패널 고르기는 0단계와 같은 순서(겹치지 않게 다음 칸을 쓴다)
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -26,7 +27,7 @@ const byGroup = (g) => shuffle(withNarr.filter((p) => p.group === g));
 const P = byGroup('P'), G = byGroup('보통');
 const panel = S0B ? [...P.slice(158, 314), ...G.slice(86, 170)] : [...P.slice(0, 156), ...G.slice(0, 84)];
 const pilot = [...P.slice(156, 158), ...G.slice(84, 86)];
-if (S0B) R = rng('stage0b-2026-10-10');
+if (S0B) R = rng(S0C ? 'stage0c-2026-10-10' : 'stage0b-2026-10-10');
 
 // 제약이 동행과 안 맞으면 고친다(1차 한계 수정)
 const ALONE_BAD = ['동행이 옆에서 말을 건다', '아이를 챙기느라 자주 끊긴다'];

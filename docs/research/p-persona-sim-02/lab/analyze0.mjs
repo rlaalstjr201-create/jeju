@@ -8,7 +8,7 @@ import { judge, rng } from './screen.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DIR = resolve(process.argv[2] ?? resolve(HERE, '../work/stage0'));
 // 0b단계(10b-stage0b-prereg.md): 「없는 차이」 비교의 기준을 base·dup 두 표본 평균으로, 1인 호출은 판정 밖, 교차 모델은 opus·haiku·fable
-const S0B = /stage0b/.test(DIR);
+const S0B = /stage0[bc]/.test(DIR);
 const manifest = JSON.parse(readFileSync(resolve(DIR, 'manifest.json'), 'utf8'));
 const meta = new Map(readFileSync(resolve(DIR, 'sessions.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l)).map((m) => [m.sid, m]));
 const panel = new Map(readFileSync(resolve(DIR, 'panel.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l)).map((p) => [p.id, p]));

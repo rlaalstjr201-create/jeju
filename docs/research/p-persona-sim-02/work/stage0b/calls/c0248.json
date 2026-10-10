@@ -34,7 +34,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -43,12 +43,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "3ec5df93-c07f-4a3d-844a-65bf4aaeca38",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:1"
+    ],
     "savedAtStart": [
      {
       "id": "3ec5df93-c07f-4a3d-844a-65bf4aaeca38",
@@ -96,22 +102,75 @@
       "order": 2
      }
     ],
-    "randN": 0,
-    "screen": "home",
+    "randN": 1794,
+    "screen": "cards",
     "when": "now",
     "scrolled": false,
     "from": "home",
-    "cards": [],
-    "queue": [],
+    "cards": [
+     "e39c9e37-2da7-420f-9dd1-45c2c27ba2dd",
+     "d695d1db-9a0f-4f27-a5ba-ee14fe485fdf",
+     "4b9b5b22-1ca3-4dad-a340-ec717fff5248"
+    ],
+    "queue": [
+     "522d94bb-ad5f-4c59-87bf-91734ebdb923",
+     "59da8c0d-66e7-447a-bf2d-c782638239e7",
+     "385e0902-9f36-4374-8ea9-67848a814e42",
+     "474b894e-c6f7-4b11-905b-520bc1aa383a",
+     "dab4d6de-b445-4cd9-8a1f-f92e4b7016b5",
+     "b333eb22-91eb-4e3a-833c-f81eeb9d5c18",
+     "2e16e034-1500-4348-b279-4c6fa616e66e",
+     "d931bd31-d0ac-46a9-a8f4-04a80d28a22f",
+     "fd92befa-12bf-46a4-a83e-b321931fd28c",
+     "450f850e-20f9-444b-8b41-e23ab9d85cc5",
+     "cd187752-6955-483f-b92e-053f37b83174",
+     "717e467f-f4b0-4f7d-9e2c-b4cee57894ad",
+     "eb271b52-3d20-4202-8722-c1781dd7a526",
+     "6df7a735-15ea-4e0e-b5c4-5ce13bcfa7bd",
+     "fa4a1a20-c67a-4725-91e2-3b380d2c29ab",
+     "dda6b3ed-b7f8-4195-87ec-6eac3ffa03bc",
+     "da43cc29-ba90-4e08-8f71-c1d23266b8e7",
+     "34fad5bf-d2c3-4d74-b5a2-94aeac096789",
+     "2aae9248-8d36-434e-9157-a86e2baa7226",
+     "d79c4c4c-f995-41c5-be8e-52c29b760af2",
+     "8e1fc769-b4f4-4f81-bb99-cc50cb32af81",
+     "e83964e9-7a08-4de0-880b-c2cf476d2e1e",
+     "f61e2d63-b732-445d-a783-52ac1b36f863",
+     "aa983e52-cc91-4018-94d3-3d1a5d569b26",
+     "70827c4c-e68c-4c6c-a798-2e7c5aa0a620",
+     "2913f41d-c1b4-4b9e-95a2-b3817f81d30e",
+     "cdf3a2ac-1c12-4522-8ac6-00fb8e869eaa",
+     "de0a264e-d4b3-4f28-a209-d368f8c068fb",
+     "16ea3ade-7b13-4de3-b48a-7e5f2ca028d7",
+     "d0da3da9-e4db-46a3-a26d-67892ef7894a",
+     "86abe37a-80bd-47e7-b0fd-ace711e8af3b",
+     "ef585d0e-3a42-4624-a7ed-ff0fdf1c2a2b",
+     "aa83ab22-626f-4741-99f0-b28fdd995dc9",
+     "7dc839a6-a9e3-4a31-b0c7-8f282c65c7ae",
+     "ef9806e7-5448-4ea5-a5b1-aa4960ee8e7b",
+     "f466ef88-48b1-48d7-95a5-2e7b252a827c",
+     "3dfcff74-d579-460f-a1e2-82d8ed2307b2",
+     "47a0a178-54cd-4fb1-8368-bfab1a55dab4",
+     "8b5b9757-3e58-423d-8978-eca547cab37d",
+     "e6433a43-91a4-45ee-a175-80f83fd6d0e7",
+     "819a018d-b823-419f-924a-0cc48610d6b1",
+     "36264e25-851e-459b-b176-050f1372d265"
+    ],
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "4b9b5b22-1ca3-4dad-a340-ec717fff5248",
+     "from": "cards"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "mood:any",
+     "go:3"
+    ],
     "savedAtStart": [
      {
       "id": "ce88519f-5279-49ba-b4a6-5306dfcc92d2",
@@ -160,7 +219,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -169,12 +228,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "d53eebf6-f07b-4b7d-9989-37a1d0057032",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:3"
+    ],
     "savedAtStart": [
      {
       "id": "4e3a7549-9c0d-4bca-82b5-cc279582eb12",
@@ -223,7 +288,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -232,12 +297,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "7b8ef56f-c764-4112-accb-de4ca7a7f5f3",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:2"
+    ],
     "savedAtStart": [
      {
       "id": "4d606bf2-8cfc-46d3-a2ae-dccd7b65ae9d",
@@ -286,7 +357,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -295,12 +366,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "e02fb0d5-68b5-42c5-9edb-a2534f1921c4",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:2"
+    ],
     "savedAtStart": [
      {
       "id": "819a018d-b823-419f-924a-0cc48610d6b1",
@@ -349,7 +426,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -358,12 +435,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "3202554b-6656-4db8-b58d-14422df9c66b",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:2"
+    ],
     "savedAtStart": [
      {
       "id": "72d612c6-fbed-44c9-8453-a75725aa1c49",
@@ -412,7 +495,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -421,12 +504,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "7defd492-3458-45ce-96b4-ce8266910798",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:2"
+    ],
     "savedAtStart": [
      {
       "id": "fff4cee6-ca1d-493e-a48b-6b0c727d2c56",
@@ -475,7 +564,7 @@
      }
     ],
     "randN": 0,
-    "screen": "home",
+    "screen": "saved",
     "when": "now",
     "scrolled": false,
     "from": "home",
@@ -484,12 +573,18 @@
     "pastOpen": false,
     "hearts": [],
     "unhearts": 0,
-    "go": null,
-    "taps": 0,
+    "go": {
+     "id": "9fe19a46-a8db-433a-b1af-9de6f8831e86",
+     "from": "saved"
+    },
+    "taps": 2,
     "bad": 0,
-    "end": null,
+    "end": "go",
     "guideShown": false,
-    "log": [],
+    "log": [
+     "open_saved",
+     "go:2"
+    ],
     "savedAtStart": [
      {
       "id": "08201fa6-0c8c-4ceb-8cd6-adbe3a4b4279",

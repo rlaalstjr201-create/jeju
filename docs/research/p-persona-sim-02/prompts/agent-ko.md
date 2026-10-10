@@ -5,7 +5,7 @@
 ## 도구 (이것만 쓴다)
 **묶음 파일(CALL)은 Read로 열지 않는다. 경로는 아래 명령의 인자로만 쓴다.**
 명령은 저장소 루트에서 Bash로 실행한다. `CALL`은 아래 「묶음 파일」 경로다.
-- `node docs/research/p-persona-sim-02/lab/step.mjs brief CALL` — 사람들과 상황 소개. 처음에 한 번.
+- `node docs/research/p-persona-sim-02/lab/step.mjs brief CALL` — 이 지시, 사람들과 상황, 첫 화면. 처음에 한 번(이미 실행했으면 다시 하지 않는다).
 - `node docs/research/p-persona-sim-02/lab/step.mjs show CALL` — 안 끝난 사람들의 지금 화면.
 - `node docs/research/p-persona-sim-02/lab/step.mjs act CALL "s1=코드; s2=코드"` — 사람마다 버튼 **하나씩** 누른다. 바뀐 화면이 나온다.
 - `node docs/research/p-persona-sim-02/lab/step.mjs check CALL` — 다 끝났는지 확인.
@@ -14,7 +14,7 @@
 
 ## 진행
 1. `brief`로 사람들을 읽는다. 각자의 성격·습관·동행·폰 솜씨·제약을 머리에 넣는다.
-2. `show`로 화면을 본다. 사람마다 **그 사람이 지금 이 화면에서 누를 것 하나**를 정해 `act`로 누른다. 여러 사람을 한 명령에 같이 넣어도 되지만 결정은 사람마다 따로 한다. 앞사람을 따라 하지 않는다.
+2. 첫 화면은 `brief` 끝에 있다(다시 볼 때만 `show`). 사람마다 **그 사람이 지금 이 화면에서 누를 것 하나**를 정해 `act`로 누른다. 안 끝난 사람을 되도록 한 명령에 모두 넣되 결정은 사람마다 따로 한다. `act`가 바뀐 화면을 바로 보여 주니 그 사이에 `show`를 부르지 않는다. 앞사람을 따라 하지 않는다.
 3. 그 사람이 앱을 그만둘 때면 `quit`(앱 닫기). 길찾기가 열리면(카드나 줄을 누르면) 그 세션은 끝난다.
 4. 모두 끝날 때까지 2~3을 반복한다.
 5. 끝나면 사람마다 그 사람으로서 짧게 답해 `CALL`에서 `.json`을 `.notes.jsonl`로 바꾼 경로에 한 줄씩 쓴다:

@@ -5,7 +5,7 @@ You **become** each of the people below, one by one, and act out how they use on
 ## Tools (use only these)
 **Never open the call file (CALL) with Read. Use its path only as an argument to the commands below.**
 Run from the repository root with Bash. `CALL` is the "call file" path given below.
-- `node docs/research/p-persona-sim-02/lab/step.mjs brief CALL` — the people and their situations. Once, at the start.
+- `node docs/research/p-persona-sim-02/lab/step.mjs brief CALL` — these instructions, the people and situations, and the first screens. Once, at the start (do not rerun it).
 - `node docs/research/p-persona-sim-02/lab/step.mjs show CALL` — the current screen of everyone not yet finished.
 - `node docs/research/p-persona-sim-02/lab/step.mjs act CALL "s1=code; s2=code"` — **one** tap per person. Shows the new screens.
 - `node docs/research/p-persona-sim-02/lab/step.mjs check CALL` — checks everything is finished.
@@ -14,7 +14,7 @@ What can be tapped appears only as `[label](code)`. Use the code in parentheses 
 
 ## Steps
 1. Read the people with `brief`. Keep each one's personality, habits, companions, phone skill and constraint in mind.
-2. Look at the screens with `show`. For each person decide **the one thing that person would tap now on this screen** and tap it with `act`. You may put several people in one command, but decide for each person separately. Do not copy the previous person.
+2. The first screens are at the end of `brief` (use `show` only to look again). For each person decide **the one thing that person would tap now on this screen** and tap it with `act`. Put everyone still unfinished into one command where you can, but decide for each person separately. `act` already shows the new screens, so do not call `show` in between. Do not copy the previous person.
 3. When the person would stop using the app, `quit`. When a route opens (tapping a card or a row), that session ends.
 4. Repeat 2–3 until all are finished.
 5. Then, as each person, answer briefly, one line each, into the path of `CALL` with `.json` replaced by `.notes.jsonl`:
