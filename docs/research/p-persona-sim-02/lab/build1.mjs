@@ -49,6 +49,7 @@ function person(p) {
 // ── 상황
 const SIT = {
   N: (a) => `밤 10시쯤, ${a} 쪽 숙소에서 누워 있다. 내일 뭐 할지 정해 둔 건 없다. 자기 전에 이 앱을 열어 훑어본다.`,
+  NI: (a) => `밤 10시쯤, ${a} 쪽 숙소에서 누워 있다. 내일 뭐 할지 정해 둔 건 없다. 자기 전에 내일 갈 만한 데를 훑어보고, 끌리는 데가 있으면 표시해 두고 싶다.`,
   N2: '다음 날 아침 9시 반, 같은 숙소. 어젯밤 이 앱에서 본 곳 중에 끌리는 데가 있었던 것 같다(이름은 정확히 기억 안 난다). 오늘 갈 곳을 정하려고 앱을 다시 연다.',
   P: (a) => `저녁 8시, ${a} 쪽 숙소. 남은 일정(내일·모레)은 사실상 내가 챙긴다. 오늘 낮에 이 앱에서 끌리는 곳 4곳에 하트를 눌러 두었다. 자기 전에 그 4곳을 내일 갈 곳과 모레 갈 곳으로 나눠 두고 싶다.`,
   S2: (a) => `오후 2시, ${a} 근처. 점심은 먹었고 다음에 뭐 할지 정한 게 없다. 이 앱을 연다.`,
@@ -74,7 +75,7 @@ function session(per, arm, scenario, run, rep) {
   // 카드 씨앗은 팔과 무관(같은 사람·같은 상황·같은 반복이면 팔이 달라도 같은 카드 순서)
   const seed = hash(`card-${STAGE}-${scenario}-${per.id}-${rep}`);
   const spec = { sid, seed, arm: ARM_CODE[arm], scenario, area: per.area, where: 'gps', day: 0, dateLabel: DATES[0], saved: [] };
-  if (scenario === 'N') Object.assign(spec, { hour: 22, next: { day: 1, hour: 9, dateLabel: DATES[1], situation: `다음 장면 — ${SIT.N2}` } });
+  if (scenario === 'N' || scenario === 'NI') Object.assign(spec, { hour: 22, next: { day: 1, hour: 9, dateLabel: DATES[1], situation: `다음 장면 — ${SIT.N2}` } });
   if (scenario === 'P') Object.assign(spec, { hour: 20, saved: presetP(per.id, per.area, arm) });
   if (scenario === 'S2') Object.assign(spec, { hour: 14 });
   return { sid, pid: per.id, scenario, situation: SIT[scenario](per.area), state: newSession(spec) };
@@ -93,8 +94,8 @@ function addCalls(run, people, arms, scenarios, perCall, rep = 1) {
 const people = SLICE[STAGE].map(person);
 const arms = ARMS_ARG ?? ALL;
 if (STAGE === '1' || STAGE === '1b') addCalls('main', people, arms, ['N', 'P', 'S2'], 10);
-if (STAGE === '2') { addCalls('w1', people.slice(0, 100), arms, ['N', 'P', 'S2'], 10); addCalls('w2', people.slice(100), arms, ['N', 'P', 'S2'], 10); }
-if (STAGE === '3') for (const rep of [1, 2]) addCalls('main', people, arms, ['N', 'P', 'S2'], 10, rep);
+if (STAGE === '2') { addCalls('w1', people.slice(0, 100), arms, ['NI', 'P'], 10); addCalls('w2', people.slice(100), arms, ['NI', 'P'], 10); }
+if (STAGE === '3') for (const rep of [1, 2]) addCalls('main', people, arms, ['NI', 'P', 'S2'], 10, rep);
 
 mkdirSync(resolve(OUT, 'calls'), { recursive: true });
 const order = shuffle(calls.map((_, i) => i));

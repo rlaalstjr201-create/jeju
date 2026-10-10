@@ -1,0 +1,1202 @@
+[
+ {
+  "file": "c0044.json",
+  "id": "w1-A-NI-r1-01",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0086.json",
+  "id": "w1-A-NI-r1-02",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0119.json",
+  "id": "w1-A-NI-r1-03",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0028.json",
+  "id": "w1-A-NI-r1-04",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0032.json",
+  "id": "w1-A-NI-r1-05",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0079.json",
+  "id": "w1-A-NI-r1-06",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0106.json",
+  "id": "w1-A-NI-r1-07",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0070.json",
+  "id": "w1-A-NI-r1-08",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0049.json",
+  "id": "w1-A-NI-r1-09",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0030.json",
+  "id": "w1-A-NI-r1-10",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0054.json",
+  "id": "w1-A-P-r1-01",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0031.json",
+  "id": "w1-A-P-r1-02",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0083.json",
+  "id": "w1-A-P-r1-03",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0050.json",
+  "id": "w1-A-P-r1-04",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0107.json",
+  "id": "w1-A-P-r1-05",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0037.json",
+  "id": "w1-A-P-r1-06",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0098.json",
+  "id": "w1-A-P-r1-07",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0113.json",
+  "id": "w1-A-P-r1-08",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0116.json",
+  "id": "w1-A-P-r1-09",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0058.json",
+  "id": "w1-A-P-r1-10",
+  "run": "w1",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0118.json",
+  "id": "w1-A2-NI-r1-01",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0020.json",
+  "id": "w1-A2-NI-r1-02",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0003.json",
+  "id": "w1-A2-NI-r1-03",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0075.json",
+  "id": "w1-A2-NI-r1-04",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0117.json",
+  "id": "w1-A2-NI-r1-05",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0056.json",
+  "id": "w1-A2-NI-r1-06",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0023.json",
+  "id": "w1-A2-NI-r1-07",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0005.json",
+  "id": "w1-A2-NI-r1-08",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0022.json",
+  "id": "w1-A2-NI-r1-09",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0036.json",
+  "id": "w1-A2-NI-r1-10",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0033.json",
+  "id": "w1-A2-P-r1-01",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0102.json",
+  "id": "w1-A2-P-r1-02",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0043.json",
+  "id": "w1-A2-P-r1-03",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0081.json",
+  "id": "w1-A2-P-r1-04",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0088.json",
+  "id": "w1-A2-P-r1-05",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0009.json",
+  "id": "w1-A2-P-r1-06",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0120.json",
+  "id": "w1-A2-P-r1-07",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0096.json",
+  "id": "w1-A2-P-r1-08",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0013.json",
+  "id": "w1-A2-P-r1-09",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0038.json",
+  "id": "w1-A2-P-r1-10",
+  "run": "w1",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0051.json",
+  "id": "w1-B-NI-r1-01",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0007.json",
+  "id": "w1-B-NI-r1-02",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0097.json",
+  "id": "w1-B-NI-r1-03",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0099.json",
+  "id": "w1-B-NI-r1-04",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0026.json",
+  "id": "w1-B-NI-r1-05",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0001.json",
+  "id": "w1-B-NI-r1-06",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0071.json",
+  "id": "w1-B-NI-r1-07",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0067.json",
+  "id": "w1-B-NI-r1-08",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0006.json",
+  "id": "w1-B-NI-r1-09",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0017.json",
+  "id": "w1-B-NI-r1-10",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0018.json",
+  "id": "w1-B-P-r1-01",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0114.json",
+  "id": "w1-B-P-r1-02",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0066.json",
+  "id": "w1-B-P-r1-03",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0111.json",
+  "id": "w1-B-P-r1-04",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0093.json",
+  "id": "w1-B-P-r1-05",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0095.json",
+  "id": "w1-B-P-r1-06",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0014.json",
+  "id": "w1-B-P-r1-07",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0110.json",
+  "id": "w1-B-P-r1-08",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0078.json",
+  "id": "w1-B-P-r1-09",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0094.json",
+  "id": "w1-B-P-r1-10",
+  "run": "w1",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0012.json",
+  "id": "w2-A-NI-r1-01",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0112.json",
+  "id": "w2-A-NI-r1-02",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0040.json",
+  "id": "w2-A-NI-r1-03",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0048.json",
+  "id": "w2-A-NI-r1-04",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0109.json",
+  "id": "w2-A-NI-r1-05",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0027.json",
+  "id": "w2-A-NI-r1-06",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0021.json",
+  "id": "w2-A-NI-r1-07",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0068.json",
+  "id": "w2-A-NI-r1-08",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0085.json",
+  "id": "w2-A-NI-r1-09",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0061.json",
+  "id": "w2-A-NI-r1-10",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0042.json",
+  "id": "w2-A-P-r1-01",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0108.json",
+  "id": "w2-A-P-r1-02",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0115.json",
+  "id": "w2-A-P-r1-03",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0101.json",
+  "id": "w2-A-P-r1-04",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0035.json",
+  "id": "w2-A-P-r1-05",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0064.json",
+  "id": "w2-A-P-r1-06",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0034.json",
+  "id": "w2-A-P-r1-07",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0025.json",
+  "id": "w2-A-P-r1-08",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0063.json",
+  "id": "w2-A-P-r1-09",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0065.json",
+  "id": "w2-A-P-r1-10",
+  "run": "w2",
+  "arm": "A",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0082.json",
+  "id": "w2-A2-NI-r1-01",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0104.json",
+  "id": "w2-A2-NI-r1-02",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0074.json",
+  "id": "w2-A2-NI-r1-03",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0060.json",
+  "id": "w2-A2-NI-r1-04",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0047.json",
+  "id": "w2-A2-NI-r1-05",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0077.json",
+  "id": "w2-A2-NI-r1-06",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0015.json",
+  "id": "w2-A2-NI-r1-07",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0039.json",
+  "id": "w2-A2-NI-r1-08",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0087.json",
+  "id": "w2-A2-NI-r1-09",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0080.json",
+  "id": "w2-A2-NI-r1-10",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0069.json",
+  "id": "w2-A2-P-r1-01",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0072.json",
+  "id": "w2-A2-P-r1-02",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0091.json",
+  "id": "w2-A2-P-r1-03",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0089.json",
+  "id": "w2-A2-P-r1-04",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0041.json",
+  "id": "w2-A2-P-r1-05",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0029.json",
+  "id": "w2-A2-P-r1-06",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0103.json",
+  "id": "w2-A2-P-r1-07",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0090.json",
+  "id": "w2-A2-P-r1-08",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0076.json",
+  "id": "w2-A2-P-r1-09",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0092.json",
+  "id": "w2-A2-P-r1-10",
+  "run": "w2",
+  "arm": "A2",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0046.json",
+  "id": "w2-B-NI-r1-01",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0055.json",
+  "id": "w2-B-NI-r1-02",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0019.json",
+  "id": "w2-B-NI-r1-03",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0008.json",
+  "id": "w2-B-NI-r1-04",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0084.json",
+  "id": "w2-B-NI-r1-05",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0073.json",
+  "id": "w2-B-NI-r1-06",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0010.json",
+  "id": "w2-B-NI-r1-07",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0024.json",
+  "id": "w2-B-NI-r1-08",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0004.json",
+  "id": "w2-B-NI-r1-09",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0059.json",
+  "id": "w2-B-NI-r1-10",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "NI",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0105.json",
+  "id": "w2-B-P-r1-01",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0062.json",
+  "id": "w2-B-P-r1-02",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0016.json",
+  "id": "w2-B-P-r1-03",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0100.json",
+  "id": "w2-B-P-r1-04",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0011.json",
+  "id": "w2-B-P-r1-05",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0057.json",
+  "id": "w2-B-P-r1-06",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0053.json",
+  "id": "w2-B-P-r1-07",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0052.json",
+  "id": "w2-B-P-r1-08",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0002.json",
+  "id": "w2-B-P-r1-09",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ },
+ {
+  "file": "c0045.json",
+  "id": "w2-B-P-r1-10",
+  "run": "w2",
+  "arm": "B",
+  "scenario": "P",
+  "rep": 1,
+  "model": "sonnet",
+  "n": 10
+ }
+]

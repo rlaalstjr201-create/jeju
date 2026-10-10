@@ -24,7 +24,7 @@ for (const c of manifest) {
     const p1 = st.parts?.[0];
     rows.push({ arm: m.arm, scenario: m.scenario, pid: m.pid, rep: m.rep ?? 1, group: m.group, call: c.file, ended: !!st.end, end: st.end,
       done: st.end ? judge(st) : null, taps: st.taps, bad: st.bad + (p1?.bad ?? 0), p1end: p1?.end ?? null,
-      nightHeart: m.scenario === 'N' ? (p1?.hearts.length ?? 0) > 0 : null, live0: m.scenario === 'N' && p1?.hearts.length ? st.part2Start?.live === 0 : null,
+      nightHeart: p1 ? (p1.hearts.length ?? 0) > 0 : null, live0: p1?.hearts.length ? st.part2Start?.live === 0 : null,
       stuck: st.end === 'stuck' || p1?.end === 'stuck', burden: note ? !none(note.burden) : null, stuckNote: note ? !none(note.stuck) : null, again: note?.again ?? null });
   });
 }
@@ -32,7 +32,7 @@ const valid = rows.filter((r) => r.ended);
 const mean = (a) => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : NaN);
 const pct = (x) => (x == null || Number.isNaN(x) ? '—' : (100 * x).toFixed(1));
 const arms = [...new Set(rows.map((r) => r.arm))].sort();
-const scen = ['N', 'P', 'S2'].filter((s) => rows.some((r) => r.scenario === s));
+const scen = ['N', 'NI', 'P', 'S2'].filter((s) => rows.some((r) => r.scenario === s));
 const cell = (a, s) => valid.filter((r) => r.arm === a && r.scenario === s);
 const rateOf = (rs, k) => mean(rs.filter((r) => r[k] != null).map((r) => (r[k] ? 1 : 0)));
 
@@ -69,6 +69,8 @@ for (const s of scen) for (const a of arms.filter((x) => x !== REF)) {
   out.paired[`${a}|${s}`] = p;
   console.log(`${a} ${s} 성공: ${fmtP(p)}`);
 }
-for (const a of arms.filter((x) => x !== REF)) { const p = paired(a, 'N', 'nightHeart'); out.paired[`${a}|N|nightHeart`] = p; if (p.n) console.log(`${a} N 밤 하트: ${fmtP(p)}`); }
+// 하트 낸 사람 중 다음 날 꺼내기(조건부, 참고 — 무작위가 깨지므로 짝 없는 비율만)
+for (const sc of scen.filter((s) => s.startsWith('N'))) for (const a of arms) { const rs = cell(a, sc).filter((r) => r.nightHeart); out.cells[`${a}|${sc}|hearted`] = { n: rs.length, done: rateOf(rs, 'done') }; console.log(`${a} ${sc} 하트 낸 사람 중 꺼내기: ${pct(rateOf(rs, 'done'))}% (n=${rs.length})`); }
+for (const sc of scen.filter((s) => s.startsWith('N'))) for (const a of arms.filter((x) => x !== REF)) { const p = paired(a, sc, 'nightHeart'); out.paired[`${a}|${sc}|nightHeart`] = p; if (p.n) console.log(`${a} ${sc} 밤 하트: ${fmtP(p)}`); }
 console.log(`\n세션 ${rows.length}, 끝난 것 ${valid.length}, 안 끝났거나 사후 답 없음 ${missing.length}${missing.length ? ` (${missing.slice(0, 10).join(', ')}…)` : ''}`);
 writeFileSync(resolve(DIR, WAVE ? `result-${WAVE}.json` : 'result.json'), JSON.stringify(out, null, 1));

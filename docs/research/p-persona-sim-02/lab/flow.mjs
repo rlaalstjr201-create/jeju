@@ -233,7 +233,8 @@ export function act(st, code) {
 /** 성공 규칙(1단계 사전등록). N은 장면 2 기준, P는 끝난 상태 기준. */
 export function judge(st) {
   switch (st.scenario) {
-    case 'N': {
+    case 'N':
+    case 'NI': {
       const night = new Set(st.parts[0]?.hearts ?? []);
       return st.part === 2 && !!st.go && st.go.from === 'saved' && night.has(st.go.id);
     }
