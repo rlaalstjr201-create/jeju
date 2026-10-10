@@ -78,7 +78,8 @@ describe('2b in-app browser notice', () => {
     await tap('.top #saved');
     await tap('#savedView .back');
     expect(out().startsWith(`${location.origin}/${BACKUP_HASH}`)).toBe(true);
-    expect(decodeBackup(out().split(BACKUP_HASH)[1])).toEqual(stored());
+    // the day saved stays here (ADR-0085): the link carries the rest
+    expect(decodeBackup(out().split(BACKUP_HASH)[1])).toEqual(stored().map(({ id, date, order }) => ({ id, date, order })));
   });
 
   it('닫기 hides it and it stays closed after a reload', async () => {

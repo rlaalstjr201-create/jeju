@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { aggregate } from '../events/aggregate';
-import { handleEvents } from '../events/handler';
+import { FLOW_IDS, handleEvents } from '../events/handler';
 import { memoryStore } from '../events/store';
 import { MAX_EVENTS, parseBatch } from '../events/validate';
 import { contextOf, type UsageEvent } from '../src/track';
@@ -115,6 +115,7 @@ describe('U4 받는 쪽 — 카운터', () => {
         { d, id: ID, e: 'map', n: 1 },
         { d: day2, id: ID, e: 'shown', n: 1 },
         { d, id: 'mood:rest', e: 'tap', n: 2 },
+        { d, id: 'save:now', e: 'save', n: 1 }, // ADR-0085: the save also counts as dated / now
       ].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))),
     );
   });
@@ -146,6 +147,123 @@ describe('U4 집계 → review/popularity.json 모양', () => {
       { id: ID, shown: 7, save: 1, map: 4, book: 1 },
       { id: ID2, shown: 3, save: 0, map: 0, book: 0 },
     ]);
+  });
+});
+
+// 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md F1·F7)
+describe('F1 저장 목록 흐름 — 검사', () => {
+  it('accepts open (live0 / past), arrange (each op), map from the saved list (age / past), save as before', () => {
+    const batch = [
+      { e: 'open', ...base },
+      { e: 'open', live0: true, past: true, ...base },
+      { e: 'open', past: true, ...base },
+      ...(['up', 'down', 'move', 'past'] as const).map((op) => ({ e: 'arrange', op, ...base })),
+      { e: 'map', id: ID, from: 'saved', age: 0, ...base },
+      { e: 'map', id: ID, from: 'saved', age: 1, past: true, ...base },
+      { e: 'map', id: ID, from: 'saved', age: 2, ...base },
+      { e: 'map', id: ID, from: 'saved', past: true, ...base }, // no `at` on the row: no age
+      { e: 'map', id: ID, ...base },
+      { e: 'save', id: ID, ...base, dated: true },
+    ];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+  });
+
+  it.each([
+    ['open with a place', { e: 'open', id: ID, d }],
+    ['arrange with a place', { e: 'arrange', op: 'up', id: ID, d }],
+    ['arrange without op', { e: 'arrange', d }],
+    ['an unknown op', { e: 'arrange', op: 'sort', d }],
+    ['op on open', { e: 'open', op: 'up', d }],
+    ['live0 false', { e: 'open', live0: false, d }],
+    ['past false', { e: 'open', past: false, d }],
+    ['live0 on map', { e: 'map', id: ID, from: 'saved', live0: true, d }],
+    ['live0 on arrange', { e: 'arrange', op: 'up', live0: true, d }],
+    ['past on arrange', { e: 'arrange', op: 'past', past: true, d }],
+    ['from on save', { e: 'save', id: ID, from: 'saved', d }],
+    ['from on open', { e: 'open', from: 'saved', d }],
+    ['an unknown from', { e: 'map', id: ID, from: 'card', d }],
+    ['age without from', { e: 'map', id: ID, age: 1, d }],
+    ['past on a card map', { e: 'map', id: ID, past: true, d }],
+    ['age 3', { e: 'map', id: ID, from: 'saved', age: 3, d }],
+    ['age as a string', { e: 'map', id: ID, from: 'saved', age: '1', d }],
+    ['age on save', { e: 'save', id: ID, age: 0, d }],
+    ['past on shown', { e: 'shown', id: ID, past: true, d }],
+    ['at (the day saved) itself', { e: 'map', id: ID, from: 'saved', at: d, d }],
+  ])('refuses %s — the whole batch', async (_, bad) => {
+    const store = memoryStore();
+    const res = await handleEvents(post([{ e: 'open', ...base }, bad]), store);
+    expect(res.status).toBe(400);
+    expect(await store.dump()).toEqual([]);
+  });
+
+  it('a time of day ("21:30", an ISO time) gets through no field', () => {
+    const good: Record<string, Record<string, unknown>> = {
+      tap: { e: 'tap', mood: 'rest', ...base },
+      open: { e: 'open', live0: true, past: true, ...base },
+      arrange: { e: 'arrange', op: 'up', ...base },
+      map: { e: 'map', id: ID, from: 'saved', age: 1, past: true, ...base, season: 'rapeseed', basis: 'area', area: '애월', indoor: true },
+    };
+    for (const ev of Object.values(good)) expect(parseBatch(JSON.stringify([ev])).ok).toBe(true);
+    for (const t of ['21:30', '2026-09-30T21:30:00+09:00', '2026-09-30T12:30:00.000Z']) {
+      for (const ev of Object.values(good)) {
+        for (const k of [...Object.keys(ev), 'at', 'time', 't']) {
+          if (k === 'e') continue;
+          expect(parseBatch(JSON.stringify([{ ...ev, [k]: t }])).ok, `${ev.e}.${k} = ${t}`).toBe(false);
+        }
+      }
+    }
+  });
+});
+
+describe('F7 저장 목록 흐름 — D1 카운터', () => {
+  const sorted = (rows: unknown[]) => [...rows].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+
+  it('the added counters go up as in the spec table; the place counters are what they were', async () => {
+    const store = memoryStore();
+    await handleEvents(
+      post([
+        { e: 'open', ...base },
+        { e: 'open', live0: true, past: true, ...base },
+        { e: 'open', live0: true, ...base },
+        { e: 'open', past: true, ...base },
+        { e: 'arrange', op: 'up', ...base },
+        { e: 'arrange', op: 'up', ...base },
+        { e: 'arrange', op: 'past', ...base },
+        { e: 'map', id: ID, from: 'saved', age: 1, past: true, ...base },
+        { e: 'map', id: ID, from: 'saved', ...base },
+        { e: 'map', id: ID2, ...base },
+        { e: 'save', id: ID, ...base, dated: true },
+        { e: 'save', id: ID2, ...base },
+      ]),
+      store,
+    );
+    const rows = await store.dump();
+    expect(sorted(rows)).toEqual(
+      sorted([
+        { d, id: 'open', e: 'open', n: 1 },
+        { d, id: 'open:live0:past', e: 'open', n: 1 },
+        { d, id: 'open:live0', e: 'open', n: 1 },
+        { d, id: 'open:past', e: 'open', n: 1 },
+        { d, id: 'arrange:up', e: 'arrange', n: 2 },
+        { d, id: 'arrange:past', e: 'arrange', n: 1 },
+        { d, id: ID, e: 'map', n: 2 },
+        { d, id: ID2, e: 'map', n: 1 },
+        { d, id: 'saved:a1:p', e: 'map', n: 1 },
+        { d, id: 'saved:ax:-', e: 'map', n: 1 },
+        { d, id: ID, e: 'save', n: 1 },
+        { d, id: ID2, e: 'save', n: 1 },
+        { d, id: 'save:dated', e: 'save', n: 1 },
+        { d, id: 'save:now', e: 'save', n: 1 },
+      ]),
+    );
+    for (const r of rows) if (r.id !== ID && r.id !== ID2) expect(FLOW_IDS).toContain(r.id);
+  });
+
+  it('the added ids are a fixed list of 18 with the four prefixes; none is a place in the aggregate', () => {
+    expect(FLOW_IDS).toHaveLength(18);
+    for (const id of FLOW_IDS) expect(id).toMatch(/^(open(:|$)|arrange:|saved:|save:)/);
+    const counters = [...FLOW_IDS.map((id) => ({ d, id, e: id.startsWith('saved:') ? 'map' : id.startsWith('save:') ? 'save' : 'open', n: 3 })), { d, id: ID, e: 'map', n: 1 }];
+    expect(aggregate(counters)).toEqual([{ id: ID, shown: 0, save: 0, map: 1, book: 0 }]);
   });
 });
 

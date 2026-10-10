@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // 분석 프로그램 (ADR-0078 6): the D1 counters → docs/analytics/YYYY-MM-DD.md, last 7 and 28 days.
 //   npm run analytics:report        (needs `npx wrangler login`; reads only, from the remote yeogwi-events)
-// Mood taps, cards shown → map opened, the most saved places (net of unsave) and how often date mode was used.
+// Mood taps, cards shown → map opened, the most saved places (net of unsave) and how often date mode was used;
+// then 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md): Q1–Q3 from the counters that are not places.
 // Little or no data is said as such, never presented as a finding.
 import { execSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -22,9 +23,39 @@ export function reportSql(today) {
 }
 
 const pct = (a, b) => `${((100 * a) / b).toFixed(1)}%`;
+/** the saved-list flow counters (events/handler.ts FLOW_IDS): not places */
+const FLOW = /^(open(:|$)|arrange:|saved:|save:)/;
+const OPS = [['up', '위로'], ['down', '아래로'], ['move', '다른 날로'], ['past', '지난 날 펼치기·접기']];
+
+/** 저장 목록 흐름 for one window (`key` n7 / n28). */
+function flowLines(rows, key) {
+  const n = (pred) => rows.filter(pred).reduce((s, r) => s + Number(r[key] || 0), 0);
+  const id = (x) => n((r) => r.id === x);
+  if (!n((r) => FLOW.test(r.id))) return ['데이터 없음.'];
+  const dated = id('save:dated');
+  const saves = dated + id('save:now');
+  const opens = n((r) => r.event === 'open' && /^open(:|$)/.test(r.id));
+  const both = id('open:live0:past');
+  const ages = ['0', '1', '2', 'x'].map((a) => n((r) => r.event === 'map' && r.id.startsWith(`saved:a${a}:`)));
+  const maps = ages.reduce((s, x) => s + x, 0);
+  const past = n((r) => r.event === 'map' && /^saved:a.:p$/.test(r.id));
+  const later = ages[1] + ages[2];
+  const ops = OPS.map(([op, name]) => [name, id(`arrange:${op}`)]);
+  const arranged = ops.reduce((s, [, x]) => s + x, 0);
+  const out = [
+    `- Q1 날짜를 고른 상태의 저장: ${saves ? `${dated} / ${saves} (${pct(dated, saves)})` : '저장 0회'}`,
+    `- Q2-a 저장 목록 열기 ${opens}회${opens ? ` 중 ♥ 0이면서 지난 날이 접힌 채: ${both} (${pct(both, opens)})` : ''}`,
+    `- Q2-b 목록에서 연 길찾기 ${maps}회${maps ? ` — 담은 날 0일 ${ages[0]}, 1일 ${ages[1]}, 2일 이상 ${ages[2]}, 모름 ${ages[3]}; 그중 지난 날 줄 ${past} (${pct(past, maps)})` : ''}`,
+    `- Q2-c 다음 날 이어짐(근사): 목록 길찾기 중 1일 이상 ${later} / 저장 ${saves}${saves ? ` (${pct(later, saves)})` : ''} — 사람 단위가 아니라 전체 비율이라 근사예요.`,
+    `- Q3 정리 ${arranged}회${opens ? ` (열기 대비 ${pct(arranged, opens)})` : ''}: ${ops.map(([name, x]) => `${name} ${x}`).join(', ')}`,
+  ];
+  if (opens < 30) out.push(`- 저장 목록 열기가 ${opens}회뿐이라 비율은 참고만 해요.`);
+  return out;
+}
 
 /** rows: { event, id, n7, n28 }[]; names: id → place name. */
-export function renderReport(rows, names, today) {
+export function renderReport(allRows, names, today) {
+  const rows = allRows.filter((r) => !FLOW.test(r.id));
   const out = [`# 사용 분석 ${today}`, '', `자체 익명 기록(D1 \`yeogwi-events\`) 기준. 7일 = ${minus(today, 6)}~${today}, 28일 = ${minus(today, 27)}~${today} (서울 날짜).`, ''];
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) {
     const sum = (e, pred = () => true) => rows.filter((r) => r.event === e && pred(r)).reduce((s, r) => s + Number(r[key] || 0), 0);
@@ -57,6 +88,8 @@ export function renderReport(rows, names, today) {
     if (taps < 30) out.push(`- 기분 탭이 ${taps}회뿐이라 비율은 참고만 해요.`);
     out.push('');
   }
+  out.push('## 저장 목록 흐름', '', 'ADR-0085. 시각 없이 센 값이에요. 「담은 날」은 기기 안에만 있고, 날 수(0·1·2 이상)만 와요.', '');
+  for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...flowLines(allRows, key), '');
   return `${out.join('\n').trimEnd()}\n`;
 }
 

@@ -353,6 +353,34 @@ describe('날짜 모드 저장 (specs/date-mode.md D3·D4·D5)', () => {
   });
 });
 
+describe('담은 날 at (ADR-0085 F5) — 기기 안에만', () => {
+  it('a heart keeps the day it was saved; moving keeps it; a list from before has none and still reads', () => {
+    const local = new MemStorage();
+    local.setItem(KEYS.savedV2, JSON.stringify([{ id: 'old', date: TODAY, order: 0 }]));
+    const store = createStore(local, null);
+    expect(store.load(TODAY).saved).toEqual([{ id: 'old', date: TODAY, order: 0 }]);
+    store.toggleSaved('new', TODAY, undefined, TODAY);
+    expect(store.saved()).toEqual([
+      { id: 'old', date: TODAY, order: 0 },
+      { id: 'new', date: TODAY, order: 1, at: TODAY },
+    ]);
+    store.moveSaved('new', TODAY, -1);
+    store.moveToDay('new', TODAY, '2026-10-02');
+    expect(store.saved()).toEqual([
+      { id: 'old', date: TODAY, order: 0 },
+      { id: 'new', date: '2026-10-02', order: 0, at: TODAY },
+    ]);
+    expect(createStore(local, null).load(TODAY).saved).toEqual(store.saved()); // survives a reload
+  });
+
+  it('a broken `at` is dropped, the row is kept', () => {
+    expect(parseEntries([{ id: 'a', date: TODAY, order: 0, at: '21:30' }, { id: 'b', date: TODAY, order: 1, at: 5 }])).toEqual([
+      { id: 'a', date: TODAY, order: 0 },
+      { id: 'b', date: TODAY, order: 1 },
+    ]);
+  });
+});
+
 describe('얼마나 (ADR-0060) — 범위 저장', () => {
   it('walk | drive30 | drive60; anything else (or nothing) reads as 차로 30분, and a bad value is written back', () => {
     expect(parseReach('walk')).toBe('walk');

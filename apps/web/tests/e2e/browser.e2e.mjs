@@ -1652,7 +1652,7 @@ await check('U1-no-events', 'VITE_EVENTS_URL unset (this build): a mood, a heart
   assert(!noted, 'the note / 기록 끄기 shows though nothing is collected');
 });
 
-await check('A1-analytics', 'ADR-0078, a build with the three analytics settings: after load GA4 (gtag.js with the id) and 네이버 wcslog.js are requested (route-mocked), a mood tap reaches GA4 as mood_tap and hiding the page POSTs /api/events, nothing carries a coordinate; with 기록 끄기 on, none of the three is requested at all', async () => {
+await check('A1-analytics', 'ADR-0078, a build with the three analytics settings: after load GA4 (gtag.js with the id) and 네이버 wcslog.js are requested (route-mocked), a mood tap reaches GA4 as mood_tap and hiding the page POSTs /api/events, nothing carries a coordinate; the saved list holding only a day gone by (♥ 0), opened once, POSTs one open with live0 and past (ADR-0085) and no day saved; with 기록 끄기 on, none of the three is requested at all', async () => {
   const { mkdtempSync, rmSync } = await import('node:fs');
   const { tmpdir } = await import('node:os');
   const http = await import('node:http');
@@ -1690,9 +1690,12 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
   // 로컬 접속은 통계에서 빠지므로(isLocalHost), 실제 방문처럼 보이는 호스트를 같은 서버로 이어 준다
   const url = 'http://e2e.example.com/';
   const ANALYTICS = /googletagmanager\.com|google-analytics\.com|wcs\.naver\.(net|com)/;
+  // 저장 목록 흐름 (ADR-0085 F2·F6): one place saved on a day gone by, saved the day before — ♥ 0, 지난 날 folded
+  const pastId = JSON.parse(readFileSync(join(out, 'spots.json'), 'utf8'))[0].id;
   async function run(trackOff, pageUrl = url) {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
     await ctx.addInitScript(GEO_STUB);
+    await ctx.addInitScript((id) => localStorage.setItem('jeju.saved.v2', JSON.stringify([{ id, date: '2025-01-02', order: 0, at: '2025-01-01' }])), pastId);
     if (trackOff) await ctx.addInitScript(() => localStorage.setItem('jeju.track', 'false'));
     await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
     // stand-ins, never the real network: gtag.js keeps the dataLayer; wcslog.js notes that wcs_do ran
@@ -1712,6 +1715,7 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
     await sleep(300);
     await tapText(page, '[data-mood="rest"]');
     await waitCards(page);
+    await tapText(page, '#saved');
     await page.evaluate(() => {
       Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
       document.dispatchEvent(new Event('visibilitychange'));
@@ -1740,6 +1744,9 @@ await check('A1-analytics', 'ADR-0078, a build with the three analytics settings
     assert(on.win.noted, 'the note / 기록 끄기 is hidden though analytics is on');
     const ours = posts.filter((p) => p.method === 'POST');
     assert(ours.length === 1 && JSON.parse(ours[0].body).some((e) => e.e === 'tap' && e.mood === 'rest'), `POST /api/events: ${JSON.stringify(posts)}`);
+    const opens = JSON.parse(ours[0].body).filter((e) => e.e === 'open');
+    assert(opens.length === 1 && opens[0].live0 === true && opens[0].past === true && !('id' in opens[0]), `open: ${JSON.stringify(opens)}`);
+    assert(!/"at"|2025-01-0[12]/.test(ours[0].body), `the day saved went out: ${ours[0].body}`);
     const coord = /lat|lng|\b3[34]\.\d{3,}|\b12[67]\.\d{3,}/;
     const leaked = [...on.seen.filter((r) => ANALYTICS.test(r.url) || r.url.includes('/api/events')).map((r) => r.url + r.body), on.win.dataLayer, ...ours.map((p) => p.body)].filter((s) => coord.test(s));
     assert(leaked.length === 0, `a coordinate went out: ${leaked.join(' | ').slice(0, 300)}`);

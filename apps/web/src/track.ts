@@ -8,13 +8,17 @@ import type { Button, NewSub, Reach, Sub } from './pick';
 import type { SeasonKind } from './season';
 import type { Basis, View, When } from './types';
 
-export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book';
+export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange';
+/** 저장 목록 정리 (ADR-0085): 위로 / 아래로 / 다른 날로 / 지난 날 펼치기·접기. */
+export type ArrangeOp = 'up' | 'down' | 'move' | 'past';
+/** days from the day a saved row was saved to today: 0, 1, or 2 = two or more. */
+export type Age = 0 | 1 | 2;
 export type Range = 'walk' | '30' | '60';
 export type BasisKind = 'here' | 'stay' | 'area';
 
 export interface UsageEvent {
   e: EventName;
-  /** the place (every event but `tap`). */
+  /** the place (every event but `tap`, `open` and `arrange`). */
   id?: string;
   mood?: Button;
   /** food: 식사 / 카페·디저트; new: 섞어서 / 구경 / 체험 (mix / sight / do, ADR-0064). */
@@ -29,8 +33,28 @@ export interface UsageEvent {
   indoor?: boolean;
   /** shown and map only: the kind whose 철 words the card showed (ADR-0080); missing = none. */
   season?: SeasonKind;
+  /** open only: ♥ N was 0 when the saved list opened (ADR-0085); missing = not 0. */
+  live0?: true;
+  /** open: the folded 지난 날 line was there; map from the saved list: the row was under 지난 날. */
+  past?: true;
+  /** map only: opened from the saved list; missing = from a results card. */
+  from?: 'saved';
+  /** map from the saved list only: days since that row was saved; missing = not known (saved before this or
+   * brought back from a backup). The day saved itself never leaves the device. */
+  age?: Age;
+  /** arrange only. */
+  op?: ArrangeOp;
   /** Jeju calendar day, no time. */
   d: Day;
+}
+
+/** Days from `at` (the day a row was saved) to `today`, as 0 / 1 / 2 (2 or more); undefined without `at`.
+ * Both are Jeju days (dayOf), so the boundary is Jeju midnight. */
+export function ageOf(at: Day | undefined, today: Day): Age | undefined {
+  if (!at) return undefined;
+  const n = Math.round((Date.parse(`${today}T00:00:00Z`) - Date.parse(`${at}T00:00:00Z`)) / 86_400_000);
+  if (!Number.isFinite(n)) return undefined;
+  return n <= 0 ? 0 : n === 1 ? 1 : 2;
 }
 
 export const FLUSH_MS = 10_000;

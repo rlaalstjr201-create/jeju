@@ -86,7 +86,7 @@ export function normalizeEntries(list: readonly SavedEntry[]): SavedEntry[] {
       day = e.date;
       n = 0;
     }
-    return { id: e.id, date: e.date, order: n++ };
+    return { id: e.id, date: e.date, order: n++, ...(isDay(e.at) ? { at: e.at } : {}) };
   });
 }
 
@@ -290,8 +290,8 @@ export interface Store {
   /** Current saved entries, re-read from storage (another tab may have changed them). */
   saved(): SavedEntry[];
   /** Heart on `id` for `date`: added at the end of that day (or at `at`, putting back a row just taken out),
-   * or taken out (`removed` says where it was). */
-  toggleSaved(id: string, date: Day, at?: number): { entries: SavedEntry[]; added: boolean; removed: SavedEntry | null };
+   * or taken out (`removed` says where it was). `on` = the day it is saved (SavedEntry.at). */
+  toggleSaved(id: string, date: Day, at?: number, on?: Day): { entries: SavedEntry[]; added: boolean; removed: SavedEntry | null };
   /** One place up (-1) or down (+1) within its day. */
   moveSaved(id: string, date: Day, dir: -1 | 1): SavedEntry[];
   /** To another day, at its end (if it is already there, the two become one). */
@@ -419,14 +419,14 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     survey: () => parseSurvey(get(local, KEYS.survey)),
     updateSurvey: (fn) => void set(local, KEYS.survey, fn(parseSurvey(get(local, KEYS.survey)))),
     saved: readSaved,
-    toggleSaved(id, date, at) {
+    toggleSaved(id, date, at, on) {
       let removed: SavedEntry | null = null;
       const entries = update((cur) => {
         removed = cur.find((e) => e.id === id && e.date === date) ?? null;
         if (removed) return cur.filter((e) => e !== removed);
         // Put back where it was: everything of that day from `at` on moves one down.
         const order = at === undefined ? lastOrder(cur, date) : at - 0.5;
-        return [...cur, { id, date, order }];
+        return [...cur, { id, date, order, ...(on ? { at: on } : {}) }];
       });
       return { entries, added: !removed, removed };
     },
@@ -449,7 +449,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         if (!entry || from === to) return cur;
         const rest = cur.filter((e) => e !== entry);
         if (rest.some((e) => e.id === id && e.date === to)) return rest;
-        return [...rest, { id, date: to, order: lastOrder(rest, to) }];
+        return [...rest, { id, date: to, order: lastOrder(rest, to), ...(entry.at ? { at: entry.at } : {}) }];
       });
     },
     mergeSaved(incoming) {
