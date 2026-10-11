@@ -9,7 +9,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
 import type { NoOrigin, Origin, Overlay, View } from './types';
@@ -65,7 +65,13 @@ export const COPY = {
   /** ADR-0071: TMAP opens only as an app (no web page to fall back on). */
   tmapNote: 'TMAP은 앱이 있어야 열려요. 걸어서 가는 길은 네이버지도로 열어요.',
   today: '오늘',
+  held: (when: string) => `${when} 담아 둠`,
+  pastDay: '지난 날',
   tomorrow: '내일',
+  homeAsk: '지금 뭐 하고 싶어요?',
+  homeAskDay: (day: string) => `${day} 뭐 하고 싶어요?`,
+  homeFrom: (where: string) => `${where}에서`,
+  homeFromArea: '동네를 고르면 그 근처에서',
   past: '지난 날',
   pastOpen: '펼치기',
   pastClose: '접기',
@@ -216,6 +222,23 @@ export function basisLabel(s: State): string {
   return COPY.basisWhen(s.when === addDays(s.today, 1) ? COPY.tomorrow : shortDay(s.when), where);
 }
 
+/** 「오늘 담아 둠」: the other day a place is kept on (heuristic audit H1), or null. */
+export function heldText(s: State, id: string): string | null {
+  const d = heldDay(s, id);
+  if (!d) return null;
+  if (d < s.today) return COPY.held(COPY.pastDay);
+  return COPY.held(d === s.today ? COPY.today : d === addDays(s.today, 1) ? COPY.tomorrow : shortDay(d));
+}
+
+/** Home question and line under it follow the basis (heuristic audit H3). 지금 + 내 위치: ADR-0077 Am.2 as is. */
+export function homeCopy(s: State): { ask: string; lede: string } {
+  const where = whereLabel(s);
+  const day = s.when === 'now' ? null : s.when === addDays(s.today, 1) ? COPY.tomorrow : shortDay(s.when);
+  const from = where === COPY.basisNoGps ? COPY.homeFromArea : COPY.homeFrom(where === COPY.basisGps && !day ? `지금 ${where}` : where);
+  if (!day) return { ask: COPY.homeAsk, lede: `${from} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 바로 길찾기로 가요.` };
+  return { ask: COPY.homeAskDay(day), lede: `${from} ${day} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 하트로 담아 두세요.` };
+}
+
 /** Status line under the results heading: one short line, plus an escape hatch while GPS is slow (S04·S05). */
 export function statusOf(s: State): { text: string; chooseArea: boolean } {
   const p = s.phase;
@@ -245,6 +268,8 @@ export interface Els {
   results: HTMLElement;
   savedView: HTMLElement;
   date: HTMLElement;
+  ask: HTMLElement;
+  lede: HTMLElement;
   basis: HTMLButtonElement;
   basisText: HTMLElement;
   saved: HTMLButtonElement;
@@ -291,6 +316,8 @@ export function findEls(doc: Document): Els {
     results: q('#results'),
     savedView: q('#savedView'),
     date: q('#date'),
+    ask: q('#ask'),
+    lede: q('#lede'),
     basis: q<HTMLButtonElement>('#basis'),
     basisText: q('#basis > span'),
     saved: q<HTMLButtonElement>('#saved'),
@@ -437,6 +464,20 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   /** `indoor`: 비 와요 is on (ADR-0065) — the line starts with 실내, words only (no tag or chip, §14).
    * `market`: a five-day market's day words (ADR-0066), in the same place and the same way.
    * `season`: the 철 words (ADR-0080), after 실내, held together with their separator so they never split. */
+  /** 「오늘 담아 둠 ·」 first in a result card's meta line, only while there is one (heuristic audit H1). */
+  function setHeld(s: State, meta: HTMLElement, id: string) {
+    const t = heldText(s, id);
+    let span = meta.querySelector<HTMLElement>(':scope > .held');
+    if (!t) return void span?.remove();
+    if (span?.dataset.t === t) return;
+    if (!span) {
+      span = el(doc, 'span', { class: 'held' });
+      meta.prepend(span);
+    }
+    span.dataset.t = t;
+    span.replaceChildren(t, el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
+  }
+
   function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null, season: string | null = null): HTMLElement {
     const metaEl = el(doc, 'p', { class: 'meta' });
     if (indoor) {
@@ -509,7 +550,12 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // 철 only on the results, for the day being viewed (ADR-0080)
     const inSeason = day ? null : seasonOn(spot.season, whenDay(s));
     const season = inSeason ? seasonText(inSeason) : null;
-    if (meta || dest || indoor || market || season) card.append(metaEl(meta, dest ? s.mapApp : null, indoor, market, season));
+    if (meta || dest || indoor || market || season) {
+      const m = metaEl(meta, dest ? s.mapApp : null, indoor, market, season);
+      // kept on another day (heuristic audit H1): the empty heart says so, not 「not saved」
+      if (!day) setHeld(s, m, spot.id);
+      card.append(m);
+    }
     // 길찾기 (ADR-0067, ADR-0069): directions in one tap, on every card; the card itself stays the place page
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
     if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
@@ -768,6 +814,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   /** Hearts, broken photos and the first-save hint are patched in place — cards are never rebuilt for them. */
   function patchCards(s: State) {
     for (const h of els.main.querySelectorAll<HTMLButtonElement>('.heart[data-id]')) setAttr(h, 'aria-pressed', String(isSaved(s, h.dataset.id!, h.dataset.date)));
+    for (const h of els.main.querySelectorAll<HTMLElement>('.heart[data-id]:not([data-date])')) {
+      const meta = h.parentElement?.querySelector<HTMLElement>(':scope > .meta');
+      if (meta) setHeld(s, meta, h.dataset.id!);
+    }
     if (s.broken !== patchedBroken) {
       const was = patchedBroken;
       patchedBroken = s.broken;
@@ -981,6 +1031,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     homeDated = dated;
     // date mode (specs/date-mode.md): the board is about the day being viewed
     setText(els.date, dated ? longDay(s.when) : todayText);
+    const hc = homeCopy(s);
+    setText(els.ask, hc.ask);
+    setText(els.lede, hc.lede);
     const origin = homeOrigin(s);
     const sig = homeSigOf(s, origin);
     if (sig === homeSig && s.spots === homeSpots) return;

@@ -311,6 +311,15 @@ export function isSaved(s: State, id: string, day: Day = whenDay(s)): boolean {
   return s.saved.some((e) => e.id === id && e.date === day);
 }
 
+/** Not kept on `day` but on another: the next such day from today, else the latest gone by (heuristic audit H1 —
+ * a card must not read 「not saved」 while ♥ N counts it). */
+export function heldDay(s: State, id: string, day: Day = whenDay(s)): Day | null {
+  if (isSaved(s, id, day)) return null;
+  const days = s.saved.filter((e) => e.id === id).map((e) => e.date).sort();
+  if (!days.length) return null;
+  return days.find((d) => d >= s.today) ?? days[days.length - 1];
+}
+
 /** Once data is loaded, only ids that still exist count (S42). */
 function known(s: State): SavedEntry[] {
   if (!s.spots) return s.saved;
