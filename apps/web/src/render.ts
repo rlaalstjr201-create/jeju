@@ -57,7 +57,9 @@ export const COPY = {
   loadError: ['목록을 불러오지 못했어요.', '연결을 확인하고 다시 불러와 주세요.'],
   loadErrorOffline: ['오프라인이라 목록을 불러오지 못했어요.', '연결되면 다시 불러와 주세요.'],
   retry: '다시 불러오기',
+  retryGps: '위치 다시 쓰기',
   westFirst: '서쪽부터',
+  otherArea: '다른 동네는 아래에서 골라요',
   savedEmpty: '저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.',
   /** ADR-0061: the saved list's usage-record switch (its note is static in index.html, ADR-0078). */
   trackOff: '기록 끄기',
@@ -163,6 +165,7 @@ export const COPY = {
   /** no basis yet (GPS, no fix this session): the island's best, not said to be near (ADR-0075 Amendment 1) */
   examplePopular: (names: string[]) => `제주 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 비짓제주(제주관광공사)',
+  homeSettings: '설정 · 지도 앱 · 의견',
   // 노을 볼 곳 (ADR-0083): only in the hours before the sunset, with 3 or more places
   sunsetPlaces: '노을 볼 곳',
   sunsetCount: (n: number) => ` ${n}곳 · 차로 45분 안`,
@@ -631,8 +634,10 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     if (kind === 'loadError') {
       box.append(el(doc, 'button', { type: 'button', class: 'retry', 'data-action': 'retry' }, COPY.retry));
     } else {
-      areaGroups(box, 'inline', s.basis === 'region' ? s.region : null);
+      // how to get the location back, above the 동네 grid rather than under it (heuristic audit H8)
       if (p.k === 'noOrigin' && p.why === 'denied') box.append(el(doc, 'p', { class: 'notice-f' }, COPY.deniedHow));
+      if (p.k === 'noOrigin' && p.why !== 'outside') box.append(el(doc, 'button', { type: 'button', class: 'tbtn regps', 'data-action': 'retry' }, COPY.retryGps));
+      areaGroups(box, 'inline', s.basis === 'region' ? s.region : null);
     }
     return box;
   }
@@ -1080,7 +1085,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       // the coastline the 노을 places were worked out from (ODbL): credited while they are shown
       const credit = el(doc, 'p', { class: 'credit' }, COPY.homeCredit);
       if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
-      nodes.push(areasSection(s, spots, origin), credit);
+      // settings reachable with nothing saved yet (heuristic audit H5): they live under the saved list
+      nodes.push(areasSection(s, spots, origin), credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings));
     }
     els.homeMore.replaceChildren(...nodes);
   }
@@ -1185,7 +1191,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
       const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
-      optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow]);
+      // the 동네 in use shows here, checked, not only far down in the index (heuristic audit H6)
+      const regionRow = s.basis === 'region' && s.region ? [optRow(option(COPY.basisRegion(areaLabel(s.region)), COPY.otherArea, { 'data-action': 'close', 'aria-pressed': 'true' }))] : [];
+      optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow, ...regionRow]);
       // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
       // The same thin-rule rows with a check. Choosing one closes the sheet.
       optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));

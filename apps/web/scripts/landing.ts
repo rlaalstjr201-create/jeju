@@ -397,7 +397,7 @@ function areaPage(ctx: Ctx, a: Area): string {
   const combos = ctx.combos.filter((c) => c.area === a);
   const body = `<h1>${esc(a.label)} 근처에서 지금 뭐 할까</h1>
 <p class="lead">${esc(AREA_LINE[a.slug])} 기분 하나만 고르면 앱이 근처 3곳을 골라 드려요.</p>
-<p class="meta">여기 순서는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 지금 있는 곳에서 다시 골라요.</p>
+<p class="meta">여기 순서는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
 <p><a class="go" href="${appLink(a)}">앱에서 ${esc(a.label)} 근처 3곳 받기</a></p>
 ${sections}
 ${combos.length ? `<h2>기분과 함께</h2>\n<ul class="areas">${combos.map((c) => `<li><a href="${c.url}">${esc(c.query)}</a></li>`).join('')}</ul>` : ''}
@@ -433,7 +433,7 @@ function comboPage(ctx: Ctx, c: Combo): string {
     .slice(0, PER_COMBO);
   const body = `<h1>${esc(c.query)}</h1>
 <p class="lead">${esc(AREA_LINE[a.slug])} ${esc(a.label)} 근처에서 「${MOOD_NAME[c.mood]}」${c.sub ? `의 ${c.sub === 'do' ? '체험' : '구경'} 탭을` : '를'} 누르면 먼저 나오는 곳 ${top.length}곳이에요.</p>
-<p class="meta">거리는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 지금 있는 곳에서 3곳을 다시 골라요.</p>
+<p class="meta">거리는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
 <p><a class="go" href="${appLink(a, c.mood)}">앱에서 지금 3곳 받기</a></p>
 <ol class="list">${top.map((p) => placeRow(ctx, p, `${a.label} 중심에서`)).join('')}</ol>
 <p><a class="tbtn" href="${areaPath(a)}">${esc(a.label)} 근처 다른 기분도 보기</a></p>`;

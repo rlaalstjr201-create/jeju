@@ -1157,7 +1157,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
-    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/걸어서/차로 30분/차로 1시간/비 와요(실내만)', `sheet rows ${rows.join('/')}`);
+    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처다른 동네는 아래에서 골라요/걸어서/차로 30분/차로 1시간/비 와요(실내만)', `sheet rows ${rows.join('/')}`);
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
     await b.page.waitForSelector('#sheet .primary');
@@ -1463,7 +1463,8 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
         },
       });
       // D1: the first screen as before (the ♥ N is there because something is saved)
-      const first = await page.$$eval('main button:not([hidden]), header button:not([hidden]), .top button:not([hidden])', (els) => els.filter((e) => e.offsetParent !== null).length);
+      // the 설정 entry at the very bottom of the home (heuristic audit H5) is not on the first screen
+      const first = await page.$$eval('main button:not([hidden]):not([data-action="settings"]), header button:not([hidden]), .top button:not([hidden])', (els) => els.filter((e) => e.offsetParent !== null).length);
       if (first !== 7) problems.push(`${tag} first screen has ${first} controls`);
       if ((await page.textContent('#basis')).trim() !== '내 위치 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
       if ((await page.textContent('#saved')).trim() !== '3') problems.push(`${tag} ♥ ${await page.textContent('#saved')}`);

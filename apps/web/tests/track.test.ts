@@ -125,7 +125,7 @@ describe('U1 수집 주소가 없으면 보내지 않는다', () => {
     await tap($$('#cards .heart')[0]);
     await tap('#saved');
     expect($('#savedView .track').hidden).toBe(false);
-    expect($('#trackNote').textContent).toBe('써 본 기록을 남겨요(GA4·네이버 애널리틱스 포함). 개인정보 처리 안내');
+    expect($('#trackNote').textContent).toBe('써 본 기록을 남겨요(구글·네이버 방문 통계 포함). 개인정보 처리 안내');
     expect($('#savedView [data-action="track"]').textContent).toBe('기록 끄기');
     expect($('#trackNote a')?.getAttribute('href')).toBe('/privacy'); // D2: what is recorded, in full
   });
@@ -229,9 +229,9 @@ describe('U3 기록 끄기', () => {
     await tap($$('#cards .heart')[0]);
     await tap('#saved');
     const btn = () => $<HTMLButtonElement>('#savedView [data-action="track"]');
-    expect($('#savedView .foot').nextElementSibling).toBe(btn().parentElement);
+    expect($('#savedView .foot').nextElementSibling?.nextElementSibling).toBe(btn().parentElement); // under 설정 (heuristic audit H5)
     expect(btn().parentElement!.hidden).toBe(false);
-    expect($('#trackNote').textContent).toBe('써 본 기록을 남겨요(GA4·네이버 애널리틱스 포함). 개인정보 처리 안내');
+    expect($('#trackNote').textContent).toBe('써 본 기록을 남겨요(구글·네이버 방문 통계 포함). 개인정보 처리 안내');
     expect(btn().textContent).toBe('기록 끄기');
     expect(btn().classList.contains('tbtn')).toBe(true);
     await tap(btn());

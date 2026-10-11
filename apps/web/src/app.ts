@@ -835,6 +835,14 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
       return;
     }
+    if (action === 'settings') {
+      if (!guarded('settings') && state.view === 'home') {
+        openSaved();
+        doc.getElementById('settingsH')?.scrollIntoView({ block: 'start' });
+        doc.getElementById('settingsH')?.focus({ preventScroll: true });
+      }
+      return;
+    }
     if (action === 'close-saved') {
       if (!guarded('close-saved') && state.view === 'saved') closeSaved();
       return;
