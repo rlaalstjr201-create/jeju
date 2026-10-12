@@ -127,6 +127,11 @@
      "week": "2026-10-05",
      "gsc": "check_failed",
      "naver": "not_found"
+    },
+    {
+     "week": "2026-10-12",
+     "gsc": "absent",
+     "naver": "not_found"
     }
    ]
   },
@@ -528,6 +533,11 @@
     {
      "week": "2026-10-05",
      "gsc": "check_failed",
+     "naver": "not_found"
+    },
+    {
+     "week": "2026-10-12",
+     "gsc": "absent",
      "naver": "not_found"
     }
    ]

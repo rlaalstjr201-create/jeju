@@ -1,31 +1,31 @@
 {
  "_why": "최신 SEO 진단의 개입 큐. 작업자가 여기서 집어 들고, check가 있는 항목은 npm run seo:verify가 해소 여부를 본다.",
- "generated": "2026-10-05",
- "from_run": "2026-10-05T0656",
+ "generated": "2026-10-12",
+ "from_run": "2026-10-12T1200",
  "items": [
   {
    "rank": 1,
-   "sort_id": "target-index-request",
-   "title": "target 랜딩 2쪽(/jeju/, /jeju/seongsan/new/)을 GSC URL 검사·네이버 서치어드바이저 수집 요청에 넣고 keywords.json에 indexed_at을 적는다",
+   "sort_id": "target-index-gsc-inspect",
+   "title": "GSC URL 검사로 target 2쪽(https://yeochana.com/jeju/, /jeju/seongsan/new/)의 색인 여부를 보고, 색인됐으면 keywords.json indexed_at을 적고 안 됐으면 색인 생성 요청을 누른다",
    "severity": "P1",
    "queue_kind": "other",
    "keyword": null,
    "check": null,
-   "where": "사람 — GSC URL 검사(https://yeochana.pages.dev/jeju/, /jeju/seongsan/new/) · 서치어드바이저 웹 페이지 수집 요청 · data/seo/config.json naver.collect_requested · data/seo/keywords.json indexed_at",
+   "where": "사람 — GSC(https://yeochana.com/ 속성) URL 검사 2회 · apps/web/data/seo/keywords.json target 2건 indexed_at",
    "verify": "keywords.json target 2건에 indexed_at이 있고 seo:keywords --track이 wait가 아닌 판정을 낸다",
-   "from_run": "2026-10-05T0656"
+   "from_run": "2026-10-12T1200"
   },
   {
    "rank": 2,
-   "sort_id": "bing-connect",
-   "title": "Bing Webmaster Tools에 GSC 가져오기로 사이트를 등록하고 config.bing.site를 채운다",
+   "sort_id": "naver-sitemap-submit",
+   "title": "네이버 서치어드바이저에 로그인된 상태로 사이트맵(https://yeochana.com/sitemap.xml)을 제출하고 config.naver.sitemap_submitted_at을 적는다",
    "severity": "P2",
    "queue_kind": "config",
    "keyword": null,
    "check": null,
-   "where": "사람 — bing.com/webmasters(GSC 가져오기) · apps/web/data/seo/config.json bing.site = https://yeochana.pages.dev",
-   "verify": "seo:verify 외부 소스 bing 줄이 「등록됨」을 출력한다",
-   "from_run": "2026-10-05T0656"
+   "where": "사람 — searchadvisor.naver.com 요청 → 사이트맵 제출 · apps/web/data/seo/config.json naver.sitemap_submitted_at · 주간 Playwright 프로필 네이버 로그인 유지",
+   "verify": "config.naver.sitemap_submitted_at이 채워지고 다음 console 기록의 naver.sitemap이 「확인 실패」가 아니다",
+   "from_run": "2026-10-12T1200"
   }
  ]
 }

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-12",
+  "google": {
+    "property": "https://yeochana.com/",
+    "indexed": 353,
+    "not_indexed_reasons": [
+      { "reason": "발견됨 - 현재 색인이 생성되지 않음", "pages": 2536 },
+      { "reason": "크롤링됨 - 현재 색인이 생성되지 않음", "pages": 51 }
+    ],
+    "sitemap": { "status": "성공", "submitted": "2026-10-08", "last_read": "2026-10-09", "discovered": 2940 }
+  },
+  "naver": {
+    "first_crawl": "확인 실패",
+    "crawled_pages_total": "확인 실패",
+    "crawl_errors_total": "확인 실패",
+    "sitemap": "확인 실패",
+    "expose": "확인 실패",
+    "note": "확인 실패(로그인 필요) — Playwright 프로필이 네이버 로그인 화면으로 넘어감"
+  },
+  "verdict": "구글은 yeochana.com 사이트맵 「성공」·색인 353쪽(나머지 2,587쪽은 발견·크롤링 후 대기), 네이버 서치어드바이저는 로그인 필요로 확인 실패"
+}

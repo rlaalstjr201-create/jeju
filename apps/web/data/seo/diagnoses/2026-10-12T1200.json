@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "run_id": "2026-10-12T1200",
+  "graded": "2026-10-05T0656",
+  "diagnosed_at": "2026-10-12",
+  "phase": "post-deploy",
+  "window": {
+    "start": "2026-10-06",
+    "end": "2026-10-12"
+  },
+  "summary": "배포 후 주간 점검(ADR-0079, 정식 주소 yeochana.com·ADR-0084). 지난 큐 2건 중 1건 해소(Bing 등록) — 해소율 50% → 개입 상한 5. seo:crawl 감사 0건·고아 0, seo:verify·keyword gate 오류 0. 구글: 사이트맵 성공(발견 2,940), 색인 353쪽, 발견됨-미색인 2,536·크롤링됨-미색인 51, 지난 7일 노출 6·클릭 0·평균 8.8위(검색어 익명). 네이버: 브랜드 「여차나:제주」가 AI 브리핑 4위로 처음 잡혔고 나머지 11개는 not_found(1회 관찰). target 2건은 색인일 미확인이라 --track wait, 밀림 경보 0 — meta·push 판정이 없으므로 ADR-0079 3의 자동 조치 대상은 없다. 미색인은 크롤 층이 아니라(감사 0·사이트맵 성공) 새 도메인 2,940쪽 중 대부분이 한 문장짜리 장소 쪽이라는 색인(품질·예산) 층 문제로 보이지만, 이를 바꾸는 일(장소 쪽 본문·색인 범위)은 제안 범위다. 크롤링됨-미색인 51쪽의 실제 URL은 아직 모른다 — investigate.",
+  "instruments": [
+    {
+      "name": "build",
+      "status": "ok",
+      "note": "SITE_URL=https://yeochana.com npm run build — 랜딩 2,938 · sitemap 2,940 URL (오늘 선행 실행 결과 인용)"
+    },
+    {
+      "name": "seo:crawl",
+      "status": "ok",
+      "note": "감사 0건 · 고아 0 (오늘 선행 실행 결과 인용)"
+    },
+    {
+      "name": "seo:verify",
+      "status": "ok",
+      "note": "큐 2건 모두 사람 채점 · 게이트 오류 0·주의 0 · bing 등록됨(조회 연결 없음) · gsc API 미연결(화면 읽기)"
+    },
+    {
+      "name": "seo:keywords --track",
+      "status": "ok",
+      "note": "target 2건 wait(indexed_at 없음) · 밀림 경보 0"
+    },
+    {
+      "name": "naver-rank(playwright)",
+      "status": "ok",
+      "note": "data/seo/rank/naver-2026-10-12.json — 브랜드 「여차나:제주」 AI 브리핑 4위 found, 11개 not_found, check_failed 0 (1회 관찰)"
+    },
+    {
+      "name": "gsc(화면)",
+      "status": "ok",
+      "note": "data/seo/gsc/2026-10-12.json 노출 6·클릭 0·평균 8.8위, 검색어 표 「데이터 없음」 · data/seo/console/2026-10-12.json 색인 353, 발견됨-미색인 2,536, 크롤링됨-미색인 51"
+    },
+    {
+      "name": "naver-searchadvisor(화면)",
+      "status": "fail",
+      "note": "로그인 필요 — 확인 실패(수집·사이트맵·노출 모두 확인 실패, 0으로 읽지 않는다)"
+    },
+    {
+      "name": "dist 표본 읽기",
+      "status": "ok",
+      "note": "장소 쪽(dist/jeju/aewol/aewol-gogitgan/) 본문 = 이유 한 문장 + 동네·기분·실내 + 가까운 곳 5 — 태그 제거 후 약 2.2천 자, 대부분 공통 틀"
+    }
+  ],
+  "grading": [
+    {
+      "rank": 1,
+      "verdict": "이행 안 됨",
+      "why": "keywords.json target 2건에 indexed_at 없음, config.naver.collect_requested 빈 배열 — --track이 여전히 wait. 10-03·10-05에 이어 세 번째라 이번엔 그대로 올리지 않고 구글 URL 검사만으로 쪼갠다"
+    },
+    {
+      "rank": 2,
+      "verdict": "맞았다",
+      "why": "config.bing.site = https://yeochana.com/, registered_at 2026-10-08 — seo:verify bing 줄이 「등록됨」을 출력한다(verify 조건 충족)"
+    }
+  ],
+  "interventions": [
+    {
+      "rank": 1,
+      "title": "GSC URL 검사로 target 2쪽(https://yeochana.com/jeju/, /jeju/seongsan/new/)의 색인 여부를 보고, 색인됐으면 keywords.json indexed_at을 적고 안 됐으면 색인 생성 요청을 누른다",
+      "severity": "P1",
+      "qualifies": "seo:keywords --track: target 2건 wait(indexed_at 없음)",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "target-index-gsc-inspect",
+      "queue_kind": "other",
+      "where": "사람 — GSC(https://yeochana.com/ 속성) URL 검사 2회 · apps/web/data/seo/keywords.json target 2건 indexed_at",
+      "evidence": "seo:keywords --track 2건 wait · console/2026-10-12 색인 353/2,940 · naver-2026-10-12 target 검색어 not_found",
+      "why_now": "사이트맵 성공·감사 0건(크롤 층 배제)인데 2,587쪽이 미색인 — target 2쪽이 353쪽 안에 들었는지 모르면 pivotOf 4주 시계가 시작되지 않는다. 세 번 이월된 항목을 구글 몫만 떼어 냈다(네이버는 로그인 막힘)",
+      "verify": "keywords.json target 2건에 indexed_at이 있고 seo:keywords --track이 wait가 아닌 판정을 낸다"
+    },
+    {
+      "rank": 2,
+      "title": "네이버 서치어드바이저에 로그인된 상태로 사이트맵(https://yeochana.com/sitemap.xml)을 제출하고 config.naver.sitemap_submitted_at을 적는다",
+      "severity": "P2",
+      "qualifies": "config.naver.sitemap_submitted_at 빈 값 · console/2026-10-12 naver 확인 실패",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "naver-sitemap-submit",
+      "queue_kind": "config",
+      "where": "사람 — searchadvisor.naver.com 요청 → 사이트맵 제출 · apps/web/data/seo/config.json naver.sitemap_submitted_at · 주간 Playwright 프로필 네이버 로그인 유지",
+      "evidence": "config.naver._moved 「사이트맵 제출은 화면 버튼이 요청을 보내지 않아 미완」 · naver-2026-10-12 11개 not_found · 서치어드바이저 화면 로그인 필요로 확인 실패",
+      "why_now": "구글은 사이트맵 성공 후 353쪽이 색인됐는데 네이버는 브랜드 외 0건 — 제출 미완과 화면 확인 실패가 겹쳐 네이버 색인 층을 지금 판단할 수 없다",
+      "verify": "config.naver.sitemap_submitted_at이 채워지고 다음 console 기록의 naver.sitemap이 「확인 실패」가 아니다"
+    }
+  ],
+  "investigate": [
+    "크롤링됨-미색인 51쪽의 예시 URL — GSC 색인 생성 → 페이지 → 「크롤링됨 - 현재 색인이 생성되지 않음」 예시 목록을 내보내 console 기록에 붙인다. 장소 쪽만인지, 지역·허브·target 쪽이 섞였는지에 따라 원인(얇은 본문 vs 중복 판정)이 갈린다. 지금은 확인 실패",
+    "발견됨-미색인 2,536쪽 — 사이트맵 제출 4일째(읽음 10-09)라 새 도메인의 크롤 예산 대기와 구분이 안 된다. 다음 주 색인 수 추이(353 → ?)를 같은 화면에서 읽어 비교한다"
+  ],
+  "not_touching": [
+    "자동 조치(ADR-0079 3) — 판정 meta·push 0건(target 2건 wait, 밀림 경보 0), seo:crawl 감사 0건이라 title/description·내부링크·본문 보강·구조화 데이터·llms.txt 정합 모두 고칠 근거 없음",
+    "IndexNow 전송 — 바뀐 URL이 없고 금지 범위",
+    "GSC 노출 6·8.8위 — 검색어 익명이라 어느 검색어인지 모름, 1주 표본으로 판단하지 않는다",
+    "브랜드 AI 브리핑 4위 — 1회 관찰, 성과로 읽지 않는다",
+    "kill 검색어 전부",
+    "제안만 — [ADR감] 장소 쪽 색인 범위 — 2,922쪽 대부분이 이유 한 문장짜리라 구글이 품질·중복으로 보류할 수 있다. 선택지: (a) 그대로 두고 4주 관찰 (b) 장소 쪽에 noindex·사이트맵 제외, 지역 15·허브·target 조합만 색인 (c) 장소 쪽 본문 보강. 크롤링됨-미색인 51쪽 URL을 본 뒤 결정",
+    "제안만 — [검색어 판정 재검토] 「비 오는 날」 묶음 — 장소 쪽에 「실내라 비 와요(실내만)를 켜도 나와요」가 있어 실내 속성이 데이터에 들어온 것으로 보인다. K2 kill 근거가 사라졌는지 keywords.json 재조사(자동완성·SERP) 제안",
+    "제안만 — [새 랜딩] 없음 — target이 색인 전이라 새 쪽을 늘릴 근거 없음",
+    "제안만 — [브랜드 문장] 변경 없음"
+  ],
+  "failed": [
+    "네이버 서치어드바이저 화면 — 로그인 필요, 확인 실패",
+    "GSC 검색어별 행 — 「데이터 없음」(익명), 확인 실패"
+  ],
+  "repo_changes": [
+    " M apps/web/data/seo/keywords.json (gsc-import·--track — 이번 가동 전 변경)",
+    " M apps/web/data/seo/queue.json (seo:report --queue)",
+    "?? apps/web/data/seo/console/2026-10-12.json (이번 가동 전 생성)",
+    "?? apps/web/data/seo/diagnoses/2026-10-12T1200.json",
+    "?? apps/web/data/seo/gsc/ (이번 가동 전 생성)",
+    "?? apps/web/data/seo/rank/naver-2026-10-12.json (이번 가동 전 생성)"
+  ]
+}
