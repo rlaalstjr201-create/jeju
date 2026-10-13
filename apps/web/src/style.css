@@ -296,7 +296,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .day .group-h { margin: 0 0 -8px; }
 .ctl { grid-area: ctl; position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 0 8px; margin: 4px 0 -8px -8px; }
 
-/* fill buttons (ADR-0070: --main): 다른 3곳 보기 (at the list end), 다시 불러오기, 지금 위치를 숙소로. Labels left-aligned */
+/* fill buttons (ADR-0070: --main): 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. Labels left-aligned */
 .more, .retry, .primary {
   display: flex; align-items: center; width: 100%; min-height: 52px; padding: 0 16px;
   border-radius: var(--r-ctl); background: var(--main); color: var(--on-main);
@@ -314,10 +314,6 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* the rule above the bar shows only while it floats; its colour changes, never its height */
 .more-bar::before { content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1px solid transparent; }
 .more-bar.stuck::before { border-top-color: var(--line); }
-/* heuristic audit H7: floating over the cards it is the second choice, the same weight as the lead card's 길찾기
-   (tint, ADR-0075); at the end of the list it is the next step and takes the fill again */
-.more-bar.stuck .more { background: var(--main-tint); color: var(--text); }
-.more-bar.stuck .more:active { background: var(--fill); }
 /* Chromium ignores scroll-margin when Tab scrolls to a control: keep a focused card link or heart above the
    floating bar (12 + 52 + its bottom padding, + 8) */
 html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(safe-area-inset-bottom))); }
