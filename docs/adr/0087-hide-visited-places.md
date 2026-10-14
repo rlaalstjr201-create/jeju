@@ -1,6 +1,6 @@
 # ADR-0087: 「가 봤어요」로 그곳을 이 기기에서만 후보에서 뺀다
 
-Status: Proposed (2026-10-14). 주인이 스펙 요지(`specs/hide-visited.md`)를 승인하면 Accepted가 된다. ADR-0061의 이벤트 이름 목록을 늘린다(ADR-0085와 같은 방식).
+Status: Accepted (2026-10-14, 주인이 스펙 요지 승인). ADR-0061의 이벤트 이름 목록을 늘린다(ADR-0085와 같은 방식).
 
 ## Context
 
