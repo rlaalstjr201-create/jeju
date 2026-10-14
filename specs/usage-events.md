@@ -6,8 +6,9 @@
 
 `{ e, id?, mood?, sub?, range?, basis?, dated?, indoor?, season?, d }`
 
-- `e`: `shown` | `save` | `unsave` | `map` | `book` | `tap`(기분 탭)
-- `id`: 장소 id (shown/save/unsave/map/book)
+- `e`: `shown` | `save` | `unsave` | `map` | `book` | `tap`(기분 탭) | `visited` | `unvisited`(ADR-0087: 카드의 「가 봤어요」 누름 / 되돌림 — 카드에서 다시 누름, 저장한 곳의 `다시 넣기`, `모두 다시 넣기`는 장소마다 하나)
+- `id`: 장소 id (shown/save/unsave/map/book/visited/unvisited)
+- `visited`·`unvisited`는 이 수집기에만 간다. GA4·네이버로는 보내지 않고, 집계 스크립트의 장소 인기(`review/popularity.json`)에는 넣지 않는다(장소의 좋고 나쁨이 아니라 이 기기의 고르기). 필드는 `id`와 위 맥락(`mood`·`range`·`basis`·`dated`·`d` 등) 그대로, D1 카운터 키는 `(d, id, e)` 그대로.
 - `mood`, `sub`(food: meal/cafe, new: mix/sight/do — ADR-0064), `range`(walk/30/60), `basis`(here/stay/area), `dated`(날짜 모드 여부 true/false), `indoor`(비 와요(실내만)가 켜져 있으면 true, 꺼져 있으면 없음 — ADR-0065), `season`(`shown`·`map`에서 그 카드가 철 글자를 보였을 때만 그 종류: cherry/plum/maple/rapeseed/hydrangea/silvergrass/camellia/tangerine/muhly, 없으면 필드 없음 — ADR-0080. D1 카운터 키는 그대로. GA4에는 `card_shown`·`map_open`의 `season` 매개변수로 간다 — ADR-0080 8 개정)
 - `d`: 로컬 날짜 `YYYY-MM-DD` (시각 없음)
 - 좌표·숙소·지역 이름 이외의 위치·식별자 없음. 지역 기준일 때만 `area` 이름 허용.
@@ -28,7 +29,7 @@
 
 - `apps/web/events/`에 호스트 비종속 핸들러 하나: POST JSON 배열 → 검증(필드·값 목록·크기 ≤ 8KB·배열 ≤ 50) → `(d, id, e)` 카운터 증가. IP·UA 저장 안 함.
 - 저장소 어댑터는 인터페이스로 두고 메모리 구현 + 테스트만. 실제 저장소(KV/D1 등)는 호스트 결정 후.
-- 집계 스크립트: 카운터 덤프 → `review/popularity.json` (`{ id, shown, save, map, book }`).
+- 집계 스크립트: 카운터 덤프 → `review/popularity.json` (`{ id, shown, save, map, book }`). 장소 이벤트 다섯(`shown`·`save`·`unsave`·`map`·`book`)만 센다(`visited`·`unvisited`는 빠진다, ADR-0087).
 
 ## 성공 기준
 

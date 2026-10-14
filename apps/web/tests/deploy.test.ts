@@ -81,6 +81,9 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('동네 이름 하나만 보내요');
     expect(html).toContain('좌표는 보내지 않아요');
     expect(html).toContain('Cloudflare 접속 기록에 남을 수 있어요');
+    // 가 봤어요 (ADR-0087): kept on the device; its tap and undo are counted here (visited·unvisited), not in GA4
+    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 지역과 범위는 이 기기의 브라우저 저장소에만 있어요');
+    expect(html).toContain('‘가 봤어요’ 누름과 되돌림');
     expect(html).toContain('<h2>문의</h2>');
     expect(html).toMatch(/<a class="tbtn" href="\/">처음 화면으로<\/a>/);
     expect(html).not.toMatch(/<script/);

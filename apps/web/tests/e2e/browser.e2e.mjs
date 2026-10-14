@@ -2938,6 +2938,143 @@ await check('SV1-survey', '설문 (ADR-0081) at 320·390 × light·dark: after a
   assert(!problems.length, problems.join('; '));
 });
 
+// --- 가 봤어요 (ADR-0087, specs/hide-visited.md S3·S4·S6) ---
+await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 cards, drawn 44 with a ≥ 48×48 area nothing covers (not the card link); a tap presses only it (cards and photos stay) and says so on the status line; 다른 3곳 보기 never brings it back; 설정 → 뺀 곳 1곳 → 다시 넣기 empties it; a fresh pick shows it again; no sideways scroll', async () => {
+  const problems = [];
+  for (const width of [320, 390]) {
+    for (const dark of [false, true]) {
+      const tag = `${width}${dark ? '-dark' : ''}`;
+      const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, dark, storage: { 'jeju.region': '애월', 'jeju.basis': 'region', 'jeju.hintSeen': true } });
+      await tapText(page, '[data-mood="walk"]');
+      await waitCards(page);
+      const ids = await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id));
+      const per = await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.querySelectorAll('.visited').length));
+      if (per.join() !== '1,1,1') problems.push(`${tag}: buttons per card ${per}`);
+      const hit = await page.evaluate(hitMeasure, '#cards .card .visited, #cards .card .go, #cards .card .heart, #cards .card .book');
+      for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${tag} ${k}: ${hit[k].join(', ')}`);
+      if (hit.over > 0) problems.push(`${tag}: overflows ${hit.over}`);
+      const drawn = await page.$$eval('#cards .card .visited', (bs) => bs.map((b) => Math.round(b.getBoundingClientRect().height)));
+      if (drawn.some((h) => h !== 44)) problems.push(`${tag}: drawn ${drawn}`);
+      const out = ids[0];
+      // the card nodes and their photos are marked: a rebuild would lose the marks
+      await page.evaluate(() => document.querySelectorAll('#cards .card, #cards img').forEach((e) => (e.__keep = 1)));
+      await page.locator(`#cards .visited[data-id="${out}"]`).scrollIntoViewIfNeeded();
+      await tapText(page, `#cards .visited[data-id="${out}"]`);
+      const after = await page.evaluate((id) => {
+        const b = document.querySelector(`#cards .visited[data-id="${id}"]`);
+        const check = b.querySelector('.i-check');
+        return {
+          pressed: b.getAttribute('aria-pressed'),
+          check: check && getComputedStyle(check).display !== 'none',
+          kept: [...document.querySelectorAll('#cards .card, #cards img')].every((e) => e.__keep === 1),
+          status: document.querySelector('#status').textContent,
+          url: location.href,
+          over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        };
+      }, out);
+      if (after.pressed !== 'true' || !after.check) problems.push(`${tag}: not pressed ${JSON.stringify(after)}`);
+      if (!after.kept) problems.push(`${tag}: cards rebuilt`);
+      if (!/^.+(은|는) 다음부터 빼고 골라요\.$/.test(after.status)) problems.push(`${tag}: status "${after.status}"`);
+      if (after.url !== BASE) problems.push(`${tag}: left for ${after.url}`); // the card link was not opened
+      if (after.over > 0) problems.push(`${tag}: overflows ${after.over} pressed`);
+      await shot(page, `cards-pressed-${tag}`);
+      for (let i = 0; i < 6; i++) {
+        await tapText(page, '[data-action="more"]');
+        await waitCards(page);
+        const now = await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id));
+        if (now.includes(out)) problems.push(`${tag}: back after ${i + 1} × 다른 3곳`);
+      }
+      await tapText(page, '[data-action="change"]');
+      await page.waitForSelector('#homeMore [data-action="settings"]');
+      await tapText(page, '#homeMore [data-action="settings"]');
+      await page.waitForSelector('#savedView .visited-box:not([hidden])', { timeout: 5000 });
+      const box = await page.evaluate(() => {
+        const b = document.querySelector('#savedView .visited-box');
+        return { text: b.querySelector('[data-action="visited-list"]').textContent, beforeMapApp: b.nextElementSibling?.nextElementSibling?.classList.contains('mapapp') };
+      });
+      if (box.text !== '뺀 곳 1곳' || !box.beforeMapApp) problems.push(`${tag}: box ${JSON.stringify(box)}`);
+      await tapText(page, '#savedView [data-action="visited-list"]');
+      await page.locator('#savedView .visited-box').scrollIntoViewIfNeeded();
+      const list = await page.evaluate(() => {
+        const de = document.documentElement;
+        const bs = [...document.querySelectorAll('#visitedList button')];
+        return { rows: document.querySelectorAll('#visitedList li').length, hs: bs.map((b) => Math.round(b.getBoundingClientRect().height)), over: de.scrollWidth - de.clientWidth };
+      });
+      if (list.rows !== 1 || list.hs.some((h) => h < 44) || list.over > 0) problems.push(`${tag}: list ${JSON.stringify(list)}`);
+      await shot(page, `saved-list-${tag}`);
+      await tapText(page, '#visitedList [data-action="put-back"]');
+      const gone = await page.evaluate(() => ({ hidden: document.querySelector('#savedView .visited-box').hidden, note: document.querySelector('#visitedNote').textContent, stored: localStorage.getItem('jeju.visited') }));
+      if (!gone.hidden || !/(을|를) 다시 넣었어요\.$/.test(gone.note) || gone.stored !== '[]') problems.push(`${tag}: put back ${JSON.stringify(gone)}`);
+      await shot(page, `saved-put-back-${tag}`);
+      // a fresh pick in a new tab (no rotation yet, same device storage): the place is picked again
+      const p2 = await ctx.newPage();
+      await p2.goto(BASE);
+      await tapText(p2, '[data-mood="walk"]');
+      await waitCards(p2);
+      const again = await p2.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id));
+      if (!again.includes(out)) problems.push(`${tag}: not back after 다시 넣기 (${again})`);
+      await ctx.close();
+    }
+  }
+  assert(!problems.length, problems.join(' | '));
+});
+
+await check('HV2-storage-throws', '가 봤어요 with every storage write throwing (private mode, quota): no page error or console error; 빼기 → 다른 3곳에 안 나옴 → 설정에서 다시 넣기 → 다시 나옴, for this visit', async () => {
+  const problems = [];
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR' });
+  await ctx.addInitScript(GEO_STUB);
+  // 애월 · 걸어서: the nearest 3 walks are the whole pool, so a place put back comes round on the next 다른 3곳
+  await ctx.addInitScript(() => {
+    const set = Storage.prototype.setItem;
+    for (const [k, v] of [['jeju.region', '애월'], ['jeju.basis', 'region'], ['jeju.reach', 'walk'], ['jeju.hintSeen', true]]) set.call(localStorage, k, JSON.stringify(v));
+    Storage.prototype.setItem = function () {
+      throw new DOMException('The quota has been exceeded.', 'QuotaExceededError');
+    };
+  });
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  const page = await ctx.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(`pageerror ${e.message}`));
+  // a missing resource (404) is the server's line, not the app's
+  page.on('console', (m) => m.type() === 'error' && !m.text().startsWith('Failed to load resource') && errors.push(`console ${m.text()}`));
+  await page.goto(BASE);
+  await tapText(page, '[data-mood="walk"]');
+  await waitCards(page);
+  const first = await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id));
+  const out = first[1];
+  await page.locator(`#cards .visited[data-id="${out}"]`).scrollIntoViewIfNeeded();
+  await tapText(page, `#cards .visited[data-id="${out}"]`);
+  if ((await page.getAttribute(`#cards .visited[data-id="${out}"]`, 'aria-pressed')) !== 'true') problems.push('not pressed');
+  if (!/다음부터 빼고 골라요\.$/.test(await page.textContent('#status'))) problems.push(`status "${await page.textContent('#status')}"`);
+  for (let i = 0; i < 4; i++) {
+    await tapText(page, '[data-action="more"]');
+    await waitCards(page);
+    if ((await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id))).includes(out)) problems.push(`back after ${i + 1} × 다른 3곳`);
+  }
+  await tapText(page, '[data-action="change"]');
+  await tapText(page, '#homeMore [data-action="settings"]');
+  await page.waitForSelector('#savedView .visited-box:not([hidden])', { timeout: 5000 });
+  await tapText(page, '#savedView [data-action="visited-list"]');
+  await tapText(page, `#visitedList [data-action="put-back"][data-id="${out}"]`);
+  if (!(await page.evaluate(() => document.querySelector('#savedView .visited-box').hidden))) problems.push('box still there');
+  await tapText(page, '#savedView [data-action="close-saved"]');
+  // the rotation went on; a place put back comes round again within the pool
+  let seen = false;
+  await tapText(page, '[data-mood="walk"]');
+  await waitCards(page);
+  for (let i = 0; i < 12 && !seen; i++) {
+    seen = (await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id))).includes(out);
+    if (!seen) {
+      await tapText(page, '[data-action="more"]');
+      await waitCards(page);
+    }
+  }
+  if (!seen) problems.push('not back after 다시 넣기');
+  if (errors.length) problems.push(errors.join(' ; '));
+  await ctx.close();
+  assert(!problems.length, problems.join(' | '));
+});
+
 await check('LP1', 'hub → area → place: 200, no script, fits 390px (light and dark), every link on them answers; the deep link opens the app on that area', async () => {
   const problems = [];
   for (const dark of [false, true]) {
