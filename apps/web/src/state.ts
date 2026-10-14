@@ -10,6 +10,8 @@ import type { SessionRecord } from './store';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';
+/** 가 봤어요 (ADR-0087): `name` left out / put back, or `n` put back at once (모두 다시 넣기). */
+export type VisitNote = { k: 'out' | 'in'; name: string } | { k: 'all'; n: number };
 export type Phase =
   | { k: 'idle' }
   | { k: 'pending'; req: number; intent: Intent; step: 'locating' | 'loading'; slow: boolean; long: boolean }
@@ -95,6 +97,8 @@ export interface State {
   saved: SavedEntry[];
   /** 뺀 곳 (가 봤어요, ADR-0087): left out of the picks from the next one on; this device only. */
   visited: string[];
+  /** what the status line says about the last 가 봤어요 / 다시 넣기 (render.ts words it); gone with the next intent. */
+  visitNote: VisitNote | null;
   spots: Spot[] | null;
   broken: string[];
   /** photos that failed while offline: tried again once the connection is back. */
@@ -147,8 +151,8 @@ export type Action =
   /** the saved list as stored now; `removed`: a row taken out in the saved list (kept on screen). */
   | { type: 'saved'; entries: SavedEntry[]; removed?: SavedEntry | null }
   | { type: 'when'; when: When }
-  /** 뺀 곳 as stored now (ADR-0087). */
-  | { type: 'visited'; ids: string[] }
+  /** 뺀 곳 as stored now (ADR-0087), and what the status line says about it (missing: as it was). */
+  | { type: 'visited'; ids: string[]; note?: VisitNote | null }
   | { type: 'today'; today: Day }
   | { type: 'pastOpen'; open: boolean }
   | { type: 'moveTarget'; id: string; date: Day }
@@ -220,6 +224,7 @@ export function initialState(init: {
     moveTarget: null,
     saved: init.saved,
     visited: init.visited ?? [],
+    visitNote: null,
     spots: null,
     broken: [],
     brokenOffline: [],
@@ -477,7 +482,9 @@ const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'reques
 
 export function reduce(s: State, a: Action): State {
   const next = step(s, a);
-  return next.hintFor && CLEARS_HINT.has(a.type) ? { ...next, hintFor: null } : next;
+  if (!CLEARS_HINT.has(a.type) || (!next.hintFor && !next.visitNote)) return next;
+  // the 가 봤어요 status line goes the same way (ADR-0087)
+  return { ...next, hintFor: null, visitNote: null };
 }
 
 function step(s: State, a: Action): State {
@@ -558,8 +565,11 @@ function step(s: State, a: Action): State {
     }
     case 'when':
       return a.when === s.when ? s : { ...s, when: a.when };
-    case 'visited':
-      return a.ids.join('\n') === s.visited.join('\n') ? s : { ...s, visited: a.ids };
+    case 'visited': {
+      const visited = a.ids.join('\n') === s.visited.join('\n') ? s.visited : a.ids;
+      const visitNote = a.note === undefined ? s.visitNote : a.note;
+      return visited === s.visited && visitNote === s.visitNote ? s : { ...s, visited, visitNote };
+    }
     case 'today': {
       if (a.today === s.today) return s;
       // the chosen day has come (or gone): back to 지금 (D5)

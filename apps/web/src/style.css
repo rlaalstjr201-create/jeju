@@ -256,7 +256,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .book::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 .hint { grid-area: hint; margin: 8px 0 0; color: var(--muted); text-wrap: pretty; }
 
-.card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }
+.card.lead { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "ph ph" "name heart" "reason reason" "meta meta" "go go" "ctl ctl" "book book" "hint hint"; }
 .card.lead .ph { aspect-ratio: 3 / 2; border-radius: var(--r-photo); margin-bottom: 12px; }
 .card.lead .name { font-size: 1.25rem; line-height: 1.35; font-weight: 700; }
 /* the first card's 길찾기 (ADR-0075): the card's width, drawn 48 (its hit area is its own square box, so the rounded
@@ -278,7 +278,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .card.row .alias { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .card.row .name:has(.alias) { -webkit-line-clamp: 3; line-clamp: 3; }
 .card.row .reason { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
-.card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint"; }
+.card.noimg.lead { grid-template-areas: "name heart" "reason reason" "meta meta" "go go" "ctl ctl" "book book" "hint hint"; }
 .card.noimg.row { grid-template-columns: minmax(0, 1fr) 44px; grid-template-areas: "name heart" "reason reason" "meta meta" "go go" "book book" "hint hint" "ctl ctl"; grid-template-rows: none; }
 /* em = .picks font size (15px → 270px). A 320px phone at default text (288px) is not caught: photo beside */
 @container (max-width: 18em) {
@@ -295,6 +295,12 @@ main { flex: 1; display: flex; flex-direction: column; }
 .day-h .tbtn { margin-right: -8px; color: var(--text); }
 .day .group-h { margin: 0 0 -8px; }
 .ctl { grid-area: ctl; position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 0 8px; margin: 4px 0 -8px -8px; }
+/* 가 봤어요 (ADR-0087): a text button like the others; the check before the words only while pressed. On the first
+   card it shares the line under 길찾기 with the booking link; on a row card it follows 길찾기 on its line */
+.ctl .book { margin: 0; }
+.go-line { grid-area: go; margin-bottom: 0; }
+.go-line .go { margin: 0; }
+.visited { gap: 4px; }
 
 /* fill buttons (ADR-0070: --main): 다른 3곳 보기, 다시 불러오기, 지금 위치를 숙소로. Labels left-aligned */
 .more, .retry, .primary {

@@ -712,6 +712,14 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
   }
 
+  /** 가 봤어요 (ADR-0087): left out of the picks from the next one on, or put back. Only that button and the status
+   * line change; the cards on screen stay as they are. A toggle like the heart: not guarded. */
+  function onVisited(id: string) {
+    const { visited, added } = store.toggleVisited(id);
+    const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(state.spots).get(id) : undefined);
+    dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim() } : null });
+  }
+
   /** 언제 in the basis sheet: applied at once (label, hearts), the sheet stays open for 어디. No request:
    * the cards do not depend on the day (ADR-0027). */
   function setWhen(w: When) {
@@ -807,6 +815,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (b.dataset.mood) return onMood(b.dataset.mood as Button);
     if (b.dataset.sub) return onSub(b.dataset.sub as Tab);
     if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
+    if (b.classList.contains('visited') && b.dataset.id) return onVisited(b.dataset.id);
     const action = b.dataset.action;
     if (state.view === 'saved' && b.dataset.id && b.dataset.date) {
       if (action === 'up' || action === 'down') return moveRow(b.dataset.id, b.dataset.date, action === 'up' ? -1 : 1);

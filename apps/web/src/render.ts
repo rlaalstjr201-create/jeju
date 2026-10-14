@@ -9,7 +9,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
 import type { NoOrigin, Origin, Overlay, View } from './types';
@@ -176,7 +176,24 @@ export const COPY = {
   rainOn: '비 소식이 있어 실내만 보고 있어요',
   rainAll: '모두 보기',
   rainFrom: '날씨: 기상청',
+  // 가 봤어요 (ADR-0087, specs/hide-visited.md): the card's switch, its status line, the saved list's 뺀 곳
+  visited: '가 봤어요',
+  visitedAria: (name: string) => `${name}, 가 봤어요`,
+  visitedOut: (name: string) => `${josa(name, '은', '는')} 다음부터 빼고 골라요.`,
+  visitedIn: (name: string) => `${josa(name, '을', '를')} 다시 넣었어요.`,
+  visitedAllIn: (n: number) => `뺀 곳 ${n}곳을 모두 다시 넣었어요.`,
+  visitedList: (n: number) => `뺀 곳 ${n}곳`,
+  putBack: '다시 넣기',
+  putBackAria: (name: string) => `${name}, 다시 넣기`,
+  putBackAll: '모두 다시 넣기',
 } as const;
+
+/** The name (its main part, without the alias) and the particle its last syllable takes: 받침 → `withFinal`. */
+function josa(name: string, withFinal: string, without: string): string {
+  const main = splitName(name.trim()).main;
+  const c = main.charCodeAt(main.length - 1) - 0xac00;
+  return `${main}${c >= 0 && c < 11172 && c % 28 === 0 ? without : withFinal}`;
+}
 
 /** The mood buttons' own words; the results title repeats the one chosen. */
 export const MOOD_LABEL: Record<Button, string> = {
@@ -242,6 +259,12 @@ export function homeCopy(s: State): { ask: string; lede: string } {
   return { ask: COPY.homeAskDay(day), lede: `${from} ${day} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 하트로 담아 두세요.` };
 }
 
+/** The status line's words for the last 가 봤어요 / 다시 넣기 (ADR-0087). */
+export function visitText(v: VisitNote): string {
+  if (v.k === 'all') return COPY.visitedAllIn(v.n);
+  return v.k === 'out' ? COPY.visitedOut(v.name) : COPY.visitedIn(v.name);
+}
+
 /** Status line under the results heading: one short line, plus an escape hatch while GPS is slow (S04·S05). */
 export function statusOf(s: State): { text: string; chooseArea: boolean } {
   const p = s.phase;
@@ -251,6 +274,8 @@ export function statusOf(s: State): { text: string; chooseArea: boolean } {
     const parts: string[] = [];
     if (s.cards?.wrapped) parts.push(COPY.wrapped);
     if (s.offline) parts.push(COPY.offline);
+    const v = s.visitNote;
+    if (v) parts.push(visitText(v));
     return { text: parts.join(' '), chooseArea: false };
   }
   return { text: '', chooseArea: false };
@@ -562,11 +587,37 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // 길찾기 (ADR-0067, ADR-0069): directions in one tap, on every card; the card itself stays the place page
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
     if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
-    card.append(go);
     // 예약 (ADR-0074): a 체험's one verified route, under 길찾기 — 네이버 예약, 마이리얼트립 상품, 홈페이지 or 전화 (tel:).
-    const book = bookLink(spot);
-    if (book) card.append(el(doc, 'a', { class: 'tbtn book', href: book.href, ...(book.href.startsWith('tel:') ? {} : { target: '_blank' }), rel: 'noopener', 'aria-label': book.aria }, book.text));
+    const b = bookLink(spot);
+    const book = b ? el(doc, 'a', { class: 'tbtn book', href: b.href, ...(b.href.startsWith('tel:') ? {} : { target: '_blank' }), rel: 'noopener', 'aria-label': b.aria }, b.text) : null;
+    if (day) {
+      card.append(go);
+      if (book) card.append(book);
+      return card;
+    }
+    // 가 봤어요 (ADR-0087), results only: the first card on its own line under 길찾기 (after the booking link, if any),
+    // a row card right after 길찾기 on its line
+    const visited = visitedEl(s, spot.id, name);
+    if (kind === 'lead') {
+      const ctl = el(doc, 'div', { class: 'ctl' });
+      if (book) ctl.append(book);
+      ctl.append(visited);
+      card.append(go, ctl);
+    } else {
+      const line = el(doc, 'div', { class: 'ctl go-line' });
+      line.append(go, visited);
+      card.append(line);
+      if (book) card.append(book);
+    }
     return card;
+  }
+
+  /** Name fixed, state only in aria-pressed (like the heart); the check before the words shows it. */
+  function visitedEl(s: State, id: string, name: string): HTMLElement {
+    const b = el(doc, 'button', { type: 'button', class: 'tbtn visited', 'data-id': id, 'aria-pressed': String(s.visited.includes(id)), 'aria-label': COPY.visitedAria(name) });
+    b.innerHTML = CHECK;
+    b.append(COPY.visited);
+    return b;
   }
 
   /** "다른 3곳 보기" in a sticky bar at the end of the list (§6.6). One node, reused while results show; the
@@ -819,6 +870,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   /** Hearts, broken photos and the first-save hint are patched in place — cards are never rebuilt for them. */
   function patchCards(s: State) {
     for (const h of els.main.querySelectorAll<HTMLButtonElement>('.heart[data-id]')) setAttr(h, 'aria-pressed', String(isSaved(s, h.dataset.id!, h.dataset.date)));
+    for (const v of els.cards.querySelectorAll<HTMLButtonElement>('.visited[data-id]')) setAttr(v, 'aria-pressed', String(s.visited.includes(v.dataset.id!)));
     for (const h of els.main.querySelectorAll<HTMLElement>('.heart[data-id]:not([data-date])')) {
       const meta = h.parentElement?.querySelector<HTMLElement>(':scope > .meta');
       if (meta) setHeld(s, meta, h.dataset.id!);
