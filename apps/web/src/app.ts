@@ -719,6 +719,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(state.spots).get(id) : undefined);
     dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim() } : null });
     countVisit(added ? 'visited' : 'unvisited', id);
+    if (added) askPersist(); // 뺀 곳 is kept on this device too (ADR-0063 2a)
   }
   /** visited / unvisited (ADR-0087): the place and the usual context, to our own collector only (never GA4·네이버). */
   function countVisit(e: 'visited' | 'unvisited', id: string) {

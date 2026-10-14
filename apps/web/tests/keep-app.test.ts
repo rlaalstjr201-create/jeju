@@ -55,6 +55,18 @@ describe('2a navigator.storage.persist', () => {
     expect(persist).toHaveBeenCalledTimes(1);
   });
 
+  it('asked at the first 가 봤어요 too (ADR-0087), not for putting it back; still once a visit', async () => {
+    const persist = vi.fn(async () => true);
+    render({ persist, userAgent: DESKTOP });
+    await cards();
+    const visited = $$('#cards .visited') as HTMLButtonElement[];
+    await tap(visited[0]);
+    expect(persist).toHaveBeenCalledTimes(1);
+    await tap(visited[0]); // put back
+    await tap('#cards .heart');
+    expect(persist).toHaveBeenCalledTimes(1);
+  });
+
   it('a browser without it, or one that throws, changes nothing', async () => {
     render({ userAgent: DESKTOP, persist: () => Promise.reject(new Error('nope')) });
     await cards();
