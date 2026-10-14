@@ -9,7 +9,8 @@ import type { UsageEvent } from '../src/track';
 export const MAX_BYTES = 8 * 1024;
 export const MAX_EVENTS = 50;
 
-const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange']);
+// visited / unvisited (ADR-0087): a place id and the usual context, like save / unsave
+const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange', 'visited', 'unvisited']);
 /** events about the saved list, not a place (ADR-0085): no id, like tap. */
 const NO_PLACE = new Set(['tap', 'open', 'arrange']);
 const OPS = new Set(['up', 'down', 'move', 'past']);

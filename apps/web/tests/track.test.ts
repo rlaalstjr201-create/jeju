@@ -437,3 +437,47 @@ describe('F6 기록 끄기 — 새 이벤트도 0건', () => {
     expect(beacon).not.toHaveBeenCalled();
   });
 });
+
+describe('가 봤어요 (ADR-0087, specs/hide-visited.md S5)', () => {
+  it('visited / unvisited carry the place id and the usual context only; never to GA4·네이버; 다시 넣기 sends unvisited', async () => {
+    const analytics = { event: vi.fn(), setEnabled: vi.fn() };
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { value: () => undefined, configurable: true, writable: true });
+    render({ eventsUrl: URL_, beacon, analytics, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    const mood = exp.mood;
+    await tap(`[data-mood="${mood}"]`);
+    const id = (cardIds() as string[])[0];
+    const d = current().state().today;
+    const sub = mood === 'food' ? 'meal' : mood === 'new' ? 'mix' : null;
+    const ctx = { mood, ...(sub ? { sub } : {}), range: '30', basis: 'here', dated: false, d };
+    await tap(`#cards .visited[data-id="${id}"]`);
+    await tap(`#cards .visited[data-id="${id}"]`);
+    await tap(`#cards .visited[data-id="${id}"]`);
+    await tap('[data-action="change"]');
+    await tap('[data-action="settings"]');
+    await flush();
+    await tap('[data-action="visited-list"]');
+    await tap(`#visitedList [data-action="put-back"][data-id="${id}"]`);
+    hide();
+    const v = events().filter((e) => e.e === 'visited' || e.e === 'unvisited');
+    expect(v).toEqual([
+      { e: 'visited', id, ...ctx },
+      { e: 'unvisited', id, ...ctx },
+      { e: 'visited', id, ...ctx },
+      { e: 'unvisited', id, range: '30', basis: 'here', dated: false, d },
+    ]);
+    expect(JSON.stringify(v)).not.toMatch(/lat|lng|point|origin/);
+    for (const [ev] of analytics.event.mock.calls as [UsageEvent][]) expect(['visited', 'unvisited']).not.toContain(ev.e);
+  });
+
+  it('기록 끄기: 0 events', async () => {
+    window.localStorage.setItem('jeju.track', 'false');
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await tap(`[data-mood="${exp.mood}"]`);
+    const id = (cardIds() as string[])[0];
+    await tap(`#cards .visited[data-id="${id}"]`);
+    await tap(`#cards .visited[data-id="${id}"]`);
+    hide();
+    expect(beacon).not.toHaveBeenCalled();
+    expect(events()).toEqual([]);
+  });
+});

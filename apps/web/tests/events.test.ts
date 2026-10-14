@@ -274,3 +274,40 @@ describe('U4 앱 번들 밖', () => {
     }
   });
 });
+
+describe('가 봤어요 (ADR-0087, specs/hide-visited.md S5)', () => {
+  it('visited / unvisited: accepted with a place id and the usual context, counted under (day, id, event)', async () => {
+    const batch: UsageEvent[] = [
+      { e: 'visited', id: ID, mood: 'walk', ...base },
+      { e: 'unvisited', id: ID, ...base },
+      { e: 'visited', id: ID2, ...base },
+    ];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+    const store = memoryStore();
+    expect((await handleEvents(post(batch), store)).status).toBe(204);
+    expect((await store.dump()).sort((a, b) => (a.id + a.e < b.id + b.e ? -1 : 1))).toEqual([
+      { d, id: ID, e: 'unvisited', n: 1 },
+      { d, id: ID, e: 'visited', n: 1 },
+      { d, id: ID2, e: 'visited', n: 1 },
+    ]);
+  });
+  it.each([
+    ['visited without a place', [{ e: 'visited', d }]],
+    ['unvisited without a place', [{ e: 'unvisited', ...base }]],
+    ['season on visited', [{ e: 'visited', id: ID, d, season: 'rapeseed' }]],
+    ['an unknown name still refused', [{ e: 'visit', id: ID, d }]],
+    ['hidden (the data field) is not an event', [{ e: 'hide', id: ID, d }]],
+  ])('refuses %s', (_, body) => {
+    expect(parseBatch(JSON.stringify(body)).ok).toBe(false);
+  });
+  it('not in the popularity: a place only left out gets no row; one also shown keeps its counts as they were', () => {
+    expect(
+      aggregate([
+        { d, id: ID, e: 'visited', n: 4 },
+        { d, id: ID, e: 'unvisited', n: 1 },
+        { d, id: ID2, e: 'shown', n: 3 },
+        { d, id: ID2, e: 'visited', n: 2 },
+      ]),
+    ).toEqual([{ id: ID2, shown: 3, save: 0, map: 0, book: 0 }]);
+  });
+});

@@ -718,6 +718,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     const { visited, added } = store.toggleVisited(id);
     const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(state.spots).get(id) : undefined);
     dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim() } : null });
+    countVisit(added ? 'visited' : 'unvisited', id);
+  }
+  /** visited / unvisited (ADR-0087): the place and the usual context, to our own collector only (never GA4·네이버). */
+  function countVisit(e: 'visited' | 'unvisited', id: string) {
+    tracker.track({ e, id, ...contextOf(state) });
   }
 
   /** 다시 넣기 in 뺀 곳 N곳: that place is picked again from the next pick on (its rotation as it was). */
@@ -726,13 +731,15 @@ export function mountApp(doc: Document, deps: Deps): App {
     hush(); // the next name moves up under the finger
     const name = state.spots ? spotIndex(state.spots).get(id)?.name.trim() : undefined;
     dispatch({ type: 'visited', ids: store.unvisit(id), note: name ? { k: 'in', name } : null });
+    countVisit('unvisited', id);
   }
   function putBackAll() {
     if (state.view !== 'saved') return;
-    const n = visitedSpots(state).length;
-    if (!n) return;
+    const back = visitedSpots(state);
+    if (!back.length) return;
     hush();
-    dispatch({ type: 'visited', ids: store.unvisitAll(), note: { k: 'all', n } });
+    dispatch({ type: 'visited', ids: store.unvisitAll(), note: { k: 'all', n: back.length } });
+    for (const x of back) countVisit('unvisited', x.id);
   }
 
   /** 언제 in the basis sheet: applied at once (label, hearts), the sheet stays open for 어디. No request:

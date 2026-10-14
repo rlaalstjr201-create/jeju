@@ -16,10 +16,13 @@ export interface Popularity {
   book: number;
 }
 
+const PLACE_EVENTS = new Set(['shown', 'save', 'unsave', 'map', 'book']);
+
 export function aggregate(counters: readonly Counter[]): Popularity[] {
   const by = new Map<string, Popularity & { unsave: number }>();
   for (const c of counters) {
-    if (/^(mood:|feedback:|open(:|$)|arrange:|saved:|save:)/.test(c.id) || !Number.isFinite(c.n)) continue;
+    // 가 봤어요 (ADR-0087, visited / unvisited) is about this device's picks, not how good a place is: left out
+    if (!PLACE_EVENTS.has(c.e) || /^(mood:|feedback:|open(:|$)|arrange:|saved:|save:)/.test(c.id) || !Number.isFinite(c.n)) continue;
     const p = by.get(c.id) ?? { id: c.id, shown: 0, save: 0, unsave: 0, map: 0, book: 0 };
     if (c.e === 'shown' || c.e === 'save' || c.e === 'unsave' || c.e === 'map' || c.e === 'book') p[c.e] += c.n;
     by.set(c.id, p);

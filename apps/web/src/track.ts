@@ -8,7 +8,8 @@ import type { Button, NewSub, Reach, Sub } from './pick';
 import type { SeasonKind } from './season';
 import type { Basis, View, When } from './types';
 
-export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange';
+/** visited / unvisited: 가 봤어요 and its undo (ADR-0087) — this collector only, never GA4·네이버, never in the popularity. */
+export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange' | 'visited' | 'unvisited';
 /** 저장 목록 정리 (ADR-0085): 위로 / 아래로 / 다른 날로 / 지난 날 펼치기·접기. */
 export type ArrangeOp = 'up' | 'down' | 'move' | 'past';
 /** days from the day a saved row was saved to today: 0, 1, or 2 = two or more. */
