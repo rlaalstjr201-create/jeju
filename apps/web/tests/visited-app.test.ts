@@ -153,3 +153,104 @@ describe('S3 카드의 「가 봤어요」', () => {
     expect(cardIds()).not.toContain(out);
   });
 });
+
+describe('S4 저장한 곳의 「뺀 곳 N곳」', () => {
+  const box = () => $('#savedView .visited-box');
+  const toggle = () => $('#savedView [data-action="visited-list"]') as HTMLButtonElement;
+  const names = () => $$('#visitedList li span').map((e) => e.textContent);
+  const note = () => $('#visitedNote').textContent ?? '';
+  async function openSettings() {
+    // jsdom has no layout: the 설정 button scrolls to its heading
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { value: () => undefined, configurable: true, writable: true });
+    await flush();
+    await tap('[data-action="settings"]');
+    await flush();
+    await flush();
+  }
+
+  it('none left out: hidden; the saved list is as it was', async () => {
+    render();
+    await openSettings();
+    expect($('#savedView').hidden).toBe(false);
+    expect(box().hidden).toBe(true);
+    expect(note()).toBe('');
+  });
+
+  it('nothing saved: reached from the home\'s 설정; above 지도 앱; 1곳 or more only', async () => {
+    const [a, b] = fileSpots.filter((s) => !s.hide);
+    window.localStorage.setItem(KEYS.visited, JSON.stringify([a.id, b.id, 'not-in-the-data']));
+    render();
+    await flush();
+    expect($('#saved').hidden).toBe(true); // no ♥ N on the home: nothing saved
+    await openSettings();
+    expect(box().hidden).toBe(false);
+    expect(box().nextElementSibling!.nextElementSibling!.matches('.mapapp')).toBe(true);
+    expect(toggle().textContent).toBe('뺀 곳 2곳'); // an id the data lacks is not counted
+    expect(toggle().getAttribute('aria-expanded')).toBe('false');
+    expect($('#visitedList').hidden).toBe(true);
+  });
+
+  it('opened: names nearest first, 다시 넣기 each, 모두 다시 넣기; 다시 넣기 → count and list follow; empty → gone', async () => {
+    const picked = fileSpots.filter((s) => !s.hide).slice(0, 3);
+    window.localStorage.setItem(KEYS.visited, JSON.stringify(picked.map((s) => s.id)));
+    render();
+    await openSettings();
+    await tap(toggle());
+    expect(toggle().getAttribute('aria-expanded')).toBe('true');
+    expect(names()).toHaveLength(3);
+    expect(new Set(names())).toEqual(new Set(picked.map((s) => s.name.trim())));
+    expect($$('#visitedList [data-action="put-back"]').map((b) => b.textContent)).toEqual(['다시 넣기', '다시 넣기', '다시 넣기']);
+    expect($('#visitedList [data-action="put-back-all"]').textContent).toBe('모두 다시 넣기');
+    const first = $('#visitedList [data-action="put-back"]') as HTMLButtonElement;
+    const id = first.dataset.id!;
+    first.focus();
+    await tap(first);
+    expect(toggle().textContent).toBe('뺀 곳 2곳');
+    expect(names()).toHaveLength(2);
+    expect(stored()).not.toContain(id);
+    expect(note()).toMatch(/(을|를) 다시 넣었어요\.$/);
+    expect(document.activeElement?.getAttribute('data-action')).toBe('put-back'); // focus stays in the list
+    await tap('#visitedList [data-action="put-back-all"]');
+    expect(note()).toBe('뺀 곳 2곳을 모두 다시 넣었어요.');
+    expect(box().hidden).toBe(true);
+    expect(stored()).toEqual([]);
+    expect(document.activeElement?.id).toBe('settingsH');
+  });
+
+  it('opened from ♥ N, the list nearest the list\'s point first', async () => {
+    const saved = fileSpots.find((s) => !s.hide)!;
+    window.localStorage.setItem(KEYS.savedV2, JSON.stringify([{ id: saved.id, date: '2026-10-14', order: 0 }]));
+    const picked = fileSpots.filter((s) => !s.hide).slice(5, 10);
+    window.localStorage.setItem(KEYS.visited, JSON.stringify(picked.map((s) => s.id)));
+    render({ today: () => new Date('2026-10-14T10:00:00+09:00') });
+    await flush();
+    await tap('#saved');
+    await flush();
+    await tap(toggle());
+    const { distanceKm } = await import('../src/pick');
+    const { ORIGINS } = await import('./fixtures');
+    const want = [...picked].sort((a, b) => distanceKm(ORIGINS.제주시, a) - distanceKm(ORIGINS.제주시, b)).map((s) => s.name.trim());
+    expect(names()).toEqual(want);
+  });
+
+  it('S6 e2e path in jsdom: 빼기 → 다른 3곳에 안 나옴 → 저장한 곳에서 다시 넣기 → 다시 나옴', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    const out = (cardIds() as string[])[0];
+    await tap(visitedBtn(out));
+    await more();
+    expect(cardIds()).not.toContain(out);
+    await tap('[data-action="change"]');
+    await openSettings();
+    await tap(toggle());
+    await tap(`#visitedList [data-action="put-back"][data-id="${out}"]`);
+    expect(box().hidden).toBe(true);
+    await tap('[data-action="close-saved"]');
+    await flush();
+    // a new round from the start: the first pick is the best ones again, the place among them
+    window.sessionStorage.clear();
+    render();
+    await tap('[data-mood="walk"]');
+    expect(cardIds()).toContain(out);
+  });
+});

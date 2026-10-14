@@ -99,6 +99,8 @@ export interface State {
   visited: string[];
   /** what the status line says about the last 가 봤어요 / 다시 넣기 (render.ts words it); gone with the next intent. */
   visitNote: VisitNote | null;
+  /** 뺀 곳 N곳 opened in the saved list (ADR-0087); closed each time the list opens. */
+  visitedOpen: boolean;
   spots: Spot[] | null;
   broken: string[];
   /** photos that failed while offline: tried again once the connection is back. */
@@ -155,6 +157,7 @@ export type Action =
   | { type: 'visited'; ids: string[]; note?: VisitNote | null }
   | { type: 'today'; today: Day }
   | { type: 'pastOpen'; open: boolean }
+  | { type: 'visitedOpen'; open: boolean }
   | { type: 'moveTarget'; id: string; date: Day }
   | { type: 'hint'; id: string }
   | { type: 'hintSeen' }
@@ -225,6 +228,7 @@ export function initialState(init: {
     saved: init.saved,
     visited: init.visited ?? [],
     visitNote: null,
+    visitedOpen: false,
     spots: null,
     broken: [],
     brokenOffline: [],
@@ -325,6 +329,20 @@ export function pickSpots(spots: Spot[], visited: readonly string[]): Spot[] {
   const list = spots.filter((x) => !out.has(x.id));
   pickCache.set(spots, { visited: visited as string[], list });
   return list;
+}
+
+/** 뺀 곳 N곳 in the saved list (ADR-0087): the places left out that the data has, nearest the list's point first
+ * (in the order they were left out while it is not known). Ids the data lacks are kept but not listed. */
+export function visitedSpots(s: State): Spot[] {
+  if (!s.spots) return [];
+  const idx = spotIndex(s.spots);
+  const list = s.visited.map((id) => idx.get(id)).filter((x): x is Spot => !!x);
+  const p = s.savedList?.origin?.point;
+  if (!p) return list;
+  return list
+    .map((spot) => ({ spot, km: distanceKm(p, spot) }))
+    .sort((a, b) => a.km - b.km || (a.spot.id < b.spot.id ? -1 : 1))
+    .map(({ spot }) => spot);
 }
 
 /** The day a heart goes to now. */
@@ -470,7 +488,7 @@ function enterView(s: State, view: View): State {
   const next: State = { ...s, view };
   if (view === 'saved') {
     const keep = s.keep.backup ? { ...s.keep, backup: null } : s.keep; // a new visit to the list, a fresh 링크로 백업
-    return { ...next, keep, unsaved: [], pastOpen: false, savedList: null, savedFrom: s.view === 'saved' ? s.savedFrom : s.view, phase: { k: 'idle' } };
+    return { ...next, keep, unsaved: [], pastOpen: false, visitedOpen: false, savedList: null, savedFrom: s.view === 'saved' ? s.savedFrom : s.view, phase: { k: 'idle' } };
   }
   const left = { ...next, unsaved: [], savedList: null };
   if (view === 'cards') return { ...left, phase: cardsValid(left) ? { k: 'ready' } : { k: 'idle' } };
@@ -578,6 +596,8 @@ function step(s: State, a: Action): State {
     }
     case 'pastOpen':
       return a.open === s.pastOpen ? s : { ...s, pastOpen: a.open };
+    case 'visitedOpen':
+      return a.open === s.visitedOpen ? s : { ...s, visitedOpen: a.open };
     case 'moveTarget':
       return { ...s, moveTarget: { id: a.id, date: a.date } };
     case 'hint':

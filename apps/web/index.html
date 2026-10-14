@@ -154,6 +154,13 @@
             <button class="tbtn" type="button" data-action="backup">링크로 백업</button>
             <p id="backupNote" class="note" role="status"></p>
           </div>
+          <!-- ADR-0087: 뺀 곳 (가 봤어요), only while there is one; the list is drawn by render.ts. Under 설정, so the
+               home's 설정 button reaches it with nothing saved -->
+          <div class="visited-box" hidden>
+            <button class="tbtn" type="button" data-action="visited-list" aria-expanded="false" aria-controls="visitedList">뺀 곳 0곳</button>
+            <div id="visitedList" hidden></div>
+          </div>
+          <p id="visitedNote" class="note" role="status"></p>
           <!-- ADR-0071: the map app the cards open; one line, remembered on this device -->
           <div class="mapapp" role="group" aria-labelledby="mapAppLabel">
             <p id="mapAppLabel">지도 앱</p>

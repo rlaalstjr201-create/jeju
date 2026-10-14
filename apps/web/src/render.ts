@@ -9,7 +9,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State, type VisitNote } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
 import type { NoOrigin, Origin, Overlay, View } from './types';
@@ -316,6 +316,12 @@ export interface Els {
   /** ADR-0071: 지도 앱 at the foot of 저장한 곳 */
   mapApps: HTMLButtonElement[];
   mapAppNote: HTMLElement;
+  /** ADR-0087: 뺀 곳 N곳 under 설정 — the box, its toggle, the list it opens, and its status line */
+  visitedBox: HTMLElement;
+  visitedToggle: HTMLButtonElement;
+  visitedList: HTMLElement;
+  visitedNote: HTMLElement;
+  settingsH: HTMLElement;
   /** ADR-0075: 오늘 판, its grey facts, and the sections under the moods */
   today: HTMLElement;
   todayFacts: HTMLElement;
@@ -363,6 +369,11 @@ export function findEls(doc: Document): Els {
     track: q<HTMLButtonElement>('#savedView [data-action="track"]'),
     mapApps: [...doc.querySelectorAll<HTMLButtonElement>('#savedView [data-action="map-app"]')],
     mapAppNote: q('#mapAppNote'),
+    visitedBox: q('#savedView .visited-box'),
+    visitedToggle: q<HTMLButtonElement>('#savedView [data-action="visited-list"]'),
+    visitedList: q('#visitedList'),
+    visitedNote: q('#visitedNote'),
+    settingsH: q('#settingsH'),
     today: q('#today'),
     todayFacts: q('#today .facts'),
     homeMore: q('#homeMore'),
@@ -909,6 +920,40 @@ export function createRenderer(doc: Document, els: Els): Renderer {
         if (els.announce) els.announce.textContent = COPY.firstSave;
       }
     }
+  }
+
+  // --- 뺀 곳 N곳 (ADR-0087): under 설정, only while there is one; opened, the names nearest first, each with 다시
+  // 넣기, and 모두 다시 넣기 at the end. Its status line is its own (#status is the results'). ---
+  let visitedSig = '';
+  function renderVisited(s: State) {
+    const list = s.view === 'saved' ? visitedSpots(s) : [];
+    setText(els.visitedNote, s.view === 'saved' && s.visitNote ? visitText(s.visitNote) : '');
+    const sig = list.length ? `${s.visitedOpen}|${list.map((x) => x.id).join()}` : '';
+    if (sig === visitedSig) return;
+    visitedSig = sig;
+    const active = doc.activeElement as HTMLElement | null;
+    const inside = !!active && els.visitedBox.contains(active);
+    const at = inside && active!.dataset.action === 'put-back' ? [...els.visitedList.querySelectorAll('[data-action="put-back"]')].indexOf(active!) : -1;
+    els.visitedBox.hidden = !list.length;
+    setText(els.visitedToggle, COPY.visitedList(list.length));
+    setAttr(els.visitedToggle, 'aria-expanded', String(s.visitedOpen));
+    els.visitedList.hidden = !s.visitedOpen || !list.length;
+    if (els.visitedList.hidden) els.visitedList.replaceChildren();
+    else {
+      const ul = el(doc, 'ul', { class: 'visited-list' });
+      for (const spot of list) {
+        const name = spot.name.trim();
+        const li = el(doc, 'li');
+        li.append(el(doc, 'span', {}, name), el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'put-back', 'data-id': spot.id, 'aria-label': COPY.putBackAria(name) }, COPY.putBack));
+        ul.append(li);
+      }
+      els.visitedList.replaceChildren(ul, el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'put-back-all' }, COPY.putBackAll));
+    }
+    // the row put back is gone: the next row's 다시 넣기 (or the one before), else the toggle; with none left, 설정
+    if (!inside || (active!.isConnected && !active!.closest('[hidden]'))) return;
+    const rows = [...els.visitedList.querySelectorAll<HTMLElement>('[data-action="put-back"]')];
+    const t = !list.length ? els.settingsH : (rows[Math.min(at, rows.length - 1)] ?? els.visitedToggle);
+    t.focus({ preventScroll: true });
   }
 
   // --- keeping saves without a login (ADR-0063): quiet notices, a sentence or two and text buttons ---
@@ -1466,6 +1511,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
 
     renderResults(s);
     renderSaved(s);
+    renderVisited(s);
     patchCards(s);
     renderHome(s);
     renderSurvey(s);

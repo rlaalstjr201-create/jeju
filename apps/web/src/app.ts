@@ -14,7 +14,7 @@ import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, sunPoint } from './home';
 import { sunsetMinutes } from './sun';
 import { createRenderer, dateLabel, findEls } from './render';
-import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
 import { feedbackBody, surveyDue } from './survey';
@@ -720,6 +720,21 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim() } : null });
   }
 
+  /** 다시 넣기 in 뺀 곳 N곳: that place is picked again from the next pick on (its rotation as it was). */
+  function putBack(id: string) {
+    if (state.view !== 'saved' || !state.visited.includes(id)) return;
+    hush(); // the next name moves up under the finger
+    const name = state.spots ? spotIndex(state.spots).get(id)?.name.trim() : undefined;
+    dispatch({ type: 'visited', ids: store.unvisit(id), note: name ? { k: 'in', name } : null });
+  }
+  function putBackAll() {
+    if (state.view !== 'saved') return;
+    const n = visitedSpots(state).length;
+    if (!n) return;
+    hush();
+    dispatch({ type: 'visited', ids: store.unvisitAll(), note: { k: 'all', n } });
+  }
+
   /** 언제 in the basis sheet: applied at once (label, hearts), the sheet stays open for 어디. No request:
    * the cards do not depend on the day (ADR-0027). */
   function setWhen(w: When) {
@@ -821,6 +836,16 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (action === 'up' || action === 'down') return moveRow(b.dataset.id, b.dataset.date, action === 'up' ? -1 : 1);
       if (action === 'move-day') return openMove(b.dataset.id, b.dataset.date);
     }
+    // 뺀 곳 N곳 (ADR-0087): open/close, 다시 넣기 one, 모두 다시 넣기 (no confirm)
+    if (action === 'visited-list') {
+      if (!guarded('visited-list') && state.view === 'saved') {
+        hush(); // the names open under the finger
+        dispatch({ type: 'visitedOpen', open: !state.visitedOpen });
+      }
+      return;
+    }
+    if (action === 'put-back' && b.dataset.id) return putBack(b.dataset.id);
+    if (action === 'put-back-all') return guarded('put-back-all') ? undefined : putBackAll();
     if (action === 'past') {
       if (!guarded('past') && state.view === 'saved') {
         hush(); // the days gone by open under the finger
