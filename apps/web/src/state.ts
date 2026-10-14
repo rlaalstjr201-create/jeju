@@ -93,6 +93,8 @@ export interface State {
   moveTarget: { id: string; date: Day } | null;
   /** every saved place per day — may include ids missing from the current data (kept, S42). */
   saved: SavedEntry[];
+  /** 뺀 곳 (가 봤어요, ADR-0087): left out of the picks from the next one on; this device only. */
+  visited: string[];
   spots: Spot[] | null;
   broken: string[];
   /** photos that failed while offline: tried again once the connection is back. */
@@ -145,6 +147,8 @@ export type Action =
   /** the saved list as stored now; `removed`: a row taken out in the saved list (kept on screen). */
   | { type: 'saved'; entries: SavedEntry[]; removed?: SavedEntry | null }
   | { type: 'when'; when: When }
+  /** 뺀 곳 as stored now (ADR-0087). */
+  | { type: 'visited'; ids: string[] }
   | { type: 'today'; today: Day }
   | { type: 'pastOpen'; open: boolean }
   | { type: 'moveTarget'; id: string; date: Day }
@@ -179,6 +183,7 @@ export function initialState(init: {
   region: AreaName | null;
   stay: Stay | null;
   saved: SavedEntry[];
+  visited?: string[];
   hintSeen: boolean;
   tracking?: boolean;
   mapApp?: MapApp;
@@ -214,6 +219,7 @@ export function initialState(init: {
     pastOpen: false,
     moveTarget: null,
     saved: init.saved,
+    visited: init.visited ?? [],
     spots: null,
     broken: [],
     brokenOffline: [],
@@ -537,6 +543,8 @@ function step(s: State, a: Action): State {
     }
     case 'when':
       return a.when === s.when ? s : { ...s, when: a.when };
+    case 'visited':
+      return a.ids.join('\n') === s.visited.join('\n') ? s : { ...s, visited: a.ids };
     case 'today': {
       if (a.today === s.today) return s;
       // the chosen day has come (or gone): back to 지금 (D5)

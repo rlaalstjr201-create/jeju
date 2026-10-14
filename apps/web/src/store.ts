@@ -38,8 +38,11 @@ export const KEYS = {
   indoor: 'jeju.indoor',
   /** sessionStorage, ADR-0076: the last 비 소식 answer `{ v: 1, area, at, rain }`, good for 30 minutes. */
   rain: 'jeju.rain',
+  /** ADR-0087: 가 봤어요 — place ids left out of the picks on this device, oldest first. Not the data's `hide`. */
+  visited: 'jeju.visited',
 } as const;
 export const MAX_SAVED = 500;
+export const MAX_VISITED = 500;
 
 const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
 const SUBS: readonly Sub[] = ['meal', 'cafe'];
@@ -62,6 +65,12 @@ const strings = (v: unknown): string[] | null => (Array.isArray(v) ? v.filter(is
 /** v1 list: strings only, duplicates removed (first = newest kept), at most MAX_SAVED. */
 export function parseSaved(v: unknown): string[] {
   return [...new Set(strings(v) ?? [])].slice(0, MAX_SAVED);
+}
+
+/** 뺀 곳 (ADR-0087): strings only, in the order they were added, duplicates removed (the first kept), at most
+ * MAX_VISITED (the oldest dropped). Ids missing from the data are kept: the place may come back. */
+export function parseVisited(v: unknown): string[] {
+  return [...new Set(strings(v) ?? [])].slice(-MAX_VISITED);
 }
 
 /** Canonical form: sorted by day, then order; one entry per place and day (the first kept); each day's
@@ -260,6 +269,8 @@ export interface Loaded {
   /** ADR-0063: the in-app browser notice was closed / the home-screen nudge was shown. */
   inappSeen: boolean;
   installSeen: boolean;
+  /** 뺀 곳 (ADR-0087), oldest first. */
+  visited: string[];
 }
 
 export interface Store {
@@ -298,6 +309,12 @@ export interface Store {
   moveToDay(id: string, from: Day, to: Day): SavedEntry[];
   /** A backup link's places onto this device (mergeEntries). */
   mergeSaved(incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number };
+  /** 가 봤어요 (ADR-0087), read-modify-write like the hearts: `id` added at the end, or taken out again. */
+  toggleVisited(id: string): { visited: string[]; added: boolean };
+  /** 다시 넣기 for one place (gone already: nothing changes). */
+  unvisit(id: string): string[];
+  /** 모두 다시 넣기. */
+  unvisitAll(): string[];
   readSession(): SessionRecord | null;
   writeSession(rec: SessionRecord): void;
   clearSession(): void;
@@ -350,6 +367,28 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     writeSaved(next);
     return next;
   }
+  // 뺀 곳 (ADR-0087): the same rule as the hearts — once its read or write throws, memory for the visit.
+  let visitedTrusted = !!local;
+  let visitedMemory: string[] = [];
+  function readVisited(): string[] {
+    if (!visitedTrusted || !local) return visitedMemory;
+    let raw: string | null;
+    try {
+      raw = local.getItem(KEYS.visited);
+    } catch {
+      visitedTrusted = false;
+      return visitedMemory;
+    }
+    visitedMemory = parseVisited(parse(raw));
+    return visitedMemory;
+  }
+  function updateVisited(change: (cur: string[]) => string[]): string[] {
+    const next = parseVisited(change(readVisited()));
+    visitedMemory = next;
+    if (visitedTrusted && !set(local, KEYS.visited, next)) visitedTrusted = false;
+    return next;
+  }
+
   const ofDay = (list: SavedEntry[], day: Day) => list.filter((e) => e.date === day);
   const lastOrder = (list: SavedEntry[], day: Day) => ofDay(list, day).length;
 
@@ -388,6 +427,13 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         memory = saved;
         if (!same(rawSaved, saved)) writeSaved(saved);
       }
+      const rawVisited = get(local, KEYS.visited);
+      const visited = parseVisited(rawVisited);
+      visitedMemory = visited;
+      if (rawVisited != null && !same(rawVisited, visited)) {
+        if (visited.length) set(local, KEYS.visited, visited);
+        else removeQuietly(local, KEYS.visited);
+      }
       return {
         basis,
         reach,
@@ -401,6 +447,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         mapApp: parseMapApp(get(local, KEYS.mapApp)),
         inappSeen: get(local, KEYS.inapp) === true,
         installSeen: get(local, KEYS.install) === true,
+        visited,
       };
     },
     setBasis: (b) => void set(local, KEYS.basis, b),
@@ -461,6 +508,16 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       });
       return { entries, added };
     },
+    toggleVisited(id) {
+      let added = false;
+      const visited = updateVisited((cur) => {
+        added = !cur.includes(id);
+        return added ? [...cur, id] : cur.filter((x) => x !== id);
+      });
+      return { visited, added };
+    },
+    unvisit: (id) => updateVisited((cur) => cur.filter((x) => x !== id)),
+    unvisitAll: () => updateVisited(() => []),
     readSession: () => parseSession(get(session, KEYS.session)),
     writeSession: (rec) => void set(session, KEYS.session, rec),
     clearSession: () => removeQuietly(session, KEYS.session),
