@@ -9,7 +9,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, heldDay, isSaved, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, whenDay, type SavedRow, type State } from './state';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
 import type { NoOrigin, Origin, Overlay, View } from './types';
@@ -925,6 +925,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   // or a link is drawn before the data is in: the rows' min-height holds the place, no grey slots (§14). ---
   let homeSig = '';
   let homeSpots: Spot[] | null = null;
+  let homeVisited: readonly string[] = [];
   let todayText = '';
   let homeDated = false;
   const ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
@@ -1041,10 +1042,12 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     setText(els.lede, hc.lede);
     const origin = homeOrigin(s);
     const sig = homeSigOf(s, origin);
-    if (sig === homeSig && s.spots === homeSpots) return;
+    if (sig === homeSig && s.spots === homeSpots && s.visited === homeVisited) return;
     homeSig = sig;
     homeSpots = s.spots;
-    const { spots } = s;
+    homeVisited = s.visited;
+    // 뺀 곳 (ADR-0087) are left out of 「예:」, 노을 볼 곳 and 오늘 장 서는 곳, as from the cards
+    const spots = s.spots && pickSpots(s.spots, s.visited);
     const day = whenDay(s);
     const markets = spots ? openMarkets(spots, origin, day) : [];
     // without a basis no market goes on the board under 「내 위치 근처」: it could be across the island (ADR-0075
@@ -1086,7 +1089,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       const credit = el(doc, 'p', { class: 'credit' }, COPY.homeCredit);
       if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
       // settings reachable with nothing saved yet (heuristic audit H5): they live under the saved list
-      nodes.push(areasSection(s, spots, origin), credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings));
+      // an area's photo is not a pick: from the data as it is
+      nodes.push(areasSection(s, s.spots!, origin), credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings));
     }
     els.homeMore.replaceChildren(...nodes);
   }

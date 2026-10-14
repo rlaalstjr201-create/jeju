@@ -309,6 +309,19 @@ export function spotIndex(spots: Spot[]): Map<string, Spot> {
   return m;
 }
 
+const pickCache = new WeakMap<Spot[], { visited: string[]; list: Spot[] }>();
+/** The places the picks start from (ADR-0087): the data without 뺀 곳 — the one array the cards, 「예:」, 노을 볼 곳 and
+ * 오늘 장 서는 곳 are worked out from. With none left out it is the data itself. The saved list never uses it. */
+export function pickSpots(spots: Spot[], visited: readonly string[]): Spot[] {
+  if (!visited.length) return spots;
+  const hit = pickCache.get(spots);
+  if (hit && hit.visited === visited) return hit.list;
+  const out = new Set(visited);
+  const list = spots.filter((x) => !out.has(x.id));
+  pickCache.set(spots, { visited: visited as string[], list });
+  return list;
+}
+
 /** The day a heart goes to now. */
 export const whenDay = (s: State): Day => (s.when === 'now' ? s.today : s.when);
 
@@ -392,7 +405,9 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   }
   const seq = s.seq + 1;
   const ids = shown[key];
-  const restored = intent === 'show' && ids ? cardsFor(spots, ids, origin.point) : null;
+  // 뺀 곳 (ADR-0087) are out from this pick on: three brought back with one of them in are picked anew
+  const from = pickSpots(spots, s.visited);
+  const restored = intent === 'show' && ids ? cardsFor(from, ids, origin.point) : null;
   if (restored) {
     // Exactly what is already on screen (same 3, same point): keep it as is, so nothing is rebuilt.
     const c = s.cards;
@@ -419,7 +434,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
     };
   }
   // 오일장 (ADR-0066): the day being viewed (지금 = today) decides which markets open and which are closed.
-  const r = pickCards(spots, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s));
+  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s));
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;
