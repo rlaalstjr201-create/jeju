@@ -23,6 +23,8 @@ export const PER_MOOD = 5;
 export const PER_COMBO = 12;
 /** Place page: nearby places in the same area (3–5). */
 export const NEARBY = 5;
+/** 지역 쪽 「비 오는 날」 절 (ADR-0065): indoor 쉬기·새로운 거 places; an area with fewer gets no section. */
+export const RAIN_MIN = 10;
 const MOODS: readonly Mood[] = ['rest', 'walk', 'new', 'food'];
 /** Screen names of the moods (docs/context.md 기분). */
 export const MOOD_NAME: Record<Mood | 'any', string> = {
@@ -170,6 +172,8 @@ const areaPath = (a: Area) => `${HUB}${a.slug}/`;
 /** 「애월(한담)」; landmarks that are no place name (공항 근처, 배로 가는 섬) are left out. */
 export const areaTitle = (a: Area) => (/근처|섬/.test(a.landmark) ? a.label : `${a.label}(${a.landmark})`);
 const appLink = (a: Area, mood?: Mood) => `/?area=${a.slug}${mood ? `&mood=${mood}` : ''}`;
+/** Indoor places for a rainy day: 쉬기·새로운 거 only (식사·카페 have their own mood). */
+const rainy = (p: Place) => p.spot.indoor && (p.spot.mood === 'rest' || p.spot.mood === 'new');
 
 /** What the place is, in the app's words: the food and 새로운 거 tabs (ADR-0028, ADR-0064). */
 export function kindOf(s: Spot): string {
@@ -394,13 +398,23 @@ function areaPage(ctx: Ctx, a: Area): string {
     const all = list.filter((p) => p.spot.mood === m);
     return `<h3>${MOOD_NAME[m]} <span class="meta">${all.length}곳</span></h3>\n<ul class="idx">${all.map((p) => `<li><a href="${p.url}">${esc(cleanName(p.spot.name))}</a></li>`).join('')}</ul>`;
   }).join('\n');
+  const indoor = list.filter(rainy);
+  const rain =
+    indoor.length >= RAIN_MIN
+      ? `\n<section aria-labelledby="rain">
+<h2 id="rain">비 오는 날, ${esc(a.label)} 실내</h2>
+<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. ${esc(a.label)} 근처 실내 쉬기·구경·체험 ${indoor.length}곳 중 먼저 갈 만한 곳이에요.</p>
+<ol class="list">${indoor.slice(0, PER_MOOD).map((p) => placeRow(ctx, p, from)).join('')}</ol>
+<p><a class="tbtn" href="${appLink(a)}&indoor=1">앱에서 ${esc(a.label)} 실내 3곳 보기</a></p>
+</section>`
+      : '';
   const near = neighbours(a);
   const combos = ctx.combos.filter((c) => c.area === a);
   const body = `<h1>${esc(a.label)} 근처에서 지금 뭐 할까</h1>
 <p class="lead">${esc(AREA_LINE[a.slug])} 기분 하나만 고르면 앱이 근처 3곳을 골라 드려요.</p>
 <p class="meta">여기 순서는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
 <p><a class="go" href="${appLink(a)}">앱에서 ${esc(a.label)} 근처 3곳 보기</a></p>
-${sections}
+${sections}${rain}
 ${combos.length ? `<h2>기분과 함께</h2>\n<ul class="areas">${combos.map((c) => `<li><a href="${c.url}">${esc(c.query)}</a></li>`).join('')}</ul>` : ''}
 <h2>${esc(a.label)} 근처 전체 ${list.length}곳</h2>
 ${index}
@@ -409,7 +423,7 @@ ${index}
   return layout(ctx, {
     path: areaPath(a),
     title: `${areaTitle(a)} 근처, 지금 갈 만한 곳 · ${BRAND}`,
-    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·새로운 거·먹기마다 먼저 갈 만한 곳을 모았어요.`,
+    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·새로운 거·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
     crumbs: [...rootCrumbs(), { name: a.label, path: areaPath(a) }],
     graph: [
       {

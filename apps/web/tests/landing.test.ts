@@ -125,6 +125,27 @@ describe('페이지', () => {
     for (const p of s.pages) expect(p.html).not.toContain('받기');
   });
 
+  // docs/seo/2026-10-16-generic-search.md a1: 「애월 실내 놀거리」·「애월 비오는날 놀거리」 land on the area page
+  it('area page: a 「비 오는 날」 section with the top 5 indoor 쉬기·새로운 거 and the indoor deep link; fewer than 10 → none', () => {
+    const indoor = (n: number) =>
+      Array.from({ length: n }, (_, i) => spot(`r${i}`, `애월 전시관 ${i + 1}`, 33.46 + i * 0.001, 126.33, { mood: i % 2 ? 'new' : 'rest', sub: i % 2 ? 'sight' : undefined, indoor: true, reason: `비를 피해 전시 ${i + 1}을 봐요` }));
+    const spots = [...SPOTS, ...indoor(11)];
+    const s = buildSite({ spots, slugs: assignSlugs(spots, {}), site: 'https://x.test', photos: true, dataDate: '2026-10-01' });
+    const aewol = s.pages.find((p) => p.path === '/jeju/aewol/')!.html;
+    const rain = aewol.match(/<section aria-labelledby="rain">([\s\S]*?)<\/section>/)![1];
+    expect(rain).toContain('<h2 id="rain">비 오는 날, 애월 실내</h2>');
+    expect(rain).toContain('애월 근처 실내 쉬기·구경·체험 11곳 중');
+    expect(rain.match(/href="\/jeju\/aewol\/[a-z0-9-]+\/"/g)).toHaveLength(5);
+    expect(rain).toContain('<a class="tbtn" href="/?area=aewol&indoor=1">앱에서 애월 실내 3곳 보기</a>');
+    expect(rain).not.toContain('애월 카페'); // food stays out even when indoor
+    expect(aewol).toContain('먹기마다, 비 오는 날 실내까지 먼저 갈 만한 곳을 모았어요.');
+    const udo = s.pages.find((p) => p.path === '/jeju/udo/')!.html;
+    expect(udo).not.toContain('비 오는 날,');
+    const few = [...SPOTS, ...indoor(9)];
+    const f = buildSite({ spots: few, slugs: assignSlugs(few, {}), site: '', photos: false, dataDate: null });
+    expect(f.pages.find((p) => p.path === '/jeju/aewol/')!.html).not.toContain('aria-labelledby="rain"');
+  });
+
   it('a place left out by the quality bar gets no page and no link', () => {
     const s = site({ exclude: new Set(['a2']) });
     expect(s.pages.some((p) => p.id === 'a2')).toBe(false);
