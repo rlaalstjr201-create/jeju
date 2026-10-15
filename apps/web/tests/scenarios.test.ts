@@ -2,7 +2,7 @@
 // design/qa/scenarios.md — one test per automatable row (named by id), plus the code-audit findings.
 // Rows that need real layout, a real service worker or a real browser's history timing are also covered
 // in tests/e2e/browser.e2e.mjs (Chromium).
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
 import { islandOf, pickCards, withinReach, type Point } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
@@ -1669,6 +1669,63 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     expect(input.classList.contains('sr')).toBe(false);
     expect(input.hasAttribute('aria-hidden')).toBe(false);
     expect(document.activeElement).toBe(input);
+  });
+
+  describe('날짜 고르기 on a touch screen (pointer: coarse)', () => {
+    beforeEach(() => {
+      window.matchMedia = ((q: string) => ({ matches: q === '(pointer: coarse)', media: q })) as unknown as typeof window.matchMedia;
+    });
+    afterEach(() => {
+      delete (window as { matchMedia?: unknown }).matchMedia;
+    });
+    /** the one control: the date field itself, named and reachable, over the option's words */
+    const field = () => {
+      const input = $<HTMLInputElement>('#sheet input[type="date"]');
+      expect($$('#sheet input[type="date"]').length).toBe(1);
+      expect($('#sheet [data-action="pick-day"]')).toBeNull();
+      expect(input.classList.contains('date-tap')).toBe(true);
+      expect(input.parentElement!.matches('label.opt')).toBe(true);
+      expect(input.getAttribute('aria-label')).toBe('날짜 고르기');
+      expect(input.hasAttribute('aria-hidden') || input.hasAttribute('tabindex')).toBe(false);
+      expect(input.min).toBe(TODAY);
+      return input;
+    };
+
+    it('basis sheet 언제: the field lies over 날짜 고르기; a picked day sets 언제 and shows on the option', async () => {
+      open();
+      await tap('#basis');
+      expect([...$$('#sheet .opts')[0].querySelectorAll('.opt .nm')].map((x) => x.textContent)).toEqual(['지금', '내일', '날짜 고르기']);
+      const input = field();
+      expect(input.max).toBe('2027-09-30');
+      input.value = '2026-10-03';
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      expect($('#basis').textContent).toBe('10월 3일 · 내 위치 근처');
+      expect(JSON.parse(window.localStorage.getItem('jeju.when')!)).toBe('2026-10-03');
+      const again = field();
+      expect(again.getAttribute('value')).toBe('2026-10-03');
+      expect(again.parentElement!.querySelector('.lm')!.textContent).toBe('10월 3일 토요일');
+      again.value = '2027-10-01'; // past +365: ignored
+      again.dispatchEvent(new Event('change', { bubbles: true }));
+      expect($('#basis').textContent).toBe('10월 3일 · 내 위치 근처');
+    });
+
+    it('다른 날로: a day picked in the field moves the row there and closes the sheet', async () => {
+      seed([[a, TODAY], [b, TODAY]]);
+      open();
+      await tap('#saved');
+      ctl(a, 'move-day').focus();
+      await tap(ctl(a, 'move-day'));
+      expect($$('#sheet .opt .nm').map((x) => x.textContent)).toEqual(['오늘', '날짜 고르기']);
+      const input = field();
+      input.value = '2026-10-05';
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      await settle();
+      expect($('#sheet').hidden).toBe(true);
+      expect(sections()).toEqual([
+        ['오늘', [b]],
+        ['10월 5일 월요일', [a]],
+      ]);
+    });
   });
 
   it('D2 a heart goes to the chosen day and is filled only for that day; the same place can go on two days', async () => {

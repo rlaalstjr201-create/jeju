@@ -1976,6 +1976,105 @@ await check('QA4-datein', 'no showPicker: 날짜 고르기 shows the date field 
   assert(problems.length === 0, problems.join(' | '));
 });
 
+await check('QA4-datetap', 'touch screen (390, isMobile, hasTouch): the finger on 날짜 고르기 lands on the real date field (named, not hidden, 16px) in the 다른 날로 sheet and the basis sheet 언제; a day set there moves the row / sets 언제. A mouse screen keeps the option button and the hidden field. (Headless cannot open the OS picker itself.)', async () => {
+  const problems = [];
+  const today = seoulDay();
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block', locale: 'ko-KR', reducedMotion: 'reduce' });
+  await ctx.addInitScript(GEO_STUB);
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  const page = await ctx.newPage();
+  await page.goto(BASE);
+  const [a, b] = SPOT_IDS;
+  await page.evaluate(
+    ({ a, b, today }) => {
+      localStorage.clear();
+      localStorage.setItem('jeju.saved.v2', JSON.stringify([{ id: a, date: today, order: 0 }, { id: b, date: today, order: 1 }]));
+    },
+    { a, b, today },
+  );
+  await page.reload();
+  if (!(await page.evaluate(() => matchMedia('(pointer: coarse)').matches))) problems.push('the context is not a coarse pointer');
+  /** what is under the finger at the option's centre, its words and (언제) 2px into its reach above */
+  const under = async (tag) => {
+    const r = await page.evaluate(() => {
+      const i = document.querySelector('#sheet input[type="date"]');
+      const opt = i?.closest('.opt');
+      if (!opt) return null;
+      opt.scrollIntoView({ block: 'center' });
+      const o = opt.getBoundingClientRect();
+      const n = opt.querySelector('.nm').getBoundingClientRect();
+      const at = (x, y) => document.elementFromPoint(x, y) === i;
+      return {
+        centre: at(o.left + o.width / 2, o.top + o.height / 2),
+        words: at(n.left + n.width / 2, n.top + n.height / 2),
+        reach: at(o.left + o.width / 2, o.top - 2),
+        when: !!opt.closest('.when-row'),
+        name: i.getAttribute('aria-label'),
+        hidden: i.getAttribute('aria-hidden'),
+        tabindex: i.getAttribute('tabindex'),
+        font: parseFloat(getComputedStyle(i).fontSize),
+        buttons: document.querySelectorAll('#sheet [data-action="pick-day"]').length,
+        min: i.min,
+        max: i.max,
+      };
+    });
+    if (!r) return problems.push(`${tag}: no date field in an option`);
+    if (!r.centre || !r.words) problems.push(`${tag}: the field is not under the finger (centre ${r.centre}, words ${r.words})`);
+    if (r.when && !r.reach) problems.push(`${tag}: the 4px reach above 언제 misses the field`);
+    if (r.name !== '날짜 고르기' || r.hidden !== null || r.tabindex !== null) problems.push(`${tag}: name ${r.name} aria-hidden ${r.hidden} tabindex ${r.tabindex}`);
+    if (r.font < 16) problems.push(`${tag}: font ${r.font}px (iOS zooms in)`);
+    if (r.buttons) problems.push(`${tag}: a second 날짜 고르기 control`);
+    if (r.min !== today || r.max !== addDaysIso(today, 365)) problems.push(`${tag}: min/max ${r.min}/${r.max}`);
+  };
+  const pick = (day) =>
+    page.evaluate((day) => {
+      const i = document.querySelector('#sheet input[type="date"]');
+      i.value = day;
+      i.dispatchEvent(new Event('change', { bubbles: true }));
+    }, day);
+  // 다른 날로
+  await tapText(page, '#saved');
+  await page.waitForSelector('#savedView .card:not(.ghost)');
+  await tapText(page, `#savedView .card[data-id="${a}"] [data-action="move-day"]`);
+  await under('move');
+  const target = seoulDay(20);
+  await pick(target);
+  await sleep(250);
+  if (await visible(page, '#sheet .sheet')) problems.push('move: the sheet stayed open');
+  const moved = JSON.parse(await page.evaluate(() => localStorage.getItem('jeju.saved.v2')));
+  if (!moved.some((e) => e.id === a && e.date === target)) problems.push(`move: not moved ${JSON.stringify(moved)}`);
+  // 기준 sheet 언제
+  await tapText(page, '#basis');
+  await under('basis');
+  const when = seoulDay(40);
+  await pick(when);
+  await sleep(200);
+  const stored = await page.evaluate(() => localStorage.getItem('jeju.when'));
+  if (stored !== JSON.stringify(when)) problems.push(`basis: not applied (${stored})`);
+  if (!(await page.textContent('#basis')).includes('일 · ')) problems.push(`basis label ${await page.textContent('#basis')}`);
+  if (!(await visible(page, '#sheet .sheet'))) problems.push('basis: the sheet closed');
+  const shown = await page.evaluate(() => {
+    const opt = document.querySelector('#sheet .date-tap').closest('.opt');
+    return { lm: opt.querySelector('.lm')?.textContent, check: getComputedStyle(opt.querySelector('.i-check')).display, weight: getComputedStyle(opt.querySelector('.nm')).fontWeight };
+  });
+  if (!shown.lm || shown.check === 'none' || shown.weight !== '600') problems.push(`basis: picked day not shown ${JSON.stringify(shown)}`);
+  await under('basis again');
+  await ctx.close();
+  // a mouse screen: as before, the option button and the hidden field
+  const desk = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR', reducedMotion: 'reduce' });
+  await desk.addInitScript(GEO_STUB);
+  const dp = await desk.newPage();
+  await dp.goto(BASE);
+  await tapText(dp, '#basis');
+  const d = await dp.evaluate(() => {
+    const i = document.querySelector('#sheet input[type="date"]');
+    return { buttons: document.querySelectorAll('#sheet button[data-action="pick-day"]').length, sr: i.classList.contains('sr'), hidden: i.getAttribute('aria-hidden'), tabindex: i.getAttribute('tabindex') };
+  });
+  if (d.buttons !== 1 || !d.sr || d.hidden !== 'true' || d.tabindex !== '-1') problems.push(`mouse: ${JSON.stringify(d)}`);
+  await desk.close();
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 await check('QA4-when-row', '언제 is one compact row (지금 · 내일 · 날짜 고르기, each ≥ 44px, check and weight, no fill): at 320×568 the 어디 heading is in view on open and 얼마나 is reachable above 닫기', async () => {
   const problems = [];
   for (const [width, height] of [[320, 568], [390, 844]]) {

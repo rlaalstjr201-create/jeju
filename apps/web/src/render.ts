@@ -1321,10 +1321,29 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     row.append(...children);
     return row;
   }
+  /** A touch screen's pointer (phones, in-app browsers); never where matchMedia is missing (jsdom). */
+  const coarse = () => {
+    try {
+      return !!win?.matchMedia?.('(pointer: coarse)').matches;
+    } catch {
+      return false;
+    }
+  };
   /** 날짜 고르기: an option that opens the browser's own date picker (today to a year on), with the native
-   * input kept beside it. Where showPicker() is missing the input itself is shown with 이 날로 (app.ts). */
+   * input kept beside it. Where showPicker() is missing the input itself is shown with 이 날로 (app.ts).
+   * On a touch screen the input itself lies see-through over the option, so the finger lands on it and the OS
+   * opens its picker: iOS Safari and in-app browsers open nothing from showPicker() on a hidden field. */
   function pickDay(s: State, picked: Day | null): HTMLElement[] {
-    const input = el(doc, 'input', { type: 'date', class: 'sr', min: s.today, max: addDays(s.today, DAYS_AHEAD), tabindex: '-1', 'aria-hidden': 'true', 'aria-label': COPY.pickDay, 'data-action': 'day-input' });
+    const range = { type: 'date', min: s.today, max: addDays(s.today, DAYS_AHEAD), 'aria-label': COPY.pickDay };
+    if (coarse()) {
+      const tap = el(doc, 'input', { ...range, class: 'date-tap', ...(picked ? { value: picked } : {}) });
+      if (tap.type === 'date') {
+        const row = el(doc, 'label', { class: 'opt' });
+        row.append(...option(COPY.pickDay, picked ? longDay(picked) : null, {}).childNodes, tap);
+        return [row];
+      }
+    }
+    const input = el(doc, 'input', { ...range, class: 'sr', tabindex: '-1', 'aria-hidden': 'true', 'data-action': 'day-input' });
     input.value = picked ?? '';
     const box = el(doc, 'div', { class: 'date-fb' });
     box.append(input, el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'day-ok', hidden: '' }, COPY.dayOk));
@@ -1438,7 +1457,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   }
 
   function focusSheet() {
-    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
+    // a day picked on a touch screen is the see-through field's value (pickDay), not a pressed option
+    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"], .sheet .date-tap[value]') ??els.sheet.querySelector<HTMLElement>('#sheet-title');
     pick?.focus({ preventScroll: true });
   }
 

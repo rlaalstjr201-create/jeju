@@ -93,11 +93,11 @@ const WORDS =
 const FORMAL = /[습입됩합]니다|십시오/; // 합쇼체: 해요체 only (§9)
 // 15 · 17 · 20 · 24px, written in rem so a larger browser text size (or root font-size 200%) scales them.
 const FONT_SIZES = new Set(['0.9375rem', '1.0625rem', '1.25rem', '1.5rem']);
-/** The exceptions (SPEC §3.2): the fallback date field, never under 16px or iOS zooms in (design.md F2); the
- * travel-time tag 13 and the logo's wordmark 18 (ADR-0088). */
+/** The exceptions (SPEC §3.2): the date fields (the fallback one and the see-through one on touch screens), never
+ * under 16px or iOS zooms in (design.md F2); the travel-time tag 13 and the logo's wordmark 18 (ADR-0088). */
 const fontSizeOk = (selector: string, size: string) =>
   FONT_SIZES.has(size) ||
-  (selector === '.date-in' && size.replace(/\s+/g, '') === 'max(1rem,16px)') ||
+  ((selector === '.date-in' || selector === '.date-tap') &&size.replace(/\s+/g, '') === 'max(1rem,16px)') ||
   (selector === '.tag' && size === '0.8125rem') ||
   (selector === '.logo' && size === '1.125rem');
 /** design/SPEC.md §10 forms that make a place sentence read as a template ("~하기 좋아요", 인생샷 …),
@@ -115,7 +115,7 @@ const SEL_TOKEN = /--sel-/;
 const SEL_FILL_OK = new Set(['.saved-btn[aria-pressed="true"]']);
 // ADR-0070: the saved heart; ADR-0088: the logo's dot and 오늘 판's sun
 const ACCENT_OK = new Set(['.heart[aria-pressed="true"]', '.logo .dot', '.today-ic']);
-const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child|\.more-end)$/;
+const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child|\.more-end|\.date-tap|\.when-row \.date-tap)$/;
 
 /** #1 over one stylesheet's rules: no gradient or other shadow anywhere; `box-shadow: var(--float)` only on
  * what floats, and the token used nowhere else. */
@@ -145,7 +145,8 @@ export function checkCss(file: string, css: string, v: Violation[]) {
     if (!isRoot && /#[0-9a-f]{3,8}\b|rgba?\(/i.test(r.body)) add(9, `${r.selector} colour literal`);
     if (/var\(--accent\)/.test(r.body) && !sels.every((s) => ACCENT_OK.has(s))) add(10, `${r.selector} uses --accent`);
     for (const m of r.body.matchAll(/opacity:\s*([^;]+)/g)) {
-      const ok = m[1].trim() === '0.72' || (m[1].trim() === '0' && r.selector.startsWith('@keyframes'));
+      // .date-tap: the see-through date field over 날짜 고르기 on touch screens (render.ts pickDay), never seen
+      const ok = m[1].trim() === '0.72' || (m[1].trim() === '0' && (r.selector.startsWith('@keyframes') || r.selector === '.date-tap'));
       if (!ok) add(11, `${r.selector} opacity ${m[1]}`);
     }
     if (!isRoot && /rgb\([^)]*\/[^)]*\)/.test(r.body)) add(11, `${r.selector} translucent colour`);

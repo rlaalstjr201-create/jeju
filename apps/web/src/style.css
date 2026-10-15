@@ -484,7 +484,12 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
    (with its own Korean fallback) held up the sheet's first frame */
 .date-fb .sr { font: inherit; }
 .date-fb.open { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; margin: 0 14px 8px; }
-.date-in {
+/* 날짜 고르기 on a touch screen (render.ts pickDay): the date field itself, see-through over the option and its
+   4px reach, so the finger opens the OS picker; 16px or iOS zooms in on it (design.md F2). A day picked: check, 600 */
+.date-tap { position: absolute; left: 0; top: 0; z-index: 1; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; opacity: 0; font: inherit; font-size: max(1rem, 16px); }
+.when-row .date-tap { top: -4px; height: calc(100% + 4px); }
+.opt:has(> .date-tap[value]) > .i-check { display: block; color: var(--main); }
+.opt:has(> .date-tap[value]) .nm { font-weight: 600; }.date-in {
   flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px;
   font: inherit; font-size: max(1rem, 16px); /* iOS zooms into a field under 16px (design.md F2) */
   color: var(--text); background: none; border: 1px solid var(--field-line); border-radius: var(--r-ctl);
