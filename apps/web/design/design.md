@@ -21,6 +21,7 @@
 - 근거: Parhi, Karlson, Bederson 2006, MobileHCI. 한 손 엄지 실험(크기 3.8~11.5mm × 9개 위치)에서 단일 탭은 9.6mm 이상, 연속 탭은 7.7mm 이상에서 크기에 따른 오류율 차이가 없었다. 권장값은 단일 탭 9.2mm, 연속 탭 9.6mm ([PDF](https://www.microsoft.com/en-us/research/wp-content/uploads/2006/01/parhi-mobileHCI06.pdf), [ACM](https://dl.acm.org/doi/10.1145/1152215.1152260)). Material: 48×48dp(약 9mm) 이상 ([Material](https://m2.material.io/design/usability/accessibility.html), [Android 도움말](https://support.google.com/accessibility/android/answer/7101858)). MIT Touch Lab(Dandekar, Raju, Srinivasan 2003, J. Biomech. Eng., 유한요소 모델): 손가락 끝 8~10mm, 지문 면 10~14mm ([PubMed](https://pubmed.ncbi.nlm.nih.gov/14618927/)). 이 손가락 수치는 터치 실험이 아니라 촉각 역학 모델에서 나온 값이라 직접 근거로는 약하다.
 - 고령자: Jin, Plocher, Kiff 2007(HCII, 노인 대상 터치스크린): 오류가 가장 적은 버튼은 19.05mm였고, 간격은 3.17~12.7mm를 권장했다 ([ResearchGate](https://www.researchgate.net/publication/221099338_Touch_Screen_User_Interfaces_for_Older_Adults_Button_Size_and_Spacing)). 키오스크 크기라 폰에 그대로 옮길 수는 없다.
 - SPEC 3판: **일치**(2026-10-01 반영). 기분 줄 60, 동네 칸 56, `닫기` 56, `다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로` 52, `아무거나 골라줘` 48. 카드 하트, `바꾸기`·`돌아가기`, `위로`·`아래로`·`다른 날로`, `이 날로`, 식사 탭, `언제` 칸은 그린 크기 44 그대로 누름 영역만 48×48(가상 요소, SPEC 4절, e2e T2-hit). 상단 기준·♥ N은 드문 보조 행동이라 44(T4).
+- ADR-0088(2026-10-15): **일치 유지.** 면이 보이게 되면서 그린 크기와 누름 영역이 갈렸다: 면 버튼은 그린 40 / 상자 44(투명 테두리 2), 기준·♥ N 칩은 그린 36 / 상자 48, 기분 줄 72(면 안), `아무거나 골라줘` 52, 첫 장 `길찾기`·`가 봤어요` 48. 누름 영역 48 가상 요소와 겹침 검사(e2e T2-hit·HV1·DR-go)는 그대로다.
 
 **T3. 서로 다른 행동의 인접 대상은 시각 간격 8px 이상을 둔다. 24px 원 겹침 검사(2.5.8)를 통과해야 한다.** [B]
 - 근거: WCAG 2.2 SC 2.5.8 Target Size (Minimum), AA: 24×24px 이상이거나, 대상 중심의 지름 24px 원이 다른 대상과 겹치지 않아야 한다 ([W3C](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)). Material: 대상 사이 8dp 이상 ([Material](https://m2.material.io/design/usability/accessibility.html)). Henze, Rukzio, Boll 2011(MobileHCI, 안드로이드 게임 9만 1,731회 설치, 터치 1억 2천만 건): 작은 대상일수록, 화면 가장자리일수록 오류가 늘었고, 터치 위치가 대상 중심에서 체계적으로 치우쳤다 ([ACM](https://dl.acm.org/doi/abs/10.1145/2037373.2037395)).
@@ -76,6 +77,7 @@
 **C1. 모든 글자는 바탕과 4.5:1 이상이다(지금 쓰는 모든 바탕 조합: `--bg`·`--surface`·`--fill`·`--fill-press`).** [B]
 - 근거: WCAG 1.4.3, AA ([W3C](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)). KWCAG 2.2 "텍스트 콘텐츠의 명도 대비" 4.5:1.
 - SPEC 3판: **일치**(ADR-0070 「바다·귤」 기준 최저는 면 버튼 글자 `--on-main` on `--main` 라이트 4.93, 다크는 `--on-main` on `--main-press` 5.46. 보조 글자 최저는 `--muted` on `--fill-press` 5.00 / 5.95).
+- ADR-0088: **일치.** 새 바탕 `--main-tint`·`--acc-tint` 위 글자는 전용 짙은 글자로 맞췄다 — 꼬리표·♥ N 눌림 `--tag-ink` 5.27 / 5.85, `아무거나` `--acc-ink` 5.35 / 8.18. 회색 면 값이 바뀌어 보조 글자 최저는 `--muted` on `--fill-press` 5.02 / 6.32. e2e `VR1`이 실제 화면에서 잰다(SPEC 2.2).
 
 **C2. 읽는 본문은 7:1 이상이다(AAA). 보조 글자는 4.5:1 이상이면 된다.** [B]
 - 근거: WCAG 1.4.6 Contrast (Enhanced), AAA.
@@ -83,7 +85,7 @@
 
 **C3. 입력 칸처럼 테두리가 있어야 무엇인지 알 수 있는 컨트롤은 테두리가 인접색과 3:1 이상이다.** [B]
 - 근거: WCAG 1.4.11 Non-text Contrast, AA. "컴포넌트를 식별하는 데 필요한 시각 정보"는 3:1 이상이어야 한다 ([W3C](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)).
-- SPEC 3판: **일치**(2026-10-01 반영). 날짜 대체 입력 `.date-in`의 테두리는 새 토큰 `--field-line`(ADR-0070 라이트 `#8a8c8f`, 다크 `#7e8287`)이라 시트(`--surface`) 위에서 3.37 / 4.33이다(`--line`이면 1.28 / 1.55). SPEC 2.2절에 "입력 칸 테두리는 예외"를 적었다. 포커스 링(17.79)과 체크(`--main` 4.93 / 7.59)도 일치한다. 예외 하나: 저장한 곳 화면의 ♥ N 눌림 면(`--fill`) 위 귤 하트가 라이트 2.90이다(ADR-0070 결정 대기).
+- SPEC 3판: **일치**(2026-10-01 반영). 날짜 대체 입력 `.date-in`의 테두리는 새 토큰 `--field-line`(ADR-0070 라이트 `#8a8c8f`, 다크 `#7e8287`)이라 시트(`--surface`) 위에서 3.37 / 4.33이다(`--line`이면 1.28 / 1.55). SPEC 2.2절에 "입력 칸 테두리는 예외"를 적었다. 포커스 링(17.79)과 체크(`--main` 4.93 / 7.59)도 일치한다. 예외 하나: 저장한 곳 화면의 ♥ N 눌림 면(`--fill`) 위 귤 하트가 라이트 2.90이다(ADR-0070 결정 대기). ADR-0088: ♥ N이 늘 회색 칩이 되어 칩의 하트는 `--acc-ink`로 칠한다(닫힘 5.37 / 9.08, 눌림 5.17 / 8.15, `--accent`였다면 2.92 / 2.81).
 
 **C4. (비규범) APCA 기준으로 15~17px/400 글자는 Lc 75 이상, 보조 글자는 Lc 60 이상이다.** [C]
 - 근거: APCA(WCAG 3 초안의 후보 대비 공식, 아직 표준이 아님). 본문 글자는 Lc 75가 최소이고 Lc 90을 선호한다. Lc 60은 본문이 아닌 글자의 최소값이다 ([APCA 문서](https://git.apcacontrast.com/documentation/APCA_in_a_Nutshell.html)). WCAG 2 공식은 어두운 바탕의 대비를 과대평가한다는 것이 APCA 쪽 주장이다 ([Why APCA](https://git.apcacontrast.com/documentation/WhyAPCA.html)). Dobres, Chahine, Reimer 2017(Applied Ergonomics 60, 흘끗 읽기 과제): 밤 조명에서는 어두운 바탕의 작은 글자가 특히 읽기 어려웠다 ([SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5231071)).
@@ -104,7 +106,7 @@
 
 **C6. 상태는 색만으로 전달하지 않는다.** [B]
 - 근거: WCAG 1.4.1 Use of Color.
-- SPEC 3판: **일치.** 선택은 체크 + 굵기 + `aria-pressed`, 저장은 채움 + 색으로 표시한다. ADR-0070(흰 바탕 + 바다·귤·현무암)에서도 그대로다: 체크·선택 탭 밑줄을 바다(`--main`)로 칠할 뿐, 선택을 색이나 채운 면으로 표시하지 않는다. ADR-0070에서 바뀐 규칙은 하나, **주 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`)이 회색 채움(`--fill`)에서 메인 색 채움(`--main`)으로** 바뀐 것이다. 주 버튼은 상태가 아니라 행동이라 이 규칙과 부딪치지 않는다.
+- SPEC 3판: **일치.** 선택은 체크 + 굵기 + `aria-pressed`, 저장은 채움 + 색으로 표시한다. ADR-0070(흰 바탕 + 바다·귤·현무암)에서도 그대로다: 체크·선택 탭 밑줄을 바다(`--main`)로 칠할 뿐, 선택을 색이나 채운 면으로 표시하지 않는다. ADR-0070에서 바뀐 규칙은 하나, **주 버튼(`다른 3곳 보기`·`다시 불러오기`·`지금 위치를 숙소로`)이 회색 채움(`--fill`)에서 메인 색 채움(`--main`)으로** 바뀐 것이다. 주 버튼은 상태가 아니라 행동이라 이 규칙과 부딪치지 않는다. ADR-0088: 채움은 첫 장 `길찾기` 하나로 줄고 나머지 버튼은 회색 면이다. 선택을 면으로 보이는 곳은 ♥ N 눌림 칩(`--main-tint`) 하나인데, 화면 제목(`저장한 곳`)과 `aria-pressed`가 함께 상태를 말하므로 색만으로 전달하지 않는다.
 
 ---
 
