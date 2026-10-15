@@ -3,7 +3,7 @@
 // dropped here, so the last user intent always wins (S36–S38).
 import { areaByName, nearestArea, type AreaName } from './areas';
 import { type Day } from './dates';
-import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type Reach, type Spot, type Sub, type Tab } from './pick';
+import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
@@ -32,8 +32,9 @@ export interface Shown {
   /** picked with 비 와요(실내만) on (ADR-0065). */
   indoor: boolean;
   wrapped: boolean;
-  /** 밤 (ADR-0091): picked at night, and that moved a 야외 산길 back (pickCards); never on 'restore'. */
-  nightShifted: boolean;
+  /** 밤 (ADR-0091): picked at night, and what that moved back — 산길, 배로 가는 섬, both (pickCards); null otherwise and
+   * on 'restore'. */
+  nightShifted: NightShift;
   how: 'new' | 'more' | 'restore';
   /** bumps on every result, so the renderer knows when to scroll/announce. */
   seq: number;
@@ -463,12 +464,13 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
       histories,
       shown,
       phase: { k: 'ready' },
-      cards: same ? c : { key, list: restored, origin, reach: s.reach, indoor: s.indoor, wrapped: false, nightShifted: false, how: 'restore', seq },
+      cards: same ? c : { key, list: restored, origin, reach: s.reach, indoor: s.indoor, wrapped: false, nightShifted: null, how: 'restore', seq },
       seq: same ? s.seq : seq,
     };
   }
   // 오일장 (ADR-0066): the day being viewed (지금 = today) decides which markets open and which are closed.
-  // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 go after the rest.
+  // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 and islands by boat
+  // (Amendment 1) go after the rest.
   const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
   const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night);
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };

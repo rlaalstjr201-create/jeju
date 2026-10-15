@@ -1,9 +1,10 @@
-// 밤에는 야외 산길을 뒤로 (ADR-0091, specs/night-trails.md §2·S2·S3): pickCards / pool / islandTop with `night`.
-// By day `trail` is never read; at night a trail goes after every other candidate — never left out — and the
-// rotation, the widening (빈손 없음), the tabs and 아무거나 stay as they are. `nightShifted` only when that moved one.
+// 밤에는 야외 산길을 뒤로 (ADR-0091, specs/night-trails.md §2·S2·S3), 배로 가는 섬도 (Amendment 1): pickCards / pool /
+// islandTop with `night`. By day neither is read; at night a trail, or a small island the origin is not on, goes after
+// every other candidate — never left out — and the rotation, the widening (빈손 없음), the tabs and 아무거나 stay as they
+// are. `nightShifted` says which kind that moved ('trail' | 'island' | 'both'), null when it moved none.
 import { describe, expect, it } from 'vitest';
 import { AREAS, areaByName } from '../src/areas';
-import { islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Spot, type Tab } from '../src/pick';
+import { islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Point, type Spot, type Tab } from '../src/pick';
 import { nightNow } from '../src/sun';
 import { fileSpots } from './fixtures';
 
@@ -21,8 +22,11 @@ const LISTS: [Button, Tab?][] = [['rest'], ['walk'], ['new', 'mix'], ['new', 'si
 /** what a result is, without the spot objects (stripping `trail` makes new ones) */
 const shape = (r: ReturnType<typeof pickCards>) => JSON.stringify({ cards: r.cards.map((c) => [c.spot.id, c.minutes]), h: r.histories, w: r.wrapped, n: r.nightShifted });
 const at = (hm: string) => Number(hm.slice(0, 2)) * 60 + Number(hm.slice(3));
+const night = (list: Spot[], origin: Point = o, b: Button = 'walk', h: Histories = {}) => pickCards(list, origin, b, h, undefined, 'drive30', false, undefined, true);
+/** hard to go to at night from `origin`: a 야외 산길, or a small island the origin is not on (`ferryTo`) */
+const hardFrom = (origin: Point) => (s: Spot) => s.trail === true || (islandOf(s) !== null && islandOf(s) !== islandOf(origin));
 
-describe('by day: trail is never read (S2 낮 12시)', () => {
+describe('by day: neither trail nor island is read (S2 낮 12시)', () => {
   it('15 areas × 3 ranges × every list, three taps each: the same as the data without trail', () => {
     for (const area of AREAS)
       for (const reach of REACHES)
@@ -33,7 +37,7 @@ describe('by day: trail is never read (S2 낮 12시)', () => {
             const r = pickCards(fileSpots, area, b, h, tab, reach, false, DAY);
             const rp = pickCards(plain, area, b, hp, tab, reach, false, DAY);
             expect(shape(r), `${area.name} ${reach} ${b}:${tab ?? ''} tap ${tap}`).toBe(shape(rp));
-            expect(r.nightShifted).toBe(false);
+            expect(r.nightShifted).toBeNull();
             h = r.histories;
             hp = rp.histories;
           }
@@ -53,25 +57,25 @@ describe('at night: 야외 산길 after every other candidate (fixtures)', () =>
 
   it('the others first, best first; by day the usual order', () => {
     expect(ids(pickCards(spots, o, 'walk').cards)).toEqual(['t5', 'a4', 't4']);
-    const night = pickCards(spots, o, 'walk', {}, undefined, 'drive30', false, undefined, true);
-    expect(ids(night.cards)).toEqual(['a4', 'b3', 'c3']);
-    expect(night.nightShifted).toBe(true);
+    const r = night(spots);
+    expect(ids(r.cards)).toEqual(['a4', 'b3', 'c3']);
+    expect(r.nightShifted).toBe('trail');
     expect(pool(spots, o, 'walk', undefined, 'drive30', false, undefined, true).map((c) => c.spot.id)).toEqual(['a4', 'b3', 'c3', 't5', 't4']);
   });
 
   it('never left out: the next tap brings the trails (unseen first, as the rotation always does), shown after the other place', () => {
-    const first = pickCards(spots, o, 'walk', {}, undefined, 'drive30', false, undefined, true);
-    const second = pickCards(spots, o, 'walk', first.histories, undefined, 'drive30', false, undefined, true);
+    const first = night(spots);
+    const second = night(spots, o, 'walk', first.histories);
     expect(ids(second.cards)).toEqual(['a4', 't5', 't4']);
     // the trails came because the others were seen, not because night moved them
-    expect(second.nightShifted).toBe(false);
+    expect(second.nightShifted).toBeNull();
     expect(second.wrapped).toBe(true);
   });
 
   it('too few others: the trails fill the 3, after them', () => {
-    const r = pickCards([mk('t5', 1, 5, T), mk('a2', 2, 2), mk('t3', 3, 3, T), mk('t4', 4, 4, T)], o, 'walk', {}, undefined, 'drive30', false, undefined, true);
+    const r = night([mk('t5', 1, 5, T), mk('a2', 2, 2), mk('t3', 3, 3, T), mk('t4', 4, 4, T)]);
     expect(ids(r.cards)).toEqual(['a2', 't5', 't4']);
-    expect(r.nightShifted).toBe(true);
+    expect(r.nightShifted).toBe('trail');
   });
 
   it('widening (빈손 없음) is the same: the nearest 3 on the island, a trail among them last', () => {
@@ -82,33 +86,32 @@ describe('at night: 야외 산길 after every other candidate (fixtures)', () =>
   });
 
   it('nightShifted only when a trail actually moved', () => {
-    const night = (list: Spot[], b: Button = 'walk', h: Histories = {}) => pickCards(list, o, b, h, undefined, 'drive30', false, undefined, true);
     // the trails already rank below every other place: night changes nothing
     const below = [mk('a5', 1, 5), mk('b4', 2, 4), mk('c4', 3, 4), mk('t3', 1, 3, T), mk('t2', 1, 2, T)];
-    expect(night(below).nightShifted).toBe(false);
+    expect(night(below).nightShifted).toBeNull();
     expect(ids(night(below).cards)).toEqual(ids(pickCards(below, o, 'walk').cards));
     // no trail, or nothing but trails: nothing to move
-    expect(night([mk('a', 1, 3), mk('b', 2, 4), mk('c', 3, 5)]).nightShifted).toBe(false);
-    expect(night([mk('t1', 1, 3, T), mk('t2', 2, 4, T), mk('t3', 3, 5, T)]).nightShifted).toBe(false);
+    expect(night([mk('a', 1, 3), mk('b', 2, 4), mk('c', 3, 5)]).nightShifted).toBeNull();
+    expect(night([mk('t1', 1, 3, T), mk('t2', 2, 4, T), mk('t3', 3, 5, T)]).nightShifted).toBeNull();
     expect(ids(night([mk('t1', 1, 3, T), mk('t2', 2, 4, T), mk('t3', 3, 5, T)]).cards)).toEqual(['t3', 't2', 't1']);
     // a trail moved behind a place it outranks, though not one of the 3 shown: the order the picks come from changed
     const deep = [mk('a5', 1, 5), mk('b5', 2, 5), mk('c5', 3, 5), mk('t4', 1, 4, T), mk('d3', 2, 3)];
     expect(ids(night(deep).cards)).toEqual(['a5', 'b5', 'c5']);
-    expect(night(deep).nightShifted).toBe(true);
+    expect(night(deep).nightShifted).toBe('trail');
     // a trail in the tier shown last time does not move behind an unseen place: the rotation put it there already
     const h: Histories = { walk: { seen: ['t4'], last: ['t4'] } };
-    expect(night([mk('t4', 1, 4, T), mk('a3', 1, 3), mk('b3', 2, 3), mk('c3', 3, 3)], 'walk', h).nightShifted).toBe(false);
+    expect(night([mk('t4', 1, 4, T), mk('a3', 1, 3), mk('b3', 2, 3), mk('c3', 3, 3)], o, 'walk', h).nightShifted).toBeNull();
     // by day never
-    expect(pickCards(deep, o, 'walk').nightShifted).toBe(false);
+    expect(pickCards(deep, o, 'walk').nightShifted).toBeNull();
   });
 
   it('아무거나: one per mood as always; the walk card from the walk list in night order', () => {
     const list = [mk('t5', 1, 5, T), mk('w3', 2, 3), mk('r3', 1, 3, { mood: 'rest' }), mk('n3', 1, 3, { mood: 'new', sub: 'sight' })];
     const day = pickCards(list, o, 'any');
     expect(ids(day.cards)).toEqual(['t5', 'n3', 'r3']);
-    const r = pickCards(list, o, 'any', {}, undefined, 'drive30', false, undefined, true);
+    const r = night(list, o, 'any');
     expect(ids(r.cards).sort()).toEqual(['n3', 'r3', 'w3']);
-    expect(r.nightShifted).toBe(true);
+    expect(r.nightShifted).toBe('trail');
   });
 
   it('a tab (새로운 거 · 체험) keeps its own list: a trail there goes after the other 체험', () => {
@@ -125,22 +128,80 @@ describe('at night: 야외 산길 after every other candidate (fixtures)', () =>
   });
 });
 
+describe('Amendment 1: at night a small island the origin is not on goes after the others too (fixtures)', () => {
+  /** a place at a point (the island boxes are pick.ts ISLANDS) */
+  const put = (id: string, p: Point, score: number, extra: Partial<Spot> = {}): Spot => ({ ...mk(id, 0, score, extra), lat: p.lat, lng: p.lng });
+  const SEONGSAN = { lat: 33.46, lng: 126.93 }; // the main island, by 성산포항
+  const UDO = { lat: 33.5, lng: 126.955 };
+  const main = (id: string, km: number, score: number, extra: Partial<Spot> = {}) => put(id, { lat: SEONGSAN.lat, lng: SEONGSAN.lng - km / 92.8 }, score, extra);
+
+  it('the main island first, the island by boat after them (never left out); the line says 섬', () => {
+    expect([islandOf(SEONGSAN), islandOf(UDO)]).toEqual([null, '우도']);
+    const list = [put('u5', UDO, 5), main('m4', 1, 4), main('m3', 2, 3), main('m2', 3, 2)];
+    expect(ids(pickCards(list, SEONGSAN, 'walk').cards)).toEqual(['u5', 'm4', 'm3']);
+    const r = night(list, SEONGSAN);
+    expect(ids(r.cards)).toEqual(['m4', 'm3', 'm2']);
+    expect(r.nightShifted).toBe('island');
+    // the next tap: the island (unseen) comes, shown after the main island places brought back with it
+    expect(ids(night(list, SEONGSAN, 'walk', r.histories).cards)).toEqual(['m4', 'm3', 'u5']);
+  });
+
+  it('a person on the island: its own places stay where they rank; another island is a boat away, the main island is not moved', () => {
+    const GAPA = { lat: 33.17, lng: 126.27 };
+    const MARA = { lat: 33.118, lng: 126.268 };
+    const PORT = { lat: 33.215, lng: 126.255 }; // 운진항 side of the main island
+    expect([islandOf(GAPA), islandOf(MARA), islandOf(PORT)]).toEqual(['가파도', '마라도', null]);
+    const list = [put('m5', MARA, 5), put('g4', { lat: 33.172, lng: 126.272 }, 4), put('j3', PORT, 3)];
+    expect(ids(pickCards(list, GAPA, 'walk').cards)).toEqual(['m5', 'g4', 'j3']);
+    const r = night(list, GAPA);
+    expect(ids(r.cards)).toEqual(['g4', 'j3', 'm5']);
+    expect(r.nightShifted).toBe('island');
+    // on 우도 itself, 우도's places are as by day
+    const udo = [put('u5', UDO, 5), put('u4', { lat: 33.505, lng: 126.95 }, 4), main('m3', 1, 3)];
+    const onUdo = night(udo, { lat: 33.51, lng: 126.96 });
+    expect(ids(onUdo.cards)).toEqual(['u5', 'u4', 'm3']);
+    expect(onUdo.nightShifted).toBeNull();
+  });
+
+  it('the line names what moved: 산길, 섬, or both — a 산길 on an island counts as both', () => {
+    const t = main('t5', 1, 5, T);
+    const u = put('u5', UDO, 5);
+    const others = [main('a3', 1, 3), main('b3', 2, 3), main('c3', 3, 3)];
+    expect(night([t, ...others], SEONGSAN).nightShifted).toBe('trail');
+    expect(night([u, ...others], SEONGSAN).nightShifted).toBe('island');
+    expect(night([t, u, ...others], SEONGSAN).nightShifted).toBe('both');
+    expect(night([put('ut', UDO, 5, T), ...others], SEONGSAN).nightShifted).toBe('both');
+    // an island that already ranks below every other place moved nothing; the trail that did is the one named
+    expect(night([t, put('u1', UDO, 1), ...others], SEONGSAN).nightShifted).toBe('trail');
+    // 아무거나 adds up its three lists
+    const any = [t, main('w1', 1, 1), put('ur', UDO, 5, { mood: 'rest' }), main('r1', 1, 1, { mood: 'rest' }), main('n1', 1, 1, { mood: 'new', sub: 'sight' })];
+    expect(night(any, SEONGSAN, 'any').nightShifted).toBe('both');
+  });
+
+  it('islandTop (no basis yet: the main island, as 길찾기 takes it): islands after the others at night', () => {
+    const list = [put('u5', UDO, 5), main('a4', 1, 4), main('b3', 2, 3)];
+    expect(islandTop(list, 'walk').map((s) => s.id)).toEqual(['u5', 'a4', 'b3']);
+    expect(islandTop(list, 'walk', undefined, false, undefined, true).map((s) => s.id)).toEqual(['a4', 'b3', 'u5']);
+  });
+});
+
 describe('S2 real data: 「좀 걷고 싶어」 around 애월 · 서귀포 시내 · 성산 at 22:00, 00:25, 05:00 vs 12:00', () => {
   const AREAS3 = ['애월', '서귀포시내', '성산'] as const;
   const trail = (c: Card) => c.spot.trail === true;
 
-  it('at night no trail comes before another place; a trail is shown only when fewer than 3 others are in the list', () => {
+  it('at night nothing hard to go to (산길, 섬 by boat) comes before another place; one is shown only when fewer than 3 others are in the list', () => {
     for (const name of AREAS3) {
       const a = areaByName(name)!;
+      const hard = hardFrom(a);
       for (const hm of ['22:00', '00:25', '05:00']) {
-        const night = nightNow(at(hm), a, DAY);
-        expect(night, `${name} ${hm}`).toBe(true);
+        const isNight = nightNow(at(hm), a, DAY);
+        expect(isNight, `${name} ${hm}`).toBe(true);
         for (const reach of REACHES) {
           const why = `${name} ${hm} ${reach}`;
-          const r = pickCards(fileSpots, a, 'walk', {}, undefined, reach, false, DAY, night);
-          const flags = r.cards.map(trail);
+          const r = pickCards(fileSpots, a, 'walk', {}, undefined, reach, false, DAY, isNight);
+          const flags = r.cards.map((c) => hard(c.spot));
           expect(flags.indexOf(true) === -1 || !flags.slice(flags.indexOf(true)).includes(false), why).toBe(true);
-          const others = pool(fileSpots, a, 'walk', undefined, reach, false, DAY).filter((c) => !c.spot.trail).length;
+          const others = pool(fileSpots, a, 'walk', undefined, reach, false, DAY).filter((c) => !hard(c.spot)).length;
           expect(flags.filter(Boolean).length, why).toBe(Math.max(0, 3 - others));
         }
       }
@@ -157,44 +218,72 @@ describe('S2 real data: 「좀 걷고 싶어」 around 애월 · 서귀포 시�
     expect(noon('성산').filter(trail).length).toBeGreaterThan(0);
   });
 
-  it('차로 30분, first tap: 애월 and 성산 change at night, 서귀포 시내 shows the same 3 (its trails moved further down)', () => {
+  it('차로 30분, first tap: 애월 and 성산 change at night (산길과 섬), 서귀포 시내 shows the same 3 (its trails moved further down)', () => {
     const both = (name: (typeof AREAS3)[number]) => {
       const a = areaByName(name)!;
       const day = pickCards(fileSpots, a, 'walk', {}, undefined, 'drive30', false, DAY, false);
-      const night = pickCards(fileSpots, a, 'walk', {}, undefined, 'drive30', false, DAY, true);
-      return { day: ids(day.cards), night: ids(night.cards), shifted: night.nightShifted };
+      const atNight = pickCards(fileSpots, a, 'walk', {}, undefined, 'drive30', false, DAY, true);
+      return { day: ids(day.cards), night: ids(atNight.cards), shifted: atNight.nightShifted };
     };
     const aewol = both('애월');
     expect(aewol.night).not.toEqual(aewol.day);
-    expect(aewol.shifted).toBe(true);
+    expect(aewol.shifted).toBe('both');
     const seongsan = both('성산');
     expect(seongsan.night).not.toEqual(seongsan.day);
+    expect(seongsan.shifted).toBe('both');
     const seogwipo = both('서귀포시내');
     expect(seogwipo.night).toEqual(seogwipo.day);
-    expect(seogwipo.shifted).toBe(true);
+    expect(seogwipo.shifted).toBe('trail');
   });
 
-  it('다른 3곳 보기 at night: every other place before any trail, none twice, and every place in the round', () => {
+  it('23:00: 애월 no longer puts 비양도, nor 성산 우도, ahead of main-island places', () => {
+    const name = (id: string) => fileSpots.find((s) => s.id === id)!.name;
+    for (const [area, island] of [['애월', '비양도'], ['성산', '우도']] as const) {
+      const a = areaByName(area)!;
+      const list = pool(fileSpots, a, 'walk', undefined, 'drive30', false, DAY, true);
+      const firstIsland = list.findIndex((c) => islandOf(c.spot) === island);
+      expect(firstIsland, area).toBeGreaterThan(-1);
+      // every main-island place that is not a trail comes before the first island place
+      expect(list.slice(firstIsland).some((c) => !c.spot.trail && islandOf(c.spot) === null), area).toBe(false);
+      const cards = pickCards(fileSpots, a, 'walk', {}, undefined, 'drive30', false, DAY, true).cards;
+      expect(cards.some((c) => islandOf(c.spot) !== null), `${area}: ${cards.map((c) => name(c.spot.id))}`).toBe(false);
+    }
+  });
+
+  it('origin on 우도: its own places are not moved — the 우도 card stays first at night', () => {
+    const udo = areaByName('우도')!;
+    expect(islandOf(udo)).toBe('우도');
+    const day = pickCards(fileSpots, udo, 'walk', {}, undefined, 'drive30', false, DAY, false).cards;
+    const atNight = pickCards(fileSpots, udo, 'walk', {}, undefined, 'drive30', false, DAY, true);
+    expect(islandOf(day[0].spot)).toBe('우도');
+    expect(atNight.cards[0].spot.id).toBe(day[0].spot.id);
+    // only trails go back there: no 우도 place that is not a trail moved
+    expect(pool(fileSpots, udo, 'walk', undefined, 'drive30', false, DAY, true).filter((c) => c.late && !c.spot.trail)).toEqual([]);
+    expect(atNight.nightShifted).toBe('trail');
+  });
+
+  it('다른 3곳 보기 at night: every other place before anything hard to go to, none twice, and every place in the round', () => {
     for (const name of AREAS3) {
       const a = areaByName(name)!;
+      const hard = hardFrom(a);
       const all = pool(fileSpots, a, 'walk', undefined, 'drive30', false, DAY, true);
-      const trails = new Set(all.filter((c) => c.spot.trail).map((c) => c.spot.id));
-      const others = all.length - trails.size;
+      const late = new Set(all.filter((c) => hard(c.spot)).map((c) => c.spot.id));
+      const others = all.length - late.size;
       let h: Histories = {};
       const shown: string[] = [];
-      let sawTrail = false;
+      let sawLate = false;
       for (let tap = 0; tap < Math.ceil(all.length / 3); tap++) {
         const r = pickCards(fileSpots, a, 'walk', h, undefined, 'drive30', false, DAY, true);
-        // a trail only once the others have all been shown (the round's last tap may bring seen ones back: 한 바퀴)
+        // one only once the others have all been shown (the round's last tap may bring seen ones back: 한 바퀴)
         if (!r.wrapped)
           for (const c of r.cards) {
-            if (c.spot.trail) sawTrail = true;
-            else expect(sawTrail, `${name} tap ${tap}`).toBe(false);
+            if (late.has(c.spot.id)) sawLate = true;
+            else expect(sawLate, `${name} tap ${tap}`).toBe(false);
           }
         shown.push(...ids(r.cards));
         h = r.histories;
       }
-      expect(shown.slice(0, others).some((id) => trails.has(id)), name).toBe(false);
+      expect(shown.slice(0, others).some((id) => late.has(id)), name).toBe(false);
       expect(new Set(shown.slice(0, others)).size, name).toBe(others);
       expect(new Set(shown).size, name).toBe(all.length);
     }

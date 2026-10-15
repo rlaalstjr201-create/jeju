@@ -1,11 +1,12 @@
 // @vitest-environment jsdom
-// 밤에는 야외 산길을 뒤로 (ADR-0091, specs/night-trails.md §2·S2·S3) in the app: the time comes from the app's own
-// clock (deps.today, the one the 노을 timer reads), 지금 only, at the cards' own point; the status line says so only
-// when the order changed; the home's 「예:」 follow the same order and turn at the sunrise by themselves.
+// 밤에는 야외 산길을 뒤로 (ADR-0091, specs/night-trails.md §2·S2·S3), 배로 가는 섬도 (Amendment 1), in the app: the time
+// comes from the app's own clock (deps.today, the one the 노을 timer reads), 지금 only, at the cards' own point; the
+// status line names what moved, only when the order changed; the home's 「예:」 follow the same order and turn at the
+// sunrise by themselves.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { areaByName, type AreaName } from '../src/areas';
 import { addDays } from '../src/dates';
-import { pickCards, type Spot } from '../src/pick';
+import { islandOf, pickCards, type Spot } from '../src/pick';
 import { COPY, statusOf } from '../src/render';
 import { initialState, type State } from '../src/state';
 import { sunriseMinutes, sunsetMinutes } from '../src/sun';
@@ -13,7 +14,8 @@ import { fileSpots } from './fixtures';
 import { $, cardIds, flush, render, reset, tap } from './harness';
 
 const DAY = '2026-10-16';
-const NIGHT_LINE = '밤이라 산길은 뒤로 미뤘어요.';
+/** the three lines (Amendment 1): what moved — 산길, 배로 가는 섬, both */
+const LINE = { trail: '밤이라 산길은 뒤로 미뤘어요.', island: '밤이라 배로 가는 섬은 뒤로 미뤘어요.', both: '밤이라 산길과 배로 가는 섬은 뒤로 미뤘어요.' };
 const kst = (day: string, min: number) => new Date(Date.parse(`${day}T00:00:00+09:00`) + min * 60_000);
 const hm = (s: string) => Number(s.slice(0, 2)) * 60 + Number(s.slice(3));
 const region = (name: AreaName) => {
@@ -23,6 +25,7 @@ const region = (name: AreaName) => {
 /** the data as it was before ADR-0091 */
 const plain = fileSpots.map(({ trail: _t, ...s }) => s as Spot);
 const trails = new Set(fileSpots.filter((s) => s.trail).map((s) => s.id));
+const islandIds = new Set(fileSpots.filter((s) => islandOf(s)).map((s) => s.id));
 const status = () => $('#status > span')?.textContent ?? '';
 const expected = (name: AreaName, night: boolean, day = DAY) =>
   pickCards(fileSpots, areaByName(name)!, 'walk', {}, undefined, 'drive30', false, day, night).cards.map((c) => c.spot.id);
@@ -40,18 +43,27 @@ afterEach(() => {
 });
 
 describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
-  it.each(['22:00', '00:25', '05:00'])('%s at 애월: the others first (no trail on screen), and the status line says so', async (t) => {
+  it.each(['22:00', '00:25', '05:00'])('%s at 애월: the others first (no trail, no 비양도 on screen), and the status line says both', async (t) => {
     await walkAt('애월', hm(t));
     expect(cardIds()).toEqual(expected('애월', true));
-    expect(cardIds().some((id) => trails.has(id!))).toBe(false);
+    expect(cardIds().some((id) => trails.has(id!) || islandIds.has(id!))).toBe(false);
     expect(expected('애월', false).some((id) => trails.has(id))).toBe(true); // by day two of the three are trails
-    expect(status()).toBe(NIGHT_LINE);
+    expect(status()).toBe(LINE.both);
   });
 
-  it.each([['성산', '22:00'], ['서귀포시내', '00:25']] as [AreaName, string][])('%s at %s: what pickCards gives at night, with the line', async (name, t) => {
+  it.each([['성산', '22:00', 'both'], ['서귀포시내', '00:25', 'trail']] as [AreaName, string, keyof typeof LINE][])('%s at %s: what pickCards gives at night, the line for %s', async (name, t, kind) => {
     await walkAt(name, hm(t));
     expect(cardIds()).toEqual(expected(name, true));
-    expect(status()).toBe(NIGHT_LINE);
+    expect(cardIds().some((id) => islandIds.has(id!))).toBe(false); // 성산: no 우도 place
+    expect(status()).toBe(LINE[kind]);
+  });
+
+  it('우도 at 23:00: a person on the island keeps its places — the 우도 card first as by day; only 산길 moved', async () => {
+    await walkAt('우도', hm('23:00'));
+    expect(cardIds()).toEqual(expected('우도', true));
+    expect(cardIds()[0]).toBe(expected('우도', false)[0]);
+    expect(islandIds.has(cardIds()[0]!)).toBe(true);
+    expect(status()).toBe(LINE.trail);
   });
 
   it('12:00: the results and the home are byte for byte what they are with no trail in the data', async () => {
@@ -82,7 +94,7 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
       reset();
       await walkAt('애월', min);
       expect(cardIds(), `${min}`).toEqual(expected('애월', night));
-      expect(status(), `${min}`).toBe(night ? NIGHT_LINE : '');
+      expect(status(), `${min}`).toBe(night ? LINE.both : '');
     }
   });
 
@@ -94,13 +106,17 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     expect(status()).toBe('');
   });
 
-  it('다른 3곳 보기 at night: still the others first, still the line', async () => {
+  it('다른 3곳 보기 at night: still the others first, still the line for what moved', async () => {
     await walkAt('애월', hm('23:00'));
     const first = cardIds();
     await tap('#cards .more');
+    const aewol = areaByName('애월')!;
+    const want = pickCards(fileSpots, aewol, 'walk', pickCards(fileSpots, aewol, 'walk', {}, undefined, 'drive30', false, DAY, true).histories, undefined, 'drive30', false, DAY, true);
+    expect(cardIds()).toEqual(want.cards.map((c) => c.spot.id));
     expect(cardIds().some((id) => first.includes(id))).toBe(false);
-    expect(cardIds().some((id) => trails.has(id!))).toBe(false);
-    expect(status()).toBe(NIGHT_LINE);
+    expect(cardIds().some((id) => trails.has(id!) || islandIds.has(id!))).toBe(false);
+    expect(want.nightShifted).not.toBeNull();
+    expect(status()).toBe(LINE[want.nightShifted!]);
   });
 
   it('nothing moved, nothing said: 푹 쉬고 싶어 has no trail; the same 3 brought back are not a new pick', async () => {
@@ -112,7 +128,7 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     expect(status()).toBe('');
     await tap('#back');
     await tap('[data-mood="walk"]');
-    expect(status()).toBe(NIGHT_LINE);
+    expect(status()).toBe(LINE.both);
     await tap('#back');
     await tap('[data-mood="rest"]');
     await tap('#back');
@@ -141,7 +157,8 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     await vi.advanceTimersByTimeAsync(0);
     const want = pickCards(fileSpots, hangyeong, 'walk', {}, undefined, 'drive30', false, DAY, true);
     expect(cardIds()).toEqual(want.cards.map((c) => c.spot.id));
-    expect(status()).toBe(want.nightShifted ? NIGHT_LINE : '');
+    expect(want.nightShifted).not.toBeNull();
+    expect(status()).toBe(LINE[want.nightShifted!]);
   });
 });
 
@@ -151,17 +168,19 @@ describe('S3 상태 줄', () => {
       ...initialState({ basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false }),
       view: 'cards',
       phase: { k: 'ready' },
-      cards: { key: 'walk', list: [], origin: { key: 'gps', point: { lat: 33.5, lng: 126.5 }, isPoint: true, from: '여기서' }, reach: 'drive30', indoor: false, wrapped: false, nightShifted: false, how: 'new', seq: 1, ...cards },
+      cards: { key: 'walk', list: [], origin: { key: 'gps', point: { lat: 33.5, lng: 126.5 }, isPoint: true, from: '여기서' }, reach: 'drive30', indoor: false, wrapped: false, nightShifted: null, how: 'new', seq: 1, ...cards },
       ...over,
     }).text;
-  it('the words, and only when the shown set moved a trail', () => {
-    expect(COPY.nightShifted).toBe(NIGHT_LINE);
-    expect(at({ nightShifted: true })).toBe(NIGHT_LINE);
-    expect(at({ nightShifted: false })).toBe('');
+  it('the words: exactly one line, for what moved — 산길, 배로 가는 섬, or both; nothing when nothing moved', () => {
+    expect(COPY.nightShifted).toEqual(LINE);
+    expect(at({ nightShifted: 'trail' })).toBe(LINE.trail);
+    expect(at({ nightShifted: 'island' })).toBe(LINE.island);
+    expect(at({ nightShifted: 'both' })).toBe(LINE.both);
+    expect(at({ nightShifted: null })).toBe('');
   });
   it('joined with the other sentences: 한 바퀴, then 밤, then 오프라인, then 가 봤어요 (its 되돌리기 right after it)', () => {
-    expect(at({ wrapped: true, nightShifted: true }, { offline: true, visitNote: { k: 'out', name: '새별오름', id: 'x' }, visited: ['x'] })).toBe(
-      `${COPY.wrapped} ${NIGHT_LINE} ${COPY.offline} 새별오름은 다음부터 빼고 골라요.`,
+    expect(at({ wrapped: true, nightShifted: 'both' }, { offline: true, visitNote: { k: 'out', name: '새별오름', id: 'x' }, visited: ['x'] })).toBe(
+      `${COPY.wrapped} ${LINE.both} ${COPY.offline} 새별오름은 다음부터 빼고 골라요.`,
     );
   });
 });
@@ -169,7 +188,7 @@ describe('S3 상태 줄', () => {
 describe('홈 「예:」 (the same order)', () => {
   const walkEx = () => $('[data-mood="walk"] .ex')?.textContent ?? '';
 
-  it('23:00 at 애월: the walk row\'s 「예:」 has no trail; 12:00 has 새별오름', async () => {
+  it('23:00 at 애월: the walk row\'s 「예:」 has no trail and no 비양도 (next in line once the trails go back); 12:00 has 새별오름', async () => {
     region('애월');
     render({ today: () => kst(DAY, hm('12:00')) });
     await flush();
@@ -182,6 +201,7 @@ describe('홈 「예:」 (the same order)', () => {
     await flush();
     expect(walkEx()).toMatch(/^예: /);
     expect(walkEx()).not.toContain('새별오름');
+    expect(walkEx()).not.toContain('비양도');
   });
 
   it('turns at the sunrise and at the sunset by itself (the one 노을 timer, no ticking)', async () => {

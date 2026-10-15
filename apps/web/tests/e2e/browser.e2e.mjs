@@ -2571,42 +2571,48 @@ await check('SU1-sunset', '노을 볼 곳 (ADR-0083) at 320·390, light and dark
   assert(problems.length === 0, problems.join(' | '));
 });
 
-await check('N1-night', '밤 (ADR-0091) at 320·390: 애월 basis at 23:00 (KST) — 좀 걷고 싶어 and its 다른 3곳 show no 야외 산길 (trail in spots.json), the status line says 밤이라 산길은 뒤로 미뤘어요., the card buttons keep their ≥ 48×48 areas apart (비양도\'s 배 타는 곳까지 길찾기 wraps its line at 320), the home\'s 「예:」 for 좀 걷고 싶어 skips 새별오름; at 12:00 the same flow has trails among the 3, 새별오름 in 「예:」 and no such line; no sideways scroll', async () => {
+await check('N1-night', '밤 (ADR-0091 and Amendment 1) at 320·390, 23:00 (KST): 애월·한경 좀 걷고 싶어 and 애월\'s 다른 3곳 show no 야외 산길 (trail in spots.json) and no island by boat (배 타는 곳까지 길찾기), the status line says 밤이라 산길과 배로 가는 섬은 뒤로 미뤘어요., the home\'s 「예:」 for 좀 걷고 싶어 skips 새별오름 and 비양도; at 12:00 애월 has trails among the 3, 새별오름 in 「예:」, and 한경 has 비양도 whose 배 타는 곳까지 길찾기 line wraps at 320, with no night line; every card button ≥ 48×48 and apart; no sideways scroll', async () => {
   const problems = [];
   const all = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));
   const trails = new Set(all.filter((s) => s.trail === true).map((s) => s.id));
-  const LINE = '밤이라 산길은 뒤로 미뤘어요.';
-  for (const [time, night, width] of [['23:00', true, 320], ['23:00', true, 390], ['12:00', false, 390]]) {
-    const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, storage: { 'jeju.basis': 'region', 'jeju.region': '애월' } });
+  const LINES = ['밤이라 산길은 뒤로 미뤘어요.', '밤이라 배로 가는 섬은 뒤로 미뤘어요.', '밤이라 산길과 배로 가는 섬은 뒤로 미뤘어요.'];
+  const BOTH = LINES[2];
+  for (const [area, time, width] of [['애월', '23:00', 320], ['애월', '23:00', 390], ['애월', '12:00', 390], ['한경', '23:00', 320], ['한경', '12:00', 320]]) {
+    const night = time === '23:00';
+    const tag = `${area} ${width} ${time}`;
+    const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, storage: { 'jeju.basis': 'region', 'jeju.region': area } });
     await page.clock.setFixedTime(new Date(`2026-10-16T${time}:00+09:00`));
     await page.reload();
     await page.waitForSelector('[data-mood="walk"] .ex');
     const ex = (await page.textContent('[data-mood="walk"] .ex')) ?? '';
-    if (ex.includes('새별오름') === night) problems.push(`${width} ${time} 「예:」 "${ex}"`);
+    if (area === '애월' && (night ? ex.includes('새별오름') || ex.includes('비양도') : !ex.includes('새별오름'))) problems.push(`${tag} 「예:」 "${ex}"`);
     await tapText(page, '[data-mood="walk"]');
     await waitCards(page);
+    // a card for a place by boat says so on its 길찾기 (ADR-0069): 배 타는 곳까지 길찾기
     const look = () =>
       page.evaluate(() => ({
         ids: [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => c.dataset.id),
+        boat: [...document.querySelectorAll('#cards .card:not(.ghost) .go')].filter((g) => g.textContent.trim() === '배 타는 곳까지 길찾기').length,
         line: document.querySelector('#status')?.textContent ?? '',
         over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       }));
     const first = await look();
-    const tag = `${width} ${time}`;
     const n = first.ids.filter((id) => trails.has(id)).length;
     if (first.ids.length !== 3) problems.push(`${tag} ${first.ids.length} cards`);
-    if (night ? n > 0 : n === 0) problems.push(`${tag} ${n} trail cards`);
-    if (first.line.includes(LINE) !== night) problems.push(`${tag} status "${first.line}"`);
+    if (night && (n > 0 || first.boat > 0)) problems.push(`${tag} ${n} trail · ${first.boat} boat cards`);
+    if (!night && area === '애월' && n === 0) problems.push(`${tag} no trail card`);
+    if (!night && area === '한경' && first.boat === 0) problems.push(`${tag} no 비양도 card`);
+    if (night ? !first.line.includes(BOTH) : LINES.some((l) => first.line.includes(l))) problems.push(`${tag} status "${first.line}"`);
     if (first.over > 0) problems.push(`${tag} overflow ${first.over}`);
-    if (night) {
-      const hit = await page.evaluate(hitMeasure, '#cards .card .heart, #cards .card .go, #cards .card .visited, #cards .card .book');
-      for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${tag} ${k}: ${hit[k].join(', ')}`);
-      await shot(page, `night-results-${width}`);
+    const hit = await page.evaluate(hitMeasure, '#cards .card .heart, #cards .card .go, #cards .card .visited, #cards .card .book');
+    for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${tag} ${k}: ${hit[k].join(', ')}`);
+    if (width === 320) await shot(page, `night-results-${area === '애월' ? 'aewol' : 'hangyeong'}-${time.slice(0, 2)}-320`);
+    if (night && area === '애월') {
       await tapText(page, '[data-action="more"]');
       await waitCards(page);
       const more = await look();
-      if (more.ids.some((id) => trails.has(id) || first.ids.includes(id))) problems.push(`${tag} 다른 3곳 ${more.ids}`);
-      if (!more.line.includes(LINE)) problems.push(`${tag} 다른 3곳 status "${more.line}"`);
+      if (more.ids.some((id) => trails.has(id) || first.ids.includes(id)) || more.boat > 0) problems.push(`${tag} 다른 3곳 ${more.ids} (boat ${more.boat})`);
+      if (!LINES.some((l) => more.line.includes(l))) problems.push(`${tag} 다른 3곳 status "${more.line}"`);
     }
     await ctx.close();
   }
@@ -2781,6 +2787,9 @@ await check('DR-ferry', '길찾기 (ADR-0069, ADR-0071) at 320·390: the 차귀�
   for (const width of [320, 390]) {
     for (const reach of ['drive30', 'walk']) {
       const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, storage: { 'jeju.region': reach === 'walk' ? '구제주' : '한경', 'jeju.basis': 'region', 'jeju.reach': reach, 'jeju.hintSeen': true } });
+      // by day: at night an island by boat goes after the others (ADR-0091 Amendment 1) and 차귀도 would not be among the 3
+      await page.clock.setFixedTime(new Date('2026-10-16T12:00:00+09:00'));
+      await page.reload();
       await tapText(page, reach === 'walk' ? '[data-mood="food"]' : '[data-mood="new"]');
       await waitCards(page);
       const r = await page.$$eval('#cards .card:not(.ghost) a.go', (as) => {
