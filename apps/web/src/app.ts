@@ -1205,8 +1205,6 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (arrival.backup) useBackup(arrival.backup);
     const link: DeepLink | null = nav.initial.view === 'home' && arrival.search ? readDeepLink(arrival.search, state.today) : null;
     countSurvey();
-    askRain();
-    checkPermission();
     // Taps on the static mood buttons before this module ran: the last one is carried out now.
     const early = win as (Window & EarlyTap) | null;
     const earlyTap = early?.__tap;
@@ -1238,9 +1236,9 @@ export function mountApp(doc: Document, deps: Deps): App {
       onMood(earlyTap as Button);
     }
   });
-  // The first draw, with the date and the time of day (tick). With deps.yieldToMain it comes a turn later: the mount
-  // above and its draw are then two tasks, each short of a long one (audit 2026-10-15); input in between is handled
-  // at once and drawn with it.
+  // The first draw, with the date and the time of day (tick); 비 소식 is asked with it (drawn), for the basis the mount
+  // settled on. With deps.yieldToMain it comes a turn later: the mount above and its draw are then two tasks, each
+  // short of a long one (audit 2026-10-15); input in between is handled at once and drawn with it.
   const firstDraw = () => {
     held = false;
     if (signal.aborted) return;
@@ -1248,6 +1246,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       tick();
       unrendered = true;
     });
+    checkPermission();
     // Warm the data so the first tap is fast (what it brings is handled by the source's onLoad above).
     data.get().catch(() => undefined);
   };
