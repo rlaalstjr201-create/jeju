@@ -1959,8 +1959,10 @@ await check('QA4-datein', 'no showPicker: 날짜 고르기 shows the date field 
   if (await open()) problems.push('move: 이 날로 left the sheet open');
   const moved = JSON.parse(await saved());
   if (!moved.some((e) => e.id === a && e.date === target)) problems.push(`move: not moved ${JSON.stringify(moved)}`);
-  // 기준 sheet 언제
+  // 기준 sheet 언제 (after the 다른 날로 sheet has gone, or the tap lands on its scrim)
+  await page.waitForSelector('#sheet .sheet', { state: 'detached', timeout: 5000 }).catch(() => {});
   await tapText(page, '#basis');
+  await page.waitForSelector('#sheet input[type="date"]', { state: 'attached', timeout: 5000 }).catch(() => {});
   await tapText(page, '#sheet [data-action="pick-day"]');
   await field('basis');
   const label0 = (await page.textContent('#basis')).trim();
@@ -2043,8 +2045,10 @@ await check('QA4-datetap', 'touch screen (390, isMobile, hasTouch): the finger o
   if (await visible(page, '#sheet .sheet')) problems.push('move: the sheet stayed open');
   const moved = JSON.parse(await page.evaluate(() => localStorage.getItem('jeju.saved.v2')));
   if (!moved.some((e) => e.id === a && e.date === target)) problems.push(`move: not moved ${JSON.stringify(moved)}`);
-  // 기준 sheet 언제
+  // 기준 sheet 언제 (after the 다른 날로 sheet has gone, or the tap lands on its scrim)
+  await page.waitForSelector('#sheet .sheet', { state: 'detached', timeout: 5000 }).catch(() => {});
   await tapText(page, '#basis');
+  await page.waitForSelector('#sheet input[type="date"]', { state: 'attached', timeout: 5000 }).catch(() => {});
   await under('basis');
   const when = seoulDay(40);
   await pick(when);
