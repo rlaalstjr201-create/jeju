@@ -1,31 +1,55 @@
 {
  "_why": "최신 SEO 진단의 개입 큐. 작업자가 여기서 집어 들고, check가 있는 항목은 npm run seo:verify가 해소 여부를 본다.",
  "generated": "2026-10-16",
- "from_run": "2026-10-16T0031",
+ "from_run": "2026-10-16T0614",
  "items": [
   {
    "rank": 1,
-   "sort_id": "brand-home-index-google",
-   "title": "GSC URL 검사로 홈(https://yeochana.com/)의 등록 여부와 Google 선택 표준을 보고 미등록이면 색인 생성 요청을 누른다. 같은 날 크롬 시크릿 창에서 구글 검색 4개(site:yeochana.com · 여차나:제주 · 여차나 제주 · yeochana) 첫 쪽을 적는다",
+   "sort_id": "area-rain-section",
+   "title": "지역 쪽에 「비 오는 날」 절을 더한다 — /jeju/aewol/부터, 실내 쉬기·구경 5곳 + 딥링크 /?area=aewol&indoor=1 (새 쪽 없이)",
    "severity": "P1",
-   "queue_kind": "other",
-   "keyword": "여차나:제주",
+   "queue_kind": "content",
+   "keyword": "애월 실내 놀거리",
    "check": null,
-   "where": "사람 — GSC(https://yeochana.com/ 속성) URL 검사 1회 · 크롬 시크릿 창 구글 검색 4개(우리 주소 yeochana.com·yeochana.pages.dev의 위치, 맨 위 「다음 검색결과 표시」 문구 유무). 결과는 data/seo/console/<날짜>.json google.home_inspection과 keywords.json 「여차나:제주」 serp.note에 적는다(화면을 에이전트에게 보여 줘도 된다)",
-   "verify": "data/seo/console/의 다음 기록에 google.home_inspection(등록 여부·Google 선택 표준 URL·검사일)이 있고, keywords.json 「여차나:제주」 serp.checked_at이 2026-10-16 이후이며 note에 구글 관찰(4개 검색어의 우리 위치)이 있다",
-   "from_run": "2026-10-16T0031"
+   "where": "specs/seo-landing.md 지역 쪽 절 목록에 한 줄 개정 + src/landing.ts(지역 쪽 렌더). 사람이 반영. 제안 문구: H2 「비 오는 날, 애월 실내」, 소개 「비가 오면 「비 와요(실내만)」를 켜고 받아요. 애월 근처 실내 쉬기·구경 42곳 중 먼저 갈 만한 곳이에요.」, 목록은 기분 절과 같은 정렬로 indoor=true인 쉬기·새로운 거 상위 5곳(식사·카페 제외), 단추 「여기서 애월 실내 3곳 보기」 → /?area=aewol&indoor=1. description 끝을 「…먹기마다, 비 오는 날 실내까지 먼저 갈 만한 곳을 모았어요.」로. 같은 틀을 15쪽에 쓰되 실내(식사·카페 제외) 10곳 미만인 동네(지금 우도 9)는 절을 그리지 않는다(K4). title은 그대로",
+   "verify": "dist/jeju/aewol/index.html에 「비 오는 날」이 든 h2가 있고, 그 절 안에 /jeju/aewol/<장소>/ 링크 5개와 /?area=aewol&indoor=1 링크가 있으며, dist/jeju/udo/index.html에는 그 h2가 없다",
+   "from_run": "2026-10-16T0614"
   },
   {
    "rank": 2,
-   "sort_id": "brand-offsite-first-mention",
-   "title": "바깥 첫 언급을 만든다 — 「여차나:제주」 이름의 네이버 블로그를 열어 첫 글에 엔티티 문장 그대로와 yeochana.com 링크를 싣고, 제주 여행 카페의 「계획 없이·지금 ○○인데」 질문 1건에 장소 2~3곳으로 답한다",
+   "sort_id": "naver-collect-hub-aewol",
+   "title": "네이버 서치어드바이저에서 웹 페이지 수집 요청 2건(https://yeochana.com/jeju/ · https://yeochana.com/jeju/aewol/)을 넣고, 사이트맵 제출 버튼을 한 번 더 시도한다",
    "severity": "P1",
-   "queue_kind": "offsite",
-   "keyword": "여차나:제주",
+   "queue_kind": "other",
+   "keyword": "제주도 무계획 여행",
    "check": null,
-   "where": "사람 — 네이버 블로그 1개(블로그 이름·소개에 「여차나:제주」와 엔티티 문장, yeochana.com) 첫 글 1편 + 제주 여행 카페 답 1건(답이 먼저, 링크는 끝 한 줄, .claude/skills/seo-geo/references/naver.md). 게시 URL은 apps/web/data/seo/config.json에 offsite 배열(url·at·kind)로 적는다",
-   "verify": "config.json offsite 배열에 2026-10-16 이후 게시 URL이 1건 이상 있고, 그 URL이 200으로 열리며 본문에 「여차나:제주」와 yeochana.com 링크가 있다",
-   "from_run": "2026-10-16T0031"
+   "where": "사람 — 서치어드바이저(yeochana.com) 요청 → 웹 페이지 수집 → 두 주소 입력, 요청 → 사이트맵 제출(https://yeochana.com/sitemap.xml). 결과를 apps/web/data/seo/config.json naver.collect_requested(주소·날짜)와 sitemap_submitted_at에 적는다. 수집 현황 화면에서 수집된 쪽 수가 보이면 data/seo/console/ 다음 기록에 적는다",
+   "verify": "config.json naver.collect_requested에 https://yeochana.com/jeju/ 와 https://yeochana.com/jeju/aewol/ 이 2026-10-16 이후 날짜로 있다",
+   "from_run": "2026-10-16T0614"
+  },
+  {
+   "rank": 3,
+   "sort_id": "lastmod-main-only",
+   "title": "lastmod 해시에서 단추 문구·바닥글을 빼고 본문(이름·이유·목록·사실)만 센다",
+   "severity": "P2",
+   "queue_kind": "config",
+   "keyword": null,
+   "check": null,
+   "where": "apps/web/src/landing.ts contentHash(지금 <main> 전체) — 딥링크 단추 글자·사진 출처 줄·「장소 정보 기준」 날짜 줄을 해시에서 뺀다. 이미 바뀐 lastmod는 되돌리지 않는다(되돌리면 그것도 거짓 날짜다)",
+   "verify": "tests/에 단추 문구만 다른 두 장소 쪽 HTML의 contentHash가 같다는 검사가 있고 통과한다",
+   "from_run": "2026-10-16T0614"
+  },
+  {
+   "rank": 4,
+   "sort_id": "sitemap-split-core",
+   "title": "sitemap.xml을 사이트맵 색인으로 나눈다 — sitemap-core.xml(홈·허브·지역 15·조합·개인정보) + 동네별 장소 사이트맵 15개",
+   "severity": "P2",
+   "queue_kind": "config",
+   "keyword": null,
+   "check": null,
+   "where": "apps/web/src/landing.ts sitemapFiles(지금 sitemap.xml 하나) · robots.txt Sitemap 줄은 /sitemap.xml 그대로(색인 파일이 된다) · seo:crawl·indexnow의 사이트맵 읽기가 sitemapindex를 따라가는지 확인(rank-ops는 이미 sitemapindex를 읽는다). 배포 뒤 주인이 GSC 사이트맵에 sitemap.xml을 다시 제출",
+   "verify": "dist/sitemap.xml이 <sitemapindex>이고, 그 안의 core 사이트맵에 https://yeochana.com/jeju/ 와 지역 15쪽이 있으며, 모든 하위 사이트맵 URL 합이 seo:crawl 색인 대상 수와 같다",
+   "from_run": "2026-10-16T0614"
   }
  ]
 }
