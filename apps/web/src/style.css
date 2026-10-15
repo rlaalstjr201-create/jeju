@@ -453,6 +453,9 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 .when-row .opt::after { content: ""; position: absolute; inset: -4px 0 0; }
 /* 날짜 고르기 where the browser has no picker to open: the date field and 이 날로, on their own line */
 .date-fb { display: contents; }
+/* the hidden field keeps the page's font: Chrome draws a date field in monospace, and a font loaded for it alone
+   (with its own Korean fallback) held up the sheet's first frame */
+.date-fb .sr { font: inherit; }
 .date-fb.open { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; margin: 0 14px 8px; }
 .date-in {
   flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px;

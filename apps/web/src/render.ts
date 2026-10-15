@@ -468,6 +468,19 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       return false;
     }
   };
+  /** The inline icons (check, heart, arrow): each markup is parsed once and cloned after that. A parse per row was
+   * a good part of building the basis sheet (25 rows) inside the tap. */
+  const icons = new Map<string, Node>();
+  function icon(markup: string): Node {
+    let n = icons.get(markup);
+    if (!n) {
+      const box = doc.createElement('div');
+      box.innerHTML = markup;
+      n = box.firstChild!;
+      icons.set(markup, n);
+    }
+    return n.cloneNode(true);
+  }
 
   let resultsSig = '';
   let resultsShowing: string | null = null; // key of what (cards, a notice, the still frame) is in #cards
@@ -589,7 +602,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const heart = el(doc, 'button', { type: 'button', class: 'heart', 'data-id': spot.id, 'aria-pressed': String(isSaved(s, spot.id, day)), 'aria-label': COPY.heartAria(name) });
     if (day) heart.dataset.date = day;
     if (day) card.dataset.date = day; // a saved-list row: which one a 길찾기 came from (ADR-0085)
-    heart.innerHTML = HEART_22;
+    heart.append(icon(HEART_22));
     card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
     // 실내 only on the results, only while 비 와요 picked them (ADR-0065)
     const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
@@ -636,8 +649,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   /** Name fixed, state only in aria-pressed (like the heart); the check before the words shows it. */
   function visitedEl(s: State, id: string, name: string): HTMLElement {
     const b = el(doc, 'button', { type: 'button', class: 'tbtn visited', 'data-id': id, 'aria-pressed': String(s.visited.includes(id)), 'aria-label': COPY.visitedAria(name) });
-    b.innerHTML = CHECK;
-    b.append(COPY.visited);
+    b.append(icon(CHECK), COPY.visited);
     return b;
   }
 
@@ -690,8 +702,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const text = el(doc, 'span');
     text.append(el(doc, 'span', { class: 'nm' }, label));
     if (sub) text.append(el(doc, 'span', { class: 'lm' }, sub));
-    b.append(text);
-    b.insertAdjacentHTML('beforeend', CHECK);
+    b.append(text, icon(CHECK));
     return b;
   }
 
@@ -1044,8 +1055,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const a = el(doc, 'a', { class: 'act', href: '#market', 'data-action': 'to-market' });
     const txt = el(doc, 'span');
     txt.append(`${COPY.todayWord(dated)} `, el(doc, 'b', {}, row.spot.name.trim()), ` 장날\u00a0· ${row.where}`);
-    a.append(txt);
-    a.insertAdjacentHTML('beforeend', ARROW);
+    a.append(txt, icon(ARROW));
     return a;
   }
 
@@ -1054,8 +1064,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const a = el(doc, 'a', { class: 'act', href: '#sunset', 'data-action': 'to-sunset' });
     const txt = el(doc, 'span');
     txt.append(el(doc, 'b', {}, COPY.sunsetPlaces), COPY.sunsetCount(n));
-    a.append(txt);
-    a.insertAdjacentHTML('beforeend', ARROW);
+    a.append(txt, icon(ARROW));
     return a;
   }
 
@@ -1089,8 +1098,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       return row;
     }
     const b = el(doc, 'button', { type: 'button', class: 'act rain', 'data-action': 'rain-indoor' });
-    b.append(txt);
-    b.insertAdjacentHTML('beforeend', ARROW);
+    b.append(txt, icon(ARROW));
     return b;
   }
 
@@ -1261,8 +1269,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       const row = el(doc, 'label', { class: 'opt' });
       const text = el(doc, 'span');
       text.append(el(doc, 'span', { class: 'nm' }, label));
-      row.append(el(doc, 'input', { type, name, value, class: 'sr' }), text);
-      row.insertAdjacentHTML('beforeend', CHECK);
+      row.append(el(doc, 'input', { type, name, value, class: 'sr' }), text, icon(CHECK));
       return optRow(row);
     };
     const box = (id: string, label: string) => {
@@ -1360,15 +1367,46 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     pick?.focus({ preventScroll: true });
   }
 
+  /** `fn` once the browser has painted the frame now being prepared: a task posted from a frame callback runs
+   * after that frame is drawn. Without frame callbacks, a task. */
+  function afterPaint(fn: () => void) {
+    const task = () => void later(0, fn);
+    if (typeof win?.requestAnimationFrame === 'function') win.requestAnimationFrame(task);
+    else task();
+  }
+  /** The page under an open sheet goes inert after the sheet's first frame, or at the first key or pointer press
+   * before that (flushInert); never once the sheet is closed again. */
+  let inertQueued = false;
+  function inertNow() {
+    inertQueued = false;
+    if (prevOverlay) els.app.setAttribute('inert', '');
+  }
+  function queueInert() {
+    if (inertQueued) return;
+    inertQueued = true;
+    afterPaint(() => {
+      if (inertQueued) inertNow();
+    });
+  }
+  const flushInert = () => {
+    if (inertQueued) inertNow();
+  };
+  doc.addEventListener('keydown', flushInert, true);
+  doc.addEventListener('pointerdown', flushInert, true);
+
   function renderSheet(s: State) {
     if (s.overlay && !prevOverlay) {
       // who opened it (before the page goes inert and drops focus): focus goes back there on close
       const active = doc.activeElement as HTMLElement | null;
       opener = active && active !== doc.body && !els.sheet.contains(active) ? active : null;
     }
-    // Everything behind the sheet is inert: no Tab or tap reaches it (S58). Lifted before focus goes back to
-    // the opener — focus() on an element inside an inert subtree silently does nothing.
-    if (s.overlay) els.app.setAttribute('inert', '');
+    // Everything behind the sheet is inert: no Tab or tap reaches it (S58). On opening it is set once the sheet's
+    // first frame is painted (queueInert): restyling the page under the sheet is then not part of the tap's frame.
+    // Until that moment the scrim covers the page, the focus is in the sheet and Tab is held there, and a key or
+    // pointer press sets it first. Lifted at once, before focus goes back to the opener — focus() on an element
+    // inside an inert subtree silently does nothing.
+    if (s.overlay && !prevOverlay) queueInert();
+    else if (s.overlay) els.app.setAttribute('inert', '');
     else els.app.removeAttribute('inert');
     if (s.overlay) {
       if (closeTimer) {
@@ -1543,6 +1581,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     dispose() {
       io?.disconnect();
       io = null;
+      inertQueued = false;
+      doc.removeEventListener('keydown', flushInert, true);
+      doc.removeEventListener('pointerdown', flushInert, true);
       for (const t of timers) clearTimeout(t);
       timers.clear();
     },

@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
 import { islandOf, pickCards, withinReach, type Point } from '../src/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
-import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, render, reset, settle, shownMood, tap, wait } from './harness';
+import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, painted, render, reset, settle, shownMood, tap, wait } from './harness';
 
 const area = (n: string) => AREAS.find((a) => a.name === n)!;
 const deny = () => Promise.reject(new LocateError('denied'));
@@ -845,6 +845,7 @@ describe('키보드·스크린리더', () => {
     render();
     $('#basis').focus();
     await tap('#basis');
+    await painted(); // inert from the sheet's first painted frame on (render.ts queueInert)
     expect($('#app').hasAttribute('inert')).toBe(true);
     const buttons = $$('#sheet button');
     buttons.at(-1)!.focus();
@@ -856,6 +857,43 @@ describe('키보드·스크린리더', () => {
     expect($('#sheet').hidden).toBe(true);
     expect($('#app').hasAttribute('inert')).toBe(false);
     expect(document.activeElement).toBe($('#basis'));
+  });
+
+  it('S58 the tap\'s own frame: the sheet is up and has the focus at once; the page under it goes inert once that frame is drawn, or at a key press before then', async () => {
+    render();
+    $('#basis').focus();
+    advance();
+    $('#basis').click(); // nothing awaited: what the tap itself leaves for its frame
+    expect($('#sheet').hidden).toBe(false);
+    expect($('#sheet .sheet').contains(document.activeElement)).toBe(true);
+    expect($('#app').hasAttribute('inert')).toBe(false);
+    await painted();
+    expect($('#app').hasAttribute('inert')).toBe(true);
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await settle();
+    expect($('#app').hasAttribute('inert')).toBe(false);
+    // opened again, and a key comes before its frame is drawn: the page is inert before the key does anything
+    advance();
+    $('#basis').click();
+    let inertAtKey: boolean | null = null;
+    const key = () => (inertAtKey = $('#app').hasAttribute('inert'));
+    document.addEventListener('keydown', key);
+    document.activeElement!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+    document.removeEventListener('keydown', key);
+    expect(inertAtKey).toBe(true);
+  });
+
+  it('S58 a sheet closed before its first frame is drawn never leaves the page inert', async () => {
+    render();
+    advance();
+    $('#basis').click();
+    advance();
+    $('#sheet .sheet-close').click(); // a click, no pointer press first: nothing sets inert early
+    expect($('#app').hasAttribute('inert')).toBe(false);
+    await painted();
+    await settle();
+    expect($('#sheet').hidden).toBe(true);
+    expect($('#app').hasAttribute('inert')).toBe(false);
   });
 
   it('S59 results are announced briefly (not read out in full); heart name fixed, state only in aria-pressed', async () => {

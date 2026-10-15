@@ -514,7 +514,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 ### 6.10 기준 시트
 
 - 루트 `#sheet`(`position: relative; z-index: var(--z-sheet)`) 안에 딤(`position: fixed; inset: 0; background: var(--scrim)`) + 시트. 시트: `position: fixed; bottom: 0`, 최대 폭 480 가운데, `max-height: 88dvh`, 안에서만 스크롤(`overscroll-behavior: contain`), `--surface`, 윗모서리 `--r-sheet` 20, 그림자 `--float`(ADR-0088), 패딩 24/16/0. 손잡이 막대 없음. 옵션 목록(`div.opts`)과 동네 색인은 기분 목록과 같은 면 묶음(6.9 칸 모양, 면 안 `.tbtn`은 `--bg` 면).
-- 열려 있는 동안 `#app`에 `inert`, 문서 스크롤 잠금(`html:has(#sheet:not([hidden])) { overflow: hidden }`).
+- 열려 있는 동안 `#app`에 `inert`, 문서 스크롤 잠금(`html:has(#sheet:not([hidden])) { overflow: hidden }`). 열 때 `inert`는 시트가 처음 그려진 프레임 뒤에 붙는다(그 아래 페이지 전체를 다시 계산하는 일이 탭의 프레임에 들지 않게, 12.5). 그 사이에도 딤이 페이지를 덮고, 포커스는 탭 안에서 이미 시트로 가 있고 Tab은 시트 안에 묶이며, 그 전에 키나 포인터 입력이 오면 그 입력보다 먼저 붙는다. 그 전에 닫히면 붙지 않는다.
 - 내용(위에서 아래로):
   1. 제목 `언제 어디 근처로 볼까요?` 20/700, 아래 16. `tabindex="-1"`.
   2. **언제**(무리 제목 `p.group-h` `언제`, 제목 바로 아래라 위 여백 0) + 가는선 **한 줄**(`div.optrow.when-row`)에 칸 셋을 나란히(specs/date-mode.md, QA r4: 320×568에서 `어디`가 더 빨리 보이게):
@@ -961,6 +961,12 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 - `score`(1~5 정수, ADR-0060): `review/score/score-NN.json`의 `{ id, score }`를 id로 붙인다(뒤 파일이 앞을 덮음). 출하되는 곳에 점수가 없으면 빌드가 멈춘다.
 - 해시 계산은 vite 설정에서 한다(12.1).
 
+### 12.5 렉: 탭과 첫 로드의 일 나누기 (출시 전 점검 2026-10-15)
+
+`docs/audit/2026-10-15/performance.md`에서 잰 렉을 줄인 방식. `reduce → render(state)` 모델과 화면에 보이는 결과는 그대로이고, 언제·어느 작업에서 하느냐만 바뀐다. 기준은 `criteria.md` 2절(375×812, CPU 4배 느림, 50ms 넘는 작업·200ms 상호작용).
+
+- **기준 시트**: 시트·딤·포커스는 탭 안에서, `#app`의 `inert`는 시트 첫 프레임 뒤(6.10). 체크·하트·화살표 SVG는 한 번 파싱해 복제한다(줄마다 HTML 파싱이던 것). 숨은 날짜 칸(`.date-fb .sr`)은 페이지 글꼴을 쓴다(`font: inherit`): 크롬은 날짜 칸을 고정폭 글꼴로 그려, 처음 여는 시트가 그 글꼴과 그 한글 대체 글꼴 파일을 불러오느라 늦었다.
+
 ---
 
 ## 13. 참조 CSS
@@ -1218,6 +1224,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .when-row .opt::after { content: ""; position: absolute; inset: -4px 0 0; } /* 누름 영역 48, 위로만(아래는 날짜 입력) */
 /* 선택기가 없을 때: 입력과 이 날로가 자기 줄에 */
 .date-fb { display: contents; }
+.date-fb .sr { font: inherit; } /* 숨은 칸도 페이지 글꼴: 날짜 칸의 고정폭 글꼴을 따로 불러오지 않게(12.5) */
 .date-fb.open { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; margin: 0 0 8px 8px; }
 .date-in { flex: 1 1 9em; min-width: 0; min-height: 44px; padding: 0 8px; font: inherit; font-size: max(1rem, 16px); color: var(--text); background: none; border: 1px solid var(--field-line); border-radius: var(--r-ctl); }
 

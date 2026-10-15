@@ -13,6 +13,9 @@ const body = html.slice(html.indexOf('<body>') + 6, html.indexOf('</body>')).rep
 export const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T;
 export const $$ = (s: string) => [...document.querySelectorAll<HTMLElement>(s)];
 export const flush = () => new Promise((r) => setTimeout(r, 0));
+/** After the next frame is painted (jsdom runs frame callbacks on a timer): what the app does once a frame is drawn
+ * (render.ts afterPaint) has run by then. */
+export const painted = () => new Promise<void>((r) => requestAnimationFrame(() => setTimeout(r, 0)));
 export const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 /** Let a history.back() the app made land (jsdom delivers popstate a few tasks later). */
 export const settle = async () => {
