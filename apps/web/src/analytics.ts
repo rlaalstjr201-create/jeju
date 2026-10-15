@@ -20,10 +20,10 @@ export interface Analytics {
 type Gtag = (...args: unknown[]) => void;
 type Win = Window & Record<string, unknown> & { dataLayer?: unknown[] };
 
-/** GA4 event names for our events; the rest stay ours only. */
+/** GA4 event names for our events; the rest stay ours only. public/privacy.html names each (tests/deploy.test.ts). */
 // shown goes too, so 철 cards can be compared with the rest (ADR-0080 8)
 // the saved list opened and arranged (ADR-0085)
-const GA_NAME: Partial<Record<UsageEvent['e'], string>> = {
+export const GA_NAME: Partial<Record<UsageEvent['e'], string>> = {
   tap: 'mood_tap',
   shown: 'card_shown',
   map: 'map_open',
@@ -32,7 +32,7 @@ const GA_NAME: Partial<Record<UsageEvent['e'], string>> = {
   arrange: 'saved_arrange',
 };
 
-/** The fields GA4 gets: no area name, no day, nothing positional. */
+/** The fields GA4 gets: no area name, no day, nothing positional. public/privacy.html names each (tests/deploy.test.ts). */
 export function gaParams(ev: UsageEvent): Record<string, string | number | boolean> {
   const p: Record<string, string | number | boolean> = {};
   if (ev.id) p.place_id = ev.id;

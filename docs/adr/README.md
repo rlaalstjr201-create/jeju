@@ -102,3 +102,7 @@
 | 0082 | [0082-rename-yeochana.md](0082-rename-yeochana.md) | 이름 「여차나:제주」, 주소 yeochana.pages.dev (ADR-0077 대체) | Accepted (2026-10-04) |  |
 | 0084 | [0084-custom-domain-yeochana-com.md](0084-custom-domain-yeochana-com.md) | 주소 yeochana.com — pages.dev·www는 같은 경로로 301, pages.dev/sw.js만 캐시 걷는 워커 (ADR-0082 주소 부분 대체) | Accepted (2026-10-08) |  |
 | 0085 | [0085-saved-flow-events.md](0085-saved-flow-events.md) | 저장 목록 열기·목록에서 연 길찾기(담은 지 날 수, 지난 날 여부)·정리 동작을 기록에 더함, 시각은 여전히 안 보냄 (ADR-0061 확장) | Accepted (2026-10-09) |  |
+| 0086 | [0086-keep-date-first-flow.md](0086-keep-date-first-flow.md) | 저장·날짜 흐름은 지금대로(A) 두고, 저장 목록 흐름 기록(ADR-0085)으로 실제 사용을 먼저 본다 — 2차 가상 실험의 사전등록 규칙대로 | Accepted (2026-10-10) |  |
+| 0087 | [0087-hide-visited-places.md](0087-hide-visited-places.md) | 「가 봤어요」로 그곳을 이 기기에서만 후보에서 뺀다, 저장한 곳의 「뺀 곳 N곳」에서 되돌림 (ADR-0061 이벤트 확장) | Accepted (2026-10-14) |  |
+| 0088 | [0088-visual-refresh-and-logo.md](0088-visual-refresh-and-logo.md) | 화면 재질 개편(면으로 묶기·면 버튼·떠 있는 것만 그림자)과 로고 「꺾이는 길」 (SPEC 1·13·14 #1, ADR-0070·0075·0082 일부 개정) | Accepted (2026-10-15) |  |
+| 0089 | [0089-partner-stay-link.md](0089-partner-stay-link.md) | 숙소 링크 `?stay=위도,경도&src=꼬리표`로 그 숙소 기준을 열고 출처별로 센다 (ADR-0067 딥링크 확장) | Accepted (2026-10-15) |  |

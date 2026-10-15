@@ -1,5 +1,11 @@
 # Cloudflare Pages response headers (docs/deploy.md, ADR-0063). A path is matched without its query string.
-# No rule for /* on purpose: two rules setting Cache-Control on one path would be joined into one value.
+# Two rules setting one header on a path are joined into one value: /* sets only what no other rule sets (never
+# Cache-Control).
+
+# Every response: never inside another site's frame; no camera, microphone or payment (geolocation stays).
+/*
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), payment=()
 
 # Content-hashed build files: a new build is a new name.
 /assets/*

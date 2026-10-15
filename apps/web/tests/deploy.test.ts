@@ -2,6 +2,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { GA_NAME, gaParams } from '../src/analytics';
+import type { UsageEvent } from '../src/track';
 
 const root = resolve(__dirname, '..');
 const pub = (f: string) => resolve(root, 'public', f);
@@ -39,9 +41,17 @@ describe('_headers (Cloudflare Pages)', () => {
     for (const p of ['/', '/index.html', '/sw.js', '/manifest.webmanifest', '/404.html', '/privacy', '/privacy.html']) expect(cc(p), p).toBe('no-cache');
   });
 
-  it('icons and the preview image: a day; no catch-all rule (Pages would join two Cache-Control values)', () => {
+  // Changed on purpose (F14): /* is there now, with no Cache-Control in it
+  it('icons and the preview image: a day; the catch-all sets no Cache-Control (Pages would join two values)', () => {
     for (const p of ['/icons/*', '/favicon.ico', '/og.png', '/robots.txt']) expect(cc(p), p).toBe('public, max-age=86400');
-    expect(Object.keys(h).some((p) => p === '/*' || p === '*')).toBe(false);
+    expect(h['*']).toBeUndefined();
+    expect(cc('/*')).toBeUndefined();
+  });
+
+  // 출시 전 점검 F14 (idempotency-security.md S7): not framed by another site; no camera, microphone or payment
+  it('F14 (S7) /*: X-Frame-Options DENY and Permissions-Policy only; no other rule sets either (no joined values)', () => {
+    expect(h['/*']).toEqual({ 'X-Frame-Options': 'DENY', 'Permissions-Policy': 'camera=(), microphone=(), payment=()' });
+    for (const [p, set] of Object.entries(h)) if (p !== '/*') expect(Object.keys(set), p).toEqual(['Cache-Control']);
   });
 
   it('no SPA fallback: no _redirects rewriting everything to index.html', () => {
@@ -92,6 +102,15 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('<link rel="canonical" href="__SITE__/privacy" />');
   });
 
+  // 출시 전 점검 F4 (idempotency-security.md K3): the repository is private, so its issues link was a 404 for everyone
+  it('F4 (K3) 문의 is the app\'s 의견 보내기, never the private repository', () => {
+    const html = text('privacy.html');
+    expect(html).not.toMatch(/github\.com/);
+    const ask = html.slice(html.indexOf('<h2>문의</h2>'), html.indexOf('<p class="date">'));
+    expect(ask).toContain('‘의견 보내기’로 남겨 주세요');
+    expect(ask).toContain('‘설정 · 지도 앱 · 의견’');
+  });
+
   it('의견 보내기 (ADR-0081): what is sent and kept, what is not, the home line and 기록 끄기', () => {
     const html = text('privacy.html');
     expect(html).toContain('<h2>의견 보내기</h2>');
@@ -102,6 +121,47 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('기록을 꺼 두면 설문 줄은 나오지 않아요');
     expect(html).toContain('보낸 의견은 1년이 지나면 지워요. 누가 보냈는지 알 수 없어서 내 의견만 골라 지울 수는 없어요.');
     expect(html).toContain('다 답하지 않아도 되고');
+  });
+});
+
+// 출시 전 점검 F3 (idempotency-security.md K2): the page said 「까지만」 over a shorter list than GA4 gets. Both lists are
+// fixed here: one more event or field for GA4 fails this until privacy.html says it too.
+describe('F3 (K2) what GA4 and our own record get is what privacy.html says', () => {
+  const html = text('privacy.html');
+  const ga = html.split('\n').find((l) => l.includes('GA4에는'))!;
+  const own = html.slice(html.indexOf('이 사이트의 익명 기록으로 보내는 것'), html.indexOf('</ul>'));
+
+  it('GA4 events: the page view and these six, each named in its paragraph', () => {
+    expect(GA_NAME).toEqual({ tap: 'mood_tap', shown: 'card_shown', map: 'map_open', save: 'place_save', open: 'saved_open', arrange: 'saved_arrange' });
+    const said: Record<string, string> = { mood_tap: '기분 누름', card_shown: '카드로 보임', map_open: '외부 지도 앱 링크 열기', place_save: '저장', saved_open: '저장 목록 열기', saved_arrange: '정리' };
+    expect(ga).toContain('본 페이지');
+    for (const name of Object.values(GA_NAME)) expect(ga, name).toContain(said[name!]);
+  });
+
+  it('GA4 fields: exactly these, each named in that paragraph (never the area, the day, 실내만 or a position)', () => {
+    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', d: '2026-10-15' };
+    const keys = Object.keys(gaParams(every));
+    expect(keys).toEqual(['place_id', 'mood', 'sub', 'range', 'basis', 'dated', 'season', 'from', 'age', 'past', 'live0', 'op']);
+    const said: Record<string, string> = {
+      place_id: '장소 번호',
+      mood: '고른 기분',
+      sub: '세부 종류',
+      range: '범위',
+      basis: '기준 종류',
+      dated: '다른 날을 골랐는지',
+      season: '카드에 보인 철',
+      from: '저장 목록에서 열었는지',
+      age: '저장한 지 며칠',
+      past: '지난 날',
+      live0: '오늘 이후 저장이 없었는지',
+      op: '정리 종류',
+    };
+    for (const k of keys) expect(ga, k).toContain(said[k]);
+  });
+
+  it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 15일', () => {
+    for (const w of ['세부 종류', '실내만', '카드에 보인 철']) expect(own, w).toContain(w);
+    expect(html).toContain('<p class="date">2026년 10월 15일부터 적용해요.</p>');
   });
 });
 

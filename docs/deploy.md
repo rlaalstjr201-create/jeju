@@ -62,7 +62,7 @@ Production·Preview 두 환경에 같은 값을 넣는다(Preview의 `SITE_URL`�
 
 빌드 결과에 함께 나가는 것(`apps/web/public/`):
 
-- `_headers`: 캐시 규칙. 해시 파일(`/assets/*`)과 `/spots.json`(늘 `?v=해시`로 요청) 1년 immutable, `/`·`/index.html`·`/sw.js`·`/manifest.webmanifest`·`/404.html`·`/privacy` no-cache, 아이콘·`og.png`·`favicon.ico`·`robots.txt` 하루. `/*` 규칙은 두지 않는다(같은 헤더가 둘이면 Pages가 값을 이어 붙인다). 규칙이 없는 파일(`/jeju/**` HTML·`/jeju/landing.css`·`sitemap.xml`·`llms.txt`)은 Pages 기본값 `public, max-age=0, must-revalidate`(매번 ETag로 확인)라 새 배포가 바로 보인다 — 이름에 해시가 없으니 그게 맞다.
+- `_headers`: 캐시 규칙. 해시 파일(`/assets/*`)과 `/spots.json`(늘 `?v=해시`로 요청) 1년 immutable, `/`·`/index.html`·`/sw.js`·`/manifest.webmanifest`·`/404.html`·`/privacy` no-cache, 아이콘·`og.png`·`favicon.ico`·`robots.txt` 하루. `/*` 규칙에는 `X-Frame-Options: DENY`(다른 사이트의 틀 안에 넣지 못하게)와 `Permissions-Policy: camera=(), microphone=(), payment=()`만 둔다 — Cache-Control은 넣지 않는다(같은 헤더가 둘이면 Pages가 값을 이어 붙인다, 2026-10-15 출시 전 점검 F14). 규칙이 없는 파일(`/jeju/**` HTML·`/jeju/landing.css`·`sitemap.xml`·`llms.txt`)은 Pages 기본값 `public, max-age=0, must-revalidate`(매번 ETag로 확인)라 새 배포가 바로 보인다 — 이름에 해시가 없으니 그게 맞다.
 - `404.html`: 있으면 Pages가 SPA 폴백을 끄고 모르는 경로에 이 페이지를 404로 준다. `/jeju/` 아래 없는 주소도 같은 404(`dist/jeju/`에 404.html 없음, 허브 링크 있음). 서비스워커는 `/jeju/**`를 캐시하지도 셸로 답하지도 않는다. `public/`에 `_redirects`는 두지 않는다(빌드가 지역을 옮긴 장소 페이지의 301만 `dist/_redirects`에 쓴다, ADR-0072).
 
 빌드가 만드는 것(`scripts/build-landing.mjs`, `vite build` 뒤): 정적 랜딩 `dist/jeju/**`(허브·지역 15·조합·장소 페이지, `landing.css`), `sitemap.xml`, `SITE_URL`이 있으면 `robots.txt`의 `Sitemap:` 줄. 품질 기준(원문 0건·쌍 유사도·자기 본문 비율, `specs/seo-landing.md`)을 어기거나 주소 없는 장소가 있으면 빌드가 실패한다 — 새 장소는 `npm run landing:slugs -w @jeju/web` 뒤 `apps/web/data/landing/slugs.json`을 커밋한다.
@@ -86,7 +86,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 ## 2. 배포 전
 
 - [ ] `apps/web`에서 `npx tsc --noEmit`, `npx vitest run`, `npm run build`(기본·`LANDING_PHOTOS=0` 둘 다), `npm run check:slop`, e2e(`npm run e2e`), `SITE_URL=… npm run seo:crawl`(감사 0건) 모두 통과. 최근 결과는 `docs/predeploy-review.md` 0절.
-- [ ] `privacy.html`의 문의처가 맞는지(지금은 GitHub 이슈 링크).
+- [ ] `privacy.html`의 문의처가 맞는지(지금은 앱의 ‘의견 보내기’. 저장소가 비공개라 GitHub 이슈 링크는 뺐다. 공개 연락처는 주인 결정 대기).
 - [x] 제주관광공사 사진 이용 가능 확인(2026-10-01, 회신 사용자 보관).
 - [ ] 빌드 환경 변수: `SITE_URL`, `VITE_GA4_ID=G-P8DN26LKBC`, `VITE_NAVER_WA`(네이버 ID), `VITE_EVENTS_URL=/api/events`(생략 시 기본). `LANDING_PHOTOS`는 넣지 않는다(사진 켬, 공사 확인 완료).
 - [ ] D1 마이그레이션 적용: `npx wrangler d1 migrations apply yeogwi-events --remote`(이미 적용됐으면 `No migrations to apply`).
