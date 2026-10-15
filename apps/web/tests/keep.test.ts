@@ -109,7 +109,28 @@ describe('merging a backup into this device', () => {
     const { entries, added } = mergeEntries(here, link);
     expect(added).toBe(2);
     expect(entries).toEqual([e(ids[0], '2026-10-01', 0), e(ids[1], '2026-10-01', 1), e(ids[2], '2026-10-01', 2), e(ids[3], '2026-10-02', 0)]);
-    expect(mergeEntries(entries, link)).toEqual({ entries, added: 0 });
+    expect(mergeEntries(entries, link)).toEqual({ entries, added: 0, left: 0 });
+  });
+
+  // 출시 전 점검 F2 (idempotency-security.md K1): normalizeEntries keeps the latest MAX_SAVED, so a later-dated link
+  // used to push this device's own saves out without a word
+  it('F2 (K1) never past MAX_SAVED by pushing out what is here: the link\'s latest days go in, `left` counts the rest', () => {
+    const many = Array.from({ length: 700 }, (_, i) => `p${i}`);
+    const mine = many.slice(0, 3).map((id, i) => e(id, '2026-10-15', i));
+    const link = many.slice(10, 10 + MAX_SAVED).map((id, i) => e(id, '2026-10-16', i));
+    const m = mergeEntries(mine, link);
+    expect(m.entries).toHaveLength(MAX_SAVED);
+    expect(m.entries.slice(0, 3)).toEqual(mine);
+    expect([m.added, m.left]).toEqual([MAX_SAVED - 3, 3]);
+    // the link's latest days first: a day gone by is what stays out
+    const old = [e(many[600], '2026-09-01', 0), e(many[601], '2026-12-25', 0), e(many[602], '2026-12-25', 1)];
+    const two = mergeEntries(many.slice(0, MAX_SAVED - 2).map((id, i) => e(id, '2026-10-15', i)), old);
+    expect([two.added, two.left]).toEqual([2, 1]);
+    expect(two.entries.filter((x) => x.date === '2026-12-25').map((x) => x.id)).toEqual([many[601], many[602]]);
+    expect(two.entries.some((x) => x.date === '2026-09-01')).toBe(false);
+    // full already: nothing goes in, nothing goes out
+    const full = many.slice(0, MAX_SAVED).map((id, i) => e(id, '2026-10-15', i));
+    expect(mergeEntries(full, link.slice(0, 2))).toEqual({ entries: full, added: 0, left: 2 });
   });
 });
 

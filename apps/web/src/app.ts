@@ -78,6 +78,9 @@ interface InstallPrompt extends Event {
 export interface App {
   destroy(): void;
   state(): State;
+  /** what a reload now would lose, so a service-worker update waits (update.ts): words typed in 의견 보내기, or a
+   * backup link's 합칠까요? not yet answered (its #s= has already left the address). */
+  unsaved(): boolean;
 }
 
 const CARDS: Route = { view: 'cards', overlay: null };
@@ -534,9 +537,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (r?.k !== 'ask') return;
     // places this data no longer has are left behind (once the data is in)
     const idx = state.spots ? spotIndex(state.spots) : null;
-    const { entries, added } = store.mergeSaved(idx ? r.entries.filter((e) => idx.has(e.id)) : r.entries);
+    const { entries, added, left } = store.mergeSaved(idx ? r.entries.filter((e) => idx.has(e.id)) : r.entries);
     dispatch({ type: 'saved', entries });
-    dispatch({ type: 'keep', keep: { restore: { k: 'done', added } } });
+    dispatch({ type: 'keep', keep: { restore: { k: 'done', added, left } } });
     if (added) askPersist();
   }
   async function backup() {
@@ -1030,13 +1033,15 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
     }
   });
-  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write); so does 기록.
+  // Hearts saved in another tab show up here too, and are never overwritten (read-modify-write); so do 뺀 곳 and 기록.
   on(win, 'storage', (e) => {
     const s = e as StorageEvent;
     if (s.storageArea && deps.storage && s.storageArea !== deps.storage) return;
     if (s.key === KEYS.savedV2 || s.key === null) dispatch({ type: 'saved', entries: store.saved() });
     if (s.key === KEYS.hint && s.newValue === 'true') dispatch({ type: 'hintSeen' });
     if (s.key === KEYS.mapApp || s.key === null) dispatch({ type: 'mapApp', app: store.mapApp() });
+    // 뺀 곳 too: a 가 봤어요 here toggles what is stored, so the button must show it (no status line for it here)
+    if (s.key === KEYS.visited || s.key === null) dispatch({ type: 'visited', ids: store.visited() });
     // 기록 끄기 in another tab stops this one too: what it queued goes, nothing more is sent (ADR-0061).
     if (deps.storage && (s.key === KEYS.track || s.key === null)) {
       const on = store.tracking();
@@ -1178,5 +1183,6 @@ export function mountApp(doc: Document, deps: Deps): App {
   return {
     destroy: () => ac.abort(),
     state: () => state,
+    unsaved: () => state.keep.restore?.k === 'ask' || (state.overlay === 'feedback' && [...els.sheet.querySelectorAll('textarea')].some((t) => t.value.trim() !== '')),
   };
 }

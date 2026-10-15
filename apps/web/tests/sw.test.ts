@@ -352,6 +352,27 @@ describe('QA 2026-09-30 — 새 배포가 상주 앱에 닿는 길', () => {
     expect(later.reload).toHaveBeenCalledTimes(1);
   });
 
+  // 출시 전 점검 F12 (idempotency-security.md S4, bugs.md S1)
+  it('F12 hold (words in 의견 보내기, a 합칠까요? not answered): no reload, idle or in the background; free again, the next change does it', async () => {
+    const { reloadOnUpdate } = await import('../src/update');
+    const on: Record<string, () => void> = {};
+    const doc = { visibilityState: 'visible' as DocumentVisibilityState, addEventListener: (t: string, fn: () => void) => void (on[t] = fn) };
+    const reload = vi.fn();
+    let held = true;
+    reloadOnUpdate({ sw: { controller: {}, addEventListener: (t: string, fn: () => void) => void (on[t] = fn) }, doc: doc as unknown as Document, idle: () => true, hold: () => held, current: async () => false, reload });
+    on.controllerchange();
+    await tick();
+    doc.visibilityState = 'hidden';
+    on.visibilitychange();
+    expect(reload).not.toHaveBeenCalled();
+    held = false;
+    doc.visibilityState = 'visible';
+    on.visibilitychange(); // back, idle: now
+    expect(reload).toHaveBeenCalledTimes(1);
+    on.visibilitychange();
+    expect(reload).toHaveBeenCalledTimes(1);
+  });
+
   it('a failed check counts as old code (a needless reload beats a stale app)', async () => {
     const u = await setupUpdate({}, true, () => Promise.reject(new Error('caches unavailable')));
     u.on.controllerchange();
@@ -362,6 +383,7 @@ describe('QA 2026-09-30 — 새 배포가 상주 앱에 닿는 길', () => {
   it('main.ts wires it up with the app state, and checks this page\'s own script (import.meta.url) against the cache', () => {
     const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');
     expect(main).toMatch(/reloadOnUpdate\(\{[\s\S]*app\.state\(\)/);
+    expect(main).toMatch(/reloadOnUpdate\(\{[\s\S]*hold: \(\) => app\.unsaved\(\)/); // F12
     expect(main).toMatch(/current: \(\) => runsCachedCode\(document, [^,]*caches[^,]*, new URL\(import\.meta\.url\)\.href\)/);
   });
 

@@ -37,8 +37,8 @@ export interface Shown {
 
 /** Keeping saves without a login (ADR-0063 2): what the quiet notices say. */
 export interface Keep {
-  /** a backup link opened here: asking 합치기 / 그만두기, then how many it added. */
-  restore: { k: 'ask'; entries: SavedEntry[] } | { k: 'done'; added: number } | null;
+  /** a backup link opened here: asking 합치기 / 그만두기, then how many it added (and how many found no room, `left`). */
+  restore: { k: 'ask'; entries: SavedEntry[] } | { k: 'done'; added: number; left: number } | null;
   /** the in-app browser this page runs in (null: a real browser). */
   inapp: InApp | null;
   /** the in-app notice on the first screen: shown, or shown after 브라우저로 열기 copied the link (or could

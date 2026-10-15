@@ -103,18 +103,15 @@ export function normalizeEntries(list: readonly SavedEntry[]): SavedEntry[] {
 }
 
 /** A backup brought onto this device (ADR-0063): what is here stays as it is; each place missing on its day
- * goes to the end of that day, in the backup's order. `added` = how many were new. */
-export function mergeEntries(cur: readonly SavedEntry[], incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number } {
+ * goes to the end of that day, in the backup's order. `added` = how many were new. Never past MAX_SAVED by pushing
+ * out what is here: with too little room the backup's latest days go in (as normalizeEntries keeps them) and `left`
+ * = how many did not. */
+export function mergeEntries(cur: readonly SavedEntry[], incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number; left: number } {
   const have = new Set(cur.map((e) => `${e.id}|${e.date}`));
-  const next = [...cur];
-  let added = 0;
-  for (const e of normalizeEntries(incoming)) {
-    const k = `${e.id}|${e.date}`;
-    if (have.has(k)) continue;
-    have.add(k);
-    next.push({ id: e.id, date: e.date, order: Number.MAX_SAFE_INTEGER - MAX_SAVED + added++ });
-  }
-  return { entries: normalizeEntries(next), added };
+  const missing = normalizeEntries(incoming).filter((e) => !have.has(`${e.id}|${e.date}`));
+  const fit = missing.slice(Math.max(0, missing.length - (MAX_SAVED - cur.length)));
+  const next = [...cur, ...fit.map((e, i) => ({ id: e.id, date: e.date, order: Number.MAX_SAFE_INTEGER - MAX_SAVED + i }))];
+  return { entries: normalizeEntries(next), added: fit.length, left: missing.length - fit.length };
 }
 
 /** v2 list: entries with a non-empty id, a real day and a finite order only, then normalized. */
@@ -311,7 +308,9 @@ export interface Store {
   /** To another day, at its end (if it is already there, the two become one). */
   moveToDay(id: string, from: Day, to: Day): SavedEntry[];
   /** A backup link's places onto this device (mergeEntries). */
-  mergeSaved(incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number };
+  mergeSaved(incoming: readonly SavedEntry[]): { entries: SavedEntry[]; added: number; left: number };
+  /** 뺀 곳 as stored now (another tab may have changed it). */
+  visited(): string[];
   /** 가 봤어요 (ADR-0087), read-modify-write like the hearts: `id` added at the end, or taken out again. */
   toggleVisited(id: string): { visited: string[]; added: boolean };
   /** 다시 넣기 for one place (gone already: nothing changes). */
@@ -507,13 +506,16 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     },
     mergeSaved(incoming) {
       let added = 0;
+      let left = 0;
       const entries = update((cur) => {
         const m = mergeEntries(cur, incoming);
         added = m.added;
+        left = m.left;
         return m.entries;
       });
-      return { entries, added };
+      return { entries, added, left };
     },
+    visited: readVisited,
     toggleVisited(id) {
       let added = false;
       const visited = updateVisited((cur) => {

@@ -2,7 +2,8 @@
 // code with its old data until the OS kills it. The new service worker takes over at once (skipWaiting +
 // clients.claim); this module then swaps the page for the new code at a moment nobody is using it: right
 // away if the first screen is idle, otherwise the next time the app goes to the background. A reload loses
-// nothing — the results and saved list come back from the session record (S54).
+// nothing — the results and saved list come back from the session record (S54) — except what is held in hand
+// (words typed in 의견 보내기, a backup link's 합칠까요?): while there is, it waits for a later moment.
 // A page that already runs the new code is left alone: the old worker answers navigations network-first, so
 // reopening the app after a deploy usually loads the new build before the new worker claims it, and a reload
 // then would only flash the screen (and could eat a tap).
@@ -12,17 +13,19 @@ export interface UpdateDeps {
   doc: Pick<Document, 'visibilityState' | 'addEventListener'>;
   /** the first screen, nothing open, nothing loading. */
   idle(): boolean;
+  /** a reload now would lose what the user has in hand (App.unsaved): it waits, in the background too. */
+  hold?(): boolean;
   /** true when the code this page runs is what the new worker serves (checked when it takes over). */
   current(): Promise<boolean>;
   reload(): void;
 }
 
-export function reloadOnUpdate({ sw, doc, idle, current, reload }: UpdateDeps): void {
+export function reloadOnUpdate({ sw, doc, idle, hold, current, reload }: UpdateDeps): void {
   // The first install also fires controllerchange (clients.claim) — that one brings no new code.
   let controlled = !!sw.controller;
   let stale = false;
   const maybe = () => {
-    if (!stale || (doc.visibilityState !== 'hidden' && !idle())) return;
+    if (!stale || hold?.() || (doc.visibilityState !== 'hidden' && !idle())) return;
     stale = false;
     reload();
   };

@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { splitName } from '../src/render';
 import { KEYS } from '../src/store';
 import { fileSpots } from './fixtures';
-import { $, $$, cardIds, flush, render, reset, tap } from './harness';
+import { $, $$, cardIds, current, flush, render, reset, tap } from './harness';
 
 const nameOf = (id: string) => fileSpots.find((s) => s.id === id)!.name.trim();
 const stored = (): string[] => JSON.parse(window.localStorage.getItem(KEYS.visited) ?? '[]');
@@ -140,6 +140,30 @@ describe('S3 카드의 「가 봤어요」', () => {
     expect(visitedBtn(out).getAttribute('aria-pressed')).toBe('true');
     await more();
     expect(cardIds()).not.toContain(out);
+  });
+
+  // 출시 전 점검 F8 (bugs.md B3): hearts, 지도 앱 and 기록 followed another tab; 뺀 곳 did not, so a tap here undid there
+  it('F8 (B3) left out in another tab: this tab follows (its button pressed, gone from the next picks); cleared there, back here', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    const x = (cardIds() as string[])[1];
+    const tabB = (value: string | null) => {
+      if (value === null) window.localStorage.clear();
+      else window.localStorage.setItem(KEYS.visited, value);
+      window.dispatchEvent(new StorageEvent('storage', { key: value === null ? null : KEYS.visited, newValue: value, storageArea: window.localStorage }));
+    };
+    const said = status();
+    tabB(JSON.stringify([x]));
+    await flush();
+    expect(current().state().visited).toEqual([x]);
+    // pressed, as stored: a tap here now puts it back, which is what the button says
+    expect(visitedBtn(x).getAttribute('aria-pressed')).toBe('true');
+    expect(status()).toBe(said); // the other tab's tap is not announced here
+    await more();
+    expect(cardIds()).not.toContain(x);
+    tabB(null); // storage cleared there
+    await flush();
+    expect(current().state().visited).toEqual([]);
   });
 
   it('S2 reopened: what was left out stays out', async () => {

@@ -10,6 +10,7 @@ import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
+import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
 import type { NoOrigin, Origin, Overlay, View } from './types';
@@ -145,6 +146,8 @@ export const COPY = {
   restoreMerge: '합치기',
   restoreCancel: '그만두기',
   restoreDone: (n: number) => (n ? `${n}곳을 합쳤어요. 맨 위 하트 버튼에 모여요.` : '새로 합칠 곳이 없어요. 이미 이 기기에 있어요.'),
+  /** the link held more than there was room for: what is here was not pushed out */
+  restoreLeft: (n: number) => `저장은 ${MAX_SAVED}곳까지라 ${n}곳은 넣지 못했어요.`,
   inappName: { kakaotalk: '카카오톡', instagram: '인스타그램', facebook: '페이스북', naver: '네이버 앱', line: '라인', daum: '다음 앱' } satisfies Record<InApp, string>,
   inappNote: (app: string) => `${app} 안에서 저장한 곳은 ${app}에만 남아요.`,
   inappOpen: '브라우저로 열기',
@@ -983,13 +986,15 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const r = k.restore;
     // a backup link's places that this data knows (all of them until the data is in)
     const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
-    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : '';
+    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}|${r.left}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : '';
+    // 합치기's answer; past MAX_SAVED, how many found no room (with nothing added, that line alone)
+    const done = r?.k === 'done' ? [...(r.added || !r.left ? [COPY.restoreDone(r.added)] : []), ...(r.left ? [COPY.restoreLeft(r.left)] : [])] : [];
     if (sig !== noteSig) {
       const focusIn = els.homeNote.contains(doc.activeElement);
       noteSig = sig;
       if (r?.k === 'ask' && n) fill(els.homeNote, [COPY.restoreAsk(n)], [act('restore-merge', COPY.restoreMerge), act('restore-cancel', COPY.restoreCancel)]);
       else if (r?.k === 'ask') fill(els.homeNote, [COPY.restoreNone], [act('restore-cancel', COPY.close)]);
-      else if (r?.k === 'done') fill(els.homeNote, [COPY.restoreDone(r.added)], []);
+      else if (r?.k === 'done') fill(els.homeNote, done, []);
       else if (k.inapp && k.inappNote) {
         const name = COPY.inappName[k.inapp];
         const lines = [COPY.inappNote(name)];
@@ -1000,7 +1005,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
         fill(els.homeNote, lines, [open, act('inapp-close', COPY.close)]);
       } else els.homeNote.replaceChildren();
       els.homeNote.hidden = !sig;
-      if (r?.k === 'done' && els.announce) els.announce.textContent = COPY.restoreDone(r.added);
+      if (r?.k === 'done' && els.announce) els.announce.textContent = done.join(' ');
       // the button tapped is gone: the answer (or, with nothing left, the first mood) takes the focus
       if (focusIn) (els.homeNote.querySelector<HTMLElement>('p') ?? els.moods[0])?.focus({ preventScroll: true });
     }

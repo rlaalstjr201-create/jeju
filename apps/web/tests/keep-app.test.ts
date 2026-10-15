@@ -2,7 +2,10 @@
 // ADR-0063 2·3·4 in the app: storage.persist at the first save, the in-app browser notice, the backup link
 // (copy, open, merge), the home-screen nudge once, attribution and the privacy link.
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { addDays } from '../src/dates';
 import { BACKUP_HASH, backupUrl, decodeBackup } from '../src/keep';
+import { MAX_SAVED } from '../src/store';
+import { reloadOnUpdate } from '../src/update';
 import { $, $$, flush, render, reset, tap } from './harness';
 import { realSpots } from './fixtures';
 import type { SavedEntry } from '../src/types';
@@ -28,6 +31,12 @@ async function cards() {
 async function openSaved() {
   await tap('#saved');
   await until(() => $$('#savedView .card:not(.ghost)').length > 0);
+}
+
+function hide() {
+  Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+  document.dispatchEvent(new Event('visibilitychange'));
+  delete (document as unknown as Record<string, unknown>).visibilityState;
 }
 
 /** A new visit on the first screen (not the history entry the last test left behind). */
@@ -207,6 +216,49 @@ describe('2c backup link', () => {
     expect(sessionStorage.getItem('jeju.indoor')).toBe('true');
     await cards();
     expect($$('#cards .card .meta .indoor').length).toBe(3);
+  });
+
+  // 출시 전 점검 F2 (idempotency-security.md K1)
+  it('F2 (K1) a link that would pass 500: every heart saved here stays; the answer says how many could not go in', async () => {
+    const mine = realSpots.slice(0, 3).map((s, order) => ({ id: s.id, date: today, order }));
+    save(mine);
+    const link = backupUrl(`${location.origin}/`, realSpots.slice(10, 10 + MAX_SAVED).map((s, order) => ({ id: s.id, date: addDays(today, 1), order })));
+    window.history.replaceState(null, '', link.slice(location.origin.length));
+    render({ userAgent: DESKTOP });
+    await until(() => $('#homeNote p')?.textContent === `링크에 저장한 곳이 ${MAX_SAVED}곳 있어요. 이 기기에 합칠까요?`);
+    await tap('#homeNote [data-action="restore-merge"]');
+    expect(stored()).toHaveLength(MAX_SAVED);
+    expect(stored().filter((x) => x.date === today)).toEqual(mine);
+    const said = [`${MAX_SAVED - 3}곳을 합쳤어요. 맨 위 하트 버튼에 모여요.`, '저장은 500곳까지라 3곳은 넣지 못했어요.'];
+    expect($$('#homeNote p').map((p) => p.textContent)).toEqual(said);
+    expect($('#announce').textContent).toBe(said.join(' '));
+  });
+
+  // 출시 전 점검 F12 (bugs.md S1): the #s= has left the address, so a reload would take the question with it
+  it('F12 (S1) the 합칠까요? question holds a service-worker update reload until it is answered', async () => {
+    window.history.replaceState(null, '', `/${backupUrl('x', [{ id: A, date: today, order: 0 }])}`);
+    const app = render({ userAgent: DESKTOP });
+    await until(() => shown('#homeNote'));
+    const reload = vi.fn();
+    let take = () => undefined as void;
+    reloadOnUpdate({
+      sw: { controller: {}, addEventListener: (_t, fn) => void (take = fn) },
+      doc: document,
+      idle: () => app.state().view === 'home' && !app.state().overlay && app.state().phase.k !== 'pending', // main.ts
+      hold: () => app.unsaved(),
+      current: async () => false,
+      reload,
+    });
+    expect(app.unsaved()).toBe(true);
+    take(); // a deploy's worker takes over while the question is up (the first screen, idle)
+    await flush();
+    hide();
+    expect(reload).not.toHaveBeenCalled();
+    expect(shown('#homeNote')).toBe(true);
+    await tap('#homeNote [data-action="restore-merge"]');
+    expect(app.unsaved()).toBe(false);
+    hide();
+    expect(reload).toHaveBeenCalledTimes(1);
   });
 
   it('pasted into an open tab (only the fragment changes): asked too', async () => {

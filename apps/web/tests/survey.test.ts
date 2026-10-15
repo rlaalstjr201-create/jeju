@@ -2,7 +2,8 @@
 // 써 본 사람에게 묻는 짧은 설문 (ADR-0081, specs/survey.md F1·F2): when the home's line shows, and what 보내기 sends.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { feedbackBody, parseSurvey, surveyDue } from '../src/survey';
-import { $, current, render, reset, settle, tap } from './harness';
+import { reloadOnUpdate } from '../src/update';
+import { $, current, flush, render, reset, settle, tap } from './harness';
 
 const KEY = 'jeju.survey';
 const rec = () => JSON.parse(localStorage.getItem(KEY) ?? 'null');
@@ -11,6 +12,12 @@ const line = () => document.querySelector<HTMLButtonElement>('#home .survey [dat
 const stay = (e: Event) => {
   if ((e.target as Element).closest?.('a')) e.preventDefault();
 };
+
+function hide() {
+  Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+  document.dispatchEvent(new Event('visibilitychange'));
+  delete (document as unknown as Record<string, unknown>).visibilityState;
+}
 
 /** one visit: a fresh mount on the same device storage, the data in */
 async function visit(deps: Parameters<typeof render>[0] = {}) {
@@ -167,6 +174,29 @@ describe('F2 설문 시트', () => {
     expect($('#sheet-title').textContent).toBe('고마워요');
     expect($('#sheet .note').textContent).toBe('보내 주신 의견은 다음에 고칠 것을 고를 때 읽어요.');
     expect(document.querySelector('#sheet [data-action="feedback-send"]')).toBeNull(); // nothing more to send
+  });
+
+  // 출시 전 점검 F12 (idempotency-security.md S4): a deploy's update reload ran as the app went to the background (to
+  // copy something from the messenger), and the words were gone
+  it('F12 (S4) words in a box hold a service-worker update reload, in the background too; sent, the next time it goes', async () => {
+    await openFromSaved(vi.fn());
+    const app = current();
+    const reload = vi.fn();
+    let take = () => undefined as void;
+    // as main.ts wires it; the sheet is open, so never idle
+    reloadOnUpdate({ sw: { controller: {}, addEventListener: (_t, fn) => void (take = fn) }, doc: document, idle: () => false, hold: () => app.unsaved(), current: async () => false, reload });
+    expect(app.unsaved()).toBe(false); // an empty sheet loses nothing
+    ($('#fb-wish') as HTMLTextAreaElement).value = '숙소 근처 빨래방도 있었으면';
+    expect(app.unsaved()).toBe(true);
+    take();
+    await flush();
+    hide();
+    expect(reload).not.toHaveBeenCalled();
+    expect(($('#fb-wish') as HTMLTextAreaElement).value).toBe('숙소 근처 빨래방도 있었으면');
+    await tap('#sheet [data-action="feedback-send"]');
+    expect(app.unsaved()).toBe(false);
+    hide();
+    expect(reload).toHaveBeenCalledTimes(1);
   });
 
   it('a failing send still says 고마워요', async () => {
