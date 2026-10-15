@@ -178,21 +178,26 @@ describe('품질 기준', () => {
     expect(ownShare(pages).map((x) => x.share)).toEqual([0, 0, 1]);
   });
 
-  it('sitemap: one file, or past the limit an index of numbered files', () => {
-    expect(Object.keys(sitemapFiles(['/', '/jeju/'], 'https://x.test', '2026-10-01'))).toEqual(['sitemap.xml']);
-    const split = sitemapFiles(['/', '/a/', '/b/'], 'https://x.test', null, 2);
-    expect(Object.keys(split)).toEqual(['sitemap-1.xml', 'sitemap-2.xml', 'sitemap.xml']);
-    expect(split['sitemap.xml']).toContain('<sitemapindex');
-    expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-2.xml</loc>');
+  // docs/seo/2026-10-16-generic-search.md a4: Search Console counts indexed pages per sitemap
+  it('sitemap: an index of one file per group (core, then each area); empty groups left out; a group past the limit goes on in -2', () => {
+    const files = sitemapFiles({ core: ['/', '/jeju/', '/jeju/aewol/'], aewol: ['/jeju/aewol/x/'], udo: [] }, 'https://x.test', '2026-10-01');
+    expect(Object.keys(files)).toEqual(['sitemap-core.xml', 'sitemap-aewol.xml', 'sitemap.xml']);
+    expect(files['sitemap.xml']).toContain('<sitemapindex');
+    expect(files['sitemap.xml']).toContain('<loc>https://x.test/sitemap-core.xml</loc>');
+    expect(files['sitemap.xml']).not.toContain('<urlset');
+    expect(files['sitemap-core.xml'].match(/<loc>/g)).toHaveLength(3);
+    expect(files['sitemap-aewol.xml']).toContain('<loc>https://x.test/jeju/aewol/x/</loc>');
+    const split = sitemapFiles({ core: ['/', '/a/', '/b/'] }, 'https://x.test', null, 2);
+    expect(Object.keys(split)).toEqual(['sitemap-core.xml', 'sitemap-core-2.xml', 'sitemap.xml']);
+    expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-core-2.xml</loc>');
   });
 
-  it('sitemap: each page its own lastmod; an index file its URLs\' latest', () => {
-    const one = sitemapFiles(['/', '/a/'], 'https://x.test', { '/': '2026-10-01', '/a/': '2026-10-03' })['sitemap.xml'];
-    expect(one).toContain('<loc>https://x.test/</loc><lastmod>2026-10-01</lastmod>');
-    expect(one).toContain('<loc>https://x.test/a/</loc><lastmod>2026-10-03</lastmod>');
-    const split = sitemapFiles(['/', '/a/', '/b/'], 'https://x.test', { '/': '2026-10-01', '/a/': '2026-10-03', '/b/': '2026-10-02' }, 2);
-    expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-1.xml</loc><lastmod>2026-10-03</lastmod>');
-    expect(split['sitemap.xml']).toContain('<loc>https://x.test/sitemap-2.xml</loc><lastmod>2026-10-02</lastmod>');
+  it('sitemap: each page its own lastmod; the index each file\'s latest', () => {
+    const files = sitemapFiles({ core: ['/', '/a/'], aewol: ['/b/'] }, 'https://x.test', { '/': '2026-10-01', '/a/': '2026-10-03', '/b/': '2026-10-02' });
+    expect(files['sitemap-core.xml']).toContain('<loc>https://x.test/</loc><lastmod>2026-10-01</lastmod>');
+    expect(files['sitemap-core.xml']).toContain('<loc>https://x.test/a/</loc><lastmod>2026-10-03</lastmod>');
+    expect(files['sitemap.xml']).toContain('<loc>https://x.test/sitemap-core.xml</loc><lastmod>2026-10-03</lastmod>');
+    expect(files['sitemap.xml']).toContain('<loc>https://x.test/sitemap-aewol.xml</loc><lastmod>2026-10-02</lastmod>');
   });
 });
 

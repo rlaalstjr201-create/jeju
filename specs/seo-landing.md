@@ -77,7 +77,7 @@
 - **화면과 같은 구조화 데이터**: 허브 `CollectionPage`+`ItemList`(지역 15)+`BreadcrumbList`, 지역 `TouristDestination`+기분별 `ItemList`(ListItem → `TouristAttraction`/`Restaurant`/`CafeOrCoffeeShop`, name, description=이유, geo, url=장소 페이지, image)+`BreadcrumbList`, 장소 `TouristAttraction`/`Restaurant`/`CafeOrCoffeeShop`(name, description=이유, `GeoCoordinates`, url, hasMap=네이버 검색, image, containedInPlace=지역)+`BreadcrumbList`. **`aggregateRating` 없음**(점수는 리뷰 평점이 아니고 화면에도 없다, ADR-0060). `image`는 사진 모드에서만.
 - canonical 자기참조(SITE_URL이 있으면 절대 URL), `lang="ko"`, description은 이유 문장 + 한 문장.
 - 앱 셸과 같은 토큰의 자체 CSS(`src/landing.css` → `dist/jeju/landing.css`), 스크립트 없음(JSON-LD만).
-- `sitemap.xml`에 `/`·`/privacy`·`/jeju/`·지역·조합·장소 전부. `lastmod` = `public/spots.json` 마지막 커밋 날짜. 45,000 URL을 넘으면 `sitemap-N.xml` + 색인 파일(지금 2,974 URL, 한 파일). SITE_URL이 있으면 `robots.txt`에 `Sitemap:` 줄을 빌드가 더한다. `llms.txt`는 허브를 링크한다.
+- `sitemap.xml`은 사이트맵 색인이다(`docs/seo/2026-10-16-generic-search.md` a4, GSC에서 사이트맵별 색인 수를 읽으려고): `sitemap-core.xml`(`/`·`/privacy`·`/jeju/`·지역 15·조합 — 지금 19쪽) + 동네별 장소 `sitemap-<지역>.xml` 15개. 합치면 `/`·`/privacy`·`/jeju/`·지역·조합·장소 전부(지금 2,940 URL). `lastmod` = 쪽마다 본문이 마지막으로 바뀐 날(`data/landing/lastmod.json`, 단추 글자는 세지 않는다), 색인 파일은 하위 파일 안의 가장 늦은 날. 한 파일이 45,000 URL을 넘으면 `sitemap-<이름>-2.xml`로 잇는다. SITE_URL이 있으면 `robots.txt`에 `Sitemap:` 줄을 빌드가 더한다. `llms.txt`는 허브를 링크한다.
 - 서비스워커는 `/jeju/**`(페이지·CSS)를 캐시하지도 셸로 답하지도 않는다(앱 셸이 아니다).
 - 404: `/jeju/` 아래 없는 주소는 호스트의 `404.html`(noindex, SPA 폴백 없음, ADR-0063)이고, 그 페이지에 「처음 화면으로」와 「동네별로 둘러보기」가 있다. 빠진 장소의 주소는 404로 둔다(검색엔진이 색인에서 뺀다). 지역이 바뀐 장소만 301.
 - 문구는 `check:slop` 규칙을 통과한다 — 생성기의 문구(`scripts/landing.ts`)와 CSS(`src/landing.css`)를 검사한다. 장소 이름은 검사하지 않는다(고유명사).

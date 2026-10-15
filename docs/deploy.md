@@ -65,7 +65,7 @@ Production·Preview 두 환경에 같은 값을 넣는다(Preview의 `SITE_URL`�
 - `_headers`: 캐시 규칙. 해시 파일(`/assets/*`)과 `/spots.json`(늘 `?v=해시`로 요청) 1년 immutable, `/`·`/index.html`·`/sw.js`·`/manifest.webmanifest`·`/404.html`·`/privacy` no-cache, 아이콘·`og.png`·`favicon.ico`·`robots.txt` 하루. `/*` 규칙에는 `X-Frame-Options: DENY`(다른 사이트의 틀 안에 넣지 못하게)와 `Permissions-Policy: camera=(), microphone=(), payment=()`만 둔다 — Cache-Control은 넣지 않는다(같은 헤더가 둘이면 Pages가 값을 이어 붙인다, 2026-10-15 출시 전 점검 F14). 규칙이 없는 파일(`/jeju/**` HTML·`/jeju/landing.css`·`sitemap.xml`·`llms.txt`)은 Pages 기본값 `public, max-age=0, must-revalidate`(매번 ETag로 확인)라 새 배포가 바로 보인다 — 이름에 해시가 없으니 그게 맞다.
 - `404.html`: 있으면 Pages가 SPA 폴백을 끄고 모르는 경로에 이 페이지를 404로 준다. `/jeju/` 아래 없는 주소도 같은 404(`dist/jeju/`에 404.html 없음, 허브 링크 있음). 서비스워커는 `/jeju/**`를 캐시하지도 셸로 답하지도 않는다. `public/`에 `_redirects`는 두지 않는다(빌드가 지역을 옮긴 장소 페이지의 301만 `dist/_redirects`에 쓴다, ADR-0072).
 
-빌드가 만드는 것(`scripts/build-landing.mjs`, `vite build` 뒤): 정적 랜딩 `dist/jeju/**`(허브·지역 15·조합·장소 페이지, `landing.css`), `sitemap.xml`, `SITE_URL`이 있으면 `robots.txt`의 `Sitemap:` 줄. 품질 기준(원문 0건·쌍 유사도·자기 본문 비율, `specs/seo-landing.md`)을 어기거나 주소 없는 장소가 있으면 빌드가 실패한다 — 새 장소는 `npm run landing:slugs -w @jeju/web` 뒤 `apps/web/data/landing/slugs.json`을 커밋한다.
+빌드가 만드는 것(`scripts/build-landing.mjs`, `vite build` 뒤): 정적 랜딩 `dist/jeju/**`(허브·지역 15·조합·장소 페이지, `landing.css`), 사이트맵 색인 `sitemap.xml`과 하위 `sitemap-core.xml`·`sitemap-<지역>.xml`, `SITE_URL`이 있으면 `robots.txt`의 `Sitemap:` 줄. 품질 기준(원문 0건·쌍 유사도·자기 본문 비율, `specs/seo-landing.md`)을 어기거나 주소 없는 장소가 있으면 빌드가 실패한다 — 새 장소는 `npm run landing:slugs -w @jeju/web` 뒤 `apps/web/data/landing/slugs.json`을 커밋한다.
 - `privacy.html`(`/privacy`), `robots.txt`, `og.png`(1200×630), `favicon.ico`, maskable 아이콘.
 
 한도(2026-10-01 빌드): 파일 2,991개(Pages 무료 한도 20,000), 가장 큰 파일 `spots.json` 1.16MB(한도 25MiB), 전체 약 37MB(랜딩 15.5MB, `LANDING_PHOTOS=0`이면 13.9MB). 장소가 늘면 장소당 파일 하나씩 늘어난다.
@@ -104,7 +104,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 - [ ] `curl -s $SITE/ | grep og:image` → `$SITE/og.png` 절대 주소. `curl -sI $SITE/og.png` → `200 image/png`.
 - [ ] `curl -s $SITE/robots.txt` → `User-agent: *` / `Allow: /` / `Sitemap: $SITE/sitemap.xml`.
 - [ ] `curl -s $SITE/ | grep canonical` → `$SITE/`. `/privacy`도 `$SITE/privacy`.
-- [ ] `curl -sI $SITE/jeju/` → `200`, `curl -sI $SITE/jeju/aewol/`·장소 한 쪽 → `200`. `curl -sI $SITE/jeju/nope/` → `404`. `curl -s $SITE/sitemap.xml | grep -c '<loc>'` → 빌드 로그의 `sitemap N URLs`와 같다.
+- [ ] `curl -sI $SITE/jeju/` → `200`, `curl -sI $SITE/jeju/aewol/`·장소 한 쪽 → `200`. `curl -sI $SITE/jeju/nope/` → `404`. `curl -s $SITE/sitemap.xml` → `<sitemapindex>`에 하위 사이트맵 16개(`sitemap-core.xml` + 동네 15). `curl -s $SITE/sitemap-core.xml | grep -c '<loc>'` → 빌드 로그의 `core N`(지금 19), 하위 파일 `<loc>` 합 → 빌드 로그의 `sitemap N URLs`와 같다.
 
 브라우저로(데스크톱 Chrome):
 

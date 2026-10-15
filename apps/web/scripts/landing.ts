@@ -517,21 +517,26 @@ ${thumb(ctx, s, 'hero', `${name} 사진`, true)}${ctx.photos && s.image ? '\n<p 
 }
 
 // --- sitemap ----------------------------------------------------------------------------------------------------
-/** sitemap.xml, or (more than `max` URLs, the protocol's limit is 50,000) an index plus sitemap-N.xml files.
- * `lastmod`: one date for every URL, or each page's own (pageLastmods); an index file gets its URLs' latest. */
-export function sitemapFiles(paths: string[], site: string, lastmod: string | null | Record<string, string>, max = 45000): Record<string, string> {
+/** sitemap.xml as an index of one sitemap-<group>.xml per group (docs/seo/2026-10-16-generic-search.md a4: `core` =
+ * home, hub, areas, combos, privacy; then one per area of place pages), so Search Console counts each one's indexed
+ * pages. A group past `max` URLs (the protocol's limit is 50,000) goes on in sitemap-<group>-2.xml …; empty groups
+ * are left out. `lastmod`: one date for every URL, or each page's own (pageLastmods); the index gets each file's
+ * latest. */
+export function sitemapFiles(groups: Record<string, string[]>, site: string, lastmod: string | null | Record<string, string>, max = 45000): Record<string, string> {
   const head = '<?xml version="1.0" encoding="UTF-8"?>\n';
   const dateOf = (p: string) => (typeof lastmod === 'string' ? lastmod : lastmod?.[p] ?? null);
   const tag = (d: string | null) => (d ? `<lastmod>${d}</lastmod>` : '');
   const urlset = (ps: string[]) =>
     `${head}<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ps.map((p) => `<url><loc>${esc(`${site}${p}`)}</loc>${tag(dateOf(p))}</url>`).join('\n')}\n</urlset>\n`;
-  if (paths.length <= max) return { 'sitemap.xml': urlset(paths) };
   const out: Record<string, string> = {};
   const latest: Record<string, string | null> = {};
-  for (let i = 0; i * max < paths.length; i++) {
-    const ps = paths.slice(i * max, (i + 1) * max);
-    out[`sitemap-${i + 1}.xml`] = urlset(ps);
-    latest[`sitemap-${i + 1}.xml`] = ps.map(dateOf).reduce<string | null>((a, d) => (d && (!a || d > a) ? d : a), null);
+  for (const [name, paths] of Object.entries(groups)) {
+    for (let i = 0; i * max < paths.length; i++) {
+      const ps = paths.slice(i * max, (i + 1) * max);
+      const f = `sitemap-${name}${i ? `-${i + 1}` : ''}.xml`;
+      out[f] = urlset(ps);
+      latest[f] = ps.map(dateOf).reduce<string | null>((a, d) => (d && (!a || d > a) ? d : a), null);
+    }
   }
   out['sitemap.xml'] = `${head}<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${Object.keys(out)
     .map((f) => `<sitemap><loc>${esc(`${site}/${f}`)}</loc>${tag(latest[f])}</sitemap>`)
