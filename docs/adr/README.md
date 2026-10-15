@@ -107,4 +107,4 @@
 | 0088 | [0088-visual-refresh-and-logo.md](0088-visual-refresh-and-logo.md) | 화면 재질 개편(면으로 묶기·면 버튼·떠 있는 것만 그림자)과 로고 「꺾이는 길」 (SPEC 1·13·14 #1, ADR-0070·0075·0082 일부 개정) | Accepted (2026-10-15) |  |
 | 0089 | [0089-partner-stay-link.md](0089-partner-stay-link.md) | 숙소 링크 `?stay=위도,경도&src=꼬리표`로 그 숙소 기준을 열고 출처별로 센다 (ADR-0067 딥링크 확장) | Accepted (2026-10-15) |  |
 | 0090 | [0090-top-left-back.md](0090-top-left-back.md) | 길 잃지 않게 — 위 줄 왼쪽은 「뒤로」(첫 화면은 로고), 기준·♥는 늘 오른쪽, 되돌리기·설정은 그 자리에서 (ADR-0087 보이는 이름 개정) | Accepted (2026-10-16) |  |
-| 0091 | [0091-night-trails-later.md](0091-night-trails-later.md) | 해가 진 뒤에는 오름·산·숲길 같은 야외 산길을 뒤로 미룬다(빼지 않음), 순서가 바뀌면 상태 줄 한 줄 | Accepted (2026-10-16) |  |
+| 0091 | [0091-night-trails-later.md](0091-night-trails-later.md) | 해가 진 뒤에는 오름·산·숲길 같은 야외 산길을 뒤로 미룬다(빼지 않음), 순서가 바뀌면 상태 줄 한 줄 | Accepted (2026-10-16) | Amendment 1: 밤에는 배로 가는 섬도 뒤로, 밀린 것에 맞춘 문구 |
