@@ -2013,7 +2013,9 @@ await check('QA4-when-row', '언제 is one compact row (지금 · 내일 · 날�
 
 // --- hit areas of the controls tapped most (design.md T2) ---
 // A control's hit area is its box joined with any absolutely positioned ::before/::after it draws (the card's
-// own whole-card link excepted, which lies under everything on purpose).
+// own whole-card link excepted, which lies under everything on purpose). The pseudo-element's insets count from
+// the control's padding box, inside its borders — a face button's 2px transparent borders (ADR-0088) put them 2px
+// in, which measuring from the border box missed (46 read as 48).
 const hitMeasure = (targetSel) => {
   const layer = document.querySelector('#sheet:not([hidden]) .sheet') ?? document;
   const shown = (e) => e.offsetParent !== null && !e.closest('[inert]') && !e.closest('[hidden]') && !e.classList.contains('sr') && (layer === document ? !e.closest('#sheet') : true);
@@ -2021,14 +2023,21 @@ const hitMeasure = (targetSel) => {
     const r = el.getBoundingClientRect();
     const b = { left: r.left, top: r.top, right: r.right, bottom: r.bottom };
     if (el.matches('.card-link')) return b;
+    const own = getComputedStyle(el);
+    const pad = {
+      left: r.left + parseFloat(own.borderLeftWidth),
+      top: r.top + parseFloat(own.borderTopWidth),
+      right: r.right - parseFloat(own.borderRightWidth),
+      bottom: r.bottom - parseFloat(own.borderBottomWidth),
+    };
     for (const p of ['::before', '::after']) {
       const cs = getComputedStyle(el, p);
       if (cs.content === 'none' || cs.position !== 'absolute' || cs.pointerEvents === 'none') continue;
       const v = (k) => (Number.isFinite(parseFloat(cs[k])) ? parseFloat(cs[k]) : 0);
-      b.left = Math.min(b.left, r.left + v('left'));
-      b.top = Math.min(b.top, r.top + v('top'));
-      b.right = Math.max(b.right, r.right - v('right'));
-      b.bottom = Math.max(b.bottom, r.bottom - v('bottom'));
+      b.left = Math.min(b.left, pad.left + v('left'));
+      b.top = Math.min(b.top, pad.top + v('top'));
+      b.right = Math.max(b.right, pad.right - v('right'));
+      b.bottom = Math.max(b.bottom, pad.bottom - v('bottom'));
     }
     return b;
   };

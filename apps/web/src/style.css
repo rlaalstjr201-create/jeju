@@ -136,9 +136,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* tapped often (design.md T2): a 48px hit area around the 44px button, drawn size and layout unchanged.
    위로 · 아래로 · 다른 날로 and 이 날로 grow 4px left (half the 8px gap before them; 위로 is 46px wide; never right,
    which would count as overflow of the button) and 4px down only, into the margin under them (not up: the row
-   card's booking link and the 언제 row sit right above) */
+   card's booking link and the 언제 row sit right above). The insets count from the padding box, inside the 2px
+   transparent borders: -2 is the box's top edge, -6 is 4 under its bottom edge */
 .ctl .tbtn, .date-fb .tbtn { position: relative; }
-.ctl .tbtn::before, .date-fb .tbtn::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
+.ctl .tbtn::before, .date-fb .tbtn::before { content: ""; position: absolute; inset: -2px 0 -6px -4px; }
 
 /* first screen (ADR-0075 A′, no empty top any more): app name, 오늘 판, the question and its line, the moods with
    two photos each, 아무거나; under them 오늘 장 서는 곳, 다른 동네 둘러보기 and the credit. Sizes 24·17·15 only. */
@@ -319,13 +320,14 @@ main { flex: 1; display: flex; flex-direction: column; }
 .heart[aria-pressed="true"] svg { fill: currentColor; }
 /* the buttons on a card sit above its link (z 1). 길찾기 (ADR-0067): a line under the meta, drawn 40 like every .tbtn.
    Tapped often (from a passenger seat): a 48px hit area 4px left and 4px down (design.md T2), into the margin
-   before the booking link / 위로 · 아래로 line; a square box, so its rounded corners count too */
+   before the booking link / 위로 · 아래로 line; a square box, so its rounded corners count too (insets from the
+   padding box, inside the 2px borders, as above) */
 .card .tbtn { position: relative; z-index: 1; }
 .go { grid-area: go; justify-self: start; margin: 8px 0 0; }
-.go::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
+.go::before { content: ""; position: absolute; inset: -2px 0 -6px -4px; }
 .book { grid-area: book; justify-self: start; margin: 8px 0 0; white-space: normal; }
 /* 예약 (ADR-0074): a 48px hit area like 길찾기 — 4px left and 4px down, never right (page edge) nor up (길찾기's own) */
-.book::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
+.book::before { content: ""; position: absolute; inset: -2px 0 -6px -4px; }
 .hint { grid-area: hint; margin: 8px 0 0; color: var(--muted); text-wrap: pretty; }
 
 /* the first card (ADR-0088): 길찾기 and 가 봤어요 side by side, the booking link on the line under them (its .ctl
@@ -381,7 +383,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 .day-h h2 { margin: 0; font: inherit; }
 .day-h .tbtn { color: var(--text); }
 .day .group-h { margin: 0 0 -8px; }
-.ctl { grid-area: ctl; position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 0 8px; margin: 8px 0 0; }
+/* a line that wraps (「배 타는 곳까지 길찾기」 and 가 봤어요 at 320) keeps 8 between its lines too: each button's hit
+   area reaches 4 under it (design.md T2), never onto the button below */
+.ctl { grid-area: ctl; position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
 /* 가 봤어요 (ADR-0087): a face button like the others; the check before the words only while pressed. On the first
    card it sits beside 길찾기; on a row card it follows 길찾기 on its line */
 .go-line { grid-area: go; }
