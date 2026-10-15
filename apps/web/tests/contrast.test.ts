@@ -61,16 +61,32 @@ describe('ADR-0070: the main colour and the accent hold WCAG AA', () => {
   });
 });
 
-describe('ADR-0070 (decided): ♥ N open is an underline, so its heart sits on the ground, not on --fill', () => {
-  it('no fill on .saved-btn[aria-pressed="true"]; a 3px --main rule; heart and rule ≥ 3 on --bg in light and dark', () => {
-    const open = [...css.matchAll(/([^{}]*\.saved-btn\[aria-pressed="true"\][^{]*)\{([^}]*)\}/g)];
-    expect(open.length).toBeGreaterThan(0);
-    for (const [, , body] of open) expect(body).not.toMatch(/background/);
-    expect(open.map((m) => m[2]).join(' ')).toMatch(/border-bottom:\s*3px solid var\(--main\)/);
+// Changed on purpose (ADR-0088): ♥ N is a grey chip and turns --main-tint while the list is open
+describe('ADR-0088: ♥ N is a chip; open, a --main-tint chip with --tag-ink words', () => {
+  it('open = --main-tint face and --tag-ink; the number ≥ 4.5 and the heart (--acc-ink) ≥ 3 on both faces, light and dark', () => {
+    expect(css).toMatch(/\.saved-btn\[aria-pressed="true"\]\s*\{[^}]*background:\s*var\(--main-tint\)[^}]*color:\s*var\(--tag-ink\)/);
+    expect(css).toMatch(/\.saved-btn svg\s*\{[^}]*color:\s*var\(--acc-ink\)/);
     for (const t of [light, dark]) {
-      expect(ratio(t['--accent'], t['--bg'])).toBeGreaterThanOrEqual(3);
-      expect(ratio(t['--main'], t['--bg'])).toBeGreaterThanOrEqual(3);
+      expect(ratio(t['--tag-ink'], t['--main-tint'])).toBeGreaterThanOrEqual(4.5);
+      expect(ratio(t['--text'], t['--fill'])).toBeGreaterThanOrEqual(4.5);
+      for (const face of [t['--fill'], t['--main-tint']]) expect(ratio(t['--acc-ink'], face)).toBeGreaterThanOrEqual(3);
     }
+    // why the heart takes the darker ink on the chip
+    expect(ratio(light['--accent'], light['--fill'])).toBeLessThan(3);
+  });
+});
+
+describe('ADR-0088: the new faces hold AA (SPEC §2.2)', () => {
+  it.each([
+    ['light', light, { tag: 5.27, any: 5.35 }],
+    ['dark', dark, { tag: 5.85, any: 8.18 }],
+  ])('%s: tag and 아무거나 ≥ 4.5 on their tints; grey words on the faces ≥ 4.5', (_, t, want) => {
+    expect(ratio(t['--tag-ink'], t['--main-tint'])).toBeCloseTo(want.tag, 2);
+    expect(ratio(t['--acc-ink'], t['--acc-tint'])).toBeCloseTo(want.any, 2);
+    expect(ratio(t['--muted'], t['--fill'])).toBeGreaterThanOrEqual(4.5);
+    expect(ratio(t['--muted'], t['--fill-press'])).toBeGreaterThanOrEqual(4.5);
+    expect(ratio(t['--text'], t['--fill-press'])).toBeGreaterThanOrEqual(4.5);
+    expect(ratio(t['--text'], t['--acc-tint'])).toBeGreaterThanOrEqual(4.5);
   });
 });
 

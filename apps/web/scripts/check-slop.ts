@@ -84,38 +84,64 @@ export function htmlStrings(html: string): string[] {
 }
 
 const SHADOW = /gradient|box-shadow|text-shadow|drop-shadow|backdrop-filter/;
+// #1 (ADR-0088): the one shadow is the --float token (defined in :root), and only what floats wears it
+const FLOAT_OK = new Set(['.more', '.sheet']);
+const FLOAT_USE = /(^|[;\s])box-shadow:\s*var\(--float\)\s*(;|$)/g;
 const SYMBOLS = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2728}\u{2665}\u{2661}\u{21C4}]/u;
 const WORDS =
   /AI|맞춤|알고리즘|추천|당신|완벽한|특별한|최고의|숨은|인생샷|힐링|감성|잊지 못할|다양한|매력적인|엄선|딱 맞는|어떨까요|도와드릴게요|걱정 마세요|되어집니다|가능합니다|할 수 있습니다/;
 const FORMAL = /[습입됩합]니다|십시오/; // 합쇼체: 해요체 only (§9)
 // 15 · 17 · 20 · 24px, written in rem so a larger browser text size (or root font-size 200%) scales them.
 const FONT_SIZES = new Set(['0.9375rem', '1.0625rem', '1.25rem', '1.5rem']);
-/** The one exception (SPEC §3.2, design.md F2): the fallback date field, never under 16px or iOS zooms in. */
-const fontSizeOk = (selector: string, size: string) => FONT_SIZES.has(size) || (selector === '.date-in' && size.replace(/\s+/g, '') === 'max(1rem,16px)');
+/** The exceptions (SPEC §3.2): the fallback date field, never under 16px or iOS zooms in (design.md F2); the
+ * travel-time tag 13 and the logo's wordmark 18 (ADR-0088). */
+const fontSizeOk = (selector: string, size: string) =>
+  FONT_SIZES.has(size) ||
+  (selector === '.date-in' && size.replace(/\s+/g, '') === 'max(1rem,16px)') ||
+  (selector === '.tag' && size === '0.8125rem') ||
+  (selector === '.logo' && size === '1.125rem');
 /** design/SPEC.md §10 forms that make a place sentence read as a template ("~하기 좋아요", 인생샷 …),
  * with the 3판 additions (겉바속촉, 돈까스, 아름다운, 여유를 누려요, 공간이에요).
  * "공기 좋은" is a noun + adjective, not the "~기 좋은" template; "…에 있어요" is not "~에 있어(서)". */
 export const REASON_BANNED =
   /(?<!공)기 좋아요|(?<!공)기 좋은|인생샷|힐링|다양한|특별한|완벽한|최고의|숨은 보석|숨은 명소|감성 넘치는|잊지 못할|매력적인|[을를] 통해|에 있어서|할 수 있습니다|가능합니다|되어집니다|여유를 즐겨요|겉바속촉|돈까스|아름다운|여유를 누려요|공간이에요/;
 const WEIGHTS = new Set(['400', '600', '700']);
-const RADII = /^(var\(--r-(ctl|photo|thumb|sheet)\)( var\(--r-(ctl|photo|thumb|sheet)\))*( 0 0)?|6px|4px)$/;
-// #18 (3판): selection is a check, weight or underline — never a filled surface.
+// the wordmark is the one 800 (ADR-0088)
+const weightOk = (selector: string, w: string) => WEIGHTS.has(w) || (selector === '.logo' && w === '800');
+const RADII = /^(var\(--r-[a-z]+\)( var\(--r-[a-z]+\))*( 0 0)?|6px|4px)$/;
+// #18 (3판): selection is a check, weight or underline — never a filled surface. ADR-0088: ♥ N open is the one
+// chip that fills (--main-tint, its words ≥ 4.5:1)
 const SEL_TOKEN = /--sel-/;
-// ADR-0070: the saved hearts and the 아무거나 underline
-const ACCENT_OK = new Set(['.saved-btn svg', '.heart[aria-pressed="true"]', '.any']);
+const SEL_FILL_OK = new Set(['.saved-btn[aria-pressed="true"]']);
+// ADR-0070: the saved heart; ADR-0088: the logo's dot and 오늘 판's sun
+const ACCENT_OK = new Set(['.heart[aria-pressed="true"]', '.logo .dot', '.today-ic']);
 const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child|\.more-end)$/;
+
+/** #1 over one stylesheet's rules: no gradient or other shadow anywhere; `box-shadow: var(--float)` only on
+ * what floats, and the token used nowhere else. */
+function shadowProblems(rules: CssRule[]): string[] {
+  const out: string[] = [];
+  for (const r of rules) {
+    const floats = r.selector.split(',').every((s) => FLOAT_OK.has(s.trim()));
+    const rest = floats ? r.body.replace(FLOAT_USE, '$1') : r.body;
+    const m = rest.match(SHADOW);
+    if (m) out.push(`${r.selector} ${m[0]}`);
+    else if (r.selector !== ':root' && /var\(--float\)/.test(rest)) out.push(`${r.selector} --float`);
+  }
+  return out;
+}
 
 export function checkCss(file: string, css: string, v: Violation[]) {
   const add = (rule: number, detail: string) => v.push({ rule, file, detail });
-  if (SHADOW.test(css)) add(1, css.match(SHADOW)![0]);
   if (/@font-face|fonts\.googleapis|cdn/.test(css)) add(16, 'external font');
   if (SEL_TOKEN.test(css)) add(18, css.match(/--sel-[\w-]*/)![0]);
+  for (const d of shadowProblems(cssRules(css))) add(1, d);
   for (const r of cssRules(css)) {
     const sels = r.selector.split(',').map((s) => s.trim());
     const isRoot = r.selector === ':root';
     for (const m of r.body.matchAll(/content:\s*"([^"]*)"/g)) if (SYMBOLS.test(m[1])) add(2, `${r.selector} content ${m[1]}`);
     for (const m of r.body.matchAll(/font-size:\s*([^;]+)/g)) if (!fontSizeOk(r.selector, m[1].trim())) add(7, `${r.selector} font-size ${m[1]}`);
-    for (const m of r.body.matchAll(/font-weight:\s*([^;]+)/g)) if (!WEIGHTS.has(m[1].trim())) add(8, `${r.selector} font-weight ${m[1]}`);
+    for (const m of r.body.matchAll(/font-weight:\s*([^;]+)/g)) if (!weightOk(r.selector, m[1].trim())) add(8, `${r.selector} font-weight ${m[1]}`);
     if (!isRoot && /#[0-9a-f]{3,8}\b|rgba?\(/i.test(r.body)) add(9, `${r.selector} colour literal`);
     if (/var\(--accent\)/.test(r.body) && !sels.every((s) => ACCENT_OK.has(s))) add(10, `${r.selector} uses --accent`);
     for (const m of r.body.matchAll(/opacity:\s*([^;]+)/g)) {
@@ -136,7 +162,7 @@ export function checkCss(file: string, css: string, v: Violation[]) {
     // ADR-0070 (decided): ♥ N's open state is an underline too, so no selector is exempt any more
     const pressedFill = sels.some((s) => /\[aria-(pressed|current)(=["']?(true|page)["']?(\s+i)?)?\]/.test(s));
     const fills = [...r.body.matchAll(/(^|[;\s])background(-color)?\s*:\s*([^;]+)/g)].some((m) => !/^(none|transparent|initial)$/.test(m[3].trim()));
-    if (pressedFill && fills) add(18, `${r.selector} fills the selection`);
+    if (pressedFill && fills && !sels.every((s) => SEL_FILL_OK.has(s))) add(18, `${r.selector} fills the selection`);
   }
 }
 
@@ -200,7 +226,7 @@ export function checkSlop(root: string, opts: { dist?: boolean } = {}): Violatio
   if (opts.dist) {
     for (const f of listFiles(join(root, 'dist/assets'), /\.css$/)) {
       const css = read(f);
-      if (SHADOW.test(css)) v.push({ rule: 1, file: f, detail: css.match(SHADOW)![0] });
+      for (const d of shadowProblems(cssRules(css))) v.push({ rule: 1, file: f, detail: d });
       if (/@font-face|fonts\.googleapis/.test(css)) v.push({ rule: 16, file: f, detail: 'external font' });
       if (SEL_TOKEN.test(css)) v.push({ rule: 18, file: f, detail: css.match(/--sel-[\w-]*/)![0] });
     }

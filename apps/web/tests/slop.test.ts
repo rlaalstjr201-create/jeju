@@ -41,10 +41,10 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
     expect(v.map((x) => `${x.rule} ${x.detail}`)).toEqual(['7 .opt font-size max(1rem, 16px)', '7 .date-in font-size 1rem']);
   });
 
-  // Changed on purpose (ADR-0070, decided): the saved button no longer may fill (#18)
-  it('3판: any centred text counts (#14); the saved button may not fill either; decimals are not a second sentence (#19)', () => {
+  // Changed on purpose (ADR-0088): ♥ N open is the one chip that fills (--main-tint); no other selection may
+  it('3판: any centred text counts (#14); only ♥ N open may fill (ADR-0088); decimals are not a second sentence (#19)', () => {
     const v: Violation[] = [];
-    checkCss('probe.css', '.more { text-align: center; } .saved-btn[aria-pressed="true"] { background: var(--ink); }', v);
+    checkCss('probe.css', '.more { text-align: center; } .saved-btn[aria-pressed="true"] { background: var(--main-tint); } .mood[aria-current="true"] { background: var(--fill); }', v);
     expect(v.map((x) => x.rule)).toEqual([14, 18]);
     const r: Violation[] = [];
     checkReasons('probe.json', [{ id: 'a', reason: '제주4.3평화공원에서 4.3의 역사를 기억해요' }, { id: 'b', reason: '약 17.5km 이어지는 올레길' }], r);
@@ -82,10 +82,31 @@ describe('S9-4 AI 슬롭 체크리스트 (§14 자동 항목 1~16)', () => {
       checkCss('probe.css', css, v);
       expect(v.map((x) => x.rule), css).toEqual([18]);
     }
-    // Changed on purpose (ADR-0070, decided): ♥ N's open state was the one fill allowed; it is an underline now
+    // Changed on purpose (ADR-0088): ♥ N open fills its chip, written exactly as in style.css
     const v: Violation[] = [];
-    checkCss('probe.css', ".saved-btn[aria-pressed='true'] { background: var(--fill); }", v);
-    expect(v.map((x) => x.rule)).toEqual([18]);
+    checkCss('probe.css', '.saved-btn[aria-pressed="true"] { background: var(--main-tint); }', v);
+    expect(v).toEqual([]);
+  });
+
+  it('#1 (ADR-0088): box-shadow only as var(--float), only on .more and .sheet; no other shadow, gradient or use of the token', () => {
+    const ok: Violation[] = [];
+    checkCss('probe.css', ':root { --float: 0 1px 2px rgb(0 0 0 / 5%); } .more { padding: 0; box-shadow: var(--float); } .sheet{box-shadow:var(--float)}', ok);
+    expect(ok).toEqual([]);
+    for (const css of [
+      '.card { box-shadow: var(--float); }',
+      '.more, .card { box-shadow: var(--float); }',
+      '.more { box-shadow: 0 1px 2px black; }',
+      '.more { box-shadow: var(--float), 0 0 4px red; }',
+      '.sheet { text-shadow: 0 1px black; }',
+      '.ph img { filter: drop-shadow(0 1px 2px black); }',
+      '.more { background: linear-gradient(red, blue); }',
+      ':root { --x: linear-gradient(red, blue); }',
+      '.tbtn { outline-color: var(--float); }',
+    ]) {
+      const v: Violation[] = [];
+      checkCss('probe.css', css, v);
+      expect(v.map((x) => x.rule), css).toEqual([1]);
+    }
   });
 
   it('#18 also catches a bare attribute, the i flag and aria-current="page"; a cleared background passes', () => {

@@ -1192,7 +1192,9 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
 
   it('tap targets ≥ 44px: ♥ N, 기준, 식사/카페 tabs, 바꾸기·돌아가기, hearts 44×44, 다른 3곳 보기; no double-tap zoom', () => {
     // 3판: 바꾸기·돌아가기·지역으로 고르기·다시 정하기·예약 링크 are one .tbtn (was .change/.link/.book/.restay)
-    for (const sel of ['.saved-btn', '.basis', '.tab', '.tbtn']) expect(cssRule(sel), sel).toMatch(/min-height:\s*44px/);
+    for (const sel of ['.tab', '.tbtn']) expect(cssRule(sel), sel).toMatch(/min-height:\s*44px/);
+    // Changed on purpose (ADR-0088): ♥ N and 기준 are chips drawn 36 inside a 48 hit area
+    for (const sel of ['.saved-btn', '.basis']) expect(cssRule(sel), sel).toMatch(/min-height:\s*48px/);
     expect(cssRule('.heart')).toMatch(/width:\s*44px/);
     expect(cssRule('.heart')).toMatch(/height:\s*44px/);
     expect(cssRule('.more')).toMatch(/min-height:\s*52px/);
@@ -1218,12 +1220,13 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
     expect(cssRule('.ph img')).toMatch(/filter:\s*var\(--photo\)/);
   });
 
-  it('audit: 아무거나 is its own underlined text button outside the list (no orphan half tile)', () => {
+  // Changed on purpose (ADR-0088): 아무거나 is a full-width 귤-tint face, no longer an underlined word
+  it('audit: 아무거나 is its own button outside the list (no orphan half tile), a full-width 귤-tint face', () => {
     render();
     expect($('.moods [data-mood="any"]')).toBeNull();
     expect($('.moods').nextElementSibling).toBe($('[data-mood="any"]'));
-    expect(cssRule('.any')).toMatch(/text-decoration:\s*underline/);
-    expect(cssRule('.any')).toMatch(/align-self:\s*flex-start/);
+    expect(cssRule('.any')).toMatch(/background:\s*var\(--acc-tint\)/);
+    expect(cssRule('.any')).toMatch(/width:\s*100%/);
   });
 });
 

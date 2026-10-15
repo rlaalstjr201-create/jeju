@@ -82,12 +82,14 @@
   <body>
     <div id="app" class="app">
       <header class="top">
+        <!-- the logo (ADR-0088 5), shown on the first screen only; a copy of src/logo.ts logoInner() (tests/logo.test.ts) -->
+        <span class="logo"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 46 L30 46 Q36 46 38 40 L46 16" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle class="dot" cx="46" cy="16" r="5"/></svg>여차나<span class="rg">:제주</span></span>
         <button id="basis" class="basis" type="button" aria-haspopup="dialog" aria-label="내 위치 근처, 기준 바꾸기"><span>내 위치 근처</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button id="saved" class="saved-btn" type="button" aria-pressed="false" aria-label="저장한 곳 0개" hidden><svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z"/></svg><span class="n">0</span></button>
       </header>
       <main id="main">
         <section id="home" aria-labelledby="ask">
-          <p class="brand">여차나:제주 · P를 위한 여행동반자</p>
+          <p class="brand">P를 위한 여행동반자</p>
           <!-- 오늘 판 (ADR-0075 2): the date and folded grey facts; render.ts adds the one row to tap, if any -->
           <div class="today" id="today"><p class="today-line"><span id="date"></span><span class="facts"></span></p></div>
           <h1 class="ask" id="ask">지금 뭐 하고 싶어요?</h1>

@@ -3,14 +3,14 @@
    are underlined text, the one call to action is the --main fill (.go), like the app's primary button. */
 
 :root {
-  --bg: #ffffff; --fill: #f3f3f4; --line: #e3e3e4; --text: #14181f; --muted: #5f6267;
+  --bg: #ffffff; --fill: #f3f3f4; --line: #e3e3e4; --text: #14181f; --muted: #5f6267; --accent: #f06400;
   --main: #0a6fd6; --on-main: #ffffff; --main-press: #0c62bb; --photo: none;
   --r-ctl: 10px; --r-photo: 12px; --r-thumb: 8px;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f1319; --fill: #23272d; --line: #33373c; --text: #eef1f5; --muted: #b0b3b7;
+    --bg: #0f1319; --fill: #23272d; --line: #33373c; --text: #eef1f5; --muted: #b0b3b7; --accent: #ff8a3d;
     --main: #5aa9ff; --on-main: #0f1319; --main-press: #4d8ed6; --photo: brightness(0.9);
     color-scheme: dark;
   }
@@ -31,7 +31,11 @@ a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; 
   padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right));
 }
 .top { display: flex; align-items: center; min-height: 52px; padding-top: env(safe-area-inset-top); }
-.brand { font-weight: 700; text-decoration: none; }
+/* the app's logo (ADR-0088 5, src/logo.ts): the symbol, 여차나 and the grey :제주; a link home */
+.logo { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 1.125rem; line-height: 1.35; font-weight: 800; letter-spacing: -0.03em; text-decoration: none; }
+.logo svg { color: var(--main); }
+.logo .dot { fill: var(--accent); }
+.logo .rg { font-weight: 600; color: var(--muted); }
 main { padding-bottom: 8px; }
 .foot { padding-bottom: max(28px, env(safe-area-inset-bottom)); color: var(--muted); }
 .foot p { margin: 4px 0 0; }

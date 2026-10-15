@@ -5,6 +5,7 @@
 import { createHash } from 'node:crypto';
 import { AREAS, AREA_GROUPS, nearestArea, type Area } from '../src/areas';
 import { cleanName } from '../src/data';
+import { logoInner } from '../src/logo';
 import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';
 import { distanceKm, islandOf, listed, travel, travelText, type Mood, type Spot } from '../src/pick';
 import { visibleText } from './seo/crawl-parse.mjs';
@@ -270,7 +271,7 @@ function layout(ctx: Ctx, o: { path: string; title: string; description: string;
 <script type="application/ld+json">${ld({ '@context': 'https://schema.org', '@graph': [...o.graph, crumbsLd(ctx, o.crumbs)] })}</script>
 </head>
 <body>
-<header class="top"><a class="brand" href="/">${BRAND}</a></header>
+<header class="top"><a class="logo" href="/">${logoInner()}</a></header>
 <main>
 <nav class="crumbs" aria-label="지금 보는 곳"><ol>${nav}</ol></nav>
 ${o.body}
