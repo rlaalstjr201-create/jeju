@@ -425,7 +425,9 @@ function resultsBodyOf(s: State, showing: string | null): ResultsBody {
   // GPS): those stay, rather than turning grey and coming back as the same 3.
   const same = !!s.mood && showing === historyKey(s.mood, tabNow(s));
   if (p.k === 'pending') {
-    if (same && cardsValid(s)) return { k: 'keep' };
+    // Cards that still answer it stay while it is asked: kept if on screen, drawn if the screen was blank (a mood
+    // tapped from the home is drawn once with its request, app.ts batch).
+    if (cardsValid(s)) return same ? { k: 'keep' } : { k: 'cards' };
     return p.slow ? { k: 'ghost' } : same ? { k: 'keep' } : { k: 'blank' };
   }
   if (p.k === 'ready') return s.cards ? { k: 'cards' } : { k: 'blank' };

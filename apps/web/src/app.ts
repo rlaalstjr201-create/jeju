@@ -173,11 +173,35 @@ export function mountApp(doc: Document, deps: Deps): App {
   function dispatch(a: Action) {
     if (signal.aborted) return;
     state = reduce(state, a);
+    if (batching) {
+      unrendered = true;
+      return;
+    }
+    drawn();
+  }
+  function drawn() {
     renderer.render(state);
     countSurvey();
     countShown();
     askRain();
     duskTimer();
+  }
+  /** One tap, one draw: the actions `fn` dispatches are reduced at once and drawn together when it ends (render is
+   * idempotent, so the screen is the one the last of them would draw). Only for steps that never read the DOM
+   * an earlier action of theirs would have drawn. */
+  let batching = 0;
+  let unrendered = false;
+  function batch(fn: () => void) {
+    batching++;
+    try {
+      fn();
+    } finally {
+      batching--;
+      if (!batching && unrendered) {
+        unrendered = false;
+        if (!signal.aborted) drawn();
+      }
+    }
   }
 
   /** 노을 줄 (ADR-0083): one timer to the next moment 노을 볼 곳 opens (2시간 30분 before the sunset at the home's
@@ -378,6 +402,14 @@ export function mountApp(doc: Document, deps: Deps): App {
     const forSaved = state.view === 'saved';
     dispatch({ type: 'request', req, intent, step: fixed ? 'loading' : 'locating' });
     remember();
+    // A fixed origin (지역, 숙소, 다른 3곳) and the list already in: the answer is known now, so it lands in this same
+    // step (and, in a batch, the same draw) instead of a microtask later — the same actions as the path below.
+    const loaded = fixed ? data.peek() : null;
+    if (fixed && loaded) {
+      dispatch({ type: 'resolved', req, origin: fixed, spots: loaded });
+      remember();
+      return;
+    }
     reqTimers.push(later(delays.slow, () => dispatch({ type: 'slow', req })));
     if (!fixed) reqTimers.push(later(delays.long, () => dispatch({ type: 'long', req })));
     // GPS and data start together; the data promise is shared and memoized only on success (S24).
@@ -589,18 +621,21 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!intent) return;
     const from = state.view;
     if (from === 'home') hush();
-    // a merge already answered has said its piece
-    if (state.keep.restore?.k === 'done') dispatch({ type: 'keep', keep: { restore: null } });
-    dispatch({ type: 'mood', button: b });
-    count('tap');
-    if (from === 'home') nav.push(CARDS);
-    request(intent);
+    // the results screen and its cards in one draw (the tap's frame lays the page out once)
+    batch(() => {
+      // a merge already answered has said its piece
+      if (state.keep.restore?.k === 'done') dispatch({ type: 'keep', keep: { restore: null } });
+      dispatch({ type: 'mood', button: b });
+      count('tap');
+      if (from === 'home') nav.push(CARDS);
+      request(intent);
+    });
   }
 
   function onMore() {
     if (guarded('more') || state.view !== 'cards' || state.phase.k !== 'ready') return;
     hush();
-    request('more');
+    batch(() => request('more'));
   }
 
   /** 바꾸기: back to the moods (the results entry is popped, so phone back never lands on it again). */
@@ -619,8 +654,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     const forMood = sub === 'meal' || sub === 'cafe' ? 'food' : 'new';
     const current = forMood === 'food' ? state.sub : state.newSub;
     if (guarded(`sub:${sub}`) || state.view !== 'cards' || state.mood !== forMood || current === sub) return;
-    dispatch({ type: 'sub', sub });
-    request('show');
+    batch(() => {
+      dispatch({ type: 'sub', sub });
+      request('show');
+    });
   }
 
   /** `counted`: false for the home's 설정 · 지도 앱 · 의견, which comes to this screen for its settings, not the list. */
