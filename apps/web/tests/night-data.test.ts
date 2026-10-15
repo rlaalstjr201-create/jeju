@@ -2,8 +2,9 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { applyNight, basisProblems, candidates, drawSample, roundProblems, scoreAudit, type NightCall, type SourceItem } from '../scripts/night.mjs';
+import { applyNight, basisProblems, candidates, drawSample, loadNightCalls, roundProblems, scoreAudit, type NightCall, type SourceItem } from '../scripts/night.mjs';
 import { loadInputs } from '../scripts/sunset.mjs';
+import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
 const read = (p: string) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
@@ -148,5 +149,24 @@ describe('review/night round 01 (committed)', () => {
     expect(sample.round).toBe('01');
     expect(sample.items.map((i) => i.id)).toEqual(drawSample(calls, sample.seed));
     for (const i of sample.items) expect(Object.keys(i)).toEqual(['id', 'name', 'tags', 'intro', 'comment', 'summary']);
+  });
+});
+
+describe('shipped spots.json (round 01 passed)', () => {
+  const shipped = readFileSync(resolve(root, 'public/spots.json'), 'utf8');
+  it('is what night.mjs makes, and a second run changes no byte (idempotent)', () => {
+    const loaded = loadNightCalls();
+    expect(loaded).toMatchObject({ round: '01', pass: true });
+    const once = applyNight(fileSpots, loaded);
+    expect(JSON.stringify(once)).toBe(shipped);
+    expect(JSON.stringify(applyNight(once, loaded))).toBe(shipped);
+  });
+  it('trail: true on exactly the round\'s 156 true places, nowhere else; no basis shipped', () => {
+    const on = new Set(read('review/night/trail-01.json').filter((c: NightCall) => c.trail).map((c: NightCall) => c.id));
+    expect(on.size).toBe(156);
+    const marked = fileSpots.filter((s) => 'trail' in s);
+    expect(marked.every((s) => s.trail === true)).toBe(true);
+    expect(marked.map((s) => s.id).sort()).toEqual([...on].sort());
+    expect(shipped).not.toMatch(/"basis"/);
   });
 });

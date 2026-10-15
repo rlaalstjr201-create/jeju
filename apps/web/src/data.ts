@@ -80,7 +80,9 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     // 노을 (ADR-0083): a list the app cannot read is dropped — the place stays, off the 노을 row.
     const badSunset = 'sunsetView' in r && !validSunset(r.sunsetView);
     const badSea = 'sunsetSea' in r && !validSea(r.sunsetSea);
-    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea) {
+    // 야외 산길 (ADR-0091): only `true` counts — anything else is dropped, the place stays as an ordinary one.
+    const badTrail = 'trail' in r && r.trail !== true;
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail) {
       out.push(spot);
       continue;
     }
@@ -90,6 +92,7 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     if (badSeason) delete fixed.season;
     if (badSunset) delete fixed.sunsetView;
     if (badSea) delete fixed.sunsetSea;
+    if (badTrail) delete fixed.trail;
     out.push(fixed);
   }
 }

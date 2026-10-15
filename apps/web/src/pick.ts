@@ -40,6 +40,8 @@ export interface Spot {
   /** 노을 (ADR-0083 Amendment 1): on a place whose sunsetView was filled in (오름, or unseen by the calculation),
    * the calculation's own azimuths (maybe none) — the ones it is seen setting over the sea at. */
   sunsetSea?: number[];
+  /** 야외 산길 (ADR-0091): 오름·산·숲길 — dark at night, so the picks put it after the other places then. */
+  trail?: true;
   /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
   book?: Book;
   /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */

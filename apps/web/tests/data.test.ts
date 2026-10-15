@@ -20,7 +20,7 @@ const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
-  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074; 철: +season, ADR-0080; 노을: +sunsetView, +sunsetSea on filled ones, ADR-0083), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
+  it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074; 철: +season, ADR-0080; 노을: +sunsetView, +sunsetSea on filled ones, ADR-0083; 야외 산길: +trail true, ADR-0091), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
     const bad = fileSpots.filter((s) => {
       const expectedFields = [
         ...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS),
@@ -28,6 +28,7 @@ describe("S1' 레코드 형식", () => {
         ...('season' in s ? ['season'] : []),
         ...('sunsetView' in s ? ['sunsetView'] : []),
         ...('sunsetSea' in s && 'sunsetView' in s ? ['sunsetSea'] : []),
+        ...(s.trail === true ? ['trail'] : []),
         ...('book' in s ? ['book'] : []),
         ...('hide' in s ? ['hide'] : []),
       ];
@@ -62,6 +63,16 @@ describe("S1' 레코드 형식", () => {
     expect(ok).toBe(m);
     expect('market' in noLabel).toBe(false);
     expect('market' in badDays).toBe(false);
+  });
+
+  it('야외 산길 (ADR-0091): only trail true is kept at load; any other value is dropped, the place stays', () => {
+    const t = fileSpots.find((s) => s.trail)!;
+    const [ok, no, str] = normalizeSpots([t, { ...t, id: 'x', trail: false }, { ...t, id: 'y', trail: 'true' }]);
+    expect(ok).toBe(t);
+    expect(ok.trail).toBe(true);
+    expect('trail' in no).toBe(false);
+    expect('trail' in str).toBe(false);
+    expect(str.id).toBe('y');
   });
 
   it('a record whose score is missing or out of range loads as 3 (모르면 3); a valid one is kept', () => {
