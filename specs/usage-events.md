@@ -28,7 +28,7 @@
 
 ## 받는 쪽 (최소)
 
-- `apps/web/events/`에 호스트 비종속 핸들러 하나: POST JSON 배열 → 검증(필드·값 목록·크기 ≤ 8KB·배열 ≤ 50, `d`는 서버의 제주 날짜 ±1일) → `(d, id, e)` 카운터 증가. 길이 머리(Content-Length)가 없으면 411, 본문은 8KB까지만 읽는다(`/api/feedback`과 같음). IP·UA 저장 안 함. 수집 상태(`/api/events/health`)는 어제~내일만 센다.
+- `apps/web/events/`에 호스트 비종속 핸들러 하나: POST JSON 배열 → 검증(필드·값 목록·크기 ≤ 8KB·배열 ≤ 50, `d`는 서버의 제주 날짜 ±1일) → `(d, id, e)` 카운터 증가. 본문은 8KB까지만 흘려 읽는다. 길이 머리(Content-Length)가 8KB를 넘으면 바로 413이고, 길이 머리가 없어도 거절하지 않는다(`/api/feedback`의 411과 다름 — 이 기록이 시범을 재는 도구라, 머리 하나 때문에 기록을 버리지 않는다). IP·UA 저장 안 함. 수집 상태(`/api/events/health`)는 어제~내일만 센다.
 - 저장소 어댑터는 인터페이스로 두고 메모리 구현 + 테스트만. 실제 저장소(KV/D1 등)는 호스트 결정 후.
 - 집계 스크립트: 카운터 덤프 → `review/popularity.json` (`{ id, shown, save, map, book }`). 장소 이벤트 다섯(`shown`·`save`·`unsave`·`map`·`book`)만 센다(`visited`·`unvisited`는 빠진다, ADR-0087).
 

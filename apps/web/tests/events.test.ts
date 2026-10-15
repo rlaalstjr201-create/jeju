@@ -159,7 +159,7 @@ describe('출시 전 점검 F7 (S1): the day must be within one of the collector
 });
 
 // 출시 전 점검 F11 (idempotency-security.md S3): without a length the whole body was read into memory first
-describe('출시 전 점검 F11 (S3): a length is required and no more than 8 KB is read', () => {
+describe('출시 전 점검 F11 (S3): no more than 8 KB is read, with or without a length', () => {
   /** a body of `size` bytes as a stream, counting what has been read of it */
   function stream(size: number) {
     const read = { n: 0 };
@@ -174,13 +174,24 @@ describe('출시 전 점검 F11 (S3): a length is required and no more than 8 KB
     return { body, read };
   }
 
-  it('no content-length (chunked): 411 with nothing read; like /api/feedback', async () => {
+  it('no content-length (chunked) and too long: reading stops past 8 KB → 413, nothing counted', async () => {
     const store = memoryStore();
     const s = stream(1024 * 1024);
     const req = new Request('https://events.test/e', { method: 'POST', body: s.body, duplex: 'half' } as RequestInit);
-    expect((await handle(req, store)).status).toBe(411);
-    expect(s.read.n).toBeLessThanOrEqual(4096);
+    expect((await handle(req, store)).status).toBe(413);
+    expect(s.read.n).toBeLessThanOrEqual(8 * 1024 + 2 * 4096);
     expect(await store.dump()).toEqual([]);
+  });
+
+  it('no content-length but a valid batch: still counted (a beacon must never be lost for a missing header)', async () => {
+    const store = memoryStore();
+    const text = JSON.stringify([{ e: 'tap', mood: 'rest', d }]);
+    const bytes = new TextEncoder().encode(text);
+    const body = new ReadableStream<Uint8Array>({ start(c) { c.enqueue(bytes); c.close(); } });
+    const req = new Request('https://events.test/e', { method: 'POST', body, duplex: 'half' } as RequestInit);
+    expect(req.headers.get('content-length')).toBeNull();
+    expect((await handle(req, store)).status).toBe(204);
+    expect(await store.dump()).toHaveLength(1);
   });
 
   it('a length that understates the body: reading stops past 8 KB → 413', async () => {

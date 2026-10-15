@@ -35,10 +35,10 @@ function idsOf(ev: UsageEvent): string[] {
 /** `now`: the collector's clock — an event's day must be within one of its Jeju day (validate.ts). */
 export async function handleEvents(req: Request, store: CounterStore, now: () => Date = () => new Date()): Promise<Response> {
   if (req.method !== 'POST') return new Response(null, { status: 405, headers: { allow: 'POST' } });
-  // like /api/feedback: a length is required (a beacon's string says one) and no more than MAX_BYTES is ever read
+  // no more than MAX_BYTES is ever read. A length that says more is turned away at once; a missing one is not
+  // (unlike /api/feedback): this is what the pilot is measured with, and reading stops past MAX_BYTES anyway
   const length = req.headers.get('content-length');
-  if (length === null) return new Response(null, { status: 411 });
-  if (!(Number(length) <= MAX_BYTES)) return new Response(null, { status: 413 });
+  if (length !== null && !(Number(length) <= MAX_BYTES)) return new Response(null, { status: 413 });
   const body = await readLimited(req, MAX_BYTES);
   if (body === null) return new Response(null, { status: 413 });
   const batch = parseBatch(body, dayOf(now()));
