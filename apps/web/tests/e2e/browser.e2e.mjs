@@ -1041,7 +1041,8 @@ await check('3-17', 'row cards: at 320×568 default text the photo sits beside t
   }
 });
 
-await check('3-19', '다른 3곳 bar: at 320×568 the button is on screen and the bar floats with its rule; at the end it rests 28px under the last card, no rule', async () => {
+// Changed on purpose (ADR-0088): the button floats with the --float shadow; the rule above the bar is gone
+await check('3-19', '다른 3곳 bar: at 320×568 the button is on screen and floats with its shadow, no rule above the bar; at the end it rests 28px under the last card', async () => {
   const { ctx, page } = await fresh({ width: 320, height: 568 });
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
@@ -1049,28 +1050,27 @@ await check('3-19', '다른 3곳 bar: at 320×568 the button is on screen and th
   const probe = () =>
     page.evaluate(() => {
       const bar = document.querySelector('#cards .more-bar');
-      const more = bar.querySelector('.more').getBoundingClientRect();
+      const btn = bar.querySelector('.more');
+      const more = btn.getBoundingClientRect();
       const cards = document.querySelectorAll('#cards .card');
       const last = cards[cards.length - 1].getBoundingClientRect();
-      const line = getComputedStyle(bar, '::before').borderTopColor;
-      const probe = document.createElement('div');
-      probe.style.color = 'var(--line)';
-      bar.append(probe);
-      const lineColor = getComputedStyle(probe).color;
-      probe.remove();
-      return { top: more.top, bottom: more.bottom, vh: innerHeight, stuck: bar.classList.contains('stuck'), gap: more.top - last.bottom, line, lineColor };
+      const before = getComputedStyle(bar, '::before');
+      return {
+        top: more.top, bottom: more.bottom, vh: innerHeight, stuck: bar.classList.contains('stuck'), gap: more.top - last.bottom,
+        shadow: getComputedStyle(btn).boxShadow, rule: before.content !== 'none' && before.borderTopStyle !== 'none',
+      };
     });
   const a = await probe();
   assert(a.top >= 0 && a.bottom <= a.vh, `button at ${a.top}–${a.bottom} of ${a.vh}`);
   assert(a.stuck, 'bar not .stuck while floating');
-  assert(a.line === a.lineColor, `floating rule ${a.line}, want ${a.lineColor}`);
+  assert(a.shadow !== 'none', 'no shadow while floating');
+  assert(!a.rule, 'a rule above the bar');
   await shot(page, 'bar-320-floating');
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   await sleep(200);
   const b = await probe();
   assert(!b.stuck, 'bar still .stuck at the end');
   assert(Math.abs(b.gap - 28) <= 1, `last card → button ${b.gap}px`);
-  assert(b.line !== b.lineColor, `rule shown at rest: ${b.line}`);
   await ctx.close();
 });
 
@@ -1193,7 +1193,9 @@ await check('3-23', 'trip lines: 애월 · 푹 쉬고 싶어 — first card "애
   await ctx.close();
 });
 
-await check('3-24', 'results hierarchy: the chosen mood is smaller than the first card name; ≤ 3 text sizes on screen', async () => {
+// Changed on purpose (ADR-0088): the head is 20/700 like the first card name (was smaller), and the travel-time
+// tag (13) is the one size outside the three
+await check('3-24', 'results hierarchy: the chosen mood is not larger than the first card name; ≤ 3 text sizes on screen besides the travel-time tag', async () => {
   for (const mood of ['rest', 'food']) {
     const { ctx, page } = await fresh();
     await tapText(page, `[data-mood="${mood}"]`);
@@ -1203,14 +1205,14 @@ await check('3-24', 'results hierarchy: the chosen mood is smaller than the firs
       const sizes = new Set();
       const walker = document.createTreeWalker(document.getElementById('app'), NodeFilter.SHOW_TEXT);
       for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-        if (!n.textContent.trim() || n.parentElement.closest('[hidden], [aria-hidden="true"]')) continue;
+        if (!n.textContent.trim() || n.parentElement.closest('[hidden], [aria-hidden="true"], .tag')) continue;
         const rect = n.parentElement.getBoundingClientRect();
         if (rect.bottom < 0 || rect.top > innerHeight || !rect.width) continue;
         sizes.add(px(n.parentElement));
       }
       return { crumb: px(document.getElementById('crumb')), name: px(document.querySelector('#cards .card.lead .name')), sizes: [...sizes].sort() };
     });
-    assert(r.crumb < r.name, `${mood}: crumb ${r.crumb} ≥ name ${r.name}`);
+    assert(r.crumb <= r.name, `${mood}: crumb ${r.crumb} > name ${r.name}`);
     assert(r.sizes.length <= 3, `${mood}: sizes ${r.sizes}`);
     await ctx.close();
   }
@@ -1427,7 +1429,8 @@ const dayMeasure = () => {
   const sizes = new Set();
   const scope = document.querySelector('#sheet:not([hidden]) .sheet') ?? document.querySelector('main');
   for (const e of scope.querySelectorAll('*')) {
-    if (e.closest('[hidden]') || e.closest('.sr') || e.offsetParent === null) continue;
+    // the first card's travel-time tag (13, ADR-0088) is the one size outside the three
+    if (e.closest('[hidden]') || e.closest('.sr') || e.closest('.tag') || e.offsetParent === null) continue;
     if ([...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) sizes.add(getComputedStyle(e).fontSize);
   }
   const centred = [...document.querySelectorAll('main *, #sheet *')].filter((e) => e.offsetParent !== null && getComputedStyle(e).textAlign === 'center').length;
@@ -2813,7 +2816,8 @@ await check('MA-line', '지도 앱 (ADR-0071) at 320·390, light·dark: 지도 �
   assert(!problems.length, problems.join(' | '));
 });
 
-await check('HN-open', '♥ N open (ADR-0070, decided): no fill, a 3px main-colour underline like a tab; the heart measured on what is really under it ≥ 3:1 in light and dark', async () => {
+// Changed on purpose (ADR-0088): ♥ N is a grey chip; open, the chip is --main-tint (was: no fill, a 3px underline)
+await check('HN-open', '♥ N open (ADR-0088): the chip turns --main-tint, no underline; its number ≥ 4.5:1 and its heart ≥ 3:1 measured on the chip in light and dark; closed, the grey chip holds the heart ≥ 3:1 too', async () => {
   const problems = [];
   const lum = ([r, g, b]) => {
     const f = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
@@ -2828,38 +2832,50 @@ await check('HN-open', '♥ N open (ADR-0070, decided): no fill, a 3px main-colo
     await tapText(page, '[data-mood="rest"]');
     await waitCards(page);
     await tapText(page, '#cards .card .heart');
+    const look = () =>
+      page.evaluate(() => {
+        const rgb = (c) => c.match(/\d+(\.\d+)?/g).slice(0, 4).map(Number);
+        const btn = document.querySelector('#saved');
+        const under = (el) => {
+          for (let e = el; e; e = e.parentElement) {
+            const c = rgb(getComputedStyle(e).backgroundColor);
+            if (c.length < 4 || c[3] > 0) return c.slice(0, 3);
+          }
+          return [255, 255, 255];
+        };
+        const after = getComputedStyle(btn, '::after');
+        return {
+          pressed: btn.getAttribute('aria-pressed'),
+          heart: rgb(getComputedStyle(btn.querySelector('svg')).color).slice(0, 3),
+          words: rgb(getComputedStyle(btn.querySelector('.n')).color).slice(0, 3),
+          ground: under(btn),
+          rule: after.content,
+        };
+      });
+    const tag = dark ? 'dark' : 'light';
+    const closed = await look();
+    if (ratio(closed.heart, closed.ground) < 3) problems.push(`${tag} closed: heart ${ratio(closed.heart, closed.ground).toFixed(2)}`);
     await tapText(page, '#saved');
     await page.waitForSelector('#savedView .card:not(.ghost)');
     await page.mouse.move(0, 0);
-    const r = await page.evaluate(() => {
-      const rgb = (c) => c.match(/\d+(\.\d+)?/g).slice(0, 4).map(Number);
-      const btn = document.querySelector('#saved');
-      const under = (el) => {
-        for (let e = el; e; e = e.parentElement) {
-          const c = rgb(getComputedStyle(e).backgroundColor);
-          if (c.length < 4 || c[3] > 0) return c.slice(0, 3);
-        }
-        return [255, 255, 255];
-      };
-      const after = getComputedStyle(btn, '::after');
-      return {
-        pressed: btn.getAttribute('aria-pressed'),
-        own: getComputedStyle(btn).backgroundColor,
-        heart: rgb(getComputedStyle(btn.querySelector('svg')).color).slice(0, 3),
-        ground: under(btn),
-        rule: { w: after.borderBottomWidth, c: rgb(after.borderBottomColor).slice(0, 3), content: after.content },
-      };
+    const r = await look();
+    const tint = await page.evaluate(() => {
+      const probe = document.createElement('i');
+      probe.style.background = 'var(--main-tint)';
+      document.body.append(probe);
+      const c = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return c.match(/\d+/g).slice(0, 3).map(Number);
     });
-    const tag = dark ? 'dark' : 'light';
     const heart = ratio(r.heart, r.ground);
-    const rule = ratio(r.rule.c, r.ground);
-    console.log(`      HN-open ${tag}: heart ${heart.toFixed(2)}:1, underline ${rule.toFixed(2)}:1 on rgb(${r.ground})`);
+    const words = ratio(r.words, r.ground);
+    console.log(`      HN-open ${tag}: closed heart ${ratio(closed.heart, closed.ground).toFixed(2)}:1; open heart ${heart.toFixed(2)}:1, number ${words.toFixed(2)}:1 on rgb(${r.ground})`);
     if (r.pressed !== 'true') problems.push(`${tag}: not pressed`);
-    if (!/rgba\(0, 0, 0, 0\)|transparent/.test(r.own)) problems.push(`${tag}: filled ${r.own}`);
-    if (r.rule.w !== '3px' || r.rule.content === 'none') problems.push(`${tag}: rule ${JSON.stringify(r.rule)}`);
+    if (r.ground.join() !== tint.join()) problems.push(`${tag}: open chip rgb(${r.ground}), not --main-tint rgb(${tint})`);
+    if (r.rule !== 'none') problems.push(`${tag}: an underline is still drawn`);
     if (heart < 3) problems.push(`${tag}: heart ${heart.toFixed(2)}`);
-    if (rule < 3) problems.push(`${tag}: underline ${rule.toFixed(2)}`);
-    if (!dark) await shot(page, 'saved-open-underline');
+    if (words < 4.5) problems.push(`${tag}: number ${words.toFixed(2)}`);
+    if (!dark) await shot(page, 'saved-open-chip');
     await ctx.close();
   }
   assert(!problems.length, problems.join(' | '));
@@ -2939,7 +2955,7 @@ await check('SV1-survey', '설문 (ADR-0081) at 320·390 × light·dark: after a
 });
 
 // --- 가 봤어요 (ADR-0087, specs/hide-visited.md S3·S4·S6) ---
-await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 cards, drawn 44 with a ≥ 48×48 area nothing covers (not the card link); a tap presses only it (cards and photos stay) and says so on the status line; 다른 3곳 보기 never brings it back; 설정 → 뺀 곳 1곳 → 다시 넣기 empties it; a fresh pick shows it again; no sideways scroll', async () => {
+await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 cards, drawn 44 (the first card\'s 48, ADR-0088) with a ≥ 48×48 area nothing covers (not the card link); a tap presses only it (cards and photos stay) and says so on the status line; 다른 3곳 보기 never brings it back; 설정 → 뺀 곳 1곳 → 다시 넣기 empties it; a fresh pick shows it again; no sideways scroll', async () => {
   const problems = [];
   for (const width of [320, 390]) {
     for (const dark of [false, true]) {
@@ -2954,7 +2970,8 @@ await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 c
       for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${tag} ${k}: ${hit[k].join(', ')}`);
       if (hit.over > 0) problems.push(`${tag}: overflows ${hit.over}`);
       const drawn = await page.$$eval('#cards .card .visited', (bs) => bs.map((b) => Math.round(b.getBoundingClientRect().height)));
-      if (drawn.some((h) => h !== 44)) problems.push(`${tag}: drawn ${drawn}`);
+      // Changed on purpose (ADR-0088): the first card's sits beside 길찾기 at its 48; the row cards' keep the 44 box
+    if (drawn.some((h, i) => h !== (i === 0 ? 48 : 44))) problems.push(`${tag}: drawn ${drawn}`);
       const out = ids[0];
       // the card nodes and their photos are marked: a rebuild would lose the marks
       await page.evaluate(() => document.querySelectorAll('#cards .card, #cards img').forEach((e) => (e.__keep = 1)));
@@ -3157,6 +3174,110 @@ await check('LP3', 'an address under /jeju/ that is no page: 404 with the 404 pa
   const hrefs = await page.$$eval('a', (as) => as.map((a) => a.getAttribute('href')));
   assert(hrefs.includes('/') && hrefs.includes('/jeju/'), `links ${hrefs}`);
   await ctx.close();
+});
+
+// --- ADR-0088 (specs/visual-refresh.md S1·S2·S4): the refreshed look, measured on the real page ---
+await check('VR1', 'visual refresh at 320·390 × light·dark: home, results, saved list and the basis sheet screenshot into design/qa/visual-refresh with no sideways scroll; the logo only on the first screen; body, tag, 아무거나 and ♥ N open words ≥ 4.5:1 on what is under them; on the results one --main fill (the first card\'s 길찾기) and a shadow only on 다른 3곳 보기 (and the sheet)', async () => {
+  const problems = [];
+  const dir = join(appDir, 'design/qa/visual-refresh');
+  mkdirSync(dir, { recursive: true });
+  // contrast of each selector's words on the first opaque background at or above it (WCAG 2.x)
+  const measure = (page, sels) =>
+    page.evaluate((sels) => {
+      const rgb = (s) => (s.match(/[\d.]+/g) ?? []).map(Number);
+      const lum = ([r, g, b]) => {
+        const c = [r, g, b].map((v) => {
+          v /= 255;
+          return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+      };
+      const under = (e) => {
+        for (let n = e; n; n = n.parentElement) {
+          const c = rgb(getComputedStyle(n).backgroundColor);
+          if (c.length === 3 || (c.length === 4 && c[3] === 1)) return c.slice(0, 3);
+        }
+        return rgb(getComputedStyle(document.documentElement).backgroundColor).slice(0, 3);
+      };
+      const out = {};
+      for (const s of sels) {
+        const e = document.querySelector(s);
+        if (!e) {
+          out[s] = null;
+          continue;
+        }
+        const [a, b] = [lum(rgb(getComputedStyle(e).color)), lum(under(e))].sort((x, y) => y - x);
+        out[s] = Math.round(((a + 0.05) / (b + 0.05)) * 100) / 100;
+      }
+      return out;
+    }, sels);
+  const overflow = (page) => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    for (const dark of [false, true]) {
+      const tag = `${width}${dark ? '-dark' : '-light'}`;
+      const name = (what) => join(dir, `${what}-${tag}.png`);
+      const { ctx, page } = await fresh({ width, height, dark });
+      await page.waitForSelector('#today:not(.wait)');
+      await page.waitForSelector('.mood .pair img');
+      if (await overflow(page)) problems.push(`${tag} home: ${await overflow(page)}px sideways`);
+      if (!(await visible(page, '.top .logo'))) problems.push(`${tag} home: no logo`);
+      await page.screenshot({ path: name('home'), fullPage: true });
+      const home = await measure(page, ['.lede', '.any', '.mood .ex', '.brand']);
+      await tapText(page, '[data-mood="walk"]');
+      await waitCards(page);
+      await sleep(300); // the photos in view (a local stand-in) are drawn
+      if (await overflow(page)) problems.push(`${tag} results: ${await overflow(page)}px sideways`);
+      if (await visible(page, '.top .logo')) problems.push(`${tag} results: the logo shows`);
+      await page.screenshot({ path: name('results'), fullPage: false });
+      await page.screenshot({ path: name('results-full'), fullPage: true });
+      const res = await measure(page, ['.card.lead .reason', '.card.lead .tag', '.card.lead .go', '.card.row .reason', '.card.row .go', '.more']);
+      const look = await page.evaluate(() => {
+        const probe = document.createElement('i');
+        probe.style.background = 'var(--main)';
+        document.body.append(probe);
+        const main = getComputedStyle(probe).backgroundColor;
+        probe.remove();
+        const shown = (e) => e.getClientRects().length > 0;
+        const all = [...document.querySelectorAll('#results *')].filter(shown);
+        return {
+          fills: all.filter((e) => getComputedStyle(e).backgroundColor === main).map((e) => e.className || e.tagName),
+          shadows: [...document.querySelectorAll('body *')].filter((e) => shown(e) && getComputedStyle(e).boxShadow !== 'none').map((e) => e.className || e.tagName),
+          textShadows: [...document.querySelectorAll('body *')].filter((e) => getComputedStyle(e).textShadow !== 'none').length,
+        };
+      });
+      if (look.fills.length !== 1 || !/\bgo\b/.test(look.fills[0])) problems.push(`${tag} results --main fills: ${JSON.stringify(look.fills)}`);
+      if (look.shadows.join() !== 'more') problems.push(`${tag} results shadows: ${JSON.stringify(look.shadows)}`);
+      if (look.textShadows) problems.push(`${tag} text-shadow on ${look.textShadows}`);
+      // the saved list, with ♥ N open
+      await tapText(page, '#cards .card.lead .heart');
+      await tapText(page, '#cards .card.row .heart');
+      await tapText(page, '#saved');
+      await page.waitForSelector('#savedView:not([hidden]) .card');
+      await sleep(300);
+      if (await overflow(page)) problems.push(`${tag} saved: ${await overflow(page)}px sideways`);
+      await page.screenshot({ path: name('saved'), fullPage: false });
+      await page.screenshot({ path: name('saved-full'), fullPage: true });
+      const saved = await measure(page, ['#saved[aria-pressed="true"] .n', '#savedView .card .reason', '#savedView .backup .tbtn']);
+      // a sheet (the basis sheet), over the saved list
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await tapText(page, '#basis');
+      await page.waitForSelector('.sheet');
+      await sleep(300);
+      if (await overflow(page)) problems.push(`${tag} sheet: ${await overflow(page)}px sideways`);
+      await page.screenshot({ path: name('sheet'), fullPage: false });
+      const sheetShadow = await page.$eval('.sheet', (e) => getComputedStyle(e).boxShadow);
+      if (sheetShadow === 'none') problems.push(`${tag} sheet: no --float`);
+      const sheet = await measure(page, ['.sheet .opt .nm', '.sheet .group-h']);
+      const all = { ...home, ...res, ...saved, ...sheet };
+      console.log(`      VR1 ${tag}: ${Object.entries(all).map(([k, v]) => `${k} ${v}`).join(' · ')}`);
+      for (const [k, v] of Object.entries(all)) {
+        if (v === null) problems.push(`${tag} ${k} not found`);
+        else if (v < 4.5) problems.push(`${tag} ${k} ${v}:1`);
+      }
+      await ctx.close();
+    }
+  }
+  assert(!problems.length, problems.join(' | '));
 });
 
 await browser.close();

@@ -1198,8 +1198,8 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
     expect(cssRule('.heart')).toMatch(/width:\s*44px/);
     expect(cssRule('.heart')).toMatch(/height:\s*44px/);
     expect(cssRule('.more')).toMatch(/min-height:\s*52px/);
-    // Changed on purpose (ADR-0075 3): a mood row now holds 「예:」 and two 52px photos, so it is 84 tall from the start
-    expect(cssRule('.mood')).toMatch(/min-height:\s*84px/);
+    // Changed on purpose (ADR-0088): a mood row holds 「예:」 and two 48px photos on the grey face, 72 tall from the start
+    expect(cssRule('.mood')).toMatch(/min-height:\s*72px/);
     expect(cssRule('.opt')).toMatch(/min-height:\s*56px/);
     expect(cssRule('button')).toMatch(/touch-action:\s*manipulation/);
   });
@@ -2262,14 +2262,15 @@ describe('결과 화면 (ADR-0075, plans/home-refresh.md U1)', () => {
     expect(how().textContent).toBe('범위 안에 맞는 곳이 적어서 가장 가까운 곳으로 골랐어요.');
   });
 
-  it('the first card\'s 길찾기 is the filled 48 line; the row cards\' and the saved rows\' stay the 44 text button', async () => {
+  // Changed on purpose (ADR-0088 2): the first card's 길찾기 is the screen's one --main fill
+  it('the first card\'s 길찾기 is the filled 48 button; the row cards\' and the saved rows\' stay the 44 face button', async () => {
     render();
     await tap('[data-mood="rest"]');
     expect($$('#cards .card.lead a.go')).toHaveLength(1);
     expect($$('#cards .card.row a.go')).toHaveLength(2);
     expect(cssRule('.card.lead .go')).toMatch(/min-height:\s*48px/);
-    expect(cssRule('.card.lead .go')).toMatch(/background:\s*var\(--main-tint\)/);
-    expect(cssRule('.card.lead .go')).toMatch(/color:\s*var\(--text\)/);
+    expect(cssRule('.card.lead .go')).toMatch(/background:\s*var\(--main\)/);
+    expect(cssRule('.card.lead .go')).toMatch(/color:\s*var\(--on-main\)/);
     expect(cssRule('.go')).not.toMatch(/min-height|background/);
     expect(cssRule('.alt')).toMatch(/margin:\s*20px 0 -8px/); // 20 gap + 20 = 40 under the first card
   });

@@ -517,7 +517,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     span.replaceChildren(t, el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
   }
 
-  function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null, season: string | null = null): HTMLElement {
+  /** `tag`: the first card's travel time (「차로 약 10분」) goes in a tag (ADR-0088), the words and their order as they are. */
+  function metaEl(meta: string | null, dest: MapApp | null, indoor = false, market: string | null = null, season: string | null = null, tag = false): HTMLElement {
     const metaEl = el(doc, 'p', { class: 'meta' });
     if (indoor) {
       metaEl.append(el(doc, 'span', { class: 'indoor' }, COPY.indoor));
@@ -534,7 +535,12 @@ export function createRenderer(doc: Document, els: Els): Renderer {
       metaEl.append(el(doc, 'span', { class: 'market' }, market));
       if (meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
     }
-    if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
+    const time = tag && meta ? /(?:차로|걸어서) 약 .+$/.exec(meta) : null;
+    if (meta && time) {
+      const travel = el(doc, 'span', { class: 'travel' }, meta.slice(0, time.index));
+      travel.append(el(doc, 'span', { class: 'tag' }, time[0]));
+      metaEl.append(travel);
+    } else if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
     // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
     // "… 5분 ·" and the next starts with "카카오맵", never with "·".
     if (meta && dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
@@ -590,7 +596,7 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const inSeason = day ? null : seasonOn(spot.season, whenDay(s));
     const season = inSeason ? seasonText(inSeason) : null;
     if (meta || dest || indoor || market || season) {
-      const m = metaEl(meta, dest ? s.mapApp : null, indoor, market, season);
+      const m = metaEl(meta, dest ? s.mapApp : null, indoor, market, season, !day && kind === 'lead');
       // kept on another day (heuristic audit H1): the empty heart says so, not 「not saved」
       if (!day) setHeld(s, m, spot.id);
       card.append(m);

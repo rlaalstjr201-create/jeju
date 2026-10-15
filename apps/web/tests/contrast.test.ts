@@ -90,14 +90,15 @@ describe('ADR-0088: the new faces hold AA (SPEC §2.2)', () => {
   });
 });
 
-describe('ADR-0075: the first card\'s 길찾기 is --text on --main-tint (--main there would miss AA)', () => {
-  it('.card.lead .go fills with --main-tint and writes --text: ≥ 4.5:1 in light and dark', () => {
-    expect(css).toMatch(/\.card\.lead \.go\s*\{[^}]*background:\s*var\(--main-tint\)[^}]*color:\s*var\(--text\)/);
+// Changed on purpose (ADR-0088 2): the first card's 길찾기 is the --main fill (was --text on --main-tint, ADR-0075)
+describe('ADR-0088: the first card\'s 길찾기 is the screen\'s one --main fill', () => {
+  it('.card.lead .go fills with --main and writes --on-main: ≥ 4.5:1 in light and dark, pressed too', () => {
+    expect(css).toMatch(/\.card\.lead \.go\s*\{[^}]*background:\s*var\(--main\)[^}]*color:\s*var\(--on-main\)/);
+    expect(css).toMatch(/\.card\.lead \.go:active\s*\{\s*background:\s*var\(--main-press\)/);
     for (const t of [light, dark]) {
-      expect(ratio(t['--text'], t['--main-tint'])).toBeGreaterThanOrEqual(4.5);
-      expect(ratio(t['--text'], t['--fill'])).toBeGreaterThanOrEqual(4.5); // pressed
+      expect(ratio(t['--on-main'], t['--main'])).toBeGreaterThanOrEqual(4.5);
+      expect(ratio(t['--on-main'], t['--main-press'])).toBeGreaterThanOrEqual(4.5);
     }
-    expect(ratio(light['--main'], light['--main-tint'])).toBeLessThan(4.5);
   });
 });
 

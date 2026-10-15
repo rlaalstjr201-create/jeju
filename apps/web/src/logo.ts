@@ -12,5 +12,5 @@ export function markSvg(size: number): string {
 
 /** The symbol, the wordmark and the grey region after the colon: 「여차나:제주」. */
 export function logoInner(region = '제주'): string {
-  return `${markSvg(22)}여차나<span class="rg">:${region}</span>`;
+  return `${markSvg(22)}<span>여차나<span class="rg">:${region}</span></span>`;
 }
