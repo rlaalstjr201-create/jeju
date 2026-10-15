@@ -2,7 +2,9 @@
 // (Request → Response), so any host that speaks it can mount it. POST a JSON array → validated → the
 // (day, place, event) counters go up. It reads nothing else from the request: no IP, no user agent, no
 // cookie is looked at or stored.
+import { dayOf } from '../src/dates';
 import type { UsageEvent } from '../src/track';
+import { readLimited } from './feedback';
 import type { CounterStore } from './store';
 import { MAX_BYTES, parseBatch } from './validate';
 
@@ -30,11 +32,16 @@ function idsOf(ev: UsageEvent): string[] {
   return [ev.id!];
 }
 
-export async function handleEvents(req: Request, store: CounterStore): Promise<Response> {
+/** `now`: the collector's clock — an event's day must be within one of its Jeju day (validate.ts). */
+export async function handleEvents(req: Request, store: CounterStore, now: () => Date = () => new Date()): Promise<Response> {
   if (req.method !== 'POST') return new Response(null, { status: 405, headers: { allow: 'POST' } });
-  const declared = Number(req.headers.get('content-length'));
-  if (declared > MAX_BYTES) return new Response(null, { status: 413 });
-  const batch = parseBatch(await req.text());
+  // like /api/feedback: a length is required (a beacon's string says one) and no more than MAX_BYTES is ever read
+  const length = req.headers.get('content-length');
+  if (length === null) return new Response(null, { status: 411 });
+  if (!(Number(length) <= MAX_BYTES)) return new Response(null, { status: 413 });
+  const body = await readLimited(req, MAX_BYTES);
+  if (body === null) return new Response(null, { status: 413 });
+  const batch = parseBatch(body, dayOf(now()));
   if (!batch.ok) return new Response(batch.error, { status: batch.status });
   // Summed first, so a batch is one write per counter.
   const sums = new Map<string, number>();

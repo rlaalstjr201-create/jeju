@@ -2,7 +2,7 @@
 // with known fields and values only. Anything else is refused whole — so a coordinate, an identifier or a
 // time of day can never be stored by accident.
 import { AREAS } from '../src/areas';
-import { isDay } from '../src/dates';
+import { addDays, isDay, type Day } from '../src/dates';
 import { SEASON_KINDS } from '../src/season';
 import type { UsageEvent } from '../src/track';
 
@@ -30,14 +30,16 @@ const SRC_EVENTS = new Set(['tap', 'open', 'map']);
 
 const inSet = (set: Set<string>, v: unknown) => typeof v === 'string' && set.has(v);
 
-/** null when the event is well formed, else why not. */
-export function eventProblem(x: unknown): string | null {
+/** null when the event is well formed, else why not. `today` (the collector's Jeju day): `d` is within one day of it —
+ * a phone's clock a little off at midnight — so a day far off cannot keep the daily 「0건」 check quiet (ADR-0078 2). */
+export function eventProblem(x: unknown, today?: Day): string | null {
   if (!x || typeof x !== 'object' || Array.isArray(x)) return 'not an object';
   const o = x as Record<string, unknown>;
   const extra = Object.keys(o).find((k) => !FIELDS.has(k));
   if (extra) return `unknown field ${extra}`;
   if (!inSet(EVENTS, o.e)) return 'e';
   if (!isDay(o.d)) return 'd';
+  if (today && (o.d < addDays(today, -1) || o.d > addDays(today, 1))) return 'd not near today';
   if (typeof o.id === 'string' && o.id.startsWith('src:')) {
     if (!SRC_ID.test(o.id)) return 'src';
     if (!inSet(SRC_EVENTS, o.e)) return `src on ${o.e}`;
@@ -67,7 +69,7 @@ export function eventProblem(x: unknown): string | null {
 
 export type Batch = { ok: true; events: UsageEvent[] } | { ok: false; status: 400 | 413; error: string };
 
-export function parseBatch(body: string): Batch {
+export function parseBatch(body: string, today?: Day): Batch {
   if (new TextEncoder().encode(body).length > MAX_BYTES) return { ok: false, status: 413, error: 'too large' };
   let v: unknown;
   try {
@@ -78,7 +80,7 @@ export function parseBatch(body: string): Batch {
   if (!Array.isArray(v) || v.length === 0) return { ok: false, status: 400, error: 'not a non-empty array' };
   if (v.length > MAX_EVENTS) return { ok: false, status: 413, error: 'too many events' };
   for (let i = 0; i < v.length; i++) {
-    const p = eventProblem(v[i]);
+    const p = eventProblem(v[i], today);
     if (p) return { ok: false, status: 400, error: `event ${i}: ${p}` };
   }
   return { ok: true, events: v as UsageEvent[] };

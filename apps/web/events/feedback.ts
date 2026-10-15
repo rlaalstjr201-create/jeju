@@ -74,8 +74,9 @@ export function parseFeedback(body: string): Parsed {
   return { ok: true, feedback: out };
 }
 
-/** The body as text, or null once it passes `max` bytes (read as a stream: never more than that is held). */
-async function readLimited(req: Request, max: number): Promise<string | null> {
+/** The body as text, or null once it passes `max` bytes (read as a stream: never more than that is held). The
+ * collector (handler.ts) reads its batches the same way. */
+export async function readLimited(req: Request, max: number): Promise<string | null> {
   if (!req.body) return '';
   const reader = req.body.getReader();
   const chunks: Uint8Array[] = [];

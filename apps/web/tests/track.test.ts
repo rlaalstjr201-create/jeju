@@ -54,6 +54,21 @@ describe('track.ts — batching', () => {
     expect(() => boom.flush()).not.toThrow();
   });
 
+  // 출시 전 점검 F5 (idempotency-security.md Q1): an in-app WebView can close for the map app without going hidden
+  it('F5 (Q1) pagehide sends what is queued; the queue is emptied first, so hidden after it sends nothing twice', () => {
+    const send = vi.fn(() => true);
+    const t = createTracker({ url: URL_, send, enabled: () => true, online: () => true, doc: document });
+    t.track(ev(1));
+    window.dispatchEvent(new Event('pagehide'));
+    expect(send).toHaveBeenCalledTimes(1);
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+    document.dispatchEvent(new Event('visibilitychange'));
+    delete (document as unknown as Record<string, unknown>).visibilityState;
+    window.dispatchEvent(new Event('pagehide'));
+    vi.advanceTimersByTime(FLUSH_MS * 2);
+    expect(send).toHaveBeenCalledTimes(1);
+  });
+
   it('no address, or 기록 끄기: nothing is queued and nothing is sent', () => {
     const send = vi.fn(() => true);
     for (const url of [undefined, '']) {
@@ -152,9 +167,10 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
     advance();
     $(`#cards .card[data-id="${exp.id}"] a.book`).click();
     await flush();
-    expect(beacon).not.toHaveBeenCalled(); // batched until 10s / 20 events / hidden
+    // Changed on purpose (F5): batched until 10s / 20 events / hidden, except that a map or booking link sends at once
+    expect(beacon).toHaveBeenCalledTimes(2);
     hide();
-    expect(beacon).toHaveBeenCalledTimes(1);
+    expect(beacon).toHaveBeenCalledTimes(2); // nothing was left to send
     expect(events()).toEqual([
       { e: 'tap', ...ctx },
       ...ids.map((id) => ({ e: 'shown', id, ...ctx })),
@@ -201,6 +217,54 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
     hide();
     for (const e of events()) expect(e).toMatchObject({ basis: 'area', area: '애월', range: '60', dated: true });
     expect(events().filter((e) => e.e === 'tap')).toHaveLength(1);
+  });
+});
+
+// 출시 전 점검 F5 (idempotency-security.md Q1): leaving for the map app, an in-app WebView may freeze or close without
+// going hidden — and with it the 숙소 링크's 길찾기 count (ADR-0089 5)
+describe('출시 전 점검 F5 (Q1): 길찾기·예약 send at once', () => {
+  it('a 길찾기, the card link and a booking link: sent the moment they are counted, src: too; hidden after adds nothing; a double tap still one', async () => {
+    window.sessionStorage.setItem('jeju.src', '"aewol-gh1"');
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await tap(`[data-mood="${exp.mood}"]`);
+    expect(beacon).not.toHaveBeenCalled();
+    const ids = cardIds() as string[];
+    $(`#cards .card[data-id="${ids[1]}"] a.go`).click();
+    expect(beacon).toHaveBeenCalledTimes(1);
+    expect(sent[0].map((e) => (e as UsageEvent).e)).toEqual(['tap', 'tap', 'shown', 'shown', 'shown', 'map', 'map']);
+    expect(sent[0].filter((e) => String((e as UsageEvent).id).startsWith('src:'))).toEqual([
+      { e: 'tap', id: 'src:aewol-gh1', d: current().state().today },
+      { e: 'map', id: 'src:aewol-gh1', d: current().state().today },
+    ]);
+    advance(100);
+    $(`#cards .card[data-id="${ids[1]}"] .card-link`).click(); // the 2nd half of a double tap: not counted
+    expect(beacon).toHaveBeenCalledTimes(1);
+    advance();
+    $(`#cards .card[data-id="${exp.id}"] a.book`).click();
+    expect(beacon).toHaveBeenCalledTimes(2);
+    expect(sent[1]).toEqual([expect.objectContaining({ e: 'book', id: exp.id })]);
+    hide();
+    window.dispatchEvent(new Event('pagehide'));
+    expect(beacon).toHaveBeenCalledTimes(2);
+  });
+});
+
+// 출시 전 점검 F6 (bugs.md B4): ADR-0086's measure is 「♥ 0인데 지난 날이 접힌 채 목록을 연 비율」 — people coming to change the
+// map app or send 의견 were counted in it
+describe('출시 전 점검 F6 (B4): 홈 「설정 · 지도 앱 · 의견」 is not a saved-list open', () => {
+  it('설정: no open; ♥ N: one, with live0 and past', async () => {
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { value: () => undefined, configurable: true, writable: true });
+    window.localStorage.setItem('jeju.saved.v2', JSON.stringify([{ id: others[0].id, date: '2026-10-08', order: 0, at: '2026-10-07' }]));
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp), today: () => new Date('2026-10-10T10:00:00+09:00') });
+    await flush();
+    await tap('#homeMore [data-action="settings"]');
+    expect(current().state().view).toBe('saved');
+    hide();
+    expect(events().filter((e) => e.e === 'open')).toEqual([]);
+    await tap('[data-action="close-saved"]');
+    await tap('#saved');
+    hide();
+    expect(events().filter((e) => e.e === 'open')).toEqual([{ e: 'open', live0: true, past: true, range: '30', basis: 'here', dated: false, d: '2026-10-10' }]);
   });
 });
 

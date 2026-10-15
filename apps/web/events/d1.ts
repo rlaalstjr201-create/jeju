@@ -31,9 +31,10 @@ export function d1Store(db: D1Like): CounterStore {
   };
 }
 
-/** Events counted on `day` or later (a primary-key range scan: no ids leave); the feedback cap count is not one. */
-export async function countSince(db: D1Like, day: string): Promise<number> {
-  const row = await db.prepare("SELECT COALESCE(SUM(n), 0) AS n FROM counters WHERE day >= ?1 AND event != 'capped'").bind(day).first<{ n: number }>();
+/** Events counted from `day` to `until` (a primary-key range scan: no ids leave); the feedback cap count is not one.
+ * `until` (today + 1): a day far ahead, kept from before the collector held days near today, never counts as lately. */
+export async function countSince(db: D1Like, day: string, until: string): Promise<number> {
+  const row = await db.prepare("SELECT COALESCE(SUM(n), 0) AS n FROM counters WHERE day >= ?1 AND day <= ?2 AND event != 'capped'").bind(day, until).first<{ n: number }>();
   return Number(row?.n ?? 0);
 }
 

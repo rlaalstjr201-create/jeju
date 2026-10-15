@@ -289,7 +289,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     const t = now();
     const prev = lastLink.get(key);
     lastLink.set(key, t);
-    if (prev === undefined || t - prev >= delays.guard) count(e, id, undefined, e === 'map' ? seasonShown(id) : null, e === 'map' ? savedFlow(id, date) : undefined);
+    if (prev !== undefined && t - prev < delays.guard) return;
+    count(e, id, undefined, e === 'map' ? seasonShown(id) : null, e === 'map' ? savedFlow(id, date) : undefined);
+    // sent now: the map app may take the page away before it goes hidden (an in-app WebView); the queue empties first
+    tracker.flush();
   }
   // --- the survey (ADR-0081, specs/survey.md): all on this device; only 보내기 sends anything ---
   let mapMarked = !!survey0.map;
@@ -620,11 +623,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     request('show');
   }
 
-  function openSaved() {
+  /** `counted`: false for the home's 설정 · 지도 앱 · 의견, which comes to this screen for its settings, not the list. */
+  function openSaved(counted = true) {
     hush();
     dispatch({ type: 'openSaved' });
     // once per opening, here and not on a draw (ADR-0085): ♥ N at 0, a folded 지난 날 line
-    count('open', undefined, undefined, null, { ...(savedCount(state) === 0 ? { live0: true } : {}), ...(savedDays(state).past.length ? { past: true } : {}) });
+    if (counted) count('open', undefined, undefined, null, { ...(savedCount(state) === 0 ? { live0: true } : {}), ...(savedDays(state).past.length ? { past: true } : {}) });
     nav.push(SAVED);
     request('show');
     // The home-screen nudge (ADR-0063 2d): once, the first time the saved list opens after a save, where it
@@ -903,7 +907,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
     if (action === 'settings') {
       if (!guarded('settings') && state.view === 'home') {
-        openSaved();
+        openSaved(false);
         doc.getElementById('settingsH')?.scrollIntoView({ block: 'start' });
         doc.getElementById('settingsH')?.focus({ preventScroll: true });
       }

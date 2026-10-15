@@ -83,7 +83,8 @@ export function createAnalytics(win: Window, ids: AnalyticsIds): Analytics | nul
       w.gtag = gtag;
       gtag('js', new Date());
       gtag('config', ga, {
-        page_location: `${win.location.origin}${win.location.pathname}${win.location.search}`,
+        // never the query: a 숙소 링크's position and tag (ADR-0089 3) stay out whatever ran first
+        page_location: `${win.location.origin}${win.location.pathname}`,
         allow_google_signals: false,
         allow_ad_personalization_signals: false,
       });

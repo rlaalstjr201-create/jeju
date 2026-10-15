@@ -199,7 +199,10 @@ describe('F3 상한 — 실제 SQLite (node:sqlite, 마이그레이션 그대로
     ]);
     expect(sqlite.prepare('SELECT day, id, event, n FROM counters').all()).toEqual([{ day: '2026-10-04', id: 'feedback:capped', event: 'capped', n: 1 }]);
     expect(sqlite.prepare('SELECT * FROM feedback LIMIT 1').get()).toEqual({ day: '2026-10-04', went: 'went', pains: '["far"]', pain: null, wish: null, v: 'dev' });
-    expect(await countSince(db, '2026-10-01')).toBe(0); // the cap count is not a usage event (health)
+    expect(await countSince(db, '2026-10-01', '2026-10-05')).toBe(0); // the cap count is not a usage event (health)
+    // 출시 전 점검 F7 (S1): nor is a day past the upper bound, in the real SQL
+    sqlite.prepare("INSERT INTO counters (day, id, event, n) VALUES ('2099-12-31', 'mood:rest', 'tap', 1), ('2026-10-05', 'mood:rest', 'tap', 2)").run();
+    expect(await countSince(db, '2026-10-01', '2026-10-05')).toBe(2);
     sqlite.close();
   });
 });

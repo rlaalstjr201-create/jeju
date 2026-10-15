@@ -1,6 +1,7 @@
 // Anonymous usage counts (ADR-0061, specs/usage-events.md): which places are shown, saved, opened on the map
 // or looked up for booking. Place-level events only: no coordinates, no 숙소 position, no device or user id,
-// no time of day. Batched into navigator.sendBeacon; offline batches are dropped and nothing is retried. With
+// no time of day. Batched into navigator.sendBeacon (sent at once on a map or booking link, which may take the page
+// away); offline batches are dropped and nothing is retried. With
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
 import type { AreaName } from './areas';
 import type { Day } from './dates';
@@ -140,6 +141,8 @@ export function createTracker(deps: TrackerDeps): Tracker {
     },
     { signal },
   );
+  // an in-app WebView may freeze or close without going hidden (leaving for the map app); pagehide still comes
+  doc?.defaultView?.addEventListener('pagehide', flush, { signal });
   signal?.addEventListener('abort', () => {
     stop();
     queue = [];

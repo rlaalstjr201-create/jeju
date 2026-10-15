@@ -16,7 +16,7 @@
 
 ## 클라이언트
 
-- `src/track.ts`: `track(event)` → 메모리 큐, 10초 또는 20건마다, 그리고 `visibilitychange: hidden`에 `navigator.sendBeacon(ENDPOINT, JSON 배열)`.
+- `src/track.ts`: `track(event)` → 메모리 큐, 10초 또는 20건마다, 그리고 `visibilitychange: hidden`·`pagehide`에 `navigator.sendBeacon(ENDPOINT, JSON 배열)`. 길찾기·지도·예약 링크를 센 직후에도 바로 보낸다(지도 앱으로 넘어가며 인앱 WebView가 숨김 없이 멈추거나 닫힐 수 있어서). 큐를 비우고 보내므로 두 번 가지 않는다.
 - `ENDPOINT` = 빌드 환경변수 `VITE_EVENTS_URL`. 없으면 no-op(개발·테스트 기본). 운영 빌드(`SITE_URL`)는 기본 `/api/events`이고, 비우면 빌드가 실패한다(ADR-0078).
 - 끄기: 저장 목록 각주 아래 `기록 끄기`/`기록 켜기` 글자 버튼, 값은 로컬 저장. 꺼져 있으면 큐도 쌓지 않음.
 - 고지 문구: `어디가 좋았는지 익명으로 세어요` (저장 목록 각주에 한 줄).
@@ -28,7 +28,7 @@
 
 ## 받는 쪽 (최소)
 
-- `apps/web/events/`에 호스트 비종속 핸들러 하나: POST JSON 배열 → 검증(필드·값 목록·크기 ≤ 8KB·배열 ≤ 50) → `(d, id, e)` 카운터 증가. IP·UA 저장 안 함.
+- `apps/web/events/`에 호스트 비종속 핸들러 하나: POST JSON 배열 → 검증(필드·값 목록·크기 ≤ 8KB·배열 ≤ 50, `d`는 서버의 제주 날짜 ±1일) → `(d, id, e)` 카운터 증가. 길이 머리(Content-Length)가 없으면 411, 본문은 8KB까지만 읽는다(`/api/feedback`과 같음). IP·UA 저장 안 함. 수집 상태(`/api/events/health`)는 어제~내일만 센다.
 - 저장소 어댑터는 인터페이스로 두고 메모리 구현 + 테스트만. 실제 저장소(KV/D1 등)는 호스트 결정 후.
 - 집계 스크립트: 카운터 덤프 → `review/popularity.json` (`{ id, shown, save, map, book }`). 장소 이벤트 다섯(`shown`·`save`·`unsave`·`map`·`book`)만 센다(`visited`·`unvisited`는 빠진다, ADR-0087).
 

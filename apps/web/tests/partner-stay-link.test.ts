@@ -235,8 +235,12 @@ describe('F15 (S2) the 숙소 링크 comma as %2C', () => {
 });
 
 describe('S3 the collector, the aggregate and the report', () => {
-  const d = '2026-10-15';
-  const post = (body: unknown) => new Request('https://events.test/e', { method: 'POST', body: JSON.stringify(body) });
+  // the collector's own day (an event's day is within one of it) and the length a beacon says
+  const d = TODAY;
+  const post = (body: unknown) => {
+    const text = JSON.stringify(body);
+    return new Request('https://events.test/e', { method: 'POST', body: text, headers: { 'content-length': String(new TextEncoder().encode(text).length) } });
+  };
 
   it('takes src:<tag> on open / tap / map with nothing but the day; refuses a bad tag, another event, more fields', () => {
     for (const e of ['open', 'tap', 'map']) expect(parseBatch(JSON.stringify([{ e, id: 'src:aewol-gh1', d }])).ok, e).toBe(true);

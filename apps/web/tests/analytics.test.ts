@@ -94,6 +94,24 @@ describe('createAnalytics', () => {
     expect(srcs()).toEqual([`https://www.googletagmanager.com/gtag/js?id=${GA}`]); // no naver id: no wcslog
   });
 
+  // 출시 전 점검 F13 (idempotency-security.md S6): no 숙소 position or tag in GA4 depended on the app clearing the
+  // query before GA4 was added
+  it('F13 (S6) page_location is the page without its query (stay, src, utm), added at once or after load', () => {
+    const config = () => (w.dataLayer!.map((x) => [...x]).find((c) => c[0] === 'config')![2] as { page_location: string }).page_location;
+    try {
+      window.history.replaceState(null, '', '/?stay=33.4631,126.3105&src=aewol-gh1&utm_source=chatgpt.com');
+      createAnalytics(window, { ga4: GA })!.setEnabled(true); // jsdom: loaded already (the app mounted after load)
+      expect(config()).toBe(`${location.origin}/`);
+      delete w.dataLayer;
+      loading();
+      createAnalytics(window, { ga4: GA })!.setEnabled(true);
+      loaded();
+      expect(config()).toBe(`${location.origin}/`);
+    } finally {
+      window.history.replaceState(null, '', '/');
+    }
+  });
+
   it('gaParams never carries the area or the day', () => {
     expect(Object.keys(gaParams({ e: 'map', id: 'x', basis: 'area', area: '애월', d: '2026-10-03', indoor: true }))).toEqual(['place_id', 'basis']);
   });
@@ -168,8 +186,9 @@ function fakeD1() {
           return { results: [...rows.values()].map((r) => ({ d: r.day, id: r.id, e: r.event, n: r.n })) as T[] };
         },
         async first<T>() {
-          expect(sql).toMatch(/SUM\(n\).*WHERE day >= \?1/);
-          return { n: [...rows.values()].filter((r) => r.day >= (args[0] as string)).reduce((s, r) => s + r.n, 0) } as T;
+          expect(sql).toMatch(/SUM\(n\).*WHERE day >= \?1 AND day <= \?2/);
+          const [from, until] = args as [string, string];
+          return { n: [...rows.values()].filter((r) => r.day >= from && r.day <= until).reduce((s, r) => s + r.n, 0) } as T;
         },
       };
       return stmt;
@@ -179,8 +198,17 @@ function fakeD1() {
 }
 
 describe('POST /api/events → D1', () => {
+  // a beacon says its length (F11)
   const post = (body: string, headers: Record<string, string> = {}) =>
-    new Request('https://x.test/api/events', { method: 'POST', body, headers: { 'content-type': 'application/json', ...headers } });
+    new Request('https://x.test/api/events', { method: 'POST', body, headers: { 'content-type': 'application/json', 'content-length': String(new TextEncoder().encode(body).length), ...headers } });
+  // the collector's own Jeju day is 2026-10-03 (F7: an event's day is within one of it)
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-10-03T03:00:00Z'));
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   it('a valid batch: 204, no-store, counters summed per day × place × event', async () => {
     const { db, rows } = fakeD1();
@@ -230,11 +258,13 @@ describe('GET /api/events/health', () => {
       await store.increment('2026-10-01', 'p1', 'save', 5);
       await store.increment('2026-10-02', 'p1', 'save', 2);
       await store.increment('2026-10-03', 'mood:rest', 'tap', 3);
+      // 출시 전 점검 F7 (S1): a day far ahead (written before the collector held days to today ± 1) is not "lately"
+      await store.increment('2099-12-31', 'mood:rest', 'tap', 1);
       const res = await health({ env: { EVENTS_DB: db } });
       expect(res.status).toBe(200);
       expect(res.headers.get('Cache-Control')).toBe('no-store');
       expect(await res.json()).toEqual({ last24h: 5 });
-      expect(await countSince(db, '2026-10-01')).toBe(10);
+      expect(await countSince(db, '2026-10-01', '2026-10-04')).toBe(10);
     } finally {
       vi.useRealTimers();
     }

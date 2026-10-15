@@ -5,16 +5,23 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { aggregate } from '../events/aggregate';
 import { FLOW_IDS, handleEvents } from '../events/handler';
-import { memoryStore } from '../events/store';
+import { memoryStore, type CounterStore } from '../events/store';
 import { MAX_EVENTS, parseBatch } from '../events/validate';
+import { addDays } from '../src/dates';
 import { contextOf, type UsageEvent } from '../src/track';
 
 const ID = 'e654312a-2a40-45cd-9464-a83756bac0fa';
 const ID2 = 'ec5de537-0e1a-4503-b1e8-338822d5ab3c';
 const d = '2026-09-30';
 const base = { range: '30', basis: 'here', dated: false, d } as const;
-const post = (body: unknown, init: RequestInit = {}) =>
-  new Request('https://events.test/e', { method: 'POST', body: typeof body === 'string' ? body : JSON.stringify(body), headers: { 'content-type': 'text/plain;charset=UTF-8' }, ...init });
+/** what sendBeacon sends: a string body, so its length is said (F11); `init.headers` add to or override these */
+const post = (body: unknown, init: RequestInit = {}) => {
+  const text = typeof body === 'string' ? body : JSON.stringify(body);
+  const headers = { 'content-type': 'text/plain;charset=UTF-8', 'content-length': String(new TextEncoder().encode(text).length), ...(init.headers as Record<string, string>) };
+  return new Request('https://events.test/e', { method: 'POST', body: text, ...init, headers });
+};
+/** the collector on the day `d` in Jeju (F7: an event's day is within one of the server's) */
+const handle = (req: Request, store: CounterStore) => handleEvents(req, store, () => new Date(`${d}T12:00:00+09:00`));
 
 describe('U4 받는 쪽 — 검증', () => {
   it('accepts what the app sends: tap, shown, save, unsave, map, book, with an area basis and food sub', async () => {
@@ -22,7 +29,7 @@ describe('U4 받는 쪽 — 검증', () => {
     expect(ctx).toEqual({ mood: 'food', sub: 'cafe', range: 'walk', basis: 'area', area: '애월', dated: true, d });
     const batch: UsageEvent[] = [{ e: 'tap', ...ctx }, ...(['shown', 'save', 'unsave', 'map', 'book'] as const).map((e) => ({ e, id: ID, ...ctx }))];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
-    const res = await handleEvents(post(batch), memoryStore());
+    const res = await handle(post(batch), memoryStore());
     expect(res.status).toBe(204);
   });
 
@@ -78,16 +85,16 @@ describe('U4 받는 쪽 — 검증', () => {
     ['more than 8 KB', `[${' '.repeat(8 * 1024)}]`, 413],
   ])('refuses %s (%#) — and counts nothing', async (_, body, status) => {
     const store = memoryStore();
-    const res = await handleEvents(post(body), store);
+    const res = await handle(post(body), store);
     expect(res.status).toBe(status);
     expect(await store.dump()).toEqual([]);
   });
 
   it('only POST; a declared body over 8 KB is refused before it is read', async () => {
     const store = memoryStore();
-    expect((await handleEvents(new Request('https://events.test/e'), store)).status).toBe(405);
+    expect((await handle(new Request('https://events.test/e'), store)).status).toBe(405);
     const big = post([{ e: 'map', id: ID, d }], { headers: { 'content-length': String(9000) } });
-    expect((await handleEvents(big, store)).status).toBe(413);
+    expect((await handle(big, store)).status).toBe(413);
     expect(await store.dump()).toEqual([]);
   });
 
@@ -95,7 +102,7 @@ describe('U4 받는 쪽 — 검증', () => {
     const body = Array.from({ length: MAX_EVENTS }, () => ({ e: 'shown', id: ID, ...base }));
     expect(JSON.stringify(body).length).toBeLessThan(8 * 1024);
     const store = memoryStore();
-    expect((await handleEvents(post(body), store)).status).toBe(204);
+    expect((await handle(post(body), store)).status).toBe(204);
     expect(await store.dump()).toEqual([{ d, id: ID, e: 'shown', n: MAX_EVENTS }]);
   });
 });
@@ -104,8 +111,8 @@ describe('U4 받는 쪽 — 카운터', () => {
   it('(day, place, event) counters add up exactly across batches; a mood tap counts under mood:<mood>', async () => {
     const store = memoryStore();
     const day2 = '2026-10-01';
-    await handleEvents(post([{ e: 'shown', id: ID, ...base }, { e: 'shown', id: ID2, ...base }, { e: 'save', id: ID, ...base }, { e: 'tap', mood: 'rest', ...base }]), store);
-    await handleEvents(post([{ e: 'shown', id: ID, ...base }, { e: 'map', id: ID, ...base }, { e: 'shown', id: ID, ...base, d: day2 }, { e: 'tap', mood: 'rest', ...base }]), store);
+    await handle(post([{ e: 'shown', id: ID, ...base }, { e: 'shown', id: ID2, ...base }, { e: 'save', id: ID, ...base }, { e: 'tap', mood: 'rest', ...base }]), store);
+    await handle(post([{ e: 'shown', id: ID, ...base }, { e: 'map', id: ID, ...base }, { e: 'shown', id: ID, ...base, d: day2 }, { e: 'tap', mood: 'rest', ...base }]), store);
     const rows = (await store.dump()).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
     expect(rows).toEqual(
       [
@@ -123,9 +130,71 @@ describe('U4 받는 쪽 — 카운터', () => {
   it('nothing from the request but its body is kept: no IP, user agent or cookie in any counter', async () => {
     const store = memoryStore();
     const req = post([{ e: 'map', id: ID, ...base }], { headers: { 'user-agent': 'UA-SECRET', 'x-forwarded-for': '203.0.113.9', cookie: 'c=COOKIE' } });
-    expect((await handleEvents(req, store)).status).toBe(204);
+    expect((await handle(req, store)).status).toBe(204);
     expect(JSON.stringify(await store.dump())).not.toMatch(/UA-SECRET|203\.0\.113\.9|COOKIE/);
     expect(readFileSync(resolve(__dirname, '../events/handler.ts'), 'utf8')).not.toMatch(/user-agent|x-forwarded-for|cf-connecting-ip|headers\.get\((?!'content-length')/i);
+  });
+});
+
+// 출시 전 점검 F7 (idempotency-security.md S1): one event dated 2099 kept the daily 「0건」 check (ADR-0078 2) quiet for good
+describe('출시 전 점검 F7 (S1): the day must be within one of the collector\'s Jeju day', () => {
+  it.each([
+    ['yesterday', addDays(d, -1), 204],
+    ['today', d, 204],
+    ['tomorrow (a phone clock a little ahead at midnight)', addDays(d, 1), 204],
+    ['two days ahead', addDays(d, 2), 400],
+    ['two days back', addDays(d, -2), 400],
+    ['2099', '2099-12-31', 400],
+    ['year 1', '0001-01-01', 400],
+  ])('%s: %s → %i', async (_, day, status) => {
+    const store = memoryStore();
+    expect((await handle(post([{ e: 'tap', mood: 'rest', d }, { e: 'tap', mood: 'rest', d: day }]), store)).status).toBe(status);
+    expect((await store.dump()).length > 0).toBe(status === 204);
+  });
+
+  it('parseBatch without a day to hold it to is as before (the app\'s own checks)', () => {
+    expect(parseBatch(JSON.stringify([{ e: 'tap', mood: 'rest', d: '2099-12-31' }])).ok).toBe(true);
+    expect(parseBatch(JSON.stringify([{ e: 'tap', mood: 'rest', d: '2099-12-31' }]), d)).toMatchObject({ ok: false, status: 400 });
+  });
+});
+
+// 출시 전 점검 F11 (idempotency-security.md S3): without a length the whole body was read into memory first
+describe('출시 전 점검 F11 (S3): a length is required and no more than 8 KB is read', () => {
+  /** a body of `size` bytes as a stream, counting what has been read of it */
+  function stream(size: number) {
+    const read = { n: 0 };
+    const chunk = new Uint8Array(4096).fill(0x20);
+    const body = new ReadableStream<Uint8Array>({
+      pull(c) {
+        if (read.n >= size) return c.close();
+        read.n += chunk.byteLength;
+        c.enqueue(chunk);
+      },
+    });
+    return { body, read };
+  }
+
+  it('no content-length (chunked): 411 with nothing read; like /api/feedback', async () => {
+    const store = memoryStore();
+    const s = stream(1024 * 1024);
+    const req = new Request('https://events.test/e', { method: 'POST', body: s.body, duplex: 'half' } as RequestInit);
+    expect((await handle(req, store)).status).toBe(411);
+    expect(s.read.n).toBeLessThanOrEqual(4096);
+    expect(await store.dump()).toEqual([]);
+  });
+
+  it('a length that understates the body: reading stops past 8 KB → 413', async () => {
+    const store = memoryStore();
+    const s = stream(1024 * 1024);
+    const req = new Request('https://events.test/e', { method: 'POST', body: s.body, duplex: 'half', headers: { 'content-length': '100' } } as RequestInit);
+    expect((await handle(req, store)).status).toBe(413);
+    expect(s.read.n).toBeLessThanOrEqual(8 * 1024 + 2 * 4096);
+  });
+
+  it('what the app sends (a beacon: a string with its length) is taken as before', async () => {
+    const store = memoryStore();
+    expect((await handle(post([{ e: 'tap', mood: 'rest', ...base }]), store)).status).toBe(204);
+    expect(await store.dump()).toEqual([{ d, id: 'mood:rest', e: 'tap', n: 1 }]);
   });
 });
 
@@ -191,7 +260,7 @@ describe('F1 저장 목록 흐름 — 검사', () => {
     ['at (the day saved) itself', { e: 'map', id: ID, from: 'saved', at: d, d }],
   ])('refuses %s — the whole batch', async (_, bad) => {
     const store = memoryStore();
-    const res = await handleEvents(post([{ e: 'open', ...base }, bad]), store);
+    const res = await handle(post([{ e: 'open', ...base }, bad]), store);
     expect(res.status).toBe(400);
     expect(await store.dump()).toEqual([]);
   });
@@ -220,7 +289,7 @@ describe('F7 저장 목록 흐름 — D1 카운터', () => {
 
   it('the added counters go up as in the spec table; the place counters are what they were', async () => {
     const store = memoryStore();
-    await handleEvents(
+    await handle(
       post([
         { e: 'open', ...base },
         { e: 'open', live0: true, past: true, ...base },
@@ -284,7 +353,7 @@ describe('가 봤어요 (ADR-0087, specs/hide-visited.md S5)', () => {
     ];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
     const store = memoryStore();
-    expect((await handleEvents(post(batch), store)).status).toBe(204);
+    expect((await handle(post(batch), store)).status).toBe(204);
     expect((await store.dump()).sort((a, b) => (a.id + a.e < b.id + b.e ? -1 : 1))).toEqual([
       { d, id: ID, e: 'unvisited', n: 1 },
       { d, id: ID, e: 'visited', n: 1 },
