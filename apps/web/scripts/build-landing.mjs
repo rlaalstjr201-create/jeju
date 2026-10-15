@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { normalizeSpots } from '../src/data.ts';
 import { judge } from './seo/keyword-gate.mjs';
 import {
-  assignSlugs, buildSite, contentHash, copiedReasons, kstDay, ownShare, pageLastmods, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
+  assignSlugs, buildSite, contentHash, copiedReasons, HASH_VERSION, kstDay, ownShare, pageLastmods, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
 } from './landing.ts';
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -85,13 +85,18 @@ const urls = ['/', '/privacy', ...pages.map((p) => p.path)];
 // Each page's lastmod is the day what it says last changed (audit D4): data/landing/lastmod.json keeps a hash per
 // page; a second build on the same day writes the same file. Commit it with the data.
 const today = kstDay(new Date());
-const hashes = Object.fromEntries([
-  ['/', contentHash(readFileSync(join(DIST, 'index.html'), 'utf8'), site)],
-  ['/privacy', contentHash(readFileSync(join(DIST, 'privacy.html'), 'utf8'), site)],
-  ...pages.map((p) => [p.path, contentHash(p.html, site)]),
-]);
-const lastmods = pageLastmods(existsSync(LASTMOD) ? read(LASTMOD).pages : null, hashes, today, dataDate);
-const lastmodJson = `${JSON.stringify({ _why: 'Sitemap lastmod per page (audit D4): the day its <main> last changed. Written by the build; commit it.', pages: lastmods }, null, 1)}\n`;
+const htmls = [
+  ['/', readFileSync(join(DIST, 'index.html'), 'utf8')],
+  ['/privacy', readFileSync(join(DIST, 'privacy.html'), 'utf8')],
+  ...pages.map((p) => [p.path, p.html]),
+];
+const hashesBy = (version) => Object.fromEntries(htmls.map(([path, html]) => [path, contentHash(html, site, version)]));
+const prevLastmod = existsSync(LASTMOD) ? read(LASTMOD) : null;
+// a record written by an older contentHash: compare with that version too, so a new way of hashing moves no date
+const prevVersion = prevLastmod?.hash_version ?? 1;
+const legacy = prevLastmod && prevVersion !== HASH_VERSION ? hashesBy(prevVersion) : undefined;
+const lastmods = pageLastmods(prevLastmod?.pages ?? null, hashesBy(HASH_VERSION), today, dataDate, legacy);
+const lastmodJson = `${JSON.stringify({ _why: 'Sitemap lastmod per page (audit D4): the day its <main> last changed, button words left out. Written by the build; commit it.', hash_version: HASH_VERSION, pages: lastmods }, null, 1)}\n`;
 if (!existsSync(LASTMOD) || readFileSync(LASTMOD, 'utf8') !== lastmodJson) writeFileSync(LASTMOD, lastmodJson);
 const changedToday = Object.values(lastmods).filter((e) => e.lastmod === today).length;
 for (const [f, body] of Object.entries(sitemapFiles(urls, site, Object.fromEntries(Object.entries(lastmods).map(([k, v]) => [k, v.lastmod]))))) writeFileSync(join(DIST, f), body);

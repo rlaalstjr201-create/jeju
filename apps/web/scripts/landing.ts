@@ -546,11 +546,14 @@ export interface LastmodEntry {
 }
 /** What a page says, for telling whether it changed: its <main> (the shared header, footer with the data date, and
  * head are left out), with the site address and photos taken out — a SITE_URL or LANDING_PHOTOS=0 build is the same
- * page. */
-export function contentHash(html: string, site: string): string {
+ * page. Version 2 also leaves out the words on the buttons (`a.go`, `a.tbtn`; where they lead still counts): a button
+ * changing 「받기」 to 「보기」 is not a change in what the page says (docs/seo/2026-10-16-generic-search.md a3). */
+export const HASH_VERSION = 2;
+export function contentHash(html: string, site: string, version = HASH_VERSION): string {
   let main = html.match(/<main\b[^>]*>([\s\S]*)<\/main>/)?.[1] ?? html;
   if (site) main = main.split(site).join('');
   main = main.replace(/<img\b[^>]*>/g, '').replace(/<p class="meta">사진: [^<]*<\/p>/g, '');
+  if (version >= 2) main = main.replace(/<a class="(?:go|tbtn)" href="([^"]*)"[^>]*>[^<]*<\/a>/g, '<a href="$1">→</a>');
   // and the boxes they sat in (`<div class="ph sq"></div>`), now empty; the photo's credit line went with it
   for (let was = ''; was !== main; ) [was, main] = [main, main.replace(/<(\w+)\b[^>]*>\s*<\/\1>/g, '')];
   main = main.replace(/\s+/g, ' ');
@@ -558,13 +561,18 @@ export function contentHash(html: string, site: string): string {
 }
 /** Each page's lastmod: kept while its hash is the same, `today` when it changed or is new. With no record yet
  * (`prev` null) every page starts at `start` (the data date the sitemap used before), so the first run changes
- * nothing for IndexNow. Pages that are gone are dropped. Same input, same output (idempotent). */
-export function pageLastmods(prev: Record<string, LastmodEntry> | null, hashes: Record<string, string>, today: string, start: string | null): Record<string, LastmodEntry> {
+ * nothing for IndexNow. Pages that are gone are dropped. Same input, same output (idempotent).
+ * `legacy`: when the record was written by an older contentHash, each page's hash by that version — a page whose old
+ * hash still matches keeps its day (a new way of hashing is not a change on the page). */
+export function pageLastmods(
+  prev: Record<string, LastmodEntry> | null, hashes: Record<string, string>, today: string, start: string | null, legacy?: Record<string, string>,
+): Record<string, LastmodEntry> {
   const out: Record<string, LastmodEntry> = {};
   for (const path of Object.keys(hashes).sort()) {
     const hash = hashes[path];
     const old = prev?.[path];
-    out[path] = { hash, lastmod: old && old.hash === hash ? old.lastmod : prev ? today : start ?? today };
+    const same = !!old && (old.hash === hash || (!!legacy && old.hash === legacy[path]));
+    out[path] = { hash, lastmod: same ? old!.lastmod : prev ? today : start ?? today };
   }
   return out;
 }

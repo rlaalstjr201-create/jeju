@@ -205,6 +205,25 @@ describe('per-page lastmod (audit D4): only a page whose content changed gets a 
     expect(contentHash(page('<a href="/jeju/">한림</a>'), '')).not.toBe(h);
   });
 
+  // docs/seo/2026-10-16-generic-search.md a3: 「받기」→「보기」 alone moved 2,939 dates on 10-16
+  it('contentHash: two place pages that differ only in button words hash the same; where a button leads still counts', () => {
+    const s = site();
+    const html = s.pages.find((p) => p.id === 'a4')!.html;
+    const reworded = html.replace('>앱에서 근처 3곳 보기</a>', '>앱에서 근처 3곳 받기</a>').replace(/>네이버지도로 [^<]*<\/a>/, '>길찾기</a>');
+    expect(reworded).not.toBe(html);
+    expect(contentHash(reworded, 'https://x.test')).toBe(contentHash(html, 'https://x.test'));
+    expect(contentHash(reworded, 'https://x.test', 1)).not.toBe(contentHash(html, 'https://x.test', 1));
+    expect(contentHash(html.replace('href="/?area=aewol&mood=food"', 'href="/?area=aewol&mood=rest"'), 'https://x.test')).not.toBe(contentHash(html, 'https://x.test'));
+  });
+
+  it('pageLastmods: a record from an older hash keeps each page\'s day where the old hash still matches', () => {
+    const prev = { '/a/': { hash: 'old-a', lastmod: '2026-10-04' }, '/b/': { hash: 'old-b', lastmod: '2026-10-04' } };
+    expect(pageLastmods(prev, { '/a/': 'new-a', '/b/': 'new-b' }, '2026-10-16', null, { '/a/': 'old-a', '/b/': 'changed-b' })).toEqual({
+      '/a/': { hash: 'new-a', lastmod: '2026-10-04' },
+      '/b/': { hash: 'new-b', lastmod: '2026-10-16' },
+    });
+  });
+
   it('pageLastmods: no record yet → every page at the old data date (nothing changes for IndexNow)', () => {
     expect(pageLastmods(null, { '/': 'a', '/x/': 'b' }, '2026-10-03', '2026-10-01')).toEqual({
       '/': { hash: 'a', lastmod: '2026-10-01' },
