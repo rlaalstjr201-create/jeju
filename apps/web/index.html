@@ -36,8 +36,10 @@
     <meta name="twitter:description" content="지금 내 위치 근처에서 갈 만한 곳 3곳, 누르면 바로 길찾기. P를 위한 여행동반자. 여행 계획 짜기 귀찮은 무계획 여행 중에 기분 하나로 제주에서 지금 갈 곳을 골라 드려요." />
     <meta name="twitter:image" content="__SITE__/og.png" />
     <!-- absolute paths: the page works at any address (a deep link, a host or worker fallback; ADR-0063) -->
-    <!-- the place list starts downloading with the page, not after the app script (it is what the first tap waits for) -->
-    <link rel="preload" href="/spots.json?v=__SPOTS_V__" as="fetch" crossorigin="anonymous" />
+    <!-- no preload of the place list (it was here from 2026-10-10): on a fast connection the 1.2MB arrived before the
+         first paint and its parse held the first screen back ~0.5s (Lighthouse LCP 6.6s, audit 2026-10-16). The app asks
+         for it when it runs, and parses it only after the first paint (main.ts) -->
+
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/icons/icon-192.png" type="image/png" />

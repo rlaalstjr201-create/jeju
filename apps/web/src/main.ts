@@ -50,16 +50,55 @@ async function persist(): Promise<void> {
   await s.persist();
 }
 
+/** After the first screen has been painted: the browser's paint entry (already there on a later load such as
+ * 다시 불러오기, buffered), or the next frame (a task after requestAnimationFrame) where paint timing is missing; a
+ * hidden tab, where frames stop, goes on after 100 ms instead. */
+function afterPaint(): Promise<void> {
+  return new Promise((resolve) => {
+    let done = false;
+    let seen: PerformanceObserver | undefined;
+    const go = () => {
+      if (done) return;
+      done = true;
+      seen?.disconnect();
+      resolve();
+    };
+    try {
+      seen = new PerformanceObserver((list) => {
+        if (list.getEntries().length) go();
+      });
+      seen.observe({ type: 'paint', buffered: true });
+    } catch {
+      /* no paint timing: the frame below */
+    }
+    requestAnimationFrame(() => setTimeout(go, 0));
+    setTimeout(go, 100);
+  });
+}
+
+/** The first download of the place list, settled either way: the service worker is registered after it (below), so
+ * its precache takes the list from the HTTP cache instead of downloading the 1.2MB a second time — the page no
+ * longer preloads it, so `load` can come before the list is in (audit 2026-10-16). */
+let listSettled: () => void = () => undefined;
+const listIn = new Promise<void>((resolve) => (listSettled = resolve));
+
 const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
-  // The text, a turn for the browser, then the parse: json() on the whole 1.2MB was one long task (audit 2026-10-15).
+  // The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
+  // task (audit 2026-10-15), and a list that came in before the first paint held that paint back (audit 2026-10-16).
   loadSpots: () =>
-    fetch(`${BASE}spots.json?v=${__SPOTS_V__}`).then(async (r) => {
-      if (!r.ok) throw new Error(String(r.status));
-      const text = await r.text();
-      await yieldToMain();
-      return JSON.parse(text) as unknown;
-    }),
+    fetch(`${BASE}spots.json?v=${__SPOTS_V__}`)
+      .then(async (r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        const text = await r.text();
+        listSettled();
+        await afterPaint();
+        return JSON.parse(text) as unknown;
+      })
+      .catch((e: unknown) => {
+        listSettled();
+        throw e;
+      }),
   locate,
   geoPermission,
   storage: storageOf('localStorage'),
@@ -100,19 +139,22 @@ function start() {
 void yieldToMain().then(start);
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  // after load and after the app's own download of the list (listIn), or 10 s at most if that never settles
   window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register(`${BASE}sw.js`)
-      .then((reg) => {
-        // A home-screen app that stays resident never navigates, so it would never look for a new
-        // deploy. Check when it comes back to the foreground (at most once a minute).
-        let last = Date.now();
-        document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState !== 'visible' || Date.now() - last < 60_000) return;
-          last = Date.now();
-          reg.update().catch(() => undefined);
-        });
-      })
-      .catch(() => undefined);
+    void Promise.race([listIn, new Promise<void>((resolve) => setTimeout(resolve, 10_000))]).then(() =>
+      navigator.serviceWorker
+        .register(`${BASE}sw.js`)
+        .then((reg) => {
+          // A home-screen app that stays resident never navigates, so it would never look for a new
+          // deploy. Check when it comes back to the foreground (at most once a minute).
+          let last = Date.now();
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState !== 'visible' || Date.now() - last < 60_000) return;
+            last = Date.now();
+            reg.update().catch(() => undefined);
+          });
+        })
+        .catch(() => undefined),
+    );
   });
 }

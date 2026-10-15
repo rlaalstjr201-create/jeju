@@ -206,3 +206,23 @@ describe('the first load in turns (deps.yieldToMain, main.ts)', () => {
     expect($$('#home .mood .ex')).toHaveLength(4);
   });
 });
+
+// audit 2026-10-16 (Lighthouse, docs/audit/2026-10-15/performance-after.md): a place list that came in before the first
+// paint held that paint back — no preload in the page, and main.ts parses the list only after a painted frame
+describe('the first paint comes before the place list is worked on', () => {
+  it('index.html does not preload spots.json, and main.ts parses it after afterPaint()', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { resolve } = await import('node:path');
+    const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
+    const main = readFileSync(resolve(__dirname, '../src/main.ts'), 'utf8');
+    expect(html).not.toMatch(/<link[^>]+rel="preload"[^>]+spots\.json/);
+    const parse = main.indexOf('JSON.parse(text)');
+    expect(parse).toBeGreaterThan(-1);
+    expect(main.lastIndexOf('await afterPaint()', parse)).toBeGreaterThan(main.lastIndexOf('const text = await r.text()', parse));
+    expect(main).toMatch(/requestAnimationFrame\(\(\) => setTimeout\(go, 0\)\)/);
+    // with no preload, `load` can come before the list is in: the worker is registered after the app's own download,
+    // so its precache takes the list from the HTTP cache and a first visit downloads it once
+    expect(main).toMatch(/Promise\.race\(\[listIn,/);
+    expect(main.indexOf('listSettled();')).toBeGreaterThan(main.indexOf('const text = await r.text()'));
+  });
+});
