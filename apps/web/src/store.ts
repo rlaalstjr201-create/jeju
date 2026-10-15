@@ -3,6 +3,7 @@
 // memory for this visit (S27·S28·S29).
 import { AREAS, LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
+import { SRC } from './deeplink';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { parseSurvey, type SurveyRec } from './survey';
@@ -38,6 +39,8 @@ export const KEYS = {
   indoor: 'jeju.indoor',
   /** sessionStorage, ADR-0076: the last 비 소식 answer `{ v: 1, area, at, rain }`, good for 30 minutes. */
   rain: 'jeju.rain',
+  /** sessionStorage, ADR-0089: the 숙소 링크 tag this visit came in by. */
+  src: 'jeju.src',
   /** ADR-0087: 가 봤어요 — place ids left out of the picks on this device, oldest first. Not the data's `hide`. */
   visited: 'jeju.visited',
 } as const;
@@ -156,7 +159,7 @@ export function parseStay(v: unknown): Stay | null {
   const near = nearestArea(p);
   const area = areaByName(o.area)?.name ?? near.name;
   const atCentre = Math.abs(near.lat - p.lat) < 1e-6 && Math.abs(near.lng - p.lng) < 1e-6;
-  const source = o.source === 'gps' || o.source === 'area' ? o.source : atCentre ? 'area' : 'gps';
+  const source = o.source === 'gps' || o.source === 'area' || o.source === 'link' ? o.source : atCentre ? 'area' : 'gps';
   return { ...p, area, source };
 }
 
@@ -321,6 +324,9 @@ export interface Store {
   /** the last 비 소식 answer if still fresh at `now` (parseRain). */
   readRain(now: number): RainRecord | null;
   writeRain(rec: RainRecord): void;
+  /** 숙소 링크 tag of this session (ADR-0089), or null. */
+  src(): string | null;
+  setSrc(tag: string): void;
 }
 
 export function createStore(local: Storage | null, session: Storage | null): Store {
@@ -523,6 +529,11 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     clearSession: () => removeQuietly(session, KEYS.session),
     readRain: (now) => parseRain(get(session, KEYS.rain), now),
     writeRain: (rec) => void set(session, KEYS.rain, rec),
+    src() {
+      const v = get(session, KEYS.src);
+      return typeof v === 'string' && SRC.test(v) ? v : null;
+    },
+    setSrc: (tag) => void set(session, KEYS.src, tag),
   };
 }
 

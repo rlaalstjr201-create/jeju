@@ -50,6 +50,9 @@ When evaluating any feature, design decision, or scope call, apply these 11 crit
 **기준**:
 카드를 가까운 순으로 고를 출발점. 세 가지: 내 위치(GPS, 기본) / 숙소 / 지역. 라벨은 `내 위치 근처`(ADR-0077 Amendment 2) / `숙소 근처` / `{지역} 근처`, GPS 권한 거절 등이 알려지면 `지역 고르기`. 숙소는 "지금 위치를 숙소로 저장" 또는 지역 선택으로 정한다(검색 없음). 어제 고른 지역 기준은 GPS로 되돌리지 않는다. 출처: `0029-destination-areas-and-saves.md`, SPEC §6.2·§16 D1·D5, `plans/tomorrow-picker.md` OQ3, ADR-0058.
 
+**숙소 링크**:
+숙소가 체크인 안내에 넣는 주소 `/?stay=<위도>,<경도>&src=<꼬리표>`. 열면 그 점이 숙소(기준 = 숙소, `숙소 근처`)가 되고 위치 권한을 묻지 않는다. 꼬리표는 숙소마다 정한 경로 이름(사람이 아님)으로, 그 방문 동안 들어옴·기분 누름·길찾기를 꼬리표별로 센다. 숙소는 고르기에 영향이 없다. 출처: ADR-0089, `specs/partner-stay-link.md`.
+
 **카드**:
 기분을 누르면 나오는 장소 3장. 사진·이름·이유 문장·"차로 약 N분", 가격·운영시간·평점 없음. 누르면 지도 앱 길찾기로 바로 간다 — 기본 네이버지도, 설정에서 카카오맵·TMAP(좌표가 없으면 그 앱의 이름 검색). 출처: ADR-0071. 기분을 다시 누르면 마지막으로 본 3장, 다음 3장은 `다른 3곳 보기`. 출처: `0025-pivot-to-tomorrow-picker.md`, `0028-include-food-and-full-review.md`, SPEC §16 D2(ADR-0058).
 

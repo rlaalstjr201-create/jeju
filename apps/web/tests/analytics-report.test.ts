@@ -16,9 +16,9 @@ describe('analytics report', () => {
     expect(sql).not.toContain('"');
   });
 
-  it('no rows: 데이터 없음 for both windows (and both 저장 목록 흐름 windows), no zeros as findings', () => {
+  it('no rows: 데이터 없음 for both windows (and both 저장 목록 흐름 and 숙소 링크 windows), no zeros as findings', () => {
     const md = renderReport([], names, today);
-    expect(md.match(/데이터 없음\./g)).toHaveLength(4);
+    expect(md.match(/데이터 없음\./g)).toHaveLength(6);
     expect(md).not.toMatch(/0\.0%|0회/);
   });
 

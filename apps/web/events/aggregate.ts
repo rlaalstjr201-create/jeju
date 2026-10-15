@@ -1,7 +1,8 @@
 // Build-time popularity (ADR-0061 6): a dump of the collector's counters → review/popularity.json,
 // `{ id, shown, save, map, book }[]` per place over all days. `save` is net of `unsave` (never below 0).
 // Mood taps (`mood:*`), the feedback cap count (`feedback:capped`, ADR-0081) and the saved-list flow counts
-// (`open…`, `arrange:*`, `saved:*`, `save:*`, ADR-0085) are not places and stay out.
+// (`open…`, `arrange:*`, `saved:*`, `save:*`, ADR-0085) and the 숙소 링크 counts (`src:*`, ADR-0089) are not
+// places and stay out.
 //   npx tsx events/aggregate.ts <counters.json> [out.json]   (out defaults to review/popularity.json)
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -22,7 +23,7 @@ export function aggregate(counters: readonly Counter[]): Popularity[] {
   const by = new Map<string, Popularity & { unsave: number }>();
   for (const c of counters) {
     // 가 봤어요 (ADR-0087, visited / unvisited) is about this device's picks, not how good a place is: left out
-    if (!PLACE_EVENTS.has(c.e) || /^(mood:|feedback:|open(:|$)|arrange:|saved:|save:)/.test(c.id) || !Number.isFinite(c.n)) continue;
+    if (!PLACE_EVENTS.has(c.e) || /^(mood:|feedback:|open(:|$)|arrange:|saved:|save:|src:)/.test(c.id) || !Number.isFinite(c.n)) continue;
     const p = by.get(c.id) ?? { id: c.id, shown: 0, save: 0, unsave: 0, map: 0, book: 0 };
     if (c.e === 'shown' || c.e === 'save' || c.e === 'unsave' || c.e === 'map' || c.e === 'book') p[c.e] += c.n;
     by.set(c.id, p);

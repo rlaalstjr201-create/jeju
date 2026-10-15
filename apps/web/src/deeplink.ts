@@ -1,8 +1,9 @@
 // Deep link (ADR-0067, specs/drive-and-agents.md): `/?mood=walk&area=aewol&reach=drive30&date=2026-10-03&indoor=1`
 // — what an AI agent (or anyone) can hand a user so the app opens on that result. Pure parsing, no DOM.
-import { AREAS, areaByName, type AreaName } from './areas';
+// 숙소 링크 (ADR-0089): `stay=<lat>,<lng>` (a point in Jeju) and `src=<tag>` (which 숙소's link it was).
+import { AREAS, areaByName, inJeju, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, isDay, type Day } from './dates';
-import { REACHES, type Button, type Reach } from './pick';
+import { REACHES, type Button, type Point, type Reach } from './pick';
 import type { When } from './types';
 
 export interface DeepLink {
@@ -12,9 +13,16 @@ export interface DeepLink {
   reach?: Reach;
   when?: When;
   indoor?: boolean;
+  /** 숙소 링크: the 숙소, inside Jeju, at most 6 decimals. */
+  stay?: Point;
+  /** 숙소 링크: the partner's tag, `[a-z0-9-]{2,24}`. */
+  src?: string;
 }
 
 const MOODS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
+/** a 숙소 링크 tag: lowercase letters, digits and hyphens, 2–24. */
+export const SRC = /^[a-z0-9-]{2,24}$/;
+const round6 = (x: number) => Math.round(x * 1e6) / 1e6;
 
 /** The query's link, each key validated on its own (a bad value drops only that key); null when none is left. */
 export function readDeepLink(search: string, today: Day): DeepLink | null {
@@ -41,5 +49,12 @@ export function readDeepLink(search: string, today: Day): DeepLink | null {
   if (isDay(date) && date >= today && date <= addDays(today, DAYS_AHEAD)) out.when = date === today ? 'now' : date;
   const indoor = get('indoor');
   if (indoor === '1' || indoor === '0') out.indoor = indoor === '1';
+  const stay = /^(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/.exec(get('stay'));
+  if (stay) {
+    const p = { lat: round6(Number(stay[1])), lng: round6(Number(stay[2])) };
+    if (inJeju(p)) out.stay = p;
+  }
+  const src = get('src');
+  if (SRC.test(src)) out.src = src;
   return Object.keys(out).length ? out : null;
 }

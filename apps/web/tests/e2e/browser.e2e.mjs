@@ -2774,6 +2774,22 @@ await check('DL-open', 'deep link /?mood=walk&area=aewol&reach=drive60&indoor=1 
   await ctx.close();
 });
 
+await check('DL-stay', '숙소 링크 (ADR-0089) /?stay=33.4631,126.3105&src=aewol-gh1&mood=rest: 숙소 근처 results with no location asked, the query leaves the address, the tag stays for the session', async () => {
+  const count = (ctx) => ctx.addInitScript(`(() => { const g = navigator.geolocation; const f = g.getCurrentPosition.bind(g); window.__asked = 0; g.getCurrentPosition = (...a) => (window.__asked++, f(...a)); })();`);
+  const { ctx, page } = await fresh({ geo: { mode: 'deny' }, route: count });
+  await page.goto(`${BASE}?stay=33.4631,126.3105&src=aewol-gh1&mood=rest`);
+  await waitCards(page);
+  const url = new URL(page.url());
+  assert(url.search === '' && url.pathname === '/', `address ${page.url()}`);
+  const label = await page.textContent('#basis');
+  assert(label.includes('숙소 근처'), `label ${label}`);
+  const got = await page.evaluate(() => ({ asked: window.__asked, stay: localStorage.getItem('jeju.stay'), src: sessionStorage.getItem('jeju.src') }));
+  assert(got.asked === 0, `location asked ${got.asked}`);
+  assert(JSON.parse(got.stay)?.source === 'link' && JSON.parse(got.stay)?.area === '애월', `stay ${got.stay}`);
+  assert(got.src === '"aewol-gh1"', `src ${got.src}`);
+  await ctx.close();
+});
+
 // --- 지도 앱 (ADR-0071) and ♥ N open as an underline (ADR-0070, decided) ---
 await check('MA-line', '지도 앱 (ADR-0071) at 320·390, light·dark: 지도 앱 · 네이버지도 · 카카오맵 · TMAP on one line at the foot of 저장한 곳, each 44 tall, no sideways scroll; not on the first screen; 카카오맵 tapped = underlined, kept after a reload, and the cards open Kakao', async () => {
   const problems = [];

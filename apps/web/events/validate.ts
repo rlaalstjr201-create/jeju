@@ -24,6 +24,9 @@ const SEASONS = new Set<string>(SEASON_KINDS);
 const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'd']);
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
+/** 숙소 링크 (ADR-0089): `src:<tag>` on tap / open / map, with nothing but the day. */
+const SRC_ID = /^src:[a-z0-9-]{2,24}$/;
+const SRC_EVENTS = new Set(['tap', 'open', 'map']);
 
 const inSet = (set: Set<string>, v: unknown) => typeof v === 'string' && set.has(v);
 
@@ -35,6 +38,11 @@ export function eventProblem(x: unknown): string | null {
   if (extra) return `unknown field ${extra}`;
   if (!inSet(EVENTS, o.e)) return 'e';
   if (!isDay(o.d)) return 'd';
+  if (typeof o.id === 'string' && o.id.startsWith('src:')) {
+    if (!SRC_ID.test(o.id)) return 'src';
+    if (!inSet(SRC_EVENTS, o.e)) return `src on ${o.e}`;
+    return Object.keys(o).length === 3 ? null : 'src with more';
+  }
   if (NO_PLACE.has(o.e as string)) {
     if (o.id !== undefined) return `id on ${o.e}`;
     if (o.e === 'tap' && !inSet(MOODS, o.mood)) return 'tap without mood';

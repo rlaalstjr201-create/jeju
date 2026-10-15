@@ -2,7 +2,8 @@
 // 분석 프로그램 (ADR-0078 6): the D1 counters → docs/analytics/YYYY-MM-DD.md, last 7 and 28 days.
 //   npm run analytics:report        (needs `npx wrangler login`; reads only, from the remote yeogwi-events)
 // Mood taps, cards shown → map opened, the most saved places (net of unsave) and how often date mode was used;
-// then 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md): Q1–Q3 from the counters that are not places.
+// then 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md): Q1–Q3 from the counters that are not places;
+// then 숙소 링크 (ADR-0089): per partner tag, 들어옴 · 기분 누름 · 길찾기 and the two ratios.
 // Little or no data is said as such, never presented as a finding.
 import { execSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -25,6 +26,8 @@ export function reportSql(today) {
 const pct = (a, b) => `${((100 * a) / b).toFixed(1)}%`;
 /** the saved-list flow counters (events/handler.ts FLOW_IDS): not places */
 const FLOW = /^(open(:|$)|arrange:|saved:|save:)/;
+/** 숙소 링크 counters (ADR-0089): `src:<tag>`, not places and not the overall taps / maps */
+const SRC = /^src:/;
 const OPS = [['up', '위로'], ['down', '아래로'], ['move', '다른 날로'], ['past', '지난 날 펼치기·접기']];
 
 /** 저장 목록 흐름 for one window (`key` n7 / n28). */
@@ -54,9 +57,28 @@ function flowLines(rows, key) {
   return out;
 }
 
+/** 숙소 링크 for one window: one line per tag, most arrivals first. The rule set in advance (ADR-0089 5) is
+ * for 2 weeks per 숙소; under 100 taps the ratios are 판단 보류. */
+function srcLines(rows, key) {
+  const by = new Map();
+  for (const r of rows) {
+    if (!SRC.test(r.id) || !['open', 'tap', 'map'].includes(r.event)) continue;
+    const t = by.get(r.id.slice(4)) ?? { open: 0, tap: 0, map: 0 };
+    t[r.event] += Number(r[key] || 0);
+    by.set(r.id.slice(4), t);
+  }
+  const list = [...by].filter(([, t]) => t.open + t.tap + t.map > 0).sort((a, b) => b[1].open - a[1].open || (a[0] < b[0] ? -1 : 1));
+  if (!list.length) return ['데이터 없음.'];
+  return list.map(([tag, t]) => {
+    const ratios = `기분÷들어옴 ${t.open ? pct(t.tap, t.open) : '-'}, 길찾기÷기분 ${t.tap ? pct(t.map, t.tap) : '-'}`;
+    const notes = [...(t.open < 10 ? ['들어옴 10 미만'] : []), ...(t.tap < 100 ? ['기분 누름 100 미만이라 판단 보류'] : [])];
+    return `- ${tag}: 들어옴 ${t.open}, 기분 누름 ${t.tap}, 길찾기 ${t.map} — ${ratios}${notes.length ? ` (${notes.join(', ')})` : ''}`;
+  });
+}
+
 /** rows: { event, id, n7, n28 }[]; names: id → place name. */
 export function renderReport(allRows, names, today) {
-  const rows = allRows.filter((r) => !FLOW.test(r.id));
+  const rows = allRows.filter((r) => !FLOW.test(r.id) && !SRC.test(r.id));
   const out = [`# 사용 분석 ${today}`, '', `자체 익명 기록(D1 \`yeogwi-events\`) 기준. 7일 = ${minus(today, 6)}~${today}, 28일 = ${minus(today, 27)}~${today} (서울 날짜).`, ''];
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) {
     const sum = (e, pred = () => true) => rows.filter((r) => r.event === e && pred(r)).reduce((s, r) => s + Number(r[key] || 0), 0);
@@ -90,6 +112,8 @@ export function renderReport(allRows, names, today) {
   }
   out.push('## 저장 목록 흐름', '', 'ADR-0085. 시각 없이 센 값이에요. 「담은 날」은 기기 안에만 있고, 날 수(0·1·2 이상)만 와요.', '');
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...flowLines(allRows, key), '');
+  out.push('## 숙소 링크', '', 'ADR-0089. 숙소마다 2주로 판단해요: 들어옴 10 미만이면 접고, 기분÷들어옴 60% 이상·길찾기÷기분 30% 이상이면 통과.', '');
+  for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...srcLines(allRows, key), '');
   return `${out.join('\n').trimEnd()}\n`;
 }
 

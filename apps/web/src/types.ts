@@ -4,10 +4,11 @@ import type { Day } from './dates';
 import type { Point } from './pick';
 
 export type Basis = 'gps' | 'stay' | 'region';
-/** 숙소. `area` = the 동네 it belongs to (shown in the basis sheet); `source` = how it was set. */
+/** 숙소. `area` = the 동네 it belongs to (shown in the basis sheet); `source` = how it was set (`link`: a 숙소
+ * 링크, ADR-0089). */
 export interface Stay extends Point {
   area: AreaName;
-  source: 'gps' | 'area';
+  source: 'gps' | 'area' | 'link';
 }
 /** Permissions API answer for geolocation ('unknown' where the API is missing). */
 export type GeoPermission = 'granted' | 'denied' | 'prompt' | 'unknown';

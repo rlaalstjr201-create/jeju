@@ -788,7 +788,7 @@ interface State {
   stayForm: { pending: boolean; error: NoOrigin | null };
   offline: boolean;
 }
-interface Stay { lat: number; lng: number; area: AreaName; source: 'gps' | 'area' }
+interface Stay { lat: number; lng: number; area: AreaName; source: 'gps' | 'area' | 'link' }
 ```
 
 - `origin`이 바뀌는 조건: 기준 종류가 바뀜, 지역/숙소가 바뀜, GPS 점이 1km 넘게 움직임. 바뀌면 `histories`와 `shown`을 비운다. 범위(`reach`)가 `originReach`와 달라져도 같다(ADR-0060). 보이는 카드(`cards.reach`)가 지금 범위와 다르면 유효하지 않다.
@@ -844,7 +844,7 @@ interface Stay { lat: number; lng: number; area: AreaName; source: 'gps' | 'area
   - `view = cards`면 11.5의 세션 기록으로 같은 기분을 복원한다. 기록이 없거나 맞지 않으면 back으로 그 항목을 소비하고 첫 화면을 그린다.
   - `view = saved`면 저장한 곳을 다시 그린다.
   - 우리 것이 아니면 replace `{jeju: 1, view: home, overlay: null, depth: 0}`.
-  - **딥링크**(ADR-0067, `src/deeplink.ts`): 주소에 `?mood=&area=&reach=&date=&indoor=`가 있으면 읽고 쿼리를 바로 지운다(replaceState, `#s=`와 같은 방식). 첫 화면 항목으로 마운트될 때만 적용한다: 얼마나·언제·기준(지역 슬러그 = 그 지역, `here` = 지금 위치)은 기준 시트에서 고른 것처럼 저장하고 실내는 세션에, 그다음 `mood`가 있으면 그 기분을 누른 것과 같다(결과 항목 push). 틀린 값은 그 키만 버린다. 결과·저장한 곳 항목으로 마운트되면(새로고침) 링크를 쓰지 않는다.
+  - **딥링크**(ADR-0067, `src/deeplink.ts`): 주소에 `?mood=&area=&reach=&date=&indoor=`가 있으면 읽고 쿼리를 바로 지운다(replaceState, `#s=`와 같은 방식). 첫 화면 항목으로 마운트될 때만 적용한다: 얼마나·언제·기준(지역 슬러그 = 그 지역, `here` = 지금 위치)은 기준 시트에서 고른 것처럼 저장하고 실내는 세션에, 그다음 `mood`가 있으면 그 기분을 누른 것과 같다(결과 항목 push). 틀린 값은 그 키만 버린다. 결과·저장한 곳 항목으로 마운트되면(새로고침) 링크를 쓰지 않는다. **숙소 링크**(ADR-0089, `specs/partner-stay-link.md`): `stay=<위도>,<경도>`(제주 안, 소수 6자리까지)면 그 점을 숙소로 저장(`source: 'link'`, 동네 = 가장 가까운 지역)하고 기준을 숙소로 둔다 — 위 줄 `숙소 근처`, 위치 권한을 묻지 않는다. `src=<꼬리표>`(`[a-z0-9-]{2,24}`)는 이번 세션 동안 `sessionStorage['jeju.src']`에 두고, 그동안 자체 기록에 `src:<꼬리표>`로 `open`(도착 때 1회)·`tap`·`map`을 더 센다(GA4·네이버 없음).
 - 폰 뒤로가기 순서: 시트 → 저장한 곳 → 결과 → 첫 화면 → 앱 밖. 헛도는 항목이 남지 않는다.
 
 ### 11.4 저장소 (store.ts, 날짜 모드로 저장 목록 v2)

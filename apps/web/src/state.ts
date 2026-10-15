@@ -259,7 +259,7 @@ export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay |
     return {
       key: `stay:${stay.lat.toFixed(6)},${stay.lng.toFixed(6)}`,
       point: { lat: stay.lat, lng: stay.lng },
-      isPoint: stay.source === 'gps',
+      isPoint: stay.source !== 'area', // GPS, or the 숙소's own point from its link (ADR-0089)
       from: '숙소에서',
     };
   }

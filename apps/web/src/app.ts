@@ -241,12 +241,20 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
+  /** the 숙소 링크 tag this session came in by (ADR-0089); memory when sessionStorage is not there */
+  let srcTag = store.src();
   /** `day`: the day a heart is about (dated = not today). `season`: the kind whose 철 words the card showed (ADR-0080).
    * `flow`: the saved-list fields (ADR-0085). */
   function count(e: EventName, id?: string, day?: Day, season?: SeasonKind | null, flow?: Pick<UsageEvent, 'live0' | 'past' | 'from' | 'age' | 'op'>) {
     const ev: UsageEvent = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}), ...(season ? { season } : {}), ...flow };
     tracker.track(ev);
     if (state.tracking) deps.analytics?.event(ev);
+    if (srcTag && (e === 'tap' || e === 'map')) countSrc(e);
+  }
+  /** 숙소 링크 (ADR-0089): while this visit came in by one, tap / map (and the arrival's open) once more under
+   * `src:<tag>`, to our own collector only (never GA4·네이버). */
+  function countSrc(e: 'open' | 'tap' | 'map') {
+    tracker.track({ e, id: `src:${srcTag}`, d: state.today });
   }
   /** Each new set of 3 on screen, once: a re-render, the same 3 brought back or restored after a reload are
    * not shown again. */
@@ -506,6 +514,19 @@ export function mountApp(doc: Document, deps: Deps): App {
       dispatch({ type: 'basis', basis: 'region', region: link.area });
       store.setBasis('region');
       store.setRegion(link.area);
+    }
+    // 숙소 링크 (ADR-0089): that point is the 숙소, nothing asked; the tag stays for the session
+    if (link.stay) {
+      const stay: Stay = { ...link.stay, area: nearestArea(link.stay).name, source: 'link' };
+      dispatch({ type: 'basis', basis: 'stay', stay });
+      store.setBasis('stay');
+      store.setStay(stay);
+    }
+    if (link.src) {
+      const arrived = srcTag !== link.src;
+      srcTag = link.src;
+      store.setSrc(link.src);
+      if (arrived) countSrc('open');
     }
   }
   function mergeBackup() {

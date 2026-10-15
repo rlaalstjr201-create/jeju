@@ -84,6 +84,8 @@ describe('privacy.html (ADR-0063 4)', () => {
     // 가 봤어요 (ADR-0087): kept on the device; its tap and undo are counted here (visited·unvisited), not in GA4
     expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 지역과 범위는 이 기기의 브라우저 저장소에만 있어요');
     expect(html).toContain('‘가 봤어요’ 누름과 되돌림');
+    // 숙소 링크 (ADR-0089 4): the tag it came in by
+    expect(html).toContain('숙소 링크로 들어왔다면 그 링크의 꼬리표');
     expect(html).toContain('<h2>문의</h2>');
     expect(html).toMatch(/<a class="tbtn" href="\/">처음 화면으로<\/a>/);
     expect(html).not.toMatch(/<script/);

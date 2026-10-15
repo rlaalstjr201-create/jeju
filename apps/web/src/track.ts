@@ -19,7 +19,8 @@ export type BasisKind = 'here' | 'stay' | 'area';
 
 export interface UsageEvent {
   e: EventName;
-  /** the place (every event but `tap`, `open` and `arrange`). */
+  /** the place (every event but `tap`, `open` and `arrange`); or `src:<tag>` on a 숙소 링크 count (tap / open / map
+   * with nothing else but the day, ADR-0089). */
   id?: string;
   mood?: Button;
   /** food: 식사 / 카페·디저트; new: 섞어서 / 구경 / 체험 (mix / sight / do, ADR-0064). */

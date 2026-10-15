@@ -21,6 +21,7 @@ export const FLOW_IDS: readonly string[] = [
 
 /** The counter ids an event goes up under (day and event stay its own). */
 function idsOf(ev: UsageEvent): string[] {
+  if (ev.id?.startsWith('src:')) return [ev.id]; // 숙소 링크 (ADR-0089)
   if (ev.e === 'tap') return [`mood:${ev.mood}`];
   if (ev.e === 'open') return [`open${ev.live0 ? ':live0' : ''}${ev.past ? ':past' : ''}`];
   if (ev.e === 'arrange') return [`arrange:${ev.op}`];
