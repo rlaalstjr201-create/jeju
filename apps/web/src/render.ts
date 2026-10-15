@@ -1458,7 +1458,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
 
   function focusSheet() {
     // a day picked on a touch screen is the see-through field's value (pickDay), not a pressed option
-    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"], .sheet .date-tap[value]') ??els.sheet.querySelector<HTMLElement>('#sheet-title');
+    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"], .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
     pick?.focus({ preventScroll: true });
   }
 
