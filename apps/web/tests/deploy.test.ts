@@ -103,11 +103,13 @@ describe('privacy.html (ADR-0063 4)', () => {
   });
 
   // 출시 전 점검 F4 (idempotency-security.md K3): the repository is private, so its issues link was a 404 for everyone
-  it('F4 (K3) 문의 is the app\'s 의견 보내기, never the private repository', () => {
+  it('F4 (K3) 문의 is the operator\'s mail (replies) and the app\'s 의견 보내기, never the private repository', () => {
     const html = text('privacy.html');
     expect(html).not.toMatch(/github\.com/);
     const ask = html.slice(html.indexOf('<h2>문의</h2>'), html.indexOf('<p class="date">'));
-    expect(ask).toContain('‘의견 보내기’로 남겨 주세요');
+    expect(ask).toContain('<a href="mailto:studiofilm.app@gmail.com">studiofilm.app@gmail.com</a>');
+    expect(ask).toContain('답장하는 데만 써요');
+    expect(ask).toContain('‘의견 보내기’로 남겨도 돼요');
     expect(ask).toContain('‘설정 · 지도 앱 · 의견’');
   });
 

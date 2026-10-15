@@ -86,7 +86,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 ## 2. 배포 전
 
 - [ ] `apps/web`에서 `npx tsc --noEmit`, `npx vitest run`, `npm run build`(기본·`LANDING_PHOTOS=0` 둘 다), `npm run check:slop`, e2e(`npm run e2e`), `SITE_URL=… npm run seo:crawl`(감사 0건) 모두 통과. 최근 결과는 `docs/predeploy-review.md` 0절.
-- [ ] `privacy.html`의 문의처가 맞는지(지금은 앱의 ‘의견 보내기’. 저장소가 비공개라 GitHub 이슈 링크는 뺐다. 공개 연락처는 주인 결정 대기).
+- [ ] `privacy.html`의 문의처가 맞는지(운영자 메일 `studiofilm.app@gmail.com`(2026-10-15 주인 결정) + 답장 없는 의견은 앱의 ‘의견 보내기’. 저장소가 비공개라 GitHub 이슈 링크는 쓰지 않는다).
 - [x] 제주관광공사 사진 이용 가능 확인(2026-10-01, 회신 사용자 보관).
 - [ ] 빌드 환경 변수: `SITE_URL`, `VITE_GA4_ID=G-P8DN26LKBC`, `VITE_NAVER_WA`(네이버 ID), `VITE_EVENTS_URL=/api/events`(생략 시 기본). `LANDING_PHOTOS`는 넣지 않는다(사진 켬, 공사 확인 완료).
 - [ ] D1 마이그레이션 적용: `npx wrangler d1 migrations apply yeogwi-events --remote`(이미 적용됐으면 `No migrations to apply`).
