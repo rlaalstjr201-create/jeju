@@ -617,8 +617,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     const visited = visitedEl(s, spot.id, name);
     if (kind === 'lead') {
       const ctl = el(doc, 'div', { class: 'ctl' });
-      if (book) ctl.append(book);
+      // the order they are drawn in (ADR-0088): 길찾기 | 가 봤어요, then the booking link under them
       ctl.append(visited);
+      if (book) ctl.append(book);
       card.append(go, ctl);
     } else {
       const line = el(doc, 'div', { class: 'ctl go-line' });
