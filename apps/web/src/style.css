@@ -235,6 +235,8 @@ main { flex: 1; display: flex; flex-direction: column; }
 .visited-list { list-style: none; margin: 0; padding: 0; }
 .visited-list li { display: flex; align-items: center; justify-content: space-between; gap: 0 8px; }
 .visited-list li .tbtn { flex: none; }
+/* a long name with no break under keep-all (24시…노형점) wraps in its row instead of pushing 다시 넣기 off the page */
+.visited-list li > span { min-width: 0; overflow-wrap: anywhere; }
 /* ADR-0071: 지도 앱 — one line of face buttons; the chosen one in weight and a 3px --main rule (like a tab), the
    others muted words; the face is the same for all, never the mark of the choice */
 .mapapp { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; margin-top: 4px; color: var(--muted); }
@@ -338,6 +340,8 @@ main { flex: 1; display: flex; flex-direction: column; }
 }
 .card.row .tbtn { background-color: var(--bg); }
 .card.row .tbtn:active { background-color: var(--fill-press); }
+/* a saved heart on the grey face: --accent is 2.92:1 on --fill in light (under 3), so the ♥ N chip's darker ink */
+.card.row .heart[aria-pressed="true"] { color: var(--acc-ink); }
 .card.row .ph { width: var(--thumb); aspect-ratio: 1; border-radius: var(--r-thumb); align-self: start; }
 /* 320: two siblings ("… 절로 가는길 - 정진의 길" / "- 인욕의 길") would clamp to the same two lines. The name
    takes up to two lines, cut with "…", and the alias its own line after it, whole */

@@ -3108,6 +3108,32 @@ await check('HV2-storage-throws', '가 봤어요 with every storage write throwi
   assert(!problems.length, problems.join(' | '));
 });
 
+// 출시 전 점검 F10 (bugs.md B5): HV1 measured short names only
+await check('HV3-long-name', '뺀 곳 at 320 × light·dark with the data\'s long unbroken name (keep-all gives it no break): the name wraps in its row, 다시 넣기 stays whole inside the page margin, no sideways scroll (specs/hide-visited.md S3)', async () => {
+  const problems = [];
+  const spots = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));
+  const unbroken = spots.filter((s) => !/\s/.test(s.name.trim())).sort((a, b) => b.name.trim().length - a.name.trim().length);
+  const long = spots.find((s) => s.name.trim() === '24시얼큰시원생고기김치찌개노형점') ?? unbroken[0];
+  for (const dark of [false, true]) {
+    const tag = `320${dark ? '-dark' : ''}`;
+    const { ctx, page } = await fresh({ width: 320, height: 568, dark, storage: { 'jeju.visited': [long.id] } });
+    await tapText(page, '#homeMore [data-action="settings"]');
+    await page.waitForSelector('#savedView .visited-box:not([hidden])', { timeout: 5000 });
+    await tapText(page, '#savedView [data-action="visited-list"]');
+    await page.locator('#visitedList [data-action="put-back"]').scrollIntoViewIfNeeded();
+    const r = await page.evaluate(() => {
+      const de = document.documentElement;
+      const name = document.querySelector('#visitedList li span').getBoundingClientRect();
+      const back = document.querySelector('#visitedList [data-action="put-back"]').getBoundingClientRect();
+      return { over: de.scrollWidth - de.clientWidth, vw: de.clientWidth, name: Math.round(name.right), backLeft: Math.round(back.left), back: Math.round(back.right) };
+    });
+    if (r.over > 0 || r.back > r.vw - 16 || r.name > r.backLeft) problems.push(`${tag} ${long.name}: ${JSON.stringify(r)}`);
+    await shot(page, `visited-long-${tag}`);
+    await ctx.close();
+  }
+  assert(!problems.length, problems.join(' | '));
+});
+
 await check('LP1', 'hub → area → place: 200, no script, fits 390px (light and dark), every link on them answers; the deep link opens the app on that area', async () => {
   const problems = [];
   for (const dark of [false, true]) {

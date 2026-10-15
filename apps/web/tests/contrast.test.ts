@@ -76,6 +76,18 @@ describe('ADR-0088: ♥ N is a chip; open, a --main-tint chip with --tag-ink wor
   });
 });
 
+// 출시 전 점검 F9 (bugs.md B2): ADR-0088 put the row cards (results 2·3, every saved-list row) on --fill, where the
+// saved heart's --accent is 2.92:1 in light
+describe('F9 (B2): a saved heart on a row card is --acc-ink, ≥ 3:1 on the grey face', () => {
+  it('.card.row\'s pressed heart takes --acc-ink (5.37 / 9.08 on --fill); the first card keeps --accent on --bg', () => {
+    expect(css).toMatch(/\.card\.row \.heart\[aria-pressed="true"\]\s*\{[^}]*color:\s*var\(--acc-ink\)/);
+    expect(css).toMatch(/^\.heart\[aria-pressed="true"\]\s*\{\s*color:\s*var\(--accent\)/m);
+    expect(ratio(light['--acc-ink'], light['--fill'])).toBeCloseTo(5.37, 2);
+    expect(ratio(dark['--acc-ink'], dark['--fill'])).toBeCloseTo(9.08, 2);
+    expect(ratio(light['--accent'], light['--fill'])).toBeLessThan(3); // why
+  });
+});
+
 describe('ADR-0088: the new faces hold AA (SPEC §2.2)', () => {
   it.each([
     ['light', light, { tag: 5.27, any: 5.35 }],
