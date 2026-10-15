@@ -1,0 +1,105 @@
+{
+  "measuredAt": "2026-10-15T14:54:30.674Z",
+  "tool": "npx lighthouse (기본 모바일), 쪽마다 3번, 중앙값",
+  "base": "https://yeochana.com",
+  "rawDir": "C:\\Users\\rlaal\\AppData\\Local\\Temp\\lh-raw-4Ic4aJ",
+  "pages": {
+    "/jeju/aewol/dochidolhanusutbul/": {
+      "url": "https://yeochana.com/jeju/aewol/dochidolhanusutbul/",
+      "median": {
+        "scores": {
+          "performance": 95,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 2567,
+          "CLS": 0,
+          "TBT": 100,
+          "FCP": 1823,
+          "SI": 2710
+        }
+      },
+      "runs": [
+        {
+          "scores": {
+            "performance": 97,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 2433.969,
+            "CLS": 0,
+            "TBT": 0,
+            "FCP": 1668.1735,
+            "SI": 2582.6158260040515
+          }
+        },
+        {
+          "scores": {
+            "performance": 95,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 2602.906,
+            "CLS": 0,
+            "TBT": 100.49199999999996,
+            "FCP": 1837.9795,
+            "SI": 2713.5888140083307
+          }
+        },
+        {
+          "scores": {
+            "performance": 95,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 2567.052,
+            "CLS": 0,
+            "TBT": 101.71000000000004,
+            "FCP": 1822.7595000000001,
+            "SI": 2709.6396219820863
+          }
+        }
+      ],
+      "topFailing": [
+        {
+          "category": "performance",
+          "id": "cache-insight",
+          "score": 0,
+          "displayValue": "Est savings of 4 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "legacy-javascript-insight",
+          "score": 0,
+          "displayValue": "Est savings of 10 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "render-blocking-insight",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "category": "performance",
+          "id": "largest-contentful-paint",
+          "score": 0.88,
+          "displayValue": "2.6 s"
+        },
+        {
+          "category": "performance",
+          "id": "first-contentful-paint",
+          "score": 0.89,
+          "displayValue": "1.8 s"
+        }
+      ]
+    }
+  }
+}

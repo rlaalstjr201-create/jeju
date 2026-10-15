@@ -1,0 +1,183 @@
+{
+ "meta": {
+  "when": "2026-10-15T14:49:23.205Z",
+  "smoke": false,
+  "url": "https://yeochana.com/?area=aewol&reach=drive30",
+  "playwright": "1.61.0",
+  "browser": "155.0.8059.40",
+  "channel": "chrome (headless)",
+  "ua": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+  "viewport": "375x812",
+  "dpr": 2,
+  "touch": true,
+  "cpuThrottle": 4,
+  "serviceWorkers": "block",
+  "optOut": "localStorage jeju.track=false via context storageState (before load)",
+  "blocked": {
+   "cdpBlockedURLs": [
+    "*yeochana.com/api/events*",
+    "*yeochana.com/api/feedback*",
+    "*/cdn-cgi/rum*",
+    "*google-analytics.com*",
+    "*googletagmanager.com*",
+    "*analytics.google.com*",
+    "*doubleclick.net*",
+    "*wcs.naver*",
+    "*wcs.pstatic.net*"
+   ],
+   "hostResolverRules": "MAP www.googletagmanager.com ~NOTFOUND, MAP *.google-analytics.com ~NOTFOUND, MAP analytics.google.com ~NOTFOUND, MAP *.doubleclick.net ~NOTFOUND, MAP wcs.naver.com ~NOTFOUND, MAP wcs.naver.net ~NOTFOUND, MAP wcs.pstatic.net ~NOTFOUND"
+  },
+  "moods": [
+   "rest",
+   "walk",
+   "new",
+   "food",
+   "any"
+  ],
+  "leakMood": "food",
+  "moreTaps": 30,
+  "rules": {
+   "interactionMs": 200,
+   "domRatio": 1.5,
+   "heapBytes": 5000000,
+   "longTaskMs": 50,
+   "longTasksMax": 1
+  },
+  "method": {
+   "interaction": "Event Timing interactionId duration (max over the tap’s entries, INP definition) when the target DOM state was reached inside the click handler (MutationObserver time ≤ click processingEnd); otherwise rAF+MessageChannel after the frame that first shows it, measured from the tap’s touchstart/pointerdown timeStamp.",
+   "tap": "page.touchscreen.tap at the element centre (CDP Input.dispatchTouchEvent), no Playwright actionability during the measured window",
+   "longTask": "From navigation start to just before the first tap: PerformanceObserver longtask entries (>50ms), attributed with long-animation-frame scripts (sourceURL host; third-party when ≥50% of the script time in the task is another host), plus every long-animation-frame whose rendering phase (frame end − renderStart) is >50ms with no longtask entry over it (one rendering task the Long Tasks API did not report; ours unless third-party rAF scripts dominate).",
+   "calibration": "same page at the end of each visit: the loop 5× at rate 4, then 5× at rate 1; slowdown = median of the last 3 at rate 4 / median of the last 3 at rate 1.",
+   "memory": "CDP HeapProfiler.collectGarbage ×2, then Performance.getMetrics (JSHeapUsedSize, Nodes, JSEventListeners), Memory.getDOMCounters, in-page element counts."
+  }
+ },
+ "script_sha256": "85ebf85711737029578f22388a52c0e70e9f7a8ba56b8197fb1f1c890dcff0f8",
+ "results": {
+  "a": {
+   "values": [
+    320,
+    176,
+    208,
+    144,
+    184
+   ],
+   "n": 5,
+   "median": 184,
+   "pass": true,
+   "methods": [
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing"
+   ]
+  },
+  "b": {
+   "values": [
+    104,
+    96,
+    112,
+    120,
+    120
+   ],
+   "n": 5,
+   "median": 112,
+   "pass": true,
+   "methods": [
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing"
+   ]
+  },
+  "c": {
+   "values": [
+    80,
+    72,
+    56,
+    48,
+    56
+   ],
+   "n": 5,
+   "median": 56,
+   "pass": true,
+   "methods": [
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing"
+   ]
+  },
+  "d": {
+   "values": [
+    216,
+    136,
+    144,
+    128,
+    160
+   ],
+   "n": 5,
+   "median": 144,
+   "pass": true,
+   "methods": [
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing",
+    "event-timing"
+   ]
+  },
+  "e": {
+   "tapsDone": 30,
+   "elements": [
+    301,
+    301,
+    1
+   ],
+   "cdpNodes": [
+    604,
+    607,
+    1.005
+   ],
+   "allNodesInDoc": [
+    579,
+    579
+   ],
+   "listeners": [
+    77,
+    77
+   ],
+   "heapUsed": [
+    3851876,
+    4352228,
+    500352
+   ],
+   "pass": true,
+   "warmMore": {
+    "median": 88,
+    "max": 120
+   }
+  },
+  "f": {
+   "countsOurs": [
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "countsAll": [
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "median": 1,
+   "pass": true
+  }
+ },
+ "errors": []
+}
