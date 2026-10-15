@@ -2,7 +2,7 @@
 // 사용: node docs/perf/lh.mjs <출력.json> [기준 주소=https://yeochana.pages.dev] [쪽 목록]
 // 원본 리포트는 OS 임시 폴더(lh-raw-*)에 남고 저장소에는 요약만 쓴다.
 import { execSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -24,10 +24,17 @@ const rawDir = mkdtempSync(join(tmpdir(), 'lh-raw-'));
 const median = (xs) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)];
 
 function runOnce(url, file) {
-  execSync(
-    `npx lighthouse "${url}" --output=json --output-path="${file}" --quiet --chrome-flags="--headless=new"`,
-    { stdio: 'inherit' },
-  );
+  try {
+    execSync(
+      `npx lighthouse "${url}" --output=json --output-path="${file}" --quiet --chrome-flags="--headless=new"`,
+      { stdio: 'inherit' },
+    );
+  } catch (err) {
+    // Windows: Lighthouse can exit non-zero (EPERM) while removing Chrome's temp profile after the report is
+    // written (audit 2026-10-15). The report decides, not the exit code; no report → the error stands.
+    if (!existsSync(file)) throw err;
+    console.error(`${url}: lighthouse exited ${err.status ?? '?'} after writing the report — using the report`);
+  }
   return JSON.parse(readFileSync(file, 'utf8'));
 }
 
