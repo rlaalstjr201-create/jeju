@@ -339,7 +339,7 @@ function hubPage(ctx: Ctx): string {
   const body = `<h1>P를 위한 제주 무계획 여행</h1>
 <p class="lead">${ENTITY}</p>
 <p>일정이나 코스는 짜 드리지 않아요. 지금 있는 곳과 기분 하나만 고르면 갈 만한 곳 3곳을 골라 드리고, 차로 몇 분인지 함께 보여 드려요. 멀리 갈지 가까이 갈지는 걸어서, 차로 30분, 차로 1시간 중에서 골라요.</p>
-<p><a class="go" href="/">앱에서 지금 3곳 받기</a></p>
+<p><a class="go" href="/">앱에서 지금 3곳 보기</a></p>
 <h2>기분은 다섯 가지</h2>
 <ul class="moods">${(['rest', 'walk', 'new', 'food', 'any'] as const).map((m) => `<li><b>${MOOD_NAME[m]}</b> <span class="meta">${MOOD_GLOSS[m]}</span></li>`).join('')}</ul>
 <h2>동네 15곳</h2>
@@ -387,7 +387,7 @@ function areaPage(ctx: Ctx, a: Area): string {
     return `<section aria-labelledby="m-${m}">
 <h2 id="m-${m}">${MOOD_NAME[m]}</h2>
 <ol class="list">${top.map((p) => placeRow(ctx, p, from)).join('')}</ol>
-<p><a class="tbtn" href="${appLink(a, m)}">앱에서 ${esc(a.label)} 근처 3곳 받기</a></p>
+<p><a class="tbtn" href="${appLink(a, m)}">앱에서 ${esc(a.label)} 근처 3곳 보기</a></p>
 </section>`;
   }).join('\n');
   const index = MOODS.map((m) => {
@@ -399,7 +399,7 @@ function areaPage(ctx: Ctx, a: Area): string {
   const body = `<h1>${esc(a.label)} 근처에서 지금 뭐 할까</h1>
 <p class="lead">${esc(AREA_LINE[a.slug])} 기분 하나만 고르면 앱이 근처 3곳을 골라 드려요.</p>
 <p class="meta">여기 순서는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
-<p><a class="go" href="${appLink(a)}">앱에서 ${esc(a.label)} 근처 3곳 받기</a></p>
+<p><a class="go" href="${appLink(a)}">앱에서 ${esc(a.label)} 근처 3곳 보기</a></p>
 ${sections}
 ${combos.length ? `<h2>기분과 함께</h2>\n<ul class="areas">${combos.map((c) => `<li><a href="${c.url}">${esc(c.query)}</a></li>`).join('')}</ul>` : ''}
 <h2>${esc(a.label)} 근처 전체 ${list.length}곳</h2>
@@ -435,7 +435,7 @@ function comboPage(ctx: Ctx, c: Combo): string {
   const body = `<h1>${esc(c.query)}</h1>
 <p class="lead">${esc(AREA_LINE[a.slug])} ${esc(a.label)} 근처에서 「${MOOD_NAME[c.mood]}」${c.sub ? `의 ${c.sub === 'do' ? '체험' : '구경'} 탭을` : '를'} 누르면 먼저 나오는 곳 ${top.length}곳이에요.</p>
 <p class="meta">거리는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
-<p><a class="go" href="${appLink(a, c.mood)}">앱에서 지금 3곳 받기</a></p>
+<p><a class="go" href="${appLink(a, c.mood)}">앱에서 지금 3곳 보기</a></p>
 <ol class="list">${top.map((p) => placeRow(ctx, p, `${a.label} 중심에서`)).join('')}</ol>
 <p><a class="tbtn" href="${areaPath(a)}">${esc(a.label)} 근처 다른 기분도 보기</a></p>`;
   return layout(ctx, {
@@ -474,7 +474,7 @@ ${thumb(ctx, s, 'hero', `${name} 사진`, true)}${ctx.photos && s.image ? '\n<p 
 <p class="lead">${esc(s.reason)}</p>
 <ul class="facts">${facts.join('')}</ul>
 <p class="links"><a class="go" href="${esc(go.href)}" rel="noopener">네이버지도로 ${go.text}</a> <a class="tbtn" href="${esc(naverSearchUrl(s))}" rel="noopener">네이버지도에서 보기</a>${book ? ` <a class="tbtn" href="${esc(book.href)}" rel="noopener" aria-label="${esc(book.aria)}">${esc(book.text)}</a>` : ''}</p>
-<p><a class="tbtn" href="${appLink(a, s.mood)}">앱에서 근처 3곳 받기</a></p>
+<p><a class="tbtn" href="${appLink(a, s.mood)}">앱에서 근처 3곳 보기</a></p>
 <h2>가까운 곳</h2>
 <ul class="near">${nearby
     .map((x) => `<li><a href="${x.url}">${esc(cleanName(x.spot.name))}</a> <span class="meta">${esc(kindOf(x.spot))} · ${esc(travelText(travel(s, true, x.spot)))}</span></li>`)

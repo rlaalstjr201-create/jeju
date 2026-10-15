@@ -3154,8 +3154,11 @@ await check('LP1', 'hub → area → place: 200, no script, fits 390px (light an
         h1: document.querySelectorAll('h1').length,
         bg: getComputedStyle(document.body).backgroundColor,
         links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
+        // ADR-0090 7: the app link says 「… 3곳 보기」 (「받기」 read as installing an app)
+        app: [...document.querySelectorAll('a[href^="/?"], a[href="/"]')].map((a) => a.textContent).filter((t) => t.startsWith('앱에서')),
       }));
       if (r.overflow > 0) problems.push(`${tag} ${path}: ${r.overflow}px sideways`);
+      if (!r.app.length || r.app.some((t) => !/^앱에서 .*3곳 보기$/.test(t))) problems.push(`${tag} ${path}: app links ${r.app.join(' / ')}`);
       if (r.scripts) problems.push(`${tag} ${path}: ${r.scripts} script(s)`);
       if (r.h1 !== 1) problems.push(`${tag} ${path}: ${r.h1} h1`);
       if (r.bg !== (dark ? 'rgb(15, 19, 25)' : 'rgb(255, 255, 255)')) problems.push(`${tag} ${path}: background ${r.bg}`);
@@ -3164,6 +3167,7 @@ await check('LP1', 'hub → area → place: 200, no script, fits 390px (light an
     const hubLinks = await visit('/jeju/');
     if (!dark) await shot(page, 'landing-hub-390-light');
     const areaLinks = await visit('/jeju/aewol/');
+    if ((await page.textContent('a.go')) !== '앱에서 애월 근처 3곳 보기') problems.push(`${tag} area: "${await page.textContent('a.go')}"`);
     if (!dark) await shot(page, 'landing-area-390-light');
     const place = areaLinks.find((h) => /^\/jeju\/aewol\/[a-z0-9-]+\/$/.test(h) && !/\/(rest|walk|new|food)\/$/.test(h));
     const placeLinks = await visit(place);
@@ -3179,7 +3183,7 @@ await check('LP1', 'hub → area → place: 200, no script, fits 390px (light an
         return out;
       }, all);
       problems.push(...bad.map((b) => `link ${b}`));
-      // 앱에서 근처 3곳 받기 → /?area=aewol&mood=… → the app's results for 애월
+      // 앱에서 근처 3곳 보기 → /?area=aewol&mood=… → the app's results for 애월
       await page.goto(new URL(place, BASE).href);
       await page.locator('a[href^="/?area=aewol&mood="]').first().click();
       await waitCards(page);

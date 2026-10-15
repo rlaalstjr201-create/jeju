@@ -106,12 +106,23 @@ describe('페이지', () => {
     const s = site();
     const hub = s.pages[0].html;
     expect(hub).toContain(ENTITY);
-    expect(hub).toContain('<a class="go" href="/">앱에서 지금 3곳 받기</a>');
+    expect(hub).toContain('<a class="go" href="/">앱에서 지금 3곳 보기</a>');
     expect((hub.match(/href="\/jeju\/[a-z]+\/"/g) ?? []).length).toBe(15);
     const aewol = s.pages.find((p) => p.path === '/jeju/aewol/')!.html;
     expect(aewol).toContain('한담 해안 산책로를 따라 카페가 이어져요');
     for (const p of s.places.filter((x) => x.area.slug === 'aewol')) expect(aewol).toContain(`href="${p.url}"`);
     expect(aewol).toContain('<title>애월(한담) 근처, 지금 갈 만한 곳 · 여차나:제주</title>');
+  });
+
+  // ADR-0090 7: 「받기」 read as installing an app (heuristic-audit-02)
+  it('the app link says 「… 3곳 보기」 on every page, never 「받기」', () => {
+    const s = site({ combos: [{ area: 'aewol', mood: 'walk', query: '애월 산책' }] });
+    const page = (kind: string, path?: string) => s.pages.find((p) => p.kind === kind && (!path || p.path === path))!.html;
+    expect(page('area', '/jeju/aewol/')).toContain('<a class="go" href="/?area=aewol">앱에서 애월 근처 3곳 보기</a>');
+    expect(page('area', '/jeju/aewol/')).toContain('>앱에서 애월 근처 3곳 보기</a>');
+    expect(page('combo')).toContain('>앱에서 지금 3곳 보기</a>');
+    expect(page('place')).toContain('>앱에서 근처 3곳 보기</a>');
+    for (const p of s.pages) expect(p.html).not.toContain('받기');
   });
 
   it('a place left out by the quality bar gets no page and no link', () => {
