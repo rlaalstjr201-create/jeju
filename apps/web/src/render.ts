@@ -3,7 +3,7 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
-import { duskNow, homeOrigin, moodExamples, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
+import { duskNow, homeOrigin, moodExamples, nightHome, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
@@ -30,6 +30,8 @@ export const COPY = {
   locating: '위치 확인 중…',
   chooseArea: '지역으로 고르기',
   wrapped: '이 근처는 다 봤어요. 처음 본 곳부터 다시 보여 드려요.',
+  /** 밤 (ADR-0091): the picks moved a 야외 산길 back */
+  nightShifted: '밤이라 산길은 뒤로 미뤘어요.',
   offline: '오프라인이라 사진은 안 보여요.',
   /** 고르는 방식 (ADR-0075): one quiet line over the cards. `reach` null = the range was widened to the nearest 3
    * (빈손 없음, pick.ts pool), so the line says that instead of a range it did not keep. */
@@ -281,6 +283,7 @@ export function statusOf(s: State): { text: string; chooseArea: boolean; undo: {
   if (p.k === 'ready') {
     const parts: string[] = [];
     if (s.cards?.wrapped) parts.push(COPY.wrapped);
+    if (s.cards?.nightShifted) parts.push(COPY.nightShifted);
     if (s.offline) parts.push(COPY.offline);
     const v = s.visitNote;
     if (v) parts.push(visitText(v));
@@ -1164,7 +1167,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // a GPS fix that moved is another place: its own photos, markets and 동네
     const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
     const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk].join('|');
+    // 밤 (ADR-0091): 「예:」 put 야외 산길 after the others from the sunset to the sunrise
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin)].join('|');
   }
 
   function renderHome(s: State) {

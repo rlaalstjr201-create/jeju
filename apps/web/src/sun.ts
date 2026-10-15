@@ -28,18 +28,30 @@ function solar(day: Day, utcMin: number): { decl: number; eqTime: number } {
   return { decl, eqTime };
 }
 
-/** Minutes after midnight UTC of `day` at which the sun sets at `p`, for the sun's position at `utcMin`. */
-function setAt(p: Point, day: Day, utcMin: number): number {
+/** Minutes after midnight UTC of `day` at which the sun sets at `p` (rises, with `rise`), for the sun's position at
+ * `utcMin`. */
+function setAt(p: Point, day: Day, utcMin: number, rise = false): number {
   const { decl, eqTime } = solar(day, utcMin);
   // 90.833°: the sun's upper edge on the horizon, with refraction
   const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(p.lat * rad) * Math.cos(decl)) - Math.tan(p.lat * rad) * Math.tan(decl)) / rad;
-  return 720 - 4 * p.lng - eqTime + 4 * ha;
+  return 720 - 4 * p.lng - eqTime + (rise ? -4 : 4) * ha;
 }
 
 /** Sunset at `p` on `day`, in minutes after midnight KST. Two passes: the sun's position at the sunset itself. */
 export function sunsetMinutes(p: Point, day: Day): number {
   const first = setAt(p, day, 18 * 60 - TZ_HOURS * 60);
   return setAt(p, day, first) + TZ_HOURS * 60;
+}
+
+/** Sunrise at `p` on `day`, in minutes after midnight KST (ADR-0091): the same two passes. */
+export function sunriseMinutes(p: Point, day: Day): number {
+  const first = setAt(p, day, 6 * 60 - TZ_HOURS * 60, true);
+  return setAt(p, day, first, true) + TZ_HOURS * 60;
+}
+
+/** 밤 (ADR-0091): `clock` (minutes after midnight KST) is at or after the sunset at `p` on `day`, or before its sunrise. */
+export function nightNow(clock: number | null, p: Point, day: Day): boolean {
+  return clock != null && (clock >= sunsetMinutes(p, day) || clock < sunriseMinutes(p, day));
 }
 
 /** 노을 볼 곳 (ADR-0083): the sunset's azimuth (degrees from north) at `p` on `day`, the geometric horizon. */

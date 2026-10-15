@@ -2571,6 +2571,48 @@ await check('SU1-sunset', '노을 볼 곳 (ADR-0083) at 320·390, light and dark
   assert(problems.length === 0, problems.join(' | '));
 });
 
+await check('N1-night', '밤 (ADR-0091) at 320·390: 애월 basis at 23:00 (KST) — 좀 걷고 싶어 and its 다른 3곳 show no 야외 산길 (trail in spots.json), the status line says 밤이라 산길은 뒤로 미뤘어요., the card buttons keep their ≥ 48×48 areas apart (비양도\'s 배 타는 곳까지 길찾기 wraps its line at 320), the home\'s 「예:」 for 좀 걷고 싶어 skips 새별오름; at 12:00 the same flow has trails among the 3, 새별오름 in 「예:」 and no such line; no sideways scroll', async () => {
+  const problems = [];
+  const all = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'));
+  const trails = new Set(all.filter((s) => s.trail === true).map((s) => s.id));
+  const LINE = '밤이라 산길은 뒤로 미뤘어요.';
+  for (const [time, night, width] of [['23:00', true, 320], ['23:00', true, 390], ['12:00', false, 390]]) {
+    const { ctx, page } = await fresh({ width, height: width === 320 ? 568 : 844, storage: { 'jeju.basis': 'region', 'jeju.region': '애월' } });
+    await page.clock.setFixedTime(new Date(`2026-10-16T${time}:00+09:00`));
+    await page.reload();
+    await page.waitForSelector('[data-mood="walk"] .ex');
+    const ex = (await page.textContent('[data-mood="walk"] .ex')) ?? '';
+    if (ex.includes('새별오름') === night) problems.push(`${width} ${time} 「예:」 "${ex}"`);
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    const look = () =>
+      page.evaluate(() => ({
+        ids: [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => c.dataset.id),
+        line: document.querySelector('#status')?.textContent ?? '',
+        over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      }));
+    const first = await look();
+    const tag = `${width} ${time}`;
+    const n = first.ids.filter((id) => trails.has(id)).length;
+    if (first.ids.length !== 3) problems.push(`${tag} ${first.ids.length} cards`);
+    if (night ? n > 0 : n === 0) problems.push(`${tag} ${n} trail cards`);
+    if (first.line.includes(LINE) !== night) problems.push(`${tag} status "${first.line}"`);
+    if (first.over > 0) problems.push(`${tag} overflow ${first.over}`);
+    if (night) {
+      const hit = await page.evaluate(hitMeasure, '#cards .card .heart, #cards .card .go, #cards .card .visited, #cards .card .book');
+      for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${tag} ${k}: ${hit[k].join(', ')}`);
+      await shot(page, `night-results-${width}`);
+      await tapText(page, '[data-action="more"]');
+      await waitCards(page);
+      const more = await look();
+      if (more.ids.some((id) => trails.has(id) || first.ids.includes(id))) problems.push(`${tag} 다른 3곳 ${more.ids}`);
+      if (!more.line.includes(LINE)) problems.push(`${tag} 다른 3곳 status "${more.line}"`);
+    }
+    await ctx.close();
+  }
+  assert(problems.length === 0, problems.join(' | '));
+});
+
 // --- ADR-0063: hosting (no SPA fallback, 404.html, absolute paths) and keeping saves without a login ---
 const KAKAO_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 10.8.5';
 await check('K-404', 'an unknown address gets 404.html (status 404, a way home), never a blank page; /privacy is a page; with the worker installed a 404 stays a 404; index.html served at a deep address (a fallback) runs the app (absolute asset paths)', async () => {

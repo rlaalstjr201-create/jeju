@@ -183,14 +183,18 @@ interface Ranked extends Card {
   open: boolean;
   /** in season that day (ADR-0080): next among the same score (sort key only) */
   inSeason: boolean;
+  /** a 야외 산길 at night (ADR-0091): after every other place (sort key only; never set by day) */
+  late: boolean;
 }
 /** Spot ids by code unit: the order localeCompare gave for our lowercase-UUID ids, without its collation cost
  * (Lighthouse: these sorts over every spot were the home's longest script task). */
 export const byId = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 /** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then a place in season (ADR-0080),
  * then the shorter trip, then id. */
-const byRank = (a: Ranked, b: Ranked) =>
+const byScore = (a: Ranked, b: Ranked) =>
   b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || Number(b.inSeason) - Number(a.inSeason) || a.trip - b.trip || byId(a.spot.id, b.spot.id);
+/** At night a 야외 산길 goes after every other place (ADR-0091), each side in byScore order; by day it is byScore. */
+const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || byScore(a, b);
 
 /** The places one mood may show, wherever they are: `pool`'s filters (tab, 비 와요, a market closed on `day`). */
 function candidates(spots: Spot[], mood: Mood, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
@@ -205,38 +209,53 @@ function candidates(spots: Spot[], mood: Mood, tab: Tab | undefined, indoor: boo
   return list;
 }
 
-/** No origin yet (ADR-0075 3, the home's 「예:」 before GPS has answered): the whole island, score then id. */
-export function islandTop(spots: Spot[], mood: Mood, tab?: Tab, indoor = false, day?: Day): Spot[] {
-  return candidates(spots, mood, tab, indoor, day).sort((a, b) => b.score - a.score || byId(a.id, b.id));
+/** No origin yet (ADR-0075 3, the home's 「예:」 before GPS has answered): the whole island, score then id — at
+ * `night` (ADR-0091) a 야외 산길 after the others. */
+export function islandTop(spots: Spot[], mood: Mood, tab?: Tab, indoor = false, day?: Day, night = false): Spot[] {
+  const late = (s: Spot) => Number(night && s.trail === true);
+  return candidates(spots, mood, tab, indoor, day).sort((a, b) => late(a) - late(b) || b.score - a.score || byId(a.id, b.id));
 }
 
 /**
  * Candidates for one mood, best first (ADR-0060). Everything within the range; if that leaves fewer than 3,
  * the nearest 3 on the whole island (빈손 없음). `day` (ADR-0066): the day being viewed — a market the source
- * says is closed that day is left out, one on its market day ranks first among the same score.
+ * says is closed that day is left out, one on its market day ranks first among the same score. `night`
+ * (ADR-0091): a 야외 산길 goes after every other candidate (still in, never left out).
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day): Ranked[] {
+export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day, night = false): Ranked[] {
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
   const all = candidates(spots, mood, tab, indoor, day)
     .map((spot) => {
       const km = distanceKm(origin, spot);
-      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open', inSeason: !!day && seasonOn(spot.season, day) !== null };
+      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open', inSeason: !!day && seasonOn(spot.season, day) !== null, late: night && spot.trail === true };
     });
   let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
   if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || byId(a.spot.id, b.spot.id)).slice(0, CARD_COUNT);
-  return near.map(({ spot, minutes, trip, open, inSeason }) => ({ spot, minutes, trip, open, inSeason })).sort(byRank);
+  return near.map(({ spot, minutes, trip, open, inSeason, late }) => ({ spot, minutes, trip, open, inSeason, late })).sort(byRank);
+}
+
+/** The rotation's tiers: unseen 0, seen 1, the cards shown last time 2. */
+function tierOf(h: History): (c: Ranked) => number {
+  const seen = new Set(h.seen);
+  const last = new Set(h.last);
+  return (c) => (last.has(c.spot.id) ? 2 : seen.has(c.spot.id) ? 1 : 0);
 }
 
 /** Unseen first, then seen, and the cards shown last time at the very back. */
 function rotate(cards: Ranked[], h: History | undefined): Ranked[] {
   if (!h) return cards;
-  const seen = new Set(h.seen);
-  const last = new Set(h.last);
-  const rank = (c: Ranked) => (last.has(c.spot.id) ? 2 : seen.has(c.spot.id) ? 1 : 0);
+  const rank = tierOf(h);
   return cards
     .map((c, i) => ({ c, i }))
     .sort((a, b) => rank(a.c) - rank(b.c) || a.i - b.i)
     .map(({ c }) => c);
+}
+
+/** ADR-0091: night moved a 야외 산길 in `order` (rotated) — it now follows a place of the same tier that it ranks
+ * above by day. Each tier keeps its other places first, so such a move shows where the two meet. */
+function nightMoved(order: Ranked[], h: History | undefined): boolean {
+  const tier = h ? tierOf(h) : () => 0;
+  return order.some((c, i) => i > 0 && c.late && !order[i - 1].late && tier(c) === tier(order[i - 1]) && byScore(c, order[i - 1]) < 0);
 }
 
 function remember(h: History | undefined, shown: Card[], poolIds: string[]): History {
@@ -263,6 +282,8 @@ export const tabOf = (button: Button | null, sub: Sub, newTab: NewSub): Tab | un
  * day being viewed, for the market days.
  * `wrapped` = this tap shows a place already seen in this round, or is the first tap after the pool ran
  * out — i.e. everything nearby has been shown once and the rotation starts over (상태 줄 한 바퀴 문장).
+ * `night` (ADR-0091, 지금 only): 야외 산길 after the other candidates; `nightShifted` = that moved one of them in the
+ * order the picks are made from (상태 줄 밤 문장).
  */
 export function pickCards(
   spots: Spot[],
@@ -273,28 +294,34 @@ export function pickCards(
   reach: Reach = DEFAULT_REACH,
   indoor = false,
   day?: Day,
-): { cards: Card[]; histories: Histories; wrapped: boolean } {
+  night = false,
+): { cards: Card[]; histories: Histories; wrapped: boolean; nightShifted: boolean } {
   const key = historyKey(button, tab);
   const h = histories[key];
   let picked: Ranked[];
   let poolIds: string[];
+  let nightShifted = false;
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor, day));
+    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor, day, night));
     // one card per mood, never the same place twice (걷기 may have widened to 구경 indoors)
     picked = [];
     for (const p of pools) {
-      const c = rotate(p, h).find((x) => !picked.some((y) => y.spot.id === x.spot.id));
+      const order = rotate(p, h);
+      const c = order.find((x) => !picked.some((y) => y.spot.id === x.spot.id));
       if (c) picked.push(c);
+      nightShifted ||= night && nightMoved(order, h);
     }
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, tab, reach, indoor, day);
-    picked = rotate(p, h).slice(0, CARD_COUNT);
+    const p = pool(spots, origin, button, tab, reach, indoor, day, night);
+    const order = rotate(p, h);
+    picked = order.slice(0, CARD_COUNT);
+    nightShifted = night && nightMoved(order, h);
     poolIds = p.map((c) => c.spot.id);
   }
   // The rotation decides which 3; they are shown best first (R3), the score itself never.
   const cards: Card[] = picked.sort(byRank).map(({ spot, minutes }) => ({ spot, minutes }));
   const wrapped = !!h && (!!h.restarted || cards.some((c) => h.seen.includes(c.spot.id)));
-  return { cards, histories: { ...histories, [key]: remember(h, cards, poolIds) }, wrapped };
+  return { cards, histories: { ...histories, [key]: remember(h, cards, poolIds) }, wrapped, nightShifted };
 }

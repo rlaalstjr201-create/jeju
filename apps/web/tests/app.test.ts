@@ -42,6 +42,8 @@ function render(deps: Partial<Deps> = {}) {
     storage: window.localStorage,
     session: window.sessionStorage,
     now: () => clock,
+    // noon in Jeju on the real day: the picks change at night (ADR-0091, see harness.ts)
+    today: () => new Date(Date.parse(`${dayOf(new Date())}T12:00:00+09:00`)),
     delays: { slow: 0, long: 10_000, settle: 300 }, // no escape-hatch timer racing the awaits (see harness.ts)
     ...deps,
   });

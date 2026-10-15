@@ -29,6 +29,9 @@ export const advance = (ms = 1000) => (clock += ms);
 // jsdom has no layout: scrolling is a no-op here (the app calls it on every screen change).
 window.scrollTo = (() => undefined) as typeof window.scrollTo;
 
+/** Noon in Jeju on the real day: the picks change at night (ADR-0091), so a test runs at noon unless it passes `today`. */
+export const noon = () => new Date(Date.parse(`${dayOf(new Date())}T12:00:00+09:00`));
+
 export function render(deps: Partial<Deps> = {}): App {
   app?.destroy();
   document.body.innerHTML = body;
@@ -38,6 +41,7 @@ export function render(deps: Partial<Deps> = {}): App {
     storage: window.localStorage,
     session: window.sessionStorage,
     now: () => clock,
+    today: noon,
     // `long` (the 지역으로 고르기 escape) is off unless a test asks for it: a real-time 30ms timer fired
     // during a busy run's awaits and made exact status checks flaky (QA 2026-09-30, S02).
     delays: { slow: 0, long: 10_000, settle: 300 },

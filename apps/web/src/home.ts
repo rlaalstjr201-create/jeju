@@ -4,7 +4,7 @@ import type { Day } from './dates';
 import { marketDay } from './market';
 import { byId, distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Mood, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
-import { sunsetBucket, sunsetMinutes } from './sun';
+import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
 
 /** 제주시청: the sunset's place when the basis is not known yet. */
@@ -14,12 +14,16 @@ export { homeOrigin } from './state';
 
 export const sunPoint = (origin: Origin | null): Point => origin?.point ?? CITY_HALL;
 
-/** 「예: A, B」 and the two photos: the first two the mood's cards would show now (pool — range, 실내, the day),
+/** 밤 (ADR-0091) on the home: 지금 only, at the basis (제주시청's sun without one), by the time the app last read. */
+export const nightHome = (s: State, origin: Origin | null): boolean => s.when === 'now' && nightNow(s.clock, sunPoint(origin), s.today);
+
+/** 「예: A, B」 and the two photos: the first two the mood's cards would show now (pool — range, 실내, the day, 밤),
  * the whole island by score without an origin. Places without a photo (or whose photo failed) are skipped. */
 export function moodExamples(s: State, spots: Spot[], origin: Origin | null, mood: Mood): Spot[] {
   const tab = tabOf(mood, s.sub, s.newSub);
   const day = whenDay(s);
-  const list = origin ? pool(spots, origin.point, mood, tab, s.reach, s.indoor, day).map((c) => c.spot) : islandTop(spots, mood, tab, s.indoor, day);
+  const night = nightHome(s, origin);
+  const list = origin ? pool(spots, origin.point, mood, tab, s.reach, s.indoor, day, night).map((c) => c.spot) : islandTop(spots, mood, tab, s.indoor, day, night);
   return list.filter((x) => x.image && !s.broken.includes(x.id)).slice(0, 2);
 }
 

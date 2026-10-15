@@ -7,6 +7,7 @@ import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, 
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
+import { nightNow } from './sun';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';
@@ -31,6 +32,8 @@ export interface Shown {
   /** picked with 비 와요(실내만) on (ADR-0065). */
   indoor: boolean;
   wrapped: boolean;
+  /** 밤 (ADR-0091): picked at night, and that moved a 야외 산길 back (pickCards); never on 'restore'. */
+  nightShifted: boolean;
   how: 'new' | 'more' | 'restore';
   /** bumps on every result, so the renderer knows when to scroll/announce. */
   seq: number;
@@ -122,8 +125,9 @@ export interface State {
   /** 비 소식 (ADR-0076): the last answer, for the area (slug) it was asked for; shown only while that is still
    * `rainArea`. */
   rain: { area: string; rain: boolean } | null;
-  /** 노을 줄 (ADR-0083): the time of day in Jeju, minutes after midnight KST, as the app last read it (opening, back in
-   * front, midnight, and the moments 노을 볼 곳 opens and closes); null before it is read. */
+  /** 노을 줄 (ADR-0083), 밤 (ADR-0091): the time of day in Jeju, minutes after midnight KST, as the app last read it
+   * (opening, back in front, midnight, the moments 노을 볼 곳 opens and closes, the sunrise, and each answer to a
+   * request); null before it is read. */
   clock: number | null;
   /** ADR-0081: the home's survey line may show this visit (src/survey.ts surveyDue; drawn only while 기록 is on). */
   surveyLine: boolean;
@@ -141,7 +145,8 @@ export type Action =
   /** GPS answered (`why` = it failed), or the wait was given up without learning anything (`unknown`). */
   | { type: 'located'; req: number; why?: NoOrigin; unknown?: boolean }
   | { type: 'noOrigin'; req: number; why: NoOrigin }
-  | { type: 'resolved'; req: number; origin: Origin | null; spots: Spot[] }
+  /** `clock`: the time of day it came at, minutes after midnight KST (ADR-0091: the picks' night is read then). */
+  | { type: 'resolved'; req: number; origin: Origin | null; spots: Spot[]; clock?: number }
   | { type: 'loadError'; req: number; offline: boolean }
   | { type: 'abort' }
   | { type: 'spots'; spots: Spot[] }
@@ -458,12 +463,14 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
       histories,
       shown,
       phase: { k: 'ready' },
-      cards: same ? c : { key, list: restored, origin, reach: s.reach, indoor: s.indoor, wrapped: false, how: 'restore', seq },
+      cards: same ? c : { key, list: restored, origin, reach: s.reach, indoor: s.indoor, wrapped: false, nightShifted: false, how: 'restore', seq },
       seq: same ? s.seq : seq,
     };
   }
   // 오일장 (ADR-0066): the day being viewed (지금 = today) decides which markets open and which are closed.
-  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s));
+  // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 go after the rest.
+  const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
+  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night);
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;
@@ -476,7 +483,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
     histories: r.histories,
     shown: { ...shown, [key]: r.cards.map((c) => c.spot.id) },
     phase: { k: 'ready' },
-    cards: { key, list: r.cards, origin, reach: s.reach, indoor: s.indoor, wrapped: r.wrapped, how, seq },
+    cards: { key, list: r.cards, origin, reach: s.reach, indoor: s.indoor, wrapped: r.wrapped, nightShifted: r.nightShifted, how, seq },
     announce: { n, more: how === 'more', seq },
     seq,
   };
@@ -537,7 +544,9 @@ function step(s: State, a: Action): State {
     case 'resolved': {
       if (!isReq(s, a.req) || s.phase.k !== 'pending') return s;
       const intent = s.phase.intent;
-      const withGeo = a.origin?.key === GPS_KEY ? { ...s, lastFail: null } : s;
+      // the time of day it came at: the picks' night is the cards' own point's, now (ADR-0091)
+      const timed = a.clock === undefined ? s : { ...s, clock: a.clock };
+      const withGeo = a.origin?.key === GPS_KEY ? { ...timed, lastFail: null } : timed;
       if (s.view === 'saved') return resolveSaved(withGeo, a.origin, a.spots);
       if (s.view === 'cards' && s.mood && a.origin) return resolveCards(withGeo, a.origin, a.spots, intent);
       return { ...withGeo, spots: a.spots, phase: { k: 'idle' } };

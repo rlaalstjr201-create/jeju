@@ -12,7 +12,7 @@ import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, sunPoint } from './home';
-import { sunsetMinutes } from './sun';
+import { sunriseMinutes, sunsetMinutes } from './sun';
 import { createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
@@ -230,14 +230,16 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   /** 노을 줄 (ADR-0083): one timer to the next moment 노을 볼 곳 opens (2시간 30분 before the sunset at the home's
-   * point) or closes (the sunset), set again when that point or the day changes. No minute-by-minute ticking. */
+   * point) or closes (the sunset), set again when that point or the day changes. No minute-by-minute ticking.
+   * 밤 (ADR-0091) runs from that sunset to the sunrise, so the sunrise is a moment too. */
   let duskKey = '';
   let duskAt: ReturnType<typeof setTimeout> | null = null;
-  /** before (0), in (1) or after (2) the 노을 window at the home's point today; -1 unknown */
+  /** before the sunrise (0), then before (1), in (2) or after (3) the 노을 window at the home's point today; -1 unknown */
   function duskPhase(clock: number | null): number {
     if (clock == null) return -1;
-    const set = sunsetMinutes(sunPoint(homeOrigin(state)), state.today);
-    return clock < set - DUSK_LEAD_MIN ? 0 : clock < set ? 1 : 2;
+    const p = sunPoint(homeOrigin(state));
+    const set = sunsetMinutes(p, state.today);
+    return clock < sunriseMinutes(p, state.today) ? 0 : clock < set - DUSK_LEAD_MIN ? 1 : clock < set ? 2 : 3;
   }
   function duskTimer() {
     const p = sunPoint(homeOrigin(state));
@@ -256,7 +258,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       return dispatch({ type: 'clock', clock: now }); // its own duskTimer() call sets the timer
     }
     const set = sunsetMinutes(p, state.today);
-    const next = now < set - DUSK_LEAD_MIN ? set - DUSK_LEAD_MIN : now < set ? set : null;
+    const rise = sunriseMinutes(p, state.today);
+    const next = now < rise ? rise : now < set - DUSK_LEAD_MIN ? set - DUSK_LEAD_MIN : now < set ? set : null;
     if (next == null) return; // after the sunset: the midnight tick reads the clock again
     duskAt = later((next - now) * 60_000 + 500, () => {
       duskAt = null;
@@ -429,9 +432,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     remember();
     // A fixed origin (지역, 숙소, 다른 3곳) and the list already in: the answer is known now, so it lands in this same
     // step (and, in a batch, the same draw) instead of a microtask later — the same actions as the path below.
+    // The time of day goes with the answer: the picks' night is read then, at the cards' own point (ADR-0091).
     const loaded = fixed ? data.peek() : null;
     if (fixed && loaded) {
-      dispatch({ type: 'resolved', req, origin: fixed, spots: loaded });
+      dispatch({ type: 'resolved', req, origin: fixed, spots: loaded, clock: minuteOf(clockNow()) });
       remember();
       return;
     }
@@ -469,7 +473,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
       if (req !== reqSeq) return;
       clearReqTimers();
-      dispatch({ type: 'resolved', req, origin: o.ok ? o.origin : null, spots });
+      dispatch({ type: 'resolved', req, origin: o.ok ? o.origin : null, spots, clock: minuteOf(clockNow()) });
       remember();
     })();
   }
