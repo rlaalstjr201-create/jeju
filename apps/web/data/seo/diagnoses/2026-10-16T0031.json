@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "run_id": "2026-10-16T0031",
+  "graded": "2026-10-12T1200",
+  "diagnosed_at": "2026-10-16",
+  "phase": "post-deploy",
+  "window": {
+    "start": "2026-10-06",
+    "end": "2026-10-09"
+  },
+  "summary": "주인 보고(크롬·구글에서 「여차나」를 치면 9쪽 안에 yeochana.com이 없다)로 연 브랜드 검색 진단. 관찰은 2026-10-16, GSC 수치는 10-12 주간 기록(창 10-06~10-09) 인용. 「검색이 아예 안 되는 상태」는 아니다 — 네이버는 「여차나」 3위(yeochana.com, 사이트링크 6), 「여차나 제주」·「여차나 여행」·「여차나:제주」 웹문서 1위(옛 주소 yeochana.pages.dev, 눌러도 301로 우리에게 온다), site:yeochana.com에 홈이 있다. 구글은 GSC 색인 353쪽이지만 결과 화면은 ADR-0079(약관)로 보지 않아 확인 실패다. 크롤·색인 설정에는 막힌 곳이 없다(curl: 200·자기 canonical·noindex 없음·옛 주소 4곳 모두 301 한 번 / seo:crawl 감사 0). 구글에서 안 나오는 원인 후보는 셋이고 아직 갈리지 않았다: ① 말 충돌(경쟁) — 단독 「여차나」는 축구 유튜브 채널 「여차나」(구독 약 2만), 거제 지명 「여차」+조사 「나」, 구글 한/영 자판 「ducksk」(자동완성 1~3위 ducksky·duckskins)가 먼저 차지했다 → keyword gate에 단독 「여차나」 K5 kill로 기록 ② 도메인 8일(RDAP 등록 2026-10-07T15:22Z)·외부 링크 0 ③ 구글이 홈을 색인했는지·표준을 새 주소로 잡았는지 미확인(이전 8일, 구글이 밝힌 표준 변경 보통 1~3주). 지난 큐 2건이 모두 이행 안 됨 → 해소율 0% → 개입 상한 2. 1번은 홈 URL 검사와 시크릿 창 관찰로 ③과 ①을 가르고, 2번은 ①·②의 유일한 레버인 바깥 첫 언급이다. 이름 변경은 제안하지 않는다 — 「여차나:제주」·「여차나 제주」는 네이버 웹문서에서 이미 1위다(옛 주소).",
+  "instruments": [
+    {
+      "name": "build",
+      "status": "ok",
+      "note": "SITE_URL=https://yeochana.com npm run build — 랜딩 2,938 · sitemap 2,940 · 원문 0 · 가장 닮은 쌍 0.773(<0.8)"
+    },
+    {
+      "name": "seo:crawl",
+      "status": "ok",
+      "note": "감사 0건 · 색인 대상 2,940 · 고아 0 · 홈 본문 626자(crawl 기준) · 장소 쪽 약 300자대"
+    },
+    {
+      "name": "seo:keywords",
+      "status": "ok",
+      "note": "검증 오류 0·주의 0(이번 기록 갱신 뒤 다시 돌림) · 브랜드 「여차나:제주」 brand, 단독 「여차나」 kill(K5)"
+    },
+    {
+      "name": "seo:verify",
+      "status": "ok",
+      "note": "큐 2건 모두 사람 채점 · 게이트 오류 0 · 감사 P0 0 · gsc API 미연결(화면 읽기) · bing 등록됨(조회 없음)"
+    },
+    {
+      "name": "seo:keywords --suggest",
+      "status": "ok",
+      "note": "네이버: 여차나·여차나 제주·여차나:제주·여차나 여행·yeochana·여차나 앱 모두 자동완성 없음 · 구글: 「여차나」 → ducksky·duckskins·ducksky phone case·여차여차·여차차·여차뜻·여차낚시(「ducksk」의 1~3위와 같다), 「여차나 제주」 → 제주 자차 여행·제주도 차 여행·여차나·여차 해수욕장"
+    },
+    {
+      "name": "naver-brand(playwright)",
+      "status": "ok",
+      "note": "6개 검색어 1회, 저장소 밖 일회 스크립트(rank-naver.mjs와 같은 방식): 여차나 3위(yeochana.com) · 여차나 제주/여차나 여행 웹문서 1위 옛 주소 · 여차나:제주 AI 브리핑은 거제 문서 3건, 웹문서 1위 옛 주소 · yeochana → 「yechan(으)로 검색한 결과」 · site:yeochana.com 홈+사이트링크"
+    },
+    {
+      "name": "live-http(curl)",
+      "status": "ok",
+      "note": "https://yeochana.com/ 200 · canonical 자기 주소 · robots Allow+Sitemap · 사이트맵 2,940 · yeochana.pages.dev·www·yeogwi·gwichana-jeju·http 모두 301 한 번 · 슬래시 없는 주소 308 · X-Robots-Tag 없음 · IndexNow 키 파일 200"
+    },
+    {
+      "name": "render-home(playwright)",
+      "status": "ok",
+      "note": "렌더된 홈 보이는 글 467자, 「여차나」 1회(로고) · 원본 HTML 본문 828자 중 noscript 396자 — 엔티티 문장은 noscript·JSON-LD에만 있다(허브 /jeju/는 본문에 있다)"
+    },
+    {
+      "name": "rdap",
+      "status": "ok",
+      "note": "yeochana.com 등록 2026-10-07T15:22:56Z(KST 10-08 00:22) — 8일"
+    },
+    {
+      "name": "websearch(미국 엔진 프록시)",
+      "status": "ok",
+      "note": "site:yeochana.com 0건, 「yeochana」를 yechan·yoonchae로 읽음 — 구글도 네이버도 아니다. 색인 부재로 읽지 않는다"
+    },
+    {
+      "name": "google-serp",
+      "status": "skip",
+      "note": "ADR-0079 — 구글 결과를 긁지 않는다(약관). 확인 실패"
+    },
+    {
+      "name": "gsc(화면)",
+      "status": "skip",
+      "note": "로그인 필요 — 이번엔 열지 않았다. console/2026-10-12·gsc/2026-10-12 인용"
+    },
+    {
+      "name": "naver-searchadvisor(화면)",
+      "status": "skip",
+      "note": "로그인 필요 — 시도하지 않았다"
+    }
+  ],
+  "grading": [
+    {
+      "rank": 1,
+      "verdict": "이행 안 됨",
+      "why": "keywords.json target 2건에 indexed_at 없음(2026-10-16 확인). 10-03·10-05·10-12에 이어 네 번째라 그대로 올리지 않고 접는다 — 홈 1쪽 검사(이번 개입 1)로 좁혔다"
+    },
+    {
+      "rank": 2,
+      "verdict": "이행 안 됨",
+      "why": "config.naver.sitemap_submitted_at 빈 값·collect_requested 빈 배열. 오늘 네이버는 site:yeochana.com에 홈이 나오지만 브랜드 검색 웹문서 1위는 옛 주소(yeochana.pages.dev)다. 해소율 0%로 상한 2라 이번 큐에서는 내리고 손대지 않기로 한 것에 남긴다"
+    }
+  ],
+  "interventions": [
+    {
+      "rank": 1,
+      "title": "GSC URL 검사로 홈(https://yeochana.com/)의 등록 여부와 Google 선택 표준을 보고 미등록이면 색인 생성 요청을 누른다. 같은 날 크롬 시크릿 창에서 구글 검색 4개(site:yeochana.com · 여차나:제주 · 여차나 제주 · yeochana) 첫 쪽을 적는다",
+      "severity": "P1",
+      "qualifies": "GSC 화면 console/2026-10-12: 색인 353/2,940 — 홈 등록 여부 미확인",
+      "cause_layer": "색인",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "brand-home-index-google",
+      "queue_kind": "other",
+      "keyword": "여차나:제주",
+      "where": "사람 — GSC(https://yeochana.com/ 속성) URL 검사 1회 · 크롬 시크릿 창 구글 검색 4개(우리 주소 yeochana.com·yeochana.pages.dev의 위치, 맨 위 「다음 검색결과 표시」 문구 유무). 결과는 data/seo/console/<날짜>.json google.home_inspection과 keywords.json 「여차나:제주」 serp.note에 적는다(화면을 에이전트에게 보여 줘도 된다)",
+      "evidence": "console/2026-10-12 색인 353·발견됨-미색인 2,536·크롤링됨-미색인 51(홈이 어디 드는지 모름) · gsc/2026-10-12 노출 6·평균 8.8위(검색어 익명) · RDAP 등록 8일 · 이전 301 한 번(curl 10-16) · 구글 자동완성 「여차나」 1~3위 = 「ducksk」 1~3위(ducksky)",
+      "why_now": "네이버는 오늘 「여차나」 3위·「여차나 제주」 웹문서 1위로 색인이 확인되는데 구글은 결과 화면을 볼 수 없다. 홈이 미등록이거나 표준이 옛 주소면 색인 층, 등록됐는데 9쪽 밖이면 경쟁 층(말 충돌·링크 0)이다 — 5분짜리 관찰 한 번으로 갈린다. 구글이 밝힌 보통 시간(새 URL 발견 약 20시간, 표준 변경 1~3주)으로 보면 이전 8일째인 지금 미등록이면 요청할 이유가 있다",
+      "verify": "data/seo/console/의 다음 기록에 google.home_inspection(등록 여부·Google 선택 표준 URL·검사일)이 있고, keywords.json 「여차나:제주」 serp.checked_at이 2026-10-16 이후이며 note에 구글 관찰(4개 검색어의 우리 위치)이 있다"
+    },
+    {
+      "rank": 2,
+      "title": "바깥 첫 언급을 만든다 — 「여차나:제주」 이름의 네이버 블로그를 열어 첫 글에 엔티티 문장 그대로와 yeochana.com 링크를 싣고, 제주 여행 카페의 「계획 없이·지금 ○○인데」 질문 1건에 장소 2~3곳으로 답한다",
+      "severity": "P1",
+      "qualifies": "keyword gate brand 「여차나:제주」 네이버 AI 브리핑 근거 3건이 모두 거제 여차(Playwright 2026-10-16)",
+      "cause_layer": "GEO",
+      "affected_impressions": null,
+      "verifiable": true,
+      "sort_id": "brand-offsite-first-mention",
+      "queue_kind": "offsite",
+      "keyword": "여차나:제주",
+      "where": "사람 — 네이버 블로그 1개(블로그 이름·소개에 「여차나:제주」와 엔티티 문장, yeochana.com) 첫 글 1편 + 제주 여행 카페 답 1건(답이 먼저, 링크는 끝 한 줄, .claude/skills/seo-geo/references/naver.md). 게시 URL은 apps/web/data/seo/config.json에 offsite 배열(url·at·kind)로 적는다",
+      "evidence": "네이버 2026-10-16: 「여차나:제주」 AI 브리핑이 sharim.kr·테니스푸디 블로그·innak.kr로 「여차나 = 거제 해안도로·몽돌해변·낚시」라고 설명(10-12엔 yeochana.com이 4위) · 「여차나」 1위 축구 유튜브 「여차나」, 2위 그 채널을 부르는 블로그 · 우리 이름이 나오는 바깥 문서 0(ADR-0084 Context 외부 링크 0, offsite 이행 0) · seoulist 사후분석: 링크 0 → 부스트가 걷힌 뒤 절벽",
+      "why_now": "네이버 AI 브리핑은 주로 네이버 안 문서를 근거로 쓰는데 「여차나:제주」를 말하는 네이버 안 문서가 0건이라 두 번 관찰에서 4위 → 거제 설명으로 흔들렸다. 구글의 단독 「여차나」도 축구 채널·거제 문서를 넘으려면 이 이름과 제주를 함께 쓰는 바깥 문서가 있어야 한다. 사이트 안에서 더 고칠 것은 없다(감사 0건)",
+      "verify": "config.json offsite 배열에 2026-10-16 이후 게시 URL이 1건 이상 있고, 그 URL이 200으로 열리며 본문에 「여차나:제주」와 yeochana.com 링크가 있다"
+    }
+  ],
+  "investigate": [
+    "구글 「여차나」 결과 화면이 한/영 자판 교정(ducksk → ducksky)으로 바뀌는지 — 자동완성만 확인했다. 개입 1의 시크릿 창 관찰(맨 위 「다음 검색결과 표시」 문구)로 갈린다",
+    "네이버가 브랜드 검색에서 옛 주소(yeochana.pages.dev)를 언제 새 주소로 바꾸는지 — 이전 8일째. rank-naver.mjs는 yeochana.com만 「찾음」으로 세서 옛 주소 1위를 not_found로 적는다(측정 정의 문제, 손대지 않기로 한 것의 제안). 다음 주간 관찰에서 옛 주소 위치도 사람이 함께 적는다",
+    "크롤링됨-미색인 51쪽 예시 URL·발견됨-미색인 2,536쪽 추이(10-12 investigate 이월) — 10-19 주간 점검에서 같은 화면"
+  ],
+  "not_touching": [
+    "이름·주소 바꾸기 — 「여차나:제주」·「여차나 제주」·「여차나 여행」은 네이버 웹문서 1위(옛 주소)이고 주소는 ADR-0084로 다시 옮기지 않는다. 다만 ADR-0082의 전제 「흔하지 않은 말이라 혼자 잡기 쉽다」가 단독 「여차나」에선 틀렸다는 기록을 ADR-0082 개정 메모로 남길 것을 제안 [ADR감]",
+    "단독 「여차나」를 노리는 쪽·문구 — keyword gate K5 kill(축구 채널·거제·ducksk)",
+    "네이버 사이트맵 제출·웹 페이지 수집 요청(https://yeochana.com/, /jeju/) — 지난 큐 2번, 이행 안 됨. 상한 2라 큐에서 내렸다. 개입 1과 같은 날 하면 옛 주소 대체가 빨라질 수 있다(근거 중간)",
+    "제안만 — IndexNow: 상태 파일이 아직 옛 호스트(yeochana.pages.dev, 보낸 것 0)다. ADR-0084 5대로 새 주소로 seed만 하고(node scripts/seo/indexnow.mjs seed --live, 전송 0) 새 주소를 처음 알리는 일은 네이버 사이트맵 제출로 한다. 2,940개 일괄 send는 네이버 FAQ 규칙(사용 시작 이후 추가된 URL만)과 ADR-0084 5에 어긋날 수 있어 권하지 않는다. 구글은 IndexNow를 쓰지 않는다",
+    "제안만 — 홈에 엔티티 문장을 보이는 글로 한 줄(지금은 noscript·JSON-LD에만, 렌더된 홈에 「여차나」는 로고 1회). 구글 사이트 이름 문서는 홈 글을 본다고 하지만 순위 효과 근거는 약하다 — ADR-0088 화면과 겹쳐 주인 결정",
+    "제안만 — rank-naver.mjs가 옛 주소(yeochana.pages.dev)를 별도 상태(예: found_old_host)로 세게(코드). 지금은 오늘 같은 3건이 not_found로 적힌다",
+    "제안만 — Organization JSON-LD + sameAs는 바깥 프로필(개입 2)이 생긴 뒤. 링크할 공식 프로필이 아직 없다",
+    "제안만 — [ADR감] 장소 쪽 색인 범위(10-12 이월). 브랜드 검색의 직접 원인은 아니다",
+    "GSC 노출 6·8.8위, 네이버 1회 관찰 결과 — 성과로 읽지 않는다"
+  ],
+  "failed": [
+    "구글 결과 화면 — ADR-0079(약관)로 직접 보지 않는다. 브랜드 검색어 5개·site: 모두 확인 실패",
+    "GSC·네이버 서치어드바이저 화면 — 로그인 필요, 이번엔 열지 않았다(10-12 기록 인용)",
+    "네이버 서치어드바이저 「사이트 이전」 기능 유무 — 공식 문서 조회가 막혔다(searchadvisor.naver.com 가져오기 실패). 없다는 뜻이 아니다",
+    "WebSearch(미국 엔진) — 우리 쪽 0건이지만 구글·네이버가 아니라 판단에 쓰지 않는다"
+  ],
+  "repo_changes": [
+    " M apps/web/data/seo/keywords.json (조사 기록 — 「여차나:제주」 serp를 2026-10-16 관찰로 갱신, 단독 「여차나」 후보 kill(K5) 추가, updated)",
+    " M apps/web/data/seo/queue.json (seo:report --queue)",
+    "?? apps/web/data/seo/diagnoses/2026-10-16T0031.json",
+    "?? docs/seo/2026-10-16-brand-search.md (요청된 진단 문서)",
+    "?? docs/research/heuristic-audit-02/ (이번 가동과 무관 — 다른 작업이 00:17에 만든 폴더, 손대지 않음)",
+    "저장소 밖: 관찰 스크립트·네이버 결과 HTML·홈 원문은 세션 scratchpad에만 있다. dist는 빌드 산출(무시 대상)"
+  ]
+}

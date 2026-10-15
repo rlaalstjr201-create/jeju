@@ -1,7 +1,7 @@
 {
  "_why": "keyword gate 기록 — 페이지·콘텐츠 작업 전에 이 표를 통과해야 한다. 규칙: scripts/seo/keyword-gate.mjs · 루브릭: .claude/skills/seo-geo/references/keyword-gate.md · 근거: docs/seo/keyword-research-01.md",
  "rubric_version": 1,
- "updated": "2026-10-01",
+ "updated": "2026-10-16",
  "candidates": [
   {
    "query": "여차나:제주",
@@ -16,17 +16,16 @@
    },
    "kills": [],
    "serp": {
-    "checked_at": "2026-10-03",
-    "source": "네이버 통합검색 Playwright(scripts/seo/rank-naver.mjs, data/seo/rank/naver-2026-10-03.json) — 「여행귀:제주」 1건. 구글·「여행귀」 단독은 확인 실패(재관찰 필요)",
+    "checked_at": "2026-10-16",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-16 — scripts/seo/rank-naver.mjs와 같은 방식의 저장소 밖 일회 스크립트, 원문 HTML은 저장소에 남기지 않음) + 구글·네이버 자동완성(seo:keywords --suggest). 구글 결과 화면은 ADR-0079(약관)로 보지 않는다 — 확인 실패",
     "observed": "naver",
     "naver_observed": true,
     "top": [
-     "AI 브리핑: visitjeju.net · onuljeju.com · visitjeju.or.kr",
-     "광고 블록",
-     "웹문서: visitjeju.net",
-     "카페: cafe.naver.com"
+     "AI 브리핑: 거제 여차 문서 3건(sharim.kr · 네이버 블로그 테니스푸디 · innak.kr) — 「여차나」를 거제 해안도로·몽돌해변·낚시 포인트로 설명",
+     "웹문서 1위: yeochana.pages.dev(옛 주소, 301 → yeochana.com) 「여차나:제주 · P를 위한 여행동반자」",
+     "웹문서: innak.kr(「여차나 홍포쪽」 낚시) · cboard.net · kookje.co.kr · memory.library.kr"
     ],
-    "note": "2026-10-03 우리 주소(yeogwi.pages.dev) 없음 — 같은 날 소유 확인·수집 요청 직후라 색인 전이다(「없음」은 순위 판단이 아니다). 같은 이름의 앱·서비스는 이 1회 관찰에서 안 보였다. 옛 이름(「여행계획짜기 귀찮아 제주」, 2026-10-01 curl) 관찰은 ADR-0077 이름 변경으로 근거에서 뺐다. 2026-10-03 네이버 자동완성이 「여행귀」를 「여행기」로 고쳐 보여 주는 듯했다(1회 관찰, 재현 미확인) — 맞다면 브랜드 단독 검색이 오타 교정에 묻힐 수 있다. 구글 SERP·「여행귀」 단독 검색은 확인 실패 — 재관찰 필요. ADR-0082로 이름이 「여차나:제주」가 됐다 — 이 SERP 관찰은 옛 이름 기준이라 새 이름으로 다시 봐야 한다."
+    "note": "2026-10-16 네이버 1회: 정확한 브랜드 검색어에서 우리 문서는 웹문서 1위지만 옛 주소(yeochana.pages.dev)로 나온다 — 이전(10-08) 8일째라 네이버가 아직 새 주소로 바꾸지 않았다. 같은 날 「여차나 제주」·「여차나 여행」도 웹문서 1위가 옛 주소, 「여차나」 단독은 3위(yeochana.com, 사이트링크 6개), site:yeochana.com은 홈이 색인돼 있다. rank-naver.mjs는 yeochana.com만 「찾음」으로 세서 이 경우를 not_found로 적는다(측정 정의 — docs/seo/2026-10-16-brand-search.md). 10-12 관찰에서는 AI 브리핑 4위에 yeochana.com이 있었다 — 두 번의 1회 관찰이 엇갈리므로 흔들림으로 읽는다. 구글: 자동완성은 네이버·구글 모두 없음, 결과 화면은 확인 실패. 옛 이름 「여행귀:제주」 관찰(10-03)은 ADR-0082 이름 변경으로 근거에서 뺐다."
    },
    "demand": {
     "naver": [],
@@ -35,6 +34,50 @@
    "rationale": "브랜드 존재 확인용(ADR-0082 새 이름 「여차나:제주」). 배포 후 1위가 아니면 색인·엔티티 문제다(경쟁 문제가 아니다).",
    "landing": "/",
    "verdict": "brand"
+  },
+  {
+   "query": "여차나",
+   "cluster": "brand",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K5_brand_collision"
+   ],
+   "serp": {
+    "checked_at": "2026-10-16",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-16, rank-naver.mjs와 같은 방식) + 구글·네이버 자동완성(seo:keywords --suggest, 구글 chrome 클라이언트 원문 확인) + 유튜브 채널 쪽 title·description(curl). 구글 결과 화면은 ADR-0079(약관)로 보지 않는다 — 확인 실패",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "유튜브 채널 「여차나」(「여기가 차붐의 나라입니까?」 — 한국 축구, 네이버 요약 기준 구독 약 2만·영상 약 270)",
+     "네이버 블로그 장카푸(그 채널을 「여차나」로 소개하는 축구 글)",
+     "yeochana.com(우리 — 사이트링크 6개)",
+     "cboard.net(통영·거제 여행 질문)",
+     "네이버 블로그(축구 — 「여차나」 채널 영상 인용)",
+     "innak.kr(「거제도 여차나, 다대쪽」 낚시)",
+     "namu.wiki(거제 버스 55 — 「여차나 저구」)"
+    ],
+    "note": "AI 브리핑 없음. 이 말은 세 가지로 읽힌다 — ① 축구 유튜브 채널 이름(여·차·나 = 여기가 차붐의 나라) ② 거제 남부면 지명 「여차」(여차몽돌해변·여차-홍포 해안도로·여차낚시)+조사 「나」 ③ 구글 한/영 자판: 여(du)차(ck)나(sk) = 「ducksk」 — 구글 자동완성 1~3위가 ducksky·duckskins·ducksky phone case로 「ducksk」의 1~3위와 같다(「여차」 = duck → duckduckgo·duck). 구글 결과 화면까지 영문으로 바뀌는지는 확인 실패. 네이버 자동완성은 없음."
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "ducksky",
+     "duckskins",
+     "ducksky phone case",
+     "여차여차",
+     "여차차",
+     "여차뜻",
+     "여차낚시"
+    ]
+   },
+   "rationale": "단독 「여차나」는 우리만의 말이 아니다(K5) — 축구 유튜브 채널 「여차나」가 네이버 1위이고, 거제 「여차」+조사 「나」 문서가 많고, 구글 자동완성은 한/영 자판으로 「ducksk」(ducksky)로 읽는다. 구글 자동완성 7개 중 우리 것은 없다(수요 1은 이 말이 검색되기는 한다는 뜻이지 우리를 찾는다는 뜻이 아니다). 이 말 하나를 노리는 쪽·문구를 만들지 않는다. 브랜드 검색어는 ADR-0082 5대로 「여차나:제주」이고, 단독 「여차나」는 바깥 언급이 쌓이며 따라오는지만 본다 — 이름 변경 제안이 아니다(docs/seo/2026-10-16-brand-search.md).",
+   "verdict": "kill"
   },
   {
    "query": "P의 여행",
