@@ -1226,16 +1226,16 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       return [credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings)];
     };
     const gen = ++homeGen;
-    // The first time the data is drawn (opts.stageHome): the moods' 「예:」 and photos a frame later, two rows at a
-    // time, then the sections under them a frame at a time (다른 동네's tiles over two) — every step its own short
-    // task and frame instead of one long one. A step a newer draw has overtaken is dropped (that draw starts again).
-    // Any later redraw is done in place, at once.
+    // The first time the data is drawn (opts.stageHome): 노을 볼 곳 and 오늘 장 서는 곳 at once, with the 오늘 판 row
+    // that jumps to them; the moods' 「예:」 and photos a frame later, two rows at a time, then 다른 동네 (its tiles
+    // over two frames), the credit and 설정 — every step its own short task and frame instead of one long one. A step
+    // a newer draw has overtaken is dropped (that draw starts again). Any later redraw is done in place, at once.
     if (opts.stageHome && spots && !homeFilled) {
+      els.homeMore.replaceChildren(...sections());
       let late: Element[] = [];
       const steps = [
         () => examples(['rest', 'walk']),
         () => examples(['new', 'food']),
-        () => els.homeMore.replaceChildren(...sections()),
         () => {
           const sec = areas();
           late = [...sec.querySelectorAll(':scope > .tiles > li')].slice(6);

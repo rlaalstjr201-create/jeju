@@ -182,6 +182,18 @@ describe('the first load in turns (deps.yieldToMain, main.ts)', () => {
     expect($('#home').innerHTML).toBe(straight);
   });
 
+  it('the 오늘 판 row and the section it jumps to come in the same draw (a tap on it always finds 오늘 장 서는 곳)', async () => {
+    // 2026-10-02 (KST): 제주민속오일장 opens (2·7일), near 구제주 (e2e M4-market)
+    window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
+    window.localStorage.setItem('jeju.region', JSON.stringify('구제주'));
+    render({ yieldToMain: turn, today: () => new Date('2026-10-02T12:00:00+09:00') });
+    await until(() => !!current().state().spots && !$('#today').classList.contains('wait'));
+    expect($('#today .act')?.getAttribute('href')).toBe('#market');
+    expect($('#homeMore #market')).not.toBeNull();
+    expect($('#homeMore .settings')).toBeNull(); // the rest still to come
+    await until(homeDrawn);
+  });
+
   it('a later draw of the home (another 동네) is done in place at once, not in steps', async () => {
     render({ yieldToMain: turn });
     await until(homeDrawn);
