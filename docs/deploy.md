@@ -126,6 +126,10 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 
 검색(배포 당일~1주): 네이버 서치어드바이저·GSC 등록과 사이트맵 제출(위 「검색엔진 소유 확인」). 주간 점검은 `docs/seo/README.md`.
 
+대시보드 설정(2026-10-16, 출시 전 점검 뒤 주인 승인으로 바꿈 — 다시 켜지 않는다):
+- Cloudflare Web Analytics(RUM) `yeochana.com`은 **Disable**. 켜져 있으면 Cloudflare가 모든 HTML에 `static.cloudflareinsights.com` 비컨을 끼워 넣어, 개인정보 안내의 「세 곳」과 어긋나고 「기록 끄기」로도 멈추지 않는다. 확인: `curl -s https://yeochana.com/ | grep -c cloudflareinsights` → 0.
+- GA4 향상된 측정의 **이탈 클릭은 끔**. 켜져 있으면 길찾기 링크 주소(가려는 곳 좌표·이름)가 GA4로 간다(안내 「좌표는 이 세 곳 어디로도 보내지 않아요」).
+
 분석(ADR-0078): 매일 `npm run analytics:health -w @jeju/web`(로컬 예약 작업)이 자체 기록 지난 24시간 0건이거나 수집기에 닿지 않으면 한 줄 이유와 함께 실패한다. 주간 점검에서 `npm run analytics:report -w @jeju/web`(`wrangler login` 필요, D1 읽기만)로 `docs/analytics/YYYY-MM-DD.md`를 만들고, GA4·네이버 대시보드의 지난 7일 사용자 수를 같이 적는다.
 
 남은 일(배포 직후~1주): 오류 집계(새 결정 필요), Lighthouse, 한국 통신사별 응답 지연 실측(무료 플랜 우회 사례).
