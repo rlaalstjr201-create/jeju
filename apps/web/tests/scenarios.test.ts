@@ -327,9 +327,9 @@ describe('뒤로가기와 저장 목록 (history)', () => {
     await settle();
     expect($('#savedView').hidden).toBe(false);
     expect(window.history.state).toMatchObject({ view: 'saved', depth: 2 });
-    await tap('#savedView .back');
+    await tap('#back');
     await settle();
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="new"]');
     await settle();
@@ -347,7 +347,7 @@ describe('뒤로가기와 저장 목록 (history)', () => {
     render();
     await tap('#saved');
     await settle();
-    await tap('#savedView .back');
+    await tap('#back');
     await settle();
     await tap('[data-mood="rest"]');
     await settle();
@@ -509,7 +509,7 @@ describe('섬·이름·지도 링크', () => {
         if (i === 0) expect(meta).toBe(want[0]);
         else expect(meta).toBe(same ? null : want[i]);
       });
-      await tap('#results .change');
+      await tap('#back');
       await settle();
     }
     expect(seen.length).toBeGreaterThan(0);
@@ -558,7 +558,7 @@ describe('연타·겹친 요청', () => {
     expect(cardNames()).toEqual(expectedNames(area('애월'), 'rest'));
     expect(window.history.state).toMatchObject({ view: 'cards', depth: 1 }); // one entry, not two
     // Changed on purpose (SPEC D2): coming back to the same mood brings back those 3; next 3 is its own button.
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="rest"]');
     expect(cardNames()).toEqual(expectedNames(area('애월'), 'rest'));
@@ -711,13 +711,13 @@ describe('다시 고르기', () => {
     render();
     await tap('[data-mood="rest"]');
     const rest1 = cardNames();
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     expect($('#home').hidden).toBe(false);
     expect($('[data-mood="rest"]').getAttribute('aria-current')).toBe('true'); // ticked: chosen last time
     await tap('[data-mood="walk"]');
     expect(pressedMoods()).toEqual(['walk']);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="rest"]');
     expect(cardNames()).toEqual(rest1);
@@ -795,9 +795,9 @@ describe('작은 화면 (S45·S46)', () => {
       Object.defineProperty(window, 'scrollY', { value: 420, configurable: true });
       await tap('#saved');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
-      await tap('#savedView .back');
+      await tap('#back');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 420);
-      await tap('#results .change');
+      await tap('#back');
       expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
     } finally {
       Object.defineProperty(window, 'scrollY', { value: 0, configurable: true });
@@ -928,7 +928,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     expect($('#results').hidden).toBe(false);
     expect($('#crumb').textContent).toBe('좀 걷고 싶어');
     expect(window.history.state).toMatchObject({ view: 'cards', depth: 1 });
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     expect($('#home').hidden).toBe(false);
     expect($('#results').hidden).toBe(true);
@@ -946,7 +946,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     await flush();
     expect($('#savedView').hidden).toBe(false);
     advance(350); // past the 300ms double-tap window, inside the 400ms same-control guard
-    $('#savedView .back').click();
+    $('#back').click();
     await flush();
     expect($('#savedView').hidden).toBe(true);
     expect($('#home').hidden).toBe(false);
@@ -1015,7 +1015,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     const stepped = vi.spyOn(Date, 'now').mockReturnValue(wall - 60_000); // NTP / manual correction: a minute back
     try {
       const change = new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 });
-      $('#results .change').dispatchEvent(change);
+      $('#back').dispatchEvent(change);
       await settle();
       expect(change.defaultPrevented).toBe(false);
       expect($('#home').hidden).toBe(false);
@@ -1143,7 +1143,7 @@ describe('한 번에 하나 — 기분 목록이 접히는 흐름 (design/SPEC.m
     render({ locate: () => (++n === 1 ? Promise.resolve(ORIGINS.제주시) : gps.promise), delays: { slow: 10_000, long: 20_000, settle: 300 } });
     await tap('[data-mood="rest"]');
     expect(cardNames()).toHaveLength(3);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="walk"]');
     expect($('#crumb').textContent).toBe('좀 걷고 싶어');
@@ -1295,7 +1295,7 @@ describe('QA 2026-09-30 — 새로고침·뒤로가기 정합성', () => {
     render({ locate });
     await tap('[data-mood="rest"]');
     const rest = cardNames();
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     fail = true;
     await tap('[data-mood="walk"]');
@@ -1352,7 +1352,7 @@ describe('QA 2026-09-30 — 새로고침·뒤로가기 정합성', () => {
     render();
     await tap('[data-mood="rest"]');
     expect(window.sessionStorage.getItem('jeju.session')).toContain('"rest"');
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     expect(window.sessionStorage.getItem('jeju.session')).toBeNull();
   });
@@ -1361,7 +1361,7 @@ describe('QA 2026-09-30 — 새로고침·뒤로가기 정합성', () => {
     render();
     await tap('[data-mood="walk"]');
     const ids = cardIds();
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     window.history.forward();
     await settle();
@@ -1454,7 +1454,7 @@ describe('QA 2026-09-30 r2 — 저절로 제자리로, 손가락 밑은 그대�
     await wait(30);
     const ids = cardIds();
     expect(ids).toHaveLength(3);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="rest"]');
     const lead = $('#cards .card');
@@ -1899,7 +1899,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     await settle();
     expect($('#sheet').hidden).toBe(true);
     expect(cardNames()).toEqual(shown);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('#basis');
     await tap('#sheet [data-reach="drive60"]');
@@ -1945,7 +1945,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     await tap('#sheet [data-reach="drive60"]');
     await settle();
     expect($('#savedView').hidden).toBe(false);
-    await tap('#savedView [data-action="close-saved"]');
+    await tap('#back');
     await settle();
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'rest', undefined, 'drive60'));
   });
@@ -1954,7 +1954,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     render();
     const words = /score|점수|별점|평점|★|☆/i;
     for (const mood of ['rest', 'walk', 'new', 'food', 'any'] as const) {
-      await tap('#results .change').catch(() => undefined);
+      await tap('#back').catch(() => undefined);
       await settle();
       await tap(`[data-mood="${mood}"]`);
       expect($$('.card')).toHaveLength(3);
@@ -2061,17 +2061,17 @@ describe('새로운 거 섞어서 · 구경 · 체험', () => {
     await tap('[data-mood="new"]');
     await tap('[data-sub="do"]');
     const doing = cardNames();
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="food"]');
     expect($('[data-sub="meal"]').getAttribute('aria-pressed')).toBe('true');
     await tap('[data-sub="cafe"]');
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="new"]');
     expect(pressedTab()).toEqual(['do']);
     expect(cardNames()).toEqual(doing);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="food"]');
     expect($('[data-sub="cafe"]').getAttribute('aria-pressed')).toBe('true');
@@ -2108,7 +2108,7 @@ describe('새로운 거 섞어서 · 구경 · 체험', () => {
     render();
     await tap('[data-mood="new"]');
     await tap('[data-sub="sight"]');
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="any"]');
     expect($('#newSub').hidden).toBe(true);
@@ -2175,18 +2175,18 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
     window.sessionStorage.setItem('jeju.indoor', 'true');
     render();
     for (const mood of ['walk', 'new', 'food', 'any'] as const) {
-      await tap('#results .change').catch(() => undefined);
+      await tap('#back').catch(() => undefined);
       await settle();
       await tap(`[data-mood="${mood}"]`);
       expect(cardNames(), mood).toEqual(indoorNames(ORIGINS.제주시, mood, mood === 'food' ? 'meal' : mood === 'new' ? 'mix' : undefined));
       expect($$('#cards .card .indoor'), mood).toHaveLength(3);
     }
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="new"]');
     await tap('#newSub [data-sub="sight"]');
     expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'new', 'sight'));
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="food"]');
     await tap('#foodSub [data-sub="cafe"]');
@@ -2208,7 +2208,7 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
     expect(state().indoor).toBe(true);
     expect($('#savedView').hidden).toBe(false);
     expect($$('#savedView .indoor')).toHaveLength(0);
-    await tap('#savedView [data-action="close-saved"]');
+    await tap('#back');
     await settle();
     expect(cardNames()).toEqual(indoorNames(ORIGINS.제주시, 'walk'));
   });
@@ -2273,10 +2273,10 @@ describe('결과 화면 (ADR-0075, plans/home-refresh.md U1)', () => {
     await tap('#saved');
     expect(how().textContent).toBe('');
     expect(how().hidden).toBe(true);
-    await tap('#savedView [data-action="close-saved"]');
+    await tap('#back');
     await settle();
     expect(how().hidden).toBe(false);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     expect(how().hidden).toBe(true);
   });
@@ -2370,7 +2370,7 @@ describe('오일장 「오늘 열려요」 (ADR-0066, specs/market-days.md M4)',
     open();
     await tap('[data-mood="rest"]');
     expect($$('#cards .meta .market')).toHaveLength(0);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="new"]');
     await tap('[data-sub="sight"]');

@@ -202,8 +202,8 @@ await check('S17', 'saved list → 돌아가기 → 바꾸기 → another mood: 
   await page.locator('.card .heart').first().click();
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card');
-  await tapText(page, '#savedView .back');
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
+  await tapText(page, '#back');
   await tapText(page, '[data-mood="walk"]');
   await waitCards(page);
   await sleep(300);
@@ -332,7 +332,7 @@ for (const [w, h, id] of [
       await sleep(100);
       const bottom = await page.$eval('.card .name', (e) => e.getBoundingClientRect().bottom);
       assert(bottom <= h, `${mood}: name bottom at y=${Math.round(bottom)} > ${h}`);
-      if (mood === 'food') await tapText(page, '#results .change');
+      if (mood === 'food') await tapText(page, '#back');
     }
     await tapText(page, '#cards .more');
     await sleep(100);
@@ -378,14 +378,14 @@ await check('S9-4', '320·390·430 × light·dark × 9 states: no sideways scrol
       await page.waitForSelector('#savedView .card');
       await measure(page, `${tag} saved`);
       await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'deny' })));
-      await tapText(page, '#savedView .back');
-      await tapText(page, '#results .change');
+      await tapText(page, '#back');
+      await tapText(page, '#back');
       await tapText(page, '[data-mood="walk"]');
       await page.waitForSelector('.notice');
       await measure(page, `${tag} denied`);
       if (width === 390) await shot(page, `denied-390-${dark ? 'dark' : 'light'}`);
       await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'hang' })));
-      await tapText(page, '#results .change');
+      await tapText(page, '#back');
       await tapText(page, '[data-mood="rest"]');
       await page.waitForSelector('#cards .ghost');
       await measure(page, `${tag} placeholder`);
@@ -539,14 +539,14 @@ await check('S43·S44', 'mood A → 바꾸기 → B → 바꾸기 → A shows th
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
   const rest = await names(page);
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
   await tapText(page, '[data-mood="walk"]');
   await waitCards(page);
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
   assert(JSON.stringify(await names(page)) === JSON.stringify(rest), 'rest cards changed');
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
   await tapText(page, '[data-mood="food"]');
   await waitCards(page);
   const meal = await names(page);
@@ -809,7 +809,7 @@ await check('S51', 'home-screen launch: start_url in a fresh top-level page → 
   assert(r.basis === '애월 근처', `basis ${r.basis}`);
   assert(r.savedShown && r.saved === '1', `♥ ${r.saved}`);
   assert(r.state?.view === 'home' && r.state?.depth === 0 && r.over <= 0, `history ${JSON.stringify(r.state)}, overflow ${r.over}`);
-  // no back button: results → 바꾸기, saved list → 돌아가기, sheet → 닫기 / scrim, all from inside the page
+  // no browser back button: 뒤로 at the top bar's left (ADR-0090) on the results and the saved list, sheet → 닫기 / scrim, all from inside the page
   await tapText(app, '[data-mood="rest"]');
   await waitCards(app);
   await shot(app, 'standalone-cards');
@@ -819,10 +819,10 @@ await check('S51', 'home-screen launch: start_url in a fresh top-level page → 
   assert(!(await visible(app, '#sheet .sheet')), '닫기 did not close the sheet');
   await tapText(app, '#saved');
   await app.waitForSelector('#savedView .card');
-  await tapText(app, '#savedView .back');
-  assert(await visible(app, '#results'), '돌아가기 did not return to the results');
-  await tapText(app, '#results .change');
-  assert(await visible(app, '#home'), '바꾸기 did not return to the moods');
+  await tapText(app, '#back');
+  assert(await visible(app, '#results'), '뒤로 did not return to the results');
+  await tapText(app, '#back');
+  assert(await visible(app, '#home'), '뒤로 did not return to the moods');
   await ctx.close();
 });
 
@@ -892,7 +892,7 @@ await check('QA-reload-history', 'reload on a results entry that never loaded (G
   await b.page.reload();
   await waitCards(b.page);
   assert((await b.page.textContent('#crumb')) === '좀 걷고 싶어', 'another mood after reload');
-  await tapText(b.page, '#results .change');
+  await tapText(b.page, '#back');
   await tapText(b.page, '[data-mood="rest"]');
   await waitCards(b.page);
   await back(b.page);
@@ -917,7 +917,7 @@ await check('QA-stale-session', 'rest shown → 바꾸기 → walk fails → loc
   const { ctx, page } = await fresh();
   await tapText(page, '[data-mood="rest"]');
   await waitCards(page);
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
   await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'fail' })));
   await tapText(page, '[data-mood="walk"]');
   await page.waitForSelector('.notice');
@@ -926,7 +926,7 @@ await check('QA-stale-session', 'rest shown → 바꾸기 → walk fails → loc
   await waitCards(page);
   assert((await page.textContent('#crumb')) === '좀 걷고 싶어', `title ${await page.textContent('#crumb')}`);
   // 식사 shown → 카페·디저트 still loading → reload: 카페·디저트
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
   await tapText(page, '[data-mood="food"]');
   await waitCards(page);
   await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'hang' })));
@@ -965,7 +965,7 @@ await check('QA-saved-scroll', 'closing the saved list returns to the scroll pos
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card');
   assert((await page.evaluate(() => scrollY)) === 0, 'saved list did not open at the top');
-  await tapText(page, '#savedView .back');
+  await tapText(page, '#back');
   const after = await page.evaluate(() => scrollY);
   assert(Math.abs(after - y) <= 1, `back at y=${after}, was ${y}`);
   await ctx.close();
@@ -978,7 +978,7 @@ await check('QA-saved-gps-hang', 'saved list while GPS never answers: shown (no 
   await page.locator('.card .heart').nth(0).click();
   await page.locator('.card .heart').nth(1).click();
   await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'hang' })));
-  await tapText(page, '#results .change');
+  await tapText(page, '#back');
   await tapText(page, '#saved');
   await page.waitForSelector('#savedView .card:not(.ghost)', { timeout: 4500 });
   assert((await page.locator('#savedView .travel').count()) === 0, 'a trip without a position');
@@ -1011,7 +1011,7 @@ await check('QA-meta', 'meta: one trip line per screen when all three match; at 
     const bare = r.trips.map((t) => t.replace(/^\S+에서 /, ''));
     assert(!bare.some((t) => bare.filter((x) => x === t).length >= 3), `${mood}: ${r.trips.join(' / ')}`);
     await shot(page, `meta-195-${mood}`);
-    await tapText(page, '#results .change');
+    await tapText(page, '#back');
   }
   await ctx.close();
 });
@@ -1157,7 +1157,9 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     verify(await read(b.page, '#sheet'), 'basis sheet', '애월');
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
-    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처다른 동네는 아래에서 골라요/걸어서/차로 30분/차로 1시간/비 와요(실내만)', `sheet rows ${rows.join('/')}`);
+    // Changed on purpose (ADR-0090 6): the 동네 row's 「다른 동네는 아래에서 골라요」 became the button 다른 동네 고르기 beside it
+    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)', `sheet rows ${rows.join('/')}`);
+    assert((await b.page.textContent('#sheet .optrow:has([data-action="close"][aria-pressed="true"]) [data-action="other-area"]')) === '다른 동네 고르기', 'no 다른 동네 고르기 on the 동네 row');
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
     await b.page.waitForSelector('#sheet .primary');
@@ -2089,17 +2091,19 @@ await check('T2-hit', 'at 320·390: card heart, 길찾기, 바꾸기·돌아가�
       if (r.n < n) problems.push(`${width} ${tag}: ${r.n} targets (want ≥ ${n})`);
       for (const k of ['small', 'overlap', 'blocked']) if (r[k].length) problems.push(`${width} ${tag} ${k}: ${r[k].join(', ')}`);
       if (r.over > 0 || r.sheetOver > 0) problems.push(`${width} ${tag} overflows ${r.over}/${r.sheetOver}`);
-      const drawn = await page.$$eval(sel, (els) => els.filter((e) => e.offsetParent !== null).map((e) => [e.matches('.card.lead .go'), Math.round(e.getBoundingClientRect().height)]));
-      // ADR-0075: the first card's 길찾기 is drawn 48 on purpose; everything else keeps 44
+      const drawn = await page.$$eval(sel, (els) => els.filter((e) => e.offsetParent !== null).map((e) => [e.matches('.card.lead .go, #back'), Math.round(e.getBoundingClientRect().height)]));
+      // ADR-0075: the first card's 길찾기 is drawn 48 on purpose; 뒤로 (ADR-0090) is its own 48 box (a 40 circle drawn
+      // in it); everything else keeps 44
       want[tag] = drawn.filter(([lead]) => !lead).map(([, h]) => h);
-      for (const [lead, h] of drawn) if (lead && h !== 48) problems.push(`${width} ${tag} first card 길찾기 drawn ${h}`);
+      for (const [lead, h] of drawn) if (lead && h !== 48) problems.push(`${width} ${tag} first card 길찾기 / 뒤로 box ${h}`);
     };
     await tapText(page, '[data-mood="food"]');
     await waitCards(page);
-    await measure('results', '.card .heart, .card .go, #results .change, #foodSub .tab', 3 + 3 + 1 + 2);
+    // Changed on purpose (ADR-0090): 뒤로 at the top bar's left in place of 바꾸기 / 돌아가기
+    await measure('results', '.card .heart, .card .go, #back, #foodSub .tab', 3 + 3 + 1 + 2);
     await tapText(page, '#saved');
     await page.waitForSelector('#savedView .card:not(.ghost)');
-    await measure('saved', '#savedView .heart, #savedView .go, #savedView .back, #savedView .ctl .tbtn', 3 + 3 + 1 + 7);
+    await measure('saved', '#savedView .heart, #savedView .go, #back, #savedView .ctl .tbtn', 3 + 3 + 1 + 7);
     await tapText(page, '#basis');
     await tapText(page, '#sheet [data-action="pick-day"]');
     await measure('basis sheet', '#sheet .when-row .opt, #sheet [data-action="day-ok"]', 3 + 1);
@@ -2919,7 +2923,7 @@ await check('SV1-survey', '설문 (ADR-0081) at 320·390 × light·dark: after a
       await tapText(page, '[data-mood="rest"]');
       await waitCards(page);
       await tapText(page, '#cards .card .card-link');
-      await tapText(page, '[data-action="change"]');
+      await tapText(page, '#back');
       if (await page.locator('#home .survey').count()) problems.push(`${tag}: line in the same visit`);
       await page.reload();
       await page.waitForSelector('#home .survey .tbtn', { timeout: 5000 });
@@ -2971,7 +2975,7 @@ await check('SV1-survey', '설문 (ADR-0081) at 320·390 × light·dark: after a
 });
 
 // --- 가 봤어요 (ADR-0087, specs/hide-visited.md S3·S4·S6) ---
-await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 cards, drawn 44 (the first card\'s 48, ADR-0088) with a ≥ 48×48 area nothing covers (not the card link); a tap presses only it (cards and photos stay) and says so on the status line; 다른 3곳 보기 never brings it back; 설정 → 뺀 곳 1곳 → 다시 넣기 empties it; a fresh pick shows it again; no sideways scroll', async () => {
+await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 cards, drawn 44 (the first card\'s 48, ADR-0088) with a ≥ 48×48 area nothing covers (not the card link); a tap presses only it (cards and photos stay) and says so on the status line; 다른 3곳 보기 never brings it back; 설정 → 가 본 곳 1곳 (ADR-0090 5) → 다시 넣기 empties it; a fresh pick shows it again; no sideways scroll', async () => {
   const problems = [];
   for (const width of [320, 390]) {
     for (const dark of [false, true]) {
@@ -2998,16 +3002,18 @@ await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 c
         const check = b.querySelector('.i-check');
         return {
           pressed: b.getAttribute('aria-pressed'),
-          check: check && getComputedStyle(check).display !== 'none',
+          check: check && getComputedStyle(check).display !== 'none' && getComputedStyle(check).visibility === 'visible',
           kept: [...document.querySelectorAll('#cards .card, #cards img')].every((e) => e.__keep === 1),
-          status: document.querySelector('#status').textContent,
+          // the words; 되돌리기 after them is a button of its own (ADR-0090 5)
+          status: document.querySelector('#status > span')?.textContent,
+          undo: document.querySelector('#status [data-action="visited-undo"]')?.textContent,
           url: location.href,
           over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         };
       }, out);
       if (after.pressed !== 'true' || !after.check) problems.push(`${tag}: not pressed ${JSON.stringify(after)}`);
       if (!after.kept) problems.push(`${tag}: cards rebuilt`);
-      if (!/^.+(은|는) 다음부터 빼고 골라요\.$/.test(after.status)) problems.push(`${tag}: status "${after.status}"`);
+      if (!/^.+(은|는) 다음부터 빼고 골라요\.$/.test(after.status) || after.undo !== '되돌리기') problems.push(`${tag}: status "${after.status}" undo "${after.undo}"`);
       if (after.url !== BASE) problems.push(`${tag}: left for ${after.url}`); // the card link was not opened
       if (after.over > 0) problems.push(`${tag}: overflows ${after.over} pressed`);
       await shot(page, `cards-pressed-${tag}`);
@@ -3017,7 +3023,7 @@ await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 c
         const now = await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id));
         if (now.includes(out)) problems.push(`${tag}: back after ${i + 1} × 다른 3곳`);
       }
-      await tapText(page, '[data-action="change"]');
+      await tapText(page, '#back');
       await page.waitForSelector('#homeMore [data-action="settings"]');
       await tapText(page, '#homeMore [data-action="settings"]');
       await page.waitForSelector('#savedView .visited-box:not([hidden])', { timeout: 5000 });
@@ -3025,7 +3031,7 @@ await check('HV1-visited', '가 봤어요 at 320·390 × light·dark: on all 3 c
         const b = document.querySelector('#savedView .visited-box');
         return { text: b.querySelector('[data-action="visited-list"]').textContent, beforeMapApp: b.nextElementSibling?.nextElementSibling?.classList.contains('mapapp') };
       });
-      if (box.text !== '뺀 곳 1곳' || !box.beforeMapApp) problems.push(`${tag}: box ${JSON.stringify(box)}`);
+      if (box.text !== '가 본 곳 1곳' || !box.beforeMapApp) problems.push(`${tag}: box ${JSON.stringify(box)}`);
       await tapText(page, '#savedView [data-action="visited-list"]');
       await page.locator('#savedView .visited-box').scrollIntoViewIfNeeded();
       const list = await page.evaluate(() => {
@@ -3078,19 +3084,19 @@ await check('HV2-storage-throws', '가 봤어요 with every storage write throwi
   await page.locator(`#cards .visited[data-id="${out}"]`).scrollIntoViewIfNeeded();
   await tapText(page, `#cards .visited[data-id="${out}"]`);
   if ((await page.getAttribute(`#cards .visited[data-id="${out}"]`, 'aria-pressed')) !== 'true') problems.push('not pressed');
-  if (!/다음부터 빼고 골라요\.$/.test(await page.textContent('#status'))) problems.push(`status "${await page.textContent('#status')}"`);
+  if (!/다음부터 빼고 골라요\.$/.test(await page.textContent('#status > span'))) problems.push(`status "${await page.textContent('#status')}"`);
   for (let i = 0; i < 4; i++) {
     await tapText(page, '[data-action="more"]');
     await waitCards(page);
     if ((await page.$$eval('#cards .card:not(.ghost)', (cs) => cs.map((c) => c.dataset.id))).includes(out)) problems.push(`back after ${i + 1} × 다른 3곳`);
   }
-  await tapText(page, '[data-action="change"]');
+  await tapText(page, '#back');
   await tapText(page, '#homeMore [data-action="settings"]');
   await page.waitForSelector('#savedView .visited-box:not([hidden])', { timeout: 5000 });
   await tapText(page, '#savedView [data-action="visited-list"]');
   await tapText(page, `#visitedList [data-action="put-back"][data-id="${out}"]`);
   if (!(await page.evaluate(() => document.querySelector('#savedView .visited-box').hidden))) problems.push('box still there');
-  await tapText(page, '#savedView [data-action="close-saved"]');
+  await tapText(page, '#back');
   // the rotation went on; a place put back comes round again within the pool
   let seen = false;
   await tapText(page, '[data-mood="walk"]');
@@ -3317,6 +3323,190 @@ await check('VR1', 'visual refresh at 320·390 × light·dark: home, results, sa
         else if (v < 4.5) problems.push(`${tag} ${k} ${v}:1`);
       }
       await ctx.close();
+    }
+  }
+  assert(!problems.length, problems.join(' | '));
+});
+
+// --- ADR-0090 길 잃지 않게 (docs/research/heuristic-audit-02 T3·T4·T8·T11) ---
+/** The top bar on the screen now: what shows in it, in order, and where (뒤로's face is its ::before). */
+const barGeometry = (page) =>
+  page.evaluate(() => {
+    const box = (e) => {
+      if (!e || !e.getClientRects().length) return null;
+      const b = e.getBoundingClientRect();
+      return { l: b.left, r: b.right, t: b.top, b: b.bottom };
+    };
+    const back = document.querySelector('#back');
+    const bb = box(back);
+    const cs = getComputedStyle(back, '::before');
+    const top = document.querySelector('.top');
+    const de = document.documentElement;
+    return {
+      order: [...top.children].filter((e) => e.getClientRects().length).map((e) => e.id || e.className),
+      logo: box(top.querySelector('.logo')),
+      back: bb,
+      face: bb && { l: bb.l + parseFloat(cs.left), r: bb.r - parseFloat(cs.right), t: bb.t + parseFloat(cs.top), b: bb.b - parseFloat(cs.bottom) },
+      basis: box(document.querySelector('#basis')),
+      saved: box(document.querySelector('#saved')),
+      bar: box(top),
+      over: de.scrollWidth - de.clientWidth,
+      vw: de.clientWidth,
+    };
+  });
+/** How far a control really reaches the finger, along a line through its middle: sampled every 0.25px (Chrome
+ * hit-tests whole pixels, so ±0.5). */
+const reach = (page, sel) =>
+  page.evaluate((sel) => {
+    const e = document.querySelector(sel);
+    const r = e.getBoundingClientRect();
+    const run = (from, to, at) => {
+      let first = null;
+      let last = null;
+      for (let v = from; v <= to; v += 0.25) {
+        if (at(v)?.closest('button, a, input') === e) {
+          first ??= v;
+          last = v;
+        }
+      }
+      return first === null ? 0 : last - first + 0.25;
+    };
+    const cx = (r.left + r.right) / 2;
+    const cy = (r.top + r.bottom) / 2;
+    return {
+      h: run(r.top - 8, r.bottom + 8, (y) => document.elementFromPoint(cx, y)),
+      w: run(r.left - 8, r.right + 8, (x) => document.elementFromPoint(x, cy)),
+      drawn: Math.round(r.height),
+    };
+  }, sel);
+await check('W1-wayfinding', 'ADR-0090 at 320·390 × light·dark: the top bar\'s left is the logo on the first screen and 뒤로 (48×48 to the finger, its 40 face on the margin line) on the results and the saved list; the basis and ♥ N chips in the same place on all three; no sideways scroll. 뒤로 on the results → the moods, and a phone back then leaves (no results); on the saved list → its opener at its scroll; 설정 under the results; 가 봤어요 keeps its width and 되돌리기 (≥ 48 tall) puts it back; the sheet\'s 다른 동네 고르기 brings the 동네 index into view. Screenshots into design/qa/wayfinding', async () => {
+  const problems = [];
+  const dir = join(appDir, 'design/qa/wayfinding');
+  mkdirSync(dir, { recursive: true });
+  const near = (a, b, what, tag) => {
+    for (const k of ['l', 'r', 't', 'b']) if (Math.abs(a[k] - b[k]) > 0.5) problems.push(`${tag} ${what} ${k} ${a[k].toFixed(1)} ≠ ${b[k].toFixed(1)}`);
+  };
+  for (const [width, height] of [[320, 568], [390, 844]]) {
+    for (const dark of [false, true]) {
+      const tag = `${width}${dark ? '-dark' : '-light'}`;
+      const name = (what) => join(dir, `${what}-${tag}.png`);
+      // one place saved already: ♥ N is on all three screens
+      const { ctx, page } = await fresh({ width, height, dark, storage: { 'jeju.hintSeen': true, 'jeju.saved.v2': [{ id: SPOT_IDS[0], date: seoulDay(), order: 0 }] } });
+      await page.waitForSelector('#today:not(.wait)');
+      await page.waitForSelector('.mood .pair img');
+      const home = await barGeometry(page);
+      await page.screenshot({ path: name('home'), fullPage: false });
+      await tapText(page, '[data-mood="walk"]');
+      await waitCards(page);
+      await sleep(300);
+      const results = await barGeometry(page);
+      await page.screenshot({ path: name('results'), fullPage: false });
+      const hit = await page.evaluate(hitMeasure, '#back');
+      for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${tag} 뒤로 ${k}: ${hit[k].join(', ')}`);
+      const backReach = await reach(page, '#back');
+      if (backReach.h < 47.5 || backReach.w < 47.5) problems.push(`${tag} 뒤로 reaches ${backReach.w}×${backReach.h}`);
+      const cards = await names(page);
+      await tapText(page, '#saved');
+      await page.waitForSelector('#savedView:not([hidden]) .card');
+      await sleep(300);
+      const saved = await barGeometry(page);
+      await page.screenshot({ path: name('saved'), fullPage: false });
+
+      // 1·2: the same bar on all three screens
+      if (home.order.join() !== 'logo,basis,saved') problems.push(`${tag} home bar ${home.order}`);
+      for (const [screen, g] of [['results', results], ['saved', saved]]) {
+        if (g.order.join() !== 'back,basis,saved') problems.push(`${tag} ${screen} bar ${g.order}`);
+        if (!g.face || Math.abs(g.face.l - 16) > 0.5) problems.push(`${tag} ${screen} 뒤로 face at ${g.face?.l}`);
+        if (Math.round(g.back.r - g.back.l) !== 48 || Math.round(g.back.b - g.back.t) !== 48) problems.push(`${tag} ${screen} 뒤로 box ${JSON.stringify(g.back)}`);
+        if (Math.round(g.face.r - g.face.l) !== 40) problems.push(`${tag} ${screen} 뒤로 face ${g.face.r - g.face.l}`);
+        // the left and the right of the bar on one line
+        if (Math.abs((g.back.t + g.back.b) / 2 - (g.basis.t + g.basis.b) / 2) > 0.5) problems.push(`${tag} ${screen} 뒤로 and 기준 not on one line`);
+        near(g.basis, home.basis, '기준', `${tag} ${screen}`);
+        near(g.saved, home.saved, '♥ N', `${tag} ${screen}`);
+      }
+      if (!home.logo || Math.abs(home.logo.l - 16) > 0.5) problems.push(`${tag} logo at ${home.logo?.l}`);
+      if (Math.abs(home.saved.r - (home.vw - 16)) > 0.5) problems.push(`${tag} ♥ N right edge ${home.saved.r} (want ${home.vw - 16})`);
+      for (const [screen, g] of [['home', home], ['results', results], ['saved', saved]]) if (g.over > 0) problems.push(`${tag} ${screen}: ${g.over}px sideways`);
+
+      // 3: 뒤로 on the saved list → the results it was opened from, at their scroll
+      await tapText(page, '#back');
+      if (!(await visible(page, '#results')) || JSON.stringify(await names(page)) !== JSON.stringify(cards)) problems.push(`${tag} saved 뒤로: not the same results`);
+      await page.evaluate(() => window.scrollTo(0, 240));
+      await sleep(100);
+      const y0 = await page.evaluate(() => scrollY);
+      await tapText(page, '#saved');
+      await page.waitForSelector('#savedView:not([hidden]) .card');
+      await tapText(page, '#back');
+      const y1 = await page.evaluate(() => scrollY);
+      if (Math.abs(y1 - y0) > 1) problems.push(`${tag} saved 뒤로: scroll ${y1}, was ${y0}`);
+
+      // 4: 설정 · 지도 앱 · 의견 under the results
+      await page.locator('#results [data-action="settings"]').scrollIntoViewIfNeeded();
+      const foot = await page.evaluate(() => {
+        const b = document.querySelector('#results [data-action="settings"]').getBoundingClientRect();
+        return { text: document.querySelector('#results [data-action="settings"]').textContent, h: b.height, inView: b.top >= 0 && b.bottom <= innerHeight, y: scrollY };
+      });
+      if (foot.text !== '설정 · 지도 앱 · 의견' || foot.h < 44 || !foot.inView) problems.push(`${tag} results 설정 ${JSON.stringify(foot)}`);
+      await tapText(page, '#results [data-action="settings"]');
+      const set = await page.evaluate(() => {
+        const h = document.querySelector('#settingsH').getBoundingClientRect();
+        return { view: history.state?.view, focus: document.activeElement?.id, top: h.top, bar: document.querySelector('.top').getBoundingClientRect().bottom, vh: innerHeight };
+      });
+      if (set.view !== 'saved' || set.focus !== 'settingsH' || set.top < set.bar - 1 || set.top > set.vh - 40) problems.push(`${tag} 설정 from the results ${JSON.stringify(set)}`);
+      await tapText(page, '#back');
+      const y2 = await page.evaluate(() => scrollY);
+      if (!(await visible(page, '#results')) || Math.abs(y2 - foot.y) > 1) problems.push(`${tag} 설정 뒤로: results ${await visible(page, '#results')} at ${y2}, was ${foot.y}`);
+
+      // 5: 가 봤어요 keeps its width; 되돌리기 beside the line puts it back
+      await page.evaluate(() => window.scrollTo(0, 0));
+      const lead = '#cards .card.lead .visited';
+      await page.locator(lead).scrollIntoViewIfNeeded();
+      const w0 = await page.$eval(lead, (b) => [b.getBoundingClientRect().width, document.querySelector('#cards .card.lead .go').getBoundingClientRect().width]);
+      await tapText(page, lead);
+      const w1 = await page.$eval(lead, (b) => [b.getBoundingClientRect().width, document.querySelector('#cards .card.lead .go').getBoundingClientRect().width, b.getAttribute('aria-pressed')]);
+      if (w1[2] !== 'true' || Math.abs(w1[0] - w0[0]) > 0.5 || Math.abs(w1[1] - w0[1]) > 0.5) problems.push(`${tag} 가 봤어요 width ${w0} → ${w1}`);
+      const line = await page.evaluate(() => ({ words: document.querySelector('#status > span')?.textContent, undo: document.querySelector('#status .undo')?.textContent, over: document.documentElement.scrollWidth - document.documentElement.clientWidth }));
+      if (!/다음부터 빼고 골라요\.$/.test(line.words ?? '') || line.undo !== '되돌리기' || line.over > 0) problems.push(`${tag} status ${JSON.stringify(line)}`);
+      await page.locator('#status .undo').scrollIntoViewIfNeeded();
+      const undoReach = await reach(page, '#status .undo');
+      if (undoReach.h < 47.5 || undoReach.drawn !== 44) problems.push(`${tag} 되돌리기 reaches ${undoReach.w}×${undoReach.h}, box ${undoReach.drawn}`);
+      await shot(page, `undo-${tag}`);
+      await tapText(page, '#status .undo');
+      const undone = await page.evaluate((sel) => ({
+        pressed: document.querySelector(sel).getAttribute('aria-pressed'),
+        stored: localStorage.getItem('jeju.visited'),
+        words: document.querySelector('#status > span')?.textContent,
+        undo: !!document.querySelector('#status .undo'),
+        width: document.querySelector(sel).getBoundingClientRect().width,
+      }), lead);
+      if (undone.pressed !== 'false' || undone.stored !== '[]' || !/다시 넣었어요\.$/.test(undone.words ?? '') || undone.undo || Math.abs(undone.width - w0[0]) > 0.5) problems.push(`${tag} 되돌리기 ${JSON.stringify(undone)}`);
+
+      // 3: 뒤로 on the results → the moods; the results entry is gone: one phone back leaves the app
+      await tapText(page, '#back');
+      if (!(await visible(page, '#home')) || (await names(page)).length) problems.push(`${tag} results 뒤로: not the moods`);
+      const st = await hstate(page);
+      if (st?.view !== 'home' || st?.depth !== 0) problems.push(`${tag} results 뒤로: history ${JSON.stringify(st)}`);
+      await back(page);
+      if (page.url() !== 'about:blank') problems.push(`${tag} phone back after 뒤로 stayed at ${page.url()} (${await visible(page, '#results') ? 'results' : 'not results'})`);
+      await ctx.close();
+
+      // 6: the basis sheet's 다른 동네 고르기, on a 동네 basis
+      const s = await fresh({ width, height, dark, storage: { 'jeju.region': '애월', 'jeju.basis': 'region' } });
+      await tapText(s.page, '#basis');
+      await s.page.waitForSelector('#sheet [data-action="other-area"]');
+      const y3 = await s.page.evaluate(() => scrollY);
+      await tapText(s.page, '#sheet [data-action="other-area"]');
+      const sheet = await s.page.evaluate(() => {
+        const box = document.querySelector('#sheet .sheet').getBoundingClientRect();
+        const close = document.querySelector('#sheet .sheet-close').getBoundingClientRect();
+        const first = document.querySelector('#sheet .areas .opt');
+        const head = first.closest('.areas').previousElementSibling.getBoundingClientRect();
+        const f = first.getBoundingClientRect();
+        return { focus: document.activeElement === first, area: first.dataset.area, headIn: head.top >= box.top - 0.5, cellIn: f.top >= box.top && f.bottom <= close.top + 0.5, scrolled: document.querySelector('#sheet .sheet').scrollTop > 0, y: scrollY, over: document.querySelector('#sheet .sheet').scrollWidth - document.querySelector('#sheet .sheet').clientWidth };
+      });
+      if (!sheet.focus || sheet.area !== '한경' || !sheet.headIn || !sheet.cellIn || !sheet.scrolled || sheet.y !== y3 || sheet.over > 0) problems.push(`${tag} 다른 동네 고르기 ${JSON.stringify(sheet)}`);
+      await shot(s.page, `sheet-areas-${tag}`);
+      await s.ctx.close();
     }
   }
   assert(!problems.length, problems.join(' | '));

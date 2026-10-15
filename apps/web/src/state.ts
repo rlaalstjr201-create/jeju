@@ -10,8 +10,9 @@ import type { SessionRecord } from './store';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';
-/** 가 봤어요 (ADR-0087): `name` left out / put back, or `n` put back at once (모두 다시 넣기). */
-export type VisitNote = { k: 'out' | 'in'; name: string } | { k: 'all'; n: number };
+/** 가 봤어요 (ADR-0087): `name` left out / put back, or `n` put back at once (모두 다시 넣기). `id`: the place a
+ * 되돌리기 beside 「… 빼고 골라요.」 puts back (ADR-0090 5). */
+export type VisitNote = { k: 'out' | 'in'; name: string; id?: string } | { k: 'all'; n: number };
 export type Phase =
   | { k: 'idle' }
   | { k: 'pending'; req: number; intent: Intent; step: 'locating' | 'loading'; slow: boolean; long: boolean }

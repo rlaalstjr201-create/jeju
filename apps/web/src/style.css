@@ -76,13 +76,14 @@ main { flex: 1; display: flex; flex-direction: column; }
   display: inline-flex; align-items: center; gap: 4px; min-height: 48px; padding: 0 12px; font-weight: 600;
   border-block: 6px solid transparent; border-radius: var(--r-pill); background: var(--fill); background-clip: padding-box;
 }
-/* a long label ("12월 25일 · 서귀포 시내 근처" at 200%) wraps inside the button; ♥ N stays on the bar */
-.basis { min-width: 0; }
+/* a long label ("12월 25일 · 서귀포 시내 근처" at 200%) wraps inside the button; ♥ N stays on the bar. ADR-0090: the
+   two chips are on the right on every screen */
+.basis { min-width: 0; margin-left: auto; }
 .basis > span { min-width: 0; text-wrap: balance; }
 .basis .nw, .meta .nw { white-space: nowrap; }
 .saved-btn { flex: none; white-space: nowrap; }
 .basis svg { color: var(--muted); }
-.saved-btn { margin-left: auto; min-width: 48px; justify-content: center; font-variant-numeric: tabular-nums; }
+.saved-btn { min-width: 48px; justify-content: center; font-variant-numeric: tabular-nums; }
 /* the 귤 heart on the grey chip: its darker ink, ≥ 3:1 on the chip and on the open tint (--accent there is 2.9) */
 .saved-btn svg { color: var(--acc-ink); fill: currentColor; }
 /* the list is open: the chip turns --main-tint, its number --tag-ink (≥ 4.5:1) */
@@ -103,15 +104,27 @@ main { flex: 1; display: flex; flex-direction: column; }
 .logo .dot { fill: var(--accent); }
 .logo .rg { font-weight: 600; color: var(--muted); }
 .app:has(#home:not([hidden])) .logo { display: flex; }
-.app:has(#home:not([hidden])) .basis { margin-left: auto; }
-.app:has(#home:not([hidden])) .saved-btn { margin-left: 0; }
-/* page zoom 200% (under 300 wide): the chips give their words the room they had as plain words (S48) */
+/* 뒤로 (ADR-0090) in the logo's place on the results and the saved list: a 24 chevron on a drawn 40 circle, in a
+   square 48 to the finger (the button's own box, unrounded, so its corners count too); the face's edge on the margin
+   line. The ring follows the circle */
+.back { position: relative; flex: none; display: grid; place-items: center; width: 48px; min-height: 48px; margin-left: -4px; }
+.back::before { content: ""; position: absolute; inset: 4px; border-radius: var(--r-pill); background: var(--fill); }
+.back:active::before { background: var(--fill-press); }
+.back svg { position: relative; }
+.back:focus-visible { border-radius: var(--r-pill); }
+/* page zoom 200% (under 300 wide): the chips give their words the room they had as plain words (S48). 뒤로 and the
+   two chips do not fit one line there (ADR-0090): the chips go on a line under 뒤로, the label still on one line
+   (S48), and the bar's height (--top-h, what the scroll margins keep clear) is two lines */
 @media (max-width: 299px) {
-  .basis { margin-left: -8px; padding: 0 8px; }
+  .basis { padding: 0 8px; }
   .saved-btn { margin-right: -8px; padding: 0 8px; }
+  .top:has(> .back:not([hidden])) { flex-wrap: wrap; }
+  .top:has(> .back:not([hidden])) > .back { margin-right: calc(100% - 44px); }
+  .top:has(> .back:not([hidden])) > .basis { max-width: calc(100% - 48px); }
+  :root:has(#back:not([hidden])) { --top-h: 100px; }
 }
 
-/* face buttons (ADR-0088, were underlined words): 바꾸기, 돌아가기, 지역으로 고르기, 다시 정하기, 기록 끄기, the booking
+/* face buttons (ADR-0088, were underlined words): 지역으로 고르기, 되돌리기, 다시 정하기, 기록 끄기, the booking
    link … A --fill face drawn 40 inside the 44 box (2px transparent borders, the face clipped to the padding);
    on a grey face (a row card, 오늘 판) the face is --bg */
 .tbtn {
@@ -121,12 +134,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 }
 .tbtn:active { background: var(--fill-press); }
 /* tapped often (design.md T2): a 48px hit area around the 44px button, drawn size and layout unchanged.
-   바꾸기 / 돌아가기 grow 2px up and down (still clear of ♥ N above and the 식사 tabs 8px below); 위로 · 아래로 · 다른 날로
-   and 이 날로 grow 4px left (half the 8px gap before them; 위로 is 46px wide; never right, which would count as
-   overflow of the button) and 4px down only, into the margin under them (not up: the row card's booking link
-   and the 언제 row sit right above) */
-.change, .back, .ctl .tbtn, .date-fb .tbtn { position: relative; }
-.change::before, .back::before { content: ""; position: absolute; inset: -2px 0; }
+   위로 · 아래로 · 다른 날로 and 이 날로 grow 4px left (half the 8px gap before them; 위로 is 46px wide; never right,
+   which would count as overflow of the button) and 4px down only, into the margin under them (not up: the row
+   card's booking link and the 언제 row sit right above) */
+.ctl .tbtn, .date-fb .tbtn { position: relative; }
 .ctl .tbtn::before, .date-fb .tbtn::before { content: ""; position: absolute; inset: 0 0 -4px -4px; }
 
 /* first screen (ADR-0075 A′, no empty top any more): app name, 오늘 판, the question and its line, the moods with
@@ -201,8 +212,6 @@ main { flex: 1; display: flex; flex-direction: column; }
 
 /* results / saved list heading */
 .head { display: flex; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 4px; scroll-margin-top: var(--top-h); }
-/* 바꾸기 / 돌아가기: pill faces (ADR-0088) */
-.head .tbtn { border-radius: var(--r-pill); }
 .crumb { flex: 1; min-width: 0; margin: 0; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
 .title { flex: 1; min-width: 0; margin: 0; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
 .title .count { margin-left: 6px; color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -218,6 +227,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; margin: 12px 0 0; color: var(--muted); text-wrap: pretty; }
 .status:empty { display: none; }
 .status .tbtn { color: var(--text); }
+/* 되돌리기 after 「… 빼고 골라요.」 (ADR-0090 5): 48 to the finger, 4 up and down from its drawn 40 (the line of words
+   above, the cards' 16 below) */
+.status .undo { position: relative; }
+.status .undo::before { content: ""; position: absolute; inset: -4px 0; }
 .sort { margin: 4px 0 0; color: var(--muted); text-wrap: pretty; }
 .foot { margin: 28px 0 0; color: var(--muted); text-wrap: pretty; }
 .sort:empty, .foot:empty { display: none; }
@@ -254,6 +267,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 .landing { margin: 8px 0 0; color: var(--muted); }
 .landing a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 #cards:empty ~ .landing { display: none; }
+/* ADR-0090 4: 설정 · 지도 앱 · 의견 under them, as at the foot of the first screen */
+#results .settings { margin-top: 8px; }
+#cards:empty ~ .settings { display: none; }
 .about { margin-top: 28px; }
 .about .credit { margin: 0; }
 /* ADR-0063: quiet notices (a backup link to merge, the in-app browser, the home-screen nudge): one or two
@@ -371,6 +387,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 .go-line { grid-area: go; }
 .go-line .go { margin: 0; }
 .visited { gap: 4px; }
+/* the check's place is kept while not pressed (ADR-0090 5): a press does not widen the button */
+.visited .i-check { display: block; visibility: hidden; }
+.visited[aria-pressed="true"] > .i-check { visibility: visible; }
 
 /* wide buttons, labels left-aligned. 다른 3곳 보기 floats (ADR-0088): the ground's face and the one shadow; 다시
    불러오기 and 지금 위치를 숙소로 are grey faces (the one --main fill is the first card's 길찾기) */
@@ -438,6 +457,10 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 /* at 200% text 다시 정하기 goes under its option instead of squeezing "서귀포 시내 숙소" to a word a line */
 .optrow .opt { flex: 1 1 10em; min-width: 0; }
 .optrow .tbtn { flex: none; margin-right: 14px; }
+/* ADR-0090 6: 다른 동네 고르기 under the 동네 in use, where its line 「다른 동네는 아래에서 골라요」 was; its face's edge on
+   the names' line */
+.other-row .opt { flex-basis: 100%; }
+.other-row .tbtn { margin: 0 14px 10px; }
 .opts .tbtn { background-color: var(--bg); }
 .opts .tbtn:active { background-color: var(--fill-press); }
 .opt:active { background: var(--fill-press); }
@@ -501,7 +524,7 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
   #sheet.closing .sheet { animation: rise 190ms ease-in reverse forwards; }
   .more, .retry, .primary { transition: transform 120ms ease-out, background-color 120ms ease-out; }
   .more:active, .retry:active, .primary:active { transform: scale(0.98); }
-  .mood, .any, .opt, .tbtn, .basis, .saved-btn { transition: background-color 120ms ease-out; }
+  .mood, .any, .opt, .tbtn, .basis, .saved-btn, .back::before { transition: background-color 120ms ease-out; }
   .heart svg { transition: transform 120ms ease-out; }
   .heart:active svg { transform: scale(0.88); }
 }

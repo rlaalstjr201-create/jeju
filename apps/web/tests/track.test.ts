@@ -190,7 +190,7 @@ describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌�
     const first = cardIds();
     await tap($$('#cards .heart')[0]);
     await tap('#saved');
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap('#cards .more');
     const second = cardIds();
     hide();
@@ -261,10 +261,21 @@ describe('출시 전 점검 F6 (B4): 홈 「설정 · 지도 앱 · 의견」 is
     expect(current().state().view).toBe('saved');
     hide();
     expect(events().filter((e) => e.e === 'open')).toEqual([]);
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap('#saved');
     hide();
     expect(events().filter((e) => e.e === 'open')).toEqual([{ e: 'open', live0: true, past: true, range: '30', basis: 'here', dated: false, d: '2026-10-10' }]);
+  });
+
+  // ADR-0090 4: the same button under the results, the same rule
+  it('설정 under the results: no open either', async () => {
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { value: () => undefined, configurable: true, writable: true });
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    await tap(`[data-mood="${exp.mood}"]`);
+    await tap('#results [data-action="settings"]');
+    expect(current().state().view).toBe('saved');
+    hide();
+    expect(events().filter((e) => e.e === 'open')).toEqual([]);
   });
 });
 
@@ -304,8 +315,8 @@ describe('U3 기록 끄기', () => {
     hide(); // what was queued before turning it off goes too
     expect(beacon).not.toHaveBeenCalled();
 
-    await tap('[data-action="close-saved"]');
-    await tap('[data-action="change"]');
+    await tap('#back');
+    await tap('#back');
     render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) }); // reload
     await flush();
     expect(btn().textContent).toBe('기록 켜기');
@@ -320,7 +331,7 @@ describe('U3 기록 끄기', () => {
     await tap(btn());
     expect(btn().textContent).toBe('기록 끄기');
     expect(window.localStorage.getItem('jeju.track')).toBe('true');
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap('#cards .more');
     hide();
     expect(events().filter((e) => e.e === 'shown')).toHaveLength(3);
@@ -363,7 +374,7 @@ describe('U3 기록 끄기', () => {
     await tap($$('#cards .heart')[0]);
     await tap('#saved');
     await tap('#savedView [data-action="track"]');
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap('#cards .more');
     hide();
     expect(beacon).not.toHaveBeenCalled();
@@ -412,7 +423,7 @@ describe('F2 저장 목록 열기 — open', () => {
     await tap('#saved');
     await tap('#savedView [data-action="past"]'); // a re-draw
     await tap('#savedView [data-action="past"]');
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap('#saved');
     hide();
     const opens = events().filter((e) => e.e === 'open');
@@ -449,7 +460,7 @@ describe('F3 저장 목록에서 연 길찾기 — map from saved', () => {
     await tap('#savedView [data-action="past"]');
     savedLink(others[0].id).click();
     advance();
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap(`[data-mood="${exp.mood}"]`);
     const id = cardIds()[0] as string;
     $(`#cards .card[data-id="${id}"] .card-link`).click();
@@ -516,7 +527,7 @@ describe('가 봤어요 (ADR-0087, specs/hide-visited.md S5)', () => {
     await tap(`#cards .visited[data-id="${id}"]`);
     await tap(`#cards .visited[data-id="${id}"]`);
     await tap(`#cards .visited[data-id="${id}"]`);
-    await tap('[data-action="change"]');
+    await tap('#back');
     await tap('[data-action="settings"]');
     await flush();
     await tap('[data-action="visited-list"]');

@@ -455,12 +455,12 @@ describe('D11 지도 앱 — Naver Map by default, Kakao Map or TMAP by choice',
     expect(row.querySelector('a.go')!.getAttribute('href')).toBe(goLink(sp, o?.point ?? null, st.reach === 'walk', o?.isPoint ?? false, 'tmap').href);
 
     // back on the results the cards follow too
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await until(() => $$('#cards .card:not(.ghost)').length === 3);
     expect($('#cards .dest')?.textContent).toBe('네이버지도');
     await tap('#saved');
     await tap('#savedView [data-app="kakao"]');
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await until(() => $$('#cards .card:not(.ghost)').length === 3);
     expect($('#cards .dest')?.textContent).toBe('카카오맵');
     for (const a of $$('#cards .card-link')) expect(a.getAttribute('href')).toMatch(/^https:\/\/(place\.map|map)\.kakao\.com\//);

@@ -182,7 +182,7 @@ describe('S3 카드', () => {
         check(`${a.name} ${b}${sub ? `:${sub}` : ''}`);
         await tap('#cards .more');
         check(`${a.name} ${b}${sub ? `:${sub}` : ''} more`);
-        await tap('#results .change');
+        await tap('#back');
         await settle();
       }
     }
@@ -307,7 +307,7 @@ describe('S3 카드 문구·사진', () => {
     expect(card.querySelector('.ph')).toBeNull();
     expect(card.classList.contains('noimg')).toBe(true);
     // the same place drawn again (바꾸기 → same mood) comes back without a photo box
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="rest"]');
     const again = $(`.card[data-id="${id}"]`) as HTMLElement;
@@ -445,7 +445,7 @@ describe('S3 위치', () => {
     const second = cardNames();
     expect(second).toHaveLength(3);
     expect(second.filter((n) => first.includes(n))).toEqual([]);
-    await tap('#results .change');
+    await tap('#back');
     await settle();
     await tap('[data-mood="rest"]');
     expect(cardNames()).toEqual(second);
@@ -702,7 +702,7 @@ describe('S8-4 저장 목록', () => {
     expect($('#saved').textContent).toBe('1');
 
     // 돌아가기 restores the mood screen it came from
-    await tap('#savedView .back');
+    await tap('#back');
     expect($('#savedView').hidden).toBe(true);
     expect($$('.card')).toHaveLength(3);
 
@@ -764,7 +764,7 @@ describe('S8-4 저장 목록', () => {
     ($('.card .heart') as HTMLButtonElement).click();
     await flush();
     await tap('#saved');
-    await tap('#savedView .back');
+    await tap('#back');
     expect($('#savedView').hidden).toBe(true);
     expect(cardNames()).toEqual(before);
   });
@@ -819,7 +819,7 @@ describe('S8-4 저장 목록', () => {
     await flush();
     await flush();
 
-    await tap('#savedView .back');
+    await tap('#back');
     expect($('#savedView').hidden).toBe(true);
     // must show walk's cards (freshly computed), not rest's stale ones, and not crash
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'walk'));

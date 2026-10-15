@@ -41,7 +41,7 @@ describe('F1 홈 한 줄 — 조건', () => {
     expect(line()).toBeNull();
     await openMap();
     expect(rec()).toEqual({ map: true });
-    await tap('[data-action="change"]');
+    await tap('#back');
     expect($('#home').hidden).toBe(false);
     expect(line()).toBeNull();
     await visit();
@@ -68,10 +68,10 @@ describe('F1 홈 한 줄 — 조건', () => {
     expect(rec().shown).toBe(1);
     await tap('[data-mood="rest"]');
     expect($('#home').hidden).toBe(true);
-    await tap('[data-action="change"]');
+    await tap('#back');
     expect(line()).not.toBeNull();
     await tap('[data-mood="walk"]');
-    await tap('[data-action="change"]');
+    await tap('#back');
     expect(rec().shown).toBe(1);
   });
 
@@ -118,7 +118,7 @@ describe('F1 홈 한 줄 — 조건', () => {
     // the saved list's 기록 끄기, then back home
     await tap('#saved');
     await tap('#savedView [data-action="track"]');
-    await tap('#savedView [data-action="close-saved"]');
+    await tap('#back');
     await settle();
     expect(current().state().tracking).toBe(false);
     expect(line()).toBeNull();

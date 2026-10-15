@@ -631,7 +631,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   // --- intents ---
   function onMood(b: Button) {
     // The mood buttons live on the first screen; from the results they are reached only programmatically
-    // (tests), from the saved list not at all (hidden, and 돌아가기 comes first).
+    // (tests), from the saved list not at all (hidden, and 뒤로 comes first).
     if (state.overlay || state.view === 'saved' || guarded(`mood:${b}`)) return;
     const intent = moodIntent(state, b);
     if (!intent) return;
@@ -654,7 +654,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     batch(() => request('more'));
   }
 
-  /** 바꾸기: back to the moods (the results entry is popped, so phone back never lands on it again). */
+  /** 뒤로 on the results (ADR-0090, was 바꾸기): back to the moods (the results entry is popped, so phone back never
+   * lands on it again). */
   function onChange() {
     if (guarded('change') || state.view !== 'cards') return;
     reqSeq++; // whatever was still on its way is void
@@ -798,7 +799,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   function onVisited(id: string) {
     const { visited, added } = store.toggleVisited(id);
     const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(state.spots).get(id) : undefined);
-    dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim() } : null });
+    // left out: the status line offers 되돌리기 for it (ADR-0090 5)
+    dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim(), ...(added ? { id } : {}) } : null });
     countVisit(added ? 'visited' : 'unvisited', id);
     if (added) askPersist(); // 뺀 곳 is kept on this device too (ADR-0063 2a)
   }
@@ -885,6 +887,14 @@ export function mountApp(doc: Document, deps: Deps): App {
     closeOverlay();
   }
 
+  /** 다른 동네 고르기 in the basis sheet (ADR-0090 6): down to the 동네 index inside the sheet, its first cell focused. */
+  function toAreas() {
+    const first = els.sheet.querySelector<HTMLElement>('.areas .opt');
+    const head = first?.closest('.areas')?.previousElementSibling as HTMLElement | null | undefined;
+    if (head && typeof head.scrollIntoView === 'function') head.scrollIntoView({ block: 'start' });
+    first?.focus({ preventScroll: true });
+  }
+
   function onSheetButton(b: HTMLElement) {
     const action = b.dataset.action;
     if (action === 'close') return closeOverlay();
@@ -899,6 +909,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (reach && REACHES.includes(reach)) return guarded(`reach:${reach}`) ? undefined : changeReach(reach);
     if (b.dataset.indoor !== undefined) return guarded('indoor') ? undefined : toggleIndoor();
     if (action === 'restay') return openOverlay('stay');
+    if (action === 'other-area') return guarded('other-area') ? undefined : toAreas();
     if (action === 'stay-here') return stayHere();
     if (action === 'feedback-send') return sendFeedback();
     const basis = b.dataset.basis;
@@ -921,6 +932,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
     if (b.classList.contains('visited') && b.dataset.id) return onVisited(b.dataset.id);
     const action = b.dataset.action;
+    // 되돌리기 on the status line (ADR-0090 5): the same as 가 봤어요 pressed again, while that place is still out
+    if (action === 'visited-undo' && b.dataset.id) return state.visited.includes(b.dataset.id) ? onVisited(b.dataset.id) : undefined;
     if (state.view === 'saved' && b.dataset.id && b.dataset.date) {
       if (action === 'up' || action === 'down') return moveRow(b.dataset.id, b.dataset.date, action === 'up' ? -1 : 1);
       if (action === 'move-day') return openMove(b.dataset.id, b.dataset.date);
@@ -949,7 +962,6 @@ export function mountApp(doc: Document, deps: Deps): App {
       return;
     }
     if (action === 'more') return onMore();
-    if (action === 'change') return onChange();
     if (action === 'choose-area') return openOverlay('basis');
     if (action === 'retry') {
       if (!guarded('retry')) {
@@ -958,16 +970,13 @@ export function mountApp(doc: Document, deps: Deps): App {
       }
       return;
     }
+    // 설정 · 지도 앱 · 의견 at the foot of the first screen and of the results (ADR-0090 4)
     if (action === 'settings') {
-      if (!guarded('settings') && state.view === 'home') {
+      if (!guarded('settings') && (state.view === 'home' || state.view === 'cards')) {
         openSaved(false);
         doc.getElementById('settingsH')?.scrollIntoView({ block: 'start' });
         doc.getElementById('settingsH')?.focus({ preventScroll: true });
       }
-      return;
-    }
-    if (action === 'close-saved') {
-      if (!guarded('close-saved') && state.view === 'saved') closeSaved();
       return;
     }
     if (action === 'track') {
@@ -1026,6 +1035,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (state.overlay || guarded('saved')) return;
     if (state.view === 'saved') closeSaved();
     else openSaved();
+  });
+  // 뒤로 (ADR-0090) at the top bar's left: what 바꾸기 did on the results and 돌아가기 on the saved list
+  on(els.back, 'click', () => {
+    if (state.overlay) return;
+    if (state.view === 'cards') onChange();
+    else if (state.view === 'saved' && !guarded('close-saved')) closeSaved();
   });
   on(els.sheet, 'click', (e) => {
     const t = e.target as HTMLElement;

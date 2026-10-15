@@ -150,7 +150,7 @@ describe('in the app', () => {
     await tap('#savedView [data-action="track"]');
     expect(a.setEnabled).toHaveBeenLastCalledWith(false);
     const n = a.event.mock.calls.length;
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await tap($$('#cards .heart')[1]);
     expect(a.event.mock.calls.length).toBe(n);
     expect(JSON.stringify(a.event.mock.calls)).not.toMatch(/lat|lng|point/);

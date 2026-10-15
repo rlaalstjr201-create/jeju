@@ -174,7 +174,7 @@ describe('F1 (B1) 브라우저로 열기 carries the 숙소 링크 on', () => {
     expect(handed()).toBe(`${location.origin}/${LINK}`);
     await tap('[data-mood="rest"]');
     await tap($$('#cards .heart')[0]);
-    await tap('#results .change');
+    await tap('#back');
     expect(handed().startsWith(`${location.origin}/${LINK}#s=`)).toBe(true);
   });
 

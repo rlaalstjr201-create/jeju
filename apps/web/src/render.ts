@@ -60,7 +60,8 @@ export const COPY = {
   retry: '다시 불러오기',
   retryGps: '위치 다시 쓰기',
   westFirst: '서쪽부터',
-  otherArea: '다른 동네는 아래에서 골라요',
+  /** ADR-0090 6: in the basis sheet's 동네 row, down to the 동네 index */
+  otherArea: '다른 동네 고르기',
   savedEmpty: '저장한 곳이 없어요. 카드의 하트를 누르면 여기 모여요.',
   /** ADR-0061: the saved list's usage-record switch (its note is static in index.html, ADR-0078). */
   trackOff: '기록 끄기',
@@ -179,13 +180,16 @@ export const COPY = {
   rainOn: '비 소식이 있어 실내만 보고 있어요',
   rainAll: '모두 보기',
   rainFrom: '날씨: 기상청',
-  // 가 봤어요 (ADR-0087, specs/hide-visited.md): the card's switch, its status line, the saved list's 뺀 곳
+  // 가 봤어요 (ADR-0087, specs/hide-visited.md): the card's switch, its status line, the saved list's 뺀 곳 — shown as
+  // 가 본 곳 (ADR-0090 5), and 되돌리기 beside the status line
   visited: '가 봤어요',
   visitedAria: (name: string) => `${name}, 가 봤어요`,
   visitedOut: (name: string) => `${josa(name, '은', '는')} 다음부터 빼고 골라요.`,
   visitedIn: (name: string) => `${josa(name, '을', '를')} 다시 넣었어요.`,
-  visitedAllIn: (n: number) => `뺀 곳 ${n}곳을 모두 다시 넣었어요.`,
-  visitedList: (n: number) => `뺀 곳 ${n}곳`,
+  visitedAllIn: (n: number) => `가 본 곳 ${n}곳을 모두 다시 넣었어요.`,
+  visitedList: (n: number) => `가 본 곳 ${n}곳`,
+  undo: '되돌리기',
+  undoAria: (name: string) => `${name}, 되돌리기`,
   putBack: '다시 넣기',
   putBackAria: (name: string) => `${name}, 다시 넣기`,
   putBackAll: '모두 다시 넣기',
@@ -268,20 +272,22 @@ export function visitText(v: VisitNote): string {
   return v.k === 'out' ? COPY.visitedOut(v.name) : COPY.visitedIn(v.name);
 }
 
-/** Status line under the results heading: one short line, plus an escape hatch while GPS is slow (S04·S05). */
-export function statusOf(s: State): { text: string; chooseArea: boolean } {
+/** Status line under the results heading: one short line, plus an escape hatch while GPS is slow (S04·S05).
+ * `undo`: the place just left out, put back by 되돌리기 after 「… 빼고 골라요.」 (ADR-0090 5) while it is still out. */
+export function statusOf(s: State): { text: string; chooseArea: boolean; undo: { id: string; name: string } | null } {
   const p = s.phase;
-  if (s.view !== 'cards') return { text: '', chooseArea: false };
-  if (p.k === 'pending' && p.step === 'locating' && p.slow) return { text: COPY.locating, chooseArea: p.long };
+  if (s.view !== 'cards') return { text: '', chooseArea: false, undo: null };
+  if (p.k === 'pending' && p.step === 'locating' && p.slow) return { text: COPY.locating, chooseArea: p.long, undo: null };
   if (p.k === 'ready') {
     const parts: string[] = [];
     if (s.cards?.wrapped) parts.push(COPY.wrapped);
     if (s.offline) parts.push(COPY.offline);
     const v = s.visitNote;
     if (v) parts.push(visitText(v));
-    return { text: parts.join(' '), chooseArea: false };
+    const undo = v?.k === 'out' && v.id && s.visited.includes(v.id) ? { id: v.id, name: v.name } : null;
+    return { text: parts.join(' '), chooseArea: false, undo };
   }
-  return { text: '', chooseArea: false };
+  return { text: '', chooseArea: false, undo: null };
 }
 
 /** 고르는 방식 (ADR-0075): only while the cards show. The range is said only if every card is inside it. */
@@ -301,6 +307,8 @@ export interface Els {
   date: HTMLElement;
   ask: HTMLElement;
   lede: HTMLElement;
+  /** ADR-0090: 뒤로, the top bar's left on the results and the saved list */
+  back: HTMLButtonElement;
   basis: HTMLButtonElement;
   basisText: HTMLElement;
   saved: HTMLButtonElement;
@@ -355,6 +363,7 @@ export function findEls(doc: Document): Els {
     date: q('#date'),
     ask: q('#ask'),
     lede: q('#lede'),
+    back: q<HTMLButtonElement>('#back'),
     basis: q<HTMLButtonElement>('#basis'),
     basisText: q('#basis > span'),
     saved: q<HTMLButtonElement>('#saved'),
@@ -1360,8 +1369,14 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
       const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
-      // the 동네 in use shows here, checked, not only far down in the index (heuristic audit H6)
-      const regionRow = s.basis === 'region' && s.region ? [optRow(option(COPY.basisRegion(areaLabel(s.region)), COPY.otherArea, { 'data-action': 'close', 'aria-pressed': 'true' }))] : [];
+      // the 동네 in use shows here, checked, not only far down in the index (heuristic audit H6); under it, where its line
+      // 「다른 동네는 아래에서 골라요」 was, 다른 동네 고르기 goes down to that index (ADR-0090 6, app.ts)
+      const regionRow: HTMLElement[] = [];
+      if (s.basis === 'region' && s.region) {
+        const row = optRow(option(COPY.basisRegion(areaLabel(s.region)), null, { 'data-action': 'close', 'aria-pressed': 'true' }), el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-area' }, COPY.otherArea));
+        row.classList.add('other-row');
+        regionRow.push(row);
+      }
       optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow, ...regionRow]);
       // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
       // The same thin-rule rows with a check. Choosing one closes the sheet.
@@ -1537,7 +1552,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (from === 'saved') scrollBeforeSaved = null;
     scrollTo(back ? back.y : 0);
     if (s.view === 'cards' && from === 'home') focusView('cards');
-    else if (lostFocus()) focusView(s.view);
+    // 뒤로 (ADR-0090) stays in the bar but means something else now: as from the 바꾸기 / 돌아가기 it took the place
+    // of, the focus goes to the screen it led to
+    else if (lostFocus() || doc.activeElement === els.back) focusView(s.view);
   }
 
   /** New cards: bring the heading back under the top bar if it scrolled away ("다른 3곳 보기", S45·S46). */
@@ -1576,6 +1593,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
 
     const n = savedCount(s);
     const inSaved = s.view === 'saved';
+    // the bar's left (ADR-0090): the logo on the first screen (style.css), 뒤로 on the other two
+    els.back.hidden = s.view === 'home';
     // Counts today and later; shown while anything is saved (지난 날 stays reachable) and while the list is
     // open, even at 0, so the toggle never vanishes under the thumb.
     els.saved.hidden = !hasSaved(s) && !inSaved;
@@ -1600,12 +1619,19 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     setText(els.how, how);
     els.how.hidden = !how;
     const st = statusOf(s);
-    const statusKey = `${st.text}|${st.chooseArea}`;
+    const statusKey = `${st.text}|${st.chooseArea}|${st.undo?.id ?? ''}`;
     if (statusKey !== lastStatus) {
       lastStatus = statusKey;
+      // 되돌리기 pressed goes with its line: the focus goes to that place's 가 봤어요, the same switch (ADR-0090 5)
+      const undone = els.status.contains(doc.activeElement) ? (doc.activeElement as HTMLElement).dataset.id : undefined;
       els.status.replaceChildren();
       if (st.text) els.status.append(el(doc, 'span', {}, st.text));
+      if (st.undo) els.status.append(el(doc, 'button', { type: 'button', class: 'tbtn undo', 'data-action': 'visited-undo', 'data-id': st.undo.id, 'aria-label': COPY.undoAria(st.undo.name) }, COPY.undo));
       if (st.chooseArea) els.status.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'choose-area' }, COPY.chooseArea));
+      if (undone) {
+        const to = st.undo?.id === undone ? els.status.querySelector<HTMLElement>('.undo') : [...els.cards.querySelectorAll<HTMLElement>('.visited[data-id]')].find((b) => b.dataset.id === undone);
+        to?.focus({ preventScroll: true });
+      }
     }
 
     renderResults(s);

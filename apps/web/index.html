@@ -84,6 +84,8 @@
       <header class="top">
         <!-- the logo (ADR-0088 5), shown on the first screen only; a copy of src/logo.ts logoInner() (tests/logo.test.ts) -->
         <span class="logo"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 46 L30 46 Q36 46 38 40 L46 16" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle class="dot" cx="46" cy="16" r="5"/></svg><span>여차나<span class="rg">:제주</span></span></span>
+        <!-- ADR-0090: the left of the bar moves you — the logo on the first screen, 뒤로 on the results and the saved list -->
+        <button id="back" class="back" type="button" aria-label="뒤로" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
         <button id="basis" class="basis" type="button" aria-haspopup="dialog" aria-label="내 위치 근처, 기준 바꾸기"><span>내 위치 근처</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button id="saved" class="saved-btn" type="button" aria-pressed="false" aria-label="저장한 곳 0개" hidden><svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z"/></svg><span class="n">0</span></button>
       </header>
@@ -118,7 +120,6 @@
         <section id="results" aria-labelledby="crumb" hidden>
           <div class="head">
             <h1 class="crumb" id="crumb" tabindex="-1"></h1>
-            <button class="tbtn change" type="button" data-action="change" aria-label="기분 바꾸기">바꾸기</button>
           </div>
           <div id="foodSub" class="tabs" role="group" aria-label="먹을 것 종류" hidden>
             <button class="tab" type="button" data-sub="meal" aria-pressed="true">식사</button>
@@ -135,11 +136,12 @@
           <p class="credit">정보·사진: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" target="_blank" rel="noopener">visitjeju.net</a></p>
           <!-- OQ3 (ADR-0072): the static pages, one small line under the results -->
           <p class="landing"><a href="/jeju/">동네별로 둘러보기</a></p>
+          <!-- ADR-0090 4: the settings from here too, the same button as the first screen's last line -->
+          <button class="tbtn settings" type="button" data-action="settings">설정 · 지도 앱 · 의견</button>
         </section>
         <section id="savedView" aria-labelledby="savedTitle" hidden>
           <div class="head">
             <h1 class="title" id="savedTitle" tabindex="-1">저장한 곳<span class="count"></span></h1>
-            <button class="tbtn back" type="button" data-action="close-saved">돌아가기</button>
           </div>
           <!-- ADR-0063: the home-screen nudge, once (filled by render.ts) -->
           <div id="nudge" class="inform" hidden></div>
@@ -157,9 +159,9 @@
             <p id="backupNote" class="note" role="status"></p>
           </div>
           <!-- ADR-0087: 뺀 곳 (가 봤어요), only while there is one; the list is drawn by render.ts. Under 설정, so the
-               home's 설정 button reaches it with nothing saved -->
+               home's 설정 button reaches it with nothing saved. Shown as 가 본 곳 (ADR-0090 5) -->
           <div class="visited-box" hidden>
-            <button class="tbtn" type="button" data-action="visited-list" aria-expanded="false" aria-controls="visitedList">뺀 곳 0곳</button>
+            <button class="tbtn" type="button" data-action="visited-list" aria-expanded="false" aria-controls="visitedList">가 본 곳 0곳</button>
             <div id="visitedList" hidden></div>
           </div>
           <p id="visitedNote" class="note" role="status"></p>

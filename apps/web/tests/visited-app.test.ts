@@ -8,7 +8,9 @@ import { $, $$, cardIds, current, flush, render, reset, tap } from './harness';
 
 const nameOf = (id: string) => fileSpots.find((s) => s.id === id)!.name.trim();
 const stored = (): string[] => JSON.parse(window.localStorage.getItem(KEYS.visited) ?? '[]');
-const status = () => $('#status').textContent ?? '';
+/** the status line's words (되돌리기 after them is a button of its own, ADR-0090 5) */
+const status = () => $('#status > span')?.textContent ?? '';
+const undo = () => $('#status [data-action="visited-undo"]') as HTMLButtonElement | null;
 const visitedBtn = (id: string) => $(`#cards .visited[data-id="${id}"]`) as HTMLButtonElement;
 async function more() {
   await tap('[data-action="more"]');
@@ -82,6 +84,68 @@ describe('S3 카드의 「가 봤어요」', () => {
     $$('#cards .card').forEach((c, i) => expect(c).toBe(cards[i]));
   });
 
+  // ADR-0090 5: undo where it was done, not only from 설정 → 가 본 곳
+  it('되돌리기 beside 「… 빼고 골라요.」: the same as 가 봤어요 again — put back, the line says so, the button goes; focus to that 가 봤어요', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    const ids = cardIds() as string[];
+    const cards = $$('#cards .card');
+    const id = ids[0];
+    expect(undo()).toBeNull();
+    await tap(visitedBtn(id));
+    const b = undo()!;
+    expect(b).not.toBeNull();
+    expect(b.textContent).toBe('되돌리기');
+    expect(b.tagName).toBe('BUTTON');
+    expect(b.classList.contains('tbtn')).toBe(true);
+    expect(b.getAttribute('aria-label')).toBe(`${nameOf(id)}, 되돌리기`);
+    expect(b.previousElementSibling?.textContent).toMatch(/다음부터 빼고 골라요\.$/);
+    b.focus();
+    await tap(b);
+    expect(stored()).toEqual([]);
+    expect(current().state().visited).toEqual([]);
+    expect(visitedBtn(id).getAttribute('aria-pressed')).toBe('false');
+    expect(status()).toMatch(/(을|를) 다시 넣었어요\.$/);
+    expect(undo()).toBeNull();
+    expect(document.activeElement).toBe(visitedBtn(id));
+    $$('#cards .card').forEach((c, i) => expect(c).toBe(cards[i])); // the cards stay, as with 가 봤어요
+    // left out again: offered again; the next pick puts the line (and its button) away
+    await tap(visitedBtn(id));
+    expect(undo()).not.toBeNull();
+    await tap('[data-action="more"]');
+    expect(undo()).toBeNull();
+    expect(stored()).toEqual([id]);
+  });
+
+  it('되돌리기 is offered only while the place is still out: put back from another tab, the button goes and never re-adds it', async () => {
+    render();
+    await tap('[data-mood="walk"]');
+    const id = (cardIds() as string[])[1];
+    await tap(visitedBtn(id));
+    expect(undo()).not.toBeNull();
+    window.localStorage.setItem(KEYS.visited, '[]');
+    window.dispatchEvent(new StorageEvent('storage', { key: KEYS.visited, newValue: '[]', storageArea: window.localStorage }));
+    await flush();
+    expect(current().state().visited).toEqual([]);
+    expect(undo()).toBeNull();
+    expect(stored()).toEqual([]);
+  });
+
+  it('the 가 봤어요 check keeps its place while not pressed (ADR-0090 5): a press does not widen the button', async () => {
+    const { css } = await import('./harness');
+    const flat = css.replace(/\/\*[\s\S]*?\*\//g, '');
+    expect(flat).toMatch(/\.visited \.i-check\s*\{[^}]*display:\s*block;[^}]*visibility:\s*hidden/);
+    expect(flat).toMatch(/\.visited\[aria-pressed="true"\] > \.i-check\s*\{[^}]*visibility:\s*visible/);
+    render();
+    await tap('[data-mood="walk"]');
+    const b = visitedBtn((cardIds() as string[])[0]);
+    // the check is in the button from the start, pressed or not: only its visibility changes
+    expect(b.querySelector(':scope > .i-check')).not.toBeNull();
+    const before = b.innerHTML;
+    await tap(b);
+    expect(b.innerHTML).toBe(before);
+  });
+
   it('the particle follows the last syllable: 받침 → 은/을, none → 는/를', async () => {
     const { COPY } = await import('../src/render');
     expect(COPY.visitedOut('협재 해수욕장')).toBe('협재 해수욕장은 다음부터 빼고 골라요.');
@@ -111,7 +175,7 @@ describe('S3 카드의 「가 봤어요」', () => {
     await tap('[data-mood="rest"]');
     const out = (cardIds() as string[])[2];
     await tap(visitedBtn(out));
-    await tap('[data-action="change"]');
+    await tap('#back');
     await tap('[data-mood="rest"]');
     expect(cardIds()).toHaveLength(3);
     expect(cardIds()).not.toContain(out);
@@ -209,7 +273,7 @@ describe('S4 저장한 곳의 「뺀 곳 N곳」', () => {
     await openSettings();
     expect(box().hidden).toBe(false);
     expect(box().nextElementSibling!.nextElementSibling!.matches('.mapapp')).toBe(true);
-    expect(toggle().textContent).toBe('뺀 곳 2곳'); // an id the data lacks is not counted
+    expect(toggle().textContent).toBe('가 본 곳 2곳'); // an id the data lacks is not counted (shown as 가 본 곳, ADR-0090 5)
     expect(toggle().getAttribute('aria-expanded')).toBe('false');
     expect($('#visitedList').hidden).toBe(true);
   });
@@ -229,13 +293,13 @@ describe('S4 저장한 곳의 「뺀 곳 N곳」', () => {
     const id = first.dataset.id!;
     first.focus();
     await tap(first);
-    expect(toggle().textContent).toBe('뺀 곳 2곳');
+    expect(toggle().textContent).toBe('가 본 곳 2곳');
     expect(names()).toHaveLength(2);
     expect(stored()).not.toContain(id);
     expect(note()).toMatch(/(을|를) 다시 넣었어요\.$/);
     expect(document.activeElement?.getAttribute('data-action')).toBe('put-back'); // focus stays in the list
     await tap('#visitedList [data-action="put-back-all"]');
-    expect(note()).toBe('뺀 곳 2곳을 모두 다시 넣었어요.');
+    expect(note()).toBe('가 본 곳 2곳을 모두 다시 넣었어요.');
     expect(box().hidden).toBe(true);
     expect(stored()).toEqual([]);
     expect(document.activeElement?.id).toBe('settingsH');
@@ -264,12 +328,12 @@ describe('S4 저장한 곳의 「뺀 곳 N곳」', () => {
     await tap(visitedBtn(out));
     await more();
     expect(cardIds()).not.toContain(out);
-    await tap('[data-action="change"]');
+    await tap('#back');
     await openSettings();
     await tap(toggle());
     await tap(`#visitedList [data-action="put-back"][data-id="${out}"]`);
     expect(box().hidden).toBe(true);
-    await tap('[data-action="close-saved"]');
+    await tap('#back');
     await flush();
     // a new round from the start: the first pick is the best ones again, the place among them
     window.sessionStorage.clear();

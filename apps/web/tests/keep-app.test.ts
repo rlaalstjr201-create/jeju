@@ -97,7 +97,7 @@ describe('2b in-app browser notice', () => {
     await cards();
     await tap('#cards .heart');
     await tap('.top #saved');
-    await tap('#savedView .back');
+    await tap('#back');
     expect(out().startsWith(`${location.origin}/${BACKUP_HASH}`)).toBe(true);
     // the day saved stays here (ADR-0085): the link carries the rest
     expect(decodeBackup(out().split(BACKUP_HASH)[1])).toEqual(stored().map(({ id, date, order }) => ({ id, date, order })));
@@ -149,7 +149,7 @@ describe('2c backup link', () => {
     expect(url.startsWith(`${location.origin}/${BACKUP_HASH}`)).toBe(true);
     expect(decodeBackup(url.split(BACKUP_HASH)[1])).toEqual(list);
     expect($('#backupNote').textContent).toBe('링크를 복사했어요. 다른 브라우저나 기기에서 열면 여기 저장한 곳을 합칠 수 있어요.');
-    await tap('#savedView .back');
+    await tap('#back');
     await openSaved();
     expect($('#backupNote').textContent).toBe('');
   });
@@ -177,7 +177,7 @@ describe('2c backup link', () => {
     expect($('#announce').textContent).toBe('2곳을 합쳤어요. 맨 위 하트 버튼에 모여요.');
     expect(shown('#saved')).toBe(true);
     await cards(); // the answer has said its piece
-    await tap('#results .change');
+    await tap('#back');
     expect(shown('#homeNote')).toBe(false);
   });
 
@@ -280,7 +280,7 @@ describe('2d home-screen nudge', () => {
     expect($$('#nudge p').map((p) => p.textContent)).toEqual(['홈 화면에 추가하면 저장한 곳이 오래 남아요.', '공유 버튼에서 ‘홈 화면에 추가’를 눌러 주세요. 지금 저장한 곳은 아래 ‘링크로 백업’으로 옮겨요.']);
     await tap('#nudge [data-action="nudge-close"]');
     expect(shown('#nudge')).toBe(false);
-    await tap('#savedView .back');
+    await tap('#back');
     await openSaved();
     expect(shown('#nudge')).toBe(false);
     revisit({ userAgent: IOS });
