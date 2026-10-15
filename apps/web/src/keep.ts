@@ -3,7 +3,7 @@
 import { addDays, isDay, type Day } from './dates';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { MAX_SAVED, normalizeEntries } from './store';
-import type { SavedEntry } from './types';
+import type { SavedEntry, Stay } from './types';
 
 // --- backup link: the saved list after `#s=` (a fragment never reaches a server or its logs) ---
 // Bytes, then base64url. [version 1] then per day: [day: varint days since EPOCH][count: varint][ids…], days
@@ -151,6 +151,15 @@ const IN_APP: readonly [InApp, RegExp][] = [
 
 export function inAppOf(ua: string): InApp | null {
   return IN_APP.find(([, re]) => re.test(ua))?.[0] ?? null;
+}
+
+/** What 브라우저로 열기 hands the phone's browser (SPEC 6.14): the app's address with what is saved here after `#s=`
+ * and, after a 숙소 링크 (ADR-0089), that 숙소 (`stay`, only when it came from the link) and this visit's tag with
+ * `relay=1` (the arrival was counted here). The comma as %2C: a messenger may end a link at a bare one. */
+export function handoffUrl(home: string, s: { saved: readonly SavedEntry[]; indoor: boolean; mapApp: MapApp; stay: Stay | null; src: string | null }): string {
+  const q = [...(s.stay?.source === 'link' ? [`stay=${s.stay.lat}%2C${s.stay.lng}`] : []), ...(s.src ? [`src=${s.src}`, 'relay=1'] : [])];
+  const url = q.length ? `${home}?${q.join('&')}` : home;
+  return s.saved.length ? backupUrl(url, s.saved, s.indoor, s.mapApp) : url;
 }
 
 /** KakaoTalk's own way out to the phone's browser. */

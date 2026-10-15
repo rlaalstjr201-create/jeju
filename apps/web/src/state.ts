@@ -72,6 +72,8 @@ export interface State {
   today: Day;
   region: AreaName | null;
   stay: Stay | null;
+  /** 숙소 링크 (ADR-0089): the tag this visit came in by (kept in sessionStorage), null without one. */
+  src: string | null;
   /** last GPS failure; cleared by the next GPS success. Drives the "지역 고르기" label and sheet hint. */
   lastFail: NoOrigin | null;
   phase: Phase;
@@ -147,6 +149,7 @@ export type Action =
   | { type: 'route'; route: Route }
   | { type: 'overlay'; overlay: Overlay }
   | { type: 'basis'; basis: Basis; region?: AreaName; stay?: Stay }
+  | { type: 'src'; src: string }
   | { type: 'reach'; reach: Reach }
   | { type: 'indoor'; on: boolean }
   | { type: 'stayForm'; pending: boolean; error: NoOrigin | null }
@@ -189,6 +192,7 @@ export function initialState(init: {
   today: Day;
   region: AreaName | null;
   stay: Stay | null;
+  src?: string | null;
   saved: SavedEntry[];
   visited?: string[];
   hintSeen: boolean;
@@ -213,6 +217,7 @@ export function initialState(init: {
     today: init.today,
     region: init.region,
     stay: init.stay,
+    src: init.src ?? null,
     lastFail: null,
     phase: { k: 'idle' },
     origin: null,
@@ -568,6 +573,8 @@ function step(s: State, a: Action): State {
         // a 숙소 saved from GPS means GPS works (the "위치 권한이 꺼져 있어요" hint no longer holds)
         lastFail: a.stay?.source === 'gps' ? null : s.lastFail,
       };
+    case 'src':
+      return a.src === s.src ? s : { ...s, src: a.src };
     case 'reach':
       return a.reach === s.reach ? s : { ...s, reach: a.reach };
     case 'indoor':

@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
 // 숙소 링크 (ADR-0089, specs/partner-stay-link.md S1–S3): `/?stay=<lat>,<lng>&src=<tag>` opens on that 숙소, and
 // while the tag is in the session tap / map (and the arrival's open) are counted once more under `src:<tag>`.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { aggregate } from '../events/aggregate';
 import { handleEvents } from '../events/handler';
@@ -154,6 +156,81 @@ describe('S2 src counts', () => {
     $('#cards .card-link').click();
     hide();
     expect(beacon).not.toHaveBeenCalled();
+  });
+});
+
+// 출시 전 점검 F1 (bugs.md B1): KakaoTalk is the 숙소 링크's main road, and its in-app notice sends people on to the
+// phone's browser — with the 숙소 and the tag, or there it opens on 내 위치 근처 and the visit counts for no 숙소.
+describe('F1 (B1) 브라우저로 열기 carries the 숙소 링크 on', () => {
+  const KAKAO = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36 KAKAOTALK 10.8.0';
+  const INSTA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 340.0';
+  const LINK = '?stay=33.4631%2C126.3105&src=aewol-gh1&relay=1';
+  /** the address KakaoTalk's 브라우저로 열기 hands over */
+  const handed = () => new URL($('#homeNote a[data-action="inapp-open"]').getAttribute('href')!).searchParams.get('url')!;
+
+  it('KakaoTalk: the 숙소 (%2C), the tag and relay=1; what is saved still goes after #s=', async () => {
+    open('?stay=33.4631,126.3105&src=aewol-gh1', { userAgent: KAKAO });
+    await flush();
+    expect(handed()).toBe(`${location.origin}/${LINK}`);
+    await tap('[data-mood="rest"]');
+    await tap($$('#cards .heart')[0]);
+    await tap('#results .change');
+    expect(handed().startsWith(`${location.origin}/${LINK}#s=`)).toBe(true);
+  });
+
+  it('elsewhere (Instagram): the address copied is the same', async () => {
+    const copy = vi.fn(async (_t: string) => true);
+    open('?stay=33.4631,126.3105&src=aewol-gh1', { userAgent: INSTA, copy });
+    await flush();
+    await tap('#homeNote [data-action="inapp-copy"]');
+    expect(copy).toHaveBeenCalledWith(`${location.origin}/${LINK}`);
+  });
+
+  it('a tag alone goes with relay=1; a 숙소 set by GPS or an area is not a 숙소 링크 (nothing added)', async () => {
+    open('?src=aewol-gh1', { userAgent: KAKAO });
+    await flush();
+    expect(handed()).toBe(`${location.origin}/?src=aewol-gh1&relay=1`);
+    reset();
+    localStorage.setItem('jeju.basis', '"stay"');
+    localStorage.setItem('jeju.stay', JSON.stringify({ lat: 33.2481, lng: 126.4123, area: '중문', source: 'gps' }));
+    open('', { userAgent: KAKAO });
+    await flush();
+    expect(handed()).toBe(`${location.origin}/`);
+  });
+
+  it('opened with relay=1 (the phone browser): 숙소 근처 and the tag kept for tap / map, but no second open', async () => {
+    const locate = vi.fn(() => Promise.resolve({ lat: 33.5, lng: 126.5 }));
+    open(LINK, { eventsUrl: URL_, beacon, locate });
+    await flush();
+    expect(current().state()).toMatchObject({ basis: 'stay', stay: { lat: 33.4631, lng: 126.3105, source: 'link' } });
+    expect($('#basis').textContent).toContain('숙소 근처');
+    expect(sessionStorage.getItem('jeju.src')).toBe('"aewol-gh1"');
+    await tap('[data-mood="rest"]');
+    $('#cards .card-link').click();
+    await flush();
+    hide();
+    const d = current().state().today;
+    expect(srcEvents()).toEqual([
+      { e: 'tap', id: 'src:aewol-gh1', d },
+      { e: 'map', id: 'src:aewol-gh1', d },
+    ]);
+    expect(locate).not.toHaveBeenCalled();
+  });
+});
+
+// 출시 전 점검 F15 (bugs.md S2): a messenger may end a link at a bare comma, so the card tool writes it as %2C
+describe('F15 (S2) the 숙소 링크 comma as %2C', () => {
+  it('the link generator writes %2C between the two numbers', () => {
+    const card = readFileSync(resolve(__dirname, '../../../docs/partner/qr-card.html'), 'utf8');
+    const line = card.split('\n').find((l) => l.includes('const link ='))!;
+    expect(line).toMatch(/\?stay=\$\{[^}]+\}%2C\$\{[^}]+\}&src=\$\{src\}/);
+  });
+
+  it('the app reads it: the deep link, and opened in the app', async () => {
+    expect(readDeepLink('?stay=33.4631%2C126.3105&src=aewol-gh1', TODAY)).toEqual({ stay: { lat: 33.4631, lng: 126.3105 }, src: 'aewol-gh1' });
+    open('?stay=33.4631%2C126.3105&src=aewol-gh1');
+    await flush();
+    expect(current().state()).toMatchObject({ basis: 'stay', stay: { lat: 33.4631, lng: 126.3105, source: 'link' } });
   });
 });
 

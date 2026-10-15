@@ -1,6 +1,7 @@
 // Deep link (ADR-0067, specs/drive-and-agents.md): `/?mood=walk&area=aewol&reach=drive30&date=2026-10-03&indoor=1`
 // — what an AI agent (or anyone) can hand a user so the app opens on that result. Pure parsing, no DOM.
-// 숙소 링크 (ADR-0089): `stay=<lat>,<lng>` (a point in Jeju) and `src=<tag>` (which 숙소's link it was).
+// 숙소 링크 (ADR-0089): `stay=<lat>,<lng>` (a point in Jeju) and `src=<tag>` (which 숙소's link it was); `relay=1`
+// when an in-app browser's 브라우저로 열기 handed it on (its arrival was counted there).
 import { AREAS, areaByName, inJeju, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, isDay, type Day } from './dates';
 import { REACHES, type Button, type Point, type Reach } from './pick';
@@ -17,6 +18,8 @@ export interface DeepLink {
   stay?: Point;
   /** 숙소 링크: the partner's tag, `[a-z0-9-]{2,24}`. */
   src?: string;
+  /** with `src` only: handed on from an in-app browser (SPEC 6.14), the arrival not counted again. */
+  relay?: true;
 }
 
 const MOODS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
@@ -55,6 +58,9 @@ export function readDeepLink(search: string, today: Day): DeepLink | null {
     if (inJeju(p)) out.stay = p;
   }
   const src = get('src');
-  if (SRC.test(src)) out.src = src;
+  if (SRC.test(src)) {
+    out.src = src;
+    if (get('relay') === '1') out.relay = true;
+  }
   return Object.keys(out).length ? out : null;
 }

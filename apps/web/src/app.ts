@@ -6,7 +6,7 @@ import { createSpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
-import { BACKUP_HASH, appHome, backupUrl, copyText, inAppOf, installHow, readBackup } from './keep';
+import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
@@ -136,7 +136,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   };
   // ADR-0081: read once at mount, so a map opened in this visit brings the survey line only next time
   const survey0 = store.survey();
-  let state = initialState({ ...loaded, today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0), clock: minuteOf(clockNow()) });
+  // src: this session's 숙소 링크 tag (ADR-0089); with sessionStorage blocked the state alone keeps it
+  let state = initialState({ ...loaded, src: store.src(), today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0), clock: minuteOf(clockNow()) });
   const tracker = createTracker({
     url: deps.eventsUrl,
     send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
@@ -241,20 +242,18 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
-  /** the 숙소 링크 tag this session came in by (ADR-0089); memory when sessionStorage is not there */
-  let srcTag = store.src();
   /** `day`: the day a heart is about (dated = not today). `season`: the kind whose 철 words the card showed (ADR-0080).
    * `flow`: the saved-list fields (ADR-0085). */
   function count(e: EventName, id?: string, day?: Day, season?: SeasonKind | null, flow?: Pick<UsageEvent, 'live0' | 'past' | 'from' | 'age' | 'op'>) {
     const ev: UsageEvent = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}), ...(season ? { season } : {}), ...flow };
     tracker.track(ev);
     if (state.tracking) deps.analytics?.event(ev);
-    if (srcTag && (e === 'tap' || e === 'map')) countSrc(e);
+    if (state.src && (e === 'tap' || e === 'map')) countSrc(e);
   }
   /** 숙소 링크 (ADR-0089): while this visit came in by one, tap / map (and the arrival's open) once more under
    * `src:<tag>`, to our own collector only (never GA4·네이버). */
   function countSrc(e: 'open' | 'tap' | 'map') {
-    tracker.track({ e, id: `src:${srcTag}`, d: state.today });
+    tracker.track({ e, id: `src:${state.src}`, d: state.today });
   }
   /** Each new set of 3 on screen, once: a re-render, the same 3 brought back or restored after a reload are
    * not shown again. */
@@ -523,8 +522,9 @@ export function mountApp(doc: Document, deps: Deps): App {
       store.setStay(stay);
     }
     if (link.src) {
-      const arrived = srcTag !== link.src;
-      srcTag = link.src;
+      // relay=1: handed on by an in-app browser's 브라우저로 열기, where this arrival was counted already (SPEC 6.14)
+      const arrived = state.src !== link.src && !link.relay;
+      dispatch({ type: 'src', src: link.src });
       store.setSrc(link.src);
       if (arrived) countSrc('open');
     }
@@ -545,9 +545,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     const ok = await copy(backupUrl(home(), entries, state.indoor, state.mapApp));
     if (!signal.aborted && state.view === 'saved') dispatch({ type: 'keep', keep: { backup: ok ? 'copied' : 'failed' } });
   }
-  /** Outside KakaoTalk (its own link does it): the address, with what is saved here, onto the clipboard. */
+  /** Outside KakaoTalk (its own link does it): the address, with what is saved here (and a 숙소 링크), onto the clipboard. */
   async function inappCopy() {
-    const ok = await copy(state.saved.length ? backupUrl(home(), state.saved, state.indoor, state.mapApp) : home());
+    const ok = await copy(handoffUrl(home(), state));
     if (!signal.aborted && state.keep.inappNote) dispatch({ type: 'keep', keep: { inappNote: ok ? 'copied' : 'failed' } });
   }
   let installPrompt: InstallPrompt | null = null;

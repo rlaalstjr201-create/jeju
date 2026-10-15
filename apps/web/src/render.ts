@@ -4,7 +4,7 @@
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
-import { appHome, backupUrl, kakaoExternal, type InApp } from './keep';
+import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
@@ -976,11 +976,8 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     }
     box.replaceChildren(...nodes);
   }
-  /** Where a link to this app carries what is saved here (the in-app browser's way out). */
-  const shareUrl = (s: State) => {
-    const home = appHome(doc.defaultView?.location.href ?? 'https://localhost/');
-    return s.saved.length ? backupUrl(home, s.saved, s.indoor, s.mapApp) : home;
-  };
+  /** Where a link to this app carries what is saved here and a 숙소 링크 (the in-app browser's way out). */
+  const shareUrl = (s: State) => handoffUrl(appHome(doc.defaultView?.location.href ?? 'https://localhost/'), s);
   function renderKeep(s: State) {
     const k = s.keep;
     const r = k.restore;
