@@ -1,9 +1,10 @@
 import './style.css';
 import { createAnalytics, isLocalHost } from './analytics';
-import { LocateError, inJeju, mountApp } from './app';
+import { LocateError, inJeju, mountApp, type Deps } from './app';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
 import { reloadOnUpdate, runsCachedCode } from './update';
+import { yieldToMain } from './yield';
 
 function locate(): Promise<Point> {
   return new Promise((resolve, reject) => {
@@ -49,12 +50,15 @@ async function persist(): Promise<void> {
   await s.persist();
 }
 
-const app = mountApp(document, {
+const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
+  // The text, a turn for the browser, then the parse: json() on the whole 1.2MB was one long task (audit 2026-10-15).
   loadSpots: () =>
-    fetch(`${BASE}spots.json?v=${__SPOTS_V__}`).then((r) => {
+    fetch(`${BASE}spots.json?v=${__SPOTS_V__}`).then(async (r) => {
       if (!r.ok) throw new Error(String(r.status));
-      return r.json() as Promise<unknown>;
+      const text = await r.text();
+      await yieldToMain();
+      return JSON.parse(text) as unknown;
     }),
   locate,
   geoPermission,
@@ -71,20 +75,31 @@ const app = mountApp(document, {
   postFeedback: (body) =>
     void fetch(`${BASE}api/feedback`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, credentials: 'omit', keepalive: true }).catch(() => undefined),
   appVersion: __APP_V__,
-});
+  yieldToMain,
+};
+
+/** The app mounts in a task of its own, right after the page's parsing task: mounted inside it, all its first draw
+ * changed was laid out by the browser's end-of-parsing step in that same task (audit 2026-10-15, the first load's
+ * long tasks). A mood tapped before then is kept by index.html's inline script and carried out at mount. */
+function start() {
+  const app = mountApp(document, deps);
+  if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+    reloadOnUpdate({
+      sw: navigator.serviceWorker,
+      doc: document,
+      idle: () => {
+        const s = app.state();
+        return s.view === 'home' && !s.overlay && s.phase.k !== 'pending';
+      },
+      hold: () => app.unsaved(),
+      current: () => runsCachedCode(document, 'caches' in window ? caches : undefined, new URL(import.meta.url).href),
+      reload: () => location.reload(),
+    });
+  }
+}
+void yieldToMain().then(start);
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-  reloadOnUpdate({
-    sw: navigator.serviceWorker,
-    doc: document,
-    idle: () => {
-      const s = app.state();
-      return s.view === 'home' && !s.overlay && s.phase.k !== 'pending';
-    },
-    hold: () => app.unsaved(),
-    current: () => runsCachedCode(document, 'caches' in window ? caches : undefined, new URL(import.meta.url).href),
-    reload: () => location.reload(),
-  });
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register(`${BASE}sw.js`)

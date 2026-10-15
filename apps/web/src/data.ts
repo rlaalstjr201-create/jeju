@@ -39,7 +39,26 @@ function validBook(b: unknown): boolean {
 export function normalizeSpots(raw: unknown): Spot[] {
   if (!Array.isArray(raw)) throw new Error('spots.json is not an array');
   const out: Spot[] = [];
-  for (const r of raw as Record<string, unknown>[]) {
+  normalizeInto(out, raw, 0, raw.length);
+  return out;
+}
+
+/** normalizeSpots a slice at a time, each after a `pause()` (a turn for the browser): on a phone the whole list in
+ * one go, right after its parse, was one of the first load's long tasks (audit 2026-10-15 렉 §2). The same list
+ * comes out. */
+export async function normalizeSpotsIn(raw: unknown, pause: () => Promise<void>, slice = 1000): Promise<Spot[]> {
+  if (!Array.isArray(raw)) throw new Error('spots.json is not an array');
+  const out: Spot[] = [];
+  for (let i = 0; i < raw.length; i += slice) {
+    await pause();
+    normalizeInto(out, raw, i, Math.min(raw.length, i + slice));
+  }
+  return out;
+}
+
+function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
+  for (let i = from; i < to; i++) {
+    const r = raw[i] as Record<string, unknown>;
     if (!r || typeof r !== 'object') continue;
     const { id, name, lat, lng, mood, reason, image } = r;
     if (typeof id !== 'string' || typeof name !== 'string' || typeof reason !== 'string' || typeof image !== 'string') continue;
@@ -73,7 +92,6 @@ export function normalizeSpots(raw: unknown): Spot[] {
     if (badSea) delete fixed.sunsetSea;
     out.push(fixed);
   }
-  return out;
 }
 
 export interface SpotSource {
@@ -86,8 +104,9 @@ export interface SpotSource {
 /**
  * `onLoad`: called once, when the list first arrives — also when it arrives after every caller has given up
  * waiting for it (a slow download that outlived its timeout), so the app can use it then.
+ * `pause`: a turn for the browser between slices of the tidying (normalizeSpotsIn); missing = all at once.
  */
-export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 10000, onLoad?: (spots: Spot[]) => void): SpotSource {
+export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 10000, onLoad?: (spots: Spot[]) => void, pause?: () => Promise<void>): SpotSource {
   let value: Spot[] | null = null;
   /** The download new callers join. The timeout only ends a caller's wait: the download keeps going, and the
    * first one to land is kept — a slow network is not sent round a 10s error loop though a full copy arrived.
@@ -98,7 +117,14 @@ export function createSpotSource(load: () => Promise<unknown>, timeoutMs = 10000
   let disposed = false;
 
   function start(): Promise<Spot[]> {
-    const p = Promise.resolve().then(load).then(normalizeSpots);
+    const p = Promise.resolve()
+      .then(load)
+      .then(async (raw) => {
+        if (!pause) return normalizeSpots(raw);
+        const spots = await normalizeSpotsIn(raw, pause);
+        await pause(); // the first draw with the list (onLoad) gets a task of its own
+        return spots;
+      });
     p.then(
       (spots) => {
         if (current === p) current = null;

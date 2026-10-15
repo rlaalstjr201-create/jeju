@@ -51,6 +51,9 @@ export interface NavOptions {
   /** Called for back/forward the app did not cause. */
   onRoute(r: Route): void;
   settleMs?: number;
+  /** the address to put in place of the one the page was opened at (app.ts readArrival), written with the mount's
+   * own entry: one history call instead of two (the second one of a load was the slow one, audit 2026-10-15). */
+  address?: string;
 }
 
 export function createNav(win: Window | null, opts: NavOptions): Nav {
@@ -70,11 +73,12 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
       return null;
     }
   };
-  function write(kind: 'push' | 'replace', r: Route, d: number) {
+  function write(kind: 'push' | 'replace', r: Route, d: number, address?: string) {
     try {
       const entry: Entry = { jeju: 1, view: r.view, overlay: r.overlay, depth: d };
       if (kind === 'push') history?.pushState(entry, '');
-      else history?.replaceState(entry, '');
+      else if (address === undefined) history?.replaceState(entry, '');
+      else history?.replaceState(entry, '', address);
     } catch {
       /* history API unavailable (sandboxed frame) — the app still works, just without the back guard */
     }
@@ -175,8 +179,15 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
   let initial: Route = HOME;
   const e = current();
   if (!e) {
-    write('replace', HOME, 0);
+    write('replace', HOME, 0, opts.address);
   } else {
+    if (opts.address !== undefined) {
+      try {
+        history?.replaceState(history.state, '', opts.address);
+      } catch {
+        /* sandboxed */
+      }
+    }
     depth = e.depth;
     initial = routeOf(e);
     if (e.overlay) {

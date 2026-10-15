@@ -451,7 +451,14 @@ export interface Renderer {
   dispose(): void;
 }
 
-export function createRenderer(doc: Document, els: Els): Renderer {
+export interface RenderOptions {
+  /** the first time the data is drawn on the home, the moods' 「예:」 and photos and the sections under them (노을 볼
+   * 곳, 오늘 장 서는 곳, 다른 동네, the credit and 설정) come a frame at a time (renderHome; app.ts: with
+   * deps.yieldToMain). */
+  stageHome?: boolean;
+}
+
+export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}): Renderer {
   const win = doc.defaultView;
   const timers = new Set<ReturnType<typeof setTimeout>>();
   const later = (ms: number, fn: () => void) => {
@@ -1043,6 +1050,9 @@ export function createRenderer(doc: Document, els: Els): Renderer {
   // what they show changes (the data, basis, range, 실내, the day, the tabs, the map app). Nothing with a photo
   // or a link is drawn before the data is in: the rows' min-height holds the place, no grey slots (§14). ---
   let homeSig = '';
+  /** the latest home draw (a staged step of an older one is dropped) and whether the data has been drawn in full */
+  let homeGen = 0;
+  let homeFilled = false;
   let homeSpots: Spot[] | null = null;
   let homeVisited: readonly string[] = [];
   let todayText = '';
@@ -1182,33 +1192,73 @@ export function createRenderer(doc: Document, els: Els): Renderer {
     // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
     els.today.classList.toggle('wait', !spots);
 
-    for (const b of els.moods) {
-      const mood = b.dataset.mood;
-      if (!mood || mood === 'any') continue;
-      b.querySelector('.ex')?.remove();
-      b.querySelector('.pair')?.remove();
-      const ex = spots ? moodExamples(s, spots, origin, mood as Exclude<Button, 'any'>) : [];
-      if (!ex.length) continue;
-      // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
-      const names = ex.map((x) => splitName(x.name.trim()).main);
-      b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : COPY.examplePopular(names)));
-      const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
-      pair.append(...ex.map((x) => homePhoto(x, false)));
-      b.querySelector('.i-check')!.before(pair);
-    }
-
-    const nodes: HTMLElement[] = [];
-    if (spots) {
+    /** `only`: the mood rows to draw (all four when missing) */
+    const examples = (only?: readonly Button[]) => {
+      for (const b of els.moods) {
+        const mood = b.dataset.mood;
+        if (!mood || mood === 'any' || (only && !only.includes(mood as Button))) continue;
+        b.querySelector('.ex')?.remove();
+        b.querySelector('.pair')?.remove();
+        const ex = spots ? moodExamples(s, spots, origin, mood as Exclude<Button, 'any'>) : [];
+        if (!ex.length) continue;
+        // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
+        const names = ex.map((x) => splitName(x.name.trim()).main);
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : COPY.examplePopular(names)));
+        const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
+        pair.append(...ex.map((x) => homePhoto(x, false)));
+        b.querySelector('.i-check')!.before(pair);
+      }
+    };
+    // the sections under 아무거나: 노을 볼 곳 and 오늘 장 서는 곳, then 다른 동네, the credit and 설정
+    const sections = (): HTMLElement[] => {
+      const nodes: HTMLElement[] = [];
       if (sunsetOn && origin) nodes.push(sunsetSection(s, sunset, origin));
       if (markets.length) nodes.push(marketSection(s, markets, origin, dated));
+      return nodes;
+    };
+    // an area's photo is not a pick: from the data as it is
+    const areas = () => areasSection(s, s.spots!, origin);
+    const tail = (): HTMLElement[] => {
       // the coastline the 노을 places were worked out from (ODbL): credited while they are shown
       const credit = el(doc, 'p', { class: 'credit' }, COPY.homeCredit);
       if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
       // settings reachable with nothing saved yet (heuristic audit H5): they live under the saved list
-      // an area's photo is not a pick: from the data as it is
-      nodes.push(areasSection(s, s.spots!, origin), credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings));
+      return [credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings)];
+    };
+    const gen = ++homeGen;
+    // The first time the data is drawn (opts.stageHome): the moods' 「예:」 and photos a frame later, two rows at a
+    // time, then the sections under them a frame at a time (다른 동네's tiles over two) — every step its own short
+    // task and frame instead of one long one. A step a newer draw has overtaken is dropped (that draw starts again).
+    // Any later redraw is done in place, at once.
+    if (opts.stageHome && spots && !homeFilled) {
+      let late: Element[] = [];
+      const steps = [
+        () => examples(['rest', 'walk']),
+        () => examples(['new', 'food']),
+        () => els.homeMore.replaceChildren(...sections()),
+        () => {
+          const sec = areas();
+          late = [...sec.querySelectorAll(':scope > .tiles > li')].slice(6);
+          for (const li of late) li.remove();
+          els.homeMore.append(sec);
+        },
+        () => {
+          els.homeMore.querySelector('.tiles')?.append(...late);
+          els.homeMore.append(...tail());
+          homeFilled = true;
+        },
+      ];
+      const run = (i: number) =>
+        afterPaint(() => {
+          if (gen !== homeGen) return;
+          steps[i]();
+          if (i + 1 < steps.length) run(i + 1);
+        });
+      run(0);
+      return;
     }
-    els.homeMore.replaceChildren(...nodes);
+    examples();
+    els.homeMore.replaceChildren(...(spots ? [...sections(), areas(), ...tail()] : []));
   }
 
   /** ADR-0081: one text button at the very bottom of the home, only while it is due and 기록 is on. Absent

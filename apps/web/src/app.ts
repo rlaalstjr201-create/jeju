@@ -68,6 +68,10 @@ export interface Deps extends GeoDeps {
   postFeedback?(body: string): void;
   /** the app's version, sent with 의견 보내기 ('dev' when missing). */
   appVersion?: string;
+  /** a turn for the browser (yield.ts): the first load's work is then cut into tasks short of a long one — the
+   * list tidied a slice at a time, the home's lower sections drawn after its first frame. Missing = straight
+   * through (the tests). */
+  yieldToMain?(): Promise<void>;
 }
 
 /** The browser's install prompt (Chrome, Edge, Samsung Internet): not in the DOM typings. */
@@ -96,6 +100,20 @@ interface EarlyTap {
   __tap?: string;
 }
 
+/** A backup link that reads (`#s=…`, ADR-0063). */
+type Backup = Extract<ReturnType<typeof readBackup>, { found: true }>;
+/** The address the page was opened at: a deep link's query (ADR-0067) and a backup link's #s= are read once and
+ * leave the address at once (`address`, written by nav.ts with the mount's own entry), so a reload, back or forward
+ * follows the usual rules. */
+function readArrival(win: Window | null): { search: string; backup: Backup | null; address?: string } {
+  const loc = win?.location;
+  if (!loc) return { search: '', backup: null };
+  const search = loc.search;
+  const b = readBackup(loc.hash);
+  const backup = b.found ? b : null;
+  return { search, backup, ...(search || backup ? { address: loc.pathname + (backup ? '' : loc.hash) } : {}) };
+}
+
 export function mountApp(doc: Document, deps: Deps): App {
   const win = doc.defaultView;
   const ac = new AbortController();
@@ -114,11 +132,16 @@ export function mountApp(doc: Document, deps: Deps): App {
   const store = createStore(deps.storage, deps.session ?? null);
   // ♥ N drops ids missing from the data once it lands (S42); a failure notice gives way to the list if a
   // download that outlived its timeout lands after all.
-  const data = createSpotSource(deps.loadSpots, delays.dataTimeout, (spots) => {
-    dispatch({ type: 'spots', spots });
-    retryFailedLoad();
-  });
-  const renderer = createRenderer(doc, els);
+  const data = createSpotSource(
+    deps.loadSpots,
+    delays.dataTimeout,
+    (spots) => {
+      dispatch({ type: 'spots', spots });
+      retryFailedLoad();
+    },
+    deps.yieldToMain,
+  );
+  const renderer = createRenderer(doc, els, { stageHome: !!deps.yieldToMain });
   const clockNow = () => deps.today?.() ?? new Date();
   const today0 = dayOf(clockNow());
   const loaded = store.load(today0);
@@ -173,7 +196,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function dispatch(a: Action) {
     if (signal.aborted) return;
     state = reduce(state, a);
-    if (batching) {
+    if (batching || held) {
       unrendered = true;
       return;
     }
@@ -191,13 +214,15 @@ export function mountApp(doc: Document, deps: Deps): App {
    * an earlier action of theirs would have drawn. */
   let batching = 0;
   let unrendered = false;
+  /** nothing is drawn before the mount's first draw (firstDraw, below) */
+  let held = true;
   function batch(fn: () => void) {
     batching++;
     try {
       fn();
     } finally {
       batching--;
-      if (!batching && unrendered) {
+      if (!batching && !held && unrendered) {
         unrendered = false;
         if (!signal.aborted) drawn();
       }
@@ -465,7 +490,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   // --- history ---
-  const nav = createNav(win, { signal, settleMs: delays.settle, onRoute: applyRoute });
+  const arrival = readArrival(win);
+  const nav = createNav(win, { signal, settleMs: delays.settle, onRoute: applyRoute, address: arrival.address });
   /** Back/forward the app did not cause: the history entry says what should be on screen. */
   function applyRoute(r: Route) {
     const prev = state;
@@ -517,24 +543,14 @@ export function mountApp(doc: Document, deps: Deps): App {
     } catch {
       /* sandboxed */
     }
+    useBackup(b);
+  }
+  function useBackup(b: Backup) {
     if (b.entries) dispatch({ type: 'keep', keep: { restore: { k: 'ask', entries: b.entries } } });
     // 비 와요 rode along (ADR-0065): this session starts with it on
     if (b.indoor) setIndoor(true);
     // so did a map app other than 네이버지도 (ADR-0071)
     if (b.mapApp) setMapApp(b.mapApp);
-  }
-  /** A deep link (`/?mood=…&area=…`, ADR-0067): read once, and the query goes from the address at once (like
-   * `#s=`), so a reload, back or forward follows the usual rules. Applied only on a fresh first-screen entry. */
-  function takeDeepLink(apply: boolean): DeepLink | null {
-    const loc = win?.location;
-    if (!loc?.search) return null;
-    const link = readDeepLink(loc.search, state.today);
-    try {
-      win!.history.replaceState(win!.history.state, '', loc.pathname + loc.hash);
-    } catch {
-      /* sandboxed */
-    }
-    return apply ? link : null;
   }
   /** As if chosen in the basis sheet: 얼마나, 비 와요, 언제 and 기준 kept as there; the mood is tapped after. */
   function applyDeepLink(link: DeepLink) {
@@ -1181,45 +1197,62 @@ export function mountApp(doc: Document, deps: Deps): App {
   } catch {
     /* sandboxed */
   }
-  tick();
-  renderer.render(state);
-  countSurvey();
-  askRain();
-  takeBackup();
-  checkPermission();
-  // Taps on the static mood buttons before this module ran: the last one is carried out now.
-  const early = win as (Window & EarlyTap) | null;
-  const earlyTap = early?.__tap;
-  if (early?.__early) win!.removeEventListener('click', early.__early, true);
-  if (early) {
-    delete early.__early;
-    delete early.__tap;
-  }
-  for (const b of doc.querySelectorAll('[data-mood][aria-busy]')) b.removeAttribute('aria-busy');
-  for (const d of doc.querySelectorAll('.wait-dots')) d.remove();
-  const link = takeDeepLink(nav.initial.view === 'home');
-  if (link) applyDeepLink(link);
-  const rec = nav.initial.view !== 'home' ? store.readSession() : null;
-  if (nav.initial.view === 'cards' && rec) {
-    // The same mood again: its 3 cards if they were shown (no rotation), else asked again — a reload during
-    // loading or on a failure notice (e.g. after turning location on) gets that mood, never an older one.
-    dispatch({ type: 'restore', rec });
-    request('show');
-  } else if (nav.initial.view === 'saved') {
-    if (rec) dispatch({ type: 'restore', rec });
-    dispatch({ type: 'openSaved', restored: true });
-    request('show');
-  } else if (nav.initial.view === 'cards') {
-    // A results entry with nothing to show for it (no session record: storage blocked or cleared): go
-    // back past it, so the phone's back button never has an empty entry to swallow.
-    nav.back(HOME);
-  } else if (link?.mood) {
-    onMood(link.mood);
-  } else if (earlyTap && BUTTONS.includes(earlyTap as Button)) {
-    onMood(earlyTap as Button);
-  }
-  // Warm the data so the first tap is fast (what it brings is handled by the source's onLoad above).
-  data.get().catch(() => undefined);
+  // One draw for the whole mount: the stored basis, a backup link, a deep link and a restored screen land in it
+  // together (audit 2026-10-15: the first load's tasks).
+  batch(() => {
+    // the address it was opened at (readArrival): a backup link to merge; a deep link, applied only on a fresh
+    // first-screen entry
+    if (arrival.backup) useBackup(arrival.backup);
+    const link: DeepLink | null = nav.initial.view === 'home' && arrival.search ? readDeepLink(arrival.search, state.today) : null;
+    countSurvey();
+    askRain();
+    checkPermission();
+    // Taps on the static mood buttons before this module ran: the last one is carried out now.
+    const early = win as (Window & EarlyTap) | null;
+    const earlyTap = early?.__tap;
+    if (early?.__early) win!.removeEventListener('click', early.__early, true);
+    if (early) {
+      delete early.__early;
+      delete early.__tap;
+    }
+    for (const b of doc.querySelectorAll('[data-mood][aria-busy]')) b.removeAttribute('aria-busy');
+    for (const d of doc.querySelectorAll('.wait-dots')) d.remove();
+    if (link) applyDeepLink(link);
+    const rec = nav.initial.view !== 'home' ? store.readSession() : null;
+    if (nav.initial.view === 'cards' && rec) {
+      // The same mood again: its 3 cards if they were shown (no rotation), else asked again — a reload during
+      // loading or on a failure notice (e.g. after turning location on) gets that mood, never an older one.
+      dispatch({ type: 'restore', rec });
+      request('show');
+    } else if (nav.initial.view === 'saved') {
+      if (rec) dispatch({ type: 'restore', rec });
+      dispatch({ type: 'openSaved', restored: true });
+      request('show');
+    } else if (nav.initial.view === 'cards') {
+      // A results entry with nothing to show for it (no session record: storage blocked or cleared): go
+      // back past it, so the phone's back button never has an empty entry to swallow.
+      nav.back(HOME);
+    } else if (link?.mood) {
+      onMood(link.mood);
+    } else if (earlyTap && BUTTONS.includes(earlyTap as Button)) {
+      onMood(earlyTap as Button);
+    }
+  });
+  // The first draw, with the date and the time of day (tick). With deps.yieldToMain it comes a turn later: the mount
+  // above and its draw are then two tasks, each short of a long one (audit 2026-10-15); input in between is handled
+  // at once and drawn with it.
+  const firstDraw = () => {
+    held = false;
+    if (signal.aborted) return;
+    batch(() => {
+      tick();
+      unrendered = true;
+    });
+    // Warm the data so the first tap is fast (what it brings is handled by the source's onLoad above).
+    data.get().catch(() => undefined);
+  };
+  if (deps.yieldToMain) void deps.yieldToMain().then(firstDraw);
+  else firstDraw();
 
   return {
     destroy: () => ac.abort(),
