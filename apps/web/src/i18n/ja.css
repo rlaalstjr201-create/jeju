@@ -1,0 +1,3 @@
+/* ADR-0093: Japanese only (loaded with src/i18n/ja.ts, never on a Korean visit). It breaks between
+   any two characters (keep-all would not wrap it at all), with its own fonts so its characters take its own shapes. */
+html:lang(ja) body { word-break: normal; line-break: strict; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, Roboto, sans-serif; }

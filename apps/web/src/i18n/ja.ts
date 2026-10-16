@@ -2,7 +2,8 @@
 import { MAP_APP_NAME, placeApp } from '../links';
 import type { Island } from '../pick';
 import { MAX_SAVED } from '../store';
-import { apply, type Lang } from './apply';
+import { apply, localDays, type Lang } from './apply';
+import './ja.css';
 
 const ISLAND: Record<Island, string> = { 우도: '牛島', 비양도: '飛揚島', 가파도: '加波島', 마라도: '馬羅島', 차귀도: '遮帰島', 추자도: '楸子島' };
 /** the piers boats leave from (links.ts TERMINALS), for the 経路 label */
@@ -13,7 +14,6 @@ const PIER: Record<string, string> = {
   '자구내포구 차귀도 유람선': 'チャグネ浦口 遮帰島遊覧船',
   '제주항 연안여객터미널': '済州港沿岸旅客ターミナル',
 };
-const WEEKDAY = '日月火水木金土';
 const CREDIT = '情報・写真：VISIT JEJU（済州観光公社）';
 const PRIVACY = '個人情報の取り扱い';
 /** the digits a five-day market's label names ("2·7일" → 2 and 7; 10 is said as 0) */
@@ -204,10 +204,7 @@ export const JA: Lang = {
     drive: (from, time) => `${from ?? ''}車で約${time}`,
     tag: /(?:徒歩|車で)約.+$/,
   },
-  day: {
-    short: (m, d) => `${m}月${d}日`,
-    long: (m, d, w) => `${m}月${d}日（${WEEKDAY[w]}）`,
-  },
+  day: localDays('ja'),
   market: {
     open: (dated) => (dated ? 'この日は市の立つ日' : '今日は市の立つ日'),
     days: (rule) => `市の日：${marketDigits(rule.label).join('と')}のつく日`,

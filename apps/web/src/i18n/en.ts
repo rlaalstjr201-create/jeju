@@ -2,7 +2,7 @@
 import { MAP_APP_NAME, placeApp, type MapApp } from '../links';
 import type { Island } from '../pick';
 import { MAX_SAVED } from '../store';
-import { apply, type Lang } from './apply';
+import { apply, localDays, type Lang } from './apply';
 
 const ISLAND: Record<Island, string> = { 우도: 'Udo', 비양도: 'Biyangdo', 가파도: 'Gapado', 마라도: 'Marado', 차귀도: 'Chagwido', 추자도: 'Chujado' };
 /** the piers boats leave from (links.ts TERMINALS), for the 길찾기 label */
@@ -13,8 +13,6 @@ const PIER: Record<string, string> = {
   '자구내포구 차귀도 유람선': 'Jagunae Port, Chagwido boat',
   '제주항 연안여객터미널': 'Jeju Port Coastal Ferry Terminal',
 };
-const WEEKDAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const lower = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 /** a day said inside a sentence: "tomorrow", "on Oct 3" */
@@ -208,10 +206,7 @@ export const EN: Lang = {
     drive: (from, time) => (from ? `${from}, about ${time} by car` : `About ${time} by car`),
     tag: /[Aa]bout .+$/,
   },
-  day: {
-    short: (m, d) => `${MONTH[m - 1]} ${d}`,
-    long: (m, d, w) => `${WEEKDAY[w]}, ${MONTH[m - 1]} ${d}`,
-  },
+  day: localDays('en'),
   market: {
     open: (dated) => (dated ? 'Market day that day' : 'Market day today'),
     days: (rule) => `Opens on dates ending in ${marketDigits(rule.label).join(' or ')}`,

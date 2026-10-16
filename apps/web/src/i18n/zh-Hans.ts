@@ -2,7 +2,8 @@
 import { MAP_APP_NAME, placeApp } from '../links';
 import type { Island } from '../pick';
 import { MAX_SAVED } from '../store';
-import { apply, type Lang } from './apply';
+import { apply, localDays, type Lang } from './apply';
+import './zh-Hans.css';
 
 const ISLAND: Record<Island, string> = { 우도: '牛岛', 비양도: '飞扬岛', 가파도: '加波岛', 마라도: '马罗岛', 차귀도: '遮归岛', 추자도: '楸子岛' };
 /** the piers boats leave from (links.ts TERMINALS), for the 路线 label */
@@ -13,7 +14,6 @@ const PIER: Record<string, string> = {
   '자구내포구 차귀도 유람선': '遮归岛游船码头',
   '제주항 연안여객터미널': '济州港沿岸客运码头',
 };
-const WEEKDAY = '日一二三四五六';
 const CREDIT = '信息·图片：VISIT JEJU（济州观光公社）';
 const PRIVACY = '个人信息处理说明';
 
@@ -200,10 +200,7 @@ export const ZH: Lang = {
     drive: (from, time) => `${from ?? ''}开车约${time}`,
     tag: /(?:步行|开车)约.+$/,
   },
-  day: {
-    short: (m, d) => `${m}月${d}日`,
-    long: (m, d, w) => `${m}月${d}日 周${WEEKDAY[w]}`,
-  },
+  day: localDays('zh-Hans'),
   market: {
     open: (dated) => (dated ? '当天开市' : '今天开市'),
     days: (rule) => `逢${(rule.label.match(/\d+/g) ?? []).join('、')}日开市`,

@@ -616,7 +616,8 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - 고르기: `?lang=` → 이 기기의 `lang` → 브라우저 언어(한국어·`-KR`이 하나라도 있으면 한국어, 아니면 en·zh*·ja 중 처음, 아니면 en). index.html `<head>` 첫 인라인 스크립트가 정하고, 한국어가 아니면 `html.l10n`으로 `#app`을 가린다(최대 3초, 문구가 들어오면 main.ts가 푼다).
 - 스위치 둘: 첫 화면 맨 아래 `설정 · 지도 앱 · 의견` 밑의 한 줄 `.lang-line`(데이터가 그려진 뒤, 지금 아닌 세 언어, 각 언어 제 이름, `/?lang=xx` 링크)과 설정의 `언어` 줄(`.langs`, 지도 앱 줄과 같은 면, 지금 언어에 `aria-current="true"`).
 - 다른 언어 문구는 `src/i18n/{en,zh-Hans,ja}.ts`, 한국어 표(`COPY`·`MOOD_LABEL`·`TRAVEL_TEXT`·`DAY_TEXT`·`MARKET_TEXT`·`SEASON_TEXT`·`FROM_TEXT`·`GO_TEXT`·`BOOK_TEXT`·`MAP_APP_NAME`·`AREAS`)를 마운트 전에 바꿔 끼운다(`src/i18n/apply.ts`). 장소 소개글은 `public/i18n/places.<lang>.json`, 화면은 `PLACE.name`·`PLACE.reason`으로 읽고 지도 링크는 한국어 이름 그대로.
-- 일본어·중국어는 `word-break: normal; line-break: strict`와 그 언어 시스템 글꼴(`style.css` 끝).
+- 일본어·중국어는 `word-break: normal; line-break: strict`와 그 언어 시스템 글꼴(`src/i18n/{ja,zh-Hans}.css`, 그 언어일 때만, ADR-0093 Amendment 4).
+- 날짜·시각: 값은 늘 한국 시각. 다른 언어 화면의 꼴은 브라우저 로캘의 `Intl.DateTimeFormat`(`timeZone: Asia/Seoul`)이 정한다(12/24시간·날짜 순서, Amendment 3). 한국어는 `17:58`, `10월 17일 토요일` 그대로.
 
 ## 7. 이동 문구
 

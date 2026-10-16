@@ -62,11 +62,11 @@
 
 ## 4. 날짜·시간·이동 시간
 
-- 날짜: "Oct 3", 요일 붙이면 "Fri, Oct 3".
+- 날짜·시각: 값은 늘 한국 시각, 꼴은 브라우저 로캘이 정한다(ADR-0093 Amendment 3, `Intl.DateTimeFormat`, 예: en-US `Sat, Oct 17`·`5:58 PM`, en-GB `Sat 17 Oct`·`17:58`, ja `10月17日(土)`·`17:58`, zh-CN `10月17日周六`·`17:58`).
 - 이동: "From here, about 12 min by car" / "From my stay, about 8 min on foot" / "From Aewol, about 1 hr 5 min by car". 첫 카드 꼬리표는 "about 12 min by car".
 - 섬: "On Udo, so you'll need a ferry" / "On the main island, so you'll need a ferry back" / "Also on Udo".
 - 장날: "Market day today" / "Opens on dates ending in 2 or 7".
-- 해 지는 시각: "Sunset 17:42"(24시간, 한국 현지 시각).
+
 
 ## 5. 장소 이름·소개글
 

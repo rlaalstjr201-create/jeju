@@ -1,6 +1,6 @@
 // 해 지는 시각 (ADR-0075 2): NOAA's solar calculator (the spreadsheet form), on the device, no requests.
 // Checked against Open-Meteo for 제주시 within ±2 minutes (tests/sun.test.ts).
-import type { Day } from './dates';
+import { DAY_TEXT, type Day } from './dates';
 import type { Point } from './pick';
 
 const rad = Math.PI / 180;
@@ -69,5 +69,5 @@ export function sunsetBucket(p: Point, day: Day): number {
 /** "18:16" */
 export function sunsetText(p: Point, day: Day): string {
   const m = Math.round(sunsetMinutes(p, day));
-  return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+  return DAY_TEXT.clock(m, day);
 }

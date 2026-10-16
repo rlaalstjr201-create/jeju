@@ -3734,6 +3734,9 @@ for (const [lang, locale] of [['en', 'en-US'], ['zh-Hans', 'zh-CN'], ['ja', 'ja-
     await page.waitForSelector('#homeMore .lang-line');
     await sleep(300);
     note('home', await koreanLeft(page));
+    // its own stylesheet (src/i18n/<lang>.css) came with its words: Japanese and Chinese break between characters
+    const brk = await page.evaluate(() => getComputedStyle(document.body).wordBreak);
+    if (brk !== (lang === 'en' ? 'keep-all' : 'normal')) problems.push(`word-break ${brk}`);
     await page.screenshot({ path: join(dir, `${lang}-home.png`), fullPage: false });
     await tapText(page, '[data-mood="walk"]');
     await waitCards(page);

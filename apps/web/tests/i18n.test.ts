@@ -4,7 +4,8 @@
 import { runInNewContext } from 'node:vm';
 import { afterEach, describe, expect, it } from 'vitest';
 import { COPY, MOOD_LABEL, PLACE } from '../src/render';
-import { apply, type Lang } from '../src/i18n/apply';
+import { DAY_TEXT, longDay, shortDay } from '../src/dates';
+import { apply, localDays, type Lang } from '../src/i18n/apply';
 import { EN } from '../src/i18n/en';
 import { JA } from '../src/i18n/ja';
 import { ZH } from '../src/i18n/zh-Hans';
@@ -74,14 +75,36 @@ describe('the tables (ADR-0093 5)', () => {
     }
   });
 
+  it("dates and clock times: the phone's own locale format, always in Korea time; Korean as before (owner, 2026-10-17)", () => {
+    const day = '2026-10-17';
+    const at = 17 * 60 + 58;
+    expect(DAY_TEXT.clock(at, day)).toBe('17:58');
+    expect(longDay(day)).toBe('10월 17일 토요일');
+    expect(shortDay(day)).toBe('10월 17일');
+    const us = localDays('en', ['en-US']);
+    expect(us.clock(at, day)).toMatch(/^5:58\sPM$/);
+    expect(us.long(10, 17, 6, day)).toBe('Sat, Oct 17');
+    const gb = localDays('en', ['en-GB', 'fr-FR']);
+    expect(gb.clock(at, day)).toBe('17:58');
+    expect(gb.long(10, 17, 6, day)).toBe('Sat 17 Oct');
+    expect(gb.short(10, 17, day)).toBe('17 Oct');
+    // a browser in another language than the page: the page's own language
+    expect(localDays('en', ['fr-FR']).clock(at, day)).toMatch(/^5:58\sPM$/);
+    expect(localDays('ja', ['ja-JP']).clock(at, day)).toBe('17:58');
+    expect(localDays('ja', ['ja-JP']).long(10, 17, 6, day)).toBe('10月17日(土)');
+    expect(localDays('zh-Hans', ['zh-CN']).long(10, 17, 6, day)).toBe('10月17日周六');
+    // Taiwan's locale is not taken for the Simplified page
+    expect(localDays('zh-Hans', ['zh-TW']).long(10, 17, 6, day)).toBe('10月17日周六');
+    // Korea time whatever the machine's zone: 00:30 in Jeju on the 17th, the 17th
+    expect(gb.clock(30, day)).toBe('0:30');
+    expect(gb.short(10, 17, day)).toBe('17 Oct');
+  });
+
   it('their words read in their own order (examples)', () => {
     expect(EN.travel.drive('From here', '12 min')).toBe('From here, about 12 min by car');
     expect(EN.travel.tag.exec('From here, about 12 min by car')![0]).toBe('about 12 min by car');
     expect(JA.travel.drive('ここから', '12分')).toBe('ここから車で約12分');
     expect(ZH.travel.walk('从住处', '8分钟')).toBe('从住处步行约8分钟');
-    expect(EN.day.long(10, 3, 5)).toBe('Fri, Oct 3');
-    expect(JA.day.long(10, 3, 5)).toBe('10月3日（金）');
-    expect(ZH.day.long(10, 3, 5)).toBe('10月3日 周五');
     const rule = { days: [5, 10, 15, 20, 25, 30], label: '5·10일' };
     expect(EN.market.days(rule)).toBe('Opens on dates ending in 5 or 0');
     expect(JA.market.days(rule)).toBe('市の日：5と0のつく日');

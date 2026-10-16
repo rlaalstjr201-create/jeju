@@ -39,10 +39,12 @@ function serviceWorker(): Plugin {
         template: readFileSync(resolve(root, 'sw/sw.js'), 'utf8'),
         // ADR-0093: the other languages' words (src/i18n) are not precached — a Korean visit never downloads them; a
         // visit in another language caches its own when it uses them (sw.js, hashed assets)
-        built: Object.keys(bundle).filter((f) => {
-          const c = bundle[f];
-          return !(c.type === 'chunk' && c.moduleIds.length && c.moduleIds.every((m) => m.replace(/\\/g, '/').includes('/src/i18n/')));
-        }),
+        built: (() => {
+          const words = Object.values(bundle).filter((c) => c.type === 'chunk' && c.moduleIds.length && c.moduleIds.every((m) => m.replace(/\\/g, '/').includes('/src/i18n/')));
+          // their chunks and the stylesheets they bring (src/i18n/<lang>.css)
+          const skip = new Set(words.flatMap((c) => (c.type === 'chunk' ? [c.fileName, ...(c.viteMetadata?.importedCss ?? [])] : [])));
+          return Object.keys(bundle).filter((f) => !skip.has(f));
+        })(),
         indexHtml: html && html.type === 'asset' ? html.source : null,
         publicFiles: PUBLIC_SHELL.map((f) => [f, readFileSync(resolve(root, 'public', f))]),
         spotsV: SPOTS_V,

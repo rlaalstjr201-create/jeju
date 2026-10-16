@@ -35,10 +35,12 @@ export function msToNextDay(d: Date): number {
   return DAY_MS - ((d.getTime() + KST) % DAY_MS);
 }
 
-/** The day words (ADR-0093: another language's table replaces them). `w`: 0 = Sunday. */
+/** The day and clock words (ADR-0093: another language's table replaces them with the phone's own format). `w`: 0 =
+ * Sunday; `min`: minutes after midnight in Jeju (Asia/Seoul) on `day`. */
 export const DAY_TEXT = {
-  short: (m: number, d: number) => `${m}월 ${d}일`,
-  long: (m: number, d: number, w: number) => `${DAY_TEXT.short(m, d)} ${WEEKDAYS[w]}요일`,
+  short: (m: number, d: number, _day: Day) => `${m}월 ${d}일`,
+  long: (m: number, d: number, w: number, day: Day) => `${DAY_TEXT.short(m, d, day)} ${WEEKDAYS[w]}요일`,
+  clock: (min: number, _day: Day) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`,
 };
 
 function parts(day: Day) {
@@ -48,10 +50,10 @@ function parts(day: Day) {
 /** "10월 3일" */
 export function shortDay(day: Day): string {
   const p = parts(day);
-  return DAY_TEXT.short(p.m, p.d);
+  return DAY_TEXT.short(p.m, p.d, day);
 }
 /** "10월 3일 금요일" */
 export function longDay(day: Day): string {
   const p = parts(day);
-  return DAY_TEXT.long(p.m, p.d, p.w);
+  return DAY_TEXT.long(p.m, p.d, p.w, day);
 }

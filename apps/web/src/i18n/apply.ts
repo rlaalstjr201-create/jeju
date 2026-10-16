@@ -2,7 +2,7 @@
 // in their modules; this replaces their entries, writes the page's own words (index.html) and, once its file is
 // in, the place texts. Loaded only for a language other than Korean (main.ts), never precached (vite.config.ts).
 import { AREAS, AREA_GROUPS, type AreaName } from '../areas';
-import { DAY_TEXT } from '../dates';
+import { DAY_TEXT, type Day } from '../dates';
 import { BOOK_TEXT, GO_TEXT, MAP_APP_NAME, type MapApp } from '../links';
 import { MARKET_TEXT } from '../market';
 import { TRAVEL_TEXT, type Button, type Spot } from '../pick';
@@ -32,6 +32,28 @@ export interface Lang {
   /** index.html's own words: `selector` → its text (an element with child elements: its first words), or
    * `selector@attr` → that attribute. Every key matches in index.html (tests/i18n.test.ts). */
   page: Record<string, string>;
+}
+
+/** Dates and clock times in the phone's own format (owner, 2026-10-17): the browser's languages that are this one
+ * (en-GB, en-US …; for Chinese only the Simplified ones), else the language itself, and always Korea time — a trip in
+ * Jeju runs on Korea time whatever the phone is set to. The locale decides 12 or 24 hours and the date order; a web
+ * page cannot read the phone's own 12/24-hour switch. */
+export function localDays(lang: string, prefs: readonly string[] = typeof navigator === 'undefined' ? [] : navigator.languages ?? []): typeof DAY_TEXT {
+  const mine = (p: string) => {
+    const t = p.toLowerCase();
+    return lang === 'zh-Hans' ? /^zh-(hans|cn|sg)/.test(t) : t.split('-')[0] === lang;
+  };
+  const locales = [...prefs.filter(mine), lang];
+  const at = (day: Day, min: number) => new Date(Date.parse(`${day}T00:00:00+09:00`) + min * 60_000);
+  const f = (o: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat(locales, { timeZone: 'Asia/Seoul', ...o });
+  const short = f({ month: 'short', day: 'numeric' });
+  const long = f({ weekday: 'short', month: 'short', day: 'numeric' });
+  const clock = f({ hour: 'numeric', minute: '2-digit' });
+  return {
+    short: (_m, _d, day) => short.format(at(day, 720)),
+    long: (_m, _d, _w, day) => long.format(at(day, 720)),
+    clock: (min, day) => clock.format(at(day, min)),
+  };
 }
 
 function write(doc: Document, key: string, value: string) {

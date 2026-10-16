@@ -543,8 +543,3 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 }
 @keyframes fade { from { opacity: 0; } }
 @keyframes rise { from { transform: translateY(100%); } }
-/* ADR-0093: Japanese and Chinese break between any two characters (keep-all would not wrap them at all), with each
-   language's own fonts so its characters take its own shapes */
-html:is(:lang(ja), :lang(zh-Hans)) body { word-break: normal; line-break: strict; }
-html:lang(ja) body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, Roboto, sans-serif; }
-html:lang(zh-Hans) body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", Roboto, sans-serif; }
