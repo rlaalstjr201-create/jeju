@@ -8,7 +8,7 @@ import { parseSession } from '../src/store';
 import { moodExamples } from '../src/home';
 import { initialState, staticOrigin } from '../src/state';
 import { parseBatch } from '../events/validate';
-import { historyKey, islandOf, pickCards, REACHES, type Button, type Card, type Histories, type Spot } from '../src/pick';
+import { famousMix, historyKey, islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Spot } from '../src/pick';
 import type { FamousItem } from '../scripts/famous.mjs';
 import { loadInputs } from '../scripts/sunset.mjs';
 import { $, $$, cardNames, render, reset, tap } from './harness';
@@ -23,9 +23,10 @@ const pick = (area: string, h: Histories = {}, indoor = false, night = false) =>
 const plain = fileSpots.map(({ famous: _f, ...s }) => s as Spot);
 
 describe('by day (F1·F2)', () => {
-  it('성산: 광치기해변 · 섭지코지 · 성산일출봉 — no 먹기, no cafe', () => {
+  // Changed on purpose (ADR-0092 Amendment 2): 인기·가까움 합 순 — was 광치기해변 · 섭지코지 · 성산일출봉 by score then trip
+  it('성산: 섭지코지 · 성산일출봉 · 광치기해변 — no 먹기, no cafe', () => {
     const r = pick('성산');
-    expect(names(r.cards)).toEqual(['광치기해변', '섭지코지', '성산일출봉']);
+    expect(names(r.cards)).toEqual(['섭지코지', '성산일출봉', '광치기해변']);
     expect(r.cards.every((c) => c.spot.mood !== 'food' && inputs.get(c.spot.id)!.category !== 'cafe')).toBe(true);
   });
   it('서귀포 시내: 천지연폭포 and 정방폭포 are among the first 3', () => {
@@ -43,8 +44,44 @@ describe('by day (F1·F2)', () => {
   });
 });
 
+describe('인기·가까움 합 (Amendment 2, criteria §6 pre-registered checks)', () => {
+  const o = { lat: 33.5, lng: 126.5 };
+  /** a made-up 유명한 곳 `min` minutes by car (차로 30분) east of o */
+  const at = (id: string, pop: number, min: number, score = 5): Spot => ({
+    id, name: id, lat: 33.5, lng: 126.5 + ((min / 60) * 40) / 1.3 / 92.6, mood: 'walk', reason: 'x', image: 'https://x.test/x.jpg', kakaoPlaceId: null, bookable: false, score, famous: true, pop,
+  });
+  const order = (list: Spot[]) => pool(list, o, 'famous', undefined, 'drive30', false, DAY).map((c) => c.spot.id);
+  it('famousMix = 0.5 × pop + 0.5 × (1 − trip ÷ the range), 0 at its end and beyond', () => {
+    expect(famousMix(1, 0, 'drive30')).toBe(1);
+    expect(famousMix(0.4, 15, 'drive30')).toBeCloseTo(0.45);
+    expect(famousMix(0.4, 45, 'drive30')).toBeCloseTo(0.2);
+    expect(famousMix(0.4, 15, 'walk')).toBeCloseTo(0.2);
+  });
+  it('C1: a much more looked-for place 15분 away beats an obscure one 5분 away', () => {
+    expect(order([at('b', 0.3, 5), at('a', 0.8, 15)])).toEqual(['a', 'b']);
+  });
+  it('C2: a slightly more looked-for place 25분 away does not beat one 5분 away', () => {
+    expect(order([at('a', 0.55, 25), at('b', 0.45, 5)])).toEqual(['b', 'a']);
+  });
+  it('C3: the same sum falls back to the old order (score, …, id)', () => {
+    expect(order([at('b', 0.5, 10, 4), at('c', 0.5, 10), at('a', 0.5, 10)])).toEqual(['a', 'c', 'b']);
+  });
+  it('C4: in every area 다른 3곳 보기 goes on down the same order (the first 3 left out)', () => {
+    for (const area of AREAS) {
+      const p = pool(fileSpots, area, 'famous', undefined, 'drive30', false, DAY).map((c) => c.spot.id);
+      const first = pickCards(fileSpots, area, 'famous', {}, undefined, 'drive30', false, DAY);
+      const next = pickCards(fileSpots, area, 'famous', first.histories, undefined, 'drive30', false, DAY);
+      expect(first.cards.map((c) => c.spot.id), area.name).toEqual(p.slice(0, 3));
+      expect(next.cards.map((c) => c.spot.id), area.name).toEqual(p.slice(3, 6));
+    }
+  });
+  it('without a basis (「제주 인기:」) 인기 alone: the most looked-for first', () => {
+    expect(islandTop(fileSpots, 'famous', undefined, false, DAY)[0].name).toBe('우도');
+  });
+});
+
 describe('every area, range and 비 와요 (F3·F7)', () => {
-  it('3 cards, each a 유명한 곳: outdoors without 비 와요, indoors with it — never 먹기 or a cafe source', () => {
+  it('3 cards, each a 유명한 곳: indoors or out without 비 와요 (Amendment 2), indoors with it — never 먹기 or a cafe source', () => {
     for (const area of AREAS)
       for (const reach of REACHES)
         for (const indoor of [false, true]) {
@@ -55,7 +92,7 @@ describe('every area, range and 비 와요 (F3·F7)', () => {
             expect(r.cards, tag).toHaveLength(3);
             for (const c of r.cards) {
               expect(c.spot.famous, `${tag} ${c.spot.name}`).toBe(true);
-              expect(c.spot.indoor === true, `${tag} ${c.spot.name}`).toBe(indoor);
+              if (indoor) expect(c.spot.indoor, `${tag} ${c.spot.name}`).toBe(true);
               expect(c.spot.mood, `${tag} ${c.spot.name}`).not.toBe('food');
               expect(['cafe', 'restaurant', 'shopping'], `${tag} ${c.spot.name}`).not.toContain(inputs.get(c.spot.id)!.category);
             }

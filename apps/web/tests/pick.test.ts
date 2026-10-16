@@ -58,11 +58,13 @@ describe('S2 real data: 4 origins × 6 buttons', () => {
   // Changed on purpose (ADR-0060): no longer nearest first — score first, then the trip, then id.
   it.each(combos)('$name / $button → the best-scored spots in range, best first', ({ origin, button }) => {
     const { cards } = pickCards(realSpots, origin, button);
+    // 유명한 데 (ADR-0092 Amendment 2): its own order, tested in famous-pick.test.ts
+    if (button === 'famous') return;
     expect(cards.map((c) => c.spot.id)).toEqual([...cards].sort(byRank(origin, DEFAULT_REACH)).map((c) => c.spot.id));
     if (button === 'any') return;
     // 'food' with no sub given defaults to 'meal' (S2/S3 toggle default).
     const best = realSpots
-      .filter((s) => listed(s) && (button === 'famous' ? s.famous === true && !s.indoor : s.mood === button) && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
+      .filter((s) => listed(s) && s.mood === button && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
       .map((spot) => ({ spot }))
       .sort(byRank(origin, DEFAULT_REACH))
       .slice(0, 3)

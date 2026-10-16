@@ -48,6 +48,9 @@ export interface Spot {
   /** 유명한 곳 (ADR-0092): a 관광지 scored 5 or a 공영관광지 scored 4+, never 먹기 or a cafe — what 「유명한 데 가 보고
    * 싶어」 picks from: the outdoor ones, or the indoor ones with 비 와요. */
   famous?: true;
+  /** 인기 (ADR-0092 Amendment 2): how much people look for the 유명한 곳 — log of its Naver blog + cafe posts, placed
+   * 0–1 among the 유명한 곳. Set with `famous` only. */
+  pop?: number;
   /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
   book?: Book;
   /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */
@@ -194,6 +197,8 @@ interface Ranked extends Card {
   late: boolean;
   /** at night, on a small island the origin is not on (`ferryTo`, ADR-0069) — which kind `late` is (never set by day) */
   ferry: boolean;
+  /** 유명한 데 (ADR-0092 Amendment 2): famousMix, first of all keys; 0 for every other button (sort key only) */
+  lead: number;
 }
 /** 밤 (ADR-0091): what night moved back in the order the picks come from — 산길, 배로 가는 섬, both — or nothing. */
 export type NightShift = 'trail' | 'island' | 'both' | null;
@@ -201,8 +206,9 @@ export type NightShift = 'trail' | 'island' | 'both' | null;
  * (Lighthouse: these sorts over every spot were the home's longest script task). */
 export const byId = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 /** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then a place in season (ADR-0080),
- * then the shorter trip, then id. */
+ * then the shorter trip, then id. 유명한 데 (ADR-0092 Amendment 2): its 인기·가까움 합 before all of them. */
 const byScore = (a: Ranked, b: Ranked) =>
+  b.lead - a.lead ||
   b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || Number(b.inSeason) - Number(a.inSeason) || a.trip - b.trip || byId(a.spot.id, b.spot.id);
 /** At night a 야외 산길 goes after every other place (ADR-0091), each side in byScore order; by day it is byScore. */
 const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || byScore(a, b);
@@ -212,8 +218,8 @@ const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || bySc
 function candidates(spots: Spot[], mood: Kind, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
-  // 유명한 곳 (ADR-0092 5): the sights outdoors; with 비 와요 the indoor ones (the filter below), never 구경 added in
-  const kind = mood === 'famous' ? (s: Spot) => s.famous === true && s.mood !== 'food' && (indoor || s.indoor !== true) : (s: Spot) => s.mood === mood;
+  // 유명한 곳 (ADR-0092, Amendment 2): indoors and out on any day; 비 와요 keeps the indoor ones (below), never 구경 added in
+  const kind = mood === 'famous' ? (s: Spot) => s.famous === true && s.mood !== 'food' : (s: Spot) => s.mood === mood;
   let list = spots.filter((s) => listed(s) && kind(s) && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
   // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
   // 구경 — places walked round inside.
@@ -227,7 +233,15 @@ function candidates(spots: Spot[], mood: Kind, tab: Tab | undefined, indoor: boo
  * `night` (ADR-0091) a 야외 산길 or a small island after the others (no origin: taken as the main island, as 길찾기 does). */
 export function islandTop(spots: Spot[], mood: Kind, tab?: Tab, indoor = false, day?: Day, night = false): Spot[] {
   const late = (s: Spot) => Number(night && (s.trail === true || islandOf(s) !== null));
-  return candidates(spots, mood, tab, indoor, day).sort((a, b) => late(a) - late(b) || b.score - a.score || byId(a.id, b.id));
+  // 유명한 데 (ADR-0092 Amendment 2): no basis, no 가까움 — 인기 alone first
+  const pop = (s: Spot) => (mood === 'famous' ? s.pop ?? 0 : 0);
+  return candidates(spots, mood, tab, indoor, day).sort((a, b) => late(a) - late(b) || pop(b) - pop(a) || b.score - a.score || byId(a.id, b.id));
+}
+
+/** 유명한 데's order (ADR-0092 Amendment 2, docs/research/famous-popularity/criteria.md §5): half 인기 (`pop`, 0–1), half
+ * 가까움 (1 at the basis, 0 at the range's end and beyond, by the trip in the range's own minutes). */
+export function famousMix(pop: number, trip: number, reach: Reach): number {
+  return 0.5 * pop + 0.5 * Math.max(0, 1 - trip / REACH_MAX[reach]);
 }
 
 /**
@@ -245,11 +259,13 @@ export function pool(spots: Spot[], origin: Point, mood: Kind, tab?: Tab, reach:
       const km = distanceKm(origin, spot);
       const island = night ? islandOf(spot) : null;
       const ferry = !!island && island !== home;
-      return { spot, km, minutes: driveMinutes(km), trip: reachMinutes(reach, km), open: status(spot) === 'open', inSeason: !!day && seasonOn(spot.season, day) !== null, late: night && (spot.trail === true || ferry), ferry };
+      const trip = reachMinutes(reach, km);
+      const lead = mood === 'famous' ? famousMix(spot.pop ?? 0, trip, reach) : 0;
+      return { spot, km, minutes: driveMinutes(km), trip, open: status(spot) === 'open', inSeason: !!day && seasonOn(spot.season, day) !== null, late: night && (spot.trail === true || ferry), ferry, lead };
     });
   let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
   if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || byId(a.spot.id, b.spot.id)).slice(0, CARD_COUNT);
-  return near.map(({ spot, minutes, trip, open, inSeason, late, ferry }) => ({ spot, minutes, trip, open, inSeason, late, ferry })).sort(byRank);
+  return near.map(({ spot, minutes, trip, open, inSeason, late, ferry, lead }) => ({ spot, minutes, trip, open, inSeason, late, ferry, lead })).sort(byRank);
 }
 
 /** The rotation's tiers: unseen 0, seen 1, the cards shown last time 2. */

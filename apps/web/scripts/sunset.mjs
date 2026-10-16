@@ -20,7 +20,7 @@ import { AZIMUTHS, prepareCoast, ringsOf, sunsetAzimuths } from './sunset-geo.mj
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
 // trail (ADR-0091) comes after 노을 too: rerunning this file keeps the build's key order
-const BOOKING_KEYS = new Set(['trail', 'famous', 'book', 'hide']);
+const BOOKING_KEYS = new Set(['trail', 'famous', 'pop', 'book', 'hide']);
 const BASIS_MAX = 40;
 
 const SEA_WORDS = /바다|오션|해변|해안|포구|노을|일몰|석양|해넘이|수평선|해수욕/;

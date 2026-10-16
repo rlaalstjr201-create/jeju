@@ -25,7 +25,7 @@ const WINDOW_DAYS = { cherry: 9, plum: 13, maple: 20 };
 /** 귤 따기 노지·미상 (ADR-0080 결정 D): the whole months of the 노지 harvest. */
 const TANGERINE_OPEN_FIELD = [11, 12];
 // sunsetView·sunsetSea (ADR-0083) and trail (ADR-0091) come after 철 too: rerunning this file keeps the build's key order
-const BOOKING_KEYS = new Set(['sunsetView', 'sunsetSea', 'trail', 'famous', 'book', 'hide']);
+const BOOKING_KEYS = new Set(['sunsetView', 'sunsetSea', 'trail', 'famous', 'pop', 'book', 'hide']);
 
 /** The latest judging round and its audit: { calls: [{ id, kind, months, cultivation? }], pass: Set<kind> }. */
 export function loadSeasonCalls(dir = resolve(root, 'review/season')) {

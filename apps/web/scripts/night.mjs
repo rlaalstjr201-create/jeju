@@ -19,7 +19,7 @@ import { loadInputs } from './sunset.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
-const BOOKING_KEYS = new Set(['famous', 'book', 'hide']);
+const BOOKING_KEYS = new Set(['famous', 'pop', 'book', 'hide']);
 const BASIS_MAX = 40;
 /** A basis may say the text was unclear (and the call therefore false): this, then the source words. */
 const UNSURE = '애매: ';

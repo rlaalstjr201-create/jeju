@@ -11,7 +11,7 @@
  * build-spots.mjs applies it after 밤 산길; run this file directly to apply it to the shipped public/spots.json in
  * place (after `trail`, before a 체험's booking fields; nothing else changes). Idempotent.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadInputs } from './sunset.mjs';
@@ -34,10 +34,35 @@ export function isFamous(spot, item) {
   return (item.category === 'sightseeing' && spot.score === 5) || (tags.some((t) => PUBLIC_TAGS.has(t)) && spot.score >= 4);
 }
 
-/** Spots with `famous: true` where isFamous says so; any old `famous` is taken off first. */
-export function applyFamous(spots, inputs = loadInputs()) {
+/** 인기 측정 (ADR-0092 Amendment 2, docs/research/famous-popularity/criteria.md): the latest review/famous/pop-NN.json
+ * as id → blog + cafe (null when either call failed: 확인 실패). */
+export function loadPop(dir = resolve(root, 'review/famous')) {
+  const nn = readdirSync(dir).map((f) => /^pop-(\d{2})\.json$/.exec(f)?.[1]).filter(Boolean).sort().at(-1);
+  if (!nn) return new Map();
+  const { rows } = JSON.parse(readFileSync(resolve(dir, `pop-${nn}.json`), 'utf8'));
+  return new Map(rows.map((r) => [r.id, Number.isInteger(r.blog) && Number.isInteger(r.cafe) ? r.blog + r.cafe : null]));
+}
+
+/** criteria §4: pop = log10(1 + n) placed between the lowest and highest of `ids`, 0–1, 3 decimals. Throws on an id
+ * with no count or a 확인 실패. */
+export function popScores(counts, ids) {
+  const logs = new Map();
+  for (const id of ids) {
+    const n = counts.get(id);
+    if (!Number.isInteger(n) || n < 0) throw new Error(`유명한 곳 ${id}: no measured count (${n}) in review/famous — measure it (owner approval) before shipping`);
+    logs.set(id, Math.log10(1 + n));
+  }
+  const lo = Math.min(...logs.values());
+  const hi = Math.max(...logs.values());
+  return new Map([...logs].map(([id, l]) => [id, hi > lo ? Math.round(((l - lo) / (hi - lo)) * 1000) / 1000 : 1]));
+}
+
+/** Spots with `famous: true` where isFamous says so, and their `pop` (criteria §4); any old `famous`/`pop` is taken
+ * off first. */
+export function applyFamous(spots, inputs = loadInputs(), counts = loadPop()) {
+  const pops = popScores(counts, spots.filter((s) => isFamous(s, inputs.get(s.id))).map((s) => s.id));
   return spots.map((s) => {
-    const { famous: _old, ...rest } = s;
+    const { famous: _old, pop: _oldPop, ...rest } = s;
     if (!isFamous(rest, inputs.get(s.id))) return rest;
     // last, but before a 체험's booking fields — the order build-spots.mjs makes (밤 산길 → 유명한 곳 → 체험 예약 경로)
     const out = {};
@@ -45,11 +70,15 @@ export function applyFamous(spots, inputs = loadInputs()) {
     for (const [k, v] of Object.entries(rest)) {
       if (!placed && BOOKING_KEYS.has(k)) {
         out.famous = true;
+        out.pop = pops.get(s.id);
         placed = true;
       }
       out[k] = v;
     }
-    if (!placed) out.famous = true;
+    if (!placed) {
+      out.famous = true;
+      out.pop = pops.get(s.id);
+    }
     return out;
   });
 }
