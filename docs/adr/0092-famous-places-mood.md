@@ -34,4 +34,4 @@ Status: Accepted (2026-10-16, 주인이 「유명한 데 가 볼래」 쪽을 �
 
 - 기분 하나가 「분위기」가 아니라 「유명함」이라는 다른 축이다. 같은 곳이 쉬기·걷기 「예:」와 유명한 곳 「예:」에 함께 보일 수 있다(예: 성산 광치기해변).
 - 정의가 원문 분류(시드의 낱말 분류)에 기댄다. 분류가 틀린 곳은 빠지거나 들어간다. 빠짐은 2에 적었다. 정의를 넓히려면 판정 회차를 연다.
-- 고친 문서: `docs/context.md` 기분·유명한 곳, ADR-0028·0072·0075 머리 줄, `specs/seo-landing.md`, `apps/web/design/SPEC.md`(6.3·6.4·9·11·14·15), `public/llms.txt`.
+- 고친 문서: `docs/context.md` 기분·유명한 곳, ADR-0028·0072·0075 머리 줄, `specs/seo-landing.md`, `apps/web/design/SPEC.md`(6.1·6.3·9·14), `public/llms.txt`.

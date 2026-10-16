@@ -1470,7 +1470,8 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
       // D1: the first screen as before (the ♥ N is there because something is saved)
       // the 설정 entry at the very bottom of the home (heuristic audit H5) is not on the first screen
       const first = await page.$$eval('main button:not([hidden]):not([data-action="settings"]), header button:not([hidden]), .top button:not([hidden])', (els) => els.filter((e) => e.offsetParent !== null).length);
-      if (first !== 7) problems.push(`${tag} first screen has ${first} controls`);
+      // Changed on purpose (ADR-0092): 6 moods + basis + ♥ N
+      if (first !== 8) problems.push(`${tag} first screen has ${first} controls`);
       if ((await page.textContent('#basis')).trim() !== '내 위치 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
       if ((await page.textContent('#saved')).trim() !== '3') problems.push(`${tag} ♥ ${await page.textContent('#saved')}`);
       // D2: 언제 → 내일

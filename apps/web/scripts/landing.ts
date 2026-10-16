@@ -27,17 +27,19 @@ export const NEARBY = 5;
 export const RAIN_MIN = 10;
 const MOODS: readonly Mood[] = ['rest', 'walk', 'new', 'food'];
 /** Screen names of the moods (docs/context.md 기분). */
-export const MOOD_NAME: Record<Mood | 'any', string> = {
+export const MOOD_NAME: Record<Mood | 'famous' | 'any', string> = {
   rest: '푹 쉬고 싶어',
   walk: '좀 걷고 싶어',
   new: '새로운 거 해보고 싶어',
+  famous: '유명한 데 가 보고 싶어',
   food: '맛있는 거 먹고 싶어',
   any: '아무거나 골라줘',
 };
-const MOOD_GLOSS: Record<Mood | 'any', string> = {
+const MOOD_GLOSS: Record<Mood | 'famous' | 'any', string> = {
   rest: '쉬어 갈 곳',
   walk: '산책길, 오름, 올레길처럼 걸을 곳',
   new: '구경하거나 체험할 곳',
+  famous: '쉬기·걷기·새로운 거를 가리지 않고 이름난 경관·명소',
   food: '식사, 카페·디저트',
   any: '쉬기·걷기·새로운 거에서 한 곳씩',
 };
@@ -344,8 +346,8 @@ function hubPage(ctx: Ctx): string {
 <p class="lead">${ENTITY}</p>
 <p>일정이나 코스는 짜 드리지 않아요. 지금 있는 곳과 기분 하나만 고르면 갈 만한 곳 3곳을 골라 드리고, 차로 몇 분인지 함께 보여 드려요. 멀리 갈지 가까이 갈지는 걸어서, 차로 30분, 차로 1시간 중에서 골라요.</p>
 <p><a class="go" href="/">앱에서 지금 3곳 보기</a></p>
-<h2>기분은 다섯 가지</h2>
-<ul class="moods">${(['rest', 'walk', 'new', 'food', 'any'] as const).map((m) => `<li><b>${MOOD_NAME[m]}</b> <span class="meta">${MOOD_GLOSS[m]}</span></li>`).join('')}</ul>
+<h2>기분은 여섯 가지</h2>
+<ul class="moods">${(['rest', 'walk', 'new', 'famous', 'food', 'any'] as const).map((m) => `<li><b>${MOOD_NAME[m]}</b> <span class="meta">${MOOD_GLOSS[m]}</span></li>`).join('')}</ul>
 <h2>동네 15곳</h2>
 <p>동네를 고르면 그 근처에서 기분마다 먼저 나오는 곳을 볼 수 있어요. 모두 ${total.toLocaleString('ko-KR')}곳이에요.</p>
 ${groups}
