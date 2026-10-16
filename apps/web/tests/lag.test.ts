@@ -16,7 +16,7 @@ async function until(cond: () => boolean, tries = 200) {
   expect(cond()).toBe(true);
 }
 /** the data is in and drawn in full: the moods' 「예:」 and the home's last line (설정 · 지도 앱 · 의견) */
-const homeDrawn = () => $$('#home .mood .ex').length === 4 && !!$('#homeMore .settings');
+const homeDrawn = () => $$('#home .mood .ex').length === 5 && !!$('#homeMore .settings'); // 기분 줄 5 (ADR-0092)
 const SVG = 'http://www.w3.org/2000/svg';
 
 describe('the basis sheet', () => {
@@ -203,7 +203,7 @@ describe('the first load in turns (deps.yieldToMain, main.ts)', () => {
     advance();
     $('#sheet [data-area="성산"]').click();
     expect($('#homeMore .settings')).not.toBeNull();
-    expect($$('#home .mood .ex')).toHaveLength(4);
+    expect($$('#home .mood .ex')).toHaveLength(5); // 5 rows since ADR-0092
   });
 });
 

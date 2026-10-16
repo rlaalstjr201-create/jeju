@@ -47,9 +47,9 @@ export const KEYS = {
 export const MAX_SAVED = 500;
 export const MAX_VISITED = 500;
 
-const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
+const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'famous', 'food', 'any'];
 const SUBS: readonly Sub[] = ['meal', 'cafe'];
-const HISTORY_KEYS: readonly HistoryKey[] = ['rest', 'walk', 'any', 'food:meal', 'food:cafe', 'new:mix', 'new:sight', 'new:do'];
+const HISTORY_KEYS: readonly HistoryKey[] = ['rest', 'walk', 'famous', 'any', 'food:meal', 'food:cafe', 'new:mix', 'new:sight', 'new:do'];
 /** Records written before the 새로운 거 tabs (ADR-0064) kept that rotation under 'new': it is 섞어서. */
 const LEGACY_KEYS: Partial<Record<HistoryKey, string>> = { 'new:mix': 'new' };
 

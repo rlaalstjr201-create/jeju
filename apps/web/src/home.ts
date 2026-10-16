@@ -2,7 +2,7 @@
 import { AREAS, nearestArea, type Area, type AreaName } from './areas';
 import type { Day } from './dates';
 import { marketDay } from './market';
-import { byId, distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Mood, type Point, type Spot } from './pick';
+import { byId, distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
@@ -19,7 +19,7 @@ export const nightHome = (s: State, origin: Origin | null): boolean => s.when ==
 
 /** 「예: A, B」 and the two photos: the first two the mood's cards would show now (pool — range, 실내, the day, 밤),
  * the whole island by score without an origin. Places without a photo (or whose photo failed) are skipped. */
-export function moodExamples(s: State, spots: Spot[], origin: Origin | null, mood: Mood): Spot[] {
+export function moodExamples(s: State, spots: Spot[], origin: Origin | null, mood: Kind): Spot[] {
   const tab = tabOf(mood, s.sub, s.newSub);
   const day = whenDay(s);
   const night = nightHome(s, origin);

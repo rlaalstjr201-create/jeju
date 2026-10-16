@@ -22,7 +22,7 @@ export interface DeepLink {
   relay?: true;
 }
 
-const MOODS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
+const MOODS: readonly Button[] = ['rest', 'walk', 'new', 'famous', 'food', 'any'];
 /** a 숙소 링크 tag: lowercase letters, digits and hyphens, 2–24. */
 export const SRC = /^[a-z0-9-]{2,24}$/;
 const round6 = (x: number) => Math.round(x * 1e6) / 1e6;

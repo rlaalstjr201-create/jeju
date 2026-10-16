@@ -4,7 +4,10 @@ import { marketDay, type Market } from './market';
 import { seasonOn, type Season } from './season';
 
 export type Mood = 'rest' | 'walk' | 'new' | 'food';
-export type Button = Mood | 'any';
+/** `famous` (ADR-0092): not a place's mood — the 유명한 곳 (`famous: true`) whatever their mood. */
+export type Button = Mood | 'famous' | 'any';
+/** What one list of cards is picked for: a mood, or the 유명한 곳. */
+export type Kind = Exclude<Button, 'any'>;
 /** food-only sub-type: 식사 | 카페·디저트 (ADR-0028 update). */
 export type Sub = 'meal' | 'cafe';
 /** new-only kind (ADR-0064): 구경 | 체험. */
@@ -42,6 +45,9 @@ export interface Spot {
   sunsetSea?: number[];
   /** 야외 산길 (ADR-0091): 오름·산·숲길 — dark at night, so the picks put it after the other places then. */
   trail?: true;
+  /** 유명한 곳 (ADR-0092): a 관광지 scored 5 or a 공영관광지 scored 4+, never 먹기 or a cafe — what 「유명한 데 가 보고
+   * 싶어」 picks from: the outdoor ones, or the indoor ones with 비 와요. */
+  famous?: true;
   /** 체험 예약 경로 (ADR-0074): the one verified route, its kind and URL (`tel:` for phone). Set on 체험 only. */
   book?: Book;
   /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */
@@ -201,14 +207,17 @@ const byScore = (a: Ranked, b: Ranked) =>
 /** At night a 야외 산길 goes after every other place (ADR-0091), each side in byScore order; by day it is byScore. */
 const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || byScore(a, b);
 
-/** The places one mood may show, wherever they are: `pool`'s filters (tab, 비 와요, a market closed on `day`). */
-function candidates(spots: Spot[], mood: Mood, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
+/** The places one mood (or the 유명한 곳, ADR-0092) may show, wherever they are: `pool`'s filters (tab, 비 와요, a market
+ * closed on `day`). */
+function candidates(spots: Spot[], mood: Kind, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
-  let list = spots.filter((s) => listed(s) && s.mood === mood && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
+  // 유명한 곳 (ADR-0092 5): the sights outdoors; with 비 와요 the indoor ones (the filter below), never 구경 added in
+  const kind = mood === 'famous' ? (s: Spot) => s.famous === true && s.mood !== 'food' && (indoor || s.indoor !== true) : (s: Spot) => s.mood === mood;
+  let list = spots.filter((s) => listed(s) && kind(s) && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
   // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
   // 구경 — places walked round inside.
-  if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight')) {
+  if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight') && mood !== 'famous') {
     list = [...list, ...spots.filter((s) => listed(s) && s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
   }
   return list;
@@ -216,7 +225,7 @@ function candidates(spots: Spot[], mood: Mood, tab: Tab | undefined, indoor: boo
 
 /** No origin yet (ADR-0075 3, the home's 「예:」 before GPS has answered): the whole island, score then id — at
  * `night` (ADR-0091) a 야외 산길 or a small island after the others (no origin: taken as the main island, as 길찾기 does). */
-export function islandTop(spots: Spot[], mood: Mood, tab?: Tab, indoor = false, day?: Day, night = false): Spot[] {
+export function islandTop(spots: Spot[], mood: Kind, tab?: Tab, indoor = false, day?: Day, night = false): Spot[] {
   const late = (s: Spot) => Number(night && (s.trail === true || islandOf(s) !== null));
   return candidates(spots, mood, tab, indoor, day).sort((a, b) => late(a) - late(b) || b.score - a.score || byId(a.id, b.id));
 }
@@ -228,7 +237,7 @@ export function islandTop(spots: Spot[], mood: Mood, tab?: Tab, indoor = false, 
  * (ADR-0091): a 야외 산길, or a small island the origin is not on (Amendment 1: no boat at night), goes after every
  * other candidate (still in, never left out).
  */
-export function pool(spots: Spot[], origin: Point, mood: Mood, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day, night = false): Ranked[] {
+export function pool(spots: Spot[], origin: Point, mood: Kind, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day, night = false): Ranked[] {
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
   const home = night ? islandOf(origin) : null;
   const all = candidates(spots, mood, tab, indoor, day)

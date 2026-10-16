@@ -33,11 +33,12 @@ const cssRule = (sel: string) => {
 beforeEach(reset);
 
 describe('첫 방문', () => {
-  it('S01 nothing is asked on open: no GPS call, no data needed for the 5 moods, no sheet', () => {
+  // Changed on purpose (ADR-0092): 6 moods
+  it('S01 nothing is asked on open: no GPS call, no data needed for the 6 moods, no sheet', () => {
     const locate = vi.fn(() => Promise.resolve(ORIGINS.제주시));
     render({ locate, loadSpots: () => new Promise(() => undefined) });
     expect(locate).not.toHaveBeenCalled();
-    expect($$('[data-mood]')).toHaveLength(5);
+    expect($$('[data-mood]')).toHaveLength(6);
     expect($('#sheet').hidden).toBe(true);
     expect($('#saved').hidden).toBe(true);
   });
@@ -1613,7 +1614,7 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
 
   it('D1 the first screen is as before: same interactive elements, label 내 위치 근처, no date in it', () => {
     open();
-    expect(interactiveCount()).toBe(6);
+    expect(interactiveCount()).toBe(7); // 6 moods + basis (ADR-0092)
     expect($('#basis').textContent).toBe('내 위치 근처');
     expect($('#saved').hidden).toBe(true);
   });
@@ -2033,9 +2034,9 @@ describe('새로운 거 섞어서 · 구경 · 체험', () => {
 
   it('N3 the first screen is unchanged; the tabs show only on 새로운 거 results, 섞어서 by default with the same 3 as before', async () => {
     render();
-    expect($$('#home [data-mood]')).toHaveLength(5);
+    expect($$('#home [data-mood]')).toHaveLength(6); // 6 since ADR-0092
     expect($('#newSub').hidden).toBe(true);
-    for (const mood of ['rest', 'walk', 'food', 'any'] as const) {
+    for (const mood of ['rest', 'walk', 'famous', 'food', 'any'] as const) {
       await tap(`[data-mood="${mood}"]`);
       expect($('#newSub').hidden, mood).toBe(true);
     }
@@ -2184,9 +2185,9 @@ describe('비 와요(실내만) (ADR-0065, specs/indoor.md I3·I4)', () => {
   const indoorNames = (o: Point, b: 'rest' | 'walk' | 'new' | 'food' | 'any', sub?: 'meal' | 'cafe' | 'mix' | 'sight' | 'do') =>
     pickCards(realSpots, o, b, {}, sub, 'drive30', true).cards.map((c) => c.spot.name);
 
-  it('I3 one row under 얼마나 (before the 동네 index), off by default; the first screen keeps its 5 moods and nothing else to tap', async () => {
+  it('I3 one row under 얼마나 (before the 동네 index), off by default; the first screen keeps its 6 moods and nothing else to tap', async () => {
     render();
-    expect($$('#home button')).toHaveLength(5);
+    expect($$('#home button')).toHaveLength(6); // 6 since ADR-0092
     await tap('#basis');
     expect($$('#sheet [data-indoor]')).toHaveLength(1);
     expect(toggle().querySelector('.nm')!.textContent).toBe('비 와요(실내만)');

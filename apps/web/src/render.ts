@@ -213,6 +213,7 @@ export const MOOD_LABEL: Record<Button, string> = {
   rest: '푹 쉬고 싶어',
   walk: '좀 걷고 싶어',
   new: '새로운 거 해보고 싶어',
+  famous: '유명한 데 가 보고 싶어',
   food: '맛있는 거 먹고 싶어',
   any: '아무거나 골라줘',
 };
@@ -1209,7 +1210,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
     els.today.classList.toggle('wait', !spots);
 
-    /** `only`: the mood rows to draw (all four when missing) */
+    /** `only`: the mood rows to draw (all five when missing) */
     const examples = (only?: readonly Button[]) => {
       for (const b of els.moods) {
         const mood = b.dataset.mood;
@@ -1252,7 +1253,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       let late: Element[] = [];
       const steps = [
         () => examples(['rest', 'walk']),
-        () => examples(['new', 'food']),
+        () => examples(['new', 'famous']),
+        () => examples(['food']),
         () => {
           const sec = areas();
           late = [...sec.querySelectorAll(':scope > .tiles > li')].slice(6);

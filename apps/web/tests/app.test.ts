@@ -80,10 +80,11 @@ beforeEach(() => {
 });
 
 describe('S3 첫 화면', () => {
-  it('only 5 mood buttons + 1 location toggle are interactive, before any data arrives', () => {
+  // Changed on purpose (ADR-0092): a 6th mood, 유명한 데 가 보고 싶어, as the 4th row
+  it('only 6 mood buttons + 1 location toggle are interactive, before any data arrives', () => {
     render({ loadSpots: () => new Promise(() => undefined) }); // spots.json never loads
     const els = interactive();
-    expect(els).toHaveLength(6);
+    expect(els).toHaveLength(7);
     const moods = $$('[data-mood]');
     // Changed on purpose (ADR-0075 3): a mood row also carries 「예:」 once the data is in, so its name is read
     // from its own span (the 아무거나 button keeps its plain span)
@@ -91,6 +92,7 @@ describe('S3 첫 화면', () => {
       '푹 쉬고 싶어',
       '좀 걷고 싶어',
       '새로운 거 해보고 싶어',
+      '유명한 데 가 보고 싶어',
       '맛있는 거 먹고 싶어',
       '아무거나 골라줘',
     ]);
@@ -99,9 +101,9 @@ describe('S3 첫 화면', () => {
     expect($('#basis').getAttribute('aria-label')).toBe('내 위치 근처, 기준 바꾸기');
   });
 
-  it('the 5 mood buttons are in the static HTML itself (ADR-0028) — shown before data loads', () => {
+  it('the 6 mood buttons are in the static HTML itself (ADR-0028, ADR-0092) — shown before data loads', () => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    expect(doc.querySelectorAll('button[data-mood]')).toHaveLength(5);
+    expect(doc.querySelectorAll('button[data-mood]')).toHaveLength(6);
   });
 
   it('no login / price / hours / rating wording (first screen stays calm)', () => {
@@ -664,11 +666,11 @@ describe('S8-3 하트', () => {
 });
 
 describe('S8-4 저장 목록', () => {
-  it('no 저장 버튼 when 0 saved — first screen stays 기분 5개 + 위치 전환 only', () => {
+  it('no 저장 버튼 when 0 saved — first screen stays 기분 6개 + 위치 전환 only', () => {
     render();
     expect($('#saved').hidden).toBe(true);
     const els = interactive();
-    expect(els).toHaveLength(6); // 5 moods + basis, same as S3 (saved button absent)
+    expect(els).toHaveLength(7); // 6 moods + basis, same as S3 (saved button absent; 6 since ADR-0092)
   });
 
   // Changed on purpose (specs/date-mode.md): the list is in the order the user set (saved order to begin with),

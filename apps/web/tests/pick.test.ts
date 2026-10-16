@@ -12,10 +12,11 @@ const byRank = (origin: Point, reach: Reach) => (a: { spot: Spot }, b: { spot: S
 
 const combos = Object.entries(ORIGINS).flatMap(([name, origin]) => BUTTONS.map((button) => ({ name, origin, button })));
 
-describe('S2 real data: 4 origins × 5 buttons', () => {
+// Changed on purpose (ADR-0092): 6 buttons (유명한 데 가 보고 싶어 = the outdoor 유명한 곳, whatever their mood)
+describe('S2 real data: 4 origins × 6 buttons', () => {
   it('uses the real file (sanity)', () => {
     expect(realSpots.length).toBeGreaterThan(0);
-    expect(combos).toHaveLength(20);
+    expect(combos).toHaveLength(24);
   });
 
   it.each(combos)('$name / $button → exactly 3 distinct spots', ({ origin, button }) => {
@@ -61,7 +62,7 @@ describe('S2 real data: 4 origins × 5 buttons', () => {
     if (button === 'any') return;
     // 'food' with no sub given defaults to 'meal' (S2/S3 toggle default).
     const best = realSpots
-      .filter((s) => listed(s) && s.mood === button && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
+      .filter((s) => listed(s) && (button === 'famous' ? s.famous === true && !s.indoor : s.mood === button) && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
       .map((spot) => ({ spot }))
       .sort(byRank(origin, DEFAULT_REACH))
       .slice(0, 3)

@@ -92,7 +92,7 @@ const SAVED: Route = { view: 'saved', overlay: null };
 /** Stopped waiting for GPS (saved list only): nothing is known about the position, nothing failed. */
 const GAVE_UP = { ok: false, why: 'unavailable', gaveUp: true } as const;
 type GaveUp = typeof GAVE_UP;
-const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'food', 'any'];
+const BUTTONS: readonly Button[] = ['rest', 'walk', 'new', 'famous', 'food', 'any'];
 
 /** index.html's inline script: the mood tapped before this module ran (a slow first visit). */
 interface EarlyTap {

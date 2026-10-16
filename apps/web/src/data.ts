@@ -82,7 +82,9 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     const badSea = 'sunsetSea' in r && !validSea(r.sunsetSea);
     // 야외 산길 (ADR-0091): only `true` counts — anything else is dropped, the place stays as an ordinary one.
     const badTrail = 'trail' in r && r.trail !== true;
-    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail) {
+    // 유명한 곳 (ADR-0092): the same — only `true` counts.
+    const badFamous = 'famous' in r && r.famous !== true;
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail && !badFamous) {
       out.push(spot);
       continue;
     }
@@ -93,6 +95,7 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     if (badSunset) delete fixed.sunsetView;
     if (badSea) delete fixed.sunsetSea;
     if (badTrail) delete fixed.trail;
+    if (badFamous) delete fixed.famous;
     out.push(fixed);
   }
 }

@@ -19,7 +19,7 @@ import { loadInputs } from './sunset.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
-const BOOKING_KEYS = new Set(['book', 'hide']);
+const BOOKING_KEYS = new Set(['famous', 'book', 'hide']);
 const BASIS_MAX = 40;
 /** A basis may say the text was unclear (and the call therefore false): this, then the source words. */
 const UNSURE = '애매: ';
@@ -174,7 +174,7 @@ export function applyNight(spots, { calls, pass } = loadNightCalls()) {
   return spots.map((s) => {
     const { trail: _old, ...rest } = s;
     if (!on.has(s.id)) return rest;
-    // last, but before a 체험's booking fields — the order build-spots.mjs makes (노을 → 밤 산길 → 체험 예약 경로)
+    // last, but before a 체험's booking fields — the order build-spots.mjs makes (노을 → 밤 산길 → 유명한 곳 → 체험 예약 경로)
     const out = {};
     let placed = false;
     for (const [k, v] of Object.entries(rest)) {

@@ -10,7 +10,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const MOODS = { rest: '푹 쉬고 싶어', walk: '좀 걷고 싶어', new: '새로운 거', food: '배고파', any: '아무거나' };
+const MOODS = { rest: '푹 쉬고 싶어', walk: '좀 걷고 싶어', new: '새로운 거', famous: '유명한 데', food: '배고파', any: '아무거나' };
 const KST = 9 * 3600_000;
 export const seoulDay = (ms = Date.now()) => new Date(ms + KST).toISOString().slice(0, 10);
 const minus = (day, n) => new Date(Date.parse(`${day}T00:00:00Z`) - n * 86_400_000).toISOString().slice(0, 10);
