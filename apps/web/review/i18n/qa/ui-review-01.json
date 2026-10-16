@@ -1,0 +1,34 @@
+{
+  "en": [
+    {"key": "copy.how", "problem": "Reads as a verbless fragment ('Within a 15-min walk, the ones most worth a visit first.' / 'Indoor places within ..., the ones ...') and drops the Korean basis '소개글로 볼 때' (judged from the descriptions).", "category": 1, "suggest": "reach ? `${indoor ? 'Indoor places' : 'Places'} within ${reach}, best first based on their descriptions.` : (unchanged)"},
+    {"key": "copy.homeLede", "problem": "'3 places worth going to near Aewol tomorrow, picked for you.' is clunky: trailing 'picked for you' and 'worth going to' read as translated. Natives would lead with the action.", "category": 2, "suggest": "near ? `We'll pick 3 places worth a visit ${near}${when}. ${then}` : `Pick an area and we'll find 3 places worth a visit nearby${when}. ${then}`"},
+    {"key": "copy.sunsetCount", "problem": "Appended after bold 'Sunset spots' it renders 'Sunset spots 4 places · within 45 min by car' — 'spots 4 places' doubles the noun and reads ungrammatically.", "category": 4, "suggest": "(n) => ` (${n}) · within a 45-min drive`"},
+    {"key": "page['#newSub@aria-label']", "problem": "'Kind of new' is read by screen readers as 'somewhat new', not 'type of new thing'.", "category": 2, "suggest": "'Type of activity' (or 'What kind of new')"},
+    {"key": "book.homepage", "problem": "'Check booking on their site' is unidiomatic and ~2.5x the Korean length on a card button; may wrap at 375px.", "category": 5, "suggest": "'Booking info on their site' or shorter 'Book via their site'"},
+    {"key": "copy.basisIndoor", "problem": "Composed chip 'Tomorrow · Near my stay · Indoors only' (~38 chars) is much longer than '내일 · 숙소 근처 · 실내만'; likely truncates in the header at 375px.", "category": 5, "suggest": "(where) => `${where} · Indoor` (matches the card tag 'Indoor')"},
+    {"key": "copy.visitedOut", "problem": "'Got it, X is left out from now on.' — unclear left out of what; Korean says it is left out of future picks.", "category": 2, "suggest": "(name) => `Got it. We'll leave ${name} out of your picks from now on.`"},
+    {"key": "copy.painMany", "problem": "'Pick any' is not the standard multi-select hint in English forms.", "category": 2, "suggest": "'Select all that apply'"}
+  ],
+  "ja": [
+    {"key": "copy.held", "problem": "`${when}に保存済み` yields '今日に保存済み' / '過去の日に保存済み' — 「今日に」「過去の日に」 are unnatural; the meaning is 'kept on (that day's list)'.", "category": 4, "suggest": "(when) => `${when}の予定に保存済み` and pastDay '過去の日' → '過去の日付'"},
+    {"key": "copy.homeLede", "problem": "No-area + day gives '明日、エリアを選ぶと、その近くで行く価値のある…' — the day dangles before the condition. Also 「行く価値のある」 is stiff translationese for Japanese travel UI.", "category": 4, "suggest": "where===null: `エリアを選ぶと、${day ? `${day}、` : ''}その近くのおすすめスポットを3か所選びます。…`; otherwise `${day ? `${day}、` : ''}${near}のおすすめスポットを3か所選びます。…` (near without trailing で)"},
+    {"key": "copy.how", "problem": "「紹介文を見て行く価値の高い順に」 is literal and stiff (価値の高い順).", "category": 2, "suggest": "`${reach}の${indoor ? '屋内スポット' : 'スポット'}から、紹介文をもとにおすすめ順に選びました。`"},
+    {"key": "copy.marketRow / copy.marketFold", "problem": "With a market name like 「大静五日市場」 the line becomes 「今日は大静五日市場の市の日」 — 市 repeated, awkward.", "category": 4, "suggest": "marketRow: (dated) => [`${dated ? 'この日' : '今日'}は`, 'が開く日']; marketFold: `${dated ? 'この日' : '今日'}は${name}が開く日`"},
+    {"key": "copy.savedAria / restoreAsk / restoreDone / restoreLeft", "problem": "Saved spots are counted with 件 here but with か所 everywhere else (announce, sunsetCount, visitedList, more).", "category": 3, "suggest": "Use か所: '保存済み ${n}か所', 'リンクに保存済みスポットが${n}か所あります…', '${n}か所をまとめました…', '…${n}か所は追加できませんでした。'"},
+    {"key": "copy.marketHead", "problem": "Glossary says 「今日開いている五日市」; 「今日開く五日市」 differs (and 開く reads as 'will open').", "category": 3, "suggest": "(dated) => (dated ? 'この日に開いている五日市' : '今日開いている五日市')"},
+    {"key": "copy.wrapped", "problem": "「この近くはひと通り見ました。」 has an unclear subject (reads as if the app looked around).", "category": 2, "suggest": "'この近くのスポットはひと通りお見せしました。最初からもう一度お見せします。'"},
+    {"key": "page['[data-sub=\"sight\"]']", "problem": "「見る」 as a category tab is a bare verb; Korean 구경 = sightseeing. Japanese apps use 「観光」 or 「見どころ」.", "category": 2, "suggest": "'見どころ'"},
+    {"key": "areas.우도 / ISLAND.우도", "problem": "Place-terms table and style-ja §4 give 「牛島（ウド）」; the file uses bare 「牛島」.", "category": 3, "suggest": "'牛島（ウド）' at least in travel.ferryTo, or update the glossary if bare is intended for UI"},
+    {"key": "copy.thanksNote", "problem": "「次に直すことを決めるときに読んでいます」 is literal; 直す sounds like fixing bugs only.", "category": 2, "suggest": "'いただいたご意見は、次に何を改善するか決めるときに読んでいます。'"}
+  ],
+  "zh-Hans": [
+    {"key": "copy.homeLede", "problem": "homeLede('我附近', true, null) → '帮你挑你现在附近值得去的3个地方。' (你 twice); with a day → '帮你挑明天涯月附近值得去的…' (day jammed before place). Also '直接导航过去' while the button says '路线'.", "category": 4, "suggest": "near: gps→'你现在的位置附近'/'你附近', stay→'住处附近'; return near ? `${day ? `${day}，` : ''}在${near}帮你挑了3个值得去的地方。${then}` : `选个区域，${day ? `${day}` : ''}帮你在附近挑3个值得去的地方。${then}`"},
+    {"key": "copy.pastDay / copy.past", "problem": "「过去的日子」 means 'the old days' (nostalgic), not 'past dates'; '已存到过去的日子' (held) reads oddly.", "category": 2, "suggest": "past: '已过的日期'; pastDay: '之前的日期'"},
+    {"key": "copy.held", "problem": "'已存到今天/明天/10月3日' — 存到+date is ambiguous ('saved until'); a native phrase names the day's list.", "category": 4, "suggest": "(when) => `已收藏到${when}的行程`"},
+    {"key": "book.naver / book.mrt / book.homepage", "problem": "Mixes 预约 (naver, homepage) and 预订 (mrt) for the same action; 携程-style booking is 预订.", "category": 3, "suggest": "'在Naver预订' / '在MyRealTrip预订' / '去官网确认预订'"},
+    {"key": "copy.how", "problem": "'只看…内的地方，最值得去的排前面。' drops '소개글로 볼 때' (based on descriptions) and 只看 sounds like a user filter.", "category": 1, "suggest": "reach ? `从${reach}内的${indoor ? '室内' : ''}地方里，按介绍挑出最值得去的排前面。` : (unchanged)"},
+    {"key": "copy.nightShifted", "problem": "'山路先往后放' sounds like postponing a chore; natural UI wording is about ordering.", "category": 2, "suggest": "trail: '天黑了，山路排到后面了。' island: '天黑了，要坐船的岛排到后面了。' both: '天黑了，山路和要坐船的岛都排到后面了。'"},
+    {"key": "copy.restoreCancel", "problem": "'算了' is too casual for a dialog button next to '合并'; mainstream apps use 取消.", "category": 2, "suggest": "'取消'"}
+  ],
+  "counted": {"en": 260, "ja": 262, "zh-Hans": 262}
+}
