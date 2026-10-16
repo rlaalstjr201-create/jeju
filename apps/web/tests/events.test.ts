@@ -33,6 +33,14 @@ describe('U4 받는 쪽 — 검증', () => {
     expect(res.status).toBe(204);
   });
 
+  it('accepts a famous tap, counted under mood:famous (ADR-0092)', async () => {
+    const ctx = contextOf({ view: 'cards', mood: 'famous', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d });
+    expect(ctx).toEqual({ mood: 'famous', ...base });
+    expect(parseBatch(JSON.stringify([{ e: 'tap', ...ctx }]))).toEqual({ ok: true, events: [{ e: 'tap', ...ctx }] });
+    const store = memoryStore();
+    expect((await handle(post([{ e: 'tap', ...ctx }]), store)).status).toBe(204);
+  });
+
   it.each(['mix', 'sight', 'do'] as const)('accepts 새로운 거 tab sub %s (ADR-0064)', (newSub) => {
     const ctx = contextOf({ view: 'cards', mood: 'new', sub: 'meal', newSub, reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d });
     expect(ctx).toEqual({ mood: 'new', sub: newSub, ...base });
@@ -72,6 +80,7 @@ describe('U4 받는 쪽 — 검증', () => {
     ['a sub without food', [{ e: 'tap', mood: 'rest', sub: 'cafe', d }], 400],
     ['a food sub on new', [{ e: 'tap', mood: 'new', sub: 'cafe', d }], 400],
     ['a new sub on food', [{ e: 'tap', mood: 'food', sub: 'sight', d }], 400],
+    ['a sub on famous (ADR-0092: no tabs)', [{ e: 'tap', mood: 'famous', sub: 'mix', d }], 400],
     ['a sub without a mood', [{ e: 'map', id: ID, d, sub: 'mix' }], 400],
     ['an unknown range', [{ e: 'map', id: ID, d, range: '90' }], 400],
     ['an unknown basis', [{ e: 'map', id: ID, d, basis: 'gps' }], 400],

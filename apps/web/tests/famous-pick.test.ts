@@ -5,6 +5,8 @@ import { describe, expect, it } from 'vitest';
 import { AREAS, areaByName } from '../src/areas';
 import { readDeepLink } from '../src/deeplink';
 import { parseSession } from '../src/store';
+import { moodExamples } from '../src/home';
+import { initialState, staticOrigin } from '../src/state';
 import { parseBatch } from '../events/validate';
 import { historyKey, islandOf, pickCards, REACHES, type Button, type Card, type Histories, type Spot } from '../src/pick';
 import type { FamousItem } from '../scripts/famous.mjs';
@@ -102,6 +104,30 @@ describe('links, the session record and the usage counts take famous', () => {
   });
 });
 
+describe('「예:」 of the 유명한 데 row (ADR-0092 7)', () => {
+  // noon and 23:00 (밤, ADR-0091) in Jeju, 2026-10-16
+  for (const clock of [720, 1380]) {
+    const s = { ...initialState({ basis: 'region', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false }), clock };
+    const origins = [null, ...AREAS.map((a) => staticOrigin('region', a.name, null))];
+    it(`never shows a place the 쉬기·걷기·새로운 거 rows above show — 15 areas and no location (clock ${clock})`, () => {
+      for (const origin of origins) {
+        const above = new Set((['rest', 'walk', 'new'] as const).flatMap((m) => moodExamples(s, fileSpots, origin, m).map((x) => x.id)));
+        const ex = moodExamples(s, fileSpots, origin, 'famous');
+        const tag = origin?.key ?? 'no location';
+        expect(ex, tag).toHaveLength(2);
+        expect(ex.filter((x) => above.has(x.id)).map((x) => x.name), tag).toEqual([]);
+        expect(ex.every((x) => x.famous === true), tag).toBe(true);
+      }
+    });
+  }
+  it('with fewer than 2 left it takes back the ones passed over (never empty while there are cards)', () => {
+    const s = { ...initialState({ basis: 'region', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false }), clock: 720 };
+    const o = staticOrigin('region', '성산', null);
+    const all = moodExamples(s, fileSpots, o, 'famous', []);
+    expect(moodExamples(s, fileSpots, o, 'famous', all.map((x) => x.id)).map((x) => x.id)).toHaveLength(2);
+  });
+});
+
 describe('the app (first screen and results)', () => {
   it('the 4th mood row, 「예:」 once the data is in; a tap shows its 3 near 성산 under its own title', async () => {
     reset();
@@ -116,5 +142,7 @@ describe('the app (first screen and results)', () => {
     expect($('#foodSub').hidden && $('#newSub').hidden).toBe(true);
     await tap('#back');
     expect($('[data-mood="famous"] .ex')?.textContent).toMatch(/^예: /);
+    // not the 「예:」 of a row above (ADR-0092 7)
+    for (const m of ['rest', 'walk', 'new']) expect($(`[data-mood="${m}"] .ex`)?.textContent).not.toBe($('[data-mood="famous"] .ex')?.textContent);
   });
 });

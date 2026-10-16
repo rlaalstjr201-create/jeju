@@ -17,14 +17,23 @@ export const sunPoint = (origin: Origin | null): Point => origin?.point ?? CITY_
 /** 밤 (ADR-0091) on the home: 지금 only, at the basis (제주시청's sun without one), by the time the app last read. */
 export const nightHome = (s: State, origin: Origin | null): boolean => s.when === 'now' && nightNow(s.clock, sunPoint(origin), s.today);
 
+/** The rows above 유명한 데 on the first screen, whose 「예:」 its own skips (ADR-0092 7). */
+const ABOVE_FAMOUS: readonly Kind[] = ['rest', 'walk', 'new'];
+
 /** 「예: A, B」 and the two photos: the first two the mood's cards would show now (pool — range, 실내, the day, 밤),
- * the whole island by score without an origin. Places without a photo (or whose photo failed) are skipped. */
-export function moodExamples(s: State, spots: Spot[], origin: Origin | null, mood: Kind): Spot[] {
+ * the whole island by score without an origin. Places without a photo (or whose photo failed) are skipped.
+ * 유명한 데 (ADR-0092 7) passes over the places `taken` (by default: the 「예:」 of the rows above it) and takes the next
+ * of its own; with fewer than 2 left it takes back the ones passed over. */
+export function moodExamples(s: State, spots: Spot[], origin: Origin | null, mood: Kind, taken?: readonly string[]): Spot[] {
   const tab = tabOf(mood, s.sub, s.newSub);
   const day = whenDay(s);
   const night = nightHome(s, origin);
   const list = origin ? pool(spots, origin.point, mood, tab, s.reach, s.indoor, day, night).map((c) => c.spot) : islandTop(spots, mood, tab, s.indoor, day, night);
-  return list.filter((x) => x.image && !s.broken.includes(x.id)).slice(0, 2);
+  const shown = list.filter((x) => x.image && !s.broken.includes(x.id));
+  if (mood !== 'famous') return shown.slice(0, 2);
+  const skip = new Set(taken ?? ABOVE_FAMOUS.flatMap((m) => moodExamples(s, spots, origin, m).map((x) => x.id)));
+  const fresh = shown.filter((x) => !skip.has(x.id)).slice(0, 2);
+  return fresh.length >= 2 ? fresh : [...fresh, ...shown.filter((x) => skip.has(x.id))].slice(0, 2);
 }
 
 export interface MarketRow {

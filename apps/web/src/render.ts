@@ -1210,6 +1210,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
     els.today.classList.toggle('wait', !spots);
 
+    /** what the rows drawn so far in this draw show (top down): 유명한 데's 「예:」 passes over them (ADR-0092 7) */
+    const drawn: string[] = [];
     /** `only`: the mood rows to draw (all five when missing) */
     const examples = (only?: readonly Button[]) => {
       for (const b of els.moods) {
@@ -1217,7 +1219,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!mood || mood === 'any' || (only && !only.includes(mood as Button))) continue;
         b.querySelector('.ex')?.remove();
         b.querySelector('.pair')?.remove();
-        const ex = spots ? moodExamples(s, spots, origin, mood as Exclude<Button, 'any'>) : [];
+        const ex = spots ? moodExamples(s, spots, origin, mood as Exclude<Button, 'any'>, mood === 'famous' ? drawn : undefined) : [];
+        if (mood !== 'famous') drawn.push(...ex.map((x) => x.id));
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(x.name.trim()).main);

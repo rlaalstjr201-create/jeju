@@ -48,11 +48,17 @@ describe('shipped spots.json (F5)', () => {
     expect(JSON.stringify(once)).toBe(JSON.stringify(fileSpots));
     expect(JSON.stringify(applyFamous(once, inputs))).toBe(JSON.stringify(fileSpots));
   });
-  it('famous: true on exactly the 71 places the rule picks (60 outdoors, 11 indoors), nowhere else', () => {
+  it('famous: true on exactly the 73 places the rule and the owner pick (61 outdoors, 12 indoors), nowhere else', () => {
     expect(famous.every((s) => s.famous === true)).toBe(true);
     expect(famous.map((s) => s.id)).toEqual(fileSpots.filter((s) => isFamous(s, inputs.get(s.id))).map((s) => s.id));
-    expect(famous).toHaveLength(71);
-    expect(famous.filter((s) => s.indoor)).toHaveLength(11);
+    expect(famous).toHaveLength(73);
+    expect(famous.filter((s) => s.indoor)).toHaveLength(12);
+  });
+  it('the owner\'s two (Amendment 1): 쇠소깍 and 국립제주박물관 by id, not the shops named 쇠소깍…', () => {
+    const ids = ['056167bb-a013-49eb-894a-cefa6592257b', 'a01f0b63-31ac-4898-8286-da9686bf8895'];
+    expect(ids.map((id) => fileSpots.find((s) => s.id === id)).map((s) => [s?.name, s?.famous])).toEqual([['쇠소깍', true], ['국립제주박물관', true]]);
+    expect(fileSpots.filter((s) => s.name.startsWith('쇠소깍') && s.famous).map((s) => s.name)).toEqual(['쇠소깍']);
+    expect(isFamous({ ...spot('x'), id: ids[0], mood: 'food' }, undefined)).toBe(false);
   });
   it('no 먹기, no cafe or restaurant source, no ocean-view cafe of 쉬기, no 올레 course; the owner\'s examples are in', () => {
     expect(famous.filter((s) => s.mood === 'food')).toEqual([]);

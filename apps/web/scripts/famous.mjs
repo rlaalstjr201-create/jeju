@@ -5,7 +5,8 @@
  *   in:  a 관광지 (`category: sightseeing`) with score 5, or a VisitJeju 공영관광지 (tag) with score 4 or more;
  *   out: 먹기, hidden, a restaurant / cafe / shopping source, a cafe word in the name or tags, or a 제주올레 course
  *        (one end of a long course, not a place to go and see).
- * Score 5 alone is not it: it takes in the ocean-view cafes of 쉬기.
+ * Score 5 alone is not it: it takes in the ocean-view cafes of 쉬기. Besides the rule: the places the owner named, by id
+ * (OWNER_INCLUDE).
  *
  * build-spots.mjs applies it after 밤 산길; run this file directly to apply it to the shipped public/spots.json in
  * place (after `trail`, before a 체험's booking fields; nothing else changes). Idempotent.
@@ -21,9 +22,12 @@ const NOT_SIGHTS = new Set(['restaurant', 'cafe', 'shopping']);
 const CAFE_WORDS = /카페|커피|빵|베이커리|디저트/;
 const PUBLIC_TAGS = new Set(['공영관광지', '공영관광지인증']);
 const OLLE_COURSE = /^제주올레 \d+코스/;
+/** ADR-0092 Amendment 1 (owner, 2026-10-16): 쇠소깍, 국립제주박물관 — in whatever the rule says (not the shops named 쇠소깍…). */
+const OWNER_INCLUDE = new Set(['056167bb-a013-49eb-894a-cefa6592257b', 'a01f0b63-31ac-4898-8286-da9686bf8895']);
 
 /** §1: whether a shipped place is a 유명한 곳, by its source item (missing: never). */
 export function isFamous(spot, item) {
+  if (OWNER_INCLUDE.has(spot.id)) return !spot.hide && spot.mood !== 'food';
   if (!item || spot.hide || spot.mood === 'food' || NOT_SIGHTS.has(item.category) || OLLE_COURSE.test(spot.name.trim())) return false;
   const tags = item.tags ?? [];
   if (CAFE_WORDS.test(spot.name) || tags.some((t) => CAFE_WORDS.test(t))) return false;
