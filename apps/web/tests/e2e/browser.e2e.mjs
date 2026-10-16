@@ -92,12 +92,12 @@ const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? '
 
 // `route(ctx)`: routes in place before the page that gets `storage` loads. Routing after fresh() and reloading
 // is racy for requests that page sends itself: under load one can reach the network after the route is up.
-async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {}, route } = {}) {
+async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {}, route, locale = 'ko-KR' } = {}) {
   const ctx = await browser.newContext({
     viewport: { width, height },
     colorScheme: dark ? 'dark' : 'light',
     serviceWorkers: sw ? 'allow' : 'block',
-    locale: 'ko-KR',
+    locale,
   });
   await ctx.addInitScript(GEO_STUB);
   await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
@@ -3684,6 +3684,88 @@ await check('W1-wayfinding', 'ADR-0090 at 320·390 × light·dark: the top bar\'
     }
   }
   assert(!problems.length, problems.join(' | '));
+});
+
+// --- ADR-0093: the app in English, Simplified Chinese and Japanese at 375×812 ---
+/** What is on screen that is still Korean: visible words and accessible names, with the places' own names (Korean
+ * until their rule is set, ADR-0093 6) and the 한국어 link taken out. Plus text a box cuts off and sideways scroll. */
+const PLACE_NAMES = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'))
+  .map((x) => x.name.trim())
+  .sort((a, b) => b.length - a.length);
+const koreanLeft = (page) =>
+  page.evaluate((names) => {
+    const shown = (e) => {
+      for (let n = e; n && n !== document.documentElement; n = n.parentElement) {
+        if (n.hidden || n.tagName === 'NOSCRIPT' || n.tagName === 'SCRIPT' || n.tagName === 'STYLE') return false;
+        const s = getComputedStyle(n);
+        if (s.display === 'none' || s.visibility === 'hidden') return false;
+      }
+      return true;
+    };
+    const left = [];
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    for (let t = walk.nextNode(); t; t = walk.nextNode()) if (t.textContent.trim() && shown(t.parentElement)) texts.push(t.textContent.trim());
+    for (const e of document.querySelectorAll('[aria-label]')) if (shown(e)) texts.push(e.getAttribute('aria-label'));
+    for (const t of texts) {
+      let rest = t;
+      for (const n of names) if (rest.includes(n)) rest = rest.split(n).join('');
+      if (/[가-힣]/.test(rest) && rest.trim() !== '한국어') left.push(t);
+    }
+    const cut = [...document.querySelectorAll('button, a, .label, .tag, .meta, .crumb, h1, h2, .group-h, .nm, .lm')]
+      .filter((b) => shown(b) && !b.closest('.ex, .alias, .base, .reason, .name') && b.scrollWidth > b.clientWidth + 1 && getComputedStyle(b).overflow !== 'visible')
+      .map((b) => b.textContent.trim().slice(0, 40));
+    return { left: [...new Set(left)], cut, over: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+  }, PLACE_NAMES);
+for (const [lang, locale] of [['en', 'en-US'], ['zh-Hans', 'zh-CN'], ['ja', 'ja-JP']]) {
+  await check(`I18N-${lang}`, `ADR-0093 ${lang} at 375×812 (browser ${locale}): first screen, a mood's 3 cards, the basis sheet and the saved list have no Korean UI words (place names excepted), nothing cut or scrolling sideways; 길찾기 goes to Naver Map by default; screenshots into design/qa/i18n`, async () => {
+    const problems = [];
+    const dir = join(appDir, 'design/qa/i18n');
+    mkdirSync(dir, { recursive: true });
+    const { ctx, page } = await fresh({ width: 375, height: 812, locale });
+    const note = (where, r) => {
+      if (r.left.length) problems.push(`${where} Korean: ${r.left.slice(0, 6).join(' / ')}`);
+      if (r.cut.length) problems.push(`${where} cut: ${r.cut.slice(0, 6).join(' / ')}`);
+      if (r.over > 0) problems.push(`${where} ${r.over}px sideways`);
+    };
+    if ((await page.evaluate(() => document.documentElement.lang)) !== lang) problems.push(`html lang ${await page.evaluate(() => document.documentElement.lang)}`);
+    await page.waitForSelector('#today:not(.wait)');
+    await page.waitForSelector('.mood .pair img');
+    await page.waitForSelector('#homeMore .lang-line');
+    await sleep(300);
+    note('home', await koreanLeft(page));
+    await page.screenshot({ path: join(dir, `${lang}-home.png`), fullPage: false });
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    await sleep(300);
+    if ((await page.$$('#cards .card:not(.ghost)')).length !== 3) problems.push('not 3 cards');
+    note('results', await koreanLeft(page));
+    const go = await page.$eval('#cards .card.lead .go', (a) => a.getAttribute('href'));
+    if (!go.startsWith('https://map.naver.com/')) problems.push(`길찾기 ${go}`);
+    const reason = await page.$eval('#cards .card.lead .reason', (p) => p.textContent);
+    if (/[가-힣]/.test(reason)) problems.push(`reason in Korean: ${reason}`);
+    await page.screenshot({ path: join(dir, `${lang}-results.png`), fullPage: false });
+    await tapText(page, '#basis');
+    await page.waitForSelector('#sheet .sheet');
+    await sleep(300);
+    note('sheet', await koreanLeft(page));
+    await tapText(page, '#sheet .sheet-close');
+    await tapText(page, '#cards .card.lead .heart');
+    await tapText(page, '#saved');
+    await page.waitForSelector('#savedView:not([hidden]) .card');
+    await sleep(300);
+    note('saved', await koreanLeft(page));
+    await page.screenshot({ path: join(dir, `${lang}-saved.png`), fullPage: false });
+    await ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+}
+await check('I18N-ko', 'ADR-0093: a Korean browser gets the Korean page as before (lang ko, nothing hidden), with the other languages\' line at the foot of the home', async () => {
+  const { ctx, page } = await fresh({ width: 375, height: 812 });
+  await page.waitForSelector('#homeMore .lang-line');
+  const r = await page.evaluate(() => ({ lang: document.documentElement.lang, cls: document.documentElement.className, ask: document.querySelector('#ask').textContent, line: document.querySelector('.lang-line').textContent }));
+  await ctx.close();
+  assert(r.lang === 'ko' && !/l10n/.test(r.cls) && r.ask === '지금 뭐 하고 싶어요?' && r.line === 'English · 简体中文 · 日本語', JSON.stringify(r));
 });
 
 await browser.close();

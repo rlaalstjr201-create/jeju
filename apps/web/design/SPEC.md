@@ -247,7 +247,7 @@ body { word-break: keep-all; overflow-wrap: break-word; }
 - 괄호 별칭: 이름이 `/^(.+?)\s*[(（](.+)[)）]$/`에 맞으면 앞부분은 이름, 괄호 부분은 `<span class="alias">`로 나눈다. 별칭은 15/400 `--muted`, `display: inline-block`이라 통째로 다음 줄로 넘어가고 괄호 안에서 끊기지 않는다. 이름과 별칭 사이는 공백 하나.
 - 하이픈 별칭: 이름이 `/^(.+?)\s+(-\s+.+)$/`("X - Y")에 맞으면 괄호처럼 나눈다. 앞부분은 `<span class="base">`(두 줄까지, 말줄임), "- Y"는 `<span class="alias">`로 줄 카드에서 자기 줄에 통째로 둔다(별칭이 있으면 이름 칸은 3줄)(`src/render.ts` `splitName`, `style.css` `.card.row .base/.alias`). 괄호 별칭이 먼저 맞으면 그쪽을 따른다.
 - 줄 카드 좁은 폭 규칙 `@container (max-width: 18em)`의 `em`은 컨테이너(`.picks`, 15px)의 글자 크기다. 기본 글자에서 270px. 320px 폰의 `.picks` 폭은 288px라 걸리지 않고(사진은 글 옆), 글자 크기를 약 107% 이상 키우면 걸린다(사진이 위로, 2:1). 20em(300px)으로 올리지 않는다(시안 A가 320에서 무너진 원인).
-- `<html lang="ko">`, `-webkit-text-size-adjust: 100%`. 글자가 담긴 요소에 고정 `height` 없음(`min-height`만).
+- `<html lang="ko">`(ADR-0093: 다른 언어로 고르면 index.html 첫 스크립트가 `en`·`zh-Hans`·`ja`로 바꾼다), `-webkit-text-size-adjust: 100%`. 글자가 담긴 요소에 고정 `height` 없음(`min-height`만).
 
 ---
 
@@ -610,6 +610,13 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - `.primary` `보내기`(위 24). 아무것도 고르지 않고 글도 비면 보내지 않고 닫힌다. 아니면 `POST /api/feedback` 한 번(기다리지 않음, 재시도 없음), 시트가 `고마워요` / `보내 주신 의견은 다음에 고칠 것을 고를 때 읽어요.` + `닫기`로 바뀐다(실패해도 같다).
 
 ---
+
+### 6.16 언어 (ADR-0093, specs/i18n.md)
+
+- 고르기: `?lang=` → 이 기기의 `lang` → 브라우저 언어(한국어·`-KR`이 하나라도 있으면 한국어, 아니면 en·zh*·ja 중 처음, 아니면 en). index.html `<head>` 첫 인라인 스크립트가 정하고, 한국어가 아니면 `html.l10n`으로 `#app`을 가린다(최대 3초, 문구가 들어오면 main.ts가 푼다).
+- 스위치 둘: 첫 화면 맨 아래 `설정 · 지도 앱 · 의견` 밑의 한 줄 `.lang-line`(데이터가 그려진 뒤, 지금 아닌 세 언어, 각 언어 제 이름, `/?lang=xx` 링크)과 설정의 `언어` 줄(`.langs`, 지도 앱 줄과 같은 면, 지금 언어에 `aria-current="true"`).
+- 다른 언어 문구는 `src/i18n/{en,zh-Hans,ja}.ts`, 한국어 표(`COPY`·`MOOD_LABEL`·`TRAVEL_TEXT`·`DAY_TEXT`·`MARKET_TEXT`·`SEASON_TEXT`·`FROM_TEXT`·`GO_TEXT`·`BOOK_TEXT`·`MAP_APP_NAME`·`AREAS`)를 마운트 전에 바꿔 끼운다(`src/i18n/apply.ts`). 장소 소개글은 `public/i18n/places.<lang>.json`, 화면은 `PLACE.name`·`PLACE.reason`으로 읽고 지도 링크는 한국어 이름 그대로.
+- 일본어·중국어는 `word-break: normal; line-break: strict`와 그 언어 시스템 글꼴(`style.css` 끝).
 
 ## 7. 이동 문구
 
@@ -974,7 +981,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 ### 12.3 크기 예산
 
-빌드 JS+CSS gzip ≤ 50KB(S9-5). 웹폰트 0. 외부 요청은 사진 CDN과 링크 이동, 그리고 사용 기록 셋(ADR-0078): 같은 출처 `POST /api/events`(익명 기록, ADR-0061 형식, `sendBeacon`), GA4(`www.googletagmanager.com/gtag/js` → `google-analytics.com` 수집), 네이버 애널리틱스(`wcs.pstatic.net/wcslog.js`). 운영 빌드(`SITE_URL`)는 `VITE_GA4_ID`·`VITE_NAVER_WA`·`VITE_EVENTS_URL`(기본 `/api/events`) 중 하나라도 비면 실패한다. 두 외부 스크립트는 `load` 뒤 `async`로 붙고 이 예산에 들어가지 않는다. 기록 끄기가 켜져 있으면 셋 다 아무것도 보내지 않고, 외부 스크립트도 불러오지 않는다(런타임에 끄면 `ga-disable-<ID>`). GA4에는 기분 탭·지도 열기·저장만 장소 id와 기분·범위·기준 종류·날짜 모드 여부로 보낸다. 좌표는 어디로도 보내지 않는다. 받는 쪽(`events/`, `functions/api/events/`)은 앱 번들에 들어가지 않는다. 비 소식(ADR-0076): 지금 모드에서 기준 동네가 있을 때만 같은 출처 `GET /api/rain?area=<slug>`를 한 번 부른다(동네 이름만, 좌표·식별자 없음, 3초 타임아웃, `sessionStorage['jeju.rain']` 30분). 기상청 요청은 그 함수(`functions/api/rain.ts`)가 하고, 함수는 앱 번들 예산에 들어가지 않는다. 서비스워커는 `/api/**`를 건드리지 않는다. 의견 보내기(ADR-0081): 사용자가 `보내기`를 누를 때만 같은 출처 `POST /api/feedback`(답·글·앱 버전 `__APP_V__`, 4KB 이하). 함수(`functions/api/feedback.ts`)가 제주 날짜만 붙여 D1 `feedback`에 넣고(하루 200건), 앱 번들 예산에 들어가지 않는다.
+빌드 JS+CSS gzip ≤ 50KB(S9-5): 한국어 방문이 받는 진입 JS+CSS로 잰다. 다른 언어 문구 청크(`assets/{en,zh-Hans,ja}-*.js`, ADR-0093)는 그 언어일 때만 받고 서비스워커가 미리 받지 않는다. 웹폰트 0. 외부 요청은 사진 CDN과 링크 이동, 그리고 사용 기록 셋(ADR-0078): 같은 출처 `POST /api/events`(익명 기록, ADR-0061 형식, `sendBeacon`), GA4(`www.googletagmanager.com/gtag/js` → `google-analytics.com` 수집), 네이버 애널리틱스(`wcs.pstatic.net/wcslog.js`). 운영 빌드(`SITE_URL`)는 `VITE_GA4_ID`·`VITE_NAVER_WA`·`VITE_EVENTS_URL`(기본 `/api/events`) 중 하나라도 비면 실패한다. 두 외부 스크립트는 `load` 뒤 `async`로 붙고 이 예산에 들어가지 않는다. 기록 끄기가 켜져 있으면 셋 다 아무것도 보내지 않고, 외부 스크립트도 불러오지 않는다(런타임에 끄면 `ga-disable-<ID>`). GA4에는 기분 탭·지도 열기·저장만 장소 id와 기분·범위·기준 종류·날짜 모드 여부로 보낸다. 좌표는 어디로도 보내지 않는다. 받는 쪽(`events/`, `functions/api/events/`)은 앱 번들에 들어가지 않는다. 비 소식(ADR-0076): 지금 모드에서 기준 동네가 있을 때만 같은 출처 `GET /api/rain?area=<slug>`를 한 번 부른다(동네 이름만, 좌표·식별자 없음, 3초 타임아웃, `sessionStorage['jeju.rain']` 30분). 기상청 요청은 그 함수(`functions/api/rain.ts`)가 하고, 함수는 앱 번들 예산에 들어가지 않는다. 서비스워커는 `/api/**`를 건드리지 않는다. 의견 보내기(ADR-0081): 사용자가 `보내기`를 누를 때만 같은 출처 `POST /api/feedback`(답·글·앱 버전 `__APP_V__`, 4KB 이하). 함수(`functions/api/feedback.ts`)가 제주 날짜만 붙여 D1 `feedback`에 넣고(하루 200건), 앱 번들 예산에 들어가지 않는다.
 
 ### 12.4 데이터 빌드 (scripts/build-spots.mjs)
 
@@ -1408,6 +1415,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 36. **화면 재질 개편**(VR1, ADR-0088 S1·S2·S4): 320×568·390×844 × 라이트·다크. 첫 화면·결과·저장한 곳(♥ N 눌림)·기준 시트 스크린숏(`design/qa/visual-refresh/`), 각 화면 가로 넘침 0. 로고는 첫 화면에서만 보임. 글자 밑 첫 불투명 면과 잰 대비가 `설명`·`아무거나`·「예:」·이름 줄·첫 장 이유·꼬리표·첫 장 `길찾기`·줄 카드 이유와 `길찾기`·`다른 3곳 보기`·♥ N 눌림 숫자·저장한 곳 이유·`링크로 백업`·시트 옵션·무리 제목 모두 4.5 이상. 결과 화면의 `--main` 채움은 첫 장 `길찾기` 하나, 그림자는 `다른 3곳 보기` 하나(시트를 열면 시트도), `text-shadow` 0. 이 판의 다른 검사(T2-hit·HV1·DR-go·HN-open·3-19·3-24 등)는 동작은 그대로, 바뀐 그린 크기·면·밑줄 값만 새 값으로 바꿨다.
 37. **길 잃지 않게**(W1-wayfinding, ADR-0090): 320×568·390×844 × 라이트·다크, 저장 1곳. 위 줄에 보이는 것이 첫 화면 `로고 · 기준 · ♥ N`, 결과·저장한 곳 `뒤로 · 기준 · ♥ N`. 로고 왼쪽 변과 뒤로의 원 왼쪽 변이 x=16, 뒤로 상자 48×48·원 40, 뒤로와 기준 칩의 세로 가운데가 같음, 기준·♥ N 칩의 상자가 세 화면에서 같음(±0.5), ♥ N 오른쪽 변이 화면 폭 − 16, 가로 넘침 0. 뒤로의 누름 영역이 `hitMeasure`로 겹침·덮임 0, 가운데 줄을 0.25px씩 찍어 48×48. 저장한 곳에서 뒤로 → 같은 결과 3장, 스크롤 위치 그대로(±1). 결과 맨 아래 `설정 · 지도 앱 · 의견`(≥ 44) → 저장한 곳의 `설정` 제목이 위 줄 아래 화면 안·포커스 → 뒤로 → 결과 같은 스크롤. 첫 장 `가 봤어요`를 누르기 전후 그 버튼과 `길찾기` 폭이 같음, 상태 줄 `…다음부터 빼고 골라요.` + `되돌리기`(그린 44, 위아래로 찍어 누름 영역 ≥ 48), `되돌리기` → `aria-pressed="false"`·`jeju.visited`=`[]`·`…다시 넣었어요.`·버튼 사라짐. 결과에서 뒤로 → 첫 화면, `history.state` `{view: home, depth: 0}`, 이어서 폰 뒤로 한 번이면 앱 밖(`about:blank`, 결과로 안 돌아옴). 애월 기준 시트에서 `다른 동네 고르기` → 포커스가 첫 칸 `한경`, `제주시 쪽` 제목과 그 칸이 시트 안(`닫기` 위), 시트가 스크롤됨, 문서 스크롤 그대로. 스크린숏 `design/qa/wayfinding/`(첫 화면·결과·저장한 곳).
 38. **밤**(N1-night, ADR-0091·Amendment 1): 시계 2026-10-16 23:00(KST), 애월 320×568·390×844와 한경 320×568: 결과 3장(애월은 `다른 3곳 보기` 3장도, 겹침 0)에 `trail` 곳도 배로 가는 섬(`배 타는 곳까지 길찾기`)도 0, 상태 줄 `밤이라 산길과 배로 가는 섬은 뒤로 미뤘어요.`, 애월 홈 `좀 걷고 싶어`의 「예:」에 `새별오름`·`비양도` 없음. 12:00이면 애월(390) 3장에 `trail` 곳·「예:」에 `새별오름`, 한경(320) 3장에 비양도(줄 카드의 `배 타는 곳까지 길찾기` 줄이 꺾인다), 밤 문장 없음. 다섯 경우 모두 카드 버튼(하트·`길찾기`·`가 봤어요`·예약)이 `hitMeasure`로 ≥ 48×48·겹침 0·덮임 0, 가로 넘침 0.
+39. **언어**(I18N-en·I18N-zh-Hans·I18N-ja·I18N-ko, ADR-0093): 375×812, 브라우저 en-US·zh-CN·ja-JP. `html lang`이 그 언어, 첫 화면·`좀 걷고 싶어` 3장·기준 시트·저장한 곳에서 보이는 글자와 접근성 이름에 한글이 없다(장소 이름과 `한국어` 링크 빼고), 버튼·라벨이 잘리지 않고 가로 넘침 0, 첫 장 소개글이 그 언어, 첫 장 `길찾기`가 `https://map.naver.com/`. 스크린숏 `design/qa/i18n/`(언어별 첫 화면·결과·저장한 곳). ko-KR이면 `lang="ko"`, 가림 없음, 첫 화면 질문 그대로, 맨 아래 `English · 简体中文 · 日本語`.
 
 ### 15.2 vitest 기대값 변경 (tests/*.test.ts)
 

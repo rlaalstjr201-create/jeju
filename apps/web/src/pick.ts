@@ -161,27 +161,38 @@ export function travel(origin: Point, originIsPoint: boolean, spot: Point): Trav
   return { kind: 'drive', minutes: driveMinutes(km) };
 }
 
+/** The trip words (ADR-0093: another language's table, src/i18n, replaces them before the app mounts). `tag`: the
+ * part of a first card's line that goes in its tag (render.ts metaEl). */
+export const TRAVEL_TEXT = {
+  minutes: (min: number) => `${min}분`,
+  hours: (h: number, m: number) => (m ? `${h}시간 ${m}분` : `${h}시간`),
+  ferryTo: (island: Island) => `${island}라서 배를 타야 해요`,
+  ferryOut: '본섬이라 배를 타고 나가야 해요',
+  sameIsland: (island: Island) => `같은 ${island} 안이에요`,
+  walk: (from: string | undefined, time: string) => `${from ? `${from} ` : ''}걸어서 약 ${time}`,
+  drive: (from: string | undefined, time: string) => `${from ? `${from} ` : ''}차로 약 ${time}`,
+  tag: /(?:차로|걸어서) 약 .+$/,
+};
+
 /** 5분 / 1시간 / 1시간 10분 */
 export function formatMinutes(min: number): string {
-  if (min < 60) return `${min}분`;
-  const h = Math.floor(min / 60);
-  const m = min % 60;
-  return m ? `${h}시간 ${m}분` : `${h}시간`;
+  if (min < 60) return TRAVEL_TEXT.minutes(min);
+  return TRAVEL_TEXT.hours(Math.floor(min / 60), min % 60);
 }
 
 /** Card meta. `from` ("애월에서", "숙소에서", "여기서") is prefixed only to walk/drive times. */
 export function travelText(t: Travel, from?: string): string {
   switch (t.kind) {
     case 'ferryTo':
-      return `${t.island}라서 배를 타야 해요`;
+      return TRAVEL_TEXT.ferryTo(t.island);
     case 'ferryOut':
-      return '본섬이라 배를 타고 나가야 해요';
+      return TRAVEL_TEXT.ferryOut;
     case 'sameIsland':
-      return `같은 ${t.island} 안이에요`;
+      return TRAVEL_TEXT.sameIsland(t.island);
     case 'walk':
-      return `${from ? `${from} ` : ''}걸어서 약 ${formatMinutes(t.minutes)}`;
+      return TRAVEL_TEXT.walk(from, formatMinutes(t.minutes));
     case 'drive':
-      return `${from ? `${from} ` : ''}차로 약 ${formatMinutes(t.minutes)}`;
+      return TRAVEL_TEXT.drive(from, formatMinutes(t.minutes));
   }
 }
 

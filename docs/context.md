@@ -237,7 +237,7 @@ _Avoid_: Explore mode, nearby mode, live mode
 ## Flagged ambiguities
 
 - **Shortlist name resolved**: domain code uses `Shortlist`; UI renders "찜하기".
-- **UI language resolved**: Korean-only for MVP. No i18n layer. v2 foreign-traveller target deferred.
+- **UI language resolved** (ADR-0093, 2026-10-17; replaces "Korean-only for MVP"): Korean (default), English, Simplified Chinese, Japanese. The app UI and the places' reason sentences are translated; place names stay Korean until the owner sets the naming rule; the `/jeju/**` landing pages stay Korean. Domain terms in code stay English/romanised as before; UI terms per language live in `docs/i18n/style-*.md`.
 - **Identifier policy resolved**: translate to English when a precise single English word exists; otherwise use romanised Korean (e.g. `oreum`, `haenyeo-experience`, `olle-trail`).
 - **Spot type taxonomy incomplete**: `beach | restaurant | activity | accommodation | oreum | …` — full list deferred to Light Spec.
 - **Score model resolved (D-CUR-3)**: three separate fields — `curationScore` (manual, curator), `popularityScore` (auto, public data + Kakao), `trendScore` (auto, SNS/search trends). Normalisation formula for `popularityScore` deferred to Plan (OQ-CUR-1).

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <title>個人情報の取り扱いについて · Yeochana:済州</title>
+    <meta name="description" content="Yeochana:済州は、「保存済み」の場所をこの端末だけに置き、位置情報を端末の外に送りません。" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <!-- ADR-0063 4. Self-contained: the same tokens as src/style.css, no script. -->
+    <style>
+      :root { --bg: #ffffff; --fill: #f3f3f4; --line: #e3e3e4; --text: #14181f; --muted: #5f6267; --r-ctl: 10px; color-scheme: light; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #0f1319; --fill: #23272d; --line: #33373c; --text: #eef1f5; --muted: #b0b3b7; color-scheme: dark; }
+      }
+      * { box-sizing: border-box; }
+      html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      body {
+        margin: 0; background: var(--bg); color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, Roboto, sans-serif;
+        font-size: 0.9375rem; line-height: 1.5; font-weight: 400; word-break: normal; line-break: strict; overflow-wrap: break-word;
+      }
+      main { max-width: 480px; margin: 0 auto; padding: 8px max(16px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+      h1 { margin: 16px 0 0; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+      h2 { margin: 28px 0 0; font-size: 1.0625rem; line-height: 1.4; font-weight: 600; letter-spacing: -0.01em; }
+      p, li { text-wrap: pretty; }
+      p { margin: 4px 0 0; }
+      ul { margin: 4px 0 0; padding-left: 20px; }
+      .lead, .date { color: var(--muted); }
+      a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+      .tbtn {
+        display: inline-flex; align-items: center; min-height: 48px; margin-left: -8px; padding: 0 8px; border-radius: var(--r-ctl);
+        font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--muted);
+      }
+      .tbtn:active { background: var(--fill); }
+      :focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="tbtn" href="/">アプリに戻る</a>
+      <h1>個人情報の取り扱いについて</h1>
+      <p>このページは翻訳です。正式な内容は<a href="/privacy">韓国語版</a>に従います。</p>
+      <p class="lead">Yeochana:済州には会員登録やログインがなく、名前や連絡先などの個人情報はいただきません。</p>
+
+      <h2>「保存済み」の場所はこの端末だけに</h2>
+      <p>「保存済み」の場所と日付、「行った」で外した場所、宿、選んだエリアと範囲、選んだ言語は、この端末のブラウザのストレージにだけ保存されます。サーバーに送るのは、下の「雨の予報」の地区名、「利用記録」に書いたもの、ご自身で送った「ご意見を送る」の内容だけです。</p>
+      <p>ブラウザのデータを消すと、これらも一緒に消えます。「リンクでバックアップ」は、保存リストをURLの # の後ろに入れます。# の後ろはサーバーに送られません。</p>
+
+      <h2>位置情報は端末の外に出ません</h2>
+      <p>位置情報は、この端末の中で近くの場所を選び、移動時間を測るためだけに使います。座標を端末の外に送ることはありません。外部の地図アプリ（NAVERマップ・カカオマップ・TMAP）へのリンクには、行き先（島の場合は船乗り場）の名前・座標と、カカオマップの場所番号だけが入ります。現在地は入れません。出発地は、地図アプリがその端末で決めます。</p>
+      <p>体験カードの予約リンクは、NAVER予約・MyRealTrip・事業者のウェブサイトに移動するか、電話をかけます（電話アプリが開きます）。このリンクには、その事業者の住所か電話番号だけが入ります。位置情報やこのアプリの記録は入れません。その後の予約と個人情報は、そのサイト・事業者の方針に従います。</p>
+      <p>「保存済み」画面の下で選んだ地図アプリは、この端末にだけ保存されます。NAVERマップ以外の場合は、「リンクでバックアップ」にそのアプリ名も含まれます。</p>
+
+      <h2>雨の予報</h2>
+      <p>エリアや宿を選んだ場合、または今回位置情報を確認した場合は、この先3時間以内に雨が降るかどうかを、このサイトのサーバーに問い合わせます。送るのは地区名ひとつだけです。現在地は端末の中でいちばん近い地区に置き換え、座標は送りません。サーバーはその地区の韓国気象庁の短期予報を受け取り、雨の予報だけを返します。このリクエストは、ほかのアクセスと同じようにCloudflareのアクセスログに残ることがあります。</p>
+
+      <h2>利用記録</h2>
+      <p>どの機能が使われているかを知るために、3か所に利用記録を残します。このサイトの匿名の記録、Google Analytics（GA4）、Naver Analyticsです。「保存済み」画面の下に、「使った記録を残します（Google・NAVERの訪問統計を含む）。」という一文と「記録をオフにする」ボタンがあります。</p>
+      <p>このサイトの匿名の記録に送るもの：</p>
+      <ul>
+        <li>場所番号と操作（カードに表示、保存、保存解除、外部の地図アプリへのリンクを開く、予約リンクを開く、「行った」を押す・取り消す、気分を押す）</li>
+        <li>選んだ気分と細かい種類（食事・カフェなど）、範囲、基準の種類（エリアを選んだ場合はそのエリア名）、別の日を選んだか、「屋内のみ」をオンにしたか、カードに表示された季節（桜の季節など）</li>
+        <li>保存リストを開いたか、保存した場所を何日後に開いたか（日数のみ）、リストを整理したか</li>
+        <li>宿のリンクから来た場合は、そのリンクのタグ（その訪問での流入、気分を押した回数、外部の地図アプリへのリンクを開いた回数を、タグごとに分けて数えます）</li>
+        <li>日付（時刻なし）</li>
+      </ul>
+      <p>このサイトのサーバー（Cloudflare）は、日付・場所・操作ごとの回数だけを積み上げます。IPアドレス、ブラウザの情報、Cookieは、読み取りも保存もしません。</p>
+      <p>GA4には、閲覧したページと、気分を押す、カードに表示、外部の地図アプリへのリンクを開く、保存、保存リストを開く・整理する、という操作を送ります。含めるのは、場所番号、選んだ気分と細かい種類、範囲、基準の種類、別の日を選んだか、カードに表示された季節、保存リストから開いたかと、保存してから何日か（日数のみ）・過去の日の行か、リストを開いたときに今日以降の保存がなかったかと、過去の日のまとまりがあったか、整理の種類までです。Naver Analyticsには、閲覧したページだけを送ります。2つのサービスはCookieを使い、IPアドレスやブラウザの情報などのアクセス情報を各社のサーバーで処理します。Cookieで、同じブラウザからの訪問を続けて数えることもあります。その処理は、GoogleとNAVERのプライバシーポリシーに従います。GA4のGoogleシグナルと広告のパーソナライズはオフにしています。</p>
+      <p>座標は、この3か所のどこにも送りません。このアプリが作る記録には、時刻や端末の番号を入れません。</p>
+      <p>「記録をオフにする」を押すとすぐに止まり、まだ送っていない記録も破棄します。3か所すべてが止まります。オフのままアプリを開くと、GA4とNaver Analyticsのスクリプトをまったく読み込みません。もう一度オンにするまで、オフのままです。すでに残っているCookieは、ブラウザの設定から削除できます。</p>
+
+      <h2>ご意見を送る</h2>
+      <p>「保存済み」画面のいちばん下の「ご意見を送る」、または最初の画面のいちばん下の「使ってみてどうでしたか？ 1分アンケート」から、ご意見を送れます。すべてに答えなくてもかまいません。「送信」を押したときだけ送られます。</p>
+      <p>送るのは、選んだ回答（おすすめされた場所に行ったか、不便だった点）と書いた文章、アプリのバージョンです。このサイトのサーバー（Cloudflare）は、これに日付（時刻なし）だけを付けて保存します。IPアドレス、ブラウザの情報、Cookie、位置情報、場所番号、端末の番号は保存しません。文章には名前や連絡先を書かないでください。1日に200件を超えると、それ以降は保存せず、件数だけを数えます。</p>
+      <p>送られたご意見は、1年たつと削除します。誰が送ったかわからないため、ご自身のご意見だけを選んで削除することはできません。</p>
+      <p>最初の画面のアンケートの一文は、外部の地図アプリへのリンクを一度開いたあと、アプリをもう一度開いたときだけ、3回まで表示されます。一度押すと、もう表示されません。そのために、地図のリンクを開いたことがあるかと、一文が何回表示されたかを、この端末にだけ記録しておきます。記録をオフにしていると、アンケートの一文は表示されません。「ご意見を送る」は、記録の設定に関係なく使えます。</p>
+
+      <h2>アクセスログ</h2>
+      <p>このサイトを配信するホスティング（Cloudflare）と、場所の写真を送るVisit Jejuのサーバーは、一般的なウェブサイトと同じように、IPアドレスなどの記録を残すことがあります。このアプリが、その記録を別に集めることはありません。</p>
+
+      <h2>お問い合わせ</h2>
+      <p>個人情報やこのアプリについてのお問い合わせは、運営者のメール <a href="mailto:studiofilm.app@gmail.com">studiofilm.app@gmail.com</a> までお送りください。メールで受け取ったアドレスと内容は、返信のためだけに使います。</p>
+      <p>返信が不要なご意見は、最初の画面のいちばん下の「設定・地図アプリ・ご意見」から、「ご意見を送る」で送っていただいてもかまいません。</p>
+
+      <p class="date">2026年10月17日から適用します。</p>
+    </main>
+  </body>
+</html>

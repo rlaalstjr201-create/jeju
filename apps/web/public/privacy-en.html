@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Privacy Notice · Yeochana:Jeju</title>
+    <meta name="description" content="Yeochana:Jeju keeps your Saved places on this device only and never sends your location off the device." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <!-- ADR-0063 4. Self-contained: the same tokens as src/style.css, no script. -->
+    <style>
+      :root { --bg: #ffffff; --fill: #f3f3f4; --line: #e3e3e4; --text: #14181f; --muted: #5f6267; --r-ctl: 10px; color-scheme: light; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #0f1319; --fill: #23272d; --line: #33373c; --text: #eef1f5; --muted: #b0b3b7; color-scheme: dark; }
+      }
+      * { box-sizing: border-box; }
+      html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      body {
+        margin: 0; background: var(--bg); color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
+        font-size: 0.9375rem; line-height: 1.5; font-weight: 400; word-break: keep-all; overflow-wrap: break-word;
+      }
+      main { max-width: 480px; margin: 0 auto; padding: 8px max(16px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+      h1 { margin: 16px 0 0; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+      h2 { margin: 28px 0 0; font-size: 1.0625rem; line-height: 1.4; font-weight: 600; letter-spacing: -0.01em; }
+      p, li { text-wrap: pretty; }
+      p { margin: 4px 0 0; }
+      ul { margin: 4px 0 0; padding-left: 20px; }
+      .lead, .date { color: var(--muted); }
+      a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+      .tbtn {
+        display: inline-flex; align-items: center; min-height: 48px; margin-left: -8px; padding: 0 8px; border-radius: var(--r-ctl);
+        font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--muted);
+      }
+      .tbtn:active { background: var(--fill); }
+      :focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="tbtn" href="/">Back to the app</a>
+      <h1>Privacy Notice</h1>
+      <p>This page is a translation. The <a href="/privacy">Korean notice</a> is the governing version.</p>
+      <p class="lead">Yeochana:Jeju has no sign-up or login, and it doesn't collect personal information such as your name or contact details.</p>
+
+      <h2>Your Saved places stay on this device</h2>
+      <p>Your Saved places and their dates, places you removed with “Been there,” your stay, the area and range you picked, and the language you picked are kept only in this device's browser storage. The only things sent to a server are the neighborhood name for “rain alerts” (below), what's listed under “Usage stats,” and any feedback you send yourself with “Send feedback.”</p>
+      <p>If you clear your browser data, these are cleared too. “Back up as link” puts your Saved list after the # in the link's address. The part after the # is never sent to a server.</p>
+
+      <h2>Your location never leaves the device</h2>
+      <p>Your location is used only on this device, to pick nearby places and estimate travel times. Coordinates are never sent off the device. Links to outside map apps (Naver Map, KakaoMap, TMAP) contain only the name and coordinates of where you're going (for an island, the ferry terminal) and the KakaoMap place ID. Your current location is not included. The map app sets the starting point on that device.</p>
+      <p>Booking links on experience cards go to Naver Booking, MyRealTrip, or the business's own website, or place a phone call (your phone app opens). These links contain only that business's address or phone number. Your location and this app's records are not included. Any booking and personal information after that are governed by that site's or business's own policy.</p>
+      <p>The map app you choose at the bottom of the Saved screen is stored only on this device. If it isn't Naver Map, its name is also included in “Back up as link.”</p>
+
+      <h2>Rain alerts</h2>
+      <p>If you've picked an area or a stay, or checked your location this time, the app asks this site's server whether rain is expected in the next 3 hours. It sends just one neighborhood name. Your current location is converted on the device to the nearest neighborhood, and coordinates are not sent. The server gets the Korea Meteorological Administration's short-range forecast for that neighborhood and returns only the rain alert. Like any other visit, this request may show up in Cloudflare's access logs.</p>
+
+      <h2>Usage stats</h2>
+      <p>To see which features get used, usage stats are recorded in three places: this site's anonymous stats, Google Analytics (GA4), and Naver Analytics. At the bottom of the Saved screen there's a line that says “We record how you use the app (including Google and Naver visit stats).” and a “Turn off stats” button.</p>
+      <p>What's sent to this site's anonymous stats:</p>
+      <ul>
+        <li>Place ID and action (shown as a card, saved, unsaved, outside map app link opened, booking link opened, “Been there” tapped and undone, mood tapped)</li>
+        <li>The mood and subtype you picked (meal, café, etc.), range, type of starting point (the area name, if you picked an area), whether you picked another day, whether “Indoor only” was on, and the season shown on the card (cherry blossom season, etc.)</li>
+        <li>Whether you opened your Saved list, how many days later you opened a Saved place (number of days only), and whether you tidied up the list</li>
+        <li>If you arrived through a stay's link, that link's tag (arrivals in that visit, mood taps, and outside map app link opens are counted separately for each tag)</li>
+        <li>Date (no time of day)</li>
+      </ul>
+      <p>This site's server (Cloudflare) only keeps counts per date, place, and action. It neither reads nor stores IP addresses, browser information, or cookies.</p>
+      <p>GA4 receives page views, mood taps, shown as a card, outside map app link opened, saved, and opening and tidying up the Saved list. These carry only the place ID, the mood and subtype you picked, range, type of starting point, whether you picked another day, the season shown on the card, whether it was opened from the Saved list, how many days since it was saved (number of days only) and whether it was in a past-day row, whether there were no saves for today or later and whether there was a past-days group when the list was opened, and the type of tidy-up. Naver Analytics receives page views only. Both services use cookies and process connection information such as IP addresses and browser information on their own servers. They may also use cookies to count visits from the same browser as connected. That processing is governed by Google's and Naver's privacy policies. Google signals and ad personalization are turned off in GA4.</p>
+      <p>Coordinates are never sent to any of these three. The records this app creates contain no time of day or device ID.</p>
+      <p>Tapping “Turn off stats” stops them right away and discards any records not yet sent. All three stop. If you open the app with stats off, the GA4 and Naver Analytics scripts aren't loaded at all. Stats stay off until you turn them back on. You can delete cookies that were already set in your browser settings.</p>
+
+      <h2>Send feedback</h2>
+      <p>You can send feedback with “Send feedback” at the very bottom of the Saved screen, or with “How was it? 1-minute survey” at the very bottom of the home screen. You don't have to answer everything, and nothing is sent until you tap “Send.”</p>
+      <p>What's sent is the answers you picked (whether you went to the places suggested, what was inconvenient), anything you wrote, and the app version. This site's server (Cloudflare) adds only the date (no time of day) and stores it. It does not store IP addresses, browser information, cookies, location, place IDs, or device IDs. Please don't include your name or contact details in what you write. If more than 200 come in on one day, any after that aren't stored; only how many there were is counted.</p>
+      <p>Feedback is deleted after one year. Because there's no way to tell who sent what, we can't find and delete only your feedback.</p>
+      <p>The survey line on the home screen appears only when you reopen the app after opening an outside map app link once, and no more than three times. Once you tap it, it won't appear again. To do this, whether you've opened a map link and how many times the line has appeared are recorded on this device only. If stats are turned off, the survey line doesn't appear. “Send feedback” works whether stats are on or off.</p>
+
+      <h2>Access logs</h2>
+      <p>The hosting that serves this site (Cloudflare) and the Visit Jeju servers that deliver place photos may keep logs such as IP addresses, like any website. This app doesn't collect those logs separately.</p>
+
+      <h2>Contact</h2>
+      <p>Please send questions about personal information or this app to the operator at <a href="mailto:studiofilm.app@gmail.com">studiofilm.app@gmail.com</a>. Email addresses and messages we receive by email are used only to reply.</p>
+      <p>For feedback that doesn't need a reply, you can also use “Send feedback” under “Settings · Map app · Feedback” at the very bottom of the home screen.</p>
+
+      <p class="date">Effective October 17, 2026.</p>
+    </main>
+  </body>
+</html>

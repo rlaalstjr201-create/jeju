@@ -35,16 +35,23 @@ export function msToNextDay(d: Date): number {
   return DAY_MS - ((d.getTime() + KST) % DAY_MS);
 }
 
+/** The day words (ADR-0093: another language's table replaces them). `w`: 0 = Sunday. */
+export const DAY_TEXT = {
+  short: (m: number, d: number) => `${m}월 ${d}일`,
+  long: (m: number, d: number, w: number) => `${DAY_TEXT.short(m, d)} ${WEEKDAYS[w]}요일`,
+};
+
 function parts(day: Day) {
   const t = new Date(`${day}T00:00:00Z`);
-  return { m: t.getUTCMonth() + 1, d: t.getUTCDate(), w: WEEKDAYS[t.getUTCDay()] };
+  return { m: t.getUTCMonth() + 1, d: t.getUTCDate(), w: t.getUTCDay() };
 }
 /** "10월 3일" */
 export function shortDay(day: Day): string {
   const p = parts(day);
-  return `${p.m}월 ${p.d}일`;
+  return DAY_TEXT.short(p.m, p.d);
 }
 /** "10월 3일 금요일" */
 export function longDay(day: Day): string {
-  return `${shortDay(day)} ${parts(day).w}요일`;
+  const p = parts(day);
+  return DAY_TEXT.long(p.m, p.d, p.w);
 }

@@ -2,6 +2,8 @@
 declare const __SPOTS_V__: string;
 /** the commit the app was built from (git short hash, 'dev' without git), injected by vite.config.ts; sent with 의견 보내기. */
 declare const __APP_V__: string;
+/** sha256 of the translated place files public/i18n/places.*.json (first 10 hex chars), injected by vite.config.ts (ADR-0093). */
+declare const __PLACES_V__: string;
 
 interface ImportMetaEnv {
   /** collection address for anonymous usage counts (ADR-0061); unset = nothing is sent. */

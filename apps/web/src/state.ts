@@ -189,7 +189,9 @@ export type Action =
   | { type: 'feedbackSent' };
 
 export const GPS_KEY = 'gps';
-export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoint: true, from: '여기서' });
+/** Where a trip is measured from, in words (ADR-0093: another language's table replaces them). */
+export const FROM_TEXT = { here: '여기서', stay: '숙소에서', area: (label: string) => `${label}에서` };
+export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoint: true, from: FROM_TEXT.here });
 
 export function initialState(init: {
   basis: Basis;
@@ -272,11 +274,11 @@ export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay |
       key: `stay:${stay.lat.toFixed(6)},${stay.lng.toFixed(6)}`,
       point: { lat: stay.lat, lng: stay.lng },
       isPoint: stay.source !== 'area', // GPS, or the 숙소's own point from its link (ADR-0089)
-      from: '숙소에서',
+      from: FROM_TEXT.stay,
     };
   }
   const area = basis === 'region' ? areaByName(region) : null;
-  if (area) return { key: `region:${area.name}`, point: { lat: area.lat, lng: area.lng }, isPoint: false, from: `${area.label}에서` };
+  if (area) return { key: `region:${area.name}`, point: { lat: area.lat, lng: area.lng }, isPoint: false, from: FROM_TEXT.area(area.label) };
   return null;
 }
 

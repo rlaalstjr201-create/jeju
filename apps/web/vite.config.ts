@@ -8,6 +8,15 @@ import { buildServiceWorker, spotsVersion } from './scripts/sw-build';
 const root = __dirname;
 const PUBLIC_SHELL = ['spots.json', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 const SPOTS_V = spotsVersion(readFileSync(resolve(root, 'public/spots.json')));
+/** ADR-0093: the translated place files' version, one for the three (a missing file counts as empty). */
+const PLACES_V = spotsVersion(
+  ['en', 'zh-Hans', 'ja']
+    .map((l) => {
+      const f = resolve(root, `public/i18n/places.${l}.json`);
+      return existsSync(f) ? readFileSync(f, 'utf8') : '';
+    })
+    .join('\0'),
+);
 /** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
 function appVersion(): string {
   try {
@@ -28,7 +37,12 @@ function serviceWorker(): Plugin {
       const html = bundle['index.html'];
       const { source } = buildServiceWorker({
         template: readFileSync(resolve(root, 'sw/sw.js'), 'utf8'),
-        built: Object.keys(bundle),
+        // ADR-0093: the other languages' words (src/i18n) are not precached — a Korean visit never downloads them; a
+        // visit in another language caches its own when it uses them (sw.js, hashed assets)
+        built: Object.keys(bundle).filter((f) => {
+          const c = bundle[f];
+          return !(c.type === 'chunk' && c.moduleIds.length && c.moduleIds.every((m) => m.replace(/\\/g, '/').includes('/src/i18n/')));
+        }),
         indexHtml: html && html.type === 'asset' ? html.source : null,
         publicFiles: PUBLIC_SHELL.map((f) => [f, readFileSync(resolve(root, 'public', f))]),
         spotsV: SPOTS_V,
@@ -102,8 +116,9 @@ export default defineConfig(({ command }) => ({
   base: '/',
   // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
   appType: 'mpa',
-  define: { __SPOTS_V__: JSON.stringify(SPOTS_V), __APP_V__: JSON.stringify(appVersion()) },
+  define: { __SPOTS_V__: JSON.stringify(SPOTS_V), __PLACES_V__: JSON.stringify(PLACES_V), __APP_V__: JSON.stringify(appVersion()) },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [serviceWorker(), siteUrl(), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
-  build: { target: 'es2020', modulePreload: { polyfill: false } },
+  // no preload helper (ADR-0093): the one dynamic import is the other languages' words, which a Korean visit never asks for
+  build: { target: 'es2020', modulePreload: false },
 }));

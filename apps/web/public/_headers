@@ -14,6 +14,9 @@
 # Always requested as spots.json?v=<content hash> (main.ts, sw.js): new data is a new URL.
 /spots.json
   Cache-Control: public, max-age=31536000, immutable
+# Always requested as places.<lang>.json?v=<content hash> (main.ts, ADR-0093).
+/i18n/*
+  Cache-Control: public, max-age=31536000, immutable
 
 # The page, the service worker, the manifest and the plain pages: asked again on every visit, so a deploy shows.
 /
@@ -29,6 +32,8 @@
 /privacy
   Cache-Control: no-cache
 /privacy.html
+  Cache-Control: no-cache
+/privacy-*
   Cache-Control: no-cache
 
 # Icons, the link preview image, robots.txt: a day.

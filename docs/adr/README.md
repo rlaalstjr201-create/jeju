@@ -9,7 +9,7 @@
 - **옛 방향(2026-05)**: 큐레이션·발굴 파이프라인(apps/api·apps/mobile 시절). 예: `0029-phase0-hidden-gem-discovery.md`.
 - **새 방향(2026-09-30~)**: 폰 우선 웹 apps/web(현재 여차나:제주). 예: `0029-destination-areas-and-saves.md`.
 
-그래서 0025~0029를 가리킬 때는 「ADR-0029」가 아니라 **파일 이름**으로 쓴다(예: `0029-destination-areas-and-saves.md`). 0030 이후는 번호만 써도 된다. 결번: 0036·0039·0046·0048. 83파일, 번호 76개.
+그래서 0025~0029를 가리킬 때는 「ADR-0029」가 아니라 **파일 이름**으로 쓴다(예: `0029-destination-areas-and-saves.md`). 0030 이후는 번호만 써도 된다. 결번: 0036·0039·0046·0048. 84파일, 번호 77개.
 
 상태 열은 각 파일 Status 줄의 첫머리다. 「대체·보완」 열은 이 결정을 일부 또는 전부 바꾼 ADR이고, 자세한 범위는 각 파일 Status 아래 줄에 있다. 새 ADR을 쓰면 이 표에 한 줄 더한다.
 
@@ -109,3 +109,4 @@
 | 0090 | [0090-top-left-back.md](0090-top-left-back.md) | 길 잃지 않게 — 위 줄 왼쪽은 「뒤로」(첫 화면은 로고), 기준·♥는 늘 오른쪽, 되돌리기·설정은 그 자리에서 (ADR-0087 보이는 이름 개정) | Accepted (2026-10-16) |  |
 | 0091 | [0091-night-trails-later.md](0091-night-trails-later.md) | 해가 진 뒤에는 오름·산·숲길 같은 야외 산길을 뒤로 미룬다(빼지 않음), 순서가 바뀌면 상태 줄 한 줄 | Accepted (2026-10-16) | Amendment 1: 밤에는 배로 가는 섬도 뒤로, 밀린 것에 맞춘 문구 |
 | 0092 | [0092-famous-places-mood.md](0092-famous-places-mood.md) | 여섯째 기분 「유명한 데 가 보고 싶어」 — 비짓제주 관광지 만족도 5 또는 공영관광지 4점 이상, 먹기·카페 빼고 (ADR-0028·0075의 기분 5개 대체) | Accepted (2026-10-16) | Amendment 1: 주인 지정 2곳. Amendment 2: 실내도 늘, 인기(네이버 글 수)·가까움 반반 합 순. Amendment 3: 인기 2회차(구절·기관 머리말). Amendment 4: 인기 = 검색량(네이버 검색광고). Amendment 5: 키워드 여럿 검색량 합 |
+| 0093 | [0093-english-chinese-japanese.md](0093-english-chinese-japanese.md) | 영어·중국어(简体)·일본어 — 앱 화면과 장소 소개글, 랜딩은 한국어, 지도는 모든 언어에서 네이버지도 기본 (context.md 「Korean-only for MVP」 대체) | Accepted (2026-10-17) |  |

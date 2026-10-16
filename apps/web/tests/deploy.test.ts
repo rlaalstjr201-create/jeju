@@ -92,7 +92,7 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('좌표는 보내지 않아요');
     expect(html).toContain('Cloudflare 접속 기록에 남을 수 있어요');
     // 가 봤어요 (ADR-0087): kept on the device; its tap and undo are counted here (visited·unvisited), not in GA4
-    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 지역과 범위는 이 기기의 브라우저 저장소에만 있어요');
+    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093
     expect(html).toContain('‘가 봤어요’ 누름과 되돌림');
     // 숙소 링크 (ADR-0089 4): the tag it came in by
     expect(html).toContain('숙소 링크로 들어왔다면 그 링크의 꼬리표');
@@ -161,9 +161,9 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
     for (const k of keys) expect(ga, k).toContain(said[k]);
   });
 
-  it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 15일', () => {
+  it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 17일 (ADR-0093: 고른 언어)', () => {
     for (const w of ['세부 종류', '실내만', '카드에 보인 철']) expect(own, w).toContain(w);
-    expect(html).toContain('<p class="date">2026년 10월 15일부터 적용해요.</p>');
+    expect(html).toContain('<p class="date">2026년 10월 17일부터 적용해요.</p>');
   });
 });
 

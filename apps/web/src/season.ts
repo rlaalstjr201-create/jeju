@@ -42,4 +42,6 @@ export function seasonOn(list: readonly Season[] | undefined, day: Day): SeasonK
   return best;
 }
 
-export const seasonText = (kind: SeasonKind) => `${WORDS[kind]} 철`;
+/** ADR-0093: another language's table replaces the words. */
+export const SEASON_TEXT = { text: (kind: SeasonKind) => `${WORDS[kind]} 철` };
+export const seasonText = (kind: SeasonKind) => SEASON_TEXT.text(kind);

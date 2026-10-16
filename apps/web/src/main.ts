@@ -82,6 +82,28 @@ function afterPaint(): Promise<void> {
 let listSettled: () => void = () => undefined;
 const listIn = new Promise<void>((resolve) => (listSettled = resolve));
 
+/** ADR-0093: another language than Korean (chosen by index.html's first script) — its words, a chunk of their own
+ * that a Korean visit never loads, go in before the app mounts, and its place texts before the list is used. A
+ * failure leaves the app in Korean. */
+const WORDS: Record<string, () => Promise<{ applyWords: (doc: Document, places: Promise<unknown>) => Promise<void> }>> = {
+  en: () => import('./i18n/en'),
+  'zh-Hans': () => import('./i18n/zh-Hans'),
+  ja: () => import('./i18n/ja'),
+};
+let placesIn: Promise<void> = Promise.resolve();
+function words(lang: string): Promise<void> {
+  const places = fetch(`${BASE}i18n/places.${lang}.json?v=${__PLACES_V__}`)
+    .then((r) => (r.ok ? (r.json() as Promise<unknown>) : null))
+    .catch(() => null);
+  return WORDS[lang]()
+    .then(
+      (m) => void (placesIn = m.applyWords(document, places)),
+      () => void (document.documentElement.lang = 'ko'),
+    )
+    .finally(() => document.documentElement.classList.remove('l10n'));
+}
+const LANG = document.documentElement.lang;
+
 const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
   // The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
@@ -93,7 +115,9 @@ const deps: Deps = {
         const text = await r.text();
         listSettled();
         await afterPaint();
-        return JSON.parse(text) as unknown;
+        const raw = JSON.parse(text) as unknown;
+        await placesIn;
+        return raw;
       })
       .catch((e: unknown) => {
         listSettled();
@@ -136,7 +160,7 @@ function start() {
     });
   }
 }
-void yieldToMain().then(start);
+void (WORDS[LANG] ? words(LANG).then(yieldToMain) : yieldToMain()).then(start);
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   // after load and after the app's own download of the list (listIn), or 10 s at most if that never settles

@@ -253,12 +253,15 @@ main { flex: 1; display: flex; flex-direction: column; }
 .visited-list li > span { min-width: 0; overflow-wrap: anywhere; }
 /* ADR-0071: 지도 앱 — one line of face buttons; the chosen one in weight and a 3px --main rule (like a tab), the
    others muted words; the face is the same for all, never the mark of the choice */
-.mapapp { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; margin-top: 4px; color: var(--muted); }
-.mapapp p { margin: 0 4px 0 0; }
+.mapapp, .langs { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; margin-top: 4px; color: var(--muted); }
+.mapapp p, .langs p { margin: 0 4px 0 0; }
 /* narrower faces: the label and the three stay on one line at 320 */
-.mapapp .tbtn { padding: 0 8px; font-weight: 400; text-decoration: none; }
-.mapapp .tbtn[aria-pressed="true"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--main); }
+.mapapp .tbtn, .langs .tbtn { padding: 0 8px; font-weight: 400; text-decoration: none; }
+.mapapp .tbtn[aria-pressed="true"], .langs .tbtn[aria-current="true"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--main); }
 .note:empty { display: none; }
+/* ADR-0093: the other languages, the home's last line (each opens the app in it) */
+.lang-line { margin: 20px 0 0; color: var(--muted); }
+.lang-line a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .credit { margin: 28px 0 0; color: var(--muted); }
 /* the source's site, a link inside the sentence (design.md T1: inline links are exempt from 44px); same
    --muted (≥ 4.5:1), told apart by its underline */
@@ -540,3 +543,8 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 }
 @keyframes fade { from { opacity: 0; } }
 @keyframes rise { from { transform: translateY(100%); } }
+/* ADR-0093: Japanese and Chinese break between any two characters (keep-all would not wrap them at all), with each
+   language's own fonts so its characters take its own shapes */
+html:is(:lang(ja), :lang(zh-Hans)) body { word-break: normal; line-break: strict; }
+html:lang(ja) body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, Roboto, sans-serif; }
+html:lang(zh-Hans) body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", Roboto, sans-serif; }

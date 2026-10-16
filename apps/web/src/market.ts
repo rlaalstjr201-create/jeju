@@ -26,6 +26,11 @@ export function marketDay(rule: Market, day: Day): MarketDay {
 
 /** The meta words for a market card on `day`; `dated`: date mode (a chosen day, not today). */
 export function marketText(rule: Market, day: Day, dated: boolean): string {
-  if (marketDay(rule, day) === 'open') return dated ? '이날 장 서는 날' : '오늘 장 서는 날';
-  return `장날: ${rule.label}`;
+  if (marketDay(rule, day) === 'open') return MARKET_TEXT.open(dated);
+  return MARKET_TEXT.days(rule);
 }
+/** The market words (ADR-0093: another language's table replaces them). */
+export const MARKET_TEXT = {
+  open: (dated: boolean) => (dated ? '이날 장 서는 날' : '오늘 장 서는 날'),
+  days: (rule: Market) => `장날: ${rule.label}`,
+};

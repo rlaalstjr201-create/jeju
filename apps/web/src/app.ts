@@ -13,7 +13,7 @@ import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, sunPoint } from './home';
 import { sunriseMinutes, sunsetMinutes } from './sun';
-import { createRenderer, dateLabel, findEls } from './render';
+import { PLACE, createRenderer, dateLabel, findEls } from './render';
 import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
@@ -804,7 +804,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const { visited, added } = store.toggleVisited(id);
     const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(state.spots).get(id) : undefined);
     // left out: the status line offers 되돌리기 for it (ADR-0090 5)
-    dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: spot.name.trim(), ...(added ? { id } : {}) } : null });
+    dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: PLACE.name(spot), ...(added ? { id } : {}) } : null });
     countVisit(added ? 'visited' : 'unvisited', id);
     if (added) askPersist(); // 뺀 곳 is kept on this device too (ADR-0063 2a)
   }
@@ -817,7 +817,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   function putBack(id: string) {
     if (state.view !== 'saved' || !state.visited.includes(id)) return;
     hush(); // the next name moves up under the finger
-    const name = state.spots ? spotIndex(state.spots).get(id)?.name.trim() : undefined;
+    const spot = state.spots ? spotIndex(state.spots).get(id) : undefined;
+    const name = spot && PLACE.name(spot);
     dispatch({ type: 'visited', ids: store.unvisit(id), note: name ? { k: 'in', name } : null });
     countVisit('unvisited', id);
   }

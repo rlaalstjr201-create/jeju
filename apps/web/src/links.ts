@@ -99,8 +99,10 @@ export function goLink(s: Spot, from: Point | null, walk: boolean, isPoint: bool
   const foot = !!from && ((walk && withinReach('walk', from, to)) || (isPoint && distanceKm(from, to) < 1));
   const via: MapApp = app === 'tmap' && foot ? 'naver' : app;
   const href = via === 'kakao' ? (foot ? walkDirectionsUrl(to) : directionsUrl(to)) : via === 'tmap' ? tmapUrl(to) : naverDirectionsUrl(to, foot ? 'foot' : 'car');
-  return { href, text: t ? '배 타는 곳까지 길찾기' : '길찾기', mode: foot ? 'foot' : 'car', terminal: t?.name, app: via };
+  return { href, text: t ? GO_TEXT.pier : GO_TEXT.go, mode: foot ? 'foot' : 'car', terminal: t?.name, app: via };
 }
+/** ADR-0093: another language's table replaces the words (the links themselves keep the Korean names). */
+export const GO_TEXT = { go: '길찾기', pier: '배 타는 곳까지 길찾기' };
 
 /** 예약 (ADR-0074, replaces ADR-0073's pause): a 체험 card's one verified route, with honest words for where it goes.
  * 네이버 예약 opens the operator's booking page; 마이리얼트립 a product page (never a search); a homepage was only seen to
@@ -113,7 +115,7 @@ export function bookLink(s: Spot): { href: string; text: string; aria: string } 
   const text = BOOK_TEXT[via];
   return { href: b.u, text, aria: `${cleanName(s.name)}, ${text}` };
 }
-const BOOK_TEXT: Record<Exclude<BookKind, 'visitjeju'>, string> = {
+export const BOOK_TEXT: Record<Exclude<BookKind, 'visitjeju'>, string> = {
   naver: '네이버로 예약하기',
   mrt: '마이리얼트립에서 예약',
   homepage: '홈페이지에서 예약 확인',

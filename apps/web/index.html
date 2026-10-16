@@ -10,6 +10,10 @@
     <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)" />
     <!-- first paint already in the right background, no white flash at night (S49). The only colour literals outside the CSS tokens. -->
     <style>html{background:#ffffff}@media (prefers-color-scheme:dark){html{background:#0f1319}}</style>
+    <!-- the language (ADR-0093): ?lang= (kept on this device), else the one kept, else the browser's — Korean whenever it
+         lists Korean or Korea, else English, Chinese or Japanese, else English. Not Korean: the page waits for its words (3 s at most) -->
+    <script>(function(w,h){var s,l,i,t,f,n,q=/[?&]lang=([^&#]*)/.exec(location.search),ok=function(x){x=String(x||'').toLowerCase();return x=='ko'||x=='en'||x=='ja'?x:x=='zh-hans'?'zh-Hans':null};try{s=w.localStorage}catch(e){}if(q&&(l=ok(q[1]))){try{s.setItem('lang',l)}catch(e){}}else try{l=ok(s.getItem('lang'))}catch(e){}if(!l){n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];for(i=0;i<n.length;i++){t=String(n[i]).toLowerCase();if(/^ko(-|$)|-kr(-|$)/.test(t)){l='ko';break}f=f||(/^zh(-|$)/.test(t)?'zh-Hans':/^ja(-|$)/.test(t)?'ja':/^en(-|$)/.test(t)?'en':null)}l=l||f||(n.join('')?'en':'ko')}if(l!='ko'){h.lang=l;h.className+=' l10n'}})(window,document.documentElement)</script>
+    <style>.l10n #app{visibility:hidden;animation:l10n 0s 3s forwards}@keyframes l10n{to{visibility:visible}}</style>
     <!-- a mood tapped before the app script has run (slow first visit) is kept; the app carries it out once loaded -->
     <script>(function(w){w.__early=function(e){var b=e.target&&e.target.closest&&e.target.closest('[data-mood]');if(!b)return;w.__tap=b.getAttribute('data-mood');var o=document.querySelectorAll('.wait-dots');for(var i=0;i<o.length;i++)o[i].remove();var d=document.createElement('span');d.className='wait-dots';d.setAttribute('aria-hidden','true');d.innerHTML='<i></i><i></i><i></i><i></i>';b.setAttribute('aria-busy','true');b.appendChild(d)};w.addEventListener('click',w.__early,true)})(window)</script>
     <!-- that tap shows four pulsing dots (a slow first visit), after 300 ms so a fast load never flickers; the app removes them -->
@@ -176,6 +180,14 @@
             <button class="tbtn" type="button" data-action="map-app" data-app="tmap" aria-pressed="false">TMAP</button>
           </div>
           <p id="mapAppNote" class="note" role="status"></p>
+          <!-- ADR-0093: the language, remembered on this device; a link opens the app again in it -->
+          <div class="langs" role="group" aria-labelledby="langLabel">
+            <p id="langLabel">언어</p>
+            <a class="tbtn" href="/?lang=ko" hreflang="ko" lang="ko" aria-current="true">한국어</a>
+            <a class="tbtn" href="/?lang=en" hreflang="en" lang="en">English</a>
+            <a class="tbtn" href="/?lang=zh-Hans" hreflang="zh-Hans" lang="zh-Hans">简体中文</a>
+            <a class="tbtn" href="/?lang=ja" hreflang="ja" lang="ja">日本語</a>
+          </div>
           <div class="about">
             <p class="credit">정보·사진: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" target="_blank" rel="noopener">visitjeju.net</a></p>
             <!-- ADR-0083: 노을 볼 곳 is worked out from the OSM coastline (ODbL) -->

@@ -8,7 +8,7 @@ import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
-import { REACHES, historyKey, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
+import { REACHES, TRAVEL_TEXT, historyKey, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
@@ -82,6 +82,11 @@ export const COPY = {
   homeAskDay: (day: string) => `${day} 뭐 하고 싶어요?`,
   homeFrom: (where: string) => `${where}에서`,
   homeFromArea: '동네를 고르면 그 근처에서',
+  /** the line under the question: `where` null = no basis yet (동네 고르기); `gpsNow`: 지금 + 내 위치 */
+  homeLede: (where: string | null, gpsNow: boolean, day: string | null) => {
+    const from = where === null ? COPY.homeFromArea : COPY.homeFrom(gpsNow ? `지금 ${where}` : where);
+    return day ? `${from} ${day} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 하트로 담아 두세요.` : `${from} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 바로 길찾기로 가요.`;
+  },
   past: '지난 날',
   pastOpen: '펼치기',
   pastClose: '접기',
@@ -169,6 +174,8 @@ export const COPY = {
   todayWord: (dated: boolean) => (dated ? '이날' : '오늘'),
   /** a market folded into the grey line when another row took the one place to tap */
   marketFold: (dated: boolean, name: string) => `${dated ? '이날' : '오늘'} ${name} 장날`,
+  /** 오늘 판's market row: the words before and after the market's name (shown bold) */
+  marketRow: (dated: boolean): [string, string] => [`${COPY.todayWord(dated)} `, ' 장날'],
   marketHead: (dated: boolean) => `${dated ? '이날' : '오늘'} 장 서는 곳`,
   areasHead: '다른 동네 둘러보기',
   example: (names: string[]) => `예: ${names.join(', ')}`,
@@ -217,6 +224,17 @@ export const MOOD_LABEL: Record<Button, string> = {
   food: '맛있는 거 먹고 싶어',
   any: '아무거나 골라줘',
 };
+
+/** A place's words on screen (ADR-0093: in another language, its translation; the map links keep the Korean name). */
+export const PLACE = { name: (s: Spot) => s.name.trim(), reason: (s: Spot) => s.reason };
+
+/** ADR-0093: the app's languages, each named in itself. */
+const LANGS = [
+  ['ko', '한국어'],
+  ['en', 'English'],
+  ['zh-Hans', '简体中文'],
+  ['ja', '日本語'],
+];
 
 const HEART_PATH =
   'M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z';
@@ -268,9 +286,8 @@ export function heldText(s: State, id: string): string | null {
 export function homeCopy(s: State): { ask: string; lede: string } {
   const where = whereLabel(s);
   const day = s.when === 'now' ? null : s.when === addDays(s.today, 1) ? COPY.tomorrow : shortDay(s.when);
-  const from = where === COPY.basisNoGps ? COPY.homeFromArea : COPY.homeFrom(where === COPY.basisGps && !day ? `지금 ${where}` : where);
-  if (!day) return { ask: COPY.homeAsk, lede: `${from} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 바로 길찾기로 가요.` };
-  return { ask: COPY.homeAskDay(day), lede: `${from} ${day} 갈 만한 곳 3곳을 골라 드려요. 마음에 들면 하트로 담아 두세요.` };
+  const lede = COPY.homeLede(where === COPY.basisNoGps ? null : where, where === COPY.basisGps && !day, day);
+  return { ask: day ? COPY.homeAskDay(day) : COPY.homeAsk, lede };
 }
 
 /** The status line's words for the last 가 봤어요 / 다시 넣기 (ADR-0087). */
@@ -577,10 +594,12 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       metaEl.append(el(doc, 'span', { class: 'market' }, market));
       if (meta || dest) metaEl.append(el(doc, 'span', { class: 'sep', 'aria-hidden': 'true' }, ' ·'), ' ');
     }
-    const time = tag && meta ? /(?:차로|걸어서) 약 .+$/.exec(meta) : null;
+    const time = tag && meta ? TRAVEL_TEXT.tag.exec(meta) : null;
     if (meta && time) {
       const travel = el(doc, 'span', { class: 'travel' }, meta.slice(0, time.index));
       travel.append(el(doc, 'span', { class: 'tag' }, time[0]));
+      const after = meta.slice(time.index + time[0].length);
+      if (after) travel.append(after);
       metaEl.append(travel);
     } else if (meta) metaEl.append(el(doc, 'span', { class: 'travel' }, meta));
     // "·" is held to the trip by a no-break space and a line may break after it: a narrow line ends
@@ -598,18 +617,18 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   function setGo(a: HTMLElement, spot: Spot, origin: Origin | null, reach: Reach, app: MapApp) {
     const g = goLink(spot, origin?.point ?? null, reach === 'walk', origin?.isPoint ?? false, app);
     setAttr(a, 'href', g.href);
-    setAttr(a, 'aria-label', COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal));
+    setAttr(a, 'aria-label', COPY.goAria(PLACE.name(spot), g.mode === 'foot', g.app, g.terminal));
     setText(a, g.text);
   }
   /** The card's own link (name and photo) in the chosen app (ADR-0071): written on a new card, patched on a reused row. */
   function setPlace(a: HTMLElement, spot: Spot, app: MapApp) {
     setAttr(a, 'href', placeUrl(spot, app));
-    setAttr(a, 'aria-label', COPY.mapAria(spot.name.trim(), app));
+    setAttr(a, 'aria-label', COPY.mapAria(PLACE.name(spot), app));
   }
 
   function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string, day?: Day): HTMLElement {
     const { spot } = c;
-    const name = spot.name.trim();
+    const name = PLACE.name(spot);
     const broken = s.broken.includes(spot.id);
     const card = el(doc, 'div', { class: `card ${kind}${broken ? ' noimg' : ''}`, 'data-id': spot.id });
     if (!broken) card.append(photoEl(spot, eager));
@@ -629,7 +648,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (day) heart.dataset.date = day;
     if (day) card.dataset.date = day; // a saved-list row: which one a 길찾기 came from (ADR-0085)
     heart.append(icon(HEART_22));
-    card.append(title, heart, el(doc, 'p', { class: 'reason' }, spot.reason));
+    card.append(title, heart, el(doc, 'p', { class: 'reason' }, PLACE.reason(spot)));
     // 실내 only on the results, only while 비 와요 picked them (ADR-0065)
     const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
     // 장날 only on the results, for the day being viewed (ADR-0066)
@@ -812,7 +831,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     let card = rowNodes.get(key);
     if (!card) {
       card = cardEl(s, { spot, minutes: 0 }, 'row', null, false, false, undefined, entry.date);
-      const name = spot.name.trim();
+      const name = PLACE.name(spot);
       const ctl = el(doc, 'div', { class: 'ctl' });
       const btn = (action: string, text: string, aria: string) =>
         el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': action, 'data-id': entry.id, 'data-date': entry.date, 'aria-label': aria }, text);
@@ -989,7 +1008,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     else {
       const ul = el(doc, 'ul', { class: 'visited-list' });
       for (const spot of list) {
-        const name = spot.name.trim();
+        const name = PLACE.name(spot);
         const li = el(doc, 'li');
         li.append(el(doc, 'span', {}, name), el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'put-back', 'data-id': spot.id, 'aria-label': COPY.putBackAria(name) }, COPY.putBack));
         ul.append(li);
@@ -1083,7 +1102,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // a jump to 오늘 장 서는 곳 below (app.ts scrolls; the address and history stay as they are)
     const a = el(doc, 'a', { class: 'act', href: '#market', 'data-action': 'to-market' });
     const txt = el(doc, 'span');
-    txt.append(`${COPY.todayWord(dated)} `, el(doc, 'b', {}, row.spot.name.trim()), ` 장날\u00a0· ${row.where}`);
+    const [pre, post] = COPY.marketRow(dated);
+    txt.append(pre, el(doc, 'b', {}, PLACE.name(row.spot)), `${post}\u00a0· ${row.where}`);
     a.append(txt, icon(ARROW));
     return a;
   }
@@ -1104,9 +1124,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const list = el(doc, 'ul', { class: 'mk-list' });
     for (const { spot, where } of rows.slice(0, SUNSET_LIST_MAX)) {
       const g = goLink(spot, origin.point, false, origin.isPoint, s.mapApp);
-      const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal) });
+      const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(PLACE.name(spot), g.mode === 'foot', g.app, g.terminal) });
       const txt = el(doc, 'span', { class: 'txt' });
-      txt.append(el(doc, 'span', { class: 'nm' }, spot.name.trim()), el(doc, 'span', { class: 'meta' }, where));
+      txt.append(el(doc, 'span', { class: 'nm' }, PLACE.name(spot)), el(doc, 'span', { class: 'meta' }, where));
       if (spot.image && !s.broken.includes(spot.id)) a.append(homePhoto(spot, true));
       a.append(txt);
       const li = el(doc, 'li');
@@ -1138,9 +1158,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     for (const { spot, where } of rows) {
       // 길찾기 to the market in one tap (ADR-0067), in the chosen map app
       const g = goLink(spot, origin?.point ?? null, false, origin?.isPoint ?? false, s.mapApp);
-      const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(spot.name.trim(), g.mode === 'foot', g.app, g.terminal) });
+      const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': COPY.goAria(PLACE.name(spot), g.mode === 'foot', g.app, g.terminal) });
       const txt = el(doc, 'span', { class: 'txt' });
-      txt.append(el(doc, 'span', { class: 'nm' }, spot.name.trim()), el(doc, 'span', { class: 'meta' }, `${marketText(spot.market!, whenDay(s), dated)}\u00a0· ${where}`));
+      txt.append(el(doc, 'span', { class: 'nm' }, PLACE.name(spot)), el(doc, 'span', { class: 'meta' }, `${marketText(spot.market!, whenDay(s), dated)}\u00a0· ${where}`));
       if (spot.image && !s.broken.includes(spot.id)) a.append(homePhoto(spot, true));
       a.append(txt);
       const li = el(doc, 'li');
@@ -1201,7 +1221,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const acts = todayActs(origin ? markets : [], rainNow(s), sunset);
     const sunsetOn = acts.some((a) => a.k === 'sunset');
     const folded = acts.slice(1).filter((a): a is Extract<TodayAct, { k: 'market' }> => a.k === 'market');
-    const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...folded.map((a) => COPY.marketFold(dated, a.row.spot.name.trim()))];
+    const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...folded.map((a) => COPY.marketFold(dated, PLACE.name(a.row.spot)))];
     // "·" held to the word before it by a no-break space (§3.2): a line never starts with "·"
     setText(els.todayFacts, facts.map((f) => `\u00a0· ${f}`).join(''));
     els.today.querySelector(':scope > .act')?.remove();
@@ -1223,7 +1243,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (mood !== 'famous') drawn.push(...ex.map((x) => x.id));
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
-        const names = ex.map((x) => splitName(x.name.trim()).main);
+        const names = ex.map((x) => splitName(PLACE.name(x)).main);
         b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         pair.append(...ex.map((x) => homePhoto(x, false)));
@@ -1244,7 +1264,12 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       const credit = el(doc, 'p', { class: 'credit' }, COPY.homeCredit);
       if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
       // settings reachable with nothing saved yet (heuristic audit H5): they live under the saved list
-      return [credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings)];
+      // ADR-0093: then the other languages, each in its own words; a link opens the app again in it
+      const langs = el(doc, 'p', { class: 'lang-line' });
+      for (const [lang, name] of LANGS.filter(([l]) => l !== (doc.documentElement.lang || 'ko'))) {
+        langs.append(...(langs.firstChild ? [' · '] : []), el(doc, 'a', { href: `/?lang=${lang}`, hreflang: lang, lang }, name));
+      }
+      return [credit, el(doc, 'button', { type: 'button', class: 'tbtn settings', 'data-action': 'settings' }, COPY.homeSettings), langs];
     };
     const gen = ++homeGen;
     // The first time the data is drawn (opts.stageHome): 노을 볼 곳 and 오늘 장 서는 곳 at once, with the 오늘 판 row

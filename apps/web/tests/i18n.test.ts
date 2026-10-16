@@ -1,0 +1,128 @@
+// @vitest-environment jsdom
+// ADR-0093 (specs/i18n.md): the language chosen before the app runs, the other languages' tables, and a page with no
+// Korean words left once one of them is in.
+import { runInNewContext } from 'node:vm';
+import { afterEach, describe, expect, it } from 'vitest';
+import { COPY, MOOD_LABEL, PLACE } from '../src/render';
+import { apply, type Lang } from '../src/i18n/apply';
+import { EN } from '../src/i18n/en';
+import { JA } from '../src/i18n/ja';
+import { ZH } from '../src/i18n/zh-Hans';
+import { fileSpots } from './fixtures';
+import { $, $$, flush, html, render, reset, tap } from './harness';
+
+const LANGS: [string, Lang][] = [
+  ['en', EN],
+  ['zh-Hans', ZH],
+  ['ja', JA],
+];
+const HANGUL = /[가-힣]/;
+
+/** index.html's first script, run with this address, kept value and browser languages: the <html> it leaves. */
+function choose(search: string, kept: string | null, languages: string[]) {
+  const script = html.match(/<script>(\(function\(w,h\)[\s\S]*?)<\/script>/)![1];
+  const store = new Map<string, string>(kept ? [['lang', kept]] : []);
+  const h = { lang: 'ko', className: '' };
+  const localStorage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => store.set(k, v) };
+  runInNewContext(script, { window: { localStorage }, document: { documentElement: h }, location: { search }, navigator: { languages, language: languages[0] } });
+  return { lang: h.lang, hidden: h.className.includes('l10n'), kept: store.get('lang') ?? null };
+}
+
+describe('the language (ADR-0093 2)', () => {
+  it('Korean whenever the browser lists Korean or Korea; else its first of English, Chinese, Japanese; else English', () => {
+    expect(choose('', null, ['ko-KR', 'en-US']).lang).toBe('ko');
+    expect(choose('', null, ['en-KR', 'en']).lang).toBe('ko');
+    expect(choose('', null, ['en-US', 'ko']).lang).toBe('ko');
+    expect(choose('', null, ['zh-CN', 'en']).lang).toBe('zh-Hans');
+    expect(choose('', null, ['zh-TW']).lang).toBe('zh-Hans');
+    expect(choose('', null, ['ja-JP']).lang).toBe('ja');
+    expect(choose('', null, ['fr-FR', 'ja']).lang).toBe('ja');
+    expect(choose('', null, ['fr-FR']).lang).toBe('en');
+    expect(choose('', null, []).lang).toBe('ko');
+  });
+
+  it('?lang= first, and it is kept on this device; then the kept one; a value it does not know is ignored', () => {
+    expect(choose('?lang=ja', null, ['ko-KR'])).toEqual({ lang: 'ja', hidden: true, kept: 'ja' });
+    expect(choose('?mood=walk&lang=zh-Hans', null, ['ko-KR']).lang).toBe('zh-Hans');
+    expect(choose('?lang=ko', 'en', ['en-US'])).toEqual({ lang: 'ko', hidden: false, kept: 'ko' });
+    expect(choose('', 'en', ['ko-KR']).lang).toBe('en');
+    expect(choose('?lang=fr', null, ['ko-KR'])).toEqual({ lang: 'ko', hidden: false, kept: null });
+  });
+
+  it('Korean leaves the page as it is: no other lang, nothing hidden', () => {
+    expect(choose('', null, ['ko-KR'])).toEqual({ lang: 'ko', hidden: false, kept: null });
+  });
+});
+
+describe('the tables (ADR-0093 5)', () => {
+  it("every language fills every word of the Korean tables, and none is left in Korean", () => {
+    for (const [, w] of LANGS) {
+      expect(Object.keys(w.copy).sort()).toEqual(Object.keys(COPY).sort());
+      expect(Object.keys(w.mood).sort()).toEqual(Object.keys(MOOD_LABEL).sort());
+      // the words themselves (the keys are the Korean tables' own: area names, islands)
+      const values = (v: unknown): string[] => (typeof v === 'string' ? [v] : v && typeof v === 'object' ? Object.values(v).flatMap(values) : []);
+      expect(values(w).filter((s) => HANGUL.test(s))).toEqual([]);
+    }
+  });
+
+  it("every page word lands on index.html, the same keys in every language", () => {
+    document.body.innerHTML = html.slice(html.indexOf('<body>') + 6, html.indexOf('</body>'));
+    const keys = Object.keys(EN.page).sort();
+    for (const [, w] of LANGS) {
+      expect(Object.keys(w.page).sort()).toEqual(keys);
+      for (const k of keys) expect(document.querySelectorAll(k.split('@')[0]).length, k).toBeGreaterThan(0);
+    }
+  });
+
+  it('their words read in their own order (examples)', () => {
+    expect(EN.travel.drive('From here', '12 min')).toBe('From here, about 12 min by car');
+    expect(EN.travel.tag.exec('From here, about 12 min by car')![0]).toBe('about 12 min by car');
+    expect(JA.travel.drive('ここから', '12分')).toBe('ここから車で約12分');
+    expect(ZH.travel.walk('从住处', '8分钟')).toBe('从住处步行约8分钟');
+    expect(EN.day.long(10, 3, 5)).toBe('Fri, Oct 3');
+    expect(JA.day.long(10, 3, 5)).toBe('10月3日（金）');
+    expect(ZH.day.long(10, 3, 5)).toBe('10月3日 周五');
+    const rule = { days: [5, 10, 15, 20, 25, 30], label: '5·10일' };
+    expect(EN.market.days(rule)).toBe('Opens on dates ending in 5 or 0');
+    expect(JA.market.days(rule)).toBe('市の日：5と0のつく日');
+    expect(ZH.market.days(rule)).toBe('逢5、10日开市');
+  });
+});
+
+afterEach(reset);
+
+describe('a page in another language (ADR-0093)', () => {
+  for (const [lang, w] of LANGS) {
+    it(`${lang}: the first screen, a mood's cards, the basis sheet and the saved list have no Korean UI words; the place texts are its own`, async () => {
+      const spot = fileSpots.find((s) => !s.hide)!;
+      const places = Object.fromEntries(fileSpots.map((s) => [s.id, ['', `${lang} text`]]));
+      // the tables first (as main.ts does before the mount), then the page's own words on the fresh page
+      await apply(lang, w, document, Promise.resolve(places));
+      render();
+      await apply(lang, w, document, Promise.resolve(places));
+      await flush();
+      // visible words only: not <noscript>, not the other languages' own names
+      const words = () =>
+        [...document.querySelectorAll('#app *:not(noscript):not(script), #sheet *')]
+          .flatMap((e) => [...e.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent!.trim()))
+          .concat($$('[aria-label]').map((e) => e.getAttribute('aria-label')!))
+          .filter((t) => HANGUL.test(t) && t !== '한국어');
+      // place names stay Korean until their rule is set (ADR-0093 6): cards' names and the words built around them
+      const names = new Set(fileSpots.map((s) => s.name.trim()));
+      const ui = () => words().filter((t) => ![...names].some((n) => t.includes(n) || n.includes(t)));
+      expect(ui()).toEqual([]);
+      await tap('[data-mood="walk"]');
+      await flush();
+      expect($$('#cards .card').length).toBe(3);
+      expect(ui()).toEqual([]);
+      await tap('#basis');
+      expect(ui()).toEqual([]);
+      await tap('#sheet [data-action="close"]');
+      await tap('#saved');
+      expect(ui()).toEqual([]);
+      expect(PLACE.reason(spot)).toBe(`${lang} text`);
+      expect(document.title).toBe(w.title);
+      expect($('.langs [aria-current="true"]').getAttribute('hreflang')).toBe(lang);
+    });
+  }
+});
