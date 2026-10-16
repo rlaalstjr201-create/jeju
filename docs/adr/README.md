@@ -47,7 +47,7 @@
 | 0027 (옛 방향) | [0027-curator-hitl-evolution-and-minimal-web-ui.md](0027-curator-hitl-evolution-and-minimal-web-ui.md) | HITL 큐레이터 워크플로우 + 진화 단계 명시 | Superseded (2026-05-19) | 0027-curator-hitl-evolution-and-tooling.md |
 | 0027 (옛 방향) | [0027-curator-hitl-evolution-and-tooling.md](0027-curator-hitl-evolution-and-tooling.md) | HITL 큐레이터 워크플로우 + 구체 도구 진화 단계 | Accepted (2026-05-19, 도구 명시 보강) |  |
 | 0027 (새 방향) | [0027-mobile-web-frozen-data.md](0027-mobile-web-frozen-data.md) | 폰 우선 웹(PWA) + 고정 데이터로 새로 만든다 | Accepted (2026-09-30) |  |
-| 0028 (새 방향) | [0028-include-food-and-full-review.md](0028-include-food-and-full-review.md) | 맛집 포함 + 보유 데이터 전 항목 검수 | Accepted (2026-09-30) |  |
+| 0028 (새 방향) | [0028-include-food-and-full-review.md](0028-include-food-and-full-review.md) | 맛집 포함 + 보유 데이터 전 항목 검수 | Accepted (2026-09-30) | 일부(기분 5개): 0092 |
 | 0028 (옛 방향) | [0028-llm-augmented-embedding-batch.md](0028-llm-augmented-embedding-batch.md) | LLM-Augmented Embedding — Phase 0 1회 배치 | Accepted (2026-05-19) |  |
 | 0029 (새 방향) | [0029-destination-areas-and-saves.md](0029-destination-areas-and-saves.md) | 세부 지역(목적지) 기준 + 하트 저장 | Accepted (2026-09-30) | 일부: 0075, 0058, 0077 |
 | 0029 (옛 방향) | [0029-phase0-hidden-gem-discovery.md](0029-phase0-hidden-gem-discovery.md) | Phase 0 hidden gem 자동 발굴 파이프라인 | Deprecated (2026-05-20) |  |
@@ -92,7 +92,7 @@
 | 0072 | [0072-static-landing-and-place-pages.md](0072-static-landing-and-place-pages.md) | 정적 랜딩과 장소 페이지 — 허브·지역 15·조합(target만)·장소마다 한 쪽, 사진은 핫링크(끄는 스위치 있음) | Accepted (2026-10-01) |  |
 | 0073 | [0073-booking-links-paused.md](0073-booking-links-paused.md) | 예약 링크(마이리얼트립 검색) 중단 — 장소별로 확인된 경로가 생길 때까지 | Accepted (2026-10-01) | 계획 부분: 0074 |
 | 0074 | [0074-verified-booking-routes-for-experiences.md](0074-verified-booking-routes-for-experiences.md) | 체험 카드는 장소별로 확인된 예약 경로 하나를 단다 — 경로 없는 체험은 체험 탭에서 뺀다 | Accepted (2026-10-01) |  |
-| 0075 | [0075-home-refresh-today-and-photos.md](0075-home-refresh-today-and-photos.md) | 홈 개편 A′ — 오늘 판, 기분 줄 사진, 아래 두 묶음. 결과 화면 작은 고침 | Accepted (2026-10-03) |  |
+| 0075 | [0075-home-refresh-today-and-photos.md](0075-home-refresh-today-and-photos.md) | 홈 개편 A′ — 오늘 판, 기분 줄 사진, 아래 두 묶음. 결과 화면 작은 고침 | Accepted (2026-10-03) | 일부(기분 5개): 0092 |
 | 0076 | [0076-rain-prompt-via-pages-function.md](0076-rain-prompt-via-pages-function.md) | 비 소식은 기상청 단기예보를 Pages Function 하나로 받는다 — 동네 이름만 보낸다 | Accepted (2026-10-03) |  |
 | 0077 | [0077-rename-yeohaenggwi.md](0077-rename-yeohaenggwi.md) | 이름 「여행귀:제주」, 주소 yeogwi.pages.dev (ADR-0068 1·2·4·5 대체) | Superseded by ADR-0082 |  |
 | 0078 | [0078-analytics-always-on.md](0078-analytics-always-on.md) | 분석은 셋(GA4 · 네이버 애널리틱스 · 자체 익명 기록), 꺼진 채로는 배포하지 않는다 | Accepted (2026-10-03) |  |
@@ -108,3 +108,4 @@
 | 0089 | [0089-partner-stay-link.md](0089-partner-stay-link.md) | 숙소 링크 `?stay=위도,경도&src=꼬리표`로 그 숙소 기준을 열고 출처별로 센다 (ADR-0067 딥링크 확장) | Accepted (2026-10-15) |  |
 | 0090 | [0090-top-left-back.md](0090-top-left-back.md) | 길 잃지 않게 — 위 줄 왼쪽은 「뒤로」(첫 화면은 로고), 기준·♥는 늘 오른쪽, 되돌리기·설정은 그 자리에서 (ADR-0087 보이는 이름 개정) | Accepted (2026-10-16) |  |
 | 0091 | [0091-night-trails-later.md](0091-night-trails-later.md) | 해가 진 뒤에는 오름·산·숲길 같은 야외 산길을 뒤로 미룬다(빼지 않음), 순서가 바뀌면 상태 줄 한 줄 | Accepted (2026-10-16) | Amendment 1: 밤에는 배로 가는 섬도 뒤로, 밀린 것에 맞춘 문구 |
+| 0092 | [0092-famous-places-mood.md](0092-famous-places-mood.md) | 여섯째 기분 「유명한 데 가 보고 싶어」 — 비짓제주 관광지 만족도 5 또는 공영관광지 4점 이상, 실내·카페 빼고 (ADR-0028·0075의 기분 5개 대체) | Accepted (2026-10-16) |  |

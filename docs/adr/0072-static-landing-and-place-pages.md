@@ -2,6 +2,8 @@
 
 Status: Accepted (2026-10-01)
 
+Updated by ADR-0092 (2026-10-16): 7의 홈 `<noscript>`와 허브의 기분 나열이 여섯 가지(「유명한 데 가 보고 싶어」 포함). 지역·조합·장소 쪽은 그대로.
+
 ## Context
 
 앱은 JS가 `spots.json`을 그려서, JS를 안 도는 검색·AI 크롤러에게 남는 것은 홈의 161자뿐이었다(`docs/seo/audit-01.md`, `seo:crawl` P0 `site:no-landing-pages`·`page:/:thin-shell`). `specs/seo-landing.md` 초안은 허브와 지역 15쪽을 제안하고 Open Question 6개를 남겼다. 경쟁 조사(`docs/research/competitors-01.md` 4(a))는 #1 장소별 정적 페이지 + 구조화 데이터, #2 지역 × 기분 랜딩, #3 읽히는 슬러그를 권했다. seoulist 사후 분석에서 이긴 층도 개별 장소 쪽이었고(상세 446쪽 중 79% 노출), 진 층은 같은 틀로 찍은 허브 다발이었다.
