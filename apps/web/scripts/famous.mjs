@@ -35,12 +35,14 @@ export function isFamous(spot, item) {
 }
 
 /** 인기 측정 (ADR-0092 Amendment 2, docs/research/famous-popularity/criteria.md): the latest review/famous/pop-NN.json
- * as id → blog + cafe (null when either call failed: 확인 실패). */
+ * as id → blog + cafe (null when either call failed: 확인 실패); from round 03 (Amendment 4) the monthly search
+ * `volume` (null: 확인 실패). */
 export function loadPop(dir = resolve(root, 'review/famous')) {
   const nn = readdirSync(dir).map((f) => /^pop-(\d{2})\.json$/.exec(f)?.[1]).filter(Boolean).sort().at(-1);
   if (!nn) return new Map();
   const { rows } = JSON.parse(readFileSync(resolve(dir, `pop-${nn}.json`), 'utf8'));
-  return new Map(rows.map((r) => [r.id, Number.isInteger(r.blog) && Number.isInteger(r.cafe) ? r.blog + r.cafe : null]));
+  const count = (r) => ('volume' in r ? (Number.isInteger(r.volume) ? r.volume : null) : Number.isInteger(r.blog) && Number.isInteger(r.cafe) ? r.blog + r.cafe : null);
+  return new Map(rows.map((r) => [r.id, count(r)]));
 }
 
 /** criteria §4: pop = log10(1 + n) placed between the lowest and highest of `ids`, 0–1, 3 decimals. Throws on an id
