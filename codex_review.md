@@ -173,3 +173,47 @@ A typo like `"action": "unPin"` silently pins the spot. API clients get no error
 3. `isAutoFilled: false` hardcoded in `EditDayPlanUseCase` — loses auto-fill context after first edit.
 
 The 2 MINOR findings (is_auto_filled semantics, warm recommender limitation) can be resolved in 8단계 as part of architecture hardening.
+
+---
+
+## 2026-10-16 famous mood (Claude 독립 리뷰, ADR-0058)
+
+Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상: 6843130, 4c82e0d, f1c6b7a, 81f2c3b (ADR-0092 여섯째 기분 `famous`).
+
+검증한 것: `npx tsc --noEmit` exit 0 · `npx vitest run` 53 files / 1224 tests pass · `SITE_URL=https://yeochana.com npm run build` (JS 40.98 + CSS 5.53 = 46.5KB gzip ≤ 50) · `check:slop` 0 · 빌드 뒤 git 작업 트리 깨끗. 따로 돌린 것: spots.json 6843130→HEAD 비교(2,964곳, 순서 같음, `famous: true` 71곳만 더함, 다른 필드 변화 0, 키 순서 `trail` 뒤·`book`/`hide` 앞 위반 0), `applyFamous` 멱등(HEAD에 다시 돌려 같음, 6843130 본에 돌리면 HEAD와 같음), 15동네 × 비 와요 켬/끔 × 다른 3곳 보기 4번(모두 3장, 먹기·카페 0), `eventProblem({e:'tap',mood:'famous'})` = null·`sub` 붙이면 거절, vite preview 375×812·320×640 실측(Chrome headless), `?mood=famous&area=seongsan&reach=drive30` → 광치기해변·섭지코지·성산일출봉. `build:spots`·e2e 전체는 돌리지 않았다.
+
+문제 없음으로 본 것: pick.ts `candidates`(famous는 탭 없음, 밖/실내 갈림, 실내 구경 보충 안 함), 순환 키 `famous`·`store.ts` HISTORY_KEYS(옛 세션은 키가 없을 뿐 그대로 읽힘), 밤 뒤로 미루기(ADR-0091, `pool`·`nightMoved` 공유), 가 봤어요·hide(`pickSpots`·`listed`가 기분과 무관하게 먼저 거름), 아무거나(ANY_MOODS 그대로), 딥링크·이른 탭·세션 복원 목록, 수집기 `MOODS`·`handler.ts`(`mood:famous` 키), track.ts는 famous에 `sub`를 붙이지 않음, 개인정보 안내(「고른 기분」만 적음, 바꿀 것 없음), spots.json `?v=` 해시 URL이라 옛 데이터와 새 버튼이 섞이지 않음.
+
+### MAJOR
+
+**M1. 첫 화면 「예:」에서 유명한 데 줄이 걷기 줄과 똑같다** — `apps/web/src/home.ts:22-26`(`moodExamples` → `islandTop`/`pool`), `apps/web/src/render.ts:1253-1257`, ADR-0092 7
+- 실패 장면: 처음 온 사람(위치 답 전, `제주 인기:`)은 375×812 첫 화면에서 `좀 걷고 싶어 — 제주 인기: 비자림, 천제연폭포`와 `유명한 데 가 보고 싶어 — 제주 인기: 비자림, 천제연폭포`를 사진 2장까지 똑같이 본다(preview 실측). 위치나 동네가 있을 때도 차로 30분 기준 15동네 중 6곳(애월·신제주·구좌·대정·안덕·중문)에서 두 줄의 「예:」 2곳이 같다. 유명한 곳 71곳 중 50곳이 `walk`이고 정렬(점수 → 거리)이 같아서다.
+- 왜 MAJOR: ADR-0092 Context의 문제는 「어느 버튼을 눌러야 할지 모른다」인데, 새 버튼이 첫 화면에서 걷기의 복사본으로 보인다. 스펙대로 만든 결과(「예:」는 다른 줄과 같은 방식)라 코드 버그는 아니고, ADR Consequences의 「같은 곳이 함께 보일 수 있다」는 두 줄이 통째로 같은 경우까지 다루지 않았다. 주인 판단이 필요하다(예: 유명한 데 「예:」에서 같은 화면의 다른 줄에 이미 나온 곳은 건너뛰기, 아니면 그대로 받아들이고 ADR에 적기).
+
+### MINOR
+
+**m1. 375×667(아이폰 SE 크기)에서 `아무거나 골라줘`가 첫 화면 밖으로 밀린다** — `apps/web/index.html:106`, `specs/famous-places.md:34`(4절)
+- 실측: `아무거나` 아래 끝 627 → 703. 667 높이에서는 전에는 보였고 지금은 안 보인다. 320×640에서는 `맛있는 거 먹고 싶어`(아래 끝 660)도 밖이다. 스펙 4절은 375×812만 쟀다. 모바일 우선 기준이라 작은 화면 숫자를 적고 받아들일지 정해야 한다.
+
+**m2. 「알고 있는 빠짐」이 쇠소깍 하나만 적혀 있다** — `docs/adr/0092-famous-places-mood.md:21`, `specs/famous-places.md:18`
+- 국립제주박물관(만족도 5, 원문 분류 `cultural_space`, 공영 태그 없음)은 규칙상 빠진다. 비 오는 날 구제주에서 바로 옆 민속자연사박물관은 나오는데 국립제주박물관은 안 나온다. 그 밖에 규칙대로 빠지는 이름난 곳: 이중섭거리·용연구름다리·엉덩물계곡·중문색달해변·우도봉(4점, 공영 태그 없음). 규칙을 바꾸라는 게 아니라 빠짐 목록이 실제보다 좁게 적혀 있다.
+
+**m3. 「먹기·카페 없음」에 걸리는 유명한 곳 두 곳** — 데이터 `apps/web/public/spots.json`(보롬왓, 서귀다원), 규칙 `apps/web/scripts/famous.mjs:217-220`
+- 보롬왓: 카드 이유 문장이 `넓은 들판과 꽃밭을 지나 카페에서 잠시 쉬어요`다. 표선 기준 유명한 데 「예:」 둘째 자리. 서귀다원: 사설 녹차밭(시음하는 찻집), 남원 기준 「예:」 첫째 자리. 둘 다 원문 분류가 관광지이고 태그에 카페 낱말이 없어 규칙을 통과한다. 고정 규칙 원칙상 손으로 빼지 않는다면, 최소한 ADR 2에 「카페를 겸한 관광지」가 들어온다고 적어야 한다.
+
+**m4. 거의 같은 곳이 한 번에 3장으로 나온다** — `apps/web/src/pick.ts:216`(famous 후보), 데이터
+- 신제주 다른 3곳 보기 2번째: `제주절물자연휴양림 / 백록담 / 윗세오름`, 서귀포 시내 4번째: `백록담 / 윗세오름 / 한라산국립공원`. 백록담·한라산국립공원·윗세오름·어승생악이 모두 유명한 곳이고 좌표가 산 위라 「차로 N분」이 실제(몇 시간 산행)와 다르다. 걷기에도 있던 문제지만 유명한 데는 3장 중 한라산 계열 2~3장이 함께 나와 더 눈에 띈다. 섶섬(사람이 내릴 수 없는 무인도, 좌표가 섬 위)도 서귀포·남원 유명한 데 후보다.
+
+**m5. 수집기 테스트가 기존 `events.test.ts`에 없다** — `apps/web/tests/events.test.ts`
+- `famous-pick.test.ts:98`에서 한 줄 확인은 있다. 동작은 맞다(직접 돌려 확인). 기분 목록 테스트를 두 곳에 나눠 둔 셈이라 다음 기분 추가 때 놓치기 쉽다. 낮은 MINOR.
+
+### NIT
+
+- n1. `apps/web/src/app.ts:1` 주석 `5 mood buttons`가 그대로다(이제 6).
+- n2. `docs/adr/0092-famous-places-mood.md:19` 「실내 11곳(빛의 벙커·여미지식물원과 공영 박물관·미술관 9곳)」: 9곳에 제주세계자연유산센터·제주별빛누리공원·서귀포천문과학문화관이 들어 있어 「박물관·미술관」보다 「공영 실내 전시관」이 맞다.
+- n3. `apps/web/scripts/landing.ts:65` `RESERVED`에 `famous`가 없다. 지금은 조합 쪽에 famous가 없어 문제가 없지만, ADR-0092 11대로 나중에 `/jeju/<area>/famous/` 조합 쪽을 열면 장소 slug와 겹칠 수 있다(로마자 slug라 실제 충돌 가능성은 낮다).
+- n4. 우도 기준이면 유명한 데 첫 장이 `우도` 자체다(서 있는 섬을 카드로 보여 줌). 걷기에도 있던 동작.
+
+### 요약
+
+MAJOR 1 · MINOR 5 · NIT 4. 코드 정합성(필터·순환·밤·숨김·딥링크·수집·데이터 변화·멱등)에서는 결함을 찾지 못했다. M1은 스펙대로 만든 결과의 제품 문제라 주인 결정이 필요하다.
