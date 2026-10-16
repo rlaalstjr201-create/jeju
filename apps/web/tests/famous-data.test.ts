@@ -48,6 +48,19 @@ describe('isFamous (§1, made-up places)', () => {
   });
 });
 
+describe('keywords04 (criteria-04 §2·§3)', () => {
+  it('the card name first, then the variants of the rule; nothing broader (a kind of place, a village, another place of the name)', async () => {
+    const { keywords04 } = await import('../scripts/famous-measure.mjs');
+    const k = (n: string) => keywords04(n).map((x: { k: string }) => x.k);
+    expect(k('천지연폭포')).toEqual(['천지연폭포', '천지연']);
+    expect(k('주상절리대')).toEqual(['주상절리대', '중문대포해안주상절리대', '대포주상절리']);
+    expect(k('함덕해수욕장')).toEqual(['함덕해수욕장']);
+    expect(k('서귀포자연휴양림')).toEqual(['서귀포자연휴양림']);
+    expect(k('제주현대미술관')).toEqual(['제주현대미술관']);
+    expect(k('우도')).toEqual(['우도']);
+  });
+});
+
 describe('shipped spots.json (F5)', () => {
   const inputs = loadInputs() as unknown as Map<string, FamousItem>;
   const famous = fileSpots.filter((s) => 'famous' in s);
@@ -79,9 +92,10 @@ describe('shipped spots.json (F5)', () => {
     }
     for (const n of ['성산일출봉', '섭지코지', '광치기해변', '천지연폭포', '정방폭포']) expect(named(n).some((s) => s.famous), n).toBe(true);
   });
-  it('pop on every 유명한 곳, from the latest review/famous/pop-NN.json (pop-03 검색량, Amendment 4; no 확인 실패), 0–1, the most looked-for 1', () => {
+  it('pop on every 유명한 곳, from the latest review/famous/pop-NN.json (pop-04 키워드 여럿 검색량 합, Amendment 5; no 확인 실패), 0–1, the most looked-for 1', () => {
     const counts = loadPop();
-    expect(counts.get(famous.find((s) => s.name === '서귀포시립기당미술관')!.id)).toBe(910); // pop-03 월간 검색수 (기당미술관)
+    expect(counts.get(famous.find((s) => s.name === '서귀포시립기당미술관')!.id)).toBe(910); // pop-04: 기당미술관 하나
+    expect(counts.get(famous.find((s) => s.name === '주상절리대')!.id)).toBe(2405); // pop-04: 주상절리대 + 중문대포해안주상절리대 + 대포주상절리
     expect(famous.every((s) => typeof s.pop === 'number' && s.pop >= 0 && s.pop <= 1 && Number.isInteger(counts.get(s.id)))).toBe(true);
     expect(fileSpots.filter((s) => 'pop' in s && !s.famous)).toEqual([]);
     expect(famous.filter((s) => s.pop === 1).map((s) => s.name)).toEqual(['천지연폭포']);

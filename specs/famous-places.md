@@ -20,7 +20,7 @@
 
 ## 2. 앱
 
-- `pick.ts`: `Button`에 `famous`. 후보 고르기(`candidates`)에서 `famous`면 `famous === true`인 곳을 원래 기분과 상관없이 받는다(탭 없음). 실내도 늘 후보이고(Amendment 2), 비 와요가 켜져 있으면 실내만이다. 비 와요의 실내 `구경` 보충은 `famous`에는 하지 않는다(구경에 카페가 섞여 있다). 순서는 `famousMix` = 0.5 × `pop` + 0.5 × (1 − 이동 분 ÷ 범위 최대 분, 0 아래는 0) 높은 순이고, 같으면 지금 정렬(점수 → 장날 → 철 → 가까운 순). 기준이 없으면 `pop` 순. 넓히기, 순환, 밤 뒤로 미루기는 같다. 측정과 무게는 `docs/research/famous-popularity/criteria.md`(측정 전 고정), 인기 값은 3회차 검색량 `criteria-03.md`·`pop-03.json`(Amendment 4, 네이버 검색광고 월간 PC+모바일 검색수).
+- `pick.ts`: `Button`에 `famous`. 후보 고르기(`candidates`)에서 `famous`면 `famous === true`인 곳을 원래 기분과 상관없이 받는다(탭 없음). 실내도 늘 후보이고(Amendment 2), 비 와요가 켜져 있으면 실내만이다. 비 와요의 실내 `구경` 보충은 `famous`에는 하지 않는다(구경에 카페가 섞여 있다). 순서는 `famousMix` = 0.5 × `pop` + 0.5 × (1 − 이동 분 ÷ 범위 최대 분, 0 아래는 0) 높은 순이고, 같으면 지금 정렬(점수 → 장날 → 철 → 가까운 순). 기준이 없으면 `pop` 순. 넓히기, 순환, 밤 뒤로 미루기는 같다. 측정과 무게는 `docs/research/famous-popularity/criteria.md`(측정 전 고정), 인기 값은 4회차 `criteria-04.md`·`pop-04.json`(Amendment 5): 곳마다 규칙으로 정한 키워드 여럿의 네이버 검색광고 월간 PC+모바일 검색수 합.
 - `data.ts`: `famous: true`만 받는다. 다른 값이면 떼고 곳은 남긴다(`trail`과 같다).
 - 첫 화면(`index.html`, `render.ts`): 기분 목록 넷째 줄 `유명한 데 가 보고 싶어`(`data-mood="famous"`). 결과 머리는 같은 문구다. 「예:」는 다른 줄과 같은 방식으로, 첫 그리기에서는 `['rest','walk']` → `['new','famous']` → `['food']` 순서로 두 줄씩 그린다. 유명한 데 줄은 위 줄(쉬기·걷기·새로운 거)의 「예:」에 나온 곳을 건너뛰고 그다음 곳을 쓴다(`home.ts` `moodExamples`, 글자·사진 둘 다). 2곳이 안 되면 건너뛴 곳으로 채운다. 결과 카드는 그대로(ADR-0092 7).
 - 버튼 목록(`app.ts`·`store.ts`·`deeplink.ts`): `famous`를 더한다. 순환 기록 키는 `famous`다.
