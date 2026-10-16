@@ -79,12 +79,12 @@ describe('shipped spots.json (F5)', () => {
     }
     for (const n of ['성산일출봉', '섭지코지', '광치기해변', '천지연폭포', '정방폭포']) expect(named(n).some((s) => s.famous), n).toBe(true);
   });
-  it('pop on every 유명한 곳, from the latest review/famous/pop-NN.json (pop-02, Amendment 3; no 확인 실패), 0–1, the most looked-for 1', () => {
+  it('pop on every 유명한 곳, from the latest review/famous/pop-NN.json (pop-03 검색량, Amendment 4; no 확인 실패), 0–1, the most looked-for 1', () => {
     const counts = loadPop();
-    expect(counts.get(famous.find((s) => s.name === '서귀포시립기당미술관')!.id)).toBe(6674); // pop-02, not pop-01's 1,120
+    expect(counts.get(famous.find((s) => s.name === '서귀포시립기당미술관')!.id)).toBe(910); // pop-03 월간 검색수 (기당미술관)
     expect(famous.every((s) => typeof s.pop === 'number' && s.pop >= 0 && s.pop <= 1 && Number.isInteger(counts.get(s.id)))).toBe(true);
     expect(fileSpots.filter((s) => 'pop' in s && !s.famous)).toEqual([]);
-    expect(famous.filter((s) => s.pop === 1).map((s) => s.name)).toEqual(['우도']);
+    expect(famous.filter((s) => s.pop === 1).map((s) => s.name)).toEqual(['천지연폭포']);
   });
   it('only famous true is kept at load; any other value is dropped, the place stays', () => {
     const f = famous[0];

@@ -23,10 +23,11 @@ const pick = (area: string, h: Histories = {}, indoor = false, night = false) =>
 const plain = fileSpots.map(({ famous: _f, ...s }) => s as Spot);
 
 describe('by day (F1·F2)', () => {
-  // Changed on purpose (ADR-0092 Amendment 2): 인기·가까움 합 순 — was 광치기해변 · 섭지코지 · 성산일출봉 by score then trip
-  it('성산: 섭지코지 · 성산일출봉 · 광치기해변 — no 먹기, no cafe', () => {
+  // Changed on purpose (ADR-0092 Amendment 2·4): 인기(검색량)·가까움 합 순 — was 광치기해변 · 섭지코지 · 성산일출봉 by score
+  // then trip, then 섭지코지 · 성산일출봉 · 광치기해변 by blog/cafe posts
+  it('성산: 성산일출봉 · 섭지코지 · 빛의 벙커 — no 먹기, no cafe', () => {
     const r = pick('성산');
-    expect(names(r.cards)).toEqual(['섭지코지', '성산일출봉', '광치기해변']);
+    expect(names(r.cards)).toEqual(['성산일출봉', '섭지코지', '빛의 벙커']);
     expect(r.cards.every((c) => c.spot.mood !== 'food' && inputs.get(c.spot.id)!.category !== 'cafe')).toBe(true);
   });
   it('서귀포 시내: 천지연폭포 and 정방폭포 are among the first 3', () => {
@@ -76,7 +77,7 @@ describe('인기·가까움 합 (Amendment 2, criteria §6 pre-registered checks
     }
   });
   it('without a basis (「제주 인기:」) 인기 alone: the most looked-for first', () => {
-    expect(islandTop(fileSpots, 'famous', undefined, false, DAY)[0].name).toBe('우도');
+    expect(islandTop(fileSpots, 'famous', undefined, false, DAY)[0].name).toBe('천지연폭포');
   });
 });
 
