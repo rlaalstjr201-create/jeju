@@ -5,6 +5,7 @@ import { AREAS, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { createSpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
+import type { Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
@@ -40,7 +41,8 @@ export interface Delays {
 export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 10000 };
 
 export interface Deps extends GeoDeps {
-  loadSpots(): Promise<unknown>;
+  /** a destination's place list (plans/busan.md); the app asks for Jeju's only until Busan opens (S5). */
+  loadSpots(dest: Dest): Promise<unknown>;
   storage: Storage | null;
   /** sessionStorage — the cards being looked at survive a reload / discarded tab (S54). */
   session?: Storage | null;
@@ -132,8 +134,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   const store = createStore(deps.storage, deps.session ?? null);
   // ♥ N drops ids missing from the data once it lands (S42); a failure notice gives way to the list if a
   // download that outlived its timeout lands after all.
+  const loadSpots = deps.loadSpots;
   const data = createSpotSource(
-    deps.loadSpots,
+    () => loadSpots('jeju'),
     delays.dataTimeout,
     (spots) => {
       dispatch({ type: 'spots', spots });

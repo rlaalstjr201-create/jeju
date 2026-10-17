@@ -1,8 +1,10 @@
 import './style.css';
 import { createAnalytics, isLocalHost } from './analytics';
-import { LocateError, inJeju, mountApp, type Deps } from './app';
+import { LocateError, mountApp, type Deps } from './app';
+import type { Dest } from './dest';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
+import { releasedDestOf } from './release';
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 
@@ -12,7 +14,8 @@ function locate(): Promise<Point> {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const p = { lat: coords.latitude, lng: coords.longitude };
-        if (inJeju(p)) resolve(p);
+        // inside a destination open in this build (plans/busan.md: with the switch off, Jeju only — as before)
+        if (releasedDestOf(p)) resolve(p);
         else reject(new LocateError('outside'));
       },
       (err) => reject(new LocateError(err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable')),
@@ -41,6 +44,9 @@ function storageOf(name: 'localStorage' | 'sessionStorage'): Storage | null {
 
 /** '/' (vite.config.ts): absolute, so a page served at any address finds its files (ADR-0063). */
 const BASE = import.meta.env.BASE_URL;
+/** Each destination's place list (plans/busan.md): Jeju's address and version as before; Busan's is fetched only on a
+ * Busan visit. */
+const spotsUrl = (dest: Dest) => (dest === 'jeju' ? `${BASE}spots.json?v=${__SPOTS_V__}` : `${BASE}spots-busan.json?v=${__BUSAN_V__}`);
 
 /** Ask the browser to keep this site's storage (ADR-0063 2a): no prompt of ours; Chrome and Safari decide by
  * themselves, and a "no" changes nothing. */
@@ -124,8 +130,8 @@ const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
   // The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
   // task (audit 2026-10-15), and a list that came in before the first paint held that paint back (audit 2026-10-16).
-  loadSpots: () =>
-    fetch(`${BASE}spots.json?v=${__SPOTS_V__}`)
+  loadSpots: (dest) =>
+    fetch(spotsUrl(dest))
       .then(async (r) => {
         if (!r.ok) throw new Error(String(r.status));
         const text = await r.text();

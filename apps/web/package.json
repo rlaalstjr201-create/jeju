@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:busan": "vitest run --mode busan",
     "e2e": "npm run build && node tests/e2e/browser.e2e.mjs",
     "export:spots": "tsx scripts/export-spots.ts",
     "build:spots": "node scripts/build-spots.mjs",

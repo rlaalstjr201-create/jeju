@@ -13,36 +13,14 @@ import { applyIndoor, indoorOf, loadIndoorCalls } from '../scripts/indoor.mjs';
 import { applyNewSub, loadCategories, loadNewSubCalls, newSub } from '../scripts/new-sub.mjs';
 import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from '../scripts/markets.mjs';
 import { fileSpots } from './fixtures';
+import { JEJU_RECORD_BOX, recordProblems } from './spot-record';
 
 const root = resolve(__dirname, '..');
-const FIELDS = ['bookable', 'id', 'image', 'indoor', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason', 'score'];
-const FOOD_FIELDS = [...FIELDS, 'sub'];
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 
 describe("S1' 레코드 형식", () => {
   it('every record has exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or +hide, ADR-0074; 철: +season, ADR-0080; 노을: +sunsetView, +sunsetSea on filled ones, ADR-0083; 야외 산길: +trail true, ADR-0091; 유명한 곳: +famous true +pop, ADR-0092), coords in Jeju, https image, mood ∈ {rest,walk,new,food}', () => {
-    const bad = fileSpots.filter((s) => {
-      const expectedFields = [
-        ...(s.mood === 'food' || s.mood === 'new' ? FOOD_FIELDS : FIELDS),
-        ...('market' in s ? ['market'] : []),
-        ...('season' in s ? ['season'] : []),
-        ...('sunsetView' in s ? ['sunsetView'] : []),
-        ...('sunsetSea' in s && 'sunsetView' in s ? ['sunsetSea'] : []),
-        ...(s.trail === true ? ['trail'] : []),
-        ...(s.famous === true ? ['famous', 'pop'] : []),
-        ...('book' in s ? ['book'] : []),
-        ...('hide' in s ? ['hide'] : []),
-      ];
-      return (
-        Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
-        !(s.lat >= 33.1 && s.lat <= 33.6 && s.lng >= 126.1 && s.lng <= 127.0) ||
-        !s.image.startsWith('https://') ||
-        !['rest', 'walk', 'new', 'food'].includes(s.mood) ||
-        typeof s.bookable !== 'boolean' ||
-        (s.kakaoPlaceId !== null && typeof s.kakaoPlaceId !== 'string')
-      );
-    });
-    expect(bad.map((s) => s.id)).toEqual([]);
+    expect(recordProblems(fileSpots, JEJU_RECORD_BOX)).toEqual([]);
   });
 
   it('만족도 점수 (ADR-0060): all 2,964 have an integer score 1–5, the one in review/score/score-NN.json (or a fact-check correction)', () => {

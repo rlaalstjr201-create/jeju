@@ -17,6 +17,9 @@ const PLACES_V = spotsVersion(
     })
     .join('\0'),
 );
+/** plans/busan.md: Busan's own file, fetched only on a Busan visit; '' while there is none (the switch is off then). */
+const BUSAN_FILE = resolve(root, 'public/spots-busan.json');
+const BUSAN_V = existsSync(BUSAN_FILE) ? spotsVersion(readFileSync(BUSAN_FILE)) : '';
 /** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
 function appVersion(): string {
   try {
@@ -122,12 +125,19 @@ function analytics(env: AnalyticsEnv | null): Plugin {
   };
 }
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, mode }) => ({
   // Absolute: index.html served at any path (a deep link, a fallback) still finds /assets/… (ADR-0063).
   base: '/',
   // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
   appType: 'mpa',
-  define: { __SPOTS_V__: JSON.stringify(SPOTS_V), __PLACES_V__: JSON.stringify(PLACES_V), __APP_V__: JSON.stringify(appVersion()) },
+  // 출시 스위치 (plans/busan.md): on only in mode `busan` (`vite build --mode busan`, `vitest run --mode busan`), read in src/release.ts
+  define: {
+    __SPOTS_V__: JSON.stringify(SPOTS_V),
+    __PLACES_V__: JSON.stringify(PLACES_V),
+    __APP_V__: JSON.stringify(appVersion()),
+    __BUSAN__: JSON.stringify(mode === 'busan'),
+    __BUSAN_V__: JSON.stringify(BUSAN_V),
+  },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [serviceWorker(), siteUrl(), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the one dynamic import is the other languages' words, which a Korean visit never asks for

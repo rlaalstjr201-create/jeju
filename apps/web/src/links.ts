@@ -1,5 +1,5 @@
 // Outbound links (ADR-0025: 예약은 외부 링크; ADR-0071: 지도 앱은 네이버지도 기본, 카카오맵 · TMAP 선택).
-import { inJeju } from './areas';
+import { destOf } from './dest';
 import { cleanName } from './data';
 import { distanceKm, islandOf, withinReach, type BookKind, type Island, type Point, type Spot } from './pick';
 
@@ -42,7 +42,7 @@ export const placeUrl = (s: Spot, app: MapApp): string => (placeApp(app) === 'ka
  * there to `app.map.naver.com/launchApp/…` (the app when installed, else Naver's mobile-web directions with the
  * same end and mode); on a PC it is the directions page. A comma or a slash would split the link: spaces. */
 export function naverDirectionsUrl(s: Spot, by: 'car' | 'foot'): string {
-  if (!inJeju(s)) return naverSearchUrl(s);
+  if (!destOf(s)) return naverSearchUrl(s);
   const name = cleanName(s.name.replace(/[,/]/g, ' '));
   return `https://map.naver.com/p/directions/-/${s.lng},${s.lat},${encodeURIComponent(name)},,/-/${by === 'foot' ? 'walk' : 'car'}`;
 }
@@ -50,7 +50,7 @@ export function naverDirectionsUrl(s: Spot, by: 'car' | 'foot'): string {
 /** 길찾기 in TMAP (ADR-0071): its app scheme, car only, end only. TMAP has no web page to fall back on without
  * an API key, so this opens only where the app is (the setting says so). */
 export function tmapUrl(s: Spot): string {
-  if (!inJeju(s)) return naverSearchUrl(s);
+  if (!destOf(s)) return naverSearchUrl(s);
   return `tmap://route?goalname=${encodeURIComponent(cleanName(s.name))}&goalx=${s.lng}&goaly=${s.lat}`;
 }
 
@@ -59,7 +59,7 @@ export function tmapUrl(s: Spot): string {
  * which opens the app when installed and the mobile web otherwise; on a PC it opens the 자동차 tab. A comma or a
  * slash would split the link, so they become spaces. No usable coordinates → the name search. */
 export function directionsUrl(s: Spot): string {
-  if (!inJeju(s)) return searchUrl(s);
+  if (!destOf(s)) return searchUrl(s);
   const name = cleanName(s.name.replace(/[,/]/g, ' '));
   return `https://map.kakao.com/link/to/${encodeURIComponent(name)},${s.lat},${s.lng}`;
 }
@@ -69,7 +69,7 @@ export function directionsUrl(s: Spot): string {
  * `by=foot`: the app when installed, else Kakao's own app-or-web page; on a PC Kakao turns it into its
  * directions page with the place as the end. No usable coordinates → the name search. */
 export function walkDirectionsUrl(s: Spot): string {
-  if (!inJeju(s)) return searchUrl(s);
+  if (!destOf(s)) return searchUrl(s);
   const name = cleanName(s.name);
   return `https://m.map.kakao.com/scheme/route?ep=${s.lat},${s.lng}&en=${encodeURIComponent(name)}&by=foot`;
 }
