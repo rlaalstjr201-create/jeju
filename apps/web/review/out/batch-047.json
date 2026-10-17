@@ -1,0 +1,358 @@
+[
+  {
+    "id": "4be5f016-12ad-48dc-9368-97a84e283db4",
+    "keep": true,
+    "mood": "walk",
+    "reason": "일제강점기 강제동원으로 만들어진 옛 비행장 벌판을 걸으며 아픈 역사를 되짚어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9d008440-16f6-444a-89b3-1002e2e0f574",
+    "keep": true,
+    "mood": "rest",
+    "reason": "해질녘 이후 조명이 켜지는 해상풍력 발전기들을 바라볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "7d74282b-0141-422f-b5b1-325e035a5619",
+    "keep": true,
+    "mood": "walk",
+    "reason": "붉게 물든 하늘과 바다를 감상하며 해안로를 따라 지날 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "b342b211-8203-4518-b96a-1f3aefd8be14",
+    "keep": true,
+    "mood": "rest",
+    "reason": "여름철에 운영되는 해수욕장으로 에메랄드빛 바다 풍경을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "cd74464c-d140-4a8b-9a37-3f606df2b034",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "7600d5e2-eb53-425d-a79b-5ba3fce9e806",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "3fb5798b-1e72-4ecd-9ebd-b4d3a655c474",
+    "keep": true,
+    "mood": "rest",
+    "reason": "하천과 포구, 칠선녀 다리까지 두루 내려다볼 수 있는 전망대예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "c58a69d3-3d4e-4931-bb43-41f36b816f90",
+    "keep": true,
+    "mood": "new",
+    "reason": "제주 4·3사건 희생자를 기리는 기념관에서 아픈 역사를 배울 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ab504307-e9f8-4099-942a-bda2d4317a7f",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "c76888db-2dcf-4972-9bc8-0aecab53a93f",
+    "keep": true,
+    "mood": "rest",
+    "reason": "등대에서 송악산과 형제섬이 보이는 풍경을 감상할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "55473d34-ca46-4ba1-b261-00ca2c1a5188",
+    "keep": true,
+    "mood": "walk",
+    "reason": "아담한 풀밭 사면에 자연림이 우거진 오름을 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "cdf6b6c9-6b7e-45ba-b9d1-9eaeb14fce07",
+    "keep": true,
+    "mood": "walk",
+    "reason": "다양한 꽃으로 꾸며진 동화 같은 정원을 거닐 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9356c282-af67-401e-9981-d745061045b6",
+    "keep": true,
+    "mood": "walk",
+    "reason": "4·3사건 당시 주민들이 희생된 학살터를 돌아보며 역사를 기억할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "2ccbd8bb-5f85-4566-a5f8-d78ade9c3ee0",
+    "keep": true,
+    "mood": "walk",
+    "reason": "안덕 곶자왈 지대에 자리한 오름을 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "1503b8c1-38ae-4116-95c4-c454545ad294",
+    "keep": true,
+    "mood": "walk",
+    "reason": "조선시대에 지어진 향교를 천천히 둘러보며 옛 정취를 느낄 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "1d45405d-cc20-4571-9e25-4261795cf52f",
+    "keep": true,
+    "mood": "walk",
+    "reason": "올레 12코스에 자리한 절벽길을 따라 걸을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "b36729b7-eb6d-4886-ac30-a0e87f87809b",
+    "keep": true,
+    "mood": "rest",
+    "reason": "마라도의 초등학교 분교장으로 포토존으로 인기 있는 곳이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "5c997afd-fa86-46d8-9609-7a63f0bfd5ed",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "25e19c2f-658b-41ee-b481-d14228540663",
+    "keep": true,
+    "mood": "walk",
+    "reason": "서귀포 신효동에 자리한 오름을 올라볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "e5fdd830-806f-4e26-8740-bd6452deac2a",
+    "keep": true,
+    "mood": "walk",
+    "reason": "정의 현감이 정사를 보던 옛 관아 건물을 둘러볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "6d2fc685-e771-4fa9-bddd-7fd90fdb61ee",
+    "keep": true,
+    "mood": "walk",
+    "reason": "용천수가 솟아나는 김녕의 지오트레일 코스를 걸을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9cc9e321-a740-454f-829c-b10774cb9b39",
+    "keep": true,
+    "mood": "walk",
+    "reason": "제주의 아픈 역사를 간직한 오름을 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "01acd40f-8896-4642-b912-846690e1fdd7",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "81f6018d-872f-4f3b-a39c-6b2c31a29b0d",
+    "keep": true,
+    "mood": "walk",
+    "reason": "뱀을 신으로 모시던 신당이 있던 오름을 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "2119efc6-c65e-494c-99a5-f630a5fa5499",
+    "keep": true,
+    "mood": "walk",
+    "reason": "신비로운 분위기의 천연 용암동굴을 둘러볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "08201fa6-0c8c-4ceb-8cd6-adbe3a4b4279",
+    "keep": true,
+    "mood": "walk",
+    "reason": "칠선녀 전설이 깃든 3단 폭포가 이어지는 풍경을 볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "3f3e2428-7da6-40ec-9158-193ffed03765",
+    "keep": true,
+    "mood": "walk",
+    "reason": "제주의 허파라 불리는 곶자왈을 걸으며 힐링할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "08812f6d-1fc8-432d-9b23-db0352e803d7",
+    "keep": true,
+    "mood": "walk",
+    "reason": "푸른 바다가 품에 안기는 오름을 오르며 풍경을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "bc9a50cc-9119-427d-84ce-0b7891f5f988",
+    "keep": true,
+    "mood": "walk",
+    "reason": "위미항에 만들어진 수변 트레킹 코스를 걸을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "41f7d719-4564-4ebd-abaf-c186dde2a3e3",
+    "keep": true,
+    "mood": "walk",
+    "reason": "아기자기한 등성이가 아름다운 오름을 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "7bfbe468-e54c-4f99-8bf1-7d44af63e6c0",
+    "keep": true,
+    "mood": "walk",
+    "reason": "제주 풍경과 어우러진 수국을 보며 길을 천천히 걸을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "76d0337a-37bf-446d-9c92-803e6f76526c",
+    "keep": true,
+    "mood": "walk",
+    "reason": "탐라의 시조가 혼례를 올렸다는 전설이 깃든 곳을 둘러볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "f50ad589-8a58-4971-af0c-9dca0a9268c8",
+    "keep": true,
+    "mood": "rest",
+    "reason": "상명리 주민들이 식수로 쓰던 마을 샘터에서 쉬어갈 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "66bd436b-fa7b-40ee-b44f-911b6310be04",
+    "keep": true,
+    "mood": "walk",
+    "reason": "한라산과 산방산이 보이는 곶자왈 숲길을 걸을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "473e52b4-cacb-4079-9785-619d00e5b10b",
+    "keep": true,
+    "mood": "walk",
+    "reason": "머릿속을 비우고 오감을 깨우는 트레킹을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "14ecdf95-63df-46ee-898f-d80e5028b70c",
+    "keep": true,
+    "mood": "new",
+    "reason": "해안 절벽 위에 지어진 건축물 속 북카페와 전시를 둘러볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "5f7e95b6-1f6c-451b-b44a-fa8e39b72e7d",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "edab657b-d2b4-4e7a-9c14-6ba257166b8b",
+    "keep": true,
+    "mood": "new",
+    "reason": "방탈출과 서바이벌 같은 게임을 실내에서 즐길 수 있는 테마파크예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ea61e031-b493-45ab-914c-fbfae4d323a2",
+    "keep": true,
+    "mood": "walk",
+    "reason": "높은 곳에 올라 시원한 전망을 즐길 수 있는 오름이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "5318cfba-0cb4-4537-9768-8625513f3826",
+    "keep": true,
+    "mood": "walk",
+    "reason": "사계절 내내 꽃이 피는 정원을 산책하며 힐링할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "a891370a-25a5-410b-93d1-70cf16c45e97",
+    "keep": true,
+    "mood": "walk",
+    "reason": "제주 동쪽 끝에서 오름에 오르며 하루를 시작해볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "dbedc2d8-10c7-4450-8aa1-4061c0c265a8",
+    "keep": true,
+    "mood": "walk",
+    "reason": "예비검속 희생자들이 묻힌 역사의 현장을 걸으며 아픈 역사를 되새길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "05325b10-9ae4-4bdf-9de6-01cb8d257d48",
+    "keep": true,
+    "mood": "walk",
+    "reason": "한림 16절경으로 꼽히는 오름을 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "00f89bea-f6aa-41e3-aa8c-212f88e665c8",
+    "keep": true,
+    "mood": "walk",
+    "reason": "하례리 마을과 범섬, 섭섬 풍경을 한눈에 볼 수 있는 오름이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "4129df6f-6d73-4bdf-bf5e-38f91ff75a8c",
+    "keep": true,
+    "mood": "walk",
+    "reason": "말미오름과 알오름에서 성산일출봉과 우도를 조망할 수 있는 올레길이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "c54bd18c-93d5-4fa9-8e35-41d31cf2c66f",
+    "keep": true,
+    "mood": "walk",
+    "reason": "해안 절벽 위에 세워진 옛 봉수대를 둘러볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "3b3fdbc2-7503-4751-861e-dd048c3216e5",
+    "keep": true,
+    "mood": "walk",
+    "reason": "오름 전체가 붉은 송이로 이루어진 풍경을 걸으며 볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9d1d93c4-6290-45d3-9528-0f9a616eef07",
+    "keep": true,
+    "mood": "rest",
+    "reason": "하도까지 바다를 계속 옆에 두고 달리는 해안 드라이브 길이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "c0354cc2-d304-4142-b1ed-14c7b9859c6c",
+    "keep": true,
+    "mood": "walk",
+    "reason": "숲의 경쾌함과 바다의 청량함을 함께 느낄 수 있는 올레길이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "12879e13-a800-400c-b08e-3a7140d30ed2",
+    "keep": true,
+    "mood": "walk",
+    "reason": "제주도를 한눈에 내려다볼 수 있는 오름에 올라볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  }
+]

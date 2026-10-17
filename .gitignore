@@ -61,6 +61,8 @@ pnpm-debug.log*
 dist/
 build/
 out/
+# AI 검수 판정은 잃으면 다시 만들 수 없다 (docs/review-out-reconstruction.md)
+!apps/web/review/out/
 .next/
 .nuxt/
 .vuepress/dist

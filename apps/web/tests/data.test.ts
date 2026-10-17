@@ -243,7 +243,7 @@ describe("S1' 완전성 (review/input 대비)", () => {
     expect(inputIds.size).toBeGreaterThan(0);
   });
 
-  // review/out (the verdicts) is not committed: on a clean checkout only this check is skipped.
+  // review/out (the verdicts) is committed since 2026-10-17 (rebuilt — docs/review-out-reconstruction.md); skipped only if absent.
   it.skipIf(!existsSync(resolve(root, 'review/out')))('every prefilter-passing input item has a verdict (batch or adj) — 0 missing (plan S1\' 100% coverage)', () => {
     // Same merge order as build-spots.mjs: batch verdicts first, then adj overrides by id.
     const verdictIds = new Set<string>();

@@ -1,0 +1,357 @@
+[
+  {
+    "id": "647a0f58-a19d-4dee-bd00-6505d6211a1b",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "11395e86-5592-40b9-b84d-05be2df15ecc",
+    "keep": true,
+    "mood": "food",
+    "reason": "퍽퍽하지 않아 선물하기 좋은 파운드 케이크를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "c73fa444-cc7a-45bb-bab4-7b06b68361de",
+    "keep": true,
+    "mood": "rest",
+    "reason": "남원 해안도로의 노란색 건물 LP카페에서 음악과 함께 머물 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "57fc2585-1b9f-4f52-804d-0e52fd4ac152",
+    "keep": true,
+    "mood": "rest",
+    "reason": "돌고래가 뛰노는 바다를 보며 쉴 수 있는 작은 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "fd7ef69a-ce5c-4baf-b0d9-9b5ffaf86e49",
+    "keep": true,
+    "mood": "food",
+    "reason": "작은 구옥에서 포르투갈식 에그타르트를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "17a2c7a6-17d1-423a-91a4-7105d0d87907",
+    "keep": true,
+    "mood": "rest",
+    "reason": "호텔 최고층에서 제주 전경을 한눈에 내려다볼 수 있는 특별한 뷰가 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ff4556ee-1747-4d6b-844e-6b95b73f8ddb",
+    "keep": true,
+    "mood": "rest",
+    "reason": "우도의 오션뷰 카페에서 디저트를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "11c3d867-0ee8-4a7b-8fba-53bd3782b0b5",
+    "keep": true,
+    "mood": "food",
+    "reason": "바나나푸딩 같은 달콤한 수제 디저트를 맛볼 수 있는 분위기 좋은 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "614f9118-c602-4611-8dbc-983eb19970c6",
+    "keep": true,
+    "mood": "food",
+    "reason": "아름다운 정원과 바다 풍경을 배경으로 돈까스와 파스타, 짬뽕을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "86efe3c9-9e32-45d4-ba40-496826a0c314",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "ad86b8f2-3ce3-4509-81aa-c1916b6faa69",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "b4f3b51b-2545-4c91-bdf5-fff4412f975a",
+    "keep": true,
+    "mood": "food",
+    "reason": "앤티크한 분위기에서 파스타와 스튜, 토스트 같은 브런치를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "b19841f8-cc9b-428b-b45b-3ac118640a71",
+    "keep": true,
+    "mood": "rest",
+    "reason": "조용하고 쾌적한 숲 속에서 커피와 디저트를 즐기며 쉬어갈 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "a2609c42-b289-4ea1-832a-a57c7abee75d",
+    "keep": true,
+    "mood": "food",
+    "reason": "바게트와 브리오슈 같은 자연발효 빵을 맛볼 수 있는 빵집이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "e398cef6-b813-409e-b8c1-e69e81bc5c2b",
+    "keep": true,
+    "mood": "food",
+    "reason": "우도 바다를 보면서 땅콩츄러스를 먹을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "523cbcd2-4841-448b-a3f8-d0d28e101ee8",
+    "keep": true,
+    "mood": "food",
+    "reason": "표선해수욕장 인근에서 로컬푸드로 만든 홈메이드 카페 메뉴를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "f5e1cb32-7339-4831-8187-9f09868f1aff",
+    "keep": true,
+    "mood": "rest",
+    "reason": "귤창고 카페에서 인생샷을 남길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "aa332547-48e5-4f99-b07e-fd0c3d0b8296",
+    "keep": true,
+    "mood": "food",
+    "reason": "무스케이크와 몽블랑, 땅콩크림라떼를 맛볼 수 있는 송당 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "a08dec7d-dab3-4cc8-99bb-069376b462b4",
+    "keep": true,
+    "mood": "rest",
+    "reason": "보목포구 인근에서 섶섬을 바라볼 수 있는 마을카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "f417c54d-1228-4622-bd28-7f651946e473",
+    "keep": true,
+    "mood": "rest",
+    "reason": "사계해안의 아늑한 공간에서 빵과 커피를 즐기며 액자창 포토존을 만날 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "23e438e7-afa4-458b-ab9b-411ded1e336f",
+    "keep": true,
+    "mood": "rest",
+    "reason": "월정리 해수욕장 앞 뷰를 즐길 수 있는 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "c55759db-422c-406a-87a2-c89817a32f62",
+    "keep": true,
+    "mood": "food",
+    "reason": "흑임자라떼와 카야토스트 같은 메뉴가 있는 빈티지한 디저트 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "30a6d3e7-7b72-4913-ad25-5a666f21a7e5",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "44ea5c34-9458-4972-b027-6526213952a8",
+    "keep": true,
+    "mood": "rest",
+    "reason": "제주민속촌 앞에서 해비치바다를 내려다보며 쉴 수 있는 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "eef44444-9d96-4f26-b883-ea619daa629d",
+    "keep": true,
+    "mood": "new",
+    "reason": "잔디밭 운동장에서 강아지가 실컷 뛰어놀 수 있는 애견 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "5f59f045-4e76-45a4-97cb-d0600d1693aa",
+    "keep": true,
+    "mood": "rest",
+    "reason": "해안도로에서 바다를 감상하며 여유를 즐길 수 있는 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "6e48ed71-d3cc-40ba-a7b1-1712fda83703",
+    "keep": true,
+    "mood": "food",
+    "reason": "마늘창고를 개조한 곳에서 직접 만든 패티와 햄, 파스트라미 요리를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "be43552f-a446-4016-a8ac-51ad5f031bb9",
+    "keep": true,
+    "mood": "food",
+    "reason": "제주에서 터키 카이막을 맛볼 수 있는 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "81f856d7-7195-4004-a092-85891d0e4599",
+    "keep": true,
+    "mood": "rest",
+    "reason": "창밖으로 바다가 보이는 꽃 가득한 베이커리 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ee2e277a-c0f0-46ea-ae90-dbc6c642aa23",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "07b6336e-5770-4a41-8261-9eb637c7630a",
+    "keep": true,
+    "mood": "food",
+    "reason": "아기자기하고 독특한 케이크와 까눌레를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "893ec487-aec8-4c04-a1e8-34fb1b32bb25",
+    "keep": true,
+    "mood": "food",
+    "reason": "프렌치토스트와 참외주스를 즐길 수 있는 제주시청 인근 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ec4c4cee-c6eb-444e-ad97-d468da96884e",
+    "keep": true,
+    "mood": "food",
+    "reason": "비건채식 풀코스를 정갈하게 플레이팅해 맛볼 수 있는 채식 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "66e012fd-c3a8-4daa-8b6d-3afaa7b1e1c2",
+    "keep": true,
+    "mood": "food",
+    "reason": "자연산 치즈와 저온숙성 수제도우로 만든 화덕피자를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9f6e305c-d515-4e09-a105-00f4151eff3b",
+    "keep": true,
+    "mood": "food",
+    "reason": "망고빙수와 애플망고스무디를 맛볼 수 있는 표선해비치해변 근처 디저트 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "0e4efe96-fa36-4531-aaeb-cee75f29961b",
+    "keep": true,
+    "mood": "rest",
+    "reason": "산지등대 관사를 새롭게 조성한 카페에서 바다 오션뷰와 루프탑을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "36264e25-851e-459b-b176-050f1372d265",
+    "keep": true,
+    "mood": "new",
+    "reason": "포토존과 인형뽑기, 가챠머신 같은 체험형 콘텐츠를 즐길 수 있는 복합문화공간이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "0ed09f83-0107-49d1-88b7-cbf5589e5b92",
+    "keep": true,
+    "mood": "food",
+    "reason": "미국 출신 사장이 직접 만드는 수제버거와 베이컨치즈버거를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "21d49711-c3e6-4c88-9fca-ad0c4ec959f6",
+    "keep": true,
+    "mood": "rest",
+    "reason": "통 유리창 너머로 바다를 감상할 수 있는 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "f0009dcd-2c2a-4f9c-9a93-059ad4348ba7",
+    "keep": true,
+    "mood": "rest",
+    "reason": "옛날 감귤 창고를 개조한 아늑한 인테리어의 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "1255d9fa-b5f3-4dd3-955f-728070cb6f4e",
+    "keep": true,
+    "mood": "rest",
+    "reason": "철도가 없는 제주의 유일한 기차역 콘셉트 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "714af3a2-0de6-41a7-9abe-d425ad569485",
+    "keep": true,
+    "mood": "new",
+    "reason": "귤나무가 가득한 넓은 밭에서 동물과 함께 감귤 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "d79c4c4c-f995-41c5-be8e-52c29b760af2",
+    "keep": true,
+    "mood": "rest",
+    "reason": "넓은 귤밭 속 70년 된 감귤저장창고에서 음료와 디저트로 여유를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9c10370b-3be5-40ee-8096-358acfb776da",
+    "keep": true,
+    "mood": "food",
+    "reason": "휴양지에 온 것 같은 분위기에서 크로플과 아포카토를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "5b5c0bcf-eefe-4554-98d8-ec555a57cba8",
+    "keep": true,
+    "mood": "food",
+    "reason": "제주 로컬푸드로 만든 피타 샌드위치와 수제청 에이드를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "81579190-f567-44db-9d16-cc336d515731",
+    "keep": true,
+    "mood": "food",
+    "reason": "차가운 땅콩크림에 에스프레소를 올린 시그니처 너티클라우드를 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "2ad7df81-235a-4a68-af3a-dcaed7bbca3c",
+    "keep": true,
+    "mood": "food",
+    "reason": "구겔호프와 소고기스튜 같은 메뉴가 있는 한적한 시골길의 베이커리 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "f3d883c5-8e78-472b-ad52-5192e325449c",
+    "keep": true,
+    "mood": "rest",
+    "reason": "외도동 바닷가 앞에서 오션뷰와 넓은 정원을 즐길 수 있는 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "8fddb524-7944-40b6-8f9a-ddac8c1f2e1f",
+    "keep": true,
+    "mood": "food",
+    "reason": "짜이와 핸드드립 커피를 맛볼 수 있는 인도 콘셉트 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "61f24b7a-7df5-4826-9dd0-651e58ea5ff7",
+    "keep": true,
+    "mood": "food",
+    "reason": "휘낭시에와 흑임자크림라떼를 즐길 수 있는 도심 속 쉼터 같은 카페예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  }
+]

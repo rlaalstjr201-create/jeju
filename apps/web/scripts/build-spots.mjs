@@ -28,7 +28,8 @@ const inputDir = resolve(root, 'review/input');
 const outDir = resolve(root, 'review/out');
 const foodSplitDir = resolve(root, 'review/food-split');
 const copyDir = resolve(root, 'review/copy');
-const outPath = resolve(root, 'public/spots.json');
+// SPOTS_OUT: write elsewhere instead (a reproduction check against the committed file, docs/review-out-reconstruction.md).
+const outPath = process.env.SPOTS_OUT ? resolve(process.env.SPOTS_OUT) : resolve(root, 'public/spots.json');
 
 // S1': 이유 문장 15~70자, 가격·운영시간·요일·평점 표현 0건.
 const BANNED_REASON_PATTERN =

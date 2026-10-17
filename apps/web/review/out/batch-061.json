@@ -1,0 +1,358 @@
+[
+  {
+    "id": "4acb1c2f-6892-4298-98d9-8485a1f12792",
+    "keep": true,
+    "mood": "new",
+    "reason": "제주를 담은 화과자를 직접 만들어보는 쿠킹클래스예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "e9259253-7a92-44f2-b2eb-ea521c6ac6dc",
+    "keep": true,
+    "mood": "new",
+    "reason": "어린이도 쉽게 탈 수 있는 승마 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "95e3477b-6580-4b80-aac0-4f6ecd3fbcd6",
+    "keep": true,
+    "mood": "rest",
+    "reason": "산림조합이 조성한 숲속 쉼터에서 편안히 쉬어갈 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "3dba0f3b-fd14-49bd-94af-9f05321b5a7f",
+    "keep": true,
+    "mood": "new",
+    "reason": "제주 땅속 현무암의 다양한 모습을 돌로 보여주는 관광지예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "3c02cb46-419d-4d56-bcf3-4a89282f424e",
+    "keep": true,
+    "mood": "new",
+    "reason": "누구나 쉽게 즐길 수 있는 현장 낚시 체험을 할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ebe6e0c9-6bee-4ba0-8318-eeb04edf61ae",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "87089804-5fa1-440b-b7d0-223d6185d34d",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "e6218cb2-1840-44fc-a66e-ab93062591a6",
+    "keep": true,
+    "mood": "walk",
+    "reason": "신석기시대 유적을 둘러보며 제주의 옛 역사를 만날 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "8713d03b-88f2-46a3-bede-e7c52ea16ff0",
+    "keep": true,
+    "mood": "rest",
+    "reason": "공기 좋은 곳에 자리한 조용한 캠핑장에서 쉬어갈 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "f116122d-ecd8-4fa5-bb46-6cdf001b5bf4",
+    "keep": true,
+    "mood": "new",
+    "reason": "제주에서 유일하게 즐길 수 있는 오프로드 투어를 경험할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "562086c2-063f-4c64-8b48-8fc384fbf4c4",
+    "keep": true,
+    "mood": "new",
+    "reason": "간조 때 갯벌에서 보말과 소라를 직접 잡아보는 체험을 할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "70b56d20-b38d-44ae-96d0-73b94f5f99a3",
+    "keep": true,
+    "mood": "new",
+    "reason": "탭댄스 원데이클래스로 나만의 리듬을 찾아볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "d8cc9572-26b8-43e5-b103-5e83731e2053",
+    "keep": true,
+    "mood": "food",
+    "reason": "제주 전통주인 오메기술과 고소리술을 직접 만들고 맛볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "fc3bcaa0-3a2f-4cab-8d5d-746cb79cbaaf",
+    "keep": true,
+    "mood": "new",
+    "reason": "인기 예능프로그램의 주인공이 되어보는 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ecd9ce57-bffb-4f5e-9616-c3b0f1f5ba4d",
+    "keep": true,
+    "mood": "rest",
+    "reason": "독일 전통 카라반과 함께 애월 바닷가를 즐길 수 있는 곳이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "9af07f91-2f37-4dad-adf8-7bc62da6ebef",
+    "keep": true,
+    "mood": "new",
+    "reason": "평창올림픽 공식 초청작인 태권뮤지컬과 한국무용 공연을 감상할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "707b43a2-afd8-4ff0-aed1-a9542dbfcd5c",
+    "keep": true,
+    "mood": "new",
+    "reason": "애월 해안에서 제트보트와 투명카약 등 해양 액티비티를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "799c022a-a4ee-4519-a0dc-87920464e3ac",
+    "keep": true,
+    "mood": "new",
+    "reason": "송악산을 바라보며 카트를 타는 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "779b0a49-3bd9-4d47-9c2b-63c24e8729f8",
+    "keep": true,
+    "mood": "walk",
+    "reason": "어머니가 아들을 안은 듯한 모습의 오름을 천천히 걸어볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "c1cde825-d769-4bd2-953f-1717c8a71027",
+    "keep": true,
+    "mood": "new",
+    "reason": "클라이밍과 레저카트를 즐길 수 있는 실내 테마공원이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "7dadf496-c978-4d32-9bee-c6442f68e982",
+    "keep": true,
+    "mood": "walk",
+    "reason": "자연을 걸으며 서귀포의 문화를 함께 느껴볼 수 있는 올레길이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "97ad8041-3744-4475-8faa-c8d81bde9fea",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "a736a35b-d4e2-492f-bedd-eeec7a15f0c5",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "2c2fb1b9-c9b7-4558-b6e5-56f2efaccf03",
+    "keep": true,
+    "mood": "new",
+    "reason": "ATV와 전동바이크, 사격 같은 레저 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "b706c6c0-6205-4825-8b20-4a79d7fb19a7",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "9d30fa56-55d4-4099-a22d-e6c27ea3288f",
+    "keep": true,
+    "mood": "rest",
+    "reason": "일몰을 바라보기 좋은 조그마한 방파제예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "00a8fa60-0aa5-4865-bae0-035caf387942",
+    "keep": true,
+    "mood": "new",
+    "reason": "말 전문 테마공원에서 특별한 기마공연을 감상할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "1de8c08d-639f-4178-8afb-77ed9c6f0675",
+    "keep": true,
+    "mood": "walk",
+    "reason": "맛있는 귤로 알려진 농촌 마을을 여유롭게 산책할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "8d653d5a-ded2-4be9-bb3e-93856c770ec8",
+    "keep": true,
+    "mood": "food",
+    "reason": "제주에서만 맛볼 수 있는 특별한 맥주를 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ea404122-e4a2-4292-ba42-8b7497d4dfa3",
+    "keep": true,
+    "mood": "walk",
+    "reason": "제주만의 분위기가 느껴지는 밭담길을 따라 걸을 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "15e35c36-8637-487e-983f-eeb11ba61c94",
+    "keep": true,
+    "mood": "new",
+    "reason": "한국을 대표하는 세계적인 골프장에서 라운딩을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "abc2fc3d-10f4-4ddb-93bd-5050089f2b2b",
+    "keep": false,
+    "mood": null,
+    "reason": null,
+    "dropReason": null,
+    "reconstructed": "2026-10-17 from spots.json — not in any committed spots.json, so not shipped; original keep/drop reason lost"
+  },
+  {
+    "id": "7886db0b-b05c-493e-8357-817bb976c2e3",
+    "keep": true,
+    "mood": "new",
+    "reason": "나만의 특별한 초콜릿을 직접 만들어보는 체험을 할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ed2ae168-0c89-4b01-8a98-a6a255c61b0f",
+    "keep": true,
+    "mood": "new",
+    "reason": "스쿠버다이빙 같은 해양스포츠에 도전해볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "8968b8fa-d2b3-46d2-a1dc-cd18b5f26d8c",
+    "keep": true,
+    "mood": "new",
+    "reason": "중문 앞바다에서 즐기는 호화로운 요트 투어를 경험할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "207ffb39-77f1-4333-84e6-7dbd1c0c1b7c",
+    "keep": true,
+    "mood": "new",
+    "reason": "투명카약을 타고 바닷속을 직접 들여다볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "2660c90d-f312-4ca9-87b1-9f4e168fffe7",
+    "keep": true,
+    "mood": "new",
+    "reason": "태양과 물, 바람을 느끼며 카누 생태관광을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "35ebb58e-d027-48e7-9972-1c47f2a116b7",
+    "keep": true,
+    "mood": "new",
+    "reason": "고즈넉한 분위기 속에서 도예 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "ac930db7-94fe-44cd-919c-cea430c71e1d",
+    "keep": true,
+    "mood": "new",
+    "reason": "바닷물과 용천수가 만나는 곳에서 스노클링을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "baeaafbd-ea6b-4102-ab94-596d40c6cf2c",
+    "keep": true,
+    "mood": "new",
+    "reason": "어린이를 위한 교통안전 체험을 즐길 수 있는 테마공원이에요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "3a0c66ef-eacd-4472-bc76-2c0e49a21b3b",
+    "keep": true,
+    "mood": "new",
+    "reason": "감귤 농장에서 살아있는 제주 농촌을 체험해볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "b981d810-7dd0-4014-b6d4-8134b6cd19ac",
+    "keep": true,
+    "mood": "new",
+    "reason": "바다 바로 앞에서 안전하게 다이빙을 체험할 수 있는 센터예요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "1c45fbbf-fd9a-4f11-8335-0071f9dfdf17",
+    "keep": true,
+    "mood": "new",
+    "reason": "넓은 노지에서 직접 감귤을 따보는 체험을 할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "fdfb2d59-e44b-49ae-a049-8c11ab1db175",
+    "keep": true,
+    "mood": "new",
+    "reason": "제주 자연 속에서 요가 원데이 클래스를 해볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "406501f1-1b9f-4b8c-a6e9-8fbddf692f8b",
+    "keep": true,
+    "mood": "new",
+    "reason": "산방산을 바라보며 쪽빛 천연염색을 체험할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "d5bd5d7e-5253-452e-9b0e-dfe1e3616327",
+    "keep": true,
+    "mood": "new",
+    "reason": "청동기시대 후기 마을 유적에서 당시 문화를 알아볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+    "keep": true,
+    "mood": "rest",
+    "reason": "한라산이 보이는 목장 안 카페에서 느긋하게 쉬어갈 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "8bc85490-4a01-4fab-9cad-58f9021812db",
+    "keep": true,
+    "mood": "new",
+    "reason": "우거진 숲속에서 승마 체험을 즐길 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "5e93049c-132f-4235-b9d5-39eb5129907c",
+    "keep": true,
+    "mood": "new",
+    "reason": "여가 분석과 체험 프로그램으로 나만의 쉬는 법을 찾아볼 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  },
+  {
+    "id": "1a6b3e2d-723b-4a6e-b4b9-7a3929230465",
+    "keep": true,
+    "mood": "new",
+    "reason": "자연휴양림에서 동물에게 먹이를 주는 체험을 할 수 있어요",
+    "reconstructed": "2026-10-17 from public/spots.json@af3f008 (first build of the full review): keep, mood and reason as first shipped — evidence, confidence and batch/adj split lost"
+  }
+]
