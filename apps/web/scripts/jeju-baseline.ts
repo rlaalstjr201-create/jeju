@@ -69,7 +69,8 @@ function assets(indexHtml: string) {
   const entry = [...indexHtml.matchAll(/(?:src|href)="\/(assets\/index-[A-Za-z0-9_-]{8}\.(?:js|css))"/g)].map((m) => m[1]);
   const gz = Object.fromEntries(entry.map((f) => [unhash(f), gzipSync(readFileSync(join(DIST, f))).length]));
   const total = Object.values(gz).reduce((a, b) => a + b, 0);
-  return { names: names.map((n) => unhash(`assets/${n}`)), koreanEntryGzip: gz, koreanEntryGzipTotal: total };
+  // sorted after the hash is gone: `ja-<hash>.js` and `ja-<hash>.css` would otherwise swap with the hashes
+  return { names: names.map((n) => unhash(`assets/${n}`)).sort(), koreanEntryGzip: gz, koreanEntryGzipTotal: total };
 }
 
 function swList() {
