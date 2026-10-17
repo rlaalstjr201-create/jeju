@@ -217,3 +217,51 @@ Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상
 ### 요약
 
 MAJOR 1 · MINOR 5 · NIT 4. 코드 정합성(필터·순환·밤·숨김·딥링크·수집·데이터 변화·멱등)에서는 결함을 찾지 못했다. M1은 스펙대로 만든 결과의 제품 문제라 주인 결정이 필요하다.
+
+## 2026-10-17 i18n (Claude 독립 리뷰, ADR-0058)
+
+Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상: `5ea9af4..HEAD` 15커밋(ef37070 … bf1eb83), ADR-0093과 Amendment 1~5, `specs/i18n.md`, `plans/i18n.md`, `docs/i18n/*`.
+
+검증한 것: `npx tsc --noEmit` exit 0 · `npx vitest run` 55 files / 1253 tests pass(한 번 돌림, 불안정한 테스트 못 봄) · `SITE_URL=https://yeochana.com npm run build` exit 0, 한국어 방문 JS 42.62 + CSS 5.56 = **48.18KB gzip ≤ 50**, 언어 청크 en 4.85·zh-Hans 5.22·ja 5.52 + apply 1.07 + CSS 0.26~0.36KB, `dist/sw.js` PRECACHE에 언어 청크·CSS·apply 없음(한국어 방문은 받지 않음 확인). 빌드 뒤 `lastmod.json` 되돌림. 따로 돌린 것: 출하 2,938곳 × 3언어 이름·소개글 빠짐 0(빠진 26곳은 모두 `hide`), 한글 남음 0, 번역 묶음의 한국어 원문과 지금 spots.json 차이 0, 금지어(泡菜·长白山·汉服·朝鲜族·日本海·Sea of Japan·竹島·Takeshima·Changbai) 출하 파일 0, GA4 `page_location`은 쿼리를 빼서 `?lang=`이 새지 않음, 지도·길찾기·검색 링크는 한국어 이름(`links.ts` `cleanName(s.name)`) 그대로. e2e·`build:spots`·브라우저 실측은 하지 않았다(M1은 코드와 빌드 산출물로 본 것이고 재현하지 않았다).
+
+한국어 화면에 대해 문제 없음으로 본 것: `homeCopy`/`homeLede`, `metaEl`의 tag 뒤 글(`after`는 한국어에서 늘 빈 문자열), `marketRow`, `FROM_TEXT`·`TRAVEL_TEXT`·`DAY_TEXT`·`MARKET_TEXT`·`SEASON_TEXT` 리팩터는 모두 전과 같은 문자열을 만든다. 한국어에서는 첫 스크립트가 `l10n`을 붙이지 않아 가림·지연이 없다. 한국어에서 바뀌는 것은 ADR-0093 4의 두 줄(첫 화면 맨 아래 언어 줄, 설정 `언어`)과 진입 JS +0.15KB(동적 import 도우미)뿐.
+
+### MAJOR
+
+**M1. 배포가 한 번 있으면 다른 언어 사용자의 다음 오프라인 열기가 한국어로 뜬다(약한 신호면 앱이 아예 안 올라온다)** — `apps/web/vite.config.ts:42`(언어 청크를 precache에서 뺌), `apps/web/sw/sw.js:30`(activate가 옛 캐시를 통째로 지움), `apps/web/sw/sw.js:64`(런타임 캐시는 쓸 때만), `apps/web/src/main.ts:98`·`:163`(청크 import에 시간 제한 없음, 앱 mount가 그 뒤)
+- 원인: 언어 청크는 진입 청크를 파일 이름으로 import한다(`dist/assets/en-*.js` 첫 줄 `from"./index-ary8bHJF.js"`). 그래서 앱 코드가 바뀌는 배포마다 en·zh-Hans·ja 청크 URL도 바뀐다. 새 서비스 워커는 이 청크를 미리 받지 않고, activate에서 옛 캐시(전에 쓰며 담아 둔 언어 청크 포함)를 지운다.
+- 실패 장면: 일본인 여행자가 숙소 와이파이에서 앱을 연다(그 사이 배포가 있었다 → 새 SW가 백그라운드 설치·활성). 다음 날 우도 가는 배 위(오프라인)에서 다시 연다 → 새 셸은 캐시에서 나오지만 새 `ja-*.js`는 어디에도 없다 → import 실패 → `main.ts:101`이 `lang='ko'`로 돌려 화면 전체가 한국어. 한국어를 못 읽는 사람에게는 앱을 못 쓰는 것과 같다. 끊기지 않고 느린 신호(산·해안에서 흔함)면 import가 실패도 성공도 안 한 채 걸려 `start()`가 불리지 않는다: 3초 뒤 정적 한국어 첫 화면이 보이고 기분 버튼은 이른 탭 점만 찍힌 채 반응이 없다. 한국어 사용자는 같은 상황에서 precache로 정상 동작한다.
+- 장소 글(`places.<lang>.json?v=`)은 내용이 바뀔 때만 URL이 바뀌어 HTTP 캐시로 대개 살아남는다. 문제는 청크 쪽이다.
+- 고칠 방향(결정 필요): 새 SW install 때 옛 캐시에 언어 청크가 있었으면 새 빌드의 같은 언어 청크·CSS·apply를 함께 precache(한국어 방문은 그대로 0바이트), 또는 기억한 언어를 SW에 알려 그 언어만 받기. 그리고 청크 import에 시간 제한(예: 3초 가림과 같은 값)을 두고 넘으면 한국어로라도 mount.
+
+### MINOR
+
+**m1. 예약 링크의 aria-label이 한국어 장소 이름이다, 그리고 테스트가 이것을 못 잡는다** — `apps/web/src/links.ts:116`(`aria: ${cleanName(s.name)}, ${text}`), `apps/web/tests/i18n.test.ts:135`
+- 실패 장면: 영어 VoiceOver 사용자가 체험 카드의 예약 버튼에서 「라이크더윈드 스튜디오, Book on Naver」처럼 한국어 이름을 듣는다(다른 aria는 `PLACE.name`으로 바뀌었는데 이것만 남았다).
+- 테스트 구멍: `ui()`가 한국어 장소 이름을 포함하는 글을 모두 빼므로 이런 섞인 aria가 통과한다. 또 `n.includes(t)` 때문에 2,938곳 이름 중 하나에 들어 있는 짧은 한국어 UI 낱말(예: 「실내」, 「카페」)도 걸러져 새는 것을 놓칠 수 있다. 장소 이름 번역이 들어간 지금은 이 예외를 없애도 된다.
+
+**m2. 장소 글 번역이 id에만 묶여 있어 spots.json이 바뀌면 조용히 낡거나 빠진다** — `apps/web/scripts/i18n-places.mjs:46-60`, 테스트 없음
+- 실패 장면: 다음 `build:spots`에서 한 곳의 소개글·이름이 바뀌거나 새 곳이 출하되면, 다른 언어 화면은 옛 뜻의 번역을 그대로 보이거나 새 곳만 한국어로 보인다. 지금은 원문 차이 0·빠짐 0이지만 이를 지키는 테스트가 없다. `review/i18n/source/batch-*.json`의 원문과 현재 spots.json의 name·reason을 비교하는 테스트(다르면 실패) 하나면 막힌다.
+
+**m3. 언어 청크가 진입 JS 실행 뒤에야 요청돼 느린 첫 방문에서 3초 가림이 끝나고 한국어가 번쩍인다; 장소 글이 목록 대기 시간 안에 들어간다** — `apps/web/vite.config.ts`(`modulePreload: false`), `apps/web/src/main.ts:94-104`·`:119`
+- 실패 장면: 3G 첫 방문 중국인 여행자. 진입 JS 42.6KB를 받고 실행한 뒤에야 zh 청크를 요청하므로(선행 preload 없음, 직렬) 3초를 넘기기 쉽다 → 정적 한국어 첫 화면이 보였다가 중국어로 바뀐다(ADR-0093 2 「한국어 문구가 번쩍이지 않는다」와 어긋남). 또 `loadSpots`가 `await placesIn`으로 130KB 장소 글까지 기다려서 `createSpotSource`의 10초 제한(`data.ts:118`)을 한국어보다 쉽게 넘긴다 → 목록 실패 안내가 잠깐 보인다. 장소 글은 목록 뒤에 와도 되게(이름·소개글만 다시 그리기) 하거나, index.html 첫 스크립트에서 고른 언어의 청크를 `<link rel=modulepreload>`로 일찍 거는 방법이 있다.
+
+**m4. 번역 표본 20곳 × 3언어 직접 점검: en 1 · zh-Hans 2 · ja 2곳 지적** (시드 `claude-review-1017`, 원어민 편집자 관점)
+- ja `문어빵굽는문빵9` → `ムノパンクムヌンムンパン9`: 한국어 문장형 상호를 통째 음역해 일본어로 뜻이 없다(en `Munppang 9`·zh `章鱼包9`처럼 줄이는 편이 맞다). 이름 오류.
+- zh `마모루` → `守`: 일본어 「守る」를 뜻으로 옮긴 한 글자 상호라 간판(가타카나/로마자)과 연결이 안 된다. `Mamoru`/음역 쪽이 찾기 쉽다.
+- zh·ja `미천굴` → `美川窟` / `美千窟`: 두 언어의 한자가 서로 다르다. 적어도 하나는 틀렸다(확인 실패, 원 한자 표기 확인 필요). 이 곳은 ja 지적 둘째로 센다.
+- zh `드림회센터` → `梦想生鱼片中心`: 상호 직역, 번역투(마).
+- en `신화워터파크` → `Stay at the Shinhwa Hotel to get in, along with the sky pool`: 어순이 어색하다(마).
+- 나머지는 뜻·말투 문제 없음. 20곳이라 비율로 일반화하지 않는다.
+
+### NIT
+
+- n1. 금지어 테스트 빈칸: `apps/web/tests/i18n-terms.test.ts:9-14` ja에 `泡菜`, zh-Hans에 번체 `漢服`·`朝鮮族`이 없다(지금 출하 파일엔 없음 확인).
+- n2. `?lang=`은 앱이 주소에서 지우므로(app.ts readArrival) localStorage를 못 쓰는 브라우저에서는 새로 고침하면 고른 언어가 사라진다. 또 `keep.ts:159-162` `handoffUrl`(인앱 브라우저 → 폰 브라우저)이 `lang`을 넘기지 않아, 인앱에서 언어를 고른 사람은 폰 브라우저의 언어 목록대로 다시 고른다(목록에 한국어가 있으면 한국어).
+- n3. 언어를 바꾼 뒤 뒤로 가기는 bfcache가 살린 옛 언어 페이지를 그대로 보여 줄 수 있다(저장된 언어와 화면이 다름). 새로 고침하면 맞아진다.
+- n4. `docs/adr/0093-english-chinese-japanese.md:28` Decision 9 「시각은 모두 한국 시각 24시간제」가 Amendment 3(en-US는 `5:58 PM`)과 어긋나는데, 6처럼 취소선·대체 표시가 없다.
+- n5. `?lang=zh`·`zh-CN`은 무시된다(`zh-hans`만 받음). llms.txt에 정확한 값이 적혀 있어 문제는 작다.
+
+### 요약
+
+MAJOR 1 · MINOR 4 · NIT 5. 한국어 화면·번들·첫 그림·사용 기록은 바뀐 것이 ADR이 말한 두 줄뿐이고 예산 안이다. 번역 범위(2,938곳 × 3, 이름·소개글)·금지어·지도 링크(한국어 이름)·개인정보 안내(보내는 것 그대로, 「고른 언어」만 기기 저장)는 맞다. M1은 오프라인 PWA에서 다른 언어 사용자만 깨지는 경로라 배포 전에 정할 일이다.
