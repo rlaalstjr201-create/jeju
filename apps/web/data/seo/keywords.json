@@ -1,7 +1,7 @@
 {
  "_why": "keyword gate 기록 — 페이지·콘텐츠 작업 전에 이 표를 통과해야 한다. 규칙: scripts/seo/keyword-gate.mjs · 루브릭: .claude/skills/seo-geo/references/keyword-gate.md · 근거: docs/seo/keyword-research-01.md",
  "rubric_version": 1,
- "updated": "2026-10-16",
+ "updated": "2026-10-17",
  "candidates": [
   {
    "query": "여차나:제주",
@@ -1447,6 +1447,1146 @@
    "rationale": "동네 + 업태(카페) — 플레이스 벽, 우리는 평점·리뷰가 없다(중문 카페와 같은 판정).",
    "landing": "",
    "verdict": "kill"
+  },
+  {
+   "query": "jeju itinerary",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "agoda.com 여행 가이드(7일)",
+     "thetravelintern.com",
+     "thatch.co(5일·1일)",
+     "ivisitkorea.com",
+     "you.co",
+     "thewholeworldisaplayground.com"
+    ],
+    "note": "모두 N일 일정표. 자동완성도 4 days·3 days·with kids·without car — 일정 짜기 의도"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "jeju itinerary",
+     "jeju itinerary 4 days",
+     "jeju itinerary 3 days",
+     "jeju itinerary 2 days",
+     "jeju itinerary 5 days",
+     "jeju itinerary 7 days"
+    ]
+   },
+   "rationale": "일정표를 찾는 말이다(자동완성 전부 N일). 우리는 일정을 짜 주지 않는다 — 한국어 「제주 여행 코스」와 같은 K1.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "things to do in jeju",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "agoda.com",
+     "thatch.co",
+     "travel2next.com",
+     "thehoneycombers.com",
+     "thetravel.com",
+     "expedia.com",
+     "gadventures.com",
+     "luxeadventuretraveler.com"
+    ],
+    "note": "OTA(Agoda·Expedia)와 여행 매체가 채운다(프록시). 실제 구글 1쪽은 확인 실패"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "things to do in jeju island",
+     "things to do in jeju south korea",
+     "things to do in jeju island south korea",
+     "things to do in jeju-do",
+     "things to do in jeju reddit",
+     "things to do in jeju in november"
+    ]
+   },
+   "rationale": "섬 전체 머리 + OTA·매체 벽. 한국어 「제주 가볼만한곳」과 같은 자리.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "jeju rainy day activities",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "ivisitkorea.com",
+     "hotels.com 가이드",
+     "trvlogue.com",
+     "blog.trazy.com(태그)"
+    ],
+    "note": "블로그·OTA 가이드 목록, 포털 벽은 아니다. 자동완성: rainy day activities · reddit · what to do in jeju when it rains"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "jeju rainy day",
+     "jeju rainy day activities",
+     "jeju rainy day activities reddit",
+     "jeju rainy weather",
+     "jeju island rainy day",
+     "what to do in jeju when it rains"
+    ]
+   },
+   "rationale": "수요가 있고 벽도 낮지만 섬 전체 「비 오는 날 BEST」 목록 의도다(우리가 피하는 문법). 동네 단위(what to do in seogwipo when it rains는 자동완성에 있다)로 좁히면 다시 본다. 실내 데이터(ADR-0065)는 있다.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "jeju indoor activities",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "theworldtravelindex.com",
+     "blog.trazy.com(2)",
+     "trvlogue.com",
+     "visitjeju.net",
+     "mom-mom.net",
+     "ivisitkorea.com",
+     "nst.com.my"
+    ],
+    "note": "블로그·매체·공식 섞임. 자동완성: indoor playground·water park·theme park — 시설 이름 찾기 쪽"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "jeju indoor activities",
+     "jeju indoor playground",
+     "jeju indoor attractions",
+     "jeju indoor water park",
+     "jeju indoor",
+     "jeju indoor theme park"
+    ]
+   },
+   "rationale": "「jeju rainy day activities」와 같은 섬 전체 목록 의도. watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "aewol cafe street",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "hotels.com",
+     "expedia.com(4)",
+     "trip.com moments(3)"
+    ],
+    "note": "OTA가 9/9. 카페 목록은 평점 의도 — 우리는 평점이 없다"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "aewol",
+     "aewol cafe street",
+     "aewol jeju",
+     "aewol the sunset jeju",
+     "aewol-eup",
+     "aewol salmon"
+    ]
+   },
+   "rationale": "동네+카페 = OTA 벽(한국어 「함덕 카페」 K3와 같은 모양).",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "seongsan ilchulbong",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 1
+   },
+   "kills": [
+    "K1_intent",
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "결과 화면은 보지 않았다(자동완성: sunrise peak·hike·opening hours·haenyeo show). 대표 명소 이름은 Wikipedia·UNESCO·VisitJeju·VisitKorea·OTA 자리로 본다(판단)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "seongsan ilchulbong",
+     "seongsan ilchulbong (sunrise peak)",
+     "seongsan ilchulbong peak",
+     "seongsan ilchulbong tuff cone",
+     "seongsan ilchulbong marine provincial park",
+     "seongsan ilchulbong haenyeo show"
+    ]
+   },
+   "rationale": "명소 이름 검색은 그곳 정보(시간·입장·등산)를 원한다 — 3곳 추천이 아니다. 장소+언어 검색 중 수요가 보이는 것은 이런 대표 명소뿐이고 모두 이 모양이다.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "things to do near seongsan ilchulbong",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "hotels.com(5, 호텔 근처 명소 쪽)",
+     "trip.com 숙소",
+     "expedia.co.jp",
+     "koreabybike.com"
+    ],
+    "note": "OTA 숙소 쪽이 8/9(프록시). 자동완성: attractions·cafe·food·breakfast near seongsan ilchulbong"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "things to do near seongsan ilchulbong",
+     "things to do near seongsan",
+     "thinga to.do.near.me",
+     "what to do near gansbaai",
+     "what is there to do near perran sands",
+     "low key things to do near me"
+    ]
+   },
+   "rationale": "의도는 우리 그대로다(대표 지명 근처, 지금 갈 곳). 프록시 결과가 OTA 벽이라 경쟁 0 → watch. 사람이 구글 결과를 보면 다시 매긴다.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "things to do in aewol",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "expedia(10/10, 나라별 도메인)"
+    ],
+    "note": "Expedia 동네 가이드가 1쪽을 채운다(프록시)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "things to do in aewol jeju",
+     "things to do in aewol",
+     "what to do in aewol eup",
+     "things to do around aewol jeju"
+    ]
+   },
+   "rationale": "동네 단위·의도 일치. 프록시 결과는 Expedia 벽 → watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "things to do in seogwipo",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "결과 화면을 보지 않았다. 자동완성 10개(at night·when it rains·reddit)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "things to do in seogwipo",
+     "things to do in seogwipo jeju",
+     "things to do in seogwipo city",
+     "things to do in seogwipo at night",
+     "things to do in seogwipo si",
+     "things to do in seogwipo reddit"
+    ]
+   },
+   "rationale": "영어 동네 검색어 중 수요가 가장 두껍다. SERP를 보지 않았으므로 target으로 올리지 않는다(규칙).",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "what to do in jeju today",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "trazy.com",
+     "thebrokebackpacker.com",
+     "expedia.com",
+     "travelocity.com",
+     "thetravelintern.com",
+     "스팸 도메인 2"
+    ],
+    "note": "today가 들어가도 결과는 섬 전체 things to do 목록"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "what to do in jeju today",
+     "what to do in jeju in june",
+     "what to do in jeju island in january",
+     "jeju weather today",
+     "jeju near me",
+     "jeju weather now"
+    ]
+   },
+   "rationale": "말은 우리 약속(지금)과 같지만 결과는 섬 전체 목록이고 OTA가 있다. watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "jeju solo travel",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성: itinerary·reddit·solo female travel·safe — 일정·안전 의도(결과 화면 안 봄)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "jeju solo travel",
+     "jeju solo travel itinerary",
+     "jeju solo travel reddit",
+     "jeju solo female travel",
+     "can i go to seoul from jeju without visa",
+     "how many days in jeju is enough"
+    ]
+   },
+   "rationale": "한국어 「제주 혼자 여행」과 같은 K1.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "jeju no plan",
+   "lang": "en",
+   "cluster": "foreign-en",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성 0(jeju spontaneous·jeju without plan도 0)"
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "P 의도의 영어판 — 수요 신호 없음. 페이지가 아니라 영어 엔티티 문장(GEO)으로만 닿는다.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "済州島 観光",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "airtrip.jp(3)",
+     "his-j.com",
+     "newt.net(2)",
+     "funliday.com",
+     "tripadvisor.jp"
+    ],
+    "note": "여행사·OTA(エアトリ·HIS·NEWT)가 채운다(프록시). 자동완성: 観光地·おすすめ·ツアー·モデルコース·費用"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "済州島 観光",
+     "済州島 観光地",
+     "済州島 観光 おすすめ",
+     "済州島 観光ツアー",
+     "済州島 観光マップ",
+     "済州島 観光 費用"
+    ]
+   },
+   "rationale": "섬 전체 머리 + 여행사 벽.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "済州島 観光 モデルコース",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성 1(결과 화면 안 봄)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "済州島 観光 モデルコース"
+    ]
+   },
+   "rationale": "모델 코스 = 일정. K1.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "済州島 カフェ",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성: 人気·芸能人·カフェ通り·新大久保(일본 안 가게 섞임). 결과 화면 안 봄 — 여행사·OTA 벽으로 본다(판단)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "済州島 カフェ",
+     "済州島 カフェ 人気",
+     "済州島 カフェ 芸能人",
+     "済州島 カフェ通り",
+     "済州島 カフェ 新大久保",
+     "済州島 みかん カフェ"
+    ]
+   },
+   "rationale": "섬+카페 머리, 평점 의도. 한국어 ○○ 카페와 같은 K3.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "城山日出峰",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 1
+   },
+   "kills": [
+    "K1_intent",
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성: 読み方·登山·アクセス·所要時間·日の出 — 명소 정보 의도"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "城山日出峰",
+     "城山日出峰 読み方",
+     "城山日出峰 登山",
+     "城山日出峰(ソンサンイルチュルボン)",
+     "城山日出峰 世界遺産",
+     "城山日出峰 アクセス"
+    ]
+   },
+   "rationale": "명소 이름 = 그곳 정보 의도. 영어 seongsan ilchulbong과 같다.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "済州島 雨の日",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17)",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "trvlogue.com/ja(동부 비 오는 날)",
+     "airtrip.jp",
+     "veltra.com(투어 4)",
+     "funliday.com"
+    ],
+    "note": "자동완성 2(雨の日·雨の日 観光). 투어 판매(VELTRA)와 블로그"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "済州島 雨の日",
+     "済州島 雨の日 観光"
+    ]
+   },
+   "rationale": "섬 전체 목록 의도 + 수요 얇음. watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "済州島 一人旅",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "scores": {
+    "demand": 1,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성 2(결과 화면 안 봄)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "済州島 一人旅",
+     "済州島 観光 一人旅"
+    ]
+   },
+   "rationale": "혼자 여행 = 일정·안전·숙소 의도. K1.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "西帰浦 観光",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성 2. 일본어 동네 단위 자동완성은 이것뿐(涯月 観光·済州 城山 観光·咸徳 ビーチ 周辺은 0)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "西帰浦 観光",
+     "済州島 西帰浦 観光"
+    ]
+   },
+   "rationale": "일본어 동네 수요는 서귀포 하나만 보였다. SERP 미관측 → watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "済州 ノープラン",
+   "lang": "ja",
+   "cluster": "foreign-ja",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성 0"
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "P 의도 일본어판 — 수요 신호 없음.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "济州岛攻略",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent",
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "gs.ctrip.com(3)",
+     "sohu.com",
+     "cncn.com 여행사",
+     "smzdm.com",
+     "holafly 블로그",
+     "bring-you.info",
+     "you.ctrip.com"
+    ],
+    "note": "携程(Ctrip)이 벽(프록시). 바이두 자동완성: 自由行·四天三晚·完整版·小红书 — 일정 의도. 바이두 결과 화면은 확인 실패"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "济州岛攻略",
+     "济州岛攻略地图",
+     "济州岛攻略小红书",
+     "济州岛 公车 攻略",
+     "济州岛 自由行 攻略",
+     "济州岛 租车 攻略"
+    ],
+    "baidu": [
+     "济州岛攻略",
+     "济州岛攻略自由行",
+     "济州岛攻略四天三晚",
+     "济州岛攻略完整版",
+     "济州岛攻略小红书",
+     "济州岛攻略景点"
+    ]
+   },
+   "rationale": "攻略 = 일정·준비 총정리. 머리 + Ctrip 벽 + 의도 불일치.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "济州岛景点",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K3_portal_wall"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다 + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "결과 화면 안 봄. 자동완성: 地图·推荐·介绍·门票 — 섬 전체 머리"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "济州岛景点",
+     "济州岛景点地图",
+     "济州岛景点地图2026",
+     "济州岛景点图",
+     "济州岛 景点推荐",
+     "济州岛景点dcard"
+    ],
+    "baidu": [
+     "济州岛景点介绍",
+     "济州岛景点地图",
+     "济州岛景点路线图",
+     "济州岛景点分布地图",
+     "济州岛景点图片",
+     "济州岛景点地图全图"
+    ]
+   },
+   "rationale": "섬 전체 머리. 携程·马蜂窝·바이두 백과 자리로 본다(판단).",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "济州岛自由行",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "kills": [
+    "K1_intent"
+   ],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다 + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": "autocomplete-only",
+    "naver_observed": false,
+    "top": [],
+    "note": "자동완성: 攻略·规划·5天·几天·交通·跟团好 — 일정·교통"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "济州岛自由行攻略",
+     "济州岛自由行规划",
+     "济州岛自由行自驾",
+     "济州岛自由行地图",
+     "济州岛自由行5天",
+     "济州岛自由行几天"
+    ],
+    "baidu": [
+     "济州岛 自由行地图",
+     "济州岛自由行攻略",
+     "邮轮济州岛自由行",
+     "济州岛自由行",
+     "济州岛自由行交通指南",
+     "济州岛自由行攻略详细"
+    ]
+   },
+   "rationale": "자유여행 일정 짜기. K1.",
+   "landing": "",
+   "verdict": "kill"
+  },
+  {
+   "query": "济州岛下雨天怎么玩",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "douyin.com 영상",
+     "nbcnews(무관)",
+     "korea.stripes.com(무관)",
+     "almanac.com(무관)",
+     "ivisitkorea(서울)"
+    ],
+    "note": "바이두 자동완성 10(怎么玩·适合去哪玩·最佳去处·攻略大全) — 세 언어 중 비 오는 날 수요가 가장 두껍다. 프록시 결과에 제주 전용 웹문서가 거의 없다(더우인 영상 하나). 바이두 결과는 확인 실패"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "济州岛 下雨",
+     "济州岛下雨机率",
+     "济州岛 下雨行程",
+     "济州岛下雨天行程",
+     "济州岛下雨景点",
+     "济州岛 下雨月份"
+    ],
+    "baidu": [
+     "济州岛下雨天怎么玩",
+     "济州岛下雨天适合去哪玩",
+     "济州岛下雨天建议去吗",
+     "济州岛下雨多吗",
+     "济州岛下雨会持续一天嘛",
+     "济州岛下雨天旅游攻略"
+    ]
+   },
+   "rationale": "수요 두껍고 웹문서 자리가 비어 보인다. 그러나 섬 전체 목록 의도(intent 1)라 watch — 동네 단위 말이 자동완성에 나오면 다시 본다.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "城山日出峰附近景点",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "WebSearch 1회(미국 엔진 프록시 — 구글·야후재팬·바이두 결과 화면이 아니다, ADR-0079로 구글 직접 조회 안 함) + 구글 자동완성(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": "websearch-proxy",
+    "naver_observed": false,
+    "top": [
+     "m.bendibao.com(2)",
+     "touch.travel.qunar.com(2)",
+     "dcfever.com",
+     "excursionmania.com",
+     "ktriptips.com"
+    ],
+    "note": "구글·바이두 자동완성 모두 있음(바이두: 附近景点推荐·附近有什么景点·附近美食). 프록시 1쪽은 집계·여행 커뮤니티 — 포털 벽은 아니다. 바이두 결과 화면은 확인 실패(바이두백과·携程·马蜂窝가 위일 수 있음)"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "城山日出峰附近景点",
+     "城山日出峰附近餐厅",
+     "城山日出峰附近早餐",
+     "城山日出峰附近美食"
+    ],
+    "baidu": [
+     "城山日出峰附近景点",
+     "城山日出峰附近景点推荐",
+     "城山日出峰附近有什么景点",
+     "城山日出峰附近美食",
+     "城山日出峰营业时间",
+     "城山日出峰玩多久"
+    ]
+   },
+   "rationale": "대표 지명(일출봉) 근처에서 지금 갈 곳 — 우리 의도 그대로이고 성산 식사·카페 뺀 59곳이 있다. 도달은 별개다: 본토 사용자는 구글을 못 쓰고 바이두 색인은 확인 실패라, 지금 이 말로 받을 수 있는 사람은 구글 간체 사용자(해외 화교·싱가포르·말레이시아·VPN)로 좁다. 외국어 랜딩은 지금 없다 — ADR-0093 결정 3(랜딩을 건드리지 않는 조건 안에서는 외국어 검색 유입을 노리지 않는다)을 고치는 주인 결정 전에는 받을 쪽을 만들지 않는다.",
+   "landing": "",
+   "verdict": "target"
+  },
+  {
+   "query": "涯月邑景点",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다 + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "바이두 자동완성: 必玩景点清单·最出名的三个景点·必吃美食. 결과 화면 안 봄"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "涯月邑 景点",
+     "济州岛 涯月邑 景点"
+    ],
+    "baidu": [
+     "涯月邑景点",
+     "涯月邑必玩景点清单",
+     "涯月邑地址",
+     "涯月邑最出名的三个景点",
+     "涯月邑简介",
+     "涯月邑最出名三个地方"
+    ]
+   },
+   "rationale": "동네 단위·의도 일치. SERP 미관측 → watch(규칙).",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "咸德海水浴场附近景点",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다 + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "바이두 자동완성에 1(咸德海边 附近 아래). 결과 화면 안 봄"
+   },
+   "demand": {
+    "naver": [],
+    "google": [],
+    "baidu": [
+     "咸德海边 附近的酒店",
+     "咸德海边 附近酒店推荐",
+     "咸德海滩",
+     "咸德海水浴场附近景点",
+     "我去咸德海水浴场看海",
+     "咸德海水浴场"
+    ]
+   },
+   "rationale": "대표 지명(함덕) 근처 — 의도 일치. SERP 미관측 → watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "济州岛小众景点",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다 + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "구글·바이두 자동완성 각 1"
+   },
+   "demand": {
+    "naver": [],
+    "google": [
+     "济州岛小众香水",
+     "济州岛 小众品牌",
+     "济州岛 小众景点"
+    ],
+    "baidu": [
+     "济州岛小众景点",
+     "济州岛网红打卡地",
+     "济州岛很小",
+     "济州岛必打卡景点",
+     "济州岛vlog",
+     "济州岛网红景点"
+    ]
+   },
+   "rationale": "숨은 명소 목록 의도 — 섬 전체. watch.",
+   "landing": "",
+   "verdict": "watch"
+  },
+  {
+   "query": "济州 不做攻略",
+   "lang": "zh-Hans",
+   "cluster": "foreign-zh-Hans",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "kills": [],
+   "serp": {
+    "checked_at": "2026-10-17",
+    "source": "구글 자동완성만(hl·gl을 그 언어로, 저장소 밖 일회 스크립트 2026-10-17) — 결과 화면은 보지 않았다 + 바이두 자동완성(suggestion.baidu.com, 같은 스크립트). 바이두 결과 화면은 확인 실패",
+    "observed": false,
+    "naver_observed": false,
+    "top": [],
+    "note": "구글·바이두 자동완성 0"
+   },
+   "demand": {
+    "naver": [],
+    "google": [],
+    "baidu": []
+   },
+   "rationale": "P 의도 중국어판 — 수요 신호 없음.",
+   "landing": "",
+   "verdict": "watch"
   }
  ]
 }
