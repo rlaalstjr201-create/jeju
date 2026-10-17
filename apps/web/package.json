@@ -15,6 +15,7 @@
     "landing:slugs": "tsx scripts/build-landing.mjs --write-slugs",
     "check:data": "tsx scripts/check-data.ts",
     "check:slop": "tsx scripts/check-slop.ts",
+    "check:jeju": "tsx scripts/jeju-baseline.ts",
     "check:links": "tsx scripts/check-links.ts",
     "make:icons": "tsx scripts/make-icons.ts",
     "aggregate:events": "tsx events/aggregate.ts",

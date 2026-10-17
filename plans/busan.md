@@ -51,7 +51,7 @@ S2는 S1과 따로 진행할 수 있다(앱을 안 건드린다). S4b는 S4 출�
 1. **데이터**: `public/spots.json`·`public/i18n/places.*.json` sha256, `__SPOTS_V__`·`__PLACES_V__`. `build-spots.mjs`는 돌리지 않는다.
 2. **배포 파일 전부**: `dist/` 아래 `assets/`를 뺀 모든 파일의 sha256 — `index.html`(바이트 전부, 인라인 포함), `sw.js`, `sitemap*.xml`, `robots.txt`, `404.html`, `privacy*.html`, `llms.txt`, `_headers`, `manifest`, 아이콘, `dist/jeju/**`(폴더별 묶음 해시·파일 수). 견주기 전에 바꾸는 것은 셋뿐이다: 해시 붙은 자산 이름(`index-XXXXXXXX.js` → `index-*.js`, 코드가 바뀌면 이름은 늘 바뀐다), `sw.js`의 `VERSION` 값, `sitemap-core.xml`의 `/`·`/privacy` `<lastmod>`(빌드 날짜를 따라 움직이는 기존 동작). 이름을 지운 `index.html`의 바이트 수·gzip도 기록한다.
 3. **서비스 워커 미리 받기 목록**: 이름을 지운 목록이 같다(부산 파일 0, 제주 `spots.json?v=` 그대로).
-4. **자산**: 해시 뺀 자산 이름 목록이 같다. 한국어 진입 JS+CSS gzip ≤ 51,200 B이고 S0 대비 늘어난 바이트를 출력한다(같을 필요는 없다 — `__APP_V__`가 커밋마다 JS를 바꾼다). 넘치면 부산 동네 표를 `spots-busan.json` 머리로 옮긴다.
+4. **자산**: 해시 뺀 자산 이름 목록이 같다. 한국어 진입 JS+CSS gzip ≤ 50,000 B(Vite가 보이는 kB와 같은 셈)이고 S0 대비 늘어난 바이트를 출력한다(같을 필요는 없다 — `__APP_V__`가 커밋마다 JS를 바꾼다). 넘치면 부산 동네 표를 `spots-busan.json` 머리로 옮긴다.
 5. **서버 함수**(tsx, Vite 정의 없이 = wrangler와 같은 조건, ReferenceError면 실패): `functions/api/rain.ts` `onRequestGet`을 제주 15 slug·`haeundae`·`gwangalli`·빈 값·모르는 값·키 없음으로 불러 상태·이유·보낸 격자(가짜 `fetch`), `events/handler.ts` `handleEvents`를 고정 묶음(기분 누름, `area` 기준 보임, 숙소 링크, 모르는 필드 `dest`, 모르는 동네 `광안리`, 모르는 이벤트 `start_view`)으로 불러 상태·카운터 증가. 서버 함수 코드 경로가 바뀌면 여기서 걸린다.
 6. **브라우저**(운영 빌드를 `vite preview`, Chrome 375×812, `ko-KR`, 시계 고정, `/api/**` 204, 사진 로컬, 위치 스텁 동문시장·권한 `prompt`): 기기 둘 — 빈 저장소, `jeju.saved.v2`에 한 곳만. 기기마다
    - 첫 그리기 전: `DOMContentLoaded` 때 `<html>` 전체(인라인 스크립트가 바꾼 것 포함)와 클래스,

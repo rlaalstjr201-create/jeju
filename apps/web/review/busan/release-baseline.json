@@ -1,0 +1,217 @@
+{
+ "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
+ "measuredAt": "9fa8cd3",
+ "data": {
+  "public/spots.json": "c88acb8476f5fd9417552bd59831960185ebe6117f4a1a5e9c0c1ad1b0e73821",
+  "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
+  "public/i18n/places.zh-Hans.json": "2d3e315211abc914fbd45736c0ab3dbcc092b8b8c5cdaba7bb774873a8b724a2",
+  "public/i18n/places.ja.json": "79915136be887bf23d9000aaf35355315bff3b2e61a72439575220781dec75b2",
+  "__SPOTS_V__": "c88acb8476",
+  "__PLACES_V__": "149ead819a"
+ },
+ "indexHtml": {
+  "bytes": 23288,
+  "gzip": 7776
+ },
+ "files": {
+  "404.html": "56e004b58d8dc04e",
+  "58c37a8603f7ad4d1d7d86505f8ed5f2.txt": "083b18dc7fa6be7e",
+  "_headers": "05a92e4add14e35b",
+  "favicon.ico": "68d8298bf0ede943",
+  "i18n/places.en.json": "914a45cc4c155e6b",
+  "i18n/places.ja.json": "79915136be887bf2",
+  "i18n/places.zh-Hans.json": "2d3e315211abc914",
+  "icons/icon-180.png": "04450ac5a579d7ce",
+  "icons/icon-192.png": "962b5f3da29910d4",
+  "icons/icon-512.png": "29e7f77a887bb18f",
+  "icons/icon-maskable-512.png": "5147ac3b22acf105",
+  "index.html": "c9c9f3e363c33016",
+  "jeju/index.html": "1b1782d22fd2b1cd",
+  "jeju/landing.css": "8ed2ff79670ead0d",
+  "llms.txt": "9264bd0c9c3af434",
+  "manifest.webmanifest": "5ed6dec50ae04bfc",
+  "og.png": "d407fccd1da64109",
+  "privacy-en.html": "eb70d23e4956ff39",
+  "privacy-ja.html": "f1cee1202200a8cf",
+  "privacy-zh-Hans.html": "24d9d285aa7bde1a",
+  "privacy.html": "85497c2b3eee7577",
+  "robots.txt": "6025d5cfb5c6237a",
+  "sitemap-aewol.xml": "d8386256edb6dc59",
+  "sitemap-andeok.xml": "2a0cf54f4d7e4497",
+  "sitemap-core.xml": "f0fd1e4dc2404d05",
+  "sitemap-daejeong.xml": "b15acfb8f0498cf2",
+  "sitemap-gujeju.xml": "3e013090eac4fce5",
+  "sitemap-gujwa.xml": "da5d2ac03a6b18c3",
+  "sitemap-hallim.xml": "cf34e9284a6050fa",
+  "sitemap-hangyeong.xml": "b5d4778478214dca",
+  "sitemap-jocheon.xml": "a78efa4cd4e1b1db",
+  "sitemap-jungmun.xml": "67e3c5239f6fbd46",
+  "sitemap-namwon.xml": "ea56d6537de94623",
+  "sitemap-pyoseon.xml": "8aacf080549a2698",
+  "sitemap-seogwipo.xml": "0c25d518b44979c1",
+  "sitemap-seongsan.xml": "d5fafc2b7310dd39",
+  "sitemap-sinjeju.xml": "bae3bc6c47b15dce",
+  "sitemap-udo.xml": "521953ce34d1ed30",
+  "sitemap.xml": "060a64b8bd188d00",
+  "spots.json": "c88acb8476f5fd94",
+  "sw.js": "f8cc5856a2760026",
+  "jeju/aewol/": "219 files dea2db28199b4788",
+  "jeju/andeok/": "137 files 0d1dbffaf773f1ad",
+  "jeju/daejeong/": "137 files 957c33c6b05c0a67",
+  "jeju/gujeju/": "454 files ff255761f92f98e0",
+  "jeju/gujwa/": "179 files 089fe61c024d41ad",
+  "jeju/hallim/": "155 files dc49daaad2df74af",
+  "jeju/hangyeong/": "117 files 6f8b559018acb0f5",
+  "jeju/jocheon/": "234 files 41c634b90e306ac1",
+  "jeju/jungmun/": "169 files a90a31b58ff89d12",
+  "jeju/namwon/": "106 files 963d7a2637765836",
+  "jeju/pyoseon/": "123 files bac2e7ec22442d57",
+  "jeju/seogwipo/": "296 files 7256cfa084c6ccdf",
+  "jeju/seongsan/": "151 files 0dae9a9bd892a38c",
+  "jeju/sinjeju/": "367 files 0c846fdb59a4332c",
+  "jeju/udo/": "93 files 003e5ec61d558728"
+ },
+ "precache": [
+  "./",
+  "assets/index-*.css",
+  "assets/index-*.js",
+  "spots.json?v=c88acb8476",
+  "manifest.webmanifest",
+  "icons/icon-192.png",
+  "icons/icon-512.png"
+ ],
+ "functions": {
+  "rain": {
+   "hangyeong": "204 result 03 NO_DATA nx=47 ny=34",
+   "hallim": "204 result 03 NO_DATA nx=48 ny=36",
+   "aewol": "204 result 03 NO_DATA nx=50 ny=37",
+   "sinjeju": "204 result 03 NO_DATA nx=52 ny=38",
+   "gujeju": "204 result 03 NO_DATA nx=53 ny=38",
+   "jocheon": "204 result 03 NO_DATA nx=55 ny=38",
+   "gujwa": "204 result 03 NO_DATA nx=58 ny=38",
+   "udo": "204 result 03 NO_DATA nx=60 ny=38",
+   "daejeong": "204 result 03 NO_DATA nx=48 ny=32",
+   "andeok": "204 result 03 NO_DATA nx=49 ny=33",
+   "jungmun": "204 result 03 NO_DATA nx=51 ny=33",
+   "seogwipo": "204 result 03 NO_DATA nx=53 ny=33",
+   "namwon": "204 result 03 NO_DATA nx=55 ny=34",
+   "pyoseon": "204 result 03 NO_DATA nx=58 ny=35",
+   "seongsan": "204 result 03 NO_DATA nx=60 ny=37",
+   "haeundae": "400",
+   "gwangalli": "400",
+   "(empty)": "400",
+   "nowhere": "400",
+   "aewol (no key)": "204 no-key"
+  },
+  "events": {
+   "tap": "204  2026-10-18 mood:walk tap +1",
+   "shown by area": "204  2026-10-18 a1b2c3d4-0000-4000-8000-000000000001 shown +1",
+   "stay link": "204  2026-10-18 src:hotel-a open +1",
+   "field dest": "400 event 0: unknown field dest",
+   "area 광안리": "400 event 0: area",
+   "event start_view": "400 event 0: e"
+  }
+ },
+ "browser": {
+  "empty": {
+   "firstPaint": {
+    "html": "4791f5c95ba875e6"
+   },
+   "home": {
+    "body": "440fc79da8318aac",
+    "styles": "245 elements 7f9ab83087549ca7",
+    "htmlClass": "",
+    "local": {},
+    "session": {},
+    "geoCalls": 0,
+    "requests": {
+     "/": 1,
+     "/assets/index-*.css": 1,
+     "/assets/index-*.js": 1,
+     "/icons/icon-192.png": 1,
+     "/spots.json?v=c88acb8476": 1,
+     "api.cdn.visitjeju.net/…": 25
+    }
+   },
+   "walk": {
+    "cards": [
+     "방선문",
+     "어승생 (어승생악)",
+     "사려니숲길"
+    ],
+    "body": "7c39270d3729fa58",
+    "styles": "286 elements 877519130824a300",
+    "local": {},
+    "session": {
+     "jeju.session": "{\"v\":1,\"mood\":\"walk\",\"sub\":\"meal\",\"newSub\":\"mix\",\"origin\":{\"key\":\"gps\",\"point\":{\"lat\":33.5122,\"lng\":126.5272},\"isPoint\":true,\"from\":\"여기서\"},\"indoor\":false,\"shown\":{\"walk\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]},\"histories\":{\"walk\":{\"seen\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"],\"last\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]}},\"reach\":\"drive30\"}"
+    },
+    "geoCalls": 1,
+    "requests": {
+     "/api/rain?area=gujeju": 1,
+     "api.cdn.visitjeju.net/…": 10
+    }
+   }
+  },
+  "saved.v2 only": {
+   "firstPaint": {
+    "html": "4791f5c95ba875e6"
+   },
+   "home": {
+    "body": "e411dc6d28674be9",
+    "styles": "245 elements 001745997ed229fa",
+    "htmlClass": "",
+    "local": {
+     "jeju.saved.v2": "[{\"id\":\"e654312a-2a40-45cd-9464-a83756bac0fa\",\"date\":\"2026-10-17\",\"order\":0}]"
+    },
+    "session": {},
+    "geoCalls": 0,
+    "requests": {
+     "/": 1,
+     "/assets/index-*.css": 1,
+     "/assets/index-*.js": 1,
+     "/icons/icon-192.png": 1,
+     "/spots.json?v=c88acb8476": 1,
+     "api.cdn.visitjeju.net/…": 25
+    }
+   },
+   "walk": {
+    "cards": [
+     "방선문",
+     "어승생 (어승생악)",
+     "사려니숲길"
+    ],
+    "body": "0853d8e45b135025",
+    "styles": "286 elements 83716fca5752d0e3",
+    "local": {
+     "jeju.saved.v2": "[{\"id\":\"e654312a-2a40-45cd-9464-a83756bac0fa\",\"date\":\"2026-10-17\",\"order\":0}]"
+    },
+    "session": {
+     "jeju.session": "{\"v\":1,\"mood\":\"walk\",\"sub\":\"meal\",\"newSub\":\"mix\",\"origin\":{\"key\":\"gps\",\"point\":{\"lat\":33.5122,\"lng\":126.5272},\"isPoint\":true,\"from\":\"여기서\"},\"indoor\":false,\"shown\":{\"walk\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]},\"histories\":{\"walk\":{\"seen\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"],\"last\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]}},\"reach\":\"drive30\"}"
+    },
+    "geoCalls": 1,
+    "requests": {
+     "/api/rain?area=gujeju": 1,
+     "api.cdn.visitjeju.net/…": 10
+    }
+   }
+  }
+ },
+ "assets": {
+  "names": [
+   "assets/apply-*.js",
+   "assets/en-*.css",
+   "assets/en-*.js",
+   "assets/index-*.css",
+   "assets/index-*.js",
+   "assets/ja-*.js",
+   "assets/ja-*.css",
+   "assets/zh-Hans-*.css",
+   "assets/zh-Hans-*.js"
+  ],
+  "koreanEntryGzip": {
+   "assets/index-*.js": 42797,
+   "assets/index-*.css": 5619
+  },
+  "koreanEntryGzipTotal": 48416
+ }
+}
