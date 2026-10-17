@@ -25,35 +25,40 @@ function choose(search: string, kept: string | null, languages: string[]) {
   const store = new Map<string, string>(kept ? [['lang', kept]] : []);
   const h = { lang: 'ko', className: '' };
   const localStorage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => store.set(k, v) };
-  runInNewContext(script, { window: { localStorage }, document: { documentElement: h }, location: { search }, navigator: { languages, language: languages[0] } });
-  return { lang: h.lang, hidden: h.className.includes('l10n'), kept: store.get('lang') ?? null };
+  const window: { localStorage: typeof localStorage; __suggest?: string } = { localStorage };
+  runInNewContext(script, { window, document: { documentElement: h }, location: { search }, navigator: { languages, language: languages[0] } });
+  return { lang: h.lang, hidden: h.className.includes('l10n'), kept: store.get('lang') ?? null, suggest: window.__suggest ?? null };
 }
 
-describe('the language (ADR-0093 2)', () => {
-  it('Korean whenever the browser lists Korean or Korea; else its first of English, Chinese, Japanese; else English', () => {
-    expect(choose('', null, ['ko-KR', 'en-US']).lang).toBe('ko');
-    expect(choose('', null, ['en-KR', 'en']).lang).toBe('ko');
-    expect(choose('', null, ['en-US', 'ko']).lang).toBe('ko');
-    expect(choose('', null, ['zh-CN', 'en']).lang).toBe('zh-Hans');
-    expect(choose('', null, ['zh-TW']).lang).toBe('zh-Hans');
-    expect(choose('', null, ['ja-JP']).lang).toBe('ja');
-    expect(choose('', null, ['fr-FR', 'ja']).lang).toBe('ja');
-    expect(choose('', null, ['fr-FR']).lang).toBe('en');
-    expect(choose('', null, []).lang).toBe('ko');
+describe('the language (ADR-0093 2, Amendment 7)', () => {
+  it("the browser's languages never switch the page (a crawler without them gets Korean); they only pick the one language offered", () => {
+    const korean = { lang: 'ko', hidden: false, kept: null };
+    expect(choose('', null, ['ko-KR', 'en-US'])).toEqual({ ...korean, suggest: null });
+    expect(choose('', null, ['en-KR', 'en'])).toEqual({ ...korean, suggest: null });
+    expect(choose('', null, ['en-US', 'ko'])).toEqual({ ...korean, suggest: null });
+    expect(choose('', null, ['en-US'])).toEqual({ ...korean, suggest: 'en' });
+    expect(choose('', null, ['zh-CN', 'en'])).toEqual({ ...korean, suggest: 'zh-Hans' });
+    expect(choose('', null, ['zh-TW'])).toEqual({ ...korean, suggest: 'zh-Hans' });
+    expect(choose('', null, ['ja-JP'])).toEqual({ ...korean, suggest: 'ja' });
+    expect(choose('', null, ['fr-FR', 'ja'])).toEqual({ ...korean, suggest: 'ja' });
+    expect(choose('', null, ['fr-FR'])).toEqual({ ...korean, suggest: 'en' });
+    expect(choose('', null, [])).toEqual({ ...korean, suggest: null });
+    // a choice already made (× keeps Korean) is never asked again
+    expect(choose('', 'ko', ['en-US'])).toEqual({ ...korean, kept: 'ko', suggest: null });
   });
 
   it('?lang= first, and it is kept on this device; then the kept one; a value it does not know is ignored', () => {
-    expect(choose('?lang=ja', null, ['ko-KR'])).toEqual({ lang: 'ja', hidden: true, kept: 'ja' });
+    expect(choose('?lang=ja', null, ['ko-KR'])).toEqual({ lang: 'ja', hidden: true, kept: 'ja', suggest: null });
     for (const zh of ['zh', 'zh-CN', 'zh-SG', 'zh-Hans']) expect(choose(`?lang=${zh}`, null, ['ko-KR']).kept).toBe('zh-Hans');
     expect(choose('?lang=zh-TW', null, ['ko-KR']).lang).toBe('ko');
     expect(choose('?mood=walk&lang=zh-Hans', null, ['ko-KR']).lang).toBe('zh-Hans');
-    expect(choose('?lang=ko', 'en', ['en-US'])).toEqual({ lang: 'ko', hidden: false, kept: 'ko' });
+    expect(choose('?lang=ko', 'en', ['en-US'])).toEqual({ lang: 'ko', hidden: false, kept: 'ko', suggest: null });
     expect(choose('', 'en', ['ko-KR']).lang).toBe('en');
-    expect(choose('?lang=fr', null, ['ko-KR'])).toEqual({ lang: 'ko', hidden: false, kept: null });
+    expect(choose('?lang=fr', null, ['ko-KR'])).toEqual({ lang: 'ko', hidden: false, kept: null, suggest: null });
   });
 
   it('Korean leaves the page as it is: no other lang, nothing hidden', () => {
-    expect(choose('', null, ['ko-KR'])).toEqual({ lang: 'ko', hidden: false, kept: null });
+    expect(choose('', null, ['ko-KR'])).toEqual({ lang: 'ko', hidden: false, kept: null, suggest: null });
   });
 });
 

@@ -3720,6 +3720,8 @@ for (const [lang, locale] of [['en', 'en-US'], ['zh-Hans', 'zh-CN'], ['ja', 'ja-
     const dir = join(appDir, 'design/qa/i18n');
     mkdirSync(dir, { recursive: true });
     const { ctx, page } = await fresh({ width: 375, height: 812, locale });
+    // Amendment 7: the page is opened in another language only by ?lang= (or a kept choice), never by the browser's
+    await page.goto(`${BASE}?lang=${lang}`);
     const note = (where, r) => {
       if (r.left.length) problems.push(`${where} Korean: ${r.left.slice(0, 6).join(' / ')}`);
       if (r.cut.length) problems.push(`${where} cut: ${r.cut.slice(0, 6).join(' / ')}`);
@@ -3827,7 +3829,7 @@ await check('I18N-offline', 'ADR-0093: English device, deploy with new file name
       }
       throw new Error(`never: ${what}`);
     };
-    await page.goto(url);
+    await page.goto(`${url}?lang=en`);
     await page.evaluate(() => navigator.serviceWorker.ready);
     await page.reload();
     await page.waitForSelector('#today:not(.wait)');
@@ -3876,7 +3878,7 @@ await check('I18N-slow', 'ADR-0093: the English words never arrive (a stalled co
   const page = await ctx.newPage();
   try {
     const t0 = Date.now();
-    await page.goto(BASE, { waitUntil: 'commit' });
+    await page.goto(`${BASE}?lang=en`, { waitUntil: 'commit' });
     await page.waitForFunction(() => !document.documentElement.classList.contains('l10n') && document.documentElement.lang === 'ko', null, { timeout: 7000 });
     const waited = Date.now() - t0;
     await page.waitForFunction(() => history.state, null, { timeout: 3000 }); // mounted
@@ -3888,6 +3890,76 @@ await check('I18N-slow', 'ADR-0093: the English words never arrive (a stalled co
   } finally {
     await ctx.close();
   }
+});
+
+// ADR-0093 Amendment 7: the browser's languages only offer a language; the page stays Korean until the user takes it.
+await check('I18N-suggest', 'Amendment 7 at 375×812: a browser without Korean (en-US) gets the Korean page (lang ko, Korean title) with one English row near the top; 아무거나 stays on the first screen; tapping it opens English and keeps it; × keeps Korean and the row never comes back; ko-KR gets no row; ?lang=ja opens Japanese at once', async () => {
+  const problems = [];
+  const open = async (locale, path = '') => {
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, serviceWorkers: 'block', locale });
+    await ctx.addInitScript(GEO_STUB);
+    await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+    const page = await ctx.newPage();
+    await page.goto(BASE + path);
+    await page.waitForSelector('#today:not(.wait)');
+    return { ctx, page };
+  };
+  const state = (page) => page.evaluate(() => {
+    const row = document.querySelector('#langSuggest');
+    return { lang: document.documentElement.lang, title: document.title, ask: document.querySelector('#ask').textContent, row: row && !row.hidden ? row.textContent : null, kept: localStorage.getItem('lang'), any: Math.round(document.querySelector('.any').getBoundingClientRect().bottom), over: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+  });
+  // en-US, nothing kept: Korean with the English row
+  let { ctx, page } = await open('en-US');
+  let s = await state(page);
+  if (s.lang !== 'ko' || !/[가-힣]/.test(s.title) || s.ask !== '지금 뭐 하고 싶어요?' || s.row !== 'View in English?' || s.over > 0) problems.push(`en-US first ${JSON.stringify(s)}`);
+  if (s.any > 812) problems.push(`아무거나 off the first screen at ${s.any}`);
+  const box = await page.$eval('#langSuggest .x', (b) => { const r = b.getBoundingClientRect(); return [r.width, r.height]; });
+  if (box[0] < 44 || box[1] < 44) problems.push(`× is ${box}`);
+  if (SHOTS) await page.screenshot({ path: join(SHOTS, 'lang-suggest-en.png') });
+  await page.click('#langSuggest a');
+  await page.waitForFunction(() => document.documentElement.lang === 'en' && !document.documentElement.classList.contains('l10n'));
+  await page.reload();
+  await page.waitForSelector('#today:not(.wait)');
+  s = await state(page);
+  if (s.lang !== 'en' || s.kept !== 'en' || s.row) problems.push(`after the tap ${JSON.stringify(s)}`);
+  await ctx.close();
+  // × : Korean kept, never asked again
+  ({ ctx, page } = await open('ja-JP'));
+  s = await state(page);
+  if (s.row !== '日本語で表示しますか？') problems.push(`ja-JP row ${s.row}`);
+  await page.click('#langSuggest .x');
+  await page.reload();
+  await page.waitForSelector('#today:not(.wait)');
+  s = await state(page);
+  if (s.lang !== 'ko' || s.kept !== 'ko' || s.row) problems.push(`after × ${JSON.stringify(s)}`);
+  await ctx.close();
+  // Korean browser: nothing new; ?lang=ja: Japanese at once
+  ({ ctx, page } = await open('ko-KR'));
+  s = await state(page);
+  if (s.lang !== 'ko' || s.row) problems.push(`ko-KR ${JSON.stringify(s)}`);
+  await ctx.close();
+  ({ ctx, page } = await open('en-US', '?lang=ja'));
+  s = await state(page);
+  if (s.lang !== 'ja' || s.kept !== 'ja' || /[가-힣]/.test(s.ask)) problems.push(`?lang=ja ${JSON.stringify(s)}`);
+  await ctx.close();
+  assert(!problems.length, problems.join(' | '));
+});
+
+await check('I18N-crawler', 'Amendment 7: a crawler-like browser (no languages at all, or en-US with no stored choice) renders the Korean page: html lang ko, Korean title and words, no language files asked for', async () => {
+  const problems = [];
+  for (const [tag, setup] of [['no languages', "Object.defineProperty(navigator, 'languages', { get: () => [] }); Object.defineProperty(navigator, 'language', { get: () => '' });"], ['en-US', '']]) {
+    const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, serviceWorkers: 'block', locale: 'en-US', userAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' });
+    if (setup) await ctx.addInitScript(setup);
+    const asked = [];
+    ctx.on('request', (r) => { if (/\/assets\/(en|ja|zh-Hans|apply)-|\/i18n\/places\./.test(r.url())) asked.push(r.url()); });
+    const page = await ctx.newPage();
+    await page.goto(BASE);
+    await page.waitForSelector('#today:not(.wait)');
+    const s = await page.evaluate(() => ({ lang: document.documentElement.lang, title: document.title, ask: document.querySelector('#ask').textContent }));
+    if (s.lang !== 'ko' || s.title !== '여차나:제주 · P를 위한 여행동반자' || s.ask !== '지금 뭐 하고 싶어요?' || asked.length) problems.push(`${tag} ${JSON.stringify({ ...s, asked })}`);
+    await ctx.close();
+  }
+  assert(!problems.length, problems.join(' | '));
 });
 
 await browser.close();

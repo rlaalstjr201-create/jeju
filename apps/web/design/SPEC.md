@@ -613,7 +613,8 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 
 ### 6.16 언어 (ADR-0093, specs/i18n.md)
 
-- 고르기: `?lang=` → 이 기기의 `lang` → 브라우저 언어(한국어·`-KR`이 하나라도 있으면 한국어, 아니면 en·zh*·ja 중 처음, 아니면 en). index.html `<head>` 첫 인라인 스크립트가 정하고, 한국어가 아니면 `html.l10n`으로 `#app`을 가린다(최대 3초, 문구가 들어오면 main.ts가 푼다).
+- 고르기(Amendment 7): `?lang=` → 이 기기의 `lang` → 한국어. 브라우저 언어로는 바꾸지 않는다. index.html `<head>` 첫 인라인 스크립트가 정하고, 한국어가 아니면 `html.l10n`으로 `#app`을 가린다(최대 3초, 문구가 들어오면 main.ts가 푼다).
+- 제안 한 줄 `#langSuggest`(`.lang-suggest`): 브라우저 언어에 한국어·`-KR`이 없고 아무것도 기억하지 않았으면 「P를 위한 여행동반자」 아래에 그 언어로 「View in English?」·「切换为简体中文？」·「日本語で表示しますか？」(링크 `/?lang=xx`)와 ×(44×44, 누르면 `lang=ko` 기억). 높이 44, 위 간격 8, 면 `--fill`, 모서리 `--r-card`. 인라인 스크립트가 만든다.
 - 스위치 둘: 첫 화면 맨 아래 `설정 · 지도 앱 · 의견` 밑의 한 줄 `.lang-line`(데이터가 그려진 뒤, 지금 아닌 세 언어, 각 언어 제 이름, `/?lang=xx` 링크)과 설정의 `언어` 줄(`.langs`, 지도 앱 줄과 같은 면, 지금 언어에 `aria-current="true"`).
 - 다른 언어 문구는 `src/i18n/{en,zh-Hans,ja}.ts`, 한국어 표(`COPY`·`MOOD_LABEL`·`TRAVEL_TEXT`·`DAY_TEXT`·`MARKET_TEXT`·`SEASON_TEXT`·`FROM_TEXT`·`GO_TEXT`·`BOOK_TEXT`·`MAP_APP_NAME`·`AREAS`)를 마운트 전에 바꿔 끼운다(`src/i18n/apply.ts`). 장소 소개글은 `public/i18n/places.<lang>.json`, 화면은 `PLACE.name`·`PLACE.reason`으로 읽고 지도 링크는 한국어 이름 그대로.
 - 일본어·중국어는 `word-break: normal; line-break: strict`와 그 언어 시스템 글꼴(`src/i18n/{ja,zh-Hans}.css`, 그 언어일 때만, ADR-0093 Amendment 4). 언어별 글꼴 순서·행간·자간·굵기는 `src/i18n/{en,zh-Hans,ja}.css`(Amendment 5, 값은 `docs/i18n/mockups/README.md`).
