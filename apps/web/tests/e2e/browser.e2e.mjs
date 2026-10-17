@@ -3832,20 +3832,30 @@ await check('I18N-offline', 'ADR-0093: English device, deploy with new file name
     await page.reload();
     await page.waitForSelector('#today:not(.wait)');
     await waitFor('English kept in the v1 cache', async () => (await cached(`/assets/${en}`)).length > 0 && (await cached('/i18n/places.en.json')).length > 0);
+    // the deploy: the new worker installs in the background while the old page is open, and the user leaves before any
+    // new code runs online (the page closes right after the update starts) — nothing of the new build's English is
+    // fetched by a page; the old cache, with the old English, goes when the new worker activates
     live = v2;
     await page.evaluate(() => navigator.serviceWorker.getRegistration().then((r) => r && r.update()));
-    await waitFor('the v2 worker took over with the new English chunk', async () => {
-      const keys = await page.evaluate(() => caches.keys()).catch(() => []);
-      return keys.length === 1 && keys[0].endsWith('-v2') && (await cached(`/assets/${en2}`)).length > 0 && (await cached('/i18n/places.en.json')).length > 0;
+    await page.close();
+    const workerCaches = async () => {
+      const ws = ctx.serviceWorkers();
+      return ws.length ? ws[ws.length - 1].evaluate(() => caches.keys()).catch(() => []) : [];
+    };
+    await waitFor('the v2 worker took over and the v1 cache is gone', async () => {
+      const keys = await workerCaches();
+      return keys.length === 1 && keys[0].endsWith('-v2');
     });
+    // the next open, on the boat: offline
     await ctx.setOffline(true);
-    await page.reload();
-    await page.waitForSelector('#today:not(.wait)', { timeout: 8000 });
-    const shown = await page.evaluate(() => ({ lang: document.documentElement.lang, ask: document.querySelector('#ask').textContent }));
+    const next = await ctx.newPage();
+    await next.goto(url);
+    await next.waitForSelector('#today:not(.wait)', { timeout: 10000 });
+    const shown = await next.evaluate(() => ({ lang: document.documentElement.lang, ask: document.querySelector('#ask').textContent }));
     assert(shown.lang === 'en' && !/[가-힣]/.test(shown.ask), `offline after the deploy: ${JSON.stringify(shown)}`);
-    await tapText(page, '[data-mood="walk"]');
-    await waitCards(page);
-    const reason = await page.$eval('#cards .card.lead .reason', (p) => p.textContent);
+    await tapText(next, '[data-mood="walk"]');
+    await waitCards(next);
+    const reason = await next.$eval('#cards .card.lead .reason', (p) => p.textContent);
     assert(!/[가-힣]/.test(reason), `offline card in Korean: ${reason}`);
   } finally {
     await ctx.close();
