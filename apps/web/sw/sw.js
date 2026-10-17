@@ -10,6 +10,18 @@ const scoped = (p) => new URL(p, self.registration.scope).href;
 /** Content-hashed build files (Vite's assets/<name>-<hash>.*) and spots.json?v=<hash>: a URL that names its
  * content can't be stale. */
 const HASHED = /^assets\/|[?&]v=/;
+/** ADR-0093: each other language's own files in this build (its words chunk and what it brings, its place texts). Not
+ * precached for everyone: kept only on a device that uses that language — the page says so (message below), and a new
+ * worker takes this build's files for every language the cache it replaces had. */
+const LANGS = __LANGS__;
+const isLang = (l) => typeof l === 'string' && Object.prototype.hasOwnProperty.call(LANGS, l);
+const addLang = (cache, l) => cache.addAll(LANGS[l].map((u) => new Request(scoped(u))));
+/** the languages whose place texts an older cache of this app holds */
+const usedLangs = () =>
+  caches
+    .keys()
+    .then((keys) => Promise.all(keys.filter((k) => k.startsWith('tomorrow-') && k !== CACHE).map((k) => caches.open(k).then((c) => c.keys()))))
+    .then((lists) => Object.keys(LANGS).filter((l) => lists.some((reqs) => reqs.some((r) => r.url.includes(`/i18n/places.${l}.json`)))));
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -18,9 +30,22 @@ self.addEventListener('install', (event) => {
       // The unversioned entries ('./', manifest, icons) bypass the HTTP cache (cache: 'reload'), so a host's
       // max-age can't put last deploy's files into this deploy's cache. Hashed ones may come from it — on a
       // first visit that is the copy the page is already downloading, not a second 330 KB download.
-      .then((cache) => cache.addAll(PRECACHE.map((u) => new Request(scoped(u), HASHED.test(u) ? {} : { cache: 'reload' }))))
+      .then((cache) =>
+        cache
+          .addAll(PRECACHE.map((u) => new Request(scoped(u), HASHED.test(u) ? {} : { cache: 'reload' })))
+          // before the old cache goes (activate): this build's files of the languages it was used in
+          .then(usedLangs)
+          .then((langs) => Promise.all(langs.map((l) => addLang(cache, l)))),
+      )
       .then(() => self.skipWaiting()),
   );
+});
+
+// The page in another language than Korean: keep that language's files in this version's cache.
+self.addEventListener('message', (event) => {
+  const l = event.data && event.data.type === 'lang' ? event.data.lang : null;
+  if (!isLang(l)) return;
+  event.waitUntil(caches.has(CACHE).then((live) => live && caches.open(CACHE).then((cache) => addLang(cache, l))).catch(() => undefined));
 });
 
 self.addEventListener('activate', (event) => {

@@ -35,19 +35,28 @@ function serviceWorker(): Plugin {
     enforce: 'post',
     generateBundle(_, bundle) {
       const html = bundle['index.html'];
+      // ADR-0093: the other languages' words (src/i18n) are not precached — a Korean visit never downloads them. Each
+      // language's own files (its chunk, the shared apply chunk, their stylesheets, its place texts) go to the worker
+      // (kept on devices that use it) and to index.html's early script (asked for before the app's own code runs).
+      const chunks = Object.values(bundle).filter((c) => c.type === 'chunk');
+      const words = chunks.filter((c) => c.type === 'chunk' && c.moduleIds.length && c.moduleIds.every((m) => m.replace(/\\/g, '/').includes('/src/i18n/')));
+      const skip = new Set(words.flatMap((c) => (c.type === 'chunk' ? [c.fileName, ...(c.viteMetadata?.importedCss ?? [])] : [])));
+      const langs = Object.fromEntries(
+        ['en', 'zh-Hans', 'ja'].map((l) => {
+          const entry = words.find((c) => c.type === 'chunk' && c.facadeModuleId?.replace(/\\/g, '/').endsWith(`/src/i18n/${l}.ts`));
+          const own = entry && entry.type === 'chunk' ? [entry, ...words.filter((c) => entry.imports.includes(c.fileName))] : [];
+          const files = own.flatMap((c) => (c.type === 'chunk' ? [...(c.viteMetadata?.importedCss ?? []), c.fileName] : []));
+          return [l, [...new Set(files), `i18n/places.${l}.json?v=${PLACES_V}`]];
+        }),
+      );
+      if (html && html.type === 'asset') html.source = String(html.source).replace('__I18N__', JSON.stringify(langs));
       const { source } = buildServiceWorker({
         template: readFileSync(resolve(root, 'sw/sw.js'), 'utf8'),
-        // ADR-0093: the other languages' words (src/i18n) are not precached — a Korean visit never downloads them; a
-        // visit in another language caches its own when it uses them (sw.js, hashed assets)
-        built: (() => {
-          const words = Object.values(bundle).filter((c) => c.type === 'chunk' && c.moduleIds.length && c.moduleIds.every((m) => m.replace(/\\/g, '/').includes('/src/i18n/')));
-          // their chunks and the stylesheets they bring (src/i18n/<lang>.css)
-          const skip = new Set(words.flatMap((c) => (c.type === 'chunk' ? [c.fileName, ...(c.viteMetadata?.importedCss ?? [])] : [])));
-          return Object.keys(bundle).filter((f) => !skip.has(f));
-        })(),
+        built: Object.keys(bundle).filter((f) => !skip.has(f)),
         indexHtml: html && html.type === 'asset' ? html.source : null,
         publicFiles: PUBLIC_SHELL.map((f) => [f, readFileSync(resolve(root, 'public', f))]),
         spotsV: SPOTS_V,
+        langs,
       });
       this.emitFile({ type: 'asset', fileName: 'sw.js', source });
     },

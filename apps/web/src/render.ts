@@ -666,7 +666,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
     if (!day) setGo(go, spot, s.cards?.origin ?? null, s.cards?.reach ?? s.reach, s.mapApp);
     // 예약 (ADR-0074): a 체험's one verified route, under 길찾기 — 네이버 예약, 마이리얼트립 상품, 홈페이지 or 전화 (tel:).
-    const b = bookLink(spot);
+    const b = bookLink(spot, PLACE.name(spot));
     const book = b ? el(doc, 'a', { class: 'tbtn book', href: b.href, ...(b.href.startsWith('tel:') ? {} : { target: '_blank' }), rel: 'noopener', 'aria-label': b.aria }, b.text) : null;
     if (day) {
       card.append(go);
@@ -1036,7 +1036,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     box.replaceChildren(...nodes);
   }
   /** Where a link to this app carries what is saved here and a 숙소 링크 (the in-app browser's way out). */
-  const shareUrl = (s: State) => handoffUrl(appHome(doc.defaultView?.location.href ?? 'https://localhost/'), s);
+  const shareUrl = (s: State) => handoffUrl(appHome(doc.defaultView?.location.href ?? 'https://localhost/'), s, doc.documentElement.lang);
   function renderKeep(s: State) {
     const k = s.keep;
     const r = k.restore;

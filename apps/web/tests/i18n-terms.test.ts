@@ -9,8 +9,8 @@ const root = resolve(__dirname, '..');
 const COMMON = [/Sea of Japan/i, /Takeshima/i, /Liancourt/i, /Changbai/i, /Hanfu/i, /竹島|竹岛/, /日本海/, /長白山|长白山/];
 const BANNED: Record<string, RegExp[]> = {
   en: [...COMMON, /pao ?cai/i],
-  'zh-Hans': [...COMMON, /泡菜/, /汉服/, /朝鲜族/, /鲜族服饰/],
-  ja: [...COMMON, /パオツァイ/, /漢服/, /朝鮮族/],
+  'zh-Hans': [...COMMON, /泡菜/, /汉服|漢服/, /朝鲜族|朝鮮族/, /鲜族服饰/],
+  ja: [...COMMON, /パオツァイ/, /泡菜/, /漢服|汉服/, /朝鮮族|朝鲜族/],
 };
 const files = (lang: string): string[] => {
   const out = [resolve(root, `src/i18n/${lang}.ts`), resolve(root, `public/i18n/places.${lang}.json`), resolve(root, `public/privacy-${lang}.html`)];

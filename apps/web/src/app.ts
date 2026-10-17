@@ -605,7 +605,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
   /** Outside KakaoTalk (its own link does it): the address, with what is saved here (and a 숙소 링크), onto the clipboard. */
   async function inappCopy() {
-    const ok = await copy(handoffUrl(home(), state));
+    const ok = await copy(handoffUrl(home(), state, doc.documentElement.lang));
     if (!signal.aborted && state.keep.inappNote) dispatch({ type: 'keep', keep: { inappNote: ok ? 'copied' : 'failed' } });
   }
   let installPrompt: InstallPrompt | null = null;

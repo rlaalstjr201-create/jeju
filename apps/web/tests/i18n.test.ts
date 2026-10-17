@@ -44,6 +44,8 @@ describe('the language (ADR-0093 2)', () => {
 
   it('?lang= first, and it is kept on this device; then the kept one; a value it does not know is ignored', () => {
     expect(choose('?lang=ja', null, ['ko-KR'])).toEqual({ lang: 'ja', hidden: true, kept: 'ja' });
+    for (const zh of ['zh', 'zh-CN', 'zh-SG', 'zh-Hans']) expect(choose(`?lang=${zh}`, null, ['ko-KR']).kept).toBe('zh-Hans');
+    expect(choose('?lang=zh-TW', null, ['ko-KR']).lang).toBe('ko');
     expect(choose('?mood=walk&lang=zh-Hans', null, ['ko-KR']).lang).toBe('zh-Hans');
     expect(choose('?lang=ko', 'en', ['en-US'])).toEqual({ lang: 'ko', hidden: false, kept: 'ko' });
     expect(choose('', 'en', ['ko-KR']).lang).toBe('en');
@@ -118,7 +120,7 @@ describe('a page in another language (ADR-0093)', () => {
   for (const [lang, w] of LANGS) {
     it(`${lang}: the first screen, a mood's cards, the basis sheet and the saved list have no Korean UI words; the place texts are its own`, async () => {
       const spot = fileSpots.find((s) => !s.hide)!;
-      const places = Object.fromEntries(fileSpots.map((s) => [s.id, ['', `${lang} text`]]));
+      const places = Object.fromEntries(fileSpots.map((s) => [s.id, [`${lang} name`, `${lang} text`]]));
       // the tables first (as main.ts does before the mount), then the page's own words on the fresh page
       await apply(lang, w, document, Promise.resolve(places));
       render();
@@ -130,9 +132,8 @@ describe('a page in another language (ADR-0093)', () => {
           .flatMap((e) => [...e.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent!.trim()))
           .concat($$('[aria-label]').map((e) => e.getAttribute('aria-label')!))
           .filter((t) => HANGUL.test(t) && t !== '한국어');
-      // place names stay Korean until their rule is set (ADR-0093 6): cards' names and the words built around them
-      const names = new Set(fileSpots.map((s) => s.name.trim()));
-      const ui = () => words().filter((t) => ![...names].some((n) => t.includes(n) || n.includes(t)));
+      // the place names are translated too (Amendment 2): no Korean at all, accessible names included
+      const ui = words;
       expect(ui()).toEqual([]);
       await tap('[data-mood="walk"]');
       await flush();

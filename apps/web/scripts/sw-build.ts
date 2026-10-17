@@ -14,6 +14,8 @@ export interface SwInput {
   /** public files precached as-is, [published path, contents] */
   publicFiles: [string, Uint8Array | string][];
   spotsV: string;
+  /** ADR-0093: each other language's own files (published paths), kept only on devices that use it */
+  langs?: Record<string, string[]>;
 }
 
 /**
@@ -34,7 +36,8 @@ export function buildServiceWorker(input: SwInput): { version: string; precache:
   }
   hash.update('\0');
   hash.update(input.template);
+  hash.update(JSON.stringify(input.langs ?? {}));
   const version = hash.digest('hex').slice(0, 12);
-  const source = input.template.replace('__VERSION__', version).replace('__PRECACHE__', JSON.stringify(precache));
+  const source = input.template.replace('__VERSION__', version).replace('__PRECACHE__', JSON.stringify(precache)).replace('__LANGS__', JSON.stringify(input.langs ?? {}));
   return { version, precache, source };
 }

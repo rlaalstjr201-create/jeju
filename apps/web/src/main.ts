@@ -91,11 +91,17 @@ const WORDS: Record<string, () => Promise<{ applyWords: (doc: Document, places: 
   ja: () => import('./i18n/ja'),
 };
 let placesIn: Promise<void> = Promise.resolve();
+/** `p`, or a rejection after `ms`: a weak connection never holds the app back. */
+const within = <T>(p: Promise<T>, ms: number) => Promise.race([p, new Promise<never>((_, no) => setTimeout(() => no(new Error('timeout')), ms))]);
+/** The words in 4 s at most (from the service worker's cache on a device that has used them, at once): else the app
+ * opens in Korean — the home's last line has each language's own name to try again. The place texts were asked for by
+ * index.html's early script (`__places`), else here. */
 function words(lang: string): Promise<void> {
-  const places = fetch(`${BASE}i18n/places.${lang}.json?v=${__PLACES_V__}`)
-    .then((r) => (r.ok ? (r.json() as Promise<unknown>) : null))
+  const early = (window as { __places?: Promise<Response | undefined> }).__places;
+  const places = (early ?? fetch(`${BASE}i18n/places.${lang}.json?v=${__PLACES_V__}`))
+    .then((r) => (r?.ok ? (r.json() as Promise<unknown>) : null))
     .catch(() => null);
-  return WORDS[lang]()
+  return within(WORDS[lang](), 4000)
     .then(
       (m) => void (placesIn = m.applyWords(document, places)),
       () => void (document.documentElement.lang = 'ko'),
@@ -103,6 +109,16 @@ function words(lang: string): Promise<void> {
     .finally(() => document.documentElement.classList.remove('l10n'));
 }
 const LANG = document.documentElement.lang;
+// back to a page kept from before a language switch (bfcache): it is in the old language, so it is loaded again
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  try {
+    const kept = localStorage.getItem('lang');
+    if (kept && kept !== (document.documentElement.lang || 'ko')) location.reload();
+  } catch {
+    /* no storage: the page stays as it is */
+  }
+});
 
 const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
@@ -116,7 +132,8 @@ const deps: Deps = {
         listSettled();
         await afterPaint();
         const raw = JSON.parse(text) as unknown;
-        await placesIn;
+        // the place texts if they come within 3 s more; later ones are used from the next draw on
+        await within(placesIn, 3000).catch(() => undefined);
         return raw;
       })
       .catch((e: unknown) => {
@@ -169,6 +186,9 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
       navigator.serviceWorker
         .register(`${BASE}sw.js`)
         .then((reg) => {
+          // ADR-0093: this device uses another language — the worker keeps its files for offline and after a deploy
+          const lang = document.documentElement.lang;
+          if (WORDS[lang]) void navigator.serviceWorker.ready.then((r) => r.active?.postMessage({ type: 'lang', lang }));
           // A home-screen app that stays resident never navigates, so it would never look for a new
           // deploy. Check when it comes back to the foreground (at most once a minute).
           let last = Date.now();

@@ -108,12 +108,13 @@ export const GO_TEXT = { go: '길찾기', pier: '배 타는 곳까지 길찾기'
  * 네이버 예약 opens the operator's booking page; 마이리얼트립 a product page (never a search); a homepage was only seen to
  * be the operator's live site, so it says 예약 확인; phone is a tel: link. 비짓제주's link is said by where it leads
  * (its one route today is a 네이버 예약 page). No route → null (such a 체험 is not picked, pick.ts `listed`). */
-export function bookLink(s: Spot): { href: string; text: string; aria: string } | null {
+/** `name`: the place as said on screen (ADR-0093: in another language, its translation). */
+export function bookLink(s: Spot, name = cleanName(s.name)): { href: string; text: string; aria: string } | null {
   const b = s.book;
   if (!b) return null;
   const via = b.k === 'visitjeju' ? (/^https:\/\/(m\.)?booking\.naver\.com\//.test(b.u) ? 'naver' : 'homepage') : b.k;
   const text = BOOK_TEXT[via];
-  return { href: b.u, text, aria: `${cleanName(s.name)}, ${text}` };
+  return { href: b.u, text, aria: `${name}, ${text}` };
 }
 export const BOOK_TEXT: Record<Exclude<BookKind, 'visitjeju'>, string> = {
   naver: '네이버로 예약하기',

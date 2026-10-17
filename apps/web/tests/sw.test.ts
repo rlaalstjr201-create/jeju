@@ -77,6 +77,7 @@ function fakeCaches() {
         }
       },
       put: async (req: FakeRequest, res: unknown) => void m.set(req.url, res),
+      keys: async () => [...m.keys()].map((url) => ({ url })),
     };
   };
   return {
@@ -128,6 +129,11 @@ function runSw(source: string, fetchImpl: (req: unknown) => Promise<unknown>, ca
       listeners.fetch(e);
       return done();
     },
+    async message(data: unknown) {
+      const { e, done } = extend({ data });
+      listeners.message(e);
+      await done();
+    },
     /** true when the worker answered the request itself (respondWith). */
     handles(url: string, init: { method?: string } = {}) {
       let responded = false;
@@ -136,6 +142,43 @@ function runSw(source: string, fetchImpl: (req: unknown) => Promise<unknown>, ca
     },
   };
 }
+
+describe('sw.js — another language on this device (ADR-0093, review M1)', () => {
+  const LANGS = { en: ['assets/en-1.css', 'assets/en-1.js', 'assets/apply-1.js', 'i18n/places.en.json?v=p1'], ja: ['assets/ja-1.js', 'i18n/places.ja.json?v=p1'] };
+  const at = (u: string) => new URL(u, 'https://app.test/').href;
+
+  it('a Korean device keeps nothing of the other languages; the page saying it uses one keeps that one only', async () => {
+    const c = fakeCaches();
+    const { source, version } = buildServiceWorker({ ...base(), langs: LANGS });
+    const sw = runSw(source, async () => ({ ok: true }), c);
+    await sw.install();
+    const store = () => [...c.stores.get(`tomorrow-${version}`)!.keys()];
+    expect(store().some((u) => u.includes('/assets/en-') || u.includes('/i18n/'))).toBe(false);
+    await sw.message({ type: 'lang', lang: 'en' });
+    expect(store()).toEqual(expect.arrayContaining(LANGS.en.map(at)));
+    expect(store().some((u) => u.includes('/assets/ja-'))).toBe(false);
+    await sw.message({ type: 'lang', lang: 'constructor' });
+  });
+
+  it("after a deploy the new worker takes the new build's files of the languages the old cache had, before the old cache goes", async () => {
+    const c = fakeCaches();
+    c.stores.set('tomorrow-old', new Map([[at('i18n/places.en.json?v=p0'), {}], [at('assets/en-0.js'), {}]]));
+    const next = { en: ['assets/en-2.js', 'i18n/places.en.json?v=p2'], ja: ['assets/ja-2.js', 'i18n/places.ja.json?v=p2'] };
+    const { source, version } = buildServiceWorker({ ...base(), langs: next });
+    const sw = runSw(source, async () => ({ ok: true }), c);
+    await sw.install();
+    const store = [...c.stores.get(`tomorrow-${version}`)!.keys()];
+    expect(store).toEqual(expect.arrayContaining(next.en.map(at)));
+    expect(store.some((u) => u.includes('/assets/ja-'))).toBe(false);
+    await sw.activate();
+    expect([...c.stores.keys()]).toEqual([`tomorrow-${version}`]);
+  });
+
+  it('the language files are part of the version (a change in them is a new worker)', () => {
+    expect(buildServiceWorker({ ...base(), langs: LANGS }).version).not.toBe(buildServiceWorker({ ...base(), langs: { ...LANGS, en: ['assets/en-9.js'] } }).version);
+    expect(buildServiceWorker({ ...base(), langs: LANGS }).source).not.toMatch(/__LANGS__/);
+  });
+});
 
 describe('sw.js — install / activate', () => {
   it('precaches every entry; the unversioned ones with cache: "reload" so a host max-age can\'t put last deploy\'s files into this cache', async () => {

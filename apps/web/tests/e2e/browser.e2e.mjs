@@ -3687,11 +3687,8 @@ await check('W1-wayfinding', 'ADR-0090 at 320·390 × light·dark: the top bar\'
 });
 
 // --- ADR-0093: the app in English, Simplified Chinese and Japanese at 375×812 ---
-/** What is on screen that is still Korean: visible words and accessible names, with the places' own names (Korean
- * until their rule is set, ADR-0093 6) and the 한국어 link taken out. Plus text a box cuts off and sideways scroll. */
-const PLACE_NAMES = JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8'))
-  .map((x) => x.name.trim())
-  .sort((a, b) => b.length - a.length);
+/** What is on screen that is still Korean: visible words and accessible names, the 한국어 link taken out (the map
+ * links' search words stay Korean but are no text). Plus text a box cuts off and sideways scroll. */
 const koreanLeft = (page) =>
   page.evaluate((names) => {
     const shown = (e) => {
@@ -3716,9 +3713,9 @@ const koreanLeft = (page) =>
       .filter((b) => shown(b) && !b.closest('.ex, .alias, .base, .reason, .name') && b.scrollWidth > b.clientWidth + 1 && getComputedStyle(b).overflow !== 'visible')
       .map((b) => b.textContent.trim().slice(0, 40));
     return { left: [...new Set(left)], cut, over: document.documentElement.scrollWidth - document.documentElement.clientWidth };
-  }, PLACE_NAMES);
+  }, []); // the place names are translated too (Amendment 2): nothing Korean is let through but the 한국어 link
 for (const [lang, locale] of [['en', 'en-US'], ['zh-Hans', 'zh-CN'], ['ja', 'ja-JP']]) {
-  await check(`I18N-${lang}`, `ADR-0093 ${lang} at 375×812 (browser ${locale}): first screen, a mood's 3 cards, the basis sheet and the saved list have no Korean UI words (place names excepted), nothing cut or scrolling sideways; 길찾기 goes to Naver Map by default; screenshots into design/qa/i18n`, async () => {
+  await check(`I18N-${lang}`, `ADR-0093 ${lang} at 375×812 (browser ${locale}): first screen, a mood's 3 cards, the basis sheet and the saved list have no Korean words (names translated too), nothing cut or scrolling sideways; 길찾기 goes to Naver Map by default; screenshots into design/qa/i18n`, async () => {
     const problems = [];
     const dir = join(appDir, 'design/qa/i18n');
     mkdirSync(dir, { recursive: true });
@@ -3769,6 +3766,118 @@ await check('I18N-ko', 'ADR-0093: a Korean browser gets the Korean page as befor
   const r = await page.evaluate(() => ({ lang: document.documentElement.lang, cls: document.documentElement.className, ask: document.querySelector('#ask').textContent, line: document.querySelector('.lang-line').textContent }));
   await ctx.close();
   assert(r.lang === 'ko' && !/l10n/.test(r.cls) && r.ask === '지금 뭐 하고 싶어요?' && r.line === 'English · 简体中文 · 日本語', JSON.stringify(r));
+});
+
+// ADR-0093 (review M1): a device used in English keeps English offline, also after a deploy that renamed its files.
+await check('I18N-offline', 'ADR-0093: English device, deploy with new file names (entry and English chunk), then offline — still English and the cards open', async () => {
+  const { mkdtempSync, cpSync, readFileSync, writeFileSync, rmSync, readdirSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const http = await import('node:http');
+  const { extname } = await import('node:path');
+  const dist = join(appDir, 'dist');
+  const tmp = mkdtempSync(join(tmpdir(), 'tomorrow-i18n-'));
+  const html = readFileSync(join(dist, 'index.html'), 'utf8');
+  const sw = readFileSync(join(dist, 'sw.js'), 'utf8');
+  const version = /const VERSION = '([^']+)'/.exec(sw)[1];
+  const assets = readdirSync(join(dist, 'assets'));
+  const js = assets.find((f) => /^index-.+\.js$/.test(f));
+  const en = assets.find((f) => /^en-.+\.js$/.test(f));
+  const v1 = join(tmp, 'v1');
+  cpSync(dist, v1, { recursive: true });
+  // v2: new code — the entry and the English chunk under new names, everything that names them rewritten
+  const v2 = join(tmp, 'v2');
+  cpSync(dist, v2, { recursive: true });
+  const [js2, en2] = [js.replace(/\.js$/, 'v2.js'), en.replace(/\.js$/, 'v2.js')];
+  const swap = (s) => s.replaceAll(js, js2).replaceAll(en, en2);
+  writeFileSync(join(v2, 'sw.js'), swap(sw.replace(version, `${version}-v2`)));
+  writeFileSync(join(v2, 'index.html'), swap(html));
+  for (const f of readdirSync(join(v2, 'assets')).filter((f) => f.endsWith('.js'))) writeFileSync(join(v2, 'assets', f), swap(readFileSync(join(v2, 'assets', f), 'utf8')));
+  cpSync(join(v2, 'assets', js), join(v2, 'assets', js2));
+  cpSync(join(v2, 'assets', en), join(v2, 'assets', en2));
+  rmSync(join(v2, 'assets', js));
+  rmSync(join(v2, 'assets', en));
+  const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
+  let live = v1;
+  const port = Number(process.env.E2E_DEPLOY_PORT ?? PORT + 1) + 1;
+  const deploy = http
+    .createServer((req, res) => {
+      let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+      if (p.endsWith('/')) p += 'index.html';
+      try {
+        const body = readFileSync(join(live, p));
+        res.writeHead(200, { 'content-type': TYPES[extname(p)] ?? 'application/octet-stream', 'cache-control': 'no-cache' });
+        res.end(body);
+      } catch {
+        res.writeHead(404);
+        res.end();
+      }
+    })
+    .listen(port);
+  const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, serviceWorkers: 'allow', locale: 'en-US' });
+  try {
+    await ctx.addInitScript(GEO_STUB);
+    await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+    const page = await ctx.newPage();
+    const url = `http://localhost:${port}/`;
+    const cached = (part) => page.evaluate(async (part) => (await Promise.all((await caches.keys()).map(async (k) => (await (await caches.open(k)).keys()).map((r) => `${k} ${r.url}`)))).flat().filter((u) => u.includes(part)), part).catch(() => []);
+    const waitFor = async (what, ok) => {
+      for (let i = 0; i < 150; i++) {
+        if (await ok()) return;
+        await sleep(100);
+      }
+      throw new Error(`never: ${what}`);
+    };
+    await page.goto(url);
+    await page.evaluate(() => navigator.serviceWorker.ready);
+    await page.reload();
+    await page.waitForSelector('#today:not(.wait)');
+    await waitFor('English kept in the v1 cache', async () => (await cached(`/assets/${en}`)).length > 0 && (await cached('/i18n/places.en.json')).length > 0);
+    live = v2;
+    await page.evaluate(() => navigator.serviceWorker.getRegistration().then((r) => r && r.update()));
+    await waitFor('the v2 worker took over with the new English chunk', async () => {
+      const keys = await page.evaluate(() => caches.keys()).catch(() => []);
+      return keys.length === 1 && keys[0].endsWith('-v2') && (await cached(`/assets/${en2}`)).length > 0 && (await cached('/i18n/places.en.json')).length > 0;
+    });
+    await ctx.setOffline(true);
+    await page.reload();
+    await page.waitForSelector('#today:not(.wait)', { timeout: 8000 });
+    const shown = await page.evaluate(() => ({ lang: document.documentElement.lang, ask: document.querySelector('#ask').textContent }));
+    assert(shown.lang === 'en' && !/[가-힣]/.test(shown.ask), `offline after the deploy: ${JSON.stringify(shown)}`);
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    const reason = await page.$eval('#cards .card.lead .reason', (p) => p.textContent);
+    assert(!/[가-힣]/.test(reason), `offline card in Korean: ${reason}`);
+  } finally {
+    await ctx.close();
+    deploy.close();
+    rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+await check('I18N-slow', 'ADR-0093: the English words never arrive (a stalled connection) — within a few seconds the app opens in Korean, usable, with the languages line to try again', async () => {
+  const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, serviceWorkers: 'block', locale: 'en-US' });
+  await ctx.addInitScript(GEO_STUB);
+  await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+  // the English chunk hangs for 15 s, then fails
+  await ctx.route('**/assets/en-*.js', async (r) => {
+    await sleep(15_000);
+    await r.abort().catch(() => undefined);
+  });
+  const page = await ctx.newPage();
+  try {
+    const t0 = Date.now();
+    await page.goto(BASE, { waitUntil: 'commit' });
+    await page.waitForFunction(() => !document.documentElement.classList.contains('l10n') && document.documentElement.lang === 'ko', null, { timeout: 7000 });
+    const waited = Date.now() - t0;
+    await page.waitForFunction(() => history.state, null, { timeout: 3000 }); // mounted
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    // the languages line (each language's own name, a link that tries again) is on the first screen
+    await page.waitForSelector('#homeMore .lang-line a[hreflang="en"]', { state: 'attached', timeout: 5000 });
+    assert(waited < 6500, `fell back after ${waited} ms`);
+  } finally {
+    await ctx.close();
+  }
 });
 
 await browser.close();
