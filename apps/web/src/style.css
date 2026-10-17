@@ -160,6 +160,8 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* the row to tap: its press face runs to the board's right and bottom edges */
 .today .act { grid-column: 2; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; margin: 0 -14px -12px -6px; padding: 0 14px 0 6px; border-radius: var(--r-ctl); }
 .today .act b { font-weight: 600; }
+/* a long market name (중문향토오일시장) at 200% zoom: let it break instead of pushing the › off the screen */
+.today .act > span { min-width: 0; overflow-wrap: anywhere; }
 .today .act svg { color: var(--muted); }
 .today .act:active { background: var(--fill-press); }
 /* 비 소식 (ADR-0076): a button row (실내만 on), or the words and 모두 보기 once 실내만 is on; the source in grey */
