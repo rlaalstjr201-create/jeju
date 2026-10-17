@@ -1,3 +1,11 @@
-/* ADR-0093: Simplified Chinese only (loaded with src/i18n/zh-Hans.ts, never on a Korean visit). It breaks between
-   any two characters (keep-all would not wrap it at all), with its own fonts so its characters take its own shapes. */
-html:lang(zh-Hans) body { word-break: normal; line-break: strict; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", Roboto, sans-serif; }
+/* ADR-0093: Simplified Chinese only (loaded with src/i18n/zh-Hans.ts, never on a Korean visit). It breaks between any
+   two characters (keep-all would not wrap it at all) with its own fonts so its characters take its own shapes, Korean
+   fonts last for any Korean left; the typography is the one the owner approved from docs/i18n/mockups (Amendment 5). */
+html:lang(zh-Hans) body {
+  word-break: normal; line-break: strict; text-autospace: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "HarmonyOS Sans SC", MiSans, "Noto Sans SC", "Microsoft YaHei", Roboto, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+html:lang(zh-Hans) :is(.lede, .reason, .hint, .note, .how, .status, .notice-b, .foot) { line-height: 1.65; }
+html:lang(zh-Hans) :is(.ask, .crumb, .title, .settings-h, .sheet h2, .more-sec h2, .card.lead .name) { line-height: 1.4; letter-spacing: 0; font-weight: 600; }
+html:lang(zh-Hans) :is(.logo, .mood, .name) { letter-spacing: 0; }
+html:lang(zh-Hans) .logo { font-weight: 600; }

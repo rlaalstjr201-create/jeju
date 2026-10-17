@@ -3,6 +3,7 @@ import { MAP_APP_NAME, placeApp, type MapApp } from '../links';
 import type { Island } from '../pick';
 import { MAX_SAVED } from '../store';
 import { apply, localDays, type Lang } from './apply';
+import './en.css';
 
 const ISLAND: Record<Island, string> = { 우도: 'Udo', 비양도: 'Biyangdo', 가파도: 'Gapado', 마라도: 'Marado', 차귀도: 'Chagwido', 추자도: 'Chujado' };
 /** the piers boats leave from (links.ts TERMINALS), for the 길찾기 label */

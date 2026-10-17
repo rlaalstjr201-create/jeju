@@ -1,0 +1,9 @@
+/* ADR-0093: English only (loaded with src/i18n/en.ts, never on a Korean visit): Latin system fonts first, Korean fonts
+   last for any Korean left, ordinary word breaking; the typography is the one the owner approved from
+   docs/i18n/mockups (Amendment 5). */
+html:lang(en) body {
+  word-break: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+html:lang(en) :is(.ask, .crumb, .title, .settings-h, .sheet h2, .more-sec h2, .card.lead .name) { line-height: 1.25; }
+html:lang(en) .name { overflow-wrap: anywhere; }

@@ -1,3 +1,11 @@
-/* ADR-0093: Japanese only (loaded with src/i18n/ja.ts, never on a Korean visit). It breaks between
-   any two characters (keep-all would not wrap it at all), with its own fonts so its characters take its own shapes. */
-html:lang(ja) body { word-break: normal; line-break: strict; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, Roboto, sans-serif; }
+/* ADR-0093: Japanese only (loaded with src/i18n/ja.ts, never on a Korean visit). It breaks between any two characters
+   (keep-all would not wrap it at all) with its own fonts so its characters take its own shapes, Korean fonts last for
+   any Korean left; the typography is the one the owner approved from docs/i18n/mockups (Amendment 5). */
+html:lang(ja) body {
+  word-break: normal; line-break: strict; text-autospace: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+html:lang(ja) :is(.lede, .reason, .hint, .note, .how, .status, .notice-b, .foot) { line-height: 1.7; }
+html:lang(ja) :is(.ask, .crumb, .title, .settings-h, .sheet h2, .more-sec h2, .card.lead .name) { line-height: 1.45; letter-spacing: 0; }
+html:lang(ja) .logo { letter-spacing: 0; font-weight: 700; }
+html:lang(ja) :is(.mood, .tbtn, .primary, .more) { letter-spacing: 0.02em; }

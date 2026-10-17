@@ -53,3 +53,7 @@ Status: Accepted (2026-10-17, 주인 결정 「일단 중국어 영어 일본어
 ## Amendment 4 (2026-10-17, 주인 승인 「2번도 해주고」): 언어별 CSS
 
 8의 일본어·중국어 줄바꿈·글꼴 규칙을 `style.css`에서 `src/i18n/{ja,zh-Hans}.css`로 옮겼다. 그 언어 문구 청크가 함께 불러오고, 한국어 방문과 서비스 워커 미리 받기에는 들어가지 않는다. 한국어 CSS gzip 5.69 → 5.56KB, 진입 JS는 동적 import 도우미가 CSS 목록을 다루느라 42.47 → 42.61KB라 합은 48.16 → 48.17KB다. 한국어 첫 화면의 DOM·계산 스타일 지문은 옮기기 전과 같다.
+
+## Amendment 5 (2026-10-17, 주인 승인 「그대로 적용하고 테스트하고 푸시해」): 언어별 글자
+
+`docs/i18n/mockups/`의 시안(근거 `docs/i18n/design-research.md` 3.1)을 그대로 넣었다. `src/i18n/en.css`(새 파일, 영어일 때만), `ja.css`, `zh-Hans.css`에 글꼴 순서(라틴·그 언어 글꼴 먼저, 한국어 글꼴 끝), 여러 줄 글 행간(zh 1.65·ja 1.7), 제목 행간(en 1.25·zh 1.4·ja 1.45)·자간 0(zh·ja)·굵기(zh 600, ja 로고 700), 일본어 기분 줄·버튼 자간 +0.02em, `text-autospace`(zh·ja), 영어 `word-break: normal`. 값 목록은 `docs/i18n/mockups/README.md`. 한국어 CSS는 그대로다. 같은 날 재측정이 찾은 뜻 오류 4건(en 2, ja 1, zh 1)도 주인 승인으로 고쳤다.
