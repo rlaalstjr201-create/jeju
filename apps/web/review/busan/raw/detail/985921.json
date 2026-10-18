@@ -1,0 +1,52 @@
+{
+ "contentid": "985921",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-18T06:28:09.575Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "985921",
+       "contenttypeid": "12",
+       "title": "미술의거리",
+       "createdtime": "20100326021758",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/89/3552989_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/89/3552989_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "15",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030600",
+       "addr1": "부산광역시 중구 신창동4가",
+       "addr2": "",
+       "zipcode": "48946",
+       "mapx": "129.0279265666",
+       "mapy": "35.1006395595",
+       "mlevel": "6",
+       "overview": "부산광역시 중구에 위치한 ‘미술의 거리’는 예술과 일상이 자연스럽게 어우러지는 공간으로 다양한 전시와 체험을 통해 시민들과 관광객들에게 풍부한 문화 경험을 제공하고 있다. 미술의 거리 기념전, 부산국제영화제 특별전, 문화체험행사 등 크고 작은 전시회와 함께 각종 시연, 체험교실 및 후배 양성, 다양한 미술품의 제작과 보급 등 부산미술의 아방가르드 역할을 해오고 있다. 또한, 부산 중구의 관광벨트 내지는 문화벨트의 중심지적 역할에 충실하면서 부산문화예술의 수준 향상에 기여하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

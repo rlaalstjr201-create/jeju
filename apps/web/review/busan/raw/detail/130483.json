@@ -1,0 +1,52 @@
+{
+ "contentid": "130483",
+ "modifiedtime": "20260305112406",
+ "fetchedAt": "2026-10-18T06:28:39.573Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130483",
+       "contenttypeid": "14",
+       "title": "부산금정도서관",
+       "createdtime": "20071106110016",
+       "modifiedtime": "20260305112406",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://library.geumjeong.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/65/1982365_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/65/1982365_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 금정구 금정도서관로 33",
+       "addr2": "",
+       "zipcode": "46213",
+       "mapx": "129.096173045288",
+       "mapy": "35.2725861165221",
+       "mlevel": "6",
+       "overview": "부산광역시 금정도서관은 부산 금정구에 위치한 1996년 12월 개관한 역사와 전통이 있는 도서관이다. 종합자료실, 열람실, 디지털자료실, 열린배움터, 어린이자료실, 문화교실 등 다양한 시설을 갖추고 있으며, 지역 주민들에게 다양한 도서 및 문화 프로그램을 제공하고 있다. 금정도서관은 지식정보원과 평생교육기관으로서 지역주민들에게 독서문화지원 및 유비쿼터스 환경에 맞춘 정보서비스 제공을 위해 독서마당과 건전한 여가활동과 삶의 질 향상 및 평생교육 증진을 위한 다양한 문화마당을 운영하고 있다. 이용자 중심의 열린 행정서비스로, 주민의 문화적 삶을 향상시키고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

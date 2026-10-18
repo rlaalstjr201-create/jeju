@@ -1,0 +1,52 @@
+{
+ "contentid": "130801",
+ "modifiedtime": "20260224165207",
+ "fetchedAt": "2026-10-18T06:28:38.960Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130801",
+       "contenttypeid": "14",
+       "title": "부산광역시립 서동도서관",
+       "createdtime": "20060418090000",
+       "modifiedtime": "20260224165207",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://home.pen.go.kr/seodonglib/main.do",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/57/1982357_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/57/1982357_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 금정구 서부로76번길 5",
+       "addr2": "(서동)",
+       "zipcode": "46313",
+       "mapx": "129.099407547319",
+       "mapy": "35.2198451703042",
+       "mlevel": "6",
+       "overview": "부산광역시립 서동도서관은 아름다운 사람들이 저마다의 바람과 꿈을 찾아 모이는 공간이자 지역주민의 평생교육기관이다. 1983년 5월 부산직할시립 서동도서관으로 개관하고, 1995년 1월 부산광역시립 서동도서관으로 명칭을 변경하였다. 1983년에 개관한 이래 20여 년의 시간 동안 지역주민과 함께 성장 발전하고 있다. 서동도서관은 자료의 수집, 열람, 대출에서부터, 시기별 다양한 문화강좌를 제공하여 지역주민의 여가활동과 학습 기회를 도모할 수 있도록 지원하며, 지식정보센터로서 역할을 다하고 있는 곳이다. 이곳은 평생교육센터 기능에 충실할 뿐만 아니라 지역주민들의 평생학습체계를 구축하는데 기여하고 있으며 지식 기반 사회로 나아가는데 일익을 담당하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

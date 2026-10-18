@@ -1,0 +1,52 @@
+{
+ "contentid": "3454074",
+ "modifiedtime": "20241220100102",
+ "fetchedAt": "2026-10-18T06:28:20.251Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3454074",
+       "contenttypeid": "12",
+       "title": "영화의전당 라이브러리 자료실",
+       "createdtime": "20241220100049",
+       "modifiedtime": "20241220100102",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://mobile.dureraum.org:44500/bccm/main/main.do?rbsIdx=1",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/99/3453999_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/99/3453999_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE12",
+       "lclsSystm3": "VE120300",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "부산광역시 해운대구 수영강변대로 120 (우동)",
+       "addr2": "",
+       "zipcode": "48058",
+       "mapx": "129.1270687971",
+       "mapy": "35.1710029572",
+       "mlevel": "6",
+       "overview": "영화의전당 라이브러리 자료실은 영화에 관심 있는 누구나 이용 가능한 꿈같은 공간이다. 단순한 도서관을 넘어, 영화 관련 자료의 보고이자 영화인들의 소통 공간으로 자리매김하고 있다. 또한 다른 영화인들과 교류하며, 새로운 아이디어를 얻을 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

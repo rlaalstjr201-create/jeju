@@ -1,0 +1,52 @@
+{
+ "contentid": "130383",
+ "modifiedtime": "20260929135003",
+ "fetchedAt": "2026-10-18T06:28:35.355Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130383",
+       "contenttypeid": "14",
+       "title": "금정문화원",
+       "createdtime": "20071106105505",
+       "modifiedtime": "20260929135003",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://kumjung.kccf.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/52/3336552_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/52/3336552_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 금정구 중앙대로1826번길 10-4 (구서동)",
+       "addr2": "",
+       "zipcode": "46250",
+       "mapx": "129.0931868044",
+       "mapy": "35.2472903619",
+       "mlevel": "6",
+       "overview": "2000년에 개원한 부산 금정구의 금정문화원은 지역의 문화 발전을 위해 다양한 행사와 강좌를 운영하는 곳이다. 전통 세시풍속을 보존 및 육성하기 위한 정월대보름 달집 태우기, 금정구민이 함께하는 신년 해맞이 행사, 문화유산과 유적들을 답사하는 향토문화탐방을 진행한다. 또한 다양한 장르의 문화강좌, 어르신들을 대상으로 하는 어르신문화활동 등의 여러 사업을 진행하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

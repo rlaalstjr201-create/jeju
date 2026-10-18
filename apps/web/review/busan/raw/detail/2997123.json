@@ -1,0 +1,52 @@
+{
+ "contentid": "2997123",
+ "modifiedtime": "20260305164514",
+ "fetchedAt": "2026-10-18T06:28:20.856Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2997123",
+       "contenttypeid": "12",
+       "title": "오방맛길",
+       "createdtime": "20230804091751",
+       "modifiedtime": "20260305164514",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://ymrf.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3491511_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3491511_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 연제구 고분로 13 (연산동)",
+       "addr2": "",
+       "zipcode": "47549",
+       "mapx": "129.083778371985",
+       "mapy": "35.1859331756485",
+       "mlevel": "6",
+       "overview": "부산 연제구 연산교차로에 위치한 오방맛길은 상권르네상스사업 추진을 통해 도시 인프라 구축 및 환경개선사업으로 MZ세대와 가족단위 방문객이 찾는 활력 넘치는 복합문화상권으로 자리 잡았다. 다양한 음식을 맛볼 수 있는 맛집이 즐비해 있으며, 문화 콘텐츠 확산과 축제로 상권의 정체성과 매력을 강화하면서 관광객들의 발길을 잡고 있다. 가까운 곳에 온천천과 배산 숲길이 있어 함께 둘러보기도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "130216",
+ "modifiedtime": "20260929161600",
+ "fetchedAt": "2026-10-18T06:28:37.862Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130216",
+       "contenttypeid": "14",
+       "title": "부산 강서문화원",
+       "createdtime": "20071106104713",
+       "modifiedtime": "20260929161600",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.bsgangseo.com/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/88/3336488_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/88/3336488_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 강서구 대저로 269 (대저1동)",
+       "addr2": "강서열린문화센터 7층",
+       "zipcode": "46702",
+       "mapx": "128.9819654575",
+       "mapy": "35.2132971632",
+       "mlevel": "6",
+       "overview": "부산 강서문화원은 1995년 1월에 개원한 곳으로, 지역문화의 계발, 연구, 조사 및 문화진흥을 목적으로 설립되었다. 풍물, 민요, 가야금 등의 문화강좌를 운영하고 있으며 이를 통해 지역민들에게 문화 예술 체험의 기회를 제공하고 있다. 이 밖에도 문화 관광해설, 문화 나눔 봉사, 민속공연 등을 통해 지역의 문화자원을 활용할 뿐만 아니라 문화를 통해 지역사회 발전에 기여하고자 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

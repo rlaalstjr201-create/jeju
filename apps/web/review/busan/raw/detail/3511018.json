@@ -1,0 +1,52 @@
+{
+ "contentid": "3511018",
+ "modifiedtime": "20250901142737",
+ "fetchedAt": "2026-10-18T06:28:25.627Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3511018",
+       "contenttypeid": "12",
+       "title": "주식회사어반힐링",
+       "createdtime": "20250722151452",
+       "modifiedtime": "20250901142737",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "10",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "부산광역시 사하구 낙동대로 534 (하단동)",
+       "addr2": "",
+       "zipcode": "49324",
+       "mapx": "128.9651983858",
+       "mapy": "35.1118315978",
+       "mlevel": "6",
+       "overview": "주식회사어반힐링은 ‘컬러를 찾아 떠나는 로컬 여행사’를 콘셉트로, K-뷰티와 퍼스널컬러 체험을 결합한 지역 관광 상품을 운영하고 있다. 대표 상품인 ‘Make up my trip’은 퍼스널컬러 진단과 메이크업 체험, 로컬 투어가 결합된 여행 상품으로, 컬러풀한 하루를 제공한다. 부산을 찾는 외국인 관광객을 대상으로 운영되며, 웰니스 체험과 야간 투어 등 다양한 수요에 맞춘 프로그램도 함께 제공한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

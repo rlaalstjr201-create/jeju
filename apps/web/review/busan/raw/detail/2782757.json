@@ -1,0 +1,52 @@
+{
+ "contentid": "2782757",
+ "modifiedtime": "20261001183039",
+ "fetchedAt": "2026-10-18T06:28:43.933Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782757",
+       "contenttypeid": "14",
+       "title": "책방오월",
+       "createdtime": "20211129221739",
+       "modifiedtime": "20261001183039",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/97/2795997_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/97/2795997_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE12",
+       "lclsSystm3": "VE120100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 수영구 수영로607번길 28 (광안동)",
+       "addr2": "",
+       "zipcode": "48254",
+       "mapx": "129.1121121939",
+       "mapy": "35.1604093702",
+       "mlevel": "6",
+       "overview": "책방 오월은 소설과 에세이, 고전 등 다양한 장르의 서적을 보유하고 있다. 대형서점처럼 베스트셀러 위주의 책을 진열해 놓기보다 개인의 관심사나 취향에 따라 고를 수 있는 재미를 준다. 또 아늑하면서도 아기자기한 감성이 묻어나는 인테리어 덕분에 편하고 여유로운 분위기에서 책을 즐길 수 있다. 벽에 붙여진 따스한 시선의 사진과 포스터 등이 눈길을 머물게 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

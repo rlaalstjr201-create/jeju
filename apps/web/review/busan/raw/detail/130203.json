@@ -1,0 +1,52 @@
+{
+ "contentid": "130203",
+ "modifiedtime": "20260305173353",
+ "fetchedAt": "2026-10-18T06:28:41.719Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130203",
+       "contenttypeid": "14",
+       "title": "수영민속예술관",
+       "createdtime": "20071106104649",
+       "modifiedtime": "20260305173353",
+       "tel": "",
+       "telname": "",
+       "homepage": "수영구 문화관광 https://www.suyeong.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/05/3491505_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/05/3491505_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 수영구 수영성로 43 (수영동)",
+       "addr2": "",
+       "zipcode": "48229",
+       "mapx": "129.113953144621",
+       "mapy": "35.1712117064374",
+       "mlevel": "6",
+       "overview": "수영사적공원 내에 위치한 수영민속예술관은 기존의 민속관(1974년 10월 25일 개관)과 함께 지역민속예술진흥과 구민들의 민속공연과 전통문화를 전수하기 위해 1986년 4월 1일 재개관하였다. 사단법인 수영고적민속예술보존협회가 위탁관리하고 있으며 수영민속예술관 놀이마당에서는 국가무형유산 수영야류, 좌수영어방놀이, 부산광역시무형유산 수영농청놀이, 수영지신밟기의 전수교육이 이루어지고 매년 6월 첫째 주 토요일에는 수영전통민속예술축제가 개최된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

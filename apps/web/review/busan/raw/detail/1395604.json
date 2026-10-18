@@ -1,0 +1,52 @@
+{
+ "contentid": "1395604",
+ "modifiedtime": "20260318101005",
+ "fetchedAt": "2026-10-18T06:28:34.824Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1395604",
+       "contenttypeid": "14",
+       "title": "국립부산국악원",
+       "createdtime": "20111005193136",
+       "modifiedtime": "20260318101005",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://busan.gugak.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/91/4007691_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/91/4007691_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 국악로 2",
+       "addr2": "(연지동)",
+       "zipcode": "47130",
+       "mapx": "129.054224218325",
+       "mapy": "35.1714000302852",
+       "mlevel": "6",
+       "overview": "국립부산국악원은 부산, 영남 지역의 전통공연예술을 계승, 발전시키기 위해 2008년 10월 28일 개원한 국립 문화예술 기관이다. 공연, 교육, 연구를 총괄한 복합적 기능을 가진 국립부산국악원은 부산의 풍부한 전통문화자원을 바탕으로 특색 있고 품격 높은 작품을 선사하고 있다. 또한 국제 해양관광도시에 걸맞게 아시아와 태평양 민족 공연예술센터로서의 비전을 가지고 관광 활성화를 위한 국제 교류 사업도 전개하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

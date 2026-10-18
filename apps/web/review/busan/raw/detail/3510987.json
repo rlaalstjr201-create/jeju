@@ -1,0 +1,52 @@
+{
+ "contentid": "3510987",
+ "modifiedtime": "20250901144022",
+ "fetchedAt": "2026-10-18T06:28:25.426Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3510987",
+       "contenttypeid": "12",
+       "title": "주식회사감천아울",
+       "createdtime": "20250722144947",
+       "modifiedtime": "20250901144022",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "10",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "부산광역시 사하구 옥천로75번안길 10 (감천동, 제일아파트)",
+       "addr2": "지하층",
+       "zipcode": "49366",
+       "mapx": "129.0087950933",
+       "mapy": "35.0934316812",
+       "mlevel": "6",
+       "overview": "주식회사감천아울은 감천문화마을을 배경으로, 환경을 생각하는 업사이클링 굿즈를 제작·판매하는 관광두레 주민사업체다. 주민의 손으로 만들어지는 제품들은 폐현수막과 자투리 천 등을 활용해 감천문화마을의 이야기를 담아낸다. 대표 상품인 '업사이클링 에코백’은 지역 내에서 수거한 소재를 활용해 제작되며, 감천의 감성을 담은 실용적인 친환경 아이템이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

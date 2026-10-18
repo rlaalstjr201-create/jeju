@@ -1,0 +1,52 @@
+{
+ "contentid": "2788828",
+ "modifiedtime": "20260305104221",
+ "fetchedAt": "2026-10-18T06:28:18.557Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2788828",
+       "contenttypeid": "12",
+       "title": "신호공원",
+       "createdtime": "20211208034755",
+       "modifiedtime": "20260305104221",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/02/3491602_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/02/3491602_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 강서구 신호산단1로72번길 46 (신호동)",
+       "addr2": "",
+       "zipcode": "46760",
+       "mapx": "128.8708641169917",
+       "mapy": "35.0821708614068",
+       "mlevel": "6",
+       "overview": "바다갈맷길 주변으로 울창한 소나무 숲을 이루고 있어 산책과 쉬어가기에 좋은 공원들이 끝이 보이지 않을 정도로 넓게 조성되어 있다. 신호공원은 갯벌 체험으로 유명한 근린공원이다. 물이 빠지면 갯벌 체험도 할 수 있는 곳으로 유명하다. 공원 내에는 운동시설과 편의시설, 놀이시설 등이 조성되어 있다. 산책길도 있어 가족들과 함께 야외 활동을 즐기기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

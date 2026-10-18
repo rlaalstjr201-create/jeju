@@ -1,0 +1,52 @@
+{
+ "contentid": "2788830",
+ "modifiedtime": "20261016134804",
+ "fetchedAt": "2026-10-18T06:28:52.545Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2788830",
+       "contenttypeid": "38",
+       "title": "남산시장",
+       "createdtime": "20211208035056",
+       "modifiedtime": "20261016134804",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3562011_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3562011_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 금정구 금강로 700",
+       "addr2": "(남산동)",
+       "zipcode": "46220",
+       "mapx": "129.0892932080",
+       "mapy": "35.2698585311",
+       "mlevel": "6",
+       "overview": "부산광역시 금정구에 있는 상가형 재래시장으로 다양한 물품과 식자재, 음식점, 횟집들이 있다. 남산시장은 범어사역 인근에 있으며, 시장 바로 옆에 시장 이용객들은 무료로 주차할 수 있는 주차장이 있어 편리하게 이용할 수 있다. 남산시장에서 파는 상품들은 식재료뿐 아니라 농수산물 모두 신선한 것들이라 믿고 살 수 있으며 바다가 가까운 부산의 이점 덕에 회 센터 못지않은 저렴한 가격에 횟감을 즐길 수 있는 식당도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

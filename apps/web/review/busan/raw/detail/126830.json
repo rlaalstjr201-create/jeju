@@ -1,0 +1,52 @@
+{
+ "contentid": "126830",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-18T06:28:14.701Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "126830",
+       "contenttypeid": "12",
+       "title": "부산진성공원",
+       "createdtime": "20031231090000",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/74/3496874_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/74/3496874_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 동구 자성로 99",
+       "addr2": "",
+       "zipcode": "48746",
+       "mapx": "129.061096784383",
+       "mapy": "35.135868230927",
+       "mlevel": "6",
+       "overview": "부산 동구에 위치한 부산진성공원은 자성대공원으로 불렸는데 공식 명칭을 부산진성공원으로 바뀌었다. 부산진성공원은 서문이 주출입구이며 금루관이라 적혀있다. 집이나 성의 모퉁이 경계에 세운 돌기둥으로​ 왜적의 침입에 대한 경각심을 세우기 위해 제작된 것으로 추정되는 우주석이 있다. 또한 알찬 책으로 가득 찬 아담한 숲 속도서관이 있어 마음의 풍요로움을 찾을 수 있다. 이어서 여유롭고 편안한 산책길을 걸을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

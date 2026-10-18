@@ -1,0 +1,52 @@
+{
+ "contentid": "2784112",
+ "modifiedtime": "20261002171802",
+ "fetchedAt": "2026-10-18T06:28:49.222Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2784112",
+       "contenttypeid": "28",
+       "title": "송정서핑학교",
+       "createdtime": "20211201013435",
+       "modifiedtime": "20261002171802",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://surfschool.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/72/2787972_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/72/2787972_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS02",
+       "lclsSystm3": "LS020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 송정해변로 34-8 (송정동)",
+       "addr2": "",
+       "zipcode": "48072",
+       "mapx": "129.2024680403",
+       "mapy": "35.1809846070",
+       "mlevel": "6",
+       "overview": "송정서핑학교는 1995년 부산 송정해수욕장에 최초로 설립된 서핑 전문학교이다. 전통을 자랑하는 송정서핑학교에서는 훌륭한 지도자와 선수들, 유소년을 배출하고 있으며 서핑 동호인은 물론 국내 서핑 문화의 활성화에 최선을 다하고 있다. 강습 후 헤매다 끝나는 서핑이 아닌 강사 도움 없이 혼자 스스로 파도를 잡는 서핑을 추구한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "128828",
+ "modifiedtime": "20260305162610",
+ "fetchedAt": "2026-10-18T06:28:12.565Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "128828",
+       "contenttypeid": "12",
+       "title": "부산 올림픽동산",
+       "createdtime": "20060310090000",
+       "modifiedtime": "20260305162610",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/10/3492210_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/10/3492210_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산 해운대구 우동",
+       "addr2": "",
+       "zipcode": "48060",
+       "mapx": "129.131853",
+       "mapy": "35.164548",
+       "mlevel": "6",
+       "overview": "부산 올림픽동산은 제24회 서울올림픽 요트경기를 수영만에서 개최한 것을 기념하기 위해 조성되었다. 올림픽동산은 야외조각공원, 자전거 놀이마당, 잔디광장, 자동차 야외극장, 산책로 등 다양한 문화시설이 있어 부산 시민들의 휴식처로 사랑받고 있다. 요트경기장을 중심으로 하여 주변에는 길게 연결된 산책로가 있으며, 산책로를 따라 가지각색의 조형물이 자리한 야외조각공원이 있어 다양한 조각품 등을 감상할 수 있다. 그리고 넓은 잔디광장 안에 드문드문 심어져 있는 울창하고 큰 나무 그늘아래 한가로이 휴식을 취할 수 있다. 또 공원 안에는 자전거도로가 있어 관광객뿐만 아니라 부산 시민들도 많이 이용하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

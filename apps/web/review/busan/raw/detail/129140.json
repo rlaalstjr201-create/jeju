@@ -1,0 +1,52 @@
+{
+ "contentid": "129140",
+ "modifiedtime": "20251230154307",
+ "fetchedAt": "2026-10-18T06:28:03.001Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129140",
+       "contenttypeid": "12",
+       "title": "금련산",
+       "createdtime": "20060712090000",
+       "modifiedtime": "20251230154307",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/3589743_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/3589743_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "12",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA01",
+       "lclsSystm3": "NA010100",
+       "cat1": "A01",
+       "cat2": "A0101",
+       "cat3": "A01010400",
+       "addr1": "부산광역시 수영구 광안동",
+       "addr2": "",
+       "zipcode": "48428",
+       "mapx": "129.0974161159",
+       "mapy": "35.1602230601",
+       "mlevel": "6",
+       "overview": "금련산은 부산광역시 연제구, 수영구, 남구의 경계에 위치한 산으로, 산의 모양이 연꽃 모양을 닮았다고 하여 붙여진 이름이라고 한다. 금련산에는 금련산 청소년 수련원과 부산 시민 천문대, 부산시장, 부산광역시 지방공무원 교육원이 자리 잡고 있다. 산 정상부에는 송신탑이 있고, 산 정상부 근처까지 차로 쉽게 이동할 수 있어 많은 시민들과 관광객들이 찾는 곳으로, 부산항과 광안리 해수욕장, 광안 대교를 조망하기 좋은 곳이다. 오래전 금련산에는 반야암과 바라밀다사(波羅密多寺)라는 사찰이 있었다고 전해지는데, 현재는 사찰 터의 흔적만 남아 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

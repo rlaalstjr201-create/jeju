@@ -1,0 +1,52 @@
+{
+ "contentid": "130380",
+ "modifiedtime": "20260929135506",
+ "fetchedAt": "2026-10-18T06:28:35.539Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130380",
+       "contenttypeid": "14",
+       "title": "기장문화원",
+       "createdtime": "20071106105500",
+       "modifiedtime": "20260929135506",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.gijangcc.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/82/3476682_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/82/3476682_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 기장군 기장읍 청강로74번길 35-6",
+       "addr2": "",
+       "zipcode": "46080",
+       "mapx": "129.2216734935",
+       "mapy": "35.2353095368",
+       "mlevel": "6",
+       "overview": "기장문화원은 1997년 개관한 곳으로 기장의 전통과 문화를 현재 우리의 삶에 맞게 재조명하고 후손들에게 올바르게 물려주는 것을 목표로 설립된 문화원이다. 이를 위해 기장문화원에서는 기장의 역사, 문화를 연구하고 지역 문화 발전을 위한 문화대학, 향토사연구소 등 다양한 교육 프로그램을 운영하고 있다. 이뿐만 아니라 지역 청소년들을 위한 온라인 역사, 문화 강의를 준비해 세대 간 올바른 교류를 위해 노력하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

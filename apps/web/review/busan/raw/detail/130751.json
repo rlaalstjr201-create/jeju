@@ -1,0 +1,52 @@
+{
+ "contentid": "130751",
+ "modifiedtime": "20260706132143",
+ "fetchedAt": "2026-10-18T06:28:38.872Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130751",
+       "contenttypeid": "14",
+       "title": "부산광역시립 사하도서관",
+       "createdtime": "20060307090000",
+       "modifiedtime": "20260706132143",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://home.pen.go.kr/sahalib/main.do",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/09/3541509_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/09/3541509_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 사하구 승학로 247 (괴정동)",
+       "addr2": "",
+       "zipcode": "49321",
+       "mapx": "128.9914179852",
+       "mapy": "35.1029056066",
+       "mlevel": "6",
+       "overview": "부산광역시립 사하도서관은 1984년 9월 개관하였으며, 2020년 5월 리모델링 사업을 완료하여 현대적인 설비를 구축하였다. 아름답고 편리한 도서관 공간, 양질의 장서와 서비스로 지역주민과 같이 성장하고 같이 행복한 도서관, 누구나 찾고 싶은 도서관, 머물고 싶은 도서관 등 행복한 삶의 기반으로서의 도서관이 될 수 있도록 노력하고 있는 곳이다. 사하도서관은 본관과 별관으로 운영되고 있으며, 본관 1층에는 어린이 자료실, 어린이강좌실이 있으며, 2층에는 종합자료실, 연속간행물실, 디지털존이 있고, 별관에는 1층에는 평생학습실, 북카페가 2층에는 문서고, 회의실, 사무실이 있다.\n사하도서관에서는 도서열람 및 대출과 같은 도서관의 기본적인 업무 외에 독서마당, 평생학습강좌 등을 운영하여 지역주민의 문화생활 향상에 기여하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

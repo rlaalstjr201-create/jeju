@@ -1,0 +1,52 @@
+{
+ "contentid": "128810",
+ "modifiedtime": "20251219095747",
+ "fetchedAt": "2026-10-18T06:28:07.521Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "128810",
+       "contenttypeid": "12",
+       "title": "동백공원",
+       "createdtime": "20060228090000",
+       "modifiedtime": "20251219095747",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/62/3575962_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/62/3575962_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "부산광역시 해운대구 동백로 99 (우동)",
+       "addr2": "",
+       "zipcode": "48100",
+       "mapx": "129.1523226328",
+       "mapy": "35.1536609221",
+       "mlevel": "6",
+       "overview": "동백공원은 해운대해수욕장 남쪽 끝에 있는 동백섬을 공원으로 조성한 것으로, 1966년 9월 공원 대지로 지정되어 1990년대에 본격적으로 개발되었으며, 동백나무와 소나무가 울창한 자연경관이 아름다운 곳으로 육지와 연결된 육계도이다. 2006년 부산에서 APEC 행사가 개최되면서 동백 공원을 정비하고 조경 복구, 전망 데크 설치, 해안 정비, 산정 광장 및 순환 도로 정비, 쉼터 광장 및 주차장 등을 새롭게 조성하여 관광객의 발길이 끊이질 않는 곳이다. 산책로 외에 배드민턴장, 의자, 화장실 등의 편의시설이 조성되어 있다. 동백공원 주요 시설로는 최치원 유적지와 누리마루 APEC 하우스, 해운대 석각, 공원 앞 바닷가에는 무궁이라는 나라의 왕과 결혼한 황옥 공주에 얽힌 전설이 있는 동백섬 인어상 등이 있으며, 동백섬 둘레를 따라 조성된 해안산책로는 산책이나 운동하기 좋은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

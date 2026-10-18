@@ -1,0 +1,52 @@
+{
+ "contentid": "1942331",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-18T06:28:05.894Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1942331",
+       "contenttypeid": "12",
+       "title": "당산",
+       "createdtime": "20140820011034",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/59/3337459_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/59/3337459_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 동구 망양로478번길 13",
+       "addr2": "(초량동)",
+       "zipcode": "48810",
+       "mapx": "129.034380349312",
+       "mapy": "35.1170893868025",
+       "mlevel": "6",
+       "overview": "우리나라 전통신앙으로 마을의 수호신인 당산신(당산할아버지와 당산할머니)을 모시는 곳이다. 당제는 마을의 풍요와 평안을 기원하는 지역공동체적 의례이며, 매년 음력 3월과 9월 보름에 제사를 지낸다. 제관으로 선정된 사람은 매사에 근신하며 제사일이 다가오면 당산나무 주변을 청결히 한 뒤 금줄을 두르고 황토를 몇 줌 놓아 부정을 막는다. 김민부 전망대에서 100m, 도보 약 3분의 거리에 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

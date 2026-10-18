@@ -1,0 +1,52 @@
+{
+ "contentid": "131145",
+ "modifiedtime": "20260203112935",
+ "fetchedAt": "2026-10-18T06:28:47.572Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "131145",
+       "contenttypeid": "28",
+       "title": "부산광역시 금련산청소년수련원",
+       "createdtime": "20030102090000",
+       "modifiedtime": "20260203112935",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://youth.busan.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/51/2445251_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/51/2445251_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 수영구 황령산로 156",
+       "addr2": "(광안동)",
+       "zipcode": "48259",
+       "mapx": "129.1019",
+       "mapy": "35.1545",
+       "mlevel": "6",
+       "overview": "금련산청소년수련원은 부산광역시에서 직접 운영하는 청소년 수련장으로 부산의 중심지인 금련산에 위치하고 있다. 주변의 자연경관이 수려하여 일반 시민들의 휴식공간 기능도 하고 있다. 수련원의 주요 시설은 청소년야영장, 생활관, 천문대, 대강당, 체력단련장 등 청소년 수련시설을 갖추고 있으며, 산책로와 등나무 오솔길 등도 있어 교육과 휴식을 동시에 취할 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

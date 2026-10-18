@@ -1,0 +1,52 @@
+{
+ "contentid": "3451794",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-18T06:28:44.754Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3451794",
+       "contenttypeid": "14",
+       "title": "해성아트베이",
+       "createdtime": "20241219105513",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/3459571_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/3459571_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "4",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060300",
+       "addr1": "부산광역시 남구 분포로 101 (용호동)",
+       "addr2": "용호만유람선터미널",
+       "zipcode": "48516",
+       "mapx": "129.1153458655",
+       "mapy": "35.1327486901",
+       "mlevel": "6",
+       "overview": ""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

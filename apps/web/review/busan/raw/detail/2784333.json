@@ -1,0 +1,52 @@
+{
+ "contentid": "2784333",
+ "modifiedtime": "20260319094959",
+ "fetchedAt": "2026-10-18T06:28:13.449Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2784333",
+       "contenttypeid": "12",
+       "title": "부산남항",
+       "createdtime": "20211201192306",
+       "modifiedtime": "20260319094959",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.busan.go.kr/southport",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/06/3498706_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/06/3498706_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA02",
+       "lclsSystm3": "NA020700",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 영도구 대평북로 6 (대교동1가)",
+       "addr2": "",
+       "zipcode": "49042",
+       "mapx": "129.03721411073323",
+       "mapy": "35.09186201794041",
+       "mlevel": "6",
+       "overview": "부산남항은 부산항 옆에 위치한 항구로, 영도대교에서 남항대교까지 이어지는 구간을 아우른다. 자갈치시장과 부산공동어시장, 영도 남항동이 자리해 부산의 대표적인 해양 풍경을 보여준다. 남항동에는 조선소들이 모여 있어 배를 수리하는 모습도 볼 수 있으며, 오랜 시간 삶의 터전이 이어져 온 곳이다. 남항대교에 오르면 부산 앞바다가 한눈에 펼쳐지며, 아래 수변공원에서는 휴식과 낚시를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

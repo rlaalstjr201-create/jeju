@@ -1,0 +1,52 @@
+{
+ "contentid": "1358310",
+ "modifiedtime": "20261015094615",
+ "fetchedAt": "2026-10-18T06:28:48.379Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1358310",
+       "contenttypeid": "28",
+       "title": "부산종합운동장",
+       "createdtime": "20110811001026",
+       "modifiedtime": "20261015094615",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://stadium.busan.go.kr",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 연제구 월드컵대로 344",
+       "addr2": "",
+       "zipcode": "47500",
+       "mapx": "129.0582038816",
+       "mapy": "35.1901840036",
+       "mlevel": "6",
+       "overview": "부산종합운동장은 1986년 체조체육관을 시작으로 현대식 실내체육관과 야구장, 종합 실내훈련장, 실내수영장을 준공하여 운영하고 있으며, 2002년 아시아 경기대회를 개최한 이후 월드컵 경기장으로도 활용하였다. 21세기 부산의 문화발전과 국제도시로서의 확고한 발판을 구축하기 위한 각종 국제규모 대회유치와 다양한 문화 행사를 수용하여 시민체육, 보건, 위락 등 여가시설을 위한 체육공원으로 조성 및 운영되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

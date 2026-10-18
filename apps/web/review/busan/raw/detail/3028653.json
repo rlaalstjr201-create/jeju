@@ -1,0 +1,52 @@
+{
+ "contentid": "3028653",
+ "modifiedtime": "20260305154008",
+ "fetchedAt": "2026-10-18T06:28:34.537Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3028653",
+       "contenttypeid": "14",
+       "title": "고은사진미술관",
+       "createdtime": "20231031122243",
+       "modifiedtime": "20260305154008",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.goeunmuseum.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/95/3492495_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/95/3492495_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 해운대로452번길 16 (우동)",
+       "addr2": "",
+       "zipcode": "48089",
+       "mapx": "129.14120332934948",
+       "mapy": "35.16330193334533",
+       "mlevel": "6",
+       "overview": "고은사진미술관은 부산 해운대에 위치한 사진전문미술관이다. 국내외의 사진 작품 전시를 기획하며, 창의적이고 미래 지향적인 신진작가를 발굴 지원한다. 또한 사진 문화의 대중화를 위하여 출판 사업과 열린 문화예술 공간의 역할을 담당하고 있다. 문화예술에 대한 순수한 사랑과 열정으로 설립된 고은문화재단과 고은사진미술관은 사진 문화 발전과 한국 사진예술의 활성화를 위한 구심점이 되어 사진예술의 대중화에 앞장서고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

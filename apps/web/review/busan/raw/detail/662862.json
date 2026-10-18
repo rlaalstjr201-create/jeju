@@ -1,0 +1,52 @@
+{
+ "contentid": "662862",
+ "modifiedtime": "20260623103701",
+ "fetchedAt": "2026-10-18T06:28:26.329Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "662862",
+       "contenttypeid": "12",
+       "title": "중앙해수랜드",
+       "createdtime": "20081206011427",
+       "modifiedtime": "20260623103701",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://jungangleports.itrocks.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/98/3476698_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/98/3476698_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX05",
+       "lclsSystm3": "EX050200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 남구 용호로 64",
+       "addr2": "",
+       "zipcode": "48523",
+       "mapx": "129.1106285651",
+       "mapy": "35.1255870340",
+       "mlevel": "6",
+       "overview": "중앙해수랜드는 남부환경체육공원 인근에 위치한 사우나 및 피트니스 시설이다. 심층 암반 해수를 활용한 사우나를 운영하고 있으며, 헬스와 요가, 에어로빅 등 다양한 운동 프로그램을 갖추고 있다. 사우나 시설과 피트니스 클럽을 함께 운영하여 휴식과 운동을 즐길 수 있는 복합 여가 공간으로 이용되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

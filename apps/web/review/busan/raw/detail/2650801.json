@@ -1,0 +1,52 @@
+{
+ "contentid": "2650801",
+ "modifiedtime": "20260305091621",
+ "fetchedAt": "2026-10-18T06:28:37.063Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2650801",
+       "contenttypeid": "14",
+       "title": "뮤지엄 원",
+       "createdtime": "20200330225944",
+       "modifiedtime": "20260305091621",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://museum1.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/01/3493601_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/01/3493601_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 센텀서로 20",
+       "addr2": "(우동)",
+       "zipcode": "48058",
+       "mapx": "129.129031134497",
+       "mapy": "35.1713708789985",
+       "mlevel": "6",
+       "overview": "부산 센텀에 위치한 뮤지엄 원은 예술 전문 기획사 쿤스트원이 2019년에 설립한 미디어 전문 현대 미술관으로, 2022년 3월 뮤지엄 원이라는 새로운 이름으로 재개관했다. 복층 형태로 이루어진 뮤지엄 원은 8천만 개의 LED를 바닥과 천장, 벽면에 설치하여 관람객들을 예술 작품 속으로 안내하는 초현실적인 경험을 선사한다. 뮤지엄 원은 대중을 위한 예술, 대중이 체험하고 즐길 수 있는 예술을 지향하며 대중들이 열광하는 환상적인 미디어 아트뿐만 아니라 현대 미술가의 영상, 설치, 사진 등의 작품까지 만나볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

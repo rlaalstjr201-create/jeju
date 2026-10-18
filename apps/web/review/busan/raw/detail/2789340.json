@@ -1,0 +1,52 @@
+{
+ "contentid": "2789340",
+ "modifiedtime": "20260305153339",
+ "fetchedAt": "2026-10-18T06:28:08.727Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789340",
+       "contenttypeid": "12",
+       "title": "명지동근린공원",
+       "createdtime": "20211208214922",
+       "modifiedtime": "20260305153339",
+       "tel": "",
+       "telname": "",
+       "homepage": "부산 강서구청 https://www.bsgangseo.go.kr/portal/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/18/3491618_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/18/3491618_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 강서구 명지오션시티10로 95",
+       "addr2": "",
+       "zipcode": "46763",
+       "mapx": "128.906629198788",
+       "mapy": "35.0869933306182",
+       "mlevel": "6",
+       "overview": "명지동 근린공원은 명지오션시티에 있는 도심 공원이다. 인근에는 주차장, 축구장, 잔디광장, 운동기구 등이 있으며 어린이들이 가족과 놀기 좋은 유아숲 체험원도 있다. 유아숲 체험원에는 어린이들이 자연 놀이를 할 수 있는 여러 가지 체험 시설이 있다. 여름이면 물놀이를 즐길 수 있는 시설을 운영하기도 한다. 공원의 맞은편에 강서 기적의 도서관이 있고 주차장이 넓어 편리하게 이용할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

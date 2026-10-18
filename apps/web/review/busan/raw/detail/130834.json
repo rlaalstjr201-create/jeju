@@ -1,0 +1,52 @@
+{
+ "contentid": "130834",
+ "modifiedtime": "20251205092517",
+ "fetchedAt": "2026-10-18T06:28:40.866Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130834",
+       "contenttypeid": "14",
+       "title": "부산점자도서관",
+       "createdtime": "20060510090000",
+       "modifiedtime": "20251205092517",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://www.angelbook.or.kr\" target=\"_blank\" title=\"새창 : 부산점자도서관 홈페이지로 이동\">http://www.angelbook.or.kr</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/3338053_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/53/3338053_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "9",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060900",
+       "addr1": "부산광역시 사상구 덕상로72번길 9",
+       "addr2": "",
+       "zipcode": "46938",
+       "mapx": "128.9898027697",
+       "mapy": "35.1781301800",
+       "mlevel": "6",
+       "overview": "부산점자도서관은 활자 매체로부터 소외된 시각장애인들에게 점자, 음성, 각종 전자기기 등을 통하여 문자 생활이 가능하게 하며, 시민들을 대상으로 장애인에 대한 인식개선을 추진함으로써 시각장애인의 문화복지 향상에 이바지함을 목적으로 설립되었다. 주요 사업으로는 점자·전자 자료 제작, 음성 자료 제작, 도서대출, 독서진흥, 디지털도서관 운영, 홍보 및 인식개선 등이 있다. 시각장애인 도서 종류로는 점자, 전자, 음성 영상 등이 있으며 전화 또는 이메일로 도서를 신청할 수 있다. 대출 신청 후 우편 또는 택배로 도서를 전달하며 반납 시에는 우체국에 가져다주거나 혹은 도서관에 전화 후 인터넷에 등록하면 우체부가 직접 방문하여 반납할 책을 수령한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

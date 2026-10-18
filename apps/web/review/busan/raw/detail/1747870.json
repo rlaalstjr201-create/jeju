@@ -1,0 +1,52 @@
+{
+ "contentid": "1747870",
+ "modifiedtime": "20260305113340",
+ "fetchedAt": "2026-10-18T06:28:36.261Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1747870",
+       "contenttypeid": "14",
+       "title": "동래문화회관",
+       "createdtime": "20121106000845",
+       "modifiedtime": "20260305113340",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.dongnae.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/57/3492357_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/57/3492357_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 동래구 문화로 80 (명륜동)",
+       "addr2": "",
+       "zipcode": "47746",
+       "mapx": "129.090545961812",
+       "mapy": "35.2119506866483",
+       "mlevel": "6",
+       "overview": "동래문화회관은 부산 유일의 숲 속에 있는 공연장으로 1999년 10월 개관했다. 대극장(505석), 소극장(196석), 야외공연장(1,130석), 전시실을 갖추고 있으며 수준 높은 문화 예술 공연장이자 시민을 위한 열린 휴식 공간으로 시민들의 문화적 만족도를 높이고 있다. 공연장 주변에는 동래 사적공원과 동래읍성, 복천박물관, 장영실 과학동산, 동래 사적공원 등이 있다. 동래 사적공원의 숲 속, 아름다운 자연환경에 맨발 걷기 체험 산책로도 조성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

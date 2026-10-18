@@ -1,0 +1,52 @@
+{
+ "contentid": "1607242",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-18T06:28:10.948Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1607242",
+       "contenttypeid": "12",
+       "title": "보광사(부산)",
+       "createdtime": "20120419204829",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/04/3552504_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/04/3552504_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "5",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030100",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02010800",
+       "addr1": "부산광역시 동구 범상로1번길 35",
+       "addr2": "",
+       "zipcode": "48702",
+       "mapx": "129.0468821528",
+       "mapy": "35.1408826262",
+       "mlevel": "6",
+       "overview": "보광사는 수정산 자락에 있는 대한불교 조계종의 사찰로 부산광역시 동구 범일동에 위치해 있다. 현대에 지어진 사찰로서 깨끗한 경내시설을 갖추고 있고 도시에서 산을 접할 수 있는 곳에 자리해 방문객들의 편의를 높였다. 보광사 대웅전에는 18세기 전후에 제작된 불상인 목조아미타여래삼존상이 봉안되어 있으며 보존 상태도 양호하다. 색난 계열의 조각승에 의해 제작된 불상으로 추정된다. 본존은 아미타여래이며 양측의 좌우협시보살은 관음과 대세지보살로서 모두 3구로 구성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

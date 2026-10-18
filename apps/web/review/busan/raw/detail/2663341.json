@@ -1,0 +1,52 @@
+{
+ "contentid": "2663341",
+ "modifiedtime": "20260917135621",
+ "fetchedAt": "2026-10-18T06:28:13.836Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2663341",
+       "contenttypeid": "12",
+       "title": "부산시민공원",
+       "createdtime": "20200713222139",
+       "modifiedtime": "20260917135621",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://citizenpark.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/08/3497008_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/08/3497008_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 시민공원로 73 (범전동)",
+       "addr2": "",
+       "zipcode": "47197",
+       "mapx": "129.0558397915",
+       "mapy": "35.1655426683",
+       "mlevel": "",
+       "overview": "부산시민공원은 기억, 문화, 즐거움, 자연, 참여라는 5가지 주제로 조성되었다. 부산의 새로운 공공 경관이자 치유와 휴식, 그리고 새로운 가능성이 축적되는 공간으로, 그중 공원 중앙에 자리한 하야리아 잔디광장이 가장 넓다. 공원 내에는 공원역사관, 공원안내소, 분수, 광장, 어린이놀이시설 등과 카페, 편의점, 화장실 등의 편의시설이 갖추어져 있다. \n부산시민공원은 부산 시민들과 외국인들도 편하게 방문하여 휴식을 취할 수 있는 공원이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

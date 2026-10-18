@@ -1,0 +1,52 @@
+{
+ "contentid": "3027780",
+ "modifiedtime": "20260420170357",
+ "fetchedAt": "2026-10-18T06:28:17.566Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3027780",
+       "contenttypeid": "12",
+       "title": "송림공원",
+       "createdtime": "20231030110706",
+       "modifiedtime": "20260420170357",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/57/3027757_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/57/3027757_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 우동",
+       "addr2": "702",
+       "zipcode": "48095",
+       "mapx": "129.154126",
+       "mapy": "35.157116",
+       "mlevel": "6",
+       "overview": "해운대 송림공원은 해운대 바닷가에 조성된 부산의 수국 명소로 유명한 공원이다. 해운대 해수욕장 끝자락인 웨스틴조선호텔 근처에 형성되어 있다. 2021년 HUG 주택도시 보증공사에서 설립하였으며 해운대구와 우호교류도시인 경남 고성군 만화방초의 기술자문과 한중대영공업, 동남리사이클링, 부산신해운대로타리클럽에서 수국을 기증받아 조성하였다. 소나무 군락지가 있어 소나무와 함께 다양한 종류와 색상의 아름다운 수국을 볼 수 있다. 수국이 만개하는 6월~7월에는 많은 방문객이 찾아오는 곳으로 인근에는 해운대 바닷가, 더베이101, 동백섬 등이 있어 함께 둘러보기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "129092",
+ "modifiedtime": "20260305101534",
+ "fetchedAt": "2026-10-18T06:28:06.170Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129092",
+       "contenttypeid": "12",
+       "title": "대변마을",
+       "createdtime": "20060629090000",
+       "modifiedtime": "20260305101534",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 기장군 기장읍 기장해안로 605",
+       "addr2": "",
+       "zipcode": "46079",
+       "mapx": "129.230364645028",
+       "mapy": "35.224783162581",
+       "mlevel": "6",
+       "overview": "멸치의 고장, 기장에서도 멸치의 주산지로 꼽히는 곳이 바로 대변마을. 대변항은 물살 센 동해에 접해 있지만 파도가 밀려와도 자연스럽게 방파제 역할을 해주는 죽도를 눈앞에 두고 있는 천혜의 어항을 낀 어촌마을이다. 봄철 대변항에는 왕멸치가 잡혀오는데 멸치의 길이가 15cm나 된다. 항구에 들어온 멸치어선들은 잡은 멸치를 털어내는데 노랫가락에 맞추어 멸치를 털어내는 모습이 대변항을 대표하는 상징적인 풍경이다. 대변마을은 조선 중기 때부터 사용된 이름인데 당시 김성련이란 선비가 적은 병술일기에 우기이대변포문생원가라는 기술이 있었고, 대동고변포라는 긴 지명을 줄여 대변포라 부르다가 대변마을이 되었다 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}
