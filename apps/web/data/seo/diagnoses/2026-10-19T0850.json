@@ -1,0 +1,83 @@
+{
+ "schema": 1,
+ "run_id": "2026-10-19T0850",
+ "graded": "2026-10-17T2310",
+ "rerun_reason": "직전 기록(2026-10-17T2310)과 3일 안이다(⓪ 3일 규칙). 주간 점검 지시와 새 주간 계기 3개(gsc·console·naver rank 2026-10-19)가 들어와 새 기록을 만든다 — 직전 기록은 외국어 검색 질문이었고 이번은 한국어 주간 순위·색인이다.",
+ "diagnosed_at": "2026-10-19",
+ "phase": "post-deploy",
+ "window": { "start": "2026-10-10", "end": "2026-10-16" },
+ "summary": "구글 노출이 한 주 6회(10-06~10-09)에서 282회(10-10~10-16, 클릭 1, 평균 8.3위)로 늘었는데, 들어온 검색어는 모두 장소 이름이고 target·watch 검색어는 0이다. 색인은 514/2,940쪽으로 10-16과 같고 2,413쪽이 「발견됨 - 색인 미생성」이다. 네이버는 관찰 32개 중 브랜드 「여차나:제주」 하나만 잡힌다(AI 브리핑 5번째, 지난주 4번째). target 5개는 모두 「색인 확인 전」이라 순위 판정(pivotOf)을 시작도 못 했다. 가장 큰 막힘은 계기다: 주간 GSC 파일의 rows가 비어 있어 어느 장소 쪽이 282회를 받았는지, target 쪽이 색인됐는지 아무도 모른다. 그다음은 바깥 링크 0(프록시 검색에서 yeochana.com 언급 0)이다. seo:crawl 감사 0건, keyword gate 오류 0. 지난 큐 4건 중 해소 1(홈 언어 위험 — 주인이 확인 대신 Amendment 7로 바로 막음) = 25%, 개입 상한 2.",
+ "instruments": [
+  { "name": "build", "status": "ok", "note": "SITE_URL=https://yeochana.com npm run build — 2,938쪽(허브 1·지역 15·조합 1·장소 2,921), 사이트맵 16파일 2,940 URL(core 19, 오늘 lastmod 2). 원문 0, 가장 가까운 쌍 0.773, 자기 본문 최소 48.6%. data/landing/lastmod.json은 가동 전부터 수정 상태였고 빌드 뒤에도 내용이 같다(건드리지 않음)" },
+  { "name": "seo:crawl", "status": "ok", "note": "감사 0건 · 깨진 링크·고아 0 · 사이트맵 2,940 = 색인 대상" },
+  { "name": "seo:keywords", "status": "ok", "note": "검증 오류 0 · 주의 1(城山日出峰附近景点 landing 없음). target 5 · --track 판정 5개 모두 wait(색인 확인 전)" },
+  { "name": "seo:verify", "status": "ok", "note": "큐 4건 모두 사람 채점(check 없음) · 게이트 오류 0 · 감사 P0 0 · gsc API 미연결 · naver 연결 · bing 등록(조회 없음)" },
+  { "name": "gsc(화면, data/seo/gsc/2026-10-19.json)", "status": "ok", "note": "7일 노출 282·클릭 1·CTR 0.4%·평균 8.3위. rows 0 — 검색어 표가 파일에 옮겨지지 않았고 페이지 차원은 읽지 않았다" },
+  { "name": "console(data/seo/console/2026-10-19.json)", "status": "ok", "note": "구글 색인 514(10-12 353) · 발견됨-미색인 2,413(10-12 2,536) · 크롤링됨-미색인 13(10-12 51) · 사이트맵 성공, 마지막 읽음 10-17. 네이버 서치어드바이저는 로그인 필요로 확인 실패" },
+  { "name": "naver rank(data/seo/rank/naver-2026-10-19.json)", "status": "ok", "note": "32개 중 found 1(여차나:제주, AI 브리핑 5) · not_found 31 · check_failed 0" },
+  { "name": "WebSearch(프록시)", "status": "ok", "note": "2회(상한 20): yeochana.com 언급 0 · 여차나 제주 여행 앱 0. 미국 엔진이라 네이버 블로그·카페 언급 유무는 확인 실패" },
+  { "name": "docs/analytics/2026-10-19.md", "status": "ok", "note": "7일 기분 탭 19 · 카드 노출 123 · 지도 열기 1 — 검색 유입과 연결해 읽을 표본이 아니다" }
+ ],
+ "grading": [
+  { "rank": 1, "verdict": "이행 안 됨", "why": "docs/adr/0093에 외국어 검색 범위를 정한 개정이 없다(Amendment 1~7은 표기·글자·언어 고르기). 노리지 않는다를 다시 확인한 기록도 없다(2026-10-19 확인)" },
+  { "rank": 2, "verdict": "채점 불가", "why": "verify 조건(console에 google.home_render_lang)은 충족되지 않았다 — 2026-10-19 console 파일에 그 키가 없다. 대신 주인이 확인 없이 진단이 「영어로 나오면」 내놓을 조치를 바로 했다(97bf9b7, ADR-0093 Amendment 7: 언어 없는 렌더는 한국어, e2e I18N-crawler). 위험은 닫혔지만 렌더러가 정말 영어로 읽었는지는 아무도 보지 않아 진단의 맞고 틀림을 가릴 수 없다" },
+  { "rank": 3, "verdict": "이행 안 됨", "why": "dist/index.html inLanguage가 여전히 ko 두 곳, dist/llms.txt에 In English 줄 0(2026-10-19 빌드)" },
+  { "rank": 4, "verdict": "이행 안 됨", "why": "dist/zh-Hans/ 없음, dist/jeju/seongsan/index.html hreflang 0. 1번이 결정되지 않았으니 조건부 항목도 그대로다" }
+ ],
+ "interventions": [
+  {
+   "rank": 1,
+   "title": "주간 GSC 읽기가 표를 rows에 옮긴다 — 실적의 「검색어」 표(7일)와 「페이지」 표(7일) 상위 행을 파일에 남기고, target 받는 쪽(/jeju/ · /jeju/aewol/ · /jeju/seongsan/new/)이 페이지 표에 있는지 적는다",
+   "severity": "P1",
+   "qualifies": "gsc 2026-10-19: 노출 282인데 rows 0 · seo:keywords --track: target 5개 모두 wait(색인 확인 전)",
+   "cause_layer": "색인",
+   "affected_impressions": 282,
+   "verifiable": true,
+   "sort_id": "gsc-rows-page-table",
+   "check": null,
+   "queue_kind": "other",
+   "where": "주간 작업(사람 또는 크롬 읽기) → data/seo/gsc/<날짜>.json. rows는 gsc-import.mjs 형식 { query, clicks, impressions, ctr, position } 그대로, 페이지 표는 새 키 pages: [{ page, clicks, impressions, ctr, position }] 로 같은 파일에(가져오기 스크립트는 pages를 읽지 않아도 된다 — 다음 진단이 읽는다). 기간을 「지난 7일」로 맞춘 뒤 표를 읽는다(이번 파일 note: 표가 3개월 값으로 남아 합계가 안 맞았다). 3개 target 쪽은 페이지 표에서 URL 필터로 찾아 있으면 행, 없으면 pages_absent에 적는다. 2026-10-03·10-05·10-12 세 번 이월된 「target 쪽 GSC URL 검사」를 사람 손 검사에서 주간 화면 읽기로 바꾼 것이다",
+   "evidence": "data/seo/gsc/2026-10-19.json totals 노출 282·클릭 1·평균 8.3위, rows [] · 같은 파일 note 「검색어는 모두 장소 이름(서귀포 혼술바 등), target·watch 없음」 · data/seo/gsc/2026-10-12.json 노출 6 · seo:keywords --track 2026-10-19 wait 5",
+   "why_now": "노출이 47배(6→282)로 늘어 처음으로 읽을 거리가 생겼는데, 어느 쪽이 받았는지가 파일에 없다. 지금 상태로는 (1) 장소 쪽 CTR 0.4%를 손볼 meta 개입을 고를 수 없고 (2) target 5개는 「색인 확인 전」에서 못 벗어나 pivotOf 4주·8주 시계가 돌지 않는다. 같은 막힘이 세 번 사람 손 검사로 이월됐으니 매주 하는 화면 읽기에 붙인다",
+   "verify": "data/seo/gsc/에 2026-10-19 뒤 날짜 파일이 있고, rows가 1행 이상이며, pages 배열이 1행 이상 있고, /jeju/ · /jeju/aewol/ · /jeju/seongsan/new/ 세 주소가 각각 pages 행이나 pages_absent 중 한쪽에 적혀 있다"
+  },
+  {
+   "rank": 2,
+   "title": "바깥 첫 언급 하나를 만든다 — 네이버 블로그 첫 글 1편(주제 「제주도 무계획 여행」, 엔티티 문장 그대로 + https://yeochana.com/jeju/ 링크), 게시 주소를 config.json offsite[]에 적는다",
+   "severity": "P1",
+   "qualifies": "keyword gate target 「제주도 무계획 여행」(8/10, landing /jeju/) · naver rank 2026-10-19 not_found 31/32 · console 발견됨-미색인 2,413",
+   "cause_layer": "공유",
+   "affected_impressions": null,
+   "verifiable": true,
+   "sort_id": "offsite-first-blog-post",
+   "check": null,
+   "queue_kind": "offsite",
+   "keyword": "제주도 무계획 여행",
+   "where": "사람(주인) — 「여차나:제주」 이름의 네이버 블로그 1개. 첫 글 첫 문단에 엔티티 문장을 한 글자도 바꾸지 않고: 「여차나:제주는 여차하면 나서는 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 무계획 여행 앱이다.」 본문은 지역 하나 × 기분 하나(예: 애월에서 「좀 걷고 싶어」)로 실제로 받은 3곳 이야기, 끝에 /jeju/ 링크 1개. 사이트 글 복붙 금지, 비짓제주 원문·사진 금지(licensing). 「코스」「BEST」「총정리」 쓰지 않음. 게시 뒤 data/seo/config.json에 offsite: [{ url, posted_at, kind: naver-blog }]. 2026-10-16T0031 2번(바깥 첫 언급)을 블로그 1편으로 좁혔다 — 카페 답변은 뺐다",
+   "evidence": "naver rank 2026-10-19: 여차나:제주만 found(AI 브리핑 5, 10-12엔 4) · target 「제주도 무계획 여행」 not_found · console 2026-10-19 발견됨-미색인 2,413/2,940 · WebSearch 프록시 yeochana.com 언급 0 · seoulist-postmortem 「우리를 링크하는 곳이 0곳」",
+   "why_now": "네이버는 우리 홈을 AI 브리핑 근거로만 쓰고 웹문서 칸에는 32개 중 한 번도 없다. AI 브리핑은 주로 네이버 안 문서를 근거로 쓰므로 네이버 블로그 글이 그 자리로 가는 가장 짧은 길이고, 구글의 2,413쪽 「발견됨-미색인」도 새 도메인에 바깥 링크가 0인 것과 맞물린다. 사이트 안에서는 감사 0건이라 더 고칠 곳이 없다",
+   "verify": "data/seo/config.json에 offsite 배열이 있고 posted_at이 2026-10-19 이후인 naver-blog 항목이 하나 이상 있으며, 그 url이 열리고 본문에 엔티티 문장과 yeochana.com/jeju/ 링크가 있다"
+  }
+ ],
+ "investigate": [
+  "장소 쪽 CTR — 282회 노출·평균 8.3위인데 클릭 1(0.4%). 10위 안이면서 클릭이 0에 가까운 꼴이라 meta 손질 후보지만, 어느 쪽인지 모르고 장소 이름 검색어는 keyword gate 밖이다. 1번 개입으로 pages 표가 생기면 상위 쪽의 title·description을 보고 meta 개입으로 올릴지 정한다",
+  "구글 색인 정체 — 514쪽(10-16 기록과 같음), 사이트맵 마지막 읽음 10-17. 3일이라 정체로 판정하지 않는다. 다음 주 console이 514 그대로이고 발견됨-미색인이 2,400 위면 원인(새 도메인 크롤 우선순위 vs 장소 쪽 품질)을 크롤링됨-미색인 13쪽의 URL 예시로 가른다",
+  "GSC 국가·기기 차원(직전 기록 이월) — 외국 노출 기준선이 아직 없다. 1번과 같은 화면 읽기에서 1회"
+ ],
+ "not_touching": [
+  "네이버 서치어드바이저 사이트맵 제출·수집 요청 — 2026-10-05·10-12·10-16 세 번 이월(3회 규칙)이라 큐에 다시 올리지 않고 접는다. 막힌 이유가 「Playwright 프로필이 로그인 화면으로 넘어감」이라 진단을 다시 내도 안 풀린다. robots.txt Sitemap 줄로 발견은 되고, 네이버는 이미 홈을 AI 브리핑에 쓴다. 주인이 로그인한 김에 1회 하면 좋은 일로만 남긴다",
+  "외국어 큐 3건(ADR-0093 외국어 검색 범위 결정·홈 JSON-LD inLanguage 넷·중국어 성산 시범 쪽) — 이행 안 됨, 이번 순위에서 상한 2 밖. 외국 노출 수치가 하나도 없고(GSC 국가 차원 미기록) 가장 급했던 홈 언어 위험은 Amendment 7로 닫혔다. 한국어 target이 색인 확인도 안 된 지금 외국어 쪽을 늘리지 않는다",
+  "keyword gate kill 전부(제주 가볼만한곳·함덕 카페·중문 카페·mbti p 여행 등) — 자격 없음",
+  "watch 검색어의 target 승격 — 대부분 「SERP를 아직 보지 않았다」라 경쟁 판단 없이 올리지 않는다. 네이버 rank는 우리 위치만 보고 SERP 구성은 기록하지 않는다"
+ ],
+ "failed": [
+  "네이버 서치어드바이저 화면 — 로그인 필요로 수집·노출 수치 확인 실패(console 2026-10-19)",
+  "GSC 페이지·국가 차원 — 이번 주 파일에 없음. 확인 실패(0이 아니다)",
+  "네이버 블로그·카페 안의 우리 이름 언급 — WebSearch는 미국 엔진이라 확인 실패"
+ ],
+ "repo_changes": [
+  "?? apps/web/data/seo/diagnoses/2026-10-19T0850.json — 이 기록",
+  "M apps/web/data/seo/queue.json — seo:report --queue 산출",
+  "(가동 전부터) M apps/web/data/landing/lastmod.json · M apps/web/data/seo/keywords.json(track 2026-10-19 줄) · ?? data/seo/console·gsc·rank 2026-10-19 · ?? docs/analytics/2026-10-19.md — 이 가동이 만든 것이 아니다. 빌드 뒤 lastmod.json 내용은 가동 전과 같다"
+ ]
+}

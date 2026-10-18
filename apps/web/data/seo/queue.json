@@ -1,55 +1,31 @@
 {
  "_why": "최신 SEO 진단의 개입 큐. 작업자가 여기서 집어 들고, check가 있는 항목은 npm run seo:verify가 해소 여부를 본다.",
- "generated": "2026-10-17",
- "from_run": "2026-10-17T2310",
+ "generated": "2026-10-19",
+ "from_run": "2026-10-19T0850",
  "items": [
   {
    "rank": 1,
-   "sort_id": "adr-foreign-search",
-   "title": "외국어 검색을 노릴지 주인이 정한다 — 노린다면 ADR-0093 결정 3을 고쳐 경로형 외국어 주소(/zh-Hans/jeju/<지역>/ 등)·hreflang 쌍·언어별 사이트맵을 허용하고, 범위는 gate target이 있는 지역 쪽부터(장소 2,921쪽 × 3언어는 하지 않는다)",
+   "sort_id": "gsc-rows-page-table",
+   "title": "주간 GSC 읽기가 표를 rows에 옮긴다 — 실적의 「검색어」 표(7일)와 「페이지」 표(7일) 상위 행을 파일에 남기고, target 받는 쪽(/jeju/ · /jeju/aewol/ · /jeju/seongsan/new/)이 페이지 표에 있는지 적는다",
    "severity": "P1",
    "queue_kind": "other",
    "keyword": null,
    "check": null,
-   "where": "주인 결정 → docs/adr/0093-english-chinese-japanese.md Amendment(또는 새 ADR). 제안: (1) 외국어 쪽은 /<lang>/jeju/<지역>/ 경로, 쪽마다 html lang·자기 canonical·한국어 쪽과 서로 가리키는 link rel=alternate hreflang(ko·en·zh-Hans·ja 중 있는 것 + x-default=한국어), sitemap-<lang>.xml. (2) 앱 ?lang=는 그대로(검색 대상 아님). (3) 범위: keyword gate target이 있는 지역 쪽만 — 지금은 /zh-Hans/jeju/seongsan/ 하나. 외국어 장소 쪽은 한국어 색인 대기(2,413쪽)가 풀리기 전에는 만들지 않는다. (4) 본문은 우리 이유 문장 번역(places.*.json)과 장소 이름만 — 비짓제주 원문 번역 없음(licensing). (5) 길찾기는 모든 언어 네이버지도(ADR-0071·ADR-0093 7)",
-   "verify": "docs/adr/에 외국어 검색 범위를 정한 개정(Amendment 또는 새 ADR)이 있고, 그 안에 URL 꼴·hreflang·범위(지역 쪽 몇 개)가 적혀 있다 — 또는 노리지 않는다를 다시 확인한 기록이 있다",
-   "from_run": "2026-10-17T2310"
+   "where": "주간 작업(사람 또는 크롬 읽기) → data/seo/gsc/<날짜>.json. rows는 gsc-import.mjs 형식 { query, clicks, impressions, ctr, position } 그대로, 페이지 표는 새 키 pages: [{ page, clicks, impressions, ctr, position }] 로 같은 파일에(가져오기 스크립트는 pages를 읽지 않아도 된다 — 다음 진단이 읽는다). 기간을 「지난 7일」로 맞춘 뒤 표를 읽는다(이번 파일 note: 표가 3개월 값으로 남아 합계가 안 맞았다). 3개 target 쪽은 페이지 표에서 URL 필터로 찾아 있으면 행, 없으면 pages_absent에 적는다. 2026-10-03·10-05·10-12 세 번 이월된 「target 쪽 GSC URL 검사」를 사람 손 검사에서 주간 화면 읽기로 바꾼 것이다",
+   "verify": "data/seo/gsc/에 2026-10-19 뒤 날짜 파일이 있고, rows가 1행 이상이며, pages 배열이 1행 이상 있고, /jeju/ · /jeju/aewol/ · /jeju/seongsan/new/ 세 주소가 각각 pages 행이나 pages_absent 중 한쪽에 적혀 있다",
+   "from_run": "2026-10-19T0850"
   },
   {
    "rank": 2,
-   "sort_id": "home-rendered-language",
-   "title": "GSC URL 검사 실시간 테스트로 홈 /의 렌더된 HTML이 한국어인지 확인한다 — 렌더러 언어 목록에 ko가 없으면 언어 고르기가 영어로 그린다",
+   "sort_id": "offsite-first-blog-post",
+   "title": "바깥 첫 언급 하나를 만든다 — 네이버 블로그 첫 글 1편(주제 「제주도 무계획 여행」, 엔티티 문장 그대로 + https://yeochana.com/jeju/ 링크), 게시 주소를 config.json offsite[]에 적는다",
    "severity": "P1",
-   "queue_kind": "other",
-   "keyword": null,
+   "queue_kind": "offsite",
+   "keyword": "제주도 무계획 여행",
    "check": null,
-   "where": "사람 — GSC → URL 검사 → https://yeochana.com/ → 실시간 URL 테스트 → 테스트한 페이지 보기 → HTML의 html lang 값과 h1 글자, 스크린샷. Bing Webmaster URL 검사로도 한 번. 결과를 data/seo/console/<날짜>.json google.home_render_lang(·bing.home_render_lang)에 적는다. 영어로 나오면 ADR-0093 개정 안건으로 「홈 /는 첫 방문에 자동 전환하지 않고 늘 한국어, 다른 언어는 권유 줄로 고르게」 안을 올린다(구글 권장 — 브라우저 언어로 자동 전환하지 말 것). 한국어로 나오면 닫는다",
-   "verify": "data/seo/console/에 2026-10-17 이후 날짜 파일이 있고 google.home_render_lang 값(ko 또는 en)이 적혀 있다",
-   "from_run": "2026-10-17T2310"
-  },
-  {
-   "rank": 3,
-   "sort_id": "home-jsonld-languages",
-   "title": "홈 JSON-LD WebApplication의 inLanguage를 실제 화면 언어 넷(ko·en·zh-Hans·ja)으로, llms.txt에 고정된 영어 엔티티 문장 한 줄을 더한다",
-   "severity": "P2",
-   "queue_kind": "structured",
-   "keyword": null,
-   "check": null,
-   "where": "index.html 홈 JSON-LD WebApplication: inLanguage를 [ko, en, zh-Hans, ja] 배열로(WebSite는 ko 그대로 — 쪽 글이 한국어). public/llms.txt 엔티티 문단 바로 아래 한 줄 제안: 「In English: Yeochana:Jeju is a travel companion for spontaneous (MBTI P) travelers — wherever you are in Jeju right now, pick one mood and get 3 places to go. The app also runs in English, Simplified Chinese and Japanese (?lang=en|zh-Hans|ja).」 영어 문장은 주인 승인 뒤 고정해 다른 곳에서도 같은 말로 쓴다. 사람이 반영(ADR-0093 결정 3 「JSON-LD는 한국어 그대로」에 대한 작은 개정 — description 글은 한국어 그대로)",
-   "verify": "dist/index.html WebApplication JSON-LD의 inLanguage가 ko·en·zh-Hans·ja 네 값을 가진 배열이고, dist/llms.txt에 In English: 로 시작하는 줄이 하나 있다",
-   "from_run": "2026-10-17T2310"
-  },
-  {
-   "rank": 4,
-   "sort_id": "zh-seongsan-pilot",
-   "title": "(1번이 노린다일 때만) 중국어 간체 성산 지역 쪽 하나를 시범으로 낸다 — /zh-Hans/jeju/seongsan/, 한국어 /jeju/seongsan/과 hreflang 쌍",
-   "severity": "P2",
-   "queue_kind": "landing",
-   "keyword": "城山日出峰附近景点",
-   "check": null,
-   "where": "scripts/landing.ts(사람 반영, ADR 뒤). title 꼴 「城山日出峰附近，现在去哪儿 · 여차나:제주」(최종 문구는 docs/i18n/style-zh-Hans.md 문체·주인 승인), H1·기분 절은 한국어 지역 쪽과 같은 구조, 장소 이름·이유는 places.zh-Hans.json, 길찾기 네이버지도, 앱 단추 /?lang=zh-Hans&area=seongsan. sitemap-zh-Hans.xml. 장소 링크는 한국어 장소 쪽으로(외국어 장소 쪽은 만들지 않는다)",
-   "verify": "dist/zh-Hans/jeju/seongsan/index.html이 있고 html lang=zh-Hans, 자기 canonical, /jeju/seongsan/을 가리키는 hreflang=ko alternate가 있으며, dist/jeju/seongsan/index.html에는 반대쪽 hreflang=zh-Hans alternate가 있고, 이 주소가 사이트맵 색인 아래 파일에 있다",
-   "from_run": "2026-10-17T2310"
+   "where": "사람(주인) — 「여차나:제주」 이름의 네이버 블로그 1개. 첫 글 첫 문단에 엔티티 문장을 한 글자도 바꾸지 않고: 「여차나:제주는 여차하면 나서는 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 제주 무계획 여행 앱이다.」 본문은 지역 하나 × 기분 하나(예: 애월에서 「좀 걷고 싶어」)로 실제로 받은 3곳 이야기, 끝에 /jeju/ 링크 1개. 사이트 글 복붙 금지, 비짓제주 원문·사진 금지(licensing). 「코스」「BEST」「총정리」 쓰지 않음. 게시 뒤 data/seo/config.json에 offsite: [{ url, posted_at, kind: naver-blog }]. 2026-10-16T0031 2번(바깥 첫 언급)을 블로그 1편으로 좁혔다 — 카페 답변은 뺐다",
+   "verify": "data/seo/config.json에 offsite 배열이 있고 posted_at이 2026-10-19 이후인 naver-blog 항목이 하나 이상 있으며, 그 url이 열리고 본문에 엔티티 문장과 yeochana.com/jeju/ 링크가 있다",
+   "from_run": "2026-10-19T0850"
   }
  ]
 }

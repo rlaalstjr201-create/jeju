@@ -176,6 +176,11 @@
      "week": "2026-10-12",
      "gsc": "absent",
      "naver": "not_found"
+    },
+    {
+     "week": "2026-10-19",
+     "gsc": "absent",
+     "naver": "not_found"
     }
    ]
   },
@@ -583,6 +588,11 @@
      "week": "2026-10-12",
      "gsc": "absent",
      "naver": "not_found"
+    },
+    {
+     "week": "2026-10-19",
+     "gsc": "absent",
+     "naver": "not_found"
     }
    ]
   },
@@ -691,7 +701,14 @@
    },
    "rationale": "10-01엔 실내 속성이 없어 K2로 접었다. ADR-0065로 spots.json 모든 곳에 indoor가 생겨 K2 근거가 사라졌다 — 루브릭 그대로 다시 채점. 재고: 애월 실내 153곳(식사·카페 빼면 42곳, dist 장소 쪽 「실내라」 문구 집계 2026-10-16). 수요는 네이버 자동완성만(1). 우리 각도: 비 와요(실내만) + 애월에서 차로 N분 + 3곳. 받는 곳은 새 쪽이 아니라 /jeju/aewol/의 「비 오는 날」 절(쪽 수를 늘리지 않는다).",
    "verdict": "target",
-   "landing": "/jeju/aewol/"
+   "landing": "/jeju/aewol/",
+   "track": [
+    {
+     "week": "2026-10-19",
+     "gsc": "absent",
+     "naver": "not_found"
+    }
+   ]
   },
   {
    "query": "중문 카페",
@@ -995,7 +1012,14 @@
    },
    "rationale": "양쪽 자동완성에 있다. 애월 실내 식사·카페 뺀 42곳(쉬기·새로운 거). 「애월 비오는날 놀거리」와 같은 의도라 같은 절(/jeju/aewol/ 「비 오는 날」)이 받는다.",
    "landing": "/jeju/aewol/",
-   "verdict": "target"
+   "verdict": "target",
+   "track": [
+    {
+     "week": "2026-10-19",
+     "gsc": "absent",
+     "naver": "not_found"
+    }
+   ]
   },
   {
    "query": "서귀포 비오는날 가볼만한곳",
@@ -2442,7 +2466,14 @@
    },
    "rationale": "대표 지명(일출봉) 근처에서 지금 갈 곳 — 우리 의도 그대로이고 성산 식사·카페 뺀 59곳이 있다. 도달은 별개다: 본토 사용자는 구글을 못 쓰고 바이두 색인은 확인 실패라, 지금 이 말로 받을 수 있는 사람은 구글 간체 사용자(해외 화교·싱가포르·말레이시아·VPN)로 좁다. 외국어 랜딩은 지금 없다 — ADR-0093 결정 3(랜딩을 건드리지 않는 조건 안에서는 외국어 검색 유입을 노리지 않는다)을 고치는 주인 결정 전에는 받을 쪽을 만들지 않는다.",
    "landing": "",
-   "verdict": "target"
+   "verdict": "target",
+   "track": [
+    {
+     "week": "2026-10-19",
+     "gsc": "absent",
+     "naver": "not_found"
+    }
+   ]
   },
   {
    "query": "涯月邑景点",

@@ -1,0 +1,8 @@
+{
+ "source": "GSC 실적 → 검색어, 지난 7일(차트 구간 2026-10-10~10-16), 속성 https://yeochana.com/ (크롬에서 읽음 2026-10-19)",
+ "date_range": { "start": "2026-10-10", "end": "2026-10-16" },
+ "totals": { "clicks": 1, "impressions": 282, "ctr": "0.4%", "position": 8.3 },
+ "note": "검색어 표는 화면 DOM이 3개월(10-06~10-16) 값으로 남아 있어 7일 합계와 일치하지 않을 수 있다(3개월 합계 노출 288). 검색어는 모두 장소 이름(서귀포 혼술바 등)이고 target·watch 검색어는 없다.",
+ "sitemap": { "path": "/sitemap.xml", "submitted": "2026-10-08", "last_read": "2026-10-17", "status": "성공", "discovered": 2940 },
+ "rows": []
+}

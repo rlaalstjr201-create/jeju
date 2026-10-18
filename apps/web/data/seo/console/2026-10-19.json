@@ -1,0 +1,6 @@
+{
+  "date": "2026-10-19",
+  "google": { "indexed": 514, "not_indexed_reasons": [{"reason":"발견됨 - 현재 색인이 생성되지 않음","pages":2413},{"reason":"크롤링됨 - 현재 색인이 생성되지 않음","pages":13}], "sitemap": { "status": "성공", "last_read": "2026-10-17", "discovered": 2940 } },
+  "naver": { "first_crawl": "확인 실패", "crawled_pages_total": "확인 실패", "crawl_errors_total": "확인 실패", "sitemap": "확인 실패(로그인 필요)", "expose": "확인 실패" },
+  "verdict": "구글 색인 353→514쪽, 사이트맵 성공. 네이버 서치어드바이저는 로그인 필요로 확인 실패."
+}
