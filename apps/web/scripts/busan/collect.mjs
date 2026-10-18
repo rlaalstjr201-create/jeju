@@ -115,7 +115,7 @@ export async function collect({ dir, fetchJson, now = () => new Date(), limit = 
       const code = body?.response?.header?.resultCode;
       if (code !== '0000') {
         status = `resultCode ${code ?? '?'}`;
-        throw new Error(`${op} ${arg}: ${status} ${body?.response?.header?.resultMsg ?? ''}`.trim());
+        throw new Error(`${op} ${arg}: ${status} ${body?.response?.header?.resultMsg ?? JSON.stringify(body).slice(0, 200)}`.trim());
       }
       return body;
     } catch (e) {
