@@ -110,3 +110,4 @@
 | 0091 | [0091-night-trails-later.md](0091-night-trails-later.md) | 해가 진 뒤에는 오름·산·숲길 같은 야외 산길을 뒤로 미룬다(빼지 않음), 순서가 바뀌면 상태 줄 한 줄 | Accepted (2026-10-16) | Amendment 1: 밤에는 배로 가는 섬도 뒤로, 밀린 것에 맞춘 문구 |
 | 0092 | [0092-famous-places-mood.md](0092-famous-places-mood.md) | 여섯째 기분 「유명한 데 가 보고 싶어」 — 비짓제주 관광지 만족도 5 또는 공영관광지 4점 이상, 먹기·카페 빼고 (ADR-0028·0075의 기분 5개 대체) | Accepted (2026-10-16) | Amendment 1: 주인 지정 2곳. Amendment 2: 실내도 늘, 인기(네이버 글 수)·가까움 반반 합 순. Amendment 3: 인기 2회차(구절·기관 머리말). Amendment 4: 인기 = 검색량(네이버 검색광고). Amendment 5: 키워드 여럿 검색량 합 |
 | 0093 | [0093-english-chinese-japanese.md](0093-english-chinese-japanese.md) | 영어·중국어(简体)·일본어 — 앱 화면과 장소 소개글, 랜딩은 한국어, 지도는 모든 언어에서 네이버지도 기본 (context.md 「Korean-only for MVP」 대체) | Accepted (2026-10-17) |  |
+| 0095 | [0095-busan-file-pipeline.md](0095-busan-file-pipeline.md) | 부산 데이터는 Postgres 없는 파일 파이프라인 — TourAPI 원문 `review/busan/raw` → `scripts/busan/` → `spots-busan.json`, 제주 `build-spots.mjs`와 분리 | Accepted (2026-10-18) |  |
