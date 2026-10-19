@@ -30,3 +30,4 @@ git checkout -- data/landing/lastmod.json   # 빌드가 날짜만 바꾼 경우
 | 단위 | 제주 그대로 | 한국어 진입 JS+CSS gzip | 비고 |
 |---|---|---|---|
 | S1 | 통과(두 번) | 48,533 B (+117 B) | e2e 88/89 — U1-indoor-label(195폭 넘침 13px)은 S1 코드를 빼고 S0 커밋에서 돌려도 똑같이 실패한다(S1과 무관) |
+| S4 | 통과 | 48,547 B (+7 B, 기준선 1df5fd6 대비) | 꺼진 빌드 `dist/`에 `spots-busan.json` 없음(`vite.config.ts` `busanFile`), 켠 빌드에는 있음·미리 받기 목록에 없음. 브라우저 요청에 부산 파일 0 |

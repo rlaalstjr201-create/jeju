@@ -8,10 +8,14 @@ const FOOD_FIELDS = [...FIELDS, 'sub'];
 /** The box every shipped Jeju place has been inside (tighter than `inJeju`, which also holds the sea around it). */
 export const JEJU_RECORD_BOX = (p: Point) => p.lat >= 33.1 && p.lat <= 33.6 && p.lng >= 126.1 && p.lng <= 127.0;
 
+/** Busan's record box until its boundary polygon comes (plans/busan.md S5): the city and its islands, nothing at sea. */
+export const BUSAN_RECORD_BOX = (p: Point) => p.lat >= 34.85 && p.lat <= 35.45 && p.lng >= 128.75 && p.lng <= 129.35;
+
 /** The ids of records that break the format: exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or
  * +hide, ADR-0074; 철: +season, ADR-0080; 노을: +sunsetView, +sunsetSea on filled ones, ADR-0083; 야외 산길: +trail true,
- * ADR-0091; 유명한 곳: +famous true +pop, ADR-0092), coords `inside`, https image, mood ∈ {rest,walk,new,food}. */
-export function recordProblems(spots: readonly Spot[], inside: (p: Point) => boolean): string[] {
+ * ADR-0091; 유명한 곳: +famous true +pop, ADR-0092), coords `inside`, https image, mood ∈ {rest,walk,new,food}.
+ * `noPhoto`: an empty image is allowed too (Busan, specs/busan.md 3.1: a TourAPI place with no photo ships `''`). */
+export function recordProblems(spots: readonly Spot[], inside: (p: Point) => boolean, { noPhoto = false } = {}): string[] {
   return spots
     .filter((s) => {
       const expectedFields = [
@@ -28,7 +32,7 @@ export function recordProblems(spots: readonly Spot[], inside: (p: Point) => boo
       return (
         Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||
         !inside(s) ||
-        !s.image.startsWith('https://') ||
+        !(s.image.startsWith('https://') || (noPhoto && s.image === '')) ||
         !['rest', 'walk', 'new', 'food'].includes(s.mood) ||
         typeof s.bookable !== 'boolean' ||
         (s.kakaoPlaceId !== null && typeof s.kakaoPlaceId !== 'string')

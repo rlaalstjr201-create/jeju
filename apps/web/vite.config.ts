@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process';
-import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import { analyticsEnv, type AnalyticsEnv } from './scripts/analytics-env';
@@ -83,6 +83,21 @@ function siteUrl(): Plugin {
   };
 }
 
+/** 출시 스위치 (plans/busan.md): Busan's file goes out with the build only in mode `busan`. With the switch off, Vite's copy
+ * of public/spots-busan.json is taken out of the build again, so a Jeju deploy carries no Busan file at all. */
+function busanFile(mode: string): Plugin {
+  let outDir = '';
+  return {
+    name: 'busan-file',
+    apply: 'build',
+    configResolved: (c) => void (outDir = resolve(c.root, c.build.outDir)),
+    closeBundle() {
+      const f = resolve(outDir, 'spots-busan.json');
+      if (mode !== 'busan' && existsSync(f)) rmSync(f);
+    },
+  };
+}
+
 /** `vite preview` answers like Cloudflare Pages with a 404.html (docs/deploy.md): no SPA fallback — a path
  * that is no file gets 404.html with status 404. The e2e checks run against this. */
 function pagesNotFound(): Plugin {
@@ -139,7 +154,7 @@ export default defineConfig(({ command, mode }) => ({
     __BUSAN_V__: JSON.stringify(BUSAN_V),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
-  plugins: [serviceWorker(), siteUrl(), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
+  plugins: [serviceWorker(), siteUrl(), busanFile(mode), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the one dynamic import is the other languages' words, which a Korean visit never asks for
   build: { target: 'es2020', modulePreload: false },
 }));
