@@ -1,6 +1,7 @@
 // 비 소식 (ADR-0076): the pure half of /api/rain — area → KMA grid, which issuance to read, and the answer's POP.
 // No I/O here; functions/api/rain.ts does the fetch and the caching.
-import { ALL_AREAS, type Area } from '../../src/areas';
+import type { Area } from '../../src/areas';
+import { ALL_AREAS } from '../../src/busan';
 
 /** Both destinations' slugs (plans/busan.md S6): no switch here — a Busan slug asked before the release does no harm. */
 export const areaBySlug = (slug: string | null): Area | null => ALL_AREAS.find((a) => a.slug === slug) ?? null;

@@ -2,7 +2,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { AREAS, BUSAN_AREAS, nearestArea } from '../src/areas';
+import { AREAS, nearestArea } from '../src/areas';
+import { BUSAN_AREAS } from '../src/busan';
 import { normalizeSpots } from '../src/data';
 import { CARD_COUNT, listed, pickCards, pool, withinReach, type Button, type Spot, type Tab } from '../src/pick';
 

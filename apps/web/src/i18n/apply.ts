@@ -6,7 +6,7 @@ import { DAY_TEXT, type Day } from '../dates';
 import { BOOK_TEXT, GO_TEXT, MAP_APP_NAME, type MapApp } from '../links';
 import { MARKET_TEXT } from '../market';
 import { TRAVEL_TEXT, type Button, type Spot } from '../pick';
-import { BUSAN, OPEN_AREAS } from '../release';
+import { BUSAN, OPEN_AREAS, whenBusan } from '../release';
 import { BUSAN_COPY, COPY, MOOD_LABEL, PLACE } from '../render';
 import { SEASON_TEXT, type SeasonKind } from '../season';
 import { FROM_TEXT } from '../state';
@@ -87,10 +87,15 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
   Object.assign(GO_TEXT, w.go);
   Object.assign(BOOK_TEXT, w.book);
   Object.assign(MAP_APP_NAME, w.mapApp);
-  for (const a of OPEN_AREAS) {
-    const area = a as { label: string; landmark: string };
-    [area.label, area.landmark] = w.areas[a.name];
-  }
+  const name = () => {
+    for (const a of OPEN_AREAS) {
+      const area = a as { label: string; landmark: string };
+      [area.label, area.landmark] = w.areas[a.name];
+    }
+  };
+  name();
+  // Busan's 12 come with its part, which may be loaded later (src/release.ts)
+  if (BUSAN) whenBusan(name);
   for (const g of AREA_GROUPS) (g as { heading: string }).heading = w.areaGroups[g.group];
 
   doc.documentElement.lang = lang;

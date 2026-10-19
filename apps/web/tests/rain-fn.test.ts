@@ -1,6 +1,7 @@
 // 비 소식 함수 (ADR-0076, plans/home-refresh.md U4): grid, issuance time, POP window, and the handler's answers.
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { AREAS, BUSAN_AREAS } from '../src/areas';
+import { AREAS } from '../src/areas';
+import { BUSAN_AREAS } from '../src/busan';
 import { areaBySlug, baseTime, kmaGrid, maxPop } from '../functions/_lib/kma';
 import { onRequestGet } from '../functions/api/rain';
 

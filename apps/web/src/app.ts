@@ -9,8 +9,7 @@ import { destOfId, type Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, OPEN_AREAS, areaOfPoint, released, releasedDestOf } from './release';
-import { mountStart } from './start';
+import { BUSAN, OPEN_AREAS, areaOfPoint, loadBusan, released, releasedDestOf, startScreen } from './release';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
@@ -163,15 +162,22 @@ export function mountApp(doc: Document, deps: Deps): App {
   // older device's Jeju), or none — the 시작 화면 is then up and Jeju is drawn under it until a choice. A link is read
   // again here: only the app knows whether a ?stay= point is in Busan (src/dest.ts). Off: Jeju, nothing read or kept.
   const early = win as (Window & { __dest?: unknown; __destBy?: unknown }) | null;
-  const starting = BUSAN && doc.documentElement.classList.contains('yc-start') && !!doc.getElementById('ycStart');
+  // (Busan's part, with the 시작 화면's module, was asked for before the mount, main.ts; without it the cover goes and this is Jeju)
+  const starting = BUSAN && !!startScreen() && doc.documentElement.classList.contains('yc-start') && !!doc.getElementById('ycStart');
+  if (BUSAN && !starting) {
+    doc.documentElement.classList.remove('yc-start');
+    doc.getElementById('ycStart')?.remove();
+  }
   let dest0: Dest = 'jeju';
   if (BUSAN) {
     const link = early?.__destBy === 'link' && win ? readDeepLink(win.location.search, today0) : null;
     const area = link?.area && link.area !== 'here' ? areaByName(link.area, OPEN_AREAS) : null;
     const linked = area ? destOfArea(area) : link?.stay ? releasedDestOf(link.stay) : null;
     const said = early?.__dest === 'busan' || early?.__dest === 'jeju' ? (early.__dest as Dest) : null;
-    dest0 = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
-    if (!starting) store.setDest(dest0);
+    const want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
+    // Busan's part not in (it could not be loaded): Jeju for this visit, the choice kept on the device as it was
+    dest0 = released(want) ? want : 'jeju';
+    if (!starting && dest0 === want) store.setDest(dest0);
   }
   store.useDest(dest0);
   const loaded = store.load(today0);
@@ -1041,8 +1047,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'other-dest') {
       const d = b.dataset.dest;
       if ((d === 'jeju' || d === 'busan') && !guarded('other-dest') && state.view === 'saved') {
-        switchDest(d);
-        request('show');
+        // Busan's part first (src/release.ts): a Jeju visit has not downloaded it
+        if (BUSAN && !released(d)) void loadBusan().then((ok) => ok && !signal.aborted && state.view === 'saved' && (switchDest(d), request('show')));
+        else {
+          switchDest(d);
+          request('show');
+        }
       }
       return;
     }
@@ -1297,6 +1307,8 @@ export function mountApp(doc: Document, deps: Deps): App {
    * its 동네 index, opened in the sheet (the sheet stays open). */
   function pickDest(d: Dest) {
     if (d === state.dest) return;
+    // Busan's part first (src/release.ts): a Jeju visit has not downloaded it
+    if (BUSAN && !released(d)) return void loadBusan().then((ok) => ok && !signal.aborted && pickDest(d));
     const fix = state.origin?.key === GPS_KEY ? state.origin.point : null;
     switchDest(d, { basis: fix && releasedDestOf(fix) === d ? 'gps' : 'region' });
     if (state.view !== 'home') request('show');
@@ -1354,7 +1366,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   // 시작 화면 (ADR-0096): index.html drew it; the app answers its buttons and, with location already allowed, reads it
   let startOpen = starting;
   if (starting)
-    mountStart(doc, {
+    startScreen()!(doc, {
       geo: deps,
       signal,
       choose(d, how, why, point) {

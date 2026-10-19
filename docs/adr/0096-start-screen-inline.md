@@ -20,5 +20,5 @@ Status: Accepted (2026-10-19, `plans/busan.md` 2판 ADR #2, S5에서 씀). ADR-0
 
 - 꺼진 빌드의 `dist/index.html`은 S0과 같은 바이트다(`check:jeju` 통과, 2026-10-19).
 - 켠 빌드 HTML은 인라인 두 블록만큼 커진다(상한: gzip +2KB, plans/busan.md 위험 표).
-- 인라인 slug 표(12개)와 `src/areas.ts` `BUSAN_AREAS`는 따로 있다. `tests/start.test.ts`가 인라인 판정 표를 jsdom에서 돌려 맞춘다.
+- 인라인 slug 표(12개)와 `src/busan.ts` `BUSAN_AREAS`는 따로 있다(ADR-0098: 앱 쪽은 부산 몫 청크로 받는다). `tests/start.test.ts`가 인라인 판정 표를 jsdom에서 돌려 맞춘다.
 - 크롤러(저장소 없음)는 덮개를 본다. 홈 본문 DOM은 그대로라 색인 글은 같다. 4주 판정은 spec 9·plan M5대로.

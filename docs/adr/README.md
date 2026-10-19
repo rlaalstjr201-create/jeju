@@ -113,3 +113,4 @@
 | 0095 | [0095-busan-file-pipeline.md](0095-busan-file-pipeline.md) | 부산 데이터는 Postgres 없는 파일 파이프라인 — TourAPI 원문 `review/busan/raw` → `scripts/busan/` → `spots-busan.json`, 제주 `build-spots.mjs`와 분리 | Accepted (2026-10-18) |  |
 | 0096 | [0096-start-screen-inline.md](0096-start-screen-inline.md) | 시작 화면은 앱 번들 밖 인라인 — 판정은 head, 덮개는 쓸 때만, GPS·경계는 앱, 꺼진 빌드는 블록을 지움 | Accepted (2026-10-19) |  |
 | 0097 | [0097-storage-keys-per-destination.md](0097-storage-keys-per-destination.md) | 저장 키 머리말 jeju. 유지, 여행지별 기준·동네·숙소는 꼬리 .busan, jeju.dest, 다른 여행지 id 보존 (ADR-0063·0087 개정) | Accepted (2026-10-19) |  |
+| 0098 | [0098-busan-part-chunk-and-terser.md](0098-busan-part-chunk-and-terser.md) | 부산 몫(동네 12·경계·시작 화면 모듈)은 부산이 쓰일 때만 받는 청크, 압축은 terser — 켠 빌드 한국어 진입 gzip ≤ 50KB | Accepted (2026-10-20) |  |

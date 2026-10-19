@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import type { GeoPermission } from '../src/effects';
 import { LocateError } from '../src/effects';
 import type { Point } from '../src/pick';
-import { BUSAN } from '../src/release';
+import { BUSAN, loadBusan } from '../src/release';
 import { mountStart } from '../src/start';
 import type { NoOrigin } from '../src/types';
 
@@ -195,6 +195,7 @@ describe('start.ts', () => {
     expect(g.chosen).toEqual([['jeju', 'gps', null, 성산]]);
   });
   it.runIf(BUSAN)('switch on: a position in Busan chooses Busan', async () => {
+    await loadBusan(); // main.ts asks for Busan's part before the mount while the 시작 화면 is up
     const t = started({ at: 해운대 });
     (t.doc.getElementById('ycGps') as HTMLElement).click();
     await tick();

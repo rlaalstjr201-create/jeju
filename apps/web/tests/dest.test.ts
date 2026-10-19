@@ -7,9 +7,10 @@ import { pathToFileURL } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { inJeju } from '../src/areas';
 import { readDeepLink } from '../src/deeplink';
-import { areaAt, destOf, destOfId, inBusan } from '../src/dest';
+import { areaAt, destOf, inBusan } from '../src/busan';
+import { destOfId } from '../src/dest';
 import { naverDirectionsUrl } from '../src/links';
-import { BUSAN, released, releasedDestOf } from '../src/release';
+import { BUSAN, OPEN_AREAS, loadBusan, openAreasOf, released, releasedDestOf } from '../src/release';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -65,6 +66,18 @@ describe('destOf', () => {
 describe('출시 스위치 (src/release.ts)', () => {
   it('is on only in mode busan (npm run test:busan), off in npm test', () => {
     expect(BUSAN).toBe(import.meta.env.MODE === 'busan');
+  });
+
+  // plans/busan.md budget: Busan's part is a chunk of its own; until it is in, the app is Jeju's (main.ts asks for it
+  // first where Busan is in play, app.ts when Busan is chosen)
+  it('Busan opens only once its part is in (src/busan-part.ts): before, 해운대 is outside and the areas are Jeju\'s 15', async () => {
+    expect(released('busan')).toBe(false);
+    expect(releasedDestOf(해운대해수욕장)).toBeNull();
+    expect(OPEN_AREAS).toHaveLength(15);
+    expect(await loadBusan()).toBe(BUSAN);
+    expect(await loadBusan()).toBe(BUSAN);
+    expect(OPEN_AREAS).toHaveLength(BUSAN ? 27 : 15);
+    expect(openAreasOf('busan')).toHaveLength(BUSAN ? 12 : 15);
   });
 
   it('Jeju is always open; Busan only with the switch on', () => {

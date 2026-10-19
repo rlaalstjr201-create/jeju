@@ -1,9 +1,9 @@
 // render(state) is idempotent: every aria-pressed/aria-current, label, count, card and sheet is derived from
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
-import { AREAS, AREA_GROUPS, BUSAN_AREAS, areaLabel, type AreaName } from './areas';
+import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DESTS, destOfId, type Dest } from './dest';
-import { BUSAN, OPEN_AREAS } from './release';
+import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, nightHome, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
@@ -757,7 +757,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       const h = el(doc, 'p', { class: 'group-h', id });
       h.append(el(doc, 'span', { class: 'order' }, COPY.westFirst));
       const grid = el(doc, 'div', { class: 'areas', role: 'group', 'aria-label': BUSAN_COPY.destName.busan });
-      for (const a of BUSAN_AREAS) grid.append(option(a.label, a.landmark, { 'data-area': a.name, 'data-where': where, 'aria-pressed': String(a.name === selected) }));
+      for (const a of openAreasOf('busan')) grid.append(option(a.label, a.landmark, { 'data-area': a.name, 'data-where': where, 'aria-pressed': String(a.name === selected) }));
       parent.append(h, grid);
       return;
     }

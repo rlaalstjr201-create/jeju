@@ -133,7 +133,9 @@ async function fresh({ width = 390, height = 844, dark = false, sw = false, geo,
   if (route) await route(ctx);
   const page = await ctx.newPage();
   await page.goto('about:blank');
-  await page.goto(BASE);
+  // switch on (ADR-0098): this first visit, with nothing stored, is the 시작 화면 — the app mounts once Busan's part is in,
+  // so it is let in before the storage is seeded; a later mount would read (and act on) the seeded storage
+  await page.goto(BASE, BUSAN ? { waitUntil: 'networkidle' } : undefined);
   await page.evaluate(
     ({ geo, storage }) => {
       localStorage.clear();

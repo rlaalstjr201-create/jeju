@@ -4,8 +4,8 @@
 import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
-import { DESTS, inBusan, type Dest } from './dest';
-import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
+import { DESTS, type Dest } from './dest';
+import { BUSAN, OPEN_AREAS, openAreasOf, releasedDestOf } from './release';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { parseSurvey, type SurveyRec } from './survey';
@@ -162,7 +162,7 @@ export function parseStay(v: unknown, dest: Dest = 'jeju'): Stay | null {
   const o = v as Record<string, unknown>;
   if (!isNum(o.lat) || !isNum(o.lng)) return null;
   const p = { lat: o.lat, lng: o.lng };
-  if (!(dest === 'jeju' ? inJeju(p) : BUSAN && inBusan(p))) return null;
+  if (!(dest === 'jeju' ? inJeju(p) : BUSAN && releasedDestOf(p) === 'busan')) return null;
   const near = nearestArea(p, openAreasOf(dest));
   const own = areaByName(o.area, OPEN_AREAS);
   const area = own && openAreasOf(dest).includes(own) ? own.name : near.name;

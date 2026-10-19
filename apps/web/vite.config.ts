@@ -171,6 +171,8 @@ export default defineConfig(({ command, mode }) => ({
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [busanBlock(mode), serviceWorker(mode), siteUrl(), busanFile(mode), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
-  // no preload helper (ADR-0093): the one dynamic import is the other languages' words, which a Korean visit never asks for
-  build: { target: 'es2020', modulePreload: false },
+  // no preload helper (ADR-0093): the dynamic imports are the other languages' words, which a Korean visit never asks for,
+  // and Busan's part (switched-on build only, src/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
+  // switch on
+  build: { target: 'es2020', modulePreload: false, minify: 'terser' },
 }));

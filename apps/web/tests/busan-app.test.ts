@@ -3,11 +3,11 @@
 // (npm run test:busan); the Jeju side of every one of these is the rest of the suite, unchanged.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocateError } from '../src/app';
 import { kakaoUrl, naverDirectionsUrl, placeUrl } from '../src/links';
 import type { Point, Spot } from '../src/pick';
-import { BUSAN } from '../src/release';
+import { BUSAN, loadBusan } from '../src/release';
 import { sunsetText } from '../src/sun';
 import { openMarkets } from '../src/home';
 import { KEYS, createStore, destKey, parseRegion, parseStay } from '../src/store';
@@ -34,6 +34,9 @@ function mount(o: { dest?: 'jeju' | 'busan'; at?: Point | 'outside'; storage?: R
 const busanIds = () => cardIds().every((id) => id?.startsWith('bs-'));
 
 describe.runIf(BUSAN)('부산 (switch on)', () => {
+  // as main.ts does where Busan is in play from the start (a device that chose it, a position read outside Jeju);
+  // the part's own arrival is tests/busan-part.test.ts
+  beforeAll(async () => void (await loadBusan()));
   beforeEach(() => {
     reset();
     Element.prototype.scrollIntoView ??= () => undefined; // jsdom has no layout

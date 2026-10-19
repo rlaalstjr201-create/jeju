@@ -5,7 +5,8 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { AREAS, BUSAN_AREAS, areaByName } from '../src/areas';
+import { AREAS, areaByName } from '../src/areas';
+import { BUSAN_AREAS } from '../src/busan';
 import { normalizeSpots } from '../src/data';
 import { islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Point, type Spot, type Tab } from '../src/pick';
 import { nightNow } from '../src/sun';

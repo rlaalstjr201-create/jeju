@@ -4,7 +4,7 @@ import { LocateError, mountApp, type Deps } from './app';
 import type { Dest } from './dest';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
-import { BUSAN, releasedDestOf } from './release';
+import { BUSAN, loadBusan, releasedDestOf } from './release';
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 
@@ -14,8 +14,10 @@ function locate(): Promise<Point> {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const p = { lat: coords.latitude, lng: coords.longitude };
-        // inside a destination open in this build (plans/busan.md: with the switch off, Jeju only — as before)
+        // inside a destination open in this build (plans/busan.md: with the switch off, Jeju only — as before). Outside
+        // Jeju with the switch on, Busan's part (its boundary) is asked for first (src/release.ts).
         if (releasedDestOf(p)) resolve(p);
+        else if (BUSAN) void loadBusan().then(() => (releasedDestOf(p) ? resolve(p) : reject(new LocateError('outside'))));
         else reject(new LocateError('outside'));
       },
       (err) => reject(new LocateError(err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable')),
@@ -183,7 +185,16 @@ function start() {
     });
   }
 }
-void (WORDS[LANG] ? words(LANG).then(yieldToMain) : yieldToMain()).then(start);
+/** With the switch on, Busan's part goes in before the mount where Busan is in play from the start (src/release.ts): the
+ * 시작 화면 is up, or index.html's first script decided Busan (a link, the device's choice). A failure (offline, 4 s)
+ * mounts Jeju. Anywhere else it is asked for only once Busan is chosen. */
+const busanFirst = (): Promise<unknown> =>
+  BUSAN && (document.documentElement.classList.contains('yc-start') || (window as { __dest?: unknown }).__dest === 'busan')
+    ? within(loadBusan(), 4000).catch(() => undefined)
+    : Promise.resolve();
+void (
+  BUSAN ? Promise.all([WORDS[LANG] ? words(LANG) : null, busanFirst()]).then(yieldToMain) : WORDS[LANG] ? words(LANG).then(yieldToMain) : yieldToMain()
+).then(start);
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   // after load and after the app's own download of the list (listIn), or 10 s at most if that never settles
