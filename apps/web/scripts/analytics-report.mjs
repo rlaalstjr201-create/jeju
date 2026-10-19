@@ -3,10 +3,11 @@
 //   npm run analytics:report        (needs `npx wrangler login`; reads only, from the remote yeogwi-events)
 // Mood taps, cards shown → map opened, the most saved places (net of unsave) and how often date mode was used;
 // then 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md): Q1–Q3 from the counters that are not places;
-// then 숙소 링크 (ADR-0089): per partner tag, 들어옴 · 기분 누름 · 길찾기 and the two ratios.
+// then 숙소 링크 (ADR-0089): per partner tag, 들어옴 · 기분 누름 · 길찾기 and the two ratios;
+// then 시작 화면 (specs/busan.md 7): seen, started (how · why · 여행지) and the rule set in advance for its 4th week.
 // Little or no data is said as such, never presented as a finding.
 import { execSync } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,6 +30,35 @@ const FLOW = /^(open(:|$)|arrange:|saved:|save:)/;
 /** 숙소 링크 counters (ADR-0089): `src:<tag>`, not places and not the overall taps / maps */
 const SRC = /^src:/;
 const OPS = [['up', '위로'], ['down', '아래로'], ['move', '다른 날로'], ['past', '지난 날 펼치기·접기']];
+/** 시작 화면 counters (events/handler.ts START_IDS): `start:view`, `start:<how>:<why>:<dest>` — not places */
+const START = /^start:/;
+const HOW = { gps: '내 위치', pick: '직접 고름' };
+const WHY = { none: '', denied: '거절 뒤', unavailable: '못 찾은 뒤', outside: '밖 문구 뒤' };
+const DEST = { jeju: '제주', busan: '부산' };
+
+/** 시작 화면 for one window. The rule set in advance (plans/busan.md 결과 생성 표): 4 weeks after the release, with
+ * start_view ≥ 100, start_done ÷ start_view < 70% reopens its form; under 100 it is 판단 보류. */
+function startLines(rows, key) {
+  const n = (pred) => rows.filter(pred).reduce((s, r) => s + Number(r[key] || 0), 0);
+  const view = n((r) => r.event === 'start_view' && r.id === 'start:view');
+  const done = rows.filter((r) => r.event === 'start_done' && START.test(r.id));
+  const doneN = n((r) => done.includes(r));
+  if (!view && !doneN) return ['데이터 없음.'];
+  const by = new Map();
+  for (const r of done) {
+    const [, how, why, dest] = r.id.split(':');
+    const k = `${HOW[how] ?? how}${WHY[why] ? `(${WHY[why]})` : ''} → ${DEST[dest] ?? dest}`;
+    by.set(k, (by.get(k) ?? 0) + Number(r[key] || 0));
+  }
+  const parts = [...by].filter(([, x]) => x > 0).sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1));
+  return [
+    `- 보임 ${view}회 → 시작 ${doneN}회${view ? ` (${pct(doneN, view)})` : ''}`,
+    ...(parts.length ? [`- 시작한 길: ${parts.map(([k, x]) => `${k} ${x}`).join(', ')}`] : []),
+    view >= 100
+      ? `- 미리 정한 기준(출시 4주 뒤 한 번): 시작÷보임 ${pct(doneN, view)} — 70% 미만이면 시작 화면 꼴을 다시 열어요.`
+      : `- 보임이 ${view}회라 100회 전에는 판단 보류예요.`,
+  ];
+}
 
 /** 저장 목록 흐름 for one window (`key` n7 / n28). */
 function flowLines(rows, key) {
@@ -78,7 +108,7 @@ function srcLines(rows, key) {
 
 /** rows: { event, id, n7, n28 }[]; names: id → place name. */
 export function renderReport(allRows, names, today) {
-  const rows = allRows.filter((r) => !FLOW.test(r.id) && !SRC.test(r.id));
+  const rows = allRows.filter((r) => !FLOW.test(r.id) && !SRC.test(r.id) && !START.test(r.id));
   const out = [`# 사용 분석 ${today}`, '', `자체 익명 기록(D1 \`yeogwi-events\`) 기준. 7일 = ${minus(today, 6)}~${today}, 28일 = ${minus(today, 27)}~${today} (서울 날짜).`, ''];
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) {
     const sum = (e, pred = () => true) => rows.filter((r) => r.event === e && pred(r)).reduce((s, r) => s + Number(r[key] || 0), 0);
@@ -114,6 +144,8 @@ export function renderReport(allRows, names, today) {
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...flowLines(allRows, key), '');
   out.push('## 숙소 링크', '', 'ADR-0089. 숙소마다 2주로 판단해요: 들어옴 10 미만이면 접고, 기분÷들어옴 60% 이상·길찾기÷기분 30% 이상이면 통과.', '');
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...srcLines(allRows, key), '');
+  out.push('## 시작 화면', '', 'specs/busan.md 7. 1초 넘게 보인 덮개만 「보임」, 그 뒤에 시작한 것만 「시작」으로 세요(자동화 브라우저는 빼요). 판정은 이 수치로 하고 GA4는 보조예요.', '');
+  for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...startLines(allRows, key), '');
   return `${out.join('\n').trimEnd()}\n`;
 }
 
@@ -142,7 +174,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     process.exit(1);
   }
   const rows = parseWranglerJson(stdout);
-  const names = new Map(JSON.parse(readFileSync(resolve(app, 'public/spots.json'), 'utf8')).map((s) => [s.id, s.name]));
+  // both destinations' places (부산's file where there is one, plans/busan.md)
+  const lists = ['public/spots.json', 'public/spots-busan.json'].map((f) => resolve(app, f)).filter((f) => existsSync(f));
+  const names = new Map(lists.flatMap((f) => JSON.parse(readFileSync(f, 'utf8')).map((s) => [s.id, s.name])));
   const dir = resolve(app, '../../docs/analytics');
   mkdirSync(dir, { recursive: true });
   const file = resolve(dir, `${today}.md`);

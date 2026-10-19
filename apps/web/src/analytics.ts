@@ -11,7 +11,8 @@ export interface AnalyticsIds {
 }
 
 export interface Analytics {
-  /** a usage event, mirrored to GA4 when it is one of mood / shown / map / save / the saved list opened or arranged. */
+  /** a usage event, mirrored to GA4 when it is one of mood / shown / map / save / the saved list opened or arranged / the
+   * 시작 화면 seen or left. */
   event(ev: UsageEvent): void;
   /** the 기록 끄기 setting (called at start with the stored value, then on every change). */
   setEnabled(on: boolean): void;
@@ -30,6 +31,9 @@ export const GA_NAME: Partial<Record<UsageEvent['e'], string>> = {
   save: 'place_save',
   open: 'saved_open',
   arrange: 'saved_arrange',
+  // 시작 화면 (specs/busan.md 7): the counts are D1's, GA4 a second look
+  start_view: 'start_view',
+  start_done: 'start_done',
 };
 
 /** The fields GA4 gets: no area name, no day, nothing positional. public/privacy.html names each (tests/deploy.test.ts). */
@@ -47,6 +51,10 @@ export function gaParams(ev: UsageEvent): Record<string, string | number | boole
   if (ev.past) p.past = ev.past;
   if (ev.live0) p.live0 = ev.live0;
   if (ev.op) p.op = ev.op;
+  // 여행지 (specs/busan.md 7): the destination; start_done: how it was left
+  if (ev.dest) p.dest = ev.dest;
+  if (ev.how) p.how = ev.how;
+  if (ev.why) p.why = ev.why;
   return p;
 }
 

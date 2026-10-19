@@ -21,3 +21,9 @@ Superseded in part by ADR-0078 (2026-10-03): 「수집 주소가 빌드 설정�
 
 - "외부 요청은 사진과 링크뿐"이던 원칙(ADR-0058 KEEP)을 이 이벤트 전송만큼 넓힌다.
 - 상세는 `specs/usage-events.md`.
+
+## Amendment 1 (2026-10-20, specs/busan.md 7, plans/busan.md S7 M6): 여행지와 시작 화면
+
+- 맥락에 `dest`(`jeju`|`busan`)를 더한다. 출시 스위치를 켠 앱만 보낸다. 장소 이벤트의 카운터 키는 그대로다(장소 id 머리말이 여행지를 말한다).
+- 이벤트 이름에 `start_view`(시작 화면이 1초 넘게 보임)와 `start_done`(`how`·`why`·`dest`)을 더한다. 장소·위치는 없다. 카운터 id는 `start:view`, `start:<how>:<why>:<dest>`.
+- 받는 쪽은 앱보다 먼저(같은 배포 포함) 바뀐다. 옛 앱 묶음(`dest` 없음)과 새 앱 묶음을 모두 받고, 모르는 필드·값은 지금처럼 묶음을 통째로 거절한다. D1 표(`counters`)는 바꾸지 않는다.

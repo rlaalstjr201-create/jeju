@@ -4,15 +4,16 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { LocateError } from '../src/app';
+import { LocateError, mountApp, type App } from '../src/app';
 import { kakaoUrl, naverDirectionsUrl, placeUrl } from '../src/links';
 import type { Point, Spot } from '../src/pick';
 import { BUSAN, loadBusan } from '../src/release';
 import { sunsetText } from '../src/sun';
 import { openMarkets } from '../src/home';
 import { KEYS, createStore, destKey, parseRegion, parseStay } from '../src/store';
+import type { UsageEvent } from '../src/track';
 import { fileSpots } from './fixtures';
-import { $, $$, cardIds, flush, render, reset, settle, tap } from './harness';
+import { $, $$, cardIds, flush, html, render, reset, settle, tap } from './harness';
 
 const busanRaw = JSON.parse(readFileSync(resolve(__dirname, '../public/spots-busan.json'), 'utf8')) as Spot[];
 const 해운대 = { lat: 35.1587, lng: 129.1604 };
@@ -223,5 +224,81 @@ describe.runIf(BUSAN)('부산 오늘 판 (plans/busan.md S6)', () => {
     for (let i = 0; i < 6; i++) await flush();
     expect(f.mock.calls.map((c) => c[0])).toEqual(['/api/rain?area=haeundae']);
     expect($('#today > .act').textContent).toContain('비');
+  });
+});
+
+// 시작 화면 기록 (specs/busan.md 7, plans/busan.md 결과 생성 표): start_view once the cover was up a second, start_done when it
+// is left (only after a start_view), never under a webdriver; no position in either
+describe.runIf(BUSAN)('시작 화면 기록 (switch on)', () => {
+  beforeAll(async () => void (await loadBusan()));
+  afterEach(() => {
+    current?.destroy();
+    current = null;
+    delete (navigator as { webdriver?: boolean }).webdriver;
+    reset();
+  });
+  const cover = [...html.matchAll(/<!--busan--><script>([\s\S]*?)<\/script>/g)][1][1];
+  const page = html.slice(html.indexOf('<body>') + 6, html.indexOf('</body>')).replace(/<script[\s\S]*?<\/script>/g, '');
+  let current: App | null = null;
+  /** a fresh device: index.html's cover drawn `upMs` ago, then the app */
+  function open(upMs: number) {
+    // what an earlier page's cover left on this window (one page per visit in a browser)
+    delete (window as { __startPick?: unknown }).__startPick;
+    delete (window as { __startTap?: unknown }).__startTap;
+    document.documentElement.classList.add('yc-start');
+    document.body.innerHTML = page;
+    new Function(cover)();
+    (window as { __startShown?: number }).__startShown = performance.now() - upMs;
+    const sent: UsageEvent[] = [];
+    current = mountApp(document, {
+      loadSpots: (d) => Promise.resolve(d === 'busan' ? busanRaw : fileSpots),
+      locate: () => Promise.resolve(동문시장),
+      storage: localStorage,
+      session: sessionStorage,
+      today: () => new Date('2026-10-20T12:00:00+09:00'),
+      eventsUrl: 'https://events.test/e',
+      beacon: (_u, body) => (sent.push(...(JSON.parse(body) as UsageEvent[])), true),
+    });
+    return { sent, send: () => window.dispatchEvent(new Event('pagehide')) };
+  }
+  const start = (sent: UsageEvent[]) => sent.filter((e) => e.e.startsWith('start_'));
+
+  it('up a second, then 부산 chosen: start_view and start_done (pick, none, busan) — the day only, no position', async () => {
+    const t = open(1500);
+    await wait();
+    (document.querySelector('#ycStart [data-dest="busan"]') as HTMLElement).click();
+    await wait();
+    t.send();
+    expect(start(t.sent)).toEqual([
+      { e: 'start_view', d: '2026-10-20' },
+      { e: 'start_done', how: 'pick', why: 'none', dest: 'busan', d: '2026-10-20' },
+    ]);
+    // the other events now say the destination in use
+    expect(t.sent.filter((e) => !e.e.startsWith('start_')).every((e) => e.dest === 'busan' || e.id?.startsWith('src:'))).toBe(true);
+  });
+
+  it('left before a second: neither (done ÷ view stays one population); under a webdriver: neither', async () => {
+    const quick = open(0);
+    (document.querySelector('#ycStart [data-dest="jeju"]') as HTMLElement).click();
+    await wait();
+    quick.send();
+    expect(start(quick.sent)).toEqual([]);
+    current?.destroy();
+    reset();
+    Object.defineProperty(navigator, 'webdriver', { value: true, configurable: true });
+    const bot = open(5000);
+    await wait();
+    (document.querySelector('#ycStart [data-dest="jeju"]') as HTMLElement).click();
+    await wait();
+    bot.send();
+    expect(start(bot.sent)).toEqual([]);
+  });
+
+  it('the cover up past a second while the app runs: start_view comes by itself, once', async () => {
+    const t = open(900);
+    await new Promise((r) => setTimeout(r, 300));
+    await wait();
+    t.send();
+    expect(start(t.sent)).toEqual([{ e: 'start_view', d: '2026-10-20' }]);
   });
 });

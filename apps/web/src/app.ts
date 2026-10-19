@@ -1365,12 +1365,30 @@ export function mountApp(doc: Document, deps: Deps): App {
   // short of a long one (audit 2026-10-15); input in between is handled at once and drawn with it.
   // 시작 화면 (ADR-0096): index.html drew it; the app answers its buttons and, with location already allowed, reads it
   let startOpen = starting;
+  // its two counts (specs/busan.md 7, plans/busan.md 결과 생성 표): start_view once the cover has been up a second
+  // (index.html's `__startShown`), never under a webdriver; start_done when it is left, only after a start_view — so
+  // done ÷ view is one population. No position, no place: the day, and how / why / the destination.
+  const startAt = (win as { __startShown?: unknown } | null)?.__startShown;
+  const startUp = () => (typeof startAt === 'number' && win?.performance ? win.performance.now() - startAt : -1);
+  let startSeen = false;
+  function seeStart(): boolean {
+    if (startSeen || !BUSAN || nav0?.webdriver || startUp() < 1000) return startSeen;
+    startSeen = true;
+    countStart({ e: 'start_view', d: state.today });
+    return true;
+  }
+  function countStart(ev: UsageEvent) {
+    tracker.track(ev);
+    if (state.tracking) deps.analytics?.event(ev);
+  }
+  if (starting && startUp() >= 0) later(Math.max(0, 1020 - startUp()), () => startOpen && seeStart());
   if (starting)
     startScreen()!(doc, {
       geo: deps,
       signal,
       choose(d, how, why, point) {
         startOpen = false;
+        if (seeStart()) countStart({ e: 'start_done', how, why: why ?? 'none', dest: d, d: state.today });
         switchDest(d, { basis: 'gps' });
         // 거절 뒤에 골랐다면 라벨은 지금처럼 지역 고르기 (spec 1.2)
         if (why === 'denied') dispatch({ type: 'permission', permission: 'denied' });

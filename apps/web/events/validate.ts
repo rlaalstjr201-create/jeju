@@ -1,7 +1,7 @@
 // What the collector accepts (specs/usage-events.md): a JSON array of at most 50 events, at most 8 KB, each
 // with known fields and values only. Anything else is refused whole — so a coordinate, an identifier or a
 // time of day can never be stored by accident.
-import { AREAS } from '../src/areas';
+import { ALL_AREAS } from '../src/busan';
 import { addDays, isDay, type Day } from '../src/dates';
 import { SEASON_KINDS } from '../src/season';
 import type { UsageEvent } from '../src/track';
@@ -10,7 +10,8 @@ export const MAX_BYTES = 8 * 1024;
 export const MAX_EVENTS = 50;
 
 // visited / unvisited (ADR-0087): a place id and the usual context, like save / unsave
-const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange', 'visited', 'unvisited']);
+// start_view / start_done: the 시작 화면 (specs/busan.md 7) — no place, the day and (done) how / why / dest only
+const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange', 'visited', 'unvisited', 'start_view', 'start_done']);
 /** events about the saved list, not a place (ADR-0085): no id, like tap. */
 const NO_PLACE = new Set(['tap', 'open', 'arrange']);
 const OPS = new Set(['up', 'down', 'move', 'past']);
@@ -19,9 +20,16 @@ const MOODS = new Set(['rest', 'walk', 'new', 'famous', 'food', 'any']);
 const SUBS: Record<string, Set<string>> = { food: new Set(['meal', 'cafe']), new: new Set(['mix', 'sight', 'do']) };
 const RANGES = new Set(['walk', '30', '60']);
 const BASES = new Set(['here', 'stay', 'area']);
-const AREA_NAMES = new Set<string>(AREAS.map((a) => a.name));
+/** both destinations' 동네 names (an app with Busan open sends its 12 too) */
+const AREA_NAMES = new Set<string>(ALL_AREAS.map((a) => a.name));
+/** 여행지 (specs/busan.md 7): sent by an app with the switch on; an older app never sends it, and needs not */
+const DESTS = new Set(['jeju', 'busan']);
+const HOWS = new Set(['gps', 'pick']);
+const WHYS = new Set(['denied', 'outside', 'unavailable', 'none']);
+/** the only fields of each 시작 화면 event */
+const START_FIELDS: Record<string, readonly string[]> = { start_view: ['e', 'd'], start_done: ['e', 'd', 'how', 'why', 'dest'] };
 const SEASONS = new Set<string>(SEASON_KINDS);
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'd']);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'd']);
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 /** 숙소 링크 (ADR-0089): `src:<tag>` on tap / open / map, with nothing but the day. */
@@ -45,6 +53,15 @@ export function eventProblem(x: unknown, today?: Day): string | null {
     if (!inSet(SRC_EVENTS, o.e)) return `src on ${o.e}`;
     return Object.keys(o).length === 3 ? null : 'src with more';
   }
+  const start = START_FIELDS[o.e as string];
+  if (start) {
+    const more = Object.keys(o).find((k) => !start.includes(k));
+    if (more) return `${more} on ${o.e}`;
+    if (o.e === 'start_done' && !(inSet(HOWS, o.how) && inSet(WHYS, o.why) && inSet(DESTS, o.dest))) return 'start_done';
+    return null;
+  }
+  if (o.how !== undefined || o.why !== undefined) return `how / why on ${o.e}`;
+  if (o.dest !== undefined && !inSet(DESTS, o.dest)) return 'dest';
   if (NO_PLACE.has(o.e as string)) {
     if (o.id !== undefined) return `id on ${o.e}`;
     if (o.e === 'tap' && !inSet(MOODS, o.mood)) return 'tap without mood';

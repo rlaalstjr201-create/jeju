@@ -5,12 +5,20 @@
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
 import type { AreaName } from './areas';
 import type { Day } from './dates';
+import type { Dest } from './dest';
 import type { Button, NewSub, Reach, Sub } from './pick';
+import { BUSAN } from './release';
 import type { SeasonKind } from './season';
 import type { Basis, View, When } from './types';
 
 /** visited / unvisited: 가 봤어요 and its undo (ADR-0087) — this collector only, never GA4·네이버, never in the popularity. */
-export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange' | 'visited' | 'unvisited';
+export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange' | 'visited' | 'unvisited' | StartEvent;
+/** 시작 화면 (specs/busan.md 7): it was seen (up a second or more), and how it was left — no place, no position. */
+export type StartEvent = 'start_view' | 'start_done';
+/** start_done: by the position, or a destination button. */
+export type StartHow = 'gps' | 'pick';
+/** start_done: what the position said before a button was pressed ('none': nothing, or it was not tried). */
+export type StartWhy = 'denied' | 'outside' | 'unavailable' | 'none';
 /** 저장 목록 정리 (ADR-0085): 위로 / 아래로 / 다른 날로 / 지난 날 펼치기·접기. */
 export type ArrangeOp = 'up' | 'down' | 'move' | 'past';
 /** days from the day a saved row was saved to today: 0, 1, or 2 = two or more. */
@@ -47,6 +55,12 @@ export interface UsageEvent {
   age?: Age;
   /** arrange only. */
   op?: ArrangeOp;
+  /** 여행지 (specs/busan.md 7): the destination in use, with the switch on (src/release.ts); start_done: the one chosen. */
+  dest?: Dest;
+  /** start_done only. */
+  how?: StartHow;
+  /** start_done only. */
+  why?: StartWhy;
   /** Jeju calendar day, no time. */
   d: Day;
 }
@@ -78,6 +92,7 @@ export function contextOf(s: {
   when: When;
   today: Day;
   indoor?: boolean;
+  dest?: Dest;
 }): Omit<UsageEvent, 'e' | 'id'> {
   const basis = BASIS[s.basis];
   return {
@@ -89,6 +104,8 @@ export function contextOf(s: {
     ...(basis === 'area' && s.region ? { area: s.region } : {}),
     dated: s.when !== 'now',
     ...(s.indoor ? { indoor: true } : {}),
+    // the destination only with the switch on: a Jeju-only build sends what it always has
+    ...(BUSAN ? { dest: s.dest ?? 'jeju' } : {}),
     d: s.today,
   };
 }

@@ -16,9 +16,9 @@ describe('analytics report', () => {
     expect(sql).not.toContain('"');
   });
 
-  it('no rows: 데이터 없음 for both windows (and both 저장 목록 흐름 and 숙소 링크 windows), no zeros as findings', () => {
+  it('no rows: 데이터 없음 for both windows (and both 저장 목록 흐름, 숙소 링크 and 시작 화면 windows), no zeros as findings', () => {
     const md = renderReport([], names, today);
-    expect(md.match(/데이터 없음\./g)).toHaveLength(6);
+    expect(md.match(/데이터 없음\./g)).toHaveLength(8);
     expect(md).not.toMatch(/0\.0%|0회/);
   });
 
@@ -98,5 +98,25 @@ describe('analytics report', () => {
     expect(f28).toContain('- Q1 날짜를 고른 상태의 저장: 0 / 2 (0.0%)');
     expect(f28).toContain('- Q2-b 목록에서 연 길찾기 0회');
     expect(f28).toContain('저장 목록 열기가 3회뿐이라 비율은 참고만 해요.');
+  });
+});
+
+describe('analytics report — 시작 화면 (specs/busan.md 7)', () => {
+  it('seen → started with how · why · 여행지; under 100 seen it is 판단 보류, from 100 the rule set in advance; never a place', () => {
+    const rows = [
+      { event: 'start_view', id: 'start:view', n7: 40, n28: 120 },
+      { event: 'start_done', id: 'start:gps:none:busan', n7: 20, n28: 50 },
+      { event: 'start_done', id: 'start:pick:denied:jeju', n7: 10, n28: 30 },
+      { event: 'start_done', id: 'start:pick:none:busan', n7: 0, n28: 4 },
+    ];
+    const md = renderReport(rows, names, today);
+    const [before, s] = md.split('## 시작 화면');
+    const [s7, s28] = s.split('### 지난 28일');
+    expect(s7).toContain('- 보임 40회 → 시작 30회 (75.0%)');
+    expect(s7).toContain('- 시작한 길: 내 위치 → 부산 20, 직접 고름(거절 뒤) → 제주 10');
+    expect(s7).toContain('- 보임이 40회라 100회 전에는 판단 보류예요.');
+    expect(s28).toContain('- 보임 120회 → 시작 84회 (70.0%)');
+    expect(s28).toContain('- 미리 정한 기준(출시 4주 뒤 한 번): 시작÷보임 70.0% — 70% 미만이면 시작 화면 꼴을 다시 열어요.');
+    expect(before).not.toContain('start:');
   });
 });

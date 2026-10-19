@@ -92,7 +92,10 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('좌표는 보내지 않아요');
     expect(html).toContain('Cloudflare 접속 기록에 남을 수 있어요');
     // 가 봤어요 (ADR-0087): kept on the device; its tap and undo are counted here (visited·unvisited), not in GA4
-    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093
+    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 여행지(제주·부산), 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093, 고른 여행지: specs/busan.md 7
+    // 시작 화면 (specs/busan.md 7): it asks for the position only on its big button; 부산's photos come from 한국관광공사
+    expect(html).toContain('시작 화면에서 ‘내 위치로 시작하기’를 누르면 위치를 물어요');
+    expect(html).toContain('부산은 한국관광공사');
     expect(html).toContain('‘가 봤어요’ 누름과 되돌림');
     // 숙소 링크 (ADR-0089 4): the tag it came in by
     expect(html).toContain('숙소 링크로 들어왔다면 그 링크의 꼬리표');
@@ -133,17 +136,17 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
   const ga = html.split('\n').find((l) => l.includes('GA4에는'))!;
   const own = html.slice(html.indexOf('이 사이트의 익명 기록으로 보내는 것'), html.indexOf('</ul>'));
 
-  it('GA4 events: the page view and these six, each named in its paragraph', () => {
-    expect(GA_NAME).toEqual({ tap: 'mood_tap', shown: 'card_shown', map: 'map_open', save: 'place_save', open: 'saved_open', arrange: 'saved_arrange' });
-    const said: Record<string, string> = { mood_tap: '기분 누름', card_shown: '카드로 보임', map_open: '외부 지도 앱 링크 열기', place_save: '저장', saved_open: '저장 목록 열기', saved_arrange: '정리' };
+  it('GA4 events: the page view and these eight, each named in its paragraph', () => {
+    expect(GA_NAME).toEqual({ tap: 'mood_tap', shown: 'card_shown', map: 'map_open', save: 'place_save', open: 'saved_open', arrange: 'saved_arrange', start_view: 'start_view', start_done: 'start_done' });
+    const said: Record<string, string> = { mood_tap: '기분 누름', card_shown: '카드로 보임', map_open: '외부 지도 앱 링크 열기', place_save: '저장', saved_open: '저장 목록 열기', saved_arrange: '정리', start_view: '시작 화면이 보임', start_done: '시작 화면에서 시작함' };
     expect(ga).toContain('본 페이지');
     for (const name of Object.values(GA_NAME)) expect(ga, name).toContain(said[name!]);
   });
 
   it('GA4 fields: exactly these, each named in that paragraph (never the area, the day, 실내만 or a position)', () => {
-    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', d: '2026-10-15' };
+    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', dest: 'busan', how: 'pick', why: 'denied', d: '2026-10-15' };
     const keys = Object.keys(gaParams(every));
-    expect(keys).toEqual(['place_id', 'mood', 'sub', 'range', 'basis', 'dated', 'season', 'from', 'age', 'past', 'live0', 'op']);
+    expect(keys).toEqual(['place_id', 'mood', 'sub', 'range', 'basis', 'dated', 'season', 'from', 'age', 'past', 'live0', 'op', 'dest', 'how', 'why']);
     const said: Record<string, string> = {
       place_id: '장소 번호',
       mood: '고른 기분',
@@ -157,12 +160,15 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
       past: '지난 날',
       live0: '오늘 이후 저장이 없었는지',
       op: '정리 종류',
+      dest: '지금 여행지(제주·부산)',
+      how: '위치로 시작했는지 직접 골랐는지',
+      why: '그 전에 위치를 쓸 수 없었던 까닭',
     };
     for (const k of keys) expect(ga, k).toContain(said[k]);
   });
 
   it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 17일 (ADR-0093: 고른 언어)', () => {
-    for (const w of ['세부 종류', '실내만', '카드에 보인 철']) expect(own, w).toContain(w);
+    for (const w of ['세부 종류', '실내만', '카드에 보인 철', '지금 여행지(제주·부산)', '시작 화면이 보였는지', '위치로 시작했는지 직접 골랐는지']) expect(own, w).toContain(w);
     expect(html).toContain('<p class="date">2026년 10월 17일부터 적용해요.</p>');
   });
 });

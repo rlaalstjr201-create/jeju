@@ -4,7 +4,7 @@
 
 ## 이벤트
 
-`{ e, id?, mood?, sub?, range?, basis?, dated?, indoor?, season?, d }`
+`{ e, id?, mood?, sub?, range?, basis?, dated?, indoor?, season?, dest?, d }` — 시작 화면 둘은 따로(아래)
 
 - `e`: `shown` | `save` | `unsave` | `map` | `book` | `tap`(기분 탭) | `visited` | `unvisited`(ADR-0087: 카드의 「가 봤어요」 누름 / 되돌림 — 카드에서 다시 누름, 저장한 곳의 `다시 넣기`, `모두 다시 넣기`는 장소마다 하나)
 - `id`: 장소 id (shown/save/unsave/map/book/visited/unvisited)
@@ -12,7 +12,9 @@
 - `mood`, `sub`(food: meal/cafe, new: mix/sight/do — ADR-0064), `range`(walk/30/60), `basis`(here/stay/area), `dated`(날짜 모드 여부 true/false), `indoor`(비 와요(실내만)가 켜져 있으면 true, 꺼져 있으면 없음 — ADR-0065), `season`(`shown`·`map`에서 그 카드가 철 글자를 보였을 때만 그 종류: cherry/plum/maple/rapeseed/hydrangea/silvergrass/camellia/tangerine/muhly, 없으면 필드 없음 — ADR-0080. D1 카운터 키는 그대로. GA4에는 `card_shown`·`map_open`의 `season` 매개변수로 간다 — ADR-0080 8 개정)
 - `d`: 로컬 날짜 `YYYY-MM-DD` (시각 없음)
 - 숙소 링크(ADR-0089, `specs/partner-stay-link.md`): 링크의 `src` 꼬리표가 이번 세션에 있으면 `tap`·`map`이 나갈 때마다 `{ e, id: 'src:<꼬리표>', d }`를 하나 더 보내고, 링크로 들어온 순간 `open`을 한 번 보낸다(저장 목록 열기 `open`과 다른 id). 인앱 브라우저 안내가 넘긴 주소(`relay=1`, SPEC 6.14)로 들어오면 꼬리표는 이어받고 `open`은 다시 보내지 않는다. 다른 필드는 없다. 이 수집기에만 가고(GA4·네이버 없음), 장소 인기 집계에서 빠지며, 보고서(`analytics:report`)에 숙소별 줄로 나온다. 받는 쪽은 `src:` + `[a-z0-9-]{2,24}`만 받는다.
-- 좌표·숙소·지역 이름 이외의 위치·식별자 없음. 지역 기준일 때만 `area` 이름 허용.
+- 좌표·숙소·지역 이름 이외의 위치·식별자 없음. 지역 기준일 때만 `area` 이름 허용(제주 15곳과 부산 12곳).
+- `dest`(`jeju`|`busan`, specs/busan.md 7): 지금 여행지. 출시 스위치를 켠 앱만 맥락(`contextOf`)에 넣는다. 숙소 링크 꼬리표 기록에는 없다. 받는 쪽은 `dest` 없는 옛 앱과 있는 새 앱을 모두 받고, 모르는 값이면 묶음을 통째로 거절한다. D1 카운터 키는 그대로다(장소 id 머리말 `bs-`가 여행지를 말한다). GA4에는 `dest` 매개변수로 간다.
+- 시작 화면(specs/busan.md 7, plans/busan.md 결과 생성 표): `{ e: 'start_view', d }`는 덮개가 1초 넘게 보였을 때 한 번, `{ e: 'start_done', how, why, dest, d }`는 덮개를 떠날 때 `start_view`를 보낸 뒤에만(`how`: `gps`|`pick`, `why`: `denied`|`outside`|`unavailable`|`none`, `dest`: 고른 여행지). 자동화 브라우저(`navigator.webdriver`)는 보내지 않는다. 다른 필드는 받지 않는다. D1 카운터 id는 `start:view`와 `start:<how>:<why>:<dest>`(`events/handler.ts` `START_IDS`, 장소 아님). GA4에는 같은 이름 이벤트로 보조로 간다. 보고서(`analytics:report`) 「시작 화면」 절.
 
 ## 클라이언트
 

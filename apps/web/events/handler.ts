@@ -21,9 +21,18 @@ export const FLOW_IDS: readonly string[] = [
   'save:now',
 ];
 
+/** 시작 화면 (specs/busan.md 7): the counter ids of its two events — `start:view`, and `start:<how>:<why>:<dest>` for each
+ * way it was left. Not places (`start:` prefix). */
+export const START_IDS: readonly string[] = [
+  'start:view',
+  ...['gps', 'pick'].flatMap((how) => ['denied', 'outside', 'unavailable', 'none'].flatMap((why) => ['jeju', 'busan'].map((dest) => `start:${how}:${why}:${dest}`))),
+];
+
 /** The counter ids an event goes up under (day and event stay its own). */
 function idsOf(ev: UsageEvent): string[] {
   if (ev.id?.startsWith('src:')) return [ev.id]; // 숙소 링크 (ADR-0089)
+  if (ev.e === 'start_view') return ['start:view'];
+  if (ev.e === 'start_done') return [`start:${ev.how}:${ev.why}:${ev.dest}`];
   if (ev.e === 'tap') return [`mood:${ev.mood}`];
   if (ev.e === 'open') return [`open${ev.live0 ? ':live0' : ''}${ev.past ? ':past' : ''}`];
   if (ev.e === 'arrange') return [`arrange:${ev.op}`];

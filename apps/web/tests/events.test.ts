@@ -4,16 +4,19 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { aggregate } from '../events/aggregate';
-import { FLOW_IDS, handleEvents } from '../events/handler';
+import { FLOW_IDS, START_IDS, handleEvents } from '../events/handler';
 import { memoryStore, type CounterStore } from '../events/store';
 import { MAX_EVENTS, parseBatch } from '../events/validate';
 import { addDays } from '../src/dates';
+import { BUSAN } from '../src/release';
 import { contextOf, type UsageEvent } from '../src/track';
 
 const ID = 'e654312a-2a40-45cd-9464-a83756bac0fa';
 const ID2 = 'ec5de537-0e1a-4503-b1e8-338822d5ab3c';
 const d = '2026-09-30';
 const base = { range: '30', basis: 'here', dated: false, d } as const;
+/** with the switch on, the context says the destination too (specs/busan.md 7); a Jeju-only build sends what it did */
+const DEST = BUSAN ? ({ dest: 'jeju' } as const) : {};
 /** what sendBeacon sends: a string body, so its length is said (F11); `init.headers` add to or override these */
 const post = (body: unknown, init: RequestInit = {}) => {
   const text = typeof body === 'string' ? body : JSON.stringify(body);
@@ -26,7 +29,7 @@ const handle = (req: Request, store: CounterStore) => handleEvents(req, store, (
 describe('U4 받는 쪽 — 검증', () => {
   it('accepts what the app sends: tap, shown, save, unsave, map, book, with an area basis and food sub', async () => {
     const ctx = contextOf({ view: 'cards', mood: 'food', sub: 'cafe', newSub: 'mix', reach: 'walk', basis: 'region', region: '애월', when: '2026-10-01', today: d });
-    expect(ctx).toEqual({ mood: 'food', sub: 'cafe', range: 'walk', basis: 'area', area: '애월', dated: true, d });
+    expect(ctx).toEqual({ mood: 'food', sub: 'cafe', range: 'walk', basis: 'area', area: '애월', dated: true, ...DEST, d });
     const batch: UsageEvent[] = [{ e: 'tap', ...ctx }, ...(['shown', 'save', 'unsave', 'map', 'book'] as const).map((e) => ({ e, id: ID, ...ctx }))];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
     const res = await handle(post(batch), memoryStore());
@@ -35,7 +38,7 @@ describe('U4 받는 쪽 — 검증', () => {
 
   it('accepts a famous tap, counted under mood:famous (ADR-0092)', async () => {
     const ctx = contextOf({ view: 'cards', mood: 'famous', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d });
-    expect(ctx).toEqual({ mood: 'famous', ...base });
+    expect(ctx).toEqual({ mood: 'famous', ...base, ...DEST });
     expect(parseBatch(JSON.stringify([{ e: 'tap', ...ctx }]))).toEqual({ ok: true, events: [{ e: 'tap', ...ctx }] });
     const store = memoryStore();
     expect((await handle(post([{ e: 'tap', ...ctx }]), store)).status).toBe(204);
@@ -43,15 +46,15 @@ describe('U4 받는 쪽 — 검증', () => {
 
   it.each(['mix', 'sight', 'do'] as const)('accepts 새로운 거 tab sub %s (ADR-0064)', (newSub) => {
     const ctx = contextOf({ view: 'cards', mood: 'new', sub: 'meal', newSub, reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d });
-    expect(ctx).toEqual({ mood: 'new', sub: newSub, ...base });
+    expect(ctx).toEqual({ mood: 'new', sub: newSub, ...base, ...DEST });
     const batch: UsageEvent[] = [{ e: 'tap', ...ctx }, { e: 'shown', id: ID, ...ctx }];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
   });
 
   it('accepts 비 와요 (ADR-0065): indoor true when it is on, and nothing when it is off', () => {
     const on = contextOf({ view: 'cards', mood: 'rest', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d, indoor: true });
-    expect(on).toEqual({ mood: 'rest', ...base, indoor: true });
-    expect(contextOf({ view: 'cards', mood: 'rest', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d, indoor: false })).toEqual({ mood: 'rest', ...base });
+    expect(on).toEqual({ mood: 'rest', ...base, indoor: true, ...DEST });
+    expect(contextOf({ view: 'cards', mood: 'rest', sub: 'meal', newSub: 'mix', reach: 'drive30', basis: 'gps', region: null, when: 'now', today: d, indoor: false })).toEqual({ mood: 'rest', ...base, ...DEST });
     const batch: UsageEvent[] = [{ e: 'tap', ...on }, { e: 'shown', id: ID, ...on }];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
   });
@@ -398,5 +401,94 @@ describe('가 봤어요 (ADR-0087, specs/hide-visited.md S5)', () => {
         { d, id: ID2, e: 'visited', n: 2 },
       ]),
     ).toEqual([{ id: ID2, shown: 3, save: 0, map: 0, book: 0 }]);
+  });
+});
+
+// 여행지와 시작 화면 (specs/busan.md 7, plans/busan.md S7 M6): the collector takes `dest` and the two 시작 화면 events before
+// any app sends them — an older app (no `dest`) and a newer one (with it) both get through the same collector, and a
+// value it does not know still refuses the batch whole.
+describe('M6 여행지·시작 화면 — 받는 쪽', () => {
+  const sorted = (rows: unknown[]) => [...rows].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  const BS = 'bs-126081';
+  /** what this collector took before S7: the same batch must count the same */
+  const old: UsageEvent[] = [
+    { e: 'tap', mood: 'walk', ...base },
+    { e: 'shown', id: ID, mood: 'walk', ...base },
+    { e: 'map', id: ID, mood: 'walk', range: '30', basis: 'area', area: '애월', dated: false, d },
+    { e: 'open', id: 'src:hotel-a', d },
+    { e: 'open', live0: true, ...base },
+  ];
+
+  it('an older app’s batch (no dest) is taken and counted as before', async () => {
+    const store = memoryStore();
+    expect((await handle(post(old), store)).status).toBe(204);
+    expect(sorted(await store.dump())).toEqual(
+      sorted([
+        { d, id: 'mood:walk', e: 'tap', n: 1 },
+        { d, id: ID, e: 'shown', n: 1 },
+        { d, id: ID, e: 'map', n: 1 },
+        { d, id: 'src:hotel-a', e: 'open', n: 1 },
+        { d, id: 'open:live0', e: 'open', n: 1 },
+      ]),
+    );
+  });
+
+  it('the same events with dest (jeju or busan) are not refused, and count under the same ids — the place id says its destination', async () => {
+    const withDest = old.map((ev) => (ev.id?.startsWith('src:') ? ev : { ...ev, dest: 'jeju' as const }));
+    const a = memoryStore();
+    const b = memoryStore();
+    expect((await handle(post(old), a)).status).toBe(204);
+    expect((await handle(post(withDest), b)).status).toBe(204);
+    expect(sorted(await b.dump())).toEqual(sorted(await a.dump()));
+    const busan: UsageEvent[] = [
+      { e: 'tap', mood: 'walk', ...base, dest: 'busan' },
+      { e: 'shown', id: BS, mood: 'walk', range: '30', basis: 'area', area: '광안리', dated: false, dest: 'busan', d },
+    ];
+    const c = memoryStore();
+    expect((await handle(post(busan), c)).status).toBe(204);
+    expect(sorted(await c.dump())).toEqual(sorted([{ d, id: 'mood:walk', e: 'tap', n: 1 }, { d, id: BS, e: 'shown', n: 1 }]));
+  });
+
+  it('the 시작 화면: start_view under start:view, start_done under start:<how>:<why>:<dest>; the ids are a fixed list, none a place', async () => {
+    const store = memoryStore();
+    const batch: UsageEvent[] = [
+      { e: 'start_view', d },
+      { e: 'start_view', d },
+      { e: 'start_done', how: 'gps', why: 'none', dest: 'busan', d },
+      { e: 'start_done', how: 'pick', why: 'denied', dest: 'jeju', d },
+    ];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+    expect((await handle(post(batch), store)).status).toBe(204);
+    const rows = await store.dump();
+    expect(sorted(rows)).toEqual(
+      sorted([
+        { d, id: 'start:view', e: 'start_view', n: 2 },
+        { d, id: 'start:gps:none:busan', e: 'start_done', n: 1 },
+        { d, id: 'start:pick:denied:jeju', e: 'start_done', n: 1 },
+      ]),
+    );
+    for (const r of rows) expect(START_IDS).toContain(r.id);
+    expect(START_IDS).toHaveLength(1 + 2 * 4 * 2);
+    expect(aggregate(rows)).toEqual([]);
+  });
+
+  it.each([
+    ['an unknown destination', [{ e: 'tap', mood: 'walk', ...base, dest: 'seoul' }]],
+    ['dest not a string', [{ e: 'map', id: ID, d, dest: 1 }]],
+    ['how on another event', [{ e: 'tap', mood: 'walk', ...base, how: 'gps' }]],
+    ['why on another event', [{ e: 'map', id: ID, d, why: 'denied' }]],
+    ['a place on start_view', [{ e: 'start_view', id: ID, d }]],
+    ['context on start_view', [{ e: 'start_view', range: '30', d }]],
+    ['dest on start_view', [{ e: 'start_view', dest: 'jeju', d }]],
+    ['start_done without dest', [{ e: 'start_done', how: 'gps', why: 'none', d }]],
+    ['start_done with an unknown how', [{ e: 'start_done', how: 'ip', why: 'none', dest: 'jeju', d }]],
+    ['start_done with an unknown why', [{ e: 'start_done', how: 'pick', why: 'slow', dest: 'jeju', d }]],
+    ['a position on start_done', [{ e: 'start_done', how: 'gps', why: 'none', dest: 'busan', d, lat: 35.1 }]],
+    ['dest on a 숙소 링크 count', [{ e: 'open', id: 'src:hotel-a', d, dest: 'jeju' }]],
+    ['a good event with a bad dest beside it', [{ e: 'start_view', d }, { e: 'map', id: ID, d, dest: 'Jeju' }]],
+  ])('refuses %s — and counts nothing', async (_, body) => {
+    const store = memoryStore();
+    expect((await handle(post(body), store)).status).toBe(400);
+    expect(await store.dump()).toEqual([]);
   });
 });

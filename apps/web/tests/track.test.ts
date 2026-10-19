@@ -4,6 +4,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { FLUSH_AT, FLUSH_MS, ageOf, createTracker, type UsageEvent } from '../src/track';
 import { listed } from '../src/pick';
+import { BUSAN } from '../src/release';
 import { realSpots } from './fixtures';
 import { $, $$, advance, cardIds, current, flush, render, reset, tap } from './harness';
 
@@ -99,7 +100,15 @@ function hide() {
   document.dispatchEvent(new Event('visibilitychange'));
   delete (document as unknown as Record<string, unknown>).visibilityState;
 }
-const events = () => sent.flat() as Record<string, unknown>[];
+/** with the switch on, every event but a 숙소 링크 count also says the destination (specs/busan.md 7): checked here, then
+ * left out, so the rest reads the same in both runs */
+const events = () =>
+  (sent.flat() as Record<string, unknown>[]).map((e) => {
+    if (!BUSAN || String(e.id ?? '').startsWith('src:')) return e;
+    expect(e.dest).toBe('jeju');
+    const { dest: _dest, ...rest } = e;
+    return rest;
+  });
 // jsdom does not open links; the click still reaches the app first.
 const noNav = (e: Event) => e.preventDefault();
 
