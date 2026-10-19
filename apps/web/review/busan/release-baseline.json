@@ -1,6 +1,6 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "9fa8cd3",
+ "measuredAt": "1df5fd6",
  "data": {
   "public/spots.json": "c88acb8476f5fd9417552bd59831960185ebe6117f4a1a5e9c0c1ad1b0e73821",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
@@ -52,7 +52,7 @@
   "sitemap-seongsan.xml": "d5fafc2b7310dd39",
   "sitemap-sinjeju.xml": "bae3bc6c47b15dce",
   "sitemap-udo.xml": "521953ce34d1ed30",
-  "sitemap.xml": "060a64b8bd188d00",
+  "sitemap.xml": "2bdd30dc688107f7",
   "spots.json": "c88acb8476f5fd94",
   "sw.js": "f8cc5856a2760026",
   "jeju/aewol/": "219 files dea2db28199b4788",
@@ -209,9 +209,9 @@
    "assets/zh-Hans-*.js"
   ],
   "koreanEntryGzip": {
-   "assets/index-*.js": 42797,
-   "assets/index-*.css": 5619
+   "assets/index-*.js": 42917,
+   "assets/index-*.css": 5623
   },
-  "koreanEntryGzipTotal": 48416
+  "koreanEntryGzipTotal": 48540
  }
 }

@@ -40,8 +40,11 @@ function walk(dir: string): string[] {
 }
 
 /** The few build-time values a file carries that are not about Jeju: asset hashes, the worker's VERSION, and the
- * sitemap date of `/` and `/privacy` (the build day whenever lastmod.json is behind, as before). */
+ * sitemap date of `/` and `/privacy` (the build day whenever lastmod.json is behind, as before), and so the index's
+ * date for sitemap-core.xml, the newest of those. */
 function normalized(rel: string, body: Buffer): Buffer | string {
+  if (rel === 'sitemap.xml')
+    return body.toString('utf8').replace(new RegExp(`(<loc>${SITE}/sitemap-core\\.xml</loc><lastmod>)[^<]*`), '$1*');
   if (rel === 'index.html') return unhash(body.toString('utf8'));
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
   if (rel === 'sitemap-core.xml')
