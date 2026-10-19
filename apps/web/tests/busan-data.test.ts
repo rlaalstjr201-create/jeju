@@ -9,7 +9,7 @@ import type { Spot } from '../src/pick';
 import { REASON_BANNED } from '../scripts/check-slop';
 import { positionProblems } from '../scripts/positions.mjs';
 import { reasonPunctuationProblem } from '../scripts/reason.mjs';
-import { build, famousIds, kakaoIds, loadInputs, quintileScores } from '../scripts/busan/build.mjs';
+import { bookingOf, build, famousIds, kakaoIds, loadInputs, OWNER_FAMOUS, quintileScores } from '../scripts/busan/build.mjs';
 import { BUSAN_RECORD_BOX, JEJU_RECORD_BOX, recordProblems } from './spot-record';
 
 const root = resolve(__dirname, '..');
@@ -92,16 +92,19 @@ describe('B8 만족도·유명한 곳 (criteria-01 6·7절)', () => {
     }
     expect(quintileScores(new Map([['a', 9], ['b', 9], ['c', 1], ['d', 0], ['e', 0]]))).toEqual(new Map([['a', 5], ['b', 5], ['c', 3], ['d', 2], ['e', 2]]));
   });
-  it('famous: 관광지·먹기 아님·카페 낱말 없는 곳 가운데 검색수 상위 60곳과 정확히 같다', () => {
+  it('famous: 관광지·먹기 아님·카페 낱말 없는 곳 가운데 검색수 상위 60곳 + 주인 지정(광안대교)과 정확히 같다', () => {
     const candidates = spots
       .filter((s) => item.get(s.id)!.contenttypeid === 12 && s.mood !== 'food' && !/카페|커피|빵|베이커리|디저트/.test(s.name))
       .sort((a, b) => volume.get(b.id)! - volume.get(a.id)! || (a.id < b.id ? -1 : 1));
-    const want = candidates.slice(0, 60).map((s) => s.id).sort();
+    expect(OWNER_FAMOUS).toEqual(['bs-128164']);
+    const want = [...candidates.slice(0, 60).map((s) => s.id), ...OWNER_FAMOUS].sort();
     expect(spots.filter((s) => s.famous === true).map((s) => s.id).sort()).toEqual(want);
     expect(volume.get(candidates[59].id)).toBeGreaterThan(volume.get(candidates[60].id)!);
     const pops = spots.filter((s) => s.famous).map((s) => s.pop!);
     expect(Math.max(...pops)).toBe(1);
     expect(Math.min(...pops)).toBe(0);
+    // 주인 지정 곳의 pop = 규칙 60번째 곳의 pop(ADR-0094 Amendment 2)
+    expect(spots.find((s) => s.id === 'bs-128164')!.pop).toBe(spots.find((s) => s.id === candidates[59].id)!.pop);
     expect(famousIds(['a', 'b', 'c'], new Map([['a', 1], ['b', 5], ['c', 5]]), 2)).toEqual(['b', 'c']);
   });
 });
@@ -121,6 +124,34 @@ describe('B8 카카오 ID (criteria-01 8절)', () => {
     ];
     expect(kakaoIds(rows, new Set(['a', 'b', 'c']))).toEqual(new Map([['a', '1'], ['b', null]]));
     expect(kakaoIds(rows, new Set(['b']))).toEqual(new Map([['b', '1']]));
+  });
+});
+
+describe('S4b 체험 예약 경로 (ADR-0074, review/busan/booking/criteria.md)', () => {
+  const routes = inputs.booking;
+  const doSpots = spots.filter((s) => s.mood === 'new' && s.sub === 'do');
+  it('체험 52곳은 모두 book이거나 hide: closed이거나 routes.json에 noroute 판정이 있다', () => {
+    expect(doSpots).toHaveLength(52);
+    const bad = doSpots.filter((s) => !s.book && s.hide !== 'closed' && routes[s.id]?.call !== 'noroute');
+    expect(bad.map((s) => s.id)).toEqual([]);
+    expect(Object.keys(routes).sort()).toEqual(doSpots.map((s) => s.id).sort());
+  });
+  it('book은 routes.json best 종류의 첫 accepted 경로와 같고, 체험이 아닌 곳에는 book·hide가 없다', () => {
+    for (const s of doSpots.filter((x) => x.book)) {
+      const r = routes[s.id];
+      expect(s.book, s.id).toEqual({ k: r.best, u: r.routes.find((x) => x.kind === r.best && x.verdict === 'accepted')!.url });
+    }
+    expect(spots.filter((s) => !(s.mood === 'new' && s.sub === 'do') && ('book' in s || 'hide' in s))).toEqual([]);
+    const kinds: Record<string, number> = {};
+    for (const s of doSpots) kinds[s.book?.k ?? s.hide ?? 'noroute'] = (kinds[s.book?.k ?? s.hide ?? 'noroute'] ?? 0) + 1;
+    expect(kinds).toEqual({ naver: 14, homepage: 9, phone: 27, noroute: 2 });
+  });
+  it('판정 없는 체험·accepted 없는 best는 빌드를 멈춘다', () => {
+    expect(bookingOf('x', undefined).problem).toMatch(/without a booking call/);
+    expect(bookingOf('x', { name: 'x', routes: [], best: 'naver' }).problem).toMatch(/no accepted route/);
+    expect(bookingOf('x', { name: 'x', routes: [], best: null, call: 'closed' }).fields).toEqual({ hide: 'closed' });
+    const noBooking = { ...inputs, booking: {} };
+    expect(() => build(noBooking)).toThrow(/without a booking call/);
   });
 });
 
