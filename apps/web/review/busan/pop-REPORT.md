@@ -54,3 +54,8 @@
 - `eb3f601` 사전등록(criteria-01, measure.mjs, pop-01-plan.json, busan-pop.test.ts)
 - `71dff2c` 측정 결과 pop-01.json
 - `7bbb001` 출하 파일(build.mjs, spots-busan.json, busan-data.test.ts, 꺼진 빌드에서 파일 빼기)
+
+## 주인 지정 (2026-10-19, ADR-0094 Amendment 2)
+
+- 주인 「광안대교 넣어줘」에 따라 광안대교(`bs-128164`)를 `build.mjs` `OWNER_FAMOUS`로 유명한 곳에 넣었다. 유명한 곳은 60 + 1 = **61곳**이다. 다시 재지 않았다.
+- `pop`은 60번째 곳(사상근린공원)과 같은 0이다. 60곳의 `pop`은 그대로다. 만족도는 측정값대로 1이다.
