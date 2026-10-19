@@ -7,6 +7,8 @@ export interface BuildInputs {
   kakao: { id: string; status: string; rule: string; kakaoPlaceId: string | null }[];
   pop: { id: string; volume: number | null }[];
   booking: Record<string, { name: string; routes: { kind: string; url: string; evidence: string; verdict: string }[]; best: string | null; call?: string; reason?: string }>;
+  /** 「장소형」 체험 ids moved to 구경 (review/busan/booking/place-type.json). */
+  placeType?: string[];
 }
 export declare const OUT: string;
 export declare const FAMOUS_N: number;
@@ -15,6 +17,7 @@ export declare const CAFE_WORDS: RegExp;
 export declare const LEPORTS_TYPE: number;
 export declare const OWNER_FAMOUS: string[];
 export declare const BOOK_KINDS: string[];
+export declare function displayName(title: string): string;
 export declare function bookingOf(id: string, r: BuildInputs['booking'][string] | undefined): { fields?: Record<string, unknown>; problem?: string };
 export declare function inBusanBox(p: { lat: number; lng: number }): boolean;
 export declare function loadInputs(dir?: string): BuildInputs;

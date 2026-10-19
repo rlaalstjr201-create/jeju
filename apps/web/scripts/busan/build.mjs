@@ -37,6 +37,10 @@ const SUBS = { food: new Set(['meal', 'cafe']), new: new Set(['sight', 'do']) };
 // build-spots.mjs BANNED_REASON_PATTERN과 같은 식(가격·운영시간·요일·평점)
 const PRACTICAL = /\d[\d,]*\s*(원|천원)|입장료|요금|무료|영업|휴무|\d{1,2}:\d{2}|오전\s*\d|오후\s*\d|\d+시(부터|까지)|오픈|평점|별점|월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
+/** The name on a card (plans/busan.md S5): TourAPI's title without the 「(부산)」 it carries to tell a Busan place from a
+ * namesake elsewhere — measurement and matching used the title as it was; on screen every place is in Busan already.
+ * Only that exact last part goes («(부산 국가지질공원)» stays). */
+export const displayName = (title) => cleanName(title).replace(/\s*\(부산\)$/, '');
 const len = (s) => [...s].length;
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
@@ -53,6 +57,7 @@ export function loadInputs(dir = busanDir) {
     kakao: readJson(resolve(dir, 'kakao-01.json')).rows,
     pop: readJson(resolve(dir, 'pop-01.json')).rows,
     booking: readJson(resolve(dir, 'booking/routes.json')).spots,
+    placeType: Object.keys(readJson(resolve(dir, 'booking/place-type.json')).spots),
   };
 }
 
@@ -110,6 +115,8 @@ export function reasonProblem(reason) {
  * missing or out of rule. Scores and 유명한 곳 are counted over the shipped places only. */
 export function build(inputs = loadInputs()) {
   const { items, verdicts, fixes, kakao, pop, booking } = inputs;
+  // 「장소형」 체험 (booking/place-type.json, ADR-0074 2): 구경, no booking link
+  const placeType = new Set(inputs.placeType ?? []);
   const fixed = new Map(fixes.filter((f) => f.field === 'reason').map((f) => [f.id, f]));
   const volumeById = new Map(pop.map((r) => [r.id, r.volume]));
   const problems = [];
@@ -133,10 +140,13 @@ export function build(inputs = loadInputs()) {
     if (typeof v.indoor !== 'boolean') problems.push(`${item.id}: indoor ${v.indoor}`);
     if (!Number.isInteger(volumeById.get(item.id))) problems.push(`${item.id}: no search volume (확인 실패) in pop-01.json`);
     if (item.image && !item.image.startsWith('https://')) problems.push(`${item.id}: image not https`);
-    const bk = v.mood === 'new' && v.sub === 'do' ? bookingOf(item.id, booking[item.id]) : { fields: {} };
+    if (placeType.has(item.id) && !(v.mood === 'new' && v.sub === 'do')) problems.push(`${item.id}: place-type.json names a place that is no 체험`);
+    const place = placeType.has(item.id);
+    const bk = v.mood === 'new' && v.sub === 'do' && !place ? bookingOf(item.id, booking[item.id]) : { fields: {} };
     if (bk.problem) problems.push(bk.problem);
-    kept.push({ item, v, reason, bookFields: bk.fields ?? {} });
+    kept.push({ item, v: place ? { ...v, sub: 'sight' } : v, reason, bookFields: bk.fields ?? {} });
   }
+  for (const id of placeType) if (!kept.some((k) => k.item.id === id)) problems.push(`${id}: place-type.json names a place not shipped`);
   for (const id of OWNER_FAMOUS) {
     const k = kept.find((x) => x.item.id === id);
     if (!k || k.v.mood === 'food' || k.bookFields.hide) problems.push(`${id}: owner 유명한 곳 not shipped, or 먹기·hide`);
@@ -154,9 +164,13 @@ export function build(inputs = loadInputs()) {
   const pops = popScores(volumeById, famous);
   for (const id of OWNER_FAMOUS) if (!pops.has(id)) pops.set(id, pops.get(famous[famous.length - 1]));
 
+  const names = kept.map(({ item }) => displayName(item.title));
+  const twice = names.filter((n, i) => names.indexOf(n) !== i);
+  if (twice.length) throw new Error(`spots-busan.json: display names shared by two places: ${[...new Set(twice)].join(', ')}`);
+
   const spots = kept.map(({ item, v, reason, bookFields }) => ({
     id: item.id,
-    name: cleanName(item.title),
+    name: displayName(item.title),
     lat: item.lat,
     lng: item.lng,
     mood: v.mood,

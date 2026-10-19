@@ -130,11 +130,24 @@ describe('B8 카카오 ID (criteria-01 8절)', () => {
 describe('S4b 체험 예약 경로 (ADR-0074, review/busan/booking/criteria.md)', () => {
   const routes = inputs.booking;
   const doSpots = spots.filter((s) => s.mood === 'new' && s.sub === 'do');
-  it('체험 52곳은 모두 book이거나 hide: closed이거나 routes.json에 noroute 판정이 있다', () => {
-    expect(doSpots).toHaveLength(52);
+  // 「장소형」 5곳은 구경으로 옮겼다(review/busan/booking/place-type.json, ADR-0074 2와 같은 처리, S5)
+  const placeType = inputs.placeType ?? [];
+  it('체험 47곳은 모두 book이거나 hide: closed이거나 routes.json에 noroute 판정이 있다', () => {
+    expect(doSpots).toHaveLength(47);
     const bad = doSpots.filter((s) => !s.book && s.hide !== 'closed' && routes[s.id]?.call !== 'noroute');
     expect(bad.map((s) => s.id)).toEqual([]);
-    expect(Object.keys(routes).sort()).toEqual(doSpots.map((s) => s.id).sort());
+    expect(Object.keys(routes).sort()).toEqual([...doSpots.map((s) => s.id), ...placeType].sort());
+  });
+  it('「장소형」 5곳은 구경이고 예약 링크가 없다', () => {
+    expect(placeType).toHaveLength(5);
+    const moved = spots.filter((s) => placeType.includes(s.id));
+    expect(moved.map((s) => [s.mood, s.sub, 'book' in s])).toEqual(moved.map(() => ['new', 'sight', false]));
+  });
+  it('이름 끝의 측정용 「(부산)」을 떼고(괄호 안 다른 말은 그대로), 두 곳이 같은 이름이 되지 않는다', () => {
+    expect(spots.filter((s) => /\(부산\)$/.test(s.name))).toEqual([]);
+    expect(spots.find((s) => s.id === 'bs-126148')?.name).toBe('범어사');
+    expect(spots.find((s) => s.id === 'bs-126088')?.name).toBe('오륙도 (부산 국가지질공원)');
+    expect(new Set(spots.map((s) => s.name)).size).toBe(spots.length);
   });
   it('book은 routes.json best 종류의 첫 accepted 경로와 같고, 체험이 아닌 곳에는 book·hide가 없다', () => {
     for (const s of doSpots.filter((x) => x.book)) {
@@ -144,7 +157,7 @@ describe('S4b 체험 예약 경로 (ADR-0074, review/busan/booking/criteria.md)'
     expect(spots.filter((s) => !(s.mood === 'new' && s.sub === 'do') && ('book' in s || 'hide' in s))).toEqual([]);
     const kinds: Record<string, number> = {};
     for (const s of doSpots) kinds[s.book?.k ?? s.hide ?? 'noroute'] = (kinds[s.book?.k ?? s.hide ?? 'noroute'] ?? 0) + 1;
-    expect(kinds).toEqual({ naver: 14, homepage: 9, phone: 27, noroute: 2 });
+    expect(kinds).toEqual({ naver: 14, homepage: 9, phone: 22, noroute: 2 });
   });
   it('판정 없는 체험·accepted 없는 best는 빌드를 멈춘다', () => {
     expect(bookingOf('x', undefined).problem).toMatch(/without a booking call/);
