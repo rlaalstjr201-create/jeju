@@ -1,0 +1,1174 @@
+{
+ "meta": {
+  "criteria": "review/busan/booking/criteria.md",
+  "checkedAt": "2026-10-19",
+  "targets": 52,
+  "calls": {
+   "search": 52,
+   "get": 48,
+   "tourapi": 52
+  },
+  "naverFailed": 0,
+  "byBest": {
+   "naver": 14,
+   "homepage": 9,
+   "phone": 27,
+   "closed": 0,
+   "noroute": 2
+  },
+  "stopped": null
+ },
+ "spots": {
+  "bs-2755676": {
+   "name": "구포 어린이교통공원",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.bsbukgu.go.kr/",
+     "evidence": "TourAPI homepage / portal",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.bsbukgu.go.kr/index.bsbukgu?menuCd=DOM_000000103001004001&cpath=",
+     "evidence": "네이버 장소 '구포어린이교통공원' 홈페이지 / portal",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0513094805",
+     "evidence": "TourAPI 문의 전화 '051-309-4805~6' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2783344": {
+   "name": "낙동강 생태탐방선",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://btoeco.or.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://bto.or.kr/eco/Main.do;jsessionid=9511465820CDCAF189A6F8BCAB775352, 제목 '', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0512942135",
+     "evidence": "TourAPI 문의 전화 '051-294-2135' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-128564": {
+   "name": "대항 어촌체험 휴양마을",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://cms.seantour.com/BS002/index.do",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://cms.seantour.com/BS002/index.do, 제목 '대항어촌체험마을'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://daehang.seantour.com/",
+     "evidence": "TourAPI homepage / 연결 실패 ENOTFOUND",
+     "verdict": "rejected-dead"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:01067801599",
+     "evidence": "TourAPI 문의 전화 '010-6780-1599' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-3015247": {
+   "name": "두루팜",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://durufarm.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://durufarm.kr/, 제목 '두루팜 농촌체험 교육농장'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0518325062",
+     "evidence": "TourAPI 문의 전화 '051-832-5062' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-3545977": {
+   "name": "라보드 우든보트",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/larboard_boatbuilders",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:01022711225",
+     "evidence": "TourAPI 문의 전화 '010-2271-1225' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-4085879": {
+   "name": "러블리가든(사계, 나를심다)",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1215894",
+     "evidence": "네이버 검색 '러블리가든 부산' → '유기농 포도원 <mark>러블리가든</mark>'(입소신평길 273 1층), 좌표 0m / HTTP 200, 최종 https://m.booking.naver.com/booking/12/bizes/1215894, 제목 '네이버 예약 :: Lovely garden 러블리가든'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://lovelygarden.imweb.me/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://lovelygarden.imweb.me/, 제목 'lovelygarden', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/lovelygarden_grape",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:01043552580",
+     "evidence": "TourAPI 문의 전화 '010-4355-2580' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050714662586",
+     "evidence": "네이버 장소 '유기농 포도원 <mark>러블리가든</mark>' 전화 0507-1466-2586 (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-2732397": {
+   "name": "물빛색스튜디오",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/13/bizes/448204",
+     "evidence": "네이버 검색 '물빛색스튜디오 부산' → '<mark>물빛색스튜디오</mark>'(체육공원로6번길 139-28), 좌표 6m / HTTP 200, 최종 https://m.booking.naver.com/booking/13/bizes/448204, 제목 '네이버 예약 :: 물빛색스튜디오'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://mulbitsaek.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://mulbitsaek.co.kr/, 제목 '물빛색스튜디오'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713931179",
+     "evidence": "TourAPI 문의 전화 '0507-1393-1179' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3083429": {
+   "name": "벡스코 상상체험 키즈월드",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "phone",
+     "url": "tel:07048016034",
+     "evidence": "TourAPI 문의 전화 '070-4801-6034' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3070686": {
+   "name": "부산광역시 119안전체험관",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://safe119.busan.go.kr/",
+     "evidence": "TourAPI homepage / 연결 실패 ECONNRESET",
+     "verdict": "rejected-dead"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517605870",
+     "evidence": "TourAPI 문의 전화 '051-760-5870~1' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2785762": {
+   "name": "사상근린공원",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.sasang.go.kr/tour/index.sasang",
+     "evidence": "TourAPI homepage / portal",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:07040108130",
+     "evidence": "TourAPI 문의 전화 '070-4010-8130' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2470024": {
+   "name": "삼진어묵 체험·역사과학관",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.samjinfood.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://m.samjinfood.com/, 제목 '삼진어묵 공식 쇼핑몰 | SINCE 1953 부산', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0514125468",
+     "evidence": "TourAPI 문의 전화 '051-412-5468' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3545373": {
+   "name": "소망계단 모노레일",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "phone",
+     "url": "tel:0512404814",
+     "evidence": "TourAPI 문의 전화 '051-240-4814' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-1082315": {
+   "name": "스포원파크재난안전체험관",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.spo1.or.kr/park",
+     "evidence": "TourAPI homepage / 연결 실패 UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+     "verdict": "rejected-dead"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0518607983",
+     "evidence": "TourAPI 문의 전화 '051-860-7983' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2788828": {
+   "name": "신호공원",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "phone",
+     "url": "tel:0519704535",
+     "evidence": "TourAPI 문의 전화 '강서구청 녹지공원과 051-970-4535' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3350219": {
+   "name": "을숙도 들락날락",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.busan.go.kr/",
+     "evidence": "TourAPI homepage / portal",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0512940505",
+     "evidence": "TourAPI 문의 전화 '051-294-0505' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3064821": {
+   "name": "자갈치 크루즈",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/5/bizes/289684",
+     "evidence": "네이버 검색 '자갈치 크루즈 부산' → '자갈치크루즈'(부산 중구 자갈치해안로 60 자갈치크루즈), 좌표 5m / HTTP 200, 최종 https://m.booking.naver.com/booking/5/bizes/289684, 제목 '네이버 예약 :: 자갈치크루즈'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://jagalchi-cruise.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.jagalchi-cruise.com/, 제목 '자갈치크루즈'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0512410909",
+     "evidence": "TourAPI 문의 전화 '051-241-0909' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3511000": {
+   "name": "주식회사 놀핏",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://norfit.imweb.me/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://norfit.imweb.me/, 제목 '놀핏 | 노르딕워킹﹒사일런트 웰니스 프로그램 전문 브랜드'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://blog.naver.com/norfit",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/norfit.korea",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713852620",
+     "evidence": "TourAPI 문의 전화 '0507-1385-2620' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-3511057": {
+   "name": "주식회사뷰티홀릭",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "phone",
+     "url": "tel:01050954767",
+     "evidence": "TourAPI 문의 전화 '010-5095-4767' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3511071": {
+   "name": "주식회사피알아이피",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/theplace.busan/",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:01042762358",
+     "evidence": "TourAPI 문의 전화 '010-4276-2358' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2496023": {
+   "name": "키자니아 부산",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.kidzania.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.kidzania.co.kr/, 제목 '', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:15445110",
+     "evidence": "TourAPI 문의 전화 '1544-5110' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3375297": {
+   "name": "태종대 오션플라잉 테마파크",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://topark.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://topark.co.kr/, 제목 '짚라인'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/taejongdae_ocean_flying",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0514040219",
+     "evidence": "TourAPI 문의 전화 '051-404-0219' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-3466755": {
+   "name": "테이블플라워",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/tableflower__",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713342597",
+     "evidence": "TourAPI 문의 전화 '0507-1334-2597' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2999905": {
+   "name": "플루니티",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://blog.naver.com/sho0051",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:01046320051",
+     "evidence": "TourAPI 문의 전화 '010-4632-0051' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2787164": {
+   "name": "하리선착장(부산)",
+   "contenttypeid": 12,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "phone",
+     "url": "tel:0514194048",
+     "evidence": "TourAPI 문의 전화 '영도관광안내센터 051-419-4048' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-4041429": {
+   "name": "하버요가&무브먼트",
+   "contenttypeid": 12,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.cocoisland.club/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.cocoisland.club/, 제목 '부산 팀빌딩·기업 워크샵 코코아일랜드 | 하버 요가&amp;무브먼트', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713944579",
+     "evidence": "TourAPI 문의 전화 '0507-1394-4579' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3345515": {
+   "name": "부산 수학문화관",
+   "contenttypeid": 14,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://home.pen.go.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://home.pen.go.kr/, 제목 '교육행정기관 홈페이지', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517150314",
+     "evidence": "TourAPI 문의 전화 '051-715-0314' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2763856": {
+   "name": "부산광역시교육청학생예술문화회관 놀이마루",
+   "contenttypeid": 14,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://home.pen.go.kr/nrmr/main.do",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://home.pen.go.kr/nrmr/main.do, 제목 '부산광역시교육청놀이마루', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0516016400",
+     "evidence": "TourAPI 문의 전화 '051-601-6400' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2764008": {
+   "name": "부산자원순환협력센터",
+   "contenttypeid": 14,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://brc.beco.or.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://brc.beco.or.kr/, 제목 '부산자원순환협력센터'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0519227504",
+     "evidence": "TourAPI 문의 전화 '051-922-7504' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-4041857": {
+   "name": "시랑",
+   "contenttypeid": 14,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/12/bizes/1569054",
+     "evidence": "네이버 검색 '시랑 부산' → '<mark>시랑</mark>'(기장해안로 98 3층 351호), 좌표 1m / HTTP 200, 최종 https://m.booking.naver.com/booking/12/bizes/1569054, 제목 '네이버 예약 :: 시랑'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/c.rang_official",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050714215830",
+     "evidence": "TourAPI 문의 전화 '0507-1421-5830' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-2708019": {
+   "name": "광안리 SUP Zone",
+   "contenttypeid": 28,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.gwangallisuprise.kr/",
+     "evidence": "TourAPI homepage / 연결 실패 ECONNREFUSED",
+     "verdict": "rejected-dead"
+    }
+   ],
+   "best": null,
+   "call": "noroute",
+   "reason": "noroute: 확인된 경로 없음(homepage rejected-dead), 네이버에서 맞는 장소 없음"
+  },
+  "bs-2991028": {
+   "name": "광안리 해양레포츠센터",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/6/bizes/234290",
+     "evidence": "네이버 검색 '광안리 해양레포츠센터 부산' → '<mark>광안리해양레포츠센터</mark>'(광안해변로54번길 222 광안리해양레포츠센터), 좌표 11m / HTTP 200, 최종 https://m.booking.naver.com/booking/6/bizes/234290, 제목 '네이버 예약 :: 광안리해양레포츠센터'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.gwanganli.co.kr/reservation",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.gwanganli.co.kr/reservation, 제목 'reservation'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0516220027",
+     "evidence": "TourAPI 문의 전화 '051-622-0027' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3076754": {
+   "name": "더베이101요트투어",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://www.thebay101yacht.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.thebay101yacht.com/, 제목 '부산 요트투어 | 해운대·광안대교 야경 더베이101 요트투어'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:18334212",
+     "evidence": "TourAPI 문의 전화 '1833-4212' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-3061018": {
+   "name": "동래아이스링크",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/5/bizes/67860",
+     "evidence": "네이버 검색 '동래아이스링크 부산' → '동래아이스링크'(부산 동래구 충렬대로 420 안락종합타운 6층), 좌표 20m / HTTP 200, 최종 https://m.booking.naver.com/booking/5/bizes/67860, 제목 '네이버 예약 :: 동래아이스링크'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://www.dongraeicerink.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://www.dongraeicerink.com/, 제목 '동래 아이스링크에 오신것을 환영합니다.'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0515297111",
+     "evidence": "TourAPI 문의 전화 '051-529-7111' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3335951": {
+   "name": "레이저태그스포츠 광안점",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/6/bizes/1187004",
+     "evidence": "네이버 검색 '레이저태그스포츠 광안점 부산' → '<mark>레이저태그스포츠 광안점</mark>'(광안해변로 269 지하층 101호), 좌표 7m / HTTP 200, 최종 https://m.booking.naver.com/booking/6/bizes/1187004, 제목 '네이버 예약 :: 레이저태그스포츠 광안점'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/lasertagsports.gwangalli/",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517581123",
+     "evidence": "네이버 장소 '<mark>레이저태그스포츠 광안점</mark>' 전화 051-758-1123 (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3060820": {
+   "name": "몽키몽키롤러장",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/monkeymonkey_rollerclub",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://blog.naver.com/ysrjqhd",
+     "evidence": "네이버 장소 '몽키몽키롤러장' 홈페이지 / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713242287",
+     "evidence": "TourAPI 문의 전화 '0507-1324-2287' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3060159": {
+   "name": "바모스승마클럽",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/6/bizes/296881",
+     "evidence": "네이버 검색 '바모스승마클럽 부산' → '<mark>바모스승마클럽</mark>'(병산1길 102-19 바모스승마클럽), 좌표 156m / HTTP 200, 최종 https://m.booking.naver.com/booking/6/bizes/296881, 제목 '네이버 예약 :: 바모스승마클럽'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://vamos.itrocks.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://vamos.itrocks.kr/, 제목 '바모스 승마클럽'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517275301",
+     "evidence": "TourAPI 문의 전화 '051-727-5301' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713285302",
+     "evidence": "네이버 장소 '<mark>바모스승마클럽</mark>' 전화 0507-1328-5302 (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3065360": {
+   "name": "부산 요트투어 요트야",
+   "contenttypeid": 28,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/_yachtya__",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713587490",
+     "evidence": "TourAPI 문의 전화 '0507-1358-7490' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3060213": {
+   "name": "부산기장승마장",
+   "contenttypeid": 28,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "phone",
+     "url": "tel:050713096988",
+     "evidence": "TourAPI 문의 전화 '0507-1309-6988' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-3009050": {
+   "name": "부산요트투어 고고요트",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.gogo_yacht.kr/",
+     "evidence": "TourAPI homepage / 연결 실패 ENOTFOUND",
+     "verdict": "rejected-dead"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050714840434",
+     "evidence": "TourAPI 문의 전화 '0507-1484-0434' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:15339919",
+     "evidence": "네이버 장소 '<mark>부산요트투어 고고요트</mark>' 전화 1533-9919 (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2756707": {
+   "name": "삼락수상레포츠타운",
+   "contenttypeid": 28,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://www.xn--pi2b9jw6tva82omwm82nv7e0qi.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://www.xn--pi2b9jw6tva82omwm82nv7e0qi.com/, 제목 '▒▒삼락수상레포츠타운▒▒'",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-2783308": {
+   "name": "서프마린",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/12/bizes/405770",
+     "evidence": "네이버 검색 '서프마린 부산' → '<mark>서프마린</mark>'(광안해변로 125 우진빌딩 지하1층 서프마린), 좌표 7m / HTTP 200, 최종 https://m.booking.naver.com/booking/12/bizes/405770, 제목 '네이버 예약 :: 서프마린'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://blog.naver.com/hjs0329",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/surfmarine_busan/",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050714768921",
+     "evidence": "TourAPI 문의 전화 '0507-1476-8921' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3484039": {
+   "name": "서프홀릭 송정 본점",
+   "contenttypeid": 28,
+   "naver": "none",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.surfholic.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.surfholic.co.kr/, 제목 '서프홀릭', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517014851",
+     "evidence": "TourAPI 문의 전화 '051-701-4851' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-1019616": {
+   "name": "센텀시티 아이스링크",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/5/bizes/189897",
+     "evidence": "네이버 검색 '센텀시티 아이스링크 부산' → '신세계 센텀시티 아이스링크'(부산 해운대구 센텀남대로 35 4층), 좌표 27m / HTTP 200, 최종 https://m.booking.naver.com/booking/5/bizes/189897, 제목 '네이버 예약 :: 신세계 센텀시티 아이스링크'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://www.shinsegae.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.shinsegae.com/, 제목 '', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.shinsegae.com/store/entertainment/centum-icelink.do?storeCd=SC00008#focus_move",
+     "evidence": "네이버 장소 '신세계 센텀시티 아이스링크' 홈페이지 / HTTP 200, 최종 https://www.shinsegae.com/store/entertainment/centum-icelink.do?storeCd=SC00008, 제목 '아이스링크 | 센텀시티점 - 신세계백화점'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517451400",
+     "evidence": "TourAPI 문의 전화 '051-745-1400' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3074661": {
+   "name": "송도해양레포츠센터",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/6/bizes/365072",
+     "evidence": "네이버 검색 '송도해양레포츠센터 부산' → '<mark>송도해양레포츠센터</mark>'(송도해변로 50), 좌표 13m / HTTP 200, 최종 https://m.booking.naver.com/booking/6/bizes/365072, 제목 '네이버 예약 :: 송도해양레포츠센터'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://www.solsc.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://www.solsc.co.kr/, 제목 '', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517172883",
+     "evidence": "TourAPI 문의 전화 '051-717-2883' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-2784112": {
+   "name": "송정서핑학교",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://surfschool.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://surfschool.co.kr/, 제목 '송정서핑스쿨'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050714260698",
+     "evidence": "TourAPI 문의 전화 '0507-1426-0698' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-2727468": {
+   "name": "스카이라인 루지 부산",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/5/bizes/696072",
+     "evidence": "네이버 검색 '스카이라인 루지 부산 부산' → '스카이라인루지 부산'(부산 기장군 기장읍 기장해안로 205), 좌표 59m / HTTP 200, 최종 https://m.booking.naver.com/booking/5/bizes/696072, 제목 '네이버 예약 :: 스카이라인루지 부산'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://busan.skylineluge.kr/",
+     "evidence": "TourAPI homepage / HTTP 403",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517226002",
+     "evidence": "TourAPI 문의 전화 '051-722-6002' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-3060196": {
+   "name": "스카이롤러파크",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/skyrollerpark_/",
+     "evidence": "TourAPI homepage / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050714418942",
+     "evidence": "TourAPI 문의 전화 '0507-1441-8942' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-576732": {
+   "name": "아시아드 컨트리클럽",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://www.asiadcc.co.kr/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.asiadcc.co.kr/, 제목 'ASIAD COUNTRY CLUB', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.asiadcc.co.kr/",
+     "evidence": "네이버 장소 '아시아드컨트리클럽' 홈페이지 / HTTP 200, 최종 https://www.asiadcc.co.kr/, 제목 'ASIAD COUNTRY CLUB', 이름 없음",
+     "verdict": "uncertain"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:0517206000",
+     "evidence": "네이버 장소 '아시아드컨트리클럽' 전화 051-720-6000 (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "phone"
+  },
+  "bs-2825115": {
+   "name": "요트탈래",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "homepage",
+     "url": "http://www.yachttale.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 https://www.yachttale.com/, 제목 '부산요트투어 요트탈래 | 더베이101·해운대 리버크루즈 예약'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:15991789",
+     "evidence": "TourAPI 문의 전화 '1599-1789' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "homepage"
+  },
+  "bs-131087": {
+   "name": "용호동일대 바다낚시",
+   "contenttypeid": 28,
+   "naver": "none",
+   "routes": [],
+   "best": null,
+   "call": "noroute",
+   "reason": "noroute: 확인된 경로 없음(후보 없음), 네이버에서 맞는 장소 없음"
+  },
+  "bs-3488597": {
+   "name": "크레이지서퍼스(크레이지컬처스주식회사)",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/12/bizes/385427",
+     "evidence": "네이버 검색 '크레이지서퍼스 부산' → '<mark>크레이지서퍼스</mark> 광안리 본점'(광남로48번길 29 1층 크레이지서퍼스), 좌표 10m / HTTP 200, 최종 https://m.booking.naver.com/booking/12/bizes/385427, 제목 '네이버 예약 :: 크레이지서퍼스 광안리 (본점)'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "http://www.crazy-surfers.com/",
+     "evidence": "TourAPI homepage / HTTP 200, 최종 http://www.crazy-surfers.com/, 제목 '크레이지서퍼스'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:01077089804",
+     "evidence": "TourAPI 문의 전화 '010-7708-9804 / 0507-1496-9804' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713439804",
+     "evidence": "네이버 장소 '<mark>크레이지서퍼스</mark> 광안리 본점' 전화 0507-1343-9804 (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  },
+  "bs-2756703": {
+   "name": "화명수상레포츠타운",
+   "contenttypeid": 28,
+   "naver": "matched",
+   "routes": [
+    {
+     "kind": "naver",
+     "url": "https://m.booking.naver.com/booking/6/bizes/1145304",
+     "evidence": "네이버 검색 '화명수상레포츠타운 부산' → '화명수상레포츠타운'(부산 북구 강변대로 1629 화명수상레포츠타운), 좌표 0m / HTTP 200, 최종 https://m.booking.naver.com/booking/6/bizes/1145304, 제목 '네이버 예약 :: 화명수상레포츠타운'",
+     "verdict": "accepted"
+    },
+    {
+     "kind": "homepage",
+     "url": "https://www.instagram.com/hwamyeong_water",
+     "evidence": "네이버 장소 '화명수상레포츠타운' 홈페이지 / sns",
+     "verdict": "rejected-sns"
+    },
+    {
+     "kind": "phone",
+     "url": "tel:050713891344",
+     "evidence": "TourAPI 문의 전화 '0507-1389-1344' (번호 꼴만 확인, 통화는 안 함)",
+     "verdict": "accepted"
+    }
+   ],
+   "best": "naver"
+  }
+ }
+}
