@@ -3,11 +3,13 @@
 // (npm run test:busan); the Jeju side of every one of these is the rest of the suite, unchanged.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocateError } from '../src/app';
 import { kakaoUrl, naverDirectionsUrl, placeUrl } from '../src/links';
 import type { Point, Spot } from '../src/pick';
 import { BUSAN } from '../src/release';
+import { sunsetText } from '../src/sun';
+import { openMarkets } from '../src/home';
 import { KEYS, createStore, destKey, parseRegion, parseStay } from '../src/store';
 import { fileSpots } from './fixtures';
 import { $, $$, cardIds, flush, render, reset, settle, tap } from './harness';
@@ -187,5 +189,36 @@ describe('저장소 키 (ADR-0097)', () => {
       expect(parseRegion('해운대', 'busan')).toBe('해운대');
       expect(parseStay({ ...해운대, source: 'link' }, 'busan')).toEqual({ ...해운대, area: '해운대', source: 'link' });
     }
+  });
+});
+
+describe.runIf(BUSAN)('부산 오늘 판 (plans/busan.md S6)', () => {
+  beforeEach(reset);
+  afterEach(reset);
+  const day = () => new Date('2026-10-20T10:00:00+09:00');
+  const rainFetch = () => vi.fn(async (_u: string) => ({ ok: true, status: 200, json: async () => ({ area: 'haeundae', pop: 70, rain: true }) }));
+
+  it('without a position the sunset is 부산시청\'s (not 제주시청\'s)', async () => {
+    localStorage.setItem(KEYS.dest, JSON.stringify('busan'));
+    render({ today: day, loadSpots: (d) => Promise.resolve(d === 'busan' ? busanRaw : fileSpots) });
+    for (let i = 0; i < 4; i++) await flush();
+    const busanSet = sunsetText({ lat: 35.1797, lng: 129.0751 }, '2026-10-20');
+    expect(busanSet).not.toBe(sunsetText({ lat: 33.4996, lng: 126.5312 }, '2026-10-20'));
+    expect($('#today .facts').textContent).toContain(`해 지는 시각 ${busanSet}`);
+  });
+  it('장날: on the 23rd 구포시장 opens, listed without a position under its Busan 동네 (서면, not a Jeju area)', () => {
+    const rows = openMarkets(busanRaw, null, '2026-10-23');
+    expect(rows.map((r) => [r.spot.name, r.where])).toEqual([['구포시장', '서면']]);
+    expect(openMarkets(busanRaw, null, '2026-10-24')).toEqual([]);
+  });
+  it('비 소식 is asked for the Busan area (지역 해운대 → haeundae), and its row shows', async () => {
+    localStorage.setItem(KEYS.dest, JSON.stringify('busan'));
+    localStorage.setItem(destKey(KEYS.basis, 'busan'), JSON.stringify('region'));
+    localStorage.setItem(destKey(KEYS.region, 'busan'), JSON.stringify('해운대'));
+    const f = rainFetch();
+    render({ today: day, fetch: f, loadSpots: (d) => Promise.resolve(d === 'busan' ? busanRaw : fileSpots) });
+    for (let i = 0; i < 6; i++) await flush();
+    expect(f.mock.calls.map((c) => c[0])).toEqual(['/api/rain?area=haeundae']);
+    expect($('#today > .act').textContent).toContain('비');
   });
 });

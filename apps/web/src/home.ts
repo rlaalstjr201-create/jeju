@@ -1,7 +1,9 @@
 // 홈 A′ (ADR-0075, specs/home-refresh.md): what the first screen shows besides the moods. Pure, no DOM — render.ts draws it.
 import { AREAS, nearestArea, type Area, type AreaName } from './areas';
 import type { Day } from './dates';
+import { destOfId, type Dest } from './dest';
 import { marketDay } from './market';
+import { BUSAN, openAreasOf } from './release';
 import { byId, distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
@@ -9,13 +11,16 @@ import type { Origin } from './types';
 
 /** 제주시청: the sunset's place when the basis is not known yet. */
 const CITY_HALL: Point = { lat: 33.4996, lng: 126.5312 };
+/** 부산광역시청 (specs/busan.md 4절; 카카오맵 장소 27284326, 연제구 중앙대로 1001): the same for Busan. */
+const BUSAN_CITY_HALL: Point = { lat: 35.1797, lng: 129.0751 };
 
 export { homeOrigin } from './state';
 
-export const sunPoint = (origin: Origin | null): Point => origin?.point ?? CITY_HALL;
+export const sunPoint = (origin: Origin | null, dest: Dest = 'jeju'): Point =>
+  origin?.point ?? (BUSAN && dest === 'busan' ? BUSAN_CITY_HALL : CITY_HALL);
 
-/** 밤 (ADR-0091) on the home: 지금 only, at the basis (제주시청's sun without one), by the time the app last read. */
-export const nightHome = (s: State, origin: Origin | null): boolean => s.when === 'now' && nightNow(s.clock, sunPoint(origin), s.today);
+/** 밤 (ADR-0091) on the home: 지금 only, at the basis (the city hall's sun without one), by the time the app last read. */
+export const nightHome = (s: State, origin: Origin | null): boolean => s.when === 'now' && nightNow(s.clock, sunPoint(origin, s.dest), s.today);
 
 /** The rows above 유명한 데 on the first screen, whose 「예:」 its own skips (ADR-0092 7). */
 const ABOVE_FAMOUS: readonly Kind[] = ['rest', 'walk', 'new'];
@@ -44,7 +49,7 @@ export interface MarketRow {
 /** 오일장 open on `day`: with a basis, within 차로 30분, nearest first; without, all of them by score, with their area. */
 export function openMarkets(spots: Spot[], origin: Origin | null, day: Day): MarketRow[] {
   const open = spots.filter((x) => listed(x) && x.market && marketDay(x.market, day) === 'open');
-  if (!origin) return open.sort((a, b) => b.score - a.score || byId(a.id, b.id)).map((spot) => ({ spot, where: nearestArea(spot).label }));
+  if (!origin) return open.sort((a, b) => b.score - a.score || byId(a.id, b.id)).map((spot) => ({ spot, where: nearestArea(spot, openAreasOf(destOfId(spot.id))).label }));
   return open
     .filter((x) => withinReach('drive30', origin.point, x))
     .map((spot) => ({ spot, km: distanceKm(origin.point, spot) }))

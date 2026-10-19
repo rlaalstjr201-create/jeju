@@ -267,12 +267,12 @@ export function mountApp(doc: Document, deps: Deps): App {
   /** before the sunrise (0), then before (1), in (2) or after (3) the 노을 window at the home's point today; -1 unknown */
   function duskPhase(clock: number | null): number {
     if (clock == null) return -1;
-    const p = sunPoint(homeOrigin(state));
+    const p = sunPoint(homeOrigin(state), state.dest);
     const set = sunsetMinutes(p, state.today);
     return clock < sunriseMinutes(p, state.today) ? 0 : clock < set - DUSK_LEAD_MIN ? 1 : clock < set ? 2 : 3;
   }
   function duskTimer() {
-    const p = sunPoint(homeOrigin(state));
+    const p = sunPoint(homeOrigin(state), state.dest);
     const key = `${p.lat},${p.lng}|${state.today}`;
     if (key === duskKey) return;
     duskKey = key;

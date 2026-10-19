@@ -1265,7 +1265,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const acts = todayActs(origin ? markets : [], rainNow(s), sunset);
     const sunsetOn = acts.some((a) => a.k === 'sunset');
     const folded = acts.slice(1).filter((a): a is Extract<TodayAct, { k: 'market' }> => a.k === 'market');
-    const facts = [COPY.sunset(sunsetText(sunPoint(origin), day)), ...folded.map((a) => COPY.marketFold(dated, PLACE.name(a.row.spot)))];
+    const facts = [COPY.sunset(sunsetText(sunPoint(origin, s.dest), day)), ...folded.map((a) => COPY.marketFold(dated, PLACE.name(a.row.spot)))];
     // "·" held to the word before it by a no-break space (§3.2): a line never starts with "·"
     setText(els.todayFacts, facts.map((f) => `\u00a0· ${f}`).join(''));
     els.today.querySelector(':scope > .act')?.remove();

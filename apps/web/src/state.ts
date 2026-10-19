@@ -8,7 +8,7 @@ import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, 
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
-import { OPEN_AREAS } from './release';
+import { OPEN_AREAS, openAreasOf } from './release';
 import { nightNow } from './sun';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
@@ -302,10 +302,10 @@ export const homeOrigin = (s: State): Origin | null =>
 /** 비 소식 (ADR-0076): the one area (slug) the forecast is asked for — the region, the area nearest the 숙소, or
  * nearest this session's GPS fix; none without a basis, or in date mode (the forecast is about the next 3 hours). */
 export function rainArea(s: State): string | null {
-  // Busan's areas get their forecast with plans/busan.md S6 (functions/_lib/kma.ts)
-  if (s.when !== 'now' || s.dest !== 'jeju') return null;
+  if (s.when !== 'now') return null;
   const o = homeOrigin(s);
-  return o ? nearestArea(o.point).slug : null;
+  // the area of the destination being viewed (plans/busan.md S6: functions/_lib/kma.ts takes Busan's slugs too)
+  return o ? nearestArea(o.point, openAreasOf(s.dest)).slug : null;
 }
 
 /** Same basis/place, and for GPS within ~1km (jitter keeps the rotation, plan OQ4). */

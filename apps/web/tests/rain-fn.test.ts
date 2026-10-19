@@ -1,6 +1,6 @@
 // 비 소식 함수 (ADR-0076, plans/home-refresh.md U4): grid, issuance time, POP window, and the handler's answers.
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { AREAS } from '../src/areas';
+import { AREAS, BUSAN_AREAS } from '../src/areas';
 import { areaBySlug, baseTime, kmaGrid, maxPop } from '../functions/_lib/kma';
 import { onRequestGet } from '../functions/api/rain';
 
@@ -163,5 +163,42 @@ describe('onRequestGet', () => {
       expect(res.headers.get('X-Rain-Reason'), why).toMatch(new RegExp(`^${why.split(' ').slice(0, 2).join(' ')}`));
       expect([...res.headers].join(' ')).not.toContain('secret-key');
     }
+  });
+});
+
+describe('부산 12동네 (plans/busan.md S6, B12)', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+  it('every Busan slug is taken (no switch in the function), Jeju slugs still resolve to the Jeju areas', () => {
+    for (const a of BUSAN_AREAS) expect(areaBySlug(a.slug), a.slug).toBe(a);
+    for (const a of AREAS) expect(areaBySlug(a.slug), a.slug).toBe(a);
+  });
+  it('the grid table: 해운대 is the agency\'s 해운대구 cell (99,75), all inside the Busan part of the grid', () => {
+    const table = Object.fromEntries(BUSAN_AREAS.map((a) => [a.slug, Object.values(kmaGrid(a.lat, a.lng)).join(',')]));
+    expect(table).toMatchInlineSnapshot(`
+      {
+        "centum": "99,76",
+        "choryang": "97,74",
+        "dadaepo": "96,73",
+        "dongnae": "98,78",
+        "gamcheon": "97,74",
+        "gwangalli": "99,75",
+        "haeundae": "99,75",
+        "nampo": "97,74",
+        "seomyeon": "98,75",
+        "songjeong": "100,76",
+        "yeongdo": "97,74",
+        "yongho": "99,74",
+      }
+    `);
+  });
+  it('/api/rain?area=haeundae answers (200) or 204, asking for 해운대\'s cell', async () => {
+    const f = vi.fn(async (_u: string) => new Response('{"response":{"header":{"resultCode":"03","resultMsg":"NO_DATA"}}}'));
+    vi.stubGlobal('fetch', f);
+    const res = await onRequestGet({ request: new Request('https://app.test/api/rain?area=haeundae'), env: { KMA_SERVICE_KEY: 'k' } });
+    expect(res.status).toBe(204);
+    const u = new URL(f.mock.calls[0][0]);
+    expect([u.searchParams.get('nx'), u.searchParams.get('ny')]).toEqual(['99', '75']);
   });
 });

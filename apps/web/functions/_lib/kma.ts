@@ -1,8 +1,9 @@
 // 비 소식 (ADR-0076): the pure half of /api/rain — area → KMA grid, which issuance to read, and the answer's POP.
 // No I/O here; functions/api/rain.ts does the fetch and the caching.
-import { AREAS, type Area } from '../../src/areas';
+import { ALL_AREAS, type Area } from '../../src/areas';
 
-export const areaBySlug = (slug: string | null): Area | null => AREAS.find((a) => a.slug === slug) ?? null;
+/** Both destinations' slugs (plans/busan.md S6): no switch here — a Busan slug asked before the release does no harm. */
+export const areaBySlug = (slug: string | null): Area | null => ALL_AREAS.find((a) => a.slug === slug) ?? null;
 
 /** KMA's Lambert conformal conic grid (단기예보 5km 격자): lat/lng → (nx, ny), the agency's own formula and constants. */
 export function kmaGrid(lat: number, lng: number): { nx: number; ny: number } {

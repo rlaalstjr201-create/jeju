@@ -3,7 +3,10 @@
 // every other candidate — never left out — and the rotation, the widening (빈손 없음), the tabs and 아무거나 stay as they
 // are. `nightShifted` says which kind that moved ('trail' | 'island' | 'both'), null when it moved none.
 import { describe, expect, it } from 'vitest';
-import { AREAS, areaByName } from '../src/areas';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { AREAS, BUSAN_AREAS, areaByName } from '../src/areas';
+import { normalizeSpots } from '../src/data';
 import { islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Point, type Spot, type Tab } from '../src/pick';
 import { nightNow } from '../src/sun';
 import { fileSpots } from './fixtures';
@@ -287,5 +290,39 @@ describe('S2 real data: 「좀 걷고 싶어」 around 애월 · 서귀포 시�
       expect(new Set(shown.slice(0, others)).size, name).toBe(others);
       expect(new Set(shown).size, name).toBe(all.length);
     }
+  });
+});
+
+describe('부산 (plans/busan.md S6, B12): 22시 「좀 걷고 싶어」 동래·금정', () => {
+  const busan = normalizeSpots(JSON.parse(readFileSync(resolve(__dirname, '../public/spots-busan.json'), 'utf8'))) as Spot[];
+  const dongnae = BUSAN_AREAS.find((a) => a.slug === 'dongnae')!;
+  // the first round's 17 true calls (review/busan/night/trail-01.json), as if its audit had passed
+  const first = new Set((JSON.parse(readFileSync(resolve(__dirname, '../review/busan/night/trail-01.json'), 'utf8')) as { id: string; trail: boolean }[]).filter((c) => c.trail).map((c) => c.id));
+  const marked: Spot[] = busan.map((s) => (first.has(s.id) ? { ...s, trail: true as const } : s));
+  it('22시 is night at 동래·금정 (the area\'s own sun)', () => {
+    expect(nightNow(at('22:00'), dongnae, DAY)).toBe(true);
+  });
+  it('with trails marked, no trail comes before another candidate at 22시, three taps, every range', () => {
+    for (const reach of REACHES) {
+      let h: Histories = {};
+      for (let tap = 0; tap < 3; tap++) {
+        const r = pickCards(marked, dongnae, 'walk', h, undefined, reach, false, DAY, true);
+        const order = r.cards.map((c) => c.spot.trail === true);
+        expect(order.indexOf(true) === -1 || !order.slice(order.indexOf(true)).includes(false), `${reach} tap ${tap}`).toBe(true);
+        expect(pool(marked, dongnae, 'walk', undefined, reach, false, DAY, true).filter((c) => !c.spot.trail).length >= r.cards.filter((c) => !c.spot.trail).length).toBe(true);
+        h = r.histories;
+      }
+    }
+    // the shift shows: by night the 30-minute picks are not the day's, and say so
+    const day = pickCards(marked, dongnae, 'walk', {}, undefined, 'drive30', false, DAY);
+    const nightR = pickCards(marked, dongnae, 'walk', {}, undefined, 'drive30', false, DAY, true);
+    expect(day.cards.some((c) => c.spot.trail)).toBe(true);
+    expect(nightR.cards.some((c) => c.spot.trail)).toBe(false);
+    expect(nightR.nightShifted).toBe('trail');
+  });
+  it('the shipped Busan file (round 01 not passed) has no trail: night and day pick the same', () => {
+    const d = pickCards(busan, dongnae, 'walk', {}, undefined, 'drive30', false, DAY);
+    const n = pickCards(busan, dongnae, 'walk', {}, undefined, 'drive30', false, DAY, true);
+    expect(shape(n)).toBe(shape(d));
   });
 });

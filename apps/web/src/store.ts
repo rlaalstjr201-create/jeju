@@ -1,7 +1,7 @@
 // Device storage (ADR-0026: no login, everything stays on this device). Every read is validated and
 // repaired; every access is try/catch'd, and when storage is missing or throws the app keeps working from
 // memory for this visit (S27·S28·S29).
-import { AREAS, LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
+import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
 import { DESTS, inBusan, type Dest } from './dest';
@@ -258,7 +258,7 @@ export const RAIN_TTL_MS = 30 * 60_000;
 export function parseRain(v: unknown, now: number): RainRecord | null {
   if (!v || typeof v !== 'object') return null;
   const o = v as Record<string, unknown>;
-  if (o.v !== 1 || !AREAS.some((a) => a.slug === o.area) || !isNum(o.at) || typeof o.rain !== 'boolean') return null;
+  if (o.v !== 1 || !OPEN_AREAS.some((a) => a.slug === o.area) || !isNum(o.at) || typeof o.rain !== 'boolean') return null;
   if (o.at > now || now - o.at >= RAIN_TTL_MS) return null;
   return { v: 1, area: o.area as string, at: o.at, rain: o.rain };
 }
