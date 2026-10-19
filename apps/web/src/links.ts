@@ -1,5 +1,5 @@
 // Outbound links (ADR-0025: 예약은 외부 링크; ADR-0071: 지도 앱은 네이버지도 기본, 카카오맵 · TMAP 선택).
-import { destOf } from './dest';
+import { releasedDestOf as destOf } from './release';
 import { cleanName } from './data';
 import { distanceKm, islandOf, withinReach, type BookKind, type Island, type Point, type Spot } from './pick';
 
@@ -12,9 +12,16 @@ export function kakaoUrl(s: Spot): string {
   return searchUrl(s);
 }
 
+/** The words a name search is scoped by (plans/busan.md M7): the place's own destination — `제주` unless it is in Busan —
+ * and whether the name already says where it is. */
+function scope(s: Spot): { word: string; said: RegExp } {
+  return destOf(s) === 'busan' ? { word: '부산', said: /부산/ } : { word: '제주', said: /제주|서귀포/ };
+}
+
 function searchUrl(s: Spot): string {
   const name = cleanName(s.name);
-  const q = /제주|서귀포/.test(name) ? name : `제주 ${name}`;
+  const { word, said } = scope(s);
+  const q = said.test(name) ? name : `${word} ${name}`;
   return `https://map.kakao.com/link/search/${encodeURIComponent(q)}`;
 }
 
@@ -28,7 +35,8 @@ export const MAP_APP_NAME: Record<MapApp, string> = { naver: '네이버지도', 
  * name is scoped to 제주 unless it already says where it is. On a phone Naver sends it on to its app-or-web page. */
 export function naverSearchUrl(s: Spot): string {
   const name = cleanName(s.name);
-  const q = /제주|서귀포/.test(name) ? name : `${name} 제주`;
+  const { word, said } = scope(s);
+  const q = said.test(name) ? name : `${name} ${word}`;
   return `https://map.naver.com/p/search/${encodeURIComponent(q)}`;
 }
 

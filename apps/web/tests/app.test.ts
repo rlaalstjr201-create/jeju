@@ -11,6 +11,7 @@ import { cardTextProblem } from '../src/card-text';
 import { cleanReason } from '../src/data';
 import { dayOf } from '../src/dates';
 import { pickCards, travel, travelText, type Point, type Sub } from '../src/pick';
+import { BUSAN } from '../src/release';
 import { splitName } from '../src/render';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
@@ -548,7 +549,8 @@ describe('S8-2 위치 전환 시트', () => {
     expect($('#sheet [data-basis="gps"]')).not.toBeNull();
     expect($('#sheet [data-basis="stay"]')).not.toBeNull();
     const headings = $$('#sheet .group-h > span:first-child').map((h) => h.textContent);
-    expect(headings).toEqual(['언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']); // 얼마나: ADR-0060
+    // 여행지 (specs/busan.md 1.4): the first row with the switch on
+    expect(headings).toEqual([...(BUSAN ? ['여행지'] : []), '언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']); // 얼마나: ADR-0060
     expect($('#sheet .group-h .order')?.textContent).toBe('서쪽부터');
     const areaBtns = $$('#sheet [data-area]').filter(visible) as HTMLElement[];
     expect(areaBtns.map((b) => b.dataset.area)).toEqual(AREAS.map((a) => a.name));

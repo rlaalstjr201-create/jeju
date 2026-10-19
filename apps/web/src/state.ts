@@ -3,10 +3,12 @@
 // dropped here, so the last user intent always wins (S36–S38).
 import { areaByName, nearestArea, type AreaName } from './areas';
 import { type Day } from './dates';
+import type { Dest } from './dest';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
+import { OPEN_AREAS } from './release';
 import { nightNow } from './sun';
 import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
@@ -58,6 +60,10 @@ export interface Keep {
 }
 
 export interface State {
+  /** 여행지 (ADR-0094): whose places, areas, 숙소 and basis are in use. Always Jeju with the switch off. */
+  dest: Dest;
+  /** specs/busan.md 1.3: the destination a GPS read just switched to (the status line says so); gone with the next intent. */
+  destNote: Dest | null;
   view: View;
   overlay: Overlay;
   /** where the saved list was opened from; null = unknown (restored after a reload). */
@@ -186,7 +192,10 @@ export type Action =
   | { type: 'clock'; clock: number }
   /** ADR-0081: the survey line was tapped (gone for good). */
   | { type: 'surveyTapped' }
-  | { type: 'feedbackSent' };
+  | { type: 'feedbackSent' }
+  /** another destination (ADR-0094): its basis, region and 숙소; what was picked from the other one's places goes.
+   * `note`: a GPS read moved it (specs/busan.md 1.3). */
+  | { type: 'dest'; dest: Dest; basis: Basis; region: AreaName | null; stay: Stay | null; note?: boolean };
 
 export const GPS_KEY = 'gps';
 /** Where a trip is measured from, in words (ADR-0093: another language's table replaces them). */
@@ -194,6 +203,7 @@ export const FROM_TEXT = { here: '여기서', stay: '숙소에서', area: (label
 export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoint: true, from: FROM_TEXT.here });
 
 export function initialState(init: {
+  dest?: Dest;
   basis: Basis;
   reach?: Reach;
   indoor?: boolean;
@@ -213,6 +223,8 @@ export function initialState(init: {
   clock?: number;
 }): State {
   return {
+    dest: init.dest ?? 'jeju',
+    destNote: null,
     view: 'home',
     overlay: null,
     savedFrom: null,
@@ -277,7 +289,7 @@ export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay |
       from: FROM_TEXT.stay,
     };
   }
-  const area = basis === 'region' ? areaByName(region) : null;
+  const area = basis === 'region' ? areaByName(region, OPEN_AREAS) : null;
   if (area) return { key: `region:${area.name}`, point: { lat: area.lat, lng: area.lng }, isPoint: false, from: FROM_TEXT.area(area.label) };
   return null;
 }
@@ -290,7 +302,8 @@ export const homeOrigin = (s: State): Origin | null =>
 /** 비 소식 (ADR-0076): the one area (slug) the forecast is asked for — the region, the area nearest the 숙소, or
  * nearest this session's GPS fix; none without a basis, or in date mode (the forecast is about the next 3 hours). */
 export function rainArea(s: State): string | null {
-  if (s.when !== 'now') return null;
+  // Busan's areas get their forecast with plans/busan.md S6 (functions/_lib/kma.ts)
+  if (s.when !== 'now' || s.dest !== 'jeju') return null;
   const o = homeOrigin(s);
   return o ? nearestArea(o.point).slug : null;
 }
@@ -517,9 +530,9 @@ const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'reques
 
 export function reduce(s: State, a: Action): State {
   const next = step(s, a);
-  if (!CLEARS_HINT.has(a.type) || (!next.hintFor && !next.visitNote)) return next;
-  // the 가 봤어요 status line goes the same way (ADR-0087)
-  return { ...next, hintFor: null, visitNote: null };
+  if (!CLEARS_HINT.has(a.type) || (!next.hintFor && !next.visitNote && !next.destNote)) return next;
+  // the 가 봤어요 status line goes the same way (ADR-0087), and so does 「지금 계신 부산으로 바꿨어요.」
+  return { ...next, hintFor: null, visitNote: null, destNote: null };
 }
 
 function step(s: State, a: Action): State {
@@ -661,6 +674,28 @@ function step(s: State, a: Action): State {
       return s.surveyLine ? { ...s, surveyLine: false } : s;
     case 'feedbackSent':
       return s.overlay === 'feedback' ? { ...s, feedbackSent: true } : s;
+    case 'dest':
+      // a request on its way keeps going (app.ts asks the new destination's list for it)
+      return {
+        ...s,
+        dest: a.dest,
+        destNote: a.note ? a.dest : null,
+        basis: a.basis,
+        region: a.region,
+        stay: a.stay,
+        spots: null,
+        cards: null,
+        origin: null,
+        originReach: null,
+        originIndoor: false,
+        histories: {},
+        shown: {},
+        savedList: null,
+        unsaved: [],
+        rain: null,
+        visitNote: null,
+        hintFor: null,
+      };
     case 'restore':
       return {
         ...enterView(s, 'cards'),

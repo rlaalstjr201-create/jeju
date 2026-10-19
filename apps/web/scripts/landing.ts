@@ -3,7 +3,9 @@
 // inputs, calls buildSite() and the checks below, and writes dist/. The rules the app uses are imported, not copied:
 // 지역 배정 = nearestArea, 이동 시간 = travel/travelText, 지도 링크 = goLink/naverSearchUrl (ADR-0071 네이버지도 기본).
 import { createHash } from 'node:crypto';
-import { AREAS, AREA_GROUPS, nearestArea, type Area } from '../src/areas';
+import { AREAS, AREA_GROUPS, nearestArea } from '../src/areas';
+/** The landing pages are Jeju's 15 areas only (plans/busan.md M1). */
+type Area = (typeof AREAS)[number];
 import { cleanName } from '../src/data';
 import { logoInner } from '../src/logo';
 import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';

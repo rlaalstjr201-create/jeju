@@ -4,7 +4,7 @@ import { LocateError, mountApp, type Deps } from './app';
 import type { Dest } from './dest';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
-import { releasedDestOf } from './release';
+import { BUSAN, releasedDestOf } from './release';
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 
@@ -46,7 +46,7 @@ function storageOf(name: 'localStorage' | 'sessionStorage'): Storage | null {
 const BASE = import.meta.env.BASE_URL;
 /** Each destination's place list (plans/busan.md): Jeju's address and version as before; Busan's is fetched only on a
  * Busan visit. */
-const spotsUrl = (dest: Dest) => (dest === 'jeju' ? `${BASE}spots.json?v=${__SPOTS_V__}` : `${BASE}spots-busan.json?v=${__BUSAN_V__}`);
+const spotsUrl = (dest: Dest) => (BUSAN && dest === 'busan' ? `${BASE}spots-busan.json?v=${__BUSAN_V__}` : `${BASE}spots.json?v=${__SPOTS_V__}`);
 
 /** Ask the browser to keep this site's storage (ADR-0063 2a): no prompt of ours; Chrome and Safari decide by
  * themselves, and a "no" changes nothing. */

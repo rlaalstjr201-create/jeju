@@ -76,6 +76,11 @@ function fakeCaches() {
           m.set(r.url, { body: r.url });
         }
       },
+      add: async (r: FakeRequest) => {
+        if (r.url.includes('fail')) throw new Error('404');
+        added.push(r);
+        m.set(r.url, { body: r.url });
+      },
       put: async (req: FakeRequest, res: unknown) => void m.set(req.url, res),
       keys: async () => [...m.keys()].map((url) => ({ url })),
     };
@@ -177,6 +182,31 @@ describe('sw.js — another language on this device (ADR-0093, review M1)', () =
   it('the language files are part of the version (a change in them is a new worker)', () => {
     expect(buildServiceWorker({ ...base(), langs: LANGS }).version).not.toBe(buildServiceWorker({ ...base(), langs: { ...LANGS, en: ['assets/en-9.js'] } }).version);
     expect(buildServiceWorker({ ...base(), langs: LANGS }).source).not.toMatch(/__LANGS__/);
+  });
+});
+
+describe('sw.js — Busan’s file (ADR-0093 Amendment 8, plans/busan.md m12)', () => {
+  const at = (u: string) => new URL(u, 'https://app.test/').href;
+  it('a Jeju build’s worker is the template as it was: nothing of Busan', () => {
+    expect(buildServiceWorker(base()).source).not.toMatch(/busan/i);
+  });
+  it('never precached; a new worker takes the new one where the old cache had any, and its 404 never stops the install', async () => {
+    const used = fakeCaches();
+    used.stores.set('tomorrow-old', new Map([[at('spots-busan.json?v=b0'), {}]]));
+    const built = buildServiceWorker({ ...base(), busanFile: 'spots-busan.json?v=b1' });
+    expect(built.precache.some((u) => u.includes('busan'))).toBe(false);
+    await runSw(built.source, async () => ({ ok: true }), used).install();
+    expect([...used.stores.get(`tomorrow-${built.version}`)!.keys()]).toContain(at('spots-busan.json?v=b1'));
+    const jejuOnly = fakeCaches();
+    jejuOnly.stores.set('tomorrow-old', new Map([[at('spots.json?v=x'), {}]]));
+    await runSw(built.source, async () => ({ ok: true }), jejuOnly).install();
+    expect([...jejuOnly.stores.get(`tomorrow-${built.version}`)!.keys()].some((u) => u.includes('busan'))).toBe(false);
+    const broken = fakeCaches();
+    broken.stores.set('tomorrow-old', new Map([[at('spots-busan.json?v=b0'), {}]]));
+    const failing = buildServiceWorker({ ...base(), busanFile: 'spots-busan.json?v=fail' });
+    const sw = runSw(failing.source, async () => ({ ok: true }), broken);
+    await sw.install();
+    expect([...broken.stores.get(`tomorrow-${failing.version}`)!.keys()]).toContain(at('spots.json?v=' + spotsVersion('[1]')));
   });
 });
 

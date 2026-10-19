@@ -1,12 +1,13 @@
 // ADR-0093: another language's words in place of the Korean ones, before the app mounts. The Korean tables stay
 // in their modules; this replaces their entries, writes the page's own words (index.html) and, once its file is
 // in, the place texts. Loaded only for a language other than Korean (main.ts), never precached (vite.config.ts).
-import { AREAS, AREA_GROUPS, type AreaName } from '../areas';
+import { AREA_GROUPS, type AreaName } from '../areas';
 import { DAY_TEXT, type Day } from '../dates';
 import { BOOK_TEXT, GO_TEXT, MAP_APP_NAME, type MapApp } from '../links';
 import { MARKET_TEXT } from '../market';
 import { TRAVEL_TEXT, type Button, type Spot } from '../pick';
-import { COPY, MOOD_LABEL, PLACE } from '../render';
+import { BUSAN, OPEN_AREAS } from '../release';
+import { BUSAN_COPY, COPY, MOOD_LABEL, PLACE } from '../render';
 import { SEASON_TEXT, type SeasonKind } from '../season';
 import { FROM_TEXT } from '../state';
 
@@ -17,6 +18,8 @@ export interface Lang {
   /** the page title */
   title: string;
   copy: Words<typeof COPY>;
+  /** 여행지 (ADR-0094): the switched-on build's words (render.ts BUSAN_COPY) */
+  busan: Words<typeof BUSAN_COPY>;
   mood: Record<Button, string>;
   travel: typeof TRAVEL_TEXT;
   day: typeof DAY_TEXT;
@@ -74,6 +77,7 @@ const validPlaces = (v: unknown): v is Places => !!v && typeof v === 'object' &&
 
 export function apply(lang: string, w: Lang, doc: Document, places: Promise<unknown>): Promise<void> {
   Object.assign(COPY, w.copy);
+  if (BUSAN) Object.assign(BUSAN_COPY, w.busan);
   Object.assign(MOOD_LABEL, w.mood);
   Object.assign(TRAVEL_TEXT, w.travel);
   Object.assign(DAY_TEXT, w.day);
@@ -83,7 +87,7 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
   Object.assign(GO_TEXT, w.go);
   Object.assign(BOOK_TEXT, w.book);
   Object.assign(MAP_APP_NAME, w.mapApp);
-  for (const a of AREAS) {
+  for (const a of OPEN_AREAS) {
     const area = a as { label: string; landmark: string };
     [area.label, area.landmark] = w.areas[a.name];
   }

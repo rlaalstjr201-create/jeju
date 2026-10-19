@@ -98,6 +98,23 @@ async function startPreview() {
 const pw = await loadPlaywright();
 const server = await startPreview();
 const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? 'chrome', headless: true });
+// plans/busan.md S5 (M10): with the switch on, a context the checks open themselves is a device that has chosen Jeju (no
+// 시작 화면), unless it asks to be a new browser (newBrowser: true; fresh() seeds its own storage).
+if (existsSync(join(appDir, 'dist/spots-busan.json'))) {
+  const open = browser.newContext.bind(browser);
+  browser.newContext = async ({ newBrowser, ...opts } = {}) => {
+    const ctx = await open(opts);
+    if (!newBrowser)
+      await ctx.addInitScript(() => {
+        try {
+          if (localStorage.getItem('jeju.dest') === null) localStorage.setItem('jeju.dest', '"jeju"');
+        } catch {
+          /* no storage */
+        }
+      });
+    return ctx;
+  };
+}
 
 // `route(ctx)`: routes in place before the page that gets `storage` loads. Routing after fresh() and reloading
 // is racy for requests that page sends itself: under load one can reach the network after the route is up.
@@ -105,6 +122,7 @@ const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? '
 async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage: given = {}, route, locale = 'ko-KR' } = {}) {
   const storage = seeded(given);
   const ctx = await browser.newContext({
+    newBrowser: true,
     viewport: { width, height },
     colorScheme: dark ? 'dark' : 'light',
     serviceWorkers: sw ? 'allow' : 'block',
@@ -1169,7 +1187,8 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     const rows = await b.page.$$eval('#sheet .opts .opt', (els) => els.map((e) => e.textContent));
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
     // Changed on purpose (ADR-0090 6): the 동네 row's 「다른 동네는 아래에서 골라요」 became the button 다른 동네 고르기 beside it
-    assert(rows.join('/') === '지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)', `sheet rows ${rows.join('/')}`);
+    // the switched-on build's 여행지 row comes first (specs/busan.md 1.4)
+    assert(rows.join('/') === `${BUSAN ? '제주/부산/' : ''}지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
     assert((await b.page.textContent('#sheet .optrow:has([data-action="close"][aria-pressed="true"]) [data-action="other-area"]')) === '다른 동네 고르기', 'no 다른 동네 고르기 on the 동네 row');
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
@@ -1555,7 +1574,7 @@ await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in t
     const depth = (await hstate(page)).depth;
     await tapText(page, '#basis');
     const heads = await page.$$eval('#sheet .group-h > span:first-child', (els) => els.map((e) => e.textContent));
-    if (heads.join() !== '언제,어디,얼마나,날씨,제주시 쪽,서귀포 쪽') problems.push(`${tag} groups ${heads}`);
+    if (heads.join() !== `${BUSAN ? '여행지,' : ''}언제,어디,얼마나,날씨,제주시 쪽,서귀포 쪽`) problems.push(`${tag} groups ${heads}`);
     if (width === 390) {
       // right under 어디: all three range rows in view above the sticky 닫기 without scrolling the sheet
       const inView = await page.$eval('#sheet [data-reach="drive60"]', (b) => {
@@ -3972,6 +3991,163 @@ await check('I18N-crawler', 'Amendment 7: a crawler-like browser (no languages a
   }
   assert(!problems.length, problems.join(' | '));
 });
+
+// --- 부산 (plans/busan.md S5, specs/busan.md 1.1·1.2 B1·B2·B3·B13): the switched-on build only ---
+// E2E_SHOTS_BUSAN=1 saves the 375×812 shots to design/qa/busan/ (the record of the 시작 화면 and the Busan screens).
+const BUSAN_SHOTS = BUSAN && process.env.E2E_SHOTS_BUSAN ? join(appDir, 'design/qa/busan') : '';
+if (BUSAN_SHOTS) mkdirSync(BUSAN_SHOTS, { recursive: true });
+const busanShot = async (page, name) => BUSAN_SHOTS && page.screenshot({ path: join(BUSAN_SHOTS, `${name}.png`) });
+const 해운대 = { mode: 'ok', lat: 35.1587, lng: 129.1604, delay: 30 };
+/** a page at 375×812 opened at \`path\` on a device with \`storage\` (null: a new browser) */
+async function openAt(path, { storage = null, geo, width = 375, height = 812, locale = 'ko-KR' } = {}) {
+  const { ctx, page } = await fresh({ width, height, storage, geo, locale });
+  if (path !== '/') {
+    await page.goto(BASE + path.replace(/^\//, ''));
+  }
+  await sleep(600);
+  return { ctx, page };
+}
+const said = (page) =>
+  page.evaluate(() => ({
+    start: !!document.getElementById('ycStart'),
+    rg: document.querySelector('.logo .rg')?.textContent,
+    basis: document.querySelector('#basis > span')?.textContent,
+    msg: document.getElementById('ycMsg')?.textContent ?? '',
+    calls: window.__geoCalls,
+  }));
+
+if (BUSAN) {
+  await check('BS-B1', 'B1 시작 화면은 넷째 경우에만: 새 브라우저 / 에 뜸 · jeju.saved.v2만 있는 기기·/?mood=walk·/jeju/** 에서 온 방문은 제주 · /?area=gwangalli 는 여차나:부산 · /?stay=<해운대> 는 숙소 근처·부산', async () => {
+    const problems = [];
+    const cases = [
+      ['/', null, true, ':제주', null],
+      ['/', { 'jeju.saved.v2': [] }, false, ':제주', null],
+      ['/?mood=walk', null, false, ':제주', null],
+      ['/?area=gwangalli', null, false, ':부산', '광안리 근처'],
+      ['/?stay=35.1587,129.1604&src=e2e-test', null, false, ':부산', '숙소 근처'],
+    ];
+    for (const [path, storage, start, rg, basis] of cases) {
+      const { ctx, page } = await openAt(path, { storage });
+      const s = await said(page);
+      if (s.start !== start || s.rg !== rg || (basis && s.basis !== basis)) problems.push(`${path} ${JSON.stringify(storage)} → ${JSON.stringify(s)}`);
+      await ctx.close();
+    }
+    // a landing page's own link to the app (the logo, a 키 없는 /): Jeju, no 시작 화면
+    const { ctx, page } = await fresh({ storage: null });
+    await page.goto(`${BASE}jeju/`);
+    await page.locator('a[href="/"]').first().click();
+    await page.waitForLoadState('load');
+    await sleep(600);
+    const s = await said(page);
+    if (s.start || s.rg !== ':제주') problems.push(`/jeju/ → / ${JSON.stringify(s)}`);
+    await ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('BS-B2', 'B2 페이지가 열릴 때 위치 읽기 0회, 큰 버튼을 누를 때 1회', async () => {
+    const { ctx, page } = await openAt('/', { geo: 해운대 });
+    const before = (await said(page)).calls;
+    await page.click('#ycGps');
+    await sleep(800);
+    const after = await said(page);
+    assert(before === 0 && after.calls === 1 && !after.start, `before ${before}, after ${JSON.stringify(after)}`);
+    await ctx.close();
+  });
+
+  await check('BS-B3', 'B3 GPS 해운대 → 여차나:부산·내 위치 근처·부산 「예:」 / 성산 → 제주 / 서울 → 밖 문구 / 거절 → 거절 문구 → 칸 고르기 뒤 지역 고르기·부산 인기:', async () => {
+    const problems = [];
+    const run = async (geo, want) => {
+      const { ctx, page } = await openAt('/', { geo });
+      await busanShot(page, 'start-375');
+      await page.click('#ycGps');
+      await sleep(900);
+      const s = await said(page);
+      if (!want(s)) problems.push(`${JSON.stringify(geo)} → ${JSON.stringify(s)}`);
+      return { ctx, page };
+    };
+    let o = await run(해운대, (s) => !s.start && s.rg === ':부산' && s.basis === '내 위치 근처');
+    await o.page.waitForFunction(() => /^예: /.test(document.querySelector('[data-mood="rest"] .ex')?.textContent ?? ''), null, { timeout: 8000 }).catch(() => problems.push('no 「예:」 near 해운대'));
+    await busanShot(o.page, 'busan-home-gps-375');
+    await tapText(o.page, '[data-mood="walk"]');
+    await waitCards(o.page);
+    await busanShot(o.page, 'busan-results-375');
+    await o.ctx.close();
+    o = await run({ mode: 'ok', lat: 33.4584, lng: 126.9426, delay: 30 }, (s) => !s.start && s.rg === ':제주');
+    await o.ctx.close();
+    o = await run({ mode: 'ok', lat: 37.5663, lng: 126.9779, delay: 30 }, (s) => s.start && s.msg === '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
+    await busanShot(o.page, 'start-outside-375');
+    await o.ctx.close();
+    o = await run({ mode: 'deny' }, (s) => s.start && s.msg === '위치를 쓸 수 없어요. 여행지를 골라 주세요.');
+    await busanShot(o.page, 'start-denied-375');
+    await o.page.click('#ycStart [data-dest="busan"]');
+    await sleep(900);
+    const s = await said(o.page);
+    const ex = await o.page.textContent('[data-mood="rest"] .ex').catch(() => '');
+    if (s.start || s.rg !== ':부산' || s.basis !== '지역 고르기' || !/^부산 인기: /.test(ex ?? '')) problems.push(`deny → 부산 ${JSON.stringify(s)} ${ex}`);
+    await busanShot(o.page, 'busan-home-picked-375');
+    await tapText(o.page, '#basis');
+    await busanShot(o.page, 'busan-sheet-375');
+    await o.ctx.close();
+    o = await run({ mode: 'fail' }, (s) => s.start && s.msg === '위치를 찾지 못했어요. 여행지를 골라 주세요.');
+    await busanShot(o.page, 'start-notfound-375');
+    await o.ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('BS-M4', 'M4 권한이 이미 granted: 덮개가 첫 그리기부터 있고 「위치 확인 중…」, 읽으면 걷히고 그 여행지 (제주 홈이 덮개 없이 보이는 순간 없음)', async () => {
+    const { ctx, page } = await fresh({ storage: null, geo: { ...해운대, delay: 600, perm: 'granted' } });
+    await page.goto(BASE);
+    const first = await page.evaluate(() => ({ start: !!document.getElementById('ycStart'), cls: document.documentElement.className }));
+    await page.waitForFunction(() => document.getElementById('ycGps')?.textContent === '위치 확인 중…', null, { timeout: 3000 }).catch(() => undefined);
+    const mid = await page.evaluate(() => document.getElementById('ycGps')?.textContent ?? 'gone');
+    await sleep(1200);
+    const end = await said(page);
+    assert(first.start && /yc-start/.test(first.cls) && mid === '위치 확인 중…' && !end.start && end.rg === ':부산', `${JSON.stringify({ first, mid, end })}`);
+    await ctx.close();
+  });
+
+  await check('BS-B13', 'B13 시작 화면 375×812: 세 누를 것이 스크롤 없이 보이고 큰 버튼(56+)·두 칸(48+, 반씩)이 아래 절반, 320 넘침 0; 영어·중국어·일본어 덮개에 한국어 0', async () => {
+    const problems = [];
+    for (const [w, h] of [[375, 812], [320, 568]]) {
+      const { ctx, page } = await openAt('/', { width: w, height: h });
+      const g = await page.evaluate(() => {
+        const r = (s) => document.querySelector(s).getBoundingClientRect();
+        const box = document.getElementById('ycStart');
+        return { big: r('#ycGps'), j: r('[data-dest="jeju"]'), b: r('[data-dest="busan"]'), vh: innerHeight, vw: innerWidth, sw: box.scrollWidth, cw: box.clientWidth, sh: box.scrollHeight, ch: box.clientHeight };
+      });
+      const lower = (x) => x.top >= g.vh / 2 && x.bottom <= g.vh;
+      if (w === 375 && (!lower(g.big) || !lower(g.j) || !lower(g.b))) problems.push(`${w}: not in the lower half ${JSON.stringify(g)}`);
+      if (g.big.height < 56 || g.j.height < 48 || g.b.height < 48 || Math.abs(g.j.width - g.b.width) > 1) problems.push(`${w}: sizes ${JSON.stringify(g)}`);
+      if (g.sw > g.cw || g.sh > g.ch) problems.push(`${w}: scrolls ${g.sw}/${g.cw} ${g.sh}/${g.ch}`);
+      await ctx.close();
+    }
+    for (const lang of ['en', 'zh-Hans', 'ja']) {
+      const { ctx, page } = await openAt(`/?lang=${lang}`);
+      const text = await page.evaluate(() => document.getElementById('ycStart')?.innerText ?? '');
+      if (!text || /[\uac00-\ud7a3]/.test(text)) problems.push(`${lang}: ${text}`);
+      if (lang === 'en') await busanShot(page, 'start-en-375');
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('BS-M5', 'M5 렌더 점검(Googlebot 412×915, 저장소 없음): 덮개 뒤 h1·.lede·기분 목록이 DOM에 있고 display:none 아님 — 덮개 비율은 기록', async () => {
+    const ctx = await browser.newContext({ newBrowser: true, viewport: { width: 412, height: 915 }, serviceWorkers: 'block', locale: 'ko-KR', userAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' });
+    await ctx.route(PHOTO_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+    const page = await ctx.newPage();
+    await page.goto(BASE);
+    await page.waitForSelector('#today:not(.wait)');
+    const r = await page.evaluate(() => {
+      const shown = (s) => { const e = document.querySelector(s); return !!e && getComputedStyle(e).display !== 'none'; };
+      const box = document.getElementById('ycStart')?.getBoundingClientRect();
+      return { h1: shown('#ask'), lede: shown('#lede'), moods: shown('.moods'), cover: box ? Math.round((box.width * box.height * 100) / (innerWidth * innerHeight)) : 0 };
+    });
+    console.log(`  BS-M5 덮개 비율 ${r.cover}% (기록만)`);
+    await busanShot(page, 'render-googlebot-412');
+    assert(r.h1 && r.lede && r.moods, JSON.stringify(r));
+    await ctx.close();
+  });
+}
 
 await browser.close();
 server.kill();

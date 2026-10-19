@@ -31,7 +31,7 @@ function appVersion(): string {
 }
 
 /** Emits sw.js with the built file list, without a PWA plugin (plan: 직접 작성). */
-function serviceWorker(): Plugin {
+function serviceWorker(mode: string): Plugin {
   return {
     name: 'tomorrow-sw',
     apply: 'build',
@@ -60,6 +60,8 @@ function serviceWorker(): Plugin {
         publicFiles: PUBLIC_SHELL.map((f) => [f, readFileSync(resolve(root, 'public', f))]),
         spotsV: SPOTS_V,
         langs,
+        // ADR-0093 Amendment 8: Busan's file is carried over by a new worker where the old cache had it (switched-on build only)
+        ...(mode === 'busan' ? { busanFile: `spots-busan.json?v=${BUSAN_V}` } : {}),
       });
       this.emitFile({ type: 'asset', fileName: 'sw.js', source });
     },
@@ -94,7 +96,21 @@ function busanFile(mode: string): Plugin {
     closeBundle() {
       const f = resolve(outDir, 'spots-busan.json');
       if (mode !== 'busan' && existsSync(f)) rmSync(f);
+      // plans/busan.md m4: always asked for as spots-busan.json?v=<content hash> — immutable, like spots.json
+      const h = resolve(outDir, '_headers');
+      if (mode === 'busan' && existsSync(h))
+        writeFileSync(h, readFileSync(h, 'utf8').replace('/i18n/*\n', '/spots-busan.json\n  Cache-Control: public, max-age=31536000, immutable\n/i18n/*\n'));
     },
+  };
+}
+
+/** 시작 화면 (ADR-0096): index.html's `<!--busan-->…<!--/busan-->` blocks (the destination decided before the first paint,
+ * the start screen) go out with a switched-on build only; with the switch off they are taken out whole, so the Jeju page
+ * is the same bytes as before (plans/busan.md M3 b). */
+function busanBlock(mode: string): Plugin {
+  return {
+    name: 'busan-block',
+    transformIndexHtml: (html) => (mode === 'busan' ? html.replace(/<!--\/?busan-->/g, '') : html.replace(/<!--busan-->[\s\S]*?<!--\/busan-->/g, '')),
   };
 }
 
@@ -154,7 +170,7 @@ export default defineConfig(({ command, mode }) => ({
     __BUSAN_V__: JSON.stringify(BUSAN_V),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
-  plugins: [serviceWorker(), siteUrl(), busanFile(mode), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
+  plugins: [busanBlock(mode), serviceWorker(mode), siteUrl(), busanFile(mode), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the one dynamic import is the other languages' words, which a Korean visit never asks for
   build: { target: 'es2020', modulePreload: false },
 }));

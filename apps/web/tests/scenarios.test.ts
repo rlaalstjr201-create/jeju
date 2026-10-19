@@ -5,6 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
 import { islandOf, pickCards, withinReach, type Point } from '../src/pick';
+import { BUSAN } from '../src/release';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, painted, render, reset, settle, shownMood, tap, wait } from './harness';
 
@@ -1622,8 +1623,9 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
   it('D2 basis sheet: 언제 (지금 / 내일 / 날짜 고르기) above 어디; 내일 puts the date in the label and the sheet stays open', async () => {
     open();
     await tap('#basis');
-    const when = $$('#sheet .opts')[0];
-    expect($('#sheet .group-h').textContent).toBe('언제');
+    // 여행지 (specs/busan.md 1.4) comes first with the switch on
+    const when = $$('#sheet .opts')[BUSAN ? 1 : 0];
+    expect($('#sheet #when-h').textContent).toBe('언제');
     expect([...when.querySelectorAll('.opt .nm')].map((x) => x.textContent)).toEqual(['지금', '내일', '날짜 고르기']);
     expect($('#sheet [data-when="now"]').getAttribute('aria-pressed')).toBe('true');
     const input = $<HTMLInputElement>('#sheet input[type="date"]');
@@ -1695,7 +1697,7 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
     it('basis sheet 언제: the field lies over 날짜 고르기; a picked day sets 언제 and shows on the option', async () => {
       open();
       await tap('#basis');
-      expect([...$$('#sheet .opts')[0].querySelectorAll('.opt .nm')].map((x) => x.textContent)).toEqual(['지금', '내일', '날짜 고르기']);
+      expect([...$$('#sheet .opts')[BUSAN ? 1 : 0].querySelectorAll('.opt .nm')].map((x) => x.textContent)).toEqual(['지금', '내일', '날짜 고르기']);
       const input = field();
       expect(input.max).toBe('2027-09-30');
       input.value = '2026-10-03';
@@ -1919,7 +1921,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     render();
     await tap('#basis');
     const heads = $$('#sheet .group-h').map((h) => h.firstElementChild!.textContent);
-    expect(heads).toEqual(['언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']);
+    expect(heads).toEqual([...(BUSAN ? ['여행지'] : []), '언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']);
     expect(reachRows().map((b) => b.querySelector('.nm')!.textContent)).toEqual(['걸어서', '차로 30분', '차로 1시간']);
     expect(pressedReach()).toEqual(['drive30']);
     // check-mark selection (SPEC 3판): each row carries the check, shown only on the chosen one by CSS

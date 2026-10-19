@@ -16,13 +16,41 @@ export interface SwInput {
   spotsV: string;
   /** ADR-0093: each other language's own files (published paths), kept only on devices that use it */
   langs?: Record<string, string[]>;
+  /** ADR-0093 Amendment 8 (plans/busan.md S5, switched-on build only): Busan's file `spots-busan.json?v=<hash>`. Not
+   * precached; a new worker takes it where the cache it replaces had any spots-busan.json, apart from the precache
+   * chain (a failure there never stops the install, m12). */
+  busanFile?: string;
+}
+
+/** The install step that carries Busan's file over, put into the worker only by a switched-on build: the template, and so
+ * a Jeju deploy's sw.js, stays as it was. */
+const INSTALL_TAIL = '          .then((langs) => Promise.all(langs.map((l) => addLang(cache, l)))),\n';
+export function withBusanFile(template: string, file: string): string {
+  const eol = template.includes('\r\n') ? '\r\n' : '\n';
+  const tail = INSTALL_TAIL.replace(/\n/g, eol);
+  if (!template.includes(tail)) throw new Error('sw.js: the install chain to carry Busan\'s file over was not found');
+  const carry = [
+    `/** ADR-0093 Amendment 8: Busan's file, kept only where the replaced cache had it; its own catch (m12). */`,
+    `const BUSAN_FILE = ${JSON.stringify(file)};`,
+    `const carryBusan = (cache) =>`,
+    `  caches`,
+    `    .keys()`,
+    `    .then((keys) => Promise.all(keys.filter((k) => k.startsWith('tomorrow-') && k !== CACHE).map((k) => caches.open(k).then((c) => c.keys()))))`,
+    `    .then((lists) => lists.some((reqs) => reqs.some((r) => r.url.includes('/spots-busan.json'))) && cache.add(new Request(scoped(BUSAN_FILE))))`,
+    `    .catch(() => undefined);`,
+    ``,
+  ].join(eol);
+  return template
+    .replace(tail, tail.replace(`)))),${eol}`, `))))${eol}          .then(() => carryBusan(cache)),${eol}`))
+    .replace(`self.addEventListener('install'`, `${carry}self.addEventListener('install'`);
 }
 
 /**
  * VERSION changes when any built file name, index.html, a precached public file, or the SW template
  * itself changes — so a copy/meta-only edit of index.html also refreshes the offline shell.
  */
-export function buildServiceWorker(input: SwInput): { version: string; precache: string[]; source: string } {
+export function buildServiceWorker(given: SwInput): { version: string; precache: string[]; source: string } {
+  const input = given.busanFile ? { ...given, template: withBusanFile(given.template, given.busanFile) } : given;
   const built = [...input.built].filter((f) => !f.endsWith('.map')).sort();
   const pub = input.publicFiles.map(([p]) => (p === 'spots.json' ? `spots.json?v=${input.spotsV}` : p));
   const precache = ['./', ...built.filter((f) => f !== 'index.html'), ...pub];

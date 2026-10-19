@@ -2,10 +2,10 @@
 // — what an AI agent (or anyone) can hand a user so the app opens on that result. Pure parsing, no DOM.
 // 숙소 링크 (ADR-0089): `stay=<lat>,<lng>` (a point in Jeju) and `src=<tag>` (which 숙소's link it was); `relay=1`
 // when an in-app browser's 브라우저로 열기 handed it on (its arrival was counted there).
-import { AREAS, areaByName, type AreaName } from './areas';
+import { areaByName, type AreaName } from './areas';
 import { DAYS_AHEAD, addDays, isDay, type Day } from './dates';
 import { REACHES, type Button, type Point, type Reach } from './pick';
-import { releasedDestOf } from './release';
+import { OPEN_AREAS, releasedDestOf } from './release';
 import type { When } from './types';
 
 export interface DeepLink {
@@ -15,7 +15,7 @@ export interface DeepLink {
   reach?: Reach;
   when?: When;
   indoor?: boolean;
-  /** 숙소 링크: the 숙소, inside Jeju, at most 6 decimals. */
+  /** 숙소 링크: the 숙소, inside an open destination, at most 6 decimals. */
   stay?: Point;
   /** 숙소 링크: the partner's tag, `[a-z0-9-]{2,24}`. */
   src?: string;
@@ -44,7 +44,8 @@ export function readDeepLink(search: string, today: Day): DeepLink | null {
   const slug = area.toLowerCase();
   if (slug === 'here') out.area = 'here';
   else {
-    const a = AREAS.find((x) => x.slug === slug) ?? areaByName(area);
+    // either destination's 동네, if it is open in this build (plans/busan.md: Busan's slugs only with the switch on)
+    const a = OPEN_AREAS.find((x) => x.slug === slug) ?? areaByName(area, OPEN_AREAS);
     if (a) out.area = a.name;
   }
   const reach = get('reach').toLowerCase();

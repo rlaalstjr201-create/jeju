@@ -7,7 +7,7 @@ import { pathToFileURL } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { inJeju } from '../src/areas';
 import { readDeepLink } from '../src/deeplink';
-import { destOf } from '../src/dest';
+import { areaAt, destOf, destOfId, inBusan } from '../src/dest';
 import { naverDirectionsUrl } from '../src/links';
 import { BUSAN, released, releasedDestOf } from '../src/release';
 import { fileSpots } from './fixtures';
@@ -31,10 +31,28 @@ describe('destOf', () => {
     expect(fileSpots.every((s) => destOf(s) === 'jeju')).toBe(true);
   });
 
-  it('outside every destination is null: 서울시청, a broken point; 해운대 too until Busan has its boundary (S5)', () => {
+  it('outside every destination is null: 서울시청, a broken point', () => {
     expect(destOf(서울시청)).toBeNull();
     expect(destOf({ lat: Number.NaN, lng: 126.5 })).toBeNull();
-    expect(destOf(해운대해수욕장)).toBeNull();
+    expect(destOf(해운대해수욕장)).toBe('busan');
+  });
+
+  // B4 (specs/busan.md): the 부산광역시 boundary (data/geo/busan-boundary.json), not a box — 김해시청 is outside
+  it('B4: 부산 안 5점, 밖 5점; every shipped Busan place is inside', () => {
+    const inside = { 해운대해수욕장, 김해국제공항: { lat: 35.1795, lng: 128.9382 }, 가덕도대항: { lat: 35.0186, lng: 128.8255 }, 일광해수욕장: { lat: 35.2601, lng: 129.2335 }, 범어사: { lat: 35.2836, lng: 129.0686 } };
+    const outside = { 김해시청: { lat: 35.2285, lng: 128.8894 }, 양산시청: { lat: 35.335, lng: 129.0372 }, 울산시청: { lat: 35.5396, lng: 129.3114 }, 창원시청: { lat: 35.228, lng: 128.6811 }, 거제장승포: { lat: 34.8687, lng: 128.7256 } };
+    expect(Object.entries(inside).filter(([, p]) => destOf(p) !== 'busan').map(([k]) => k)).toEqual([]);
+    expect(Object.entries(outside).filter(([, p]) => destOf(p) !== null).map(([k]) => k)).toEqual([]);
+    const busan = JSON.parse(readFileSync(join(root, 'public/spots-busan.json'), 'utf8')) as { id: string; lat: number; lng: number }[];
+    expect(busan.filter((s) => !inBusan(s)).map((s) => s.id)).toEqual([]);
+    expect(busan.every((s) => destOfId(s.id) === 'busan')).toBe(true);
+    expect(fileSpots.every((s) => destOfId(s.id) === 'jeju' && !inBusan(s))).toBe(true);
+  });
+
+  it('a point\'s 동네 is the nearest centre of its own destination (Jeju\'s outside both)', () => {
+    expect(areaAt(해운대해수욕장).name).toBe('해운대');
+    expect(areaAt(성산일출봉).name).toBe('성산');
+    expect(areaAt(서울시청).group).not.toBe('busan');
   });
 
   it('a link to a place outside every destination stays a name search, one inside is a coordinate link (as with inJeju)', () => {
@@ -54,15 +72,16 @@ describe('출시 스위치 (src/release.ts)', () => {
     expect(released('busan')).toBe(BUSAN);
   });
 
-  it('the app takes in a point only inside an open destination: 성산 → Jeju; 해운대·서울 → none (the GPS says 「지금은 제주 밖이에요.」)', () => {
+  it('the app takes in a point only inside an open destination: 성산 → Jeju; 해운대 → Busan only with the switch on; 서울 → none', () => {
     expect(releasedDestOf(성산일출봉)).toBe('jeju');
-    expect(releasedDestOf(해운대해수욕장)).toBeNull();
+    expect(releasedDestOf(해운대해수욕장)).toBe(BUSAN ? 'busan' : null);
     expect(releasedDestOf(서울시청)).toBeNull();
   });
 
-  it('links with Busan in them open nothing of Busan yet: ?stay=<해운대> is dropped, ?area=gwangalli is no area', () => {
-    expect(readDeepLink(`?stay=${해운대해수욕장.lat},${해운대해수욕장.lng}`, TODAY)).toBeNull();
-    expect(readDeepLink('?area=gwangalli', TODAY)).toBeNull();
+  it('links with Busan in them open Busan only with the switch on: ?stay=<해운대>, ?area=gwangalli', () => {
+    expect(readDeepLink(`?stay=${해운대해수욕장.lat},${해운대해수욕장.lng}`, TODAY)).toEqual(BUSAN ? { stay: 해운대해수욕장 } : null);
+    expect(readDeepLink('?area=gwangalli', TODAY)).toEqual(BUSAN ? { area: '광안리' } : null);
+    expect(readDeepLink(`?stay=${서울시청.lat},${서울시청.lng}`, TODAY)).toBeNull();
     expect(readDeepLink(`?stay=${성산일출봉.lat},${성산일출봉.lng}`, TODAY)).toEqual({ stay: 성산일출봉 });
   });
 

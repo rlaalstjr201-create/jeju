@@ -1,14 +1,16 @@
 // render(state) is idempotent: every aria-pressed/aria-current, label, count, card and sheet is derived from
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
-import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
+import { AREAS, AREA_GROUPS, BUSAN_AREAS, areaLabel, type AreaName } from './areas';
+import { DESTS, destOfId, type Dest } from './dest';
+import { BUSAN, OPEN_AREAS } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, nightHome, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
-import { REACHES, TRAVEL_TEXT, historyKey, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
+import { CARD_COUNT, REACHES, TRAVEL_TEXT, historyKey, listed, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
 import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
@@ -208,6 +210,22 @@ export const COPY = {
   putBackAll: '모두 다시 넣기',
 } as const;
 
+/** 여행지 (ADR-0094, specs/busan.md 1.3·1.4·3.5·6·8): the switched-on build's words, apart from COPY so that a Jeju build,
+ * where every use of them is behind the switch, carries none of them (another language's table: Lang.busan). */
+export const BUSAN_COPY = {
+  destName: { jeju: '제주', busan: '부산' } satisfies Record<Dest, string>,
+  destHead: '여행지',
+  title: '여차나:부산 · P를 위한 여행동반자',
+  examplePopular: (names: string[]) => `부산 인기: ${names.join(', ')}`,
+  homeCredit: '정보·사진: 한국관광공사',
+  outside: '지금은 부산 밖이에요.',
+  stayOutside: '지금은 부산 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
+  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.' } satisfies Record<Dest, string>,
+  otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
+  /** specs/busan.md 8 (D4): Busan's place names and notes have no translation yet — said once in another language */
+  korean: '',
+} as const;
+
 /** The name (its main part, without the alias) and the particle its last syllable takes: 받침 → `withFinal`. */
 function josa(name: string, withFinal: string, without: string): string {
   const main = splitName(name.trim()).main;
@@ -264,7 +282,9 @@ export function splitName(name: string): { main: string; alias: string | null } 
 
 function whereLabel(s: State): string {
   if (s.basis === 'stay' && s.stay) return COPY.basisStay;
-  if (s.basis === 'region' && s.region) return COPY.basisRegion(areaLabel(s.region));
+  if (s.basis === 'region' && s.region) return COPY.basisRegion(areaLabel(s.region, OPEN_AREAS));
+  // another destination picked in the sheet, its 동네 not yet (specs/busan.md 1.4)
+  if (s.basis === 'region') return COPY.basisNoGps;
   return s.lastFail ? COPY.basisNoGps : COPY.basisGps;
 }
 /** 지금: the place only. A chosen day goes in front: "내일 · 애월 근처", "10월 3일 · 숙소 근처"; 실내만 after. */
@@ -304,6 +324,7 @@ export function statusOf(s: State): { text: string; chooseArea: boolean; undo: {
   if (p.k === 'pending' && p.step === 'locating' && p.slow) return { text: COPY.locating, chooseArea: p.long, undo: null };
   if (p.k === 'ready') {
     const parts: string[] = [];
+    if (BUSAN && s.destNote) parts.push(BUSAN_COPY.switched[s.destNote]);
     if (s.cards?.wrapped) parts.push(COPY.wrapped);
     if (s.cards?.nightShifted) parts.push(COPY.nightShifted[s.cards.nightShifted]);
     if (s.offline) parts.push(COPY.offline);
@@ -552,6 +573,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return { metas, both };
   }
 
+  /** A Busan place without a photo (TourAPI gave none): a text card from the start, no empty <img> (S4 handover). */
+  const noPhoto = (spot: Spot) => BUSAN && !spot.image && destOfId(spot.id) === 'busan';
+
   function photoEl(spot: Card['spot'], eager: boolean): HTMLElement {
     const ph = el(doc, 'div', { class: 'ph' });
     const load: Record<string, string> = eager ? { fetchpriority: 'high' } : { loading: 'lazy' };
@@ -629,7 +653,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   function cardEl(s: State, c: Card, kind: 'lead' | 'row', meta: string | null, dest: boolean, eager: boolean, describedBy?: string, day?: Day): HTMLElement {
     const { spot } = c;
     const name = PLACE.name(spot);
-    const broken = s.broken.includes(spot.id);
+    const broken = s.broken.includes(spot.id) || noPhoto(spot);
     const card = el(doc, 'div', { class: `card ${kind}${broken ? ' noimg' : ''}`, 'data-id': spot.id });
     if (!broken) card.append(photoEl(spot, eager));
     // The name's link covers the whole card (::after); heart and booking link sit above it (S8-3).
@@ -726,7 +750,17 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return card;
   }
 
-  function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: AreaName | null) {
+  function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: AreaName | null, dest: Dest = 'jeju') {
+    if (BUSAN && dest === 'busan') {
+      // specs/busan.md 2절: one group, no heading, west → east
+      const id = `areas-${where}-busan`;
+      const h = el(doc, 'p', { class: 'group-h', id });
+      h.append(el(doc, 'span', { class: 'order' }, COPY.westFirst));
+      const grid = el(doc, 'div', { class: 'areas', role: 'group', 'aria-label': BUSAN_COPY.destName.busan });
+      for (const a of BUSAN_AREAS) grid.append(option(a.label, a.landmark, { 'data-area': a.name, 'data-where': where, 'aria-pressed': String(a.name === selected) }));
+      parent.append(h, grid);
+      return;
+    }
     AREA_GROUPS.forEach(({ group, heading }, i) => {
       // ids per place: the inline index and a sheet's can be in the document at the same time
       const id = `areas-${where}-${group}`;
@@ -755,7 +789,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const box = el(doc, 'div', { class: 'notice' });
     const p = s.phase;
     let lines: readonly string[];
-    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [COPY.noOrigin[p.why], COPY.noOriginBody];
+    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [BUSAN && p.why === 'outside' && s.dest === 'busan' ? BUSAN_COPY.outside : COPY.noOrigin[p.why], COPY.noOriginBody];
     else if (kind === 'loadError' && p.k === 'loadError') lines = p.offline ? COPY.loadErrorOffline : COPY.loadError;
     else lines = COPY.empty;
     box.append(el(doc, 'p', { class: 'notice-t' }, lines[0]), el(doc, 'p', { class: 'notice-b' }, lines[1]));
@@ -765,7 +799,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       // how to get the location back, above the 동네 grid rather than under it (heuristic audit H8)
       if (p.k === 'noOrigin' && p.why === 'denied') box.append(el(doc, 'p', { class: 'notice-f' }, COPY.deniedHow));
       if (p.k === 'noOrigin' && p.why !== 'outside') box.append(el(doc, 'button', { type: 'button', class: 'tbtn regps', 'data-action': 'retry' }, COPY.retryGps));
-      areaGroups(box, 'inline', s.basis === 'region' ? s.region : null);
+      areaGroups(box, 'inline', s.basis === 'region' ? s.region : null, s.dest);
     }
     return box;
   }
@@ -777,7 +811,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (b.k === 'notice') {
       const p = s.phase;
       const detail = p.k === 'noOrigin' ? p.why : p.k === 'loadError' ? String(p.offline) : '';
-      return `notice|${b.kind}|${detail}|${s.basis}|${s.region}`;
+      return `notice|${b.kind}|${detail}|${s.basis}|${s.region}|${s.dest}`;
     }
     return b.k;
   }
@@ -859,7 +893,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const { upcoming, past } = savedDays(s);
     const o = s.savedList!.origin;
     const days = [...upcoming, ...(s.pastOpen ? past : [])].map((d) => `${d.day}:${d.rows.map((r) => `${r.entry.id}${r.live ? '' : '~'}`).join(',')}`);
-    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${s.reach}|${s.mapApp}|${past.length}|${s.pastOpen}|${days.join(';')}`;
+    return `${s.today}|${o ? `${o.key}@${o.point.lat},${o.point.lng}` : ''}|${s.reach}|${s.mapApp}|${past.length}|${s.pastOpen}|${days.join(';')}${BUSAN ? `|${s.dest}|${s.saved.length}` : ''}`;
   }
 
   function savedListNodes(s: State): HTMLElement[] {
@@ -940,6 +974,16 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     }
     if (b.k !== 'list') rowNodes.clear();
     setText(els.savedSort, empty);
+    // 「부산에 저장한 곳 N곳」 (specs/busan.md 6): the other destination's saves, kept, one line under this one's
+    if (BUSAN && b.k === 'list') {
+      for (const d of DESTS) {
+        const n = d === s.dest ? 0 : s.saved.filter((e) => destOfId(e.id) === d).length;
+        if (!n) continue;
+        const line = el(doc, 'p', { class: 'other-dest' });
+        line.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-dest', 'data-dest': d }, BUSAN_COPY.otherSaved[d](n)));
+        nodes.push(line);
+      }
+    }
     els.savedList.replaceChildren(...nodes);
     if (inside) refocus(active!);
   }
@@ -968,7 +1012,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         for (const card of els.main.querySelectorAll<HTMLElement>('.card.noimg[data-id]')) {
           const id = card.dataset.id!;
           const spot = broken.has(id) ? null : (s.cards?.list.find((x) => x.spot.id === id)?.spot ?? idx?.get(id));
-          if (!spot) continue;
+          if (!spot || noPhoto(spot)) continue;
           card.classList.remove('noimg');
           card.prepend(photoEl(spot, false));
         }
@@ -1193,7 +1237,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
     const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
     // 밤 (ADR-0091): 「예:」 put 야외 산길 and islands by boat after the others from the sunset to the sunrise
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin)].join('|');
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest].join('|');
   }
 
   function renderHome(s: State) {
@@ -1244,7 +1288,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
-        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : COPY.examplePopular(names)));
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : BUSAN && s.dest === 'busan' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         pair.append(...ex.map((x) => homePhoto(x, false)));
         b.querySelector('.i-check')!.before(pair);
@@ -1258,10 +1302,11 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       return nodes;
     };
     // an area's photo is not a pick: from the data as it is
-    const areas = () => areasSection(s, s.spots!, origin);
+    // 다른 동네 둘러보기 links the area pages, which Busan has none of (specs/busan.md 1.4)
+    const areas = () => (BUSAN && s.dest === 'busan' ? el(doc, 'span', { hidden: '' }) : areasSection(s, s.spots!, origin));
     const tail = (): HTMLElement[] => {
       // the coastline the 노을 places were worked out from (ODbL): credited while they are shown
-      const credit = el(doc, 'p', { class: 'credit' }, COPY.homeCredit);
+      const credit = el(doc, 'p', { class: 'credit' }, BUSAN && s.dest === 'busan' ? BUSAN_COPY.homeCredit : COPY.homeCredit);
       if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
       // settings reachable with nothing saved yet (heuristic audit H5): they live under the saved list
       // ADR-0093: then the other languages, each in its own words; a link opens the app again in it
@@ -1330,7 +1375,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // 의견 보내기 keeps what is typed: rebuilt only when it turns into 고마워요
     if (s.overlay === 'feedback') return `feedback|${s.feedbackSent}`;
     const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
-    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}`;
+    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}|${s.dest}`;
   }
 
   /** A thin-rule list of rows under its own group heading (the 언제 / 어디 / 얼마나 parts of the basis sheet). */
@@ -1411,6 +1456,13 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : overlay === 'feedback' ? (s.feedbackSent ? COPY.thanks : COPY.feedbackSheet) : COPY.staySheet;
     panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
+      // 여행지 (specs/busan.md 1.4): the sheet's first row, with the switch on — the one in use pressed
+      if (BUSAN) {
+        // one compact line, like 언제
+        const row = optRow(...DESTS.map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
+        row.classList.add('when-row');
+        optGroup(panel, 'dest-h', BUSAN_COPY.destHead, [row]);
+      }
       // 언제 (specs/date-mode.md): 지금 · 내일 · 날짜 고르기 on one compact row, so 어디 comes sooner.
       // Choosing one keeps the sheet open for 어디.
       const tomorrow = addDays(s.today, 1);
@@ -1424,13 +1476,13 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       optGroup(panel, 'when-h', COPY.whenHead, [when]);
       // 어디: a thin-rule list of two rows; 다시 정하기 sits at the end of the 숙소 row, beside its option (§6.10).
       // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
-      const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
+      const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area, OPEN_AREAS)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
       // the 동네 in use shows here, checked, not only far down in the index (heuristic audit H6); under it, where its line
       // 「다른 동네는 아래에서 골라요」 was, 다른 동네 고르기 goes down to that index (ADR-0090 6, app.ts)
       const regionRow: HTMLElement[] = [];
       if (s.basis === 'region' && s.region) {
-        const row = optRow(option(COPY.basisRegion(areaLabel(s.region)), null, { 'data-action': 'close', 'aria-pressed': 'true' }), el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-area' }, COPY.otherArea));
+        const row = optRow(option(COPY.basisRegion(areaLabel(s.region, OPEN_AREAS)), null, { 'data-action': 'close', 'aria-pressed': 'true' }), el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-area' }, COPY.otherArea));
         row.classList.add('other-row');
         regionRow.push(row);
       }
@@ -1441,7 +1493,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       // 비 와요(실내만) (ADR-0065): one row of its own, the same thin-rule option with a check when on. Choosing it
       // closes the sheet, like 얼마나.
       optGroup(panel, 'weather-h', COPY.weatherHead, [optRow(option(COPY.indoorToggle, null, { 'data-indoor': '', 'aria-pressed': String(s.indoor) }))]);
-      areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null);
+      areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null, s.dest);
     } else if (overlay === 'move') {
       // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.
       const from = s.moveTarget?.date ?? '';
@@ -1459,7 +1511,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         el(doc, 'button', { type: 'button', class: 'primary', 'data-action': 'stay-here' }, COPY.stayHere),
         el(doc, 'p', { class: 'form-err', role: 'alert', hidden: '' }),
       );
-      areaGroups(panel, 'stay', s.stay?.source === 'area' ? s.stay.area : null);
+      areaGroups(panel, 'stay', s.stay?.source === 'area' ? s.stay.area : null, s.dest);
     }
     panel.append(el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
     els.sheet.replaceChildren(scrim, panel);
@@ -1481,14 +1533,15 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const err = els.sheet.querySelector<HTMLElement>('.form-err');
     if (err) {
       // The button stays a button; the reason goes on its own line (S09).
-      setText(err, s.stayForm.error ? COPY.stayError[s.stayForm.error] : '');
+      setText(err, s.stayForm.error ? (BUSAN && s.stayForm.error === 'outside' && s.dest === 'busan' ? BUSAN_COPY.stayOutside : COPY.stayError[s.stayForm.error]) : '');
       err.hidden = !s.stayForm.error;
     }
   }
 
   function focusSheet() {
     // a day picked on a touch screen is the see-through field's value (pickDay), not a pressed option
-    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"], .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
+    // (the 여행지 row is not where a choice is made each time: focus starts below it, as before it was there)
+    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"]:not([data-dest]), .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
     pick?.focus({ preventScroll: true });
   }
 
@@ -1628,6 +1681,31 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (c.how === 'more' || lostFocus()) els.crumb.focus({ preventScroll: true });
   }
 
+  // --- 여행지 (ADR-0094): the logo's grey name, the document title, the credits and the Korean-only line ---
+  let tabSpots: Spot[] | null = null;
+  let destDrawn: Dest | null = null;
+  const jejuTitle = doc.title;
+  const credits = [...doc.querySelectorAll<HTMLElement>('#results > .credit, #savedView .about > .credit:first-of-type')].map((e) => ({ e, html: e.innerHTML }));
+  function renderDest(s: State) {
+    if (s.dest === destDrawn) return;
+    destDrawn = s.dest;
+    const busan = s.dest === 'busan';
+    for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${BUSAN_COPY.destName[s.dest]}`);
+    doc.title = busan ? BUSAN_COPY.title : jejuTitle;
+    for (const c of credits) {
+      if (busan) c.e.textContent = BUSAN_COPY.homeCredit;
+      else c.e.innerHTML = c.html;
+    }
+    for (const l of doc.querySelectorAll<HTMLElement>('#results > .landing')) l.hidden = busan;
+    // another language (D4): one line under the question and over the cards
+    for (const [after, id] of [[els.lede, 'koNoteHome'], [els.how, 'koNoteCards']] as const) {
+      let p = doc.getElementById(id);
+      if (busan && BUSAN_COPY.korean) {
+        if (!p) after.after((p = el(doc, 'p', { id, class: 'ko-note' }, BUSAN_COPY.korean)));
+      } else p?.remove();
+    }
+  }
+
   function render(s: State) {
     const yBefore = s.view !== shownView ? (win?.scrollY ?? 0) : 0;
     const label = basisLabel(s);
@@ -1672,6 +1750,15 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     els.foodSub.hidden = !(s.view === 'cards' && s.mood === 'food');
     els.newSub.hidden = !(s.view === 'cards' && s.mood === 'new');
     for (const b of els.subs) setAttr(b, 'aria-pressed', String(b.dataset.sub === s.sub || b.dataset.sub === s.newSub));
+    // 탭은 그 여행지에 보일 곳이 3곳 이상일 때만 (specs/busan.md 5절, plans/busan.md M8): 구경·체험
+    if (s.spots !== tabSpots) {
+      tabSpots = s.spots;
+      for (const b of els.subs) {
+        const sub = b.dataset.sub;
+        if (sub === 'sight' || sub === 'do') b.hidden = !!s.spots && s.spots.filter((x) => listed(x) && x.mood === 'new' && x.sub === sub).length < CARD_COUNT;
+      }
+    }
+    if (BUSAN) renderDest(s);
 
     const how = howOf(s);
     setText(els.how, how);

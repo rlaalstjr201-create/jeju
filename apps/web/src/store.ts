@@ -4,6 +4,8 @@
 import { AREAS, LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
+import { DESTS, inBusan, type Dest } from './dest';
+import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { parseSurvey, type SurveyRec } from './survey';
@@ -43,7 +45,13 @@ export const KEYS = {
   src: 'jeju.src',
   /** ADR-0087: 가 봤어요 — place ids left out of the picks on this device, oldest first. Not the data's `hide`. */
   visited: 'jeju.visited',
+  /** ADR-0097: the destination chosen on this device, 'jeju' | 'busan' (written by the switched-on build only). */
+  dest: 'jeju.dest',
 } as const;
+
+/** ADR-0097: the keys that belong to one destination — `jeju.basis`, `jeju.region`, `jeju.stay` stay Jeju's; Busan's
+ * carry `.busan`. Everything else (saved, visited, settings) is shared: an id says its destination. */
+export const destKey = (key: typeof KEYS.basis | typeof KEYS.region | typeof KEYS.stay, dest: Dest): string => (dest === 'jeju' ? key : `${key}.busan`);
 export const MAX_SAVED = 500;
 export const MAX_VISITED = 500;
 
@@ -140,21 +148,24 @@ export function parseReach(v: unknown): Reach {
   return REACHES.includes(v as Reach) ? (v as Reach) : DEFAULT_REACH;
 }
 
-/** One of the 15 areas; the 4 legacy names map to their nearest area. */
-export function parseRegion(v: unknown): AreaName | null {
+/** One of the destination's areas (Jeju's 15 by default); the 4 legacy names map to their nearest Jeju area. */
+export function parseRegion(v: unknown, dest: Dest = 'jeju'): AreaName | null {
   if (typeof v !== 'string') return null;
-  return areaByName(v)?.name ?? LEGACY_REGION[v] ?? null;
+  const a = areaByName(v, OPEN_AREAS);
+  if (a) return openAreasOf(dest).includes(a) ? a.name : null;
+  return dest === 'jeju' ? LEGACY_REGION[v] ?? null : null;
 }
 
-/** Finite coordinates inside Jeju. Legacy `{lat, lng, label:'숙소'}` is accepted and upgraded. */
-export function parseStay(v: unknown): Stay | null {
+/** Finite coordinates inside the destination (Jeju by default). Legacy `{lat, lng, label:'숙소'}` is accepted and upgraded. */
+export function parseStay(v: unknown, dest: Dest = 'jeju'): Stay | null {
   if (!v || typeof v !== 'object') return null;
   const o = v as Record<string, unknown>;
   if (!isNum(o.lat) || !isNum(o.lng)) return null;
   const p = { lat: o.lat, lng: o.lng };
-  if (!inJeju(p)) return null;
-  const near = nearestArea(p);
-  const area = areaByName(o.area)?.name ?? near.name;
+  if (!(dest === 'jeju' ? inJeju(p) : BUSAN && inBusan(p))) return null;
+  const near = nearestArea(p, openAreasOf(dest));
+  const own = areaByName(o.area, OPEN_AREAS);
+  const area = own && openAreasOf(dest).includes(own) ? own.name : near.name;
   const atCentre = Math.abs(near.lat - p.lat) < 1e-6 && Math.abs(near.lng - p.lng) < 1e-6;
   const source = o.source === 'gps' || o.source === 'area' || o.source === 'link' ? o.source : atCentre ? 'area' : 'gps';
   return { ...p, area, source };
@@ -275,8 +286,16 @@ export interface Loaded {
 
 export interface Store {
   /** Read everything once at mount, writing back repaired values where the stored ones were bad. The v1
-   * saved list is moved to `today` the first time (no v2 key yet), in its order. */
+   * saved list is moved to `today` the first time (no v2 key yet), in its order. The basis, region and 숙소 are the
+   * destination's in use (`useDest`, Jeju until then). */
   load(today: Day): Loaded;
+  /** ADR-0097: the destination whose basis, region and 숙소 are read and written from now on. */
+  useDest(d: Dest): void;
+  /** that destination's basis, region and 숙소, read (and repaired) as `load` does. */
+  place(): Pick<Loaded, 'basis' | 'region' | 'stay'>;
+  /** the destination kept on this device (`jeju.dest`), or null. */
+  dest(): Dest | null;
+  setDest(d: Dest): void;
   setBasis(b: Basis): void;
   setReach(r: Reach): void;
   /** for this session only (sessionStorage); off removes it. */
@@ -397,23 +416,40 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
   const ofDay = (list: SavedEntry[], day: Day) => list.filter((e) => e.date === day);
   const lastOrder = (list: SavedEntry[], day: Day) => ofDay(list, day).length;
 
+  // ADR-0097: whose basis, region and 숙소 the keys below are (only that destination's keys are read or repaired)
+  let cur: Dest = 'jeju';
+  function place() {
+    const rk = destKey(KEYS.region, cur);
+    const rawRegion = get(local, rk);
+    const region = parseRegion(rawRegion, cur);
+    if (rawRegion != null && !same(rawRegion, region)) {
+      if (region) set(local, rk, region);
+      else removeQuietly(local, rk);
+    }
+    const sk = destKey(KEYS.stay, cur);
+    const rawStay = get(local, sk);
+    const stay = parseStay(rawStay, cur);
+    if (rawStay != null && !same(rawStay, stay)) {
+      if (stay) set(local, sk, stay);
+      else removeQuietly(local, sk);
+    }
+    const bk = destKey(KEYS.basis, cur);
+    const rawBasis = get(local, bk);
+    const basis = parseBasis(rawBasis, stay, region);
+    if (rawBasis != null && rawBasis !== basis) set(local, bk, basis);
+    return { basis, region, stay };
+  }
+
   return {
+    useDest: (d) => void (cur = d),
+    place,
+    dest() {
+      const v = get(local, KEYS.dest);
+      return DESTS.includes(v as Dest) ? (v as Dest) : null;
+    },
+    setDest: (d) => void set(local, KEYS.dest, d),
     load(today) {
-      const rawRegion = get(local, KEYS.region);
-      const region = parseRegion(rawRegion);
-      if (rawRegion != null && !same(rawRegion, region)) {
-        if (region) set(local, KEYS.region, region);
-        else removeQuietly(local, KEYS.region);
-      }
-      const rawStay = get(local, KEYS.stay);
-      const stay = parseStay(rawStay);
-      if (rawStay != null && !same(rawStay, stay)) {
-        if (stay) set(local, KEYS.stay, stay);
-        else removeQuietly(local, KEYS.stay);
-      }
-      const rawBasis = get(local, KEYS.basis);
-      const basis = parseBasis(rawBasis, stay, region);
-      if (rawBasis != null && rawBasis !== basis) set(local, KEYS.basis, basis);
+      const { basis, region, stay } = place();
       const rawReach = get(local, KEYS.reach);
       const reach = parseReach(rawReach);
       if (rawReach != null && rawReach !== reach) set(local, KEYS.reach, reach);
@@ -455,12 +491,12 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
         visited,
       };
     },
-    setBasis: (b) => void set(local, KEYS.basis, b),
+    setBasis: (b) => void set(local, destKey(KEYS.basis, cur), b),
     setReach: (r) => void set(local, KEYS.reach, r),
     setIndoor: (on) => (on ? void set(session, KEYS.indoor, true) : removeQuietly(session, KEYS.indoor)),
     setWhen: (w) => void set(local, KEYS.when, w),
-    setRegion: (name) => void set(local, KEYS.region, name),
-    setStay: (stay) => void set(local, KEYS.stay, stay),
+    setRegion: (name) => void set(local, destKey(KEYS.region, cur), name),
+    setStay: (stay) => void set(local, destKey(KEYS.stay, cur), stay),
     setHintSeen: () => void set(local, KEYS.hint, true),
     setTracking: (on) => void set(local, KEYS.track, on),
     setMapApp: (app) => void set(local, KEYS.mapApp, app),
