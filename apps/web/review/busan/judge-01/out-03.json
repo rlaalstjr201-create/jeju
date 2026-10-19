@@ -1,0 +1,675 @@
+[
+  {
+    "id": "bs-1960614",
+    "name": "부평족발골목",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1980년대 가게 한 곳에서 시작된 족발집들이 모인 골목이에요",
+    "basis": [
+      "1980년대 조그마한 가게 한 군데에서 시작된 족발집이",
+      "돼지족발집 간판들이 즐비한 족발 골목"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1960620",
+    "name": "부산 자갈치 양곱창 골목",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "연탄불에 양곱창을 구워 먹는 집들이 모인 골목",
+    "basis": [
+      "연탄불에 양곱창을 구워 먹는 방식",
+      "양곱창의 종류는 소금구이, 양념구이, 전골이 있으며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1997221",
+    "name": "부산 감천문화마을",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "계단식 집들 사이 미로 같은 골목길을 걸으며 작품을 봐요",
+    "basis": [
+      "미로 같은 골목길",
+      "골목골목 설치된 다양한 형태의 작품을 감상할 수"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-229912",
+    "name": "씨라이프부산아쿠아리움",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "해저터널과 8개 전시관에서 해양 생물을 보는 아쿠아리움",
+    "basis": [
+      "총 8개의 전시관을 운영하고 있으며",
+      "수조와 해저터널"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-231945",
+    "name": "부산 복천동 고분군",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "구릉 위에 가야 때 무덤들이 모여 있는 고분군이에요",
+    "basis": [
+      "구릉 위에 있는 가야 때 무덤들이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2350092",
+    "name": "더베이101",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해운대 마천루 야경을 보고 요트투어도 타는 곳",
+    "basis": [
+      "밤이 되면 화려한 마천루를 볼 수 있는",
+      "요트투어를 운영하고 있어"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2381553",
+    "name": "부산영화촬영스튜디오",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "실내 스튜디오와 영화 세트장을 견학하는 곳",
+    "basis": [
+      "250평 규모와 500평 규모의 실내 스튜디오",
+      "영화 세트장 견학이 가능하다"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2385686",
+    "name": "아홉산숲",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "대나무숲과 편백나무 숲, 금강송 천연림이 있는 사유림",
+    "basis": [
+      "대나무숲, 편백나무 숲",
+      "약 400년의 세월을 지켜온 사유림",
+      "수령 100~300년 되는 금강송"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2456224",
+    "name": "렛츠런파크 부산경남",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "사계절 썰매장과 워터범퍼카가 있는 가족 공원",
+    "basis": [
+      "사계절 썰매장(슬레이드힐), 워터범퍼카",
+      "가족 공원"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2456767",
+    "name": "F1963",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "1963년 와이어 공장을 고쳐 전시와 공연을 여는 문화공간",
+    "basis": [
+      "1963년에 설립된 와이어 생성 공장이었으나",
+      "다양한 전시와 공연, 영화 상영 등이 이루어지며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2456837",
+    "name": "부산 영화의 전당",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "하늘연극장과 시네마테크에서 영화와 공연을 봐요",
+    "basis": [
+      "하늘연극장, 중극장, 소극장, 시네마테크",
+      "다양한 장르의 영화와 품격 있는 공연을 감상할 수"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2470024",
+    "name": "삼진어묵 체험·역사과학관",
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "reason": "강사와 수제 어묵 요리를 만들어 현장에서 시식해요",
+    "basis": [
+      "전문 강사와 함께 수제 어묵 요리를 만들어보는",
+      "현장에서 시식이 가능하다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2487925",
+    "name": "대저생태공원",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "낙동강 둔치에 습지와 유채꽃단지가 있는 생태공원",
+    "basis": [
+      "신덕습지를 비롯한 크고 작은 습지와 수로, 초지, 유채꽃단지",
+      "낙동강 우안 대저수문에서부터"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2487927",
+    "name": "맥도생태공원",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "겨울철새 쉼터인 둔치에 갈대밭과 연꽃단지가 있어요",
+    "basis": [
+      "겨울철새의 먹이터 겸 쉼터",
+      "갈대밭, 연꽃단지, 수생식물원"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2487931",
+    "name": "화명생태공원",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "연꽃습지와 수생 식물원, 산책로 데크가 있는 낙동강 둔치",
+    "basis": [
+      "연꽃습지, 수생 식물원과 산책로, 데크는",
+      "낙동강 좌안 북구 구포동"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2496023",
+    "name": "키자니아 부산",
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "reason": "어린이가 40여 가지 직업을 체험하는 테마파크",
+    "basis": [
+      "40여 가지 전문적인 직업 체험활동",
+      "직업 체험 테마파크"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-250424",
+    "name": "망산도·유주암",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "허태후가 배에서 처음 내렸다는 전설이 있는 작은 섬",
+    "basis": [
+      "허태후가 처음으로 배에서 내린 곳이 망산도",
+      "용원동 앞바다의 작은 섬을 망산도"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2504464",
+    "name": "부산 송도해상케이블카",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "바닥이 투명한 크리스털캐빈을 타고 바다 위를 건너요",
+    "basis": [
+      "바닥이 투명한 크리스털캐빈",
+      "바다 위를 가로질러 운행함으로써"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-252561",
+    "name": "절영해안산책로",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "봉래산 아래 해안선을 따라 장승과 돌탑을 보며 걷는 산책로",
+    "basis": [
+      "봉래산 아래 해안선을 따라 이어져 있는 산책로",
+      "장승과 돌탑"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-252562",
+    "name": "부산대교",
+    "keep": false,
+    "reject": "NOT_DESTINATION",
+    "basis": [],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-252563",
+    "name": "봉래산(부산)",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "정상에서 할매 바위와 부산 시가지를 내려다봐요",
+    "basis": [
+      "할매의 신체인 할매 바위가 있다",
+      "부산의 시가지를 한눈에 볼 수 있다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-252564",
+    "name": "75광장",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "1975년에 만들어진 영도 광장, 문화 행사와 공연이 열려요",
+    "basis": [
+      "1975년에 조성된 이후",
+      "다양한 문화 행사와 공연이 열리는 곳"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2554068",
+    "name": "부산영화체험박물관",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "영화의 역사와 제작방법을 체험하며 보는 박물관",
+    "basis": [
+      "영화의 역사와 원리, 영화의 장르 및 제작방법",
+      "전국 최초의 영화 관련 전문 전시 체험 시설"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2554070",
+    "name": "깡깡이 예술마을",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "수리조선소와 선박 부품 업체가 모여 있는 항구 마을",
+    "basis": [
+      "십여 곳의 수리조선소와 200여 개에 달하는 공업사",
+      "선박 부품 업체"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2554141",
+    "name": "낙동강문화관",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "강을 주제로 한 미디어작품과 어린이 체험 시설이 있는 문화관",
+    "basis": [
+      "강을 주제로 한 미디어작품은",
+      "어린이들이 감성적 체험을 할 수 있도록"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2605602",
+    "name": "외양포 포진지",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "러일전쟁 때 일본군 기지였던 포구에 일본식 건물이 남아 있어요",
+    "basis": [
+      "일본식 건물이 다수 남아 있고",
+      "러시아 함대와의 해전을 대비한 군사기지가 되었다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2605916",
+    "name": "초량 이바구길",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "남선창고 터에서 168 계단을 지나 망양로까지 이어지는 길",
+    "basis": [
+      "남선창고 터에서 출발해",
+      "168 계단, 김민부 전망대, 당산, 망양로까지"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2606204",
+    "name": "장림포구",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "알록달록한 건물과 작은 배들이 늘어선 포구, 부네치아라고 불러요",
+    "basis": [
+      "알록달록한 건물과 떠 있는 작은 배들",
+      "부네치아’라는 별명이 붙었다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2606221",
+    "name": "영도 흰여울해안터널",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "벽화와 조명이 있는 1930년대 터널을 지나 바닷가를 걸어요",
+    "basis": [
+      "터널 내부의 벽화와 조명이",
+      "1930년대에 만들어져",
+      "자연경관을 즐기며 산책할 수 있는"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2606230",
+    "name": "국립달음산자연휴양림",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "달음산 서쪽 자락에 있는 부산 첫 국립 자연휴양림",
+    "basis": [
+      "달음산 서쪽 자락에 위치하고 있으며",
+      "부산광역시 최초의 국립 자연휴양림"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2607943",
+    "name": "청사포 다릿돌전망대",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "투명 바닥 전망대에서 다릿돌 암초와 해상 등대를 봐요",
+    "basis": [
+      "반달 모양의 투명 바닥을 설치해",
+      "5개의 암초인 다릿돌을 바라보며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2614712",
+    "name": "구상반려암 (부산 국가지질공원)",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "동심원과 꽃 모양 무늬가 바위 표면에 나타나는 희귀암",
+    "basis": [
+      "동심원 또는 꽃 모양 무늬로 나타난다",
+      "우리나라에서 분포가 매우 적은 희귀암"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2614714",
+    "name": "낙동강하구 (부산 국가지질공원)",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "연안사주와 넓은 갯벌이 펼쳐진 낙동강하구 지질명소",
+    "basis": [
+      "크고 작은 연안사주와 넓은 갯벌이 펼쳐져"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2614716",
+    "name": "두도",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "갈매기가 많고 공룡알 둥지 화석이 있는 송도 반도 남동쪽 섬",
+    "basis": [
+      "수많은 갈매기를 마주할 수 있다",
+      "공룡알 둥지 화석",
+      "송도 반도에서 남동쪽으로 떨어진 섬"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2614721",
+    "name": "몰운대(부산)",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "다대포와 이어진 육계도에서 단층과 암맥 같은 지질을 봐요",
+    "basis": [
+      "다대포와 연결되면서 지금은 육계도의 모습",
+      "단층, 단층암, 암맥, 광맥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2614723",
+    "name": "백양산 (부산 국가지질공원)",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "동평현 성터와 선암사가 있는 금정산맥 산",
+    "basis": [
+      "동평현 성터가 있고",
+      "선암사가 자리 잡고 있다",
+      "금정산맥의 주능선에 있는 산"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2614725",
+    "name": "송도반도 (부산 국가지질공원)",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "해안가를 따라 다대포 층과 공룡알 둥지 화석을 볼 수 있어요",
+    "basis": [
+      "해안가를 따라 하부부터 상부까지 연속으로",
+      "공룡알 둥지 화석"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2614727",
+    "name": "장산 (부산 국가지질공원)",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "재송너덜길을 따라 암괴류와 바다 경치를 보는 산",
+    "basis": [
+      "재송너덜길을 통해 남해, 동해 바다의 경치를",
+      "다양한 등산 코스가 만들어져 있다",
+      "암괴류를 관찰할 수 있다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2617724",
+    "name": "마린시티",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "아파트와 건물들이 불을 밝히는 마린시티 야경을 보는 곳",
+    "basis": [
+      "밤이 되면 화려하게 불을 밝히는 아파트 및 건물들이"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2643387",
+    "name": "북맛골",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "부산대 북문 쪽 20~30년 된 식당들이 이어진 골목",
+    "basis": [
+      "20~30년 된 아주 오래된 식당들",
+      "부산대 북문 쪽"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2643873",
+    "name": "금정산성마을 먹거리촌",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "숯불 석쇠에 직화로 굽는 흑염소 불고기 집들이 모인 마을",
+    "basis": [
+      "숯불 위 석쇠에 바로 굽는 직화구이 방식",
+      "흑염소불고기, 오리불고기, 오리백숙"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2650232",
+    "name": "산복도로",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "산 중턱 도로에서 바다와 구도심을 내려다봐요",
+    "basis": [
+      "부산의 바다와 구도심이 한눈에 들어온다",
+      "산 중턱을 따라 구불구불 이어지는 도로"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2654613",
+    "name": "동래읍성지",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "복원한 동래읍성 성곽을 따라 걷는 산책길",
+    "basis": [
+      "성곽을 따라 걸으며",
+      "편안한 산책길",
+      "벽돌을 쌓아 복원한 것이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2656194",
+    "name": "친환경 스카이웨이 전망대(이바구길)",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "북항과 부산항대교, 영도가 내려다보이는 이바구길 끝 전망대",
+    "basis": [
+      "부산항대교가 가로지르는 북항을 비롯해",
+      "이바구길의 끄트머리 쪽에 위치하였다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2660770",
+    "name": "부산 치유의 숲",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "솔바람길과 큰바위길 가운데 골라 걷는 치유의 숲",
+    "basis": [
+      "솔바람길, 짙은 숲의 생명력을 느끼는 큰바위길",
+      "컨디션에 따라 선택할 수 있다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2661446",
+    "name": "아미르공원",
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "국립해양박물관 옆 잔디밭에서 바다를 보고 여름엔 수국길을 걸어요",
+    "basis": [
+      "넓은 잔디공간에 탁 트인 바다를 감상할 수",
+      "여름에는 수국이 만개하여",
+      "국립해양박물관 옆에 위치한"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2661452",
+    "name": "안데르센 동화마을",
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "안데르센 생애와 작품 세계를 담은 정원과 놀이시설",
+    "basis": [
+      "안데르센의 생애와 그의 작품 세계",
+      "18세기 바로크 양식으로 재현한 안데르센 정원"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2661475",
+    "name": "회동수원지(회동수원지 둘레길)",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "수원지를 따라 21㎞ 둘레길과 땅뫼산 황토숲길을 걸어요",
+    "basis": [
+      "총거리는 21㎞로",
+      "땅뫼산 황토숲길"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2662531",
+    "name": "호천마을",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "호랑이 벽화거리와 물고기 벽화의 180 계단이 있는 마을",
+    "basis": [
+      "호랑이를 주제로 한 다양한 벽화들로 길을",
+      "180 계단은"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2662991",
+    "name": "구포만세거리",
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "구포역에서 구포시장까지 만세운동 벽화를 보며 걷는 길",
+    "basis": [
+      "구포역부터 구포시장까지 가는 길로",
+      "만세운동에 관한 다양한 벽화들을 감상할 수"
+    ],
+    "confidence": "high"
+  }
+]

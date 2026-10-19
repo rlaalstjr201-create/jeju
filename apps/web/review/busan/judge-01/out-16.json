@@ -1,0 +1,710 @@
+[
+ {
+  "id": "bs-2807806",
+  "name": "태화육개장",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "얼큰하지 않고 담백한 육개장에 수육과 양무침도 내는 집이에요",
+  "basis": [
+   "얼큰하지 않고 담백한 이색적인 육개장",
+   "육개장과 함께 수육과 양무침을 판매"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2807808",
+  "name": "카페썬번",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "1990년대 팝음악을 들으며 플랫화이트와 스콘을 먹는 골목 카페",
+  "basis": [
+   "안락동 골목에 자리한 작은 카페",
+   "1990년대 팝음악을 함께 즐길 수 있다",
+   "스콘, 쿠키, 케이크 등이 준비되어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2808054",
+  "name": "경주집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생오리양념불고기와 소금구이, 백숙을 내는 오리요리 전문점",
+  "basis": [
+   "오리요리 전문점으로 생오리양념불고기, 소금구이, 백숙"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2808104",
+  "name": "송정해녀집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "해녀가 잡은 멍게와 해삼, 개불을 모둠으로 내는 해산물집이에요",
+  "basis": [
+   "해녀분들이 직접 잡은 신선한 해산물",
+   "신선한 멍게, 해삼, 개불, 소라, 문어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2809068",
+  "name": "국이네 낙지볶음",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "낙곱새와 낙지볶음을 순한맛부터 매운맛까지 골라 먹는 낙지집",
+  "basis": [
+   "낙곱새를 비롯한 싱싱한 낙지볶음을 하는 낙지전문점",
+   "순한맛, 중간맛, 매운맛 선택 가능"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2810909",
+  "name": "만서리 이가네 막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동치미 막국수와 옹심이 메밀 칼국수를 내는 메밀 요리집이에요",
+  "basis": [
+   "동치미 막국수와 비빔막국수, 옹심이 메밀 칼국수"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2811346",
+  "name": "박옥희할매집원조복국",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "50년 넘게 복국을 끓여 온 해운대 미포의 복국집이에요",
+  "basis": [
+   "50년 이상 복국으로 장사한",
+   "해운대 미포에서 가장 먼저 생긴 복국집"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2812073",
+  "name": "더가마",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "고양이 양갱이가 있는 티 카페에서 백차와 직접 만든 화과자를 먹어요",
+  "basis": [
+   "고양이 양갱이와 함께하는 티 카페",
+   "금준미·백차·홍차",
+   "직접 만든 화과자와 양갱"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2812078",
+  "name": "옥이네밀면칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "광안리에서 물밀면과 비빔밀면을 먹는 칼국수 전문점",
+  "basis": [
+   "광안리에서 입소문으로 유명해졌다는 칼국수 전문점",
+   "물밀면과 매콤달콤한 비빔밀면이 인기 메뉴"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2815626",
+  "name": "미락슈퍼",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "셰프가 산지에서 가져온 제철 재료로 차리는 예약제 오마카세",
+  "basis": [
+   "예약제로 운영되는 제철요리 오마카세 전문점",
+   "제철에 나는 싱싱한 재료를 산지에서 공수해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2818714",
+  "name": "남천녹차팥빙수",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "녹차가루를 올린 보성녹차팥빙수와 단팥죽을 내는 집이에요",
+  "basis": [
+   "보성녹차팥빙수가 유명한 카페",
+   "팥과 녹차가루에 올려져 있다",
+   "단팥죽이 또 다른 대표 메뉴"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2822838",
+  "name": "대보름",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "꽃장식 인테리어 카페에서 음료와 함께 버거와 피자를 먹어요",
+  "basis": [
+   "꽃장식 등의 화려한 인테리어",
+   "버거와 다양한 피자메뉴도 판매"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2822840",
+  "name": "칠암사계",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "이흥용 과자점이 칠암 어촌 마을에 만든 베이커리 갤러리",
+  "basis": [
+   "이흥용 과자점이",
+   "어촌 마을 칠암에 베이커리 갤러리를 만들었다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2824044",
+  "name": "스시미르네",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "장어덮밥과 물회소바를 많이 찾는 초밥 전문점이에요",
+  "basis": [
+   "장어덮밥과 물회소바가 인기 메뉴",
+   "초밥 전문점"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2826792",
+  "name": "시골추어탕 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "국내산 미꾸라지로 끓인 추어탕에 집밥 같은 반찬이 나와요",
+  "basis": [
+   "국내산 미꾸라지만 사용하는 추어탕 집",
+   "집밥을 먹는 듯한 느낌"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2827847",
+  "name": "퍼프베이커리",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "인공 제빵 개량제 없이 구운 크로와상과 퀸아망을 파는 서면 베이커리",
+  "basis": [
+   "인공 제빵 개량제가 들어가지 않는 것이 특징",
+   "크로와상, 퀸아망 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2827931",
+  "name": "무명일기",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "폐공장을 고친 복합문화공간에서 목화크림 라테를 내는 카페예요",
+  "basis": [
+   "폐공장을 활용하여 만들어진 공간",
+   "복합문화공간",
+   "영도소반과 목화크림 라테"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832636",
+  "name": "코랄라니",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "야외 계단식 의자로 알려진 기장 연화리 쪽 대형 베이커리 카페",
+  "basis": [
+   "야외에 마련된 계단식 의자가 유명하다",
+   "기장 연화리 쪽에 위치해 있는 대형 베이커리 카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832642",
+  "name": "풍원장시골밥상집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "숯불 돼지불고기 정식과 전복회 정식을 내는 기장 한정식집",
+  "basis": [
+   "숯불에 구워 기름기를 쏙 뺀 돼지불고기 정식",
+   "전복회 정식",
+   "한정식 음식점"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832649",
+  "name": "피크스퀘어",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "돌 담벼락에 둘러싸인 오션뷰 카페에서 앙버터와 몽블랑을 먹어요",
+  "basis": [
+   "돌 담벼락에 둘러싸인 오션뷰 카페",
+   "케이크, 앙버터, 몽블랑"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832655",
+  "name": "헤이든",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "야자수에 둘러싸인 일광 카페, 1층 창가가 바다와 맞닿아 있어요",
+  "basis": [
+   "야자수 나무에 둘러싸여 있고",
+   "1층 창가 자리는 바로 바다와 맞닿아"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832671",
+  "name": "신발원",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "부산역 근처에서 고기만두와 군만두, 콩국을 먹는 만두집이에요",
+  "basis": [
+   "부산역 5번 출구에서 90m 거리",
+   "육즙 가득한 고기만두와 바삭한 군만두",
+   "콩국과 콩과자도 인기 메뉴"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832700",
+  "name": "구디너프",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "가덕도 통유리 건물에서 바다를 보며 유기농 허브티를 마셔요",
+  "basis": [
+   "건물 전체가 통유리로 되어 오션뷰",
+   "가덕도 핫플레이스",
+   "허브티에 사용되는 재료는 모두 유기농"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832712",
+  "name": "록산",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "명지 우드톤 카페에서 수제 케이크와 파스타 브런치를 먹어요",
+  "basis": [
+   "따뜻한 우드톤의 감성적인 인테리어",
+   "수제 케이크와 파스타, 샐러드, 버거 등의 브런치 메뉴"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832717",
+  "name": "어라우즈로스터리",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "2층과 3층 통창으로 바다와 낙동강이 보이는 명지 로스터리 카페",
+  "basis": [
+   "2, 3층 모두 통창으로 바다와 낙동강 뷰"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832723",
+  "name": "이프리오",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "낙동강을 보며 커피와 빵을 먹는 강서구 대형 베이커리 카페",
+  "basis": [
+   "낙동강 뷰를 한눈에 보며 커피를 즐길 수 있다",
+   "대형 베이커리 카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2832729",
+  "name": "모모스커피 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "월드 바리스타 챔피언십 우승자를 낸 집의 커피를 오래된 건물 정원에서 마셔요",
+  "basis": [
+   "월드 바리스타 챔피언십에서 우승한 바리스타를 배출한 곳",
+   "오래된 건물 정원에서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2833257",
+  "name": "그릿비 일광",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "테라스에서 기장 앞바다를 보며 커피와 케이크를 먹는 카페",
+  "basis": [
+   "기장 앞바다를 보며 커피를 즐길 수 있다",
+   "여러 종류의 케이크, 타르트, 밀크티"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2836405",
+  "name": "신기커피영도",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "산새소리유치원을 고쳐 만든 대나무 숲 속 카페예요",
+  "basis": [
+   "산새소리유치원을 개조하여 만든 카페",
+   "대나무 숲 속에서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2836412",
+  "name": "에테르",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "흰여울 문화마을 비탈길에 있는 통창 카페, 루프탑에 선베드가 있어요",
+  "basis": [
+   "흰여울 문화마을 비탈길에 있다",
+   "전 층 통창으로",
+   "4층 루프탑에는 선베드가 마련되어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2836424",
+  "name": "오구카페",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "공장 건물을 고친 카페에서 물을 골라 내리는 커피를 마셔요",
+  "basis": [
+   "공장 건물의 일부를 카페로 리모델링",
+   "물 맛을 선택할 수 있는 특별한 커피"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2836431",
+  "name": "노티스",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "1950년에 지은 쌀 창고를 고친 카페에서 부산항을 봐요",
+  "basis": [
+   "1950년에 지어진 쌀 창고",
+   "2층은 부산항이 한눈에 보이는 카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2836450",
+  "name": "이재모피자 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "임실 치즈를 듬뿍 올린 도톰한 반죽 피자집이에요",
+  "basis": [
+   "100% 임실 자연산 치즈",
+   "옛날 스타일의 도톰한 반죽"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838382",
+  "name": "신창국밥 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "맑은 육수에 순대와 내장을 넣은 국밥을 토성역 근처에서 먹어요",
+  "basis": [
+   "맑은 육수에 순대, 내장 등 다양한 부위를 넣어 끓인 국밥",
+   "토성역 3번 출구에서 250m"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838418",
+  "name": "이엘 16.52 (EL16.52)",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "5층 루프탑에서 바다를 보는 서구 해안 카페예요",
+  "basis": [
+   "서구 동쪽 해안에 있는",
+   "5층 루프탑에 올라가면 파노라마 뷰로 바다를 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838432",
+  "name": "엄용백 돼지국밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "맑은 부산식과 진한 밀양식 돼지국밥을 골라 먹는 집이에요",
+  "basis": [
+   "맑은 국물의 부산식 국밥과 진한 국물의 밀양식 국밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838489",
+  "name": "수복돼지국밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "직접 만든 순대를 넣은 모듬국밥을 먹는 연산동 국밥집",
+  "basis": [
+   "직접 만드는 순대도 별미",
+   "고기, 내장, 순대 모두 다 들어간 모듬국밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838755",
+  "name": "연어바치",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "다시마로 숙성한 연어와 그린몬스터 피자를 함께 내는 집",
+  "basis": [
+   "다시마 숙성의 연어 전문점",
+   "그린몬스터 피자와 파스타"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838820",
+  "name": "주문진 막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사직야구장 근처 좌식 식당에서 막국수에 수육을 곁들여요",
+  "basis": [
+   "사직야구장 근처에 위치한 주문진 막국수",
+   "좌식 테이블 구조",
+   "막국수, 비빔막국수, 수육"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838849",
+  "name": "초량1941",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "이바구길 끝자락 일본식 가옥 카페에서 우유음료를 마셔요",
+  "basis": [
+   "이바구길 끝자락 산기슭에 자리 잡고",
+   "과거 일본식 가옥을 리모델링한",
+   "우유를 기본으로 브랜딩을 한 카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838872",
+  "name": "더스타뷔페",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한식부터 스테이크, 쌀국수까지 차린 서면 뷔페 레스토랑",
+  "basis": [
+   "한식, 중식, 일식, 양식은 물론, 스테이크, 쌀국수",
+   "뷔페 레스토랑"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "bs-2838889",
+  "name": "툇마루",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "보쌈과 주꾸미가 함께 나오는 툇마루 한 상 세트를 먹어요",
+  "basis": [
+   "툇마루 한 상 세트",
+   "잡채, 보쌈, 주꾸미"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838907",
+  "name": "고관함박",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "함박스테이크에 쫄면을 곁들이는 부산진역 앞 함박집",
+  "basis": [
+   "부산진역 1번 출구 바로 앞",
+   "함박스테이크와 쫄면이 조화로운"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838922",
+  "name": "오르디",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "떠먹는 커피 오르디슈페너와 초당옥수수커피를 내는 카페",
+  "basis": [
+   "떠먹는 커피인 오르디슈페너",
+   "초당옥수수커피도 인기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838935",
+  "name": "비상(VSANT)",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "폐기물 처리용 용지에 지은 카페, 루프탑 선베드에서 낙동강이 보여요",
+  "basis": [
+   "공장지대의 폐기물 처리용 용지를 깔끔히 재정비",
+   "선베드가 준비되어",
+   "하늘과 낙동강 뷰"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2838973",
+  "name": "오소리순대",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "밤을 넣어 직접 만든 순대와 수육을 스페셜 모둠으로 내는 노포",
+  "basis": [
+   "순대 속에 밤이 들어 있어",
+   "사장님이 직접 손수 만들어내며",
+   "노포 분위기의 식당"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2840883",
+  "name": "녹산용가든",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한우와 한돈을 굽고 같은 곳 카페에서 커피까지 마시는 고깃집",
+  "basis": [
+   "프리미엄 한우와 한돈",
+   "녹산용가든 자체에서 운영하는 카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2840901",
+  "name": "로다로지",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "유기농 밀로 만든 크루아상과 앙버터를 파는 명지 베이커리 카페",
+  "basis": [
+   "유기농 밀을 사용해",
+   "크루아상과 앙버터"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2840921",
+  "name": "방코",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "화덕 닮은 빨간 벽돌 건물에서 화덕피자와 파스타를 먹어요",
+  "basis": [
+   "빨간 벽돌의 둥근 외벽이 마치 화덕을 닮은",
+   "화덕피자 맛집 방코"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-2840956",
+  "name": "벨렘351",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "포르투갈에서 배워 온 전통 에그타르트를 굽는 대저 베이커리 카페",
+  "basis": [
+   "전통 에그타르트의 제빵 기술을 전수받았다",
+   "대저생태공원 인근에 위치한 대형 베이커리 카페"
+  ],
+  "confidence": "high"
+ }
+]

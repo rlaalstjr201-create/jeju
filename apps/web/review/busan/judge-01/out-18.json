@@ -1,0 +1,699 @@
+[
+  {
+    "id": "bs-2852685",
+    "name": "금강만두",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "충무 김밥과 만둣국이 나오는 충무 세트가 대표인 만두집이에요",
+    "basis": [
+      "대표 메뉴는 충무 김밥과 만둣국이 나오는 충무 세트다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2852696",
+    "name": "수안커피컴퍼니 커피하우스",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "원두를 직접 골라 시음해 보는 커피 전문 매장이에요",
+    "basis": [
+      "다양한 원두를 직접 골라 시음해볼 수 있는 시스템",
+      "커피 전문 매장이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853012",
+    "name": "낭만송백",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "낙동강 풍경이 보이고 야외에 모래놀이 체험과 트램펄린이 있는 카페",
+    "basis": [
+      "낙동강의 멋진 풍경을 볼 수 있으며",
+      "야외 공간에 모래놀이 체험, 트램펄린, 정자 등이 있어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853031",
+    "name": "황토마루",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "장작불로 달군 구들장 돌판에 고기를 직접 구워 먹는 집이에요",
+    "basis": [
+      "장작불로 달군 구들장 돌판 위에서 직접 구워 먹는 고기"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853060",
+    "name": "카페 도토리 로스터스",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "입구부터 조각품과 예술 작품이 전시된 갤러리 카페예요",
+    "basis": [
+      "입구부터 다양한 조각품과 예술 작품들이 전시되어 있어",
+      "갤러리 카페 도토리"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853079",
+    "name": "만선해물탕",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1998년부터 이어온 육수로 해물탕을 끓이는 집이에요",
+    "basis": [
+      "1998년도부터 이어져 내려온 전통의 비법 육수가 있다",
+      "그 육수로 시원하고 싱싱한 해물탕을 만든다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853081",
+    "name": "파나카F",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "파나마 생두를 직접 수입해 로스팅하는 숲속 카페예요",
+    "basis": [
+      "파나마의 환상적인 자연환경 속에서 자란 생두를 직접 수입하고",
+      "숲속에서 자연을 만끽하며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853131",
+    "name": "부산조개창고",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "원하는 조개만 골라 먹는 조개구이 무한리필집이에요",
+    "basis": [
+      "자신이 원하는 조개만 골라 먹을 수 있는 조개구이 무한리필집"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853145",
+    "name": "브레이크인커피",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "통유리 너머 숲속 초록 뷰를 보며 직접 만든 빵을 먹는 카페",
+    "basis": [
+      "넓은 통유리를 통해 들어오는 풍경",
+      "숲속의 초록으로 가득한 뷰",
+      "베이커리도 직접 만들어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853156",
+    "name": "해물왕창칼국수",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해물을 왕창 넣은 칼국수에 열무 보리밥이 함께 나와요",
+    "basis": [
+      "해물을 왕창 넣은 칼국수는",
+      "강된장 열무 보리밥이 함께 나와"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853163",
+    "name": "아라진",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해녀 출신 어머님들이 운영하는 성게알 덮밥집이에요",
+    "basis": [
+      "해녀 출신의 어머님들이 직접 운영하기 때문에",
+      "성게알 덮밥과 비빔밥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853231",
+    "name": "조방제일한우",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "등심과 갈빗살 같은 여러 부위를 굽는 한우구이 전문점",
+    "basis": [
+      "등심, 갈빗살, 채끝등심, 안심, 꽃살 등",
+      "한우구이 전문점으로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2853243",
+    "name": "303일상",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "갓 도정한 히노히카리 백미로 밥을 짓는 초밥 전문점",
+    "basis": [
+      "갓 도정된 단일 품종의 고품질 히노히카리 백미",
+      "초밥 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2854465",
+    "name": "양산집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1954년부터 3대째 이어온 부평깡통시장 안 돼지국밥집이에요",
+    "basis": [
+      "부평깡통시장 안에 위치한 양산집은",
+      "1954년부터 3대째 가업을 이어오고 있는 전통 돼지국밥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2854845",
+    "name": "미포집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해물장정식과 전복솥밥 같은 솥밥을 내는 집이에요",
+    "basis": [
+      "미녀해물장정식, 전복솥밥, 문어솥밥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2854887",
+    "name": "리버사이드",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "바다를 보며 전복명란파스타와 리소토를 먹는 양식 레스토랑",
+    "basis": [
+      "바다가 보이는 곳에 위치하여",
+      "관자 알리오올리오, 전복명란파스타, 시금치 쉬림프 리소토"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2855623",
+    "name": "온든해",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "오곡슈페너와 쌀로 만든 디저트를 내는 디저트 카페예요",
+    "basis": [
+      "대표 메뉴 오곡슈페너와 쑥크림 라테",
+      "쌀로 만든 건강한 디저트"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2858292",
+    "name": "또시아",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "영도에서 대만 현지 음식을 내는 작은 식당이에요",
+    "basis": [
+      "영도 속 작은 대만 또시아",
+      "대만 현지 음식을 선사하는 곳이다"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2858936",
+    "name": "해운대하얀오징어집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "실처럼 얇게 썰어 내는 오징어회와 오징어 먹통을 내는 집",
+    "basis": [
+      "실처럼 얇게 썰어 나오는 오징어회",
+      "오징어 먹통도 인기가 좋다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2858955",
+    "name": "하진이네",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "청사포 횟집촌에서 장어와 조개구이를 내는 집이에요",
+    "basis": [
+      "부산 청사포 횟집촌에 있는 하진이네는",
+      "장어와 조개구이 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2858974",
+    "name": "타이가텐푸라",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "일본식 튀김을 올린 텐동 덮밥 전문점",
+    "basis": [
+      "일본식 튀김을 올린 덮밥 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2859073",
+    "name": "구덕포끝집고기",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "허브로 밑간해 24시간 숙성한 돼지고기를 굽는 집이에요",
+    "basis": [
+      "수십여 가지의 허브와 정제소금",
+      "24시간 숙성한 돼지고기 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2859101",
+    "name": "나가하마만게츠",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "후쿠오카에서 1963년부터 이어온 돼지 사골 라멘집이에요",
+    "basis": [
+      "후쿠오카에서 1963년부터 운영해 온 일본식 정통 라멘 전문점",
+      "돼지 사골을 우려낸 육수"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2859132",
+    "name": "흑송 우동소바 송정본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "큰 우엉튀김 4개가 올라간 우엉튀김우동이 대표예요",
+    "basis": [
+      "대표 메뉴는 우엉튀김우동으로",
+      "큰 우엉튀김이 4개가 올라간다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2859188",
+    "name": "키친동백",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "광안대교와 동백섬이 보이는 달맞이길 이탈리안 레스토랑",
+    "basis": [
+      "바다와 동백섬, 광안대교까지 한눈에 볼 수 있는",
+      "부산 달맞이 길에 있는 키친동백은"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860755",
+    "name": "영남식육식당",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "새우살과 안창살 같은 한우 특수부위를 굽는 한우구이집",
+    "basis": [
+      "새우살, 안창살, 안거미살, 제비추리, 꽃살 등 한우 특수부위",
+      "한우구이 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860782",
+    "name": "오반장",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "세 칸 불판에 계란찜과 김치를 올려 고기와 함께 구워 먹어요",
+    "basis": [
+      "불판을 세 칸으로 나눠 한쪽에 계란찜과 김치",
+      "고기와 함께 구워 먹는다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860819",
+    "name": "샤브막심 송정본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "송정 바다를 마주 보며 개인 냄비로 샤브샤브를 먹는 집이에요",
+    "basis": [
+      "송정 바닷가를 정면으로 마주하고 있어",
+      "개인 화로 및 개인 냄비를 이용하여"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860823",
+    "name": "샤브야 본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우와 생조개 같은 샤브샤브 월남쌈을 내는 전문점",
+    "basis": [
+      "샤브샤브 월남쌈 전문점이다",
+      "한우, 생조개, 소고기, 한돈 총 네 가지의"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860829",
+    "name": "솔내음한정식",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "광안대교와 오륙도를 보며 먹는 한정식 코스요리",
+    "basis": [
+      "광안대교와 오륙도를 보며 식사할 수 있고",
+      "한정식 코스요리 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860833",
+    "name": "송정물총칼국수",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "동죽조개와 홍합, 가리비를 넣어 끓이는 칼국수집이에요",
+    "basis": [
+      "동죽조개와 홍합, 가리비 등 다양한 조개를",
+      "칼국수 맛집이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860839",
+    "name": "스노잉클라우드",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": false,
+    "reason": "청사포와 오륙도까지 보이는 루프탑 디저트 카페예요",
+    "basis": [
+      "맑은 날엔 청사포, 오륙도, 대마도까지 보이는",
+      "루프탑 디저트 카페다",
+      "실내보다 야외 공간이 더 분위기 좋은"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2860851",
+    "name": "싱싱뽈락회 해운대본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "뽈락을 뼈째 썬 세꼬시를 된장소스에 곁들여 먹는 횟집",
+    "basis": [
+      "뽈락은 뼈째 썰어내는 세꼬시로 많이 먹고",
+      "세꼬시와 곁들여 먹는 된장소스가 별미로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2860881",
+    "name": "백구당",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "옥수수 알갱이가 박힌 크로이즌이 대표인 50년 된 빵집",
+    "basis": [
+      "가장 유명한 빵은 크로이즌으로 옥수수 알갱이가",
+      "50년 역사를 자랑한다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2861132",
+    "name": "커피트웰브 중앙동12시",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "40계단 사진과 고양이 사진이 가득한 다락방 카페예요",
+    "basis": [
+      "40계단의 사진들과 고양이 사진들이",
+      "아늑한 다락방 카페이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2861178",
+    "name": "미포할매복국본가",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "복국과 복 불고기를 내는 달맞이길 복요리 전문점",
+    "basis": [
+      "복요리 전문점인 미포할매복국 본가",
+      "시원한 복국과 매콤함 양념이 맛있는 복 불고기"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2861189",
+    "name": "부우사안",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "북경오리부터 딤섬까지 내는 3층 건물 중식당이에요",
+    "basis": [
+      "북경오리부터 딤섬까지 다양한 중식 요리를",
+      "단독 건물 1층부터 3층까지 사용하는"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2861291",
+    "name": "사마정",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한돈과 한우를 무제한으로 먹는 일본식 샤브샤브 집",
+    "basis": [
+      "일본식 샤브샤브 전문점이다",
+      "무제한으로 먹을 수 있는 타베호다이"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2861551",
+    "name": "아티성블렁제리 빵빵빵",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "돌가마 오븐에 당일 구운 샤워도우와 샌드위치를 파는 빵집",
+    "basis": [
+      "독일 미베 돌가마 오븐을 사용해 당일 구운 빵",
+      "샌드위치와 샤워도우 브래드 맛집으로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2861958",
+    "name": "부센동",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "숙성 사시미를 밥 위에 올린 카이센동 전문점이에요",
+    "basis": [
+      "카이센동 전문점으로",
+      "숙성사시미의 조화가 인기이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2862337",
+    "name": "몽작",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "캠핑 분위기 속에서 고기를 먹는 곳이에요",
+    "basis": [
+      "신선한 고기와 캠핑 분위기를 동시에 즐길 수 있는"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-2863209",
+    "name": "오손1209",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "몽블랑 기계로 즉석에서 크림을 뽑아 올리는 몽블랑 카페",
+    "basis": [
+      "테이블 앞 몽블랑 기계로 즉석에서 면발 같은 크림을",
+      "해리단길 골목 안쪽에 위치한"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2865236",
+    "name": "희와제과",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 만든 팥앙금과 통밤이 든 밤팥빵이 시그니처인 제과점",
+    "basis": [
+      "시그니처 메뉴는 밤팥빵으로",
+      "직접 만든 팥앙금과 통밤이 듬뿍 들어 있어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2865384",
+    "name": "아시오",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "천연발효로 당일 만든 빵을 파는 2층 베이커리 카페",
+    "basis": [
+      "당일 생산과 당일 판매를 원칙으로 한다",
+      "천연발효로 빵을 만들고",
+      "2층 건물을 전체 사용하는"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2865403",
+    "name": "초함",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "유황오리백숙이 대표인 개별 룸 한정식집이에요",
+    "basis": [
+      "대표매뉴는 유황오리백숙으로",
+      "개별 룸이 있는 한정식 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2865435",
+    "name": "해신킹크랩",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1층에서 게를 보고 무게를 달아 주문하는 킹크랩 전문점",
+    "basis": [
+      "1층에서 게를 보고 직접 무게를 달아서 주문하고",
+      "대게, 킹크랩 전문점이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2865941",
+    "name": "밤나무집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "가마솥으로 끓인 추어탕과 닭백숙을 내는 집이에요",
+    "basis": [
+      "가마솥으로 끓인 추어탕은",
+      "전통 추어탕과 닭백숙 맛집이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2865975",
+    "name": "스페이스앤무드",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "클래식 에그베네딕트와 레몬 마스카포네 케이크를 내는 서면 카페",
+    "basis": [
+      "클래식 에그베네딕트이며",
+      "레몬 마스카포네 케이크는 인기메뉴이며",
+      "부산 서면에 위치해 있으며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2867167",
+    "name": "양산국밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "목살을 13번 토렴한 토렴 국밥이 대표인 국밥집이에요",
+    "basis": [
+      "부드러운 목살을 13번 토렴한 토렴 국밥이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2867215",
+    "name": "거창맷돌순두부",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "매일 새벽 직접 만든 순두부에 반찬 셀프바가 있는 집",
+    "basis": [
+      "매일 새벽 시간부터 직접 순두부를 만들며",
+      "반찬 셀프바가 있어"
+    ],
+    "confidence": "high"
+  }
+]

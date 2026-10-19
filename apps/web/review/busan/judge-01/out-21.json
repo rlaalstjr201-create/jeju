@@ -1,0 +1,703 @@
+[
+  {
+    "id": "bs-2911185",
+    "name": "알천순대곱창전골전문점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "순대와 곱창 비중을 골라 시키는 전골집이에요",
+    "basis": [
+      "진정한 수제 순대 맛집이다",
+      "순대, 고기, 곱창 비중을 선택할 수 있고"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2911203",
+    "name": "카페 바이버",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "1층부터 3층까지 쓰는 베이커리 카페에 소금빵과 크루아상이 진열돼 있어요",
+    "basis": [
+      "1층부터 3층까지 건물 전체를 카페 공간으로 운영하고",
+      "소금빵과 크루아상, 파운드케이크, 앙버터"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2911217",
+    "name": "합천일류돼지국밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "토렴 방식으로 내는 돼지국밥에 우동 사리를 더해 먹어요",
+    "basis": [
+      "전통 토렴 방식으로 제공해",
+      "우동 사리를 추가해"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2911229",
+    "name": "디에이블 광안점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "통유리 창 너머 광안대교를 보며 파스타와 필라프를 먹는 레스토랑",
+    "basis": [
+      "통유리 창을 통해 탁 트인 바다와 광안대교 전망을",
+      "파스타, 필라프, 리소토, 스테이크, 피자"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2933698",
+    "name": "기장손칼국수",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "멸치 육수에 직접 반죽한 손칼국수와 비빔손칼국수를 내요",
+    "basis": [
+      "멸치로 우려낸 육수",
+      "직접 반죽해 썰어낸",
+      "비빔손칼국수도 인기 메뉴로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2938788",
+    "name": "엄마손팥칼국수",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "팥칼국수와 보리밥을 내는 집이에요",
+    "basis": [
+      "팥칼국수, 보리밥, 팥새알죽, 새알미역국을 판매하고"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2939476",
+    "name": "만드리곤드레밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "곤드레 돌솥밥과 훈제오리를 내는 집",
+    "basis": [
+      "곤드레밥과 훈제오리, 오리불고기 전문점",
+      "돌솥밥은 따뜻하게 데운 그릇에"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2940880",
+    "name": "수복센타",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1945년 문을 연 실내포장마차에서 스지어묵탕을 먹어요",
+    "basis": [
+      "노포 감성의 실내포장마차",
+      "1945년 문을 연 이후",
+      "대표 메뉴인 스지어묵탕"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2946078",
+    "name": "기장종가집곰장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "소금이나 양념, 짚불로 굽는 곰장어집이에요",
+    "basis": [
+      "50년 전통의 대를 이어온 곰장어 식당",
+      "소금곰장어, 양념곰장어, 짚불곰장어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2952019",
+    "name": "소공간",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "우리 소를 메인으로 내는 한식 퓨전 코스요리",
+    "basis": [
+      "한식 퓨전 코스요리를 선보이는 곳",
+      "우리 소(1++) 메인으로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2952936",
+    "name": "카페제노아",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "로스터리 카페의 대표 메뉴는 제노아슈패너와 노스폴라떼예요",
+    "basis": [
+      "1층은 주문 및 로스터리, 2층은 카페, 3층은 루프탑",
+      "제노아슈패너",
+      "노스폴라떼가 대표 메뉴이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2989656",
+    "name": "율링",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "런치코스와 디너코스를 내는 파인 다이닝이에요",
+    "basis": [
+      "부산에 위치한 파인 다이닝",
+      "런치코스와 디너코스가 준비되어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3014718",
+    "name": "성진활어판매장",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1층 활어판매장 위층 횟집에서 광안대교를 보며 회를 먹어요",
+    "basis": [
+      "1층은 활어판매장, 2층에서 10층은 횟집으로",
+      "각 층의 횟집마다 광안대교와 광안리해수욕장을 조망할"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3026941",
+    "name": "금정산성 유가네누룩",
+    "keep": false,
+    "reject": "OUT_OF_SCOPE",
+    "basis": [
+      "누룩방의 선반위에다 짚을 깔고 14일 정도 띄운다"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-3028633",
+    "name": "풍천만민물장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "커피나무 숯에 구운 국내산 민물장어를 내는 해운대 장어집",
+    "basis": [
+      "국내산 자포니카 민물장어를 전문으로",
+      "커피나무 숯을 사용해"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3060265",
+    "name": "카페베이스",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "연화해변 방파제 앞 카페로 5층 루프탑에서 바다를 봐요",
+    "basis": [
+      "연화해변 서암 방파제 앞에 있는 카페 베이스",
+      "5층의 루프탑은 바닷바람을 맞으며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3060845",
+    "name": "제이스 생텀커피",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "숲속에 있는 북카페라 책을 읽으며 숲을 바라봐요",
+    "basis": [
+      "숲속에 자리 잡고 있는 힐링 북 카페",
+      "책을 읽을 수 있고",
+      "숲을 바라보며 휴식할 수 있는"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3061069",
+    "name": "이지요661",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "다대포해수욕장 삼거리에서 빵 공장을 함께 운영하는 대형 카페",
+    "basis": [
+      "다대포해수욕장 삼거리에 있는 카페 이지요661",
+      "직접 빵을 만드는 빵 공장을 함께 운영"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3066825",
+    "name": "비아조",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "낙동강변 좌석에 앉아 강을 보며 음료를 마시는 카페",
+    "basis": [
+      "낙동강을 조망하면서 음료를 마실 수 있는",
+      "강변 바로 옆에 좌석이 배치되어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3074637",
+    "name": "해물 포장마차촌",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "연화리 해안가 포장마차에서 전복죽과 해산물 모둠을 먹어요",
+    "basis": [
+      "연화리 해안가에 자리한 먹거리 명소",
+      "여러 개의 포장마차가 모여 있으며",
+      "전복과 해산물 모둠, 전복죽"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3081825",
+    "name": "아트모이지",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "물총과 붓으로 칠하는 페인팅건 체험 공방 겸 카페",
+    "basis": [
+      "페인팅건 체험 공방이자 드로잉 카페 공방",
+      "물총, 스펀지, 아크릴 붓, 페인트 붓",
+      "실내 체험 공간으로도"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3334005",
+    "name": "굿올데이즈카페",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "부산 사진작가들과 만든 풍경엽서 150종이 있는 원도심 카페",
+    "basis": [
+      "부산 로컬사진작가들과 협업하여",
+      "부산 풍경엽서 150종",
+      "원도심에 위치하고"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3350880",
+    "name": "카페윤",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "통유리 창으로 바다가 보이는 동부산 관광단지 입구 디저트 카페",
+    "basis": [
+      "동부산 관광단지 입구에 위치하여",
+      "통유리로 되어 있어 창문을 통해"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3373600",
+    "name": "세븐아일랜드",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "7개의 섬에서 따온 건축물에서 베이커리 80여 종을 골라요",
+    "basis": [
+      "7개의 섬에서 영감을 받은 공간 구성",
+      "약 80여 종의 다채로운 베이커리"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3408797",
+    "name": "송도키친",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "송도 바다를 보며 홍합 스튜와 바베큐 피스트를 먹는 레스토랑",
+    "basis": [
+      "시그니처 메뉴 ‘홍합 스튜’",
+      "송도 해수욕장이 한눈에 보이는 파노라마 뷰"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3409762",
+    "name": "윈덤그랜드 부산 더 브릿지",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "바다를 보며 베이징덕과 스시를 고르는 올데이 뷔페",
+    "basis": [
+      "올데이 뷔페 레스토랑",
+      "푸른 바다를 감상하며",
+      "베이징덕, 신선한 스시와 사시미"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3415203",
+    "name": "만달리",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "클램 차우더 수프와 하우스 포카치아가 대표인 기장 브런치카페",
+    "basis": [
+      "부산 기장에 있는 브런치카페",
+      "대표 메뉴는 클램 차우더 수프와 하우스 포카치아"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3417299",
+    "name": "남촌설렁탕",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1987년 문을 연 송도해수욕장 입구 근처 설렁탕집",
+    "basis": [
+      "1987년 문을 연 송도의 전통 있는 설렁탕 전문점",
+      "송도해수욕장 입구 인근에 위치해"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3423011",
+    "name": "선생조고매",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "영도꿀고매라테와 고구마빵을 파는 고구마 카페",
+    "basis": [
+      "고구마를 활용한 음료와 디저트를 만드는 곳",
+      "영도꿀고매라테와 고매크림라테",
+      "영도 조고매(고구마) 빵"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3432951",
+    "name": "송정3대국밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "40년 전통의 돼지국밥집이에요",
+    "basis": [
+      "40년 전통의 부산 대표 맛집",
+      "특히 돼지국밥이 유명하며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3432962",
+    "name": "안목",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돼지 뼈 육수 돼지국밥에 돼지라면도 내는 광안리 집",
+    "basis": [
+      "돼지 뼈를 24시간 이상 푹 삶아서 만든 육수로",
+      "국물에 면을 넣고 만든 돼지라면도 별미",
+      "광안리 맛집으로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3434388",
+    "name": "삼송초밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "김초밥과 복지리를 내는 중구의 일식집이에요",
+    "basis": [
+      "부산 중구에 위치한 삼송초밥",
+      "일본식 김밥인 김초밥 등이 유명한 곳",
+      "이곳의 복지리는"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3438936",
+    "name": "빅토리아 베이커리 가든",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "지하 빵 공장에서 만든 빵을 1층에서 파는 베이커리 카페",
+    "basis": [
+      "지하에는 빵 공장, 1층은 베이커리, 2층 카페로 운영되며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3442923",
+    "name": "솥이랑 서면점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "바나나잎 위에 육해공 바베큐를 담아 내는 필리핀 퓨전 바베큐집",
+    "basis": [
+      "육해공 바베큐를 한꺼번에 바나나잎 위에 담은",
+      "필리핀 퓨전 바베큐 전문점"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3443614",
+    "name": "원시학",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "망치로 깨 먹는 빙수와 불빙수가 있는 원시시대 분위기 카페",
+    "basis": [
+      "원시시대 분위기로 만들어본 카페",
+      "빙수를 망치로 깨보기도 하고 불빙수의 불을 보며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3444416",
+    "name": "나막집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "미쉐린 가이드에 선정된 용호동 돼지곰탕집",
+    "basis": [
+      "부산 용호동에 위치한 미쉐린 가이드에 선정된 돼지곰탕 전문점"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3444429",
+    "name": "W 옵스 드마히니",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "옵스 빵을 매장에서 굽고 테라스로 광안대교가 보이는 베이커리 카페",
+    "basis": [
+      "매장에서 직접 빵을 굽는 베이커리 카페",
+      "탁 트인 테라스를 통해 광안대교를"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3452014",
+    "name": "부산 카페 라운지",
+    "keep": false,
+    "reject": "CHAIN_GENERIC",
+    "basis": [
+      "부산의 다양한 지역에서 찾을 수 있는"
+    ],
+    "confidence": "low"
+  },
+  {
+    "id": "bs-3467682",
+    "name": "아트센트",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "1980년대 목욕탕 건물을 고친 영도 청학동 브런치 카페",
+    "basis": [
+      "1980년대 건축된 영도 청학동의 낡은 목욕탕 건물",
+      "브런치 카페로 리뉴얼 되어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3484048",
+    "name": "홀리라운지",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "송정 바다가 보이는 양식당에서 한식 재료 파스타를 먹어요",
+    "basis": [
+      "송정 바다가 보이는 오션뷰 양식 레스토랑",
+      "한식 재료를 이용한 양식 요리"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3486625",
+    "name": "한우고집 부산가야본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우특모둠과 한우육회를 내는 가야동 한우 식육 식당",
+    "basis": [
+      "20년 전통의 한우 식육 식당",
+      "대표 메뉴로는 한우특모둠과 한우육회"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3487618",
+    "name": "부산에 뜬 고등어 해운대점 본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "화산석 화덕에 구운 생선을 한 상으로 내는 집이에요",
+    "basis": [
+      "화산석으로 만든 화덕",
+      "화덕에서 적정 시간 구워낸 생선"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3489180",
+    "name": "부산에 뜬 장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "참숯 장어구이와 나고야식 장어덮밥을 내는 해운대 장어집",
+    "basis": [
+      "고품격 장어구이는 참숯을 사용해",
+      "나고야식 장어덮밥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3543105",
+    "name": "마리나블루키친",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "마린시티에서 한식과 글로벌 요리를 고르는 상설 뷔페",
+    "basis": [
+      "해운대 마린시티에 위치한 프리미엄 상설 뷔페",
+      "다양한 한식과 글로벌 요리"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3544694",
+    "name": "아이리",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "금정산성 마을 근처 편백나무 숲 속에 있는 카페",
+    "basis": [
+      "금정산성 마을 근처 편백나무 숲 속에 모던한 건물의 카페"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3546069",
+    "name": "비쇼쿠",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "눈이 내리는 연출 공간에서 한우를 먹는 일본식 소고기 전문점",
+    "basis": [
+      "365일 눈이 내리는 연출 공간",
+      "일본식 소고기 전문점",
+      "프리미엄 한우와 다양한 주류"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3550346",
+    "name": "그랜드하브(GRAND HAV)",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "가덕도 바다 앞에 스카이워크가 있는 대형 카페",
+    "basis": [
+      "부산 강서구 가덕도에 위치한",
+      "스카이워크가 있는 대형 오션 뷰 카페"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3550401",
+    "name": "흐른",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "낙동강 옆 카페로 땅콩크림을 올린 흐른라떼가 시그니처예요",
+    "basis": [
+      "낙동강 옆에 자리한",
+      "고소한 땅콩크림이 올라간 라떼"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3559064",
+    "name": "스페이스 원지(onez)",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "창고 구조를 살린 영도 음식점 겸 카페에서 파스타와 수제맥주를 먹어요",
+    "basis": [
+      "과거 창고의 구조와 감성을 살려 재탄생한",
+      "음식점 겸 카페",
+      "수제맥주와 와인도"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-3568404",
+    "name": "선인장식당 영도본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우와 한돈으로 만든 수제 함박스테이크와 치킨카레를 내요",
+    "basis": [
+      "한우와 한돈을 사용하여 100% 수제로",
+      "치킨카레는 국내산 냉장 닭다리살만을"
+    ],
+    "confidence": "high"
+  }
+]

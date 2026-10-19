@@ -1,0 +1,706 @@
+[
+  {
+    "id": "bs-133227",
+    "name": "구포집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "고사리 넣은 경상도식 추어탕과 회비빔밥을 내는 집이에요",
+    "basis": [
+      "경상도식 추어탕 집으로 1959년 개업하여",
+      "대표메뉴인 회비빔밥은"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133262",
+    "name": "해운대암소갈비집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "다이아몬드 컷으로 손질한 암소갈비를 감자국수로 마무리해요",
+    "basis": [
+      "다이아몬드 컷으로 손질하는 방식",
+      "원조 해운대 갈빗집이다",
+      "맛볼 수 있는 감자국수이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133310",
+    "name": "원조할매낙지",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "맵지 않은 낙지볶음에 면사리를 넣어 먹는 집",
+    "basis": [
+      "원조 낙지볶음 전문점이다",
+      "양념장에 각종 면사리를 넣어 먹는 것",
+      "맵지 않은 것이 특징이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133313",
+    "name": "부산명물횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "광어회에 맑은 국과 밑반찬이 나오는 회백반 집이에요",
+    "basis": [
+      "인기메뉴는 회백반으로 광어회 한 접시에",
+      "시원한 맑은 국과 여섯 가지 밑반찬"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133314",
+    "name": "팔미초밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해산물 초밥을 내는 초밥 전문점이에요",
+    "basis": [
+      "신선한 초밥 전문 음식점이다",
+      "다양한 해산물을 사용한 초밥이 인기"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133525",
+    "name": "18번완당집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "직원들이 빚는 완당과 새우완당면을 먹어요",
+    "basis": [
+      "오픈 주방에서 직원들이 완당을 빚는 모습",
+      "완당과 모밀, 새우완당면을 맛볼 수"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133526",
+    "name": "원조서울삼계탕",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1960년부터 이어온 삼계탕과 전기구이 통닭",
+    "basis": [
+      "1960년부터 삼계탕을 전문으로 요리한 곳",
+      "전기구이 통닭도 준비되어 있다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133533",
+    "name": "금오횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "미포 바닷가 언덕에서 활어회와 찹쌀수제비 미역국을 먹어요",
+    "basis": [
+      "해운대 미포 바닷가 언덕에 자리하고",
+      "신선한 활어를 즉석에서 조리해",
+      "찹쌀수제비를 띄운 미역국"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133796",
+    "name": "어가초밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "자갈치시장 근처에서 회초밥과 전복회를 내는 일식집",
+    "basis": [
+      "자갈치시장 인근에 위치한 어가초밥은",
+      "혼마구로, 전복회, 새우튀김"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133839",
+    "name": "롯데호텔부산 무궁화",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "참나무 숯 갈비구이와 궁중요리를 내는 호텔 한식당",
+    "basis": [
+      "모던 한식당이다",
+      "갈비구이 시 참나무 숯만을 사용",
+      "일품요리부터 궁중요리까지 맛볼 수 있다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133906",
+    "name": "명송초밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "용두산공원 근처에서 모둠 초밥을 내는 일식당이에요",
+    "basis": [
+      "용두산공원 인근에서 초밥을 전문으로",
+      "모둠 초밥이 인기 메뉴"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-133997",
+    "name": "대궐안집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "점심에만 한정으로 내는 소뼈 갈비탕이 인기인 갈비집",
+    "basis": [
+      "점심에 한정 판매하고 있는 소뼈 갈비탕이 인기 메뉴",
+      "갈비전문점으로"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134082",
+    "name": "큰집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "국제시장 안에서 해물찜과 한정식 상차림을 내요",
+    "basis": [
+      "국제시장 안에 위치한 음식점이다",
+      "큰집 만의 별미인 해물찜은"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134204",
+    "name": "윤가네신토불이보쌈",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "보쌈을 보쌈김치에 싸서 먹는 보쌈 전문점",
+    "basis": [
+      "보쌈 전문점이다",
+      "보쌈김치를 넣어 쌈으로 싸서 먹으면"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134326",
+    "name": "곰보식당",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우 암소 갈빗살과 육회, 곱창전골을 내는 집이에요",
+    "basis": [
+      "한우 전문점으로 1975년에 개업하여",
+      "갈빗살과 육회뿐만 아니라 곱창전골도"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134351",
+    "name": "송도공원",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "층마다 갈비와 중국요리, 회를 내는 바다 전망 식당이에요",
+    "basis": [
+      "탁 트인 바다 풍경을 바라보며 식사가 가능한 곳",
+      "1층은 숯불갈비전문점으로",
+      "4층은 회 전문점으로 일식집이다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134718",
+    "name": "원조소문난산곰장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "3대째 이어온 집에서 곰장어를 양념구이와 소금구이로 먹어요",
+    "basis": [
+      "3대째 대를 이어 운영하고 있는 식당",
+      "양념구이와 소금구이 그리고 통구이"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134949",
+    "name": "금문",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "온천장에서 2대째 중국인이 운영하는 중국음식점",
+    "basis": [
+      "2대째 중국인이 직접 운영하고 있는",
+      "온천장 허심청 후문 근처에 위치"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-134989",
+    "name": "밀레니엄횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "광안대교가 보이는 자리에서 자연산 회를 먹어요",
+    "basis": [
+      "광안대교와 광안리 바닷가가 한눈에 보이는",
+      "자연산 생선 횟감을 제공"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-135004",
+    "name": "산성청송가든",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "금정산성 산성마을에서 흑염소불고기와 오리백숙을 먹어요",
+    "basis": [
+      "산성마을에 2대에 걸쳐",
+      "흑염소불고기, 오리숯불고기, 한방오리백숙"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-135008",
+    "name": "무심정",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "사찰음식과 약선요리에 손두부를 내는 한식집",
+    "basis": [
+      "메뉴는 사찰음식에 약선요리로",
+      "손두부는 간수 대신 바닷물을 쓰는 초당두부"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-135101",
+    "name": "돌고래순두부",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1982년부터 순두부와 생김치를 내 온 집",
+    "basis": [
+      "돌고래순두부는 1982년부터",
+      "매일 아침 신선한 순두부를 공수받아"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-135262",
+    "name": "자연활어 수정궁",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "자연산 활어회와 해물 요리를 내는 횟집",
+    "basis": [
+      "자연산 활어를 사용해 회와 해물 요리를 제공"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-135287",
+    "name": "구덕민속촌",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한옥에서 갈비와 한방유황오리를 먹는 집이에요",
+    "basis": [
+      "토속적인 한옥의 멋을 즐길 수 있다",
+      "한방유황오리를 비롯하여"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-135827",
+    "name": "동백섬횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해운대해수욕장 근처 반원형 창가에서 모둠회를 먹어요",
+    "basis": [
+      "해운대해수욕장 인근에 위치한",
+      "반원형 창가는 많은 사람들에게 인기",
+      "모둠회가 이 집의 대표 메뉴"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1394895",
+    "name": "할매재첩국",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "물 없이 삶아 낸 재첩국과 재첩덮밥",
+    "basis": [
+      "물을 붓지 않고 삶아 진한 조개 국물만 모아",
+      "재첩덮밥과 재첩무침이 준비"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1552695",
+    "name": "태종대암소한마당",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "태종대공원 입구에서 한우 암소만 내는 고깃집",
+    "basis": [
+      "태종대공원 입구에 위치해 있다",
+      "한우 중 암소만을 취급한다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1803744",
+    "name": "산성집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "흑염소 숯불구이와 산성토산주에 파전을 곁들이는 집",
+    "basis": [
+      "흑염소 숯불구이, 오리불고기, 토종닭, 산성토산주"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805095",
+    "name": "할매팥빙수단팥죽",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 삶은 통팥을 얹은 팥빙수 전문점",
+    "basis": [
+      "팥빙수 전문점이다",
+      "직접 삶은 통팥과 잘게 갈린 얼음 위에"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805498",
+    "name": "기장집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "금정산성 근처에서 숯불흑염소불고기와 한방백숙을 먹어요",
+    "basis": [
+      "금정산성 인근에 위치해 있다",
+      "숯불흑염소불고기, 숯불오리불고기, 한방백숙"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805542",
+    "name": "성안집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "금정산성 동문 근처에서 산행 뒤 염소 불고기를 먹는 집",
+    "basis": [
+      "금정산성 동문 인근에 위치하여 산행 후 식사하기",
+      "염소 불고기, 오리불고기, 오리백숙"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805578",
+    "name": "원조짚불곰장어 기장외가집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "공수마을 짚불곰장어 집성촌의 시초가 된 원조집이에요",
+    "basis": [
+      "짚불곰장어의 원조집이다",
+      "공수마을에 짚불곰장어 집성촌이 형성됐다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805619",
+    "name": "해변짚불곰장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "짚불곰장어와 양념 곰장어, 곰장어 매운탕을 내요",
+    "basis": [
+      "대표메뉴인 짚불곰장어와 양념 곰장어",
+      "곰장어 매운탕이 이 집의 별미"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805656",
+    "name": "일번지자갈치산곰장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해운대 시장 안에서 곰장어를 연탄 초벌로 구워 줘요",
+    "basis": [
+      "해운대 시장 내에 위치해 있다",
+      "곰장어를 연탄불에 초벌 하여 제공한다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805774",
+    "name": "파도횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "대변항에서 멸치회와 자연산 모듬회를 먹어요",
+    "basis": [
+      "부산 대변항에 위치한 파도횟집",
+      "대변항에서 유명한 멸치회"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805792",
+    "name": "해동횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "창가로 대변항 바다를 보며 멸치회를 먹는 집",
+    "basis": [
+      "자연산 멸치회를 전문으로 한다",
+      "창가를 통해 바다를 볼 수 있어"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805853",
+    "name": "수민이네",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "청사포에서 장어와 조개를 연탄불에 구워 먹어요",
+    "basis": [
+      "청사포에 위치한 장어구이 전문점",
+      "조개, 가리비, 우럭, 새우를 연탄불에 구워"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1805861",
+    "name": "속시원한 대구탕",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "달맞이 고개에서 대구탕 하나만 내는 집이에요",
+    "basis": [
+      "해운대 달맞이 고개에 위치한",
+      "대구탕 하나만을 고집하며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1826034",
+    "name": "아델라7",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 로스팅한 커피와 유기농 빵을 내는 디저트 카페",
+    "basis": [
+      "유기농 빵과 향긋한 커피가 있는",
+      "매장에서 직접 로스팅해"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1855868",
+    "name": "부전돼지국밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "사상터미널 맞은편에서 가마솥 순대를 넣은 돼지국밥을 먹어요",
+    "basis": [
+      "사상터미널 맞은편에 위치해 있다",
+      "순대는 매일 가마솥에서 직접 만들며"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1963007",
+    "name": "부평족발",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "부평족발골목에서 냉채족발과 불족을 내는 집",
+    "basis": [
+      "부평족발골목 내에 위치한 족발 전문 음식점",
+      "족발, 냉채족발, 매운 철판불족"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1963051",
+    "name": "부산족발",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "족발골목에서 냉채족발이 인기인 족발집",
+    "basis": [
+      "족발골목에 자리하였다",
+      "이곳의 인기 메뉴는 냉채족발"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-1963085",
+    "name": "제일산꼼장어",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "자갈치시장 근처에서 산꼼장어를 연탄구이로 먹어요",
+    "basis": [
+      "자갈치시장 인근에 있는 꼼장어 연탄구이 전문",
+      "산꼼장어를 연탄구이로 맛볼 수"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2362382",
+    "name": "기장국보미역 본점",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "기장미역으로 끓인 미역국을 바다를 보며 먹는 집",
+    "basis": [
+      "기장미역으로 만든 미역국을 판매하는 곳",
+      "바다 풍경을 감상하며 식사를 즐길 수 있다"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2377647",
+    "name": "동신참치",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "온천동에서 참치회와 생선초밥을 내는 일식집",
+    "basis": [
+      "온천동 동신참치는",
+      "고급 참치회와 생선회를 같이 판매"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2390133",
+    "name": "비비비당",
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "달맞이길 전통 찻집에서 전통차와 다식을 받아요",
+    "basis": [
+      "달맞이길에 위치한 전통 찻집이다",
+      "주문한 전통차에는 전통 다식이 함께 제공"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2402940",
+    "name": "다온스시앤덮밥",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "원피스 피규어가 늘어선 가게에서 모둠초밥을 먹어요",
+    "basis": [
+      "원피스 퍼즐과 피규어가 즐비하여",
+      "모둠초밥, 활어초밥, 연어초밥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2484386",
+    "name": "감내맛집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감천문화마을이 내려다보이는 마을기업에서 비빔밥을 먹어요",
+    "basis": [
+      "감천문화마을이 한눈에 내려다보이는",
+      "주민협의회에서 운영하는 마을기업으로",
+      "비빔밥, 김밥"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-2485840",
+    "name": "대구횟집",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "자갈치시장 바로 앞에서 곰장어와 회를 내는 횟집",
+    "basis": [
+      "자갈치시장 바로 앞에 위치해 있는 30년 전통",
+      "곰장어와 회부터 생선구이"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "bs-250562",
+    "name": "카파도키아",
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "치즈 피데와 케밥 세트를 내는 튀르키예 음식점",
+    "basis": [
+      "치즈 피데와 다양한 케밥 세트 메뉴가 인기"
+    ],
+    "confidence": "high"
+  }
+]
