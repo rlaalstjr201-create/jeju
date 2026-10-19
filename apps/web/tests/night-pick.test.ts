@@ -297,8 +297,8 @@ describe('S2 real data: 「좀 걷고 싶어」 around 애월 · 서귀포 시�
 describe('부산 (plans/busan.md S6, B12): 22시 「좀 걷고 싶어」 동래·금정', () => {
   const busan = normalizeSpots(JSON.parse(readFileSync(resolve(__dirname, '../public/spots-busan.json'), 'utf8'))) as Spot[];
   const dongnae = BUSAN_AREAS.find((a) => a.slug === 'dongnae')!;
-  // the first round's 17 true calls (review/busan/night/trail-01.json), as if its audit had passed
-  const first = new Set((JSON.parse(readFileSync(resolve(__dirname, '../review/busan/night/trail-01.json'), 'utf8')) as { id: string; trail: boolean }[]).filter((c) => c.trail).map((c) => c.id));
+  // round 02's 16 true calls (review/busan/night/trail-02.json, audit passed)
+  const first = new Set((JSON.parse(readFileSync(resolve(__dirname, '../review/busan/night/trail-02.json'), 'utf8')) as { id: string; trail: boolean }[]).filter((c) => c.trail).map((c) => c.id));
   const marked: Spot[] = busan.map((s) => (first.has(s.id) ? { ...s, trail: true as const } : s));
   it('22시 is night at 동래·금정 (the area\'s own sun)', () => {
     expect(nightNow(at('22:00'), dongnae, DAY)).toBe(true);
@@ -321,9 +321,8 @@ describe('부산 (plans/busan.md S6, B12): 22시 「좀 걷고 싶어」 동래�
     expect(nightR.cards.some((c) => c.spot.trail)).toBe(false);
     expect(nightR.nightShifted).toBe('trail');
   });
-  it('the shipped Busan file (round 01 not passed) has no trail: night and day pick the same', () => {
-    const d = pickCards(busan, dongnae, 'walk', {}, undefined, 'drive30', false, DAY);
-    const n = pickCards(busan, dongnae, 'walk', {}, undefined, 'drive30', false, DAY, true);
-    expect(shape(n)).toBe(shape(d));
+  it('the shipped Busan file (round 02 passed) carries exactly those trails, so the night picks above are what ships', () => {
+    expect(busan.filter((s) => s.trail).map((s) => s.id).sort()).toEqual([...first].sort());
+    expect(shape(pickCards(busan, dongnae, 'walk', {}, undefined, 'drive30', false, DAY, true))).toBe(shape(pickCards(marked, dongnae, 'walk', {}, undefined, 'drive30', false, DAY, true)));
   });
 });

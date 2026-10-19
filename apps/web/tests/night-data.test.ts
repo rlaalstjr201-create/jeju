@@ -173,9 +173,8 @@ describe('shipped spots.json (round 01 passed)', () => {
 });
 
 describe('부산 회차 01 (plans/busan.md S6, review/busan/night/criteria.md)', () => {
-  const dir = resolve(root, 'review/busan/night');
   const busan = read('public/spots-busan.json') as S[];
-  const loaded = loadNightCalls(dir);
+  const loaded = { calls: read('review/busan/night/trail-01.json'), pass: read('review/busan/night/audit-01.json').agreement.pass };
   it('the candidates are what the pre-registered words give (name + TourAPI overview, and every 걷기)', () => {
     const shipped = busan.map(({ market: _m, trail: _t, ...s }: S & { market?: unknown }) => s);
     expect(candidates(shipped, nightInputs(shipped), BUSAN_TRAIL_WORDS)).toEqual(read('review/busan/night/candidates.json'));
@@ -190,8 +189,31 @@ describe('부산 회차 01 (plans/busan.md S6, review/busan/night/criteria.md)',
     expect(agreement).toMatchObject({ n: 34, agree: 33, trueToFalse: 1, trueToFalseMax: 0, pass: false });
     expect(loaded.pass).toBe(false);
   });
-  it('a round that did not pass puts no trail on the Busan file; Jeju\'s round is read from its own folder', () => {
-    expect(busan.filter((s) => s.trail)).toEqual([]);
+});
+
+describe('부산 회차 02 (review/busan/night/criteria-02.md)', () => {
+  const dir = resolve(root, 'review/busan/night');
+  const busan = read('public/spots-busan.json') as S[];
+  const loaded = loadNightCalls(dir);
+  it('round 02 is the latest; it judges every candidate, and its sample is seed 2026102002\'s draw', () => {
+    expect(loaded.round).toBe('02');
+    expect(roundProblems(loaded.calls, read('review/busan/night/candidates.json').map((c: { id: string }) => c.id), nightInputs(busan))).toEqual([]);
+    const sample = read('review/busan/night/audit-02-sample.json');
+    expect(sample.seed).toBe(2026102002);
+    expect(sample.perSide).toBe(sampleSide(loaded.calls));
+    expect(drawSample(loaded.calls, sample.seed, sample.perSide)).toEqual(sample.items.map((i: { id: string }) => i.id));
+  });
+  it('its score is what audit-02.json says: passed (32/32, true→false 0 ≤ 0)', () => {
+    const sample = read('review/busan/night/audit-02-sample.json');
+    const { agreement } = scoreAudit(loaded.calls, sample.items.map((i: { id: string }) => i.id), read('review/busan/night/audit-02-judgments.json'), passRule(sample.perSide));
+    expect(agreement).toEqual(read('review/busan/night/audit-02.json').agreement);
+    expect(agreement).toMatchObject({ n: 32, agree: 32, trueToFalse: 0, trueToFalseMax: 0, pass: true });
+    expect(loaded.pass).toBe(true);
+  });
+  it('the Busan file carries exactly round 02\'s true calls as trail; Jeju\'s round is read from its own folder', () => {
+    const on = loaded.calls.filter((c) => c.trail).map((c) => c.id).sort();
+    expect(on).toHaveLength(16);
+    expect(busan.filter((s) => s.trail).map((s) => s.id).sort()).toEqual(on);
     expect(loadNightCalls().round).toBe('01');
     expect(loadNightCalls().pass).toBe(true);
   });
