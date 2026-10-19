@@ -39,7 +39,7 @@ export interface NightAgreement {
   trueToFalseMax: number;
   pass: boolean;
 }
-export declare function candidates<T extends { id: string; name: string; mood: string }>(spots: T[], inputs: Map<string, SourceItem>): NightCandidate[];
+export declare function candidates<T extends { id: string; name: string; mood: string }>(spots: T[], inputs: Map<string, SourceItem>, words?: RegExp): NightCandidate[];
 export declare function drawSample(calls: { id: string; trail: boolean }[], seed?: number, per?: number): string[];
 export declare function loadNightCalls(dir?: string): NightLoaded;
 export declare function basisProblems(calls: NightCall[], inputs: Map<string, SourceItem>): string[];
@@ -48,5 +48,6 @@ export declare function scoreAudit(
   calls: { id: string; trail: boolean }[],
   ids: string[],
   judgments: BlindCall[],
+  pass?: { min?: number; trueToFalseMax?: number },
 ): { agreement: NightAgreement; rows: { id: string; first: boolean; audit: boolean; agree: boolean; reason?: string }[] };
 export declare function applyNight<T extends { id: string }>(spots: T[], loaded?: NightLoaded): (T & { trail?: true })[];

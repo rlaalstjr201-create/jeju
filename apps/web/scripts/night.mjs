@@ -45,13 +45,13 @@ const textOf = (item) => ({ tags: item.tags ?? [], intro: item.intro ?? null, co
 
 /**
  * Who gets judged (§1), by id: every shipped place whose source text or name has a TRAIL_WORDS word, and every
- * 걷기 — [{ id, name, mood, tags, intro, comment, summary }].
+ * 걷기 — [{ id, name, mood, tags, intro, comment, summary }]. `words`: another destination's §1 word list (plans/busan.md S6).
  */
-export function candidates(spots, inputs) {
+export function candidates(spots, inputs, words = TRAIL_WORDS) {
   const out = [];
   for (const s of spots) {
     const item = inputs.get(s.id) ?? { name: s.name };
-    if (s.mood !== 'walk' && !TRAIL_WORDS.test(sourceText(item)) && !TRAIL_WORDS.test(s.name.trim())) continue;
+    if (s.mood !== 'walk' && !words.test(sourceText(item)) && !words.test(s.name.trim())) continue;
     out.push({ id: s.id, name: s.name, mood: s.mood, ...textOf(item) });
   }
   return out.sort(byId);
@@ -129,9 +129,10 @@ export function roundProblems(calls, candidateIds, inputs) {
 /**
  * The blind judge against the round (§1): rows in sample order and the agreement — n, agree, rate and trueToFalse
  * (first `true`, blind `false`: pushing back a place that should not be is the worse mistake) — with pass = rate ≥ 95%
- * and trueToFalse ≤ 3. Throws unless every sampled place has a first judgment and exactly one blind true/false.
+ * and trueToFalse ≤ 3 (another round's pre-registered `min` and `trueToFalseMax`, plans/busan.md S6). Throws unless every
+ * sampled place has a first judgment and exactly one blind true/false.
  */
-export function scoreAudit(calls, ids, judgments) {
+export function scoreAudit(calls, ids, judgments, { min = AGREE_MIN, trueToFalseMax = TRUE_TO_FALSE_MAX } = {}) {
   const first = new Map(calls.map((c) => [c.id, c.trail]));
   const sampled = new Set(ids);
   const blind = new Map();
@@ -152,8 +153,8 @@ export function scoreAudit(calls, ids, judgments) {
   const agree = rows.filter((r) => r.agree).length;
   const trueToFalse = rows.filter((r) => r.first && !r.audit).length;
   const rate = n ? agree / n : 0;
-  const pass = n > 0 && rate >= AGREE_MIN && trueToFalse <= TRUE_TO_FALSE_MAX;
-  return { agreement: { n, agree, rate, threshold: AGREE_MIN, trueToFalse, trueToFalseMax: TRUE_TO_FALSE_MAX, pass }, rows };
+  const pass = n > 0 && rate >= min && trueToFalse <= trueToFalseMax;
+  return { agreement: { n, agree, rate, threshold: min, trueToFalse, trueToFalseMax, pass }, rows };
 }
 
 /**
