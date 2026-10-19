@@ -15,7 +15,9 @@ import { CARD_COUNT, distanceKm, driveMinutes, listed, pickCards, pool, withinRe
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 export const INPUT_SHA = 'eee2cb7054300f2a79822e575d6dda53818f6c2dd68d034fd973b10a6995a198';
-export const OUT = resolve(webRoot, 'review/busan/areas-01.json');
+/** 고침 2 (주인 승인): the centre is the 대표 지명 point itself; areas-01.json was the median run. */
+export const METHOD = 'landmark';
+export const OUT = resolve(webRoot, 'review/busan/areas-02.json');
 
 /** West → east (specs/busan.md 2절). `at`: the 대표 지명 record. */
 export const PLAN = [
@@ -66,7 +68,7 @@ const median = (xs) => {
 const round4 = (v) => Math.round(v * 1e4) / 1e4;
 
 /** The centres (areas-criteria.md 방법 1~3). Throws on a district the table does not know. */
-export function centres(spots, addrById) {
+export function centres(spots, addrById, method = METHOD) {
   const byId = new Map(spots.map((s) => [s.id, s]));
   const seed = new Map(PLAN.map((a) => [a.name, byId.get(a.at)]));
   for (const a of PLAN) if (!seed.get(a.name)) throw new Error(`areas: 대표 지명 ${a.at} is not shipped`);
@@ -81,7 +83,8 @@ export function centres(spots, addrById) {
   }
   return PLAN.map((a) => {
     const m = members.get(a.name);
-    const c = { lat: round4(median(m.map((s) => s.lat))), lng: round4(median(m.map((s) => s.lng))) };
+    const at = seed.get(a.name);
+    const c = method === 'landmark' ? { lat: round4(at.lat), lng: round4(at.lng) } : { lat: round4(median(m.map((s) => s.lat))), lng: round4(median(m.map((s) => s.lng))) };
     return { name: a.name, slug: a.slug, label: a.name, landmark: a.landmark, ...c, places: m.length, landmarkKm: Math.round(distanceKm(c, seed.get(a.name)) * 100) / 100 };
   });
 }
@@ -158,8 +161,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     return { from: byId.get(a).name, to: byId.get(b).name, km: Math.round(km * 10) / 10, appMinutes: driveMinutes(km), mapMinutes: null };
   });
   const passed = ['slug', 'landmark', 'outskirts', 'b7', 'd1'].every((k) => result[k].length === 0);
-  writeFileSync(OUT, `${JSON.stringify({ criteria: 'review/busan/areas-criteria.md', input: { file: 'public/spots-busan.json', sha256: sha }, passed, areas, checks: result, pairs }, null, 2)}\n`);
-  console.log(`areas-01.json: ${passed ? 'PASSED' : 'FAILED'}`);
+  writeFileSync(OUT, `${JSON.stringify({ criteria: 'review/busan/areas-criteria.md (고침 2)', method: METHOD, input: { file: 'public/spots-busan.json', sha256: sha }, passed, areas, checks: result, pairs }, null, 2)}\n`);
+  console.log(`areas-02.json: ${passed ? 'PASSED' : 'FAILED'}`);
   for (const a of areas) console.log(`  ${a.name.padEnd(6)} ${a.lat}, ${a.lng}  places ${a.places}  ↔ ${a.landmark} ${a.landmarkKm} km`);
   for (const [k, v] of Object.entries(result)) if (k !== 'tabs') console.log(`  ${k}: ${v.length ? v.join(' | ') : 'ok'}`);
   console.log(`  tabs: ${result.tabs.join(', ')}`);
