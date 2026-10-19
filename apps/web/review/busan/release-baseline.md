@@ -33,3 +33,13 @@ git checkout -- data/landing/lastmod.json   # 빌드가 날짜만 바꾼 경우
 | S4 | 통과 | 48,547 B (+7 B, 기준선 1df5fd6 대비) | 꺼진 빌드 `dist/`에 `spots-busan.json` 없음(`vite.config.ts` `busanFile`), 켠 빌드에는 있음·미리 받기 목록에 없음. 브라우저 요청에 부산 파일 0 |
 | S5 | 통과 | 49,496 B (+956 B) | 꺼진 빌드: 인라인 블록·sw.js 부산 단계·_headers 줄 없음, 부산 코드는 스위치 뒤라 번들에서 빠짐. 켠 빌드: 진입 JS+CSS gzip 약 52.2 kB(예산 넘음 — S7 전에 줄일 것), index.html gzip +2,000 B(상한 2KB). e2e 꺼진 89/89, 켠 95/95 |
 | S6 | 통과 | 49,512 B (+16 B, S5 대비) | 기준선 `functions.rain.haeundae`·`gwangalli`를 `400` → `204 result 03 NO_DATA nx=99 ny=75`로 고침(계획 S6: `kma.ts`가 부산 slug를 받음 — 의도한 차이, 제주 15 slug 격자·응답은 그대로). `spots.json` 해시 그대로(밤 산길·장날 부산 경로 인자). 켠 빌드 진입 JS+CSS gzip 46.73 + 5.62 = 52.35 kB(S5 약 52.2 kB, 여전히 예산 넘음 — S7). e2e 꺼진 89/89, 켠 95/95 |
+| S7 | 통과(두 번, 켠 운영 빌드) | 49,312 B (+772 B, 켠 빌드; 꺼진 빌드 47,849 B) | 스위치 켬(`vite build` 기본, 되돌리기 `npm run build:jeju`). 부산 몫 청크·terser(ADR-0098). 켠 빌드 비교: 빈 기기는 제주를 고른 기기(`jeju.dest: jeju`)로 재고, 인라인 두 블록·`_headers` 부산 줄·부산 청크는 빼고 견준다. 남은 허용 차이(`allowed`): privacy 네 언어, `llms.txt`, 수집기 `dest`·광안리·`start_view`, `sw.js`, `spots-busan.json`, 저장소 `jeju.dest`(두 기기), 인라인 gzip +1,998 B(상한 2,000 B). 홈·결과 DOM·계산 스타일·요청·위치 읽기 횟수·카드는 기준선과 같다. M5 렌더 점검(Googlebot 412×915, 저장소 없음): h1·.lede·기분 목록 모두 있음 → 통과, 덮개 비율 100%(기록만, `design/qa/busan/render-googlebot-412.png`) |
+
+## 출시 뒤 측정 (예약, 미리 등록한 기준 그대로 한 번씩)
+
+출시일을 2026-10-20 배포로 잡은 날짜다. 배포가 늦어지면 같은 간격으로 민다.
+
+| 날짜 | 무엇 | 기준(바꾸지 않음) |
+|---|---|---|
+| 2026-11-17 | 시작 화면 4주 판정(`npm run analytics:report` 「시작 화면」 지난 28일, D1 수치) | `start_view` ≥ 100이면 `start_done ÷ start_view` < 70% → 시작 화면 꼴 다시 열기. 100 미만이면 「판단 보류」(기간을 늘려 통과시키지 않음) |
+| 2026-11-17 | 서치콘솔 `/` 노출 4주 판정 | 기준 기간 S7 직전 4주(2026-09-22~10-19) 대비 출시 뒤 4주(2026-10-20~11-16). 「`/` 감소율 − `/jeju/**` 감소율 > 30%p」면 ADR-0094 2 다시 열기 |

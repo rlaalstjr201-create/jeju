@@ -27,6 +27,14 @@ const BASE = `http://localhost:${PORT}/`;
 /** 2026-10-18 14:00 KST: the date line, sunset and 「지금」 are the same on every run. */
 const CLOCK = Date.parse('2026-10-18T14:00:00+09:00');
 
+/** index.html's `<!--busan-->…<!--/busan-->` contents (a switched-on build keeps them, the markers gone; vite.config.ts busanBlock) */
+const BUSAN_BLOCKS = [...readFileSync(join(APP, 'index.html'), 'utf8').matchAll(/<!--busan-->([\s\S]*?)<!--\/busan-->/g)].map((m) => m[1]);
+/** 출시 스위치를 켠 빌드(plans/busan.md S7): what it adds for Busan on purpose is taken out before the comparison, so the
+ * rest is held to the switched-off baseline — the inline blocks, the 부산 파일 캐시 줄 of _headers, the 부산 몫 청크 in the
+ * file and precache lists. The inline blocks' size is held to their own cap instead (plans/busan.md 위험: gzip +2KB). */
+const SWITCHED = existsSync(join(DIST, 'spots-busan.json'));
+const BUSAN_CHUNK = /^assets\/busan-part-\*\.js$/;
+const withoutBlocks = (html: string) => (SWITCHED ? BUSAN_BLOCKS.reduce((h, b) => h.replace(b, ''), html) : html);
 const sha = (b: Uint8Array | string) => createHash('sha256').update(b).digest('hex');
 const short = (b: Uint8Array | string) => sha(b).slice(0, 16);
 /** Hashed asset names change with any code change (the build commit is in the JS): only the name is kept. */
@@ -45,7 +53,8 @@ function walk(dir: string): string[] {
 function normalized(rel: string, body: Buffer): Buffer | string {
   if (rel === 'sitemap.xml')
     return body.toString('utf8').replace(new RegExp(`(<loc>${SITE}/sitemap-core\\.xml</loc><lastmod>)[^<]*`), '$1*');
-  if (rel === 'index.html') return unhash(body.toString('utf8'));
+  if (rel === 'index.html') return withoutBlocks(unhash(body.toString('utf8')));
+  if (rel === '_headers' && SWITCHED) return body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
   if (rel === 'sitemap-core.xml')
     return body.toString('utf8').replace(new RegExp(`(<loc>${SITE}/(?:privacy)?</loc><lastmod>)[^<]*`, 'g'), '$1*');
@@ -73,13 +82,13 @@ function assets(indexHtml: string) {
   const gz = Object.fromEntries(entry.map((f) => [unhash(f), gzipSync(readFileSync(join(DIST, f))).length]));
   const total = Object.values(gz).reduce((a, b) => a + b, 0);
   // sorted after the hash is gone: `ja-<hash>.js` and `ja-<hash>.css` would otherwise swap with the hashes
-  return { names: names.map((n) => unhash(`assets/${n}`)).sort(), koreanEntryGzip: gz, koreanEntryGzipTotal: total };
+  return { names: names.map((n) => unhash(`assets/${n}`)).filter((n) => !(SWITCHED && BUSAN_CHUNK.test(n))).sort(), koreanEntryGzip: gz, koreanEntryGzipTotal: total };
 }
 
 function swList() {
   const src = readFileSync(join(DIST, 'sw.js'), 'utf8');
   const m = /const PRECACHE = (\[[^\]]*\]);/.exec(src);
-  return m ? (JSON.parse(m[1]) as string[]).map(unhash) : null;
+  return m ? (JSON.parse(m[1]) as string[]).map(unhash).filter((n) => !(SWITCHED && BUSAN_CHUNK.test(n))) : null;
 }
 
 /** The two server functions as deployed (no Vite defines): /api/rain per area slug, /api/events per batch. */
@@ -149,14 +158,16 @@ interface Snap {
 const SNAP = `(() => {
   const props = ${JSON.stringify(STYLE_PROPS)};
   const keep = (s) => Object.fromEntries(Object.keys(s).filter((k) => !k.startsWith('__')).sort().map((k) => [k, s.getItem(k)]));
-  const styles = [...document.body.querySelectorAll('*')].map((el) => {
+  // 출시 스위치를 켠 빌드의 바디 인라인(시작 화면 문구 표, ADR-0096): 제주 기기에서는 아무것도 그리지 않는 스크립트라 빼고 잰다
+  const busan = (el) => el.tagName === 'SCRIPT' && el.textContent.includes('__ycT');
+  const styles = [...document.body.querySelectorAll('*')].filter((el) => !busan(el)).map((el) => {
     const cs = getComputedStyle(el);
     const r = el.getBoundingClientRect();
     const box = [r.x, r.y, r.width, r.height].map((v) => Math.round(v * 2) / 2).join(',');
     return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + ' ' + box + ' ' + props.map((p) => cs.getPropertyValue(p)).join('|');
   });
   return {
-    body: document.body.outerHTML,
+    body: (() => { const b = document.body.cloneNode(true); for (const s of b.querySelectorAll('script')) if (busan(s)) s.remove(); return b.outerHTML; })(),
     htmlClass: document.documentElement.className,
     styles,
     local: keep(localStorage),
@@ -201,8 +212,11 @@ async function browserRun(firstId: string) {
   const server = await startPreview();
   const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? 'chrome', headless: true });
   const photo = readFileSync(join(APP, 'public/icons/icon-512.png'));
+  // 출시 스위치를 켠 빌드(plans/busan.md S7): 저장소가 빈 첫 방문은 시작 화면이다. 제주 사용자는 거기서 제주를 고른 기기
+  // (jeju.dest)로 잰다 — 시작 화면 자체는 이 기준선이 아니라 e2e(BS-*)·start.test.ts가 본다
+  const switched = existsSync(join(DIST, 'spots-busan.json'));
   const devices: Record<string, Record<string, unknown>> = {
-    empty: {},
+    empty: switched ? { 'jeju.dest': 'jeju' } : {},
     'saved.v2 only': { 'jeju.saved.v2': [{ id: firstId, date: '2026-10-17', order: 0 }] },
   };
   const summary: Record<string, unknown> = {};
@@ -227,7 +241,8 @@ async function browserRun(firstId: string) {
       await page.waitForTimeout(1500);
       // a string, not a function: tsx would wrap a function's inner arrows in a helper the page does not have
       const snap = (): Promise<Snap> => page.evaluate(SNAP);
-      const dcl = unhash(await page.evaluate('window.__dcl'));
+      // the switched-on build's two inline blocks (ADR-0096), as index.html has them: taken out before the hash
+      const dcl = BUSAN_BLOCKS.reduce((h, b) => h.replace(b, ''), unhash(await page.evaluate('window.__dcl')));
       const home = await snap();
       const homeRequests = [...requests];
       await page.locator('[data-mood="walk"]').first().click();
@@ -259,7 +274,10 @@ async function measure() {
     return [l, existsSync(f) ? readFileSync(f, 'utf8') : ''] as const;
   });
   const firstId = (JSON.parse(spots.toString('utf8')) as { id: string }[])[0].id;
-  const html = unhash(indexHtml);
+  const full = unhash(indexHtml);
+  const html = withoutBlocks(full);
+  // the inline blocks' own cost, a switched-on build only
+  const inlineGzip = gzipSync(full).length - gzipSync(html).length;
   const browser = await browserRun(firstId);
   return {
     summary: {
@@ -270,6 +288,7 @@ async function measure() {
         __PLACES_V__: spotsVersion(places.map(([, t]) => t).join('\0')),
       },
       indexHtml: { bytes: Buffer.byteLength(html), gzip: gzipSync(html).length },
+      ...(SWITCHED ? { busanInlineGzip: inlineGzip } : {}),
       files: files(),
       precache: swList(),
       assets: assets(indexHtml),
@@ -319,6 +338,11 @@ if (write) {
   const delta = total - base.assets.koreanEntryGzipTotal;
   console.log(`Korean entry JS+CSS gzip: ${total} B (baseline ${base.assets.koreanEntryGzipTotal} B, ${delta >= 0 ? '+' : ''}${delta} B; budget ${BUDGET} B)`);
   if (total > BUDGET) problems.push(`Korean entry JS+CSS gzip ${total} B > ${BUDGET} B`);
+  const inline = (now.summary as { busanInlineGzip?: number }).busanInlineGzip;
+  if (inline !== undefined) {
+    console.log(`switched-on build: index.html inline blocks gzip +${inline} B (cap 2000 B)`);
+    if (inline > 2000) problems.push(`inline blocks gzip +${inline} B > 2000 B`);
+  }
   if (problems.length) {
     const f = join(tmpdir(), `jeju-baseline-now-${Date.now()}.json`);
     writeFileSync(f, JSON.stringify(now, null, 1));

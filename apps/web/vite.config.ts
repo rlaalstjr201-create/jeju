@@ -156,12 +156,19 @@ function analytics(env: AnalyticsEnv | null): Plugin {
   };
 }
 
-export default defineConfig(({ command, mode }) => ({
+/** 출시 스위치 (plans/busan.md S7, 2026-10-20): on in every build (`vite build`, the production one) and in `vitest run
+ * --mode busan`; off in `vitest run` (npm test) and in `vite build --mode jeju`, the Jeju-only build kept to switch back to
+ * until the 4-week check after the release removes it. */
+const switchOn = (command: string, mode: string) => mode === 'busan' || (command === 'build' && mode !== 'jeju');
+
+export default defineConfig(({ command, mode: given }) => {
+  const mode = switchOn(command, given) ? 'busan' : given;
+  return {
   // Absolute: index.html served at any path (a deep link, a fallback) still finds /assets/… (ADR-0063).
   base: '/',
   // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
   appType: 'mpa',
-  // 출시 스위치 (plans/busan.md): on only in mode `busan` (`vite build --mode busan`, `vitest run --mode busan`), read in src/release.ts
+  // 출시 스위치: switchOn above, read in src/release.ts
   define: {
     __SPOTS_V__: JSON.stringify(SPOTS_V),
     __PLACES_V__: JSON.stringify(PLACES_V),
@@ -175,4 +182,5 @@ export default defineConfig(({ command, mode }) => ({
   // and Busan's part (switched-on build only, src/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
   // switch on
   build: { target: 'es2020', modulePreload: false, minify: 'terser' },
-}));
+  };
+});

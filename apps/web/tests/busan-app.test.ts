@@ -234,6 +234,7 @@ describe.runIf(BUSAN)('시작 화면 기록 (switch on)', () => {
   afterEach(() => {
     current?.destroy();
     current = null;
+    vi.restoreAllMocks();
     delete (navigator as { webdriver?: boolean }).webdriver;
     reset();
   });
@@ -248,7 +249,9 @@ describe.runIf(BUSAN)('시작 화면 기록 (switch on)', () => {
     document.documentElement.classList.add('yc-start');
     document.body.innerHTML = page;
     new Function(cover)();
-    (window as { __startShown?: number }).__startShown = performance.now() - upMs;
+    // the first paint, upMs ago (jsdom has no paint timing)
+    const painted = performance.now() - upMs;
+    vi.spyOn(performance, 'getEntriesByName').mockImplementation((n: string) => (n === 'first-paint' ? [{ startTime: painted } as PerformanceEntry] : []));
     const sent: UsageEvent[] = [];
     current = mountApp(document, {
       loadSpots: (d) => Promise.resolve(d === 'busan' ? busanRaw : fileSpots),

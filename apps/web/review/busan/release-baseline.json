@@ -9,7 +9,14 @@
   "files.llms.txt",
   "functions.events.field dest",
   "functions.events.area 광안리",
-  "functions.events.event start_view"
+  "functions.events.event start_view",
+  "files.sw.js",
+  "files.spots-busan.json",
+  "busanInlineGzip",
+  "browser.empty.home.local.jeju.dest",
+  "browser.empty.walk.local.jeju.dest",
+  "browser.saved.v2 only.home.local.jeju.dest",
+  "browser.saved.v2 only.walk.local.jeju.dest"
  ],
  "data": {
   "public/spots.json": "c88acb8476f5fd9417552bd59831960185ebe6117f4a1a5e9c0c1ad1b0e73821",

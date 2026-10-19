@@ -1366,10 +1366,12 @@ export function mountApp(doc: Document, deps: Deps): App {
   // 시작 화면 (ADR-0096): index.html drew it; the app answers its buttons and, with location already allowed, reads it
   let startOpen = starting;
   // its two counts (specs/busan.md 7, plans/busan.md 결과 생성 표): start_view once the cover has been up a second
-  // (index.html's `__startShown`), never under a webdriver; start_done when it is left, only after a start_view — so
-  // done ÷ view is one population. No position, no place: the day, and how / why / the destination.
-  const startAt = (win as { __startShown?: unknown } | null)?.__startShown;
-  const startUp = () => (typeof startAt === 'number' && win?.performance ? win.performance.now() - startAt : -1);
+  // (index.html draws it before the first paint, so from that paint; without paint timing, from this mount), never under a
+  // webdriver; start_done when it is left, only after a start_view — so done ÷ view is one population. No position, no
+  // place: the day, and how / why / the destination.
+  const perf = starting ? win?.performance : undefined;
+  const startAt = perf ? (perf.getEntriesByName?.('first-paint')[0]?.startTime ?? perf.now()) : 0;
+  const startUp = () => (perf ? perf.now() - startAt : -1);
   let startSeen = false;
   function seeStart(): boolean {
     if (startSeen || !BUSAN || nav0?.webdriver || startUp() < 1000) return startSeen;

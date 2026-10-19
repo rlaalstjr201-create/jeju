@@ -12,6 +12,8 @@
     "test:busan": "vitest run --mode busan",
     "e2e": "npm run build && node tests/e2e/browser.e2e.mjs",
     "e2e:busan": "vite build --mode busan && tsx scripts/build-landing.mjs && node tests/e2e/browser.e2e.mjs",
+    "build:jeju": "vite build --mode jeju && tsx scripts/build-landing.mjs",
+    "e2e:jeju": "npm run build:jeju && node tests/e2e/browser.e2e.mjs",
     "export:spots": "tsx scripts/export-spots.ts",
     "build:spots": "node scripts/build-spots.mjs",
     "landing:slugs": "tsx scripts/build-landing.mjs --write-slugs",

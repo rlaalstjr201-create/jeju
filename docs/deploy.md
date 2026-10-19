@@ -13,6 +13,7 @@ ADR-0063 1. 정적 사이트 하나에 서버 코드는 Functions 둘(`apps/web/
 npx wrangler d1 migrations apply yeogwi-events --remote
 
 SITE_URL=https://yeochana.com npm run build   # dist/ (표 참고)
+# 부산 출시 스위치는 켠 빌드가 기본(plans/busan.md S7). 제주만으로 되돌리기: SITE_URL=https://yeochana.com npm run build:jeju
 npx wrangler pages deploy dist --project-name yeochana
 SITE=https://yeochana.com bash scripts/smoke.sh                                                               # 아래 3
 ```
