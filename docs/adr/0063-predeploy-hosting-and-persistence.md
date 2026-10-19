@@ -2,6 +2,7 @@
 
 Status: Accepted (2026-10-01) — ADR-0026(로그인 없음)을 확장
 
+Amended by ADR-0097 (2026-10-19): 저장 키에 `jeju.dest`와 부산 기준·동네·숙소 키(꼬리 `.busan`)를 더했다. 머리말 `jeju.`은 그대로.
 Amended by ADR-0076·ADR-0078 (2026-10-03): 「서버 없음」에 첫 서버 코드(비 소식 Pages Function, ADR-0076)를, 「쿠키 없음」에 D1 사용 기록·분석 쿠키(ADR-0078)를 더했다.
 
 ## Context
