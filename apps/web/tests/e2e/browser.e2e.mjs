@@ -3,7 +3,7 @@
 // Run after `vite build`:  node tests/e2e/browser.e2e.mjs   (needs playwright-core + Chrome or Chromium)
 // Env: E2E_CHANNEL=chrome|chromium (default chrome), E2E_SHOTS=<dir> to save screenshots, E2E_ONLY=<id regex>.
 import { spawn, execSync } from 'node:child_process';
-import { mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -33,10 +33,14 @@ async function loadPlaywright() {
 // --- geolocation stub: behaviour set per test through localStorage.__geo ---
 // Default point: 동문시장 (33.5122, 126.5272), where real spots are dense. The old default — the city hall —
 // was also the geocoder's fallback point, so 16 misplaced spots read "걸어서 약 5분" there and hid the bug.
+// plans/busan.md S5 (M10): every read is counted in window.__geoCalls, and `perm` ('prompt' | 'granted' | 'denied',
+// default 'prompt') is what the Permissions API answers.
 const GEO_STUB = `(() => {
   const DEF = { mode: 'ok', lat: 33.5122, lng: 126.5272, delay: 30 };
   const cfg = () => { try { return JSON.parse(localStorage.getItem('__geo') || 'null') || DEF; } catch { return DEF; } };
+  window.__geoCalls = 0;
   const geo = { getCurrentPosition(ok, fail) {
+    window.__geoCalls++;
     const c = cfg();
     if (c.mode === 'hang') return;
     setTimeout(() => {
@@ -47,9 +51,14 @@ const GEO_STUB = `(() => {
   Object.defineProperty(navigator, 'geolocation', { value: geo, configurable: true });
   if (navigator.permissions) {
     const q = navigator.permissions.query.bind(navigator.permissions);
-    navigator.permissions.query = (d) => d && d.name === 'geolocation' ? Promise.resolve({ state: 'prompt' }) : q(d);
+    navigator.permissions.query = (d) => d && d.name === 'geolocation' ? Promise.resolve({ state: cfg().perm || 'prompt' }) : q(d);
   }
 })();`;
+/** plans/busan.md S5: a build with the switch on (`vite build --mode busan`) ships spots-busan.json; the off build never does. */
+const BUSAN = existsSync(join(appDir, 'dist/spots-busan.json'));
+/** With the switch on, a device that has chosen Jeju (jeju.dest) unless the check asks for a new browser
+ * (`storage: null`): the Jeju checks then run on the Jeju home, as on every device that has used the app. */
+const seeded = (storage) => (storage === null ? {} : BUSAN && !('jeju.dest' in storage) ? { 'jeju.dest': 'jeju', ...storage } : storage);
 
 const results = [];
 // E2E_ONLY=<regex on the check id> runs a subset while working on one area.
@@ -92,7 +101,9 @@ const browser = await pw.chromium.launch({ channel: process.env.E2E_CHANNEL ?? '
 
 // `route(ctx)`: routes in place before the page that gets `storage` loads. Routing after fresh() and reloading
 // is racy for requests that page sends itself: under load one can reach the network after the route is up.
-async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage = {}, route, locale = 'ko-KR' } = {}) {
+// `storage: null`: a new browser — nothing stored, not even the 여행지 (the switched-on build then shows 시작 화면).
+async function fresh({ width = 390, height = 844, dark = false, sw = false, geo, storage: given = {}, route, locale = 'ko-KR' } = {}) {
+  const storage = seeded(given);
   const ctx = await browser.newContext({
     viewport: { width, height },
     colorScheme: dark ? 'dark' : 'light',
