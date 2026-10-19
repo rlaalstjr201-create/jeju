@@ -1,0 +1,52 @@
+{
+ "contentid": "851082",
+ "modifiedtime": "20260225163718",
+ "fetchedAt": "2026-10-19T00:00:55.241Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "851082",
+       "contenttypeid": "39",
+       "title": "장춘방",
+       "createdtime": "20091030214946",
+       "modifiedtime": "20260225163718",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/46/1902246_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/46/1902246_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 동구 대영로243번길 30",
+       "addr2": "",
+       "zipcode": "48820",
+       "mapx": "129.037949562809",
+       "mapy": "35.1134093309433",
+       "mlevel": "6",
+       "overview": "장춘방은 부산 차이나 타운에 위치한 화교가 운영하는 중식당이다. 기본찬으로 단무지와 함께 다진 마늘과 간장을 곁들인 오이가 제공된다. 만두 전문점으로 이름이 알려지기 시작한 만큼 매장에서 직접 빚는 군만두가 인기이다. 이 외에도 오향장육, 멘바오샤, 가지튀김, 탕수육 등 다양한 요리 메뉴가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

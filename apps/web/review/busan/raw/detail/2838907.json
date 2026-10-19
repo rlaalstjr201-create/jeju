@@ -1,0 +1,52 @@
+{
+ "contentid": "2838907",
+ "modifiedtime": "20250828105311",
+ "fetchedAt": "2026-10-19T00:00:24.153Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2838907",
+       "contenttypeid": "39",
+       "title": "고관함박",
+       "createdtime": "20220818142455",
+       "modifiedtime": "20250828105311",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/2838897_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/97/2838897_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "5",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "부산광역시 동구 중앙대로349번길 14 (수정동)",
+       "addr2": "",
+       "zipcode": "48791",
+       "mapx": "129.0462742511",
+       "mapy": "35.1270313878",
+       "mlevel": "6",
+       "overview": "부산진역 1번 출구 바로 앞에 있는 고관함박은 함박스테이크 맛집이다. 함박스테이크와 쫄면이 조화로운 맛집으로, 고관까스와 비빔국수 조합이 특히 인기이다. 부드러운 고기와 매콤한 소스가 어우러져 만족스러운 식사를 제공한다. 비교적 저렴한 가격으로 함박스테이크를 제공해 많은 이들이 찾고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

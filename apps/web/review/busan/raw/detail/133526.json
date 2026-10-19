@@ -1,0 +1,52 @@
+{
+ "contentid": "133526",
+ "modifiedtime": "20260318101005",
+ "fetchedAt": "2026-10-19T00:00:51.482Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133526",
+       "contenttypeid": "39",
+       "title": "원조서울삼계탕",
+       "createdtime": "20021126090000",
+       "modifiedtime": "20260318101005",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 남포길 36",
+       "addr2": "",
+       "zipcode": "48954",
+       "mapx": "129.032614367211",
+       "mapy": "35.0982610140296",
+       "mlevel": "6",
+       "overview": "부산에 위치한 원조서울삼계탕은 1960년부터 삼계탕을 전문으로 요리한 곳이다. 닭의 목과 발에 황기, 율무씨 등의 약재를 넣어 진하게 고아 낸 육수에 찹쌀, 대추, 밤 등의 곡물을 채워 삶아낸 영계를 담아낸다. 기본 삼계탕과 함께 산삼삼계탕, 전복삼계탕, 흑삼삼계탕 등의 다양한 메뉴와 전기구이 통닭도 준비되어 있다. 넓은 좌석과 단체석으로 편리하게 이용이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2845149",
+ "modifiedtime": "20250828142025",
+ "fetchedAt": "2026-10-19T00:00:45.077Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2845149",
+       "contenttypeid": "39",
+       "title": "아데초이",
+       "createdtime": "20220829153719",
+       "modifiedtime": "20250828142025",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/47/2845147_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/47/2845147_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "3",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "부산광역시 기장군 일광읍 문오성길 162-1",
+       "addr2": "",
+       "zipcode": "46041",
+       "mapx": "129.2582291988",
+       "mapy": "35.2864924566",
+       "mlevel": "6",
+       "overview": "아데초이는 베이커리가 유명한 디저트 카페이다. 고급스러운 분위기의 카페로, 아메리카노와 카페라떼 등 기본 커피 메뉴부터 아인슈페너와 같은 특별한 음료까지 다양하게 제공한다. 핸드드립 커피도 인기 있으며, 브런치 세트를 통해 여유로운 식사를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

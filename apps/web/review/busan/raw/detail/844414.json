@@ -1,0 +1,52 @@
+{
+ "contentid": "844414",
+ "modifiedtime": "20260703105437",
+ "fetchedAt": "2026-10-19T00:01:06.948Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "844414",
+       "contenttypeid": "39",
+       "title": "회국수할매집",
+       "createdtime": "20091029064151",
+       "modifiedtime": "20260703105437",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 서면문화로 5",
+       "addr2": "",
+       "zipcode": "47257",
+       "mapx": "129.0575687168",
+       "mapy": "35.1582016469",
+       "mlevel": "6",
+       "overview": "회국수할매집은 부산 서면의 50년 전통 노포로 부산 명물인 회국수와 충무김밥을 판매하고 있는 곳이다. 회국수에는 가오리회가 올라가며, 상큼한 양념과 신선한 채소가 조화롭게 어울린다. 충무김밥은 어묵무침과 섞박지를 곁들여 즐길 수 있다. 두 가지 메뉴 이외에도 튿회국수, 비빔국수, 우동 등 다양한 메뉴가 준비되어 있어 취향에 맞게 선택해 즐길 수 있다. 새벽까지 영업하고 있어 언제나 부담 없이 찾아갈 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

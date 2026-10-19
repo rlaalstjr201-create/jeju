@@ -1,0 +1,52 @@
+{
+ "contentid": "2858292",
+ "modifiedtime": "20260304100426",
+ "fetchedAt": "2026-10-19T00:00:31.661Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2858292",
+       "contenttypeid": "39",
+       "title": "또시아",
+       "createdtime": "20220922100757",
+       "modifiedtime": "20260304100426",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 영도구 절영로 6",
+       "addr2": "",
+       "zipcode": "49033",
+       "mapx": "129.040330441764",
+       "mapy": "35.0936672539924",
+       "mlevel": "6",
+       "overview": "영도 속 작은 대만 또시아는 대만어로 ‘감사합니다’라는 뜻이다. 방문하는 모든 분들께 신선한 재료로 정성껏 만든 대만 현지 음식을 선사하는 곳이다. 메뉴마다 하나도 빠짐없이 매력 있어 여러 명이서 함께 방문해 다양한 음식을 맛보는 것을 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

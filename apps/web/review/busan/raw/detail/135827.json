@@ -1,0 +1,52 @@
+{
+ "contentid": "135827",
+ "modifiedtime": "20250311153735",
+ "fetchedAt": "2026-10-19T00:00:30.981Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135827",
+       "contenttypeid": "39",
+       "title": "동백섬횟집",
+       "createdtime": "20070713090000",
+       "modifiedtime": "20250311153735",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 해운대해변로209번나길 17",
+       "addr2": "",
+       "zipcode": "48093",
+       "mapx": "129.1546889075",
+       "mapy": "35.1604296524",
+       "mlevel": "6",
+       "overview": "동백섬횟집은 해운대해수욕장 인근에 위치한 맛집으로 알려져 있는 곳이다. 3층짜리 하얀색 건물로 실내에서 밖을 볼 수 있는 반원형 창가는 많은 사람들에게 인기가 있다. 한 접시 푸짐하게 담겨 나오는 모둠회가 이 집의 대표 메뉴라 할 수 있는데, 저렴하면서도 그 양이 많아 회로 배를 채운다는 말이 나올 정도다. 부산의 싱싱한 회를 맛볼 수 있으며 회덮밥과 매운탕도 그 맛이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "135004",
+ "modifiedtime": "20251216113322",
+ "fetchedAt": "2026-10-19T00:00:40.359Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135004",
+       "contenttypeid": "39",
+       "title": "산성청송가든",
+       "createdtime": "20050525090000",
+       "modifiedtime": "20251216113322",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "2",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 금정구 산성로 516",
+       "addr2": "",
+       "zipcode": "46238",
+       "mapx": "129.0552285771",
+       "mapy": "35.2448405765",
+       "mlevel": "6",
+       "overview": "산성마을에 2대에 걸쳐 옛 전통을 지키고 있는 금정산성의 명소 산성청송가든이다. 친절한 분위기와 더불어 맛깔스런 음식조리에 최선을 다한다. 흑염소불고기, 오리숯불고기, 한방오리백숙 등 주변에서 흔히 맛볼 수 없는 건강식으로 사랑받고 있다. 가게 내부는 넓고 단체석도 마련되어 있어 가족모임이나 단체 행사로도 적합하다. 또한, 족구장 시설도 준비되어 있어 단체 모임 하려는 이들이 많이 방문하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

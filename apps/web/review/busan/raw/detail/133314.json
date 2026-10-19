@@ -1,0 +1,52 @@
+{
+ "contentid": "133314",
+ "modifiedtime": "20250307141556",
+ "fetchedAt": "2026-10-19T00:01:01.942Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133314",
+       "contenttypeid": "39",
+       "title": "팔미초밥",
+       "createdtime": "20041230090000",
+       "modifiedtime": "20250307141556",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "13",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "부산광역시 연제구 월드컵대로119번길 8",
+       "addr2": "",
+       "zipcode": "47596",
+       "mapx": "129.0818167950",
+       "mapy": "35.1849700007",
+       "mlevel": "6",
+       "overview": "팔미초밥은 부산 연제구에 위치한 신선한 초밥 전문 음식점이다. 이곳은 신선한 재료와 정성스러운 손길로 만들어진 초밥을 제공하며, 특히 다양한 해산물을 사용한 초밥이 인기이다. 아늑한 분위기 속에서 친절한 서비스와 함께 식사를 즐길 수 있어, 가족이나 친구들, 연인과 함께 방문하기 좋은 장소이다. 신선한 재료로 만든 초밥을 합리적인 가격에 제공하며, 지역 주민들뿐만 아니라 관광객들에게도 사랑받는 맛집이다. 팔미초밥은 부산에서 꼭 가봐야 할 초밥 맛집으로 알려져 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

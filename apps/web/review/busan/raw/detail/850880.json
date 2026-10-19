@@ -1,0 +1,52 @@
+{
+ "contentid": "850880",
+ "modifiedtime": "20250311152123",
+ "fetchedAt": "2026-10-19T00:00:50.199Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850880",
+       "contenttypeid": "39",
+       "title": "외식1번가",
+       "createdtime": "20091030214352",
+       "modifiedtime": "20250311152123",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 해운대로 425",
+       "addr2": "",
+       "zipcode": "48064",
+       "mapx": "129.1416454336",
+       "mapy": "35.1663954099",
+       "mlevel": "6",
+       "overview": "숯불구이 전문점 20년 노하우로 맛은 물론, 자체 유통 시스템으로 최고급 고기를 보다 저렴하게 제공하고 있다. 유럽의 아름다운 거리를 옮겨 놓은 듯한 독특한 인테리어와 편안하고 모던한 분위기에서 우리의 전통 숯불 직화 방식으로 고급 숯불갈비를 즐길 수 있는 외식공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

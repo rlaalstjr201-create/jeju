@@ -1,0 +1,52 @@
+{
+ "contentid": "2848952",
+ "modifiedtime": "20250828165507",
+ "fetchedAt": "2026-10-19T00:00:54.110Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2848952",
+       "contenttypeid": "39",
+       "title": "일광정",
+       "createdtime": "20220905102507",
+       "modifiedtime": "20250828165507",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/63/2848663_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/63/2848663_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "3",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 기장군 일광읍 일광로 645",
+       "addr2": "",
+       "zipcode": "46040",
+       "mapx": "129.2580316277",
+       "mapy": "35.2996881955",
+       "mlevel": "6",
+       "overview": "부산 칠암항 근처에 있는 일광정은 분홍색의 화려한 건물 외관으로 한눈에 찾기 쉬운 소갈비찜 전문점이다. 식당 내부는 좌석 간 거리도 여유 있고 칸막이로 테이블을 분리해 놓아 가족 식사하러 오기에도 좋다. 대표 메뉴 소매운갈비찜으로 매운 단계 조절이 가능하다. 매운 걸 못 먹는 사람이라면 소갈비찜을 추천한다. 갈비찜 외에도 한우로 만드는 도가니탕, 왕갈비탕이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

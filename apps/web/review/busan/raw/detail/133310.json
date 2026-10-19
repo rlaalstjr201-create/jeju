@@ -1,0 +1,52 @@
+{
+ "contentid": "133310",
+ "modifiedtime": "20261013152415",
+ "fetchedAt": "2026-10-19T00:00:51.859Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133310",
+       "contenttypeid": "39",
+       "title": "원조할매낙지",
+       "createdtime": "20030820090000",
+       "modifiedtime": "20261013152415",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 골드테마길 10",
+       "addr2": "",
+       "zipcode": "47365",
+       "mapx": "129.0601411451",
+       "mapy": "35.1421091451",
+       "mlevel": "6",
+       "overview": "부산 부산진구에 위치한 원조할매낙지는 40여 년 전통의 원조 낙지볶음 전문점이다. 마늘, 참기름, 고춧가루 등의 양념을 아끼지 않고 듬뿍 넣어 만든다. 양념장에 각종 면사리를 넣어 먹는 것 또한 별미이다. 일체의 인공조미료를 사용하지 않아 재료의 담백한 맛을 살렸다. 양념 맛이 강한 무교동 낙지와는 달리 맵지 않은 것이 특징이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

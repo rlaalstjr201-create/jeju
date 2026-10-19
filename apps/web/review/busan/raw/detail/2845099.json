@@ -1,0 +1,52 @@
+{
+ "contentid": "2845099",
+ "modifiedtime": "20260701162604",
+ "fetchedAt": "2026-10-19T00:00:36.561Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2845099",
+       "contenttypeid": "39",
+       "title": "바보낙지",
+       "createdtime": "20220829152118",
+       "modifiedtime": "20260701162604",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/97/2845097_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/97/2845097_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 기장군 기장읍 동암해안길 6",
+       "addr2": "",
+       "zipcode": "46083",
+       "mapx": "129.2218930329",
+       "mapy": "35.1949130176",
+       "mlevel": "6",
+       "overview": "바보낙지는 부산 기장에 있는 음식점으로 낙지볶음과 구이로 유명한 맛집으로, 넓은 주차장과 깔끔한 내부 시설을 자랑한다. 낙지볶음은 통통한 낙지와 소면이 함께 제공되며 밑반찬도 정갈하게 준비된다. 이블이 많아 방문객이 많아도 오래 기다릴 필요가 없으며 주차장도 넓어 편리하다. 동부산 롯데아웃렛과 아난티 힐튼호텔이 가깝다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

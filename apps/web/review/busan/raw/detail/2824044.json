@@ -1,0 +1,52 @@
+{
+ "contentid": "2824044",
+ "modifiedtime": "20260317101258",
+ "fetchedAt": "2026-10-19T00:00:43.818Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2824044",
+       "contenttypeid": "39",
+       "title": "스시미르네",
+       "createdtime": "20220616135128",
+       "modifiedtime": "20260317101258",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 세실로 75 일진빌딩",
+       "addr2": "",
+       "zipcode": "48106",
+       "mapx": "129.176768355405",
+       "mapy": "35.1712884515461",
+       "mlevel": "6",
+       "overview": "부산 해운대구에 위치한 스시미르네는 신선한 재료를 사용하여 만드는 초밥 전문점이다. 메뉴는 점심특선 세트메뉴와 우나동, 장어덮밥, 수제등심 돈까스초밥, 모듬사시미 등 다양하게 준비되어 있어 취향에 맞게 선택해 즐길 수 있다. 이 중 장어덮밥과 물회소바가 인기 메뉴이다. 오픈 주방에서 셰프들이 직접 스시를 만드는 모습을 볼 수 있으며, 1인석부터 단체석까지 다양한 좌석이 마련되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

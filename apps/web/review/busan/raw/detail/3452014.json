@@ -1,0 +1,52 @@
+{
+ "contentid": "3452014",
+ "modifiedtime": "20250724142917",
+ "fetchedAt": "2026-10-19T00:00:37.986Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3452014",
+       "contenttypeid": "39",
+       "title": "부산 카페 라운지",
+       "createdtime": "20241219113318",
+       "modifiedtime": "20250724142917",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/3451897_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/97/3451897_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "13",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "부산광역시 연제구 중앙대로1056번길 13 (연산동)",
+       "addr2": "2~4층",
+       "zipcode": "47596",
+       "mapx": "129.0796892677",
+       "mapy": "35.1825730073",
+       "mlevel": "6",
+       "overview": "부산 카페 라운지는 부산의 다양한 지역에서 찾을 수 있는 세련되고 아늑한 분위기의 카페 공간이다. 이곳은 카페와 라운지의 특징을 결합하여, 편안한 휴식과 함께 고급스러운 커피와 음료를 즐길 수 있는 장소이다. 대부분의 카페 라운지는 스타일리시한 인테리어와 편안한 좌석을 제공하며, 현대적인 디자인을 채택하여 고객들에게 여유로운 시간을 선사하는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

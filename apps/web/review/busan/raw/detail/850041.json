@@ -1,0 +1,52 @@
+{
+ "contentid": "850041",
+ "modifiedtime": "20260225163413",
+ "fetchedAt": "2026-10-19T00:00:24.319Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850041",
+       "contenttypeid": "39",
+       "title": "고향맛",
+       "createdtime": "20091030211932",
+       "modifiedtime": "20260225163413",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/51/1982651_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/51/1982651_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 중앙대로 711",
+       "addr2": "",
+       "zipcode": "47286",
+       "mapx": "129.058776989076",
+       "mapy": "35.156340777499",
+       "mlevel": "6",
+       "overview": "부산광역시 부산진구 부전동에 위치한 고향맛은 쌈밥 전문점이다. 메뉴는 쌈 정식과 영양돌솥밥 두 가지이다. 집밥처럼 푸짐한 정갈한 한 상이 차려진다. 뜨끈하고 구수한 숭늉까지 마실 수 있어 든든한 한끼로 손색이 없다. 포장 및 배달주문도 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

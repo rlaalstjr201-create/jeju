@@ -1,0 +1,52 @@
+{
+ "contentid": "850466",
+ "modifiedtime": "20250304174542",
+ "fetchedAt": "2026-10-19T00:00:34.673Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850466",
+       "contenttypeid": "39",
+       "title": "명수정",
+       "createdtime": "20091030213113",
+       "modifiedtime": "20250304174542",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "2",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 금정구 구서로 23",
+       "addr2": "",
+       "zipcode": "46242",
+       "mapx": "129.0885367382",
+       "mapy": "35.2466271039",
+       "mlevel": "6",
+       "overview": "명수정은 부산 금정구 범어사 가는 길목에 위치한 음식점으로 추어탕과 민물장어로 유명한 곳이다. 이곳은 구서동 부산은행 건물 4층에 자리하여 찾아가기 어렵지 않다. 대표 메뉴는 추어탕으로 배달도 가능하다. 이외에 오리야채불고기는 4인까지 먹을 수 있고 많은 사람들이 찾는 인기 메뉴이다. 내부는 넓고 아늑한 분위기를 풍긴다. 룸이 있어 모임에 제격이며 영양만점 맛있는 추어탕과 매운탕을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

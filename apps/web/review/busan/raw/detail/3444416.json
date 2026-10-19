@@ -1,0 +1,52 @@
+{
+ "contentid": "3444416",
+ "modifiedtime": "20250730165344",
+ "fetchedAt": "2026-10-19T00:00:27.912Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3444416",
+       "contenttypeid": "39",
+       "title": "나막집",
+       "createdtime": "20241213121959",
+       "modifiedtime": "20250730165344",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.instagram.com/namakzip",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/3444423_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/3444423_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "4",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 남구 분포로 145 (용호동, 더블유)",
+       "addr2": "스퀘어동 1층 1068호",
+       "zipcode": "48515",
+       "mapx": "129.1125849531",
+       "mapy": "35.1342484706",
+       "mlevel": "6",
+       "overview": "나막집은 부산 용호동에 위치한 미쉐린 가이드에 선정된 돼지곰탕 전문점이다. 전통적인 돼지국밥을 현대적인 감각으로 재해석하여 진하면서도 깔끔한 국물 맛을 선사한다. 주요 메뉴로는 돼지곰탕, 고기칼국수, 생면칼국수, 수육, 삼겹구이가 있으며, 오픈 주방에서 신선한 재료와 요리 과정을 직접 볼 수 있는 매장이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

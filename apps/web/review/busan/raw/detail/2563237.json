@@ -1,0 +1,52 @@
+{
+ "contentid": "2563237",
+ "modifiedtime": "20260224101913",
+ "fetchedAt": "2026-10-19T00:00:43.646Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2563237",
+       "contenttypeid": "39",
+       "title": "쉐라미과자점",
+       "createdtime": "20181016030115",
+       "modifiedtime": "20260224101913",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/26/2563326_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/26/2563326_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 사하구 낙동대로 238",
+       "addr2": "",
+       "zipcode": "49341",
+       "mapx": "128.991064",
+       "mapy": "35.09973",
+       "mlevel": "6",
+       "overview": "부산 사람들에게 향과점으로 유명한 쉐라미 사장님에 이어 아들이 빵을 만드는 곳으로 프랑스산 밀가루와 유기농 호밀로 만드는 건강한 빵을 만날 수 있다. 통팥빵, 옛날 크림빵, 애플파이가 대표 메뉴이다. 옛스러움과 급변하는 트렌드에 맞춘 다양한 메뉴를 만날 수 있다. 2015년에 부산시로부터 명품빵집으로 지정되기도 하였다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

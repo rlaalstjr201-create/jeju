@@ -1,0 +1,52 @@
+{
+ "contentid": "2805377",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-19T00:00:24.904Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2805377",
+       "contenttypeid": "39",
+       "title": "광명집",
+       "createdtime": "20220125175511",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "4",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 남구 신선로 458 (대연동)",
+       "addr2": "",
+       "zipcode": "48518",
+       "mapx": "129.1009667539",
+       "mapy": "35.1256714384",
+       "mlevel": "6",
+       "overview": "광명집은 부산 남구에 위치한 25년 이상의 오랜 전통을 가진 한식 전문점이다. 빨간 양념으로 버무린 뽈찜과 아귀찜을 전문으로 요리하고 있다. 각종 쌈 채소가 함께 나와 수육과 양념을 넣고 쌈을 싸먹기도 좋으며, 맵기 조절이 가능하여 남녀노소 부담 없이 맛볼 수 있다. 아귀찜을 다 먹고 난 후에 감자사리를 양념에 넣고 비벼 먹는 것 또한 인기이다. 전용 주차장 시설을 보유하고 있어 차로 더욱 편리한 이용이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

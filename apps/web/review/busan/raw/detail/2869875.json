@@ -1,0 +1,52 @@
+{
+ "contentid": "2869875",
+ "modifiedtime": "20250829094256",
+ "fetchedAt": "2026-10-19T00:01:06.684Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2869875",
+       "contenttypeid": "39",
+       "title": "화복반점",
+       "createdtime": "20221019093823",
+       "modifiedtime": "20250829094256",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/2869870_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/70/2869870_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "14",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "부산광역시 영도구 일산봉로39번길 14 (청학동)",
+       "addr2": "",
+       "zipcode": "49086",
+       "mapx": "129.0647515407",
+       "mapy": "35.0860390940",
+       "mlevel": "6",
+       "overview": "부산 청학동에 있는 화복반점은 중식당이다. 세련된 인테리어와 깔끔한 내부는 좌석 간 간격이 넓어 쾌적하게 식사할 수 있다.  특히 소갈비 짬뽕, 짬뽕, 나가사키 백짬뽕은 풍미를 내기 위에 사골육수와 조개류를 사용하여 육수를 만들어 깊고 진한 맛이 일품이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

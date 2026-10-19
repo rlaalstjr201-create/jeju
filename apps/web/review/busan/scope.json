@@ -23,17 +23,17 @@
    "listed": 986,
    "totalCount": 986,
    "inScope": 57,
-   "detailed": 11
+   "detailed": 57
   },
   "39": {
    "listed": 517,
    "totalCount": 517,
    "inScope": 517,
-   "detailed": 0
+   "detailed": 517
   }
  },
  "places": 1108,
- "detailed": 545,
+ "detailed": 1108,
  "items": [
   {
    "id": "bs-2715601",
@@ -10407,7 +10407,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260831085423",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788458",
@@ -10426,7 +10426,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260305134335",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2796940",
@@ -10445,7 +10445,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250902112950",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3031356",
@@ -10464,7 +10464,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260420160519",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785611",
@@ -10483,7 +10483,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250828094620",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1608737",
@@ -10502,7 +10502,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260305173432",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1013694",
@@ -10521,7 +10521,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251105143045",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2742601",
@@ -10540,7 +10540,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251230134139",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875862",
@@ -10559,7 +10559,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250704094052",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2763881",
@@ -10578,7 +10578,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20261016153043",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1756609",
@@ -10597,7 +10597,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260309093631",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1117790",
@@ -10616,7 +10616,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260305161900",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132524",
@@ -10635,7 +10635,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251104140611",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132190",
@@ -10654,7 +10654,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20261016150640",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132499",
@@ -10673,7 +10673,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251105110718",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132572",
@@ -10692,7 +10692,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250522095554",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1250823",
@@ -10711,7 +10711,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260511093522",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1607655",
@@ -10730,7 +10730,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260309093631",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2787128",
@@ -10749,7 +10749,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250828101036",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132189",
@@ -10768,7 +10768,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251105110024",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132188",
@@ -10787,7 +10787,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250430104849",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1878218",
@@ -10806,7 +10806,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260908095200",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2763981",
@@ -10825,7 +10825,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20261016153431",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2763900",
@@ -10844,7 +10844,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260518170118",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788440",
@@ -10863,7 +10863,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260305153856",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1117817",
@@ -10882,7 +10882,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060100",
    "modifiedtime": "20250425094625",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869279",
@@ -10901,7 +10901,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250623135639",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132576",
@@ -10920,7 +10920,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251105112333",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867542",
@@ -10939,7 +10939,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250619173337",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1013709",
@@ -10958,7 +10958,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251105144151",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788435",
@@ -10977,7 +10977,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260305154232",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788444",
@@ -10996,7 +10996,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260910133214",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1608657",
@@ -11015,7 +11015,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260309170117",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1942316",
@@ -11034,7 +11034,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250408131324",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3064838",
@@ -11053,7 +11053,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260417091358",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3083333",
@@ -11072,7 +11072,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260420170829",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788365",
@@ -11091,7 +11091,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260309153945",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788451",
@@ -11110,7 +11110,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20261016135740",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776286",
@@ -11129,7 +11129,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060100",
    "modifiedtime": "20261016143134",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1013721",
@@ -11148,7 +11148,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251105144937",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875886",
@@ -11167,7 +11167,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250704094816",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2790483",
@@ -11186,7 +11186,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250828102744",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869135",
@@ -11205,7 +11205,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20250620151133",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2744582",
@@ -11224,7 +11224,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20251031094110",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3027514",
@@ -11243,7 +11243,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20260305103153",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-995455",
@@ -11262,7 +11262,7 @@
    "lclsSystm2": "SH06",
    "lclsSystm3": "SH060200",
    "modifiedtime": "20261004013003",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2805408",
@@ -11281,7 +11281,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260227145625",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845011",
@@ -11300,7 +11300,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828133132",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778443",
@@ -11319,7 +11319,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250325143557",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-849929",
@@ -11338,7 +11338,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250307142014",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-849941",
@@ -11357,7 +11357,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260206153956",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2484386",
@@ -11376,7 +11376,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260304100426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869158",
@@ -11395,7 +11395,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829093536",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2774857",
@@ -11414,7 +11414,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20261001094426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872626",
@@ -11433,7 +11433,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250708105911",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2784321",
@@ -11452,7 +11452,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250116105318",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2609623",
@@ -11471,7 +11471,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260710113441",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-849862",
@@ -11490,7 +11490,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260318101005",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2760771",
@@ -11509,7 +11509,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902114540",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2904908",
@@ -11528,7 +11528,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260723162919",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867215",
@@ -11547,7 +11547,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250619172748",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2808054",
@@ -11566,7 +11566,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227151557",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838907",
@@ -11585,7 +11585,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250828105311",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850018",
@@ -11604,7 +11604,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225163105",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850041",
@@ -11623,7 +11623,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225163413",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785272",
@@ -11642,7 +11642,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250828093425",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-849871",
@@ -11661,7 +11661,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260918100559",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134326",
@@ -11680,7 +11680,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250306150858",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841481",
@@ -11699,7 +11699,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605113025",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869241",
@@ -11718,7 +11718,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250623131807",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870277",
@@ -11737,7 +11737,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250624173351",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2805377",
@@ -11756,7 +11756,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2806016",
@@ -11775,7 +11775,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227145747",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2759595",
@@ -11794,7 +11794,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260205105613",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-135287",
@@ -11813,7 +11813,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250306145402",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2859073",
@@ -11832,7 +11832,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250115110428",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832700",
@@ -11851,7 +11851,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250527173749",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2873498",
@@ -11870,7 +11870,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260911090408",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133227",
@@ -11889,7 +11889,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260224121340",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2809068",
@@ -11908,7 +11908,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251104110721",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3334005",
@@ -11927,7 +11927,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260504154003",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869454",
@@ -11946,7 +11946,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250623143018",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2626043",
@@ -11965,7 +11965,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311150323",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3550346",
@@ -11984,7 +11984,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260421171108",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2782628",
@@ -12003,7 +12003,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250827165306",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2833257",
@@ -12022,7 +12022,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250528170303",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852685",
@@ -12041,7 +12041,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250121153640",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134949",
@@ -12060,7 +12060,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250306094600",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2903578",
@@ -12079,7 +12079,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260527091615",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778487",
@@ -12098,7 +12098,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260811151734",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133533",
@@ -12117,7 +12117,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260304100426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3026941",
@@ -12136,7 +12136,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260804134912",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2616370",
@@ -12155,7 +12155,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250626111643",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850093",
@@ -12174,7 +12174,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251029170356",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2362382",
@@ -12193,7 +12193,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260319152615",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872474",
@@ -12212,7 +12212,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250702095246",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850109",
@@ -12231,7 +12231,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260209175247",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2933698",
@@ -12250,7 +12250,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260724165757",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2946078",
@@ -12269,7 +12269,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260608110913",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805498",
@@ -12288,7 +12288,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260206162237",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4071258",
@@ -12307,7 +12307,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260605154452",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-849887",
@@ -12326,7 +12326,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250305150645",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2789451",
@@ -12345,7 +12345,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250325152617",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850121",
@@ -12364,7 +12364,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260918141955",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2783360",
@@ -12383,7 +12383,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250827170537",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2859101",
@@ -12402,7 +12402,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250616164446",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3444416",
@@ -12421,7 +12421,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250730165344",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2903049",
@@ -12440,7 +12440,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260723163312",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2630323",
@@ -12459,7 +12459,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260318101005",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-574250",
@@ -12478,7 +12478,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250626171058",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2818714",
@@ -12497,7 +12497,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250909150250",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868507",
@@ -12516,7 +12516,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829092938",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3417299",
@@ -12535,7 +12535,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260602135450",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1312452",
@@ -12554,7 +12554,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260209114206",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850179",
@@ -12573,7 +12573,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260209175503",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853012",
@@ -12592,7 +12592,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250116091735",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788399",
@@ -12611,7 +12611,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227134919",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2836431",
@@ -12630,7 +12630,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250528174532",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2840883",
@@ -12649,7 +12649,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250604174229",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785275",
@@ -12668,7 +12668,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828093647",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2786008",
@@ -12687,7 +12687,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250708110619",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2402940",
@@ -12706,7 +12706,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260206094042",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850217",
@@ -12725,7 +12725,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251223131258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868557",
@@ -12744,7 +12744,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220174054",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-689290",
@@ -12763,7 +12763,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260224121340",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2485840",
@@ -12782,7 +12782,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260211081009",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133997",
@@ -12801,7 +12801,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250306150236",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867692",
@@ -12820,7 +12820,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250120104130",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2822838",
@@ -12839,7 +12839,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250526110840",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2807607",
@@ -12858,7 +12858,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20251104102727",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2752168",
@@ -12877,7 +12877,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2812073",
@@ -12896,7 +12896,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050200",
    "modifiedtime": "20260312165836",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845041",
@@ -12915,7 +12915,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828140220",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838872",
@@ -12934,7 +12934,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020500",
    "modifiedtime": "20250530140309",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841064",
@@ -12953,7 +12953,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605103223",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2781799",
@@ -12972,7 +12972,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250709135536",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852312",
@@ -12991,7 +12991,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828172849",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-135101",
@@ -13010,7 +13010,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225112245",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1232697",
@@ -13029,7 +13029,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260205174951",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778476",
@@ -13048,7 +13048,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250916090135",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2565287",
@@ -13067,7 +13067,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260708181326",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4106709",
@@ -13086,7 +13086,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050200",
    "modifiedtime": "20260902093552",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-135827",
@@ -13105,7 +13105,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311153735",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2377647",
@@ -13124,7 +13124,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20261008105711",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870868",
@@ -13143,7 +13143,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829153829",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891745",
@@ -13162,7 +13162,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251120091625",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911229",
@@ -13181,7 +13181,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260612165052",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869159",
@@ -13200,7 +13200,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250620151653",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2759629",
@@ -13219,7 +13219,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251105112455",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2807703",
@@ -13238,7 +13238,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260127111540",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2858292",
@@ -13257,7 +13257,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20260304100426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891789",
@@ -13276,7 +13276,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20251024151709",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2626612",
@@ -13295,7 +13295,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227091829",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4002868",
@@ -13314,7 +13314,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260325093432",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2783646",
@@ -13333,7 +13333,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828090235",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2840901",
@@ -13352,7 +13352,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605091412",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2717045",
@@ -13371,7 +13371,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260312161024",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869129",
@@ -13390,7 +13390,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829093258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832712",
@@ -13409,7 +13409,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250527180725",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133839",
@@ -13428,7 +13428,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251104095755",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891814",
@@ -13447,7 +13447,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250114094301",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2782695",
@@ -13466,7 +13466,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250106150150",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841417",
@@ -13485,7 +13485,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605110318",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2854887",
@@ -13504,7 +13504,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2626628",
@@ -13523,7 +13523,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260227092132",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868609",
@@ -13542,7 +13542,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250620141049",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845069",
@@ -13561,7 +13561,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250828140713",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3543105",
@@ -13580,7 +13580,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260406162453",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845094",
@@ -13599,7 +13599,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250609141626",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851936",
@@ -13618,7 +13618,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225164155",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869196",
@@ -13637,7 +13637,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250709135121",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872442",
@@ -13656,7 +13656,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251106095036",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3415203",
@@ -13675,7 +13675,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20261013174916",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2939476",
@@ -13694,7 +13694,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260630105502",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2810909",
@@ -13713,7 +13713,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867715",
@@ -13732,7 +13732,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250619180445",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853079",
@@ -13751,7 +13751,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829142804",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872611",
@@ -13770,7 +13770,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250702175802",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891826",
@@ -13789,7 +13789,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902103123",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891849",
@@ -13808,7 +13808,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260911091533",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4055432",
@@ -13827,7 +13827,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260406094239",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841499",
@@ -13846,7 +13846,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605143418",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2847910",
@@ -13865,7 +13865,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828144124",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2847893",
@@ -13884,7 +13884,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250610103145",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133906",
@@ -13903,7 +13903,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260304100426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850466",
@@ -13922,7 +13922,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250304174542",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2752976",
@@ -13941,7 +13941,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105094445",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4002891",
@@ -13960,7 +13960,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260325093432",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776379",
@@ -13979,7 +13979,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220142711",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832729",
@@ -13998,7 +13998,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250527182343",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-820382",
@@ -14017,7 +14017,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251030143424",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776400",
@@ -14036,7 +14036,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260224154610",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852419",
@@ -14055,7 +14055,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250611175334",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2862337",
@@ -14074,7 +14074,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260102180409",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2827931",
@@ -14093,7 +14093,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260312151306",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-135008",
@@ -14112,7 +14112,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260122163000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776396",
@@ -14131,7 +14131,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250108095613",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891868",
@@ -14150,7 +14150,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030200",
    "modifiedtime": "20250902103855",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872395",
@@ -14169,7 +14169,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251106094416",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2815626",
@@ -14188,7 +14188,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220162824",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869595",
@@ -14207,7 +14207,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250623175841",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776391",
@@ -14226,7 +14226,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778493",
@@ -14245,7 +14245,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220150225",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2854845",
@@ -14264,7 +14264,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220171956",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2861178",
@@ -14283,7 +14283,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260304100426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134989",
@@ -14302,7 +14302,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225112004",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868655",
@@ -14321,7 +14321,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250620141928",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845099",
@@ -14340,7 +14340,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260701162604",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872574",
@@ -14359,7 +14359,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250708105334",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2811346",
@@ -14378,7 +14378,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227142523",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2756690",
@@ -14397,7 +14397,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250116131744",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2787408",
@@ -14416,7 +14416,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828101956",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2865941",
@@ -14435,7 +14435,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829091345",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2840921",
@@ -14454,7 +14454,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030200",
    "modifiedtime": "20250605094651",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869113",
@@ -14473,7 +14473,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250620150549",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860881",
@@ -14492,7 +14492,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030100",
    "modifiedtime": "20260209155549",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2807129",
@@ -14511,7 +14511,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030400",
    "modifiedtime": "20260317101258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4084686",
@@ -14530,7 +14530,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260709115844",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2840956",
@@ -14549,7 +14549,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605095508",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785270",
@@ -14568,7 +14568,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250828092951",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845123",
@@ -14587,7 +14587,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250609143136",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2804495",
@@ -14606,7 +14606,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20260206141006",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2791482",
@@ -14625,7 +14625,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227135129",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3452014",
@@ -14644,7 +14644,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250724142917",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133313",
@@ -14663,7 +14663,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250724143854",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3487618",
@@ -14682,7 +14682,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260305095851",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3489180",
@@ -14701,7 +14701,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260427103638",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853131",
@@ -14720,7 +14720,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829143039",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1963051",
@@ -14739,7 +14739,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260312090840",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2861958",
@@ -14758,7 +14758,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20251104104434",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2861189",
@@ -14777,7 +14777,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250311112324",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1855868",
@@ -14796,7 +14796,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1963007",
@@ -14815,7 +14815,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260224121340",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2752996",
@@ -14834,7 +14834,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251124180757",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869302",
@@ -14853,7 +14853,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260629163807",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853145",
@@ -14872,7 +14872,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260929161416",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2847969",
@@ -14891,7 +14891,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250610110839",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2390133",
@@ -14910,7 +14910,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260312140400",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838935",
@@ -14929,7 +14929,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260907101142",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3546069",
@@ -14948,7 +14948,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260406165331",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868824",
@@ -14967,7 +14967,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250620144203",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3066825",
@@ -14986,7 +14986,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260619112615",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4113684",
@@ -15005,7 +15005,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260918180846",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3438936",
@@ -15024,7 +15024,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260323095249",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844022",
@@ -15043,7 +15043,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260123163905",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2861291",
@@ -15062,7 +15062,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829152511",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-841730",
@@ -15081,7 +15081,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20261012102239",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2607508",
@@ -15100,7 +15100,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260929170305",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2787109",
@@ -15119,7 +15119,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250116111349",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785277",
@@ -15138,7 +15138,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828094134",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1803744",
@@ -15157,7 +15157,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260211081009",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-135004",
@@ -15176,7 +15176,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251216113322",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3434388",
@@ -15195,7 +15195,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260323095249",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851286",
@@ -15214,7 +15214,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311152617",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860819",
@@ -15233,7 +15233,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105143502",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3578832",
@@ -15252,7 +15252,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260424091626",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860823",
@@ -15271,7 +15271,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250114161803",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867598",
@@ -15290,7 +15290,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105173039",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778503",
@@ -15309,7 +15309,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3423011",
@@ -15328,7 +15328,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260323101848",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3568404",
@@ -15347,7 +15347,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260309093631",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872553",
@@ -15366,7 +15366,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250708104638",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-403961",
@@ -15385,7 +15385,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311154507",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805542",
@@ -15404,7 +15404,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260910093331",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3014718",
@@ -15423,7 +15423,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260305110128",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3373600",
@@ -15442,7 +15442,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260914135547",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2626063",
@@ -15461,7 +15461,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227091312",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2952019",
@@ -15480,7 +15480,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20261014095914",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2784320",
@@ -15499,7 +15499,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828090748",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805861",
@@ -15518,7 +15518,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20261008145029",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2793181",
@@ -15537,7 +15537,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902102847",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860829",
@@ -15556,7 +15556,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250617095913",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778507",
@@ -15575,7 +15575,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220151806",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134351",
@@ -15594,7 +15594,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260205135236",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3408797",
@@ -15613,7 +15613,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260331112746",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868850",
@@ -15632,7 +15632,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250116112130",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3432951",
@@ -15651,7 +15651,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260323171835",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860833",
@@ -15670,7 +15670,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250114105143",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785965",
@@ -15689,7 +15689,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828095557",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2808104",
@@ -15708,7 +15708,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3442923",
@@ -15727,7 +15727,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250718090000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4095461",
@@ -15746,7 +15746,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260803142242",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805853",
@@ -15765,7 +15765,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311143418",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2668102",
@@ -15784,7 +15784,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260916130658",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838489",
@@ -15803,7 +15803,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250530133002",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2940880",
@@ -15822,7 +15822,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260526170841",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852696",
@@ -15841,7 +15841,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250612100458",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869572",
@@ -15860,7 +15860,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250623173529",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785269",
@@ -15879,7 +15879,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250116131214",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4116819",
@@ -15898,7 +15898,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20261001140517",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2563237",
@@ -15917,7 +15917,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260224101913",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860839",
@@ -15936,7 +15936,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250617100934",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2824044",
@@ -15955,7 +15955,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260317101258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870354",
@@ -15974,7 +15974,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250624174640",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3588185",
@@ -15993,7 +15993,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260831103809",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3559064",
@@ -16012,7 +16012,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260422094532",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2865975",
@@ -16031,7 +16031,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250619112203",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2826792",
@@ -16050,7 +16050,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227154148",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872534",
@@ -16069,7 +16069,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250708104311",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869183",
@@ -16088,7 +16088,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030400",
    "modifiedtime": "20250620152258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2836405",
@@ -16107,7 +16107,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260819101125",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869439",
@@ -16126,7 +16126,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829094030",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832671",
@@ -16145,7 +16145,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250828104302",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851832",
@@ -16164,7 +16164,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260918142457",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838382",
@@ -16183,7 +16183,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828104304",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860851",
@@ -16202,7 +16202,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250626152903",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2759609",
@@ -16221,7 +16221,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250916090438",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845149",
@@ -16240,7 +16240,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828142025",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1826034",
@@ -16259,7 +16259,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260929172314",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853163",
@@ -16278,7 +16278,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260804130640",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-688610",
@@ -16297,7 +16297,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250311134900",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911145",
@@ -16316,7 +16316,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260625151501",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2865384",
@@ -16335,7 +16335,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250829152835",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3544694",
@@ -16354,7 +16354,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260407100828",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3081825",
@@ -16373,7 +16373,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260727090421",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3467682",
@@ -16392,7 +16392,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260319094959",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2861551",
@@ -16411,7 +16411,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030100",
    "modifiedtime": "20260227152026",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3432962",
@@ -16430,7 +16430,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260323171636",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911158",
@@ -16449,7 +16449,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030100",
    "modifiedtime": "20260615155424",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911185",
@@ -16468,7 +16468,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260826160703",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132836",
@@ -16487,7 +16487,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260318101005",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2781598",
@@ -16506,7 +16506,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250708110410",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2773623",
@@ -16525,7 +16525,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20251120092557",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867167",
@@ -16544,7 +16544,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105172754",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2786742",
@@ -16563,7 +16563,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828100505",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2854465",
@@ -16582,7 +16582,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260520101853",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867517",
@@ -16601,7 +16601,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250113150140",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133796",
@@ -16620,7 +16620,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20260209102625",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2753006",
@@ -16639,7 +16639,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902113815",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832717",
@@ -16658,7 +16658,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250708110830",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776988",
@@ -16677,7 +16677,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260227130914",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2777936",
@@ -16696,7 +16696,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20250827164904",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844638",
@@ -16715,7 +16715,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828112258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875727",
@@ -16734,7 +16734,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902102541",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2938788",
@@ -16753,7 +16753,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260727160518",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838432",
@@ -16772,7 +16772,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250116111621",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2836412",
@@ -16791,7 +16791,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868912",
@@ -16810,7 +16810,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250620145759",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872353",
@@ -16829,7 +16829,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250702092116",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869896",
@@ -16848,7 +16848,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250829094605",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867674",
@@ -16867,7 +16867,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250619175810",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838755",
@@ -16886,7 +16886,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867626",
@@ -16905,7 +16905,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105173354",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875744",
@@ -16924,7 +16924,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250827164425",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860755",
@@ -16943,7 +16943,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250616181844",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869491",
@@ -16962,7 +16962,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260804103053",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869405",
@@ -16981,7 +16981,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829093822",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-853787",
@@ -17000,7 +17000,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260929171645",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785266",
@@ -17019,7 +17019,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828092244",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1310148",
@@ -17038,7 +17038,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250626094632",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850836",
@@ -17057,7 +17057,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260205173918",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776981",
@@ -17076,7 +17076,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260220143026",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2836424",
@@ -17095,7 +17095,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250528173622",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850814",
@@ -17114,7 +17114,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260120084307",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838922",
@@ -17133,7 +17133,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260703171138",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2840998",
@@ -17152,7 +17152,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250605100751",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2512488",
@@ -17171,7 +17171,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311151917",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2860782",
@@ -17190,7 +17190,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250616182435",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850847",
@@ -17209,7 +17209,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250306163534",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838973",
@@ -17228,7 +17228,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250530145744",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2863209",
@@ -17247,7 +17247,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260123093633",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844259",
@@ -17266,7 +17266,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828111910",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869277",
@@ -17285,7 +17285,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260629164150",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2812078",
@@ -17304,7 +17304,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227142916",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2659244",
@@ -17323,7 +17323,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250102175456",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2855623",
@@ -17342,7 +17342,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260804111138",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776991",
@@ -17361,7 +17361,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227131531",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850880",
@@ -17380,7 +17380,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311152123",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868940",
@@ -17399,7 +17399,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250120144123",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850891",
@@ -17418,7 +17418,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250305113559",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2784325",
@@ -17437,7 +17437,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828091046",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872583",
@@ -17456,7 +17456,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250702170542",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870841",
@@ -17475,7 +17475,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250627094427",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869936",
@@ -17494,7 +17494,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829095044",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869323",
@@ -17513,7 +17513,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250623141843",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132838",
@@ -17532,7 +17532,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225091441",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132807",
@@ -17551,7 +17551,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260318101005",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3443614",
@@ -17570,7 +17570,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250730132740",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850932",
@@ -17589,7 +17589,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867662",
@@ -17608,7 +17608,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020500",
    "modifiedtime": "20250619174919",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869223",
@@ -17627,7 +17627,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260702165604",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133526",
@@ -17646,7 +17646,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260318101005",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875761",
@@ -17665,7 +17665,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250704090716",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134718",
@@ -17684,7 +17684,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250306100902",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805578",
@@ -17703,7 +17703,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260209134402",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133310",
@@ -17722,7 +17722,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20261013152415",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841018",
@@ -17741,7 +17741,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20250605101618",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872610",
@@ -17760,7 +17760,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250702172452",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852185",
@@ -17779,7 +17779,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250611132225",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2770124",
@@ -17798,7 +17798,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260311100340",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3409762",
@@ -17817,7 +17817,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260331113534",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852200",
@@ -17836,7 +17836,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260804141203",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134204",
@@ -17855,7 +17855,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225103914",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850991",
@@ -17874,7 +17874,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260304100426",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2989656",
@@ -17893,7 +17893,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260813093808",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870394",
@@ -17912,7 +17912,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251106092030",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2726193",
@@ -17931,7 +17931,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030400",
    "modifiedtime": "20260915090316",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875783",
@@ -17950,7 +17950,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250827164625",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838418",
@@ -17969,7 +17969,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828104758",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2836450",
@@ -17988,7 +17988,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030200",
    "modifiedtime": "20250822142537",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841029",
@@ -18007,7 +18007,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260929155132",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3061069",
@@ -18026,7 +18026,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260406110132",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852402",
@@ -18045,7 +18045,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250611172815",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832723",
@@ -18064,7 +18064,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250826145040",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2845027",
@@ -18083,7 +18083,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828133957",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872551",
@@ -18102,7 +18102,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260313095829",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2847877",
@@ -18121,7 +18121,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828143102",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844677",
@@ -18140,7 +18140,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030400",
    "modifiedtime": "20250828131602",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851009",
@@ -18159,7 +18159,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260929161756",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776274",
@@ -18178,7 +18178,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260318101005",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872634",
@@ -18197,7 +18197,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250703091512",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2848952",
@@ -18216,7 +18216,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828165507",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2776275",
@@ -18235,7 +18235,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220142316",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805656",
@@ -18254,7 +18254,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311135053",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2608181",
@@ -18273,7 +18273,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250523112615",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851955",
@@ -18292,7 +18292,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250311153027",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872517",
@@ -18311,7 +18311,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250708102854",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2788406",
@@ -18330,7 +18330,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251104101059",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-135262",
@@ -18349,7 +18349,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20261012132945",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844687",
@@ -18368,7 +18368,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828130549",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868961",
@@ -18387,7 +18387,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260305095851",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872496",
@@ -18406,7 +18406,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250708103151",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851073",
@@ -18425,7 +18425,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785970",
@@ -18444,7 +18444,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828100128",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851082",
@@ -18463,7 +18463,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260225163718",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2703515",
@@ -18482,7 +18482,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260220110447",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2759593",
@@ -18501,7 +18501,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250103145754",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851104",
@@ -18520,7 +18520,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260918095731",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911100",
@@ -18539,7 +18539,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260916133744",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4020804",
@@ -18558,7 +18558,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260224164736",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3060845",
@@ -18577,7 +18577,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260406100237",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4070624",
@@ -18596,7 +18596,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260605084251",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1963085",
@@ -18615,7 +18615,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260224121340",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2873468",
@@ -18634,7 +18634,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902101330",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844698",
@@ -18653,7 +18653,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-850558",
@@ -18672,7 +18672,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853231",
@@ -18691,7 +18691,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829143517",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838820",
@@ -18710,7 +18710,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250530133932",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2608459",
@@ -18729,7 +18729,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250729152345",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851172",
@@ -18748,7 +18748,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260918094043",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911112",
@@ -18767,7 +18767,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260618102051",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844643",
@@ -18786,7 +18786,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828112524",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-132846",
@@ -18805,7 +18805,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225174853",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872258",
@@ -18824,7 +18824,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250701172653",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852238",
@@ -18843,7 +18843,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828165950",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875311",
@@ -18862,7 +18862,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250902102324",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911171",
@@ -18881,7 +18881,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260518094808",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852250",
@@ -18900,7 +18900,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250611170046",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4101028",
@@ -18919,7 +18919,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260826144307",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838849",
@@ -18938,7 +18938,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250530135106",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870751",
@@ -18957,7 +18957,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250625174637",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785956",
@@ -18976,7 +18976,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828094855",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870703",
@@ -18995,7 +18995,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030100",
    "modifiedtime": "20250625173943",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852263",
@@ -19014,7 +19014,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250120172830",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1280921",
@@ -19033,7 +19033,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250306153159",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2865403",
@@ -19052,7 +19052,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250619111207",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2794743",
@@ -19071,7 +19071,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250103145516",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2848949",
@@ -19090,7 +19090,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250610113114",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2822840",
@@ -19109,7 +19109,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250519093518",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2775556",
@@ -19128,7 +19128,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251023143000",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-250562",
@@ -19147,7 +19147,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20260928144630",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2642681",
@@ -19166,7 +19166,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260916133505",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853060",
@@ -19185,7 +19185,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250612102623",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852408",
@@ -19204,7 +19204,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251120203444",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911203",
@@ -19223,7 +19223,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260703171429",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875345",
@@ -19242,7 +19242,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250703111935",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3060265",
@@ -19261,7 +19261,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260401172026",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2807808",
@@ -19280,7 +19280,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251029164611",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844710",
@@ -19299,7 +19299,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260701161653",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3350880",
@@ -19318,7 +19318,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260701154204",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2952936",
@@ -19337,7 +19337,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20261014095412",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2861132",
@@ -19356,7 +19356,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260224134738",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832636",
@@ -19375,7 +19375,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250527171154",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852620",
@@ -19394,7 +19394,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250612094241",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3582279",
@@ -19413,7 +19413,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260406094239",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-134082",
@@ -19432,7 +19432,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260225102532",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-843489",
@@ -19451,7 +19451,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260929172534",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785267",
@@ -19470,7 +19470,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828092457",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3588134",
@@ -19489,7 +19489,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260422164121",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870780",
@@ -19508,7 +19508,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250627091138",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2859188",
@@ -19527,7 +19527,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250616173903",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2858974",
@@ -19546,7 +19546,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250829151826",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869532",
@@ -19565,7 +19565,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20250623145154",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2868448",
@@ -19584,7 +19584,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250116130814",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-4123423",
@@ -19603,7 +19603,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20261014083925",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2775543",
@@ -19622,7 +19622,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251229143651",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852602",
@@ -19641,7 +19641,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250828173532",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1552695",
@@ -19660,7 +19660,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260205175817",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1128306",
@@ -19679,7 +19679,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20260317101258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2807806",
@@ -19698,7 +19698,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260317101258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869186",
@@ -19717,7 +19717,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250620153137",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2902322",
@@ -19736,7 +19736,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260312090840",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-403929",
@@ -19755,7 +19755,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250304173307",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841442",
@@ -19774,7 +19774,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250605111729",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2838889",
@@ -19793,7 +19793,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250530142314",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853081",
@@ -19812,7 +19812,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250120132727",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805774",
@@ -19831,7 +19831,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260226150156",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133314",
@@ -19850,7 +19850,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250307141556",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844738",
@@ -19869,7 +19869,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250609132037",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2827847",
@@ -19888,7 +19888,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260227145059",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2791498",
@@ -19907,7 +19907,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260317101258",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2756678",
@@ -19926,7 +19926,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251104171929",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2844748",
@@ -19945,7 +19945,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020400",
    "modifiedtime": "20250828132443",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869249",
@@ -19964,7 +19964,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250623133925",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2616371",
@@ -19983,7 +19983,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250526105305",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832642",
@@ -20002,7 +20002,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250527172035",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3028633",
@@ -20021,7 +20021,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260420161651",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2891887",
@@ -20040,7 +20040,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20251024152407",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832649",
@@ -20059,7 +20059,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250527172713",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875819",
@@ -20078,7 +20078,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250704092015",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2785276",
@@ -20097,7 +20097,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828093920",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2787137",
@@ -20116,7 +20116,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250828101959",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852277",
@@ -20135,7 +20135,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828170308",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2848930",
@@ -20154,7 +20154,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250610111925",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2858955",
@@ -20173,7 +20173,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829152055",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841052",
@@ -20192,7 +20192,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250605102427",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2904891",
@@ -20211,7 +20211,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260415101230",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3486625",
@@ -20230,7 +20230,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260929170720",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2867734",
@@ -20249,7 +20249,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250619180936",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-851989",
@@ -20268,7 +20268,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260921013002",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1394895",
@@ -20287,7 +20287,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260312090840",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2905141",
@@ -20306,7 +20306,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250120112932",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805095",
@@ -20325,7 +20325,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20261008145520",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869618",
@@ -20344,7 +20344,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105175542",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2911217",
@@ -20363,7 +20363,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260617181435",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2775501",
@@ -20382,7 +20382,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227113523",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2872271",
@@ -20401,7 +20401,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250701175728",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2875364",
@@ -20420,7 +20420,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250703113403",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805792",
@@ -20439,7 +20439,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250326111735",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2786766",
@@ -20458,7 +20458,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250828101047",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3074637",
@@ -20477,7 +20477,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260713130554",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853156",
@@ -20496,7 +20496,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250115155817",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-1805619",
@@ -20515,7 +20515,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260226145850",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2778403",
@@ -20534,7 +20534,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260227143130",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2865435",
@@ -20553,7 +20553,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250829153146",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2786779",
@@ -20572,7 +20572,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260806150307",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2760773",
@@ -20591,7 +20591,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105113448",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2903812",
@@ -20610,7 +20610,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260527111232",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133262",
@@ -20629,7 +20629,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260309114047",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2858936",
@@ -20648,7 +20648,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250116113047",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852289",
@@ -20667,7 +20667,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250611171652",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2903829",
@@ -20686,7 +20686,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260617140217",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2759611",
@@ -20705,7 +20705,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250626134421",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2841524",
@@ -20724,7 +20724,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828111627",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2832655",
@@ -20743,7 +20743,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250527174719",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2852301",
@@ -20762,7 +20762,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250828172649",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3484048",
@@ -20781,7 +20781,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20260305162827",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869343",
@@ -20800,7 +20800,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251105175141",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2869875",
@@ -20819,7 +20819,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020100",
    "modifiedtime": "20250829094256",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2848924",
@@ -20838,7 +20838,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250120105622",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853031",
@@ -20857,7 +20857,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250612101641",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-844414",
@@ -20876,7 +20876,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260703105437",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3550401",
@@ -20895,7 +20895,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20260309093631",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2859132",
@@ -20914,7 +20914,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250616165655",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2865236",
@@ -20933,7 +20933,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250619105217",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-133525",
@@ -20952,7 +20952,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20251222151606",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870666",
@@ -20971,7 +20971,7 @@
    "lclsSystm2": "FD05",
    "lclsSystm3": "FD050100",
    "modifiedtime": "20250829095658",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2853243",
@@ -20990,7 +20990,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020200",
    "modifiedtime": "20250612103806",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2870800",
@@ -21009,7 +21009,7 @@
    "lclsSystm2": "FD02",
    "lclsSystm3": "FD020300",
    "modifiedtime": "20250627091945",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2608470",
@@ -21028,7 +21028,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250526101744",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-3444429",
@@ -21047,7 +21047,7 @@
    "lclsSystm2": "FD03",
    "lclsSystm3": "FD030100",
    "modifiedtime": "20260702112415",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2563357",
@@ -21066,7 +21066,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20250307092435",
-   "detail": false
+   "detail": true
   },
   {
    "id": "bs-2609624",
@@ -21085,7 +21085,7 @@
    "lclsSystm2": "FD01",
    "lclsSystm3": "FD010100",
    "modifiedtime": "20260702165034",
-   "detail": false
+   "detail": true
   }
  ]
 }

@@ -1,0 +1,52 @@
+{
+ "contentid": "2873468",
+ "modifiedtime": "20250902101330",
+ "fetchedAt": "2026-10-19T00:00:56.005Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2873468",
+       "contenttypeid": "39",
+       "title": "제주복국",
+       "createdtime": "20221024152800",
+       "modifiedtime": "20250902101330",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/63/2873463_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/63/2873463_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "14",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 영도구 절영로 481",
+       "addr2": "",
+       "zipcode": "49118",
+       "mapx": "129.0688904785",
+       "mapy": "35.0710436259",
+       "mlevel": "6",
+       "overview": "복어 유통 전문 업체에서 직영으로 운영하는 제주복국은 노화 예방, 다이어트, 숙취 해소 등의 효과가 있는 복요리 전문점이다. 매일 새벽 경매한 신선한 재료와 복어를 사용하는 제주복국에는 까치복, 밀복, 참복, 총 세 가지로 복어로 지리와 매운탕으로 선택하여 먹을 수 있다. 특미로 까치복, 밀복 수육과 복튀김, 복초회, 복불고기, 복찜이 있어 다양한 복요리를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

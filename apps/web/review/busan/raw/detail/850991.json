@@ -1,0 +1,52 @@
+{
+ "contentid": "850991",
+ "modifiedtime": "20260304100426",
+ "fetchedAt": "2026-10-19T00:00:52.551Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850991",
+       "contenttypeid": "39",
+       "title": "윤희횟집",
+       "createdtime": "20091030214732",
+       "modifiedtime": "20260304100426",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/20/1867020_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/20/1867020_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 수영구 광안해변로344번길 17-17",
+       "addr2": "3층",
+       "zipcode": "48280",
+       "mapx": "129.131528570897",
+       "mapy": "35.1552978178551",
+       "mlevel": "6",
+       "overview": "수변공원에 위치한 자연산 회 전문점 윤희횟집은 회와 매운탕 전문점으로 손님이 직접 생선을 고를 수 있는 것이 특징이다. 20년 이상 운영한 사장님의 칼솜씨로 신선하고 깊은 맛을 맛볼 수 있으며, 수변공원 바로 앞에 위치하여 경치가 좋으며 주차 자리도 넉넉하다. 단체석도 완비되어 각종 모임 및 회식 장소로 방문하기에 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

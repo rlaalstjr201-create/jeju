@@ -1,0 +1,52 @@
+{
+ "contentid": "2791482",
+ "modifiedtime": "20260227135129",
+ "fetchedAt": "2026-10-19T00:00:37.901Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2791482",
+       "contenttypeid": "39",
+       "title": "부산 내호냉면",
+       "createdtime": "20211210183846",
+       "modifiedtime": "20260227135129",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 남구 우암번영로26번길 17",
+       "addr2": "",
+       "zipcode": "48479",
+       "mapx": "129.070837803253",
+       "mapy": "35.1264778515291",
+       "mlevel": "6",
+       "overview": "부산 우암시장 좁은 골목길에 있는 오랜 전통의 밀면 전문점 내호냉면은 부산 여행을 하면서 꼭 들려야 하는 맛집이다. 밀면은 국전쟁 때 피란민들의 고단한 몸과 마음을 달래주던 음식이었다. 이북에서는 감자전분을 이용한 면을 뽑아 농마국수를 팔았지만 1.4 후퇴 이후 부산으로 피난을 오신 후에는 한국전쟁 당시에는 너무 비싸 피란민이 배급받은 밀가루로 만든 게 바로 부산 최초의 밀면이다. 현재 내호냉면은 4대 젊은 사업주가 전통과 현대를 이어가고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2952936",
+ "modifiedtime": "20261014095412",
+ "fetchedAt": "2026-10-19T00:00:59.406Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2952936",
+       "contenttypeid": "39",
+       "title": "카페제노아",
+       "createdtime": "20230327113243",
+       "modifiedtime": "20261014095412",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/22/2952922_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/22/2952922_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 중구로29번길 17 (부평동1가)",
+       "addr2": "",
+       "zipcode": "48978",
+       "mapx": "129.0269764845",
+       "mapy": "35.1003647937",
+       "mlevel": "6",
+       "overview": "카페제노아는 부산 자갈치역 근처있는 카페로 부평족발골목과 미술의거리 사이에 위치해있다. 1층은 주문 및 로스터리, 2층은 카페, 3층은 루프탑으로 운영하고 있으며, 유료 짐 보관 서비스를 이용할 수 있어 관광객들의 편의를 제공하고 있다. 부산에 어울리는 비주얼의 제노아슈패너와 상하목장으로 만든 아이스크림 라떼인 노스폴라떼가 대표 메뉴이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

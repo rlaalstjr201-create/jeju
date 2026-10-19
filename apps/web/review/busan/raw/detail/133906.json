@@ -1,0 +1,52 @@
+{
+ "contentid": "133906",
+ "modifiedtime": "20260304100426",
+ "fetchedAt": "2026-10-19T00:00:34.587Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133906",
+       "contenttypeid": "39",
+       "title": "명송초밥",
+       "createdtime": "20030930090000",
+       "modifiedtime": "20260304100426",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/89/1902089_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/89/1902089_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 해관로 32",
+       "addr2": "",
+       "zipcode": "48957",
+       "mapx": "129.035883410739",
+       "mapy": "35.1017495533909",
+       "mlevel": "6",
+       "overview": "명송초밥은 용두산공원 인근에서 초밥을 전문으로 영업하는 일식당이다. 모둠 초밥이 인기 메뉴이지만 장어와 연어, 광어, 새우, 문어, 날치알, 계란말이 등 다양한 초밥도 맛볼 수 있다. 즉석에서 떠주는 활어회와 얼큰한 매운탕도 준비되어 있다. 모임이나 대화를 나누기 좋은 장소이며, 대접하기 좋은 코스요리를 찾는다면 안성맞춤인 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

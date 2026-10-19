@@ -1,0 +1,52 @@
+{
+ "contentid": "688610",
+ "modifiedtime": "20250311134900",
+ "fetchedAt": "2026-10-19T00:00:45.320Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "688610",
+       "contenttypeid": "39",
+       "title": "아미산",
+       "createdtime": "20090205232754",
+       "modifiedtime": "20250311134900",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "부산광역시 해운대구 해운대해변로 154",
+       "addr2": "",
+       "zipcode": "48092",
+       "mapx": "129.1485450604",
+       "mapy": "35.1581353515",
+       "mlevel": "6",
+       "overview": "중국 아미산의 이름을 빌려 1996년 1월 해운대 마리나센터에 문을 연 아미산은 뛰어난 맛과 서비스로 중식 애호가들에게 사랑을 받아 오고 있으며 부산을 찾는 저명인사들도 즐겨 찾는 곳이다. 홀과 룸의 좌석이 테이블과 의자로 되어 있고 룸의 입구에도 높이 차이가 없어 이용이 편리하다. 대표 메뉴는 황실의 보양식 불도장 세트이며, 팔보채, 홍소가지에 짜장, 볶음밥, 짬뽕 중 2가지를 선택할 수 있는 구성이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

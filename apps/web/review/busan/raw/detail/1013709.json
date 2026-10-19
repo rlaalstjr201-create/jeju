@@ -1,0 +1,52 @@
+{
+ "contentid": "1013709",
+ "modifiedtime": "20251105144151",
+ "fetchedAt": "2026-10-19T00:00:21.326Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1013709",
+       "contenttypeid": "38",
+       "title": "아리랑거리",
+       "createdtime": "20100504012600",
+       "modifiedtime": "20251105144151",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/26/3561926_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/26/3561926_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "15",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "A04",
+       "cat2": "A0401",
+       "cat3": "A04010200",
+       "addr1": "부산광역시 중구 광복로35번길 11 (신창동3가)",
+       "addr2": "",
+       "zipcode": "48946",
+       "mapx": "129.0287931674",
+       "mapy": "35.1002812830",
+       "mlevel": "6",
+       "overview": "만물의 거리 옆으로 나란히 위치한 아리랑 거리에서는 한국의 대표적인 음식인 김치를 비롯하여 한복, 장신구 등의 한국적인 물건들을 만날 수 있다. 다양한 전통공예품 및 특산품이 판매되고 있어 외국관광객들의 발길이 끊이지 않는 곳이다. 한류를 일으키고 있는 연예인관련 제품도 찾아볼 수 있다. 특히 이 거리의 매장들은 네이티브 수준의 외국어를 구사하는 직원들이 안내하고 있어 외국인 관광객이 편하게 쇼핑을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

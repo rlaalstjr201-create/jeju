@@ -1,0 +1,52 @@
+{
+ "contentid": "3484048",
+ "modifiedtime": "20260305162827",
+ "fetchedAt": "2026-10-19T00:01:06.499Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3484048",
+       "contenttypeid": "39",
+       "title": "홀리라운지",
+       "createdtime": "20250327113800",
+       "modifiedtime": "20260305162827",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/41/3484041_image2_1.png",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/41/3484041_image3_1.png",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 송정중앙로6번길 143 (송정동)",
+       "addr2": "",
+       "zipcode": "48073",
+       "mapx": "129.19784022730101",
+       "mapy": "35.177917108501184",
+       "mlevel": "6",
+       "overview": "홀리라운지는 부산 해운대구 송정 바다가 보이는 오션뷰 양식 레스토랑이다. 한식 재료를 이용한 양식 요리를 전문적으로 취급한다. 신선한 재료와 5성급 호텔 출신의 쉐프의 정성이 더해진 파스타 요리로 인기가 좋다. 피자, 리조또 등 다양한 양식 요리를 제공하고 있다. 양식에 어울리는 각종 음료도 준비되어 있다. 단체, 대관, 이벤트, 행사 등 가능한 공간이며 3층은 워케이션 공간으로도 활용되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

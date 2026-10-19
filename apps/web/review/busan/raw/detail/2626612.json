@@ -1,0 +1,52 @@
+{
+ "contentid": "2626612",
+ "modifiedtime": "20260227091829",
+ "fetchedAt": "2026-10-19T00:00:31.827Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2626612",
+       "contenttypeid": "39",
+       "title": "라세느",
+       "createdtime": "20191017221354",
+       "modifiedtime": "20260227091829",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 가야대로 772",
+       "addr2": "",
+       "zipcode": "47285",
+       "mapx": "129.056429972267",
+       "mapy": "35.1568240100647",
+       "mlevel": "6",
+       "overview": "170여 가지의 전 세계 산해진미를 한자리에서 맛볼 수 있는 스타일리시 업스케일 뷔페다. 2017년 5월, 롯데호텔부산 5층을 새 단장해 오픈한 이곳은 프리미엄 뷔페 메뉴와 더불어 파인 다이닝 서비스를 제공한다. 양갈비, 불도장, 훈제연어 같은 이곳 시그니처 메뉴와 더불어 대게찜 등 매 시즌마다 선보이는 새로운 메뉴가 고급스러움을 더한다. 4인부터 6인, 8인부터 10인, 12인부터 14인까지 이용할 수 있는 각 1개의 별실과 6인부터 8인까지 이용할 수 있는 3개의 별실을 갖추고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

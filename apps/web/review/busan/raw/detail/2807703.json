@@ -1,0 +1,52 @@
+{
+ "contentid": "2807703",
+ "modifiedtime": "20260127111540",
+ "fetchedAt": "2026-10-19T00:00:31.581Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2807703",
+       "contenttypeid": "39",
+       "title": "딤타오",
+       "createdtime": "20220218172534",
+       "modifiedtime": "20260127111540",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 우동1로 25",
+       "addr2": "",
+       "zipcode": "48088",
+       "mapx": "129.15645656362",
+       "mapy": "35.1639361576617",
+       "mlevel": "6",
+       "overview": "부산 해운대구에 위치한 딤타오는 홍콩 미슐랭 셰프분들이 하는 레스토랑으로 홍콩의 맛을 제대로 느껴볼 수 있는 딤섬집이다. 식당 인테리어는 조명과 분위기가 세련되고 포근한 느낌을 준다. 테이블마다 태블릿 PC가 있어 주문이 간편하다. 메뉴는 딤섬종류인 소롱포, 하가우, 슈마이, 부추 새우 교자 등이 있으며 만두종류 외에도 가벼운 식사를 할 수 있는 음식들이 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

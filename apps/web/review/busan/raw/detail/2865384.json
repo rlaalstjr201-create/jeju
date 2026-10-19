@@ -1,0 +1,52 @@
+{
+ "contentid": "2865384",
+ "modifiedtime": "20250829152835",
+ "fetchedAt": "2026-10-19T00:00:45.493Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2865384",
+       "contenttypeid": "39",
+       "title": "아시오",
+       "createdtime": "20221011165741",
+       "modifiedtime": "20250829152835",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/2865371_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/2865371_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "7",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "부산광역시 부산진구 초읍동",
+       "addr2": "165-10",
+       "zipcode": "47103",
+       "mapx": "129.0492419275",
+       "mapy": "35.1822280386",
+       "mlevel": "6",
+       "overview": "부산광역시 초읍동에 위치한 아시오 카페는 2층 건물을 전체 사용하는 큰 규모의 베이커리 카페이다. 아시오의 모든 빵은 당일 생산과 당일 판매를 원칙으로 한다. 또 천연발효로 빵을 만들고 화학 개량제를 일절 사용하지 않는다. 1층과 2층 모두 통창으로 되어 있어 개방감을 느낄 수 있으며, 유리창 너머로 보이는 풍경, 그리고 차 한잔과 함께 여유를 느낄 수 있는 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

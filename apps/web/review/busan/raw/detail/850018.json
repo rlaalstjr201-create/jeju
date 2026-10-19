@@ -1,0 +1,52 @@
+{
+ "contentid": "850018",
+ "modifiedtime": "20260225163105",
+ "fetchedAt": "2026-10-19T00:00:24.237Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850018",
+       "contenttypeid": "39",
+       "title": "고스락",
+       "createdtime": "20091030211857",
+       "modifiedtime": "20260225163105",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/49/1982649_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/49/1982649_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 기장군 장안읍 해맞이로 286",
+       "addr2": "",
+       "zipcode": "46037",
+       "mapx": "129.269115",
+       "mapy": "35.322138",
+       "mlevel": "6",
+       "overview": "부산 기장군 임랑해수욕장 해변에 위치한 고스락은 한식전문점이다. 이곳의 내부는 사시사철 언제나 아름다운 바다를 볼 수 있는 방갈로 독채로 되어있어 낭만적인 시간을 보낼 수 있다. 메뉴는  국내산 통사골을 38시간 푹 고아 만든 진한사골육수와 별도 숙성을 거쳐 부드럽고 육즙이 살이있는 국밥고기를 제공한다. 돼지국밥, 순대국밥, 얼큰국밥 등 다양한 국밥이 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "850814",
+ "modifiedtime": "20260120084307",
+ "fetchedAt": "2026-10-19T00:00:48.982Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850814",
+       "contenttypeid": "39",
+       "title": "오륙도낙지",
+       "createdtime": "20091030214203",
+       "modifiedtime": "20260120084307",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 금정구 수림로20번길 49",
+       "addr2": "",
+       "zipcode": "46275",
+       "mapx": "129.090185574468",
+       "mapy": "35.2417757466878",
+       "mlevel": "6",
+       "overview": "부산 금정구에 위치한 오륙도낙지는 낙곱새 전골로 유명한 낙지 전문점이다. 전골이 끓으면 부추와 콩나물을 추가하여 밥과 비벼 먹는데, 자극적이지 않고 고소한 맛이 일품이다. 낙곱새 외에도 낙새, 불낙, 곱창, 낙지볶음 등 다양한 메뉴 선택이 가능하다. 또한 우동이나 당면, 라면사리를 추가할 수도 있어 든든한 한 끼 식사가 가능하다. 오륙도낙지 식당에서는 국내산 곱창과 쌀, 김치를 사용하여 더욱 건강한 먹거리를 제공한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

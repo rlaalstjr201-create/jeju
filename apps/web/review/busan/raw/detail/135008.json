@@ -1,0 +1,52 @@
+{
+ "contentid": "135008",
+ "modifiedtime": "20260122163000",
+ "fetchedAt": "2026-10-19T00:00:35.528Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135008",
+       "contenttypeid": "39",
+       "title": "무심정",
+       "createdtime": "20050613090000",
+       "modifiedtime": "20260122163000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 금정구 북문로 23",
+       "addr2": "",
+       "zipcode": "46237",
+       "mapx": "129.055910712538",
+       "mapy": "35.251923908111",
+       "mlevel": "6",
+       "overview": "무심정은 부산 금정구 금성동에 위치한 한식 전문점으로 깨끗하고 정갈한 음식을 제공한다. 메뉴는 사찰음식에 약선요리로 자연 그대로의 재료만을 사용하여 맛을 내며, 장아찌류를 매일매일 바꿔서 상에 올리고 있다. 금정산 자락에서 직접 재배한 유기농 식재료들을 사용하고, 간장, 된장, 고추장 등의 장류와 장아찌들로 조리한다. 손두부는 간수 대신 바닷물을 쓰는 초당두부에 12가지 한약재료를 넣고 삶아낸, 국내산 돼지수육을 얹고 새우젓을 적당히 곁들이면 더욱 고소하고 부드럽다. 정성 가득한 식사를 즐기고 싶다면 무심정을 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2827847",
+ "modifiedtime": "20260227145059",
+ "fetchedAt": "2026-10-19T00:01:02.129Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2827847",
+       "contenttypeid": "39",
+       "title": "퍼프베이커리",
+       "createdtime": "20220714161536",
+       "modifiedtime": "20260227145059",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 동천로 56",
+       "addr2": "",
+       "zipcode": "47297",
+       "mapx": "129.06272114219",
+       "mapy": "35.1535856200546",
+       "mlevel": "6",
+       "overview": "부산 서면에 위치한 퍼프베이커리는 다양한 빵을 판매하고 있는 베이커리이다. 인테리어가 잘 되어 있어서 분위기가 좋다. 퍼프베이커리의 모든 빵에는 인공 제빵 개량제가 들어가지 않는 것이 특징이다.  베이커리에 들어서면 빵 냄새가 가득하다. 마들렌, 스콘, 쿠키 등의 구움류는 물론 크로와상, 퀸아망 등 다양한 빵종류도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

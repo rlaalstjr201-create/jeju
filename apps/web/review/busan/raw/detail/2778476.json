@@ -1,0 +1,52 @@
+{
+ "contentid": "2778476",
+ "modifiedtime": "20250916090135",
+ "fetchedAt": "2026-10-19T00:00:30.719Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2778476",
+       "contenttypeid": "39",
+       "title": "동래밀면",
+       "createdtime": "20211124193618",
+       "modifiedtime": "20250916090135",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/65/2778665_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/65/2778665_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "6",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 동래구 명륜로 47 (수안동)",
+       "addr2": "",
+       "zipcode": "47818",
+       "mapx": "129.0841689993",
+       "mapy": "35.1984074269",
+       "mlevel": "6",
+       "overview": "동래밀면은 부산시 동래구 수안동에 있다. 인기 메뉴인 물밀면과 비빔밀면은 육수가 진하고 양념이 적당히 매콤달콤해 인기가 많으며, 특미왕만두도 함께 즐기기 좋다. 사리 추가나 들깨손칼국수, 웰빙손칼국수 등 다양한 선택지가 있어 가족이나 친구와 함께 방문하기 좋다. 음식점은 부산 지하철 1호선 교대역에서 가깝고, 주변에는 충렬사, 온천천시민공원이 위치해 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

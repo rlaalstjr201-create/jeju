@@ -1,0 +1,52 @@
+{
+ "contentid": "2512488",
+ "modifiedtime": "20250311151917",
+ "fetchedAt": "2026-10-19T00:00:49.238Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2512488",
+       "contenttypeid": "39",
+       "title": "오막집",
+       "createdtime": "20171025183241",
+       "modifiedtime": "20250311151917",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 해운대해변로209번나길 28",
+       "addr2": "",
+       "zipcode": "48093",
+       "mapx": "129.1550666621",
+       "mapy": "35.1600824760",
+       "mlevel": "6",
+       "overview": "오막집은 부산 해운대에 자리한 오랜 전통을 가진 양, 대창 전문점이다. 현대적 외관의 3층 건물에 자체 주차장을 갖춰 편안하고 쾌적한 식사를 즐길 수 있다. 테이블 공간과 룸으로 공간을 구분해 가족 모임, 업무 미팅, 데이트 등 모임의 성격에 따라 식사할 수 있다. 신선한 곱창과 중독성 있는 양념, 숯불의 세 가지 조합이 일품인 특양구이와 대창구이, 불을 만나 극대화된 한우 차돌박이의 풍미에 잘 숙성된 묵은지가 환상의 조합을 이뤄 씹을수록 달콤하고 감칠맛 나는 한우 양념갈비 등 모든 메뉴가 최고다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

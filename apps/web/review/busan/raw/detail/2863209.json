@@ -1,0 +1,52 @@
+{
+ "contentid": "2863209",
+ "modifiedtime": "20260123093633",
+ "fetchedAt": "2026-10-19T00:00:49.585Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2863209",
+       "contenttypeid": "39",
+       "title": "오손1209",
+       "createdtime": "20221004150601",
+       "modifiedtime": "20260123093633",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 해운대구 우동2로 48 (우동)",
+       "addr2": "",
+       "zipcode": "48086",
+       "mapx": "129.158027523374",
+       "mapy": "35.1679223530659",
+       "mlevel": "6",
+       "overview": "부산 해운대 카페 오손1209는 해리단길 골목 안쪽에 위치한 나무 인테리어 외관의 카페이다. 카페 내부 테이블은 바테이블 하나로 구성되어 있고, 인테리어도 심플하지만 분위기가 있다. 디저트 종류는 몽블랑 단품으로 구성되어 있지만 종류가 다양하며, 음료 메뉴는 콜드브루와 차 종류가 있다. 몽블랑 메뉴를 주문하면, 테이블 앞 몽블랑 기계로 즉석에서 면발 같은 크림을 뽑아내어 데코하기 때문에 구경하는 재미도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

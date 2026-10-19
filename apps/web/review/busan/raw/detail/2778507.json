@@ -1,0 +1,52 @@
+{
+ "contentid": "2778507",
+ "modifiedtime": "20260220151806",
+ "fetchedAt": "2026-10-19T00:00:42.132Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2778507",
+       "contenttypeid": "39",
+       "title": "송도1913",
+       "createdtime": "20211124195510",
+       "modifiedtime": "20260220151806",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 서구 등대로 11",
+       "addr2": "",
+       "zipcode": "49264",
+       "mapx": "129.024215737187",
+       "mapy": "35.0769633632404",
+       "mlevel": "6",
+       "overview": "송도1913은 부산 서구 암남동에 있는 조개구이 전문점이다. 음식점 명칭은 인근에 있는 송도해수욕장의 송도와 개장 연도에서 따왔다. 바다를 바라보며 음식을 즐길 수 있으며, 대표 메뉴는 조개구이다. 이 밖에 장어구이, 모듬해물, 스페셜 물회도 함께 즐길 수 있다. 음식점 주변에는 송도해수욕장, 송도구름산책로, 송림공원이 있어 함꼐 둘러볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

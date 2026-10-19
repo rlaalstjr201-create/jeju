@@ -1,0 +1,52 @@
+{
+ "contentid": "2815626",
+ "modifiedtime": "20260220162824",
+ "fetchedAt": "2026-10-19T00:00:35.878Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2815626",
+       "contenttypeid": "39",
+       "title": "미락슈퍼",
+       "createdtime": "20220408171541",
+       "modifiedtime": "20260220162824",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 수영구 민락본동로31번길 46",
+       "addr2": "",
+       "zipcode": "48288",
+       "mapx": "129.125962322223",
+       "mapy": "35.1589195094267",
+       "mlevel": "6",
+       "overview": "부산광역시 수영구에 위치한 미락슈퍼는 예약제로 운영되는 제철요리 오마카세 전문점이다. 셰프가 직접 전국을 돌아다니며 제철에 나는 싱싱한 재료를 산지에서 공수해 보다 합리적이고 퀄리티 높은 음식을 손님에게 제공하고 있다. 돼지고기를 기본으로 한 음식들이 제공되며 금액을 추가하면 소고기로 변경이 가능하다. 오픈 주방에서 쉐프가 직접 요리하는 모습을 관찰하며 식사를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

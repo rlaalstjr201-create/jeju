@@ -1,0 +1,52 @@
+{
+ "contentid": "134989",
+ "modifiedtime": "20260225112004",
+ "fetchedAt": "2026-10-19T00:00:36.394Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134989",
+       "contenttypeid": "39",
+       "title": "밀레니엄횟집",
+       "createdtime": "20050419090000",
+       "modifiedtime": "20260225112004",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/43/1866443_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/43/1866443_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 수영구 민락수변로 103",
+       "addr2": "",
+       "zipcode": "48280",
+       "mapx": "129.131789",
+       "mapy": "35.154868",
+       "mlevel": "6",
+       "overview": "광안리 수변공원 앞 밀레니엄횟집은 광안대교와 광안리 바닷가가 한눈에 보이는 전망 좋은 곳이다. 이른 새벽에 청정해역 어장에서 막 잡아 올린 싱싱한 자연산 생선 횟감을 제공하고 있다. 메뉴는 금액대 별로 부요리, 어종과 생선의 크기 등이 차이 나며 계절에 맞는 생선이 제공된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

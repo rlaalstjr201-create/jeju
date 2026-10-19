@@ -1,0 +1,52 @@
+{
+ "contentid": "133227",
+ "modifiedtime": "20260224121340",
+ "fetchedAt": "2026-10-19T00:00:25.510Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133227",
+       "contenttypeid": "39",
+       "title": "구포집",
+       "createdtime": "20070831090000",
+       "modifiedtime": "20260224121340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/02/612202_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/02/612202_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 보수대로36번길 14-1",
+       "addr2": "",
+       "zipcode": "48976",
+       "mapx": "129.024628919021",
+       "mapy": "35.1012021857204",
+       "mlevel": "6",
+       "overview": "구포집은 부산 중구 부평동에 위치한 구포집은 부산을 대표하는 경상도식 추어탕 집으로 1959년 개업하여 오랫동안 한자리를 지켜온 집이다. 진한 추어탕 국물에 고사리를 넣어 추어탕의 구수한 맛이 더욱 발한다. 야채 종류들을 다양하게 넣어 국물은 거친 감이 가시고 부드러워진다. 추어탕 이외에도 또다른 대표메뉴인 회비빔밥은 숙성회와 신선한 야채가 어우러진 비빔밥이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3373600",
+ "modifiedtime": "20260914135547",
+ "fetchedAt": "2026-10-19T00:00:41.528Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3373600",
+       "contenttypeid": "39",
+       "title": "세븐아일랜드",
+       "createdtime": "20240925134655",
+       "modifiedtime": "20260914135547",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/06/4110306_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/06/4110306_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 강서구 가덕해안로 560 (천성동)",
+       "addr2": "",
+       "zipcode": "46770",
+       "mapx": "128.8072219779",
+       "mapy": "35.0451026510",
+       "mlevel": "6",
+       "overview": "부산 강서구에 위치한 세븐아일랜드는 베르사유상을 수상한 독창적인 건축물로, 7개의 섬에서 영감을 받은 공간 구성과 디자인이 특징인 카페다. 특별한 건축미와 함께 약 80여 종의 다채로운 베이커리를 맛볼 수 있으며, 베이커리뿐만 아니라 블랙라떼, 콘파냐 등의 음료도 같이 먹기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

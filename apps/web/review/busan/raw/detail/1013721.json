@@ -1,0 +1,52 @@
+{
+ "contentid": "1013721",
+ "modifiedtime": "20251105144937",
+ "fetchedAt": "2026-10-19T00:00:22.194Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1013721",
+       "contenttypeid": "38",
+       "title": "조명의거리",
+       "createdtime": "20100504013457",
+       "modifiedtime": "20251105144937",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/33/3561933_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/33/3561933_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "6",
+       "sigungucode": "15",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "A04",
+       "cat2": "A0401",
+       "cat3": "A04010200",
+       "addr1": "부산광역시 중구 국제시장2길 5",
+       "addr2": "(창선동2가)",
+       "zipcode": "48945",
+       "mapx": "129.0283348915",
+       "mapy": "35.0996591215",
+       "mlevel": "6",
+       "overview": "온 골목이 알록달록, 반짝반짝 신비롭고 아름다운 조명으로 가득한 곳, 부산 남포동 국제시장 안에 자리 잡은 조명의 거리이다. 이곳은 화려한 조명기구와 특수한 공구를 시중보다 20%~30% 저렴한 가격에 구매할 수 있는 곳이다. 실내외에 쓰이는 예쁘고 실용적인 조명기구와 업소용 조명기구 등 모든 종류의 조명기구가 총망라되어 있다. 야간에만 볼 수 있는 조명의 거리 입구의 화려한 조명도 관광객의 눈길을 사로잡는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

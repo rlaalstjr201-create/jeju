@@ -1,0 +1,52 @@
+{
+ "contentid": "850093",
+ "modifiedtime": "20251029170356",
+ "fetchedAt": "2026-10-19T00:00:26.803Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850093",
+       "contenttypeid": "39",
+       "title": "급행장",
+       "createdtime": "20091030212054",
+       "modifiedtime": "20251029170356",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "7",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 부산진구 서면문화로 4",
+       "addr2": "",
+       "zipcode": "47256",
+       "mapx": "129.0580307117",
+       "mapy": "35.1581031257",
+       "mlevel": "6",
+       "overview": "한우 전문점인 급행장은 부산광역시 서면역 근처에 위치하고 있다. 1950년 오픈하여 대를 이어오고 있으며 부산 최초로 한우협회 인증점으로 등록되어 있으며 품질 좋은 암소 한우를 고객에게 제공한다. 한우 갈빗살, 한우 등심, 육회 등의 메뉴뿐만 아니라 한우 떡갈비정식, 한우 불고기전골, 갈비탕 등 다양한 식사메뉴도 준비되어 있다. 또한, 소모임부터 단체행사까지 가능한 다양한 공간이 준비되어 있다. 전용 주차장을 구비하고 있어 차량으로도 방문이 용이하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

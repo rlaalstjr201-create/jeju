@@ -1,0 +1,52 @@
+{
+ "contentid": "4071258",
+ "modifiedtime": "20260605154452",
+ "fetchedAt": "2026-10-19T00:00:27.392Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4071258",
+       "contenttypeid": "39",
+       "title": "김바당",
+       "createdtime": "20260605153857",
+       "modifiedtime": "20260605154452",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/65/4071265_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/65/4071265_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 기장군 일광읍 화용길 53-83",
+       "addr2": "1층",
+       "zipcode": "46047",
+       "mapx": "129.2300297504",
+       "mapy": "35.2790846542",
+       "mlevel": "",
+       "overview": "김바당은 부산 기장군에 위치한 생선구이 전문점이다. 두툼하고 다양한 생선구이와 직접 만드는 약고추장, 신선한 나물로 구성된 비빔밥이 함께 제공되는 한상 차림이 특징이다. 특히 미역국과 된장찌개도 같이 나와 건강한 한 끼를 즐길 수 있으며, 주차장이 넓어 가족 단위 방문객에게 편리하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

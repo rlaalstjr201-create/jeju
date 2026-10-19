@@ -1,0 +1,52 @@
+{
+ "contentid": "850836",
+ "modifiedtime": "20260205173918",
+ "fetchedAt": "2026-10-19T00:00:48.715Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850836",
+       "contenttypeid": "39",
+       "title": "옛날오막집",
+       "createdtime": "20091030214241",
+       "modifiedtime": "20260205173918",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 서구 구덕로274번길 14",
+       "addr2": "",
+       "zipcode": "49221",
+       "mapx": "129.019706946361",
+       "mapy": "35.1087789800952",
+       "mlevel": "6",
+       "overview": "옛날오막집은 70년 전통의 오막집의 새로운 이름이다. 현재 분점이 일본 쿠마모토에만 있다. 부산 양곱창 숯불구이 전문점 중에서 가장 오래된 집으로, 여러 유명한 매체에 양곱창이 소개되면서 더욱 유명해졌다. 동대신역 7번 출구에서 5분 이내 거리에 있어 접근성이 좋다. 이곳은 모든 반찬과 된장, 고추장은 직접 재래식으로 담아서 제공하며 곱이 가득한 고소한 곱창과 대창은 항상 인기가 많으며 주문 즉시 볶아주는 볶음밥도 인기가 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

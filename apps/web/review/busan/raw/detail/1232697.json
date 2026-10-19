@@ -1,0 +1,52 @@
+{
+ "contentid": "1232697",
+ "modifiedtime": "20260205174951",
+ "fetchedAt": "2026-10-19T00:00:30.637Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1232697",
+       "contenttypeid": "39",
+       "title": "돌솥밥집",
+       "createdtime": "20110318192239",
+       "modifiedtime": "20260205174951",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 광복로37번길 7-1",
+       "addr2": "",
+       "zipcode": "48946",
+       "mapx": "129.029061872924",
+       "mapy": "35.0999829673913",
+       "mlevel": "6",
+       "overview": "국제 시장 내에서 비빔밥을 전문으로 영업하는 한식당이다. 메뉴는 비빔밥 단일메뉴 이지만 순두부와 된장 중 찌개의 종류를 선택할 수 있다. 계란 부침을 얹은 돌솥밥을 내어주면 나물을 담은 커다란 그릇에 밥을 옮겨 담아 비빔밥을 만들고 주문한 찌개를 곁들여 먹으면 된다. 돌솥밥이 제공되므로 식후에 숭늉과 누룽지를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

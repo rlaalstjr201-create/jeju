@@ -1,0 +1,52 @@
+{
+ "contentid": "2858955",
+ "modifiedtime": "20250829152055",
+ "fetchedAt": "2026-10-19T00:01:03.583Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2858955",
+       "contenttypeid": "39",
+       "title": "하진이네",
+       "createdtime": "20220923142703",
+       "modifiedtime": "20250829152055",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/44/2858944_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/44/2858944_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 청사포로 151 (중동)",
+       "addr2": "",
+       "zipcode": "48116",
+       "mapx": "129.1940076674",
+       "mapy": "35.1620496446",
+       "mlevel": "6",
+       "overview": "부산 청사포 횟집촌에 있는 하진이네는 장어와 조개구이 전문점이다. 1층, 2층으로 이루어진 하진이네는 좌석 간 간격이 넓어 쾌적하게 음식을 먹을 수 있고, 창가 쪽에 앉으면 청사포 바다를 볼 수 있어 주말에는 금방 자리가 찬다. 조개구이 전문점으로 싱싱하고 속이 꽉 찬 가리비, 키조개, 대합, 바지락 등 여러 종류의 조개들을 먹을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

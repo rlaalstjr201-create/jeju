@@ -1,0 +1,52 @@
+{
+ "contentid": "2485840",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-19T00:00:29.518Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2485840",
+       "contenttypeid": "39",
+       "title": "대구횟집",
+       "createdtime": "20170317183020",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/31/2485831_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/31/2485831_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 자갈치해안로 57",
+       "addr2": "",
+       "zipcode": "48984",
+       "mapx": "129.031372846893",
+       "mapy": "35.0971500104967",
+       "mlevel": "6",
+       "overview": "대구횟집은 부산의 명소 자갈치시장 바로 앞에 위치해 있는 30년 전통의 횟집이다. 곰장어와 회부터 생선구이, 해물탕, 우럭 매운탕 등의 여러 요리를 선보이고 있다. 가게 위치가 BIFF 광장, 국제시장, 영도다리 등 부산의 명소와 지리적으로 가까이 위치해 있어 가게에서 맛있는 식사를 하고 관광하러 가기에 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

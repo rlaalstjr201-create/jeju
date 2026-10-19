@@ -1,0 +1,52 @@
+{
+ "contentid": "2642681",
+ "modifiedtime": "20260916133505",
+ "fetchedAt": "2026-10-19T00:00:58.504Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2642681",
+       "contenttypeid": "39",
+       "title": "카페 385",
+       "createdtime": "20200103231312",
+       "modifiedtime": "20260916133505",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/90/3423190_image2_1.png",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/90/3423190_image3_1.png",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 영도구 태종로 539",
+       "addr2": "",
+       "zipcode": "49012",
+       "mapx": "129.0762884625",
+       "mapy": "35.0842856954",
+       "mlevel": "6",
+       "overview": "영도에 자리한 카페 385는 바다 뷰가 보이는 위치로 4층짜리 루프탑 카페이다. 나무숲 사이로 흰색의 깔끔한 건물이 보이고 안으로 들어오는 순간 원두의 향에 설레고, 두 번째로는 베이커리 향에 취할 수 있는 곳이다. 영도할매빵으로 알려진 ‘부산 할머핀○은 달콤한 고구마와 꾸덕꾸덕한 크림치즈가 어우러진 시그니처 메뉴로 유명하다. 영도 바다가 한눈에 들어오고 대형 카페로 따뜻함과 부드러운 추억을 공유할 수 있는 장소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

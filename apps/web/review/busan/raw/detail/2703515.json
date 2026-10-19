@@ -1,0 +1,52 @@
+{
+ "contentid": "2703515",
+ "modifiedtime": "20260220110447",
+ "fetchedAt": "2026-10-19T00:00:55.327Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2703515",
+       "contenttypeid": "39",
+       "title": "전골그집 주례본점",
+       "createdtime": "20210112191719",
+       "modifiedtime": "20260220110447",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 사상구 가야대로 268-15",
+       "addr2": "",
+       "zipcode": "47012",
+       "mapx": "129.002085242388",
+       "mapy": "35.1494933030752",
+       "mlevel": "6",
+       "overview": "부산에 위치한 전골 그집은 차돌박이를 구이가 아닌 전골 요리로 재탄생시킨 곳이다. 이곳에서 사용하는 모든 야채는 초음파세척기로 살균세척하며, 싱싱한 야채와 버섯들을 곁들여 끓여 낸 차돌박이 전골은 칼칼하지만 깊고 진한 맛이 난다. 이 외에도 담백한 차돌박이찜, 차돌박이 숙주볶음면, 비빔골뱅이 등의 메뉴를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

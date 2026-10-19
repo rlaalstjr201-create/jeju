@@ -1,0 +1,52 @@
+{
+ "contentid": "134351",
+ "modifiedtime": "20260205135236",
+ "fetchedAt": "2026-10-19T00:00:42.213Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134351",
+       "contenttypeid": "39",
+       "title": "송도공원",
+       "createdtime": "20031229090000",
+       "modifiedtime": "20260205135236",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 서구 암남공원로 75",
+       "addr2": "",
+       "zipcode": "49275",
+       "mapx": "129.018185921466",
+       "mapy": "35.0705001223546",
+       "mlevel": "6",
+       "overview": "낮에는 해안 도로로 이어지는 숲속의 정취를 마음껏 즐길 수 있고 저녁에는 환상적인 해안의 야경을 만끽할 수 있는 송도공원은 4층 건물로 돼있는데, 탁 트인 바다 풍경을 바라보며 식사가 가능한 곳이다. 1층은 숯불갈비전문점으로 한우 생갈비 구이가 별미이고, 2층은 단체 연회석이 있는 장소이며, 3층은 특급호텔 출신의 조리장이 요리하는 정통 중국관으로 중국요리를 한국인의 입맛에 맞게 조화시켜 맛이 좋다고 유명하다. 4층은 회 전문점으로 일식집이다. 한 레스토랑에서 한·중·일의 음식을 모두 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

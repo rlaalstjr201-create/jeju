@@ -1,0 +1,52 @@
+{
+ "contentid": "2844677",
+ "modifiedtime": "20250828131602",
+ "fetchedAt": "2026-10-19T00:00:53.763Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2844677",
+       "contenttypeid": "39",
+       "title": "일광당",
+       "createdtime": "20220829094113",
+       "modifiedtime": "20250828131602",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/2844674_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/74/2844674_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "3",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 기장군 일광읍 일광로 125-1",
+       "addr2": "",
+       "zipcode": "46043",
+       "mapx": "129.2352761915",
+       "mapy": "35.2666137010",
+       "mlevel": "6",
+       "overview": "부산 동해남부선 일광역 1번 출구에서 278m 거리에 있는 일광당은 일광면에서 유일하게 주인이 손으로 직접 빚어 만드는 찐빵과 만두로 지역민이 선호하는 맛집이다. 일광당 만두의 특징은 피가 매우 얇고 속은 꽉 차있다. 포장해서 조금만 걸어 나오면 주변에 있는 벤치에 앉아서 바다를 바라보며 먹을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

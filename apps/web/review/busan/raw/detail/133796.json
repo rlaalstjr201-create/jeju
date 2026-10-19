@@ -1,0 +1,52 @@
+{
+ "contentid": "133796",
+ "modifiedtime": "20260209102625",
+ "fetchedAt": "2026-10-19T00:00:46.768Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133796",
+       "contenttypeid": "39",
+       "title": "어가초밥",
+       "createdtime": "20031002090000",
+       "modifiedtime": "20260209102625",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/01/1982801_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/01/1982801_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 자갈치로 41",
+       "addr2": "",
+       "zipcode": "48983",
+       "mapx": "129.028828638135",
+       "mapy": "35.097199957184",
+       "mlevel": "6",
+       "overview": "부산광역시 중구 자갈치시장 인근에 위치한 어가초밥은 신선한 회와 초밥을 판매하고 있는 일식집이다. 어가 스페셜코스와 더불어 혼마구로, 전복회, 새우튀김, 전복튀김, 생선모듬초밥, 생선회덮밥 등 다양한 메뉴를 제공하고 있다. 신선한 회초밥을 맛보고 싶다면 부산 방문 시 어가초밥을 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

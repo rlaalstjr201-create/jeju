@@ -1,0 +1,52 @@
+{
+ "contentid": "3423011",
+ "modifiedtime": "20260323101848",
+ "fetchedAt": "2026-10-19T00:00:41.031Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3423011",
+       "contenttypeid": "39",
+       "title": "선생조고매",
+       "createdtime": "20241121114050",
+       "modifiedtime": "20260323101848",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/99/3422999_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/99/3422999_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 영도구 벚꽃길 75 (청학동)",
+       "addr2": "영도 조내기  고구마 역사기념관 2층",
+       "zipcode": "49087",
+       "mapx": "129.05832742221446",
+       "mapy": "35.08529258954757",
+       "mlevel": "6",
+       "overview": "선생 조고매 카페는 고구마를 활용한 음료와 디저트를 만드는 곳이다. 대표 음료는 영도꿀고매라테와 고매크림라테가 있으며 대표 디저트는 영도 조고매(고구마) 빵과 선생 감자빵, 고매스틱이 있다. 굿즈로는 머그컵, 리유저블 컵, 에코백이 있다. 매장 근처에는 봉래산 산책로와 어린이들을 위한 놀이터가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

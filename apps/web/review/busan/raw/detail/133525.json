@@ -1,0 +1,52 @@
+{
+ "contentid": "133525",
+ "modifiedtime": "20251222151606",
+ "fetchedAt": "2026-10-19T00:01:07.308Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133525",
+       "contenttypeid": "39",
+       "title": "18번완당집",
+       "createdtime": "20030820090000",
+       "modifiedtime": "20251222151606",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "15",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 중구 비프광장로 31",
+       "addr2": "",
+       "zipcode": "48953",
+       "mapx": "129.0284682315",
+       "mapy": "35.0989841994",
+       "mlevel": "6",
+       "overview": "18번완당집은 1948년에 시작하여 오랜 전통이 있는 완당 전문점이다. 티비프로그램에도 출연 그 외 신문, 잡지 등에 다수 소개된 바 있는 음식점이다. 지하에 위치한 넓은 매장에서 신선한 재료로 만든 완당과 모밀, 새우완당면을 맛볼 수 있으며, 세트 메뉴로 김초밥이나 유부초밥을 함께 즐길 수 있다. 오픈 주방에서 직원들이 완당을 빚는 모습을 볼 수 있으며, 얇은 피에 소를 넣어 만들며, 숙주를 넣어 함께 끓이는 데 국물이 시원하며 남녀노소 즐길 수 있는 별미 음식이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "851172",
+ "modifiedtime": "20260918094043",
+ "fetchedAt": "2026-10-19T00:00:56.525Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "851172",
+       "contenttypeid": "39",
+       "title": "중앙모밀",
+       "createdtime": "20091030215149",
+       "modifiedtime": "20260918094043",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 중구 중앙대로49번길 9-1",
+       "addr2": "",
+       "zipcode": "48956",
+       "mapx": "129.0352612440",
+       "mapy": "35.1018411977",
+       "mlevel": "6",
+       "overview": "부산에 위치한 중앙모밀은 50년 이상 된 전통 있는 국숫집으로 우동면과 메밀면을 모두 직접 손으로 뽑아 제공하고 있다. 모두 인기가 많지만 그중 모밀국수, 냄비 우동, 유부초밥, 김초밥을 많이 찾는다. 메밀국수는 포만감을 주면서도 칼로리가 높지 않아 다이어트 음식으로도 좋다. 가게 내부는 깔끔하며, 다양한 좌석을 구비하고 있어 편안한 식사가 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2785276",
+ "modifiedtime": "20250828093920",
+ "fetchedAt": "2026-10-19T00:01:03.204Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2785276",
+       "contenttypeid": "39",
+       "title": "하기연진주냉면",
+       "createdtime": "20211202223942",
+       "modifiedtime": "20250828093920",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/01/2798101_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/01/2798101_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "10",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 사하구 괴정로 34 (하단동)",
+       "addr2": "",
+       "zipcode": "49413",
+       "mapx": "128.9678872863",
+       "mapy": "35.1027993255",
+       "mlevel": "6",
+       "overview": "하기연 진주냉면은 소고기와 해산물을 기본으로 한 육수에 청정 제주산 쓴(흑)메일로 만든 면을 넣고 시원한 배, 상큼한 오이, 맛깔스러운 색을 내주는 노란 지단과 삶은 계란, 계란 물을 입혀 맛있게 구워 낸 육전을 푸짐하게 올린 경상남도 진주의 향토음식인 진주냉면 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

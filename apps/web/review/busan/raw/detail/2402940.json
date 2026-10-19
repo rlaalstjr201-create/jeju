@@ -1,0 +1,52 @@
+{
+ "contentid": "2402940",
+ "modifiedtime": "20260206094042",
+ "fetchedAt": "2026-10-19T00:00:29.169Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2402940",
+       "contenttypeid": "39",
+       "title": "다온스시앤덮밥",
+       "createdtime": "20160820010428",
+       "modifiedtime": "20260206094042",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 남구 수영로334번길 6 (대연동)",
+       "addr2": "1층",
+       "zipcode": "48508",
+       "mapx": "129.10227486205213",
+       "mapy": "35.13806078044969",
+       "mlevel": "6",
+       "overview": "다온스시앤덮밥은 부산 남구 경성대, 부경대역 인근에 자리한 초밥 전문점이다. 가게 안을 들어서면 원피스 퍼즐과 피규어가 즐비하여 인테리어를 보는 재미가 있다. 메뉴는 모둠초밥, 활어초밥, 연어초밥, 생새우초밥, 초새우초밥 등 취향에 맞게 초밥세트를 주문할 수 있다. 사이드 메뉴로 우동과 연어샐러드, 치킨샐러드, 감자크로켓이 있는데 이 또한 별미이다. 초밥은 회의 크기가 밥을 한 바퀴 감싸 안을 만큼 제법 큰 편이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

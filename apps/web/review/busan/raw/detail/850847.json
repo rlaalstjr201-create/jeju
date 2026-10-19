@@ -1,0 +1,52 @@
+{
+ "contentid": "850847",
+ "modifiedtime": "20250306163534",
+ "fetchedAt": "2026-10-19T00:00:49.408Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "850847",
+       "contenttypeid": "39",
+       "title": "오사카",
+       "createdtime": "20091030214258",
+       "modifiedtime": "20250306163534",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "10",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "부산광역시 사하구 낙동대로324번길 2",
+       "addr2": "",
+       "zipcode": "49344",
+       "mapx": "128.9820222326",
+       "mapy": "35.1004109631",
+       "mlevel": "6",
+       "overview": "오사카는 일본 가정식을 맛볼 수 있는 식당으로 일본인 사장님이 운영하고 있어 현지의 맛을 느낄 수 있다. 1층은 이자카야로 운영되며 2층은 라멘, 덮밥, 카레, 회전초밥 등 여러 가지 식사메뉴를 맛볼 수 있는 식당으로 구성되어 있다. 음식 주문 시 기본 밑반찬으로 김치와 다시 국물이 제공된다. 대표메뉴는 카레라이스이며 그 외에 돈가스와 오므라이스, 우동, 크로켓 등의 메뉴도 인기가 좋다. 주차는 가능하나 주차자리가 매우 협소하므로 인근에 주차를 한 후 식당에 방문하는 것을 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

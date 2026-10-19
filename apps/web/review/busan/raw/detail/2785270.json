@@ -1,0 +1,52 @@
+{
+ "contentid": "2785270",
+ "modifiedtime": "20250828092951",
+ "fetchedAt": "2026-10-19T00:00:37.604Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2785270",
+       "contenttypeid": "39",
+       "title": "복성반점",
+       "createdtime": "20211202223831",
+       "modifiedtime": "20250828092951",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/55/2790955_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/55/2790955_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "10",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "부산광역시 사하구 하신중앙로 289 (하단동)",
+       "addr2": "",
+       "zipcode": "49428",
+       "mapx": "128.9624793993",
+       "mapy": "35.1036769053",
+       "mlevel": "6",
+       "overview": "부산의 복성반점은 짬뽕 맛집이다. 당일 구입한 신선한 한치와 관자, 조갯살, 새우 등 푸짐한 해산물을 넣어 만든 짬뽕으로 소문난 집이다. 해산물이 주는 시원함과 채소가 주는 감칠맛에 정성을 한가득 들여 끓여 내는 짬뽕은 기호에 맞게 맵기를 보통맛과 매운맛으로 조절해서 시킬 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2791498",
+ "modifiedtime": "20260317101258",
+ "fetchedAt": "2026-10-19T00:01:02.228Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2791498",
+       "contenttypeid": "39",
+       "title": "평산옥",
+       "createdtime": "20211210184159",
+       "modifiedtime": "20260317101258",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 동구 초량중로 26",
+       "addr2": "",
+       "zipcode": "48818",
+       "mapx": "129.03709961769",
+       "mapy": "35.1142897670249",
+       "mlevel": "6",
+       "overview": "부산역 근처 대를 이어 오고 있는 부산 평산옥은 수육 전문점으로 메뉴는 주류를 제외하면 돼지고기 수육과 기본 국수, 열무 국수가 전부인 곳이다. 1인분을 시키면 한 접시에 담겨 나오는 수육, 소면으로 만든 국수는 돼지고기를 삶은 육수에 파와 김치 등의 간단한 재료만 넣어 담백한 맛이 특징이다. 열무국수는 적당히 매운맛이라 얇게 썰어낸 잡내 없는 부드러운 수육과 잘 어울린다. 오래된 가게인 만큼 기본에 충실한 곳임을 느낄 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

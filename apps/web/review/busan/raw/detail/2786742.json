@@ -1,0 +1,52 @@
+{
+ "contentid": "2786742",
+ "modifiedtime": "20250828100505",
+ "fetchedAt": "2026-10-19T00:00:46.515Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2786742",
+       "contenttypeid": "39",
+       "title": "양산왕돼지국밥",
+       "createdtime": "20211207001012",
+       "modifiedtime": "20250828100505",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/14/2797514_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/14/2797514_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 재반로 70 (재송동)",
+       "addr2": "",
+       "zipcode": "48053",
+       "mapx": "129.1263962484",
+       "mapy": "35.1850013767",
+       "mlevel": "6",
+       "overview": "부산 해운대구 재송동에 위치한 양산왕돼지국밥은 진한 국물과 부드러운 고기가 특징인 돼지국밥 전문점이다. 수육은 야들야들하고 순대는 쫄깃하며, 수육백반과 순대국밥 등 메뉴가 다양하다. 매장 내 셀프바에는 고향에서 공수해 온 시골 막걸리를 한잔 맛볼 수도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

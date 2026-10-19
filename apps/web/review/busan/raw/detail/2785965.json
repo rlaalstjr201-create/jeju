@@ -1,0 +1,52 @@
+{
+ "contentid": "2785965",
+ "modifiedtime": "20250828095557",
+ "fetchedAt": "2026-10-19T00:00:42.638Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2785965",
+       "contenttypeid": "39",
+       "title": "송정집",
+       "createdtime": "20211206191807",
+       "modifiedtime": "20250828095557",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/49/2800449_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/49/2800449_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 송정광어골로 59 (송정동)",
+       "addr2": "",
+       "zipcode": "48073",
+       "mapx": "129.1963681835",
+       "mapy": "35.1762119923",
+       "mlevel": "6",
+       "overview": "송정집은 전통 한식 메뉴와 특색 있는 국수 요리 전문점이다. 비빔국수, 들깨오곡 메밀면, 한우육개장 등 다양한 메뉴가 준비되어 있으며, 특히 찐만두는 수제만두로 인기가 높다. 음식 간이 자극적이지 않아 건강한 한 끼를 즐길 수 있다. 주차가 편리하고 매장 분위기가 아늑해 가족이나 친구와 함께 방문하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2484386",
+ "modifiedtime": "20260304100426",
+ "fetchedAt": "2026-10-19T00:00:23.216Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2484386",
+       "contenttypeid": "39",
+       "title": "감내맛집",
+       "createdtime": "20170309014837",
+       "modifiedtime": "20260304100426",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/78/2484378_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/78/2484378_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 사하구 감내2로 159",
+       "addr2": "",
+       "zipcode": "49363",
+       "mapx": "129.009308187387",
+       "mapy": "35.0989243904725",
+       "mlevel": "6",
+       "overview": "감천문화마을이 한눈에 내려다보이는 감내맛집은 (사)감천문화마을 주민협의회에서 운영하는 마을기업으로 비빔밥, 김밥, 돈까스 등을 판매하고 있으며 수익금은 주민복지사업 등 지역환원사업에 사용된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

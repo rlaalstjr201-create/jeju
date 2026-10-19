@@ -1,0 +1,52 @@
+{
+ "contentid": "2659244",
+ "modifiedtime": "20250102175456",
+ "fetchedAt": "2026-10-19T00:00:49.938Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2659244",
+       "contenttypeid": "39",
+       "title": "옥탑방",
+       "createdtime": "20200610201124",
+       "modifiedtime": "20250102175456",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://theast.co.kr/sub.php?menu_number=475\" target=\"_blank\" title=\"새창 : 옥탑방 카페 홈페이지로 이동\">http://theast.co.kr/</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/48/2659248_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/48/2659248_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "6",
+       "sigungucode": "3",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "부산광역시 기장군 기장읍 기장해안로 266 5층",
+       "addr2": "",
+       "zipcode": "46083",
+       "mapx": "129.2242568180",
+       "mapy": "35.1982517091",
+       "mlevel": "6",
+       "overview": "옥탑방은 더이스트인부산 루프탑에 위치한 베이커리 카페이다. 바리스타의 손길이 담긴 신선한 커피, 좋은 재료로 건강하게 만든 디저트, 기장 앞바다가 한눈에 내려다 보이는 뷰, 이 세 가지 즐거움을 한곳에서 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

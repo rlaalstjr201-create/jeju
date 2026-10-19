@@ -1,0 +1,52 @@
+{
+ "contentid": "2804495",
+ "modifiedtime": "20260206141006",
+ "fetchedAt": "2026-10-19T00:00:37.821Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2804495",
+       "contenttypeid": "39",
+       "title": "부들파이터",
+       "createdtime": "20211231025539",
+       "modifiedtime": "20260206141006",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 서전로46번길 86",
+       "addr2": "(전포동)",
+       "zipcode": "47297",
+       "mapx": "129.064737612183",
+       "mapy": "35.1538995096897",
+       "mlevel": "6",
+       "overview": "부들파이트는 필리핀 사관학교 부사관들이 식사를 할 때 바나나 잎 위에 바비큐 음식을 차려 놓고 전쟁을 치르듯이 손으로 먹는 모습을 보고 생겨난 음식이다. 현재는 군대뿐만 아니라 필리핀 현지의 행사 때마다 대중적으로 선호하는 하나의 식문화로 자리 잡았다. 바나나 잎 위에 버터갈릭밥을 깔고 그 위에 다양한 종류의 필리핀식 바베큐가 올라가 있어 정말 현지에서 먹는듯한 느낌이 든다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

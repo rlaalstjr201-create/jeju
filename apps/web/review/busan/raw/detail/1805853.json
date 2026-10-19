@@ -1,0 +1,52 @@
+{
+ "contentid": "1805853",
+ "modifiedtime": "20250311143418",
+ "fetchedAt": "2026-10-19T00:00:42.970Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1805853",
+       "contenttypeid": "39",
+       "title": "수민이네",
+       "createdtime": "20130419024335",
+       "modifiedtime": "20250311143418",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "16",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 해운대구 청사포로58번길 118",
+       "addr2": "",
+       "zipcode": "48116",
+       "mapx": "129.1909968571",
+       "mapy": "35.1606275259",
+       "mlevel": "6",
+       "overview": "수민이네는 부산 해운대구 청사포에 위치한 장어구이 전문점이다. 이곳에서는 장어뿐만 아니라 조개, 가리비, 우럭, 새우를 연탄불에 구워 먹을 수 있다. 장어구이는 깨와 고추를 썰어 넣은 매콤한 양념과 함께 구워 먹을 수 있으며, 구이류뿐만 아니라 탕류 및 해물류도 메뉴로 하고 있다. 아늑한 분위기와 친절한 서비스로 가족 단위 손님들에게 인기가 많으며, 해운대 지역의 로컬 맛집으로 자리잡고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

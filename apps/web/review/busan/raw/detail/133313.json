@@ -1,0 +1,52 @@
+{
+ "contentid": "133313",
+ "modifiedtime": "20250724143854",
+ "fetchedAt": "2026-10-19T00:00:38.081Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133313",
+       "contenttypeid": "39",
+       "title": "부산명물횟집",
+       "createdtime": "20021115090000",
+       "modifiedtime": "20250724143854",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "6",
+       "sigungucode": "15",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "부산광역시 중구 자갈치해안로 55",
+       "addr2": "1층",
+       "zipcode": "48984",
+       "mapx": "129.0311458269",
+       "mapy": "35.0971289007",
+       "mlevel": "6",
+       "overview": "부산명물횟집은 2대에 걸쳐서 한 곳에서 50년 전통을 가진 업소이다. 모든 음식이나 젓갈 등을 직접 집에서 담가서 사용하고 있다. 인기메뉴는 회백반으로 광어회 한 접시에 고기뼈를 푹 고아서 만든 시원한 맑은 국과 여섯 가지 밑반찬이 나오는 회정식이다. 그 외에 다양한 생선회와 식사류의 메뉴가 준비되어 있다. 이곳은 여러 잡지나 방송에서 많이 취재해 가고, 일본 잡지에도 몇 번 소개된 적이 있을 정도로 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "4106709",
+ "modifiedtime": "20260902093552",
+ "fetchedAt": "2026-10-19T00:00:30.893Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4106709",
+       "contenttypeid": "39",
+       "title": "동백",
+       "createdtime": "20260902093043",
+       "modifiedtime": "20260902093552",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/16/4106716_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/16/4106716_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "26",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "부산광역시 부산진구 서면문화로 11-1 (부전동)",
+       "addr2": "2층",
+       "zipcode": "47257",
+       "mapx": "129.0572281714",
+       "mapy": "35.1585659029",
+       "mlevel": "",
+       "overview": "부산진구에 위치한 동백은 전통 한방차와 현대적인 감각이 어우러진 분위기를 통해 장년층과 청년층이 함께 머무르는 곳이다. 쌍화차와 대추차는 진하고 풍부한 맛으로 호평받고 있다. 전통차뿐만 아니라 커피, 에이드 등도 맛볼 수 있다. 넓은 공간과 편안한 좌석 배치로 대화나 휴식에 적합하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}
