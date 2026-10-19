@@ -219,5 +219,13 @@
       "appMinutes": 25,
       "mapMinutes": null
     }
-  ]
+  ],
+  "rescored": {
+    "by": "areas-criteria.md 고침 3 (주인 승인)",
+    "outskirts": [],
+    "dropped": [
+      "구포시장 → 서면 (want 동래·금정)"
+    ],
+    "passed": true
+  }
 }
