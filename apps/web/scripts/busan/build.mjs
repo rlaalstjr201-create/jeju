@@ -11,7 +11,10 @@ import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { popScores } from '../famous.mjs';
+import { applyMarketDays, loadMarketDays } from '../markets.mjs';
+import { applyNight, basisProblems as nightBasisProblems, loadNightCalls } from '../night.mjs';
 import { reasonPunctuationProblem, shipReason } from '../reason.mjs';
+import { nightInputs } from './night.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const busanDir = resolve(webRoot, 'review/busan');
@@ -58,6 +61,9 @@ export function loadInputs(dir = busanDir) {
     pop: readJson(resolve(dir, 'pop-01.json')).rows,
     booking: readJson(resolve(dir, 'booking/routes.json')).spots,
     placeType: Object.keys(readJson(resolve(dir, 'booking/place-type.json')).spots),
+    // S6: 밤 산길(review/busan/night, criteria.md)과 장날(market-days.json, ADR-0066) — 제주 경로가 아닌 부산 경로
+    night: loadNightCalls(resolve(dir, 'night')),
+    marketDays: loadMarketDays(resolve(dir, 'market-days.json')),
   };
 }
 
@@ -184,7 +190,15 @@ export function build(inputs = loadInputs()) {
     ...(pops.has(item.id) ? { famous: true, pop: pops.get(item.id) } : {}),
     ...bookFields,
   }));
-  return { spots, unknownPosition };
+  // S6: 통과한 회차의 밤 산길(`trail`, 체험 예약 칸 앞), 그다음 확인된 장날(`market`, 끝) — 제주 build-spots.mjs와 같은 순서
+  let out = spots;
+  if (inputs.night?.calls.length) {
+    const bad = nightBasisProblems(inputs.night.calls, nightInputs(spots));
+    if (bad.length) throw new Error(`spots-busan.json: night basis problems\n  ${bad.slice(0, 20).join('\n  ')}`);
+    out = applyNight(out, inputs.night);
+  }
+  if (inputs.marketDays) out = applyMarketDays(out, inputs.marketDays, new Map());
+  return { spots: out, unknownPosition };
 }
 
 export const buildSpots = (inputs = loadInputs()) => build(inputs).spots;

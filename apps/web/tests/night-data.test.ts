@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { applyNight, basisProblems, candidates, drawSample, loadNightCalls, roundProblems, scoreAudit, type NightCall, type SourceItem } from '../scripts/night.mjs';
 import { loadInputs } from '../scripts/sunset.mjs';
+import { BUSAN_TRAIL_WORDS, nightInputs, passRule, sampleSide } from '../scripts/busan/night.mjs';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -168,5 +169,30 @@ describe('shipped spots.json (round 01 passed)', () => {
     expect(marked.every((s) => s.trail === true)).toBe(true);
     expect(marked.map((s) => s.id).sort()).toEqual([...on].sort());
     expect(shipped).not.toMatch(/"basis"/);
+  });
+});
+
+describe('부산 회차 01 (plans/busan.md S6, review/busan/night/criteria.md)', () => {
+  const dir = resolve(root, 'review/busan/night');
+  const busan = read('public/spots-busan.json') as S[];
+  const loaded = loadNightCalls(dir);
+  it('the candidates are what the pre-registered words give (name + TourAPI overview, and every 걷기)', () => {
+    const shipped = busan.map(({ market: _m, trail: _t, ...s }: S & { market?: unknown }) => s);
+    expect(candidates(shipped, nightInputs(shipped), BUSAN_TRAIL_WORDS)).toEqual(read('review/busan/night/candidates.json'));
+    expect(roundProblems(loaded.calls, read('review/busan/night/candidates.json').map((c: { id: string }) => c.id), nightInputs(busan))).toEqual([]);
+  });
+  it('the blind sample is the seed\'s draw, and its score is what audit-01.json says: not passed (true→false 1 > 0)', () => {
+    const sample = read('review/busan/night/audit-01-sample.json');
+    expect(sample.perSide).toBe(sampleSide(loaded.calls));
+    expect(drawSample(loaded.calls, sample.seed, sample.perSide)).toEqual(sample.items.map((i: { id: string }) => i.id));
+    const { agreement } = scoreAudit(loaded.calls, sample.items.map((i: { id: string }) => i.id), read('review/busan/night/audit-01-judgments.json'), passRule(sample.perSide));
+    expect(agreement).toEqual(read('review/busan/night/audit-01.json').agreement);
+    expect(agreement).toMatchObject({ n: 34, agree: 33, trueToFalse: 1, trueToFalseMax: 0, pass: false });
+    expect(loaded.pass).toBe(false);
+  });
+  it('a round that did not pass puts no trail on the Busan file; Jeju\'s round is read from its own folder', () => {
+    expect(busan.filter((s) => s.trail)).toEqual([]);
+    expect(loadNightCalls().round).toBe('01');
+    expect(loadNightCalls().pass).toBe(true);
   });
 });

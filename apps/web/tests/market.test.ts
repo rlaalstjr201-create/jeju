@@ -1,4 +1,6 @@
 // 오일장 장날 판정 (ADR-0066, specs/market-days.md M2): 날짜 경계·월말·31일·KST.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { dayOf } from '../src/dates';
 import { marketDay, marketText, type Market } from '../src/market';
@@ -62,5 +64,28 @@ describe('M4 marketText', () => {
   });
   it('a closed day reads like any other non-market day', () => {
     expect(marketText(DAEJEONG, '2026-11-01', false)).toBe('장날: 1·6일');
+  });
+});
+
+describe('부산 장날 (plans/busan.md S6, review/busan/market-days.json)', () => {
+  const busan = JSON.parse(readFileSync(resolve(__dirname, '../public/spots-busan.json'), 'utf8')) as { id: string; name: string; market?: Market }[];
+  const rules = JSON.parse(readFileSync(resolve(__dirname, '../review/busan/market-days.json'), 'utf8')) as { markets: { id: string; days: number[]; label: string; second: string; kakao: { status: string } }[] };
+  it('only the places the file confirms carry a market day: 구포시장 3·8일; 기장시장 none (not confirmed)', () => {
+    expect(busan.filter((s) => s.market).map((s) => [s.name, s.market])).toEqual([['구포시장', { days: [3, 8, 13, 18, 23, 28], label: '3·8일' }]]);
+    expect(busan.find((s) => s.id === 'bs-1117790')?.market).toBeUndefined();
+  });
+  it('each confirmed market has a second source and an open Kakao place', () => {
+    for (const m of rules.markets) {
+      expect(m.second, m.id).toMatch(/^https:\/\//);
+      expect(m.kakao.status, m.id).toBe('Y');
+    }
+  });
+  it('구포: the 28th opens, the 27th and the 31st are off', () => {
+    const gupo = busan.find((s) => s.id === 'bs-1250885')!.market!;
+    expect(marketDay(gupo, '2026-10-28')).toBe('open');
+    expect(marketDay(gupo, '2026-10-03')).toBe('open');
+    expect(marketDay(gupo, '2026-10-27')).toBe('off');
+    expect(marketDay(gupo, '2026-10-31')).toBe('off');
+    expect(marketText(gupo, '2026-10-27', false)).toBe('장날: 3·8일');
   });
 });

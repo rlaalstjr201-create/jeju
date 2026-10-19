@@ -9,6 +9,10 @@ export interface BuildInputs {
   booking: Record<string, { name: string; routes: { kind: string; url: string; evidence: string; verdict: string }[]; best: string | null; call?: string; reason?: string }>;
   /** 「장소형」 체험 ids moved to 구경 (review/busan/booking/place-type.json). */
   placeType?: string[];
+  /** S6 밤 산길 회차(review/busan/night): applied only when its audit passed. */
+  night?: import('../night.mjs').NightLoaded;
+  /** S6 장날(review/busan/market-days.json). */
+  marketDays?: Map<string, import('../markets.mjs').MarketRule>;
 }
 export declare const OUT: string;
 export declare const FAMOUS_N: number;
