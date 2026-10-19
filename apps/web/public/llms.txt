@@ -21,6 +21,7 @@
 |---|---|---|
 | mood | rest · walk · new · famous · food · any | 기분. 있으면 결과 화면으로 바로 연다 |
 | area | hangyeong(한경·수월봉) · hallim(한림·협재) · aewol(애월·한담) · sinjeju(신제주·공항 근처) · gujeju(구제주·동문시장) · jocheon(조천·함덕) · gujwa(구좌·월정리) · udo(우도) · daejeong(대정·모슬포) · andeok(안덕·산방산) · jungmun(중문·주상절리) · seogwipo(서귀포 시내·올레시장) · namwon(남원·위미) · pyoseon(표선·성읍) · seongsan(성산·일출봉) · here | 기준. 지역이면 그 지역 중심에서 재고 위치 권한을 묻지 않는다. here는 지금 위치(권한을 묻는다) |
+| area(부산) | dadaepo(다대포 / 다대포해수욕장) · gamcheon(송도·감천 / 감천문화마을) · nampo(원도심 / 자갈치시장) · yeongdo(영도 / 흰여울마을) · choryang(부산역·초량 / 이바구길) · seomyeon(서면) · dongnae(동래·금정 / 범어사) · yongho(오륙도·용호) · gwangalli(광안리 / 광안대교) · centum(센텀 / 센텀시티) · haeundae(해운대 / 해운대해수욕장) · songjeong(송정·기장 / 해동용궁사) | 부산 세부 지역 12곳. 열면 여차나:부산(장소·사진은 한국관광공사 관광정보)으로 연다 |
 | reach | walk · drive30 · drive60 | 걸어서 15분 · 차로 30분 · 차로 1시간 |
 | date | YYYY-MM-DD (오늘~1년 뒤) | 언제. 하트는 그날에 저장되고 오일장은 그날 장이 서는지 보인다. 오늘이면 지금 |
 | indoor | 1 · 0 | 비 와요(실내만) 켜기 · 끄기 |

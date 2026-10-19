@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, areaByName } from '../src/areas';
+import { BUSAN_AREAS } from '../src/busan';
 import { addDays } from '../src/dates';
 import { readDeepLink } from '../src/deeplink';
 import { backupUrl, readBackup } from '../src/keep';
@@ -239,6 +240,8 @@ describe('D6 what agents read: llms.txt and the home JSON-LD', () => {
     const t = read('public/llms.txt');
     expect(t.startsWith('# 여차나:제주\n')).toBe(true);
     for (const a of AREAS) expect(t, a.slug).toContain(`${a.slug}(`);
+    // 부산 (plans/busan.md S7): its 12 slugs on one line of their own
+    for (const a of BUSAN_AREAS) expect(t, a.slug).toContain(`${a.slug}(`);
     for (const v of ['rest', 'walk', 'new', 'food', 'any', 'here', 'drive30', 'drive60', 'indoor', 'YYYY-MM-DD']) expect(t, v).toContain(v);
     expect(t).toContain('비짓제주(제주관광공사)');
     expect(t).not.toMatch(/공공누리 1유형/);
