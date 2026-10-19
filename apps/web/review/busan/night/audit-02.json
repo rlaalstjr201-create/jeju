@@ -1,0 +1,242 @@
+{
+ "round": "02",
+ "date": "2026-10-20",
+ "criteria": "review/busan/night/criteria-02.md",
+ "sample": "audit-02-sample.json (seed 2026102002, 16 a side)",
+ "judgments": "audit-02-judgments.json",
+ "agreement": {
+  "n": 32,
+  "agree": 32,
+  "rate": 1,
+  "threshold": 0.95,
+  "trueToFalse": 0,
+  "trueToFalseMax": 0,
+  "pass": true
+ },
+ "rows": [
+  {
+   "id": "bs-2763832",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "부엉산 정상까지 20분 걸어 오르는 전망대"
+  },
+  {
+   "id": "bs-3060845",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "숲속 북카페, 먹는 곳"
+  },
+  {
+   "id": "bs-252563",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "영도 중앙의 산, 봉우리 오르기"
+  },
+  {
+   "id": "bs-2788828",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "바닷가 근린공원·갯벌 체험"
+  },
+  {
+   "id": "bs-2381567",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "달맞이고개 바다 옆 해안 산책로"
+  },
+  {
+   "id": "bs-2852185",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "베이커리 카페, 먹는 곳"
+  },
+  {
+   "id": "bs-3027098",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "산성 문루 하나만 있는 곳"
+  },
+  {
+   "id": "bs-2782682",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "강변 시내 공원"
+  },
+  {
+   "id": "bs-2614727",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "다양한 등산 코스가 있는 산"
+  },
+  {
+   "id": "bs-2677748",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "백양산 계곡 주변 숲길·데크길"
+  },
+  {
+   "id": "bs-2726843",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "해발 459m 봉우리 등산"
+  },
+  {
+   "id": "bs-2660770",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "산속 치유의 숲 흙길 탐방로"
+  },
+  {
+   "id": "bs-2614723",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "금정산맥 주능선의 산"
+  },
+  {
+   "id": "bs-2643873",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "산성마을 음식점 거리"
+  },
+  {
+   "id": "bs-2744553",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "길가 낙조 전망대"
+  },
+  {
+   "id": "bs-2822343",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "옛 철길 해안 산책로"
+  },
+  {
+   "id": "bs-3017254",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "고분 유적 구경이 주인 곳"
+  },
+  {
+   "id": "bs-2606230",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "달음산 자락 자연휴양림"
+  },
+  {
+   "id": "bs-2661475",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "수원지 산중 둘레길 21km·숲길"
+  },
+  {
+   "id": "bs-126196",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "금정산 능선 따라 쌓은 산성"
+  },
+  {
+   "id": "bs-128290",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "숲길 등산하는 도심의 산"
+  },
+  {
+   "id": "bs-2755696",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "산자락 숲 데크길 2km"
+  },
+  {
+   "id": "bs-2875849",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "호수 둘레 시민공원"
+  },
+  {
+   "id": "bs-2674974",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "억새 정상 오르는 등산 코스"
+  },
+  {
+   "id": "bs-126120",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "강가 시내 공원·체육시설"
+  },
+  {
+   "id": "bs-126028",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "봉우리·능선 이어진 산"
+  },
+  {
+   "id": "bs-2997123",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "맛집 상권 거리"
+  },
+  {
+   "id": "bs-2715654",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "어촌 포구"
+  },
+  {
+   "id": "bs-1803744",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "음식점"
+  },
+  {
+   "id": "bs-2675011",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "편백림 황토 숲 둘레길"
+  },
+  {
+   "id": "bs-3550346",
+   "first": false,
+   "audit": false,
+   "agree": true,
+   "reason": "오션뷰 카페"
+  },
+  {
+   "id": "bs-2385686",
+   "first": true,
+   "audit": true,
+   "agree": true,
+   "reason": "산자락 천연림 숲 탐방"
+  }
+ ]
+}
