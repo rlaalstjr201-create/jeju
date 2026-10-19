@@ -67,7 +67,7 @@ export function volume03(row) {
 }
 
 /** criteria-03 §4: keywordstool for up to 5 keywords; the rows whose relKeyword is one of them (spaces removed). */
-async function keywordstool(keywords, keys) {
+export async function keywordstool(keywords, keys) {
   const { createHmac } = await import('node:crypto');
   const ts = String(Date.now());
   const sig = createHmac('sha256', keys.secret).update(`${ts}.GET./keywordstool`).digest('base64');
@@ -204,7 +204,7 @@ async function run04() {
   console.log(`pop-${ROUND}.json: ${rows.length} places, ${all.length} keywords, ${calls} calls, 확인 실패 곳 ${failed}, 빠진 키워드 ${missing.length}`);
 }
 
-function env(key) {
+export function env(key) {
   for (const line of readFileSync(resolve(root, '../../.env'), 'utf8').split(/\r?\n/)) {
     const eq = line.indexOf('=');
     if (eq > 0 && line.slice(0, eq).trim() === key) return line.slice(eq + 1).trim();
