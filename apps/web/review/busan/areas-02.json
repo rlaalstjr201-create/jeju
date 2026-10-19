@@ -1,0 +1,223 @@
+{
+  "criteria": "review/busan/areas-criteria.md (고침 2)",
+  "method": "landmark",
+  "input": {
+    "file": "public/spots-busan.json",
+    "sha256": "eee2cb7054300f2a79822e575d6dda53818f6c2dd68d034fd973b10a6995a198"
+  },
+  "passed": false,
+  "areas": [
+    {
+      "name": "다대포",
+      "slug": "dadaepo",
+      "label": "다대포",
+      "landmark": "다대포해수욕장",
+      "lat": 35.0462,
+      "lng": 128.9632,
+      "places": 86,
+      "landmarkKm": 0.01
+    },
+    {
+      "name": "송도·감천",
+      "slug": "gamcheon",
+      "label": "송도·감천",
+      "landmark": "감천문화마을",
+      "lat": 35.0975,
+      "lng": 129.0106,
+      "places": 48,
+      "landmarkKm": 0
+    },
+    {
+      "name": "원도심",
+      "slug": "nampo",
+      "label": "원도심",
+      "landmark": "자갈치시장",
+      "lat": 35.0966,
+      "lng": 129.0306,
+      "places": 83,
+      "landmarkKm": 0
+    },
+    {
+      "name": "영도",
+      "slug": "yeongdo",
+      "label": "영도",
+      "landmark": "흰여울마을",
+      "lat": 35.0799,
+      "lng": 129.0435,
+      "places": 61,
+      "landmarkKm": 0
+    },
+    {
+      "name": "부산역·초량",
+      "slug": "choryang",
+      "label": "부산역·초량",
+      "landmark": "이바구길",
+      "lat": 35.1169,
+      "lng": 129.0367,
+      "places": 50,
+      "landmarkKm": 0
+    },
+    {
+      "name": "서면",
+      "slug": "seomyeon",
+      "label": "서면",
+      "landmark": "서면",
+      "lat": 35.1557,
+      "lng": 129.0579,
+      "places": 86,
+      "landmarkKm": 0
+    },
+    {
+      "name": "동래·금정",
+      "slug": "dongnae",
+      "label": "동래·금정",
+      "landmark": "범어사",
+      "lat": 35.2838,
+      "lng": 129.0702,
+      "places": 141,
+      "landmarkKm": 0.01
+    },
+    {
+      "name": "오륙도·용호",
+      "slug": "yongho",
+      "label": "오륙도·용호",
+      "landmark": "오륙도",
+      "lat": 35.092,
+      "lng": 129.1269,
+      "places": 47,
+      "landmarkKm": 0
+    },
+    {
+      "name": "광안리",
+      "slug": "gwangalli",
+      "label": "광안리",
+      "landmark": "광안대교",
+      "lat": 35.1475,
+      "lng": 129.1301,
+      "places": 68,
+      "landmarkKm": 0
+    },
+    {
+      "name": "센텀",
+      "slug": "centum",
+      "label": "센텀",
+      "landmark": "센텀시티",
+      "lat": 35.1688,
+      "lng": 129.1295,
+      "places": 22,
+      "landmarkKm": 0
+    },
+    {
+      "name": "해운대",
+      "slug": "haeundae",
+      "label": "해운대",
+      "landmark": "해운대해수욕장",
+      "lat": 35.1591,
+      "lng": 129.1603,
+      "places": 111,
+      "landmarkKm": 0
+    },
+    {
+      "name": "송정·기장",
+      "slug": "songjeong",
+      "label": "송정·기장",
+      "landmark": "해동용궁사",
+      "lat": 35.1882,
+      "lng": 129.2235,
+      "places": 189,
+      "landmarkKm": 0.01
+    }
+  ],
+  "checks": {
+    "slug": [],
+    "landmark": [],
+    "outskirts": [
+      "구포시장 → 서면 (want 동래·금정)"
+    ],
+    "b7": [],
+    "d1": [],
+    "tabs": [
+      "rest",
+      "walk",
+      "famous",
+      "any",
+      "food:meal",
+      "food:cafe",
+      "new:mix",
+      "new:sight",
+      "new:do"
+    ]
+  },
+  "pairs": [
+    {
+      "from": "해운대해수욕장",
+      "to": "해동용궁사",
+      "km": 6.6,
+      "appMinutes": 15,
+      "mapMinutes": null
+    },
+    {
+      "from": "해운대해수욕장",
+      "to": "광안대교",
+      "km": 3,
+      "appMinutes": 5,
+      "mapMinutes": null
+    },
+    {
+      "from": "부산 자갈치시장",
+      "to": "부산 감천문화마을",
+      "km": 1.8,
+      "appMinutes": 5,
+      "mapMinutes": null
+    },
+    {
+      "from": "부산 자갈치시장",
+      "to": "흰여울문화마을",
+      "km": 2.2,
+      "appMinutes": 5,
+      "mapMinutes": null
+    },
+    {
+      "from": "서면시장",
+      "to": "범어사",
+      "km": 14.3,
+      "appMinutes": 30,
+      "mapMinutes": null
+    },
+    {
+      "from": "서면시장",
+      "to": "해운대해수욕장",
+      "km": 9.3,
+      "appMinutes": 20,
+      "mapMinutes": null
+    },
+    {
+      "from": "다대포해수욕장",
+      "to": "부산 감천문화마을",
+      "km": 7.1,
+      "appMinutes": 15,
+      "mapMinutes": null
+    },
+    {
+      "from": "초량 이바구길",
+      "to": "오륙도 (부산 국가지질공원)",
+      "km": 8.7,
+      "appMinutes": 15,
+      "mapMinutes": null
+    },
+    {
+      "from": "구포시장",
+      "to": "범어사",
+      "km": 10.3,
+      "appMinutes": 20,
+      "mapMinutes": null
+    },
+    {
+      "from": "대항선착장",
+      "to": "다대포해수욕장",
+      "km": 13,
+      "appMinutes": 25,
+      "mapMinutes": null
+    }
+  ]
+}
