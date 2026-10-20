@@ -265,3 +265,39 @@ Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상
 ### 요약
 
 MAJOR 1 · MINOR 4 · NIT 5. 한국어 화면·번들·첫 그림·사용 기록은 바뀐 것이 ADR이 말한 두 줄뿐이고 예산 안이다. 번역 범위(2,938곳 × 3, 이름·소개글)·금지어·지도 링크(한국어 이름)·개인정보 안내(보내는 것 그대로, 「고른 언어」만 기기 저장)는 맞다. M1은 오프라인 PWA에서 다른 언어 사용자만 깨지는 경로라 배포 전에 정할 일이다.
+
+## 2026-10-20 부산 출시 (Claude 독립 리뷰, ADR-0058)
+
+Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상: `529201a..HEAD` 48커밋(d1c3f17 … d4a6e82), ADR-0094~0098, `specs/busan.md`, `plans/busan.md`, `docs/context.md`. 코드는 고치지 않았다.
+
+검증한 것(각 1회): `npx tsc --noEmit` exit 0 · `npm test` 65 files / 1396 pass(15 skip) · `npm run test:busan` 66 files / 1411 pass · `SITE_URL=https://yeochana.com npm run build` exit 0(켠 빌드, 진입 JS 43.69 + CSS 5.62KB gzip, `busan-part` 청크 2.01KB, `dist/_headers`에 `/spots-busan.json` immutable 줄 있음, sw.js PRECACHE에 busan-part 있고 spots-busan.json 없음) · `npm run check:jeju` exit 0(진입 49,312 B ≤ 50,000, 인라인 블록 +1,998 B ≤ 2,000, 제주 데이터·파일·precache·함수·브라우저 2기기 그대로) · e2e `E2E_ONLY=^BS-` 6/6 PASS(B1·B2·B3·M4·B13·M5, Googlebot 덮개 100%지만 h1·.lede·기분 목록 DOM에 있음). 빌드 뒤 `data/landing/lastmod.json` 되돌림, `dist/`는 켠 운영 빌드로 둠. **전체 e2e(제주 쪽 포함)는 확인 실패**: 백그라운드 실행이 출력 없이 끝나 결과를 읽지 못했다(통과로 적지 않는다).
+
+따로 돌린 것: `spots-busan.json` 994곳, id 전부 `bs-<숫자>`·중복 0, 좌표 994곳 모두 `inBusan` 안·제주 0, famous 61(pop 없는 곳 0), trail 16, market 1(구포 3·8일), 체험 book 45(네이버·홈페이지·전화), 사진 없음 192, HTML 엔티티·빈 이유 0, 「(부산)」 꼬리 0. `node scripts/busan/build.mjs` 다시 돌려 해시 같음(멱등). 금지어(泡菜·长白·日本海·東海·竹島 등) i18n·공개 HTML·llms.txt 0. 리뷰용 브라우저 점검(저장소 밖 스크립트): 새 브라우저가 고르지 않고 나갔다 오면 저장 키 0·시작 화면 다시 뜸 / `jeju.basis`·`jeju.region`·`jeju.visited`만 있는 옛 기기 → 시작 화면 없이 제주·「애월 근처」·키 그대로(+`jeju.dest`) / 권한 granted·서울 → 덮개에 밖 문구, 읽기 1회 / 부산 청크 2초 늦고 그 전에 「부산」 누름 → 여차나:부산 / 부산 카드 6기분: 네이버 검색 링크 끝 「부산」(이름에 부산 있으면 안 붙임), 출처 「정보·사진: 한국관광공사」, 랜딩 줄 숨김, 문서 제목 바뀜, 페이지 오류 0 / 제주 기기·GPS 기준·해운대 granted → 부산으로 자동 전환(spec 1.3대로).
+
+제주 사용자에게 문제 없음으로 본 것: 옛 기기(아무 `jeju.` 키)·`/jeju/**` referrer·제주 딥링크는 시작 화면 없이 제주. 저장 키는 그대로 읽고 `jeju.dest`만 더한다(ADR-0097). 수집기는 같은 배포의 Functions라 새 필드 `dest`·`start_*`를 받고, 옛 앱의 배치도 그대로 받는다. sw.js는 옛 캐시의 spots-busan.json만 넘겨받고(지금 배포본엔 없음 → no-op), 부산 장소 파일은 처음 쓸 때 런타임 캐시에 든다. 비·장날·해·밤은 `s.dest`로 갈린 곳 말고 제주 계산 그대로.
+
+### MAJOR
+
+없음.
+
+### MINOR
+
+**m1. 부산 청크가 4초 안에 안 오거나 실패하면 새 기기에 `jeju.dest="jeju"`를 영구히 쓴다(그 사이 누른 「내 위치로 시작하기」도 버려진다)** — `apps/web/src/app.ts:180`(`if (!starting && dest0 === want) store.setDest(dest0)`), `apps/web/src/main.ts:193`(`within(loadBusan(), 4000)`)
+- 재현: 새 브라우저에서 `assets/busan-part-*.js`를 막으면 1.5초 뒤 덮개가 걷히고 `jeju.dest="jeju"`가 남는다. 다시 열어도 시작 화면 없이 제주. 청크를 6초 늦추고 0.4초에 큰 버튼을 누르면 위치 읽기 0회, 4초 뒤 제주로 열리고 역시 `jeju.dest="jeju"`.
+- 왜 문제: ADR-0098 1은 「4초 안에 못 받으면 덮개를 걷고 제주로 연다(기기에 남긴 선택은 그대로)」, app.ts 주석도 「Jeju for this visit」인데, 고른 적 없는 기기에 선택을 만들어 쓴다. 느린 망·인앱 브라우저의 부산 첫 방문자가 시작 화면을 다시 못 본다. GPS 기준이라 기분을 누르면 `followGps`로 부산에 오긴 하지만, 위치를 거절한 사람은 기준 시트 여행지 줄을 찾아야 한다.
+- 고치는 방향: 덮개가 떠 있었던 마운트(`yc-start`가 처음에 있었음)에서는 `setDest`를 하지 않는다.
+
+**m2. 영어 개인정보 안내의 위치 문단이 문장 중간에서 끊겼다** — `apps/web/public/privacy-en.html:52`
+- 「The first time you open the app, a start screen appears; tapping  Links to outside map apps…」: 한국어·중국어·일본어판에 있는 「‘내 위치로 시작하기’를 누르면 위치를 물어요」에 해당하는 말이 빠지고 다음 문장과 붙었다. 네 언어 안내가 같은 것을 말하지 않는다.
+
+### NIT
+
+- n1. 켠 빌드 인라인 블록 gzip +1,998 B, 상한 2,000 B(`check:jeju`). 시작 화면 문구 한 줄만 고쳐도 검사가 깨진다. 여유를 정해 두거나 상한을 ADR에 다시 적을 일.
+- n2. `apps/web/src/i18n/zh-Hans.ts:191` 등 「韩国观光公社」 — 한국관광공사 중국어 공식 이름은 「韩国旅游发展局」(공사 중국어 사이트 표기). 한국 공식 표기 우선 규칙(docs/i18n/place-terms.md)과 맞출지 정할 것.
+- n3. 큰 버튼을 청크가 오기 전에 누르면 최대 4초 동안 버튼이 그대로다(`위치 확인 중…`은 앱이 와야 나온다). 인라인 onclick에서 글자만 바꿔 두면 된다.
+- n4. `apps/web/src/keep.ts:160` `handoffUrl`은 여행지를 싣지 않는다. 인앱 브라우저의 부산 사용자가 「브라우저로 열기」를 누르면 새 브라우저에서 시작 화면을 다시 본다.
+- n5. 저장소에 `lang`만 있는 기기는 `jeju.` 키가 아니라서 시작 화면을 본다(인라인 판정). 그런 기기는 드물고 해는 작다.
+
+### 요약
+
+MAJOR 0 · MINOR 2 · NIT 5. 제주 쪽은 의도한 추가(기준 시트 여행지 줄·저장한 곳 다른 여행지 줄·안내 몇 줄) 말고 바뀐 것을 찾지 못했고 `check:jeju`가 같다고 본다. 부산 데이터 994곳은 경계·id·유명한 곳·밤 산길·예약 경로·멱등 모두 맞다. 배포 전에 m1(청크 실패 때 `jeju.dest` 쓰기)과 m2(영어 안내 끊긴 문장)를 고칠지 정할 일. 전체 e2e는 이번에 결과를 못 읽었으니 배포 전에 한 번 더 돌려 볼 것.
