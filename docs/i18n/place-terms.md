@@ -43,6 +43,147 @@
 | 광안리 | Gwangalli | 広安里 확인 | 广安里 확인 |
 | 한국관광공사(출처 줄) | Korea Tourism Organization | 韓国観光公社 | 韩国旅游发展局(공사 중국어 사이트 표기, 독립 리뷰 2026-10-20 n2) |
 | 그 밖(다대포·송도·영도·초량·이바구길·서면·동래·금정·범어사·오륙도·용호·광안대교·센텀·해운대·송정·기장·해동용궁사) | `src/i18n/en.ts` | `src/i18n/ja.ts` | `src/i18n/zh-Hans.ts` — 판단 |
+
+## 부산 이름난 곳과 자주 나오는 지명 (2026-10-20, 부산 장소 글 번역용)
+
+기준(ADR-0093 Amendment 2, 부산): 그 언어 원어민·여행 매체가 실제 쓰는 꼴이 먼저, 갈리거나 근거가 없으면 비짓부산(visitbusan.net) 그 언어판, 「한국 문화·영토 용어」(아래)가 늘 먼저. 앱 화면에 이미 있는 이름(`src/i18n/*.ts`)은 그대로 다시 쓰고, 비짓부산과 다르면 칸에 적어 둔다. 근거 칸: 「VB」는 2026-10-20 비짓부산 명소·쇼핑·미식투어·테마여행 목록과 미식 글 3편(길거리음식·해장 별미·맛집골목)의 영어·중국어(간체)·일본어판에서 본 표기(목록 제목은 서술형이 많아 이름 부분만 땄다), 「앱」은 앱 화면 이름, 「media」는 매체 이름을 적었고 검색 결과 요약으로만 본 것은 「검색 요약」이라 적었다, 「판단」은 출처를 보지 않은 것. 한국관광공사 다국어 사이트와 부산시 「2025 부산의 맛」 안내책(4개 언어)은 열지 못했다(확인 실패). 일본어 괄호 가타카나는 소개글에서 처음 나올 때만 붙이고, 카드 이름·앱 화면은 괄호 앞 꼴만 쓴다(앱 海雲台와 같게). 가타카나 독음 자체는 판단(비짓부산 일본어판은 대개 한자만 쓴다).
+
+| 한국어 | en | ja | zh-Hans | 근거 |
+|---|---|---|---|---|
+| 해운대 | Haeundae | 海雲台（ヘウンデ） | 海云台 | VB, 앱 |
+| 해운대해수욕장 | Haeundae Beach | 海雲台海水浴場 | 海云台海水浴场 | VB, 앱 |
+| 해운대 블루라인파크(해변열차·스카이캡슐) | Haeundae Blueline Park (Beach Train, Sky Capsule) | 海雲台ブルーラインパーク（海辺列車、スカイカプセル） | 海云台蓝线公园（海岸列车、天空舱） | VB |
+| 해운대 그린레일웨이 | Haeundae Green Railway trail | 海雲台グリーンレールウェイ | 海云台绿色铁路步道 | 판단 |
+| 해운대수목원 | Haeundae Arboretum | 海雲台樹木園 | 海云台树木园 | VB |
+| 해운대온천센터 | Haeundae Hot Spring Center | 海雲台温泉センター | 海云台温泉中心 | 판단 |
+| 동백섬 | Dongbaekseom Island | 冬柏島（トンベクソム） | 冬柏岛 | VB |
+| 마린시티 | Marine City | マリンシティ | Marine City | VB(en), zh media(creatrip 중문·haniseoul zh-CN, 검색 요약), ja 판단 |
+| 더베이101 | The Bay 101 | ザ・ベイ101 | The Bay 101 | zh media(ktriptips chs·creatrip, 검색 요약), en·ja 판단 |
+| 부산엑스더스카이 | Busan X the Sky | 釜山エックスザスカイ | 釜山X the SKY | VB |
+| 달맞이길 | Dalmajigil Road | タルマジキル（月見道） | 迎月路 | VB |
+| 미포 | Mipo | 尾浦（ミポ） | 尾浦 | VB |
+| 청사포 | Cheongsapo | 青沙浦（チョンサポ） | 青沙浦 | VB |
+| 해리단길 | Haeridan-gil | 海理団通り（ヘリダンキル） | 海理团路 | VB |
+| 송정 / 송정해수욕장 | Songjeong / Songjeong Beach | 松亭（ソンジョン） / 松亭海水浴場 | 松亭 / 松亭海水浴场 | VB, 앱 |
+| 센텀시티 | Centum City | センタムシティ | Centum City | VB(백화점 지점명, zh도 로마자), 앱 |
+| 영화의전당 | Busan Cinema Center | 映画の殿堂 | 电影殿堂 | VB |
+| 허심청 | Hurshimchung Spa | 虚心庁（ホシムチョン） | 虚心厅 | VB |
+| 광안리 / 광안리해수욕장 | Gwangalli / Gwangalli Beach | 広安里（クァンアンリ） / 広安里海水浴場 | 广安里 / 广安里海水浴场 | VB, 앱 |
+| 광안대교 | Gwangan Bridge | 広安大橋 | 广安大桥 | VB(ja·zh), 앱. en은 앱 꼴, VB 영어판은 Gwangandaegyo Bridge |
+| 민락(수변공원·회타운) | Millak (Millak Waterside Park, Millak Hoe Town) | 民楽（ミルラク）水辺公園・民楽刺身タウン | 民乐水边公园・民乐生鱼片城 | VB |
+| 밀락더마켓 | Millac the Market | ミルラク・ザ・マーケット | Millac the Market | VB |
+| 수영 | Suyeong | 水営（スヨン） | 水营 | VB(수영사적공원) |
+| 이기대(해안산책로) | Igidae (Igidae Coastal Trail) | 二妓台（イギデ）海岸散策路 | 二妓台海岸散步路 | VB |
+| 오륙도 | Oryukdo Islets | 五六島（オリュクト） | 五六岛 | VB, 앱 |
+| 오륙도 스카이워크 | Oryukdo Skywalk | 五六島スカイウォーク | 五六岛天空步道 | VB(「부산 3대 스카이워크」 글의 꼴) |
+| 황령산 / 황령산 전망대 | Hwangnyeongsan Mountain / Hwangnyeongsan Viewing Lounge | 荒嶺山（ファンニョンサン） / 荒嶺山展望休憩所 | 荒岭山 / 荒岭山观景休息区 | VB |
+| 장산 | Jangsan Mountain | 萇山（チャンサン） | 苌山 | VB |
+| 서면 | Seomyeon | 西面（ソミョン） | 西面 | VB, 앱 |
+| 전포카페거리 | Jeonpo Café Street | 田浦（チョンポ）カフェ通り | 田浦咖啡街 | VB(en·zh), ja 판단(VB의 田浦工具通り 꼴을 따름) |
+| 범일동 | Beomil-dong | 凡一洞（ポミルトン） | 凡一洞 | VB |
+| 부산시민공원 | Busan Citizens Park | 釜山市民公園 | 釜山市民公园 | VB |
+| 송상현광장 | Songsanghyeon Square | 宋象賢（ソンサンヒョン）広場 | 宋象贤广场 | VB |
+| 부산 어린이대공원 | Children's Grand Park, Busan | 釜山子供大公園 | 釜山儿童大公园 | VB |
+| 부산북항 친수공원 | North Port Waterfront Park | 北港親水公園 | 北港亲水公园 | VB |
+| 부산역 | Busan Station | 釜山駅 | 釜山站 | 앱 |
+| 초량 이바구길 | Choryang Ibagu-gil | 草梁（チョリャン）イバグキル | 草梁以巴谷路 | VB(en·ja), 앱. **zh 충돌**: 앱은 以巴谷路, VB 중국어판은 늘 「草梁故事路」 |
+| 산복도로 | sanbok-doro (hillside road) | 山腹道路（サンボクトロ） | 山腹道路 | VB |
+| 남포동 | Nampo-dong | 南浦洞（ナンポドン） | 南浦洞 | VB |
+| 자갈치시장 | Jagalchi Market | チャガルチ市場 | 札嘎其市场 | VB, 앱 |
+| 국제시장 | Gukje Market | 国際市場（クッチェシジャン） | 国际市场 | VB |
+| 부평깡통시장 | Bupyeong Kkangtong Market | 富平（プピョン）カントン市場 | 富平罐头市场 | VB. zh는 VB 안에서도 易拉罐市场·罐头夜市로 갈려 罐头 쪽 판단 |
+| BIFF광장 | BIFF Square | BIFF広場 | BIFF广场 | 판단 |
+| 보수동책방골목 | Bosu-dong Book Street | 宝水洞（ポスドン）本屋通り | 宝水洞书店街 | VB |
+| 용두산공원 | Yongdusan Park | 龍頭山（ヨンドゥサン）公園 | 龙头山公园 | VB |
+| 부산타워 | Busan Tower | 釜山タワー | 釜山塔 | zh VB(중국어판 인기검색어), en·ja 판단(VB 제목은 서술형) |
+| 부산 차이나타운(상해거리) | Shanghai Street (Busan Chinatown) | 上海通り（釜山チャイナタウン） | 上海街（釜山唐人街） | VB(상해거리), 괄호 차이나타운 판단 |
+| 부산영화체험박물관 | Busan Museum of Movies | 釜山映画体験博物館 | 釜山电影体验博物馆 | VB(목록에 「博物」까지만 보여 「館/馆」 붙임) |
+| 영도 | Yeongdo | 影島（ヨンド） | 影岛 | VB, 앱 |
+| 흰여울문화마을 | Huinnyeoul Culture Village | ヒニョウル文化村 | 白川文化村 | VB, 앱 |
+| 태종대 | Taejongdae | 太宗台（テジョンデ） | 太宗台 | VB |
+| 봉래산 | Bongnaesan Mountain | 蓬莱山 | 蓬莱山 | VB(zh는 번체 「蓬萊」가 섞여 간체로) |
+| 영도 해녀촌 | Yeongdo Haenyeochon (haenyeo village) | 影島海女村 | 影岛海女村 | VB |
+| 송도 / 송도해수욕장 | Songdo / Songdo Beach | 松島（ソンド） / 松島海水浴場 | 松岛 / 松岛海水浴场 | VB, 앱 |
+| 송도해상케이블카 | Songdo Marine Cable Car | 松島海上ロープウェイ | 松岛海上缆车 | VB(ja·zh), en 판단(VB 영어판은 Songdo Marine Sea Car) |
+| 송도용궁구름다리 | Songdo Yonggung Suspension Bridge | 松島竜宮吊橋 | 松岛龙宫云桥 | VB |
+| 암남공원 | Amnam Park | 岩南（アムナム）公園 | 岩南公园 | VB(en·zh), ja 판단 |
+| 감천문화마을 | Gamcheon Culture Village | 甘川（カムチョン）文化村 | 甘川文化村 | VB, 앱 |
+| 다대포 / 다대포해수욕장 | Dadaepo / Dadaepo Beach | 多大浦（タデポ） / 多大浦海水浴場 | 多大浦 / 多大浦海水浴场 | VB, 앱 |
+| 몰운대 | Morundae | 没雲台（モルンデ） | 没云台 | 판단 |
+| 승학산 | Seunghaksan Mountain | 乗鶴山（スンハクサン） | 乘鹤山 | VB |
+| 낙동강 | Nakdonggang River | 洛東江（ナクトンガン） | 洛东江 | VB |
+| 을숙도 | Eulsukdo Island | 乙淑島（ウルスクト） | 乙淑岛 | VB |
+| 삼락생태공원 | Samnak Eco Park | 三楽（サムラク）エコパーク | 三乐生态公园 | VB |
+| 대저생태공원 | Daejeo Eco Park | 大渚（テジョ）生態公園 | 大渚生态公园 | VB |
+| 화명생태공원 / 화명수목원 | Hwamyeong Eco Park / Hwamyeong Arboretum | 華明（ファミョン）生態公園 / 華明樹木園 | 华明生态公园 / 华明树木园 | VB |
+| 명지 | Myeongji | 鳴旨（ミョンジ） | 鸣旨 | VB |
+| 가덕도 / 연대봉 | Gadeokdo Island / Yeondaebong Peak | 加徳島（カドクト） / 煙台峰 | 加德岛 / 烟台峰 | VB |
+| 사상근린공원 | Sasang Neighborhood Park | 沙上（ササン）近隣公園 | 沙上近邻公园 | 판단(沙上는 VB 사상생활사박물관) |
+| 백양산 | Baegyangsan Mountain | 白楊山（ペギャンサン） | 白杨山 | VB |
+| 동래 | Dongnae | 東萊（トンネ） | 东莱 | 앱, VB. **ja 글자 차이**: 앱은 「萊」, VB 일본어판은 거의 「東莱」 |
+| 온천장(동래온천) | Oncheonjang (Dongnae hot springs) | 温泉場（オンチョンジャン）・東萊温泉 | 温泉场（东莱温泉） | 판단 |
+| 연산동 | Yeonsan-dong | 蓮山洞（ヨンサンドン） | 莲山洞 | 판단 |
+| 금정 / 금정산 | Geumjeong / Geumjeongsan Mountain | 金井（クムジョン） / 金井山 | 金井 / 金井山 | VB, 앱 |
+| 금정산성 | Geumjeongsanseong Fortress | 金井山城（クムジョンサンソン） | 金井山城 | VB(막걸리 글의 산성 이름), Fortress는 판단 |
+| 범어사 | Beomeosa Temple | 梵魚寺（ポモサ） | 梵鱼寺 | VB, 앱 |
+| 회동수원지(둘레길) | Hoedong Reservoir Trail | 回東（フェドン）水源池散策路 | 回东水源池步道 | VB |
+| 땅뫼산 | Ttangmoesan | タンメ山 | 唐马山 | VB |
+| 기장 | Gijang | 機張（キジャン） | 机张 | VB, 앱 |
+| 기장시장 | Gijang Market | 機張市場 | 机张市场 | VB |
+| 해동용궁사 | Haedong Yonggungsa Temple | 海東龍宮寺（ヘドンヨングンサ） | 海东龙宫寺 | VB, 앱 |
+| 오시리아(해안산책로) | Osiria (Osiria Coastal Walk) | オシリア海岸散策路 | 五侍利亚海岸散步路 | VB |
+| 롯데월드 어드벤처 부산 | Lotte World Adventure Busan | ロッテワールド・アドベンチャー釜山 | 釜山乐天世界探险世界 | VB |
+| 일광 / 일광해수욕장 | Ilgwang / Ilgwang Beach | 日光（イルグァン） / 日光海水浴場 | 日光 / 日光海水浴场 | VB |
+| 임랑해수욕장 | Imnang Beach | 林浪（イムナン）海水浴場 | 林浪海水浴场 | VB |
+| 대변항 | Daebyeon Port | 大辺港（テビョンハン） | 大边港 | 판단 |
+| 연화리 | Yeonhwa-ri | 蓮花里（ヨンファリ） | 莲花里 | 판단 |
+| 아홉산숲 | Ahopsan Forest | アホプ（九）山森 | 九峰山林 | VB(ja·zh), en 판단 |
+| 홍법사 | Hongbeopsa Temple | 弘法寺（ホンボプサ） | 弘法寺 | VB |
+| 달음산 | Dareumsan Mountain | 達陰山 | 达阴山 | VB |
+| 부산 치유의 숲 | Busan Healing Forest | 釜山癒しの森 | 釜山治愈之林 | VB |
+| 용소웰빙공원 | Yongso Well-Being Park | 龍沼（ヨンソ）ウェルビーイング公園 | 龙沼健康公园 | VB |
+| 클럽디오아시스 | Club D Oasis | クラブDオアシス | CLUBD OASIS | VB |
+| 키자니아 부산 | KidZania Busan | キッザニア釜山 | 趣志尼亚釜山 | VB |
+| F1963 | F1963 | F1963 | F1963 | VB |
+| 부산과학체험관 | Busan Science Experience Center | 釜山科学体験館 | 釜山科学体验馆 | 판단 |
+| 안데르센 동화마을 | Andersen Fairy Tale Village | アンデルセン童話村 | 安徒生童话村 | 판단 |
+| 당산(마을 당산) | dangsan (village guardian shrine) | 堂山（タンサン） | 堂山 | 판단 |
+| 갈맷길 | Galmaetgil Trail (Course n) | カルメッキル（n コース） | 釜山海鸥步道（第n路线） | 판단(zh는 원어민 검수 대상) |
+| 해파랑길 | Haeparang Trail (Course n) | ヘパランキル（n コース） | 海波浪步道（第n路线） | 판단 |
+| 돼지국밥 | dwaeji gukbap (pork and rice soup) | テジクッパ（豚肉クッパ） | 猪肉汤饭 | VB(en Rice and Pork Soup·ja 豚肉クッパ·zh), ja 앞꼴은 media(trifa·holafly, 검색 요약) |
+| 국밥 | gukbap (rice soup) | クッパ | 汤饭 | VB(국밥집 이름들) |
+| 밀면 | milmyeon (Busan wheat noodles) | ミルミョン（小麦冷麺） | 小麦面 | VB |
+| 어묵 | eomuk (fish cake) | オムク（練り物） | 鱼糕 | VB |
+| 씨앗호떡 | ssiat hotteok (seed-filled sweet pancake) | 種ホットク（シアッホットク） | 果仁糖饼 | VB |
+| 비빔당면 | bibim dangmyeon (spicy glass noodles) | ピビムダンミョン（混ぜ春雨） | 拌粉条 | VB |
+| 유부주머니 | yubu jumeoni (fried tofu pouch) | 油揚げの巾着（ユブチュモニ） | 油豆腐福袋 | VB |
+| 떡볶이 | tteokbokki | トッポッキ | 辣炒年糕 | VB |
+| 꼼장어·곰장어(구이) | grilled kkomjangeo (hagfish) | 焼きヌタウナギ（コムジャンオ） | 烤盲鳗 | VB(ja·zh), en: VB 영어판 Sea eel은 오역이라 hagfish(Stars and Stripes 「2025 부산의 맛」 기사 grilled hagfish, 검색 요약) |
+| 짚불곰장어 | straw-fire grilled hagfish | わら焼きヌタウナギ | 稻草火烤盲鳗 | 판단 |
+| 붕장어·아나고 | conger eel (anago) | アナゴ | 星鳗 | 판단 |
+| 장어(통칭) | eel | ウナギ・アナゴ（글에 따라） | 鳗鱼 | 판단 |
+| 낙곱새 | nakgopsae (octopus, beef tripe and shrimp stew) | ナッコプセ | 章鱼肥肠虾锅 | ja media(4travel·NEWT, 검색 요약), en·zh 판단 |
+| 조방낙지 | Jobang nakji (spicy octopus stew) | チョバンナクチ | 朝纺辣炒章鱼 | 판단 |
+| 낙지볶음 | nakji bokkeum (spicy stir-fried octopus) | ナクチポックム | 辣炒章鱼 | ja media(rurubu), en·zh 판단 |
+| 동래파전 | Dongnae pajeon (green onion pancake) | 東萊パジョン（ねぎのチヂミ） | 东莱葱煎饼 | VB(ja 東莱式ねぎのチヂミ·zh), en media(Stars and Stripes) |
+| 복국 | bokguk (pufferfish soup) | フグ汁（ポックク） | 河豚汤 | zh media(ktriptips 번체 「河豚湯」, 검색 요약), ja 검색 요약, en 판단 |
+| 대게 | snow crab (daege) | ズワイガニ（テゲ） | 雪蟹 | ja media(rurubu), zh media(funliday·대만, 검색 요약), en 판단 |
+| 회 | hoe (sliced raw fish) | 刺身（フェ） | 生鱼片 | VB, ja media(rurubu 「フェ（刺身）」) |
+| 활어회 | hoe from live fish | 活魚の刺身 | 活鱼生鱼片 | 판단 |
+| 물회 | mulhoe (cold raw fish soup) | ムルフェ（冷たい刺身スープ） | 冰镇生鱼片汤 | en media(Stars and Stripes), ja 검색 요약, zh 판단 |
+| 해물탕 | haemultang (spicy seafood stew) | ヘムルタン（海鮮鍋） | 海鲜汤 | 판단 |
+| 조개구이 | grilled clams (jogae-gui) | 貝焼き | 烤蛤蜊 | VB |
+| 재첩국 | jaecheop-guk (marsh clam soup) | シジミスープ（チェチョプクク） | 河蚬汤 | VB |
+| 아귀찜 | agujjim (spicy braised monkfish) | アンコウの蒸し物（アグチム） | 辣炖安康鱼 | VB |
+| 전복 / 전복죽 | abalone / abalone porridge | アワビ / アワビ粥 | 鲍鱼 / 鲍鱼粥 | VB |
+| 기장 멸치 | Gijang anchovies | 機張のカタクチイワシ | 机张鳀鱼 | VB |
+| 기장 미역 | Gijang miyeok (seaweed) | 機張わかめ | 机张海带 | VB(zh 「海带」은 VB 꼴, 엄밀히는 裙带菜 — 원어민 검수 대상) |
+| 냉채족발 | naengchae jokbal (cold pig's trotter salad) | 豚足の冷菜（ネンチェチョッパル） | 猪蹄冷盘 | VB |
+| 양곱창 | yang-gopchang (grilled beef tripe) | 牛コプチャン | 烤牛肠 | VB(ja), en·zh 판단 |
+| 칼국수 | kalguksu (knife-cut noodles) | カルグクス | 韩式刀切面 | 판단(「刀削面」은 산시 국수라 쓰지 않음) |
+| 막걸리 | makgeolli | マッコリ | 马格利酒 | VB |
+| 금정산성막걸리 | Geumjeongsanseong Makgeolli | 金井山城マッコリ | 金井山城马格利酒 | VB |
+
 ## 이름난 곳(R 4절 표에서)
 
 | 한국어 | en | ja | zh-Hans |
