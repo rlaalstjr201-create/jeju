@@ -163,7 +163,18 @@ export function mountApp(doc: Document, deps: Deps): App {
   // again here: only the app knows whether a ?stay= point is in Busan (src/dest.ts). Off: Jeju, nothing read or kept.
   const early = win as (Window & { __dest?: unknown; __destBy?: unknown }) | null;
   // (Busan's part, with the 시작 화면's module, was asked for before the mount, main.ts; without it the cover goes and this is Jeju)
-  const starting = BUSAN && !!startScreen() && doc.documentElement.classList.contains('yc-start') && !!doc.getElementById('ycStart');
+  const covered = BUSAN && doc.documentElement.classList.contains('yc-start') && !!doc.getElementById('ycStart');
+  const starting = covered && !!startScreen();
+  // the cover was up but its module never came (ADR-0098 1): Jeju for this visit only — no choice is kept for the device
+  // (the 시작 화면 comes again next time), and a press made on it is not lost (below, after the mount)
+  const fellBack = covered && !starting;
+  const pressed = fellBack ? (win as { __startTap?: unknown; __startPick?: unknown } | null) : null;
+  const pressedGps = !!pressed?.__startTap;
+  const pressedDest = pressed?.__startPick === 'busan' ? ('busan' as const) : null;
+  if (pressed) {
+    delete pressed.__startTap;
+    delete pressed.__startPick;
+  }
   if (BUSAN && !starting) {
     doc.documentElement.classList.remove('yc-start');
     doc.getElementById('ycStart')?.remove();
@@ -177,7 +188,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
     // Busan's part not in (it could not be loaded): Jeju for this visit, the choice kept on the device as it was
     dest0 = released(want) ? want : 'jeju';
-    if (!starting && dest0 === want) store.setDest(dest0);
+    if (!starting && !fellBack && dest0 === want) store.setDest(dest0);
   }
   store.useDest(dest0);
   const loaded = store.load(today0);
@@ -1415,6 +1426,10 @@ export function mountApp(doc: Document, deps: Deps): App {
   };
   if (deps.yieldToMain) void deps.yieldToMain().then(firstDraw);
   else firstDraw();
+  // the cover went without its module (fellBack): 「내 위치로 시작하기」 pressed on it is a position read now (a Busan one
+  // asks for the part again, main.ts locate, and moves there); 「부산」 pressed asks for the part again
+  if (pressedGps) later(0, locateHome);
+  if (pressedDest) void loadBusan().then((ok) => ok && !signal.aborted && switchDest(pressedDest, { basis: 'gps' }));
 
   return {
     destroy: () => ac.abort(),

@@ -105,6 +105,18 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('<link rel="canonical" href="__SITE__/privacy" />');
   });
 
+  // 독립 리뷰 2026-10-20 m2: the translations say what the Korean one does — the start screen asks for the position on its
+  // button, and coordinates never leave the device
+  it.each([
+    ['privacy-en.html', 'tapping “Start with my location” there asks for your location.', 'Coordinates are never sent off the device.'],
+    ['privacy-zh-Hans.html', '点按“用我的位置开始”时会询问位置。', '坐标不会发送到设备以外。'],
+    ['privacy-ja.html', '「現在地で始める」を押すと、位置情報の許可を求めます。', '座標を端末の外に送ることはありません。'],
+  ])('%s: the start screen\'s ask and the location sentence', (f, ask, kept) => {
+    const html = text(f);
+    expect(html).toContain(ask);
+    expect(html).toContain(kept);
+  });
+
   // 출시 전 점검 F4 (idempotency-security.md K3): the repository is private, so its issues link was a 404 for everyone
   it('F4 (K3) 문의 is the operator\'s mail (replies) and the app\'s 의견 보내기, never the private repository', () => {
     const html = text('privacy.html');

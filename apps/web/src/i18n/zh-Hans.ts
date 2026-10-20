@@ -188,7 +188,7 @@ export const ZH: Lang = {
     destHead: '旅行地',
     title: 'Yeochana:釜山 · P人的旅行搭子',
     examplePopular: (names) => `釜山人气：${names.join('、')}`,
-    homeCredit: '信息与照片：韩国观光公社',
+    homeCredit: '信息与照片：韩国旅游发展局',
     outside: '你现在不在釜山。',
     stayOutside: '你现在不在釜山。请在下面选择住处所在的区域。',
     switched: { jeju: '你在济州，已切换到济州。', busan: '你在釜山，已切换到釜山。' },

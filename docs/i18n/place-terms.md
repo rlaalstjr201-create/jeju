@@ -41,6 +41,7 @@
 | 흰여울문화마을 | Huinnyeoul Culture Village | ヒニョウル文化村 확인 | 白川文化村 확인 |
 | 감천문화마을 | Gamcheon Culture Village | 甘川文化村 확인 | 甘川文化村 확인 |
 | 광안리 | Gwangalli | 広安里 확인 | 广安里 확인 |
+| 한국관광공사(출처 줄) | Korea Tourism Organization | 韓国観光公社 | 韩国旅游发展局(공사 중국어 사이트 표기, 독립 리뷰 2026-10-20 n2) |
 | 그 밖(다대포·송도·영도·초량·이바구길·서면·동래·금정·범어사·오륙도·용호·광안대교·센텀·해운대·송정·기장·해동용궁사) | `src/i18n/en.ts` | `src/i18n/ja.ts` | `src/i18n/zh-Hans.ts` — 판단 |
 ## 이름난 곳(R 4절 표에서)
 
