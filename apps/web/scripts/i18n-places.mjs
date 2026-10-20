@@ -5,6 +5,8 @@
  * batch can be redone and this run again; nothing else changes and the source data (spots.json) is only read.
  *   node scripts/i18n-places.mjs --export   the Korean source batches, review/i18n/source/batch-NNN.json (150 each)
  *   node scripts/i18n-places.mjs            the three files, with a count of what is missing or does not pass
+ * 부산 (ADR-0093 Amendment 9): the same with `--busan` — public/spots-busan.json, batches under review/i18n/busan/,
+ * files public/i18n/places-busan.<lang>.json (asked for only on a Busan visit in that language).
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -61,10 +63,13 @@ export function buildLang(spots, reasons, names) {
 }
 
 function main() {
-  const spots = JSON.parse(readFileSync(resolve(root, 'public/spots.json'), 'utf8'));
+  const busan = process.argv.includes('--busan');
+  const review = resolve(root, busan ? 'review/i18n/busan' : 'review/i18n');
+  const out = busan ? 'places-busan' : 'places';
+  const spots = JSON.parse(readFileSync(resolve(root, busan ? 'public/spots-busan.json' : 'public/spots.json'), 'utf8'));
   const list = shipped(spots);
   if (process.argv.includes('--export')) {
-    const dir = resolve(root, 'review/i18n/source');
+    const dir = resolve(review, 'source');
     mkdirSync(dir, { recursive: true });
     for (let i = 0; i < list.length; i += BATCH) {
       const rows = list.slice(i, i + BATCH).map((s) => ({ id: s.id, name: s.name.trim(), reason: s.reason, mood: s.mood, ...(s.sub ? { sub: s.sub } : {}) }));
@@ -75,9 +80,9 @@ function main() {
   }
   mkdirSync(resolve(root, 'public/i18n'), { recursive: true });
   for (const lang of LANGS) {
-    const dir = resolve(root, 'review/i18n', lang);
+    const dir = resolve(review, lang);
     const { places, missing, rejected } = buildLang(spots, readBatches(dir, 'reasons-'), readBatches(dir, 'names-'));
-    writeFileSync(resolve(root, `public/i18n/places.${lang}.json`), JSON.stringify(places));
+    writeFileSync(resolve(root, `public/i18n/${out}.${lang}.json`), JSON.stringify(places));
     console.log(`${lang}: ${Object.keys(places).length} of ${list.length} places; missing names ${missing.name}, reasons ${missing.reason}; rejected ${rejected.length}`);
     for (const r of rejected.slice(0, 20)) console.log(`  ${r.id} ${r.kind}: ${r.why}`);
   }
