@@ -305,3 +305,33 @@ describe.runIf(BUSAN)('시작 화면 기록 (switch on)', () => {
     expect(start(t.sent)).toEqual([{ e: 'start_view', d: '2026-10-20' }]);
   });
 });
+describe.runIf(BUSAN)('브라우저로 열기 carries the 여행지 (codex_review.md 2026-10-20 n4)', () => {
+  const KAKAO = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36 KAKAOTALK 10.8.0';
+  const early = window as { __dest?: string; __destBy?: string };
+  const load = (d: string) => Promise.resolve(d === 'busan' ? busanRaw : fileSpots);
+  beforeAll(async () => void (await loadBusan()));
+  beforeEach(reset);
+  afterEach(() => {
+    reset();
+    delete early.__dest;
+    delete early.__destBy;
+    window.history.replaceState(null, '', '/');
+  });
+
+  it('KakaoTalk on Busan: dest=busan in the address handed over; opened there (index.html: a link), Busan, kept', async () => {
+    localStorage.setItem(KEYS.dest, '"busan"');
+    render({ loadSpots: load, userAgent: KAKAO });
+    await wait();
+    const url = new URL($('#homeNote a[data-action="inapp-open"]').getAttribute('href')!).searchParams.get('url')!;
+    expect(new URL(url).search).toBe('?dest=busan');
+    reset();
+    window.history.replaceState(null, '', '/?dest=busan');
+    early.__dest = 'busan';
+    early.__destBy = 'link';
+    render({ loadSpots: load });
+    await wait();
+    expect($('.logo .rg').textContent).toBe(':부산');
+    expect(localStorage.getItem(KEYS.dest)).toBe('"busan"');
+    expect(window.location.search).toBe('');
+  });
+});

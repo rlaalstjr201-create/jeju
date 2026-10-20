@@ -183,7 +183,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   if (BUSAN) {
     const link = early?.__destBy === 'link' && win ? readDeepLink(win.location.search, today0) : null;
     const area = link?.area && link.area !== 'here' ? areaByName(link.area, OPEN_AREAS) : null;
-    const linked = area ? destOfArea(area) : link?.stay ? releasedDestOf(link.stay) : null;
+    // `dest=`: 브라우저로 열기 from an in-app browser (keep.ts handoffUrl) carries the 여행지 in use
+    const handed = /[?&]dest=(jeju|busan)(?:[&#]|$)/.exec(win?.location.search ?? '')?.[1] as Dest | undefined;
+    const linked = area ? destOfArea(area) : link?.stay ? releasedDestOf(link.stay) : (handed ?? null);
     const said = early?.__dest === 'busan' || early?.__dest === 'jeju' ? (early.__dest as Dest) : null;
     const want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
     // Busan's part not in (it could not be loaded): Jeju for this visit, the choice kept on the device as it was

@@ -4,6 +4,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { addDays } from '../src/dates';
 import { BACKUP_HASH, backupUrl, decodeBackup } from '../src/keep';
+import { BUSAN } from '../src/release';
 import { MAX_SAVED } from '../src/store';
 import { reloadOnUpdate } from '../src/update';
 import { $, $$, flush, render, reset, tap } from './harness';
@@ -85,6 +86,8 @@ describe('2a navigator.storage.persist', () => {
 });
 
 describe('2b in-app browser notice', () => {
+  /** the address 브라우저로 열기 hands over: with the switch on it carries the 여행지 (codex_review.md 2026-10-20 n4) */
+  const home = () => `${location.origin}/${BUSAN ? '?dest=jeju' : ''}`;
   it('KakaoTalk: one sentence on the first screen; 브라우저로 열기 opens the phone browser with what is saved here', async () => {
     render({ userAgent: KAKAO });
     expect(shown('#homeNote')).toBe(true);
@@ -93,12 +96,12 @@ describe('2b in-app browser notice', () => {
     expect(link().textContent).toBe('브라우저로 열기');
     const out = () => new URL(link().getAttribute('href')!).searchParams.get('url')!;
     expect(link().getAttribute('href')!.startsWith('kakaotalk://web/openExternal?url=')).toBe(true);
-    expect(out()).toBe(`${location.origin}/`);
+    expect(out()).toBe(home());
     await cards();
     await tap('#cards .heart');
     await tap('.top #saved');
     await tap('#back');
-    expect(out().startsWith(`${location.origin}/${BACKUP_HASH}`)).toBe(true);
+    expect(out().startsWith(`${home()}${BACKUP_HASH}`)).toBe(true);
     // the day saved stays here (ADR-0085): the link carries the rest
     expect(decodeBackup(out().split(BACKUP_HASH)[1])).toEqual(stored().map(({ id, date, order }) => ({ id, date, order })));
   });
@@ -118,7 +121,7 @@ describe('2b in-app browser notice', () => {
     expect($('#homeNote p').textContent).toBe('인스타그램 안에서 저장한 곳은 인스타그램에만 남아요.');
     await tap('#homeNote [data-action="inapp-copy"]');
     await flush();
-    expect(copy).toHaveBeenCalledWith(`${location.origin}/`);
+    expect(copy).toHaveBeenCalledWith(home());
     expect($$('#homeNote p').map((p) => p.textContent)).toEqual(['인스타그램 안에서 저장한 곳은 인스타그램에만 남아요.', '링크를 복사했어요. 휴대폰 브라우저 주소창에 붙여 넣어 주세요.']);
     render({ userAgent: INSTA, copy: async () => false });
     await tap('#homeNote [data-action="inapp-copy"]');

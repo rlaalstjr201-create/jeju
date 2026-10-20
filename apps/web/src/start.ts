@@ -18,11 +18,17 @@ export interface StartWords {
   jeju: string;
   busan: string;
   locating: string;
-  denied: string;
-  unavailable: string;
   retry: string;
-  outside: string;
 }
+
+/** Why the position could not be used, per language: shown only after this module has read it, so they come with
+ * Busan's part rather than in index.html's inline table (its gzip cap, ADR-0096). The page's language at mount. */
+const FAILED: Record<string, Record<NoOrigin, string>> = {
+  ko: { denied: '위치를 쓸 수 없어요. 여행지를 골라 주세요.', unavailable: '위치를 찾지 못했어요. 여행지를 골라 주세요.', outside: '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.' },
+  en: { denied: "Can't use your location. Please choose where you are.", unavailable: "Couldn't find your location. Please choose where you are.", outside: "You're outside Jeju and Busan right now. Please choose one." },
+  'zh-Hans': { denied: '无法使用位置。请选择旅行地。', unavailable: '找不到你的位置。请选择旅行地。', outside: '你现在不在济州或釜山。请选择旅行地。' },
+  ja: { denied: '位置情報を使えません。旅行先を選んでください。', unavailable: '現在地が見つかりませんでした。旅行先を選んでください。', outside: 'いまは済州・釜山の外にいます。旅行先を選んでください。' },
+};
 
 export interface StartScreen {
   /** what it shows now: the first state, reading, or why the position could not be used */
@@ -46,7 +52,7 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
   const box = doc.getElementById('ycStart');
   const w = doc.defaultView as (Window & Inline) | null;
   const a = w?.__ycT;
-  const T: Pick<StartWords, 'gps' | 'locating' | NoOrigin> | null = a ? { gps: a[1], locating: a[6], denied: a[7], unavailable: a[8], outside: a[10] } : null;
+  const T: (Pick<StartWords, 'gps' | 'locating'> & Record<NoOrigin, string>) | null = a ? { gps: a[1], locating: a[6], ...(FAILED[doc.documentElement.lang] ?? FAILED.ko) } : null;
   const big = doc.getElementById('ycGps') as HTMLButtonElement | null;
   const msg = doc.getElementById('ycMsg');
   const note = doc.getElementById('ycNote');

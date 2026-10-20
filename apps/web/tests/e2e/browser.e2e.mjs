@@ -2852,7 +2852,8 @@ await check('K-inapp', 'KakaoTalk in-app browser: one calm notice under the mood
   await page.waitForSelector('#homeNote:not([hidden])');
   assert((await page.textContent('#homeNote p')) === '카카오톡 안에서 저장한 곳은 카카오톡에만 남아요.', 'notice text');
   const href = await page.getAttribute('#homeNote a[data-action="inapp-open"]', 'href');
-  assert(href === `kakaotalk://web/openExternal?url=${encodeURIComponent(BASE)}`, `href ${href}`);
+  // with the switch on, the 여행지 in use goes too (codex_review.md 2026-10-20 n4)
+  assert(href === `kakaotalk://web/openExternal?url=${encodeURIComponent(BUSAN ? `${BASE}?dest=jeju` : BASE)}`, `href ${href}`);
   const layout = await page.evaluate(() => {
     const de = document.documentElement;
     const n = document.querySelector('#homeNote').getBoundingClientRect();

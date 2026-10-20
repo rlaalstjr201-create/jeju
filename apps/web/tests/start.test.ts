@@ -56,6 +56,9 @@ describe('1.1 여행지를 정하는 순서 (index.html 첫 인라인)', () => {
     ['기억한 여행지', '/', { 'jeju.dest': 'busan' }, undefined, 'busan', 'kept'],
     ['이전 기기(저장만)', '/', { 'jeju.saved.v2': [] }, undefined, 'jeju', 'old'],
     ['링크가 기억보다 먼저', '/?area=haeundae', { 'jeju.dest': 'jeju' }, undefined, 'busan', 'link'],
+    ['브라우저로 열기의 여행지(n4)', '/?lang=en&dest=busan', {}, undefined, 'busan', 'link'],
+    ['브라우저로 열기의 여행지, 제주', '/?dest=jeju', {}, undefined, 'jeju', 'link'],
+    ['모르는 여행지 값', '/?dest=seoul', {}, undefined, null, null],
   ];
   for (const [name, path, storage, referrer, dest, by] of cases)
     it(`${name}: ${dest ?? '시작 화면'}`, () => {
@@ -89,6 +92,15 @@ describe('1.2 시작 화면 (index.html 바디 인라인)', () => {
     expect([w.__startPick, heard, w.localStorage.getItem('jeju.dest')]).toEqual(['busan', 'busan', '"busan"']);
     (doc.getElementById('ycGps') as HTMLElement).click();
     expect(w.__startTap).toBe(1);
+  });
+  it('the big button says 위치 확인 중… at once when pressed before the app runs (n3), and takes no second press', () => {
+    const { w, doc } = open('/');
+    let heard = 0;
+    doc.addEventListener('yc:start-gps', () => heard++);
+    const big = doc.getElementById('ycGps') as HTMLButtonElement;
+    big.click();
+    big.click();
+    expect([big.textContent, big.disabled, w.__startTap, heard]).toEqual(['위치 확인 중…', true, 1, 1]);
   });
   for (const lang of ['en', 'zh-Hans', 'ja'])
     it(`${lang}: the cover in that language, no Korean (B13)`, () => {
@@ -186,6 +198,15 @@ describe('start.ts', () => {
     expect(u.doc.getElementById('ycMsg')!.textContent).toBe('위치를 찾지 못했어요. 여행지를 골라 주세요.');
     expect((u.doc.getElementById('ycRetry') as HTMLElement).hidden).toBe(false);
     expect(u.doc.activeElement?.id).toBe('ycRetry');
+  });
+  it("the reasons come in the page's language (with Busan's part, not in the inline table)", async () => {
+    const { dom, doc } = open('/?lang=ja');
+    const ctl = new (dom.window as unknown as typeof globalThis).AbortController();
+    mountStart(doc, { signal: ctl.signal, geo: { geoPermission: () => Promise.resolve('prompt'), locate: () => Promise.reject(new LocateError('outside')) }, choose: () => undefined });
+    (doc.getElementById('ycGps') as HTMLElement).click();
+    await tick();
+    await tick();
+    expect(doc.getElementById('ycMsg')!.textContent).toBe('いまは済州・釜山の外にいます。旅行先を選んでください。');
   });
   it('a press before the app ran is carried out at mount', async () => {
     expect(started({ early: 'jeju' }).chosen).toEqual([['jeju', 'pick', null]]);

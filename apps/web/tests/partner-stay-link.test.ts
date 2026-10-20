@@ -10,6 +10,7 @@ import { memoryStore } from '../events/store';
 import { parseBatch } from '../events/validate';
 import { renderReport } from '../scripts/analytics-report.mjs';
 import { readDeepLink } from '../src/deeplink';
+import { BUSAN } from '../src/release';
 import { parseStay } from '../src/store';
 import { $, $$, current, flush, render, reset, tap, today } from './harness';
 
@@ -165,17 +166,20 @@ describe('F1 (B1) 브라우저로 열기 carries the 숙소 링크 on', () => {
   const KAKAO = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36 KAKAOTALK 10.8.0';
   const INSTA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 340.0';
   const LINK = '?stay=33.4631%2C126.3105&src=aewol-gh1&relay=1';
+  /** with the switch on, the 여행지 in use goes too (codex_review.md 2026-10-20 n4) */
+  const D = BUSAN ? 'dest=jeju' : '';
+  const HANDED = D ? LINK.replace('?', `?${D}&`) : LINK;
   /** the address KakaoTalk's 브라우저로 열기 hands over */
   const handed = () => new URL($('#homeNote a[data-action="inapp-open"]').getAttribute('href')!).searchParams.get('url')!;
 
   it('KakaoTalk: the 숙소 (%2C), the tag and relay=1; what is saved still goes after #s=', async () => {
     open('?stay=33.4631,126.3105&src=aewol-gh1', { userAgent: KAKAO });
     await flush();
-    expect(handed()).toBe(`${location.origin}/${LINK}`);
+    expect(handed()).toBe(`${location.origin}/${HANDED}`);
     await tap('[data-mood="rest"]');
     await tap($$('#cards .heart')[0]);
     await tap('#back');
-    expect(handed().startsWith(`${location.origin}/${LINK}#s=`)).toBe(true);
+    expect(handed().startsWith(`${location.origin}/${HANDED}#s=`)).toBe(true);
   });
 
   it('elsewhere (Instagram): the address copied is the same', async () => {
@@ -183,19 +187,19 @@ describe('F1 (B1) 브라우저로 열기 carries the 숙소 링크 on', () => {
     open('?stay=33.4631,126.3105&src=aewol-gh1', { userAgent: INSTA, copy });
     await flush();
     await tap('#homeNote [data-action="inapp-copy"]');
-    expect(copy).toHaveBeenCalledWith(`${location.origin}/${LINK}`);
+    expect(copy).toHaveBeenCalledWith(`${location.origin}/${HANDED}`);
   });
 
   it('a tag alone goes with relay=1; a 숙소 set by GPS or an area is not a 숙소 링크 (nothing added)', async () => {
     open('?src=aewol-gh1', { userAgent: KAKAO });
     await flush();
-    expect(handed()).toBe(`${location.origin}/?src=aewol-gh1&relay=1`);
+    expect(handed()).toBe(`${location.origin}/?${D ? `${D}&` : ''}src=aewol-gh1&relay=1`);
     reset();
     localStorage.setItem('jeju.basis', '"stay"');
     localStorage.setItem('jeju.stay', JSON.stringify({ lat: 33.2481, lng: 126.4123, area: '중문', source: 'gps' }));
     open('', { userAgent: KAKAO });
     await flush();
-    expect(handed()).toBe(`${location.origin}/`);
+    expect(handed()).toBe(`${location.origin}/${D ? `?${D}` : ''}`);
   });
 
   it('opened with relay=1 (the phone browser): 숙소 근처 and the tag kept for tap / map, but no second open', async () => {
