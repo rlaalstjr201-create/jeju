@@ -134,3 +134,5 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 분석(ADR-0078): 매일 `npm run analytics:health -w @jeju/web`(로컬 예약 작업)이 자체 기록 지난 24시간 0건이거나 수집기에 닿지 않으면 한 줄 이유와 함께 실패한다. 주간 점검에서 `npm run analytics:report -w @jeju/web`(`wrangler login` 필요, D1 읽기만)로 `docs/analytics/YYYY-MM-DD.md`를 만들고, GA4·네이버 대시보드의 지난 7일 사용자 수를 같이 적는다.
 
 남은 일(배포 직후~1주): 오류 집계(새 결정 필요), Lighthouse, 한국 통신사별 응답 지연 실측(무료 플랜 우회 사례).
+
+- 2026-10-20: GA4 속성 「여차나:제주」(p557193654)에 이벤트 범위 맞춤 측정기준 3개 등록 — 여행지(dest), 시작 방법(how), 시작 사유(why). ADR-0094, specs/usage-events.md. 기존 「철 종류」(season)와 합쳐 4개.
