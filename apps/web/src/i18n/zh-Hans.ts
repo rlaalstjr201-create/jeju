@@ -193,7 +193,6 @@ export const ZH: Lang = {
     stayOutside: '你现在不在釜山。请在下面选择住处所在的区域。',
     switched: { jeju: '你在济州，已切换到济州。', busan: '你在釜山，已切换到釜山。' },
     otherSaved: { jeju: (n) => `在济州收藏的地方 ${n} 处`, busan: (n) => `在釜山收藏的地方 ${n} 处` },
-    korean: '釜山的地名和介绍目前只有韩语。',
   },
   mood: {
     rest: '想好好歇一歇',
@@ -297,3 +296,4 @@ export const ZH: Lang = {
 };
 
 export const applyWords = (doc: Document, places: Promise<unknown>) => apply('zh-Hans', ZH, doc, places);
+export { addPlaces } from './apply';

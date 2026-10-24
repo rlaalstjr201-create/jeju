@@ -110,12 +110,18 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
     if (a.getAttribute('hreflang') === lang) a.setAttribute('aria-current', 'true');
     else a.removeAttribute('aria-current');
   }
-  return places.then((v) => {
-    if (!validPlaces(v)) return;
-    const of = (s: Spot) => (Object.prototype.hasOwnProperty.call(v, s.id) && Array.isArray(v[s.id]) ? v[s.id] : null);
-    const name = PLACE.name;
-    const reason = PLACE.reason;
-    PLACE.name = (s) => of(s)?.[0] || name(s);
-    PLACE.reason = (s) => of(s)?.[1] || reason(s);
-  });
+  const of = (s: Spot) => (Object.prototype.hasOwnProperty.call(table, s.id) && Array.isArray(table[s.id]) ? table[s.id] : null);
+  const koName = PLACE.name;
+  const koReason = PLACE.reason;
+  PLACE.name = (s) => of(s)?.[0] || koName(s);
+  PLACE.reason = (s) => of(s)?.[1] || koReason(s);
+  return addPlaces(places);
 }
+
+/** Every destination's place texts in this language, by id (Jeju's and, on a Busan visit, Busan's: ids never clash). */
+const table: Places = {};
+/** A place file in (Jeju's at start, Busan's when Busan's list is asked for: main.ts, ADR-0093 Amendment 9). */
+export const addPlaces = (places: Promise<unknown>): Promise<void> =>
+  places.then((v) => {
+    if (validPlaces(v)) Object.assign(table, v);
+  });

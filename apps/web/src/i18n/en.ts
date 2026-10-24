@@ -200,7 +200,6 @@ export const EN: Lang = {
     stayOutside: "You're not in Busan right now. Pick your stay's area below.",
     switched: { jeju: "You're in Jeju, so we switched to Jeju.", busan: "You're in Busan, so we switched to Busan." },
     otherSaved: { jeju: (n) => `Saved in Jeju (${n})`, busan: (n) => `Saved in Busan (${n})` },
-    korean: 'Busan place names and notes are in Korean for now.',
   },
   mood: {
     rest: 'Just relax',
@@ -304,3 +303,4 @@ export const EN: Lang = {
 };
 
 export const applyWords = (doc: Document, places: Promise<unknown>) => apply('en', EN, doc, places);
+export { addPlaces } from './apply';

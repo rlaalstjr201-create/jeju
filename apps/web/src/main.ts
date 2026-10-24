@@ -93,12 +93,19 @@ const listIn = new Promise<void>((resolve) => (listSettled = resolve));
 /** ADR-0093: another language than Korean (chosen by index.html's first script) — its words, a chunk of their own
  * that a Korean visit never loads, go in before the app mounts, and its place texts before the list is used. A
  * failure leaves the app in Korean. */
-const WORDS: Record<string, () => Promise<{ applyWords: (doc: Document, places: Promise<unknown>) => Promise<void> }>> = {
+type Words = { applyWords: (doc: Document, places: Promise<unknown>) => Promise<void>; addPlaces: (places: Promise<unknown>) => Promise<void> };
+const WORDS: Record<string, () => Promise<Words>> = {
   en: () => import('./i18n/en'),
   'zh-Hans': () => import('./i18n/zh-Hans'),
   ja: () => import('./i18n/ja'),
 };
 let placesIn: Promise<void> = Promise.resolve();
+/** the language's module once in: it also takes Busan's place texts (ADR-0093 Amendment 9) */
+let inLang: Words | null = null;
+const json = (url: string): Promise<unknown> =>
+  fetch(url)
+    .then((r) => (r.ok ? (r.json() as Promise<unknown>) : null))
+    .catch(() => null);
 /** `p`, or a rejection after `ms`: a weak connection never holds the app back. */
 const within = <T>(p: Promise<T>, ms: number) => Promise.race([p, new Promise<never>((_, no) => setTimeout(() => no(new Error('timeout')), ms))]);
 /** The words in 4 s at most (from the service worker's cache on a device that has used them, at once): else the app
@@ -111,7 +118,7 @@ function words(lang: string): Promise<void> {
     .catch(() => null);
   return within(WORDS[lang](), 4000)
     .then(
-      (m) => void (placesIn = m.applyWords(document, places)),
+      (m) => void ((inLang = m), (placesIn = m.applyWords(document, places))),
       () => void (document.documentElement.lang = 'ko'),
     )
     .finally(() => document.documentElement.classList.remove('l10n'));
@@ -132,8 +139,11 @@ const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
   // The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
   // task (audit 2026-10-15), and a list that came in before the first paint held that paint back (audit 2026-10-16).
-  loadSpots: (dest) =>
-    fetch(spotsUrl(dest))
+  loadSpots: (dest) => {
+    // Busan in another language: its place texts, asked for with its list (ADR-0093 Amendment 9)
+    const lang = document.documentElement.lang;
+    const more = BUSAN && dest === 'busan' && inLang ? inLang.addPlaces(json(`${BASE}i18n/places-busan.${lang}.json?v=${__BUSAN_PLACES_V__}`)) : null;
+    return fetch(spotsUrl(dest))
       .then(async (r) => {
         if (!r.ok) throw new Error(String(r.status));
         const text = await r.text();
@@ -141,13 +151,14 @@ const deps: Deps = {
         await afterPaint();
         const raw = JSON.parse(text) as unknown;
         // the place texts if they come within 3 s more; later ones are used from the next draw on
-        await within(placesIn, 3000).catch(() => undefined);
+        await within(Promise.all([placesIn, more]), 3000).catch(() => undefined);
         return raw;
       })
       .catch((e: unknown) => {
         listSettled();
         throw e;
-      }),
+      });
+  },
   locate,
   geoPermission,
   storage: storageOf('localStorage'),

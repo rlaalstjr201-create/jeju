@@ -18,25 +18,27 @@ export interface SwInput {
   langs?: Record<string, string[]>;
   /** ADR-0093 Amendment 8 (plans/busan.md S5, switched-on build only): Busan's file `spots-busan.json?v=<hash>`. Not
    * precached; a new worker takes it where the cache it replaces had any spots-busan.json, apart from the precache
-   * chain (a failure there never stops the install, m12). */
-  busanFile?: string;
+   * chain (a failure there never stops the install, m12). Amendment 9: with it, Busan's place texts in each language
+   * (`i18n/places-busan.<lang>.json?v=`), each carried over where the replaced cache had that file. */
+  busanFile?: string | string[];
 }
 
 /** The install step that carries Busan's file over, put into the worker only by a switched-on build: the template, and so
  * a Jeju deploy's sw.js, stays as it was. */
 const INSTALL_TAIL = '          .then((langs) => Promise.all(langs.map((l) => addLang(cache, l)))),\n';
-export function withBusanFile(template: string, file: string): string {
+export function withBusanFile(template: string, file: string | string[]): string {
   const eol = template.includes('\r\n') ? '\r\n' : '\n';
   const tail = INSTALL_TAIL.replace(/\n/g, eol);
   if (!template.includes(tail)) throw new Error('sw.js: the install chain to carry Busan\'s file over was not found');
   const carry = [
-    `/** ADR-0093 Amendment 8: Busan's file, kept only where the replaced cache had it; its own catch (m12). */`,
-    `const BUSAN_FILE = ${JSON.stringify(file)};`,
+    `/** ADR-0093 Amendment 8·9: Busan's files (its list, its place texts per language), each kept only where the replaced`,
+    ` * cache had it; their own catch (m12). */`,
+    `const BUSAN_FILES = ${JSON.stringify([file].flat())};`,
     `const carryBusan = (cache) =>`,
     `  caches`,
     `    .keys()`,
     `    .then((keys) => Promise.all(keys.filter((k) => k.startsWith('tomorrow-') && k !== CACHE).map((k) => caches.open(k).then((c) => c.keys()))))`,
-    `    .then((lists) => lists.some((reqs) => reqs.some((r) => r.url.includes('/spots-busan.json'))) && cache.add(new Request(scoped(BUSAN_FILE))))`,
+    `    .then((lists) => Promise.all(BUSAN_FILES.filter((f) => lists.some((reqs) => reqs.some((r) => r.url.includes('/' + f.split('?')[0])))).map((f) => cache.add(new Request(scoped(f))).catch(() => undefined))))`,
     `    .catch(() => undefined);`,
     ``,
   ].join(eol);

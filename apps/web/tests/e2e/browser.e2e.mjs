@@ -4150,6 +4150,26 @@ if (BUSAN) {
     assert(r.h1 && r.lede && r.moods, JSON.stringify(r));
     await ctx.close();
   });
+
+  await check('BS-L10n', '부산 장소 글 (ADR-0093 Amendment 9): en·zh-Hans·ja 해운대 기분 하나의 카드 3장, 이름·소개글에 한국어 0, 「아직 한국어」 안내 없음', async () => {
+    const problems = [];
+    for (const lang of ['en', 'zh-Hans', 'ja']) {
+      const { ctx, page } = await openAt(`/?lang=${lang}&area=haeundae`);
+      await page.waitForSelector('#today:not(.wait)');
+      await tapText(page, '[data-mood="walk"]');
+      await waitCards(page);
+      await sleep(300);
+      const r = await page.evaluate(() => ({
+        rg: document.querySelector('.logo .rg')?.textContent,
+        cards: [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => `${c.querySelector('.name')?.textContent} | ${c.querySelector('.reason')?.textContent}`),
+        note: !!document.querySelector('.ko-note'),
+      }));
+      if (r.cards.length !== 3 || r.cards.some((t) => /[가-힣]/.test(t)) || r.note) problems.push(`${lang} ${JSON.stringify(r)}`);
+      await busanShot(page, `${lang}-busan-results`);
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
 }
 
 await browser.close();

@@ -208,6 +208,18 @@ describe('sw.js — Busan’s file (ADR-0093 Amendment 8, plans/busan.md m12)', 
     await sw.install();
     expect([...broken.stores.get(`tomorrow-${failing.version}`)!.keys()]).toContain(at('spots.json?v=' + spotsVersion('[1]')));
   });
+  it('Amendment 9: Busan’s place texts, each language carried over only where the old cache had that one', async () => {
+    const used = fakeCaches();
+    used.stores.set('tomorrow-old', new Map([[at('spots-busan.json?v=b0'), {}], [at('i18n/places-busan.ja.json?v=p0'), {}]]));
+    const files = ['spots-busan.json?v=b1', 'i18n/places-busan.en.json?v=p1', 'i18n/places-busan.ja.json?v=p1'];
+    const built = buildServiceWorker({ ...base(), busanFile: files });
+    expect(built.precache.some((u) => u.includes('busan'))).toBe(false);
+    await runSw(built.source, async () => ({ ok: true }), used).install();
+    const kept = [...used.stores.get(`tomorrow-${built.version}`)!.keys()];
+    expect(kept).toContain(at('spots-busan.json?v=b1'));
+    expect(kept).toContain(at('i18n/places-busan.ja.json?v=p1'));
+    expect(kept.some((u) => u.includes('places-busan.en'))).toBe(false);
+  });
 });
 
 describe('sw.js — install / activate', () => {

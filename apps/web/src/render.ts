@@ -222,8 +222,6 @@ export const BUSAN_COPY = {
   stayOutside: '지금은 부산 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
   switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.' } satisfies Record<Dest, string>,
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
-  /** specs/busan.md 8 (D4): Busan's place names and notes have no translation yet — said once in another language */
-  korean: '',
 } as const;
 
 /** The name (its main part, without the alias) and the particle its last syllable takes: 받침 → `withFinal`. */
@@ -1697,13 +1695,6 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       else c.e.innerHTML = c.html;
     }
     for (const l of doc.querySelectorAll<HTMLElement>('#results > .landing')) l.hidden = busan;
-    // another language (D4): one line under the question and over the cards
-    for (const [after, id] of [[els.lede, 'koNoteHome'], [els.how, 'koNoteCards']] as const) {
-      let p = doc.getElementById(id);
-      if (busan && BUSAN_COPY.korean) {
-        if (!p) after.after((p = el(doc, 'p', { id, class: 'ko-note' }, BUSAN_COPY.korean)));
-      } else p?.remove();
-    }
   }
 
   function render(s: State) {

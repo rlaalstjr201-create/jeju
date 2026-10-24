@@ -30,3 +30,30 @@ describe('translated place texts (ADR-0093 6)', () => {
     });
   }
 });
+
+// 부산 (ADR-0093 Amendment 9, specs/busan.md 8.1): the same check on Busan's places and their own source batches
+// (review/i18n/busan/source, `node scripts/i18n-places.mjs --busan --export`).
+const busanSpots = (JSON.parse(readFileSync(resolve(root, 'public/spots-busan.json'), 'utf8')) as { id: string; name: string; reason: string; hide?: boolean }[]).filter((s) => !s.hide);
+const busanDir = resolve(root, 'review/i18n/busan/source');
+const busanSource = new Map<string, { name: string; reason: string }>(
+  readdirSync(busanDir).flatMap((f) => (JSON.parse(readFileSync(resolve(busanDir, f), 'utf8')) as { id: string; name: string; reason: string }[]).map((r) => [r.id, r] as const)),
+);
+
+describe('Busan translated place texts (ADR-0093 Amendment 9)', () => {
+  it('were made from the Korean that ships now (a changed or new place fails until it is translated again)', () => {
+    const stale = busanSpots.filter((s) => {
+      const r = busanSource.get(s.id);
+      return !r || r.name !== s.name.trim() || r.reason !== s.reason;
+    });
+    expect(stale.map((s) => `${s.id} ${s.name}`)).toEqual([]);
+  });
+
+  for (const lang of ['en', 'zh-Hans', 'ja']) {
+    it(`${lang}: every shipped Busan place has its name and reason, and nothing of Jeju's`, () => {
+      const places = JSON.parse(readFileSync(resolve(root, `public/i18n/places-busan.${lang}.json`), 'utf8')) as Record<string, [string, string]>;
+      const missing = busanSpots.filter((s) => !places[s.id]?.[0] || !places[s.id]?.[1]);
+      expect(missing.map((s) => s.id)).toEqual([]);
+      expect(Object.keys(places).filter((id) => !id.startsWith('bs-'))).toEqual([]);
+    });
+  }
+});

@@ -20,6 +20,9 @@ const PLACES_V = spotsVersion(
 /** plans/busan.md: Busan's own file, fetched only on a Busan visit; '' while there is none (the switch is off then). */
 const BUSAN_FILE = resolve(root, 'public/spots-busan.json');
 const BUSAN_V = existsSync(BUSAN_FILE) ? spotsVersion(readFileSync(BUSAN_FILE)) : '';
+/** ADR-0093 Amendment 9: Busan's translated place files, one version for the three; fetched only on a Busan visit in that language. */
+const BUSAN_PLACES = ['en', 'zh-Hans', 'ja'].map((l) => `i18n/places-busan.${l}.json`);
+const BUSAN_PLACES_V = spotsVersion(BUSAN_PLACES.map((f) => (existsSync(resolve(root, 'public', f)) ? readFileSync(resolve(root, 'public', f), 'utf8') : '')).join('\0'));
 /** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
 function appVersion(): string {
   try {
@@ -61,7 +64,7 @@ function serviceWorker(mode: string): Plugin {
         spotsV: SPOTS_V,
         langs,
         // ADR-0093 Amendment 8: Busan's file is carried over by a new worker where the old cache had it (switched-on build only)
-        ...(mode === 'busan' ? { busanFile: `spots-busan.json?v=${BUSAN_V}` } : {}),
+        ...(mode === 'busan' ? { busanFile: [`spots-busan.json?v=${BUSAN_V}`, ...BUSAN_PLACES.map((f) => `${f}?v=${BUSAN_PLACES_V}`)] } : {}),
       });
       this.emitFile({ type: 'asset', fileName: 'sw.js', source });
     },
@@ -94,8 +97,8 @@ function busanFile(mode: string): Plugin {
     apply: 'build',
     configResolved: (c) => void (outDir = resolve(c.root, c.build.outDir)),
     closeBundle() {
-      const f = resolve(outDir, 'spots-busan.json');
-      if (mode !== 'busan' && existsSync(f)) rmSync(f);
+      // with it, Busan's place texts (ADR-0093 Amendment 9)
+      for (const f of ['spots-busan.json', ...BUSAN_PLACES].map((p) => resolve(outDir, p))) if (mode !== 'busan' && existsSync(f)) rmSync(f);
       // plans/busan.md m4: always asked for as spots-busan.json?v=<content hash> — immutable, like spots.json
       const h = resolve(outDir, '_headers');
       if (mode === 'busan' && existsSync(h))
@@ -175,6 +178,7 @@ export default defineConfig(({ command, mode: given }) => {
     __APP_V__: JSON.stringify(appVersion()),
     __BUSAN__: JSON.stringify(mode === 'busan'),
     __BUSAN_V__: JSON.stringify(BUSAN_V),
+    __BUSAN_PLACES_V__: JSON.stringify(BUSAN_PLACES_V),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [busanBlock(mode), serviceWorker(mode), siteUrl(), busanFile(mode), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],

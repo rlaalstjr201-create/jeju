@@ -9,19 +9,24 @@ const root = resolve(__dirname, '..');
 const COMMON = [/Sea of Japan/i, /Takeshima/i, /Liancourt/i, /Changbai/i, /Hanfu/i, /竹島|竹岛/, /日本海/, /長白山|长白山/];
 const BANNED: Record<string, RegExp[]> = {
   en: [...COMMON, /pao ?cai/i],
-  'zh-Hans': [...COMMON, /泡菜/, /汉服|漢服/, /朝鲜族|朝鮮族/, /鲜族服饰/],
+  // 한국관광공사 is 韩国旅游发展局 in Chinese, its own site's name (place-terms.md, review 2026-10-20 n2)
+  'zh-Hans': [...COMMON, /泡菜/, /汉服|漢服/, /朝鲜族|朝鮮族/, /鲜族服饰/, /韩国观光公社|韓國觀光公社/],
   ja: [...COMMON, /パオツァイ/, /泡菜/, /漢服|汉服/, /朝鮮族|朝鲜族/],
 };
 const files = (lang: string): string[] => {
-  const out = [resolve(root, `src/i18n/${lang}.ts`), resolve(root, `public/i18n/places.${lang}.json`), resolve(root, `public/privacy-${lang}.html`)];
-  const dir = resolve(root, `review/i18n/${lang}`);
-  if (existsSync(dir)) out.push(...readdirSync(dir).map((f) => resolve(dir, f)));
+  const out = [resolve(root, `src/i18n/${lang}.ts`), resolve(root, `public/i18n/places.${lang}.json`), resolve(root, `public/i18n/places-busan.${lang}.json`), resolve(root, `public/privacy-${lang}.html`)];
+  // Jeju's batches and Busan's (ADR-0093 Amendment 9)
+  for (const dir of [resolve(root, `review/i18n/${lang}`), resolve(root, `review/i18n/busan/${lang}`)])
+    if (existsSync(dir)) out.push(...readdirSync(dir).map((f) => resolve(dir, f)));
   return out.filter((f) => existsSync(f));
 };
 
 describe('Korean cultural and territorial terms in the translations', () => {
   for (const [lang, banned] of Object.entries(BANNED)) {
-    it(`${lang}: none of the banned terms in its UI, place texts, batches or privacy notice`, () => {
+    it(`${lang}: Busan's place file and batches are among the files checked`, () => {
+      expect(files(lang).filter((f) => /busan/.test(f)).length).toBeGreaterThanOrEqual(15);
+    });
+    it(`${lang}: none of the banned terms in its UI, place texts (Jeju and Busan), batches or privacy notice`, () => {
       const found: string[] = [];
       for (const f of files(lang)) {
         const text = readFileSync(f, 'utf8');
