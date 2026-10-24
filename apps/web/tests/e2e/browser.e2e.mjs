@@ -4248,6 +4248,38 @@ if (BUSAN) {
     await ctx.close();
   });
 
+  // 2026-10-24 주인 제보: 여행지를 고른 뒤 홈이 멈춘 듯 — 「예:」·사진·장날 줄 없음. 그 여행지 목록이 이미 받아져 있으면
+  // (덮개 밑 제주 홈이 받아 둔 것, 부산에 갔다 온 제주) 다시 오지 않아서 홈이 빈 목록으로 남았다.
+  await check('BS-R1', '여행지를 다시 고른 홈: 시작 화면(거절) → 목록이 온 뒤 제주 / 기준 시트 제주 → 부산 → 제주 — 둘 다 「제주 인기:」와 사진, 375·1280', async () => {
+    const problems = [];
+    const home = async (page, what) => {
+      const ok = await page
+        .waitForFunction(() => /^제주 인기: /.test(document.querySelector('[data-mood="rest"] .ex')?.textContent ?? '') && document.querySelectorAll('.mood img').length > 0, null, { timeout: 5000 })
+        .then(() => true, () => false);
+      if (!ok) problems.push(`${what}: ${JSON.stringify(await page.evaluate(() => ({ ex: document.querySelector('[data-mood="rest"] .ex')?.textContent ?? null, imgs: document.querySelectorAll('.mood img').length, basis: document.querySelector('#basis > span')?.textContent })))}`);
+    };
+    for (const width of [375, 1280]) {
+      let o = await openAt('/', { geo: { mode: 'deny' }, width });
+      await o.page.click('#ycGps');
+      await o.page.waitForFunction(() => document.getElementById('ycMsg')?.textContent, null, { timeout: 3000 });
+      await sleep(1500);
+      await o.page.click('#ycStart [data-dest="jeju"]');
+      await home(o.page, `${width} 시작 화면 → 제주`);
+      await o.ctx.close();
+      o = await openAt('/', { storage: {}, width });
+      await home(o.page, `${width} 제주 홈`);
+      await tapText(o.page, '#basis');
+      await o.page.click('.sheet [data-dest="busan"]');
+      await o.page.waitForFunction(() => document.querySelector('.logo .rg')?.textContent === ':부산', null, { timeout: 5000 });
+      await o.page.click('.sheet [data-dest="jeju"]');
+      await o.page.waitForFunction(() => document.querySelector('.logo .rg')?.textContent === ':제주', null, { timeout: 5000 });
+      await o.page.keyboard.press('Escape');
+      await home(o.page, `${width} 부산 → 제주`);
+      await o.ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
   await check('BS-L10n', '부산 장소 글 (ADR-0093 Amendment 9): en·zh-Hans·ja 해운대 기분 하나의 카드 3장, 이름·소개글에 한국어 0, 「아직 한국어」 안내 없음', async () => {
     const problems = [];
     for (const lang of ['en', 'zh-Hans', 'ja']) {

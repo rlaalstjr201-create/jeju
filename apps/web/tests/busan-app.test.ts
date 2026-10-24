@@ -119,6 +119,23 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     expect([localStorage.getItem('jeju.region.busan'), localStorage.getItem('jeju.basis.busan'), localStorage.getItem('jeju.region')]).toEqual(['"광안리"', '"region"', null]);
   });
 
+  // owner report 2026-10-24: back on a destination whose list was already in, the home stayed without 「예:」 or photos
+  it('제주 → 부산 → 제주: the Jeju list already in comes back with it — 「제주 인기:」 and photos, not asked for again', async () => {
+    const { asked } = mount({ dest: 'jeju', at: 'outside' });
+    await wait();
+    expect($('[data-mood="rest"] .ex').textContent).toMatch(/^제주 인기: /);
+    await tap('#basis');
+    await tap('#sheet [data-dest="busan"]');
+    await wait();
+    expect($('[data-mood="rest"] .ex').textContent).toMatch(/^부산 인기: /);
+    await tap('#sheet [data-dest="jeju"]');
+    await wait();
+    expect($('.logo .rg').textContent).toBe(':제주');
+    expect($('[data-mood="rest"] .ex')?.textContent).toMatch(/^제주 인기: /);
+    expect($$('.mood img').length).toBeGreaterThan(0);
+    expect(asked).toEqual(['jeju', 'busan']);
+  });
+
   it('B10 부산에 저장한 곳: kept when Jeju is in use, one line under the saved list, which opens Busan’s', async () => {
     mount({ dest: 'busan', at: 해운대 });
     await wait();

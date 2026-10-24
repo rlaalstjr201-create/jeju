@@ -1304,7 +1304,13 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (d === state.dest && !opts.basis) return;
     const p = store.place();
     const basis = opts.basis ?? p.basis;
-    dispatch({ type: 'dest', dest: d, basis, region: basis === 'region' ? null : p.region, stay: p.stay, note: opts.note });
+    batch(() => {
+      dispatch({ type: 'dest', dest: d, basis, region: basis === 'region' ? null : p.region, stay: p.stay, note: opts.note });
+      // its list already in (warmed under the 시작 화면, or before a trip to the other one): its onLoad has been, so
+      // nothing else would bring it back and the home stayed without 「예:」, photos or 장날 (owner report 2026-10-24)
+      const ready = data.peek();
+      if (ready) dispatch({ type: 'spots', spots: ready });
+    });
     if (opts.basis && opts.basis !== 'region') store.setBasis(opts.basis);
     data.get().catch(() => undefined);
   }
