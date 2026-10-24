@@ -301,3 +301,33 @@ Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상
 ### 요약
 
 MAJOR 0 · MINOR 2 · NIT 5. 제주 쪽은 의도한 추가(기준 시트 여행지 줄·저장한 곳 다른 여행지 줄·안내 몇 줄) 말고 바뀐 것을 찾지 못했고 `check:jeju`가 같다고 본다. 부산 데이터 994곳은 경계·id·유명한 곳·밤 산길·예약 경로·멱등 모두 맞다. 배포 전에 m1(청크 실패 때 `jeju.dest` 쓰기)과 m2(영어 안내 끊긴 문장)를 고칠지 정할 일. 전체 e2e는 이번에 결과를 못 읽었으니 배포 전에 한 번 더 돌려 볼 것.
+
+## 2026-10-24 부산 번역 (Claude 독립 리뷰, ADR-0058)
+
+Codex를 쓰지 않고 Claude가 독립 리뷰로 대신했다(ADR-0058). 대상: `fc7306b5..HEAD` 6커밋(5cd4942e docs, d3c167c9 n3·n4, afa19614·064b0830·ebdf5cb8·3c5e3084 부산 장소 글 en·zh-Hans·ja, ADR-0093 Amendment 9, ADR-0096 Amendment 1). 코드는 고치지 않았다.
+
+검증한 것(각 1회): `npx tsc --noEmit` exit 0 · `npx vitest run` 65 files / 1412 pass(18 skip) · `npx vitest run --mode busan` 67 files / 1430 pass · `SITE_URL=https://yeochana.com npm run build` exit 0(켠 빌드, 진입 JS 43.80 + CSS 5.62KB gzip, `busan-part` 2.49KB, `dist/i18n/places-busan.{en,zh-Hans,ja}.json` 116·92·136KB) · `npm run check:jeju` exit 0(한국어 진입 49,421 B ≤ 50,000, 기준선 대비 +881 B; 인라인 블록 +1,766 B ≤ 2,000; 제주 데이터·60 파일·precache·함수·브라우저 2기기 그대로). 빌드 뒤 `data/landing/lastmod.json` 되돌림, `dist/`는 켠 운영 빌드로 둠. e2e는 돌리지 않았다(요청 범위 밖, 통과로 적지 않는다).
+
+따로 본 것: 세 언어 파일 모두 994/994곳, 빈 이름·이유 0, 한글 남은 곳 0, 제주 `places.<lang>.json`과 id 겹침 0. 금지어(泡菜·长白山·日本海·Sea of Japan·竹島·韩国观光公社 등) 0, 辛奇 10·东海/東海 5·East Sea 2·独岛/独島 각 1. 코드 경로: 부산 글은 `loadSpots('busan')`에서 언어 모듈이 들어온 뒤에만 받고(마운트는 `words()`를 기다리므로 `inLang`은 마운트 때 이미 있음), 실패·오프라인이면 `json()`이 null → 표에 안 들어가 한국어로 보이고 숨김은 없다(3초 상한, Amendment 6과 같음). sw.js는 미리 받지 않고 런타임 캐시에 들며, 새 워커는 옛 캐시에 같은 이름 파일이 있을 때만 새 판을 받는다(지금 배포본엔 없음 → 첫 업데이트는 no-op, 파일마다 `.catch`). `BUSAN_FILES`가 템플릿에 들어가 VERSION 해시에 반영된다. `dest=`는 인라인·앱 모두 `jeju|busan` 정규식만 받아 값이 HTML·URL로 다시 나가지 않는다(XSS·열린 리다이렉트 없음). 부산 몫이 안 오면 이번 방문만 제주, 기기 선택은 안 쓴다. 꺼진 빌드는 `dist/`에서 세 파일을 지운다.
+
+번역 표본(sample-01과 겹치지 않게 `sha256(id+"rev-1024")` 앞 20곳, 원어민 편집자 관점, 한 번만): en (가)~(라) 0 · 번역투 2 · 언어 간 이름 어긋남 1 / zh-Hans (가)~(라) 1 · 번역투 2 / ja (가)~(라) 0 · 번역투 1. zh 「XX 总店」→「XX总店」 34곳 붙여 쓰기는 중국어 점포명 관례(大众点评 「海底捞王府井店」 꼴)와 맞아 자연스럽다.
+
+### MAJOR
+
+없음.
+
+### MINOR
+
+**m1. 둔치도 중국어 표기 「屯治岛」 — 한자는 屯致島(일본어판도 「屯致島」)** — `apps/web/review/i18n/busan/zh-Hans/reasons-004.json:74`
+- 중국어 카드(bs-2903578 금빛노을 소개글)에 다른 한자 지명이 나간다. 같은 곳이 일본어판과 다르다. 「屯致岛」로 고치고 place-terms.md에 한 줄 넣을 일.
+
+### NIT
+
+- n1. `apps/web/review/i18n/busan/en/names-007.json:36` 「Foody 1354」 vs `zh-Hans/names-007.json:36` 「Foodie 1354」(bs-2869249 푸디1354): 라틴 이름이 언어마다 다르다. 실제 상호 철자 하나로 맞출 것.
+- n2. `apps/web/index.html:17` 인라인 판정은 `dest=`를 `area=`(부산 slug만)·`stay=` 다음, 제주 딥링크 키 앞에 본다. 앱(`src/app.ts:188`)은 제주 동네 `area=`를 `dest=`보다 먼저 쓴다. 손으로 만든 `?area=aewol&dest=busan`이면 인라인은 부산으로 보고 부산 몫을 미리 받지만 앱은 제주로 연다. `handoffUrl`은 `area`를 싣지 않아 앱이 만든 링크에선 안 생긴다. 해는 쓸데없는 청크 한 번.
+- n3. `apps/web/src/start.ts:55` 거절·못 찾음·밖 문구를 `documentElement.lang`으로 고른다. 언어 청크가 4초 안에 안 와 `lang`이 `ko`로 돌아간 기기는 시작 화면 제목·버튼(인라인 `__ycT`, 원래 언어)과 실패 문구(한국어)가 섞인다. 드문 경우.
+- n4. 번역투 표본 예: en bs-2824044 「mulhoe soba」 풀이 없음(ja는 풀이 있음), zh bs-2785956 「汤小麦面」·bs-3027098 「头号城门」. 출시 막을 것 아님.
+
+### 요약
+
+MAJOR 0 · MINOR 1 · NIT 4. 제주 사용자: 진입 +881 B로 예산 안, `check:jeju` 같음, 꺼진 빌드엔 부산 글 파일이 없고 제주만 쓰는 외국어 기기는 부산 글을 받지 않는다. 부산 외국어: 번역 이름·소개글이 들어가고, 파일 실패·오프라인이면 한국어로 내려앉고 멈춘 숨김은 없다. `dest=`는 값 검증만 받고 링크로 온 방문에서만 기기 선택을 바꾼다(ADR-0096 Amendment 1 그대로). 배포 전 m1(屯治岛) 한 줄 고칠지 정할 일. e2e는 이번에 돌리지 않았다.
