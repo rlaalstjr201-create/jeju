@@ -87,4 +87,4 @@ Status: Accepted (2026-10-17, 주인 결정 「일단 중국어 영어 일본어
 - 부산 출하 994곳의 이름·소개글을 en·zh-Hans·ja로 번역해 `public/i18n/places-busan.<lang>.json`(`{ id: [이름, 소개글] }`)으로 낸다. 만드는 법은 제주와 같다(`node scripts/i18n-places.mjs --busan`, 묶음 `review/i18n/busan/<lang>/`). specs/busan.md 8의 D4(「장소 정보는 아직 한국어예요」 한 줄)는 이것으로 대체해 지운다.
 - 받기: 그 언어로 부산 목록을 부를 때만(`main.ts` `loadSpots('busan')`) 함께 받는다. 제주만 쓰는 외국어 기기·한국어 기기는 받지 않는다. 목록 뒤 3초까지 기다리고 늦으면 다음 그리기부터 쓴다(Amendment 6과 같음). 제주·부산 글은 한 표에 합친다(id가 겹치지 않음, `apply.ts` `addPlaces`).
 - 주소는 `?v=<세 파일 합친 해시>`(`__BUSAN_PLACES_V__`). 서비스 워커는 미리 받지 않고, 새 워커는 옛 캐시에 그 언어 부산 글이 있었을 때만 새 판을 받아 둔다(Amendment 8 방식, 파일마다 따로 `.catch`). 꺼진 빌드는 `dist/`에서 이 파일들을 지운다.
-- 표본 검수(사전 등록 sample-01, 한 번만)는 `review/i18n/busan/qa/result-01.json`.
+- 표본 검수(사전 등록 sample-01, 한 번만)는 `review/i18n/busan/qa/result-01.json`: (가)~(라) en 6·zh-Hans 3·ja 4 /60, 번역투 en 11·zh-Hans 9·ja 14 /60, 금지어 0. 짚은 곳과 같은 꼴은 고쳤고 다시 재지 않았다.

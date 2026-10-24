@@ -1,0 +1,545 @@
+{
+ "reviewer": "independent subagent, native-Chinese editor role",
+ "items": [
+  {
+   "id": "bs-2783646",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "句子结构成了「汉堡里…的咖啡馆」；「青酱」是绿色罗勒酱，与番茄干酱矛盾。建议：卖日晒番茄干香蒜酱素食汉堡的咖啡馆"
+  },
+  {
+   "id": "bs-850018",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "缺介词「在」，读起来是残句。建议：在林浪海水浴场前的独栋小木屋里吃猪肉汤饭"
+  },
+  {
+   "id": "bs-3032396",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-129140",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-851936",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2867715",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": true,
+   "e": false,
+   "note": "만석 通常写作萬石，按规则应为简体「万石」，「满石」不成词；另卡名中间的空格中文不用。建议：万石海带总店（正文同）"
+  },
+  {
+   "id": "bs-2554070",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2840883",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "「韩猪」不是中文说法，「同一处咖啡馆」生硬。建议：烤韩牛和韩国本土猪，店里还有咖啡馆能喝咖啡"
+  },
+  {
+   "id": "bs-850179",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-3334005",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2608459",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2852419",
+   "a": false,
+   "b": true,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "사골 指牛腿骨，译成「猪骨」改了原文事实。建议：牛骨熬汤的猪肉汤饭，还有白切肉套餐"
+  },
+  {
+   "id": "bs-3421778",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2838418",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-1250885",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2838489",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-849871",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "店名「故乡家」是逐字直译，中文不这么说。建议：老家刀切面（正文同）"
+  },
+  {
+   "id": "bs-2902322",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2606221",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-134326",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2872353",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2841481",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "「平床」是韩语평상直译；「看海和红灯塔喝咖啡」缺「边…边」。建议：坐在遮阳伞下的木榻上，边看海和红灯塔边喝咖啡"
+  },
+  {
+   "id": "bs-662756",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-849941",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-3014437",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-851082",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-130737",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-850109",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "句尾补一句「熟成生鱼片店」是韩语语序。建议：熟成生鱼片店，活鱼低温熟成后现切上桌"
+  },
+  {
+   "id": "bs-3408797",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2656194",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2630323",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "「百年小店认证的」生硬。建议：获评「百年老店」的中餐馆，招牌是面上盖辣炒猪肉的猪肉面"
+  },
+  {
+   "id": "bs-1607203",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-126122",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2852408",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-1960620",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-841730",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2891868",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2827931",
+   "a": false,
+   "b": true,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "原文只说卖棉花奶油拿铁，没说是招牌，「招牌」是添加的。建议：废工厂改造的复合文化空间里，卖棉花奶油拿铁的咖啡馆"
+  },
+  {
+   "id": "bs-2875837",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-126119",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-3350880",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-3081825",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2675032",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-3008288",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2832642",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2848924",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-130642",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-1935608",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "大陆天主教用语是「殉道者」，「殉教者」是日韩用法。建议：殉道者博物馆"
+  },
+  {
+   "id": "bs-229912",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-3017347",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-129737",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2756696",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2911203",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2782628",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-1608751",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2844638",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": true,
+   "note": "「母花蟹酱蟹」重复。建议：海鲜炖排骨、大麦黄鱼干和酱母花蟹，一桌端上的韩定食"
+  },
+  {
+   "id": "bs-2350092",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-2869532",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-129816",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  },
+  {
+   "id": "bs-1805095",
+   "a": false,
+   "b": false,
+   "c": false,
+   "d": false,
+   "e": false,
+   "note": "ok"
+  }
+ ]
+}

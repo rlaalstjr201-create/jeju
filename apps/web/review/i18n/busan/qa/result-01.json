@@ -1,0 +1,9 @@
+{
+  "registered": "specs/busan.md §8.1, sample sample-01.json (seed i18n-busan-qa-01), committed afa19614 before translation",
+  "run": "2026-10-24, one run per language, independent reviewer subagents (did not translate or polish); packets packet-01-<lang>.json, verdicts review-01-<lang>.json; counts are before any fix",
+  "en": { "n": 60, "errorsAtoD": 6, "translationese": 11, "a": 0, "b": 3, "c": 0, "d": 4 },
+  "zh-Hans": { "n": 60, "errorsAtoD": 3, "translationese": 9, "a": 0, "b": 2, "c": 0, "d": 1 },
+  "ja": { "n": 60, "errorsAtoD": 4, "translationese": 14, "a": 0, "b": 0, "c": 0, "d": 4 },
+  "bannedTerms": "none found by the reviewers or tests/i18n-terms.test.ts",
+  "after": "the flagged places were fixed (en 16, zh-Hans 12, ja 18 by id; en 851082 kept as ethnic Chinese for 화교, ja 2848924 without 産) and the same patterns across all places (en Hoetjip→Raw Fish Restaurant 16, Banjeom→Chinese Restaurant 2, 100-year shop→Centennial Store 1; zh 百年小店→百年老店 2, no space before 店/总店 34; ja reading in brackets off card names 16, タルマジ峠 1, 統営海鮮膳 1); not re-measured"
+}
