@@ -1,7 +1,7 @@
 {
  "_why": "keyword gate 기록 — 페이지·콘텐츠 작업 전에 이 표를 통과해야 한다. 규칙: scripts/seo/keyword-gate.mjs · 루브릭: .claude/skills/seo-geo/references/keyword-gate.md · 근거: docs/seo/keyword-research-01.md",
  "rubric_version": 1,
- "updated": "2026-10-17",
+ "updated": "2026-10-24",
  "candidates": [
   {
    "query": "여차나:제주",
@@ -2618,6 +2618,1110 @@
    "rationale": "P 의도 중국어판 — 수요 신호 없음.",
    "landing": "",
    "verdict": "watch"
+  },
+  {
+   "kills": [
+    "K1_intent"
+   ],
+   "landing": "",
+   "query": "부산 여행",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "부산광역시(네이버 여행 요약)",
+     "라운지",
+     "인플루언서",
+     "네이버 클립",
+     "뉴스",
+     "웹문서: visitkorea·tripadvisor·visitbusan·expedia",
+     "네이버 여행상품"
+    ],
+    "note": "네이버 자기 서비스와 공공·OTA. 우리 없음"
+   },
+   "demand": {
+    "naver": [
+     "부산여행코스추천",
+     "부산여행2박3일코스",
+     "혼자부산여행"
+    ],
+    "google": [
+     "부산 여행 코스",
+     "부산 여행 필수 코스",
+     "부산 여행 코스 정리 2박 3일"
+    ]
+   },
+   "rationale": "코스·2박3일·여행상품 의도(K1). 제주 「제주 여행」과 같은 꼴 — 일정을 짜 주지 않는 우리 것이 아니다.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "부산 가볼만한곳",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "부산 가볼만한곳 저장리스트",
+     "네이버 클립",
+     "뉴스",
+     "웹문서: visitbusan·grandculture·hotels.com·expedia"
+    ],
+    "note": "플레이스·인플루언서·저장리스트가 위, 웹문서는 공공·OTA뿐"
+   },
+   "demand": {
+    "naver": [
+     "부산가볼만한곳"
+    ],
+    "google": [
+     "부산 가볼만한곳 베스트 10",
+     "부산 가볼만한곳 실내",
+     "부산 가볼만한곳 겨울"
+    ]
+   },
+   "rationale": "여행지 + 일반형 헤드(seoulist lost-shape, 제주 「제주 가볼만한곳」 kill과 같은 꼴). 포털 벽 — K3.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "부산 실내 놀거리",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "네이버 클립",
+     "네이버 가격비교",
+     "네이버플러스 스토어",
+     "웹문서: visitbusan",
+     "카페",
+     "인플루언서",
+     "지식iN"
+    ],
+    "note": "가격비교·스토어(입장권)까지 붙은 포털 벽. 바깥 웹문서는 visitbusan 하나"
+   },
+   "demand": {
+    "naver": [
+     "부산 실내 놀거리",
+     "부산 실내 데이트",
+     "부산 실내 액티비티"
+    ],
+    "google": [
+     "부산 실내 놀거리",
+     "부산 실내 액티비티",
+     "부산 실내 놀거리 디시"
+    ]
+   },
+   "rationale": "부산 전체 + 실내 헤드. 동네로 좁힌 「해운대·영도·광안리 실내 놀거리」로 받는다. K3.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "부산 비오는날",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "플레이스",
+     "네이버 클립",
+     "웹문서: visitbusan",
+     "뉴스",
+     "카페",
+     "웹문서: trip.com",
+     "웹문서: nadrilab·idpaper·bsjb·welcome-busan",
+     "지식iN"
+    ],
+    "note": "광고 없음. 1쪽 아래에 작은 바깥 사이트 넷(nadrilab 등) — 경쟁 1"
+   },
+   "demand": {
+    "naver": [
+     "부산 비오는날 가기좋은곳",
+     "부산 비오는날 데이트",
+     "부산 비오는날 아이랑",
+     "부산 비오는날 실내"
+    ],
+    "google": [
+     "부산 비오는날 갈만한곳",
+     "부산 비오는날 놀거리",
+     "부산 비오는날 데이트"
+    ]
+   },
+   "rationale": "자동완성이 가장 두껍고 바깥 자리도 있지만 부산 전체라 「지금 이 동네」가 아니다(의도 1) — 데이트·아이랑·드라이브·카페 갈래. 제주 「제주 비오는날」은 포털 벽 kill이었고 부산은 자리가 있어 watch. 따로 쪽을 만들지 않고 허브가 동네 실내 절로 잇는다.",
+   "verdict": "watch"
+  },
+  {
+   "kills": [
+    "K1_intent"
+   ],
+   "landing": "",
+   "query": "부산 뚜벅이 여행",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "AI 브리핑",
+     "인플루언서",
+     "네이버 클립",
+     "인플루언서",
+     "카페",
+     "지식iN",
+     "웹문서: visitbusan·cboard",
+     "지식iN"
+    ],
+    "note": "AI 브리핑·인플루언서가 위"
+   },
+   "demand": {
+    "naver": [
+     "부산 뚜벅이 여행 코스",
+     "부산 뚜벅이 여행 숙소 위치",
+     "부산 뚜벅이 여행 2박 3일 코스"
+    ],
+    "google": [
+     "부산 뚜벅이 여행 코스",
+     "부산 2박3일 뚜벅이 여행코스"
+    ]
+   },
+   "rationale": "코스·숙소 위치·N박 의도(K1). 「차 없이」는 우리 이동 시간(걸어서) 각도와 닿지만 검색은 일정표를 원한다.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [
+    "K1_intent",
+    "K2_data"
+   ],
+   "landing": "",
+   "query": "부산 혼자 여행",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버·구글 자동완성(seo:keywords --suggest 2026-10-24)만. 네이버 결과 화면은 이번에 보지 않았다",
+    "naver_observed": false,
+    "note": "결과 화면은 보지 않았다 — 의도와 데이터로 접는다(K1·K2), 경쟁 판단이 필요 없다"
+   },
+   "demand": {
+    "naver": [
+     "부산 혼자 여행 숙소",
+     "부산 혼자 여행 코스",
+     "부산 혼자 여행 혼술",
+     "부산 혼자 여행 게하"
+    ],
+    "google": [
+     "부산 혼자 여행 코스",
+     "부산 혼자 여행 숙소"
+    ]
+   },
+   "rationale": "숙소·게하·코스 의도(K1) + 혼자 적합 데이터 없음(K2). 제주 「제주 혼자 여행」과 같다.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [
+    "K1_intent"
+   ],
+   "landing": "",
+   "query": "부산 당일치기",
+   "cluster": "busan-head",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버·구글 자동완성(seo:keywords --suggest 2026-10-24)만. 네이버 결과 화면은 이번에 보지 않았다",
+    "naver_observed": false,
+    "note": "결과 화면은 보지 않았다 — 의도로 접는다(K1)"
+   },
+   "demand": {
+    "naver": [
+     "부산 당일치기 코스",
+     "부산 당일치기 패키지",
+     "부산 당일치기 코스 뚜벅이"
+    ],
+    "google": [
+     "부산 당일치기 여행 코스",
+     "부산 당일치기 비용"
+    ]
+   },
+   "rationale": "코스·패키지·비용 의도(K1).",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "해운대 가볼만한곳",
+   "cluster": "busan-area-general",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "네이버 클립",
+     "웹문서: visitkorea·expedia",
+     "뉴스",
+     "웹문서 묶음: tripadvisor·visitbusan·haeundae.go.kr·busan.go.kr"
+    ],
+    "note": "플레이스·인플루언서·클립 아래 공공·OTA·구청뿐"
+   },
+   "demand": {
+    "naver": [
+     "해운대 가볼만한곳",
+     "부산 해운대 가볼만한곳"
+    ],
+    "google": [
+     "해운대 가볼만한곳",
+     "부산 해운대 가볼만한곳"
+    ]
+   },
+   "rationale": "동네 + 일반형(seoulist lost-shape, 제주 「애월 가볼만한곳」 kill과 같은 꼴). 동네 쪽은 이 말을 노리지 않고 「근처·실내」로 좁힌 말을 받는다. K3.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "광안리 가볼만한곳",
+   "cluster": "busan-area-general",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "웹문서: visitkorea",
+     "네이버 클립",
+     "뉴스",
+     "웹문서 묶음: visitbusan·todayall"
+    ],
+    "note": "밖 웹문서 자리는 공공(visitkorea·visitbusan)"
+   },
+   "demand": {
+    "naver": [
+     "광안리 가볼만한곳",
+     "부산 광안리 가볼만한곳"
+    ],
+    "google": [
+     "광안리 가볼만한곳",
+     "부산 광안리 가볼만한곳"
+    ]
+   },
+   "rationale": "동네 + 일반형(seoulist lost-shape, 제주 「애월 가볼만한곳」 kill과 같은 꼴). 동네 쪽은 이 말을 노리지 않고 「근처·실내」로 좁힌 말을 받는다. K3.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "서면 가볼만한곳",
+   "cluster": "busan-area-general",
+   "head": true,
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "네이버 클립",
+     "인플루언서",
+     "뉴스",
+     "웹문서 묶음: busanjin.go.kr·visitkorea·rockpin.ai·ktravelmate"
+    ],
+    "note": "구청·공공이 먼저. 작은 사이트(rockpin.ai)는 맨 아래 하나"
+   },
+   "demand": {
+    "naver": [
+     "서면 가볼만한곳",
+     "부산 서면 가볼만한곳"
+    ],
+    "google": [
+     "서면 가볼만한곳",
+     "부산 서면 가볼만한곳"
+    ]
+   },
+   "rationale": "동네 + 일반형(seoulist lost-shape, 제주 「애월 가볼만한곳」 kill과 같은 꼴). 동네 쪽은 이 말을 노리지 않고 「근처·실내」로 좁힌 말을 받는다. K3.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/choryang/",
+   "query": "부산역 근처 가볼만한곳",
+   "cluster": "busan-near",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "네이버 클립",
+     "웹문서: visitkorea·tripadvisor",
+     "웹문서 묶음: info.koreacharts"
+    ],
+    "note": "플레이스·인플루언서 아래 공공·tripadvisor·작은 사이트(koreacharts). 이 의도를 정확히 받는 쪽은 없다 — 경쟁 1. 우리 없음"
+   },
+   "demand": {
+    "naver": [
+     "부산역 근처 가볼만한곳",
+     "부산역 근처 놀거리"
+    ],
+    "google": [
+     "부산역 근처 가볼만한곳",
+     "부산역 근처 놀거리",
+     "부산역 근처 실내 놀거리"
+    ]
+   },
+   "rationale": "기차 시간이 남은 여행자 — 「지금 여기서 걸어서 몇 곳」 그대로다(의도 2). 부산역·초량 칸 먹기 뺀 38곳(이바구길·산복도로·부산과학체험관 등). 동네 label이 「부산역·초량」이라 쪽 title·H1에 「부산역」이 이미 들어간다.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/choryang/",
+   "query": "부산역 근처 놀거리",
+   "cluster": "busan-near",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서(tripadvisor 링크)",
+     "네이버 클립",
+     "웹문서 묶음: nol.yanolja·visitbusan"
+    ],
+    "note": "OTA(야놀자)·공공 혼합, 정확한 의도 쪽 없음 — 경쟁 1"
+   },
+   "demand": {
+    "naver": [
+     "부산역 근처 놀거리"
+    ],
+    "google": [
+     "부산역 근처 놀거리",
+     "부산역 근처 놀거리 디시",
+     "부산역 근처 실내 놀거리"
+    ]
+   },
+   "rationale": "「부산역 근처 가볼만한곳」과 같은 의도라 같은 쪽(/busan/choryang/)이 받는다. 새 쪽을 만들지 않는다.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/haeundae/",
+   "query": "해운대 근처 가볼만한곳",
+   "cluster": "busan-near",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "인플루언서",
+     "네이버 클립",
+     "웹문서 묶음: expedia·okithekey·ktravelmate"
+    ],
+    "note": "플레이스·인플루언서 아래 OTA와 작은 사이트 — 경쟁 1. 「해운대 가볼만한곳」(공공·구청 벽)과 달리 「근처」가 붙으면 작은 사이트 자리가 있다"
+   },
+   "demand": {
+    "naver": [
+     "해운대 근처 가볼만한곳",
+     "부산 해운대 근처 가볼만한곳"
+    ],
+    "google": [
+     "해운대 근처 가볼만한곳"
+    ]
+   },
+   "rationale": "「근처」 = 해운대에 와 있는 사람(의도 2). 해운대 칸 먹기 뺀 41곳. 1급 관광지라 헤드에 가깝다 — 1회 관찰이라 색인 4주 뒤 pivotOf로 다시 본다.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/gwangalli/",
+   "query": "광안리 근처 놀거리",
+   "cluster": "busan-near",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "플레이스",
+     "[광고]",
+     "인플루언서",
+     "네이버 클립",
+     "웹문서 묶음: tripadvisor·jmotel·pandarank·nol.yanolja"
+    ],
+    "note": "OTA·숙박·작은 사이트(pandarank) 혼합 — 경쟁 1"
+   },
+   "demand": {
+    "naver": [
+     "광안리 근처 가볼만한곳"
+    ],
+    "google": [
+     "광안리 근처 놀거리",
+     "광안리 근처 가볼만한 곳"
+    ]
+   },
+   "rationale": "구글 자동완성에만 있다(수요 1, 네이버는 「광안리 근처 가볼만한곳」). 광안리 칸 먹기 뺀 31곳. 7점 경계라 같은 쪽이 덤으로 받는 말이고 따로 일하지 않는다.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/haeundae/",
+   "query": "해운대 실내 놀거리",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "AI 브리핑",
+     "인플루언서",
+     "네이버 클립",
+     "플레이스",
+     "네이버 가격비교(lotteon)",
+     "네이버플러스 스토어",
+     "웹문서 묶음: visitbusan",
+     "블로그",
+     "웹문서 묶음: pandarank",
+     "카페"
+    ],
+    "note": "AI 브리핑·입장권 가격비교가 위, 1쪽 아래에 작은 바깥 사이트(pandarank) — 경쟁 1. 우리 없음"
+   },
+   "demand": {
+    "naver": [
+     "해운대 실내 놀거리",
+     "해운대 실내데이트",
+     "해운대 실내 가볼만한곳",
+     "해운대 놀거리 실내"
+    ],
+    "google": [
+     "해운대 실내 놀거리",
+     "해운대 실내 데이트",
+     "해운대 실내 액티비티"
+    ]
+   },
+   "rationale": "제주 target 「애월 실내 놀거리」와 같은 꼴. 해운대 칸 실내 먹기 뺀 14곳(씨라이프 아쿠아리움·엑스더스카이·클럽디 오아시스·해운대온천센터·누리마루 등) — 재고 1. 「비 오는 날, 해운대 실내」 절이 받는다.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/yeongdo/",
+   "query": "영도 실내 놀거리",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "웹문서: visitbusan(맨 위)",
+     "[광고]",
+     "플레이스",
+     "네이버 클립",
+     "인플루언서",
+     "웹문서: trip.happynowinfo",
+     "웹문서 묶음: pandarank",
+     "웹문서: nkchildren"
+    ],
+    "note": "visitbusan 쪽이 1쪽 맨 위 — 공식이 이 의도를 받는다. 그 아래 작은 사이트 셋이 있어 경쟁 1(0에 가깝다)"
+   },
+   "demand": {
+    "naver": [
+     "영도 실내 놀거리",
+     "영도 실내 가볼만한곳",
+     "영도 가볼만한곳 실내"
+    ],
+    "google": [
+     "영도 실내 놀거리",
+     "영도 실내 데이트"
+    ]
+   },
+   "rationale": "영도 칸 실내 먹기 뺀 11곳(국립해양박물관·아르떼뮤지엄·피아크·해녀문화전시관·태종대온천 등) — 재고 1, K4 경계 바로 위. visitbusan이 맨 위라 순위 기대는 낮다.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/gwangalli/",
+   "query": "광안리 실내 놀거리",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "AI 브리핑",
+     "웹문서: visitbusan",
+     "네이버 클립",
+     "플레이스",
+     "인플루언서",
+     "웹문서 묶음: visitbusan·instagram·pandarank",
+     "카페",
+     "웹문서: busan-where"
+    ],
+    "note": "visitbusan이 웹문서 첫 자리, 아래 작은 사이트(pandarank·busan-where) — 경쟁 1"
+   },
+   "demand": {
+    "naver": [
+     "광안리 실내 놀거리",
+     "광안리 실내데이트",
+     "광안리 실내 가볼만한곳"
+    ],
+    "google": [
+     "광안리 실내 놀거리",
+     "광안리 실내 데이트",
+     "광안리 실내 액티비티"
+    ]
+   },
+   "rationale": "광안리 칸 실내 먹기 뺀 11곳(부산박물관·유엔평화기념관·중앙해수랜드·포디움다이브 등) — 재고 1, K4 경계 바로 위.",
+   "verdict": "target"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "서면 실내 놀거리",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "AI 브리핑",
+     "인플루언서(busan.go.kr)",
+     "[광고]",
+     "네이버 클립",
+     "플레이스",
+     "인플루언서",
+     "카페",
+     "블로그",
+     "웹문서: pandarank"
+    ],
+    "note": "AI 브리핑 맨 위, 맨 아래 pandarank — 경쟁 1"
+   },
+   "demand": {
+    "naver": [
+     "서면 실내 놀거리",
+     "서면 실내데이트",
+     "서면 실내동물원",
+     "서면 실내사격장"
+    ],
+    "google": [
+     "서면 실내 놀거리",
+     "서면 실내 액티비티",
+     "서면 실내동물원"
+    ]
+   },
+   "rationale": "도심 오락 의도(방탈출·실내동물원·사격장·VR) — TourAPI 장소 범위(관광지·문화시설)에 거의 없다. 서면 칸 실내 15곳은 국악원·119안전체험관·박물관·해수탕이다(의도 1). 서면 쪽 실내 절이 덤으로 받을 수는 있다.",
+   "verdict": "watch"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "남포동 실내 놀거리",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "플레이스",
+     "네이버 클립",
+     "인플루언서",
+     "인플루언서",
+     "카페",
+     "블로그 묶음: soonwidot·pandarank·bgame"
+    ],
+    "note": "광고 없음, 작은 사이트 셋 — 경쟁 1"
+   },
+   "demand": {
+    "naver": [
+     "남포동 실내동물원"
+    ],
+    "google": [
+     "남포동 실내 놀거리",
+     "남포동 실내데이트"
+    ]
+   },
+   "rationale": "구글에만 있다(수요 1). 원도심 칸 실내 먹기 뺀 11곳(부산영화체험박물관·부산타워·근현대역사관·삼진어묵 등). 사람들은 「남포동」으로 치는데 동네 이름은 원도심(대표 지명 자갈치시장)이다 — 쪽 title에 남포동이 없으면 받지 못한다.",
+   "verdict": "watch"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "서면 비오는날",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 1,
+    "competition": 1,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "네이버 클립",
+     "인플루언서",
+     "웹문서 묶음: diningcode·nusudoctor·myteatime·kfood"
+    ],
+    "note": "맛집 사이트가 웹문서 자리를 차지 — 먹을 곳 의도"
+   },
+   "demand": {
+    "naver": [
+     "서면 비오는날 맛집",
+     "서면 비오는날 데이트",
+     "서면 비오는날 카페",
+     "서면 비오는날 놀거리"
+    ],
+    "google": []
+   },
+   "rationale": "네이버에만 있고 맛집·데이트·카페 갈래가 크다(의도 1).",
+   "verdict": "watch"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/haeundae/",
+   "query": "해운대 비오는날",
+   "cluster": "busan-x-rain",
+   "scores": {
+    "demand": 2,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버·구글 자동완성(seo:keywords --suggest 2026-10-24)만. 네이버 결과 화면은 이번에 보지 않았다",
+    "observed": false,
+    "naver_observed": false,
+    "note": "네이버 결과 화면은 이번에 보지 않았다"
+   },
+   "demand": {
+    "naver": [
+     "해운대 비오는날"
+    ],
+    "google": [
+     "해운대 비오는날"
+    ]
+   },
+   "rationale": "양쪽 자동완성(뒤 갈래 없음). SERP를 안 봤으니 watch. 「비 오는 날, 해운대 실내」 절이 생기면 덤으로 받는다.",
+   "verdict": "watch"
+  },
+  {
+   "kills": [
+    "K4_thin"
+   ],
+   "landing": "",
+   "query": "영도 산책",
+   "cluster": "busan-mood",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 0
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "네이버 클립",
+     "웹문서: visitbusan·yeongdo.go.kr·visitkorea·busan.go.kr"
+    ],
+    "note": "공공·구청뿐 — 경쟁 0"
+   },
+   "demand": {
+    "naver": [
+     "영도 산책로",
+     "영도 산책"
+    ],
+    "google": [
+     "영도 산책로",
+     "영도 절영 해안 산책로",
+     "영도 산책코스"
+    ]
+   },
+   "rationale": "절영해안산책로 한 곳을 찾는 검색(의도 1) + 영도 칸 걷기 9곳(K4).",
+   "verdict": "kill"
+  },
+  {
+   "kills": [],
+   "landing": "",
+   "query": "해운대 산책",
+   "cluster": "busan-mood",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 1,
+    "uniqueness": 1,
+    "inventory": 1
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "네이버 클립",
+     "뉴스",
+     "웹문서: visitbusan·visitkorea·grandculture"
+    ],
+    "note": "공공뿐 — 경쟁 0"
+   },
+   "demand": {
+    "naver": [
+     "해운대 산책로",
+     "해운대 산책 코스"
+    ],
+    "google": [
+     "해운대 산책로",
+     "해운대 동백섬 산책",
+     "해운대 달맞이 길 산책"
+    ]
+   },
+   "rationale": "동백섬·달맞이길·블루라인 산책로 같은 한 길을 찾는다(의도 1). 해운대 칸 걷기 14곳.",
+   "verdict": "watch"
+  },
+  {
+   "kills": [],
+   "landing": "/busan/",
+   "query": "부산 무계획 여행",
+   "cluster": "busan-P",
+   "scores": {
+    "demand": 0,
+    "competition": 1,
+    "intent_fit": 2,
+    "uniqueness": 2,
+    "inventory": 2
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "카페",
+     "블로그(youtube)",
+     "네이버 클립",
+     "웹문서: blog.google·ranktube·steemit",
+     "네이버 가격비교",
+     "네이버플러스 스토어",
+     "블로그",
+     "지식iN"
+    ],
+    "note": "광고·플레이스 없음, 엉뚱한 웹문서(blog.google 등) — 이 의도를 받는 쪽이 없다. 우리 없음"
+   },
+   "demand": {
+    "naver": [],
+    "google": []
+   },
+   "rationale": "포지션 그대로(무계획·지금)지만 양쪽 자동완성 0(「부산 즉흥 여행」「부산 계획 없이」「부산 p 여행」도 0). 제주 target 「제주도 무계획 여행」과 달리 수요 신호가 없어 watch. 허브 첫 문단이 덤으로 받는다 — 단, 엔티티 문장이 「제주 무계획 여행 앱」이라 부산 허브 문장은 ADR로 먼저 정해야 한다.",
+   "verdict": "watch"
+  },
+  {
+   "kills": [
+    "K1_intent"
+   ],
+   "landing": "",
+   "query": "흰여울문화마을",
+   "cluster": "busan-place",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 0
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버 통합검색 Playwright 1회(seo-analyst 2026-10-24 busan — rank-naver.mjs와 같은 블록 추출의 저장소 밖 일회 스크립트, PC 1쪽만, 원문 HTML은 남기지 않음) + 네이버·구글 자동완성(seo:keywords --suggest 2026-10-24). 구글 결과 화면은 ADR-0079로 보지 않는다 — 구글 경쟁은 확인 실패(WebSearch 미국 엔진 프록시 5회는 참고만)",
+    "observed": "naver",
+    "naver_observed": true,
+    "top": [
+     "[광고]",
+     "플레이스",
+     "다른 곳을 찾으시나요?",
+     "함께 가볼만한 장소",
+     "인플루언서",
+     "네이버 클립",
+     "웹문서: visitbusan·visitkorea·wikipedia·namu.wiki"
+    ],
+    "note": "플레이스·공공·위키 벽"
+   },
+   "demand": {
+    "naver": [
+     "흰여울문화마을 주차",
+     "흰여울문화마을 포토존",
+     "흰여울문화마을 맛집",
+     "흰여울문화마을 짐보관"
+    ],
+    "google": [
+     "흰여울문화마을 사진",
+     "흰여울문화마을 코스 시간"
+    ]
+   },
+   "rationale": "장소명 단독 — 주차·포토존·맛집·짐보관 같은 한 곳 실용 정보(K1). 장소 쪽이 생기면 이름 검색 노출은 저절로 오지만(제주 장소 쪽 7일 노출 282·클릭 1) 노리지 않는다.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [
+    "K1_intent"
+   ],
+   "landing": "",
+   "query": "해운대 블루라인파크",
+   "cluster": "busan-place",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 0
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버·구글 자동완성(seo:keywords --suggest 2026-10-24)만. 네이버 결과 화면은 이번에 보지 않았다",
+    "naver_observed": false,
+    "note": "결과 화면은 보지 않았다 — 의도로 접는다(K1)"
+   },
+   "demand": {
+    "naver": [
+     "해운대 블루라인파크 예약",
+     "해운대 블루라인파크 스카이캡슐",
+     "해운대 블루라인파크 주차장"
+    ],
+    "google": [
+     "해운대 블루라인파크 예약",
+     "해운대 블루라인파크 가격",
+     "해운대 블루라인파크 후기"
+    ]
+   },
+   "rationale": "예약·가격·후기(K1). 검색광고 월간 64,780(review/busan/pop-REPORT.md, 부산 1위)이지만 우리가 줄 것은 이름·이유 한 줄·가까운 곳뿐이다.",
+   "verdict": "kill"
+  },
+  {
+   "kills": [
+    "K1_intent"
+   ],
+   "landing": "",
+   "query": "감천문화마을",
+   "cluster": "busan-place",
+   "scores": {
+    "demand": 2,
+    "competition": 0,
+    "intent_fit": 0,
+    "uniqueness": 0,
+    "inventory": 0
+   },
+   "serp": {
+    "checked_at": "2026-10-24",
+    "source": "네이버·구글 자동완성(seo:keywords --suggest 2026-10-24)만. 네이버 결과 화면은 이번에 보지 않았다",
+    "naver_observed": false,
+    "note": "결과 화면은 보지 않았다 — 의도로 접는다(K1)"
+   },
+   "demand": {
+    "naver": [
+     "감천문화마을 맛집",
+     "감천문화마을 주차장",
+     "감천문화마을 코스"
+    ],
+    "google": [
+     "감천문화마을 입장료",
+     "감천문화마을 주차장",
+     "감천문화마을 지도"
+    ]
+   },
+   "rationale": "주차·입장료·코스·지도(K1). 검색광고 월간 38,520(pop-REPORT).",
+   "verdict": "kill"
   }
  ]
 }

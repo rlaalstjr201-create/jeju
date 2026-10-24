@@ -1,0 +1,144 @@
+{
+ "schema": 1,
+ "run_id": "2026-10-24T0548",
+ "graded": "2026-10-19T0850",
+ "diagnosed_at": "2026-10-24",
+ "phase": "post-deploy",
+ "window": {
+  "start": "2026-10-10",
+  "end": "2026-10-16"
+ },
+ "summary": "부산 랜딩(/busan/**) 착수 전 검색어 gate. 부산 후보 27개를 keyword gate에 넣었다 — target 7 · watch 7 · kill 13. 머리 검색어(부산 여행·부산 가볼만한곳·부산 실내 놀거리·뚜벅이·혼자·당일치기)와 동네+일반형(해운대·광안리·서면 가볼만한곳), 장소명 단독(흰여울문화마을·블루라인파크·감천문화마을)은 모두 kill이다 — 네이버 1쪽이 플레이스·인플루언서·클립·가격비교와 visitbusan·visitkorea·OTA로 막혔거나 의도가 코스·주차·예약이다. 노릴 말은 「동네 근처」(부산역 근처 가볼만한곳·놀거리 8점, 해운대 근처 가볼만한곳 8점, 광안리 근처 놀거리 7점)와 「동네 × 실내」(해운대·영도·광안리 실내 놀거리 7점)다. 모두 새 쪽이 아니라 동네 쪽 4개(/busan/choryang/·haeundae/·gwangalli/·yeongdo/)가 받는다. 크롤 예산: 제주는 색인 514쪽이 10-16~10-20 그대로이고 2,413쪽이 「발견됨-미색인」이다. 부산 장소 쪽 994개를 한꺼번에 내면 대기열이 약 34% 는다 — 1단계는 허브 1 + 동네 12(13쪽, +0.4%)만 내고 장소 쪽은 조건을 걸어 뒤로 미룬다. 제주 템플릿은 틀(허브·동네·실내 절·사이트맵 묶음·lastmod 해시)은 그대로 쓰되 상수(이름·엔티티 문장·출처 줄·동네 소개·containedInPlace·키 없는 「/」 링크)는 여행지별로 바꿔야 한다. 그중 엔티티 문장(「제주 무계획 여행 앱」)은 포지션이라 ADR이 먼저다. 지난 큐 2건 모두 이행 안 됨 → 해소율 0%, 개입 상한 2.",
+ "instruments": [
+  {
+   "name": "build",
+   "status": "ok",
+   "note": "SITE_URL=https://yeochana.com npm run build — 2,938쪽(허브 1·지역 15·조합 1·장소 2,921), 사이트맵 16파일 2,940 URL(core 19). 원문 0 · 가장 가까운 쌍 0.773 · 자기 본문 최소 48.6%. /busan/ 쪽 0. 빌드가 data/landing/lastmod.json의 / · /privacy 두 줄을 바꿨다(부산 출시로 홈이 바뀜) — 읽기 전용이라 git checkout으로 되돌렸다"
+  },
+  {
+   "name": "seo:crawl",
+   "status": "ok",
+   "note": "감사 0건 · 깨진 링크·고아 0 · 사이트맵 2,940 = 색인 대상"
+  },
+  {
+   "name": "seo:keywords",
+   "status": "ok",
+   "note": "부산 후보 27개 추가 뒤 검증 오류 0 · 주의 1(城山日出峰附近景点 landing 없음, 이번 것 아님). 부산 target 7·watch 7·kill 13"
+  },
+  {
+   "name": "seo:verify",
+   "status": "ok",
+   "note": "큐 2건(10-19) 모두 사람 채점 · 둘 다 이행 안 됨 → 해소율 0% → 개입 상한 2 · 게이트 오류 0 · 감사 P0 0"
+  },
+  {
+   "name": "seo:keywords --suggest",
+   "status": "ok",
+   "note": "52개 검색어 3회 호출. 「부산 무계획 여행」「부산 즉흥 여행」「부산 계획 없이」「부산 p 여행」 양쪽 0. 「부산역 근처」 네이버·구글 모두 가볼만한곳·놀거리(구글은 실내 놀거리까지). 「해운대·광안리·서면·영도·기장 실내」 양쪽 놀거리·데이트. 「영도·센텀·남포동·부산역 비오는날」 0"
+  },
+  {
+   "name": "naver-serp(playwright, 저장소 밖 일회)",
+   "status": "ok",
+   "note": "22개 검색어 1회·PC 1쪽, check_failed 0. 우리 주소 0/22. 블록 추출은 rank-naver.mjs와 같은 방식, 원문 HTML은 남기지 않음"
+  },
+  {
+   "name": "WebSearch(프록시)",
+   "status": "ok",
+   "note": "5회(상한 30). 미국 엔진이라 구글 한국 결과가 아니다 — 참고만. 「오늘 부산에서 뭐 하지」 같은 기분·근처 서비스는 안 보임(K5 없음, 확인 강도 약함). yugacrew·야놀자 programmatic 동네 쪽이 보임"
+  },
+  {
+   "name": "console(data/seo/console/2026-10-20.json)",
+   "status": "ok",
+   "note": "구글 색인 514(10-19와 같음) · 발견됨-미색인 2,413 · 크롤링됨-미색인 13 · 일 노출 55→32는 장소 쪽 1개(만벵듸 공동장지) 빠진 탓. 네이버 수집 10일 8쪽·색인 0"
+  },
+  {
+   "name": "spots-busan.json(읽기)",
+   "status": "ok",
+   "note": "994곳, 동네는 areaAt(가장 가까운 중심)과 같은 규칙으로 셈. 먹기 뺀 곳: 서면 67·동래·금정 53·센텀 48·영도 42·해운대 41·송정·기장 40·부산역·초량 38·원도심 37·다대포 33·광안리 31·송도·감천 27·오륙도·용호 9. 실내(먹기 뺀): 센텀 20·서면 15·해운대 14·동래·금정 13·광안리 11·영도 11·원도심 11·부산역·초량 11·다대포 8·송정·기장 8·송도·감천 7·오륙도·용호 0"
+  },
+  {
+   "name": "gsc",
+   "status": "skip",
+   "note": "10-19 뒤 새 GSC 파일 없음 — 이번 창은 10-19 기록과 같다(10-10~10-16)"
+  },
+  {
+   "name": "google-serp",
+   "status": "skip",
+   "note": "ADR-0079 — 구글 결과 화면을 보지 않는다. 구글 경쟁은 확인 실패"
+  }
+ ],
+ "grading": [
+  {
+   "rank": 1,
+   "verdict": "이행 안 됨",
+   "why": "data/seo/gsc/에 2026-10-19 뒤 파일이 없다(2026-10-24 확인). console/2026-10-20.json에 일별 노출과 drop_page 한 쪽은 있지만 rows·pages 표와 target 세 주소 기록은 없다"
+  },
+  {
+   "rank": 2,
+   "verdict": "이행 안 됨",
+   "why": "data/seo/config.json에 offsite 배열이 없다(2026-10-24 확인)"
+  }
+ ],
+ "interventions": [
+  {
+   "rank": 1,
+   "title": "부산 쪽에 쓸 엔티티 문장과 이름을 ADR로 먼저 정한다 — 지금 문장은 「…제주 무계획 여행 앱」이라 /busan/ 허브 첫 문단·title·JSON-LD·llms.txt에 그대로 못 쓴다",
+   "severity": "P1",
+   "qualifies": "keyword gate 부산 target 7(landing /busan/choryang/·haeundae/·gwangalli/·yeongdo/) — 받을 쪽의 허브 첫 문단이 엔티티 문장이다 · busan-P 「부산 무계획 여행」 네이버 1쪽에 이 의도를 받는 쪽 없음(2026-10-24)",
+   "cause_layer": "GEO",
+   "affected_impressions": null,
+   "verifiable": true,
+   "sort_id": "busan-entity-adr",
+   "check": null,
+   "queue_kind": "other",
+   "where": "주인 결정 → docs/adr/ 새 ADR 또는 ADR-0094 Amendment. 에이전트는 문장을 바꾸지 않는다(seo-analyst 가드레일 9). 선택지: (가) 여행지마다 콜론 뒤만 바꾼다 — 「여차나:부산은 여차하면 나서는 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 부산 무계획 여행 앱이다.」(context.md 「다른 지역으로 넓히면 콜론 뒤만 바꾼다(여차나:부산)」와 맞다. 엔티티가 둘로 읽힐 위험) (나) 앱 하나 문장 — 「…제주·부산 무계획 여행 앱이다」로 홈·llms.txt를 바꾸고 /jeju/·/busan/ 허브는 지역만 다르게(브랜드 검색어 「여차나:제주」·AI 브리핑 5번째 자리와 어긋날 위험). 함께 정할 것: 홈 JSON-LD WebApplication name·alternateName에 「여차나:부산」을 넣는지, scripts/landing.ts BRAND·ENTITY 상수를 여행지별로 둘지",
+   "evidence": "scripts/landing.ts ENTITY 「…제주 무계획 여행 앱이에요」·BRAND 「여차나:제주」 · seo-analyst 0절 「이 문장을 title·description·JSON-LD·llms.txt·랜딩 허브 첫 문단에 같은 말로」 · naver rank 2026-10-19 브랜드 「여차나:제주」 found(AI 브리핑 5) · naver-serp 2026-10-24 「부산 무계획 여행」 카페·블로그·엉뚱한 웹문서(blog.google·steemit), 받는 쪽 없음 · suggest 2026-10-24 부산 P 의도 4개 모두 0",
+   "why_now": "부산 랜딩 템플릿을 만들기 전에 정해야 한다 — 허브 첫 문단·title·JSON-LD description이 다 이 문장에 매달려 있어, 랜딩을 먼저 내고 문장을 나중에 바꾸면 크롤러가 다른 엔티티 둘을 먼저 읽는다. 제주 쪽은 브랜드 검색이 잡히기 시작했고(AI 브리핑 4→5번째) 바꾸면 그 자리를 건드린다",
+   "verify": "docs/adr/에 부산 엔티티 문장을 한 줄로 적은 ADR(또는 ADR-0094 Amendment)이 있고, 그 ADR이 (가)·(나) 중 하나를 고른 이유를 적었다"
+  },
+  {
+   "rank": 2,
+   "title": "부산 랜딩 1단계 — /busan/ 허브 1 + 동네 쪽 12만 낸다(장소 쪽 0). 실내(먹기 뺀) 10곳 이상 8동네에 「비 오는 날, {동네} 실내」 절, 제주 템플릿을 여행지 인자로",
+   "severity": "P2",
+   "qualifies": "keyword gate 부산 target 7 — 부산역 근처 가볼만한곳 8·부산역 근처 놀거리 8·해운대 근처 가볼만한곳 8·광안리 근처 놀거리 7·해운대 실내 놀거리 7·영도 실내 놀거리 7·광안리 실내 놀거리 7",
+   "cause_layer": "경쟁",
+   "affected_impressions": null,
+   "verifiable": true,
+   "sort_id": "busan-landing-stage1",
+   "check": null,
+   "queue_kind": "landing",
+   "keyword": "부산역 근처 가볼만한곳",
+   "evidence": "keyword gate 2026-10-24: 부산 target 7·kill 13(머리 7개 중 6 kill, 동네+일반형 3 kill, 장소명 3 kill) · naver-serp 2026-10-24 22개 중 우리 0, target 7개 모두 1쪽 아래에 작은 바깥 사이트(pandarank·koreacharts·okithekey·busan-where·happynowinfo) 자리 · spots-busan.json 먹기 뺀 곳 부산역·초량 38·해운대 41·광안리 31, 실내 해운대 14·영도 11·광안리 11 · console 2026-10-20 구글 색인 514(10-16과 같음)·발견됨-미색인 2,413/2,940 · build 2,938쪽, /busan/ 0",
+   "why_now": "부산 앱이 출시됐고(ADR-0094~0098) 받을 쪽이 없다. 그런데 제주는 색인이 514쪽에서 멈췄고 2,413쪽이 대기 중이다 — 장소 쪽 994개를 같이 내면 대기열이 34% 늘어 제주 쪽과 같은 크롤 수요를 나눠 쓴다(근거 중간: 구글 크롤 예산 문서의 「크롤 수요」, 새 도메인·바깥 링크 0). 13쪽(+0.4%)이면 target 7개를 모두 받으면서 대기열은 거의 그대로다. target 7개가 가리키는 쪽은 동네 쪽 4개뿐이라 장소 쪽이 없어도 gate상 손해가 없다(장소명 검색은 kill)",
+   "verify": "dist/busan/index.html과 dist/busan/<부산 slug 12>/index.html이 있고 dist/busan/ 아래 index.html이 13개이며, dist/busan/haeundae/index.html에 「비 오는 날」이 든 h2가 있고 dist/busan/dadaepo/index.html에는 없으며, sitemap.xml 색인에 /busan/ 13쪽을 담은 하위 사이트맵이 있고, seo:crawl 감사가 0건이다",
+   "where": "개입 1 결정 뒤, 사람이 specs/seo-landing.md(또는 specs/busan.md 9절) 개정 → scripts/landing.ts·build-landing.mjs. 쪽: /busan/(허브) + /busan/<slug>/ 12쪽. 동네 쪽 장소 목록은 장소 쪽 링크 대신 앱 딥링크 /?area=<slug>(장소마다 길찾기 링크는 그대로). 실내 절은 센텀·서면·해운대·동래·금정·광안리·영도·원도심·부산역·초량에만(다대포 8·송정·기장 8·송도·감천 7·오륙도·용호 0은 그리지 않는다, K4). title은 제주 꼴 그대로(「부산역·초량(이바구길) 근처, 지금 갈 만한 곳」), 원도심만 「원도심(남포동)」 — 검색은 남포동으로 들어온다. 여행지별 상수: BRAND·ENTITY(개입 1)·HUB /busan/·출처 줄 「정보·사진: 한국관광공사」(D3)·동네 소개 12문장(새로 씀, TourAPI 개요 원문 금지 — 빌드의 원문 대조를 TourAPI overview로도 돌린다)·JSON-LD containedInPlace 부산광역시·장날 줄(review/busan/market-days.json). 로고·「앱에서 3곳 보기」 같은 키 없는 「/」 링크는 /?dest=busan으로(index.html 첫 스크립트는 같은 사이트 /jeju/** referrer만 제주로 고정하고 /busan/은 모른다). 사이트맵은 sitemap-busan-core.xml(13쪽)을 따로 두어 GSC에서 부산 13쪽 색인 수를 따로 읽는다"
+  }
+ ],
+ "investigate": [
+  "부산 장소 쪽(2단계)을 언제 내나 — 사전등록 조건: (1) GSC에서 sitemap-busan-core 13쪽 중 10쪽 이상 색인 확인, (2) 제주 「발견됨-미색인」이 1,500쪽 아래로 내려옴(10-20 2,413), 둘 다 참이면 유명한 곳 61쪽부터, 그 4주 뒤 나머지. 조건을 못 채우면 장소 쪽을 늘리지 않는다. 장소명 검색은 kill이지만 제주에서 노출의 거의 전부가 장소 쪽 가게 이름이었다(7일 282회·클릭 1) — 도메인 신호로서의 값이 있는지는 아직 모른다",
+  "동네 경계와 검색어의 어긋남 — areaAt(가장 가까운 중심)이라 동래·금정 중심(범어사)이 북쪽 끝에 있어 복천박물관·동래읍성 임진왜란 역사관·1934 기차 동래역·동래아이스링크가 센텀 칸에, 사상생활사박물관이 서면 칸에 든다. 「센텀 실내」를 찾은 사람에게 동래 박물관이 나오는 꼴이다. 랜딩 문구 문제가 아니라 review/busan/areas-criteria.md 쪽 결정이라 여기서는 기록만 한다",
+  "제주 구글 색인 정체 — 514쪽이 10-16·10-19·10-20 세 번 같다. 다음 주 console이 그대로면 「발견됨-미색인」 예시 URL로 원인을 가른다(10-19 기록 이월). 부산 2단계 조건 (2)가 여기에 걸려 있다",
+  "watch 넷의 승격 — 서면 실내 놀거리(도심 오락 의도, 의도 1)·남포동 실내 놀거리(구글만, 수요 1)·해운대 비오는날(SERP 안 봄)·부산 비오는날(부산 전체, 의도 1). 1단계 동네 쪽이 실내 절로 덤으로 받는지는 색인 4주 뒤 GSC 검색어 표로 본다"
+ ],
+ "not_touching": [
+  "머리 검색어 kill 6(부산 여행·부산 가볼만한곳·부산 실내 놀거리·부산 뚜벅이 여행·부산 혼자 여행·부산 당일치기) — 자격 없음. 허브 title에 「부산 여행」「가볼만한곳」을 넣지 않는다",
+  "동네+일반형 kill 3(해운대·광안리·서면 가볼만한곳)과 장소명 단독 kill 3(흰여울문화마을·해운대 블루라인파크·감천문화마을) — 자격 없음. 장소명은 검색광고 월간 수만(pop-01)이지만 의도가 주차·예약·입장료다",
+  "「영도 산책」 kill(K4, 영도 걷기 9곳)·「해운대 산책」 watch(공공 벽·한 길 찾기) — 걷기 조합 쪽은 만들지 않는다",
+  "부산 조합 쪽(/busan/<area>/<mood>/) — target 7개가 모두 동네 쪽에 붙어 조합 쪽이 필요 없다. 제주도 조합 쪽은 1개뿐이다",
+  "부산 외국어 랜딩 — docs/seo/2026-10-17-foreign-search.md 결정(지금 만들지 않음) 그대로",
+  "지난 큐 2건(GSC 표 옮기기·네이버 블로그 첫 글) — 이행 안 됨, 제주 일이라 이번 부산 범위 밖. 이번 기록으로 seo:report --queue를 돌리면 queue.json이 부산 2건으로 덮여 두 건이 큐에서 사라지므로 --queue를 돌리지 않았다. 두 건은 queue.json(from 2026-10-19T0850)에 그대로 열려 있다"
+ ],
+ "failed": [
+  "구글 결과 화면 — ADR-0079로 보지 않음. 부산 target의 구글 경쟁은 확인 실패(0이 아니다)",
+  "네이버 결과 화면 미관측 — 해운대 비오는날·부산 혼자 여행·부산 당일치기·해운대 블루라인파크·감천문화마을은 자동완성만 봤다(앞의 하나는 watch, 나머지는 의도로 kill)",
+  "GSC 이번 주 — 10-19 뒤 파일 없음, 확인 실패",
+  "네이버 서치어드바이저 — 열지 않음(console 10-20 값만 씀)"
+ ],
+ "repo_changes": [
+  "?? apps/web/data/seo/diagnoses/2026-10-24T0548.json — 이 기록",
+  "M apps/web/data/seo/keywords.json — 부산 후보 27개(cluster busan-*) 추가, updated 2026-10-24. 기존 66개는 그대로",
+  "?? docs/seo/2026-10-24-busan-landing.md — 이 가동의 보고",
+  "(가동 전부터) ?? apps/web/data/seo/console/2026-10-20.json — 이 가동이 만든 것이 아니다",
+  "빌드가 바꾼 apps/web/data/landing/lastmod.json(/ · /privacy 두 줄)은 git checkout으로 되돌렸다",
+  "seo:report --queue는 돌리지 않았다(queue.json 그대로, 10-19 큐 2건 유지)"
+ ]
+}
