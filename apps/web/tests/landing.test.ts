@@ -3,9 +3,10 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
-  assignSlugs, buildSite, contentHash, copiedReasons, ENTITY, kstDay, pageLastmods, ownShare, romanize, similarPairs, sitemapFiles, slugBase, sourceCopies, type SlugRegistry,
+  assignSlugs, buildSite, busanPages, BUSAN_ENTITY, contentHash, copiedReasons, ENTITY, kstDay, pageLastmods, ownShare, romanize, similarPairs, sitemapFiles, slugBase, sourceCopies, type SlugRegistry,
 } from '../scripts/landing';
 import { parseJsonLd } from '../scripts/seo/crawl-parse.mjs';
+import { BUSAN_AREAS } from '../src/busan';
 import type { Spot } from '../src/pick';
 import { fileSpots } from './fixtures';
 
@@ -252,5 +253,73 @@ describe('per-page lastmod (audit D4): only a page whose content changed gets a 
   it('kstDay: the date in Jeju', () => {
     expect(kstDay(new Date('2026-10-02T15:00:00Z'))).toBe('2026-10-03');
     expect(kstDay(new Date('2026-10-02T14:59:59Z'))).toBe('2026-10-02');
+  });
+});
+
+// ADR-0099, docs/seo/2026-10-24-busan-landing.md 2절: 부산 1단계 — 허브 1 + 동네 12쪽, 장소 쪽 없음
+describe('부산 1단계 (/busan/**)', () => {
+  // 해운대 (35.1591, 129.1603), 다대포 (35.0462, 128.9632)
+  const bspot = (id: string, name: string, lat: number, lng: number, over: Partial<Spot> = {}): Spot =>
+    spot(id, name, lat, lng, { image: `https://tong.visitkorea.or.kr/cms/resource/${id}.jpg`, ...over });
+  const indoor = (n: number) =>
+    Array.from({ length: n }, (_, i) =>
+      bspot(`bs-${i}`, `해운대 전시관 ${i + 1}`, 35.16 + i * 0.0005, 129.16, { mood: i % 2 ? 'new' : 'rest', sub: i % 2 ? 'sight' : undefined, indoor: true, reason: `비를 피해 전시 ${i + 1}을 봐요` }),
+    );
+  const BS = [...indoor(10), bspot('bs-d1', '다대포해수욕장', 35.046, 128.963, { mood: 'rest', reason: '노을이 지는 넓은 모래사장에서 쉬어요' })];
+  const b = (over: Partial<Parameters<typeof busanPages>[0]> = {}) => busanPages({ spots: BS, site: 'https://x.test', photos: true, dataDate: '2026-10-20', ...over });
+  const page = (path: string) => b().pages.find((p) => p.path === path)!.html;
+
+  it('13 pages: the hub and 12 areas, no place page', () => {
+    const { pages } = b();
+    expect(pages.map((p) => p.path)).toEqual(['/busan/', ...BUSAN_AREAS.map((a) => `/busan/${a.slug}/`)]);
+    expect(pages.filter((p) => p.kind === 'place')).toHaveLength(0);
+  });
+
+  it('hub: the Busan entity sentence; every link to the app says Busan (a key-less / opens Jeju from /jeju/** only)', () => {
+    const hub = page('/busan/');
+    expect(BUSAN_ENTITY).toBe('여차나:부산은 여차하면 나서는 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 부산 무계획 여행 앱이에요.');
+    expect(hub).toContain(`<p class="lead">${BUSAN_ENTITY}</p>`);
+    expect(hub).toContain('<a class="go" href="/?dest=busan">앱에서 지금 3곳 보기</a>');
+    expect(hub).toContain('<a class="logo" href="/?dest=busan">');
+    expect(hub).toContain('<span class="rg">:부산</span>');
+    expect(hub).toContain('<title>P를 위한 부산 무계획 여행 · 여차나:부산</title>');
+    expect(hub).not.toMatch(/<title>[^<]*(부산 여행|가볼만한)/);
+    expect(hub).toContain('<a href="/busan/haeundae/#rain">해운대 실내</a>');
+    for (const p of b().pages) {
+      expect(p.html).not.toMatch(/<a\b[^>]*\shref="\/(jeju\/|")/);
+      expect(p.html).toContain('<p class="credit">정보·사진: 한국관광공사</p>');
+      expect(p.html).not.toContain('비짓제주');
+    }
+    // the crumb links to the app with ?dest=busan; the structured data names the home page itself
+    expect(hub).toContain('"name":"여차나:부산","item":"https://x.test/"}');
+  });
+
+  it('area page: places link to the map and the way there, not to a place page; mood buttons deep-link the app; region 부산광역시', () => {
+    const h = page('/busan/haeundae/');
+    expect(h).toContain('<a class="go" href="/?area=haeundae">앱에서 해운대 근처 3곳 보기</a>');
+    expect(h).toContain('href="/?area=haeundae&mood=rest"');
+    expect(h).not.toMatch(/href="\/busan\/haeundae\/[a-z0-9-]+\/"/);
+    expect(h).toContain('href="https://map.naver.com/p/search/');
+    expect(h).toContain('>네이버지도 길찾기</a>');
+    expect(h).toContain('"containedInPlace":{"@type":"AdministrativeArea","name":"부산광역시"}');
+    expect(h).toContain('<title>해운대 근처 가볼만한 곳, 비 오는 날 실내 놀거리까지 · 여차나:부산</title>');
+    expect(page('/busan/nampo/')).toContain('<title>원도심(남포동) 근처, 지금 갈 만한 곳 · 여차나:부산</title>');
+    expect(page('/busan/seomyeon/')).toContain('<title>서면 근처, 지금 갈 만한 곳 · 여차나:부산</title>');
+  });
+
+  it('「비 오는 날, {동네} 실내」 only where 10 or more indoor 쉬기·새로운 거', () => {
+    const rain = page('/busan/haeundae/').match(/<section aria-labelledby="rain">([\s\S]*?)<\/section>/)![1];
+    expect(rain).toContain('<h2 id="rain">비 오는 날, 해운대 실내</h2>');
+    expect(rain).toContain('해운대 실내 놀거리(쉬기·구경·체험) 10곳 중');
+    expect(rain).toContain('<a class="tbtn" href="/?area=haeundae&indoor=1">앱에서 해운대 실내 3곳 보기</a>');
+    expect(page('/busan/dadaepo/')).not.toContain('aria-labelledby="rain"');
+    const nine = busanPages({ spots: BS.slice(1), site: '', photos: false, dataDate: null }).pages.find((p) => p.path === '/busan/haeundae/')!.html;
+    expect(nine).not.toContain('aria-labelledby="rain"');
+    expect(nine).not.toContain('<img');
+  });
+
+  it('a place whose reason repeats its overview is left out', () => {
+    expect(page('/busan/dadaepo/')).toContain('노을이 지는 넓은 모래사장에서 쉬어요');
+    expect(b({ exclude: new Set(['bs-d1']) }).pages.find((p) => p.path === '/busan/dadaepo/')!.html).not.toContain('노을이 지는 넓은 모래사장에서 쉬어요');
   });
 });

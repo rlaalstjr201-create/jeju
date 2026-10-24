@@ -338,6 +338,16 @@ describe('정적 랜딩 (ADR-0072) — 서비스워커는 /jeju/**를 건드리�
     expect(sw.handles('https://app.test/assets/index-abc.js')).toBe(true);
     expect(sw.handles('https://app.test/jejudo.png')).toBe(true);
   });
+  it('ADR-0099: a switched-on build leaves /busan/** alone the same way (a Jeju build’s worker says nothing of it)', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker({ ...base(), busanFile: 'spots-busan.json?v=b1' });
+    const res = { ok: true, clone: () => res };
+    const sw = runSw(source, async () => res, c);
+    await sw.install();
+    for (const u of ['https://app.test/busan/', 'https://app.test/busan', 'https://app.test/busan/haeundae/', 'https://app.test/jeju/aewol/']) expect(sw.handles(u), u).toBe(false);
+    expect(sw.handles('https://app.test/')).toBe(true);
+    expect(sw.handles('https://app.test/busanmap.png')).toBe(true);
+  });
 });
 
 describe('비 소식 (ADR-0076) — 서비스워커는 /api/**를 건드리지 않는다', () => {

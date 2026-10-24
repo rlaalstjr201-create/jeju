@@ -52,7 +52,11 @@ function walk(dir: string): string[] {
  * date for sitemap-core.xml, the newest of those. */
 function normalized(rel: string, body: Buffer): Buffer | string {
   if (rel === 'sitemap.xml')
-    return body.toString('utf8').replace(new RegExp(`(<loc>${SITE}/sitemap-core\\.xml</loc><lastmod>)[^<]*`), '$1*');
+    return body
+      .toString('utf8')
+      .replace(new RegExp(`(<loc>${SITE}/sitemap-core\\.xml</loc><lastmod>)[^<]*`), '$1*')
+      // ADR-0099: the line for Busan's own sitemap file (a switched-on build's, added on purpose)
+      .replace(new RegExp(`\\n<sitemap><loc>${SITE}/sitemap-busan-core\\.xml</loc>(?:<lastmod>[^<]*</lastmod>)?</sitemap>`), '');
   if (rel === 'index.html') return withoutBlocks(unhash(body.toString('utf8')));
   if (rel === '_headers' && SWITCHED) return body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
@@ -67,6 +71,8 @@ function files() {
   for (const p of walk(DIST).sort()) {
     const rel = relative(DIST, p).replace(/\\/g, '/');
     if (rel.startsWith('assets/')) continue;
+    // ADR-0099: Busan's static pages and their sitemap file, what a switched-on build adds for Busan on purpose
+    if (SWITCHED && (rel.startsWith('busan/') || rel === 'sitemap-busan-core.xml')) continue;
     const h = short(normalized(rel, readFileSync(p)));
     const m = /^jeju\/([^/]+)\/./.exec(rel);
     if (m) groups.set(`jeju/${m[1]}/`, [...(groups.get(`jeju/${m[1]}/`) ?? []), `${rel}\0${h}`]);

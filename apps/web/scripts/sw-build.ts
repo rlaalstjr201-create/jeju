@@ -42,9 +42,13 @@ export function withBusanFile(template: string, file: string | string[]): string
     `    .catch(() => undefined);`,
     ``,
   ].join(eol);
+  // ADR-0099: Busan's static pages (/busan/**) are left alone like /jeju/** (never cached, never the app shell)
+  const pages = '/^\\/jeju(\\/|$)/.test(new URL(req.url).pathname)';
+  if (!template.includes(pages)) throw new Error('sw.js: the /jeju/** pass-through was not found');
   return template
     .replace(tail, tail.replace(`)))),${eol}`, `))))${eol}          .then(() => carryBusan(cache)),${eol}`))
-    .replace(`self.addEventListener('install'`, `${carry}self.addEventListener('install'`);
+    .replace(`self.addEventListener('install'`, `${carry}self.addEventListener('install'`)
+    .replace(pages, '/^\\/(?:jeju|busan)(\\/|$)/.test(new URL(req.url).pathname)');
 }
 
 /**

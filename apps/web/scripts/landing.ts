@@ -3,9 +3,11 @@
 // inputs, calls buildSite() and the checks below, and writes dist/. The rules the app uses are imported, not copied:
 // 지역 배정 = nearestArea, 이동 시간 = travel/travelText, 지도 링크 = goLink/naverSearchUrl (ADR-0071 네이버지도 기본).
 import { createHash } from 'node:crypto';
-import { AREAS, AREA_GROUPS, nearestArea } from '../src/areas';
-/** The landing pages are Jeju's 15 areas only (plans/busan.md M1). */
+import { AREAS, AREA_GROUPS, nearestArea, type Area as AnyArea } from '../src/areas';
+import { BUSAN_AREAS } from '../src/busan';
+/** Jeju's 15 areas (plans/busan.md M1); Busan's 12 have their own pages below (busanPages, ADR-0099). */
 type Area = (typeof AREAS)[number];
+type BusanArea = (typeof BUSAN_AREAS)[number];
 import { cleanName } from '../src/data';
 import { logoInner } from '../src/logo';
 import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';
@@ -177,7 +179,7 @@ const areaPath = (a: Area) => `${HUB}${a.slug}/`;
 export const areaTitle = (a: Area) => (/근처|섬/.test(a.landmark) ? a.label : `${a.label}(${a.landmark})`);
 const appLink = (a: Area, mood?: Mood) => `/?area=${a.slug}${mood ? `&mood=${mood}` : ''}`;
 /** Indoor places for a rainy day: 쉬기·새로운 거 only (식사·카페 have their own mood). */
-const rainy = (p: Place) => p.spot.indoor && (p.spot.mood === 'rest' || p.spot.mood === 'new');
+const rainy = (p: { spot: Spot }) => p.spot.indoor && (p.spot.mood === 'rest' || p.spot.mood === 'new');
 
 /** What the place is, in the app's words: the food and 새로운 거 tabs (ADR-0028, ADR-0064). */
 export function kindOf(s: Spot): string {
@@ -189,7 +191,7 @@ const schemaType = (s: Spot) => (s.mood === 'food' ? (s.sub === 'cafe' ? 'CafeOr
 
 /** The app's order inside one area (specs/ranking.md without the user's position): score, then the trip from the
  * area centre, then id. */
-function rank(list: Place[]): Place[] {
+function rank<P extends { spot: Spot; area: AnyArea }>(list: P[]): P[] {
   return [...list].sort(
     (a, b) => b.spot.score - a.spot.score || distanceKm(a.area, a.spot) - distanceKm(b.area, b.spot) || a.spot.id.localeCompare(b.spot.id),
   );
@@ -218,7 +220,7 @@ export function buildSite(input: SiteInput): Site {
     const sub = c.mood === 'new' ? (/체험/.test(c.query) ? 'do' : /구경/.test(c.query) ? 'sight' : undefined) : undefined;
     return [{ area, mood: c.mood, query: c.query, url: `${areaPath(area)}${c.mood}/`, ...(sub ? { sub } : {}) }];
   });
-  const ctx: Ctx = { site, photos, dataDate: input.dataDate, byArea, combos };
+  const ctx: Ctx = { site, photos, dataDate: input.dataDate, byArea, combos, d: JEJU_TEXT };
   const pages: SitePage[] = [{ path: HUB, kind: 'hub', html: hubPage(ctx) }];
   for (const a of AREAS) pages.push({ path: areaPath(a), kind: 'area', html: areaPage(ctx, a) });
   for (const c of combos) pages.push({ path: c.url, kind: 'combo', html: comboPage(ctx, c) });
@@ -233,24 +235,44 @@ interface Ctx {
   dataDate: string | null;
   byArea: Map<string, Place[]>;
   combos: Combo[];
+  d: DestText;
 }
+/** What differs between the destinations' pages around the content (ADR-0099). */
+interface DestText {
+  brand: string;
+  /** the logo's word after the colon */
+  region: string;
+  /** where the logo goes: a key-less / from /jeju/** opens Jeju (index.html's first script); Busan has to say so */
+  home: string;
+  hub: string;
+  hubName: string;
+  credit: (photos: boolean) => string;
+}
+const JEJU_TEXT: DestText = {
+  brand: BRAND,
+  region: '제주',
+  home: '/',
+  hub: HUB,
+  hubName: '제주 무계획 여행',
+  credit: (photos) =>
+    `<p class="credit">${photos ? '정보·사진' : '정보'}: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" rel="noopener">visitjeju.net</a></p>`,
+};
 interface Crumb {
   name: string;
   path: string;
 }
 const DOCTYPE = '<!doctype html>';
 const ld = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
+// a crumb's link may carry the app's ?dest=; the structured data names the page itself
 const crumbsLd = (ctx: Ctx, crumbs: Crumb[]) => ({
   '@type': 'BreadcrumbList',
-  itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${ctx.site}${c.path}` })),
+  itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${ctx.site}${c.path.split('?')[0]}` })),
 });
-const rootCrumbs = (): Crumb[] => [
-  { name: BRAND, path: '/' },
-  { name: '제주 무계획 여행', path: HUB },
+const rootCrumbs = (ctx: Ctx): Crumb[] => [
+  { name: ctx.d.brand, path: ctx.d.home },
+  { name: ctx.d.hubName, path: ctx.d.hub },
 ];
 const geo = (p: { lat: number; lng: number }) => ({ '@type': 'GeoCoordinates', latitude: p.lat, longitude: p.lng });
-const credit = (ctx: Ctx) =>
-  `<p class="credit">${ctx.photos ? '정보·사진' : '정보'}: 비짓제주(제주관광공사) · <a href="https://www.visitjeju.net" rel="noopener">visitjeju.net</a></p>`;
 
 function layout(ctx: Ctx, o: { path: string; title: string; description: string; crumbs: Crumb[]; graph: unknown[]; body: string; image?: string }): string {
   const url = `${ctx.site}${o.path}`;
@@ -270,7 +292,7 @@ function layout(ctx: Ctx, o: { path: string; title: string; description: string;
 <meta name="description" content="${esc(o.description)}">
 <link rel="canonical" href="${esc(url)}">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="${BRAND}">
+<meta property="og:site_name" content="${ctx.d.brand}">
 <meta property="og:title" content="${esc(o.title)}">
 <meta property="og:description" content="${esc(o.description)}">
 <meta property="og:locale" content="ko_KR">${og}
@@ -279,13 +301,13 @@ function layout(ctx: Ctx, o: { path: string; title: string; description: string;
 <script type="application/ld+json">${ld({ '@context': 'https://schema.org', '@graph': [...o.graph, crumbsLd(ctx, o.crumbs)] })}</script>
 </head>
 <body>
-<header class="top"><a class="logo" href="/">${logoInner()}</a></header>
+<header class="top"><a class="logo" href="${ctx.d.home}">${logoInner(ctx.d.region)}</a></header>
 <main>
 <nav class="crumbs" aria-label="지금 보는 곳"><ol>${nav}</ol></nav>
 ${o.body}
 </main>
 <footer class="foot">
-${credit(ctx)}
+${ctx.d.credit(ctx.photos)}
 ${ctx.dataDate ? `<p>장소 정보 기준 ${ctx.dataDate}. 영업 여부와 시간은 지도 앱에서 확인해 주세요.</p>` : '<p>영업 여부와 시간은 지도 앱에서 확인해 주세요.</p>'}
 <p><a href="/privacy">개인정보 처리 안내</a></p>
 </footer>
@@ -358,7 +380,7 @@ ${combos}`;
     path: HUB,
     title: `P를 위한 제주 무계획 여행 · ${BRAND}`,
     description: '계획 없이 제주에 왔다면, 지금 기분 하나만 고르세요. 동네 15곳에서 갈 만한 곳을 기분별로 볼 수 있어요.',
-    crumbs: rootCrumbs(),
+    crumbs: rootCrumbs(ctx),
     graph: [
       {
         '@type': 'CollectionPage',
@@ -428,7 +450,7 @@ ${index}
     path: areaPath(a),
     title: `${areaTitle(a)} 근처, 지금 갈 만한 곳 · ${BRAND}`,
     description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·새로운 거·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
-    crumbs: [...rootCrumbs(), { name: a.label, path: areaPath(a) }],
+    crumbs: [...rootCrumbs(ctx), { name: a.label, path: areaPath(a) }],
     graph: [
       {
         '@type': 'TouristDestination',
@@ -460,7 +482,7 @@ function comboPage(ctx: Ctx, c: Combo): string {
     path: c.url,
     title: `${c.query}, 지금 할 만한 곳 · ${BRAND}`,
     description: `${c.query}, 지금 할 만한 곳 ${top.length}곳. 기분 하나만 고르면 앱이 근처 3곳을 골라 드려요.`,
-    crumbs: [...rootCrumbs(), { name: a.label, path: areaPath(a) }, { name: c.query, path: c.url }],
+    crumbs: [...rootCrumbs(ctx), { name: a.label, path: areaPath(a) }, { name: c.query, path: c.url }],
     graph: [itemList(ctx, c.query, top)],
     body,
   });
@@ -502,7 +524,7 @@ ${thumb(ctx, s, 'hero', `${name} 사진`, true)}${ctx.photos && s.image ? '\n<p 
     path: p.url,
     title,
     description: `${s.reason}. ${a.label} 근처에서 「${MOOD_NAME[s.mood]}」를 누르면 나오는 곳이에요.`,
-    crumbs: [...rootCrumbs(), { name: a.label, path: areaPath(a) }, { name, path: p.url }],
+    crumbs: [...rootCrumbs(ctx), { name: a.label, path: areaPath(a) }, { name, path: p.url }],
     image: ctx.photos && s.image ? s.image : undefined,
     graph: [
       {
@@ -515,6 +537,217 @@ ${thumb(ctx, s, 'hero', `${name} 사진`, true)}${ctx.photos && s.image ? '\n<p 
         ...(ctx.photos && s.image ? { image: s.image } : {}),
         containedInPlace: { '@type': 'TouristDestination', name: a.label, url: `${ctx.site}${areaPath(a)}` },
       },
+    ],
+    body,
+  });
+}
+
+// --- 부산 1단계 (ADR-0099, docs/seo/2026-10-24-busan-landing.md): /busan/ 허브 + 동네 12쪽, 장소 쪽은 아직 없다 ----------
+export const BUSAN_BRAND = '여차나:부산';
+/** ADR-0099 — the entity sentence for Busan's pages: Jeju's with the destination after the colon. */
+export const BUSAN_ENTITY =
+  '여차나:부산은 여차하면 나서는 P를 위한 여행동반자로, 계획 없이 다니는 여행자가 지금 있는 곳에서 기분 하나로 갈 곳 3곳을 받는 부산 무계획 여행 앱이에요.';
+const BUSAN_ENTITY_LD = BUSAN_ENTITY.replace(/이에요(?=\.$)/, '이다');
+export const BUSAN_HUB = '/busan/';
+/** A key-less / from /busan/ is not pinned to a destination (index.html knows /jeju/** only): the app is told. */
+const BUSAN_HOME = '/?dest=busan';
+const BUSAN_TEXT: DestText = {
+  brand: BUSAN_BRAND,
+  region: '부산',
+  home: BUSAN_HOME,
+  hub: BUSAN_HUB,
+  hubName: '부산 무계획 여행',
+  // specs/busan.md D3
+  credit: (photos) => `<p class="credit">${photos ? '정보·사진' : '정보'}: 한국관광공사</p>`,
+};
+/** One sentence per area, written for these pages (never TourAPI text: the build checks them against the overviews). */
+export const BUSAN_AREA_LINE: Record<BusanArea['slug'], string> = {
+  dadaepo: '낙동강 하구에 닿은 부산 서쪽 끝 바닷가예요. 모래사장이 넓고 해 질 녘 노을이 좋아요. 강서와 가덕도도 이 동네에 들어요.',
+  gamcheon: '산비탈 골목마다 알록달록한 집이 층층이 앉은 감천문화마을과 송도 바닷가가 있는 서쪽이에요.',
+  nampo: '자갈치시장과 국제시장, 용두산공원이 걸어서 이어지는 옛 시내예요. 남포동·광복동 거리가 한가운데예요.',
+  yeongdo: '다리를 건너 들어가는 섬 동네예요. 바다 쪽 절벽 위에 흰여울마을 골목이 있고, 남쪽 끝은 태종대예요.',
+  choryang: '부산역 바로 건너편 동네예요. 기차 시간이 남았을 때 부산역 근처에서 걸어서 가볼만한 곳과 놀거리를 찾기 좋고, 산복도로로 오르는 초량 이바구길이 있어요.',
+  seomyeon: '지하철 1·2호선이 만나는 부산 한가운데 번화가예요. 전포 카페거리와 부산시민공원이 가까워요.',
+  dongnae: '금정산 자락의 범어사와 동래 온천이 있는 북쪽이에요. 금정산성과 부산대 앞 거리도 이 동네에 들어요.',
+  yongho: '오륙도와 이기대 해안 산책로가 있는 남구 바닷가예요. 스카이워크에서 발밑으로 바다를 내려다볼 수 있어요.',
+  gwangalli: '광안대교가 정면으로 보이는 해변이에요. 해변 길을 따라 광안리 근처 놀거리와 카페가 이어지고, 밤에는 다리에 불이 켜져요.',
+  centum: '벡스코와 영화의전당, 큰 백화점이 모인 수영강 옆 새 시가지예요. 비 오는 날 실내로만 다니기 쉬워요.',
+  haeundae: '해운대해수욕장을 가운데 두고 동백섬과 달맞이길이 이어지는 동쪽 바닷가예요. 해운대 근처 가볼만한 곳이 걸어서 닿는 거리에 모여 있어요.',
+  songjeong: '송정 해변부터 기장 바닷가까지 이어지는 동북쪽 끝이에요. 바닷가 바위 위에 해동용궁사가 있어요.',
+};
+/** The name searches come in by where it is not the 대표 지명 (원도심 → 남포동, the diagnosis 2절). */
+const BUSAN_LANDMARK: Partial<Record<BusanArea['slug'], string>> = { nampo: '남포동' };
+/** 「광안리(광안대교)」; a landmark the label already says (서면, 오륙도) is not said twice. */
+export const busanAreaTitle = (a: BusanArea) => {
+  const lm = BUSAN_LANDMARK[a.slug] ?? a.landmark;
+  return a.label.includes(lm) ? a.label : `${a.label}(${lm})`;
+};
+/** keyword gate targets (data/seo/keywords.json, cluster busan-*): the four pages that receive them say the words. */
+const BUSAN_TITLE: Partial<Record<BusanArea['slug'], string>> = {
+  choryang: '부산역·초량(이바구길) 근처 가볼만한 곳·놀거리',
+  haeundae: '해운대 근처 가볼만한 곳, 비 오는 날 실내 놀거리까지',
+  gwangalli: '광안리(광안대교) 근처 놀거리, 비 오는 날 실내까지',
+  yeongdo: '영도(흰여울마을) 근처 갈 만한 곳과 실내 놀거리',
+};
+const BUSAN_MOOD_GLOSS: Record<Mood | 'famous' | 'any', string> = { ...MOOD_GLOSS, walk: '산책길, 해안길, 산성길처럼 걸을 곳' };
+const busanAreaPath = (a: BusanArea) => `${BUSAN_HUB}${a.slug}/`;
+
+interface BusanPlace {
+  spot: Spot;
+  area: BusanArea;
+}
+export interface BusanInput {
+  spots: Spot[];
+  /** ids whose reason repeats its TourAPI overview: left out of the lists */
+  exclude?: ReadonlySet<string>;
+  site: string;
+  photos: boolean;
+  /** spots-busan.json's last change (YYYY-MM-DD), or null */
+  dataDate: string | null;
+}
+interface BusanCtx extends Ctx {
+  busan: Map<string, BusanPlace[]>;
+}
+
+/** The hub and the 12 area pages (ADR-0099). No place pages yet: a listed place links to the map, its area to the app. */
+export function busanPages(input: BusanInput): { pages: SitePage[]; places: number } {
+  const exclude = input.exclude ?? new Set<string>();
+  const all: BusanPlace[] = input.spots
+    .filter((s) => !exclude.has(s.id) && listed(s))
+    .map((spot) => ({ spot, area: nearestArea(spot, BUSAN_AREAS) }));
+  const busan = new Map(BUSAN_AREAS.map((a) => [a.slug as string, rank(all.filter((p) => p.area.slug === a.slug))]));
+  const ctx: BusanCtx = { site: input.site, photos: input.photos, dataDate: input.dataDate, byArea: new Map(), combos: [], d: BUSAN_TEXT, busan };
+  const pages: SitePage[] = [{ path: BUSAN_HUB, kind: 'hub', html: busanHubPage(ctx) }];
+  for (const a of BUSAN_AREAS) pages.push({ path: busanAreaPath(a), kind: 'area', html: busanAreaPage(ctx, a) });
+  return { pages, places: all.length };
+}
+
+const busanRain = (ctx: BusanCtx, a: BusanArea) => ctx.busan.get(a.slug)!.filter(rainy);
+
+function busanHubPage(ctx: BusanCtx): string {
+  const total = [...ctx.busan.values()].reduce((n, l) => n + l.length, 0);
+  const floor = RAIN_MIN;
+  const wet = BUSAN_AREAS.map((a) => ({ a, n: busanRain(ctx, a).length })).filter((x) => x.n >= floor);
+  const body = `<h1>P를 위한 부산 무계획 여행</h1>
+<p class="lead">${BUSAN_ENTITY}</p>
+<p>일정이나 코스는 짜 드리지 않아요. 지금 있는 곳과 기분 하나만 고르면 갈 만한 곳 3곳을 골라 드리고, 차로 몇 분인지 함께 보여 드려요. 멀리 갈지 가까이 갈지는 걸어서, 차로 30분, 차로 1시간 중에서 골라요.</p>
+<p><a class="go" href="${BUSAN_HOME}">앱에서 지금 3곳 보기</a></p>
+<h2>기분은 여섯 가지</h2>
+<ul class="moods">${(['rest', 'walk', 'new', 'famous', 'food', 'any'] as const).map((m) => `<li><b>${MOOD_NAME[m]}</b> <span class="meta">${BUSAN_MOOD_GLOSS[m]}</span></li>`).join('')}</ul>
+<h2>동네 12곳</h2>
+<p>동네를 고르면 그 근처에서 기분마다 먼저 나오는 곳을 볼 수 있어요. 모두 ${total.toLocaleString('ko-KR')}곳이에요.</p>
+<ul class="areas">${BUSAN_AREAS.map((a) => `<li><a href="${busanAreaPath(a)}">${esc(busanAreaTitle(a))}</a> <span class="meta">${ctx.busan.get(a.slug)!.length}곳</span></li>`).join('')}</ul>
+<h2>비 오는 날</h2>
+<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. 실내에서 쉬거나 구경·체험할 곳이 ${floor}곳 이상인 동네는 동네 쪽에 따로 모았어요.</p>
+<ul class="areas">${wet.map(({ a, n }) => `<li><a href="${busanAreaPath(a)}#rain">${esc(a.label)} 실내</a> <span class="meta">${n}곳</span></li>`).join('')}</ul>`;
+  return layout(ctx, {
+    path: BUSAN_HUB,
+    title: `P를 위한 부산 무계획 여행 · ${BUSAN_BRAND}`,
+    description: '계획 없이 부산에 왔다면, 지금 기분 하나만 고르세요. 동네 12곳에서 갈 만한 곳을 기분별로 볼 수 있어요.',
+    crumbs: rootCrumbs(ctx),
+    graph: [
+      {
+        '@type': 'CollectionPage',
+        name: 'P를 위한 부산 무계획 여행',
+        description: BUSAN_ENTITY_LD,
+        inLanguage: 'ko',
+        url: `${ctx.site}${BUSAN_HUB}`,
+        isPartOf: { '@type': 'WebSite', name: BUSAN_BRAND, url: `${ctx.site}/` },
+      },
+      {
+        '@type': 'ItemList',
+        name: '부산 동네 12곳',
+        numberOfItems: BUSAN_AREAS.length,
+        itemListElement: BUSAN_AREAS.map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: busanAreaTitle(a), url: `${ctx.site}${busanAreaPath(a)}` })),
+      },
+    ],
+    body,
+  });
+}
+
+/** A listed place: its name opens it on 네이버지도, then the way there (no place page in 1단계). */
+function busanRow(ctx: Ctx, p: BusanPlace, from: string): string {
+  const s = p.spot;
+  const trip = travelText(travel(p.area, false, s), from);
+  const go = goLink(s, null, false, false, 'naver');
+  return `<li class="row">${thumb(ctx, s, 'sq')}<div><a class="name" href="${esc(naverSearchUrl(s))}" rel="noopener">${esc(cleanName(s.name))}</a><p class="reason">${esc(s.reason)}</p><p class="meta">${esc(tags(s))} · ${esc(trip)} · <a href="${esc(go.href)}" rel="noopener">네이버지도 ${go.text}</a></p></div></li>`;
+}
+
+function busanItemList(ctx: Ctx, name: string, list: BusanPlace[]) {
+  return {
+    '@type': 'ItemList',
+    name,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: list.length,
+    itemListElement: list.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': schemaType(p.spot),
+        name: cleanName(p.spot.name),
+        description: p.spot.reason,
+        geo: geo(p.spot),
+        hasMap: naverSearchUrl(p.spot),
+        ...(ctx.photos && p.spot.image ? { image: p.spot.image } : {}),
+      },
+    })),
+  };
+}
+
+function busanAreaPage(ctx: BusanCtx, a: BusanArea): string {
+  const list = ctx.busan.get(a.slug)!;
+  const from = `${a.label} 중심에서`;
+  const sections = MOODS.map((m) => {
+    const top = list.filter((p) => p.spot.mood === m).slice(0, PER_MOOD);
+    return `<section aria-labelledby="m-${m}">
+<h2 id="m-${m}">${MOOD_NAME[m]}</h2>
+<ol class="list">${top.map((p) => busanRow(ctx, p, from)).join('')}</ol>
+<p><a class="tbtn" href="/?area=${a.slug}&mood=${m}">앱에서 ${esc(a.label)} 근처 3곳 보기</a></p>
+</section>`;
+  }).join('\n');
+  const index = MOODS.map((m) => {
+    const names = list.filter((p) => p.spot.mood === m);
+    return `<h3>${MOOD_NAME[m]} <span class="meta">${names.length}곳</span></h3>\n<ul class="idx">${names.map((p) => `<li>${esc(cleanName(p.spot.name))}</li>`).join('')}</ul>`;
+  }).join('\n');
+  const indoor = busanRain(ctx, a);
+  const rain =
+    indoor.length >= RAIN_MIN
+      ? `\n<section aria-labelledby="rain">
+<h2 id="rain">비 오는 날, ${esc(a.label)} 실내</h2>
+<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. ${esc(a.label)} 실내 놀거리(쉬기·구경·체험) ${indoor.length}곳 중 먼저 갈 만한 곳이에요.</p>
+<ol class="list">${indoor.slice(0, PER_MOOD).map((p) => busanRow(ctx, p, from)).join('')}</ol>
+<p><a class="tbtn" href="/?area=${a.slug}&indoor=1">앱에서 ${esc(a.label)} 실내 3곳 보기</a></p>
+</section>`
+      : '';
+  const near = BUSAN_AREAS.filter((x) => x !== a)
+    .map((x) => ({ x, km: distanceKm(a, x) }))
+    .sort((p, q) => p.km - q.km)
+    .slice(0, 3)
+    .map((p) => p.x);
+  const body = `<h1>${esc(a.label)} 근처에서 지금 뭐 할까</h1>
+<p class="lead">${esc(BUSAN_AREA_LINE[a.slug])} 기분 하나만 고르면 앱이 근처 3곳을 골라 드려요.</p>
+<p class="meta">여기 순서는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
+<p><a class="go" href="/?area=${a.slug}">앱에서 ${esc(a.label)} 근처 3곳 보기</a></p>
+${sections}${rain}
+<h2>${esc(a.label)} 근처 전체 ${list.length}곳</h2>
+${index}
+<h2>이웃 동네</h2>
+<ul class="areas">${near.map((x) => `<li><a href="${busanAreaPath(x)}">${esc(busanAreaTitle(x))}</a></li>`).join('')}<li><a href="${BUSAN_HUB}">동네 12곳 모두</a></li></ul>`;
+  return layout(ctx, {
+    path: busanAreaPath(a),
+    title: `${BUSAN_TITLE[a.slug] ?? `${busanAreaTitle(a)} 근처, 지금 갈 만한 곳`} · ${BUSAN_BRAND}`,
+    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·새로운 거·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
+    crumbs: [...rootCrumbs(ctx), { name: a.label, path: busanAreaPath(a) }],
+    graph: [
+      {
+        '@type': 'TouristDestination',
+        name: a.label,
+        description: BUSAN_AREA_LINE[a.slug],
+        geo: geo(a),
+        containedInPlace: { '@type': 'AdministrativeArea', name: '부산광역시' },
+        url: `${ctx.site}${busanAreaPath(a)}`,
+      },
+      ...MOODS.map((m) => busanItemList(ctx, `${a.label} 근처, ${MOOD_NAME[m]}`, list.filter((p) => p.spot.mood === m).slice(0, PER_MOOD))),
     ],
     body,
   });

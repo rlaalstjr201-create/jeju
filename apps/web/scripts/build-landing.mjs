@@ -13,7 +13,7 @@ import { AREAS } from '../src/areas.ts';
 import { normalizeSpots } from '../src/data.ts';
 import { judge } from './seo/keyword-gate.mjs';
 import {
-  assignSlugs, buildSite, contentHash, copiedReasons, HASH_VERSION, kstDay, ownShare, pageLastmods, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
+  assignSlugs, buildSite, busanPages, contentHash, copiedReasons, HASH_VERSION, kstDay, ownShare, pageLastmods, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,
 } from './landing.ts';
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,6 +22,8 @@ const LASTMOD = join(APP, 'data/landing/lastmod.json');
 /** The quality bar (specs/seo-landing.md 「품질 기준」). Set before the first build's numbers were seen; see the spec. */
 export const BAR = { maxSimilarity: 0.8, minOwnShare: 0.3, minNearby: 3, sourceRun: 20 };
 const PHOTO_HOST = 'https://api.cdn.visitjeju.net/';
+/** 부산 (ADR-0099): TourAPI photos as the app shows them (specs/busan.md 3.5). */
+const BUSAN_PHOTO_HOST = 'https://tong.visitkorea.or.kr/';
 
 const argv = process.argv.slice(2);
 const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
@@ -75,18 +77,48 @@ try {
 
 const { pages, places, redirects } = buildSite({ spots, slugs: registry.slugs, exclude, combos, site, photos, dataDate });
 
+// 부산 1단계 (ADR-0099): /busan/ 허브 + 동네 12쪽, only in a build that carries Busan's file (the switched-on one).
+// Source text = each place's TourAPI overview (review/busan/raw/detail), held to the same bar as VisitJeju's.
+const busanFile = join(DIST, 'spots-busan.json');
+const busanSources = new Map();
+let busan = { pages: [], places: 0, spots: [], exclude: new Set() };
+if (existsSync(busanFile)) {
+  const detail = join(APP, 'review/busan/raw/detail');
+  for (const f of readdirSync(detail).filter((x) => x.endsWith('.json'))) {
+    for (const it of [read(join(detail, f))?.body?.response?.body?.items?.item ?? []].flat()) {
+      if (it?.contentid && typeof it.overview === 'string' && it.overview) busanSources.set(`bs-${it.contentid}`, [it.overview]);
+    }
+  }
+  const bSpots = normalizeSpots(read(busanFile));
+  const bExclude = copiedReasons(bSpots, (id) => busanSources.get(id) ?? [], BAR.sourceRun);
+  let bDate = null;
+  try {
+    bDate = execFileSync('git', ['log', '-1', '--format=%cs', '--', 'public/spots-busan.json'], { cwd: APP }).toString().trim() || null;
+  } catch {
+    /* no git: no date */
+  }
+  busan = { ...busanPages({ spots: bSpots, exclude: bExclude, site, photos, dataDate: bDate }), spots: bSpots, exclude: bExclude };
+}
+
 // --- write -----------------------------------------------------------------------------------------------------
 for (const p of pages) {
   const dir = join(DIST, p.path);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), p.html);
 }
+for (const p of busan.pages) {
+  const dir = join(DIST, p.path);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), p.html);
+}
 writeFileSync(join(DIST, CSS_PATH), readFileSync(join(APP, 'src/landing.css')));
-const urls = ['/', '/privacy', ...pages.map((p) => p.path)];
+const urls = ['/', '/privacy', ...pages.map((p) => p.path), ...busan.pages.map((p) => p.path)];
 // sitemap-core.xml (home, privacy, hub, areas, combos) + one per area of place pages (docs/seo/2026-10-16-generic-search.md a4)
 const sitemapGroups = {
   core: ['/', '/privacy', ...pages.filter((p) => p.kind !== 'place').map((p) => p.path)],
   ...Object.fromEntries(AREAS.map((a) => [a.slug, places.filter((x) => x.area.slug === a.slug).map((x) => x.url)])),
+  // its own file, so Search Console counts Busan's 13 apart from Jeju's (docs/seo/2026-10-24-busan-landing.md 2절)
+  'busan-core': busan.pages.map((p) => p.path),
 };
 // Each page's lastmod is the day what it says last changed (audit D4): data/landing/lastmod.json keeps a hash per
 // page; a second build on the same day writes the same file. Commit it with the data.
@@ -95,6 +127,7 @@ const htmls = [
   ['/', readFileSync(join(DIST, 'index.html'), 'utf8')],
   ['/privacy', readFileSync(join(DIST, 'privacy.html'), 'utf8')],
   ...pages.map((p) => [p.path, p.html]),
+  ...busan.pages.map((p) => [p.path, p.html]),
 ];
 const hashesBy = (version) => Object.fromEntries(htmls.map(([path, html]) => [path, contentHash(html, site, version)]));
 const prevLastmod = existsSync(LASTMOD) ? read(LASTMOD) : null;
@@ -117,10 +150,15 @@ if (redirects.length) writeFileSync(join(DIST, '_redirects'), `${redirects.join(
 const copies = sourceCopies(pages, [...sources.values()].flat(), spots.map((s) => s.name), BAR.sourceRun);
 for (const c of copies.slice(0, 10)) fail.push(`source text on ${c.path}: ${c.run}`);
 if (copies.length > 10) fail.push(`… ${copies.length} pages with source text`);
+const busanCopies = sourceCopies(busan.pages, [...busanSources.values()].flat(), busan.spots.map((s) => s.name), BAR.sourceRun);
+for (const c of busanCopies) fail.push(`source text on ${c.path}: ${c.run}`);
 
-const alike = similarPairs(pages, BAR.maxSimilarity);
+const alike = similarPairs([...pages, ...busan.pages], BAR.maxSimilarity);
 for (const x of alike.slice(0, 10)) fail.push(`too alike (${x.sim.toFixed(3)} ≥ ${BAR.maxSimilarity}): ${x.a} ${x.b}`);
 const closest = similarPairs(pages, 0.5)[0];
+const busanClosest = busan.pages.length
+  ? similarPairs([...pages.filter((p) => p.kind !== 'place'), ...busan.pages], 0.3).find((x) => x.a.startsWith('/busan/') || x.b.startsWith('/busan/'))
+  : null;
 
 const placePages = pages.filter((p) => p.kind === 'place');
 const own = ownShare(placePages).sort((a, b) => a.share - b.share);
@@ -136,12 +174,24 @@ for (const p of pages) {
   }
   if (!/비짓제주\(제주관광공사\)/.test(p.html)) fail.push(`no credit: ${p.path}`);
 }
+for (const p of busan.pages) {
+  for (const m of p.html.matchAll(/<img\b[^>]*\ssrc="([^"]*)"/g)) {
+    if (!photos) fail.push(`photo with LANDING_PHOTOS=0: ${p.path}`);
+    else if (!m[1].startsWith(BUSAN_PHOTO_HOST)) fail.push(`photo not a TourAPI hotlink: ${p.path} ${m[1]}`);
+  }
+  if (!/<p class="credit">정보(·사진)?: 한국관광공사<\/p>/.test(p.html)) fail.push(`no credit: ${p.path}`);
+  // a key-less / or a /jeju/ link would open Jeju (index.html's first script)
+  if (/<a\b[^>]*\shref="\/(jeju\/|")/.test(p.html)) fail.push(`a link to Jeju or a key-less / on ${p.path}`);
+}
 
 const size = (dir) => readdirSync(dir, { withFileTypes: true }).reduce((n, e) => n + (e.isDirectory() ? size(join(dir, e.name)) : statSync(join(dir, e.name)).size), 0);
 const count = pages.reduce((a, p) => ({ ...a, [p.kind]: (a[p.kind] ?? 0) + 1 }), {});
 console.log(`landing: ${pages.length} pages (${Object.entries(count).map(([k, n]) => `${k} ${n}`).join(' · ')}), ${(size(join(DIST, 'jeju')) / 1048576).toFixed(1)} MB, photos ${photos ? 'on (hotlink)' : 'off'}, site ${site || '(relative)'}`);
 console.log(`  places ${places.length} of ${spots.length}; no page (reason repeats ${BAR.sourceRun}+ characters of its source): ${exclude.size}${exclude.size ? ` — ${spots.filter((s) => exclude.has(s.id)).map((s) => s.name).join(', ')}` : ''}`);
 console.log(`  closest pair ${closest ? `${closest.sim.toFixed(3)} ${closest.a} ${closest.b}` : '< 0.5'} (bar < ${BAR.maxSimilarity}); least own text ${own.length ? `${(own[0].share * 100).toFixed(1)}% ${own[0].path}` : '-'} (bar ≥ ${BAR.minOwnShare * 100}%)`);
+if (busan.pages.length) {
+  console.log(`  busan: ${busan.pages.length} pages (hub 1 · area ${busan.pages.length - 1}), places listed ${busan.places} of ${busan.spots.length}; reason repeats its overview: ${busan.exclude.size}; source-text runs ${busanCopies.length}; closest pair with a Busan page ${busanClosest ? `${busanClosest.sim.toFixed(3)} ${busanClosest.a} ${busanClosest.b}` : '< 0.3'}`);
+}
 console.log(`  source-text runs: ${copies.length}; sitemap ${urls.length} URLs in ${Object.keys(sitemaps).length - 1} files under the index sitemap.xml (core ${sitemapGroups.core.length}; lastmod today: ${changedToday}); redirects ${redirects.length}`);
 if (fail.length) {
   for (const f of fail) console.error(`  FAIL ${f}`);

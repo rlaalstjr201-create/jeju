@@ -111,7 +111,11 @@ export function auditSite({ pages, files, origin, spotCount = 0 }) {
     const utility = UTILITY.includes(u); // 안내 페이지 — 검색어를 받으려는 쪽이 아니다
     if (p.lang !== 'ko') out.push(F(`page:${u}:lang`, 'P2', '색인', `<html lang>이 "${p.lang}"이다.`, 'lang="ko"', u));
     if (!p.title) out.push(F(`page:${u}:no-title`, 'P0', '색인', 'title이 없다.', '<title> 추가', u));
-    else if (!utility && !/제주/.test(p.title)) out.push(F(`page:${u}:title-no-jeju`, 'P1', '색인',
+    // 부산 쪽(/busan/**, ADR-0099)은 제목에 그 여행지 이름 「부산」
+    else if (!utility && /^\/busan(\/|$)/.test(u)) {
+      if (!/부산/.test(p.title)) out.push(F(`page:${u}:title-no-busan`, 'P1', '색인',
+        `title "${p.title}"에 「부산」이 없다. 검색 결과 제목만 보고는 부산 여행 도구인지 모른다.`, 'title에 「여차나:부산」', u));
+    } else if (!utility && !/제주/.test(p.title)) out.push(F(`page:${u}:title-no-jeju`, 'P1', '색인',
       `title "${p.title}"에 「제주」가 없다. 검색 결과 제목만 보고는 제주 여행 도구인지 모른다.`,
       'title에 제주와 P(무계획·즉흥) 포지션을 넣는다. 예: 「여차나:제주」(이름에 제주)', u));
     if (!p.description) out.push(F(`page:${u}:no-description`, 'P1', '색인', 'meta description이 없다.', '한 문장 설명 추가', u));

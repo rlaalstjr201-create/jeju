@@ -4047,6 +4047,98 @@ if (BUSAN) {
     assert(!problems.length, problems.join(' | '));
   });
 
+  // ADR-0099 (docs/seo/2026-10-24-busan-landing.md 2절): 부산 1단계 허브 + 동네 12쪽, LP1 for Busan
+  await check('LP4', '/busan/ and its 12 area pages: 200, no script, fits 390px (light and dark), one h1, every link on them answers; the logo opens 여차나:부산 without the 시작 화면, an area\'s deep link opens the app on that area; the worker leaves /busan/** alone', async () => {
+    const problems = [];
+    const paths = ['/busan/', ...['dadaepo', 'gamcheon', 'nampo', 'yeongdo', 'choryang', 'seomyeon', 'dongnae', 'yongho', 'gwangalli', 'centum', 'haeundae', 'songjeong'].map((s) => `/busan/${s}/`)];
+    const links = new Set();
+    for (const dark of [false, true]) {
+      const { ctx, page } = await fresh({ dark, storage: null });
+      const tag = dark ? 'dark' : 'light';
+      for (const path of paths) {
+        const res = await page.goto(new URL(path, BASE).href);
+        if (res?.status() !== 200) problems.push(`${tag} ${path}: ${res?.status()}`);
+        const r = await page.evaluate(() => ({
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          scripts: [...document.scripts].filter((s) => s.type !== 'application/ld+json').length,
+          h1: document.querySelectorAll('h1').length,
+          bg: getComputedStyle(document.body).backgroundColor,
+          links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
+          app: [...document.querySelectorAll('a[href^="/?"]')].map((a) => a.textContent).filter((t) => t.startsWith('앱에서')),
+          bare: [...document.querySelectorAll('a[href="/"], a[href^="/jeju/"]')].length,
+          rg: document.querySelector('.logo .rg')?.textContent,
+        }));
+        if (r.rg !== ':부산') problems.push(`${tag} ${path}: logo ${r.rg}`);
+        if (r.overflow > 0) problems.push(`${tag} ${path}: ${r.overflow}px sideways`);
+        if (!r.app.length || r.app.some((t) => !/^앱에서 .*3곳 보기$/.test(t))) problems.push(`${tag} ${path}: app links ${r.app.join(' / ')}`);
+        if (r.bare) problems.push(`${tag} ${path}: ${r.bare} link(s) to / or /jeju/`);
+        if (r.scripts) problems.push(`${tag} ${path}: ${r.scripts} script(s)`);
+        if (r.h1 !== 1) problems.push(`${tag} ${path}: ${r.h1} h1`);
+        if (r.bg !== (dark ? 'rgb(15, 19, 25)' : 'rgb(255, 255, 255)')) problems.push(`${tag} ${path}: background ${r.bg}`);
+        for (const h of r.links) links.add(h);
+        if (!dark && (path === '/busan/' || path === '/busan/haeundae/')) await shot(page, `landing-busan-${path === '/busan/' ? 'hub' : 'haeundae'}-390-light`);
+      }
+      if (!dark) {
+        const bad = await page.evaluate(async (hrefs) => {
+          const out = [];
+          for (const h of hrefs) {
+            const r = await fetch(h, { redirect: 'manual' });
+            if (r.status !== 200) out.push(`${h} ${r.status}`);
+          }
+          return out;
+        }, [...links]);
+        problems.push(...bad.map((b) => `link ${b}`));
+      }
+      await ctx.close();
+    }
+    // the logo (/?dest=busan) on a new browser: 여차나:부산, no 시작 화면
+    {
+      const { ctx, page } = await fresh({ storage: null });
+      await page.goto(`${BASE}busan/`);
+      await page.locator('a.logo').click();
+      await page.waitForLoadState('load');
+      await sleep(600);
+      const s = await said(page);
+      if (s.start || s.rg !== ':부산') problems.push(`/busan/ logo → ${JSON.stringify(s)}`);
+      await ctx.close();
+    }
+    // 앱에서 해운대 근처 3곳 보기 (/?area=haeundae&mood=…) → the app's results for 해운대
+    {
+      const { ctx, page } = await fresh({ storage: null });
+      await page.goto(`${BASE}busan/haeundae/`);
+      await page.locator('a[href^="/?area=haeundae&mood="]').first().click();
+      await waitCards(page);
+      const s = await said(page);
+      if (s.rg !== ':부산' || !s.basis?.includes('해운대')) problems.push(`deep link opened on ${JSON.stringify(s)}`);
+      await ctx.close();
+    }
+    // the worker: /busan/** never cached and, offline, never the app shell (LP2 for Busan)
+    {
+      const { ctx, page } = await fresh({ sw: true });
+      await page.evaluate(async () => {
+        await navigator.serviceWorker.ready;
+      });
+      await page.reload();
+      await sleep(300);
+      await page.goto(`${BASE}busan/`);
+      const cached = await page.evaluate(async () => {
+        const out = [];
+        for (const k of await caches.keys()) for (const r of await (await caches.open(k)).keys()) if (new URL(r.url).pathname.startsWith('/busan')) out.push(r.url);
+        return out;
+      });
+      if (cached.length) problems.push(`cached: ${cached.join(', ')}`);
+      await ctx.setOffline(true);
+      const shell = await page
+        .goto(`${BASE}busan/haeundae/`, { timeout: 8000 })
+        .then(() => page.locator('[data-mood="rest"]').count())
+        .catch(() => 0);
+      await ctx.setOffline(false);
+      if (shell) problems.push('offline /busan/haeundae/ got the app shell');
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
   await check('BS-B2', 'B2 페이지가 열릴 때 위치 읽기 0회, 큰 버튼을 누를 때 1회', async () => {
     const { ctx, page } = await openAt('/', { geo: 해운대 });
     const before = (await said(page)).calls;
