@@ -93,14 +93,23 @@ main { flex: 1; display: flex; flex-direction: column; }
    first when the bar is short of room (a long basis label, large text): it shrinks before the chips do, and what no
    longer fits wraps onto a second line that is never shown — the wordmark goes, then the symbol, never cut in half
    (the empty ::before keeps the first line when the symbol has gone). Its -8 cancels the bar's gap once it is gone.
-   The shrink weight is that large so the chips give not even a fraction of a pixel (a label that fits would wrap) */
+   The shrink weight is that large so the chips give not even a fraction of a pixel (a label that fits would wrap).
+   ADR-0094 Amendment 3: a 48-high button (the 여행지 chooser) whose ▾ never goes; the giving way is its .lw's */
 .logo {
-  display: none; flex: 0 100000 auto; min-width: 0; flex-wrap: wrap; align-items: center; align-content: flex-start;
-  max-height: 1.35em; margin: 0 -8px 0 0; overflow: hidden;
+  display: none; flex: 0 100000 auto; min-width: 16px; min-height: 48px; align-items: center;
   font-size: 1.125rem; line-height: 1.35; font-weight: 800; letter-spacing: -0.03em; white-space: nowrap;
 }
-.logo::before { content: ""; }
-.logo svg { margin-right: 6px; color: var(--main); }
+.logo > .lw {
+  display: flex; flex: 0 1 auto; min-width: 0; flex-wrap: wrap; align-items: center; align-content: flex-start;
+  max-height: 1.35em; overflow: hidden;
+}
+.logo > .lw::before { content: ""; }
+.logo > .chev { flex: none; margin-left: 2px; color: var(--muted); }
+/* a two-part label (a day or 실내만, its .nw): the bar's room is the label's, as before the ▾ — the ▾ goes, and the
+   name line may give way to nothing (its -8 cancels the bar's gap) */
+.top:has(> .basis .nw) > .logo { min-width: 0; margin-right: -8px; }
+.top:has(> .basis .nw) > .logo > .chev { display: none; }
+.logo .lw svg { margin-right: 6px; color: var(--main); }
 .logo .dot { fill: var(--accent); }
 .logo .rg { font-weight: 600; color: var(--muted); }
 .app:has(#home:not([hidden])) .logo { display: flex; }

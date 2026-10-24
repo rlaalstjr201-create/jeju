@@ -1615,7 +1615,7 @@ describe('날짜 모드 (specs/date-mode.md D1–D6)', () => {
 
   it('D1 the first screen is as before: same interactive elements, label 내 위치 근처, no date in it', () => {
     open();
-    expect(interactiveCount()).toBe(7); // 6 moods + basis (ADR-0092)
+    expect(interactiveCount()).toBe(8); // 6 moods + basis (ADR-0092) + the name line (ADR-0094 Amendment 3)
     expect($('#basis').textContent).toBe('내 위치 근처');
     expect($('#saved').hidden).toBe(true);
   });

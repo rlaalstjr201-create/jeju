@@ -193,6 +193,7 @@ export const ZH: Lang = {
     stayOutside: '你现在不在釜山。请在下面选择住处所在的区域。',
     switched: { jeju: '你在济州，已切换到济州。', busan: '你在釜山，已切换到釜山。' },
     otherSaved: { jeju: (n) => `在济州收藏的地方 ${n} 处`, busan: (n) => `在釜山收藏的地方 ${n} 处` },
+    destAria: (name) => `${name}，更换旅行地`,
   },
   mood: {
     rest: '想好好歇一歇',
@@ -263,8 +264,9 @@ export const ZH: Lang = {
   },
   areaGroups: { jeju: '济州市一侧', seogwipo: '西归浦一侧' },
   page: {
-    '.logo > span': 'Yeochana',
+    '.logo .lw > span': 'Yeochana',
     '.logo .rg': ':济州',
+    '#logo@aria-label': 'Yeochana:济州，更换旅行地',
     '#back@aria-label': '返回',
     '#home .brand': 'P人的旅行搭子',
     '#foodSub@aria-label': '吃的种类',

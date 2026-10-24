@@ -1502,8 +1502,8 @@ await check('D1-D6', 'date mode at 320·390·430 × light·dark: 언제 in the b
       // D1: the first screen as before (the ♥ N is there because something is saved)
       // the 설정 entry at the very bottom of the home (heuristic audit H5) is not on the first screen
       const first = await page.$$eval('main button:not([hidden]):not([data-action="settings"]), header button:not([hidden]), .top button:not([hidden])', (els) => els.filter((e) => e.offsetParent !== null).length);
-      // Changed on purpose (ADR-0092): 6 moods + basis + ♥ N
-      if (first !== 8) problems.push(`${tag} first screen has ${first} controls`);
+      // Changed on purpose (ADR-0092): 6 moods + basis + ♥ N; (ADR-0094 Amendment 3) + the name line 「여차나:제주 ▾」
+      if (first !== 9) problems.push(`${tag} first screen has ${first} controls`);
       if ((await page.textContent('#basis')).trim() !== '내 위치 근처') problems.push(`${tag} label ${await page.textContent('#basis')}`);
       if ((await page.textContent('#saved')).trim() !== '3') problems.push(`${tag} ♥ ${await page.textContent('#saved')}`);
       // D2: 언제 → 내일
@@ -4277,6 +4277,45 @@ if (BUSAN) {
       await home(o.page, `${width} 부산 → 제주`);
       await o.ctx.close();
     }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('BS-F1', 'ADR-0094 Amendment 3: 첫 화면 이름 줄 「여차나:제주 ▾」 버튼(48 높이·44+ 폭, 넘침 0) → 기준 시트의 여행지 줄이 화면 안·포커스 → 부산; 결과에서는 뒤로만; 네 언어, 320·375·1280', async () => {
+    const problems = [];
+    for (const [lang, width] of [['ko', 320], ['ko', 375], ['ko', 1280], ['en', 375], ['zh-Hans', 375], ['ja', 375]]) {
+      const tag = `${lang}-${width}`;
+      const { ctx, page } = await openAt(lang === 'ko' ? '/' : `/?lang=${lang}`, { storage: {}, width });
+      await page.waitForSelector('#today:not(.wait)');
+      const g = await page.evaluate(() => {
+        const b = document.getElementById('logo');
+        const r = b.getBoundingClientRect();
+        const chev = b.querySelector('.chev').getBoundingClientRect();
+        return { tag: b.tagName, w: r.width, h: r.height, l: r.left - document.getElementById('app').getBoundingClientRect().left, chev: chev.width > 0 && chev.right <= document.getElementById('basis').getBoundingClientRect().left, aria: b.getAttribute('aria-label'), over: document.documentElement.scrollWidth - innerWidth };
+      });
+      if (g.tag !== 'BUTTON' || g.h < 47.5 || g.w < 44 || Math.abs(g.l - 16) > 0.5 || !g.chev || g.over > 0 || !/[A-Za-z제]/.test(g.aria ?? '')) problems.push(`${tag} ${JSON.stringify(g)}`);
+      if (lang !== 'ko' && /[가-힣]/.test(g.aria)) problems.push(`${tag} Korean aria ${g.aria}`);
+      await page.click('#logo');
+      await page.waitForSelector('.sheet [data-dest]');
+      await sleep(400);
+      const s = await page.evaluate(() => {
+        const row = document.querySelector('.sheet [data-dest="busan"]').getBoundingClientRect();
+        return { inView: row.top >= 0 && row.bottom <= innerHeight, focus: document.activeElement?.getAttribute('data-dest') };
+      });
+      if (!s.inView || s.focus !== 'jeju') problems.push(`${tag} sheet ${JSON.stringify(s)}`);
+      await page.click('.sheet [data-dest="busan"]');
+      const ok = await page.waitForFunction(() => /부산|Busan|釜山/.test(document.querySelector('.logo .rg')?.textContent ?? ''), null, { timeout: 5000 }).then(() => true, () => false);
+      if (!ok) problems.push(`${tag} 부산 not chosen`);
+      await ctx.close();
+    }
+    // results: 뒤로 in its place, no name line
+    const { ctx, page } = await openAt('/', { storage: {} });
+    await page.waitForSelector('#today:not(.wait)');
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    if ((await visible(page, '#logo')) || !(await visible(page, '#back'))) problems.push('results: logo shown or no 뒤로');
+    await tapText(page, '#back');
+    if (!(await visible(page, '#logo'))) problems.push('뒤로 → home: no logo');
+    await ctx.close();
     assert(!problems.length, problems.join(' | '));
   });
 

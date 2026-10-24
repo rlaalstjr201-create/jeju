@@ -197,6 +197,7 @@ export const JA: Lang = {
     stayOutside: 'いまは釜山の外にいます。下から宿のエリアを選んでください。',
     switched: { jeju: '済州にいるので、済州に切り替えました。', busan: '釜山にいるので、釜山に切り替えました。' },
     otherSaved: { jeju: (n) => `済州で保存した場所 ${n}か所`, busan: (n) => `釜山で保存した場所 ${n}か所` },
+    destAria: (name) => `${name}、旅行先を変更`,
   },
   mood: {
     rest: 'のんびりしたい',
@@ -267,8 +268,9 @@ export const JA: Lang = {
   },
   areaGroups: { jeju: '済州市側', seogwipo: '西帰浦側' },
   page: {
-    '.logo > span': 'Yeochana',
+    '.logo .lw > span': 'Yeochana',
     '.logo .rg': ':済州',
+    '#logo@aria-label': 'Yeochana:済州、旅行先を変更',
     '#back@aria-label': '戻る',
     '#home .brand': 'ノープラン旅のおとも',
     '#foodSub@aria-label': '食べるものの種類',

@@ -200,6 +200,7 @@ export const EN: Lang = {
     stayOutside: "You're not in Busan right now. Pick your stay's area below.",
     switched: { jeju: "You're in Jeju, so we switched to Jeju.", busan: "You're in Busan, so we switched to Busan." },
     otherSaved: { jeju: (n) => `Saved in Jeju (${n})`, busan: (n) => `Saved in Busan (${n})` },
+    destAria: (name) => `${name}, change destination`,
   },
   mood: {
     rest: 'Just relax',
@@ -270,8 +271,9 @@ export const EN: Lang = {
   },
   areaGroups: { jeju: 'Jeju City side', seogwipo: 'Seogwipo side' },
   page: {
-    '.logo > span': 'Yeochana',
+    '.logo .lw > span': 'Yeochana',
     '.logo .rg': ':Jeju',
+    '#logo@aria-label': 'Yeochana:Jeju, change destination',
     '#back@aria-label': 'Back',
     '#home .brand': 'Your no-plan travel buddy',
     '#foodSub@aria-label': 'Type of food',

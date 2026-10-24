@@ -1116,6 +1116,10 @@ export function mountApp(doc: Document, deps: Deps): App {
   on(els.basis, 'click', () => {
     if (!state.overlay && !guarded('basis')) openOverlay('basis');
   });
+  // the name line 「여차나:제주 ▾」 (ADR-0094 Amendment 3): the same sheet, its 여행지 row first (render.ts focusSheet)
+  on(doc.getElementById('logo'), 'click', () => {
+    if (!state.overlay && !guarded('basis')) openOverlay('basis');
+  });
   on(els.saved, 'click', () => {
     if (state.overlay || guarded('saved')) return;
     if (state.view === 'saved') closeSaved();

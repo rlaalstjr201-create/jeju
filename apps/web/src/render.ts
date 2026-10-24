@@ -222,6 +222,8 @@ export const BUSAN_COPY = {
   stayOutside: '지금은 부산 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
   switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.' } satisfies Record<Dest, string>,
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
+  /** the name line's button (ADR-0094 Amendment 3): its words, e.g. 「여차나:제주」 */
+  destAria: (name: string) => `${name}, 여행지 바꾸기`,
 } as const;
 
 /** The name (its main part, without the alias) and the particle its last syllable takes: 받침 → `withFinal`. */
@@ -1536,10 +1538,12 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     }
   }
 
-  function focusSheet() {
+  function focusSheet(atDest = false) {
     // a day picked on a touch screen is the see-through field's value (pickDay), not a pressed option
     // (the 여행지 row is not where a choice is made each time: focus starts below it, as before it was there)
-    const pick = els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"]:not([data-dest]), .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
+    // opened from the name line (ADR-0094 Amendment 3): on the 여행지 in use
+    const dest = atDest ? els.sheet.querySelector<HTMLElement>('.sheet [data-dest][aria-pressed="true"]') : null;
+    const pick = dest ?? els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"]:not([data-dest]), .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
     pick?.focus({ preventScroll: true });
   }
 
@@ -1600,7 +1604,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         sheetSig = sig;
         buildSheet(s);
         els.sheet.hidden = false;
-        if (switched || focusInside) focusSheet();
+        if (switched || focusInside) focusSheet(switched && opener?.id === 'logo');
       }
       patchSheet(s);
     } else if (prevOverlay) {
@@ -1689,6 +1693,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     destDrawn = s.dest;
     const busan = s.dest === 'busan';
     for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${BUSAN_COPY.destName[s.dest]}`);
+    const logo = doc.getElementById('logo');
+    if (BUSAN && logo) setAttr(logo, 'aria-label', BUSAN_COPY.destAria(logo.textContent ?? ''));
     doc.title = busan ? BUSAN_COPY.title : jejuTitle;
     for (const c of credits) {
       if (busan) c.e.textContent = BUSAN_COPY.homeCredit;

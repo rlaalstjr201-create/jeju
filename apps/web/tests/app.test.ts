@@ -85,7 +85,7 @@ describe('S3 첫 화면', () => {
   it('only 6 mood buttons + 1 location toggle are interactive, before any data arrives', () => {
     render({ loadSpots: () => new Promise(() => undefined) }); // spots.json never loads
     const els = interactive();
-    expect(els).toHaveLength(7);
+    expect(els).toHaveLength(8); // + the name line 「여차나:제주 ▾」 (ADR-0094 Amendment 3)
     const moods = $$('[data-mood]');
     // Changed on purpose (ADR-0075 3): a mood row also carries 「예:」 once the data is in, so its name is read
     // from its own span (the 아무거나 button keeps its plain span)
@@ -672,7 +672,7 @@ describe('S8-4 저장 목록', () => {
     render();
     expect($('#saved').hidden).toBe(true);
     const els = interactive();
-    expect(els).toHaveLength(7); // 6 moods + basis, same as S3 (saved button absent; 6 since ADR-0092)
+    expect(els).toHaveLength(8); // 6 moods + basis + the name line (ADR-0094 Amendment 3), same as S3 (saved button absent; 6 since ADR-0092)
   });
 
   // Changed on purpose (specs/date-mode.md): the list is in the order the user set (saved order to begin with),

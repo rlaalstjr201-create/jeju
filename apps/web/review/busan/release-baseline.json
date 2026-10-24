@@ -17,7 +17,20 @@
   "browser.empty.home.local.jeju.dest",
   "browser.empty.walk.local.jeju.dest",
   "browser.saved.v2 only.home.local.jeju.dest",
-  "browser.saved.v2 only.walk.local.jeju.dest"
+  "browser.saved.v2 only.walk.local.jeju.dest",
+  "indexHtml.bytes",
+  "indexHtml.gzip",
+  "files.index.html",
+  "browser.empty.firstPaint.html",
+  "browser.empty.home.body",
+  "browser.empty.home.styles",
+  "browser.empty.walk.body",
+  "browser.empty.walk.styles",
+  "browser.saved.v2 only.firstPaint.html",
+  "browser.saved.v2 only.home.body",
+  "browser.saved.v2 only.home.styles",
+  "browser.saved.v2 only.walk.body",
+  "browser.saved.v2 only.walk.styles"
  ],
  "data": {
   "public/spots.json": "c88acb8476f5fd9417552bd59831960185ebe6117f4a1a5e9c0c1ad1b0e73821",

@@ -136,6 +136,20 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     expect(asked).toEqual(['jeju', 'busan']);
   });
 
+  it('ADR-0094 Amendment 3: the name line 「여차나:제주 ▾」 is a button that opens the 기준 시트 on its 여행지 row; its name follows the 여행지', async () => {
+    mount({ dest: 'jeju', at: 동문시장 });
+    await wait();
+    const logo = $('#logo') as HTMLButtonElement;
+    expect([logo.tagName, logo.getAttribute('aria-haspopup'), logo.getAttribute('aria-label')]).toEqual(['BUTTON', 'dialog', '여차나:제주, 여행지 바꾸기']);
+    logo.focus();
+    await tap('#logo');
+    expect($('#sheet [role="dialog"], #sheet .sheet')).toBeTruthy();
+    expect(document.activeElement).toBe($('#sheet [data-dest="jeju"]'));
+    await tap('#sheet [data-dest="busan"]');
+    await wait();
+    expect(logo.getAttribute('aria-label')).toBe('여차나:부산, 여행지 바꾸기');
+  });
+
   it('B10 부산에 저장한 곳: kept when Jeju is in use, one line under the saved list, which opens Busan’s', async () => {
     mount({ dest: 'busan', at: 해운대 });
     await wait();

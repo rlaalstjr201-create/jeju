@@ -17,7 +17,8 @@ describe('logo 「꺾이는 길」 (ADR-0088 5)', () => {
   it('index.html: the top line starts with the logo (a copy of logoInner()), the name line under it is 「P를 위한 여행동반자」', () => {
     const html = readFileSync(resolve(root, 'index.html'), 'utf8');
     const top = html.match(/<header class="top">([\s\S]*?)<\/header>/)![1];
-    expect(top).toContain(`<span class="logo">${logoInner()}</span>`);
+    // ADR-0094 Amendment 3: a button with ▾ (the 여행지 chooser)
+    expect(top).toMatch(new RegExp(`<button id="logo" class="logo" type="button" aria-haspopup="dialog" aria-label="[^"]+"><span class="lw">${logoInner().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</span><svg class="chev" `));
     expect(top.indexOf('class="logo"')).toBeLessThan(top.indexOf('id="basis"'));
     expect(html).toContain('<p class="brand">P를 위한 여행동반자</p>');
   });
