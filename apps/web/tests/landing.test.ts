@@ -108,6 +108,11 @@ describe('페이지', () => {
     const hub = s.pages[0].html;
     expect(hub).toContain(ENTITY);
     expect(hub).toContain('<a class="go" href="/">앱에서 지금 3곳 보기</a>');
+    // ADR-0099 Amendment 1: the line to /busan/ only in a build that has it, and on the hub only
+    expect(hub).not.toContain('href="/busan/');
+    const on = site({ busan: true });
+    expect(on.pages[0].html).toContain('<p>다른 여행지: <a href="/busan/">여차나:부산</a></p>');
+    expect(on.pages.filter((p) => p.html.includes('href="/busan/')).map((p) => p.path)).toEqual(['/jeju/']);
     expect((hub.match(/href="\/jeju\/[a-z]+\/"/g) ?? []).length).toBe(15);
     const aewol = s.pages.find((p) => p.path === '/jeju/aewol/')!.html;
     expect(aewol).toContain('한담 해안 산책로를 따라 카페가 이어져요');
@@ -285,8 +290,10 @@ describe('부산 1단계 (/busan/**)', () => {
     expect(hub).toContain('<title>P를 위한 부산 무계획 여행 · 여차나:부산</title>');
     expect(hub).not.toMatch(/<title>[^<]*(부산 여행|가볼만한)/);
     expect(hub).toContain('<a href="/busan/haeundae/#rain">해운대 실내</a>');
+    // ADR-0099 Amendment 1: the hub's one line to the other destination's hub, and no other link to Jeju
+    expect(hub).toContain('<p>다른 여행지: <a href="/jeju/">여차나:제주</a></p>');
     for (const p of b().pages) {
-      expect(p.html).not.toMatch(/<a\b[^>]*\shref="\/(jeju\/|")/);
+      expect(p.html.replace('<a href="/jeju/">여차나:제주</a>', '')).not.toMatch(/<a\b[^>]*\shref="\/(jeju\/|")/);
       expect(p.html).toContain('<p class="credit">정보·사진: 한국관광공사</p>');
       expect(p.html).not.toContain('비짓제주');
     }

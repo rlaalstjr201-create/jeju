@@ -3368,6 +3368,8 @@ await check('LP1', 'hub → area → place: 200, no script, fits 390px (light an
       return r.links;
     };
     const hubLinks = await visit('/jeju/');
+    // ADR-0099 Amendment 1: one line to the /busan/ hub, in a build that has it
+    if (hubLinks.filter((h) => h.startsWith('/busan/')).join() !== (BUSAN ? '/busan/' : '')) problems.push(`${tag} hub links to Busan: ${hubLinks.filter((h) => h.startsWith('/busan/'))}`);
     if (!dark) await shot(page, 'landing-hub-390-light');
     const areaLinks = await visit('/jeju/aewol/');
     if ((await page.textContent('a.go')) !== '앱에서 애월 근처 3곳 보기') problems.push(`${tag} area: "${await page.textContent('a.go')}"`);
@@ -4065,13 +4067,16 @@ if (BUSAN) {
           bg: getComputedStyle(document.body).backgroundColor,
           links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
           app: [...document.querySelectorAll('a[href^="/?"]')].map((a) => a.textContent).filter((t) => t.startsWith('앱에서')),
-          bare: [...document.querySelectorAll('a[href="/"], a[href^="/jeju/"]')].length,
+          // ADR-0099 Amendment 1: the hub's one line to the /jeju/ hub is on purpose
+          bare: [...document.querySelectorAll('a[href="/"], a[href^="/jeju/"]')].filter((a) => !(location.pathname === '/busan/' && a.getAttribute('href') === '/jeju/')).length,
+          other: [...document.querySelectorAll('a[href="/jeju/"]')].map((a) => a.parentElement?.textContent),
           rg: document.querySelector('.logo .rg')?.textContent,
         }));
         if (r.rg !== ':부산') problems.push(`${tag} ${path}: logo ${r.rg}`);
         if (r.overflow > 0) problems.push(`${tag} ${path}: ${r.overflow}px sideways`);
         if (!r.app.length || r.app.some((t) => !/^앱에서 .*3곳 보기$/.test(t))) problems.push(`${tag} ${path}: app links ${r.app.join(' / ')}`);
         if (r.bare) problems.push(`${tag} ${path}: ${r.bare} link(s) to / or /jeju/`);
+        if (path === '/busan/' && JSON.stringify(r.other) !== JSON.stringify(['다른 여행지: 여차나:제주'])) problems.push(`${tag} /busan/: the line to /jeju/ ${JSON.stringify(r.other)}`);
         if (r.scripts) problems.push(`${tag} ${path}: ${r.scripts} script(s)`);
         if (r.h1 !== 1) problems.push(`${tag} ${path}: ${r.h1} h1`);
         if (r.bg !== (dark ? 'rgb(15, 19, 25)' : 'rgb(255, 255, 255)')) problems.push(`${tag} ${path}: background ${r.bg}`);

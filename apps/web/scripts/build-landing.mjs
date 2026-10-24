@@ -75,7 +75,7 @@ try {
   /* no git: no date */
 }
 
-const { pages, places, redirects } = buildSite({ spots, slugs: registry.slugs, exclude, combos, site, photos, dataDate });
+const { pages, places, redirects } = buildSite({ spots, slugs: registry.slugs, exclude, combos, site, photos, dataDate, busan: existsSync(join(DIST, 'spots-busan.json')) });
 
 // 부산 1단계 (ADR-0099): /busan/ 허브 + 동네 12쪽, only in a build that carries Busan's file (the switched-on one).
 // Source text = each place's TourAPI overview (review/busan/raw/detail), held to the same bar as VisitJeju's.
@@ -180,8 +180,10 @@ for (const p of busan.pages) {
     else if (!m[1].startsWith(BUSAN_PHOTO_HOST)) fail.push(`photo not a TourAPI hotlink: ${p.path} ${m[1]}`);
   }
   if (!/<p class="credit">정보(·사진)?: 한국관광공사<\/p>/.test(p.html)) fail.push(`no credit: ${p.path}`);
-  // a key-less / or a /jeju/ link would open Jeju (index.html's first script)
-  if (/<a\b[^>]*\shref="\/(jeju\/|")/.test(p.html)) fail.push(`a link to Jeju or a key-less / on ${p.path}`);
+  // a key-less / or a /jeju/ link would open Jeju (index.html's first script); the hub's one line to the /jeju/ hub
+  // itself is on purpose (ADR-0099 Amendment 1)
+  const toJeju = p.kind === 'hub' ? /<a\b[^>]*\shref="\/(jeju\/[^"]|")/ : /<a\b[^>]*\shref="\/(jeju\/|")/;
+  if (toJeju.test(p.html)) fail.push(`a link to Jeju or a key-less / on ${p.path}`);
 }
 
 const size = (dir) => readdirSync(dir, { withFileTypes: true }).reduce((n, e) => n + (e.isDirectory() ? size(join(dir, e.name)) : statSync(join(dir, e.name)).size), 0);

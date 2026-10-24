@@ -157,6 +157,8 @@ export interface SiteInput {
   photos: boolean;
   /** spots.json's last change (YYYY-MM-DD), or null */
   dataDate: string | null;
+  /** the build carries /busan/ (a switched-on one): the hub links to it (ADR-0099 Amendment 1) */
+  busan?: boolean;
 }
 export interface SitePage {
   path: string;
@@ -221,7 +223,7 @@ export function buildSite(input: SiteInput): Site {
     return [{ area, mood: c.mood, query: c.query, url: `${areaPath(area)}${c.mood}/`, ...(sub ? { sub } : {}) }];
   });
   const ctx: Ctx = { site, photos, dataDate: input.dataDate, byArea, combos, d: JEJU_TEXT };
-  const pages: SitePage[] = [{ path: HUB, kind: 'hub', html: hubPage(ctx) }];
+  const pages: SitePage[] = [{ path: HUB, kind: 'hub', html: hubPage(ctx, input.busan === true) }];
   for (const a of AREAS) pages.push({ path: areaPath(a), kind: 'area', html: areaPage(ctx, a) });
   for (const c of combos) pages.push({ path: c.url, kind: 'combo', html: comboPage(ctx, c) });
   for (const p of places) pages.push({ path: p.url, kind: 'place', html: placePage(ctx, p), id: p.spot.id });
@@ -355,7 +357,7 @@ function itemList(ctx: Ctx, name: string, list: Place[]) {
   };
 }
 
-function hubPage(ctx: Ctx): string {
+function hubPage(ctx: Ctx, busan: boolean): string {
   const groups = AREA_GROUPS.map(
     (g) =>
       `<h3>${g.heading}</h3>\n<ul class="areas">${AREAS.filter((a) => a.group === g.group)
@@ -375,7 +377,8 @@ function hubPage(ctx: Ctx): string {
 <h2>동네 15곳</h2>
 <p>동네를 고르면 그 근처에서 기분마다 먼저 나오는 곳을 볼 수 있어요. 모두 ${total.toLocaleString('ko-KR')}곳이에요.</p>
 ${groups}
-${combos}`;
+${combos}${busan ? `
+<p>다른 여행지: <a href="${BUSAN_HUB}">여차나:부산</a></p>` : ''}`;
   return layout(ctx, {
     path: HUB,
     title: `P를 위한 제주 무계획 여행 · ${BRAND}`,
@@ -639,7 +642,8 @@ function busanHubPage(ctx: BusanCtx): string {
 <ul class="areas">${BUSAN_AREAS.map((a) => `<li><a href="${busanAreaPath(a)}">${esc(busanAreaTitle(a))}</a> <span class="meta">${ctx.busan.get(a.slug)!.length}곳</span></li>`).join('')}</ul>
 <h2>비 오는 날</h2>
 <p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. 실내에서 쉬거나 구경·체험할 곳이 ${floor}곳 이상인 동네는 동네 쪽에 따로 모았어요.</p>
-<ul class="areas">${wet.map(({ a, n }) => `<li><a href="${busanAreaPath(a)}#rain">${esc(a.label)} 실내</a> <span class="meta">${n}곳</span></li>`).join('')}</ul>`;
+<ul class="areas">${wet.map(({ a, n }) => `<li><a href="${busanAreaPath(a)}#rain">${esc(a.label)} 실내</a> <span class="meta">${n}곳</span></li>`).join('')}</ul>
+<p>다른 여행지: <a href="${HUB}">여차나:제주</a></p>`;
   return layout(ctx, {
     path: BUSAN_HUB,
     title: `P를 위한 부산 무계획 여행 · ${BUSAN_BRAND}`,

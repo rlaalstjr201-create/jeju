@@ -58,6 +58,8 @@ function normalized(rel: string, body: Buffer): Buffer | string {
       // ADR-0099: the line for Busan's own sitemap file (a switched-on build's, added on purpose)
       .replace(new RegExp(`\\n<sitemap><loc>${SITE}/sitemap-busan-core\\.xml</loc>(?:<lastmod>[^<]*</lastmod>)?</sitemap>`), '');
   if (rel === 'index.html') return withoutBlocks(unhash(body.toString('utf8')));
+  // ADR-0099 Amendment 1: the hub's line to /busan/ (a switched-on build's, added on purpose)
+  if (rel === 'jeju/index.html' && SWITCHED) return body.toString('utf8').replace('\n<p>다른 여행지: <a href="/busan/">여차나:부산</a></p>', '');
   if (rel === '_headers' && SWITCHED) return body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
   if (rel === 'sitemap-core.xml')
