@@ -21,7 +21,7 @@ const OUT = join(APP, 'review/busan/release-baseline.json');
 const DETAIL = join(APP, 'review/busan/release-baseline.detail.json');
 const SITE = 'https://yeochana.com';
 /** Vite's own kB (1000 bytes), as the budget has always been read (ADR-0093 Amendment 4). */
-const BUDGET = 50_000;
+const BUDGET = 60_000; // ADR-0100 (was 50_000)
 const PORT = Number(process.env.BASELINE_PORT ?? 4181);
 const BASE = `http://localhost:${PORT}/`;
 /** 2026-10-18 14:00 KST: the date line, sunset and 「지금」 are the same on every run. */
