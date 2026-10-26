@@ -162,6 +162,8 @@ export const ZH: Lang = {
     examplePopular: (names) => `济州热门：${names.join('、')}`,
     homeCredit: CREDIT,
     homeSettings: '设置 · 地图App · 反馈',
+    nowKicker: '就在你附近',
+    shareAria: (name) => `${name}，分享给同行的人`,
     sunsetPlaces: '看日落的地方',
     sunsetCount: (n) => ` ${n}个 · 开车45分钟内`,
     sunsetCredit: ' · 海岸线 © ',

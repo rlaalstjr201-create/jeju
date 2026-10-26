@@ -115,7 +115,8 @@ const SEL_TOKEN = /--sel-/;
 const SEL_FILL_OK = new Set(['.saved-btn[aria-pressed="true"]']);
 // ADR-0070: the saved heart; ADR-0088: the logo's dot and 오늘 판's sun
 const ACCENT_OK = new Set(['.heart[aria-pressed="true"]', '.logo .dot', '.today-ic']);
-const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.ghost \.bar:first-child|\.more-end|\.date-tap|\.when-row \.date-tap)$/;
+// ADR-0101: the photo that fills a mood tile or 지금 여기서's left side has no words in it, like `.ph img`
+const FIXED_HEIGHT_OK = /^(\.heart|\.ghost \.bar|\.sr|\.ph img|\.pair img|\.now-photo img|\.ghost \.bar:first-child|\.more-end|\.date-tap|\.when-row \.date-tap)$/;
 
 /** #1 over one stylesheet's rules: no gradient or other shadow anywhere; `box-shadow: var(--float)` only on
  * what floats, and the token used nowhere else. */

@@ -1238,8 +1238,8 @@ describe('스타일 계약 (S9-4·S48·S49, audit hit-testing / tap targets)', (
     expect(cssRule('.heart')).toMatch(/width:\s*44px/);
     expect(cssRule('.heart')).toMatch(/height:\s*44px/);
     expect(cssRule('.more')).toMatch(/min-height:\s*52px/);
-    // Changed on purpose (ADR-0088): a mood row holds 「예:」 and two 48px photos on the grey face, 72 tall from the start
-    expect(cssRule('.mood')).toMatch(/min-height:\s*72px/);
+    // Changed on purpose (ADR-0101): a mood is a photo tile, two across, 92 tall at least (was a 72px row, ADR-0088)
+    expect(cssRule('.mood')).toMatch(/min-height:\s*92px/);
     expect(cssRule('.opt')).toMatch(/min-height:\s*56px/);
     expect(cssRule('button')).toMatch(/touch-action:\s*manipulation/);
   });

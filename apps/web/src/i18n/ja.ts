@@ -166,6 +166,8 @@ export const JA: Lang = {
     examplePopular: (names) => `済州で人気：${names.join('、')}`,
     homeCredit: CREDIT,
     homeSettings: '設定・地図アプリ・ご意見',
+    nowKicker: '今いる場所の近く',
+    shareAria: (name) => `${name}、旅の連れに共有する`,
     sunsetPlaces: '夕日スポット',
     sunsetCount: (n) => ` ${n}か所・車で45分以内`,
     sunsetCredit: '・海岸線 © ',

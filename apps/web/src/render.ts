@@ -5,7 +5,7 @@ import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
 import { DESTS, destOfId, type Dest } from './dest';
 import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
-import { duskNow, homeOrigin, moodExamples, nightHome, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
+import { duskNow, homeOrigin, moodExamples, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
@@ -185,6 +185,9 @@ export const COPY = {
   examplePopular: (names: string[]) => `제주 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 비짓제주(제주관광공사)',
   homeSettings: '설정 · 지도 앱 · 의견',
+  // 지금 여기서 (ADR-0101, specs/home-v2.md 1): the small word over the first place, and its share button's name
+  nowKicker: '지금 여기서',
+  shareAria: (name: string) => `${name}, 같이 보기`,
   // 노을 볼 곳 (ADR-0083): only in the hours before the sunset, with 3 or more places
   sunsetPlaces: '노을 볼 곳',
   sunsetCount: (n: number) => ` ${n}곳 · 차로 45분 안`,
@@ -382,6 +385,7 @@ export interface Els {
   /** ADR-0075: 오늘 판, its grey facts, and the sections under the moods */
   today: HTMLElement;
   todayFacts: HTMLElement;
+  now: HTMLElement;
   homeMore: HTMLElement;
   /** ADR-0063: the first screen's notice (backup to merge, in-app browser), the saved list's nudge and backup. */
   homeNote: HTMLElement;
@@ -434,6 +438,7 @@ export function findEls(doc: Document): Els {
     settingsH: q('#settingsH'),
     today: q('#today'),
     todayFacts: q('#today .facts'),
+    now: q('#now'),
     homeMore: q('#homeMore'),
     homeNote: q('#homeNote'),
     nudge: q('#nudge'),
@@ -1240,6 +1245,33 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest].join('|');
   }
 
+  /** 지금 여기서 (ADR-0101, specs/home-v2.md 1): the one place the 아무거나 rule would show first, over the moods; not drawn
+   * while no place with a photo can be shown. The card's name is not a link: its one tap is 길찾기. */
+  function renderNow(s: State, spots: Spot[] | null, origin: Origin | null) {
+    const spot = spots ? nowSpot(s, spots, origin) : null;
+    if (!spot) {
+      els.now.hidden = true;
+      els.now.replaceChildren();
+      return;
+    }
+    const photo = el(doc, 'div', { class: 'now-photo' });
+    photo.append(el(doc, 'img', { src: spot.image, alt: '', fetchpriority: 'high', decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': spot.id }));
+    const head = el(doc, 'div');
+    // the word over the name and, with a basis, how far, on its line (the first screen is short of height)
+    const kick = el(doc, 'p', { class: 'now-kick' }, COPY.nowKicker);
+    if (origin) kick.append(el(doc, 'span', { class: 'now-meta' }, ` · ${travelText(travel(origin.point, origin.isPoint, spot))}`));
+    head.append(kick, el(doc, 'h2', { class: 'now-name' }, splitName(PLACE.name(spot)).main));
+    const go = el(doc, 'a', { class: 'tbtn go', target: '_blank', rel: 'noopener' });
+    setGo(go, spot, origin, s.reach, s.mapApp);
+    const row = el(doc, 'div', { class: 'now-row' });
+    row.append(go);
+    const body = el(doc, 'div', { class: 'now-body' });
+    body.append(head, row);
+    els.now.replaceChildren(photo, body);
+    setAttr(els.now, 'aria-label', COPY.nowKicker);
+    els.now.hidden = false;
+  }
+
   function renderHome(s: State) {
     const dated = s.when !== 'now';
     homeDated = dated;
@@ -1273,6 +1305,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (first) els.today.append(first.k === 'rain' ? rainRow(s.indoor) : first.k === 'sunset' ? sunsetRow(first.rows.length) : todayRow(first.row, dated));
     // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
     els.today.classList.toggle('wait', !spots);
+    renderNow(s, spots || null, origin);
 
     /** what the rows drawn so far in this draw show (top down): 유명한 데's 「예:」 passes over them (ADR-0092 7) */
     const drawn: string[] = [];
@@ -1288,7 +1321,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
-        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex' }, origin ? COPY.example(names) : BUSAN && s.dest === 'busan' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin ? COPY.example(names) : BUSAN && s.dest === 'busan' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         pair.append(...ex.map((x) => homePhoto(x, false)));
         b.querySelector('.i-check')!.before(pair);

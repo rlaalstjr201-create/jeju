@@ -96,7 +96,15 @@ function assets(indexHtml: string) {
 function swList() {
   const src = readFileSync(join(DIST, 'sw.js'), 'utf8');
   const m = /const PRECACHE = (\[[^\]]*\]);/.exec(src);
-  return m ? (JSON.parse(m[1]) as string[]).map(unhash).filter((n) => !(SWITCHED && BUSAN_CHUNK.test(n))) : null;
+  if (!m) return null;
+  // The build lists the entry's CSS and JS in the order of their content hashes, so the order moves whenever either
+  // changes (ADR-0101: no change to what is cached). The two are put in a fixed order — ./, the CSS, the JS, the rest
+  // as listed — so only a file that is added or dropped shows.
+  const rank = (n: string) => (n === './' ? 0 : n === 'assets/index-*.css' ? 1 : n === 'assets/index-*.js' ? 2 : 3);
+  return (JSON.parse(m[1]) as string[])
+    .map(unhash)
+    .filter((n) => !(SWITCHED && BUSAN_CHUNK.test(n)))
+    .sort((a, b) => rank(a) - rank(b));
 }
 
 /** The two server functions as deployed (no Vite defines): /api/rain per area slug, /api/events per batch. */

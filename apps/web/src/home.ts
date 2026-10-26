@@ -4,7 +4,7 @@ import type { Day } from './dates';
 import { destOfId, type Dest } from './dest';
 import { marketDay } from './market';
 import { BUSAN, openAreasOf } from './release';
-import { byId, distanceKm, islandTop, listed, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
+import { byId, distanceKm, islandTop, listed, pickCards, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
@@ -39,6 +39,18 @@ export function moodExamples(s: State, spots: Spot[], origin: Origin | null, moo
   const skip = new Set(taken ?? ABOVE_FAMOUS.flatMap((m) => moodExamples(s, spots, origin, m).map((x) => x.id)));
   const fresh = shown.filter((x) => !skip.has(x.id)).slice(0, 2);
   return fresh.length >= 2 ? fresh : [...fresh, ...shown.filter((x) => skip.has(x.id))].slice(0, 2);
+}
+
+/** 지금 여기서 (ADR-0101 7, specs/home-v2.md 1): the first card 「아무거나」 would show now — the same pool, rotation start and
+ * order (nothing seen yet), skipping a place without a photo (Q-C). Without a basis the best of the three moods' first
+ * 「예:」 by score, like the island's 「제주 인기」. Null when no place with a photo is left. */
+export function nowSpot(s: State, spots: Spot[], origin: Origin | null): Spot | null {
+  const shown = (x: Spot) => !!x.image && !s.broken.includes(x.id);
+  if (origin) {
+    return pickCards(spots, origin.point, 'any', {}, undefined, s.reach, s.indoor, whenDay(s), nightHome(s, origin)).cards.map((c) => c.spot).find(shown) ?? null;
+  }
+  const tops = (['rest', 'walk', 'new'] as const).flatMap((m) => moodExamples(s, spots, origin, m).slice(0, 1));
+  return tops.sort((a, b) => b.score - a.score || byId(a.id, b.id))[0] ?? null;
 }
 
 export interface MarketRow {

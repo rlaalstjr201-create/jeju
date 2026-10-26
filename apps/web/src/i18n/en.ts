@@ -169,6 +169,8 @@ export const EN: Lang = {
     examplePopular: (names) => `Jeju favorites: ${names.join(', ')}`,
     homeCredit: 'Info & photos: Visit Jeju (Jeju Tourism Organization)',
     homeSettings: 'Settings · Map app · Feedback',
+    nowKicker: 'Near you now',
+    shareAria: (name) => `${name}, share with your travel partner`,
     sunsetPlaces: 'Sunset spots',
     sunsetCount: (n) => ` (${n}) · within a 45-min drive`,
     sunsetCredit: ' · Coastline © ',

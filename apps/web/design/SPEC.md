@@ -1347,7 +1347,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 | 12 | 모서리 | `border-radius` | `--r-*` 토큰(2.3절, ADR-0088로 8개) + 포커스 링 6px + 회색 틀 막대 4px만 |
 | 13 | 움직임 | `animation\|transition` | 모두 `prefers-reduced-motion: no-preference` 안, 길이 ≤ 240ms, `.card` 선택자에는 없음 |
 | 14 | 가운데 정렬 | `text-align: center` | **0건**(3판). 전체 폭 버튼·`닫기`도 왼쪽 정렬 |
-| 15 | 고정 높이 | 글자가 담긴 요소의 `height:` | 0건. 예외: `.heart`, `.ghost .bar`, `.sr`, `.ph img`, `.more-end`, `.date-tap`(글자 없는 투명 칸) |
+| 15 | 고정 높이 | 글자가 담긴 요소의 `height:` | 0건. 예외: `.heart`, `.ghost .bar`, `.sr`, `.ph img`, `.pair img`, `.now-photo img`(글자 없는 사진, ADR-0101), `.more-end`, `.date-tap`(글자 없는 투명 칸) |
 | 16 | 외부 글꼴 | `@font-face\|fonts.googleapis\|fonts.gstatic\|cdn` | 0건 |
 | 17 | 이유 문장 금지 어형 | spots.json reason에 `REASON_BANNED`(10절, 3판 추가분 포함) | 0건 |
 | 18 | 채운 면 선택 표시(3판) | CSS·TS에서 `--sel-bg\|--sel-fg`, `[aria-pressed]`·`[aria-current]` 규칙 안의 `background` | 0건. 예외 하나: 선택자가 정확히 `.saved-btn[aria-pressed="true"]`인 규칙(♥ N 눌림 칩, ADR-0088) |
