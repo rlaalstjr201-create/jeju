@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375">
+<title>시안 A — 큰 사진 한 장 + 기분 가로 카드</title><link rel="stylesheet" href="base.css">
+<style>
+.hero { position: relative; margin: 14px 16px 0; height: 360px; border-radius: 20px; overflow: hidden; }
+.hero .photo { position: absolute; inset: 0; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / 72%) 0%, rgb(0 0 0 / 0%) 62%); }
+.hero .tag { position: absolute; z-index: 1; top: 14px; left: 14px; padding: 4px 10px; border-radius: var(--r-pill); background: rgb(255 255 255 / 92%); font-size: 13px; font-weight: 700; }
+.hero .body { position: absolute; z-index: 1; left: 16px; right: 16px; bottom: 16px; color: #fff; }
+.hero .body h2 { color: #fff; font-size: 24px; }
+.hero .body p { margin: 4px 0 12px; font-size: 14px; opacity: .92; }
+.hero .row { display: flex; gap: 8px; }
+.hero .btn-main { flex: 1; }
+.hero .share { width: 48px; padding: 0; background: rgb(255 255 255 / 92%); color: var(--text); }
+h3 { margin: 22px 16px 10px; font-size: 16px; }
+.moods { display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 4px; scroll-snap-type: x mandatory; }
+.mood { position: relative; flex: none; width: 138px; height: 176px; border-radius: 16px; overflow: hidden; scroll-snap-align: start; }
+.mood .photo { position: absolute; inset: 0; }
+.mood::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / 66%), rgb(0 0 0 / 0%) 60%); }
+.mood span { position: absolute; z-index: 1; left: 12px; right: 12px; bottom: 12px; color: #fff; font-weight: 700; font-size: 15px; line-height: 1.3; }
+.any { margin: 12px 16px 0; display: flex; align-items: center; justify-content: center; height: 52px; border-radius: 14px; background: var(--acc-tint); color: #a8460a; font-weight: 700; }
+</style></head><body>
+<div class="top">
+  <button class="logo"><span class="dot"></span>여차나<b>:</b>제주
+    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+  <button class="chip">♥ 2</button>
+</div>
+<div class="today"><span class="sun">☀</span><b>10월 27일 화요일</b><span class="gray">· 해 지는 시각 17:47</span></div>
+
+<section class="hero">
+  <div class="photo" style="background-image:url('https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/f18ca648-b42f-4209-b87a-2410b8da656d.webp')"></div>
+  <span class="tag">지금 여기서</span>
+  <div class="body">
+    <h2>섭지코지</h2>
+    <p>바다 위 절벽 길을 걷기 좋아요 · 차로 12분</p>
+    <div class="row"><span class="btn-main">길찾기</span><span class="btn-ghost share">↗</span></div>
+  </div>
+</section>
+
+<h3>다른 걸 하고 싶다면</h3>
+<div class="moods">
+  <div class="mood"><div class="photo" style="background-image:url('https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/27/6b6dc9c4-5466-493e-98e5-580dbf18eefc.webp')"></div><span>푹 쉬고 싶어</span></div>
+  <div class="mood"><div class="photo" style="background-image:url('https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/15/ec11cb19-cd96-4036-b302-9730035bf052.webp')"></div><span>좀 걷고 싶어</span></div>
+  <div class="mood"><div class="photo" style="background-image:url('https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/16/54503744-a4b3-4e68-b819-47e67df59100.webp')"></div><span>새로운 거 해보고 싶어</span></div>
+  <div class="mood"><div class="photo" style="background-image:url('https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/20/464d6099-295a-4e60-bd93-9e65388f4d0d.webp')"></div><span>유명한 데 가 보고 싶어</span></div>
+  <div class="mood"><div class="photo" style="background-image:url('https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/12/2cee35af-0c35-4448-b32d-179bf66c2dd1.webp')"></div><span>맛있는 거 먹고 싶어</span></div>
+</div>
+<div class="any">아무거나 골라줘</div>
+</body></html>

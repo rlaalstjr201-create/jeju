@@ -1,0 +1,29 @@
+/* 목업 공통 (앱 코드는 바꾸지 않음). 색·반지름은 apps/web/src/style.css :root 그대로. */
+:root {
+  --bg: #fff; --fill: #f2f4f6; --line: #e3e3e4; --text: #14181f; --muted: #5f6267;
+  --accent: #f06400; --acc-tint: #fff1e6; --main: #0a6fd6; --on-main: #fff; --main-tint: #e6f1fb;
+  --r-card: 16px; --r-pill: 999px; --float: 0 1px 2px rgb(0 0 0 / 5%), 0 4px 14px rgb(0 0 0 / 10%);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); }
+body {
+  width: 375px; min-height: 812px; color: var(--text);
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", "Malgun Gothic", -apple-system, sans-serif;
+  font-size: 15px; line-height: 1.5; word-break: keep-all; -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-align: left; }
+.top { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 16px; }
+.logo { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 700; font-size: 17px; }
+.logo b { color: var(--accent); }
+.logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.logo .caret { width: 14px; height: 14px; color: var(--muted); }
+.chip { display: inline-flex; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border-radius: var(--r-pill); background: var(--fill); font-weight: 600; font-size: 14px; }
+.today { margin: 0 16px; padding: 10px 14px; border-radius: 14px; background: var(--fill); font-size: 14px; display: flex; gap: 8px; align-items: center; }
+.today .sun { width: 22px; height: 22px; border-radius: 50%; background: var(--acc-tint); display: grid; place-items: center; color: var(--accent); }
+.today .gray { color: var(--muted); }
+.photo { background-size: cover; background-position: center; background-color: #cfd8e0; }
+.btn-main { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 48px; padding: 0 20px; border-radius: 12px; background: var(--main); color: var(--on-main); font-weight: 700; }
+.btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 48px; padding: 0 16px; border-radius: 12px; background: var(--fill); font-weight: 600; }
+.meta { font-size: 13px; color: var(--muted); }
+h2 { margin: 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; }
+.note { position: fixed; left: 0; bottom: 0; width: 375px; padding: 6px 12px; background: #14181f; color: #fff; font-size: 11px; opacity: .85; }
