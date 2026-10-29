@@ -468,7 +468,7 @@ describe('M6 여행지·시작 화면 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(START_IDS).toContain(r.id);
-    expect(START_IDS).toHaveLength(1 + 2 * 4 * 2);
+    expect(START_IDS).toHaveLength(1 + 2 * 4 * 3);
     expect(aggregate(rows)).toEqual([]);
   });
 
@@ -486,6 +486,43 @@ describe('M6 여행지·시작 화면 — 받는 쪽', () => {
     ['a position on start_done', [{ e: 'start_done', how: 'gps', why: 'none', dest: 'busan', d, lat: 35.1 }]],
     ['dest on a 숙소 링크 count', [{ e: 'open', id: 'src:hotel-a', d, dest: 'jeju' }]],
     ['a good event with a bad dest beside it', [{ e: 'start_view', d }, { e: 'map', id: ID, d, dest: 'Jeju' }]],
+  ])('refuses %s — and counts nothing', async (_, body) => {
+    const store = memoryStore();
+    expect((await handle(post(body), store)).status).toBe(400);
+    expect(await store.dump()).toEqual([]);
+  });
+});
+// 자동 지역 (plans/nationwide-app.md 7, U1): the collector takes dest nation and the 시군구 code before any app sends them.
+// `sgg` only with dest nation and an area basis, a 4–8 digit code; nothing else about where.
+describe('U1 자동 지역 — 받는 쪽', () => {
+  const NT = 'nt-126508';
+  it('takes dest nation, with sgg on an area basis, and counts under the place id as before', async () => {
+    const batch = [
+      { e: 'tap', mood: 'walk', ...base, dest: 'nation' },
+      { e: 'shown', id: NT, mood: 'walk', range: '30', basis: 'area', sgg: '51150', dated: false, dest: 'nation', d },
+      { e: 'map', id: NT, range: 'walk', basis: 'here', dated: false, dest: 'nation', d },
+      { e: 'start_done', how: 'pick', why: 'outside', dest: 'nation', d },
+    ];
+    expect(parseBatch(JSON.stringify(batch)).ok).toBe(true);
+    const store = memoryStore();
+    expect((await handle(post(batch), store)).status).toBe(204);
+    const rows = await store.dump();
+    expect(rows).toHaveLength(4);
+    expect(rows).toContainEqual({ d, id: NT, e: 'shown', n: 1 });
+    expect(rows).toContainEqual({ d, id: 'start:pick:outside:nation', e: 'start_done', n: 1 });
+    expect(START_IDS).toContain('start:pick:outside:nation');
+  });
+
+  it.each([
+    ['sgg without dest nation', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: '51150', dated: false, dest: 'busan', d }]],
+    ['sgg without a dest', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: '51150', dated: false, d }]],
+    ['sgg on a here basis', [{ e: 'shown', id: NT, ...base, sgg: '51150', dest: 'nation' }]],
+    ['sgg too short', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: '511', dated: false, dest: 'nation', d }]],
+    ['sgg too long', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: '511501234', dated: false, dest: 'nation', d }]],
+    ['sgg a name', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: '강릉시', dated: false, dest: 'nation', d }]],
+    ['sgg a number', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: 51150, dated: false, dest: 'nation', d }]],
+    ['a 시군구 code as area', [{ e: 'shown', id: NT, range: '30', basis: 'area', area: '51150', dated: false, dest: 'nation', d }]],
+    ['sgg on start_done', [{ e: 'start_done', how: 'pick', why: 'none', dest: 'nation', sgg: '51150', d }]],
   ])('refuses %s — and counts nothing', async (_, body) => {
     const store = memoryStore();
     expect((await handle(post(body), store)).status).toBe(400);

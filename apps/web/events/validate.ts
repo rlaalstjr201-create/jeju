@@ -22,14 +22,17 @@ const RANGES = new Set(['walk', '30', '60']);
 const BASES = new Set(['here', 'stay', 'area']);
 /** both destinations' 동네 names (an app with Busan open sends its 12 too) */
 const AREA_NAMES = new Set<string>(ALL_AREAS.map((a) => a.name));
-/** 여행지 (specs/busan.md 7): sent by an app with the switch on; an older app never sends it, and needs not */
-const DESTS = new Set(['jeju', 'busan']);
+/** 여행지 (specs/busan.md 7): sent by an app with the switch on; an older app never sends it, and needs not.
+ * 'nation': the 자동 지역 layer (plans/nationwide-app.md 7) */
+const DESTS = new Set(['jeju', 'busan', 'nation']);
+/** 자동 지역 시군구 code (plans/nationwide-app.md 0): with dest nation and an area basis only */
+const SGG = /^\d{4,8}$/;
 const HOWS = new Set(['gps', 'pick']);
 const WHYS = new Set(['denied', 'outside', 'unavailable', 'none']);
 /** the only fields of each 시작 화면 event */
 const START_FIELDS: Record<string, readonly string[]> = { start_view: ['e', 'd'], start_done: ['e', 'd', 'how', 'why', 'dest'] };
 const SEASONS = new Set<string>(SEASON_KINDS);
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'd']);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'sgg', 'd']);
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 /** 숙소 링크 (ADR-0089): `src:<tag>` on tap / open / map, with nothing but the day. */
@@ -71,6 +74,7 @@ export function eventProblem(x: unknown, today?: Day): string | null {
   if (o.range !== undefined && !inSet(RANGES, o.range)) return 'range';
   if (o.basis !== undefined && !inSet(BASES, o.basis)) return 'basis';
   if (o.area !== undefined && (o.basis !== 'area' || !inSet(AREA_NAMES, o.area))) return 'area';
+  if (o.sgg !== undefined && !(o.dest === 'nation' && o.basis === 'area' && typeof o.sgg === 'string' && SGG.test(o.sgg))) return 'sgg';
   if (o.dated !== undefined && typeof o.dated !== 'boolean') return 'dated';
   if (o.indoor !== undefined && typeof o.indoor !== 'boolean') return 'indoor';
   if (o.season !== undefined && !((o.e === 'shown' || o.e === 'map') && inSet(SEASONS, o.season))) return 'season';
