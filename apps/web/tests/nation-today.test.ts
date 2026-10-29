@@ -7,10 +7,13 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { kmaGrid } from '../functions/_lib/kma';
 import { fetchRain, type Fetch } from '../src/effects';
 import { sunPoint } from '../src/home';
+import { kakaoUrl, naverSearchUrl } from '../src/links';
+import type { Spot } from '../src/pick';
 import { NATION, loadNation } from '../src/release';
 
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const 강릉시 = { lat: 37.77063, lng: 128.89659 }; // the index's centre of 51150
+const spot = (name: string, sgg: string, p = 강릉시) => ({ id: 'nt-1', name, reason: '', mood: 'walk', lat: p.lat, lng: p.lng, sgg }) as unknown as Spot;
 
 describe.runIf(NATION)('자동 지역: 오늘 판 and map links (switch on)', () => {
   beforeAll(async () => {
@@ -40,4 +43,10 @@ describe.runIf(NATION)('자동 지역: 오늘 판 and map links (switch on)', ()
     expect(sunPoint({ key: 'x', point: { lat: 1, lng: 2 }, isPoint: true, from: '' }, 'nation', '51150')).toEqual({ lat: 1, lng: 2 });
   });
 
+  it("a map search is scoped by the 시군구's short name, unless the name already says it", () => {
+    expect(decodeURIComponent(kakaoUrl(spot('경포해변', '51150')))).toBe('https://map.kakao.com/link/search/강릉 경포해변');
+    expect(decodeURIComponent(naverSearchUrl(spot('강릉 중앙시장', '51150')))).toBe('https://map.naver.com/p/search/강릉 중앙시장');
+    // 서울 중구: the 구 is what the name would say
+    expect(decodeURIComponent(naverSearchUrl(spot('명동성당', '11140', { lat: 37.5633, lng: 126.9873 })))).toBe('https://map.naver.com/p/search/명동성당 서울 중구');
+  });
 });
