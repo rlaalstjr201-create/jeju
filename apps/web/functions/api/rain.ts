@@ -1,5 +1,6 @@
 // GET /api/rain?area=<slug> (ADR-0076): 기상청 단기예보 → will it rain in this area within 3 hours.
-// Only the area's name comes in; the service key stays here (env KMA_SERVICE_KEY, `wrangler pages secret put`).
+// GET /api/rain?grid=<nx>,<ny> (plans/nationwide-app.md 5): the same for one KMA grid cell — a 시군구 centre's, never a GPS point.
+// Only the area's name or the cell comes in; the service key stays here (env KMA_SERVICE_KEY, `wrangler pages secret put`).
 import { areaBySlug, baseTime, kmaGrid, maxPop } from '../_lib/kma';
 
 const ENDPOINT = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
@@ -36,9 +37,20 @@ function upstreamWhy(text: string): string {
 const edge = (): Cache | null =>
   typeof caches !== 'undefined' ? ((caches as unknown as { default?: Cache }).default ?? null) : null;
 
+/** `<nx>,<ny>` inside the agency's grid (1–149, 1–253), no leading zero; else null. */
+function gridOf(v: string | null): { nx: number; ny: number } | null {
+  const m = /^([1-9]\d{0,2}),([1-9]\d{0,2})$/.exec(v ?? '');
+  if (!m) return null;
+  const nx = Number(m[1]), ny = Number(m[2]);
+  return nx <= 149 && ny <= 253 ? { nx, ny } : null;
+}
+
 export async function onRequestGet(ctx: Ctx): Promise<Response> {
-  const area = areaBySlug(new URL(ctx.request.url).searchParams.get('area'));
-  if (!area) return new Response('bad area', { status: 400, headers: { 'Cache-Control': 'no-store' } });
+  const params = new URL(ctx.request.url).searchParams;
+  // an area, when asked, wins: its path is as it was
+  const area = params.has('area') ? areaBySlug(params.get('area')) : null;
+  const grid = area ? kmaGrid(area.lat, area.lng) : params.has('area') ? null : gridOf(params.get('grid'));
+  if (!grid) return new Response('bad area', { status: 400, headers: { 'Cache-Control': 'no-store' } });
   // data.go.kr shows the key twice, 인코딩 and 디코딩: an encoded one (it has %) would be encoded again below, so
   // whichever was pasted, it is used decoded
   const raw = ctx.env.KMA_SERVICE_KEY?.trim();
@@ -55,11 +67,11 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
   const now = Date.now();
   const base = baseTime(now);
   const cache = edge();
-  const cacheKey = new Request(`https://rain.cache/${area.slug}/${base.base_date}${base.base_time}`);
+  const cacheKey = new Request(`https://rain.cache/${area ? area.slug : `g${grid.nx}-${grid.ny}`}/${base.base_date}${base.base_time}`);
   const hit = await cache?.match(cacheKey).catch(() => undefined);
   if (hit) return hit;
 
-  const { nx, ny } = kmaGrid(area.lat, area.lng);
+  const { nx, ny } = grid;
   const q = new URLSearchParams({ serviceKey: key, dataType: 'JSON', numOfRows: '1000', pageNo: '1', ...base, nx: String(nx), ny: String(ny) });
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
@@ -77,7 +89,7 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
   }
   if (pop === null) return none(upstreamWhy(text));
 
-  const out = new Response(JSON.stringify({ area: area.slug, pop, rain: pop >= 60, base: `${base.base_date}${base.base_time}`, from: '기상청' }), {
+  const out = new Response(JSON.stringify({ ...(area ? { area: area.slug } : { grid: `${nx},${ny}` }), pop, rain: pop >= 60, base: `${base.base_date}${base.base_time}`, from: '기상청' }), {
     status: 200,
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=0, s-maxage=1800' },
   });

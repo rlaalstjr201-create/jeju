@@ -203,3 +203,78 @@ describe('부산 12동네 (plans/busan.md S6, B12)', () => {
     expect([u.searchParams.get('nx'), u.searchParams.get('ny')]).toEqual(['99', '75']);
   });
 });
+
+// 자동 지역 (plans/nationwide-app.md 5, U2): ?grid=<nx>,<ny> asks for one cell; ?area= is as it was, to the byte.
+describe('격자로 묻기 ?grid=', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+  const req = (q: string) => new Request(`https://app.test/api/rain${q}`);
+  const ok = () => vi.fn(async (_u: string) => new Response(JSON.stringify(body([pop('20261003', '1500', 70)]))));
+  /** a stand-in for caches.default that records the keys asked for and put */
+  const edgeCache = () => {
+    const keys: string[] = [];
+    const put: [string, Response][] = [];
+    vi.stubGlobal('caches', { default: { match: async (r: Request) => (keys.push(r.url), undefined), put: async (r: Request, res: Response) => void put.push([r.url, res]) } });
+    return { keys, put };
+  };
+
+  it('a cell inside the grid → 200 { grid, pop, rain, base, from }, asking for that cell, cached under g<nx>-<ny>', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(at('2026-10-03T14:20'));
+    const f = ok();
+    vi.stubGlobal('fetch', f);
+    const c = edgeCache();
+    const res = await onRequestGet({ request: req('?grid=92,131'), env: { KMA_SERVICE_KEY: 'k' } });
+    expect(res.status).toBe(200);
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=1800');
+    expect(await res.text()).toBe('{"grid":"92,131","pop":70,"rain":true,"base":"202610031400","from":"기상청"}');
+    const u = new URL(f.mock.calls[0][0]);
+    expect([u.searchParams.get('nx'), u.searchParams.get('ny')]).toEqual(['92', '131']);
+    expect(c.keys).toEqual(['https://rain.cache/g92-131/202610031400']);
+    expect(c.put.map(([k]) => k)).toEqual(['https://rain.cache/g92-131/202610031400']);
+    for (const q of ['?grid=1,1', '?grid=149,253']) {
+      expect((await onRequestGet({ request: req(q), env: { KMA_SERVICE_KEY: 'k' } })).status, q).toBe(200);
+    }
+  });
+
+  it('a cell outside the grid, a decimal, a negative, a leading zero or junk → 400, nothing fetched', async () => {
+    const f = vi.fn();
+    vi.stubGlobal('fetch', f);
+    for (const q of ['?grid=', '?grid=0,1', '?grid=1,0', '?grid=150,10', '?grid=10,254', '?grid=60.5,127', '?grid=-1,127', '?grid=060,127', '?grid=60', '?grid=60,127,1', '?grid=60%2C127%20', '?grid=a,b', '?grid=33.45,126.57']) {
+      expect((await onRequestGet({ request: req(q), env: { KMA_SERVICE_KEY: 'k' } })).status, q).toBe(400);
+    }
+    expect(f).not.toHaveBeenCalled();
+  });
+
+  it('an area wins over a grid; an unknown area with a good grid is still 400', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(at('2026-10-03T14:20'));
+    const f = ok();
+    vi.stubGlobal('fetch', f);
+    const res = await onRequestGet({ request: req('?area=seogwipo&grid=92,131'), env: { KMA_SERVICE_KEY: 'k' } });
+    expect(await res.json()).toEqual({ area: 'seogwipo', pop: 70, rain: true, base: '202610031400', from: '기상청' });
+    const u = new URL(f.mock.calls[0][0]);
+    expect([u.searchParams.get('nx'), u.searchParams.get('ny')]).toEqual(['53', '33']);
+    for (const q of ['?area=seoul&grid=92,131', '?area=&grid=92,131']) {
+      expect((await onRequestGet({ request: req(q), env: { KMA_SERVICE_KEY: 'k' } })).status, q).toBe(400);
+    }
+  });
+
+  it('the 15 Jeju slugs: the answer, the cell asked for and the cache key are what they were, byte for byte', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(at('2026-10-03T14:20'));
+    for (const a of AREAS) {
+      const f = ok();
+      vi.stubGlobal('fetch', f);
+      const c = edgeCache();
+      const res = await onRequestGet({ request: req(`?area=${a.slug}`), env: { KMA_SERVICE_KEY: 'k' } });
+      expect(await res.text(), a.slug).toBe(`{"area":"${a.slug}","pop":70,"rain":true,"base":"202610031400","from":"기상청"}`);
+      const { nx, ny } = kmaGrid(a.lat, a.lng);
+      const u = new URL(f.mock.calls[0][0]);
+      expect([u.searchParams.get('nx'), u.searchParams.get('ny')], a.slug).toEqual([String(nx), String(ny)]);
+      expect(c.keys, a.slug).toEqual([`https://rain.cache/${a.slug}/202610031400`]);
+    }
+  });
+});
