@@ -66,12 +66,15 @@ export function shipRecord(r, rule) {
     if (rule.sub !== 'meal' && rule.sub !== 'cafe') return null;
     sub = rule.sub;
   } else if (mood === 'new') sub = 'sight';
+  // 시군구 코드가 없는 곳(다른 시도 주소가 섞인 레코드)은 뺀다. 세종은 시도 코드 하나가 곧 시군구다.
+  if (!r.lDongSignguCd) return null;
+  const sgg = r.lDongRegnCd === r.lDongSignguCd ? String(r.lDongSignguCd) : `${r.lDongRegnCd}${r.lDongSignguCd}`;
   const out = {
     id: r.id,
     name: cleanName(r.title),
     lat: r.lat,
     lng: r.lng,
-    sgg: `${r.lDongRegnCd}${r.lDongSignguCd}`,
+    sgg,
     cat: [r.lclsSystm1, r.lclsSystm2, r.lclsSystm3],
     image: r.image,
     moods: [mood],
