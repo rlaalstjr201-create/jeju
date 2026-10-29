@@ -12,6 +12,8 @@ import type { StartDeps, StartScreen } from './start';
 
 /** On in a build or test run with `--mode busan`; off (and safe to read) where no define exists. */
 export const BUSAN: boolean = typeof __BUSAN__ !== 'undefined' && __BUSAN__;
+/** 자동 지역 (plans/nationwide-app.md 1.2): on with `--mode nation` only (Busan on with it); off where no define exists. */
+export const NATION: boolean = typeof __NATION__ !== 'undefined' && __NATION__;
 
 /** What src/busan-part.ts brings (nothing with the switch off, or before it is in). */
 interface Part {

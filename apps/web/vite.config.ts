@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process';
-import { existsSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import { analyticsEnv, type AnalyticsEnv } from './scripts/analytics-env';
@@ -23,6 +23,17 @@ const BUSAN_V = existsSync(BUSAN_FILE) ? spotsVersion(readFileSync(BUSAN_FILE)) 
 /** ADR-0093 Amendment 9: Busan's translated place files, one version for the three; fetched only on a Busan visit in that language. */
 const BUSAN_PLACES = ['en', 'zh-Hans', 'ja'].map((l) => `i18n/places-busan.${l}.json`);
 const BUSAN_PLACES_V = spotsVersion(BUSAN_PLACES.map((f) => (existsSync(resolve(root, 'public', f)) ? readFileSync(resolve(root, 'public', f), 'utf8') : '')).join('\0'));
+/** 자동 지역 (plans/nationwide-app.md 2): the files data/nation/*.json (scripts/nation/build.mjs), shipped under /nation/ by
+ * the nation build only; `__NATION_V__` is the index's version, '' while there is none. */
+const NATION_DIR = resolve(root, 'data/nation');
+const NATION_INDEX = resolve(NATION_DIR, 'index.json');
+const NATION_V = existsSync(NATION_INDEX) ? spotsVersion(readFileSync(NATION_INDEX)) : '';
+/** the nation files a new worker carries over: the index and each file it names, at their `?v=` */
+function nationCarry(): string[] {
+  if (!NATION_V) return [];
+  const files = (JSON.parse(readFileSync(NATION_INDEX, 'utf8')) as { files?: Record<string, string> }).files ?? {};
+  return [`nation/index.json?v=${NATION_V}`, ...Object.entries(files).map(([f, v]) => `nation/${f}.json?v=${v}`)];
+}
 /** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
 function appVersion(): string {
   try {
@@ -34,7 +45,7 @@ function appVersion(): string {
 }
 
 /** Emits sw.js with the built file list, without a PWA plugin (plan: 직접 작성). */
-function serviceWorker(mode: string): Plugin {
+function serviceWorker(mode: string, nation: boolean): Plugin {
   return {
     name: 'tomorrow-sw',
     apply: 'build',
@@ -65,6 +76,7 @@ function serviceWorker(mode: string): Plugin {
         langs,
         // ADR-0093 Amendment 8: Busan's file is carried over by a new worker where the old cache had it (switched-on build only)
         ...(mode === 'busan' ? { busanFile: [`spots-busan.json?v=${BUSAN_V}`, ...BUSAN_PLACES.map((f) => `${f}?v=${BUSAN_PLACES_V}`)] } : {}),
+        ...(nation ? { carry: nationCarry() } : {}),
       });
       this.emitFile({ type: 'asset', fileName: 'sw.js', source });
     },
@@ -103,6 +115,24 @@ function busanFile(mode: string): Plugin {
       const h = resolve(outDir, '_headers');
       if (mode === 'busan' && existsSync(h))
         writeFileSync(h, readFileSync(h, 'utf8').replace('/i18n/*\n', '/spots-busan.json\n  Cache-Control: public, max-age=31536000, immutable\n/i18n/*\n'));
+    },
+  };
+}
+
+/** 자동 지역 스위치 (plans/nationwide-app.md U4): the nation build copies data/nation/*.json to dist/nation/ (none there yet:
+ * nothing copied); every other build has no dist/nation at all. */
+function nationFiles(nation: boolean): Plugin {
+  let outDir = '';
+  return {
+    name: 'nation-files',
+    apply: 'build',
+    configResolved: (c) => void (outDir = resolve(c.root, c.build.outDir)),
+    closeBundle() {
+      const out = resolve(outDir, 'nation');
+      rmSync(out, { recursive: true, force: true });
+      if (!nation || !existsSync(NATION_DIR)) return;
+      mkdirSync(out, { recursive: true });
+      for (const f of readdirSync(NATION_DIR).filter((f) => f.endsWith('.json'))) cpSync(resolve(NATION_DIR, f), resolve(out, f));
     },
   };
 }
@@ -165,7 +195,9 @@ function analytics(env: AnalyticsEnv | null): Plugin {
 const switchOn = (command: string, mode: string) => mode === 'busan' || (command === 'build' && mode !== 'jeju');
 
 export default defineConfig(({ command, mode: given }) => {
-  const mode = switchOn(command, given) ? 'busan' : given;
+  // 자동 지역 (plans/nationwide-app.md U4): mode `nation` only (`vite build --mode nation`, `vitest run --mode nation`), Busan on with it
+  const nation = given === 'nation';
+  const mode = nation || switchOn(command, given) ? 'busan' : given;
   return {
   // Absolute: index.html served at any path (a deep link, a fallback) still finds /assets/… (ADR-0063).
   base: '/',
@@ -179,9 +211,11 @@ export default defineConfig(({ command, mode: given }) => {
     __BUSAN__: JSON.stringify(mode === 'busan'),
     __BUSAN_V__: JSON.stringify(BUSAN_V),
     __BUSAN_PLACES_V__: JSON.stringify(BUSAN_PLACES_V),
+    __NATION__: JSON.stringify(nation),
+    __NATION_V__: JSON.stringify(nation ? NATION_V : ''),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
-  plugins: [busanBlock(mode), serviceWorker(mode), siteUrl(), busanFile(mode), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
+  plugins: [busanBlock(mode), serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the dynamic imports are the other languages' words, which a Korean visit never asks for,
   // and Busan's part (switched-on build only, src/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
   // switch on

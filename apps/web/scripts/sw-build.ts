@@ -21,12 +21,15 @@ export interface SwInput {
    * chain (a failure there never stops the install, m12). Amendment 9: with it, Busan's place texts in each language
    * (`i18n/places-busan.<lang>.json?v=`), each carried over where the replaced cache had that file. */
   busanFile?: string | string[];
+  /** 자동 지역 (plans/nationwide-app.md 2, nation build only): its files (`nation/<f>.json?v=`), carried over as Busan's are. */
+  carry?: string[];
 }
 
-/** The install step that carries Busan's file over, put into the worker only by a switched-on build: the template, and so
- * a Jeju deploy's sw.js, stays as it was. */
+/** The install step that carries files over (Busan's; the nation build's too), put into the worker only by a switched-on
+ * build: the template, and so a Jeju deploy's sw.js, stays as it was. A file is carried where the replaced cache had its
+ * path (any `?v=`). */
 const INSTALL_TAIL = '          .then((langs) => Promise.all(langs.map((l) => addLang(cache, l)))),\n';
-export function withBusanFile(template: string, file: string | string[]): string {
+export function withCarry(template: string, file: string | string[]): string {
   const eol = template.includes('\r\n') ? '\r\n' : '\n';
   const tail = INSTALL_TAIL.replace(/\n/g, eol);
   if (!template.includes(tail)) throw new Error('sw.js: the install chain to carry Busan\'s file over was not found');
@@ -56,7 +59,8 @@ export function withBusanFile(template: string, file: string | string[]): string
  * itself changes — so a copy/meta-only edit of index.html also refreshes the offline shell.
  */
 export function buildServiceWorker(given: SwInput): { version: string; precache: string[]; source: string } {
-  const input = given.busanFile ? { ...given, template: withBusanFile(given.template, given.busanFile) } : given;
+  const carried = [...[given.busanFile ?? []].flat(), ...(given.carry ?? [])];
+  const input = carried.length ? { ...given, template: withCarry(given.template, carried) } : given;
   const built = [...input.built].filter((f) => !f.endsWith('.map')).sort();
   const pub = input.publicFiles.map(([p]) => (p === 'spots.json' ? `spots.json?v=${input.spotsV}` : p));
   const precache = ['./', ...built.filter((f) => f !== 'index.html'), ...pub];

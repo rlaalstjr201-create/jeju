@@ -10,7 +10,7 @@ import { readDeepLink } from '../src/deeplink';
 import { areaAt, destOf, inBusan } from '../src/busan';
 import { destOfId } from '../src/dest';
 import { naverDirectionsUrl } from '../src/links';
-import { BUSAN, OPEN_AREAS, loadBusan, openAreasOf, released, releasedDestOf } from '../src/release';
+import { BUSAN, NATION, OPEN_AREAS, loadBusan, openAreasOf, released, releasedDestOf } from '../src/release';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -64,8 +64,11 @@ describe('destOf', () => {
 });
 
 describe('출시 스위치 (src/release.ts)', () => {
-  it('is on only in mode busan (npm run test:busan), off in npm test', () => {
-    expect(BUSAN).toBe(import.meta.env.MODE === 'busan');
+  it('is on only in mode busan (npm run test:busan) or nation (npm run test:nation), off in npm test', () => {
+    expect(BUSAN).toBe(import.meta.env.MODE === 'busan' || import.meta.env.MODE === 'nation');
+  });
+  it('자동 지역 (plans/nationwide-app.md U4): on only in mode nation (npm run test:nation)', () => {
+    expect(NATION).toBe(import.meta.env.MODE === 'nation');
   });
 
   // plans/busan.md budget: Busan's part is a chunk of its own; until it is in, the app is Jeju's (main.ts asks for it
@@ -98,12 +101,12 @@ describe('출시 스위치 (src/release.ts)', () => {
     expect(readDeepLink(`?stay=${성산일출봉.lat},${성산일출봉.lng}`, TODAY)).toEqual({ stay: 성산일출봉 });
   });
 
-  it('only src/release.ts reads __BUSAN__ (areas, destinations, functions and scripts never see it)', () => {
+  it.each(['__BUSAN__', '__NATION__'])('only src/release.ts reads %s (areas, destinations, functions and scripts never see it)', (name) => {
     const walk = (dir: string): string[] =>
       readdirSync(dir).flatMap((f) => (statSync(join(dir, f)).isDirectory() ? walk(join(dir, f)) : [join(dir, f)]));
     const readers = ['src', 'functions', 'events', 'scripts']
       .flatMap((d) => walk(join(root, d)))
-      .filter((f) => /\.(ts|mts|mjs|js)$/.test(f) && readFileSync(f, 'utf8').includes('__BUSAN__'))
+      .filter((f) => /\.(ts|mts|mjs|js)$/.test(f) && readFileSync(f, 'utf8').includes(name))
       .map((f) => relative(root, f).replace(/\\/g, '/'));
     expect(readers.sort()).toEqual(['src/env.d.ts', 'src/release.ts']);
   });

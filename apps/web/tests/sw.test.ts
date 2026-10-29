@@ -220,6 +220,19 @@ describe('sw.js — Busan’s file (ADR-0093 Amendment 8, plans/busan.md m12)', 
     expect(kept).toContain(at('i18n/places-busan.ja.json?v=p1'));
     expect(kept.some((u) => u.includes('places-busan.en'))).toBe(false);
   });
+  it('자동 지역 (plans/nationwide-app.md U4): the nation build’s files are carried over the same way; without them the worker is as it was', async () => {
+    const busan = 'spots-busan.json?v=b1';
+    expect(buildServiceWorker({ ...base(), busanFile: busan, carry: [] }).source).toBe(buildServiceWorker({ ...base(), busanFile: busan }).source);
+    const used = fakeCaches();
+    used.stores.set('tomorrow-old', new Map([[at('nation/index.json?v=i0'), {}], [at('nation/51.json?v=a0'), {}]]));
+    const built = buildServiceWorker({ ...base(), busanFile: busan, carry: ['nation/index.json?v=i1', 'nation/51.json?v=a1', 'nation/11.json?v=s1'] });
+    expect(built.precache.some((u) => u.includes('nation'))).toBe(false);
+    await runSw(built.source, async () => ({ ok: true }), used).install();
+    const kept = [...used.stores.get(`tomorrow-${built.version}`)!.keys()];
+    expect(kept).toContain(at('nation/index.json?v=i1'));
+    expect(kept).toContain(at('nation/51.json?v=a1'));
+    expect(kept.some((u) => u.includes('nation/11.json'))).toBe(false);
+  });
 });
 
 describe('sw.js — install / activate', () => {
