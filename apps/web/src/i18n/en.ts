@@ -193,7 +193,7 @@ export const EN: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: 'Jeju', busan: 'Busan', nation: 'Korea' },
+    destName: { jeju: 'Jeju', busan: 'Busan', nation: 'Somewhere else' },
     destHead: 'Destination',
     title: 'Yeochana:Busan · Your no-plan travel buddy',
     examplePopular: (names) => `Busan favorites: ${names.join(', ')}`,
@@ -203,6 +203,16 @@ export const EN: Lang = {
     switched: { jeju: "You're in Jeju, so we switched to Jeju.", busan: "You're in Busan, so we switched to Busan.", nation: 'We switched to where you are.' },
     otherSaved: { jeju: (n) => `Saved in Jeju (${n})`, busan: (n) => `Saved in Busan (${n})` },
     destAria: (name) => `${name}, change destination`,
+  },
+  /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in Revised Romanization, 시군구 and places stay Korean */
+  nation: {
+    title: (short) => `Yeochana:${short} · Your no-plan travel buddy`,
+    how: 'Picked from public data, nearest first.',
+    outside: "You're outside Korea right now.",
+    stayOutside: "You're outside Korea right now. Pick your stay's area below.",
+    otherSido: 'Another province',
+    sido: { '11': 'Seoul', '27': 'Daegu', '28': 'Incheon', '30': 'Daejeon', '31': 'Ulsan', '36110': 'Sejong', '41': 'Gyeonggi', '43': 'Chungbuk', '44': 'Chungnam', '47': 'Gyeongbuk', '48': 'Gyeongnam', '51': 'Gangwon', '52': 'Jeonbuk', '12': 'Jeonnam·Gwangju' },
+    koNames: 'Place names are shown in Korean.',
   },
   mood: {
     rest: 'Just relax',

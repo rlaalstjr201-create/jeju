@@ -186,7 +186,7 @@ export const ZH: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: '济州', busan: '釜山', nation: '韩国' },
+    destName: { jeju: '济州', busan: '釜山', nation: '其他地方' },
     destHead: '旅行地',
     title: 'Yeochana:釜山 · P人的旅行搭子',
     examplePopular: (names) => `釜山人气：${names.join('、')}`,
@@ -196,6 +196,16 @@ export const ZH: Lang = {
     switched: { jeju: '你在济州，已切换到济州。', busan: '你在釜山，已切换到釜山。', nation: '已切换到你现在所在的地方。' },
     otherSaved: { jeju: (n) => `在济州收藏的地方 ${n} 处`, busan: (n) => `在釜山收藏的地方 ${n} 处` },
     destAria: (name) => `${name}，更换旅行地`,
+  },
+  /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in their Chinese names, 시군구 and places stay Korean */
+  nation: {
+    title: (short) => `Yeochana:${short} · P人的旅行搭子`,
+    how: '根据公共数据，按距离由近到远选出。',
+    outside: '你现在不在韩国。',
+    stayOutside: '你现在不在韩国。请在下方选择住处所在的区域。',
+    otherSido: '其他道/市',
+    sido: { '11': '首尔', '27': '大邱', '28': '仁川', '30': '大田', '31': '蔚山', '36110': '世宗', '41': '京畿', '43': '忠清北道', '44': '忠清南道', '47': '庆尚北道', '48': '庆尚南道', '51': '江原', '52': '全罗北道', '12': '全南·光州' },
+    koNames: '地名以韩文显示。',
   },
   mood: {
     rest: '想好好歇一歇',

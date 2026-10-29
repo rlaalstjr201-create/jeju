@@ -79,19 +79,24 @@ export async function install(): Promise<boolean> {
       grid.className = 'areas';
       grid.setAttribute('role', 'group');
       grid.setAttribute('aria-labelledby', id);
+      // another language: that the 시군구 are named in Korean, beside the heading (as render.ts's 서쪽부터)
+      const head = (text: string) => {
+        h.replaceChildren(text);
+        if (NATION_COPY.koNames) h.append(Object.assign(doc.createElement('span'), { className: 'order', textContent: NATION_COPY.koNames }));
+      };
       const on = (b: HTMLButtonElement, fn: () => void) => (b.addEventListener('click', fn), b);
       const first = () => grid.querySelector('button')?.focus();
       let now = sidoOf.get(selected ?? '') ?? sidoOf.get(sgg ?? '') ?? null;
       const show = (c: string) => {
         now = c;
-        h.textContent = sidoName(c);
+        head(sidoName(c));
         grid.replaceChildren(
           ...ix.sgg.filter((s) => s.s === c).map((s) => option(s.n, null, { 'data-area': s.c, 'data-where': where, 'aria-pressed': String(s.c === selected) })),
           on(option(NATION_COPY.otherSido, null, { 'data-sido': '' }), () => (list(), first())),
         );
       };
       const list = () => {
-        h.textContent = NATION_COPY.otherSido;
+        head(NATION_COPY.otherSido);
         grid.replaceChildren(...sidos.map((c) => on(option(sidoName(c), null, { 'data-sido': c, 'aria-pressed': String(c === now) }), () => (show(c), first()))));
       };
       if (now) show(now);

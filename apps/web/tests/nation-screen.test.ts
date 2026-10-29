@@ -4,6 +4,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { apply } from '../src/i18n/apply';
+import { EN } from '../src/i18n/en';
 import { normalizeNation } from '../src/nation';
 import type { Point } from '../src/pick';
 import { NATION, loadNation } from '../src/release';
@@ -88,5 +90,18 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     await wait();
     expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11140', basis: 'region' });
     expect($('#areas-basis-nation').textContent).toBe('서울');
+  });
+
+  // last: another language's words stay in the tables for the rest of this file
+  it('in English: its words with its part, the 시도 named in English, a line that the 시군구 stay Korean', async () => {
+    await apply('en', EN, document, Promise.resolve({}));
+    mount({ dest: 'nation', sgg: '51150' });
+    await wait();
+    await tap('#basis');
+    expect($('#sheet [data-dest="nation"] .nm').textContent).toBe('Somewhere else');
+    expect($('#areas-basis-nation').textContent).toBe('GangwonPlace names are shown in Korean.');
+    expect($$('#sheet [data-area] .nm').map((b) => b.textContent)).toContain('강릉시');
+    await tap('#sheet [data-sido=""]');
+    expect($$('#sheet [data-sido] .nm').map((b) => b.textContent)).toContain('Jeonbuk');
   });
 });

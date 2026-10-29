@@ -190,7 +190,7 @@ export const JA: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: '済州', busan: '釜山', nation: '韓国' },
+    destName: { jeju: '済州', busan: '釜山', nation: 'ほかの場所' },
     destHead: '旅行先',
     title: 'Yeochana:釜山 · ノープラン旅のおとも',
     examplePopular: (names) => `釜山の人気：${names.join('、')}`,
@@ -200,6 +200,16 @@ export const JA: Lang = {
     switched: { jeju: '済州にいるので、済州に切り替えました。', busan: '釜山にいるので、釜山に切り替えました。', nation: '今いる場所に切り替えました。' },
     otherSaved: { jeju: (n) => `済州で保存した場所 ${n}か所`, busan: (n) => `釜山で保存した場所 ${n}か所` },
     destAria: (name) => `${name}、旅行先を変更`,
+  },
+  /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in their Japanese names, 시군구 and places stay Korean */
+  nation: {
+    title: (short) => `Yeochana:${short} · ノープラン旅のおとも`,
+    how: '公共データをもとに、近い順に選びました。',
+    outside: 'いまは韓国の外にいます。',
+    stayOutside: 'いまは韓国の外にいます。下から宿のエリアを選んでください。',
+    otherSido: 'ほかの道・市',
+    sido: { '11': 'ソウル', '27': '大邱', '28': '仁川', '30': '大田', '31': '蔚山', '36110': '世宗', '41': '京畿', '43': '忠清北道', '44': '忠清南道', '47': '慶尚北道', '48': '慶尚南道', '51': '江原', '52': '全羅北道', '12': '全南・光州' },
+    koNames: '地名は韓国語で表示しています。',
   },
   mood: {
     rest: 'のんびりしたい',

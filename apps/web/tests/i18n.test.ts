@@ -1,8 +1,11 @@
 // @vitest-environment jsdom
 // ADR-0093 (specs/i18n.md): the language chosen before the app runs, the other languages' tables, and a page with no
 // Korean words left once one of them is in.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
 import { afterEach, describe, expect, it } from 'vitest';
+import { NATION_COPY } from '../src/nation-part';
 import { COPY, MOOD_LABEL, PLACE } from '../src/render';
 import { DAY_TEXT, longDay, shortDay } from '../src/dates';
 import { apply, localDays, type Lang } from '../src/i18n/apply';
@@ -70,6 +73,16 @@ describe('the tables (ADR-0093 5)', () => {
       // the words themselves (the keys are the Korean tables' own: area names, islands)
       const values = (v: unknown): string[] => (typeof v === 'string' ? [v] : v && typeof v === 'object' ? Object.values(v).flatMap(values) : []);
       expect(values(w).filter((s) => HANGUL.test(s))).toEqual([]);
+    }
+  });
+
+  it('자동 지역 (plans/nationwide-app.md 8): its words in every language, every 시도 of the index named', () => {
+    const ix = JSON.parse(readFileSync(resolve(__dirname, '../data/nation/index.json'), 'utf8')) as { sido: { c: string }[]; sgg: { s: string }[] };
+    const sido = ix.sido.filter((x) => ix.sgg.some((g) => g.s === x.c)).map((x) => x.c).sort();
+    for (const [, w] of LANGS) {
+      expect(Object.keys(w.nation).sort()).toEqual(Object.keys(NATION_COPY).sort());
+      expect(Object.keys(w.nation.sido).sort()).toEqual(sido);
+      expect(w.nation.koNames).not.toBe('');
     }
   });
 
