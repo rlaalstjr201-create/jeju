@@ -1,7 +1,7 @@
 // One screen: 5 mood buttons (static HTML, ADR-0028) + basis toggle → 3 cards (spec, plan OQ3·5; design/SPEC.md).
 // Controller only: user intents → reduce(state) → render(state); effects (GPS, data, storage, history)
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
-import { AREAS, areaByName, destOfArea, inJeju, type RegionName } from './areas';
+import { AREAS, areaByName, destOfArea, inJeju, type RegionName, type SggCode } from './areas';
 import { createSpotSource, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
@@ -9,14 +9,14 @@ import { destOfId, isDest, type Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, OPEN_AREAS, areaOfPoint, loadBusan, released, releasedDestOf, startScreen } from './release';
+import { BUSAN, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, released, releasedDestOf, sggOf, startScreen } from './release';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, sunPoint } from './home';
 import { sunriseMinutes, sunsetMinutes } from './sun';
 import { PLACE, createRenderer, dateLabel, findEls } from './render';
-import { GPS_KEY, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { GPS_KEY, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
 import { feedbackBody, surveyDue } from './survey';
@@ -42,8 +42,9 @@ export interface Delays {
 export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 10000 };
 
 export interface Deps extends GeoDeps {
-  /** a destination's place list (plans/busan.md); the app asks for Jeju's only until Busan opens (S5). */
-  loadSpots(dest: Dest): Promise<unknown>;
+  /** a destination's place list (plans/busan.md); the app asks for Jeju's only until Busan opens (S5). The 자동 지역's is
+   * a 시군구's (`sgg`: its file and its neighbours', plans/nationwide-app.md 2). */
+  loadSpots(dest: Dest, sgg?: string): Promise<unknown>;
   storage: Storage | null;
   /** sessionStorage — the cards being looked at survive a reload / discarded tab (S54). */
   session?: Storage | null;
@@ -135,24 +136,28 @@ export function mountApp(doc: Document, deps: Deps): App {
   const store = createStore(deps.storage, deps.session ?? null);
   // ♥ N drops ids missing from the data once it lands (S42); a failure notice gives way to the list if a
   // download that outlived its timeout lands after all.
-  // One list per destination (plans/busan.md m3), each asked for only once that destination is in use.
+  // One list per destination (plans/busan.md m3), each asked for only once that destination is in use; the 자동 지역's
+  // per 시군구 (plans/nationwide-app.md 2: the same array while the 시군구 is the same).
   const loadSpots = deps.loadSpots;
-  const sources: Partial<Record<Dest, SpotSource>> = {};
-  const sourceOf = (d: Dest): SpotSource =>
-    (sources[d] ??= createSpotSource(
-      () => loadSpots(d),
+  const sources: Record<string, SpotSource> = {};
+  const keyOf = (d: Dest, sgg: SggCode | null) => (d === 'nation' ? `nation:${sgg}` : d);
+  const sourceOf = (d: Dest, sgg: SggCode | null): SpotSource => {
+    const key = keyOf(d, sgg);
+    return (sources[key] ??= createSpotSource(
+      () => (d === 'nation' ? loadSpots(d, sgg ?? '') : loadSpots(d)),
       delays.dataTimeout,
       (spots) => {
-        if (state.dest !== d) return;
+        if (keyOf(state.dest, state.sgg) !== key) return;
         dispatch({ type: 'spots', spots });
         retryFailedLoad();
       },
       deps.yieldToMain,
     ));
-  /** the list of the destination in use */
+  };
+  /** the list of the destination (and 시군구) in use */
   const data = {
-    get: () => sourceOf(state.dest).get(),
-    peek: () => sourceOf(state.dest).peek(),
+    get: () => sourceOf(state.dest, state.sgg).get(),
+    peek: () => sourceOf(state.dest, state.sgg).peek(),
     dispose: () => Object.values(sources).forEach((x) => x?.dispose()),
   };
   const renderer = createRenderer(doc, els, { stageHome: !!deps.yieldToMain });
@@ -180,17 +185,26 @@ export function mountApp(doc: Document, deps: Deps): App {
     doc.getElementById('ycStart')?.remove();
   }
   let dest0: Dest = 'jeju';
+  // 자동 지역 (plans/nationwide-app.md 1.2): its 시군구 — a link's (`dest=nation&area=<code>`), else the one kept
+  let sgg0: SggCode | null = store.sgg();
   if (BUSAN) {
-    const link = early?.__destBy === 'link' && win ? readDeepLink(win.location.search, today0) : null;
+    const search = win?.location.search ?? '';
+    const link = early?.__destBy === 'link' && win ? readDeepLink(search, today0) : null;
     const area = link?.area && link.area !== 'here' ? areaByName(link.area, OPEN_AREAS) : null;
     // `dest=`: 브라우저로 열기 from an in-app browser (keep.ts handoffUrl) carries the 여행지 in use
-    const handed = /[?&]dest=(jeju|busan)(?:[&#]|$)/.exec(win?.location.search ?? '')?.[1] as Dest | undefined;
+    const named = /[?&]dest=([a-z]{2,10})(?:[&#]|$)/.exec(search)?.[1];
+    const handed = isDest(named) ? named : undefined;
+    const sggLink = handed === 'nation' ? /[?&]area=(\d{4,8})(?:[&#]|$)/.exec(search)?.[1] : undefined;
+    if (sggLink && areaByName(sggLink, OPEN_AREAS)) sgg0 = sggLink as SggCode;
     const linked = area ? destOfArea(area) : link?.stay ? releasedDestOf(link.stay) : (handed ?? null);
     const said = isDest(early?.__dest) ? early.__dest : null;
     const want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
-    // Busan's part not in (it could not be loaded): Jeju for this visit, the choice kept on the device as it was
-    dest0 = released(want) ? want : 'jeju';
+    if (want === 'nation' && link?.stay) sgg0 = sggOf(link.stay) ?? sgg0;
+    // Busan's (the 자동 지역's) part not in (it could not be loaded), or no 시군구 to show: Jeju for this visit, the choice
+    // kept on the device as it was
+    dest0 = released(want) && (want !== 'nation' || !!sgg0) ? want : 'jeju';
     if (!starting && !fellBack && dest0 === want) store.setDest(dest0);
+    if (dest0 === 'nation' && sgg0) store.setSgg(sgg0);
   }
   store.useDest(dest0);
   const loaded = store.load(today0);
@@ -212,7 +226,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   // ADR-0081: read once at mount, so a map opened in this visit brings the survey line only next time
   const survey0 = store.survey();
   // src: this session's 숙소 링크 tag (ADR-0089); with sessionStorage blocked the state alone keeps it
-  let state = initialState({ ...loaded, dest: dest0, src: store.src(), today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0), clock: minuteOf(clockNow()) });
+  let state = initialState({ ...loaded, dest: dest0, sgg: sgg0, src: store.src(), today: today0, offline: !online(), keep: keep0, surveyLine: surveyDue(survey0), clock: minuteOf(clockNow()) });
   const tracker = createTracker({
     url: deps.eventsUrl,
     send: deps.beacon ?? (typeof nav0?.sendBeacon === 'function' ? (u, b) => nav0.sendBeacon(u, b) : undefined),
@@ -1060,8 +1074,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'other-dest') {
       const d = b.dataset.dest;
       if (isDest(d) && !guarded('other-dest') && state.view === 'saved') {
-        // Busan's part first (src/release.ts): a Jeju visit has not downloaded it
-        if (BUSAN && !released(d)) void loadBusan().then((ok) => ok && !signal.aborted && state.view === 'saved' && (switchDest(d), request('show')));
+        // Busan's (the 자동 지역's) part first (src/release.ts): a Jeju visit has not downloaded it
+        if (BUSAN && !released(d)) void partOf(d).then((ok) => ok && !signal.aborted && state.view === 'saved' && (switchDest(d), request('show')));
         else {
           switchDest(d);
           request('show');
@@ -1288,7 +1302,8 @@ export function mountApp(doc: Document, deps: Deps): App {
    * failure says nothing (the label is not changed by a read nobody asked for). */
   let homeLocating = false;
   function locateHome() {
-    if (homeLocating || state.view !== 'home' || state.basis !== 'gps' || homeOrigin(state)) return;
+    // (the 자동 지역's weak start is no position: it is read all the same)
+    if (homeLocating || state.view !== 'home' || state.basis !== 'gps' || knownOrigin(state)) return;
     homeLocating = true;
     void locateGps(deps).then((r) => {
       homeLocating = false;
@@ -1299,17 +1314,22 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
 
   // --- 여행지 (ADR-0094, specs/busan.md 1.3·1.4) ---
+  /** Busan's part, or the 자동 지역's (with Busan's): asked for where that destination comes into play. */
+  const partOf = (d: Dest) => (d === 'nation' ? loadNation() : loadBusan());
   /** To `d`: its basis, region and 숙소 (each destination keeps its own, ADR-0097), its list asked for, kept on this
-   * device. `basis`: what to start it with instead of the one kept there. */
-  function switchDest(d: Dest, opts: { basis?: Basis; note?: boolean } = {}) {
-    if (!released(d)) return;
+   * device. `basis`: what to start it with instead of the one kept there. `sgg`: the 자동 지역's 시군구 (the one in use, or
+   * the one kept, when not given); another one is another list. */
+  function switchDest(d: Dest, opts: { basis?: Basis; note?: boolean; sgg?: SggCode | null } = {}) {
+    const sgg = d === 'nation' ? (opts.sgg ?? state.sgg ?? store.sgg()) : null;
+    if (!released(d) || (d === 'nation' && !sgg)) return;
     store.useDest(d);
     store.setDest(d);
-    if (d === state.dest && !opts.basis) return;
+    if (sgg) store.setSgg(sgg);
+    if (d === state.dest && !opts.basis && (!sgg || sgg === state.sgg)) return;
     const p = store.place();
     const basis = opts.basis ?? p.basis;
     batch(() => {
-      dispatch({ type: 'dest', dest: d, basis, region: basis === 'region' ? null : p.region, stay: p.stay, note: opts.note });
+      dispatch({ type: 'dest', dest: d, basis, region: basis === 'region' ? null : p.region, stay: p.stay, note: opts.note, ...(sgg ? { sgg } : {}) });
       // its list already in (warmed under the 시작 화면, or before a trip to the other one): its onLoad has been, so
       // nothing else would bring it back and the home stayed without 「예:」, photos or 장날 (owner report 2026-10-24)
       const ready = data.peek();
@@ -1318,22 +1338,24 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (opts.basis && opts.basis !== 'region') store.setBasis(opts.basis);
     data.get().catch(() => undefined);
   }
-  /** A GPS point inside another open destination, while the basis is 내 위치: moves there (true). */
+  /** A GPS point inside another open destination (or, in the 자동 지역, another 시군구), while the basis is 내 위치: moves
+   * there (true). */
   function followGps(p: { lat: number; lng: number }): boolean {
     if (!BUSAN || state.basis !== 'gps') return false;
     const d = releasedDestOf(p);
-    if (!d || d === state.dest || !released(d)) return false;
-    switchDest(d, { basis: 'gps', note: true });
+    const sgg = d === 'nation' ? sggOf(p) : null;
+    if (!d || (d === state.dest && sgg === (d === 'nation' ? state.sgg : null)) || !released(d)) return false;
+    switchDest(d, { basis: 'gps', note: d !== state.dest, sgg });
     return true;
   }
   /** 기준 시트's 여행지 row (specs/busan.md 1.4): with this session's position inside it, 내 위치 근처; else 지역 고르기 and
    * its 동네 index, opened in the sheet (the sheet stays open). */
   function pickDest(d: Dest) {
     if (d === state.dest) return;
-    // Busan's part first (src/release.ts): a Jeju visit has not downloaded it
-    if (BUSAN && !released(d)) return void loadBusan().then((ok) => ok && !signal.aborted && pickDest(d));
+    // Busan's (the 자동 지역's) part first (src/release.ts): a Jeju visit has not downloaded it
+    if (BUSAN && !released(d)) return void partOf(d).then((ok) => ok && !signal.aborted && pickDest(d));
     const fix = state.origin?.key === GPS_KEY ? state.origin.point : null;
-    switchDest(d, { basis: fix && releasedDestOf(fix) === d ? 'gps' : 'region' });
+    switchDest(d, { basis: fix && releasedDestOf(fix) === d ? 'gps' : 'region', sgg: fix && d === 'nation' ? sggOf(fix) : undefined });
     if (state.view !== 'home') request('show');
     later(0, toAreas);
   }
@@ -1411,10 +1433,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     startScreen()!(doc, {
       geo: deps,
       signal,
-      choose(d, how, why, point) {
+      choose(d, how, why, point, sgg) {
         startOpen = false;
         if (seeStart()) countStart({ e: 'start_done', how, why: why ?? 'none', dest: d, d: state.today });
-        switchDest(d, { basis: 'gps' });
+        // the 자동 지역: the 시군구 picked, or the one the position is in
+        switchDest(d, { basis: 'gps', sgg: d === 'nation' ? (sgg ?? (point ? sggOf(point) : null)) : undefined });
         // 거절 뒤에 골랐다면 라벨은 지금처럼 지역 고르기 (spec 1.2)
         if (why === 'denied') dispatch({ type: 'permission', permission: 'denied' });
         if (how === 'gps' && point) dispatch({ type: 'homeFix', point });

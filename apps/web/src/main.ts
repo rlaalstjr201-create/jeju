@@ -4,7 +4,7 @@ import { LocateError, mountApp, type Deps } from './app';
 import { DEST, type Dest } from './dest';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
-import { BUSAN, loadBusan, releasedDestOf } from './release';
+import { BUSAN, NATION, loadBusan, loadNation, nationSpots, releasedDestOf } from './release';
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 
@@ -15,9 +15,10 @@ function locate(): Promise<Point> {
       ({ coords }) => {
         const p = { lat: coords.latitude, lng: coords.longitude };
         // inside a destination open in this build (plans/busan.md: with the switch off, Jeju only — as before). Outside
-        // Jeju with the switch on, Busan's part (its boundary) is asked for first (src/release.ts).
+        // Jeju with the switch on, Busan's part (its boundary) is asked for first (src/release.ts) — the 자동 지역's with it
+        // where that is on (plans/nationwide-app.md 9: a position outside Jeju and Busan).
         if (releasedDestOf(p)) resolve(p);
-        else if (BUSAN) void loadBusan().then(() => (releasedDestOf(p) ? resolve(p) : reject(new LocateError('outside'))));
+        else if (BUSAN) void (NATION ? loadNation() : loadBusan()).then(() => (releasedDestOf(p) ? resolve(p) : reject(new LocateError('outside'))));
         else reject(new LocateError('outside'));
       },
       (err) => reject(new LocateError(err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable')),
@@ -139,7 +140,9 @@ const deps: Deps = {
   // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
   // The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
   // task (audit 2026-10-15), and a list that came in before the first paint held that paint back (audit 2026-10-16).
-  loadSpots: (dest) => {
+  loadSpots: (dest, sgg) => {
+    // the 자동 지역: a 시군구's files, through its part (plans/nationwide-app.md 2)
+    if (NATION && dest === 'nation') return nationSpots(sgg ?? '').finally(listSettled);
     // Busan in another language: its place texts, asked for with its list (ADR-0093 Amendment 9)
     const lang = document.documentElement.lang;
     const more = BUSAN && dest === 'busan' && inLang ? inLang.addPlaces(json(`${BASE}i18n/places-busan.${lang}.json?v=${__BUSAN_PLACES_V__}`)) : null;
@@ -203,8 +206,14 @@ const busanFirst = (): Promise<unknown> =>
   BUSAN && (document.documentElement.classList.contains('yc-start') || (window as { __dest?: unknown }).__dest === 'busan')
     ? within(loadBusan(), 4000).catch(() => undefined)
     : Promise.resolve();
+/** The 자동 지역's part (and its index) before the mount where it may be in play from the start (plans/nationwide-app.md 9):
+ * the 시작 화면 is up, the device chose it, or a link names it. A failure (offline, 4 s) mounts Jeju. */
+const nationFirst = (): Promise<unknown> =>
+  NATION && (document.documentElement.classList.contains('yc-start') || (window as { __dest?: unknown }).__dest === 'nation' || /[?&]dest=nation(?:[&#]|$)/.test(location.search))
+    ? within(loadNation(), 4000).catch(() => undefined)
+    : Promise.resolve();
 void (
-  BUSAN ? Promise.all([WORDS[LANG] ? words(LANG) : null, busanFirst()]).then(yieldToMain) : WORDS[LANG] ? words(LANG).then(yieldToMain) : yieldToMain()
+  BUSAN ? Promise.all([WORDS[LANG] ? words(LANG) : null, busanFirst(), nationFirst()]).then(yieldToMain) : WORDS[LANG] ? words(LANG).then(yieldToMain) : yieldToMain()
 ).then(start);
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {

@@ -3,6 +3,7 @@
 // runs: the big button reads the position (the app's locate: inside an open destination or `outside`), the two
 // destination buttons choose, and with location already allowed it reads without asking (M4: the cover is there from
 // the first paint and only ever goes away). Used only with the switch on (app.ts).
+import type { SggCode } from './areas';
 import { isDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
 import type { Point } from './pick';
@@ -44,8 +45,9 @@ interface Inline {
 export interface StartDeps {
   geo: GeoDeps;
   signal: AbortSignal;
-  /** chosen: by the position (`point`) or a button (`why` = what the position said before, if anything) */
-  choose(d: Dest, how: 'gps' | 'pick', why: NoOrigin | null, point?: Point): void;
+  /** chosen: by the position (`point`) or a button (`why` = what the position said before, if anything); `sgg`: the
+   * 자동 지역's 시군구 picked (plans/nationwide-app.md 4) */
+  choose(d: Dest, how: 'gps' | 'pick', why: NoOrigin | null, point?: Point, sgg?: SggCode): void;
 }
 
 export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
