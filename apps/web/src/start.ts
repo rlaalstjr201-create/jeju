@@ -3,11 +3,11 @@
 // runs: the big button reads the position (the app's locate: inside an open destination or `outside`), the two
 // destination buttons choose, and with location already allowed it reads without asking (M4: the cover is there from
 // the first paint and only ever goes away). Used only with the switch on (app.ts).
-import type { SggCode } from './areas';
+import { areaByName, type SggCode } from './areas';
 import { isDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
 import type { Point } from './pick';
-import { releasedDestOf } from './release';
+import { NATION, loadNation, nationPart, openAreasOf, releasedDestOf } from './release';
 import type { NoOrigin } from './types';
 
 /** The start screen's words, in the order index.html's table keeps them per language (window.__ycT). */
@@ -30,6 +30,22 @@ const FAILED: Record<string, Record<NoOrigin, string>> = {
   'zh-Hans': { denied: '无法使用位置。请选择旅行地。', unavailable: '找不到你的位置。请选择旅行地。', outside: '你现在不在济州或釜山。请选择旅行地。' },
   ja: { denied: '位置情報を使えません。旅行先を選んでください。', unavailable: '現在地が見つかりませんでした。旅行先を選んでください。', outside: 'いまは済州・釜山の外にいます。旅行先を選んでください。' },
 };
+/** 자동 지역 (plans/nationwide-app.md 4): anywhere in Korea is open, so outside is outside Korea; 다른 곳 and 뒤로 */
+const NATION_WORDS: Record<string, { outside: string; other: string; back: string }> = {
+  ko: { outside: '지금은 한국 밖이에요. 여행지를 골라 주세요.', other: '다른 곳', back: '뒤로' },
+  en: { outside: "You're outside Korea right now. Please choose where you are.", other: 'Somewhere else', back: 'Back' },
+  'zh-Hans': { outside: '你现在不在韩国。请选择旅行地。', other: '其他地方', back: '返回' },
+  ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', other: 'ほかの場所', back: '戻る' },
+};
+/** 인기 칸 (plans/nationwide-app.md 13 R14): name and 시군구 (서울: 서울시청's 중구, 전주: 한옥마을's 완산구) */
+const POPULAR: readonly [string, SggCode][] = [
+  ['서울', '11140'],
+  ['강릉', '51150'],
+  ['경주', '47130'],
+  ['전주', '52111'],
+  ['여수', '12130'],
+  ['속초', '51210'],
+];
 
 export interface StartScreen {
   /** what it shows now: the first state, reading, or why the position could not be used */
@@ -54,7 +70,9 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
   const box = doc.getElementById('ycStart');
   const w = doc.defaultView as (Window & Inline) | null;
   const a = w?.__ycT;
-  const T: (Pick<StartWords, 'gps' | 'locating'> & Record<NoOrigin, string>) | null = a ? { gps: a[1], locating: a[6], ...(FAILED[doc.documentElement.lang] ?? FAILED.ko) } : null;
+  const lang = doc.documentElement.lang;
+  const N = NATION_WORDS[lang] ?? NATION_WORDS.ko;
+  const T: (Pick<StartWords, 'gps' | 'locating'> & Record<NoOrigin, string>) | null = a ? { gps: a[1], locating: a[6], ...(FAILED[lang] ?? FAILED.ko), ...(NATION ? { outside: N.outside } : {}) } : null;
   const big = doc.getElementById('ycGps') as HTMLButtonElement | null;
   const msg = doc.getElementById('ycMsg');
   const note = doc.getElementById('ycNote');
@@ -100,6 +118,71 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
         deps.choose(d, 'gps', null, r.point);
       } else show(quiet && (r.ok || r.why !== 'outside') ? 'start' : r.ok ? 'outside' : r.why);
     });
+  }
+
+  // 자동 지역 (plans/nationwide-app.md 4): under the two destinations, the 인기 칸 (rows of two, as theirs) and 다른 곳,
+  // which lists the 시도 and then a 시도's 시군구 in the cover's own place (its part asked for when it is not in yet)
+  const main = box.querySelector<HTMLElement>(':scope > div');
+  if (NATION && main) {
+    const button = (text: string, fn: () => void, ko = false) => {
+      const b = doc.createElement('button');
+      b.type = 'button';
+      b.textContent = text;
+      if (ko) b.lang = 'ko';
+      b.addEventListener('click', (e) => (e.stopPropagation(), fn()));
+      return b;
+    };
+    const rows = (bs: HTMLButtonElement[]) =>
+      bs.reduce<HTMLElement[]>((out, b, i) => {
+        if (i % 2 === 0) out.push(doc.createElement('div'));
+        out[out.length - 1].append(b);
+        return out;
+      }, []);
+    const nation = (sgg: SggCode) => {
+      if (done) return;
+      const why = now === 'start' || now === 'locating' ? null : now;
+      close();
+      deps.choose('nation', 'pick', why, undefined, sgg);
+    };
+    const tiles = POPULAR.filter(([, c]) => areaByName(c, openAreasOf('nation'))).map(([name, c]) => button(name, () => nation(c), true));
+    const panel = doc.createElement('div');
+    panel.hidden = true;
+    const back = (to: () => void) => {
+      const b = button(N.back, to);
+      b.className = 'yc-link';
+      return b;
+    };
+    const showMain = () => {
+      panel.hidden = true;
+      main.hidden = false;
+      other.focus();
+    };
+    const showSgg = (c: string) => {
+      const part = nationPart()!;
+      const list = openAreasOf('nation').filter((x) => part.sidoOf(x.name) === c);
+      panel.replaceChildren(back(showSido), ...rows(list.map((x) => button(x.label, () => nation(x.name as SggCode), true))));
+      panel.querySelector('button')?.focus();
+    };
+    const showSido = () => {
+      const part = nationPart()!;
+      const note = part.copy.koNames ? [Object.assign(doc.createElement('p'), { textContent: part.copy.koNames })] : [];
+      panel.replaceChildren(back(showMain), ...note, ...rows(part.sido().map((x) => button(x.name, () => showSgg(x.c)))));
+      main.hidden = true;
+      panel.hidden = false;
+      panel.querySelector('button')?.focus();
+    };
+    let asking = false;
+    const other = button(N.other, () => {
+      if (asking || done) return;
+      asking = true;
+      void loadNation().then((ok) => {
+        asking = false;
+        if (ok && !done && !deps.signal.aborted) showSido();
+      });
+    });
+    other.className = 'yc-link';
+    main.append(...rows(tiles), other);
+    box.append(panel);
   }
 
   const on = (type: string, fn: (e: Event) => void) => doc.addEventListener(type, fn, { signal: deps.signal });

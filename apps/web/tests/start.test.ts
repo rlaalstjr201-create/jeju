@@ -3,11 +3,11 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { JSDOM } from 'jsdom';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { GeoPermission } from '../src/effects';
 import { LocateError } from '../src/effects';
 import type { Point } from '../src/pick';
-import { BUSAN, loadBusan } from '../src/release';
+import { BUSAN, NATION, loadBusan, loadNation } from '../src/release';
 import { mountStart } from '../src/start';
 import type { NoOrigin } from '../src/types';
 
@@ -58,7 +58,11 @@ describe('1.1 여행지를 정하는 순서 (index.html 첫 인라인)', () => {
     ['링크가 기억보다 먼저', '/?area=haeundae', { 'jeju.dest': 'jeju' }, undefined, 'busan', 'link'],
     ['브라우저로 열기의 여행지(n4)', '/?lang=en&dest=busan', {}, undefined, 'busan', 'link'],
     ['브라우저로 열기의 여행지, 제주', '/?dest=jeju', {}, undefined, 'jeju', 'link'],
-    ['모르는 여행지 값', '/?dest=seoul', {}, undefined, null, null],
+    // plans/nationwide-app.md 4: any short word goes to the app, which checks it against its DEST (an unknown one: Jeju)
+    ['모르는 여행지 값', '/?dest=seoul', {}, undefined, 'seoul', 'link'],
+    ['자동 지역 링크', '/?dest=nation&area=51150', {}, undefined, 'nation', 'link'],
+    ['기억한 자동 지역', '/', { 'jeju.dest': 'nation' }, undefined, 'nation', 'kept'],
+    ['기억값이 낱말이 아님(그 키가 있으니 이전 기기)', '/', { 'jeju.dest': 'x1' }, undefined, 'jeju', 'old'],
   ];
   for (const [name, path, storage, referrer, dest, by] of cases)
     it(`${name}: ${dest ?? '시작 화면'}`, () => {
@@ -178,7 +182,7 @@ describe('start.ts', () => {
     await tick();
     await tick();
     expect(out.screen.state()).toBe('outside');
-    expect(out.doc.getElementById('ycMsg')!.textContent).toBe('지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
+    expect(out.doc.getElementById('ycMsg')!.textContent).toBe(NATION ? '지금은 한국 밖이에요. 여행지를 골라 주세요.' : '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
   });
   it('denied, not found (다시 시도), outside: the words in the big button’s place; a destination then chosen says it was denied', async () => {
     const d = started({ at: 'denied' });
@@ -206,7 +210,7 @@ describe('start.ts', () => {
     (doc.getElementById('ycGps') as HTMLElement).click();
     await tick();
     await tick();
-    expect(doc.getElementById('ycMsg')!.textContent).toBe('いまは済州・釜山の外にいます。旅行先を選んでください。');
+    expect(doc.getElementById('ycMsg')!.textContent).toBe(NATION ? 'いまは韓国の外にいます。旅行先を選んでください。' : 'いまは済州・釜山の外にいます。旅行先を選んでください。');
   });
   it('a press before the app ran is carried out at mount', async () => {
     expect(started({ early: 'jeju' }).chosen).toEqual([['jeju', 'pick', null]]);
@@ -222,5 +226,39 @@ describe('start.ts', () => {
     await tick();
     await tick();
     expect(t.chosen).toEqual([['busan', 'gps', null, 해운대]]);
+  });
+  it.runIf(NATION)('자동 지역: 인기 칸 6 under the two; one pressed chooses its 시군구; 다른 곳 → 시도 → 시군구, 뒤로 back', async () => {
+    vi.stubGlobal('fetch', (url: string) => {
+      const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
+      return Promise.resolve(m ? { ok: true, json: () => Promise.resolve(JSON.parse(readFileSync(resolve(__dirname, `../data/nation/${m[1]}.json`), 'utf8'))) } : { ok: false, status: 404 });
+    });
+    expect(await loadNation()).toBe(true); // main.ts asks for it before the mount while the 시작 화면 is up
+    vi.unstubAllGlobals();
+    const words = (d: Document) => [...d.querySelectorAll('#ycStart button')].filter((b) => !b.closest('[hidden]') && !(b as HTMLElement).hidden).map((b) => b.textContent);
+    const t = started({});
+    expect(words(t.doc)).toEqual(['내 위치로 시작하기', '제주', '부산', '서울', '강릉', '경주', '전주', '여수', '속초', '다른 곳']);
+    ([...t.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === '강릉') as HTMLElement).click();
+    expect(t.chosen).toEqual([['nation', 'pick', null, undefined, '51150']]);
+    expect(t.doc.getElementById('ycStart')).toBeNull();
+    const o = started({});
+    const press = (w: string) => ([...o.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === w && !b.closest('[hidden]')) as HTMLElement).click();
+    press('다른 곳');
+    await tick();
+    await tick();
+    expect(words(o.doc)).toContain('강원');
+    expect(words(o.doc)).not.toContain('부산');
+    expect(words(o.doc)[0]).toBe('뒤로');
+    press('강원');
+    expect(words(o.doc)).toContain('속초시');
+    press('뒤로');
+    press('뒤로');
+    expect(words(o.doc)).toContain('내 위치로 시작하기');
+    press('다른 곳');
+    await tick();
+    await tick();
+    press('강원');
+    press('속초시');
+    expect(o.chosen).toEqual([['nation', 'pick', null, undefined, '51210']]);
+    expect(o.w.__startTap).toBeUndefined(); // the cover's own handler did not take these for the big button
   });
 });

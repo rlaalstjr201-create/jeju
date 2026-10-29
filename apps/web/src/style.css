@@ -157,6 +157,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* ADR-0093 Amendment 7: one row offering the browser's language, under the line above; the words a link, × its own 44 */
 .lang-suggest { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; margin: 8px 0 0; padding-left: 14px; border-radius: var(--r-card); background: var(--fill); }
 .lang-suggest[hidden] { display: none; }
+/* 시작 화면's 다른 곳 and 뒤로 (src/start.ts, plans/nationwide-app.md 4): words, not a face; its lists in the cover's place */
+#ycStart div[hidden] { display: none; }
+#ycStart .yc-link { align-self: flex-start; min-height: 48px; background: none; color: var(--main); text-decoration: underline; }
 .lang-suggest a { flex: 1; min-width: 0; padding: 10px 0; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .lang-suggest .x { flex: none; display: grid; place-items: center; width: 44px; min-height: 44px; align-self: stretch; color: var(--muted); }
 /* 오늘 판 (ADR-0088): one grey face, 16 round, the sun in a 32px 귤-tint cell on the left; the lines beside it */
