@@ -20,7 +20,7 @@ import { DAY_LIMIT, NUM_OF_ROWS, callsOn, imageOf, inScope, itemsOf, kstDay, pag
 const here = dirname(fileURLToPath(import.meta.url));
 const webRoot = resolve(here, '../..');
 
-export const SIDOS = [11, 27, 28, 30, 31, 36110, 41, 43, 44, 47, 48, 12];
+export const SIDOS = [11, 27, 28, 30, 31, 36110, 41, 43, 44, 47, 48, 51, 52, 12];
 export const SKIPPED_SIDOS = [26, 50];
 export const LIST_TYPES = [12, 14, 28, 38, 39];
 export { DAY_LIMIT, NUM_OF_ROWS };
