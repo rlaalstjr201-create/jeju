@@ -617,3 +617,48 @@ describe('철 (ADR-0080, specs/seasonal-spots.md S3)', () => {
     }
   });
 });
+
+// 자동 지역 (plans/nationwide-app.md 3, U7): a place may have several moods; 아무거나 takes its cards from 걷기·새로운 것.
+describe('자동 지역 moods · anyMoods', () => {
+  const origin = { lat: 37.75, lng: 128.88 };
+  const mk = (id: string, moods: Spot['mood'][], km: number, extra: Partial<Spot> = {}): Spot => ({
+    id, name: id, lat: origin.lat + km / 111.19, lng: origin.lng, mood: moods[0], moods, reason: '', image: '', kakaoPlaceId: null, bookable: false, score: 3,
+    ...(moods[0] === 'food' ? { sub: 'meal' as const } : moods[0] === 'new' ? { sub: 'sight' as const } : {}), ...extra,
+  });
+  const spots = [mk('w1', ['walk'], 5), mk('w2', ['walk'], 8), mk('wn', ['walk', 'new'], 2), mk('n1', ['new'], 10), mk('n2', ['new'], 13), mk('f1', ['food'], 1), mk('f2', ['food'], 1.5)];
+  const ANY = ['walk', 'new'] as const;
+
+  it('a place counts for each of its moods (moods), not only the first', () => {
+    expect(pickCards(spots, origin, 'new').cards.map((c) => c.spot.id)).toEqual(['wn', 'n1', 'n2']);
+    expect(pickCards(spots, origin, 'walk').cards.map((c) => c.spot.id)).toEqual(['wn', 'w1', 'w2']);
+  });
+
+  it('anyMoods [walk, new]: 3 cards — 걷기 1, 새로운 것 1, the next best of both — no 먹기, no place twice', () => {
+    const { cards } = pickCards(spots, origin, 'any', {}, undefined, 'drive30', false, undefined, false, ANY);
+    const ids = cards.map((c) => c.spot.id);
+    expect(ids).toHaveLength(3);
+    expect(new Set(ids).size).toBe(3);
+    expect(cards.some((c) => c.spot.mood === 'food')).toBe(false);
+    // the same score everywhere: the nearest first (wn for 걷기, then n1 for 새로운 것, then w1)
+    expect(ids).toEqual(['wn', 'w1', 'n1']);
+  });
+
+  it('anyMoods: the rotation moves on — the 2 unseen places come, the third is one seen before (5 places in all)', () => {
+    const a = pickCards(spots, origin, 'any', {}, undefined, 'drive30', false, undefined, false, ANY);
+    const b = pickCards(spots, origin, 'any', a.histories, undefined, 'drive30', false, undefined, false, ANY);
+    const ids = b.cards.map((c) => c.spot.id);
+    expect(ids).toHaveLength(3);
+    expect(new Set(ids).size).toBe(3);
+    expect(ids).toEqual(expect.arrayContaining(['w2', 'n2']));
+    expect(b.wrapped).toBe(true);
+  });
+
+  it('the 3 moods as before: the default is rest, walk, new — one card each', () => {
+    const three = [...spots, mk('r1', ['rest'], 5)];
+    const before = pickCards(three, origin, 'any');
+    expect(pickCards(three, origin, 'any', {}, undefined, 'drive30', false, undefined, false, ['rest', 'walk', 'new'])).toEqual(before);
+    expect(before.cards.map((c) => c.spot.id).sort()).toEqual(['n1', 'r1', 'wn']);
+    // 쉬기 has none: two cards, not a third from the others (아무거나 of 3 moods is as it was)
+    expect(pickCards(spots, origin, 'any').cards).toHaveLength(2);
+  });
+});

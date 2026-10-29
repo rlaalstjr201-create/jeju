@@ -24,6 +24,8 @@ export interface Spot {
   lat: number;
   lng: number;
   mood: Mood;
+  /** 자동 지역 (plans/nationwide-app.md 3): every mood the place has (`mood` is the first); unset on a 검수한 곳's place. */
+  moods?: Mood[];
   reason: string;
   image: string;
   kakaoPlaceId: string | null;
@@ -89,7 +91,7 @@ export type HistoryKey = Exclude<Button, 'food' | 'new'> | `food:${Sub}` | `new:
 export type Histories = Partial<Record<HistoryKey, History>>;
 
 export const CARD_COUNT = 3;
-const ANY_MOODS: Mood[] = ['rest', 'walk', 'new'];
+const ANY_MOODS: readonly Mood[] = ['rest', 'walk', 'new'];
 
 /** 얼마나 (ADR-0060): 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간. */
 export type Reach = 'walk' | 'drive30' | 'drive60';
@@ -230,7 +232,7 @@ function candidates(spots: Spot[], mood: Kind, tab: Tab | undefined, indoor: boo
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
   // 유명한 곳 (ADR-0092, Amendment 2): indoors and out on any day; 비 와요 keeps the indoor ones (below), never 구경 added in
-  const kind = mood === 'famous' ? (s: Spot) => s.famous === true && s.mood !== 'food' : (s: Spot) => s.mood === mood;
+  const kind = mood === 'famous' ? (s: Spot) => s.famous === true && s.mood !== 'food' : (s: Spot) => s.mood === mood || !!s.moods?.includes(mood);
   let list = spots.filter((s) => listed(s) && kind(s) && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
   // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
   // 구경 — places walked round inside.
@@ -336,6 +338,8 @@ export const tabOf = (button: Button | null, sub: Sub, newTab: NewSub): Tab | un
  * out — i.e. everything nearby has been shown once and the rotation starts over (상태 줄 한 바퀴 문장).
  * `night` (ADR-0091, 지금 only): 야외 산길 and small islands the origin is not on after the other candidates;
  * `nightShifted` = which of them that moved in the order the picks are made from (상태 줄 밤 문장), null if none.
+ * `anyMoods`: the moods 아무거나 takes a card from (DEST[d].any); with fewer than 3 (the 자동 지역's 걷기·새로운 것), the
+ * last card is the next best of their pools together.
  */
 export function pickCards(
   spots: Spot[],
@@ -347,6 +351,7 @@ export function pickCards(
   indoor = false,
   day?: Day,
   night = false,
+  anyMoods: readonly Mood[] = ANY_MOODS,
 ): { cards: Card[]; histories: Histories; wrapped: boolean; nightShifted: NightShift } {
   const key = historyKey(button, tab);
   const h = histories[key];
@@ -355,7 +360,7 @@ export function pickCards(
   const moved = { trail: false, island: false };
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = ANY_MOODS.map((m) => pool(spots, origin, m, undefined, reach, indoor, day, night));
+    const pools = anyMoods.map((m) => pool(spots, origin, m, undefined, reach, indoor, day, night));
     // one card per mood, never the same place twice (걷기 may have widened to 구경 indoors)
     picked = [];
     for (const p of pools) {
@@ -363,6 +368,12 @@ export function pickCards(
       const c = order.find((x) => !picked.some((y) => y.spot.id === x.spot.id));
       if (c) picked.push(c);
       if (night) nightMoved(order, h, moved);
+    }
+    // fewer moods than cards: the rest from their pools together (only then, so 아무거나 of 3 moods is as it was)
+    const all = anyMoods.length < CARD_COUNT ? rotate(pools.flat().sort(byRank), h) : [];
+    for (const c of all) {
+      if (picked.length >= CARD_COUNT) break;
+      if (!picked.some((y) => y.spot.id === c.spot.id)) picked.push(c);
     }
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
