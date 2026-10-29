@@ -1,0 +1,52 @@
+{
+ "contentid": "3537621",
+ "modifiedtime": "20250916091140",
+ "fetchedAt": "2026-10-29T20:22:53.158Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537621",
+       "contenttypeid": "39",
+       "title": "연곡반점",
+       "createdtime": "20250916091116",
+       "modifiedtime": "20250916091140",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 강릉시 연곡면 진고개로 2717-1",
+       "addr2": "",
+       "zipcode": "25428",
+       "mapx": "128.8363438317",
+       "mapy": "37.8594661436",
+       "mlevel": "6",
+       "overview": "\"연곡 중화요리 맛집 연곡반점입니다.\n\n항상 엄선된 음식으로 맛있는 음식 준비해드리겠습니다\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

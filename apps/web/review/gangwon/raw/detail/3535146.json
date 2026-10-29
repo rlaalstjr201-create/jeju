@@ -1,0 +1,52 @@
+{
+ "contentid": "3535146",
+ "modifiedtime": "20250911091906",
+ "fetchedAt": "2026-10-29T20:22:51.523Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535146",
+       "contenttypeid": "39",
+       "title": "안목바다식당",
+       "createdtime": "20250911091850",
+       "modifiedtime": "20250911091906",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 월대산로 152 (입암동)",
+       "addr2": "",
+       "zipcode": "25577",
+       "mapx": "128.9267832189",
+       "mapy": "37.7595655820",
+       "mlevel": "6",
+       "overview": "\"강릉을 대표하는 장칼국수 현지인 추천 맛집이다.\n속풀이용으로 제격인 얼큰하고 매콤한 장칼국수와 직접 매일 빚는 만둣국, 여름 계절메뉴로 국산콩을 직접 갈아 만드는 콩국수가 별미이다\n매일 무치는 겉절이와 직접 담그는 깍뚜기도 별미인 곳.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

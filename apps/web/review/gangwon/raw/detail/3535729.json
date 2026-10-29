@@ -1,0 +1,52 @@
+{
+ "contentid": "3535729",
+ "modifiedtime": "20250911145313",
+ "fetchedAt": "2026-10-29T20:22:45.449Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535729",
+       "contenttypeid": "39",
+       "title": "산두꺼비",
+       "createdtime": "20250911145254",
+       "modifiedtime": "20250911145313",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 남구길18번길 36 (포남동)",
+       "addr2": "",
+       "zipcode": "25546",
+       "mapx": "128.9087457229",
+       "mapy": "37.7670282560",
+       "mlevel": "6",
+       "overview": "\"시장에서 본 신선한 재료로 만들어낸 음식 성산의 기운을 받은 산두꺼비 식당에서\n포장가능,배달불가능,카드/현금가능,주차가능,식당 외부 화장실 이용,예약가능\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

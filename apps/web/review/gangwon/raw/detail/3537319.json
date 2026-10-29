@@ -1,0 +1,52 @@
+{
+ "contentid": "3537319",
+ "modifiedtime": "20250915172033",
+ "fetchedAt": "2026-10-29T20:22:51.292Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537319",
+       "contenttypeid": "39",
+       "title": "아빠의돈까스",
+       "createdtime": "20250915172008",
+       "modifiedtime": "20250915172033",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 남부로17번길 23 (내곡동)",
+       "addr2": "",
+       "zipcode": "25604",
+       "mapx": "128.8814322874",
+       "mapy": "37.7421111609",
+       "mlevel": "6",
+       "overview": "돈까스"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

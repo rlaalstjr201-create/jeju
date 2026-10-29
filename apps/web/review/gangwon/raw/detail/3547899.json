@@ -1,0 +1,52 @@
+{
+ "contentid": "3547899",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:04.791Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3547899",
+       "contenttypeid": "12",
+       "title": "강문해변화장실",
+       "createdtime": "20251014161433",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE01",
+       "lclsSystm3": "VE010100",
+       "cat1": "A02",
+       "cat2": "A0205",
+       "cat3": "A02050600",
+       "addr1": "강원특별자치도 강릉시 창해로 344-1 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9193966990",
+       "mapy": "37.7942253168",
+       "mlevel": "6",
+       "overview": "강문해변화장실"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

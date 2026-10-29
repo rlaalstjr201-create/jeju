@@ -1,0 +1,52 @@
+{
+ "contentid": "610465",
+ "modifiedtime": "20251218171712",
+ "fetchedAt": "2026-10-29T20:23:10.863Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "610465",
+       "contenttypeid": "39",
+       "title": "해동횟집",
+       "createdtime": "20080818233419",
+       "modifiedtime": "20251218171712",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 사천면 진리해변길 133",
+       "addr2": "",
+       "zipcode": "25435",
+       "mapx": "128.8736493195",
+       "mapy": "37.8426910358",
+       "mlevel": "6",
+       "overview": "강원도 강릉에 있는 해동횟집은 신선도가 높은 대게, 자연산 활어회, 홍게세트로 유명하다. 쾌적한 공간에서 아름다운 사천바다의 오션뷰를 보시며 식사할 수 있으며 회를 옥돌 위에 내는 것이 특징이다. 오랜 경력의 베테랑 주방장의 손밧이 배어있어 맛과 양 가격 만족도가 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

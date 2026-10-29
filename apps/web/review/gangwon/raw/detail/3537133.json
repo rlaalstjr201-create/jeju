@@ -1,0 +1,52 @@
+{
+ "contentid": "3537133",
+ "modifiedtime": "20250915143030",
+ "fetchedAt": "2026-10-29T20:23:06.498Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537133",
+       "contenttypeid": "39",
+       "title": "커피콩빵",
+       "createdtime": "20250915143015",
+       "modifiedtime": "20250915143030",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://blog.naver.com/sukhoon2000",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 창해로 351-1 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9184162220",
+       "mapy": "37.7945363730",
+       "mlevel": "6",
+       "overview": "\"제과, 베이커리, 주메뉴는 커피빵\n\n이용 시간 오전 9시-저녁 6시(연중무휴)\n\n전용 주차장이 없으며 근처 공영유료주차장을 이용하거나 잠시 가게 앞에 세워두어야 함.\n\n자동문은 없지만 경사로가 있어 휠체어 접근은 할 수 있음.\n\n화장실 없고 근처 공중화장실을 이용해야함.\n\n인터넷으로 구매 가능하며 테이크아웃 위주로 영업함.\n\n영업 종료시 무인으로 키오스크를 이용하여 구매 가능함.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

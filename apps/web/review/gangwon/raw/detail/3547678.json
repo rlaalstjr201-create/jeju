@@ -1,0 +1,52 @@
+{
+ "contentid": "3547678",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:31.479Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3547678",
+       "contenttypeid": "39",
+       "title": "고향촌중화요리",
+       "createdtime": "20251014113430",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 강릉시 강동면 헌화로 1080",
+       "addr2": "",
+       "zipcode": "25631",
+       "mapx": "129.0325814328",
+       "mapy": "37.6892507776",
+       "mlevel": "6",
+       "overview": "동네 중식 찐맛집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

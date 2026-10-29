@@ -1,0 +1,52 @@
+{
+ "contentid": "3536902",
+ "modifiedtime": "20250915110341",
+ "fetchedAt": "2026-10-29T20:22:41.865Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536902",
+       "contenttypeid": "39",
+       "title": "미성식당",
+       "createdtime": "20250915110255",
+       "modifiedtime": "20250915110341",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 하평5길 14 (포남동)",
+       "addr2": "",
+       "zipcode": "25565",
+       "mapx": "128.9176142373",
+       "mapy": "37.7712751597",
+       "mlevel": "6",
+       "overview": "한식"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

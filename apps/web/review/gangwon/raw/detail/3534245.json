@@ -1,0 +1,52 @@
+{
+ "contentid": "3534245",
+ "modifiedtime": "20250910103739",
+ "fetchedAt": "2026-10-29T20:23:04.822Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534245",
+       "contenttypeid": "39",
+       "title": "추억의맛집",
+       "createdtime": "20250910103720",
+       "modifiedtime": "20250910103739",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 옥가로7번길 14 (옥천동)",
+       "addr2": "1층",
+       "zipcode": "25551",
+       "mapx": "128.8976997662",
+       "mapy": "37.7583151593",
+       "mlevel": "6",
+       "overview": "#추억의맛집 #한식 / 신선한 재료, 정직한밥상"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

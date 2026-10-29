@@ -1,0 +1,52 @@
+{
+ "contentid": "3537606",
+ "modifiedtime": "20250916084839",
+ "fetchedAt": "2026-10-29T20:22:55.467Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537606",
+       "contenttypeid": "39",
+       "title": "우정회관",
+       "createdtime": "20250916084817",
+       "modifiedtime": "20250916084839",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 주문진읍 항구2길 5",
+       "addr2": "",
+       "zipcode": "25412",
+       "mapx": "128.8287851229",
+       "mapy": "37.8935426033",
+       "mlevel": "6",
+       "overview": "한식집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

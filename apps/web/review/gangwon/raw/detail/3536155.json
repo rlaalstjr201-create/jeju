@@ -1,0 +1,52 @@
+{
+ "contentid": "3536155",
+ "modifiedtime": "20250912100737",
+ "fetchedAt": "2026-10-29T20:22:58.922Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536155",
+       "contenttypeid": "39",
+       "title": "장수삼계탕",
+       "createdtime": "20250912100715",
+       "modifiedtime": "20250912100737",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 주문진읍 시장길 51",
+       "addr2": "",
+       "zipcode": "25413",
+       "mapx": "128.8274269475",
+       "mapy": "37.8924093748",
+       "mlevel": "6",
+       "overview": "\"장수삼계탕은 주문진 대표 보양식 전문점으로 한방삼계탕과 능이삼계탕을 비롯해 흑임자삼계탕, 옻삼계탕 등 다양한 메뉴를 제공하는 식당이다.\n1인용 닭볶음탕도 있어 혼밥하기 좋으며, 찹쌀밥과 산삼이 함께 들어간 삼계탕은 영양 가득한 한 끼 식사로 호평을 받고있다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

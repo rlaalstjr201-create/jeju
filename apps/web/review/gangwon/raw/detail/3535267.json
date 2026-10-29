@@ -1,0 +1,52 @@
+{
+ "contentid": "3535267",
+ "modifiedtime": "20250911103942",
+ "fetchedAt": "2026-10-29T20:23:00.594Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535267",
+       "contenttypeid": "39",
+       "title": "좋은사람커피",
+       "createdtime": "20250911103927",
+       "modifiedtime": "20250911103942",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 주문진읍 신리천로 18",
+       "addr2": "",
+       "zipcode": "25419",
+       "mapx": "128.8282326344",
+       "mapy": "37.8858490394",
+       "mlevel": "6",
+       "overview": ""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

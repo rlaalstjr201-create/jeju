@@ -1,0 +1,52 @@
+{
+ "contentid": "3535301",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:23:13.724Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535301",
+       "contenttypeid": "39",
+       "title": "100브랜드",
+       "createdtime": "20250911110211",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 회산로339번길 12-7 (회산동)",
+       "addr2": "",
+       "zipcode": "25598",
+       "mapx": "128.8638672749",
+       "mapy": "37.7397805328",
+       "mlevel": "6",
+       "overview": "100브랜드는 강릉시 회산동에 위치한 브런치 카페로, 청담동 브런치 카페에서 주방장으로 근무한 셰프가 직접 운영한다. 대표 메뉴는 잠봉 루꼴라 바질페스토 피자와 리코타치즈 루꼴라 바질페스토 피자이며, 강릉 송로버섯을 활용한 토마토·로제·오일 파스타, 청양고추 까르보나라, 투움바 파스타 등 다양한 메뉴를 판매한다. 파스타는 스테인리스 팬으로 조리하고 1종 세제만을 사용하는 등 철저한 위생 관리 원칙을 지켜 청결한 조리 환경을 유지한다. 넓은 주차 공간을 갖추고 있어 방문이 편리하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

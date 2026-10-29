@@ -1,0 +1,52 @@
+{
+ "contentid": "3351277",
+ "modifiedtime": "20250318213503",
+ "fetchedAt": "2026-10-29T20:22:07.870Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3351277",
+       "contenttypeid": "12",
+       "title": "라카이 샌드파인 수영장",
+       "createdtime": "20240821095559",
+       "modifiedtime": "20250318213503",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/73/3380973_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/73/3380973_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE05",
+       "lclsSystm3": "VE050200",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020200",
+       "addr1": "강원특별자치도 강릉시 해안로 536 (안현동)",
+       "addr2": "",
+       "zipcode": "25460",
+       "mapx": "128.9033255449",
+       "mapy": "37.8064819183",
+       "mlevel": "6",
+       "overview": "강릉의 랜드마크로 떠오른 라카이 샌드파인은 총 객실 281실 규모의 콘도 6개동과 리셉션동, 컨벤션센터, 야외풀, 테마가든으로 구성된 리조트이다. 부대시설로 실내풀, 야외풀. 사우나 등이 있으며 실내풀은 성인풀, 유아풀, 야외 스파로 구성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

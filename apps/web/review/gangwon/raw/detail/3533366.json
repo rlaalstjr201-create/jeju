@@ -1,0 +1,52 @@
+{
+ "contentid": "3533366",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:37.241Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533366",
+       "contenttypeid": "39",
+       "title": "돈미소",
+       "createdtime": "20250909131257",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 하슬라로 195 (교동)",
+       "addr2": "1층",
+       "zipcode": "25507",
+       "mapx": "128.8751765139",
+       "mapy": "37.7674136678",
+       "mlevel": "6",
+       "overview": "돈미소는 강릉시 교동 하슬라로에 위치한 돼지고기 구이 전문점으로, 제주흑돼지오겹살·문경약돌삼겹살·목살 등이 대표 메뉴이다. 100% 천연 대나무숯을 사용해 구운 고기는 육즙이 풍부하고 담백한 맛이 특징이며, 하향식 로스타를 적용해 연기와 냄새를 최소화한 쾌적한 환경을 유지한다. 기본 반찬으로 양념게장이 제공되며, 식사 메뉴로는 된장찌개·김치찌개·누룽지 등을 함께 판매한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

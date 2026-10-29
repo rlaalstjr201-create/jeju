@@ -1,0 +1,52 @@
+{
+ "contentid": "3534702",
+ "modifiedtime": "20250910155337",
+ "fetchedAt": "2026-10-29T20:22:27.057Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534702",
+       "contenttypeid": "39",
+       "title": "강릉남매삼계탕",
+       "createdtime": "20250910155225",
+       "modifiedtime": "20250910155337",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 교동광장로 84 (교동)",
+       "addr2": "",
+       "zipcode": "25516",
+       "mapx": "128.8737906045",
+       "mapy": "37.7649139300",
+       "mlevel": "6",
+       "overview": "강릉남매삼계탕은 다양한 삼계탕과 닭요리를 맛볼 수 있는 한식 전문점입니다.\n인기 메뉴인 들깨삼계탕은 고소하고 부드러운 국물이 특징이며, 능이버섯 오리백숙과 순살 닭볶음탕도 인기가 많습니다.\n닭곰탕과 닭볶음탕의 조합이 특히 좋으며, 국내산 닭다리살을 사용한 순살 닭볶음탕은 쫄깃한 식감으로 만족도가 높습니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

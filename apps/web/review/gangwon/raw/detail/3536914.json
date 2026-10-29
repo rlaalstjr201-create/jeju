@@ -1,0 +1,52 @@
+{
+ "contentid": "3536914",
+ "modifiedtime": "20250915112005",
+ "fetchedAt": "2026-10-29T20:22:21.421Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536914",
+       "contenttypeid": "28",
+       "title": "삼산 야영장",
+       "createdtime": "20250915111949",
+       "modifiedtime": "20250915112005",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.instagram.com/samsan_camping",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "AC",
+       "lclsSystm2": "AC05",
+       "lclsSystm3": "AC050100",
+       "cat1": "A03",
+       "cat2": "A0302",
+       "cat3": "A03021700",
+       "addr1": "강원특별자치도 강릉시 연곡면 진고개로 1296",
+       "addr2": "",
+       "zipcode": "25400",
+       "mapx": "128.6813221297",
+       "mapy": "37.8461174558",
+       "mlevel": "6",
+       "overview": "작은 금강산이라 불리우는 소금강 계곡을 낀 자연에서 편안한 시간 보내시길 바랍니다:)"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

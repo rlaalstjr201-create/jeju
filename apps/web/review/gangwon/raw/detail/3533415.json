@@ -1,0 +1,52 @@
+{
+ "contentid": "3533415",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:44.172Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533415",
+       "contenttypeid": "39",
+       "title": "봉봉키친",
+       "createdtime": "20250909134826",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 회산로385번길 1 (회산동)",
+       "addr2": "1층",
+       "zipcode": "25598",
+       "mapx": "128.8690972864",
+       "mapy": "37.7421414730",
+       "mlevel": "6",
+       "overview": "봉봉키친은 강릉시 회산동에 위치한 돈가스 전문 식당으로, 양파·파프리카·모짜렐라 치즈가 올라간 피자돈가스와 스윗트콘·모짜렐라 치즈가 올라간 콘치즈돈가스가 대표 메뉴이다. 바삭한 식감의 수제돈가스 외에도 함박스테이크와 냉메밀소바, 쫄면튀김만두(쫄튀만) 등 다양한 메뉴를 판매한다. 매장은 깔끔하고 밝은 분위기로 꾸며져 있으며, 반찬과 스프는 셀프바 형태로 운영된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

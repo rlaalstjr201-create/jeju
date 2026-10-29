@@ -1,0 +1,52 @@
+{
+ "contentid": "3536522",
+ "modifiedtime": "20250912160809",
+ "fetchedAt": "2026-10-29T20:22:42.936Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536522",
+       "contenttypeid": "39",
+       "title": "베이커리가루 입암점",
+       "createdtime": "20250912160750",
+       "modifiedtime": "20250912160809",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 월대산로 64 (입암동)",
+       "addr2": "1호",
+       "zipcode": "25579",
+       "mapx": "128.9174701587",
+       "mapy": "37.7598848077",
+       "mlevel": "6",
+       "overview": "#베이커리가루 #베이커리"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

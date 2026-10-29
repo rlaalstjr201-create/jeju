@@ -1,0 +1,52 @@
+{
+ "contentid": "3548812",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:23:12.812Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3548812",
+       "contenttypeid": "39",
+       "title": "홍가홍",
+       "createdtime": "20251015114258",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 강릉시 남부로 137 (노암동)",
+       "addr2": "",
+       "zipcode": "25595",
+       "mapx": "128.8952893578",
+       "mapy": "37.7426058183",
+       "mlevel": "6",
+       "overview": "중식당"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3547911",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:23:01.111Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3547911",
+       "contenttypeid": "39",
+       "title": "주문진순이네",
+       "createdtime": "20251014164552",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 가작로 15 (교동)",
+       "addr2": "",
+       "zipcode": "25508",
+       "mapx": "128.8774623545",
+       "mapy": "37.7694995820",
+       "mlevel": "6",
+       "overview": "주문진순이네는 강릉의 인기 맛집으로, 신선한 생물을 사용한 장치조림이 인기 메뉴입니다.\n매콤달콤한 회무침과 정갈한 밑반찬이 함께 제공되며, 특히 장치조림은 뼈 없이 부드럽게 즐길 수 있어 호평을 받고 있습니다.\n주차는 그린 유료주차장과 제휴되어 있어 편리하며, 웨이팅이 있을 수 있으니 방문 시 참고하시기 바랍니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

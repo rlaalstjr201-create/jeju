@@ -1,0 +1,52 @@
+{
+ "contentid": "3536390",
+ "modifiedtime": "20250912142659",
+ "fetchedAt": "2026-10-29T20:22:26.290Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536390",
+       "contenttypeid": "39",
+       "title": "강릉가마솥설렁탕",
+       "createdtime": "20250912142646",
+       "modifiedtime": "20250912142659",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 사천면 동해대로 3566",
+       "addr2": "",
+       "zipcode": "25441",
+       "mapx": "128.8617043626",
+       "mapy": "37.8043730170",
+       "mlevel": "6",
+       "overview": "\"한식, 사천면\n\n주메뉴는 설렁탕, 이용시간 오전7시30분-저녁 8시(일요일 휴무)\n\n장애인 주차장은 없음. 일반차량 15대 정도 주차가능.\n\n가게 출입구는 자동문은 아니지만 경사로가 있어 휠체어 접근이 용이함.\n\n장애인용 화장실은 없음. 일반 공용화장실은 있으나 문턱 단차가 있어 휠체어 이용자는 이용이 불편함.\n\n유아의자는 2개 보유함.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

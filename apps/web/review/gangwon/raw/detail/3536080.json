@@ -1,0 +1,52 @@
+{
+ "contentid": "3536080",
+ "modifiedtime": "20250912093834",
+ "fetchedAt": "2026-10-29T20:22:40.657Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536080",
+       "contenttypeid": "39",
+       "title": "맛마루부대찌개",
+       "createdtime": "20250912093804",
+       "modifiedtime": "20250912093834",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 해안로 298-5 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9193634337",
+       "mapy": "37.7921227817",
+       "mlevel": "6",
+       "overview": "\"맛마루부대찌개는 부대찌개뿐만 아니라 꼬막비빔밥, 순두부부대찌개 등 다양한 한식 메뉴를 제공합니다.\n특히 여름철에는 시원한 냉모밀이 인기이며, 통실한 새우튀김과 함께 먹으면 더욱 좋습니다.\n주차 공간이 넓어 방문이 편리하고, 내부 인테리어도 깔끔해 쾌적한 식사를 즐길 수 있습니다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

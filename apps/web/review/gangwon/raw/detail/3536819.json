@@ -1,0 +1,52 @@
+{
+ "contentid": "3536819",
+ "modifiedtime": "20250915095246",
+ "fetchedAt": "2026-10-29T20:23:02.457Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536819",
+       "contenttypeid": "39",
+       "title": "찜대감",
+       "createdtime": "20250915095220",
+       "modifiedtime": "20250915095246",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 해안로 292 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9202106032",
+       "mapy": "37.7913701078",
+       "mlevel": "6",
+       "overview": "\"한식, 경포권, 주메뉴는 가오리찜, \n\n이용시간 오전11시-밤22시(연중무휴)\n\n식당가 공용주차장 이용\n\n사장님 한분이 찜대감 외 같은 라인쪽 3개 사업장을 더 가지고 계심(강릉 다이닝 조개, 아이러브조개, 비빔상회) \n\n가게 출입구는 단차 없으나 수동문임.\n\n화장실은 남녀 구분되어 있으나 화장실 입구가 좁고, 문 단차가 있음.\n\n유아용 의자 15개 있음.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

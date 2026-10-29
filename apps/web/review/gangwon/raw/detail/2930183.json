@@ -1,0 +1,52 @@
+{
+ "contentid": "2930183",
+ "modifiedtime": "20260720102845",
+ "fetchedAt": "2026-10-29T20:23:05.298Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2930183",
+       "contenttypeid": "39",
+       "title": "카페 뤼미에르",
+       "createdtime": "20221205150822",
+       "modifiedtime": "20260720102845",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/79/2930179_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/79/2930179_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 창해로14번길 18",
+       "addr2": "",
+       "zipcode": "25556",
+       "mapx": "128.9471325696",
+       "mapy": "37.7727618841",
+       "mlevel": "6",
+       "overview": "카페 뤼미에르는 강원특별자치도 강릉시 안목 커피거리에 위치한 카페이다. 전면이 통창으로 되어 있어 안목해변을 바라보며 시간을 보낼 수 있으며, 유럽풍의 차분한 분위기로 꾸며진 실내가 특징이다. 커피를 비롯해 다양한 차와 디저트, 간단한 식사 메뉴를 판매하며, 시그니처 라떼도 함께 선보인다. 안목해변과 안목 커피거리를 함께 둘러보며 방문하기 좋은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

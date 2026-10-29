@@ -1,0 +1,52 @@
+{
+ "contentid": "3536043",
+ "modifiedtime": "20250912091358",
+ "fetchedAt": "2026-10-29T20:22:48.145Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536043",
+       "contenttypeid": "39",
+       "title": "솔향기추어탕",
+       "createdtime": "20250912091344",
+       "modifiedtime": "20250912091358",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 난설헌로78번길 38-5 (포남동)",
+       "addr2": "",
+       "zipcode": "25472",
+       "mapx": "128.9021542533",
+       "mapy": "37.7798627534",
+       "mlevel": "6",
+       "overview": "솔향기추어탕 #한식"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

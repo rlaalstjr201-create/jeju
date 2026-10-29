@@ -1,0 +1,52 @@
+{
+ "contentid": "3530952",
+ "modifiedtime": "20250915145626",
+ "fetchedAt": "2026-10-29T20:22:45.348Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3530952",
+       "contenttypeid": "39",
+       "title": "사천항주문진물회",
+       "createdtime": "20250903132213",
+       "modifiedtime": "20250915145626",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 사천면 진리항구길 49",
+       "addr2": "",
+       "zipcode": "25435",
+       "mapx": "128.8754270978",
+       "mapy": "37.8375222248",
+       "mlevel": "6",
+       "overview": "사천항 주문진 물회는 강릉시 사천면 진리항구길에 위치한 새콤달콤 시원한 물회를 전문적으로 하는 사천항 맛집이다. 특히, 물회의 매콤한 맛뿐만 아니라 우럭 미역국의 부드러운 맛도 일품으로 알려져 많은 사람이 방문하는 곳이다. 메뉴로는 모둠물회, 모둠 덮밥, 가자미 물회 등을 판매하고 있다. 영업시간은 오전 9시부터 밤 9시까지 영업하고 있으며 쉬는 날은 없어 언제든 방문할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

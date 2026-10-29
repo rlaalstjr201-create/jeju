@@ -1,0 +1,52 @@
+{
+ "contentid": "3535724",
+ "modifiedtime": "20250911144835",
+ "fetchedAt": "2026-10-29T20:22:55.319Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535724",
+       "contenttypeid": "39",
+       "title": "우미관곰탕",
+       "createdtime": "20250911144820",
+       "modifiedtime": "20250911144835",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 남부로 170 (노암동)",
+       "addr2": "",
+       "zipcode": "25610",
+       "mapx": "128.8987973714",
+       "mapy": "37.7427169849",
+       "mlevel": "6",
+       "overview": "\"[강릉맛집]우미관 대표님 직접 신선한 재료를 선별하여 설렁탕, 갈비탕, 매운갈비탕, 육개장, 우거지국밥, 한우도가니탕, 한우우족탕\n각종 탕, 수육 준비되어 있으며,\n계절메뉴 주인장이 직접 면 반죽 숙성한 자가제면 냉면, 막국수, 서리태콩국수 를 손님에게 제공합니다\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

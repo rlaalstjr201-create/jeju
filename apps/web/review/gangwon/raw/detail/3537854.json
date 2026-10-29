@@ -1,0 +1,52 @@
+{
+ "contentid": "3537854",
+ "modifiedtime": "20250916135010",
+ "fetchedAt": "2026-10-29T20:22:46.261Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537854",
+       "contenttypeid": "39",
+       "title": "삼다도횟집",
+       "createdtime": "20250916134951",
+       "modifiedtime": "20250916135010",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 사천면 진리해변길 85",
+       "addr2": "",
+       "zipcode": "25435",
+       "mapx": "128.8767574667",
+       "mapy": "37.8396442273",
+       "mlevel": "6",
+       "overview": "\"삼다도 횟집은 강릉시 사천면 진리해변길에 위치한 곳으로 횟집 앞으로 바다가 있어 아름다운 경치와 함께 푸짐한 정성이 강릉여행의 맛을 더해주는 곳이다. 메뉴로는 광어,우럭, 자연산,물회, 회덮밥 등을 판매하고 있다. 특히 반찬으로 나오는 가리비젓이 특색있다. 영업시간은 오전 10시부터 오후 9시까지이며 휠체어가 입장이 가능하고 매주 화요일은 휴무이기 때문에 주의해서 방문하면 된다.\n휠체어 입장이 가능하다. (강원도청 제공 2017.08)\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

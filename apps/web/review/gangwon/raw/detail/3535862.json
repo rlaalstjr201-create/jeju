@@ -1,0 +1,52 @@
+{
+ "contentid": "3535862",
+ "modifiedtime": "20250911164531",
+ "fetchedAt": "2026-10-29T20:23:10.086Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535862",
+       "contenttypeid": "39",
+       "title": "하누리감자탕",
+       "createdtime": "20250911164451",
+       "modifiedtime": "20250911164531",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 구정면 구정중앙로 119",
+       "addr2": "",
+       "zipcode": "25622",
+       "mapx": "128.8715813715",
+       "mapy": "37.7105257330",
+       "mlevel": "6",
+       "overview": "감자탕"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

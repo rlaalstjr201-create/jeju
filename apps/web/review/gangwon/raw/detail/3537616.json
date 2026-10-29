@@ -1,0 +1,52 @@
+{
+ "contentid": "3537616",
+ "modifiedtime": "20250916085806",
+ "fetchedAt": "2026-10-29T20:22:53.241Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537616",
+       "contenttypeid": "39",
+       "title": "연곡유정오리",
+       "createdtime": "20250916085752",
+       "modifiedtime": "20250916085806",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 연곡면 성안길 49",
+       "addr2": "",
+       "zipcode": "25428",
+       "mapx": "128.8313192972",
+       "mapy": "37.8590716469",
+       "mlevel": "6",
+       "overview": "\"연곡유정오리의 오리주물럭은 잡내 없이 고소하고 맛있어 재방문이 끊이지 않는 곳입니다.\n \n순한맛부터 매운맛까지 선택 가능하며, 곁들임 반찬도 상큼하게 잘 어울려 만족스러운 식사를 제공합니다.\n \n오리로스와 볶음밥도 인기 메뉴로, 넓은 주차장과 깔끔한 매장이 더해져 가족 외식 장소로 추천됩니다\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

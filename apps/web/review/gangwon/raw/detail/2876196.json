@@ -1,0 +1,52 @@
+{
+ "contentid": "2876196",
+ "modifiedtime": "20251218174441",
+ "fetchedAt": "2026-10-29T20:23:03.594Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2876196",
+       "contenttypeid": "39",
+       "title": "초당버거 강릉본점",
+       "createdtime": "20221026150646",
+       "modifiedtime": "20251218174441",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"https://www.instagram.com/chodang_burger\" target=\"_blank\" title=\"새창 : 초당버거 인스타그램 페이지로 이동\">www.instagram.com/chodang_burger</a>",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 초당순두부길77번길 20 (초당동)",
+       "addr2": "",
+       "zipcode": "25466",
+       "mapx": "128.9149249652",
+       "mapy": "37.7914644382",
+       "mlevel": "6",
+       "overview": "초당버거는 신선한 재료와 정성으로 만든 수제버거를 전문으로 하는 수제버거 전문점이다. 수제버거뿐만 아니라, 당근라페, 코울슬로, 피클 등 다양한 수제 사이드 메뉴를 직접 만들어 제공한다. 매장은 시즌마다 새로운 인테리어로 변신하여, 방문할 때마다 색다른 분위기를 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

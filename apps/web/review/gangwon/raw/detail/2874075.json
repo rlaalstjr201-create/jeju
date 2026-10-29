@@ -1,0 +1,52 @@
+{
+ "contentid": "2874075",
+ "modifiedtime": "20250108142020",
+ "fetchedAt": "2026-10-29T20:23:07.652Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2874075",
+       "contenttypeid": "39",
+       "title": "태백산맥식당",
+       "createdtime": "20221025095645",
+       "modifiedtime": "20250108142020",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/2874074_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/74/2874074_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 해안로 517",
+       "addr2": "",
+       "zipcode": "25460",
+       "mapx": "128.9035283620",
+       "mapy": "37.8046182489",
+       "mlevel": "6",
+       "overview": "태백산맥식당은 경포에서 20년 넘게 자리를 지키며 손님을 맞이하는 두부 요리 전문점이다. 신선한 채소로 육수를 내고 신선한 해산물들을 넣어 만드는 짬뽕 순두부가 대표 메뉴이다. 두부는 국내산 콩을 사용하여 매일 아침 정성껏 만든다. 이 외에도 오삼불고기와 황태해장국도 인기가 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

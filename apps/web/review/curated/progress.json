@@ -1,0 +1,174 @@
+{
+ "updatedAt": "2026-10-29T20:23:24.733Z",
+ "kstDay": "2026-10-30",
+ "callsThisRun": 812,
+ "callsToday": 900,
+ "dests": {
+  "gangwon": {
+   "lDongRegnCd": 51,
+   "inScope": 1968,
+   "detailed": 812,
+   "remaining": 1156,
+   "cities": {
+    "150 강릉": {
+     "inScope": 724,
+     "detailed": 724,
+     "remaining": 0
+    },
+    "210 속초": {
+     "inScope": 209,
+     "detailed": 88,
+     "remaining": 121
+    },
+    "830 양양": {
+     "inScope": 202,
+     "detailed": 0,
+     "remaining": 202
+    },
+    "110 춘천": {
+     "inScope": 314,
+     "detailed": 0,
+     "remaining": 314
+    },
+    "760 평창": {
+     "inScope": 519,
+     "detailed": 0,
+     "remaining": 519
+    }
+   }
+  },
+  "seoul": {
+   "lDongRegnCd": 11,
+   "inScope": 3171,
+   "detailed": 0,
+   "remaining": 3171,
+   "cities": {
+    "110 110": {
+     "inScope": 510,
+     "detailed": 0,
+     "remaining": 510
+    },
+    "140 140": {
+     "inScope": 259,
+     "detailed": 0,
+     "remaining": 259
+    },
+    "170 170": {
+     "inScope": 183,
+     "detailed": 0,
+     "remaining": 183
+    },
+    "200 200": {
+     "inScope": 204,
+     "detailed": 0,
+     "remaining": 204
+    },
+    "215 215": {
+     "inScope": 75,
+     "detailed": 0,
+     "remaining": 75
+    },
+    "230 230": {
+     "inScope": 65,
+     "detailed": 0,
+     "remaining": 65
+    },
+    "260 260": {
+     "inScope": 41,
+     "detailed": 0,
+     "remaining": 41
+    },
+    "290 290": {
+     "inScope": 110,
+     "detailed": 0,
+     "remaining": 110
+    },
+    "305 305": {
+     "inScope": 53,
+     "detailed": 0,
+     "remaining": 53
+    },
+    "320 320": {
+     "inScope": 40,
+     "detailed": 0,
+     "remaining": 40
+    },
+    "350 350": {
+     "inScope": 75,
+     "detailed": 0,
+     "remaining": 75
+    },
+    "380 380": {
+     "inScope": 60,
+     "detailed": 0,
+     "remaining": 60
+    },
+    "410 410": {
+     "inScope": 83,
+     "detailed": 0,
+     "remaining": 83
+    },
+    "440 440": {
+     "inScope": 186,
+     "detailed": 0,
+     "remaining": 186
+    },
+    "470 470": {
+     "inScope": 59,
+     "detailed": 0,
+     "remaining": 59
+    },
+    "500 500": {
+     "inScope": 89,
+     "detailed": 0,
+     "remaining": 89
+    },
+    "530 530": {
+     "inScope": 56,
+     "detailed": 0,
+     "remaining": 56
+    },
+    "545 545": {
+     "inScope": 27,
+     "detailed": 0,
+     "remaining": 27
+    },
+    "560 560": {
+     "inScope": 118,
+     "detailed": 0,
+     "remaining": 118
+    },
+    "590 590": {
+     "inScope": 50,
+     "detailed": 0,
+     "remaining": 50
+    },
+    "620 620": {
+     "inScope": 76,
+     "detailed": 0,
+     "remaining": 76
+    },
+    "650 650": {
+     "inScope": 156,
+     "detailed": 0,
+     "remaining": 156
+    },
+    "680 680": {
+     "inScope": 374,
+     "detailed": 0,
+     "remaining": 374
+    },
+    "710 710": {
+     "inScope": 154,
+     "detailed": 0,
+     "remaining": 154
+    },
+    "740 740": {
+     "inScope": 68,
+     "detailed": 0,
+     "remaining": 68
+    }
+   }
+  }
+ }
+}

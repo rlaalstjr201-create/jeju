@@ -1,0 +1,52 @@
+{
+ "contentid": "2818352",
+ "modifiedtime": "20251218173203",
+ "fetchedAt": "2026-10-29T20:23:05.912Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2818352",
+       "contenttypeid": "39",
+       "title": "카페폴앤메리",
+       "createdtime": "20220429130712",
+       "modifiedtime": "20251218173203",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 창해로350번길 33 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9168746243",
+       "mapy": "37.7967888597",
+       "mlevel": "6",
+       "overview": "카페폴앤메리는 강원도 강릉시에 위치한 수제버거 전문점이다. 빵 사이에 여러 채소와 두툼한 패티를 쌓아 올린 수제버거는 비주얼도 맛도 최고다. 버거 안에서 폭포처럼 쏟아지는 치즈가 폴앤메리만의 시그니처 메뉴다. 강문해변에 위치한 본점은 바다를 바라보며 버거를 즐길 수 있고, 강릉 시내에 위치한 분점은 접근성이 좋은 장점이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

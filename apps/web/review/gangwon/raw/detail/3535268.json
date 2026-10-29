@@ -1,0 +1,52 @@
+{
+ "contentid": "3535268",
+ "modifiedtime": "20250911104309",
+ "fetchedAt": "2026-10-29T20:22:42.564Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535268",
+       "contenttypeid": "39",
+       "title": "백경횟집(홍게무한리필)",
+       "createdtime": "20250911104255",
+       "modifiedtime": "20250911104309",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 주문진읍 항구로 63",
+       "addr2": "",
+       "zipcode": "25412",
+       "mapx": "128.8284629456",
+       "mapy": "37.8930343226",
+       "mlevel": "6",
+       "overview": "\"경횟집 홍게무한리필은 가성비 좋은 홍게 무한리필 메뉴로 유명하다.\n성인, 초등학생, 7세 미만 아이용으로 구분된 메뉴가 있으며, 신선한 해산물을 합리적인 가격에 즐길 수 있다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3536518",
+ "modifiedtime": "20250912155516",
+ "fetchedAt": "2026-10-29T20:22:29.785Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536518",
+       "contenttypeid": "39",
+       "title": "게락 회산점",
+       "createdtime": "20250912155459",
+       "modifiedtime": "20250912155516",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 회산로383번길 35 (회산동)",
+       "addr2": "103호",
+       "zipcode": "25598",
+       "mapx": "128.8659197926",
+       "mapy": "37.7422136245",
+       "mlevel": "6",
+       "overview": "#게락 #카페"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

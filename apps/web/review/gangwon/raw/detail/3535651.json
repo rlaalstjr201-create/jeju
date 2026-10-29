@@ -1,0 +1,52 @@
+{
+ "contentid": "3535651",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:54.212Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535651",
+       "contenttypeid": "39",
+       "title": "옛카네이션집",
+       "createdtime": "20250911140549",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 성산면 구산길 32",
+       "addr2": "",
+       "zipcode": "25450",
+       "mapx": "128.8319236027",
+       "mapy": "37.7179546584",
+       "mlevel": "6",
+       "overview": "옛카네이션집은 강원도 강릉시에 위치한 한식당으로, 단일 메뉴인 대구머리찜을 전문으로 한다. 대구머리찜에는 말린 대구 머리를 비롯해 미역, 버섯, 감자, 두부 등이 함께 들어가며, 특히 초당두부가 함께 끓여져 담백한 맛을 더한다. 매운 양념의 맛을 완화시켜 균형을 이루는 역할을 하며, 진한 양념으로 조리해 깊은 풍미를 낸다. 국물 맛이 개운한 것이 특징이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

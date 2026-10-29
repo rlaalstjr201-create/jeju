@@ -1,0 +1,52 @@
+{
+ "contentid": "3534346",
+ "modifiedtime": "20250910110901",
+ "fetchedAt": "2026-10-29T20:22:36.802Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534346",
+       "contenttypeid": "39",
+       "title": "더카페 강릉중앙점",
+       "createdtime": "20250910110834",
+       "modifiedtime": "20250910110901",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.thecaffe.co.kr/ 인스타그램",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 중앙시장2길 19 (성남동)",
+       "addr2": "",
+       "zipcode": "25543",
+       "mapx": "128.8971333263",
+       "mapy": "37.7526241399",
+       "mlevel": "6",
+       "overview": "이랜드이츠에서 운영하는 '더카페'는 20년 업력의 브랜드로 최고의 커피 전문가들이 최상의 커피를 만듭니다.\n\n(1) 최고의 커피를 만드는 전문가들\n로스팅 팩토리 직영 운영하며, 더카페 소속 국제공인 Q-grader들이 엄선한 최상의 원두로 로스팅합니다.\n\n(2) 산지 직수입 최상의 원두\n커피 생두를 브라질, 에티오피아 등의 산지에서 직수입하고, 100% 아라비카 원두만을 고집하는 커피에 대한 원칙이 있습니다.\n\n(3) 꼭 먹어야 하는 시크릿라떼\n80만잔 판매된 더카페의 시그니처 음료 '시크릿라떼'는 우유와 크림의 황금 블렌딩을 연구해 깊은 맛을 완성했습니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

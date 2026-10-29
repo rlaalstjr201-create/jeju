@@ -1,0 +1,52 @@
+{
+ "contentid": "3533715",
+ "modifiedtime": "20250909164149",
+ "fetchedAt": "2026-10-29T20:22:57.078Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533715",
+       "contenttypeid": "39",
+       "title": "유진면옥",
+       "createdtime": "20250909164115",
+       "modifiedtime": "20250909164149",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 주문진읍 신리천로 77",
+       "addr2": "",
+       "zipcode": "25420",
+       "mapx": "128.8228970980",
+       "mapy": "37.8828437281",
+       "mlevel": "6",
+       "overview": "\"채소와 해산물로 7시간 이상 푹 끓여 진하게 달인 '육수', 직접 반죽하고 주문 즉시 바로 뽑는 '면'\n냉면과 막국수가 맛있는 유진면옥입니다.\n\n100% 국내산 돼지고기로 만드는 수육도 맛이 좋습니다.\n\n넓은 매장에 입, 좌식 테이블 모두 갖추고 있으며, 후면 주차장도 마련되어 있습니다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

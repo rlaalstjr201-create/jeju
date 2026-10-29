@@ -1,0 +1,52 @@
+{
+ "contentid": "3536554",
+ "modifiedtime": "20250912161719",
+ "fetchedAt": "2026-10-29T20:22:44.256Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536554",
+       "contenttypeid": "39",
+       "title": "부산횟집",
+       "createdtime": "20250912161702",
+       "modifiedtime": "20250912161719",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 창해로 419 (강문동)",
+       "addr2": "",
+       "zipcode": "25460",
+       "mapx": "128.9143442240",
+       "mapy": "37.7991218740",
+       "mlevel": "6",
+       "overview": "\"오픈한지 50년 ~3대째 연중무휴..24시간 운영되는 ...\n경포에서 가장 맛좋코 전망 좋은 횟집\n200명 단체석 완비 ~~\n일단 푸짐한 양~~\n싱싱한 활어회~~물회\n시원한 원조 곰치국(비리지않코..완전맛있는)\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

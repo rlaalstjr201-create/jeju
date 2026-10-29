@@ -1,0 +1,52 @@
+{
+ "contentid": "3532493",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:28.691Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3532493",
+       "contenttypeid": "39",
+       "title": "강릉한우만",
+       "createdtime": "20250905171131",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 정원로 74-23 (교동)",
+       "addr2": "1층",
+       "zipcode": "25516",
+       "mapx": "128.8741211385",
+       "mapy": "37.7646361908",
+       "mlevel": "6",
+       "overview": "강릉한우만은 강릉 여행 중 꼭 방문해야 할 가성비 좋은 한우 전문점입니다.\n한우모듬부터 1인분까지 다양한 메뉴와 신선한 육회, 키조개관자 등이 준비되어 있습니다.\n신선한 고기와 푸짐한 양, 저렴한 가격으로 가족이나 친구들과 함께 방문하기 좋으며, 기본 반찬도 맛있습니다.\n단골이 되기 쉬운 매력적인 맛집입니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

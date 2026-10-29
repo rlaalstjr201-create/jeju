@@ -1,0 +1,52 @@
+{
+ "contentid": "3542927",
+ "modifiedtime": "20250923150343",
+ "fetchedAt": "2026-10-29T20:22:03.692Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3542927",
+       "contenttypeid": "12",
+       "title": "강릉교회",
+       "createdtime": "20250923150328",
+       "modifiedtime": "20250923150343",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030200",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02010900",
+       "addr1": "강원특별자치도 강릉시 해안로 333 (강문동)",
+       "addr2": "",
+       "zipcode": "25466",
+       "mapx": "128.9166441773",
+       "mapy": "37.7939586275",
+       "mlevel": "6",
+       "overview": "강릉교회"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

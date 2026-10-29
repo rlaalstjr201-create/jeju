@@ -1,0 +1,52 @@
+{
+ "contentid": "3547819",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:23:08.546Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3547819",
+       "contenttypeid": "39",
+       "title": "토프레소 강릉 교동점",
+       "createdtime": "20251014151514",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 솔올로5번길 49 (교동)",
+       "addr2": "",
+       "zipcode": "25515",
+       "mapx": "128.8769764566",
+       "mapy": "37.7640196508",
+       "mlevel": "6",
+       "overview": "숙주돈까스와 커피를 파는 식당"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

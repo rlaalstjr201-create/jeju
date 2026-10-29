@@ -1,0 +1,52 @@
+{
+ "contentid": "2905205",
+ "modifiedtime": "20260916113507",
+ "fetchedAt": "2026-10-29T20:22:29.160Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2905205",
+       "contenttypeid": "39",
+       "title": "강문떡갈비",
+       "createdtime": "20221110163959",
+       "modifiedtime": "20260916113507",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 창해로 360-1 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9176168602",
+       "mapy": "37.7951002552",
+       "mlevel": "6",
+       "overview": "강문떡갈비는 강릉시 강문해변 인근에 위치한 떡갈비 정식 전문점이다. 소고기와 돼지고기를 섞어 비법 재료로 만든 떡갈비를 대표 메뉴로 판매한다. 정식을 주문하면 떡갈비 두 덩어리와 샐러드, 밥, 김치, 소스, 콘샐러드, 된장국이 한 쟁반에 담겨 나온다. 깔끔하게 차려진 음식을 편리하게 즐길 수 있으며, 소고기 육회와 채소를 함께 비벼 먹는 육회물회도 맛볼 수 있다. 매장 앞에 전용 주차장이 마련되어 있어 이용하기 편리하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

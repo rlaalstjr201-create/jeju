@@ -1,0 +1,52 @@
+{
+ "contentid": "2775583",
+ "modifiedtime": "20260807095124",
+ "fetchedAt": "2026-10-29T20:23:14.039Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2775583",
+       "contenttypeid": "39",
+       "title": "346커피스토리",
+       "createdtime": "20211118005530",
+       "modifiedtime": "20260807095124",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/99/3571799_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/99/3571799_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 창해로 348 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9187615199",
+       "mapy": "37.7944884999",
+       "mlevel": "6",
+       "overview": "346커피스토리은 강릉 강문해변 오션뷰를 즐길 수 있는 전망 좋은 베이커리 카페이다. 디저트와 커피를 마시면서 바다를 바라보며 대화를 나눌 수 있다. 좌석이 비교적 넓게 배치되어 있고 바다가 잘 보이는 전망을 갖춘 분위기 좋은 카페이다. 기본 커피를 비롯해 다양한 음료와 베이커리를 한 번에 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3536162",
+ "modifiedtime": "20250912101333",
+ "fetchedAt": "2026-10-29T20:23:02.547Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536162",
+       "contenttypeid": "39",
+       "title": "참치엔초밥",
+       "createdtime": "20250912101313",
+       "modifiedtime": "20250912101333",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "강원특별자치도 강릉시 입암로 157 (입암동)",
+       "addr2": "",
+       "zipcode": "25579",
+       "mapx": "128.9184006333",
+       "mapy": "37.7597959473",
+       "mlevel": "6",
+       "overview": "\" #참치엔초밥 #일식당\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

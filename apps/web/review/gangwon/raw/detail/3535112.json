@@ -1,0 +1,52 @@
+{
+ "contentid": "3535112",
+ "modifiedtime": "20250911090113",
+ "fetchedAt": "2026-10-29T20:22:26.790Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535112",
+       "contenttypeid": "39",
+       "title": "강릉김밥",
+       "createdtime": "20250911090041",
+       "modifiedtime": "20250911090113",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 용지로 121 (옥천동)",
+       "addr2": "",
+       "zipcode": "25553",
+       "mapx": "128.9040047003",
+       "mapy": "37.7600345280",
+       "mlevel": "6",
+       "overview": "\"강릉김밥은 날치알 김밥과 매운돈까스김밥이 특히 인기 있는 김밥 전문점입니다.\n\n날치알 김밥은 톡톡 터지는 식감과 비리지 않은 맛으로 호평받고 있으며, 매운돈까스김밥은 중독성 있는 매운맛으로 많은 이들이 찾습니다.\n\n돈스김밥과 새우김밥 등 다양한 메뉴가 준비되어 있으며, 포장 주문도 가능해 편리하게 즐길 수 있습니다.\n\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

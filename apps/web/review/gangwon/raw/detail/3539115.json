@@ -1,0 +1,52 @@
+{
+ "contentid": "3539115",
+ "modifiedtime": "20250917101501",
+ "fetchedAt": "2026-10-29T20:23:01.316Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3539115",
+       "contenttypeid": "39",
+       "title": "주문진전주식당",
+       "createdtime": "20250917101342",
+       "modifiedtime": "20250917101501",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 주문진읍 시장길 49-1",
+       "addr2": "",
+       "zipcode": "25413",
+       "mapx": "128.8274352882",
+       "mapy": "37.8921371844",
+       "mlevel": "6",
+       "overview": "한식집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

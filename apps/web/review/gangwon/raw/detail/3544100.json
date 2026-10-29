@@ -1,0 +1,52 @@
+{
+ "contentid": "3544100",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:19.132Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3544100",
+       "contenttypeid": "28",
+       "title": "강릉강북공설운동장",
+       "createdtime": "20250925105352",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100100",
+       "cat1": "A03",
+       "cat2": "A0302",
+       "cat3": "A03020300",
+       "addr1": "강원특별자치도 강릉시 연곡면 연주로 188",
+       "addr2": "",
+       "zipcode": "25429",
+       "mapx": "128.8347186016",
+       "mapy": "37.8716063720",
+       "mlevel": "6",
+       "overview": ""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

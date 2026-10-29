@@ -1,0 +1,52 @@
+{
+ "contentid": "133934",
+ "modifiedtime": "20260224121340",
+ "fetchedAt": "2026-10-29T20:22:50.600Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133934",
+       "contenttypeid": "39",
+       "title": "신리면옥",
+       "createdtime": "20030422090000",
+       "modifiedtime": "20260224121340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/47/1813847_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/47/1813847_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 주문진읍 신리천로 84",
+       "addr2": "",
+       "zipcode": "25420",
+       "mapx": "128.821688455663",
+       "mapy": "37.8827821519344",
+       "mlevel": "6",
+       "overview": "신리면옥은 강원도 강릉시에 위치한 막국수 전문점이다.\n국내산 신선한 재료로 만드는 깔끔한 맛의 막국수가 대표 메뉴이다. 회 비빔막국수에는 가자미회가 올라가는데 은은한 감칠맛이 입맛을 돋운다. 이 외에도 냉면, 찐만두 등의 메뉴도 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

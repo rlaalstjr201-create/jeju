@@ -1,0 +1,52 @@
+{
+ "contentid": "3533850",
+ "modifiedtime": "20250909172919",
+ "fetchedAt": "2026-10-29T20:22:39.051Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533850",
+       "contenttypeid": "39",
+       "title": "래원",
+       "createdtime": "20250909172850",
+       "modifiedtime": "20250909172919",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 강릉시 동부시장길 9 (옥천동)",
+       "addr2": "",
+       "zipcode": "25552",
+       "mapx": "128.8999717671",
+       "mapy": "37.7588401427",
+       "mlevel": "6",
+       "overview": "\"청결.위생 매.일. 청소하고 주방이 훤히 보이는 오픈식 주방!\n레몬 생강 대파 중국간장 등을 넣고 매주 만드는 새콤달콤 특제 탕수육 소스\n육류 좋아하시는 분은 꼭 드셔보실 추천 메뉴 육짬뽐!\n뻔한 짜장면 보단 싱싱한 해산물이 어우러진 해물쟁반짜장!\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3533526",
+ "modifiedtime": "20250909145839",
+ "fetchedAt": "2026-10-29T20:22:37.573Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533526",
+       "contenttypeid": "39",
+       "title": "동보성",
+       "createdtime": "20250909145816",
+       "modifiedtime": "20250909145839",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 강릉시 산양큰길22번길 49 (포남동)",
+       "addr2": "",
+       "zipcode": "25483",
+       "mapx": "128.9181666803",
+       "mapy": "37.7804796616",
+       "mlevel": "6",
+       "overview": "#동보성 #중식 40년 전통 중식당입니다"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

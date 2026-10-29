@@ -1,0 +1,52 @@
+{
+ "contentid": "3535858",
+ "modifiedtime": "20250911163522",
+ "fetchedAt": "2026-10-29T20:22:41.223Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535858",
+       "contenttypeid": "39",
+       "title": "멕시칸치킨 연곡점",
+       "createdtime": "20250911163424",
+       "modifiedtime": "20250911163522",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 연곡면 진고개로 2719",
+       "addr2": "",
+       "zipcode": "25428",
+       "mapx": "128.8364938177",
+       "mapy": "37.8594717010",
+       "mlevel": "6",
+       "overview": "강릉시 연곡면에 위치한 오래된치킨집입니다.\n옛날맛그대로 튀기는 치킨입니다"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

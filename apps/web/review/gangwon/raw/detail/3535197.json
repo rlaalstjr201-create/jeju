@@ -1,0 +1,52 @@
+{
+ "contentid": "3535197",
+ "modifiedtime": "20250911095024",
+ "fetchedAt": "2026-10-29T20:22:42.451Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535197",
+       "contenttypeid": "39",
+       "title": "배스킨라빈스강릉주문진점",
+       "createdtime": "20250911095009",
+       "modifiedtime": "20250911095024",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://blog.naver.com/brgirl31/",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 주문진읍 주문로 53",
+       "addr2": "",
+       "zipcode": "25414",
+       "mapx": "128.8254800133",
+       "mapy": "37.8888097540",
+       "mlevel": "6",
+       "overview": "배스킨라빈스 주문진점/ 아이스크림"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

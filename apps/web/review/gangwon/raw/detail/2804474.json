@@ -1,0 +1,52 @@
+{
+ "contentid": "2804474",
+ "modifiedtime": "20260904165907",
+ "fetchedAt": "2026-10-29T20:22:03.883Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2804474",
+       "contenttypeid": "12",
+       "title": "강릉아기동물농장",
+       "createdtime": "20211231023919",
+       "modifiedtime": "20260904165907",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://blog.naver.com/ainmalfarm",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/28/3499728_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/28/3499728_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX03",
+       "lclsSystm3": "EX030300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 사천면 해안로 1121-144",
+       "addr2": "",
+       "zipcode": "25435",
+       "mapx": "128.8610966449",
+       "mapy": "37.8462050404",
+       "mlevel": "6",
+       "overview": "강릉아기동물농장은 강원도 강릉시 경포해변에서 해안도로를 따라 약 5.8킬로미터 거리에 가깝게 위치한 관광목장이다. 농장에는 기니피그, 공작비둘기, 양, 염소, 포니말, 토끼, 금계, 앵무새, 꿩, 강아지, 고양이 등 아이들이 교감할 수 있는 여러 동물친구들을 만날 수 있다. 넓은 주차장을 겸비하고 있어 이용이 편리하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

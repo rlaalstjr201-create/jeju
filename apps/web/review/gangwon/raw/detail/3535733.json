@@ -1,0 +1,52 @@
+{
+ "contentid": "3535733",
+ "modifiedtime": "20250911145901",
+ "fetchedAt": "2026-10-29T20:23:02.737Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535733",
+       "contenttypeid": "39",
+       "title": "청도양꼬치",
+       "createdtime": "20250911145837",
+       "modifiedtime": "20250911145901",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 강릉시 남산초교길 15-2 (내곡동)",
+       "addr2": "",
+       "zipcode": "25585",
+       "mapx": "128.8907341091",
+       "mapy": "37.7459386774",
+       "mlevel": "6",
+       "overview": "양꼬치"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

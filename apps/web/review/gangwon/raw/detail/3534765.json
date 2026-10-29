@@ -1,0 +1,52 @@
+{
+ "contentid": "3534765",
+ "modifiedtime": "20250910161247",
+ "fetchedAt": "2026-10-29T20:22:49.871Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534765",
+       "contenttypeid": "39",
+       "title": "쉼표하나",
+       "createdtime": "20250910161142",
+       "modifiedtime": "20250910161247",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 하슬라로 181 (교동)",
+       "addr2": "",
+       "zipcode": "25507",
+       "mapx": "128.8748515826",
+       "mapy": "37.7661221438",
+       "mlevel": "6",
+       "overview": "#쉼표하나 #카페 / 디저트도 맛있는 카페"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

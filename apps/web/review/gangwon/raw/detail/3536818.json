@@ -1,0 +1,52 @@
+{
+ "contentid": "3536818",
+ "modifiedtime": "20250915095229",
+ "fetchedAt": "2026-10-29T20:22:51.625Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536818",
+       "contenttypeid": "39",
+       "title": "암사직화쪽갈비 강릉점",
+       "createdtime": "20250915095205",
+       "modifiedtime": "20250915095229",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 성덕포남로168번길 47 (포남동)",
+       "addr2": "1층",
+       "zipcode": "25568",
+       "mapx": "128.9143923623",
+       "mapy": "37.7694391984",
+       "mlevel": "6",
+       "overview": "고기요리"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

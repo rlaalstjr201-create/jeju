@@ -1,0 +1,52 @@
+{
+ "contentid": "2872351",
+ "modifiedtime": "20250108113512",
+ "fetchedAt": "2026-10-29T20:22:54.036Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2872351",
+       "contenttypeid": "39",
+       "title": "옛성도물회",
+       "createdtime": "20221021134114",
+       "modifiedtime": "20250108113512",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/33/2872333_image2_1.png",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/33/2872333_image3_1.png",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 경강로2343번길 6",
+       "addr2": "",
+       "zipcode": "25569",
+       "mapx": "128.9169254581",
+       "mapy": "37.7697392128",
+       "mlevel": "6",
+       "overview": "옛성도물회는 강원도 강릉시 송정 해수욕장에서 멀지 않은 곳에 있는 물회 전문 식당이다. 동해에서 갓 잡은 횟감과 비법 육수를 사용한 요리는 푸짐한 양과 맛깔스러운 맛으로 손님들의 미각을 만족시킨다. 정직한 음식 재료와 바른 조리법으로 물회의 맛을 살리려 노력하며 재료가 소진되면 일찍 마감될 수 있으니 확인 후 방문하길 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

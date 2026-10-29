@@ -1,0 +1,52 @@
+{
+ "contentid": "3537794",
+ "modifiedtime": "20250916131903",
+ "fetchedAt": "2026-10-29T20:23:06.317Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537794",
+       "contenttypeid": "39",
+       "title": "커피블럭",
+       "createdtime": "20250916131846",
+       "modifiedtime": "20250916131903",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 성덕포남로182번길 41 (포남동)",
+       "addr2": "",
+       "zipcode": "25568",
+       "mapx": "128.9128452610",
+       "mapy": "37.7700390984",
+       "mlevel": "6",
+       "overview": "\"매일 로스팅 되는 다양한 종류의 원두,\n건강을 생각하여 정성들여 만드는 수제차,\n최고의 맛을 내는 균형잡힌 하우스블랜딩,\n한잔 한잔 정성을 다하는 핸드드립,\n아늑하고 편안한 분위기의 커피블럭 입니다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

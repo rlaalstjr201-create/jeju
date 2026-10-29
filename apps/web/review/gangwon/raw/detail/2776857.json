@@ -1,0 +1,52 @@
+{
+ "contentid": "2776857",
+ "modifiedtime": "20260930174214",
+ "fetchedAt": "2026-10-29T20:22:24.795Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2776857",
+       "contenttypeid": "38",
+       "title": "어민수산시장",
+       "createdtime": "20211122183430",
+       "modifiedtime": "20260930174214",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/59/3577859_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/59/3577859_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 주문진읍 해안로 1790",
+       "addr2": "",
+       "zipcode": "25412",
+       "mapx": "128.8308372039",
+       "mapy": "37.8942075222",
+       "mlevel": "6",
+       "overview": "주문진항에서 소형 선박을 소유한 어민이 스스로 꾸민 어민 시장으로 강릉시 어업인이 생산하는 자연산 수산물만 판매한다. 야외 공간에 만들어져 있고 주문진항 입구로 들어오면 가장 먼저 눈에 띄는 곳에 있다.  많은 양의 물고기를 잡을 때는 위판을 하지만 대체로 물량이 적은 탓에 소비자와 직접 거래를 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

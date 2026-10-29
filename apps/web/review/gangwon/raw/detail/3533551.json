@@ -1,0 +1,52 @@
+{
+ "contentid": "3533551",
+ "modifiedtime": "20250909151205",
+ "fetchedAt": "2026-10-29T20:23:09.722Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533551",
+       "contenttypeid": "39",
+       "title": "프랭크버거 강릉역점",
+       "createdtime": "20250909151144",
+       "modifiedtime": "20250909151205",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.frankburger.co.kr/",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 용지로 174-6 (교동)",
+       "addr2": "",
+       "zipcode": "25491",
+       "mapx": "128.9002938033",
+       "mapy": "37.7639145616",
+       "mlevel": "6",
+       "overview": "FRANK BURGER\n정통 미국식 프리미엄 수제치즈버거\n정통 아메리칸 스타일의 거친 패티의 맛과 풍미!\n100% 순살 소고기 수제패티!!"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

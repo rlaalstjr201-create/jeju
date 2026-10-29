@@ -1,0 +1,52 @@
+{
+ "contentid": "2775555",
+ "modifiedtime": "20251218172147",
+ "fetchedAt": "2026-10-29T20:23:08.451Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2775555",
+       "contenttypeid": "39",
+       "title": "토담순두부",
+       "createdtime": "20211118004316",
+       "modifiedtime": "20251218172147",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 난설헌로193번길 1-19 (초당동)",
+       "addr2": "",
+       "zipcode": "25466",
+       "mapx": "128.9106503621",
+       "mapy": "37.7910755104",
+       "mlevel": "6",
+       "overview": "시골집 분위기의 손두부요리 전문점이다. 허균, 허난설헌 생가 입구에 위치하고 있다. 순두부를 매콤한 양념에 끓여낸 순두부전골이 인기 메뉴이다. 가게는 옛날 구옥을 개조해서 자리를 만든 시골집 느낌이 물씬 풍기는 식당이다. 주요 메뉴로는 매콤하고 얼큰하지만 부드러운 순두부 전골, 깔끔하고 담백한 순두부 백반과 얼큰하면서 씹히는 두부식감이 좋은 두부 전골이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

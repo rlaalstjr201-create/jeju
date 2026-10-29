@@ -1,0 +1,52 @@
+{
+ "contentid": "3536482",
+ "modifiedtime": "20250912154344",
+ "fetchedAt": "2026-10-29T20:22:57.532Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536482",
+       "contenttypeid": "39",
+       "title": "이디야커피 강릉회산점",
+       "createdtime": "20250912154326",
+       "modifiedtime": "20250912154344",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 회산로 372 (회산동)",
+       "addr2": "",
+       "zipcode": "25599",
+       "mapx": "128.8684334900",
+       "mapy": "37.7410804712",
+       "mlevel": "6",
+       "overview": "#이디야커피 #카페"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

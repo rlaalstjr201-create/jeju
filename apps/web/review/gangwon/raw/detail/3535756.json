@@ -1,0 +1,52 @@
+{
+ "contentid": "3535756",
+ "modifiedtime": "20250911151614",
+ "fetchedAt": "2026-10-29T20:22:55.925Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535756",
+       "contenttypeid": "39",
+       "title": "원조강릉교동짬뽕 본점",
+       "createdtime": "20250911151521",
+       "modifiedtime": "20250911151614",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 하슬라로232번길 26-12 (교동)",
+       "addr2": "",
+       "zipcode": "25508",
+       "mapx": "128.8785539179",
+       "mapy": "37.7696606957",
+       "mlevel": "6",
+       "overview": "짬뽕맛집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

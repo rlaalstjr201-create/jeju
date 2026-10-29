@@ -1,0 +1,52 @@
+{
+ "contentid": "3533766",
+ "modifiedtime": "20250909165105",
+ "fetchedAt": "2026-10-29T20:22:49.955Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533766",
+       "contenttypeid": "39",
+       "title": "스시마루",
+       "createdtime": "20250909165029",
+       "modifiedtime": "20250909165105",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "강원특별자치도 강릉시 하슬라로206번길 12-10 (교동)",
+       "addr2": "",
+       "zipcode": "25511",
+       "mapx": "128.8767291549",
+       "mapy": "37.7673164865",
+       "mlevel": "6",
+       "overview": "영동지역 최초 회전초밥집. 2004년 개업. 최장수 초밥집으로 유명합니다. 오랜 세월 사랑 받아온 맛집으로 장수 매뉴들이 많습니다. 빠르게 변해가는 세상 속에서 변하지 않는 것이 소중하게 느껴지신다면 한번 방문해 보셔요."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

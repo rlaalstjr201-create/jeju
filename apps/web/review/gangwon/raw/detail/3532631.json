@@ -1,0 +1,52 @@
+{
+ "contentid": "3532631",
+ "modifiedtime": "20250909173100",
+ "fetchedAt": "2026-10-29T20:22:56.212Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3532631",
+       "contenttypeid": "39",
+       "title": "원족발 입암점",
+       "createdtime": "20250908104853",
+       "modifiedtime": "20250909173100",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 입암로148번길 22 (입암동)",
+       "addr2": "",
+       "zipcode": "25615",
+       "mapx": "128.9184284850",
+       "mapy": "37.7573212342",
+       "mlevel": "6",
+       "overview": "언제나 같은 마음으로 고객들께 맛있는 족발을 드리고자 매일 신선한 재료로 열심히 삶고 있습니다.\n늘 저희 족발을 애용해 주셔서 감사 드립니다.\n더족발에서 원족발 다시 시작 하겠습니다.\n감사합니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

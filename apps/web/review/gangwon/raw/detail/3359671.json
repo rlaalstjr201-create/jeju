@@ -1,0 +1,52 @@
+{
+ "contentid": "3359671",
+ "modifiedtime": "20250903152520",
+ "fetchedAt": "2026-10-29T20:22:46.820Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3359671",
+       "contenttypeid": "39",
+       "title": "서원커피랩",
+       "createdtime": "20240905142525",
+       "modifiedtime": "20250903152520",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/73/3421573_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/73/3421573_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 죽헌길 167 (죽헌동)",
+       "addr2": "",
+       "zipcode": "25465",
+       "mapx": "128.8826948998",
+       "mapy": "37.7797179461",
+       "mlevel": "6",
+       "overview": "강릉 오죽헌 앞에 위치한 카페로 세미나실 등 편의시설과 함께 대청마루 공간이 이색적이다. 오죽헌 입구에 위치하여 강릉 명소와 연계하여 관광할 수 있다. 인절미 우유빙수, 쑥 인절미 아이스크림 토스트, 인절미 크림라떼 등이 시그니처 디저트이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3534551",
+ "modifiedtime": "20250910143504",
+ "fetchedAt": "2026-10-29T20:22:58.152Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534551",
+       "contenttypeid": "39",
+       "title": "인성식당",
+       "createdtime": "20250910143434",
+       "modifiedtime": "20250910143504",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 남문길1번길 1 (남문동)",
+       "addr2": "",
+       "zipcode": "25538",
+       "mapx": "128.8941558633",
+       "mapy": "37.7511048128",
+       "mlevel": "6",
+       "overview": "#인성식당 #한식"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

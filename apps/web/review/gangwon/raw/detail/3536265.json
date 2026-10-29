@@ -1,0 +1,52 @@
+{
+ "contentid": "3536265",
+ "modifiedtime": "20250912111815",
+ "fetchedAt": "2026-10-29T20:23:01.649Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536265",
+       "contenttypeid": "39",
+       "title": "지호한방삼계탕 초당점",
+       "createdtime": "20250912111753",
+       "modifiedtime": "20250912111815",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 강릉대로587번길 4 (초당동)",
+       "addr2": "",
+       "zipcode": "25468",
+       "mapx": "128.9200330542",
+       "mapy": "37.7844958997",
+       "mlevel": "6",
+       "overview": "지호한방삼계탕은 1991년부터 시작한 국내 최대 삼계탕 프랜차이즈로 전통 한식인 한방삼계탕을 오랜시간 계승, 발전시켜온 자랑스런 전통 한식 브랜드입니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

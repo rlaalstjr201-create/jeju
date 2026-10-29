@@ -1,0 +1,52 @@
+{
+ "contentid": "3535270",
+ "modifiedtime": "20250911104751",
+ "fetchedAt": "2026-10-29T20:22:25.836Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535270",
+       "contenttypeid": "39",
+       "title": "강릉 빵명장",
+       "createdtime": "20250911104738",
+       "modifiedtime": "20250911104751",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 성덕로 107 (병산동)",
+       "addr2": "",
+       "zipcode": "25617",
+       "mapx": "128.9403651594",
+       "mapy": "37.7650207722",
+       "mlevel": "6",
+       "overview": "\"유기농밀 사용 천연 발효종을 첨가한 30여가지 속편한 빵,건강한 빵을 매일 구워 판매한다\n이탈리아 원두 출품 대회에서 금메달을 수상한 원두로 만든 커피와 당일 만든 맛있는 빵을 파는 가게\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

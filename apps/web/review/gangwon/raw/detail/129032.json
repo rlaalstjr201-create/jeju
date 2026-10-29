@@ -1,0 +1,52 @@
+{
+ "contentid": "129032",
+ "modifiedtime": "20250321152932",
+ "fetchedAt": "2026-10-29T20:23:14.821Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129032",
+       "contenttypeid": "12",
+       "title": "대포마을",
+       "createdtime": "20060621090000",
+       "modifiedtime": "20250321152932",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/20/3394120_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/20/3394120_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040200",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030100",
+       "addr1": "강원특별자치도 속초시 대포항1길 6-13",
+       "addr2": "",
+       "zipcode": "24901",
+       "mapx": "128.6072936101",
+       "mapy": "38.1758166221",
+       "mlevel": "6",
+       "overview": "속초에 가면 회 한 접시를 먹고, 빨간 등대를 봐야만 한다고 알려진 속초의 명소 대포항 인근에 위치한 마을이다. 관광 성수기나 비수기에 상관없이 주말이면 언제나 많은 사람으로 넘쳐나는 대포항은 일단 설악산과 가깝고, 7번 국도변에 위치해 있어 쉽게 찾아갈 수 있다. 무엇보다도 대포항이 이렇게 유명세를 치르게 된 것은 주차장 옆길에 500m 이상 늘어선 활어 난전 때문이다. 시원한 바다와 맛 좋은 활어회를 동시에 즐길 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

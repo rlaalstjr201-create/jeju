@@ -1,0 +1,52 @@
+{
+ "contentid": "3533451",
+ "modifiedtime": "20250909142310",
+ "fetchedAt": "2026-10-29T20:22:43.148Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533451",
+       "contenttypeid": "39",
+       "title": "보배골",
+       "createdtime": "20250909142250",
+       "modifiedtime": "20250909142310",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 강변로 260-8 (노암동)",
+       "addr2": "",
+       "zipcode": "25587",
+       "mapx": "128.8973306461",
+       "mapy": "37.7488856875",
+       "mlevel": "6",
+       "overview": "#보배골 #한식"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

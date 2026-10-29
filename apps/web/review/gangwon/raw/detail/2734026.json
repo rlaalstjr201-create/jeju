@@ -1,0 +1,52 @@
+{
+ "contentid": "2734026",
+ "modifiedtime": "20261029134012",
+ "fetchedAt": "2026-10-29T20:22:21.595Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2734026",
+       "contenttypeid": "28",
+       "title": "소금강오토캠프장",
+       "createdtime": "20210817223158",
+       "modifiedtime": "20261029134012",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://reservation.knps.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/80/4136280_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/80/4136280_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "AC",
+       "lclsSystm2": "AC05",
+       "lclsSystm3": "AC050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 연곡면 소금강길 449",
+       "addr2": "",
+       "zipcode": "25400",
+       "mapx": "128.7081265643",
+       "mapy": "37.8148492868",
+       "mlevel": "6",
+       "overview": "오대산국립공원 내 위치한 소금강자동차 야영장으로 맑은 소금강계곡에서 물놀이는 어른도 아이도 들뜨게 만든다. 국립공원 내 캠핑장이라 관리가 잘되어 있다. 자동차 야영지 105동, 카라반전용 야영지 9동, 카라반 4인용 12동, 하우스 15동이 있으며 야영지 주변에 나무들도 크게 자라 그늘이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

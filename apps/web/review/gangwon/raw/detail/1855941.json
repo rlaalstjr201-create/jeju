@@ -1,0 +1,52 @@
+{
+ "contentid": "1855941",
+ "modifiedtime": "20260205164626",
+ "fetchedAt": "2026-10-29T20:22:52.818Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1855941",
+       "contenttypeid": "39",
+       "title": "여왕개미식당",
+       "createdtime": "20131106002843",
+       "modifiedtime": "20260205164626",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 금성로23번길 4",
+       "addr2": "",
+       "zipcode": "25543",
+       "mapx": "128.89804068268",
+       "mapy": "37.753685451485",
+       "mlevel": "6",
+       "overview": "여왕개미식당은 강릉 중앙시장 인근에 있는 감자옹심이 전문 음식점이다. 감자옹심이와 칼국수를 주메뉴로 하고 있다. 음식 주문 시 밑반찬으로 깍두기와 열무김치가 나오며 추가 반찬은 셀프바에서 원하는 만큼 떠다 먹을 수 있다. 대표메뉴는 감자옹심이다. 인기메뉴인 장칼국수는 호박과 감자, 양파 등 많은 채소가 들어가 있으며 조갯살이 들어가 있어 국물이 칼칼하면서 시원하며 깔끔하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

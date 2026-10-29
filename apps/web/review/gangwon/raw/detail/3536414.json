@@ -1,0 +1,52 @@
+{
+ "contentid": "3536414",
+ "modifiedtime": "20250912145122",
+ "fetchedAt": "2026-10-29T20:22:46.449Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536414",
+       "contenttypeid": "39",
+       "title": "새마을영양탕",
+       "createdtime": "20250912145050",
+       "modifiedtime": "20250912145122",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 구정면 회산로 101",
+       "addr2": "",
+       "zipcode": "25621",
+       "mapx": "128.8489690974",
+       "mapy": "37.7241959344",
+       "mlevel": "6",
+       "overview": "#새마을영양탕 #사철 #영양탕"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

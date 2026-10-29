@@ -1,0 +1,52 @@
+{
+ "contentid": "3536121",
+ "modifiedtime": "20250912095911",
+ "fetchedAt": "2026-10-29T20:22:30.245Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536121",
+       "contenttypeid": "39",
+       "title": "경포동해횟집",
+       "createdtime": "20250912095855",
+       "modifiedtime": "20250912095911",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 창해로 491 (강문동)",
+       "addr2": "",
+       "zipcode": "25460",
+       "mapx": "128.9087556914",
+       "mapy": "37.8038823250",
+       "mlevel": "6",
+       "overview": "\"경포동해횟집은 강릉 경포해수욕장 인근에 위치한 해산물 전문점으로, 대게와 모듬회, 해물탕 등 다양한 해산물 요리를 제공합니다.\n대게는 살이 꽉 차고 신선하며, 모듬회는 쫄깃한 식감과 고소한 맛이 특징입니다.\n해물탕은 깊은 풍미와 시원한 국물로 호평을 받고 있으며, 멍게, 전복, 타코와사비, 새우, 조개 등 다양한 해산물과 함께 바다 뷰를 즐기기에 좋습니다\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3547941",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:44.608Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3547941",
+       "contenttypeid": "39",
+       "title": "빛고을식당",
+       "createdtime": "20251014171000",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 창해로 473 (강문동)",
+       "addr2": "104호",
+       "zipcode": "25460",
+       "mapx": "128.9101194924",
+       "mapy": "37.8027519269",
+       "mlevel": "6",
+       "overview": "강릉 부모님모시고 오기좋은곳\n단체손님\n강릉 혼식\n집밥 한식\n경포대 경포대맛집\n강릉 맛집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

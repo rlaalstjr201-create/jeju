@@ -1,0 +1,52 @@
+{
+ "contentid": "3544319",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:23:13.459Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3544319",
+       "contenttypeid": "39",
+       "title": "힐링캠프예서원",
+       "createdtime": "20250925143957",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 구정면 구정옥봉길 161",
+       "addr2": "",
+       "zipcode": "25623",
+       "mapx": "128.8933325248",
+       "mapy": "37.6996801881",
+       "mlevel": "6",
+       "overview": "\"와송과 약선식물 발효액, 발효식초, 천연염색 스카프등을 직접 만들며. 연잎밥식사와 발효음료, 드립커피로 카페를 운영한다. 넓은정원의 펜션은 휴식을 찾는 이들에게 인기가높다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

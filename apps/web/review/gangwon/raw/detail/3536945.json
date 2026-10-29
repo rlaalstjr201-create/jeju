@@ -1,0 +1,52 @@
+{
+ "contentid": "3536945",
+ "modifiedtime": "20250915115047",
+ "fetchedAt": "2026-10-29T20:22:29.881Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536945",
+       "contenttypeid": "39",
+       "title": "경기해변횟집",
+       "createdtime": "20250915115017",
+       "modifiedtime": "20250915115047",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 창해로 473 (강문동)",
+       "addr2": "",
+       "zipcode": "25460",
+       "mapx": "128.9101194924",
+       "mapy": "37.8027519269",
+       "mlevel": "6",
+       "overview": "\"경포대 대표 맛집 신선도 최고의 회와 대게 조개 맛집입니다. 친절 봉사정신으로 영업에 임할 것을 약속합니다. 믿고 찾아 주십시오. 정성을 다해 모시겠습니다.\n\n넓은 주차공간과 대규모 단체 식사가 가능한 2층을 보유하고 있습니다. 단체 문의 환영\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

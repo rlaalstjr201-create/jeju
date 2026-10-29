@@ -1,0 +1,52 @@
+{
+ "contentid": "3544047",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:19.390Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3544047",
+       "contenttypeid": "28",
+       "title": "강릉국민체육센터",
+       "createdtime": "20250925102455",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100200",
+       "cat1": "A03",
+       "cat2": "A0302",
+       "cat3": "A03020200",
+       "addr1": "강원특별자치도 강릉시 수리골길 76 (교동)",
+       "addr2": "",
+       "zipcode": "25472",
+       "mapx": "128.8969770271",
+       "mapy": "37.7771018606",
+       "mlevel": "6",
+       "overview": "1층에는 안내데스크와 탈의실,\n장애인 가족탈의실, 수영장 등이 있고\n2층에는 전망대와 GX룸, 음료자판기가 있습니다"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

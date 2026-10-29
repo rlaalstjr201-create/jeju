@@ -1,0 +1,52 @@
+{
+ "contentid": "3535914",
+ "modifiedtime": "20250911170733",
+ "fetchedAt": "2026-10-29T20:22:59.525Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535914",
+       "contenttypeid": "39",
+       "title": "정동진 어부횟집",
+       "createdtime": "20250911170651",
+       "modifiedtime": "20250911170733",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 강동면 헌화로 993",
+       "addr2": "",
+       "zipcode": "25631",
+       "mapx": "129.0394781224",
+       "mapy": "37.6864345711",
+       "mlevel": "6",
+       "overview": "어부횟집은 다양한 해산물 요리로 유명한 맛집입니다.\n메인 메뉴인 어부횟집 스페셜과 대게+회세트는 푸짐한 구성으로 인기가 많으며, 식사 메뉴인 물회스페셜과 생선구이정식도 많은 고객들의 호평을 받고 있습니다.\n매장은 넓고 청결하며, 주차 공간이 넉넉해 가족 단위 방문에도 적합합니다.\n특히 물회는 새콤달콤한 맛으로 여름철 별미로 손꼽힙니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

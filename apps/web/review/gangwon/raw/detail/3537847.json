@@ -1,0 +1,52 @@
+{
+ "contentid": "3537847",
+ "modifiedtime": "20250916133802",
+ "fetchedAt": "2026-10-29T20:22:57.966Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3537847",
+       "contenttypeid": "39",
+       "title": "이주환전통한우",
+       "createdtime": "20250916133728",
+       "modifiedtime": "20250916133802",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 성산면 사임당로107번길 89",
+       "addr2": "",
+       "zipcode": "25447",
+       "mapx": "128.8589838219",
+       "mapy": "37.7578894541",
+       "mlevel": "6",
+       "overview": ""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

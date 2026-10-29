@@ -1,0 +1,52 @@
+{
+ "contentid": "3535260",
+ "modifiedtime": "20250911102924",
+ "fetchedAt": "2026-10-29T20:22:49.346Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535260",
+       "contenttypeid": "39",
+       "title": "수줍은과자점",
+       "createdtime": "20250911102903",
+       "modifiedtime": "20250911102924",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 공항길20번길 16 (병산동)",
+       "addr2": "",
+       "zipcode": "25617",
+       "mapx": "128.9394209215",
+       "mapy": "37.7611212045",
+       "mlevel": "6",
+       "overview": "\"매일 아침 매장에서 직접 구운 구움과자와 조각케이크를 판매한다.\n케이크종류는 계절과일을 사용해서 계절마다 종류가 바뀌고.\n구움과자는 오픈시간인 11시, 케이크종류는 12시 이후에 나오는 디저트 맛집이다.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

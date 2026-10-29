@@ -1,0 +1,52 @@
+{
+ "contentid": "3536200",
+ "modifiedtime": "20250912103945",
+ "fetchedAt": "2026-10-29T20:23:00.405Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536200",
+       "contenttypeid": "39",
+       "title": "조개공장",
+       "createdtime": "20250912103924",
+       "modifiedtime": "20250912103945",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.instagram.com/shell__factory",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 창해로 263 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9245103048",
+       "mapy": "37.7884955243",
+       "mlevel": "6",
+       "overview": "안목해변과 강문해변 사이에 위치한 무한리필 조개구이집입니다.\n\n싱싱한 해산물만 취급하기 때문에 가격대비 만족스러운\n조개구이를 맛보실 수 있습니다! ^^\n\n전용 주차장이 완비되어있고, 단체모임도 가능합니다~!\n\n이제 강릉에서 무제한으로 조개구이를 즐겨보세요^_^"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3534792",
+ "modifiedtime": "20250910163050",
+ "fetchedAt": "2026-10-29T20:22:31.927Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534792",
+       "contenttypeid": "39",
+       "title": "관동닭갈비",
+       "createdtime": "20250910162938",
+       "modifiedtime": "20250910163050",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 원대로 105 (교동)",
+       "addr2": "",
+       "zipcode": "25513",
+       "mapx": "128.8816482463",
+       "mapy": "37.7643835890",
+       "mlevel": "6",
+       "overview": "#관동닭갈비 #닭갈비"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

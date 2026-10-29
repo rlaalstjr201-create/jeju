@@ -1,0 +1,52 @@
+{
+ "contentid": "3534254",
+ "modifiedtime": "20250911103040",
+ "fetchedAt": "2026-10-29T20:22:37.467Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534254",
+       "contenttypeid": "39",
+       "title": "돌체테리아",
+       "createdtime": "20250910104401",
+       "modifiedtime": "20250911103040",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.xn--pq1bl5io8ktoh91f.com/",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 하슬라로206번길 4-3 (교동)",
+       "addr2": "",
+       "zipcode": "25511",
+       "mapx": "128.8761847449",
+       "mapy": "37.7677608695",
+       "mlevel": "6",
+       "overview": "강릉에서 유명한 빵지순례 맛집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "131037",
+ "modifiedtime": "20260312154738",
+ "fetchedAt": "2026-10-29T20:22:20.240Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "131037",
+       "contenttypeid": "28",
+       "title": "경포저수지",
+       "createdtime": "20021127090000",
+       "modifiedtime": "20260312154738",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/66/3516866_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/66/3516866_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS02",
+       "lclsSystm3": "LS020500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 죽헌동",
+       "addr2": "530-1",
+       "zipcode": "25454",
+       "mapx": "128.85859138134836",
+       "mapy": "37.77925652241971",
+       "mlevel": "6",
+       "overview": "경포저수지는 계곡형 저수지로 제방높이가 30m로 수심이 깊고 물이 맑은 편이다. 수위가 떨어지면 중류에 솔밭섬이 나타나는데 육지와도 연결된다. 강릉 바우길 11구간에 포함되는 스폿이라 저수지 인근으로 산책로가 조성되어 있다. 또한 대형 카페도 여럿 위치하고 있어 자연 속에서 조용히 휴식하기에 좋다. 또한 민물낚시를 즐기기 위한 낚시꾼들의 방문이 끊이지 않는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

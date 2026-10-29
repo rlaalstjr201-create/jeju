@@ -1,0 +1,52 @@
+{
+ "contentid": "3533668",
+ "modifiedtime": "20250909160350",
+ "fetchedAt": "2026-10-29T20:23:03.494Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533668",
+       "contenttypeid": "39",
+       "title": "초당맷돌젤라또",
+       "createdtime": "20250909160325",
+       "modifiedtime": "20250909160350",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 초당순두부길 71 (초당동)",
+       "addr2": "",
+       "zipcode": "25466",
+       "mapx": "128.9153472023",
+       "mapy": "37.7897563106",
+       "mlevel": "6",
+       "overview": "#초당맷돌젤라또 #아이스크림  만드는 이탈리아 전통방식 젤라또"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3535689",
+ "modifiedtime": "20250911141940",
+ "fetchedAt": "2026-10-29T20:22:55.024Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535689",
+       "contenttypeid": "39",
+       "title": "용궁식당",
+       "createdtime": "20250911141918",
+       "modifiedtime": "20250911141940",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 노암길42번길 24 (노암동)",
+       "addr2": "1층, 112호",
+       "zipcode": "25592",
+       "mapx": "128.9020775421",
+       "mapy": "37.7456111585",
+       "mlevel": "6",
+       "overview": "용궁식당은 신선한 고기와 정성 가득한 밑반찬이 특징인 고깃집입니다.\n양념돼지갈비는 자극적이지 않은 자연스러운 맛으로 아이들도 좋아하며, 생삼겹살은 두툼한 두께와 풍부한 육즙이 매력적입니다.\n매장 내부는 깔끔하고 좌석 간격이 넓어 개인 대화나 단체 모임 모두에 적합합니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

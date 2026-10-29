@@ -1,0 +1,52 @@
+{
+ "contentid": "3458062",
+ "modifiedtime": "20250731152225",
+ "fetchedAt": "2026-10-29T20:22:29.046Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3458062",
+       "contenttypeid": "39",
+       "title": "강문달카페",
+       "createdtime": "20241223153635",
+       "modifiedtime": "20250731152225",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/3458007_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/07/3458007_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 창해로350번길 21 (강문동)",
+       "addr2": "",
+       "zipcode": "25467",
+       "mapx": "128.9176218056",
+       "mapy": "37.7959417503",
+       "mlevel": "6",
+       "overview": "강릉 강문해변에 위치한 강문달카페는 탁 트인 동해 바다를 배경으로 멋진 풍경을 자랑하는 카페이다. 푸른 바다와 하늘, 그리고 아름다운 해변을 한눈에 담을 수 있어 많은 사람들에게 사랑받는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3536259",
+ "modifiedtime": "20250912111620",
+ "fetchedAt": "2026-10-29T20:22:46.084Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536259",
+       "contenttypeid": "39",
+       "title": "삼교리동치미막국수 남항진점",
+       "createdtime": "20250912111603",
+       "modifiedtime": "20250912111620",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://samgyori.co.kr/",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 공항길127번길 42 (남항진동)",
+       "addr2": "",
+       "zipcode": "25617",
+       "mapx": "128.9526140382",
+       "mapy": "37.7656292741",
+       "mlevel": "6",
+       "overview": "강릉에서 유명한 동치미 막국수 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

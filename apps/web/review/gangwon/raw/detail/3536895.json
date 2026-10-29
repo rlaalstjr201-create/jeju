@@ -1,0 +1,52 @@
+{
+ "contentid": "3536895",
+ "modifiedtime": "20250915104538",
+ "fetchedAt": "2026-10-29T20:22:34.966Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536895",
+       "contenttypeid": "39",
+       "title": "노브랜드버거 강릉송정DI점",
+       "createdtime": "20250915104520",
+       "modifiedtime": "20250915104538",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 경강로 2518 (송정동)",
+       "addr2": "",
+       "zipcode": "25561",
+       "mapx": "128.9342598850",
+       "mapy": "37.7737029816",
+       "mlevel": "6",
+       "overview": "노브랜드버거 강릉송정DI점 안녕하세요 노브랜드버거 입니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

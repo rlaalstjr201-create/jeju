@@ -1,0 +1,52 @@
+{
+ "contentid": "133931",
+ "modifiedtime": "20260220175837",
+ "fetchedAt": "2026-10-29T20:22:50.406Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133931",
+       "contenttypeid": "39",
+       "title": "시골할머니추어탕",
+       "createdtime": "20030929090000",
+       "modifiedtime": "20260220175837",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 성산면 솔밭길 16",
+       "addr2": "",
+       "zipcode": "25449",
+       "mapx": "128.850934715144",
+       "mapy": "37.7345701761526",
+       "mlevel": "6",
+       "overview": "영동고속도로가 끝나는 대관령 끝자락에 꼭 들러야 할 추어탕집이 있다. \n평창, 정선, 진부 등 깊은 산골에서 직접 잡은 미꾸라지를 전통방식 그대로 요리하여 토속적인 맛을 지키고 있는 시골할머니추어탕이다. 추어탕과 함께 제공되는 감자밥이 이 집의 별미다. 넓고 깔끔한 내부와 전용 주차장도 마련되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

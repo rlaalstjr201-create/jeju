@@ -1,0 +1,52 @@
+{
+ "contentid": "3536830",
+ "modifiedtime": "20250915095824",
+ "fetchedAt": "2026-10-29T20:22:55.197Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536830",
+       "contenttypeid": "39",
+       "title": "용장군",
+       "createdtime": "20250915095800",
+       "modifiedtime": "20250915095824",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 성덕포남로188번길 34 (포남동)",
+       "addr2": "",
+       "zipcode": "25568",
+       "mapx": "128.9118342435",
+       "mapy": "37.7699613099",
+       "mlevel": "6",
+       "overview": "감자탕"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3534299",
+ "modifiedtime": "20250910110140",
+ "fetchedAt": "2026-10-29T20:22:59.978Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534299",
+       "contenttypeid": "39",
+       "title": "정혜영쿡",
+       "createdtime": "20250910110126",
+       "modifiedtime": "20250910110140",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 율곡초교길11번길 11 (교동)",
+       "addr2": "",
+       "zipcode": "25510",
+       "mapx": "128.8797011057",
+       "mapy": "37.7674054240",
+       "mlevel": "6",
+       "overview": "가성비 좋은 파스타 맛집"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

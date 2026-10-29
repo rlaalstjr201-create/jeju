@@ -1,0 +1,52 @@
+{
+ "contentid": "3536329",
+ "modifiedtime": "20250912132101",
+ "fetchedAt": "2026-10-29T20:22:46.340Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536329",
+       "contenttypeid": "39",
+       "title": "삼미식당",
+       "createdtime": "20250912132045",
+       "modifiedtime": "20250912132101",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 주문진읍 시장길 49-4",
+       "addr2": "",
+       "zipcode": "25413",
+       "mapx": "128.8273102939",
+       "mapy": "37.8923454912",
+       "mlevel": "6",
+       "overview": "\"삼미식당은 주문진 해산물 맛집으로, 생선구이와 장치찜이 인기 메뉴입니다.\n생선구이는 짜지 않고 담백한 맛으로 가족 단위 방문객들에게 인기가 있으며, 장치찜은 특유의 쫄깃한 식감과 깊은 맛으로 재방문 의사를 부르는 메뉴입니다.\n기본 반찬도 다양하고 맛있어 전체적인 식사 경험이 좋습니다\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

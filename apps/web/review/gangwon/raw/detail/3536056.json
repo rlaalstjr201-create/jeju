@@ -1,0 +1,52 @@
+{
+ "contentid": "3536056",
+ "modifiedtime": "20250912092951",
+ "fetchedAt": "2026-10-29T20:23:02.891Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536056",
+       "contenttypeid": "39",
+       "title": "청수",
+       "createdtime": "20250912092931",
+       "modifiedtime": "20250912092951",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 성산면 송두길 223-13",
+       "addr2": "",
+       "zipcode": "25446",
+       "mapx": "128.8409765209",
+       "mapy": "37.7770285557",
+       "mlevel": "6",
+       "overview": ""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3536558",
+ "modifiedtime": "20250912163348",
+ "fetchedAt": "2026-10-29T20:22:30.881Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536558",
+       "contenttypeid": "39",
+       "title": "고봉민김밥인 강릉역점",
+       "createdtime": "20250912163317",
+       "modifiedtime": "20250912163348",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 강릉대로 337-5 (포남동)",
+       "addr2": "강릉역 동도센트리움 102동 105호",
+       "zipcode": "25492",
+       "mapx": "128.9037212006",
+       "mapy": "37.7662338052",
+       "mlevel": "6",
+       "overview": "#고봉민김밥인 #분식"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

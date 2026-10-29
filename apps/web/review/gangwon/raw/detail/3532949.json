@@ -1,0 +1,52 @@
+{
+ "contentid": "3532949",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:34.723Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3532949",
+       "contenttypeid": "39",
+       "title": "넉살집",
+       "createdtime": "20250908171244",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 솔올로5번길 51 (교동)",
+       "addr2": "",
+       "zipcode": "25515",
+       "mapx": "128.8770014492",
+       "mapy": "37.7641862993",
+       "mlevel": "6",
+       "overview": "넉살집은 강릉시 교동에 위치한 고기구이 전문점으로, 생삼겹·냉동삼겹·항정살 등 다양한 돼지고기 부위를 판매한다. 삼겹살과 함께 전복을 구워 먹을 수 있는 메뉴가 특징이며, 투명 수정 불판을 사용해 고기 굽는 모습을 시각적으로 즐길 수 있다. 식사 후에는 냉면과 전복해장라면 등 식사메뉴가 준비 되어있고, 점심특선으로 제육볶음·된장찌개·고추장찌개 등을 판매한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

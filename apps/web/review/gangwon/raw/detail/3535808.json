@@ -1,0 +1,52 @@
+{
+ "contentid": "3535808",
+ "modifiedtime": "20250911160858",
+ "fetchedAt": "2026-10-29T20:22:38.828Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535808",
+       "contenttypeid": "39",
+       "title": "라보엠",
+       "createdtime": "20250911160735",
+       "modifiedtime": "20250911160858",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 성산면 백두대간로 2775-19",
+       "addr2": "",
+       "zipcode": "25444",
+       "mapx": "128.8245215860",
+       "mapy": "37.7148937574",
+       "mlevel": "6",
+       "overview": "\"033-645-7930\n대관령아래 계곡물소리 맑은곳\n양떼목장 15분 커피박물관 10분\n갓구운빵과 커피와 식사를 함께할수있는곳\n온가족이 만족할수 있는 다양한메뉴구성\n스테이크 커틀렛 피자 파스타 샐러드\n특히 스테이크는 최고급 프리미엄 등급만을 고집하는\n오너셰프의 철학\n친절한 써비스와 신선한 식재료로\n최상의 맛을 전해드리고자 언제나 노력하고 있습니다\n분위기좋은 카페레스토랑\n한적한 라보엠으로 힐링하러 오세요\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

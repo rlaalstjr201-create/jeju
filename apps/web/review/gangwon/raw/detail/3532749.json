@@ -1,0 +1,52 @@
+{
+ "contentid": "3532749",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:23:13.378Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3532749",
+       "contenttypeid": "39",
+       "title": "흥부네쌈밥",
+       "createdtime": "20250908141230",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 토성로 69-2 (홍제동)",
+       "addr2": "",
+       "zipcode": "25536",
+       "mapx": "128.8854344158",
+       "mapy": "37.7514601570",
+       "mlevel": "6",
+       "overview": "흥부네쌈밥은 강릉시 홍제동 토성로에 위치한 쌈밥 전문 식당으로, 생선구이쌈밥을 비롯해 토종닭백숙·닭볶음탕·삼겹묵은지찜·고등어묵은지찜 등 다양한 한식 메뉴를 판매한다. 쌈밥은 된장국과 여러 반찬, 신선한 쌈 채소가 함께 제공되어 균형 잡힌 한 끼 식사로 구성된다. 생선구이와 조림 요리, 육류 메뉴를 모두 갖춘 상차림으로 다양한 취향의 손님이 이용하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

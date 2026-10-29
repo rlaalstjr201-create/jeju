@@ -1,0 +1,52 @@
+{
+ "contentid": "3547909",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:43.883Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3547909",
+       "contenttypeid": "39",
+       "title": "본래순대 교동택지점",
+       "createdtime": "20251014163653",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 가작로 20 (교동)",
+       "addr2": "",
+       "zipcode": "25511",
+       "mapx": "128.8779067688",
+       "mapy": "37.7691635184",
+       "mlevel": "6",
+       "overview": ""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

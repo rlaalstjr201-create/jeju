@@ -1,0 +1,52 @@
+{
+ "contentid": "3534095",
+ "modifiedtime": "20250910084248",
+ "fetchedAt": "2026-10-29T20:22:51.850Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534095",
+       "contenttypeid": "39",
+       "title": "애너벨리",
+       "createdtime": "20250910084200",
+       "modifiedtime": "20250910084248",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 공항길127번길 52 (남항진동)",
+       "addr2": "",
+       "zipcode": "25617",
+       "mapx": "128.9533834286",
+       "mapy": "37.7651237921",
+       "mlevel": "6",
+       "overview": "\"강릉 남항진항에 위치한 애너벨리는 자가 로스팅으로 신선한 커피를 선보이는 카페 겸 레스토랑입니다.\n1층 카페에서는 매장에서 직접 로스팅한 원두로 내린 드립커피와 다양한 디저트, 베이커리를 즐길 수 있으며,\n여름에는 뚝배기 과일 팥빙수가 별미로 제공됩니다.\n다양한 신선한 과일과 달콤한 팥이 듬뿍 올라간 이 팥빙수는 뚝배기에 담겨 나와 시원함과 특별함을 동시에 느낄 수 있어요.\n\n2층 레스토랑은 신선한 재료로 만든 계절 요리를 선보이며, 바다를 바라보는 창가 자리는 강릉의 풍경을 더욱 특별하게 만들어 줍니다. 맛있는 음식과 함께 강릉 바다를 만끽할 수 있는 공간이에요.\""
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

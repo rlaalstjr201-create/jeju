@@ -1,0 +1,52 @@
+{
+ "contentid": "3533636",
+ "modifiedtime": "20250909154921",
+ "fetchedAt": "2026-10-29T20:22:58.709Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533636",
+       "contenttypeid": "39",
+       "title": "장군시오야끼 포남직영점",
+       "createdtime": "20250909154825",
+       "modifiedtime": "20250909154921",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 하평길 20 (포남동)",
+       "addr2": "",
+       "zipcode": "25572",
+       "mapx": "128.9108732136",
+       "mapy": "37.7701084964",
+       "mlevel": "6",
+       "overview": "장군시오야끼 본점 직영 매장입니다. 유사업체와는 다른 본점 직영 매장의 맛을 느껴보세요.\n장군시오야끼 포남직영점은 소고기시오야끼와 특제 소스가 조화로운 맛집입니다.\n매콤한 시오야끼와 고소한 치즈볶음밥의 조합이 일품이며, 김치말이국수는 매운맛 메뉴와 함께 먹으면 더욱 좋습니다.\n주차 공간이 넉넉하고 직원들의 친절한 서비스로 기분 좋은 식사를 할 수 있습니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

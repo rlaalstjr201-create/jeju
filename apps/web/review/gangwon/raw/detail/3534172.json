@@ -1,0 +1,52 @@
+{
+ "contentid": "3534172",
+ "modifiedtime": "20250910094621",
+ "fetchedAt": "2026-10-29T20:22:32.561Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3534172",
+       "contenttypeid": "39",
+       "title": "궁전구내식당",
+       "createdtime": "20250910094603",
+       "modifiedtime": "20250910094621",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 남구길23번길 9 (포남동)",
+       "addr2": "",
+       "zipcode": "25550",
+       "mapx": "128.9046517285",
+       "mapy": "37.7644229216",
+       "mlevel": "6",
+       "overview": "아침식사 가능한 식당"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

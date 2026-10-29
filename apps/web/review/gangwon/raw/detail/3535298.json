@@ -1,0 +1,52 @@
+{
+ "contentid": "3535298",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:44.472Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535298",
+       "contenttypeid": "39",
+       "title": "빙고주막",
+       "createdtime": "20250911105603",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 임영로 45-1 (노암동)",
+       "addr2": "",
+       "zipcode": "25586",
+       "mapx": "128.8966891072",
+       "mapy": "37.7466081605",
+       "mlevel": "6",
+       "overview": "빙고주막은 강릉시 노암동에 위치한 주점 형태의 한식당으로, 주물럭·코다리찜·닭볶음탕·오삼불고기 등 다양한 한식 요리를 판매한다. 대표 메뉴인 오삼불고기는 돼지고기와 오징어를 함께 볶아 매콤한 양념의 조화가 특징이며, 코다리찜과 닭볶음탕은 진한 양념과 부드러운 식감으로 인기가 있다. 여러 가지 밑반찬이 함께 제공되어 식사로도 충분하며, 다양한 요리를 술안주로 곁들이기에도 잘 어울린다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

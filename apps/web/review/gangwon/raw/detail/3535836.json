@@ -1,0 +1,52 @@
+{
+ "contentid": "3535836",
+ "modifiedtime": "20250911162644",
+ "fetchedAt": "2026-10-29T20:22:41.029Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3535836",
+       "contenttypeid": "39",
+       "title": "맥시칸치킨 정동점",
+       "createdtime": "20250911162622",
+       "modifiedtime": "20250911162644",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 강릉시 강동면 헌화로 1078",
+       "addr2": "",
+       "zipcode": "25631",
+       "mapx": "129.0326314332",
+       "mapy": "37.6890952408",
+       "mlevel": "6",
+       "overview": "맥시칸치킨 정동점은 신선하고 위생적인 국내산 하림닭고기와\n맑고 깨끗한 식용유로 조리하고 있습니다.\n항상 최고의 치킨 맛과 최상의 서비스로 보답하겠습니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

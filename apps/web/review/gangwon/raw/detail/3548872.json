@@ -1,0 +1,52 @@
+{
+ "contentid": "3548872",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-29T20:22:58.558Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3548872",
+       "contenttypeid": "39",
+       "title": "자스민레스토랑",
+       "createdtime": "20251015140211",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 강릉시 난설헌로 105 (포남동)",
+       "addr2": "라동",
+       "zipcode": "25471",
+       "mapx": "128.9038289338",
+       "mapy": "37.7852954912",
+       "mlevel": "6",
+       "overview": "자스민레스토랑"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

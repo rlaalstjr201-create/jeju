@@ -1,0 +1,52 @@
+{
+ "contentid": "3533403",
+ "modifiedtime": "20260821105155",
+ "fetchedAt": "2026-10-29T20:22:58.386Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3533403",
+       "contenttypeid": "39",
+       "title": "임계식당",
+       "createdtime": "20250909133357",
+       "modifiedtime": "20260821105155",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 강릉시 중앙시장길 22-2 (성남동)",
+       "addr2": "",
+       "zipcode": "25543",
+       "mapx": "128.8988370688",
+       "mapy": "37.7535599271",
+       "mlevel": "6",
+       "overview": "임계식당은 강릉 중앙시장 내에 위치한 국밥 전문점으로, 오랜 기간 운영되어 온 지역 식당이다. 소머리국밥·돼지국밥·닭국밥 등 다양한 국밥 메뉴를 판매하며, 맑고 깔끔한 국물과 부드러운 고기 식감이 특징이다. 김치와 깍두기가 함께 제공되어 국밥과의 조화를 이루고, 가성비가 좋은 맛보기 소수육도 함께 판매한다. 오전 8시부터 영업해 아침식사 장소로 이용하기 적합하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

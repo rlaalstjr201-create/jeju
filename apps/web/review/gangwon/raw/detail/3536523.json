@@ -1,0 +1,52 @@
+{
+ "contentid": "3536523",
+ "modifiedtime": "20250912161048",
+ "fetchedAt": "2026-10-29T20:23:07.734Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3536523",
+       "contenttypeid": "39",
+       "title": "태양부양꼬치 강릉점",
+       "createdtime": "20250912161023",
+       "modifiedtime": "20250912161048",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "강원특별자치도 강릉시 회산로383번길 1 (회산동)",
+       "addr2": "회산빌딩 1층",
+       "zipcode": "25598",
+       "mapx": "128.8687195551",
+       "mapy": "37.7417331792",
+       "mlevel": "6",
+       "overview": "#태양부양꼬치 #양꼬치"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

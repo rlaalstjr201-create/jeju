@@ -1,0 +1,52 @@
+{
+ "contentid": "3355175",
+ "modifiedtime": "20250912131109",
+ "fetchedAt": "2026-10-29T20:23:11.939Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3355175",
+       "contenttypeid": "39",
+       "title": "허스크밀",
+       "createdtime": "20240828134822",
+       "modifiedtime": "20250912131109",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/05/3421605_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/05/3421605_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "1",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "150",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 강릉시 난설헌로219번길 20-8 (강문동)",
+       "addr2": "",
+       "zipcode": "25466",
+       "mapx": "128.9146249007",
+       "mapy": "37.7944168683",
+       "mlevel": "6",
+       "overview": "허스크밀은 강릉 안목해변에 있는 베이커리 대형 카페이다. 자연을 느낄 수 있는 분위기에서 최고급 베이커리를 다양하게 맛볼 수 있다. 대표 메뉴로는 인절미 크림라떼, 말차 바닐라 크림라떼, 먹물 치즈 크림라떼 등이 있다. 대형 베이커리 카페답게 전용 주차장이 있어서 편리하게 주차할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

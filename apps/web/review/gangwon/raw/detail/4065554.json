@@ -1,0 +1,52 @@
+{
+ "contentid": "4065554",
+ "modifiedtime": "20260522155421",
+ "fetchedAt": "2026-10-29T20:23:16.838Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4065554",
+       "contenttypeid": "12",
+       "title": "설악산소공원",
+       "createdtime": "20260519112620",
+       "modifiedtime": "20260522155421",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.knps.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/63/4065563_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/63/4065563_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 설악산로 1055 (설악동)",
+       "addr2": "",
+       "zipcode": "24903",
+       "mapx": "128.492883110932",
+       "mapy": "38.1728177507139",
+       "mlevel": "",
+       "overview": "설악산국립공원의 관문인 설악산소공원은 속초를 대표하는 명소이다. 울산바위와 토왕성폭포, 공룡능선 코스의 시작점일 뿐만 아니라, 권금성으로 향하는 케이블카가 있어 누구나 손쉽게 설악산의 수려한 경치를 즐길 수 있다. 특히 가을철 단풍이 아름답기로 유명하다. 소공원 내 상가 구역을 지나면 신흥사 일주문과 함께 압도적인 규모의 청동좌불상을 만나볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}
