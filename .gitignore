@@ -121,3 +121,6 @@ apps/web/design/qa/shots-*/
 
 # wrangler 로컬 상태(pages dev)
 .wrangler/
+
+# 전국 목록 원문(약 35MB, plans/nationwide.md N1) — 해시만 커밋
+apps/web/review/nation/raw/
