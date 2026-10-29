@@ -51,7 +51,7 @@ export const KEYS = {
 
 /** ADR-0097: the keys that belong to one destination — `jeju.basis`, `jeju.region`, `jeju.stay` stay Jeju's; Busan's
  * carry `.busan`. Everything else (saved, visited, settings) is shared: an id says its destination. */
-export const destKey = (key: typeof KEYS.basis | typeof KEYS.region | typeof KEYS.stay, dest: Dest): string => (dest === 'jeju' ? key : `${key}.busan`);
+export const destKey = (key: typeof KEYS.basis | typeof KEYS.region | typeof KEYS.stay, dest: Dest): string => (dest === 'jeju' ? key : `${key}.${dest}`);
 export const MAX_SAVED = 500;
 export const MAX_VISITED = 500;
 
@@ -162,7 +162,7 @@ export function parseStay(v: unknown, dest: Dest = 'jeju'): Stay | null {
   const o = v as Record<string, unknown>;
   if (!isNum(o.lat) || !isNum(o.lng)) return null;
   const p = { lat: o.lat, lng: o.lng };
-  if (!(dest === 'jeju' ? inJeju(p) : BUSAN && releasedDestOf(p) === 'busan')) return null;
+  if (!(dest === 'jeju' ? inJeju(p) : BUSAN && releasedDestOf(p) === dest)) return null;
   const near = nearestArea(p, openAreasOf(dest));
   const own = areaByName(o.area, OPEN_AREAS);
   const area = own && openAreasOf(dest).includes(own) ? own.name : near.name;

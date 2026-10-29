@@ -1,4 +1,5 @@
 // Outbound links (ADR-0025: 예약은 외부 링크; ADR-0071: 지도 앱은 네이버지도 기본, 카카오맵 · TMAP 선택).
+import { DEST } from './dest';
 import { releasedDestOf as destOf } from './release';
 import { cleanName } from './data';
 import { distanceKm, islandOf, withinReach, type BookKind, type Island, type Point, type Spot } from './pick';
@@ -12,11 +13,9 @@ export function kakaoUrl(s: Spot): string {
   return searchUrl(s);
 }
 
-/** The words a name search is scoped by (plans/busan.md M7): the place's own destination — `제주` unless it is in Busan —
+/** The words a name search is scoped by (plans/busan.md M7): the place's own destination's — Jeju's outside them all —
  * and whether the name already says where it is. */
-function scope(s: Spot): { word: string; said: RegExp } {
-  return destOf(s) === 'busan' ? { word: '부산', said: /부산/ } : { word: '제주', said: /제주|서귀포/ };
-}
+const scope = (s: Spot): { word: string; said: RegExp } => DEST[destOf(s) ?? 'jeju'];
 
 function searchUrl(s: Spot): string {
   const name = cleanName(s.name);

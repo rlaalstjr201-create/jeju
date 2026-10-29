@@ -3,7 +3,7 @@
 // runs: the big button reads the position (the app's locate: inside an open destination or `outside`), the two
 // destination buttons choose, and with location already allowed it reads without asking (M4: the cover is there from
 // the first paint and only ever goes away). Used only with the switch on (app.ts).
-import type { Dest } from './dest';
+import { isDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
 import type { Point } from './pick';
 import { releasedDestOf } from './release';
@@ -81,7 +81,7 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
     if (failed && lost) (next === 'unavailable' ? retry! : box!.querySelector<HTMLElement>('[data-dest]'))?.focus();
   }
   function pick(d: string | undefined) {
-    if (done || (d !== 'jeju' && d !== 'busan')) return;
+    if (done || !isDest(d)) return;
     const why = now === 'start' || now === 'locating' ? null : now;
     close();
     deps.choose(d, 'pick', why);

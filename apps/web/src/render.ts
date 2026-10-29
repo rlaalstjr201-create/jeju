@@ -2,7 +2,7 @@
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
-import { DESTS, destOfId, type Dest } from './dest';
+import { DEST, DESTS, destOfId, type Dest } from './dest';
 import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
@@ -1321,7 +1321,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
-        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin ? COPY.example(names) : BUSAN && s.dest === 'busan' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         pair.append(...ex.map((x) => homePhoto(x, false)));
         b.querySelector('.i-check')!.before(pair);
@@ -1336,10 +1336,10 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     };
     // an area's photo is not a pick: from the data as it is
     // 다른 동네 둘러보기 links the area pages, which Busan has none of (specs/busan.md 1.4)
-    const areas = () => (BUSAN && s.dest === 'busan' ? el(doc, 'span', { hidden: '' }) : areasSection(s, s.spots!, origin));
+    const areas = () => (BUSAN && s.dest !== 'jeju' ? el(doc, 'span', { hidden: '' }) : areasSection(s, s.spots!, origin));
     const tail = (): HTMLElement[] => {
       // the coastline the 노을 places were worked out from (ODbL): credited while they are shown
-      const credit = el(doc, 'p', { class: 'credit' }, BUSAN && s.dest === 'busan' ? BUSAN_COPY.homeCredit : COPY.homeCredit);
+      const credit = el(doc, 'p', { class: 'credit' }, BUSAN && DEST[s.dest].credit === 'tour' ? BUSAN_COPY.homeCredit : COPY.homeCredit);
       if (sunsetOn) credit.append(COPY.sunsetCredit, el(doc, 'a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener' }, COPY.osm));
       // settings reachable with nothing saved yet (heuristic audit H5): they live under the saved list
       // ADR-0093: then the other languages, each in its own words; a link opens the app again in it
@@ -1724,13 +1724,14 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   function renderDest(s: State) {
     if (s.dest === destDrawn) return;
     destDrawn = s.dest;
-    const busan = s.dest === 'busan';
+    const busan = s.dest !== 'jeju';
+    const tour = DEST[s.dest].credit === 'tour';
     for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${BUSAN_COPY.destName[s.dest]}`);
     const logo = doc.getElementById('logo');
     if (BUSAN && logo) setAttr(logo, 'aria-label', BUSAN_COPY.destAria(logo.textContent ?? ''));
     doc.title = busan ? BUSAN_COPY.title : jejuTitle;
     for (const c of credits) {
-      if (busan) c.e.textContent = BUSAN_COPY.homeCredit;
+      if (tour) c.e.textContent = BUSAN_COPY.homeCredit;
       else c.e.innerHTML = c.html;
     }
     for (const l of doc.querySelectorAll<HTMLElement>('#results > .landing')) l.hidden = busan;

@@ -5,7 +5,7 @@ import { AREAS, areaByName, destOfArea, inJeju, type AreaName } from './areas';
 import { createSpotSource, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
-import { destOfId, type Dest } from './dest';
+import { destOfId, isDest, type Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
@@ -186,7 +186,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     // `dest=`: 브라우저로 열기 from an in-app browser (keep.ts handoffUrl) carries the 여행지 in use
     const handed = /[?&]dest=(jeju|busan)(?:[&#]|$)/.exec(win?.location.search ?? '')?.[1] as Dest | undefined;
     const linked = area ? destOfArea(area) : link?.stay ? releasedDestOf(link.stay) : (handed ?? null);
-    const said = early?.__dest === 'busan' || early?.__dest === 'jeju' ? (early.__dest as Dest) : null;
+    const said = isDest(early?.__dest) ? early.__dest : null;
     const want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
     // Busan's part not in (it could not be loaded): Jeju for this visit, the choice kept on the device as it was
     dest0 = released(want) ? want : 'jeju';
@@ -983,7 +983,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'stay-here') return stayHere();
     if (action === 'feedback-send') return sendFeedback();
     const dest = b.dataset.dest;
-    if (dest === 'jeju' || dest === 'busan') return guarded(`dest:${dest}`) ? undefined : pickDest(dest);
+    if (isDest(dest)) return guarded(`dest:${dest}`) ? undefined : pickDest(dest);
     const basis = b.dataset.basis;
     if (basis === 'gps') return basisIsCurrent(state, 'gps') ? closeOverlay() : changeBasis({ basis: 'gps' });
     if (basis === 'stay') {
@@ -1059,7 +1059,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     // 저장한 곳: 「부산에 저장한 곳 N곳」 (specs/busan.md 6) — that destination's saved list
     if (action === 'other-dest') {
       const d = b.dataset.dest;
-      if ((d === 'jeju' || d === 'busan') && !guarded('other-dest') && state.view === 'saved') {
+      if (isDest(d) && !guarded('other-dest') && state.view === 'saved') {
         // Busan's part first (src/release.ts): a Jeju visit has not downloaded it
         if (BUSAN && !released(d)) void loadBusan().then((ok) => ok && !signal.aborted && state.view === 'saved' && (switchDest(d), request('show')));
         else {
