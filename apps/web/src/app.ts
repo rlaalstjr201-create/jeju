@@ -1,7 +1,7 @@
 // One screen: 5 mood buttons (static HTML, ADR-0028) + basis toggle → 3 cards (spec, plan OQ3·5; design/SPEC.md).
 // Controller only: user intents → reduce(state) → render(state); effects (GPS, data, storage, history)
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
-import { AREAS, areaByName, destOfArea, inJeju, type AreaName } from './areas';
+import { AREAS, areaByName, destOfArea, inJeju, type RegionName } from './areas';
 import { createSpotSource, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
@@ -798,7 +798,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     nav.back();
   }
 
-  function changeBasis(next: { basis: Basis; region?: AreaName; stay?: Stay }) {
+  function changeBasis(next: { basis: Basis; region?: RegionName; stay?: Stay }) {
     dispatch({ type: 'basis', ...next });
     store.setBasis(next.basis);
     if (next.region) store.setRegion(next.region);

@@ -89,6 +89,8 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
   Object.assign(MAP_APP_NAME, w.mapApp);
   const name = () => {
     for (const a of OPEN_AREAS) {
+      // a 시군구 is named in Korean in every language (ADR-0094 Amendment 1 D4): no row of `w.areas`
+      if (a.group === 'nation') continue;
       const area = a as { label: string; landmark: string };
       [area.label, area.landmark] = w.areas[a.name];
     }

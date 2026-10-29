@@ -1,7 +1,7 @@
 // App state as data + a pure reducer. No DOM, no storage, no timers — the controller (app.ts) runs the
 // effects and feeds their results back in as actions tagged with a request id; results for an old id are
 // dropped here, so the last user intent always wins (S36–S38).
-import { areaByName, nearestArea, type AreaName } from './areas';
+import { areaByName, nearestArea, type RegionName } from './areas';
 import { type Day } from './dates';
 import type { Dest } from './dest';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick';
@@ -81,7 +81,7 @@ export interface State {
   when: When;
   /** today in Jeju (Asia/Seoul). */
   today: Day;
-  region: AreaName | null;
+  region: RegionName | null;
   stay: Stay | null;
   /** 숙소 링크 (ADR-0089): the tag this visit came in by (kept in sessionStorage), null without one. */
   src: string | null;
@@ -161,7 +161,7 @@ export type Action =
   | { type: 'closeSaved' }
   | { type: 'route'; route: Route }
   | { type: 'overlay'; overlay: Overlay }
-  | { type: 'basis'; basis: Basis; region?: AreaName; stay?: Stay }
+  | { type: 'basis'; basis: Basis; region?: RegionName; stay?: Stay }
   | { type: 'src'; src: string }
   | { type: 'reach'; reach: Reach }
   | { type: 'indoor'; on: boolean }
@@ -195,7 +195,7 @@ export type Action =
   | { type: 'feedbackSent' }
   /** another destination (ADR-0094): its basis, region and 숙소; what was picked from the other one's places goes.
    * `note`: a GPS read moved it (specs/busan.md 1.3). */
-  | { type: 'dest'; dest: Dest; basis: Basis; region: AreaName | null; stay: Stay | null; note?: boolean };
+  | { type: 'dest'; dest: Dest; basis: Basis; region: RegionName | null; stay: Stay | null; note?: boolean };
 
 export const GPS_KEY = 'gps';
 /** Where a trip is measured from, in words (ADR-0093: another language's table replaces them). */
@@ -209,7 +209,7 @@ export function initialState(init: {
   indoor?: boolean;
   when?: When;
   today: Day;
-  region: AreaName | null;
+  region: RegionName | null;
   stay: Stay | null;
   src?: string | null;
   saved: SavedEntry[];
@@ -280,7 +280,7 @@ export function initialState(init: {
 export const tabNow = (s: Pick<State, 'mood' | 'sub' | 'newSub'>): Tab | undefined => tabOf(s.mood, s.sub, s.newSub);
 
 /** The fixed origin for 숙소 / 지역 basis, or null when GPS has to be asked. */
-export function staticOrigin(basis: Basis, region: AreaName | null, stay: Stay | null): Origin | null {
+export function staticOrigin(basis: Basis, region: RegionName | null, stay: Stay | null): Origin | null {
   if (basis === 'stay' && stay) {
     return {
       key: `stay:${stay.lat.toFixed(6)},${stay.lng.toFixed(6)}`,
@@ -329,7 +329,7 @@ export function moodIntent(s: State, b: Button): Intent | null {
 }
 
 /** Choosing the basis that is already in use is a no-op — unless the last attempt with it failed. */
-export function basisIsCurrent(s: State, basis: Basis, region?: AreaName | null): boolean {
+export function basisIsCurrent(s: State, basis: Basis, region?: RegionName | null): boolean {
   if (s.basis !== basis) return false;
   if (basis === 'region' && s.region !== region) return false;
   return s.phase.k !== 'noOrigin' && s.phase.k !== 'loadError';

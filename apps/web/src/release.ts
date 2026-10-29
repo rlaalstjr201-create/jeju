@@ -5,8 +5,9 @@
 // only where Busan is in play — the 시작 화면, a Busan link or a device that chose Busan (main.ts, before the app mounts),
 // Busan chosen in the sheet, a position outside Jeju — so a Jeju visit never downloads it (plans/busan.md budget: the
 // Korean entry ≤ 50 kB). Until it is in, Busan is not open: `released('busan')` is false and the app is Jeju's.
-import { AREAS, inJeju, nearestArea, type Area } from './areas';
+import { AREAS, inJeju, nearestArea, type Area, type SggArea, type SggCode } from './areas';
 import type { Dest } from './dest';
+import type { Region } from './nation';
 import type { Point } from './pick';
 import type { StartDeps, StartScreen } from './start';
 
@@ -56,15 +57,52 @@ export function loadBusan(): Promise<boolean> {
 /** The 시작 화면's module (src/start.ts), once Busan's part is in. */
 export const startScreen = (): Part['mountStart'] | null => part?.mountStart ?? null;
 
-export const released = (d: Dest): boolean => d === 'jeju' || (BUSAN && !!part);
+/** What src/nation-part.ts brings (plans/nationwide-app.md 1.1·9): the index's 시군구 as areas, where a point is, the
+ * 이름 줄's word for a 시군구, and the places around one. */
+interface NationPart {
+  areas: readonly SggArea[];
+  region(p: Point): Region;
+  short(sgg: string): string;
+  spots(sgg: string): Promise<unknown>;
+}
+let nation: NationPart | null = null;
+/** the 자동 지역's 시군구 once its part is in */
+const NATION_OPEN: Area[] = [];
+
+/** Called by src/nation-part.ts once it has read the index. */
+export function installNation(p: NationPart): void {
+  if (!NATION || nation) return;
+  nation = p;
+  NATION_OPEN.push(...p.areas);
+  (OPEN_AREAS as Area[]).push(...p.areas);
+}
+let nationLoading: Promise<boolean> | null = null;
+/** The 자동 지역's part and its index (Busan's part with it: a point in Busan is Busan's), asked for once (again after a
+ * failure); false with the switch off or when either could not be loaded. */
+export function loadNation(): Promise<boolean> {
+  if (!NATION) return Promise.resolve(false);
+  const failed = () => ((nationLoading = null), false);
+  return (nationLoading ??= Promise.all([loadBusan(), import('./nation-part').then((m) => m.install())]).then(([, ok]) => ok || failed(), failed));
+}
+/** A point's 시군구 in the 자동 지역 (null: in a 검수한 곳, outside Korea, or the part not in). */
+export function sggOf(p: Point): SggCode | null {
+  const r = nation?.region(p);
+  return r?.k === 'auto' ? r.sgg : null;
+}
+/** The 이름 줄's word for a 시군구 ('' before the part is in). */
+export const sggShort = (sgg: string): string => nation?.short(sgg) ?? '';
+/** The places around a 시군구 (its file and its neighbours'), as the app's places. */
+export const nationSpots = (sgg: string): Promise<unknown> => (nation ? nation.spots(sgg) : Promise.reject(new Error('no part')));
+
+export const released = (d: Dest): boolean => (d === 'nation' ? NATION && !!nation : d === 'jeju' || (BUSAN && !!part));
 
 /** The destination a point is in, if it is open to visitors in this build; else null (as outside them all). With the
  * switch off the boundary is never read (and, with it, never in the Jeju bundle: plans/busan.md budget). */
 export function releasedDestOf(p: Point): Dest | null {
-  return inJeju(p) ? 'jeju' : BUSAN && part?.inside(p) ? 'busan' : null;
+  return inJeju(p) ? 'jeju' : BUSAN && part?.inside(p) ? 'busan' : NATION && sggOf(p) ? 'nation' : null;
 }
 
 /** One destination's areas (Jeju's with the switch off). */
-export const openAreasOf = (d: Dest): readonly Area[] => (BUSAN && d === 'busan' ? BUSAN_OPEN : AREAS);
+export const openAreasOf = (d: Dest): readonly Area[] => (BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : AREAS);
 /** A point's 동네: the nearest centre of its destination's areas (Jeju's outside both, as before). */
 export const areaOfPoint = (p: Point, d: Dest = releasedDestOf(p) ?? 'jeju'): Area => nearestArea(p, openAreasOf(d));

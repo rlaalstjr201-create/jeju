@@ -3,7 +3,7 @@
 // no time of day. Batched into navigator.sendBeacon (sent at once on a map or booking link, which may take the page
 // away); offline batches are dropped and nothing is retried. With
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
-import type { AreaName } from './areas';
+import type { AreaName, RegionName } from './areas';
 import type { Day } from './dates';
 import type { Dest } from './dest';
 import type { Button, NewSub, Reach, Sub } from './pick';
@@ -88,7 +88,7 @@ export function contextOf(s: {
   newSub: NewSub;
   reach: Reach;
   basis: Basis;
-  region: AreaName | null;
+  region: RegionName | null;
   when: When;
   today: Day;
   indoor?: boolean;
@@ -101,7 +101,8 @@ export function contextOf(s: {
       : {}),
     range: RANGE[s.reach],
     basis,
-    ...(basis === 'area' && s.region ? { area: s.region } : {}),
+    // a 시군구 is not an area name (its own field comes with plans/nationwide-app.md U15)
+    ...(basis === 'area' && s.region && s.dest !== 'nation' ? { area: s.region as AreaName } : {}),
     dated: s.when !== 'now',
     ...(s.indoor ? { indoor: true } : {}),
     // the destination only with the switch on: a Jeju-only build sends what it always has

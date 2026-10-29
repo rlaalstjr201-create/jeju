@@ -1,8 +1,10 @@
 // 자동 지역 (ADR-0101, plans/nationwide-app.md 0·2): what scripts/nation/build.mjs ships under /nation/ and the app's
 // reading of it. Pure — no fetch, no build-time define — so tests and scripts may import it. The app reaches it through
 // src/nation-part.ts only (its own chunk).
+import type { SggCode } from './areas';
 import { cleanName } from './data';
-import type { Mood, Spot } from './pick';
+import type { Dest } from './dest';
+import { distanceKm, type Mood, type Point, type Spot } from './pick';
 
 /** The moods a 자동 지역 record may carry: no 쉬기, no 유명한 데 (ADR-0101 2). */
 export type NationMood = Extract<Mood, 'walk' | 'new' | 'food'>;
@@ -103,4 +105,78 @@ export function normalizeNation(raw: unknown, curatedSgg: Iterable<string> = [],
     });
   }
   return out;
+}
+
+/** Where a point is (plans/nationwide-app.md 1.1). */
+export type Region = { k: 'dest'; dest: Dest } | { k: 'auto'; sgg: SggCode } | null;
+type SggRow = NationIndex['sgg'][number];
+/** a point farther than this from every 시군구 centre is outside Korea */
+export const SGG_MAX_KM = 35;
+/** 부산·제주's 시군구 are their 검수한 곳's: never a centre for the 자동 지역 */
+const OWN = /^(26|50)/;
+
+/** A point's 시군구: the nearest centre (no boundary, like a 검수한 곳's 동네) within 35 km, Busan's and Jeju's left out. */
+export function nearestSgg(p: Point, sgg: readonly SggRow[]): SggRow | null {
+  let best: SggRow | null = null;
+  let bestKm = SGG_MAX_KM;
+  for (const s of sgg) {
+    if (OWN.test(s.c)) continue;
+    const km = distanceKm(p, s);
+    if (km <= bestKm) {
+      best = s;
+      bestKm = km;
+    }
+  }
+  return best;
+}
+
+/** The 검수한 곳 a point is in by its boundary (`inside`: Jeju's box, Busan's ring), else the destination whose 시군구 list
+ * (`curated`, DEST[d].sgg) has its 시군구, else the 자동 지역's 시군구; null outside Korea. */
+export function regionOf(p: Point, sgg: readonly SggRow[], inside: (p: Point) => Dest | null, curated: Partial<Record<Dest, readonly string[]>> = {}): Region {
+  const d = inside(p);
+  if (d) return { k: 'dest', dest: d };
+  const near = nearestSgg(p, sgg);
+  if (!near) return null;
+  for (const [dest, codes] of Object.entries(curated) as [Dest, readonly string[]][]) if (codes.includes(near.c)) return { k: 'dest', dest };
+  return { k: 'auto', sgg: near.c as SggCode };
+}
+
+/** The 이름 줄's word for each 시군구 (plans/nationwide-app.md 1.5): 시·군·구 off when 2 letters or more are left
+ * (강릉시 → 강릉, 중구 stays); the 시도's short name before it when another 시군구 has the same word or the name was 2
+ * letters at most (서울 중구, 강원 고성); that 시도 off again past 6 letters (ADR-0094 Amendment 3). A 일반구 (`수원시 장안구`)
+ * is its 시's word: the 구 of one 시 do not clash with each other. */
+export function sggShorts(ix: Pick<NationIndex, 'sido' | 'sgg'>): Record<string, string> {
+  const sido = new Map(ix.sido.map((x) => [x.c, x.s]));
+  const city = (n: string) => n.split(' ')[0];
+  const word = (n: string) => {
+    const c = city(n);
+    const cut = c.replace(/[시군구]$/, '');
+    return cut.length >= 2 ? cut : c;
+  };
+  // the places (시도 + 시) each word stands for
+  const owners = new Map<string, Set<string>>();
+  for (const s of ix.sgg) {
+    const w = word(s.n);
+    if (!owners.has(w)) owners.set(w, new Set());
+    owners.get(w)!.add(`${s.s} ${city(s.n)}`);
+  }
+  const out: Record<string, string> = {};
+  for (const s of ix.sgg) {
+    const w = word(s.n);
+    const both = `${sido.get(s.s) ?? ''} ${w}`.trim();
+    out[s.c] = (owners.get(w)!.size > 1 || city(s.n).length <= 2) && both.length <= 6 ? both : w;
+  }
+  return out;
+}
+
+/** The files a 시군구's places come from (plans/nationwide-app.md 2): its own first, then those of the 시군구 whose
+ * centre is within 40 km of its centre (차로 1시간's straight reach ≈ 30.8 km, and 10 km more), 3 at most. */
+export function filesFor(code: string, sgg: readonly SggRow[]): string[] {
+  const own = sgg.find((s) => s.c === code);
+  if (!own) return [];
+  const near = sgg
+    .map((s) => ({ f: s.f, km: distanceKm(own, s) }))
+    .filter((x) => x.km <= 40)
+    .sort((a, b) => a.km - b.km);
+  return [...new Set([own.f, ...near.map((x) => x.f)])].slice(0, 3);
 }

@@ -1,10 +1,10 @@
 // Device storage (ADR-0026: no login, everything stays on this device). Every read is validated and
 // repaired; every access is try/catch'd, and when storage is missing or throws the app keeps working from
 // memory for this visit (S27·S28·S29).
-import { LEGACY_REGION, areaByName, inJeju, nearestArea, type AreaName } from './areas';
+import { LEGACY_REGION, areaByName, inJeju, nearestArea, type RegionName } from './areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
-import { DESTS, type Dest } from './dest';
+import { DESTS, type Curated, type Dest } from './dest';
 import { BUSAN, OPEN_AREAS, openAreasOf, releasedDestOf } from './release';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
@@ -149,7 +149,7 @@ export function parseReach(v: unknown): Reach {
 }
 
 /** One of the destination's areas (Jeju's 15 by default); the 4 legacy names map to their nearest Jeju area. */
-export function parseRegion(v: unknown, dest: Dest = 'jeju'): AreaName | null {
+export function parseRegion(v: unknown, dest: Dest = 'jeju'): RegionName | null {
   if (typeof v !== 'string') return null;
   const a = areaByName(v, OPEN_AREAS);
   if (a) return openAreasOf(dest).includes(a) ? a.name : null;
@@ -171,7 +171,7 @@ export function parseStay(v: unknown, dest: Dest = 'jeju'): Stay | null {
   return { ...p, area, source };
 }
 
-export function parseBasis(v: unknown, stay: Stay | null, region: AreaName | null): Basis {
+export function parseBasis(v: unknown, stay: Stay | null, region: RegionName | null): Basis {
   if (v === 'stay' && stay) return 'stay';
   if (v === 'region' && region) return 'region';
   return 'gps';
@@ -269,7 +269,7 @@ export interface Loaded {
   /** 비 와요(실내만), this session (ADR-0065). */
   indoor: boolean;
   when: When;
-  region: AreaName | null;
+  region: RegionName | null;
   stay: Stay | null;
   saved: SavedEntry[];
   hintSeen: boolean;
@@ -301,7 +301,7 @@ export interface Store {
   /** for this session only (sessionStorage); off removes it. */
   setIndoor(on: boolean): void;
   setWhen(w: When): void;
-  setRegion(name: AreaName): void;
+  setRegion(name: RegionName): void;
   setStay(stay: Stay): void;
   setHintSeen(): void;
   setTracking(on: boolean): void;
@@ -445,7 +445,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     place,
     dest() {
       const v = get(local, KEYS.dest);
-      return DESTS.includes(v as Dest) ? (v as Dest) : null;
+      return DESTS.includes(v as Curated) ? (v as Curated) : null;
     },
     setDest: (d) => void set(local, KEYS.dest, d),
     load(today) {

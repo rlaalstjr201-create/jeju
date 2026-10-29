@@ -3,8 +3,14 @@
 // destination a point is in is src/busan.ts's (destOf, with Busan's boundary); whether a destination is open to
 // visitors yet is src/release.ts's question, asked only where the app takes a point in.
 
-export type Dest = 'jeju' | 'busan';
-export const DESTS: readonly Dest[] = ['jeju', 'busan'];
+import type { Kind, Mood } from './pick';
+
+/** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. */
+export type Curated = 'jeju' | 'busan';
+/** `nation`: the 자동 지역 as a whole (plans/nationwide-app.md 1.2); which 시군구 is State.sgg. */
+export type Dest = Curated | 'nation';
+/** the 검수한 곳, in the order the 여행지 row lists them */
+export const DESTS: readonly Curated[] = ['jeju', 'busan'];
 
 /** One destination's row (plans/nationwide-app.md 1.2): a new 검수한 곳 is one more row. */
 export interface DestRow {
@@ -19,16 +25,28 @@ export interface DestRow {
   /** a map search is scoped by `word` unless the name already says where it is (`said`, plans/busan.md M7) */
   word: string;
   said: RegExp;
+  /** the moods it offers (ADR-0101 2: no 쉬기, no 유명한 데 in the 자동 지역), and the ones 아무거나 takes a card from */
+  moods: readonly Kind[];
+  any: readonly Mood[];
+  /** what the 이름 줄 says after the colon: the destination's name, or the 시군구's (sggShort) */
+  label: 'name' | 'sgg';
+  /** a 검수한 곳 named by 시군구 (plans/nationwide-app.md 1.3): its codes, which the 자동 지역 then leaves to it */
+  sgg?: readonly string[];
 }
 
+const ALL: readonly Kind[] = ['rest', 'walk', 'new', 'famous', 'food'];
+const ANY: readonly Mood[] = ['rest', 'walk', 'new'];
 export const DEST: Record<Dest, DestRow> = {
   // 제주시청
-  jeju: { file: 'spots.json', idPrefix: '', cityHall: { lat: 33.4996, lng: 126.5312 }, credit: 'visitjeju', word: '제주', said: /제주|서귀포/ },
+  jeju: { file: 'spots.json', idPrefix: '', cityHall: { lat: 33.4996, lng: 126.5312 }, credit: 'visitjeju', word: '제주', said: /제주|서귀포/, moods: ALL, any: ANY, label: 'name' },
   // 부산광역시청 (specs/busan.md 4절; 카카오맵 장소 27284326, 연제구 중앙대로 1001)
-  busan: { file: 'spots-busan.json', idPrefix: 'bs-', cityHall: { lat: 35.1797, lng: 129.0751 }, credit: 'tour', word: '부산', said: /부산/ },
+  busan: { file: 'spots-busan.json', idPrefix: 'bs-', cityHall: { lat: 35.1797, lng: 129.0751 }, credit: 'tour', word: '부산', said: /부산/, moods: ALL, any: ANY, label: 'name' },
+  // 자동 지역: its files are nation/<f>.json (src/nation-part.ts); 서울시청 until a 시군구 is known; a map search by the
+  // name alone (plans/nationwide-app.md U13 scopes it)
+  nation: { file: '', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '', said: /(?:)/, moods: ['walk', 'new', 'food'], any: ['walk', 'new'], label: 'sgg' },
 };
 
-export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Dest);
+export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';
 
 /** A destination's id prefix (specs/busan.md 3.1); an id with none is Jeju's. */
-export const destOfId = (id: string): Dest => DESTS.find((d) => DEST[d].idPrefix && id.startsWith(DEST[d].idPrefix)) ?? 'jeju';
+export const destOfId = (id: string): Dest => (Object.keys(DEST) as Dest[]).find((d) => DEST[d].idPrefix && id.startsWith(DEST[d].idPrefix)) ?? 'jeju';

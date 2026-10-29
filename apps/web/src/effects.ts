@@ -1,6 +1,6 @@
 // Side effects that only *return* results — no UI. The controller checks the request id before it
 // applies anything, so a late GPS answer can never open a sheet or overwrite newer cards (S37·S38).
-import type { AreaName } from './areas';
+import type { RegionName } from './areas';
 import type { Point } from './pick';
 import { gpsOrigin, staticOrigin } from './state';
 import type { Basis, GeoPermission, NoOrigin, Origin, Stay } from './types';
@@ -37,7 +37,7 @@ export async function locateGps(deps: GeoDeps): Promise<{ ok: true; point: Point
   }
 }
 
-export async function resolveOrigin(basis: Basis, region: AreaName | null, stay: Stay | null, deps: GeoDeps): Promise<OriginResult> {
+export async function resolveOrigin(basis: Basis, region: RegionName | null, stay: Stay | null, deps: GeoDeps): Promise<OriginResult> {
   const fixed = staticOrigin(basis, region, stay);
   if (fixed) return { ok: true, origin: fixed };
   const r = await locateGps(deps);

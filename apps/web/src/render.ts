@@ -1,7 +1,7 @@
 // render(state) is idempotent: every aria-pressed/aria-current, label, count, card and sheet is derived from
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
-import { AREAS, AREA_GROUPS, areaLabel, type AreaName } from './areas';
+import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
 import { DEST, DESTS, destOfId, type Dest } from './dest';
 import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
@@ -216,14 +216,14 @@ export const COPY = {
 /** 여행지 (ADR-0094, specs/busan.md 1.3·1.4·3.5·6·8): the switched-on build's words, apart from COPY so that a Jeju build,
  * where every use of them is behind the switch, carries none of them (another language's table: Lang.busan). */
 export const BUSAN_COPY = {
-  destName: { jeju: '제주', busan: '부산' } satisfies Record<Dest, string>,
+  destName: { jeju: '제주', busan: '부산', nation: '한국' } satisfies Record<Dest, string>,
   destHead: '여행지',
   title: '여차나:부산 · P를 위한 여행동반자',
   examplePopular: (names: string[]) => `부산 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 한국관광공사',
   outside: '지금은 부산 밖이에요.',
   stayOutside: '지금은 부산 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
-  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.' } satisfies Record<Dest, string>,
+  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Dest, string>,
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
   /** the name line's button (ADR-0094 Amendment 3): its words, e.g. 「여차나:제주」 */
   destAria: (name: string) => `${name}, 여행지 바꾸기`,
@@ -755,7 +755,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return card;
   }
 
-  function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: AreaName | null, dest: Dest = 'jeju') {
+  function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: RegionName | null, dest: Dest = 'jeju') {
     if (BUSAN && dest === 'busan') {
       // specs/busan.md 2절: one group, no heading, west → east
       const id = `areas-${where}-busan`;

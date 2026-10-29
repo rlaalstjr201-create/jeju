@@ -186,14 +186,14 @@ export const ZH: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: '济州', busan: '釜山' },
+    destName: { jeju: '济州', busan: '釜山', nation: '韩国' },
     destHead: '旅行地',
     title: 'Yeochana:釜山 · P人的旅行搭子',
     examplePopular: (names) => `釜山人气：${names.join('、')}`,
     homeCredit: '信息与照片：韩国旅游发展局',
     outside: '你现在不在釜山。',
     stayOutside: '你现在不在釜山。请在下面选择住处所在的区域。',
-    switched: { jeju: '你在济州，已切换到济州。', busan: '你在釜山，已切换到釜山。' },
+    switched: { jeju: '你在济州，已切换到济州。', busan: '你在釜山，已切换到釜山。', nation: '已切换到你现在所在的地方。' },
     otherSaved: { jeju: (n) => `在济州收藏的地方 ${n} 处`, busan: (n) => `在釜山收藏的地方 ${n} 处` },
     destAria: (name) => `${name}，更换旅行地`,
   },

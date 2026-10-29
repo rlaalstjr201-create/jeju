@@ -1,5 +1,6 @@
 // 15 destination areas with fixed centres (ADR-0029, plans/tomorrow-picker.md "지역 15곳 중심 좌표").
 import type { BUSAN_AREAS } from './busan';
+import type { Dest } from './dest';
 import { distanceKm, type Point } from './pick';
 
 // Listed west → east within each group (longitude order), so the grid reads like a map (design/SPEC.md §6.9).
@@ -24,11 +25,27 @@ export const AREAS = [
   { name: '성산', slug: 'seongsan', label: '성산', landmark: '일출봉', lat: 33.4387, lng: 126.9026, group: 'seogwipo' },
 ] as const;
 
-/** Either destination's area: Jeju's 15 here, Busan's 12 in src/busan.ts (BUSAN_AREAS, ALL_AREAS) — a module of its own
- * that the app's entry never imports (plans/busan.md budget). */
-export type Area = (typeof AREAS)[number] | (typeof BUSAN_AREAS)[number];
-export type AreaName = Area['name'];
-export const destOfArea = (a: Area): 'jeju' | 'busan' => (a.group === 'busan' ? 'busan' : 'jeju');
+/** 시군구 code (lDongRegnCd + lDongSignguCd, src/nation.ts SGG_CODE). */
+export type SggCode = `${number}`;
+/** A 시군구 as the 자동 지역's 동네 (plans/nationwide-app.md 1.4): named by its code (`중구`, `고성군` are not one place each);
+ * `label` its name (`강릉시`), `landmark` its 시도's short name. From the index, once the 자동 지역's part is in. */
+export interface SggArea {
+  name: SggCode;
+  slug: SggCode;
+  label: string;
+  landmark: string;
+  lat: number;
+  lng: number;
+  group: 'nation';
+}
+/** A destination's area: Jeju's 15 here, Busan's 12 in src/busan.ts (BUSAN_AREAS, ALL_AREAS) — a module of its own
+ * that the app's entry never imports (plans/busan.md budget) — and the 자동 지역's 시군구. */
+export type Area = (typeof AREAS)[number] | (typeof BUSAN_AREAS)[number] | SggArea;
+/** a 검수한 곳's 동네 */
+export type AreaName = Exclude<Area, SggArea>['name'];
+/** a 동네 of any destination: a 검수한 곳's, or a 시군구 */
+export type RegionName = AreaName | SggCode;
+export const destOfArea = (a: Area): Dest => (a.group === 'busan' ? 'busan' : a.group === 'nation' ? 'nation' : 'jeju');
 
 export const AREA_GROUPS: readonly { group: (typeof AREAS)[number]['group']; heading: string }[] = [
   { group: 'jeju', heading: '제주시 쪽' },
@@ -48,7 +65,7 @@ export const areaByName = (name: unknown, areas: readonly Area[] = AREAS): Area 
   typeof name === 'string' ? areas.find((a) => a.name === name) ?? null : null;
 
 /** On-screen name of a stored area key ('서귀포시내' → '서귀포 시내'). */
-export const areaLabel = (name: AreaName, areas: readonly Area[] = AREAS): string => areaByName(name, areas)?.label ?? name;
+export const areaLabel = (name: RegionName, areas: readonly Area[] = AREAS): string => areaByName(name, areas)?.label ?? name;
 
 /** The area whose centre is nearest, among `areas` (Jeju's 15 unless given). */
 export function nearestArea<A extends Area = (typeof AREAS)[number]>(p: Point, areas: readonly A[] = AREAS as readonly Area[] as readonly A[]): A {
