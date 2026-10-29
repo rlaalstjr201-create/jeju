@@ -7,6 +7,7 @@ import { destOf } from './busan';
 import { DEST, DESTS, type Dest } from './dest';
 import { filesFor, normalizeNation, parseIndex, regionOf, sggShorts } from './nation';
 import { installNation } from './release';
+import { kmaGrid } from '../functions/_lib/kma';
 
 /** The 자동 지역's own words (plans/nationwide-app.md 4·8): here rather than in render.ts, so a visit that never comes
  * here carries none of them; another language's (Lang.nation) are written in once this part is in (release.ts whenNation). */
@@ -62,6 +63,10 @@ export async function install(): Promise<boolean> {
     copy: NATION_COPY,
     sido: () => sidos.map((c) => ({ c, name: sidoName(c) })),
     sidoOf: (c) => sidoOf.get(c) ?? null,
+    grid(c) {
+      const s = ix.sgg.find((x) => x.c === c);
+      return s ? kmaGrid(s.lat, s.lng) : null;
+    },
     // the 동네 index (plans/nationwide-app.md 4): the 시군구 of the 시도 in use, then 다른 시도, which lists the 시도 in the
     // same place; one picked lists its 시군구 there
     areas(parent, where, selected, sgg, option) {

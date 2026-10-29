@@ -1,9 +1,9 @@
 // 홈 A′ (ADR-0075, specs/home-refresh.md): what the first screen shows besides the moods. Pure, no DOM — render.ts draws it.
-import { AREAS, nearestArea, type Area, type AreaName } from './areas';
+import { AREAS, areaByName, nearestArea, type Area, type AreaName } from './areas';
 import type { Day } from './dates';
 import { DEST, destOfId, type Dest } from './dest';
 import { marketDay } from './market';
-import { BUSAN, openAreasOf } from './release';
+import { BUSAN, NATION, OPEN_AREAS, openAreasOf } from './release';
 import { byId, distanceKm, islandTop, listed, pickCards, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
 import { rainArea, whenDay, type State } from './state';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
@@ -11,11 +11,14 @@ import type { Origin } from './types';
 
 export { homeOrigin } from './state';
 
-export const sunPoint = (origin: Origin | null, dest: Dest = 'jeju'): Point =>
-  origin?.point ?? DEST[BUSAN ? dest : 'jeju'].cityHall;
+/** The sun's place: the basis, else the destination's city hall (the 자동 지역: its 시군구's centre, plans/nationwide-app.md 5). */
+export const sunPoint = (origin: Origin | null, dest: Dest = 'jeju', sgg: string | null = null): Point => {
+  const a = NATION && dest === 'nation' && !origin ? areaByName(sgg, OPEN_AREAS) : null;
+  return origin?.point ?? (a ? { lat: a.lat, lng: a.lng } : DEST[BUSAN ? dest : 'jeju'].cityHall);
+};
 
 /** 밤 (ADR-0091) on the home: 지금 only, at the basis (the city hall's sun without one), by the time the app last read. */
-export const nightHome = (s: State, origin: Origin | null): boolean => s.when === 'now' && nightNow(s.clock, sunPoint(origin, s.dest), s.today);
+export const nightHome = (s: State, origin: Origin | null): boolean => s.when === 'now' && nightNow(s.clock, sunPoint(origin, s.dest, s.sgg), s.today);
 
 /** The rows above 유명한 데 on the first screen, whose 「예:」 its own skips (ADR-0092 7). */
 const ABOVE_FAMOUS: readonly Kind[] = ['rest', 'walk', 'new'];

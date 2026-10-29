@@ -71,6 +71,8 @@ interface NationPart {
   /** the 시도 that have a 시군구 in it, named in the page's language; a 시군구's 시도 */
   sido(): { c: string; name: string }[];
   sidoOf(sgg: string): string | null;
+  /** 비 소식's KMA grid of a 시군구's centre (null: not one of its) */
+  grid(sgg: string): { nx: number; ny: number } | null;
   /** the 동네 index (render.ts areaGroups), drawn with the app's option row */
   areas(parent: HTMLElement, where: string, selected: string | null, sgg: string | null, option: (label: string, sub: string | null, attrs: Record<string, string>) => HTMLButtonElement): void;
 }
