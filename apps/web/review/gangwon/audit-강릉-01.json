@@ -1,0 +1,2644 @@
+{
+ "round": "01",
+ "city": "강릉",
+ "criteria": "review/gangwon/criteria.md",
+ "sample": "audit-강릉-01-sample.json (seed 20261030)",
+ "judgments": "audit-강릉-01-judgments.json",
+ "facts": "audit-강릉-01-facts.json",
+ "metrics": {
+  "n": 120,
+  "keepMood": {
+   "agree": 115,
+   "rate": 0.9583,
+   "threshold": 0.9,
+   "pass": true
+  },
+  "keepOnly": {
+   "agree": 118,
+   "rate": 0.9833,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 116,
+   "rate": 0.9667,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 0,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 96,
+   "of": 98,
+   "note": "기록만"
+  }
+ },
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-3536826",
+   "name": "빵을쇼핑하다 치아바타",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "치아바타가 주메뉴인 주문진 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2870225",
+   "name": "소돌막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "즉석에서 뽑은 생면으로 막국수를 내는 주문진 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2781674",
+   "name": "벌집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오래된 한옥을 고쳐 칼국수를 내는 임당동 칼국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-800375",
+   "name": "소금강 장천마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "양떼목장에서 양을 만나고 농산물을 맛보는 체험 마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536332",
+   "name": "예당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "간장게장과 양념게장 등 게 요리 정식을 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2837796",
+   "name": "현대장칼국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "멸치육수에 매운 장칼국수를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069503",
+   "name": "강릉농산물새벽시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "남대천 둔치에서 농민이 직접 농산물을 파는 새벽시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536155",
+   "name": "장수삼계탕",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한방삼계탕과 능이삼계탕을 내는 주문진 보양식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2704780",
+   "name": "샌드파인골프클럽(샌드파인GC)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "동해를 내려다보는 18홀 골프장이에요"
+   },
+   "audit": {
+    "keep": false,
+    "reject": "NOT_DESTINATION",
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125697",
+   "name": "안인해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "바위 해변에서 조개를 잡고 낚시도 하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892127",
+   "name": "비비플로",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "원데이 클래스를 여는 편집숍 겸 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125770",
+   "name": "금강사(강릉)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "소금강 무릉계곡 안의 절이고 맞은편에 식당암이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2808098",
+   "name": "철뚝소머리집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "소머리국밥 하나만 내는 주문진 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125748",
+   "name": "남대천(강릉)",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "시내를 가로지르는 하천으로 둔치 주변에 단오공원이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3537794",
+   "name": "커피블럭",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "매일 로스팅한 원두로 핸드드립과 수제차를 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892780",
+   "name": "앙빵",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "감자처럼 포장한 감자빵을 파는 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774703",
+   "name": "경포생태저류지",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "오죽헌과 경포호 사이 산책로에 유채꽃과 코스모스가 피어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125694",
+   "name": "송정해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해변 도로 양옆 소나무 사이 벤치에서 바다를 바라봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069526",
+   "name": "애니멀스토리(강릉)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "reason": "먹이 주기와 만져보기 체험을 하는 동물 체험관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3532998",
+   "name": "깐숙이네",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돼지갈비와 항정살 오겹살을 화로에 굽는 고기집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3535139",
+   "name": "뚱할머니순두부",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "순두부백반과 두부전골과 두부조림을 내는 순두부집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3537616",
+   "name": "연곡유정오리",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오리주물럭과 오리로스, 볶음밥을 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2930702",
+   "name": "강릉안반데기관광농원",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "산나물 채취와 치유숲길 트레킹, 별보기 차박을 하는 민간정원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2990291",
+   "name": "강릉생태체험박물관 자연아놀자",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "reason": "어류관과 파충류관, 곤충양서관에서 생물을 만나는 체험 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": false,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536240",
+   "name": "조개상회 강릉점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "안목해변 바로 앞에서 바다를 보며 조개구이를 먹는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1012554",
+   "name": "[해파랑길] 35코스(바우길 9구간)",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "옥계시장에서 정동진역까지 해안길과 숲길로 이어지는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782914",
+   "name": "고래책방",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "독립서점과 베이커리, 카페, 어린이책방이 층마다 들어선 책방이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536080",
+   "name": "맛마루부대찌개",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "부대찌개와 꼬막비빔밥, 냉모밀을 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2870203",
+   "name": "서당골산채",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돌솥정식과 황태구이정식을 내는 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2894303",
+   "name": "크림하우스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "논밭이 보이는 대형 베이커리 카페이고 눈꽃커피를 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536384",
+   "name": "맛있는대게 홍게",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "주문진 수산시장 입구에서 대게를 파는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714439",
+   "name": "안반데기",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해발 1,100m 고랭지에 배추밭 경관이 펼쳐진 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892089",
+   "name": "바우카페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "영진해변이 훤히 보이는 카페이고 흑임자 카페라테를 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2894092",
+   "name": "월화엔",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "단독주택을 고쳐 만든 정원 있는 도심 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3534254",
+   "name": "돌체테리아",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "빵지순례로 알려진 빵집이에요"
+   },
+   "audit": {
+    "keep": false,
+    "reject": "INSUFFICIENT_INFO",
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1169632",
+   "name": "[강릉 바우길 11구간] 신사임당길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "송양초등학교에서 오죽헌과 선교장을 지나 허난설헌 생가터에 이르는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069499",
+   "name": "무명",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "구옥을 고친 상영관에서 강릉 독립영화를 보고 음료도 마셔요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128722",
+   "name": "칠성산",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "법왕사에서 오르는 산으로 정상에서 강릉 바다가 보여요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3532541",
+   "name": "효주원",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "수타면 짜장면과 해물 육수 짬뽕이 대표인 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3537135",
+   "name": "경성포차",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "모듬조개탕과 백골뱅이탕을 내는 세인트존스호텔 근처 포차예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2869020",
+   "name": "라몬타냐",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "참나무 화덕으로 구운 피자와 생면파스타를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3534216",
+   "name": "이쉐프의돈까스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "생등심으로 만든 수제 돈가스를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2687981",
+   "name": "경포 아쿠아리움",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "경포호 대형어류와 수달을 보는 아쿠아리움이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2775588",
+   "name": "에세이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "영진해변 근처 북카페이고 해변 피크닉용품도 빌려줘요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714722",
+   "name": "헌화로",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "옥계 낙풍에서 정동진역 앞까지 이어지는 도로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3535623",
+   "name": "포모도로",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "파스타와 스테이크를 내는 궁골길 이탈리안 레스토랑이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536555",
+   "name": "강릉한우백화점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우 구이집이고 정육 매장도 함께 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128359",
+   "name": "강릉 복사꽃마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "전통놀이와 과수원길 걷기 같은 농촌 체험을 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3532662",
+   "name": "내마음에찜 강릉본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "매운소갈비모둠해물찜을 내는 해물찜집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3543287",
+   "name": "신사임당사친시비",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "신사임당을 기리는 기념비로 시가 새겨져 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2903492",
+   "name": "염전횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "망치와 아귀로 매운탕을 끓이는 염전길 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3535672",
+   "name": "만나옹심이손칼국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "옹심이칼국수와 감자요리를 내는 옹심이 전문 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127922",
+   "name": "오대산 소금강계곡",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "명경대와 구룡폭포, 만물상이 이어지는 계곡이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774694",
+   "name": "강릉전복해물뚝배기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "전복 해물뚝배기가 대표 메뉴인 전복요리집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536259",
+   "name": "삼교리동치미막국수 남항진점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "동치미 막국수로 알려진 막국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2776853",
+   "name": "주문진좌판풍물시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "신선한 생선회와 해산물, 젓갈을 파는 수산물 풍물시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2551386",
+   "name": "강릉원주대학교 박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "영동지역 발굴 유물을 전시한 대학 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3534425",
+   "name": "OODD",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "장작화덕 피자와 한우 스테이크를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2772889",
+   "name": "부연약수",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "트레킹을 하고 탄산약수를 맛보는 계곡이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125769",
+   "name": "강릉 굴산사지",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "당간지주와 승탑, 석불좌상이 남은 옛 절터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2773834",
+   "name": "소집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "옛 외양간을 고쳐 지역 작가 전시를 여는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536481",
+   "name": "대게왕국",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "주문진항 앞에서 대게와 게딱지 볶음밥을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125698",
+   "name": "연곡해변(연곡해수욕장)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "넓은 백사장과 솔밭이 있고 주변에 먹거리촌이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069528",
+   "name": "주마강산승마클럽",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "이론 수업과 말 끌기, 평보와 속보를 배우는 승마 체험이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3533836",
+   "name": "기사문&강릉락강정",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "락강정과 가자미덮밥과 해산물코스를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536397",
+   "name": "에펠루아",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "강문에서 바게트와 천연발효종 빵을 굽는 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3535741",
+   "name": "도자기카페 안다미로",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "도자기 만들기 체험도 하는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892006",
+   "name": "마시와 본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "먹물 아이스크림과 오징어빵을 파는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069502",
+   "name": "병산 옹심이마을",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감자옹심이와 감자전을 내는 가게가 모인 마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-126898",
+   "name": "통일공원(강릉)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "군사장비를 한곳에서 볼 수 있는 전시공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2930172",
+   "name": "강릉 초당찰떡",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "밥을 찧어 만든 구운 찰떡을 파는 찰떡 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-623156",
+   "name": "교항면옥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "물막국수와 비빔막국수, 수육을 내는 막국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-585615",
+   "name": "도직해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "깨끗한 모래와 야영장이 있고 철조망이 쳐진 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2605207",
+   "name": "허난설헌 솔숲",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "생가터 옆 소나무 군락에 솔바람이 부는 숲이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3532895",
+   "name": "꿀꺽",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "강릉 구정에서 기른 한돈을 내는 고기집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2891818",
+   "name": "강릉샌드",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "월화거리에서 커피 곶감 초당옥수수 맛 쿠키샌드를 파는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714729",
+   "name": "매월당 김시습 기념관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "김시습 유물을 전시한 한옥 기념관으로 저포놀이 체험방이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125417",
+   "name": "국립대관령자연휴양림",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "아름드리 소나무 숲에서 산림욕을 하는 휴양림이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069500",
+   "name": "지베이스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "건담 피규어가 가득한 건담 테마 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2717933",
+   "name": "경포가시연습지",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "호수를 낀 산책로에서 연꽃과 가시연을 봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3535303",
+   "name": "해변횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "물회 육수에 사과를 넣는 옥계 금진리 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2894282",
+   "name": "카페카모메",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 만든 당고를 내는 당고 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3532714",
+   "name": "해뜨는맛집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "닭볶음탕이 대표 메뉴인 포남동 한식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-130057",
+   "name": "대관령박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "고인돌 모양으로 지은 박물관에 청룡방, 백호방 전시실이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2874141",
+   "name": "해마루",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "남항진 해변에서 농어 도다리 참돔 모듬회를 내는 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1086405",
+   "name": "강릉 모래내 한과마을(갈골한과)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "전통 방식으로 한과를 만드는 마을이고 한과 체험 전시관이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774692",
+   "name": "강릉자동차극장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "차에서 영화를 보는 극장이고 전원형 카페와 셀프 바비큐 시설도 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": false,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2781684",
+   "name": "실비생선구이 본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "주문진항 해안로에서 생선구이와 된장찌개를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2499926",
+   "name": "봉봉방앗간",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "방앗간 건물을 고쳐 만든 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2871246",
+   "name": "까치장칼국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "강릉역 근처에서 장칼국수와 소고기김밥을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536398",
+   "name": "영진댁",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "대왕철판과 낙지칼국수를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536409",
+   "name": "13월의강릉",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "조개를 바탕으로 한 요리를 내는 조개구이집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536138",
+   "name": "사천소머리국밥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "사천면에서 소머리국밥을 내는 국밥집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1913089",
+   "name": "솔바람다리",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "남항진과 안목을 잇는 보행자 전용 다리예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3534557",
+   "name": "길목풍천장어",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "풍천장어구이가 메뉴의 전부인 장어집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2550106",
+   "name": "환희컵박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "세계 각국의 명품 커피잔을 전시한 컵 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3531662",
+   "name": "최선평 가옥",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "안채와 사랑채를 갖춘 전통 가옥으로 문화재자료로 지정됐어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2773086",
+   "name": "허균·허난설헌 기념공원",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "생가터와 기념관, 전통차 체험관이 있는 기념공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2870295",
+   "name": "송정용짬뽕",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "문어짬뽕과 해물짬뽕을 내는 송정동 짬뽕집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129179",
+   "name": "주문진 등대",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "강원도에서 처음 세운 벽돌 등대예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2775525",
+   "name": "메시56",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "우나기동과 우니동 같은 일본식 해산물 덮밥집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3536295",
+   "name": "파머스키친 강릉점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "초당순두부마을에서 수제버거를 파는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128759",
+   "name": "강릉 수리골 고택",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "해운정과 담 하나 사이에 둔 ㅁ자형 한옥이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-132774",
+   "name": "주문진수산시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "주문진항 옆 어시장에서 갓 잡은 오징어와 회를 맛봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3539725",
+   "name": "갈골한과체험전시관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "한과의 유래를 보는 전시관과 한과 만들기 체험관이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125588",
+   "name": "경포도립공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "경포호와 해변, 송림을 품은 도립공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2928847",
+   "name": "콩방앗간",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "옛 오징어 공장을 살려 만든 카페이고 루프탑에서 바다가 보여요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3069527",
+   "name": "너울서프",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "금진해변에서 서핑 강습을 받고 바비큐 파티를 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2930183",
+   "name": "카페 뤼미에르",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "안목 커피거리에서 통창으로 안목해변이 보이는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2874093",
+   "name": "택지골수제생갈비",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한돈 돼지갈비와 지리산 흑돼지 오겹살을 숯불에 굽는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3532991",
+   "name": "다모아식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "20년째 장치찜을 내는 주문진 가게예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1722228",
+   "name": "강릉단오제전수교육관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "강릉단오제 홍보전시실과 공연동, 전통문화교실이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2465063",
+   "name": "강릉 녹색도시체험센터",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "reason": "태양열과 지열로 지은 센터에서 친환경 에너지 체험을 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2868612",
+   "name": "미트컬쳐",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "안목해변에서 헤링과 에스까르고를 내는 유럽식 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128728",
+   "name": "영진해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "가자미와 조개를 잡는 어촌 마을 옆 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128360",
+   "name": "강릉 한울타리마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "도예와 공예 체험을 하는 공방이 있는 마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-585591",
+   "name": "염전해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "군선강과 만나는 곳에서 숭어와 학꽁치 낚시를 하는 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3576963",
+   "name": "커피내리는 버스정류장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 로스팅한 원두로 커피를 내리는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2775583",
+   "name": "346커피스토리",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "강문해변 바다를 보며 쉬는 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702581",
+   "name": "강릉 오금집",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "강릉 중심부에 하나뿐인 조선 후기 초가집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}
