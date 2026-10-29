@@ -1,0 +1,70 @@
+{
+ "n": 260,
+ "compared": 49,
+ "mood": {
+  "same": 43,
+  "of": 49,
+  "rate": 0.8775510204081632,
+  "pass": true
+ },
+ "indoor": {
+  "same": 49,
+  "of": 49,
+  "rate": 1,
+  "pass": true
+ },
+ "wetMiss": {
+  "count": 0,
+  "of": 18,
+  "rate": 0
+ },
+ "keep": {
+  "same": 233,
+  "of": 260,
+  "rate": 0.8961538461538462
+ },
+ "misses": [
+  {
+   "id": "nt-1008185",
+   "what": "mood",
+   "rule": "new",
+   "judge": "walk",
+   "code": "LS011900"
+  },
+  {
+   "id": "nt-4114253",
+   "what": "mood",
+   "rule": "new",
+   "judge": "walk",
+   "code": "EX070200"
+  },
+  {
+   "id": "nt-2756611",
+   "what": "mood",
+   "rule": "walk",
+   "judge": "new",
+   "code": "HS010200"
+  },
+  {
+   "id": "nt-3072022",
+   "what": "mood",
+   "rule": "new",
+   "judge": "walk",
+   "code": "EX070200"
+  },
+  {
+   "id": "nt-2666753",
+   "what": "mood",
+   "rule": "new",
+   "judge": "walk",
+   "code": "LS011900"
+  },
+  {
+   "id": "nt-2669961",
+   "what": "mood",
+   "rule": "new",
+   "judge": "walk",
+   "code": "LS011900"
+  }
+ ]
+}
