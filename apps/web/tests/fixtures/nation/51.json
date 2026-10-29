@@ -1,0 +1,17 @@
+[
+  {"id":"nt-125417","name":"국립대관령자연휴양림","lat":37.71485534800313,"lng":128.79051549291611,"sgg":"51150","cat":["NA","NA04","NA040600"],"image":"https://tong.visitkorea.or.kr/cms/resource/12/3016112_image2_1.jpg","moods":["walk"]},
+  {"id":"nt-127951","name":"하슬라아트월드","lat":37.7064767297,"lng":129.0102035685,"sgg":"51150","cat":["VE","VE07","VE070600"],"image":"http://tong.visitkorea.or.kr/cms/resource/77/3349677_image2_1.jpg","moods":["new"],"sub":"sight","indoor":true},
+  {"id":"nt-133494","name":"원조초당순두부","lat":37.7905840840965,"lng":128.914949005182,"sgg":"51150","cat":["FD","FD01","FD010100"],"image":"","moods":["food"],"sub":"meal","indoor":true},
+  {"id":"nt-2609150","name":" 뉴욕제과  ","lat":38.2010386033,"lng":128.5794158255,"sgg":"51210","cat":["FD","FD03","FD030100"],"image":"https://tong.visitkorea.or.kr/cms/resource/48/2732948_image2_1.jpg","moods":["food"],"sub":"cafe","indoor":true},
+  {"id":"nt-125756","name":"계조암(속초)","lat":38.18979680686125,"lng":128.47506156125354,"sgg":"51210","cat":["HS","HS03","HS030100"],"image":"","moods":["new"],"sub":"sight"},
+  {"id":"nt-900001","name":"체험으로 온 새로운 것","lat":37.75,"lng":128.88,"sgg":"51150","cat":["EX","EX01","EX010100"],"image":"","moods":["new"],"sub":"do"},
+  {"id":"nt-900002","name":"분류 없는 먹기","lat":37.75,"lng":128.88,"sgg":"51150","cat":["FD","FD01","FD010100"],"image":"","moods":["food"]},
+  {"id":"nt-900003","name":"쉬기만","lat":37.75,"lng":128.88,"sgg":"51150","cat":["NA","NA01","NA010100"],"image":"","moods":["rest","famous"]},
+  {"id":"nt-900004","name":"좌표 없음","lat":null,"lng":128.88,"sgg":"51150","cat":["NA","NA01","NA010100"],"image":"","moods":["walk"]},
+  {"id":"nt-900005","name":"시군구 코드 틀림","lat":37.75,"lng":128.88,"sgg":"51","cat":["NA","NA01","NA010100"],"image":"","moods":["walk"]},
+  {"id":"bs-126081","name":"다른 여행지 id","lat":37.75,"lng":128.88,"sgg":"51150","cat":["NA","NA01","NA010100"],"image":"","moods":["walk"]},
+  {"id":"nt-900006","name":"실내 아닌 값","lat":37.75,"lng":128.88,"sgg":"51150","cat":["NA","NA01","NA010100"],"image":"","moods":["walk"],"indoor":"yes"},
+  {"id":"nt-900007","name":"걷기와 새로운 것","lat":37.76,"lng":128.89,"sgg":"51150","cat":["NA","NA01","NA010100"],"image":"","moods":["walk","new"]},
+  {"id":"nt-900008","name":"울릉 일주도로","lat":37.49,"lng":130.9,"sgg":"47940","cat":["NA","NA01","NA010100"],"image":"","moods":["walk"]},
+  null
+]
