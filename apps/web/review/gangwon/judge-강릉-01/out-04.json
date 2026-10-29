@@ -1,0 +1,634 @@
+[
+ {
+  "id": "nt-130057",
+  "name": "대관령박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "고인돌 모양으로 지은 박물관에 청룡방, 백호방 전시실이 있어요",
+  "basis": [
+   "자연과의 조화를 생각하며 고인돌 형상으로 지은",
+   "청룡방, 백호방, 주작방, 현무방으로 구분하고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130123",
+  "name": "참소리에디슨손성목영화박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "축음기와 에디슨 발명품을 전시한 박물관이에요",
+  "basis": [
+   "명품축음기, 뮤직박스, 라디오, TV 등 2500점이",
+   "에디슨의 발명품과 유품 등 2,000여 점이 전시되어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130703",
+  "name": "숲사랑홍보관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-130878",
+  "name": "정동진시간박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "시간을 주제로 한 시계 작품을 전시한 박물관이에요",
+  "basis": [
+   "시간을 주제로 한 동·서양의 다양한 시계 작품들",
+   "큰 규모의 모래시계와 초정밀 청동해시계"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1318353",
+  "name": "강릉자수박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "한국, 중국, 일본 전통 자수를 전시한 박물관이에요",
+  "basis": [
+   "한국, 중국, 일본 전통 자수 500여 점이 상설 전시관에 전시"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1722228",
+  "name": "강릉단오제전수교육관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "강릉단오제 홍보전시실과 공연동, 전통문화교실이 있어요",
+  "basis": [
+   "강릉단오제 홍보전시실, 전수교육실",
+   "전통문화교실과 강릉단오제 역사 탐방이 있는데"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2550106",
+  "name": "환희컵박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "세계 각국의 명품 커피잔을 전시한 컵 박물관이에요",
+  "basis": [
+   "세계 각국의 명품 커피잔들이 전시되어 있고",
+   "아시아 유일의 컵 박물관이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2551386",
+  "name": "강릉원주대학교 박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "영동지역 발굴 유물을 전시한 대학 박물관이에요",
+  "basis": [
+   "4층 전시실에는 영동지역의 역사·문화를 살펴볼 수 있도록 전시가 구성"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2592013",
+  "name": "강릉커피박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "커피 유물과 로스터를 전시하고 커피체험관과 뮤지엄 카페가 있어요",
+  "basis": [
+   "일반전시관, 특별관, 커피체험관, 커피 교육관, 뮤지엄 카페로 구성",
+   "2관에서는 커피 로스터와 그라인더를 볼 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2706817",
+  "name": "강릉시립미술관 교동",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "언덕 위에서 강릉 시내가 내려다보이는 시립미술관 분관이에요",
+  "basis": [
+   "높은 언덕 위에 위치하여 강릉 시내를 한 눈에 조망할 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714729",
+  "name": "매월당 김시습 기념관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "김시습 유물을 전시한 한옥 기념관으로 저포놀이 체험방이 있어요",
+  "basis": [
+   "김시습 관련 유물·자료를 전시해 놓은 기념관이다",
+   "저포놀이 체험방 한 칸"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2764935",
+  "name": "김동명문학관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "시인 김동명의 생가와 전시관으로 이뤄진 문학관이에요",
+  "basis": [
+   "문학관은 생가 한 채와 전시관 한 동으로 구성되어 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2774692",
+  "name": "강릉자동차극장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "차에서 영화를 보는 극장이고 전원형 카페와 셀프 바비큐 시설도 있어요",
+  "basis": [
+   "자동차 전용 극장이다",
+   "전원형 카페와 셀프 바비큐 시설도 함께 운영"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774698",
+  "name": "강릉아트센터",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2775531",
+  "name": "주문진해양박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "갑각류와 암석, 조개껍데기, 산호를 전시한 해양박물관이에요",
+  "basis": [
+   "많은 갑각류와 암석들이 전시되어 있으며",
+   "색색의 예쁜 조개껍데기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2782914",
+  "name": "고래책방",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "독립서점과 베이커리, 카페, 어린이책방이 층마다 들어선 책방이에요",
+  "basis": [
+   "독립서점 겸 베이커리 북카페이다",
+   "서점, 베이커리, 카페, 어린이책방, 세미나실"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2804197",
+  "name": "아르떼뮤지엄 강릉",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "열두 개의 미디어아트 전시를 펼치는 몰입형 상설 전시관이에요",
+  "basis": [
+   "몰입형 미디어아트 상설 전시관이다",
+   "12개의 다채로운 미디어아트 전시"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2930206",
+  "name": "커피커퍼박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "1층 카페 위로 로스팅기계와 추출기를 전시한 커피 박물관이에요",
+  "basis": [
+   "1층은 커피커퍼카페 본점이 있고, 2~4층은 박물관이다",
+   "로스팅기계, 추출기부터 나라별 커피잔까지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2990291",
+  "name": "강릉생태체험박물관 자연아놀자",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "어류관과 파충류관, 곤충양서관에서 생물을 만나는 체험 박물관이에요",
+  "basis": [
+   "내부는 어류관과 파충류관, 곤충양서관 등으로 이루어져",
+   "곤충, 포유류, 갑각류 등의 체험학습을 할 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3022375",
+  "name": "강릉교육문화관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3069551",
+  "name": "키즈몬 강릉점",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3100746",
+  "name": "강릉시립미술관 솔올",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "리처드 마이어가 설계한 건물에서 현대 미술 전시를 해요",
+  "basis": [
+   "리처드 마이어와 마이어 파트너사에서 디자인한",
+   "현대 미술의 다양한 흐름을 보여주는 전시"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3379937",
+  "name": "강릉 한복 문화 창작소",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "한복 관련 전시를 여는 1층 메인전시실이 있어요",
+  "basis": [
+   "1층 메인전시실은 입구 및 로비와 이어져 있어서",
+   "한복과 관련되어 있는 전시를 열고 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3531540",
+  "name": "강릉올림픽뮤지엄",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "올림픽 메달과 성화봉, 포스터를 전시한 올림픽 기념 박물관이에요",
+  "basis": [
+   "올림픽메달, 성화봉, 역대 동계올림픽 포스터, 기념 배지 등을 전시"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532282",
+  "name": "단오타운전시관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "강릉단오제를 소개하는 홍보전시실이에요",
+  "basis": [
+   "강릉단오제 홍보전시실은 보호전승 및 진흥의 중심공간"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532413",
+  "name": "소금강 돌박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "소금강 인근의 돌과 광물을 모아 전시한 박물관이에요",
+  "basis": [
+   "돌박물관에서는 이러한 돌들을 모아 전시하고 있다",
+   "5만여 점의 희귀한 돌과 광물들을 만나볼 수 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3539725",
+  "name": "갈골한과체험전시관",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "한과의 유래를 보는 전시관과 한과 만들기 체험관이 있어요",
+  "basis": [
+   "직접 한과를 만들어 볼 수 있는 체험관으로 구성되어 있다",
+   "강릉지방의 한과 유래를 살펴 볼 수 있는 전시관"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544745",
+  "name": "㈜타임트레인",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3592123",
+  "name": "디자인씽킹뮤지엄",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "실내 전시실 아홉 개와 체험 프로그램을 갖춘 체험형 박물관이에요",
+  "basis": [
+   "9개의 실내 전시실은",
+   "20여 개 이상의 체험 프로그램은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4098127",
+  "name": "그대 나의 뮤즈 반고흐 to 마티스",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "반 고흐, 르누아르, 클림트, 마티스 작품의 미디어아트 전시관이에요",
+  "basis": [
+   "실내 몰입형 미디어아트 전시관이다",
+   "반 고흐, 르누아르, 클림트, 마티스 4인 거장의 작품"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1009525",
+  "name": "아라나비 바다하늘자전거",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "20m 타워에서 바다 위를 내려오는 집라인 체험을 해요",
+  "basis": [
+   "집라인, 바다하늘자전거를 체험할 수 있다",
+   "20m 높이의 타워에서 도르래를 타고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012186",
+  "name": "[강릉 바우길 3구간] 어명을 받은 소나무길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "보광리에서 명주군왕릉까지 이어지는 소나무 숲길이에요",
+  "basis": [
+   "명주군왕릉까지 가는 소나무숲길이다",
+   "어명정을 세웠다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012247",
+  "name": "[강릉 바우길 4구간] 사천 둑방길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "둑방을 따라 바다로 나가고 가을엔 연어가 올라오는 길이에요",
+  "basis": [
+   "작은 강물의 둑방을 따라 바다로 나간다",
+   "이 냇물로 연어가 올라오는 모습"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012259",
+  "name": "[강릉 바우길 5구간] 바다 호숫길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "경포해변과 경포호수, 해변 솔밭길을 따라 걷는 길이에요",
+  "basis": [
+   "해변 솔밭길을 따라 걸을 수도 있다",
+   "경포호숫길의 정취와 바다 옆 솔밭길"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012454",
+  "name": "[해파랑길] 38코스(바우길 6구간)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "오독떼기전수관에서 중앙시장을 지나 솔바람다리까지 걷는 길이에요",
+  "basis": [
+   "오독떼기전수관에서 출발해 모산봉, 강릉 중앙시장을 지나 솔바람다리까지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012487",
+  "name": "[해파랑길] 37코스(바우길 7구간)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "안인해변에서 오독떼기전수관까지 이어지는 18km 도보 코스예요",
+  "basis": [
+   "안인해변에서 출발해 오독떼기전수관까지 이어지는 약 18km의 도보 코스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012531",
+  "name": "[해파랑길] 36코스(바우길 8구간)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "정동진역에서 안인해변까지 해안길과 괘방산 등산로가 이어져요",
+  "basis": [
+   "정동진역에서 출발해 183 고지와 패러글라이딩 활공장을 지나 안인해변까지",
+   "괘방산 등산로를 지나는 구간"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012554",
+  "name": "[해파랑길] 35코스(바우길 9구간)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "옥계시장에서 정동진역까지 해안길과 숲길로 이어지는 길이에요",
+  "basis": [
+   "옥계시장에서 출발해 옥계해변, 금진항, 심곡항을 지나"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1012593",
+  "name": "[강릉 바우길 10구간] 심스테파노 길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "순교한 천주교 신자를 기리며 걷는 골아우 마을 길이에요",
+  "basis": [
+   "순교자를 기리며 순례자의 마음으로 걷는 길이다",
+   "골아우 마을에 심스테파노라는 천주교 신자가"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1169632",
+  "name": "[강릉 바우길 11구간] 신사임당길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "송양초등학교에서 오죽헌과 선교장을 지나 허난설헌 생가터에 이르는 길이에요",
+  "basis": [
+   "송양초등학교에서 출발해 오죽헌, 선교장을 지나"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131037",
+  "name": "경포저수지",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "저수지 둘레 산책로와 대형 카페가 있는 계곡형 저수지예요",
+  "basis": [
+   "저수지 인근으로 산책로가 조성되어 있다",
+   "대형 카페도 여럿 위치하고 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131271",
+  "name": "주문진 방파제",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "드라마 도깨비 촬영지 방파제로 가자미 낚시도 해요",
+  "basis": [
+   "드라마 〈도깨비〉 촬영지로 유명해졌다",
+   "봄부터 9월까지는 가자미낚시가 이어지고"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-131272",
+  "name": "금진방파제",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "큰 방파제와 작은 방파제에서 낚시를 하는 어촌 방파제예요",
+  "basis": [
+   "큰 방파제와 작은 방파제로 구분되는데",
+   "두 방파제 모두에서 낚시가 가능하지만"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-131862",
+  "name": "사기막저수지",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "사천천 물을 막아 만든 계곡형 저수지예요",
+  "basis": [
+   "수심이 매우 깊고 물이 맑은 계곡형 저수지이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-1869883",
+  "name": "노추산 모정탑길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "차순옥 할머니가 26년간 쌓은 돌탑이 모인 노추산 계곡이에요",
+  "basis": [
+   "노추산 자락에는 3,000개의 돌탑 골이 있다",
+   "차순옥 할머니는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2396259",
+  "name": "정동진 레일바이크",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "정동진역에서 바다 경치를 보며 타는 레일바이크예요",
+  "basis": [
+   "정동진역을 출발해 전 구간 시원한 바닷바람을 느끼며",
+   "2인승 레일바이크는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2494745",
+  "name": "정동심곡 바다부채길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "정동항에서 심곡항까지 기암괴석과 해안단구를 따라 걷는 길이에요",
+  "basis": [
+   "웅장한 기암괴석에서 오는 비경의 아름다움을",
+   "국내 유일의 해안단구이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2525011",
+  "name": "강릉 올림픽파크",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2534281",
+  "name": "관동하키센터",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2553644",
+  "name": "강릉실내빙상장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "스케이트 장비를 빌려 타는 실내빙상장이고 컬링센터도 있어요",
+  "basis": [
+   "스케이트 장비 대여는 물론",
+   "컬링센터와 실내빙상장이 있다"
+  ],
+  "confidence": "low"
+ }
+]

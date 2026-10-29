@@ -1,0 +1,615 @@
+[
+ {
+  "id": "nt-2804474",
+  "name": "강릉아기동물농장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "기니피그, 양, 토끼, 앵무새를 만나는 관광목장이에요",
+  "basis": [
+   "기니피그, 공작비둘기, 양, 염소, 포니말, 토끼, 금계"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2821072",
+  "name": "사근진해중공원 전망대",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "해변이 내려다보이는 전망대에 알록달록한 테트라포드가 있어요",
+  "basis": [
+   "에메랄드빛 사근진 해변이 한눈에 펼쳐진다",
+   "빨강, 노랑, 파랑의 알록달록한 테트라포드"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2900682",
+  "name": "강릉 3·1운동 기념공원",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "독립 만세운동 기념탑과 평화비가 있는 공원이에요",
+  "basis": [
+   "강릉 3·1독립만세운동 기념탑이 우뚝 솟아있고",
+   "평화비도 조성되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2925502",
+  "name": "리고엠",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "퀼트 제품을 보고 퀼트 체험을 하는 곳이에요",
+  "basis": [
+   "‘퀼트 체험 여행’이라는 입간판이 반긴다",
+   "크고 작은 가방부터 쿠션, 소품 등 각양각색의 퀼트 제품"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2930702",
+  "name": "강릉안반데기관광농원",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "산나물 채취와 치유숲길 트레킹, 별보기 차박을 하는 민간정원이에요",
+  "basis": [
+   "산나물 채취, 치유숲길 트레킹, 별보기 차박 체험 캠핑",
+   "구름위의 땅 안반데기에 위치한"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2946241",
+  "name": "향호해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "솔밭 야영장 앞 백사장에 BTS 버스정류장 포토존이 있어요",
+  "basis": [
+   "‘BTS 버스정류장’이라는 유명한 포토존이 존재하는데",
+   "넓은 벤치가 놓여있어 조용하게 바다를 바라볼 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3022373",
+  "name": "강릉 남산공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "숲속 산책로와 잔디광장이 있고 오성정 정자가 있는 공원이에요",
+  "basis": [
+   "숲속 산책로와 휴게 공간, 잔디광장이 조성되어",
+   "오성정이라는 나무 정자가 있는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3069501",
+  "name": "풍호마을",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "연꽃이 피는 늪지에서 정자와 벤치에 앉아 쉬는 마을이에요",
+  "basis": [
+   "초록빛 자연 늪지에 만발한 연꽃으로",
+   "휴식을 취할 수 있는 정자가 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069502",
+  "name": "병산 옹심이마을",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "감자옹심이와 감자전을 내는 가게가 모인 마을이에요",
+  "basis": [
+   "감자옹심이 맛집이 많다",
+   "바로 부친 따끈한 감자전과 매콤한 닭발도 먹을 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3069504",
+  "name": "강릉 방동리 무궁화",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "천연기념물 무궁화와 옛집이 보존된 재실이에요",
+  "basis": [
+   "천연기념물로 지정된 방동리 무궁화는",
+   "신라시대 우리 선조가 살던 옛집도 잘 보존되고 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3069526",
+  "name": "애니멀스토리(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "먹이 주기와 만져보기 체험을 하는 동물 체험관이에요",
+  "basis": [
+   "먹이 주기와 만져보기 같은 체험이 진행되고 있다",
+   "실내에는 안녕하고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3351277",
+  "name": "라카이 샌드파인 수영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3351715",
+  "name": "처음처럼&새로 브랜드 체험관",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "롯데칠성 공장 안에서 제품 시음과 병조명 만들기를 해요",
+  "basis": [
+   "롯데칠성 강릉공장 안에 새롭게 마련된 체험관이다",
+   "감금주, 병조명 만들기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3406885",
+  "name": "강릉시강남축구공원",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3454461",
+  "name": "경포호수광장",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "경포호수를 따라 산책로와 자전거 도로가 이어진 광장이에요",
+  "basis": [
+   "경포호수를 중심으로 조성된 광장으로",
+   "산책로, 자전거 도로, 휴식 공간 등이 마련되어 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3507377",
+  "name": "강릉 메타버스 체험관",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "VR 기술로 만든 메타버스 콘텐츠를 체험하고 카페테리아도 있어요",
+  "basis": [
+   "다양한 메타버스 콘텐츠와 VR 기술로 구성된",
+   "카페테리아도 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3531662",
+  "name": "최선평 가옥",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "안채와 사랑채를 갖춘 전통 가옥으로 문화재자료로 지정됐어요",
+  "basis": [
+   "강원도문화재자료 제81호로 지정되었다",
+   "안채와 사랑채는 팔작지붕"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532273",
+  "name": "소금강",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "무릉계 급류와 청담이 이어지는 계곡 명승지예요",
+  "basis": [
+   "급류와 청담(靑潭)이 이어지는 계곡이 펼쳐진다",
+   "명승 제1호로 지정되었다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532370",
+  "name": "임당동 성당",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "종탑이 옛 모습 그대로인 등록문화재 성당이에요",
+  "basis": [
+   "정면 중앙부 종탑을 비롯한 외형이",
+   "등록문화재 제457호로 지정되었다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532403",
+  "name": "산계리3층석탑",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "산 어귀에 검은 돌을 쌓아 올린 삼층석탑이에요",
+  "basis": [
+   "검은빛의 거친 돌로 쌓아 올린 형태가 특징이다",
+   "산계리 계곡 입구"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532423",
+  "name": "보광리분청자요지",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532451",
+  "name": "보광리석조여래좌상",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "옛 절터에 있는 높이 1.7m 석불이에요",
+  "basis": [
+   "높이 1.7m의 석불이다",
+   "옛 절터에 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532463",
+  "name": "굴산사지당간지주",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "한 덩이 돌로 만든 높이 5.4m 당간지주예요",
+  "basis": [
+   "거대한 한 덩이의 돌을 사용한",
+   "높이는 5.4m이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532465",
+  "name": "동해산타열차",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "강릉에서 분천까지 바다와 협곡을 따라 달리는 열차예요",
+  "basis": [
+   "강릉에서 푸른바다를 따라 분천까지 운행되는 열차이다",
+   "아찔한 협곡이 보여주는 자연의 신비"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532478",
+  "name": "임당생활문화센터",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3541047",
+  "name": "주문진 관광안내센터",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3542927",
+  "name": "강릉교회",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3542992",
+  "name": "BTS 버스정류장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "방탄소년단 앨범 사진에 나온 바닷가 버스정류장을 복원한 곳이에요",
+  "basis": [
+   "동일한 형태로 복원되었다",
+   "방탄소년단 앨범 재킷 사진에 등장해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3543287",
+  "name": "신사임당사친시비",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "신사임당을 기리는 기념비로 시가 새겨져 있어요",
+  "basis": [
+   "신사임당을 기리기 위해 세워진 기념비이다",
+   "비석에는 당시의 정서를 담은 시가 새겨져 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3543415",
+  "name": "주문진문화교육센터",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544074",
+  "name": "대한노인회 강릉시지회",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544376",
+  "name": "강릉종합사회복지관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3545967",
+  "name": "정동진",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "광화문에서 정동쪽에 있는 바닷가로 해돋이 명소예요",
+  "basis": [
+   "전국 제일 해돋이 명소로 유명하며",
+   "정동쪽에 있는 나루터가 있는 마을"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3546554",
+  "name": "강릉항여객터미널",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3547622",
+  "name": "허균 허난설헌 기념공원 초희전통차체험관",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "한옥 분위기로 꾸민 전통차 체험관이에요",
+  "basis": [
+   "한옥 만의 분위기를 느낄 수 있는 공간으로 꾸며있다",
+   "초희전통차체험관"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3547638",
+  "name": "강릉통일공원안보전시관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "퇴역 항공기와 전투장비, 북한 잠수함을 전시한 안보전시관이에요",
+  "basis": [
+   "우리 공군의 퇴역 항공기와 대통령 전용기와 전차",
+   "함정전시관에는 북한 잠수함이 전시되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547899",
+  "name": "강문해변화장실",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4064579",
+  "name": "하슬라강릉 이머시브아트쇼",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "초당동 소나무 숲길을 걸으며 보는 야외 미디어아트쇼예요",
+  "basis": [
+   "울창한 소나무 숲에서 펼쳐지는 야외 몰입형 미디어아트쇼",
+   "숲길을 따라 걸으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4135899",
+  "name": "드바로티",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "꽃차 체험과 족욕 체험을 하고 꽃밭을 거닐어요",
+  "basis": [
+   "수제 꽃차 체험 프로그램을 운영하며",
+   "발을 담그는 족욕 체험도 준비되어 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-585522",
+  "name": "강문해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "작은 포구 옆 해변이고 스킨스쿠버 하는 사람들이 찾아요",
+  "basis": [
+   "주변에 작은 포구인 강문항이 있어",
+   "스킨스쿠버 동호인들이 많이 찾고 있으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-585526",
+  "name": "사천진해변(사천뒷불해수욕장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "백사장이 넓고 옆 사천항에서 바다낚시를 하는 해변이에요",
+  "basis": [
+   "바닷물이 얕고 백사장이 넓게 펼쳐져있다",
+   "사천항에서 바다낚시를 즐기는 사람들로 붐비는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-585542",
+  "name": "하평해변(강릉)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "뒤로 해송 숲이 펼쳐지고 앞에 해다리바위가 있는 해변이에요",
+  "basis": [
+   "뒤로는 해송 숲이 넓게 펼쳐져 있는",
+   "해변 앞에는 해다리바위"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-585585",
+  "name": "순긋해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "경포해변 가까이 깨끗한 모래밭과 오토캠프장이 있는 해변이에요",
+  "basis": [
+   "경포해변과 가까이 있으며 깨끗한 모래밭",
+   "오토캠프장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-585591",
+  "name": "염전해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "군선강과 만나는 곳에서 숭어와 학꽁치 낚시를 하는 해변이에요",
+  "basis": [
+   "바닷물과 민물이 교차하는 곳",
+   "숭어철이 지나면 학꽁치들이 무리지어 올라와"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-585605",
+  "name": "금진해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "넓은 백사장이 있고 초보자도 서핑을 배우는 해변이에요",
+  "basis": [
+   "초보자도 쉽게 서핑을 배울 수 있고",
+   "길이 900m, 63,000㎡의 백사장을 간직하고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-585615",
+  "name": "도직해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "깨끗한 모래와 야영장이 있고 철조망이 쳐진 해변이에요",
+  "basis": [
+   "모래가 깨끗하고 주차장이 넓어",
+   "군사지역이라 철조망이 쳐져 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-776838",
+  "name": "현덕사(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "만월산 중턱에 소나무가 울창한 사찰이에요",
+  "basis": [
+   "오대산 줄기인 만월산 중턱에 자리한 현덕사",
+   "울창한 소나무와 주위 산세에"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-800375",
+  "name": "소금강 장천마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "양떼목장에서 양을 만나고 농산물을 맛보는 체험 마을이에요",
+  "basis": [
+   "마을에서는 양떼목장을 운영하고 있어",
+   "직접 재배한 농산물을 맛보는 체험도 가능하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129784",
+  "name": "강릉 오죽헌·시립박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "율곡 이이가 태어난 오죽헌과 시립박물관이 함께 있어요",
+  "basis": [
+   "이곳 오죽헌 몽룡실에서 율곡 이이가 태어났다",
+   "오죽헌과 강릉시립박물관으로 구분된다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129942",
+  "name": "강릉문화원",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ }
+]

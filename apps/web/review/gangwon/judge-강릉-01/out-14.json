@@ -1,0 +1,536 @@
+[
+ {
+  "id": "nt-3537009",
+  "name": "교동짬뽕강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강릉에서 짬뽕으로 이름난 중식당이에요",
+  "basis": [
+   "강릉에서 제일 유명한 짬뽕 맛집이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3537133",
+  "name": "커피콩빵",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "커피빵이 주메뉴인 제과점이에요",
+  "basis": [
+   "제과, 베이커리, 주메뉴는 커피빵"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537135",
+  "name": "경성포차",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "모듬조개탕과 백골뱅이탕을 내는 세인트존스호텔 근처 포차예요",
+  "basis": [
+   "모듬조개탕과 백골뱅이탕이 인기 메뉴입니다",
+   "세인트존스 호텔 인근에 위치해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537137",
+  "name": "원조가보리살 솥뚜껑생삼겹살",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "무쇠솥뚜껑에 생삼겹살을 구워 먹는 집이에요",
+  "basis": [
+   "넓은 무쇠솥 뚜껑에 두툼한 생고기를 구워 먹는 것이 특징이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537153",
+  "name": "주문진밤바다",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진에서 회 포장을 전문으로 하는 집이에요",
+  "basis": [
+   "주문진 회포장 전문점"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3537184",
+  "name": "하나로본감자탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "감자탕과 뼈해장국, 오삼불고기를 내는 노암동 식당이에요",
+  "basis": [
+   "감자탕을 비롯해 뼈해장국·오삼불고기·얼큰닭볶음탕·생고기김치찜"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537193",
+  "name": "이디야커피강릉사천점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537206",
+  "name": "강릉 중화짬뽕빵",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "짬뽕빵이 대표 메뉴인 빵집이에요",
+  "basis": [
+   "대표메뉴는 중화짬뽕빵이고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537319",
+  "name": "아빠의돈까스",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537606",
+  "name": "우정회관",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537616",
+  "name": "연곡유정오리",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "오리주물럭과 오리로스, 볶음밥을 내는 식당이에요",
+  "basis": [
+   "연곡유정오리의 오리주물럭은",
+   "오리로스와 볶음밥도 인기 메뉴로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537618",
+  "name": "컴포즈커피 강릉내곡점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537621",
+  "name": "연곡반점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537624",
+  "name": "도깨비젤라또",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": false,
+  "reason": "지역 농산물로 만든 젤라또를 파는 가게예요",
+  "basis": [
+   "지역 농산물로 만든 젤라또"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537687",
+  "name": "혜진식당1호점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537692",
+  "name": "타래",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "장덕리 시골 마을에서 라떼를 내는 카페예요",
+  "basis": [
+   "라떼가 맛있는 장덕리 시골의 포근한 카페입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537696",
+  "name": "남북면옥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "회냉면과 물냉면, 물막국수를 내는 냉면집이에요",
+  "basis": [
+   "회냉면이 전문인 냉면집입니다",
+   "회냉면과 물냉면, 물막국수 등으로 구성되어 있어요"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537705",
+  "name": "항구곰치국",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537794",
+  "name": "커피블럭",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "매일 로스팅한 원두로 핸드드립과 수제차를 내는 카페예요",
+  "basis": [
+   "매일 로스팅 되는 다양한 종류의 원두",
+   "한잔 한잔 정성을 다하는 핸드드립"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537806",
+  "name": "뚝배기양평해장국 포남점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537847",
+  "name": "이주환전통한우",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537850",
+  "name": "정화식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "갈치조림과 오징어볶음이 대표인 노포 한식당이에요",
+  "basis": [
+   "저희 매장에 대표메뉴는 갈치조림과 오징어볶음이 있습니다",
+   "20여년지난 점포의 노포식당으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3537854",
+  "name": "삼다도횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "진리해변 앞에서 광어와 우럭, 물회를 내는 횟집이에요",
+  "basis": [
+   "강릉시 사천면 진리해변길에 위치한 곳으로",
+   "메뉴로는 광어,우럭, 자연산,물회, 회덮밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3538024",
+  "name": "초당막국수",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3538108",
+  "name": "해안로라운지",
+  "keep": false,
+  "reject": "INAPPROPRIATE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3538144",
+  "name": "어부네코다리조림 강릉내곡점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "코다리조림 전문점으로 꼬막비빔밥도 내요",
+  "basis": [
+   "코다리조림 전문점입니다",
+   "꼬막비빔밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3538157",
+  "name": "송천휴게소식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "유기농 토종닭백숙을 내는 송천휴게소 식당이에요",
+  "basis": [
+   "유기농 토종닭백숙 전문점입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3538297",
+  "name": "심곡홍가네식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "망치매운탕을 전문으로 하는 심곡 식당이에요",
+  "basis": [
+   "망치매운탕 전문점입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3538351",
+  "name": "롯데리아 강릉내곡점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3539115",
+  "name": "주문진전주식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3539177",
+  "name": "맘스터치 강릉내곡점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3539787",
+  "name": "산야뜰솔향고향떡집",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3539795",
+  "name": "김여사네",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3542959",
+  "name": "김윤식케익부띠끄회산점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3543260",
+  "name": "양자강",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "탕수육과 사천탕수육을 내는 교동택지 중식당이에요",
+  "basis": [
+   "강릉 교동택지에 위치하고 있는데요",
+   "탕수육과 사천탕수육도 많이 찾는 메뉴지요"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3543262",
+  "name": "강릉초당두부티라미수(두티)",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "초당두부와 커피로 만든 두부티라미수 전문점이에요",
+  "basis": [
+   "강릉초당두부와 커피로 만든 두부티라미수 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544073",
+  "name": "강릉김군박군횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "참돔 유비끼와 물회를 내는 초당동 횟집이에요",
+  "basis": [
+   "강릉 초당동, 25년 전통 참돔 유비끼 전문점"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544102",
+  "name": "빽다방 강릉내곡점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544108",
+  "name": "허씨커피",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "직접 만든 수제 디저트와 커피를 내는 카페예요",
+  "basis": [
+   "직접 만든 수제 디저트를 손님분들께 제공하고 있습니다",
+   "로스팅하여 만든 커피와 음료"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544319",
+  "name": "힐링캠프예서원",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "연잎밥 식사와 발효음료, 드립커피를 내는 카페예요",
+  "basis": [
+   "연잎밥식사와 발효음료, 드립커피로 카페를 운영한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544351",
+  "name": "연곡전주식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544610",
+  "name": "영진항",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진에서 대왕해물철판과 황제얼큰해물탕을 내는 식당이에요",
+  "basis": [
+   "주문진에서 대왕해물철판과 황제얼큰해물탕으로 유명한"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547651",
+  "name": "훌랄라참숯바베큐치킨 입암1점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547675",
+  "name": "고깃집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547678",
+  "name": "고향촌중화요리",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547680",
+  "name": "정남미명과 강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "감자빵과 단호박빵, 밤빵을 파는 카페예요",
+  "basis": [
+   "감자빵, 단호박빵, 밤빵 등 구황작물을 활용한"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547763",
+  "name": "강촌제주산흑돼지",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547805",
+  "name": "이디야커피 강릉중앙점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547819",
+  "name": "토프레소 강릉 교동점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "숙주돈가스와 커피를 파는 식당이에요",
+  "basis": [
+   "숙주돈까스와 커피를 파는 식당"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3547909",
+  "name": "본래순대 교동택지점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ }
+]

@@ -1,0 +1,307 @@
+[
+ {
+  "id": "nt-3547911",
+  "name": "주문진순이네",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "장치조림이 대표 메뉴인 주문진 식당이에요",
+  "basis": [
+   "신선한 생물을 사용한 장치조림이 인기 메뉴입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547912",
+  "name": "옛소라횟집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3547941",
+  "name": "빛고을식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3548786",
+  "name": "양평콩나물국밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "22년 전통의 콩나물국밥집이에요",
+  "basis": [
+   "22년전통 콩나물국밥집입니다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3548812",
+  "name": "홍가홍",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3548864",
+  "name": "코너카페",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "1층부터 3층까지 바다가 보이는 카페예요",
+  "basis": [
+   "1,2,3층 바다가 보이는 아담하고 조용한 공간에서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3548869",
+  "name": "카페 가배초당",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "순두부가배라떼와 초당순두부케이크를 내는 초당동 카페예요",
+  "basis": [
+   "강릉시 초당동에 위치한 카페로",
+   "초당순두부케이크"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3548872",
+  "name": "자스민레스토랑",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3560307",
+  "name": "게락",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "직접 로스팅한 원두로 핸드드립 커피를 내는 카페예요",
+  "basis": [
+   "바리스타가 직접 선별하고 로스팅 한 신선한 원두",
+   "핸드드립 커피"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3569108",
+  "name": "초당옥수수푸딩카페 쵸딩",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "초당순두부마을에서 옥수수 푸딩을 파는 카페예요",
+  "basis": [
+   "초당순두부마을에 자리한 초당옥수수푸딩카페 쵸딩은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3569194",
+  "name": "에스프레소 스퀘어",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강릉역 근처에서 에스프레소 쇼콜라를 내는 로스터리 카페예요",
+  "basis": [
+   "에스프레소 쇼콜라, 에스프레소 콘 판나",
+   "강릉역 근처에 위치해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3576963",
+  "name": "커피내리는 버스정류장",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "직접 로스팅한 원두로 커피를 내리는 카페예요",
+  "basis": [
+   "직접 로스팅 한 원두를 사용하고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4013606",
+  "name": "강릉의 밤",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": false,
+  "reason": "글램핑 분위기에서 고기를 직접 구워 먹는 바비큐 식당이에요",
+  "basis": [
+   "글램핑장 컨셉트로 꾸며진 바비큐 레스토랑이다",
+   "야외에 2명부터 최대 10명까지 이용할 수 있는 좌석이 마련되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4016961",
+  "name": "더블티 다이닝",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "코스 전용 프렌치 와인 다이닝이에요",
+  "basis": [
+   "강릉시 초당동에 위치한 모던 프렌치 와인 다이닝이다",
+   "코스 전용 레스토랑으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4058991",
+  "name": "파인파인 강릉점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "명주동 골목 2층에서 로컬 디저트를 내는 카페예요",
+  "basis": [
+   "명주동 골목 안쪽, 나무 질감의 인테리어가",
+   "로컬 디저트 카페로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-475197",
+  "name": "경포가든",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "영양 돌솥밥과 초당순두부를 내는 경포대 식당이에요",
+  "basis": [
+   "영양 돌솥밥과 초당순두부가 자랑이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-610465",
+  "name": "해동횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대게와 활어회를 옥돌 위에 내는 사천 횟집이에요",
+  "basis": [
+   "회를 옥돌 위에 내는 것이 특징이다",
+   "대게, 자연산 활어회, 홍게세트로 유명하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-623156",
+  "name": "교항면옥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "물막국수와 비빔막국수, 수육을 내는 막국수집이에요",
+  "basis": [
+   "2000년부터 영업을 시작한 강원 강릉의 막국수 전문점이다",
+   "고소하고 담백한 수육도 인기 메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-623201",
+  "name": "대관령황태촌",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "황태구이정식과 황태찜을 내는 주문진 황태요리집이에요",
+  "basis": [
+   "강릉시 주문진읍에 위치한 대관령황태촌은 황태요리 전문점이다",
+   "대관령황태구이정식이 대표메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-623223",
+  "name": "강릉짬뽕순두부 동화가든 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "짬뽕순두부를 처음 낸 초당두부마을 식당이에요",
+  "basis": [
+   "초당두부마을에서 짬뽕순두부를 가장 먼저 판매하기 시작한 식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-623279",
+  "name": "옛날초당순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "바닷물로 응고시킨 초당순두부와 두부전골을 내는 집이에요",
+  "basis": [
+   "동해안의 바닷물로 응고시켜 만든 강릉의 전통 초당순두부",
+   "대표메뉴는 초당순두부·두부전골이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-624640",
+  "name": "유리횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진 등대 앞에서 물회를 내는 횟집이에요",
+  "basis": [
+   "빨간 등대와 하얀 등대가 눈앞에 있는 주문진 신리하교앞에 위치한",
+   "물회 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-650442",
+  "name": "월성식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "장치찜으로 알려진 식당으로 곰치국과 생선구이도 내요",
+  "basis": [
+   "월성식당은 강릉에서 장치찜으로 유명한 음식점이다",
+   "곰치국, 복맑은탕, 생선구이"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-791636",
+  "name": "오직한우",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한우 구이와 한우육회를 내는 한우 전문점이에요",
+  "basis": [
+   "한우 전문점이다",
+   "한우육회, 한우육사시미"
+  ],
+  "confidence": "high"
+ }
+]

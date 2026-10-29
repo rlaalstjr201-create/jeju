@@ -1,0 +1,635 @@
+[
+ {
+  "id": "nt-3458062",
+  "name": "강문달카페",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강문해변에 있는 카페이고 바다를 한눈에 볼 수 있어요",
+  "basis": [
+   "탁 트인 동해 바다를 배경으로",
+   "푸른 바다와 하늘, 그리고 아름다운 해변을 한눈에 담을 수 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3468980",
+  "name": "고씨네동해막국수&순두부칼국수 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강문해수욕장 앞에서 메밀막국수와 순두부칼국수를 내는 집이에요",
+  "basis": [
+   "강문해수욕장 앞에 위치해 있어 바다를 보며 식사할 수 있는",
+   "자가제면으로 만든 강원도 전통 메밀막국수이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3530952",
+  "name": "사천항주문진물회",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사천항에서 모둠물회와 가자미 물회를 내는 집이에요",
+  "basis": [
+   "모둠물회, 모둠 덮밥, 가자미 물회 등을 판매하고 있다",
+   "사천면 진리항구길에 위치한"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532493",
+  "name": "강릉한우만",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한우모듬과 육회와 키조개관자를 내는 한우 전문점이에요",
+  "basis": [
+   "한우 전문점입니다",
+   "신선한 육회, 키조개관자"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532520",
+  "name": "강릉국시집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "멸치로 국물을 내고 직접 만든 비빔장을 쓰는 국수집이에요",
+  "basis": [
+   "완도, 여수의 최상급 멸치를 사용하여",
+   "갖가지 과일로 비빔장을 만듭니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532541",
+  "name": "효주원",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "수타면 짜장면과 해물 육수 짬뽕이 대표인 중식당이에요",
+  "basis": [
+   "수타면을 사용한 짜장면과 해물 육수를 활용한 짬뽕이 대표 메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532619",
+  "name": "오딧세이포남2호점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532631",
+  "name": "원족발 입암점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532635",
+  "name": "대찬맛집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진시장 근처에서 한우내장탕과 황태해장국을 내는 집이에요",
+  "basis": [
+   "한우내장탕과 황태해장국이 대표 메뉴이다",
+   "주문진시장 인근에서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532641",
+  "name": "주문진 돈의맛",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "삼겹살과 가브리살 항정살을 굽는 주문진 돼지고기구이집이에요",
+  "basis": [
+   "돼지고기구이 전문 식당이다",
+   "가브리살·항정살·소막창"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532659",
+  "name": "솥고집 주문진점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "무쇠솥뚜껑에 삼겹살과 목살을 구워 먹는 집이에요",
+  "basis": [
+   "무쇠솥뚜껑 위에서 구워내는 삼겹살과 목살이 주된 메뉴로",
+   "솥뚜껑김치삼겹"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532662",
+  "name": "내마음에찜 강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "매운소갈비모둠해물찜을 내는 해물찜집이에요",
+  "basis": [
+   "대표 메뉴인 매운소갈비모둠해물찜은",
+   "해물요리 전문 식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532668",
+  "name": "화로상회 주문진점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "참숯 화로에 구운 삼겹과 양념갈비를 무한리필로 먹는 집이에요",
+  "basis": [
+   "참숯화로 직화 방식을 사용해 조리하며",
+   "참숯통삼겹, 옛날양념갈비, 숯불닭갈비"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532680",
+  "name": "굴리아케이크",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "중앙시장 안에서 러시아식 케이크를 파는 디저트 가게예요",
+  "basis": [
+   "전통 러시아식 케이크와 크럼블 쿠키를 주력으로 판매한다",
+   "중앙시장 안에 위치한 수제 디저트 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532693",
+  "name": "코리안숯불닭바베큐",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "참숯 직화로 닭바베큐 소금구이를 내는 집이에요",
+  "basis": [
+   "닭바베큐 전문 식당이다",
+   "대표 메뉴로는 소금구이와 한식바베큐가 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532710",
+  "name": "서울족발",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "구운족발과 구운보쌈을 내는 포남동 족발집이에요",
+  "basis": [
+   "대표 메뉴는 구운족발과 구운보쌈이며",
+   "족발·보쌈 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532714",
+  "name": "해뜨는맛집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "닭볶음탕이 대표 메뉴인 포남동 한식집이에요",
+  "basis": [
+   "닭볶음탕을 대표 메뉴로 판매한다",
+   "불고기버섯전골·코다리명태찜"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532721",
+  "name": "오감",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "능이백숙과 오리구이를 내는 한식당이에요",
+  "basis": [
+   "대표 메뉴인 능이백숙은 국내산 닭고기와 능이버섯을 함께 끓이며",
+   "생오리구이와 오리양념주물럭"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532749",
+  "name": "흥부네쌈밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생선구이쌈밥과 토종닭백숙을 내는 쌈밥집이에요",
+  "basis": [
+   "쌈밥 전문 식당으로, 생선구이쌈밥을 비롯해",
+   "토종닭백숙·닭볶음탕·삼겹묵은지찜"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532758",
+  "name": "낭만포차",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532769",
+  "name": "강나루민물장어",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "풍천장어를 숯불에 구워 잘라 주는 민물장어집이에요",
+  "basis": [
+   "국내산 풍천장어를 1kg 단위로 판매한다",
+   "직접 숯불에 구워 잘라주어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532775",
+  "name": "해안선",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532862",
+  "name": "카페툇마루",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532877",
+  "name": "돈우마을",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "돼지갈비와 한우를 굽는 주문진 고기집이에요",
+  "basis": [
+   "돼지갈비를 포함한 돼지고기와 한우고기전문 점입니다",
+   "잔치국수 또한 인기메뉴"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532895",
+  "name": "꿀꺽",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강릉 구정에서 기른 한돈을 내는 고기집이에요",
+  "basis": [
+   "강릉 구정에서 직접 기른 돼지고기를 제공하는 가게이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532949",
+  "name": "넉살집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "삼겹살과 함께 전복을 구워 먹는 고기구이집이에요",
+  "basis": [
+   "삼겹살과 함께 전복을 구워 먹을 수 있는 메뉴가 특징이며",
+   "투명 수정 불판을 사용해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532988",
+  "name": "바다식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3532991",
+  "name": "다모아식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "20년째 장치찜을 내는 주문진 가게예요",
+  "basis": [
+   "주문진에서 20년동안 운영중인 장치찜 가게이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532998",
+  "name": "깐숙이네",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "돼지갈비와 항정살 오겹살을 화로에 굽는 고기집이에요",
+  "basis": [
+   "넉넉한 양의 돼지갈비, 항정살, 오겹살 등",
+   "깐숙이네화로구이는 가족이나 단체 모임에 최적화된 고기 전문점이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533002",
+  "name": "정선 이모네 식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동물성 재료 없이 감자옹심이와 콧등치기국수를 내는 향토음식점이에요",
+  "basis": [
+   "감자옹심이, 콧등치기국수, 강릉장칼국수",
+   "동물성 재료를 사용하지 않아서 비건 음식에도 적합하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533366",
+  "name": "돈미소",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "제주흑돼지오겹살과 문경약돌삼겹살을 대나무숯에 굽는 집이에요",
+  "basis": [
+   "제주흑돼지오겹살·문경약돌삼겹살·목살 등이 대표 메뉴이다",
+   "100% 천연 대나무숯을 사용해 구운 고기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533380",
+  "name": "고단황금막국수 강릉점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533403",
+  "name": "임계식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "중앙시장 안에서 소머리국밥과 돼지국밥을 내는 국밥집이에요",
+  "basis": [
+   "강릉 중앙시장 내에 위치한 국밥 전문점으로",
+   "소머리국밥·돼지국밥·닭국밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533414",
+  "name": "성산옛집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대구머리찜을 내는 성산면 식당이에요",
+  "basis": [
+   "대구머리찜을 맛깔스럽게 요리해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533415",
+  "name": "봉봉키친",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "피자돈가스와 콘치즈돈가스를 내는 돈가스집이에요",
+  "basis": [
+   "피자돈가스와 스윗트콘·모짜렐라 치즈가 올라간 콘치즈돈가스가",
+   "돈가스 전문 식당으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533423",
+  "name": "나라스시",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "참치 광어 연어 초밥을 내는 현지인 추천 초밥집이에요",
+  "basis": [
+   "현지인들이 추천하는 강릉의 초밥 맛집으로",
+   "참치, 광어, 연어 등 다양한 초밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533428",
+  "name": "동부감자옹심이",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동부시장 안에서 옹심이메밀국수와 옹심이칼국수를 내는 집이에요",
+  "basis": [
+   "동부시장 내부에 위치한 옹심이 전문점입니다",
+   "옹심이메밀국수와 옹심이칼국수가 인기 메뉴로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533451",
+  "name": "보배골",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533498",
+  "name": "소바위트",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문 즉시 소바를 삶고 새우튀김 카레우동을 내는 일식집이에요",
+  "basis": [
+   "소바는 주문과 동시에 면을 삶고 튀김을 튀깁니다",
+   "새우소바, 장어소바, 카레우동"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533526",
+  "name": "동보성",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "40년 전통을 이어 온 중식당이에요",
+  "basis": [
+   "40년 전통 중식당입니다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533542",
+  "name": "송이랑능이랑",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소금강에서 능이버섯전골과 송이한방백숙을 내는 집이에요",
+  "basis": [
+   "오대산국립공원 소금강 내에 위치한",
+   "능이한방백숙, 능이버섯전골, 송이한방백숙"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533551",
+  "name": "프랭크버거 강릉역점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533573",
+  "name": "테라스670",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "심곡입구에 있는 카페이고 앞에 산이 보여요",
+  "basis": [
+   "심곡입구에 위치한 테라스670",
+   "바로앞에 산이"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533636",
+  "name": "장군시오야끼 포남직영점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소고기 시오야끼와 치즈볶음밥을 내는 직영점이에요",
+  "basis": [
+   "소고기시오야끼와 특제 소스가 조화로운 맛집입니다",
+   "고소한 치즈볶음밥"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533651",
+  "name": "초당다나정원",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "삼계탕과 해물장칼국수를 내는 한옥 분위기 한식집이에요",
+  "basis": [
+   "삼계탕과 해물장칼국수가 특히 인기 있는 한식 전문점입니다",
+   "한옥 분위기의 고즈넉한 인테리어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533668",
+  "name": "초당맷돌젤라또",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "이탈리아 전통방식으로 만드는 젤라또 가게예요",
+  "basis": [
+   "아이스크림 만드는 이탈리아 전통방식 젤라또"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533670",
+  "name": "두딩",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강릉에서 유명한 두부푸딩을 파는 가게예요",
+  "basis": [
+   "강릉에서 유명한 두부푸딩"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3533671",
+  "name": "짬뽕1번지",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "새벽에 받아온 해물로 볶아낸 해물짬뽕이 대표예요",
+  "basis": [
+   "새벽에 받아온 여러가지 해물로 그때그때 갓 볶아내어",
+   "대표적인 해물짬뽕은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533674",
+  "name": "본터웰빙산채오리",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3533678",
+  "name": "형제칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "매콤한 장칼국수를 맵기 5단계로 고르는 칼국수집이에요",
+  "basis": [
+   "매콤한 장칼국수가 인기 메뉴이다",
+   "5가지 맵기 단계"
+  ],
+  "confidence": "high"
+ }
+]

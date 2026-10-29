@@ -1,0 +1,573 @@
+[
+ {
+  "id": "nt-3535808",
+  "name": "라보엠",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "스테이크와 피자, 파스타를 내는 대관령 아래 카페 레스토랑이에요",
+  "basis": [
+   "스테이크 커틀렛 피자 파스타 샐러드",
+   "분위기좋은 카페레스토랑"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535809",
+  "name": "크림브리즈",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "금진해변 앞에서 방앗간 크림라떼와 수박주스를 내는 카페예요",
+  "basis": [
+   "강원도 강릉의 금진해변 앞에 위치한 카페로",
+   "방앗간 크림라떼와 수박주스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535825",
+  "name": "원인숙고성생선찜",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535836",
+  "name": "맥시칸치킨 정동점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535858",
+  "name": "멕시칸치킨 연곡점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535862",
+  "name": "하누리감자탕",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535874",
+  "name": "진재골식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535899",
+  "name": "항구횟집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3535914",
+  "name": "정동진 어부횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대게와 회 세트, 물회를 내는 정동진 횟집이에요",
+  "basis": [
+   "어부횟집 스페셜과 대게+회세트",
+   "물회스페셜과 생선구이정식"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536027",
+  "name": "일출봉횟집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536028",
+  "name": "고향횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "안인항에서 30년 넘게 활어회를 내온 횟집이에요",
+  "basis": [
+   "30년 넘는 전통횟집",
+   "강릉 강동 안인항의 몇안되는 활어맛집입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536036",
+  "name": "통큰해물",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536043",
+  "name": "솔향기추어탕",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536056",
+  "name": "청수",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536080",
+  "name": "맛마루부대찌개",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "부대찌개와 꼬막비빔밥, 냉모밀을 내는 식당이에요",
+  "basis": [
+   "부대찌개뿐만 아니라 꼬막비빔밥, 순두부부대찌개",
+   "여름철에는 시원한 냉모밀이 인기이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536081",
+  "name": "사천 010",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "순두부 파스타와 감자옹심이를 내는 식당이에요",
+  "basis": [
+   "순두부 파스타와 감자옹심이 같은 독특한 메뉴를 맛볼 수 있습니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536096",
+  "name": "강남흑염소전문점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "흑염소탕과 전골, 수육을 내는 흑염소 요리 전문점이에요",
+  "basis": [
+   "흑염소 요리 전문점입니다",
+   "전골과 수육도 인기 메뉴입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536116",
+  "name": "진보양푼이물회횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "물회와 섭국, 성게비빔밥을 내는 식당이에요",
+  "basis": [
+   "물회, 섭국, 섭칼국수 등 해산물 요리가 특화된 식당입니다",
+   "성게비빔밥과 성게미역국"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536121",
+  "name": "경포동해횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포해수욕장 근처에서 대게와 모듬회, 해물탕을 내는 집이에요",
+  "basis": [
+   "강릉 경포해수욕장 인근에 위치한 해산물 전문점으로",
+   "대게와 모듬회, 해물탕"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536138",
+  "name": "사천소머리국밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사천면에서 소머리국밥을 내는 국밥집이에요",
+  "basis": [
+   "강릉시 사천면 방동길에 있는 국밥집으로",
+   "소머리국밥을 비롯해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536139",
+  "name": "강릉사임당인절미",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3536155",
+  "name": "장수삼계탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한방삼계탕과 능이삼계탕을 내는 주문진 보양식집이에요",
+  "basis": [
+   "주문진 대표 보양식 전문점으로 한방삼계탕과 능이삼계탕을"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536156",
+  "name": "코바코 강릉사천점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536162",
+  "name": "참치엔초밥",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536170",
+  "name": "바다구이탕탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생선구이와 오징어불고기, 통우럭매운탕을 내는 식당이에요",
+  "basis": [
+   "생선구이, 오징어불고기, 통우럭매운탕을 비롯한"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536182",
+  "name": "번패티번 강릉",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "수제버거를 드라이브스루로도 파는 가게예요",
+  "basis": [
+   "국내최초 수제버거 드라이브스루(Drive-Thru) 컨셉스토어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536186",
+  "name": "한끼밥집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536200",
+  "name": "조개공장",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "안목해변과 강문해변 사이에서 조개구이를 무한리필로 내는 집이에요",
+  "basis": [
+   "안목해변과 강문해변 사이에 위치한 무한리필 조개구이집입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536240",
+  "name": "조개상회 강릉점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "안목해변 바로 앞에서 바다를 보며 조개구이를 먹는 집이에요",
+  "basis": [
+   "바다를 보며 조개구이를 먹을 수 있습니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536259",
+  "name": "삼교리동치미막국수 남항진점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동치미 막국수로 알려진 막국수집이에요",
+  "basis": [
+   "강릉에서 유명한 동치미 막국수 맛집이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3536265",
+  "name": "지호한방삼계탕 초당점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536274",
+  "name": "초당본가짬뽕순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "차돌짬뽕순두부와 순두부백반을 내는 한식당이에요",
+  "basis": [
+   "차돌짬뽕순두부와 순두부백반 등 다양한 메뉴를 제공하는 한식당입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536295",
+  "name": "파머스키친 강릉점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "초당순두부마을에서 수제버거를 파는 집이에요",
+  "basis": [
+   "강릉 초당순두부마을에 위치한 파머스키친 강릉점은",
+   "강릉수제버거"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3536301",
+  "name": "패티김",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포대 근처에서 수제버거와 파스타를 내는 식당이에요",
+  "basis": [
+   "지역 농산물만 사용하는 건강한 수제버거와 파스타",
+   "강릉 경포대 인근"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536302",
+  "name": "허니홈비 강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "벌집 아이스크림을 파는 가게예요",
+  "basis": [
+   "강릉 벌집 아이스크림 본점 천연꿀 판매점"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536303",
+  "name": "경포비치횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포대에서 물회와 대게, 조개구이를 내는 횟집이에요",
+  "basis": [
+   "경포대 횟집 경포대 대게 경포대 물회 경포대 조개구이",
+   "2층에 테라스 테이블"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536323",
+  "name": "짬뽕의신 주문진점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536329",
+  "name": "삼미식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진에서 생선구이와 장치찜을 내는 식당이에요",
+  "basis": [
+   "주문진 해산물 맛집으로, 생선구이와 장치찜이 인기 메뉴입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536330",
+  "name": "형제매운양푼갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "계란찜과 백김치를 곁들이는 매운 양푼갈비집이에요",
+  "basis": [
+   "계란찜,백김치와 함께 먹는 매운 양푼갈비가 인기인 곳"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536332",
+  "name": "예당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "간장게장과 양념게장 등 게 요리 정식을 내는 식당이에요",
+  "basis": [
+   "예당은 다양한 게 요리 정식으로 유명한 식당입니다",
+   "간장게장, 양념게장, 간장새우, 꽃게조림"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536347",
+  "name": "사랑채막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수를 28년 해 온 막국수집이에요",
+  "basis": [
+   "28년 고집해온 저희 막국수는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536357",
+  "name": "커피다",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536360",
+  "name": "스타벅스 강릉강문해변점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536384",
+  "name": "맛있는대게 홍게",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진 수산시장 입구에서 대게를 파는 집이에요",
+  "basis": [
+   "주문진 수산시장 입구에 위치한 현지인 맛집",
+   "대게 유통업 10년 이상의 경력"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536390",
+  "name": "강릉가마솥설렁탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사천면에서 설렁탕을 내는 한식당이에요",
+  "basis": [
+   "한식, 사천면 주메뉴는 설렁탕"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536396",
+  "name": "육반장 주문진점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "육개장과 순두부육개장, 육개장칼국수를 내는 집이에요",
+  "basis": [
+   "육개장 전문점 육반장",
+   "순두부육개장",
+   "육개장칼국수"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536397",
+  "name": "에펠루아",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강문에서 바게트와 천연발효종 빵을 굽는 베이커리 카페예요",
+  "basis": [
+   "강릉 강문에서 프랑스 정통 베이커리와 스페셜티 커피를 경험해보세요"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536398",
+  "name": "영진댁",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대왕철판과 낙지칼국수를 내는 식당이에요",
+  "basis": [
+   "대왕철판과 낙지칼국수가 인기 메뉴입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536409",
+  "name": "13월의강릉",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "조개를 바탕으로 한 요리를 내는 조개구이집이에요",
+  "basis": [
+   "신선한 조개를 바탕으로 다양한 요리를 선보이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536411",
+  "name": "만동면옥",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ }
+]

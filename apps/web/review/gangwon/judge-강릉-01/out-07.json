@@ -1,0 +1,700 @@
+[
+ {
+  "id": "nt-2868923",
+  "name": "강릉유환식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "간장 대게장을 주메뉴로 게장 정식을 내는 집이에요",
+  "basis": [
+   "주메뉴는 간장 대게장이지만",
+   "간장 홍게장, 전복장, 새우장 등을 정식으로 차려 낸다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868991",
+  "name": "동일장칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "입암동에서 장칼국수를 내는 전문점이에요",
+  "basis": [
+   "장칼국수 전문점이다",
+   "대표 메뉴는 강원도의 토속 음식인 장칼국수이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2869003",
+  "name": "두에시스",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "중앙시장 근처 2층에서 스테이크와 파스타를 내는 이탈리안 식당이에요",
+  "basis": [
+   "중앙시장 근처 건물 2층에 있는 이탈리안 레스토랑이다",
+   "스테이크 종류와 피자, 파스타, 샐러드"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2869020",
+  "name": "라몬타냐",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "참나무 화덕으로 구운 피자와 생면파스타를 내는 집이에요",
+  "basis": [
+   "참나무로 피자를 굽는 커다란 화덕이 설치되어 있다",
+   "화덕피자, 생면파스타"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870121",
+  "name": "정동진 바다마을횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "정동진에서 대게와 회 세트를 내는 횟집이에요",
+  "basis": [
+   "각종 대게와 회가 포함된 세트 메뉴다",
+   "기차뷰와 바다뷰를 함께 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870140",
+  "name": "본가동해막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "명태식해를 올린 막국수를 내는 연곡 노포예요",
+  "basis": [
+   "고명으로 명태식해를 올리는데",
+   "1978년에 어머니가 창업한 노포"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870175",
+  "name": "삼교리동치미막국수 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동치미 국물 육수로 막국수를 내는 집이에요",
+  "basis": [
+   "1년 이상 숙성한 동치미 국물로 육수를 만들고",
+   "막국수 곁들임 메뉴로 수육, 메밀만두, 메밀전"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870203",
+  "name": "서당골산채",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "돌솥정식과 황태구이정식을 내는 한식당이에요",
+  "basis": [
+   "대표 메뉴는 돌솥정식, 황태구이정식, 더덕구이, 황태구이"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870225",
+  "name": "소돌막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "즉석에서 뽑은 생면으로 막국수를 내는 주문진 집이에요",
+  "basis": [
+   "주문과 함께 즉석에서 뽑는 생면을 사용해",
+   "막국수 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870278",
+  "name": "솔올통나무집닭갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "치즈를 올린 닭갈비를 내는 교동 닭갈비집이에요",
+  "basis": [
+   "닭갈비 한 판 가운데로 두툼하게 치즈를 놓고",
+   "닭갈비 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2870295",
+  "name": "송정용짬뽕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "문어짬뽕과 해물짬뽕을 내는 송정동 짬뽕집이에요",
+  "basis": [
+   "신선한 동해 문어 한 마리가 올려져 있는 문어짬뽕",
+   "짬뽕 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871127",
+  "name": "고기랑조개랑",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "정동진 모래시계공원 근처에서 고기와 조개를 구워 먹는 집이에요",
+  "basis": [
+   "정동진 모래시계공원 근처에 있는 맛집이다",
+   "한쪽에는 고기를 굽고, 한쪽에는 조개를 구워 가면서 먹을 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871151",
+  "name": "고성생선찜",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "가오리찜과 생선 모둠찜을 내는 생선찜집이에요",
+  "basis": [
+   "생선찜 요리 전문점이다",
+   "생선 모둠찜을 주문하면 코다리, 가오리, 도루묵, 갈치, 가자미"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871178",
+  "name": "광덕식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소머리국밥과 소머리수육을 내는 국밥집이에요",
+  "basis": [
+   "소머리국밥 전문점이다",
+   "주메뉴는 소머리국밥, 소머리국밥에 순두부를 넣은 소순이"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871190",
+  "name": "금천칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "장칼국수에 옹심이를 넣은 것도 내는 칼국수집이에요",
+  "basis": [
+   "메뉴는 간단하게 장칼국수이다",
+   "여기에 옹심이를 넣은 것도 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871214",
+  "name": "김우정초당짬뽕순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "짬뽕순두부 특허를 받은 초당 순두부집이에요",
+  "basis": [
+   "짬뽕순두부로 특허를 받은 음식이다",
+   "초당 순두부 마을에 있는 순두부 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871246",
+  "name": "까치장칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강릉역 근처에서 장칼국수와 소고기김밥을 내는 집이에요",
+  "basis": [
+   "강릉역 주변에 있는 장칼국수 맛집이다",
+   "장칼국수, 소고기김밥, 공깃밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871268",
+  "name": "남항진어촌식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "망치매운탕과 가자미회무침을 내는 남항진항 식당이에요",
+  "basis": [
+   "망치 매운탕과 가자미회 무침이 맛있는 집이다",
+   "남항진항에 있는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871297",
+  "name": "대동면옥 강릉점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "가자미회를 올린 회비빔 막국수와 냉면을 내는 집이에요",
+  "basis": [
+   "가자미 회가 올라간 회비빔 막국수, 회비빔 냉면이 주메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2871315",
+  "name": "대동면옥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "가자미회무침을 올린 회 비빔 냉면과 막국수 집이에요",
+  "basis": [
+   "회 비빔 냉면, 회 비빔 막국수 전문점이다",
+   "가자미로 회를 만들어 새콤달콤하게 만든 회무침"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2872351",
+  "name": "옛성도물회",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "송정 해수욕장 근처 물회 전문 식당이에요",
+  "basis": [
+   "물회 전문 식당이다",
+   "송정 해수욕장에서 멀지 않은 곳에"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2872387",
+  "name": "이모네생선찜",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "빨간 양념 생선찜과 가오리찜을 내는 집이에요",
+  "basis": [
+   "생선찜 전문점이다",
+   "뼈까지 다 먹는 가오리찜도 인기다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2872436",
+  "name": "이츠모라멘",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한옥을 고친 식당에서 돈코츠라멘과 츠케면을 내요",
+  "basis": [
+   "오래된 한옥을 리모델링해서 꾸민 식당",
+   "돈코츠라멘, 카라이토리 라멘, 츠케면"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2872467",
+  "name": "정동진밥집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "정동진 기찻길 옆에서 생선구이정식을 내는 집이에요",
+  "basis": [
+   "정동진 기찻길 바로 옆에 있는 식당이다",
+   "주메뉴는 생선구이정식이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2873113",
+  "name": "초당비스트로",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한옥을 고친 식당에서 파스타와 스테이크를 내요",
+  "basis": [
+   "한옥을 개조한 단층 식당으로",
+   "대표 메뉴는 파스타, 스테이크, 해산물 볶음밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2873252",
+  "name": "초당고부순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "4대째 운영하며 순두부 백반과 순두부전골을 내는 집이에요",
+  "basis": [
+   "4대에 걸쳐 운영되고 있는",
+   "순두부 백반, 순두부 전골, 두부전골"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2873989",
+  "name": "주문진막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진 수산시장 입구에서 막국수와 수육을 내는 집이에요",
+  "basis": [
+   "주문진 수산시장 입구에 있는 막국수 전문점이다",
+   "수육도 부드럽고 고소해서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2873999",
+  "name": "주문진홍게무한리필",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소돌해변 근처에서 홍게찜을 먹는 홍게 전문 식당이에요",
+  "basis": [
+   "소돌해변에 있는 홍게 전문 식당이다",
+   "잘 손질한 홍게찜을 무한으로 먹을 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874011",
+  "name": "짬뽕 순두부 초당애",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포호가 내려다보이는 2층에서 짬뽕순두부를 내는 집이에요",
+  "basis": [
+   "호수를 한눈에 내려다보며 식사할 수 있다",
+   "면 대신 순두부를 넣어 요리하는 짬뽕 순두부"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874023",
+  "name": "최대게",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진항 근처에서 대게와 홍게를 고르는 게요리 식당이에요",
+  "basis": [
+   "주문진 항 근처에 있는 게요리 전문 식당이다",
+   "식당 입구에서 게를 골라 주문하고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874063",
+  "name": "칠공주불고기",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "지경해수욕장 근처에서 뚝배기불고기를 내는 한식당이에요",
+  "basis": [
+   "뚝배기불고기가 식사 메뉴로 인기가 좋지만",
+   "지경해수욕장 근처에 있는 한식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874075",
+  "name": "태백산맥식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포에서 짬뽕순두부를 내는 두부 요리집이에요",
+  "basis": [
+   "두부 요리 전문점이다",
+   "짬뽕 순두부가 대표 메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874093",
+  "name": "택지골수제생갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한돈 돼지갈비와 지리산 흑돼지 오겹살을 숯불에 굽는 집이에요",
+  "basis": [
+   "한돈을 사용해서 만드는 돼지갈비와 지리산 흑돼지 오겹살",
+   "비장탄 숯을 사용하고 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874112",
+  "name": "택지물회",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "활어회와 전복 문어를 큰 대접에 담은 물회집이에요",
+  "basis": [
+   "물회 전문집이다",
+   "신선한 활어회와 전복, 문어가 가득 큰 대접에 담겨 나온다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874129",
+  "name": "포남사골옹심이",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사골 국물에 감자 옹심이를 끓여 내는 토속 음식점이에요",
+  "basis": [
+   "감자로만 만든 옹심이를 사골 국물에 끓여내고 있다",
+   "강원도 토속 음식점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874141",
+  "name": "해마루",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "남항진 해변에서 농어 도다리 참돔 모듬회를 내는 횟집이에요",
+  "basis": [
+   "남항진 해변에 있는 횟집이다",
+   "주로 농어, 도다리, 참돔이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2874156",
+  "name": "해연가",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "문어 홍게 활어회 세트와 물회를 내는 해안로 식당이에요",
+  "basis": [
+   "신선한 문어, 홍게, 활어회, 활어회 무침, 피꼬막",
+   "세트 메뉴와 물회이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2875477",
+  "name": "해오름자연산횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소돌해변에서 자연산 회와 물회를 내는 횟집이에요",
+  "basis": [
+   "소돌해변에 있는 횟집이다",
+   "자연산 회를 그대로 즐길 수도 있고, 물회로 즐길 수도 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2875531",
+  "name": "형제막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수와 냉면을 물이나 비빔으로 내는 집이에요",
+  "basis": [
+   "막국수 전문점이다",
+   "막국수를 물이나 비빔으로 먹을 수도 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2876196",
+  "name": "초당버거 강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "초당동에서 수제버거와 직접 만든 사이드를 내는 집이에요",
+  "basis": [
+   "수제버거를 전문으로 하는 수제버거 전문점이다",
+   "당근라페, 코울슬로, 피클 등 다양한 수제 사이드 메뉴"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891704",
+  "name": "AURA Cafe&Lounge",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "경포해변과 강문해변 중간 호텔 1층에서 칵테일을 파는 카페예요",
+  "basis": [
+   "경포해변과 강문해변 중간",
+   "칵테일도 판매하는 곳이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891705",
+  "name": "24FRAME",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "논이 보이는 베이커리 카페이고 강릉 두부라테를 내요",
+  "basis": [
+   "넓게 펼쳐진 논이 보이는 전망은",
+   "강릉 두부라테, 강릉 옥수수라테"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891773",
+  "name": "자료 동읫",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "중앙시장 근처 카페이고 서리태 커피를 내요",
+  "basis": [
+   "서리태 커피와 태성커피가 시그니처 메뉴인데",
+   "강릉 중앙시장 근처에 있는 카페이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891818",
+  "name": "강릉샌드",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "월화거리에서 커피 곶감 초당옥수수 맛 쿠키샌드를 파는 카페예요",
+  "basis": [
+   "월화거리에 있는 카페이다",
+   "커피, 곶감, 초당옥수수 등 여러가지 맛으로 구성되어 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891837",
+  "name": "강릉커피빵 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "감자 아이스크림과 옥수수 아이스크림을 파는 강문동 카페예요",
+  "basis": [
+   "감자 아이스크림, 옥수수 아이스크림, 들깨 아이스크림",
+   "2층은 강문해변이 훤히 보이는 좌석들이 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891853",
+  "name": "그다이마잇",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "빅토리아 케이크를 내는 직접 만든 베이커리 카페예요",
+  "basis": [
+   "베이커리 카페이다",
+   "시그니처 메뉴인 빅토리아 케이크와 그커피"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891889",
+  "name": "나봄",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "실타래 빙수와 밀크 빙수를 내는 디저트 카페예요",
+  "basis": [
+   "대표 메뉴는 실타래 빙수와 밀크 빙수로",
+   "디저트 카페이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891906",
+  "name": "라티엔다",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "빵 샐러드 밥 국이 차려진 가정식 브런치 뷔페예요",
+  "basis": [
+   "가정식 브런치 뷔페이다",
+   "빵, 프라이, 밥, 국, 수프 등 주식 메뉴가 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891927",
+  "name": "롱블랙",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강문해변이 보이는 카페이고 제과제빵 명인의 빵을 내요",
+  "basis": [
+   "강문해변에 위치한 카페이다",
+   "제과제빵 명인이 직접 만드는 베이커리"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891940",
+  "name": "르 블루",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "한옥을 고친 베이커리 펍이고 와인과 맥주도 내요",
+  "basis": [
+   "와인과 맥주로 마실 수 있는 한옥 베이커리 팝이다",
+   "오래된 한옥을 현대식으로 개조해서"
+  ],
+  "confidence": "high"
+ }
+]

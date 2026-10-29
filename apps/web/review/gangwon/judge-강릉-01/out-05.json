@@ -1,0 +1,538 @@
+[
+ {
+  "id": "nt-2702476",
+  "name": "[해파랑길] 39코스(바우길 05구간)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "솔바람다리에서 사천진리 해변공원까지 해안과 해송 숲길, 호숫길을 걸어요",
+  "basis": [
+   "솔바람다리에서 출발하여 사천진리 해변공원까지 이어지는 코스",
+   "해안과 해송 숲길, 호숫길로 이루어져"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702478",
+  "name": "[해파랑길] 40코스",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "사천진리해변에서 주문진해변까지 해변을 따라 걷는 코스예요",
+  "basis": [
+   "사천진리해변, 연곡해변, 주문진, 주문진해변 순으로 이어지는 코스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702497",
+  "name": "[해파랑길] 41코스",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "주문진 해변에서 양양 죽도정까지 항구와 석호, 솔숲을 지나는 길이에요",
+  "basis": [
+   "강릉 주문진 해변에서 출발해 양양 죽도정 입구까지 이어진",
+   "중간중간 석호와 소나무숲, 대나무숲"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2704780",
+  "name": "샌드파인골프클럽(샌드파인GC)",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "동해를 내려다보는 18홀 골프장이에요",
+  "basis": [
+   "동해를 내려다볼 수 있는 필드",
+   "18홀 코스는"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2726717",
+  "name": "강릉경포카라반파크",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2729143",
+  "name": "대관령솔내음오토캠프장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2729266",
+  "name": "솔향강릉오토캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2734026",
+  "name": "소금강오토캠프장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2744417",
+  "name": "연곡해변솔향기캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2747568",
+  "name": "주문진 글램핑 오토캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2752057",
+  "name": "강릉 와우파크 카라반펜션",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2752649",
+  "name": "부연스카이케빈",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2752786",
+  "name": "추억촌",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2752790",
+  "name": "보광농촌체험휴양마을",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2753005",
+  "name": "강릉여행 굿캠핑",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2763531",
+  "name": "정원펜션 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2784104",
+  "name": "대관령 소나무숲길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "소나무 종자를 직접 뿌려 가꾼 울창한 소나무 숲길이에요",
+  "basis": [
+   "울창한 숲이다",
+   "직접 뿌리는 직파조림을 통해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2791912",
+  "name": "안목커피거리카라반캠핑",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2792194",
+  "name": "강릉 금진리321카라반",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2792307",
+  "name": "바람부리별밤캠핑장 관광농원",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2833823",
+  "name": "경민호",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "주문진항에서 대구, 문어, 가자미를 노리는 선상낚시 어선이에요",
+  "basis": [
+   "주문진항을 중심으로 운항하는 11인승 선상낚시 전문 어선",
+   "대구, 문어, 가자미, 락피시 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3029909",
+  "name": "해원다이브리조트",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "사천항 가까운 해중공원 포인트 등에서 스쿠버다이빙을 배워요",
+  "basis": [
+   "스쿠버다이빙 교육은 스텔라호 중간지점",
+   "해중공원 포인트는 사천항에서 가까이 있고"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069525",
+  "name": "강릉시인라인스케이팅장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069527",
+  "name": "너울서프",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "금진해변에서 서핑 강습을 받고 바비큐 파티를 해요",
+  "basis": [
+   "서핑 강습, 게스트하우스 숙박, 바비큐 파티를 패키지로 제공한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3069528",
+  "name": "주마강산승마클럽",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "이론 수업과 말 끌기, 평보와 속보를 배우는 승마 체험이에요",
+  "basis": [
+   "승마 체험 강습 과정은 10일 차에 걸쳐",
+   "말 끌기 및 승·하마 법 실습"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069529",
+  "name": "보보스다이브리조트",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "난파선과 해중공원 포인트에서 스쿠버다이빙 체험을 해요",
+  "basis": [
+   "스텔라 난파선, 엠버 33호 난파선, 장갑차, 해중공원 등이 있고"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069531",
+  "name": "하파서프",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "서핑 강습을 하고 치킨과 수제 돈가스를 내는 서핑샵이에요",
+  "basis": [
+   "전문 강사진들과 함께하는 서핑 강습",
+   "맛있는 치킨과 수제 돈가스가 준비되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3534453",
+  "name": "342camp",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536914",
+  "name": "삼산 야영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3543978",
+  "name": "강릉생활체육센터",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3543994",
+  "name": "강릉실내체육관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544047",
+  "name": "강릉국민체육센터",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544100",
+  "name": "강릉강북공설운동장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544350",
+  "name": "강릉볼링장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3544490",
+  "name": "강릉스쿼시장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4062752",
+  "name": "오죽헌 전통뱃놀이 체험시설",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "경포 생태저류지 수변에서 오죽헌 전통 풍류를 체험하는 뱃놀이 시설이에요",
+  "basis": [
+   "경포 생태저류지에 조성된 오죽헌 전통뱃놀이 체험시설",
+   "오죽헌의 전통과 풍류 문화를 색다르게 체험할 수 있도록"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-132771",
+  "name": "강릉 중앙시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "골목 노점에서 농수산물과 건어물을 파는 대표 전통시장이에요",
+  "basis": [
+   "도로변과 골목에는 노점이 형성되어",
+   "농수산물과 건어물, 강릉의 특산 식재료 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-132772",
+  "name": "강릉 동부시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "메밀적과 감자옹심이를 파는 상가 건물형 시장이에요",
+  "basis": [
+   "주 취급 품목은 메밀적(메밀 맷돌 부치기), 감자옹심이"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-132773",
+  "name": "강릉 서부시장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-132774",
+  "name": "주문진수산시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "주문진항 옆 어시장에서 갓 잡은 오징어와 회를 맛봐요",
+  "basis": [
+   "동해안의 어시장이자 국내외 관광객이 많이 찾는 전통시장",
+   "싱싱한 회를 즉석에서 맛볼 수 있는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-132775",
+  "name": "강릉 주문진종합시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "수산물과 농특산물을 파는 108개 점포가 모인 시장이에요",
+  "basis": [
+   "108개의 점포가 있으며 식품, 의류, 잡화 수산물, 농특산물 등을 판매",
+   "관광객 집객 형태의 전통시장으로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-1756581",
+  "name": "강릉 농산물도매시장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2776853",
+  "name": "주문진좌판풍물시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "신선한 생선회와 해산물, 젓갈을 파는 수산물 풍물시장이에요",
+  "basis": [
+   "신선한 생선회를 비롯해 각종 해산물, 젓갈 등",
+   "주문진 수산시장에서 큰길을 건너 부두 쪽에 위치한 시장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2776857",
+  "name": "어민수산시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "주문진항 입구에서 어민이 직접 자연산 수산물을 파는 시장이에요",
+  "basis": [
+   "어업인이 생산하는 자연산 수산물만 판매한다",
+   "주문진항 입구로 들어오면"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069503",
+  "name": "강릉농산물새벽시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "남대천 둔치에서 농민이 직접 농산물을 파는 새벽시장이에요",
+  "basis": [
+   "남대천 둔치에 장터가 꾸며져 있고",
+   "농민들이 직접 재배하고 가꾸는 농산물"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3532396",
+  "name": "옥계5일장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "농수산물과 생활용품을 파는 옥계 전통 5일장이에요",
+  "basis": [
+   "지역 전통시장으로",
+   "지역 특산물과 농가에서 직접 재배한 신선한 먹거리"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3547801",
+  "name": "주문진건어물시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "해안도로를 따라 건어물 상가가 늘어서고 활어회센터가 있는 시장이에요",
+  "basis": [
+   "해안도로를 따라 길게 늘어선 건어물 상가",
+   "활어회센터로 이루어져 있으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133494",
+  "name": "원조초당순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "순두부 백반과 살짝 데친 두부 반찬을 내는 식당이에요",
+  "basis": [
+   "메인 요리인 순두부 백반",
+   "살짝 데친 두부는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133497",
+  "name": "영진횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "영진해수욕장에 있는 횟집으로 회와 매운탕을 내요",
+  "basis": [
+   "선회로 이름난 곳으로 영진해수욕장에 위치한",
+   "매운탕의 맛 또한 깊고 풍부하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133808",
+  "name": "초당할머니순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "순두부 백반과 째복을 넣은 얼큰째복순두부를 내는 집이에요",
+  "basis": [
+   "순두부 백반이 기본 메뉴이며",
+   "얼큰째복순두부도 인기다"
+  ],
+  "confidence": "high"
+ }
+]

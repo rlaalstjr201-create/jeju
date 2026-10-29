@@ -1,0 +1,702 @@
+[
+ {
+  "id": "nt-2891972",
+  "name": "르봉마젤",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "리빙 소품 편집숍 2층에 카페가 있어요",
+  "basis": [
+   "1층은 리빙 편집숍, 2층은 리빙 편집숍과 카페이다",
+   "카페 메뉴는 커피류와 디저트류를 판매하고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2892006",
+  "name": "마시와 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "먹물 아이스크림과 오징어빵을 파는 카페예요",
+  "basis": [
+   "오징어 먹물을 넣은 아이스크림, 커피, 오징어빵, 오징어만쥬",
+   "국내 최초로 먹물 아이스크림을 개발한 곳"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892062",
+  "name": "만동제과",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "중앙시장 근처 빵집이고 마늘바게트가 시그니처예요",
+  "basis": [
+   "시그니처 메뉴는 마늘바게트이지만",
+   "강릉중앙시장 근처에 있는 줄을 서서 먹는 빵집이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892089",
+  "name": "바우카페",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "영진해변이 훤히 보이는 카페이고 흑임자 카페라테를 내요",
+  "basis": [
+   "영진해변이 훤히 보이는 조망",
+   "시그니처 바우커피가 흑임자 카페라테인데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892102",
+  "name": "보헤미안박이추커피 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "박이추 선생이 운영하는 강릉 커피 전문점이에요",
+  "basis": [
+   "박이추 선생이 운영하는 커피 전문점이다",
+   "매장 내부에는 커피잔과 커피 도구 등이 전시되어 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892127",
+  "name": "비비플로",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "원데이 클래스를 여는 편집숍 겸 카페예요",
+  "basis": [
+   "편집숍 겸 카페이다",
+   "크래프트 제품 만드는 것을 배울 수 있는 원데이 클래스도 운영하고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2892750",
+  "name": "쎄라비",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "교동 주택가에서 싱글 원두 커피와 디저트를 내는 카페예요",
+  "basis": [
+   "교동 주택가에 있는 디저트 카페이다",
+   "매일 새로운 싱글 원두로 커피를 내려 준다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892780",
+  "name": "앙빵",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "감자처럼 포장한 감자빵을 파는 베이커리 카페예요",
+  "basis": [
+   "감자와 똑같이 생긴 감자빵을 감자처럼 포장해서 판매하고 있어",
+   "베이커리 카페이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894037",
+  "name": "오브더모먼트",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "식물 판매점과 카페를 함께 하는 시내 카페예요",
+  "basis": [
+   "식물판매점과 카페를 함께 운영하고 있어",
+   "1층은 카페와 꽃집이고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894068",
+  "name": "월량화",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "라탄 작업실이 있고 라탄 클래스를 여는 카페예요",
+  "basis": [
+   "내부에 라탄 작업실이 있고",
+   "라탄을 배우는 클래스가 진행된다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894092",
+  "name": "월화엔",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "단독주택을 고쳐 만든 정원 있는 도심 카페예요",
+  "basis": [
+   "단독주택을 개조해서 만든 카페라",
+   "널찍한 정원과 아늑한 테라스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894231",
+  "name": "초당커피",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "초당두부라떼와 솔방울큐브라떼를 내는 초당순두부마을 카페예요",
+  "basis": [
+   "초당두부라떼와 솔방울큐브라떼가 시그니처 메뉴이다",
+   "초당순두부마을에 있는 카페이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894253",
+  "name": "카페디드",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "포남동 우드톤 카페이고 디저트 케이크를 내요",
+  "basis": [
+   "고풍스러운 우드 톤의 넓은 내부에",
+   "디저트 케이크들이"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894282",
+  "name": "카페카모메",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "직접 만든 당고를 내는 당고 카페예요",
+  "basis": [
+   "강릉시에 있는 당고 카페이다",
+   "모든 메뉴와 디저트를 직접 만들어서 제공한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894303",
+  "name": "크림하우스",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "논밭이 보이는 대형 베이커리 카페이고 눈꽃커피를 내요",
+  "basis": [
+   "대형 베이커리 카페이다",
+   "눈꽃커피는 요즘 강릉에서 인기가 좋은 흑임자 라테"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894339",
+  "name": "퍼베이드",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "밭이 보이는 베이커리 카페이고 무화과 크림치즈 바게트를 내요",
+  "basis": [
+   "파릇한 밭 뷰가 보이는 색다른 카페이다",
+   "무화과 크림치즈 바게트가 인기 메뉴인데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894353",
+  "name": "하슬라가배",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목해변 커피 거리에서 바다가 보이는 2층 카페예요",
+  "basis": [
+   "안목해변 커피 거리에 있는 카페이다",
+   "창가에 앉아 보이는 안목해변 조망은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2894374",
+  "name": "홀리데이빈티지",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "동부시장 안에서 돌 모양 디저트 몽돌을 파는 카페예요",
+  "basis": [
+   "동부시장 안에 있는 디저트 카페이다",
+   "돌 모양을 한 몽돌과 백돌이 유명하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2903367",
+  "name": "송정해변막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "물막국수와 비빔막국수를 내는 강문해변 근처 막국수집이에요",
+  "basis": [
+   "막국수 전문점이다",
+   "주요 메뉴는 물막국수와 비빔막국수이고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2903398",
+  "name": "시골식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "그날 잡힌 생선으로 망치매운탕을 끓이는 정동진 노포예요",
+  "basis": [
+   "노포 음식점이다",
+   "그날 잡히는 생선에 따라서 망치매운탕, 도루묵매운탕, 대구매운탕"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2903411",
+  "name": "신대게나라",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진 도깨비시장에서 대게와 홍게를 쪄 주는 식당이에요",
+  "basis": [
+   "주문진항 근처 도깨비시장에 있는 해물요리 전문 식당이다",
+   "대게, 킹크랩, 랍스터, 박달 홍게를 쪄서 먹는 메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2903472",
+  "name": "아날로그 소사이어티",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "스테이크와 파스타를 내는 양식 레스토랑 겸 바예요",
+  "basis": [
+   "양식 레스토랑을 겸하는 바이다",
+   "스테이크, 파스타, 관자 새우 버터구이 등이 인기 메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2903492",
+  "name": "염전횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "망치와 아귀로 매운탕을 끓이는 염전길 횟집이에요",
+  "basis": [
+   "망치와 아귀로 매운탕을 끓여내는데",
+   "염전길에 있는 현지인들이 찾는 맛집이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905170",
+  "name": "강릉짬뽕순두부 강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "짬뽕순두부와 초당순두부와 모두부만 내는 순두부집이에요",
+  "basis": [
+   "짬뽕순두부, 초당순두부, 모두부가 전부이다",
+   "초당 순두부길 초입에 있는 순두부 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905190",
+  "name": "강문가",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포대 근처에서 활어회 물회 홍게찜 세트를 내는 식당이에요",
+  "basis": [
+   "활어회, 물회, 홍게찜, 꼬막숙회, 미역국으로 구성된 세트 메뉴",
+   "경포대 근처에 있는 해물전문식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905205",
+  "name": "강문떡갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강문해변 근처에서 떡갈비 정식을 내는 식당이에요",
+  "basis": [
+   "떡갈비 정식 전문점이다",
+   "소고기와 돼지고기를 섞어 비법 재료로 만든 떡갈비"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2910619",
+  "name": "커피씨엘",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목해변이 보이는 오션뷰 카페이고 테라로사 원두를 써요",
+  "basis": [
+   "안목 해변에 위치한 오션뷰 카페로",
+   "커피는 테라로사 원두를 사용해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2922605",
+  "name": "보사노바 커피로스터스 강릉점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목해변 베이커리 카페이고 위층에 테라스가 있어요",
+  "basis": [
+   "안목해변에 있는 베이커리 카페이다",
+   "4층은 테라스 공간이라"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2922617",
+  "name": "카페기와",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "오래된 한옥을 고친 정원 카페이고 꽃분홍라떼를 내요",
+  "basis": [
+   "오래된 한옥을 리모델링해서",
+   "시그니처 메뉴인 꽃분홍라떼, 기와블랙라떼, 녹두꽃라떼"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2927544",
+  "name": "디오슬로",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "올림픽파크 앞쪽에 있는 대형 베이커리 카페예요",
+  "basis": [
+   "강릉 올림픽파크 앞쪽에 있는 대형 베이커리 카페다",
+   "마당과 테라스, 루프탑에도 테이블이 준비되어 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2927601",
+  "name": "로지커피",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목 바닷가의 화이트톤 대형 카페이고 루프탑이 있어요",
+  "basis": [
+   "안목 바닷가에 화이트톤의 인테리어가 인상적인 대형 카페이다",
+   "2층부터 루프탑까지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2927791",
+  "name": "미르마르",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목 커피거리 오션뷰 카페이고 커피콩빵을 내요",
+  "basis": [
+   "탁 트인 바다 전망을 감상할 수 있는 오션뷰 카페이다",
+   "강릉의 명물인 커피콩빵을 비롯해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2928154",
+  "name": "순두부젤라또 1호점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "초당마을에서 순두부를 넣은 젤라또를 파는 디저트 가게예요",
+  "basis": [
+   "초당마을에 위치한 디저트 전문점이다",
+   "순두부를 활용한 젤라또를 대표 메뉴로 판매하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2928847",
+  "name": "콩방앗간",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "옛 오징어 공장을 살려 만든 카페이고 루프탑에서 바다가 보여요",
+  "basis": [
+   "원래 1,700평의 오징어가미 공장이었는데",
+   "2층의 루프탑에서 오션뷰와 노을을 감상할 수 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2929266",
+  "name": "오드커피",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "주문진 해변에 있는 카페이고 2층에서 바다가 보여요",
+  "basis": [
+   "주문진 해변에 위치한 카페이다",
+   "2층에서는 주문진 바다를 한눈에 조망할 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2930038",
+  "name": "강릉불고기 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "안인진에서 한우 산더미 파 불고기를 내는 원조 식당이에요",
+  "basis": [
+   "안인진에 자리한 불고기 전문점이다",
+   "옛날 한우 산더미 파 불고기 한 가지로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2930172",
+  "name": "강릉 초당찰떡",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "밥을 찧어 만든 구운 찰떡을 파는 찰떡 전문점이에요",
+  "basis": [
+   "매일 새벽 지은 밥을 직접 찧어 만드는 찰떡 전문점이다",
+   "흑임자와 인절미 두 가지 맛"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2930183",
+  "name": "카페 뤼미에르",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목 커피거리에서 통창으로 안목해변이 보이는 카페예요",
+  "basis": [
+   "안목 커피거리에 위치한 카페이다",
+   "전면이 통창으로 되어 있어 안목해변을 바라보며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2938685",
+  "name": "애시당초",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "빠다밀키와 동백꽃라떼를 내는 레트로 카페예요",
+  "basis": [
+   "대표 메뉴는 빠다밀키로",
+   "얼그레이에 꽃향이 나는 동백꽃라떼"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2941250",
+  "name": "감자유원지",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강릉과 평창에서 재배한 감자로 음식을 내는 로컬 다이닝이에요",
+  "basis": [
+   "직접 강릉과 평창에서 재배한 감자를 활용한 음식",
+   "항정살 감자솥밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2943818",
+  "name": "스시심",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "교동에서 장어 문어 새우 초밥을 내는 일식집이에요",
+  "basis": [
+   "장어, 문어, 새우, 간장게장 등 다양한 초밥",
+   "일식 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2995934",
+  "name": "강릉한우마크나인",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "포남동에서 부위별 한우 요리를 내는 한우 요리 전문점이에요",
+  "basis": [
+   "한우 요리 전문점이다",
+   "부위 별로 다양한 한우 요리를 경험할 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3019876",
+  "name": "강릉샌드 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "중앙시장에서 크림치즈와 솔트카라멜을 채운 쿠키 샌드를 파는 가게예요",
+  "basis": [
+   "강릉 중앙시장에 있으며",
+   "크림치즈와 수제 솔트카라멜을 풍성하게 채운 샌드"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3069499",
+  "name": "무명",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "구옥을 고친 상영관에서 강릉 독립영화를 보고 음료도 마셔요",
+  "basis": [
+   "강릉에서 제작된 단편영화와 독립영화를 상영하고",
+   "구옥주택을 개조해서 만들어졌다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069500",
+  "name": "지베이스",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "건담 피규어가 가득한 건담 테마 카페예요",
+  "basis": [
+   "대한민국 최대 규모의 건담 테마 카페라 쓰여 있고",
+   "건담을 비롯한 많은 피규어가 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3355175",
+  "name": "허스크밀",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "안목해변에 있는 대형 베이커리 카페이고 인절미 크림라떼를 내요",
+  "basis": [
+   "안목해변에 있는 베이커리 대형 카페이다",
+   "인절미 크림라떼, 말차 바닐라 크림라떼, 먹물 치즈 크림라떼"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3359671",
+  "name": "서원커피랩",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "오죽헌 앞 카페이고 인절미 우유빙수를 내요",
+  "basis": [
+   "강릉 오죽헌 앞에 위치한 카페로",
+   "인절미 우유빙수, 쑥 인절미 아이스크림 토스트"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3416220",
+  "name": "체크이스트",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "옛 렌터카 사옥을 고친 호텔 콘셉트 베이커리 카페예요",
+  "basis": [
+   "기존의 렌터카 사옥을 리모델링한 공간으로",
+   "호텔 콘셉트 베이커리 카페이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3443739",
+  "name": "강릉빵다방",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "인절미 빵과 매운용암빵으로 알려진 베이커리예요",
+  "basis": [
+   "인절미 빵이 유명하며",
+   "매운용암빵(매운부추빵)도 인기있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3448288",
+  "name": "강원옥 찹쌀떡",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "초당순두부와 크림치즈를 넣은 찹쌀떡을 파는 떡카페예요",
+  "basis": [
+   "초당순두부와 생크림 그리고 크림치즈를 넣어",
+   "떡카페이다"
+  ],
+  "confidence": "high"
+ }
+]

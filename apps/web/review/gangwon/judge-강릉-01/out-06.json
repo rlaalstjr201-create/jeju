@@ -1,0 +1,690 @@
+[
+ {
+  "id": "nt-133817",
+  "name": "강릉감자옹심 강릉본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "칼국수에 옹심이를 넣어 내는 강릉 향토음식 집이에요",
+  "basis": [
+   "감자옹심이가 칼국수 이상으로 손님에게 인기가 있다고 한다",
+   "강릉시의 향토음식으로 지정되어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133927",
+  "name": "수리골추어탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "추어탕이 유명하고 메밀전과 명태찜도 내는 집이에요",
+  "basis": [
+   "추어탕이 유명한 곳이다",
+   "추어탕 외에도 메밀전, 명태찜도"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133930",
+  "name": "꼭지네식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수와 칡냉면을 전문으로 하는 집이에요",
+  "basis": [
+   "막국수와 칡냉면을 전문으로 하는 곳이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133931",
+  "name": "시골할머니추어탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "미꾸라지로 끓인 추어탕에 감자밥이 함께 나와요",
+  "basis": [
+   "추어탕과 함께 제공되는 감자밥이 이 집의 별미다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133933",
+  "name": "연곡꾹저구탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "꾹저구탕과 메밀전으로 유명한 집이에요",
+  "basis": [
+   "꾹저구탕과 메밀전으로 유명한"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133934",
+  "name": "신리면옥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수 전문점이고 회 비빔막국수에 가자미회가 올라가요",
+  "basis": [
+   "막국수 전문점이다",
+   "회 비빔막국수에는 가자미회가 올라가는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-134338",
+  "name": "소나무집초당순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "순두부전골과 순두부 젤라토를 함께 내는 집이에요",
+  "basis": [
+   "순두부 젤라토를 함께 운영하고 있어",
+   "대표 메뉴로 순두부 전골과 해물짬뽕순두부전골 등이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1855941",
+  "name": "여왕개미식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "중앙시장 근처에서 감자옹심이와 칼국수를 내는 집이에요",
+  "basis": [
+   "감자옹심이 전문 음식점이다",
+   "강릉 중앙시장 인근에 있는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1950195",
+  "name": "테라로사 커피공장",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "로스팅 머신과 커피 박물관이 있는 공장 건물 카페예요",
+  "basis": [
+   "로스팅 머신, 커피 박물관, 아트숍",
+   "빨간 벽돌 외관의 공장 건물"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2499926",
+  "name": "봉봉방앗간",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "방앗간 건물을 고쳐 만든 카페예요",
+  "basis": [
+   "방앗간이었던 건물을 리모델링하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2499936",
+  "name": "초당커피정미소",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "정미소를 고쳐 만든 카페이고 정미소 크림 라테를 내요",
+  "basis": [
+   "정미소의 느낌을 살려 카페로 리모델링 한 곳이다",
+   "정미소 크림 라테"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2501071",
+  "name": "솔담",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "연잎밥 정식을 내는 강릉 지역 식재료 한식집이에요",
+  "basis": [
+   "연잎밥 정식을 주메뉴로 한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2685320",
+  "name": "원영생선구이",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생선구이와 오징어볶음을 내는 주문진 생선구이집이에요",
+  "basis": [
+   "생선구이 전문점으로",
+   "생선구이, 오징어볶음"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2685330",
+  "name": "강문어화횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강문해변 바로 앞에서 바다 보며 회를 먹는 횟집이에요",
+  "basis": [
+   "강문해변 바로 앞에 위치한 횟집",
+   "오션뷰를 감상할 수 있는 개별룸"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2753134",
+  "name": "갤러리밥스",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "초당옥수수 커피와 소금빵을 파는 카페예요",
+  "basis": [
+   "초당옥수수 커피를 판매하고 있는 카페다",
+   "소금빵은 쫄깃하고 부드러워"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2773828",
+  "name": "100년임당방앗간",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "옛 방앗간으로 쓰던 공간을 고쳐 만든 카페예요",
+  "basis": [
+   "100여 년 동안 방앗간으로 운영되었던 공간을 재구성한 카페다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2773834",
+  "name": "소집",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "옛 외양간을 고쳐 지역 작가 전시를 여는 카페예요",
+  "basis": [
+   "과거 외양간을 개조한 갤러리 겸 카페다",
+   "지역 작가의 작품들을 선보이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774300",
+  "name": "교동반점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "짬뽕이 대표 메뉴인 교동 중식당이에요",
+  "basis": [
+   "짬뽕이 대표 메뉴다",
+   "강릉시 교동의 중식당으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774694",
+  "name": "강릉전복해물뚝배기",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "전복 해물뚝배기가 대표 메뉴인 전복요리집이에요",
+  "basis": [
+   "전복 해물뚝배기가 대표 메뉴다",
+   "전복요리점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775513",
+  "name": "대영유통",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대게와 홍게를 직접 골라 먹는 주문진 횟집이에요",
+  "basis": [
+   "소비자가 직접 게를 고를 수 있으며",
+   "신선한 대게 맛볼 수 있는 주문진 횟집이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775515",
+  "name": "정은숙초당순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "수육과 초당두부와 순두부전골이 나오는 초당두부밥상 집이에요",
+  "basis": [
+   "수육, 초당두부, 가자미식해, 순두부 전골로 구성된 메뉴",
+   "순두부전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775521",
+  "name": "장안횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사천항 직판장 앞에서 물회와 회덮밥을 내는 횟집이에요",
+  "basis": [
+   "강릉 사천항 수산물 직판장 앞에 위치한",
+   "물회와 회덮밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775525",
+  "name": "메시56",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "우나기동과 우니동 같은 일본식 해산물 덮밥집이에요",
+  "basis": [
+   "일본식 해산물(회) 덮밥 전문점이다",
+   "성게알이 올라간 우니동"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775529",
+  "name": "강릉꼬막집 독도네 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동부시장 안에서 꼬막무침과 한우 사시미를 내는 집이에요",
+  "basis": [
+   "동부시장에 위치한 음식점이다",
+   "꼬막무침과 한우 사시미를 함께 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775552",
+  "name": "제주해인물회",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "사천물회거리에서 멍게 비빔밥과 물회를 내는 집이에요",
+  "basis": [
+   "사천물회거리에 위치한 물회 전문 음식점이다",
+   "멍게 비빔밥과 멍게 물회"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775555",
+  "name": "토담순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "허난설헌 생가 입구에서 순두부전골을 내는 집이에요",
+  "basis": [
+   "순두부전골이 인기 메뉴이다",
+   "허균, 허난설헌 생가 입구에 위치하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775566",
+  "name": "강릉꼬막비빔밥풍호맛뜨락",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "물회와 꼬막비빔밥을 내는 집이에요",
+  "basis": [
+   "물회와 꼬막비빔밥 전문 식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775583",
+  "name": "346커피스토리",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강문해변 바다를 보며 쉬는 베이커리 카페예요",
+  "basis": [
+   "강문해변 오션뷰를 즐길 수 있는 전망 좋은 베이커리 카페이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775588",
+  "name": "에세이",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "영진해변 근처 북카페이고 해변 피크닉용품도 빌려줘요",
+  "basis": [
+   "북카페로 커피와 책을 즐길 수 있는 곳이다",
+   "피크닉용품 대여도 함께하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2781674",
+  "name": "벌집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "오래된 한옥을 고쳐 칼국수를 내는 임당동 칼국수집이에요",
+  "basis": [
+   "오래된 한옥을 개조한 식당으로",
+   "임당동에 위치한 유명 칼국수집이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2781684",
+  "name": "실비생선구이 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진항 해안로에서 생선구이와 된장찌개를 내는 집이에요",
+  "basis": [
+   "생선구이 전문점이다",
+   "같이 나오는 된장찌개는 이 집만의 별미이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2789528",
+  "name": "점봉산산채산나물천국",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "점봉산 산나물로 만든 돌솥밥 정식 집이에요",
+  "basis": [
+   "100% 점봉산 자연산 산나물로만 만드는 돌솥밥 정식 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2808098",
+  "name": "철뚝소머리집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소머리국밥 하나만 내는 주문진 집이에요",
+  "basis": [
+   "소머리국밥으로 단일메뉴로 판매하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2809298",
+  "name": "소도리",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "고추장돼지불고기와 간장돼지불고기가 대표 메뉴인 한식당이에요",
+  "basis": [
+   "대표메뉴는 고추장돼지불고기, 간장돼지불고기이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2818352",
+  "name": "카페폴앤메리",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강문해변에서 수제버거를 내는 집이에요",
+  "basis": [
+   "수제버거 전문점이다",
+   "바다를 바라보며 버거를 즐길 수 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2819996",
+  "name": "고려반점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "짬뽕과 탕수육을 내는 강릉 중화요리집이에요",
+  "basis": [
+   "강릉의 로컬 중화요리 전문점",
+   "탕수육도 베스트 메뉴로 인기가 많다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2820425",
+  "name": "엔드투앤드",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "강문해변 근처에서 소나무와 분수를 보며 커피 마시는 카페예요",
+  "basis": [
+   "강문해변 근처에 위치한 카페이다",
+   "분수의 가장자리를 테이블로 활용하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2820641",
+  "name": "도깨비젤라또",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "영진해변 방파제 앞에서 순두부 젤라또를 파는 가게예요",
+  "basis": [
+   "영진해변 방파제 바로 앞에 위치해있다",
+   "초당순두부로 만든 고소한 순두부 젤라또"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2837775",
+  "name": "곳",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "사천진 해변에 있는 베이커리 카페이고 3층 루프탑이 있어요",
+  "basis": [
+   "사천진 해변에 자리 잡은 오션뷰 카페이다",
+   "3층은 루프탑으로 야외 좌석들이"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2837796",
+  "name": "현대장칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "멸치육수에 매운 장칼국수를 내는 집이에요",
+  "basis": [
+   "장칼국수 전문점이다",
+   "멸치육수를 베이스로 한 매운 고추장 양념"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2844107",
+  "name": "툇마루",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "흑임자라떼로 유명한 초당 카페예요",
+  "basis": [
+   "흑임자라떼로 유명하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2845593",
+  "name": "강릉불고기 초당점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "파채를 올린 소불고기와 돼지불고기 집이에요",
+  "basis": [
+   "40년 전통의 파 불고기 전문점으로",
+   "엄청난 양의 파채가 올라가는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2845698",
+  "name": "강릉풍년갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "돼지갈비와 소갈비를 내는 대형 갈비집이에요",
+  "basis": [
+   "돼지갈비와 소갈비를",
+   "2,000석 규모의 대형 음식점으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868612",
+  "name": "미트컬쳐",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "안목해변에서 헤링과 에스까르고를 내는 유럽식 식당이에요",
+  "basis": [
+   "안목해변에 있는 유럽식 레스토랑이다",
+   "청어를 절임해서 만든 헤링"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868647",
+  "name": "명성옥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한옥을 고친 설렁탕과 우족탕 집이에요",
+  "basis": [
+   "설렁탕, 우족탕 전문점이다",
+   "오래된 한옥을 리모델링해서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868676",
+  "name": "맛드린",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "오죽헌 근처에서 낙지곱창전골을 내는 집이에요",
+  "basis": [
+   "오죽헌 근처에 있는 낙지요리전문점이다",
+   "낙지곱창전골, 낙지볶음, 낙지부추전"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868746",
+  "name": "리틀다이너",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "수제버거와 감자튀김을 내는 미국식 식당이에요",
+  "basis": [
+   "주메뉴는 수제 버거이고 감자튀김",
+   "미국식 식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868839",
+  "name": "가람집옹심이",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "감자전과 장칼옹심이를 내는 강원도 토속 음식점이에요",
+  "basis": [
+   "강원도 토속 음식점이다",
+   "갓 부쳐낸 감자전"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868869",
+  "name": "감자적본부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소나무 밑 자리에서 감자적을 먹는 토속 음식점이에요",
+  "basis": [
+   "소나무 밑에 외부 좌석이 있어",
+   "고소한 감자 적"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2868904",
+  "name": "강릉궁짬뽕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강문해변 중국집이고 불향 오징어 짬뽕을 내요",
+  "basis": [
+   "강문해변에 있는 중국집이다",
+   "불향 오징어 짬뽕"
+  ],
+  "confidence": "high"
+ }
+]

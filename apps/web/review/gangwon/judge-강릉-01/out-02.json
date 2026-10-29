@@ -1,0 +1,649 @@
+[
+ {
+  "id": "nt-129585",
+  "name": "소돌아들바위공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "기암괴석을 보며 걷는 소돌해안일주 산책로가 있어요",
+  "basis": [
+   "소돌해안일주 산책로는 아들바위 주변으로 연결되어 있는 산책로",
+   "기암괴석들을 볼 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1625166",
+  "name": "주문진항",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": false,
+  "reason": "오징어와 양미리를 잡는 어항에서 갓 내린 횟감을 먹어요",
+  "basis": [
+   "배에서 갓 내려놓은 횟감이",
+   "오징어, 양미리, 명태, 청어, 멸치 등이 많이 잡힌다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-1870612",
+  "name": "임해자연휴양림",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "바다와 괘방산이 함께 보이는 숲 속 휴양림이에요",
+  "basis": [
+   "푸른 바다와 산의 정취를 함께 느낄 수 있는 숲 속 휴양림",
+   "안보체험 등산로는 바우길 8구간으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1913089",
+  "name": "솔바람다리",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "남항진과 안목을 잇는 보행자 전용 다리예요",
+  "basis": [
+   "남항진과 안목을 잇는 인도교인 솔바람다리",
+   "보행자·자전거 전용 다리로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2414769",
+  "name": "강릉 솔향수목원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "칠성산 자락 금강소나무 숲에 테마 공간을 둔 수목원이에요",
+  "basis": [
+   "금강소나무 원시림이 보존된 칠성산 자락",
+   "23개의 다양한 테마 공간"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2414791",
+  "name": "강릉커피거리",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "커피숍이 모여 커피와 디저트를 맛보는 안목 카페거리예요",
+  "basis": [
+   "커피와 디저트를 맛볼 수 있으며",
+   "안목 카페거리는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2465063",
+  "name": "강릉 녹색도시체험센터",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "태양열과 지열로 지은 센터에서 친환경 에너지 체험을 해요",
+  "basis": [
+   "태양열, 지열 등 순수 청정 자연에너지만을 사용하여 건축되었다",
+   "친환경 에너지와 관련하여 다양한 체험 프로그램"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2511677",
+  "name": "정감이마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "곶감 만들기와 감물 들이기 같은 체험을 하는 마을이에요",
+  "basis": [
+   "감따기, 감말랭이 만들기, 곶감 만들기가 있다",
+   "감물 들이기 체험"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2554069",
+  "name": "국립대관령치유의숲",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "소나무 숲에 숲길 일곱 개와 무장애 데크로드가 있어요",
+  "basis": [
+   "7개의 숲길과 무장애 데크로드가 조성되어 있어",
+   "대관령의 울창한 소나무숲에"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2588752",
+  "name": "강릉 월화거리",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2605187",
+  "name": "강릉 대도호부 관아",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "관아 터에 국보 객사문이 남아 있어요",
+  "basis": [
+   "지금은 객사문(국보)만 남아 있다",
+   "건물터이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2605193",
+  "name": "정동진역",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "바다가 가장 가까운 역으로 해돋이 보러 들르는 곳이에요",
+  "basis": [
+   "전국에서 바다가 가장 가까운 역",
+   "정동진 해돋이를 보기 위해 많은 사람이 찾아들었고"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2605196",
+  "name": "허난설헌 생가터",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "솟을대문 안에 사랑채와 안채가 있는 사대부가 한옥이에요",
+  "basis": [
+   "2001년에 복원된 허난설헌 생가터",
+   "솟을대문과 야트막한 담장 안에는 대청, 사랑채, 안채"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2605207",
+  "name": "허난설헌 솔숲",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "생가터 옆 소나무 군락에 솔바람이 부는 숲이에요",
+  "basis": [
+   "허난설헌 생가터 주위에 있는 울창한 소나무 군락",
+   "솔바람이 불어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2628967",
+  "name": "버드나무 브루어리",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "쌀과 국화, 솔잎으로 강릉 맥주를 만드는 양조장이에요",
+  "basis": [
+   "쌀, 국화, 솔잎, 오죽 등의 재료를 이용하여",
+   "막걸리양조장이었던 곳이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2628994",
+  "name": "강릉 명주동 거리",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "옛 학교와 방앗간을 문화 공간과 카페로 바꾼 동네 거리예요",
+  "basis": [
+   "옛 명주초등학교 건물을 문화 예술 공간으로 꾸민",
+   "옛 방앗간과 100년 넘은 적산가옥은 멋스러운 카페로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2638566",
+  "name": "주문진읍 BTS 앨범사진 촬영지 (버스정류장)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "BTS 앨범 사진 속 바닷가 버스 정류장을 재현한 포토존이에요",
+  "basis": [
+   "관광객들을 위한 포토존으로 재현해 놓았다",
+   "BTS 앨범재킷 촬영장소"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2641014",
+  "name": "뒷뜨루관광농원",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "동물 먹이 체험과 온실정원, 빛의 동굴이 있는 농원이에요",
+  "basis": [
+   "여러 동물의 먹이를 받아 먹이 체험을 할 수 있다",
+   "빛의 동굴은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-264370",
+  "name": "초당순두부마을",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "순두부와 두부전골, 짬뽕순두부를 내는 마을이에요",
+  "basis": [
+   "두부전골, 모두부, 짬뽕순두부 등",
+   "초당순두부는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2687981",
+  "name": "경포 아쿠아리움",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "경포호 대형어류와 수달을 보는 아쿠아리움이에요",
+  "basis": [
+   "경포호에 서식하는 대형어류",
+   "아쿠아리움의 마스코트이자 자랑인 수달"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702581",
+  "name": "강릉 오금집",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "강릉 중심부에 하나뿐인 조선 후기 초가집이에요",
+  "basis": [
+   "강릉시 중심부에 위치하고 있는 유일한 초가집"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702655",
+  "name": "기린사우나",
+  "keep": true,
+  "mood": "rest",
+  "indoor": true,
+  "reason": "발견한 온천물로 온천욕을 하는 작은 사우나예요",
+  "basis": [
+   "불편함 없이 온천욕을 즐길 수 있다",
+   "2006년 온천을 발견하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2706354",
+  "name": "강릉 안목해맞이공원",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "안목해변과 이어진 공원에 바다를 보는 벤치가 있어요",
+  "basis": [
+   "바다를 보며 휴식을 취할 수 있도록 벤치도 조성되어 있다",
+   "안목해변과 연결된 공원이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2713848",
+  "name": "수상한마법학교",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "마술 체험과 공연, 교육을 하는 상설 마법학교예요",
+  "basis": [
+   "체험과 공연 그리고 교육을 경험할 수 있는",
+   "상설 마법학교이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2714439",
+  "name": "안반데기",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "해발 1,100m 고랭지에 배추밭 경관이 펼쳐진 곳이에요",
+  "basis": [
+   "해발 1,100m 고산지대",
+   "고랭지 배추밭으로 탈바꿈시켰다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2714720",
+  "name": "석병산",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "세 개의 암봉이 솟은 산으로 야생화와 진달래가 피어요",
+  "basis": [
+   "정상은 그리 크지 않은 세 개의 암봉",
+   "야생화와 진달래를 감상할 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714722",
+  "name": "헌화로",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "옥계 낙풍에서 정동진역 앞까지 이어지는 도로예요",
+  "basis": [
+   "낙풍 사거리에서 강동면 정동진리 정동진역 앞 삼거리에 이르는 도로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2717933",
+  "name": "경포가시연습지",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "호수를 낀 산책로에서 연꽃과 가시연을 봐요",
+  "basis": [
+   "경포호수를 낀 한적한 산책로",
+   "‘연꽃’과 신비의 꽃 ‘가시연’을 볼 수 있는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2721544",
+  "name": "강문솟대다리",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "강문해변과 경포해변을 가르는 솟대 다리예요",
+  "basis": [
+   "강문솟대다리를 기준으로 강문해변과 경포해변이 나누어진다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2721547",
+  "name": "호린파크(경포대허브농장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "핑크뮬리와 바다가 보이는 허브정원과 갤러리카페예요",
+  "basis": [
+   "언덕에 핑크뮬리와 바다가 함께 보이는 허브정원과 갤러리카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2727741",
+  "name": "안인항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "숭어가 올라와 낚시꾼이 찾는 어항이에요",
+  "basis": [
+   "숭어가 많이 올라와 지역 낚시 애호가들이 많이 찾으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2731193",
+  "name": "강릉항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "남대천 하류의 백사장 항구로 낚시를 해요",
+  "basis": [
+   "남대천 하류에 있는 항구로 백사장인 것이 특징이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2753136",
+  "name": "노암터널",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "기차가 다니던 터널로 강릉 바우길에 속해요",
+  "basis": [
+   "예전에는 실제로 기차가 드나들던 길목"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2764847",
+  "name": "금진항(강릉)",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": false,
+  "reason": "가자미회 무침과 대게 칼국수로 알려진 항구예요",
+  "basis": [
+   "고소한 가자미회 무침",
+   "얼큰한 대게 칼국수가 특히 유명하다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2772889",
+  "name": "부연약수",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "트레킹을 하고 탄산약수를 맛보는 계곡이에요",
+  "basis": [
+   "벌들이 발견한 탄산약수",
+   "트레킹을 즐긴 후 시원한 부연약수를 맛볼 수 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2773007",
+  "name": "심곡항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "산과 바다 사이 오지 마을의 항구예요",
+  "basis": [
+   "양쪽으로 산맥이 뻗은 가운데에 놓인 오지마을",
+   "산과 바다가 어우러져 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2773046",
+  "name": "사천진항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "사천천이 바다와 만나는 곳에 요트를 즐기는 항구예요",
+  "basis": [
+   "사천천과 바다가 만나는 합류 지점에 있다",
+   "요트를 즐기기에 좋은 항구이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2773086",
+  "name": "허균·허난설헌 기념공원",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "생가터와 기념관, 전통차 체험관이 있는 기념공원이에요",
+  "basis": [
+   "허균·허난설헌 기념관, 전통차 체험관으로 조성되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2773857",
+  "name": "경포플라워가든",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "튤립과 장미, 수국이 피는 정원에 맨발로 걷는 구간이 있어요",
+  "basis": [
+   "봄에는 화려한 튤립과 장미가 만개하고",
+   "맨발로 걸을 수 있는 구간이 마련되어 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2774687",
+  "name": "쌍둥이동물농장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "호랑이와 사자를 보고 먹이를 주는 작은 동물원이에요",
+  "basis": [
+   "호랑이, 사자 등 63종의 동물들을 볼 수 있는 곳",
+   "직접 먹이를 주거나, 만져보는 동물체험"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774696",
+  "name": "대관령아기동물농장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "알파카와 토끼, 타조에게 먹이를 주는 체험 농장이에요",
+  "basis": [
+   "알파카, 토끼, 오리, 타조, 양, 말, 소, 기니피그",
+   "직접 먹이 주는 체험을 통해"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2774699",
+  "name": "정동진조각공원",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "조각 작품과 장승이 서 있고 동해가 내려다보이는 공원이에요",
+  "basis": [
+   "동해는 물론 해수욕장과 기차역과 해안도로를 한눈에 조망할 수",
+   "230기의 장승이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774703",
+  "name": "경포생태저류지",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "오죽헌과 경포호 사이 산책로에 유채꽃과 코스모스가 피어요",
+  "basis": [
+   "오죽헌과 경포호 사이에 자리하고 있으며",
+   "봄에는 유채꽃과 벚꽃, 가을에는 코스모스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774721",
+  "name": "명주예술마당",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2775494",
+  "name": "소돌항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "아들바위공원 안에 어촌계 식당과 활어판매장이 있는 항구예요",
+  "basis": [
+   "소돌항 어촌계원들이 운영하는 식당과 활어판매장이 있다",
+   "아들바위, 서낭당, 소돌항 등의 아들바위공원"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2775497",
+  "name": "순포해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "해변을 따라 송림이 늘어선 한적한 해변이에요",
+  "basis": [
+   "해변을 따라 늘어선 송림과 한적한 바다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775500",
+  "name": "소돌해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "기암으로 덮인 해변에 소를 닮은 바위가 있어요",
+  "basis": [
+   "앞바다에 소를 닮은 바위가 있다",
+   "수심이 얕아 조개도 잡을 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2775508",
+  "name": "순포습지",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "조류관찰대가 있는 습지공원에 겨울이면 고니가 와요",
+  "basis": [
+   "조류관찰대 등 편의시설을 갖춘 습지공원",
+   "고니가 늦은 가을과 겨울에 찾아온다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2776846",
+  "name": "강남축구공원",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2781963",
+  "name": "해피아워크루즈",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "주문진항에서 첫 운항을 시작한 3층 유람선으로 선상카페가 있어요",
+  "basis": [
+   "2015년 주문진항에서 첫 운항을 시작한 대형 유람선",
+   "선상카페가 있으며"
+  ],
+  "confidence": "low"
+ }
+]

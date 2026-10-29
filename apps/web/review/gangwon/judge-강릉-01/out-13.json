@@ -1,0 +1,506 @@
+[
+ {
+  "id": "nt-3536412",
+  "name": "산촌식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536414",
+  "name": "새마을영양탕",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536423",
+  "name": "태흥루1호점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536440",
+  "name": "다이닝조개",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강문해변 앞에서 치즈 조개구이와 가리비구이를 내는 집이에요",
+  "basis": [
+   "강문해변 바로 앞",
+   "치즈 조개구이, 가리비구이, 해물삼합, 조개전골"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536448",
+  "name": "곱창전골명가도계물닭갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "물닭갈비와 곱창전골을 내는 식당이에요",
+  "basis": [
+   "물닭갈비와 곱창전골을 전문으로 하는 식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536449",
+  "name": "최가네한방능이백숙",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536457",
+  "name": "유광회관 1호점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "수제 돼지갈비와 솔향냉면을 내는 식당이에요",
+  "basis": [
+   "30년 전통의 수제돼지갈비와 솔잎을 이용한 솔향냉면"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536478",
+  "name": "감천골",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생선구이와 쌈채소 정식을 내는 식당이에요",
+  "basis": [
+   "갓구운 생선구이&쌈채소 정식이 주메뉴입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536481",
+  "name": "대게왕국",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진항 앞에서 대게와 게딱지 볶음밥을 내는 집이에요",
+  "basis": [
+   "주문진항 바로 앞에 자리잡고 있고",
+   "게딱지 볶음밥까지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536482",
+  "name": "이디야커피 강릉회산점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536483",
+  "name": "순남시래기",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "들깨시래기국과 시래기정식을 내는 식당이에요",
+  "basis": [
+   "고소한 들깨시래기국,얼큰시래기국, 시래기꼬마정식"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536518",
+  "name": "게락 회산점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536521",
+  "name": "명경막국수",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536522",
+  "name": "베이커리가루 입암점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536523",
+  "name": "태양부양꼬치 강릉점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536552",
+  "name": "동해횟집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536553",
+  "name": "토프레소 내곡점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536554",
+  "name": "부산횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포에서 3대째 활어회와 물회, 곰치국을 내는 횟집이에요",
+  "basis": [
+   "오픈한지 50년 ~3대째 연중무휴",
+   "경포에서 가장 맛좋코 전망 좋은 횟집"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536555",
+  "name": "강릉한우백화점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "한우 구이집이고 정육 매장도 함께 해요",
+  "basis": [
+   "최상급 한우를 즐길 수 있는 곳이다",
+   "1층 할인매장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536558",
+  "name": "고봉민김밥인 강릉역점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536570",
+  "name": "강릉 한우타운",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "방송에 소개된 한우 전문 식당이에요",
+  "basis": [
+   "2017.11.01 생생정보TV 에 방영되었습니다",
+   "한우 전문 매장입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536590",
+  "name": "난설헌메밀촌",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "들기름 막국수가 대표인 전통 막국수집이에요",
+  "basis": [
+   "대표 메뉴인 들기름 막국수는",
+   "전통 막국수 전문점입니다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536756",
+  "name": "달리는커피 포남점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536757",
+  "name": "대관령원조감자탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "감자탕과 뼈해장국으로 알려진 식당이에요",
+  "basis": [
+   "감자탕과 뼈해장국으로 유명한 맛집"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536758",
+  "name": "동해바다샾1971",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "동해 해산물과 직접 채취한 산나물을 쓰는 집이에요",
+  "basis": [
+   "동해바다의 싱싱한 해산물",
+   "산에서 직접 채취한 귀한 산나물과 채소들을 사용하는 집"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536759",
+  "name": "빽다방 포남점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536761",
+  "name": "삼겹식당 강릉포남점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536774",
+  "name": "솔향식빵공방",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536783",
+  "name": "십원집 청송점",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3536808",
+  "name": "아르카디아커피",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536818",
+  "name": "암사직화쪽갈비 강릉점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536819",
+  "name": "찜대감",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "가오리찜이 주메뉴인 경포 식당이에요",
+  "basis": [
+   "경포권, 주메뉴는 가오리찜"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536826",
+  "name": "빵을쇼핑하다 치아바타",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "치아바타가 주메뉴인 주문진 베이커리 카페예요",
+  "basis": [
+   "베이커리 카페, 주문진권, 주메뉴는 치아바타(빵종류)"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536830",
+  "name": "용장군",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536831",
+  "name": "다경횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "주문진 수산시장 안에서 모둠회와 매운탕을 내는 횟집이에요",
+  "basis": [
+   "강릉 주문진 수산시장에 위치한 해산물 전문점으로",
+   "신선한 모둠회와 매운탕이 인기 메뉴이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536848",
+  "name": "유명참숯화로구이",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536864",
+  "name": "육대장 강릉점",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536873",
+  "name": "컴포즈커피 강릉포남점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536882",
+  "name": "보헤미안커피 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "보헤미안 하우스 브랜드가 주메뉴인 주문진 카페예요",
+  "basis": [
+   "주문진권, 주메뉴는 보헤미안 하우스 브랜드"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3536888",
+  "name": "피자에땅 포남점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536895",
+  "name": "노브랜드버거 강릉송정DI점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536899",
+  "name": "고향마을숯불돼지갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "고기를 섞지 않은 돼지갈비를 내는 숯불 갈비집이에요",
+  "basis": [
+   "어떤 고기도 섞지 않고 있는 그대로 판매하고 있습니다",
+   "20년째 운영한 노하우"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536901",
+  "name": "원조집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536902",
+  "name": "미성식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536903",
+  "name": "주문진식당",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536906",
+  "name": "함흥횟집",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536907",
+  "name": "산호갈비",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536915",
+  "name": "스타벅스 강릉송정DT점",
+  "keep": false,
+  "reject": "CHAIN_GENERIC",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3536938",
+  "name": "뚱보냉면",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "평양냉면으로 알려진 냉면집이에요",
+  "basis": [
+   "평양냉면의 달인 맛집"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3536945",
+  "name": "경기해변횟집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "경포대에서 회와 대게, 조개를 내는 횟집이에요",
+  "basis": [
+   "경포대 대표 맛집 신선도 최고의 회와 대게 조개 맛집입니다"
+  ],
+  "confidence": "high"
+ }
+]

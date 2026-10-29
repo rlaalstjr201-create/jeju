@@ -1,0 +1,668 @@
+[
+ {
+  "id": "nt-1086405",
+  "name": "강릉 모래내 한과마을(갈골한과)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "전통 방식으로 한과를 만드는 마을이고 한과 체험 전시관이 있어요",
+  "basis": [
+   "전통 방식 그대로의 한과를 생산",
+   "강릉 한과 체험 전시관"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125417",
+  "name": "국립대관령자연휴양림",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "아름드리 소나무 숲에서 산림욕을 하는 휴양림이에요",
+  "basis": [
+   "아름드리 소나무 숲",
+   "가족 단위 휴식 및 산림욕을 즐기기에"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125588",
+  "name": "경포도립공원",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "경포호와 해변, 송림을 품은 도립공원이에요",
+  "basis": [
+   "경포대, 경포호, 경포해수욕장을 중심으로",
+   "경호정 일원송림"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125617",
+  "name": "제왕산",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "참나무 숲 사이로 오르는 높이 840m의 산이에요",
+  "basis": [
+   "높이 840m의 산",
+   "참나무 숲과 낙엽송이 우거진"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125619",
+  "name": "노인봉",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "계곡을 끼고 소금강으로 내려오는 등산 코스가 있는 봉우리예요",
+  "basis": [
+   "전 구간이 계곡을 끼고 있어",
+   "청학동 소금강 등산로의 분기점"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125636",
+  "name": "단경골 휴양지",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "기암괴석 사이로 맑은 물이 흐르는 계곡 피서지예요",
+  "basis": [
+   "맑은 물과 기암괴석",
+   "피서지로서 적격이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125669",
+  "name": "구룡폭포(소금강)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "계곡 구간에 폭포 아홉 개가 이어져 있어요",
+  "basis": [
+   "9개의 크고 작은 폭포가 연이어져 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125691",
+  "name": "남항진해변(남항진해수욕장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "백사장과 소나무 숲이 있고 방파제 너머로 커피 거리가 있어요",
+  "basis": [
+   "2만 4천㎡의 백사장이 있는 간이해수욕장",
+   "커피 거리로 유명한 강릉항이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125694",
+  "name": "송정해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "해변 도로 양옆 소나무 사이 벤치에서 바다를 바라봐요",
+  "basis": [
+   "쉴 수 있는 벤치와 간이매점이 있어",
+   "소나무가 해변 도로 양 옆을 가득 메워"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125695",
+  "name": "등명해변(등명해수욕장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "솔숲 옆 백사장이 있고 근처에 등명락가사 오층 석탑이 있어요",
+  "basis": [
+   "넓은 주차장과 소나무 숲이 우거져",
+   "등명락가사 오층 석탑"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125696",
+  "name": "사천해변(사천해수욕장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "해송숲과 백사장이 이어지는 조용한 해변이에요",
+  "basis": [
+   "해송숲이 넓게 우거져 있고",
+   "깨끗한 백사장과 얕은 수심"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125697",
+  "name": "안인해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "바위 해변에서 조개를 잡고 낚시도 하는 곳이에요",
+  "basis": [
+   "백사장 대신 바위가 많아",
+   "조개를 잡거나 놀래기, 가자미, 감성돔, 우럭 등을 낚을"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125698",
+  "name": "연곡해변(연곡해수욕장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "넓은 백사장과 솔밭이 있고 주변에 먹거리촌이 있어요",
+  "basis": [
+   "넓은 백사장을 간직하고 있다",
+   "주변에는 먹거리촌들이 성시를 이룬다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125699",
+  "name": "주문진해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "백사장 뒤 솔밭에 체육공원과 야영장이 있어요",
+  "basis": [
+   "솔밭 안에 있는 체육공원",
+   "하루 440곳의 텐트를 설치할 수 있는 야영장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125748",
+  "name": "남대천(강릉)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "시내를 가로지르는 하천으로 둔치 주변에 단오공원이 있어요",
+  "basis": [
+   "강릉시 도심 한가운데를 가로지르며",
+   "남대천 주변으로 단오공원"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125766",
+  "name": "등명낙가사(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "괘방산 중턱 사찰로 등명사지오층석탑이 있어요",
+  "basis": [
+   "괘방산 중턱에 위치하고 있는 등명낙가사",
+   "등명사지오층석탑"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125768",
+  "name": "보현사(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "대관령 바로 아래에 대웅전과 금강루가 있는 산사예요",
+  "basis": [
+   "대관령과 선자령 바로 아래에 자리하여",
+   "대웅전, 영산전, 지장전, 삼성각, 금강루"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125769",
+  "name": "강릉 굴산사지",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "당간지주와 승탑, 석불좌상이 남은 옛 절터예요",
+  "basis": [
+   "굴산사의 옛터이다",
+   "당간지주와 승탑, 석불좌상 등이 남아 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125770",
+  "name": "금강사(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "소금강 무릉계곡 안의 절이고 맞은편에 식당암이 있어요",
+  "basis": [
+   "소금강 무릉계곡에 정각 스님이 1964년 창건한 절",
+   "전설이 깃든 식당암이 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125787",
+  "name": "강릉향교",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "보물로 지정된 대성전과 명륜당이 남은 향교예요",
+  "basis": [
+   "대성전과 명륜당 등은 임진왜란과 한국전쟁 때도 불타지 않아",
+   "보물로 지정되었다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125788",
+  "name": "강릉 임영관 삼문",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "조선 초기 것으로 추정되는 맞배지붕 삼문이에요",
+  "basis": [
+   "단층의 맞배지붕으로",
+   "조선 초기의 것으로 추정된다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125790",
+  "name": "강릉 경포대",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "경포 호수 북쪽 언덕에 선 관동팔경의 누각이에요",
+  "basis": [
+   "경포 호수 북쪽 언덕에 있는 누각이다",
+   "관동팔경의 하나이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125791",
+  "name": "송담서원(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "율곡 이이를 모신 서원으로 송담사와 세심재가 있어요",
+  "basis": [
+   "율곡 이이의 학문과 덕행을 추모하고 제향하기 위해 세운 서원이다",
+   "이이의 위패를 모신 송담사와 세심재"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125800",
+  "name": "강릉 선교장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "사대부 가옥이 남아 있고 문밖 연못에 활래정이 있어요",
+  "basis": [
+   "품위 있는 사대부 가옥이다",
+   "연못 위에 세워진 활래정이라는 정자가 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-126895",
+  "name": "부연동마을",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "계곡과 약수터, 야영장이 있는 오지 마을이에요",
+  "basis": [
+   "부연약수터, 부연동 마을관리 휴양지 야영장",
+   "오지마을로도 유명하다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-126897",
+  "name": "강릉 대공산성",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "대공산 봉우리에 성벽과 성문터가 남은 산성이에요",
+  "basis": [
+   "대공산 봉우리에 위치한 산성",
+   "성문터가 남아 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-126898",
+  "name": "통일공원(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "군사장비를 한곳에서 볼 수 있는 전시공원이에요",
+  "basis": [
+   "군사장비를 한곳에서 볼 수 있는 대규모 전시공원인 통일공원"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127722",
+  "name": "안목해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "동해 바다 옆에 유명한 커피거리가 있는 해변이에요",
+  "basis": [
+   "푸른 동해 바다와 향긋한 커피 향이 어우러진",
+   "유명한 커피거리는 물론"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127922",
+  "name": "오대산 소금강계곡",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "명경대와 구룡폭포, 만물상이 이어지는 계곡이에요",
+  "basis": [
+   "명경대, 식당암, 구룡폭포, 군자폭포, 만물상",
+   "오대산 국립공원의 동쪽 지구"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127951",
+  "name": "하슬라아트월드",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "조각공원 안에 현대 미술관과 피노키오 미술관이 있어요",
+  "basis": [
+   "3만 3천여 평의 조각공원",
+   "‘피노키오 & 마리오네트 미술관’이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127975",
+  "name": "경포호(철새도래지)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "소나무 숲과 벚나무가 둘러싼 호수로 겨울엔 철새가 와요",
+  "basis": [
+   "오래 된 소나무 숲과 벚나무가 유명하며",
+   "겨울 철새도래지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128176",
+  "name": "옥계해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "넓은 백사장과 오래된 송림이 있는 해변이에요",
+  "basis": [
+   "깨끗하고 넓은 백사장과 수령 30~40년생 이상 된 송림지역을 갖춘 해변"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128293",
+  "name": "대기리산촌마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "산촌 체험장이 있고 봄에 나무 심기와 야생화 탐사를 해요",
+  "basis": [
+   "푸른 고원 산촌 체험장이",
+   "봄철 나무 심기와 야생화 탐사도"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128359",
+  "name": "강릉 복사꽃마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "전통놀이와 과수원길 걷기 같은 농촌 체험을 해요",
+  "basis": [
+   "전통놀이 체험, 과수원길 걷기 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128360",
+  "name": "강릉 한울타리마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "도예와 공예 체험을 하는 공방이 있는 마을이에요",
+  "basis": [
+   "도예체험 및 각종 공예체험을 할 수 있는 한울타리 공방"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128721",
+  "name": "모래시계공원",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "바다 쪽 벤치 곁에 세계 최대 크기의 모래시계가 있어요",
+  "basis": [
+   "바다 쪽으로는 벤치가 자리 잡고 있다",
+   "크기와 무게가 세계 최대이며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128722",
+  "name": "칠성산",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "법왕사에서 오르는 산으로 정상에서 강릉 바다가 보여요",
+  "basis": [
+   "법왕사에서 출발하는 것이 일반적인 등산 코스",
+   "강릉바다와 금광평, 강릉 시내가 한눈에 들어오며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128724",
+  "name": "오봉서원",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "집성사와 칠봉사, 강당이 남은 서원이에요",
+  "basis": [
+   "집성사·칠봉사·문·오봉강당·묘정비각·2개의 묘정비 등이 남아 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128726",
+  "name": "용연사(강릉)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "산속에 대웅전과 5층 석탑이 있는 사찰이에요",
+  "basis": [
+   "산속에 용연사가 위치해 있다",
+   "5층 석탑이 1기 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128727",
+  "name": "사근진해변(사근진해수욕장)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "경포해변과 붙은 백사장에 소나무 숲이 있는 해변이에요",
+  "basis": [
+   "경포해변과 붙어 있다",
+   "넓은 백사장과 소나무 숲"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128728",
+  "name": "영진해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "가자미와 조개를 잡는 어촌 마을 옆 해변이에요",
+  "basis": [
+   "가자미와 조개를 많이 잡는다",
+   "바다 냄새가 물씬 풍기는 조그마한 어촌 마을이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128757",
+  "name": "정동진해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "정동진역 앞과 모래시계공원 앞 바다가 있는 해변이에요",
+  "basis": [
+   "정동진역 앞의 바다와 모래시계 공원 앞의 바다",
+   "동해의 푸른 창파에서 우람하게 솟아오르는 해를 맞는 관광객들이 많다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128758",
+  "name": "경포해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "하얀 모래밭과 송림이 이어지는 큰 해변이에요",
+  "basis": [
+   "길이 1.8㎞, 면적 1.44㎢의 하얀 모래밭",
+   "울창한 송림병풍"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128759",
+  "name": "강릉 수리골 고택",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "해운정과 담 하나 사이에 둔 ㅁ자형 한옥이에요",
+  "basis": [
+   "해운정과 담 하나를 사이에 두고 있으며",
+   "ㅁ자형 구조를 이루고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128998",
+  "name": "썬크루즈 테마공원",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "절벽 위에 조각 공원과 장승 공원, 범선 카페가 있어요",
+  "basis": [
+   "조각 30여 점이 자리한 조각 공원",
+   "현재 커피숍으로 운영하는 범선 카페가 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129179",
+  "name": "주문진 등대",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "강원도에서 처음 세운 벽돌 등대예요",
+  "basis": [
+   "강원특별자치도에서 첫 번째로 세워졌다",
+   "벽돌식구조의 등대"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129268",
+  "name": "영진항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "연곡천이 바다와 닿는 곳의 어항으로 가자미와 조개를 잡아요",
+  "basis": [
+   "연곡천 하류 북쪽에 있는 곳",
+   "가자미와 조개를 많이 잡는다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-129337",
+  "name": "강릉 해살이마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "개두릅나무 마을에서 단오체험을 해요",
+  "basis": [
+   "약 10만 주 개두릅나무(엄나무)를 보유하여",
+   "단오체험을 통해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129339",
+  "name": "마암터마을",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "오대산 자락에 수청계곡이 흐르는 산촌 마을이에요",
+  "basis": [
+   "국립공원 오대산 자락에 위치하여 소금강, 수청계곡이 있고"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-129584",
+  "name": "강릉 해운정",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "경포호 서쪽 기슭의 정자로 보물로 지정됐어요",
+  "basis": [
+   "경포호 서쪽 기슭에 자리한 별당 형식의 정자",
+   "1963년 보물로 지정되었다"
+  ],
+  "confidence": "high"
+ }
+]
