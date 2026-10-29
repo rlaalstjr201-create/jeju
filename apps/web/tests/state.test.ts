@@ -1,8 +1,11 @@
 // Pure reducer: last intent wins, restore vs next-3, basis idempotency — no DOM.
-import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { describe, expect, it, vi } from 'vitest';
 import { AREAS } from '../src/areas';
 import { pickCards } from '../src/pick';
-import { basisIsCurrent, cardsValid, hasSaved, initialState, isSaved, moodIntent, reduce, savedCount, savedDays, sessionOf, staticOrigin, whenDay, type Action, type State } from '../src/state';
+import { NATION, loadNation } from '../src/release';
+import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, isSaved, knownOrigin, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, staticOrigin, whenDay, type Action, type State } from '../src/state';
 import type { Point } from '../src/pick';
 import type { Origin, SavedEntry } from '../src/types';
 import { ORIGINS, realSpots } from './fixtures';
@@ -370,5 +373,63 @@ describe('비 와요(실내만) (ADR-0065) — 토글은 범위 변경과 같은
     const { indoor: _drop, ...old } = sessionOf(pick(s0(), 'food', 1))!;
     const oldOn = run(s0({ indoor: true }), { type: 'restore', rec: old }, { type: 'request', req: 1, intent: 'show', step: 'loading' }, { type: 'resolved', req: 1, origin: gps(), spots: realSpots });
     expect(oldOn.cards?.how).toBe('new');
+  });
+});
+
+// 자동 지역 (plans/nationwide-app.md 3, U8): its moods, its 시군구, its 비 소식 area and its weak start.
+describe('자동 지역 상태', () => {
+  const toNation = (sgg: '51150' | '51210' = '51150'): Action => ({ type: 'dest', dest: 'nation', basis: 'gps', region: null, stay: null, sgg });
+
+  it('switching there: 쉬기·유명한 데 become 아무거나; a mood it has stays; the 시군구 is kept', () => {
+    expect(run(s0({ mood: 'rest' }), toNation())).toMatchObject({ dest: 'nation', mood: 'any', sgg: '51150' });
+    expect(run(s0({ mood: 'famous' }), toNation()).mood).toBe('any');
+    expect(run(s0({ mood: 'walk' }), toNation()).mood).toBe('walk');
+    expect(run(s0({ mood: null }), toNation()).mood).toBeNull();
+    // back to a 검수한 곳: every mood again, the 시군구 remembered
+    const back = run(s0({ mood: 'food' }), toNation(), { type: 'dest', dest: 'jeju', basis: 'gps', region: null, stay: null });
+    expect(back).toMatchObject({ dest: 'jeju', mood: 'food', sgg: '51150' });
+    expect(run(back, { type: 'mood', button: 'rest' }).mood).toBe('rest');
+  });
+
+  it('a mood it does not offer, tapped or restored, is 아무거나', () => {
+    const s = run(s0(), toNation());
+    expect(run(s, { type: 'mood', button: 'rest' }).mood).toBe('any');
+    expect(run(s, { type: 'mood', button: 'famous' }).mood).toBe('any');
+    expect(run(s, { type: 'mood', button: 'food' }).mood).toBe('food');
+    const rec = { v: 1 as const, mood: 'rest' as const, sub: 'meal' as const, origin: null, shown: {}, histories: {} };
+    expect(run(s, { type: 'restore', rec }).mood).toBe('any');
+    expect(run(s0(), { type: 'restore', rec }).mood).toBe('rest');
+  });
+
+  it('another 시군구: what was picked and shown so far goes', () => {
+    const a = pick(run(s0(), toNation()), 'walk', 1);
+    expect(Object.keys(a.histories)).not.toEqual([]);
+    const b = run(a, toNation('51210'));
+    expect(b).toMatchObject({ sgg: '51210', histories: {}, shown: {}, cards: null, spots: null, origin: null });
+  });
+
+  it('비 소식 is asked for its 시군구; a 검수한 곳 asks for its area as before', () => {
+    const fixed = run(s0(), toNation(), { type: 'homeFix', point: { lat: 37.7643, lng: 128.8996 } });
+    expect(rainArea(fixed)).toBe('51150');
+    expect(rainArea({ ...fixed, when: TOMORROW })).toBeNull();
+    expect(rainArea(run(s0(), { type: 'homeFix', point: ORIGINS.제주시 }))).toBe('gujeju');
+  });
+
+  // the 시군구's centre comes from the index (the part, switch on)
+  it.runIf(NATION)('내 위치 not read yet: the last 시군구\'s centre is a weak start — the home uses it, a position read still lands', async () => {
+    vi.stubGlobal('fetch', (url: string) => {
+      const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
+      return Promise.resolve(m ? new Response(readFileSync(resolve(__dirname, `../data/nation/${m[1]}.json`), 'utf8')) : new Response('', { status: 404 }));
+    });
+    expect(await loadNation()).toBe(true);
+    vi.unstubAllGlobals();
+    const s = run(s0(), toNation());
+    expect(knownOrigin(s)).toBeNull();
+    expect(homeOrigin(s)).toMatchObject({ key: 'near:51150', isPoint: false, from: '강릉시에서' });
+    expect(rainArea(s)).toBe('51150');
+    const p = { lat: 37.7643, lng: 128.8996 };
+    expect(homeOrigin(run(s, { type: 'homeFix', point: p }))).toMatchObject({ key: 'gps', point: p });
+    // not on a 검수한 곳, not on another basis
+    expect(homeOrigin(run(s, { type: 'dest', dest: 'jeju', basis: 'gps', region: null, stay: null }))).toBeNull();
   });
 });

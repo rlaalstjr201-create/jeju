@@ -1,9 +1,9 @@
 // App state as data + a pure reducer. No DOM, no storage, no timers — the controller (app.ts) runs the
 // effects and feeds their results back in as actions tagged with a request id; results for an old id are
 // dropped here, so the last user intent always wins (S36–S38).
-import { areaByName, nearestArea, type RegionName } from './areas';
+import { areaByName, nearestArea, type RegionName, type SggCode } from './areas';
 import { type Day } from './dates';
-import type { Dest } from './dest';
+import { DEST, type Dest } from './dest';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
@@ -64,6 +64,9 @@ export interface State {
   dest: Dest;
   /** specs/busan.md 1.3: the destination a GPS read just switched to (the status line says so); gone with the next intent. */
   destNote: Dest | null;
+  /** 자동 지역 (plans/nationwide-app.md 1.2): the 시군구 whose places are in use while `dest` is 'nation' — the last one
+   * known otherwise (store `jeju.sgg`); null before any. */
+  sgg: SggCode | null;
   view: View;
   overlay: Overlay;
   /** where the saved list was opened from; null = unknown (restored after a reload). */
@@ -195,7 +198,7 @@ export type Action =
   | { type: 'feedbackSent' }
   /** another destination (ADR-0094): its basis, region and 숙소; what was picked from the other one's places goes.
    * `note`: a GPS read moved it (specs/busan.md 1.3). */
-  | { type: 'dest'; dest: Dest; basis: Basis; region: RegionName | null; stay: Stay | null; note?: boolean };
+  | { type: 'dest'; dest: Dest; basis: Basis; region: RegionName | null; stay: Stay | null; note?: boolean; sgg?: SggCode | null };
 
 export const GPS_KEY = 'gps';
 /** Where a trip is measured from, in words (ADR-0093: another language's table replaces them). */
@@ -204,6 +207,7 @@ export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoi
 
 export function initialState(init: {
   dest?: Dest;
+  sgg?: SggCode | null;
   basis: Basis;
   reach?: Reach;
   indoor?: boolean;
@@ -225,6 +229,7 @@ export function initialState(init: {
   return {
     dest: init.dest ?? 'jeju',
     destNote: null,
+    sgg: init.sgg ?? null,
     view: 'home',
     overlay: null,
     savedFrom: null,
@@ -294,19 +299,36 @@ export function staticOrigin(basis: Basis, region: RegionName | null, stay: Stay
   return null;
 }
 
-/** The basis the home speaks for: 지역·숙소 centre, else this session's GPS fix (never a region origin read as GPS,
- * and not a fix the label no longer stands for: after a failed ask it reads 지역 고르기). */
-export const homeOrigin = (s: State): Origin | null =>
+/** The basis the home knows: 지역·숙소 centre, else this session's GPS fix (never a region origin read as GPS, and not a
+ * fix the label no longer stands for: after a failed ask it reads 지역 고르기). */
+export const knownOrigin = (s: State): Origin | null =>
   staticOrigin(s.basis, s.region, s.stay) ?? (s.origin?.key === GPS_KEY && !(s.basis === 'gps' && s.lastFail) ? s.origin : null);
 
+/** The key of the 자동 지역's weak start (homeOrigin). */
+export const WEAK_KEY = 'near';
+/** The basis the home speaks for: knownOrigin, else — 자동 지역 on 내 위치 with no position read — the centre of the last
+ * 시군구 (plans/nationwide-app.md 3: its places all score 3, so 인기 says nothing; near it is the best guess). */
+export function homeOrigin(s: State): Origin | null {
+  const o = knownOrigin(s);
+  if (o || s.dest !== 'nation' || s.basis !== 'gps') return o;
+  const a = areaByName(s.sgg, OPEN_AREAS);
+  return a ? { key: `${WEAK_KEY}:${a.name}`, point: { lat: a.lat, lng: a.lng }, isPoint: false, from: FROM_TEXT.area(a.label) } : null;
+}
+
 /** 비 소식 (ADR-0076): the one area (slug) the forecast is asked for — the region, the area nearest the 숙소, or
- * nearest this session's GPS fix; none without a basis, or in date mode (the forecast is about the next 3 hours). */
+ * nearest this session's GPS fix (the 자동 지역: its 시군구); none without a basis, or in date mode (the forecast is about
+ * the next 3 hours). */
 export function rainArea(s: State): string | null {
   if (s.when !== 'now') return null;
   const o = homeOrigin(s);
+  if (!o) return null;
+  if (s.dest === 'nation') return s.sgg;
   // the area of the destination being viewed (plans/busan.md S6: functions/_lib/kma.ts takes Busan's slugs too)
-  return o ? nearestArea(o.point, openAreasOf(s.dest)).slug : null;
+  return nearestArea(o.point, openAreasOf(s.dest)).slug;
 }
+
+/** A mood the destination offers, else 아무거나 (the 자동 지역 has no 쉬기, no 유명한 데: ADR-0101 2). */
+const offered = (d: Dest, b: Button): Button => (b === 'any' || DEST[d].moods.includes(b) ? b : 'any');
 
 /** Same basis/place, and for GPS within ~1km (jitter keeps the rotation, plan OQ4). */
 export function sameOrigin(a: Origin | null, b: Origin | null): boolean {
@@ -487,7 +509,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 and islands by boat
   // (Amendment 1) go after the rest.
   const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
-  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night);
+  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any);
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;
@@ -539,7 +561,7 @@ function step(s: State, a: Action): State {
   switch (a.type) {
     case 'mood':
       // Set the mood first: whether the cards on hand still apply depends on it.
-      return enterView({ ...s, mood: a.button }, 'cards');
+      return enterView({ ...s, mood: offered(s.dest, a.button) }, 'cards');
     case 'sub':
       return a.sub === 'meal' || a.sub === 'cafe' ? { ...s, sub: a.sub } : { ...s, newSub: a.sub };
     case 'request':
@@ -660,7 +682,7 @@ function step(s: State, a: Action): State {
       if ((a.permission === 'granted' || a.permission === 'prompt') && s.lastFail === 'denied') return { ...s, lastFail: null };
       return s;
     case 'homeFix': {
-      if (s.basis !== 'gps' || homeOrigin(s)) return s;
+      if (s.basis !== 'gps' || knownOrigin(s)) return s;
       const fix = gpsOrigin(a.point);
       if (sameOrigin(s.origin, fix)) return { ...s, lastFail: null };
       // the rotation so far belongs to another point (as resolveCards would decide)
@@ -680,6 +702,9 @@ function step(s: State, a: Action): State {
         ...s,
         dest: a.dest,
         destNote: a.note ? a.dest : null,
+        // another 시군구 is another list: what was picked and shown goes with it (below)
+        sgg: a.sgg ?? s.sgg,
+        mood: s.mood && offered(a.dest, s.mood),
         basis: a.basis,
         region: a.region,
         stay: a.stay,
@@ -699,7 +724,7 @@ function step(s: State, a: Action): State {
     case 'restore':
       return {
         ...enterView(s, 'cards'),
-        mood: a.rec.mood,
+        mood: offered(s.dest, a.rec.mood),
         sub: a.rec.sub,
         newSub: a.rec.newSub ?? s.newSub,
         origin: a.rec.origin,

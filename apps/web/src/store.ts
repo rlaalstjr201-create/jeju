@@ -1,11 +1,12 @@
 // Device storage (ADR-0026: no login, everything stays on this device). Every read is validated and
 // repaired; every access is try/catch'd, and when storage is missing or throws the app keeps working from
 // memory for this visit (S27·S28·S29).
-import { LEGACY_REGION, areaByName, inJeju, nearestArea, type RegionName } from './areas';
+import { LEGACY_REGION, areaByName, inJeju, nearestArea, type RegionName, type SggCode } from './areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
-import { DESTS, type Curated, type Dest } from './dest';
-import { BUSAN, OPEN_AREAS, openAreasOf, releasedDestOf } from './release';
+import { isDest, type Dest } from './dest';
+import { SGG_CODE } from './nation';
+import { BUSAN, NATION, OPEN_AREAS, openAreasOf, releasedDestOf } from './release';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { parseSurvey, type SurveyRec } from './survey';
@@ -45,8 +46,11 @@ export const KEYS = {
   src: 'jeju.src',
   /** ADR-0087: 가 봤어요 — place ids left out of the picks on this device, oldest first. Not the data's `hide`. */
   visited: 'jeju.visited',
-  /** ADR-0097: the destination chosen on this device, 'jeju' | 'busan' (written by the switched-on build only). */
+  /** ADR-0097: the destination chosen on this device, 'jeju' | 'busan' | 'nation' (written by the switched-on build only;
+   * 'nation' read by the 자동 지역 build only, Amendment 1). */
   dest: 'jeju.dest',
+  /** ADR-0097 Amendment 1: the last 시군구 of the 자동 지역 (its code), written there only. */
+  sgg: 'jeju.sgg',
 } as const;
 
 /** ADR-0097: the keys that belong to one destination — `jeju.basis`, `jeju.region`, `jeju.stay` stay Jeju's; Busan's
@@ -296,6 +300,9 @@ export interface Store {
   /** the destination kept on this device (`jeju.dest`), or null. */
   dest(): Dest | null;
   setDest(d: Dest): void;
+  /** the 자동 지역's last 시군구 (`jeju.sgg`), or null. */
+  sgg(): SggCode | null;
+  setSgg(c: SggCode): void;
   setBasis(b: Basis): void;
   setReach(r: Reach): void;
   /** for this session only (sessionStorage); off removes it. */
@@ -445,9 +452,15 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     place,
     dest() {
       const v = get(local, KEYS.dest);
-      return DESTS.includes(v as Curated) ? (v as Curated) : null;
+      // 'nation' with the 자동 지역 switch only: a build without it opens Jeju and leaves the key as it is
+      return isDest(v) && (v !== 'nation' || NATION) ? v : null;
     },
     setDest: (d) => void set(local, KEYS.dest, d),
+    sgg() {
+      const v = get(local, KEYS.sgg);
+      return typeof v === 'string' && SGG_CODE.test(v) ? (v as SggCode) : null;
+    },
+    setSgg: (c) => void set(local, KEYS.sgg, c),
     load(today) {
       const { basis, region, stay } = place();
       const rawReach = get(local, KEYS.reach);

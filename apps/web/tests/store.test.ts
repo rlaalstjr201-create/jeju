@@ -3,6 +3,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
 import { KEYS, MAX_SAVED, createStore, normalizeEntries, parseBasis, parseEntries, parseRegion, parseReach, parseSaved, parseSession, parseStay, parseWhen } from '../src/store';
+import { NATION } from '../src/release';
 import type { SavedEntry } from '../src/types';
 
 /** In-memory Storage shared between "tabs". */
@@ -454,5 +455,52 @@ describe('비 와요(실내만) (ADR-0065) — 세션 동안만 기억', () => {
     expect(parseSession({ ...rec, indoor: 'yes' })).not.toHaveProperty('indoor');
     expect(parseSession(rec)).not.toHaveProperty('indoor');
     expect(parseSession({ ...rec, origin: null, indoor: true })?.indoor).toBe(true);
+  });
+});
+
+// ADR-0097 Amendment 1 (plans/nationwide-app.md 6, U8): the 자동 지역's keys.
+describe('자동 지역 저장 키', () => {
+  it("'nation' kept as the destination: read back with the switch on; a build without it reads null and leaves the key", () => {
+    const st = createStore(mem, null);
+    st.setDest('nation');
+    expect(mem.getItem(KEYS.dest)).toBe('"nation"');
+    expect(st.dest()).toBe(NATION ? 'nation' : null);
+    st.load(TODAY);
+    expect(mem.getItem(KEYS.dest)).toBe('"nation"');
+    mem.setItem(KEYS.dest, '"seoul"');
+    expect(st.dest()).toBeNull();
+  });
+
+  it('its basis, 시군구 and 숙소 carry .nation; Jeju keys stay as they are', () => {
+    mem.setItem(KEYS.basis, '"region"');
+    mem.setItem(KEYS.region, '"애월"');
+    const st = createStore(mem, null);
+    st.useDest('nation');
+    st.setBasis('gps');
+    st.setRegion('51150');
+    expect(mem.getItem('jeju.basis.nation')).toBe('"gps"');
+    expect(mem.getItem('jeju.region.nation')).toBe('"51150"');
+    expect(mem.getItem(KEYS.basis)).toBe('"region"');
+    expect(mem.getItem(KEYS.region)).toBe('"애월"');
+  });
+
+  it('jeju.sgg: the last 시군구 code, anything else null', () => {
+    const st = createStore(mem, null);
+    expect(st.sgg()).toBeNull();
+    st.setSgg('51150');
+    expect(mem.getItem(KEYS.sgg)).toBe('"51150"');
+    expect(st.sgg()).toBe('51150');
+    for (const bad of ['"강릉"', '"51"', '51150', 'null', '{']) {
+      mem.setItem(KEYS.sgg, bad);
+      expect(st.sgg(), bad).toBeNull();
+    }
+  });
+
+  it('nt- ids stay in the saved list and 뺀 곳 next to the other destinations\' ids', () => {
+    mem.setItem(KEYS.savedV2, JSON.stringify([{ id: 'nt-125417', date: TODAY, order: 0 }, { id: 'bs-126081', date: TODAY, order: 1 }, { id: 'a-jeju-id', date: TODAY, order: 2 }]));
+    mem.setItem(KEYS.visited, JSON.stringify(['nt-127951', 'bs-1']));
+    const got = createStore(mem, null).load(TODAY);
+    expect(ids(got.saved)).toEqual(['nt-125417', 'bs-126081', 'a-jeju-id']);
+    expect(got.visited).toEqual(['nt-127951', 'bs-1']);
   });
 });
