@@ -5,11 +5,11 @@ import { AREAS, areaByName, destOfArea, inJeju, type RegionName, type SggCode } 
 import { createSpotSource, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
-import { destOfId, isDest, type Dest } from './dest';
+import { DEST, destOfId, isDest, type Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, released, releasedDestOf, sggOf, startScreen } from './release';
+import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, released, releasedDestOf, sggOf, startScreen } from './release';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
@@ -1006,6 +1006,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
     const area = areaByName(b.dataset.area, OPEN_AREAS);
     if (!area) return;
+    toSgg(area);
     if (b.dataset.where === 'stay') return changeBasis({ basis: 'stay', stay: { lat: area.lat, lng: area.lng, area: area.name, source: 'area' } });
     return basisIsCurrent(state, 'region', area.name) ? closeOverlay() : changeBasis({ basis: 'region', region: area.name });
   }
@@ -1092,6 +1093,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const area = areaByName(b.dataset.area, OPEN_AREAS);
     if (area && !guarded(`area:${area.name}`)) {
       hush();
+      toSgg(area);
       changeBasis({ basis: 'region', region: area.name });
     }
   }
@@ -1338,6 +1340,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (opts.basis && opts.basis !== 'region') store.setBasis(opts.basis);
     data.get().catch(() => undefined);
   }
+  /** A 시군구 picked in the 자동 지역's 동네 index (another 시도's, plans/nationwide-app.md 4): its list from now on. */
+  function toSgg(area: { name: string; group: string }) {
+    if (NATION && state.dest === 'nation' && area.group === 'nation' && area.name !== state.sgg) switchDest('nation', { basis: state.basis, sgg: area.name as SggCode });
+  }
   /** A GPS point inside another open destination (or, in the 자동 지역, another 시군구), while the basis is 내 위치: moves
    * there (true). */
   function followGps(p: { lat: number; lng: number }): boolean {
@@ -1355,7 +1361,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     // Busan's (the 자동 지역's) part first (src/release.ts): a Jeju visit has not downloaded it
     if (BUSAN && !released(d)) return void partOf(d).then((ok) => ok && !signal.aborted && pickDest(d));
     const fix = state.origin?.key === GPS_KEY ? state.origin.point : null;
-    switchDest(d, { basis: fix && releasedDestOf(fix) === d ? 'gps' : 'region', sgg: fix && d === 'nation' ? sggOf(fix) : undefined });
+    // the 자동 지역 never chosen on this device: 서울시청's 시군구 until one is picked in its index
+    const sgg = d !== 'nation' ? undefined : ((fix && sggOf(fix)) ?? state.sgg ?? store.sgg() ?? sggOf(DEST.nation.cityHall));
+    switchDest(d, { basis: fix && releasedDestOf(fix) === d ? 'gps' : 'region', sgg });
     if (state.view !== 'home') request('show');
     later(0, toAreas);
   }

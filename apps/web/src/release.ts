@@ -8,6 +8,7 @@
 import { AREAS, inJeju, nearestArea, type Area, type SggArea, type SggCode } from './areas';
 import type { Dest } from './dest';
 import type { Region } from './nation';
+import type { NationCopy } from './nation-part';
 import type { Point } from './pick';
 import type { StartDeps, StartScreen } from './start';
 
@@ -60,22 +61,39 @@ export const startScreen = (): Part['mountStart'] | null => part?.mountStart ?? 
 /** What src/nation-part.ts brings (plans/nationwide-app.md 1.1·9): the index's 시군구 as areas, where a point is, the
  * 이름 줄's word for a 시군구, and the places around one. */
 interface NationPart {
-  areas: readonly SggArea[];
+  /** its 시군구, as areas */
+  list: readonly SggArea[];
   region(p: Point): Region;
   short(sgg: string): string;
   spots(sgg: string): Promise<unknown>;
+  /** its words (plans/nationwide-app.md 8) */
+  copy: NationCopy;
+  /** the 시도 that have a 시군구 in it, named in the page's language; a 시군구's 시도 */
+  sido(): { c: string; name: string }[];
+  sidoOf(sgg: string): string | null;
+  /** the 동네 index (render.ts areaGroups), drawn with the app's option row */
+  areas(parent: HTMLElement, where: string, selected: string | null, sgg: string | null, option: (label: string, sub: string | null, attrs: Record<string, string>) => HTMLButtonElement): void;
 }
 let nation: NationPart | null = null;
 /** the 자동 지역's 시군구 once its part is in */
 const NATION_OPEN: Area[] = [];
+const nationWaiting: (() => void)[] = [];
 
 /** Called by src/nation-part.ts once it has read the index. */
 export function installNation(p: NationPart): void {
   if (!NATION || nation) return;
   nation = p;
-  NATION_OPEN.push(...p.areas);
-  (OPEN_AREAS as Area[]).push(...p.areas);
+  NATION_OPEN.push(...p.list);
+  (OPEN_AREAS as Area[]).push(...p.list);
+  for (const fn of nationWaiting.splice(0)) fn();
 }
+/** `fn` now if the 자동 지역's part is in, else once it is (another language's words, i18n/apply.ts). */
+export function whenNation(fn: () => void): void {
+  if (nation) fn();
+  else nationWaiting.push(fn);
+}
+/** The 자동 지역's part once it is in (its words, its 시도, its 동네 index), else null. */
+export const nationPart = () => nation;
 let nationLoading: Promise<boolean> | null = null;
 /** The 자동 지역's part and its index (Busan's part with it: a point in Busan is Busan's), asked for once (again after a
  * failure); false with the switch off or when either could not be loaded. */

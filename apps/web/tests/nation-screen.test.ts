@@ -1,0 +1,92 @@
+// @vitest-environment jsdom
+// 자동 지역 on screen (plans/nationwide-app.md 4, U10): the 이름 줄 and title by 시군구, no 쉬기·유명한 데, no empty reason, the
+// 고르는 방식 line, the credit, no 둘러보기, and the 기준 시트's 다른 곳 with its 시도 → 시군구 index. Switch on only.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { normalizeNation } from '../src/nation';
+import type { Point } from '../src/pick';
+import { NATION, loadNation } from '../src/release';
+import { KEYS } from '../src/store';
+import { fileSpots } from './fixtures';
+import { $, $$, cardIds, current, flush, render, reset, settle, tap } from './harness';
+
+const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
+const raw = (f: string) => JSON.parse(file(f)) as unknown;
+const 강릉역 = { lat: 37.7643, lng: 128.8996 };
+const wait = async () => {
+  for (let i = 0; i < 4; i++) await flush();
+  await settle();
+};
+function mount(o: { dest?: string; sgg?: string; at?: Point } = {}) {
+  if (o.dest) localStorage.setItem(KEYS.dest, JSON.stringify(o.dest));
+  if (o.sgg) localStorage.setItem(KEYS.sgg, JSON.stringify(o.sgg));
+  const asked: string[] = [];
+  render({
+    loadSpots: (d, sgg) => (asked.push(sgg ? `${d}:${sgg}` : d), Promise.resolve(d === 'nation' ? normalizeNation(raw(sgg!.startsWith('52') ? '52' : '51'), [], sgg) : fileSpots)),
+    locate: () => Promise.resolve(o.at ?? 강릉역),
+  });
+  return { asked };
+}
+
+describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
+  beforeAll(async () => {
+    vi.stubGlobal('fetch', (url: string) => {
+      const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
+      return Promise.resolve(m ? { ok: true, json: () => Promise.resolve(JSON.parse(file(m[1]))) } : { ok: false, status: 404 });
+    });
+    expect(await loadNation()).toBe(true);
+    vi.unstubAllGlobals();
+  });
+  beforeEach(() => {
+    reset();
+    Element.prototype.scrollIntoView ??= () => undefined;
+  });
+  afterEach(() => reset());
+
+  it('이름 줄 and title by 시군구; no 쉬기·유명한 데; a card without reason has no reason line; #how, credit, no 둘러보기', async () => {
+    mount({ dest: 'nation', sgg: '51150' });
+    await wait();
+    expect($('.logo .rg').textContent).toBe(':강릉');
+    expect(document.title).toBe('여차나:강릉 · P를 위한 여행동반자');
+    const hidden = (m: string) => $(`[data-mood="${m}"]`).closest('li')!.hidden;
+    expect(['rest', 'famous'].map(hidden)).toEqual([true, true]);
+    expect(['walk', 'new', 'food'].map(hidden)).toEqual([false, false, false]);
+    await tap('[data-mood="walk"]');
+    await wait();
+    expect(cardIds()).toHaveLength(3);
+    expect($$('#cards .reason')).toHaveLength(0);
+    expect($('#how').textContent).toBe('공공 데이터로 가까운 순으로 골랐어요.');
+    expect($('#results > .credit').textContent).toBe('정보·사진: 한국관광공사');
+    expect($('#results > .landing').hidden).toBe(true);
+  });
+
+  it('기준 시트: 다른 곳 pressed; its index is the 시도 in use, 다른 시도 lists them, 전북 → 전주시 완산구 is the list from then on', async () => {
+    const { asked } = mount({ dest: 'nation', sgg: '51150' });
+    await wait();
+    await tap('#basis');
+    expect($('#sheet [data-dest="nation"]').getAttribute('aria-pressed')).toBe('true');
+    expect($('#sheet [data-dest="nation"] .nm').textContent).toBe('다른 곳');
+    expect($('#areas-basis-nation').textContent).toBe('강원');
+    expect($$('#sheet .areas [data-area]').map((b) => b.dataset.area)).toContain('51210');
+    await tap('#sheet [data-sido=""]');
+    expect($('#areas-basis-nation').textContent).toBe('다른 시도');
+    expect($$('#sheet [data-sido]').map((b) => b.querySelector('.nm')!.textContent)).not.toContain('부산');
+    await tap('#sheet [data-sido="52"]');
+    await tap('#sheet [data-area="52111"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '52111', basis: 'region', region: '52111' });
+    expect($('.logo .rg').textContent).toBe(':전주');
+    expect(asked).toEqual(['nation:51150', 'nation:52111']);
+  });
+
+  it('제주 device: the sheet offers 다른 곳, and pressing it opens 서울 (the 시군구 of 서울시청) to pick from', async () => {
+    mount({ dest: 'jeju' });
+    await wait();
+    await tap('#basis');
+    await tap('#sheet [data-dest="nation"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11140', basis: 'region' });
+    expect($('#areas-basis-nation').textContent).toBe('서울');
+  });
+});

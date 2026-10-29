@@ -3,7 +3,7 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
 import { DEST, DESTS, destOfId, type Dest } from './dest';
-import { BUSAN, OPEN_AREAS, openAreasOf } from './release';
+import { BUSAN, NATION, OPEN_AREAS, nationPart, openAreasOf, sggShort } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
@@ -216,7 +216,7 @@ export const COPY = {
 /** 여행지 (ADR-0094, specs/busan.md 1.3·1.4·3.5·6·8): the switched-on build's words, apart from COPY so that a Jeju build,
  * where every use of them is behind the switch, carries none of them (another language's table: Lang.busan). */
 export const BUSAN_COPY = {
-  destName: { jeju: '제주', busan: '부산', nation: '한국' } satisfies Record<Dest, string>,
+  destName: { jeju: '제주', busan: '부산', nation: '다른 곳' } satisfies Record<Dest, string>,
   destHead: '여행지',
   title: '여차나:부산 · P를 위한 여행동반자',
   examplePopular: (names: string[]) => `부산 인기: ${names.join(', ')}`,
@@ -343,6 +343,8 @@ export function statusOf(s: State): { text: string; chooseArea: boolean; undo: {
 export function howOf(s: State): string {
   const c = s.cards;
   if (s.view !== 'cards' || s.phase.k !== 'ready' || !c) return '';
+  // the 자동 지역 (plans/nationwide-app.md 4): no reason was read, the nearest first
+  if (NATION && s.dest === 'nation') return nationPart()!.copy.how;
   const inReach = c.list.every((x) => withinReach(c.reach, c.origin.point, x.spot));
   return COPY.how(inReach ? COPY.howReach[c.reach] : null, c.indoor);
 }
@@ -578,8 +580,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return { metas, both };
   }
 
-  /** A Busan place without a photo (TourAPI gave none): a text card from the start, no empty <img> (S4 handover). */
-  const noPhoto = (spot: Spot) => BUSAN && !spot.image && destOfId(spot.id) === 'busan';
+  /** A Busan (자동 지역) place without a photo (TourAPI gave none): a text card from the start, no empty <img> (S4 handover). */
+  const noPhoto = (spot: Spot) => BUSAN && !spot.image && destOfId(spot.id) !== 'jeju';
 
   function photoEl(spot: Card['spot'], eager: boolean): HTMLElement {
     const ph = el(doc, 'div', { class: 'ph' });
@@ -677,7 +679,10 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (day) heart.dataset.date = day;
     if (day) card.dataset.date = day; // a saved-list row: which one a 길찾기 came from (ADR-0085)
     heart.append(icon(HEART_22));
-    card.append(title, heart, el(doc, 'p', { class: 'reason' }, PLACE.reason(spot)));
+    card.append(title, heart);
+    // a 자동 지역 place has no reason (plans/nationwide-app.md 4): no empty line for it
+    const reason = PLACE.reason(spot);
+    if (reason) card.append(el(doc, 'p', { class: 'reason' }, reason));
     // 실내 only on the results, only while 비 와요 picked them (ADR-0065)
     const indoor = !day && !!s.cards?.indoor && spot.indoor === true;
     // 장날 only on the results, for the day being viewed (ADR-0066)
@@ -755,7 +760,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return card;
   }
 
-  function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: RegionName | null, dest: Dest = 'jeju') {
+  function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: RegionName | null, dest: Dest = 'jeju', sgg: string | null = null) {
+    // the 자동 지역: its 시도's 시군구 and 다른 시도, drawn by its part (plans/nationwide-app.md 4)
+    if (NATION && dest === 'nation') return nationPart()?.areas(parent, where, selected, sgg, option);
     if (BUSAN && dest === 'busan') {
       // specs/busan.md 2절: one group, no heading, west → east
       const id = `areas-${where}-busan`;
@@ -794,7 +801,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const box = el(doc, 'div', { class: 'notice' });
     const p = s.phase;
     let lines: readonly string[];
-    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [BUSAN && p.why === 'outside' && s.dest === 'busan' ? BUSAN_COPY.outside : COPY.noOrigin[p.why], COPY.noOriginBody];
+    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [NATION && p.why === 'outside' && nationPart() ? nationPart()!.copy.outside : BUSAN && p.why === 'outside' && s.dest === 'busan' ? BUSAN_COPY.outside : COPY.noOrigin[p.why], COPY.noOriginBody];
     else if (kind === 'loadError' && p.k === 'loadError') lines = p.offline ? COPY.loadErrorOffline : COPY.loadError;
     else lines = COPY.empty;
     box.append(el(doc, 'p', { class: 'notice-t' }, lines[0]), el(doc, 'p', { class: 'notice-b' }, lines[1]));
@@ -804,7 +811,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       // how to get the location back, above the 동네 grid rather than under it (heuristic audit H8)
       if (p.k === 'noOrigin' && p.why === 'denied') box.append(el(doc, 'p', { class: 'notice-f' }, COPY.deniedHow));
       if (p.k === 'noOrigin' && p.why !== 'outside') box.append(el(doc, 'button', { type: 'button', class: 'tbtn regps', 'data-action': 'retry' }, COPY.retryGps));
-      areaGroups(box, 'inline', s.basis === 'region' ? s.region : null, s.dest);
+      areaGroups(box, 'inline', s.basis === 'region' ? s.region : null, s.dest, s.sgg);
     }
     return box;
   }
@@ -884,7 +891,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (card.dataset.meta !== metaKey) {
       card.dataset.meta = metaKey;
       card.querySelector(':scope > .meta')?.remove();
-      if (meta || dest) card.querySelector(':scope > .reason')!.after(metaEl(meta, dest ? s.mapApp : null));
+      if (meta || dest) (card.querySelector(':scope > .reason') ?? card.querySelector(':scope > .heart'))!.after(metaEl(meta, dest ? s.mapApp : null));
     }
     // a row taken out in this visit keeps only its (empty) heart: nothing to move
     const ctl = card.querySelector<HTMLElement>(':scope > .ctl')!;
@@ -1321,7 +1328,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
-        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin || s.dest === 'nation' ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         pair.append(...ex.map((x) => homePhoto(x, false)));
         b.querySelector('.i-check')!.before(pair);
@@ -1493,6 +1500,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       if (BUSAN) {
         // one compact line, like 언제
         const row = optRow(...DESTS.map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
+        // the 자동 지역 (plans/nationwide-app.md 4): 다른 곳 (its part asked for when pressed: app.ts pickDest)
+        if (NATION) row.append(option(BUSAN_COPY.destName.nation, null, { 'data-dest': 'nation', 'aria-pressed': String(s.dest === 'nation') }));
         row.classList.add('when-row');
         optGroup(panel, 'dest-h', BUSAN_COPY.destHead, [row]);
       }
@@ -1526,7 +1535,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       // 비 와요(실내만) (ADR-0065): one row of its own, the same thin-rule option with a check when on. Choosing it
       // closes the sheet, like 얼마나.
       optGroup(panel, 'weather-h', COPY.weatherHead, [optRow(option(COPY.indoorToggle, null, { 'data-indoor': '', 'aria-pressed': String(s.indoor) }))]);
-      areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null, s.dest);
+      areaGroups(panel, 'basis', s.basis === 'region' ? s.region : null, s.dest, s.sgg);
     } else if (overlay === 'move') {
       // 다른 날로: the days that have saved places (today on), the row's own checked, then 날짜 고르기.
       const from = s.moveTarget?.date ?? '';
@@ -1544,7 +1553,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         el(doc, 'button', { type: 'button', class: 'primary', 'data-action': 'stay-here' }, COPY.stayHere),
         el(doc, 'p', { class: 'form-err', role: 'alert', hidden: '' }),
       );
-      areaGroups(panel, 'stay', s.stay?.source === 'area' ? s.stay.area : null, s.dest);
+      areaGroups(panel, 'stay', s.stay?.source === 'area' ? s.stay.area : null, s.dest, s.sgg);
     }
     panel.append(el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
     els.sheet.replaceChildren(scrim, panel);
@@ -1566,7 +1575,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const err = els.sheet.querySelector<HTMLElement>('.form-err');
     if (err) {
       // The button stays a button; the reason goes on its own line (S09).
-      setText(err, s.stayForm.error ? (BUSAN && s.stayForm.error === 'outside' && s.dest === 'busan' ? BUSAN_COPY.stayOutside : COPY.stayError[s.stayForm.error]) : '');
+      setText(err, s.stayForm.error ? (NATION && s.stayForm.error === 'outside' && nationPart() ? nationPart()!.copy.stayOutside : BUSAN && s.stayForm.error === 'outside' && s.dest === 'busan' ? BUSAN_COPY.stayOutside : COPY.stayError[s.stayForm.error]) : '');
       err.hidden = !s.stayForm.error;
     }
   }
@@ -1718,18 +1727,23 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
 
   // --- 여행지 (ADR-0094): the logo's grey name, the document title, the credits and the Korean-only line ---
   let tabSpots: Spot[] | null = null;
-  let destDrawn: Dest | null = null;
+  let moodSpots: Spot[] | null = null;
+  let moodDest: Dest | null = null;
+  let destDrawn: string | null = null;
   const jejuTitle = doc.title;
   const credits = [...doc.querySelectorAll<HTMLElement>('#results > .credit, #savedView .about > .credit:first-of-type')].map((e) => ({ e, html: e.innerHTML }));
   function renderDest(s: State) {
-    if (s.dest === destDrawn) return;
-    destDrawn = s.dest;
+    // the 자동 지역 is named by its 시군구 (plans/nationwide-app.md 1.5): another one is another name
+    const short = DEST[s.dest].label === 'sgg' ? sggShort(s.sgg ?? '') : '';
+    const key = `${s.dest}|${short}`;
+    if (key === destDrawn) return;
+    destDrawn = key;
     const busan = s.dest !== 'jeju';
     const tour = DEST[s.dest].credit === 'tour';
-    for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${BUSAN_COPY.destName[s.dest]}`);
+    for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${short || BUSAN_COPY.destName[s.dest]}`);
     const logo = doc.getElementById('logo');
     if (BUSAN && logo) setAttr(logo, 'aria-label', BUSAN_COPY.destAria(logo.textContent ?? ''));
-    doc.title = busan ? BUSAN_COPY.title : jejuTitle;
+    doc.title = short ? nationPart()!.copy.title(short) : busan ? BUSAN_COPY.title : jejuTitle;
     for (const c of credits) {
       if (tour) c.e.textContent = BUSAN_COPY.homeCredit;
       else c.e.innerHTML = c.html;
@@ -1790,6 +1804,17 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       }
     }
     if (BUSAN) renderDest(s);
+    // the 자동 지역 (plans/nationwide-app.md 4): no mood it does not offer, nor one with fewer than 3 places in its list
+    if (NATION && (s.spots !== moodSpots || s.dest !== moodDest)) {
+      moodSpots = s.spots;
+      moodDest = s.dest;
+      for (const b of els.moods) {
+        const m = b.dataset.mood as Button;
+        if (m === 'any') continue;
+        const off = s.dest === 'nation' && (!DEST.nation.moods.includes(m) || (!!s.spots && s.spots.filter((x) => listed(x) && (x.mood === m || !!(x.moods as readonly string[] | undefined)?.includes(m))).length < CARD_COUNT));
+        b.closest('li')?.toggleAttribute('hidden', off);
+      }
+    }
 
     const how = howOf(s);
     setText(els.how, how);
