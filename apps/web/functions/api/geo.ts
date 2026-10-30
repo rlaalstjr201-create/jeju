@@ -134,7 +134,7 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     // a key Kakao refuses (wrong, or 카카오맵 not switched on for it): the same as no key
     const refused = failed.find((e): e is KakaoError => e instanceof KakaoError && (e.status === 401 || e.status === 403));
     if (refused) return plain(503, '', `bad-key ${refused.status}`);
-    if (failed.length === 2) return plain(502, '', ctl.signal.aborted ? 'timeout' : String((failed[1] as Error)?.message ?? 'network'));
+    if (failed.length === 2) return plain(502, '', ctl.signal.aborted ? 'timeout' : failed[1] instanceof KakaoError ? `kakao ${failed[1].status}` : 'network');
     hits = hitsOf(address.status === 'fulfilled' ? address.value : null, keyword.status === 'fulfilled' ? keyword.value : null);
   } finally {
     clearTimeout(timer);
