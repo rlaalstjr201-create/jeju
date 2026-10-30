@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
-// 강원 (ADR-0102, plans/nationwide-app.md 1.3): 강릉·속초·춘천 are a 검수한 곳 now (Amendment 2) — a GPS read there, the 인기
-// 칸, a device that had one as the 자동 지역 and the 기준 시트 all open `gangwon` at that 시군구, with that 시군구's own list
-// (reasons, all five moods) and name, while the other 강원 시군구 (양양 …) stay 자동 지역. With the switch on only
+// 강원 (ADR-0102, plans/nationwide-app.md 1.3): 강릉·속초·춘천 (Amendment 2)·양양 (Amendment 3) are a 검수한 곳 now — a GPS
+// read there, the 인기 칸, a device that had one as the 자동 지역 and the 기준 시트 all open `gangwon` at that 시군구, with that
+// 시군구's own list (reasons, all five moods) and name, while the other 강원 시군구 (평창 …) stay 자동 지역. With the switch on only
 // (npm run test:nation).
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -26,6 +26,7 @@ const 강릉역 = { lat: 37.7643, lng: 128.8996 };
 const 속초해수욕장 = { lat: 38.1906, lng: 128.6014 };
 const 춘천역 = { lat: 37.8846, lng: 127.7166 };
 const 양양시외버스터미널 = { lat: 38.0754, lng: 128.6189 };
+const 진부 = { lat: 37.6355, lng: 128.5636 }; // 평창
 const 서울시청 = { lat: 37.5663, lng: 126.9779 };
 const SGG_KEY = 'jeju.sgg.gangwon';
 const wait = async () => {
@@ -275,7 +276,7 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     expect(localStorage.getItem(destKey(KEYS.basis, 'gangwon'))).toBe('"gps"');
   });
 
-  it('기준 시트: 여행지 row 제주·부산·강원·다른 곳; 강원 pressed → its 동네 index is 강원\'s 시군구 (the index\'s order, 강원\'s three among them); 속초시 → 강원 속초 (its list); 양양군 → 자동 지역 양양; 강릉시 → 강원 강릉', async () => {
+  it('기준 시트: 여행지 row 제주·부산·강원·다른 곳; 강원 pressed → its 동네 index is 강원\'s 시군구 (the index\'s order, 강원\'s three among them); 속초시 → 강원 속초 (its list); 평창군 → 자동 지역 평창; 강릉시 → 강원 강릉', async () => {
     const { asked } = mount({ dest: 'jeju', at: { lat: 33.5122, lng: 126.5272 } });
     await wait();
     await tap('#basis');
@@ -286,7 +287,7 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     await wait();
     expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51150', basis: 'region', region: null });
     expect($('#areas-basis-nation').textContent).toBe('강원');
-    expect($$('#sheet .areas [data-area]').map((b) => b.dataset.area)).toEqual(expect.arrayContaining(['51110', '51150', '51210', '51830']));
+    expect($$('#sheet .areas [data-area]').map((b) => b.dataset.area)).toEqual(expect.arrayContaining(['51110', '51150', '51210', '51830', '51760']));
     await tap('#sheet [data-area="51150"]');
     await wait();
     expect(current().state()).toMatchObject({ dest: 'gangwon', basis: 'region', region: '51150' });
@@ -302,19 +303,19 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     await tap('#basis');
     expect($('#sheet [data-dest="gangwon"]').getAttribute('aria-pressed')).toBe('true');
     expect($('#sheet [data-area="51210"]').getAttribute('aria-pressed')).toBe('true');
-    await tap('#sheet [data-area="51830"]');
+    await tap('#sheet [data-area="51760"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51830', basis: 'region', region: '51830' });
-    expect($('.logo .rg').textContent).toBe(':양양');
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51760', basis: 'region', region: '51760' });
+    expect($('.logo .rg').textContent).toBe(':평창');
     await tap('#basis');
     await tap('#sheet [data-area="51150"]');
     await wait();
     expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51150', basis: 'region', region: '51150' });
     expect($('.logo .rg').textContent).toBe(':강릉');
-    expect(asked).toEqual(['jeju', 'gangwon:51150', 'gangwon:51210', 'nation:51830']);
+    expect(asked).toEqual(['jeju', 'gangwon:51150', 'gangwon:51210', 'nation:51760']);
   });
 
-  it('Amendment 2: GPS in 속초 from 강릉: 강원 속초 (its list, its name; no note — the same destination); GPS in 양양: the 자동 지역, whose list never has 강원\'s records', async () => {
+  it('Amendment 2: GPS in 속초 from 강릉: 강원 속초 (its list, its name; no note — the same destination); GPS in 평창: the 자동 지역, whose list never has 강원\'s records', async () => {
     const at = { p: 속초해수욕장 as Point };
     const asked: string[] = [];
     localStorage.setItem(KEYS.dest, '"gangwon"');
@@ -330,11 +331,11 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     expect(cardIds().every((id) => byId(id)?.area === '속초')).toBe(true);
     await tap('#back');
     await wait();
-    at.p = 양양시외버스터미널;
+    at.p = 진부;
     await tap('[data-mood="walk"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51830' });
-    expect(asked).toEqual(['gangwon:51150', 'gangwon:51210', 'nation:51830']);
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51760' });
+    expect(asked).toEqual(['gangwon:51150', 'gangwon:51210', 'nation:51760']);
     const spots = current().state().spots as { sgg?: string }[];
     expect(spots.some((s) => DEST.gangwon.sgg!.includes(s.sgg ?? ''))).toBe(false);
     // and a read in 춘천 from there: 강원 again, at 춘천, with the note in that 시군구's name
@@ -375,10 +376,10 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     await tap('[data-mood="walk"]');
     await wait();
     expect($('#cards .notice-t').textContent).toBe('지금은 속초 밖이에요.');
-    // a 숙소 by GPS in 양양 (자동 지역) while in 속초
+    // a 숙소 by GPS in 평창 (자동 지역) while in 속초
     reset();
     localStorage.setItem(SGG_KEY, '"51210"');
-    mount({ dest: 'gangwon', at: 양양시외버스터미널 });
+    mount({ dest: 'gangwon', at: 진부 });
     await wait();
     await tap('#basis');
     await tap('#sheet [data-basis="stay"]');
@@ -400,6 +401,47 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     window.history.replaceState(null, '', '/');
     delete (window as { __dest?: unknown }).__dest;
     delete (window as { __destBy?: unknown }).__destBy;
+  });
+
+  it('Amendment 3: 제주 device, a GPS read in 양양: 강원 at 양양 — its list only, 여차나:양양, the note 「양양으로」, 비 소식 at 양양', async () => {
+    const { asked } = mount({ dest: 'jeju', at: 양양시외버스터미널 });
+    await wait();
+    await tap('[data-mood="walk"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51830', destNote: 'gangwon', basis: 'gps' });
+    expect($('.logo .rg').textContent).toBe(':양양');
+    expect(document.title).toBe('여차나:양양 · P를 위한 여행동반자');
+    expect($('#status').textContent).toContain('지금 계신 양양으로 바꿨어요.');
+    expect(asked).toEqual(['jeju', 'gangwon:51830']);
+    expect(cardIds()).toHaveLength(3);
+    expect(cardIds().every((id) => byId(id)?.area === '양양')).toBe(true);
+    expect(areasInUse()).toEqual(['양양']);
+    expect(rainArea(current().state())).toBe('51830');
+    expect(localStorage.getItem(SGG_KEY)).toBe('"51830"');
+  });
+
+  it('Amendment 3: a device that had 양양 as the 자동 지역 (jeju.sgg 51830): opens 강원 at 양양 (「양양 인기:」), kept for 강원; 브라우저로 열기 at 양양 (dest=nation&area=51830) too', async () => {
+    const { asked } = mount({ dest: 'nation', sgg: '51830', at: 양양시외버스터미널 });
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51830' });
+    expect($('.logo .rg').textContent).toBe(':양양');
+    expect(localStorage.getItem(KEYS.dest)).toBe('"gangwon"');
+    expect(localStorage.getItem(SGG_KEY)).toBe('"51830"');
+    expect(asked).toEqual(['gangwon:51830']);
+    expect(areasInUse()).toEqual(['양양']);
+    expect($('[data-mood="rest"] .ex').textContent).toMatch(/^양양 인기: /);
+    reset();
+    window.history.replaceState(null, '', '/?dest=nation&area=51830');
+    Object.assign(window, { __dest: 'nation', __destBy: 'link' });
+    try {
+      mount({});
+      await wait();
+      expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51830' });
+    } finally {
+      window.history.replaceState(null, '', '/');
+      delete (window as { __dest?: unknown }).__dest;
+      delete (window as { __destBy?: unknown }).__destBy;
+    }
   });
 
   it('사용 기록: an area basis in 강원 sends its 시군구 as sgg, never as area', () => {
@@ -428,6 +470,13 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     await tap('#basis');
     await destSide();
     expect($('#sheet [data-dest="gangwon"] .nm').textContent).toBe('Gangwon');
+    // Amendment 3
+    reset();
+    localStorage.setItem(SGG_KEY, '"51830"');
+    mount({ dest: 'gangwon', at: 양양시외버스터미널 });
+    await wait();
+    expect($('.logo .rg').textContent).toBe(':Yangyang');
+    expect(document.title).toBe('Yeochana:Yangyang · Your no-plan travel buddy');
   });
 
   it('every 강원 시군구 has its name in the four languages', async () => {

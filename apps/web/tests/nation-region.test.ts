@@ -28,11 +28,10 @@ describe('regionOf', () => {
   });
 
   // ADR-0102: a 시군구 a 검수한 곳 covers (DEST.gangwon.sgg) is that destination's; its neighbours stay 자동 지역
-  it('강원: 강릉역·정동진·주문진·속초·춘천역 → gangwon; 동해역·양양·진부(평창)·홍천 → their own 시군구', () => {
+  it('강원: 강릉역·정동진·주문진·속초·춘천역·양양 → gangwon; 동해역·진부(평창)·홍천 → their own 시군구', () => {
     const cur = { gangwon: DEST.gangwon.sgg };
-    for (const [lat, lng] of [[37.7643, 128.8996], [37.6907, 129.0344], [37.8925, 128.8256], [38.2047, 128.5918], [37.8846, 127.7166]]) expect(regionOf({ lat, lng }, ix.sgg, destOf, cur)).toEqual({ k: 'dest', dest: 'gangwon' });
+    for (const [lat, lng] of [[37.7643, 128.8996], [37.6907, 129.0344], [37.8925, 128.8256], [38.2047, 128.5918], [37.8846, 127.7166], [38.0754, 128.6189]]) expect(regionOf({ lat, lng }, ix.sgg, destOf, cur)).toEqual({ k: 'dest', dest: 'gangwon' });
     expect(regionOf({ lat: 37.4985, lng: 129.124 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51170' });
-    expect(regionOf({ lat: 38.0754, lng: 128.6189 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51830' });
     expect(regionOf({ lat: 37.6355, lng: 128.5636 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51760' });
     expect(regionOf({ lat: 37.6971, lng: 127.8888 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51720' });
   });
@@ -116,12 +115,13 @@ describe('자동 지역 몫 (src/nation-part.ts)', () => {
     expect(released('nation')).toBe(false);
     expect(await loadNation()).toBe(true);
     expect(released('nation')).toBe(true);
-    // 강릉·속초·춘천 are 강원's (ADR-0102 Amendment 2): its 동네, not the 자동 지역's, and opened with the same part
-    expect(openAreasOf('nation')).toHaveLength(ix.sgg.length - 3);
+    // 강릉·속초·춘천·양양 are 강원's (ADR-0102 Amendment 2·3): its 동네, not the 자동 지역's, and opened with the same part
+    expect(openAreasOf('nation')).toHaveLength(ix.sgg.length - 4);
     expect(openAreasOf('gangwon').map((a) => [a.name, a.label, a.group])).toEqual([
       ['51110', '춘천시', 'gangwon'],
       ['51150', '강릉시', 'gangwon'],
       ['51210', '속초시', 'gangwon'],
+      ['51830', '양양군', 'gangwon'],
     ]);
     expect(released('gangwon')).toBe(true);
     expect(releasedDestOf(강릉역)).toBe('gangwon');
@@ -134,7 +134,7 @@ describe('자동 지역 몫 (src/nation-part.ts)', () => {
     await nationSpots('51210');
     expect(a.length).toBeGreaterThan(100);
     expect(a.every((x) => x.id.startsWith('nt-'))).toBe(true);
-    // 강릉's (속초's, 춘천's) records in 51.json are left to 강원's own list
+    // 강릉's (속초's, 춘천's, 양양's) records in 51.json are left to 강원's own list
     expect(a.some((x) => DEST.gangwon.sgg!.includes(x.sgg))).toBe(false);
     expect(asked.filter((u) => u.startsWith('/nation/51.json'))).toHaveLength(1);
   });

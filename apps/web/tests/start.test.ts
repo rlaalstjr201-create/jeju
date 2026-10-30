@@ -279,15 +279,23 @@ describe('start.ts', () => {
     press('강원');
     press('춘천시');
     expect(o.chosen).toEqual([['gangwon', 'pick', null, undefined, '51110']]);
-    // 양양 stays 자동 지역
+    // 양양 opens 강원 too (Amendment 3); 평창 stays 자동 지역
+    const g = started({});
+    const pressG = (w: string) => ([...g.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === w && !b.closest('[hidden]')) as HTMLElement).click();
+    pressG('다른 곳');
+    await tick();
+    await tick();
+    pressG('강원');
+    pressG('양양군');
+    expect(g.chosen).toEqual([['gangwon', 'pick', null, undefined, '51830']]);
     const y = started({});
     const pressY = (w: string) => ([...y.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === w && !b.closest('[hidden]')) as HTMLElement).click();
     pressY('다른 곳');
     await tick();
     await tick();
     pressY('강원');
-    pressY('양양군');
-    expect(y.chosen).toEqual([['nation', 'pick', null, undefined, '51830']]);
+    pressY('평창군');
+    expect(y.chosen).toEqual([['nation', 'pick', null, undefined, '51760']]);
     expect(o.w.__startTap).toBeUndefined(); // the cover's own handler did not take these for the big button
   });
   it.runIf(NATION)('자동 지역 in another language: the 인기 칸 in official forms, no Korean on the cover (B13); each still its 시군구', () => {

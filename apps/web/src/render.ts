@@ -219,7 +219,7 @@ export const BUSAN_COPY = {
   /** the 여행지 row's words (강원: ADR-0102 Amendment 2 — its 시군구 are listed in its 동네 index) */
   destName: { jeju: '제주', busan: '부산', gangwon: '강원', nation: '다른 곳' } satisfies Record<Dest, string>,
   /** 강원's 시군구 by code (DEST.gangwon.sgg): the name line, the title, 「○○ 인기:」 and 「○○ 밖이에요」 say the one in use */
-  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천' } as Record<string, string>,
+  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천', '51830': '양양' } as Record<string, string>,
   destHead: '여행지',
   /** a 검수한 곳 other than Jeju, by its name (부산, 속초: ADR-0102) */
   title: (name: string) => `여차나:${name} · P를 위한 여행동반자`,

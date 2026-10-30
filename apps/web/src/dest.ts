@@ -6,7 +6,7 @@
 import type { Kind, Mood } from './pick';
 
 /** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. `gangwon` (ADR-0102): 강원's, named by
- * 시군구 — 강릉·속초·춘천 now (Amendment 2); the others stay 자동 지역 until theirs are checked. */
+ * 시군구 — 강릉·속초·춘천 (Amendment 2)·양양 (Amendment 3) now; the others stay 자동 지역 until theirs are checked. */
 export type Curated = 'jeju' | 'busan' | 'gangwon';
 /** `nation`: the 자동 지역 as a whole (plans/nationwide-app.md 1.2); which 시군구 is State.sgg. */
 export type Dest = Curated | 'nation';
@@ -48,10 +48,10 @@ export const DEST: Record<Dest, DestRow> = {
   // 자동 지역: its files are nation/<f>.json (src/nation-part.ts); 서울시청 until a 시군구 is known; a map search by the
   // name alone (plans/nationwide-app.md U13 scopes it)
   nation: { file: '', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '', said: /(?:)/, moods: ['walk', 'new', 'food'], any: ['walk', 'new'], label: 'sgg' },
-  // 강원 (ADR-0102): 강릉시청 (강릉대로 33); its 시군구 강릉·속초·춘천 (Amendment 2), which the 자동 지역 leaves to it — the
-  // first is the one used when none is known. A map search is scoped by the place's own 시군구 (links.ts); `word` only
-  // before the 자동 지역's part is in
-  gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강원', said: /강원|강릉|속초|춘천/, moods: ALL, any: ANY, label: 'name', sgg: ['51150', '51210', '51110'] },
+  // 강원 (ADR-0102): 강릉시청 (강릉대로 33); its 시군구 강릉·속초·춘천 (Amendment 2)·양양 (Amendment 3), which the 자동 지역 leaves
+  // to it — the first is the one used when none is known. A map search is scoped by the place's own 시군구 (links.ts);
+  // `word` only before the 자동 지역's part is in
+  gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강원', said: /강원|강릉|속초|춘천|양양/, moods: ALL, any: ANY, label: 'name', sgg: ['51150', '51210', '51110', '51830'] },
 };
 
 export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';
