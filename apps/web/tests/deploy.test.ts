@@ -92,7 +92,11 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('좌표는 보내지 않아요');
     expect(html).toContain('Cloudflare 접속 기록에 남을 수 있어요');
     // 가 봤어요 (ADR-0087): kept on the device; its tap and undo are counted here (visited·unvisited), not in GA4
-    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 여행지(제주·부산·강원·다른 곳)와 강원·다른 곳의 마지막 시군구, 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093, 고른 여행지: specs/busan.md 7, 시군구: plans/nationwide-app.md 7
+    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소(‘주소·숙소’ 검색으로 고른 곳 포함), 고른 여행지(제주·부산·강원·다른 곳)와 강원·다른 곳의 마지막 시군구, 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093, 고른 여행지: specs/busan.md 7, 시군구: plans/nationwide-app.md 7
+    // 주소·숙소 검색 (ADR-0103): the words go to the server and Kakao; not each keystroke, never the position, not stored
+    expect(html).toContain('<h2>주소·숙소 검색</h2>');
+    expect(html).toContain('칸에 적은 글자를 이 사이트의 서버로 보내고, 서버는 그 글자로 카카오(카카오 로컬 API)에 주소와 장소를 물어');
+    expect(html).toContain('글자를 칠 때마다 보내지 않고, 지금 위치는 보내지 않아요');
     // 자동 지역 (plans/nationwide-app.md 5): a 시군구 centre's grid, never the position
     expect(html).toContain('그 시군구 가운데의 기상청 격자 번호(지금 위치가 아니에요) 하나를 보내요');
     // 시작 화면 (specs/busan.md 7): it asks for the position only on its big button; 부산's photos come from 한국관광공사
