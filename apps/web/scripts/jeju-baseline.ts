@@ -34,6 +34,13 @@ const BUSAN_BLOCKS = [...readFileSync(join(APP, 'index.html'), 'utf8').matchAll(
  * file and precache lists. The inline blocks' size is held to their own cap instead (plans/busan.md 위험: gzip +2KB). */
 const SWITCHED = existsSync(join(DIST, 'spots-busan.json'));
 const BUSAN_CHUNK = /^assets\/busan-part-\*\.js$/;
+/** 자동 지역 빌드(plans/nationwide-app.md 10, U19): what it adds on purpose is taken out the same way — dist/nation/ (the
+ * 시도 files and their index), the /nation/* 캐시 줄 of _headers, and two chunks in the file and precache lists: nation-part
+ * and busan (src/busan.ts, Busan's boundary, split out of busan-part only because nation-part's regionOf needs it too). A
+ * Jeju device asks for none of them: the browser run below still counts its requests. */
+const NATION = existsSync(join(DIST, 'nation/index.json'));
+const NATION_CHUNK = /^assets\/(?:nation-part|busan)-\*\.js$/;
+const added = (n: string) => (SWITCHED && BUSAN_CHUNK.test(n)) || (NATION && NATION_CHUNK.test(n));
 const withoutBlocks = (html: string) => (SWITCHED ? BUSAN_BLOCKS.reduce((h, b) => h.replace(b, ''), html) : html);
 const sha = (b: Uint8Array | string) => createHash('sha256').update(b).digest('hex');
 const short = (b: Uint8Array | string) => sha(b).slice(0, 16);
@@ -60,7 +67,10 @@ function normalized(rel: string, body: Buffer): Buffer | string {
   if (rel === 'index.html') return withoutBlocks(unhash(body.toString('utf8')));
   // ADR-0099 Amendment 1: the hub's line to /busan/ (a switched-on build's, added on purpose)
   if (rel === 'jeju/index.html' && SWITCHED) return body.toString('utf8').replace('\n<p>다른 여행지: <a href="/busan/">여차나:부산</a></p>', '');
-  if (rel === '_headers' && SWITCHED) return body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
+  if (rel === '_headers' && SWITCHED) {
+    const h = body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
+    return NATION ? h.replace(/\/nation\/\*\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '') : h;
+  }
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
   if (rel === 'sitemap-core.xml')
     return body.toString('utf8').replace(new RegExp(`(<loc>${SITE}/(?:privacy)?</loc><lastmod>)[^<]*`, 'g'), '$1*');
@@ -75,6 +85,7 @@ function files() {
     if (rel.startsWith('assets/')) continue;
     // ADR-0099: Busan's static pages and their sitemap file, what a switched-on build adds for Busan on purpose
     if (SWITCHED && (rel.startsWith('busan/') || rel === 'sitemap-busan-core.xml')) continue;
+    if (NATION && rel.startsWith('nation/')) continue;
     const h = short(normalized(rel, readFileSync(p)));
     const m = /^jeju\/([^/]+)\/./.exec(rel);
     if (m) groups.set(`jeju/${m[1]}/`, [...(groups.get(`jeju/${m[1]}/`) ?? []), `${rel}\0${h}`]);
@@ -90,7 +101,7 @@ function assets(indexHtml: string) {
   const gz = Object.fromEntries(entry.map((f) => [unhash(f), gzipSync(readFileSync(join(DIST, f))).length]));
   const total = Object.values(gz).reduce((a, b) => a + b, 0);
   // sorted after the hash is gone: `ja-<hash>.js` and `ja-<hash>.css` would otherwise swap with the hashes
-  return { names: names.map((n) => unhash(`assets/${n}`)).filter((n) => !(SWITCHED && BUSAN_CHUNK.test(n))).sort(), koreanEntryGzip: gz, koreanEntryGzipTotal: total };
+  return { names: names.map((n) => unhash(`assets/${n}`)).filter((n) => !added(n)).sort(), koreanEntryGzip: gz, koreanEntryGzipTotal: total };
 }
 
 function swList() {
@@ -103,7 +114,7 @@ function swList() {
   const rank = (n: string) => (n === './' ? 0 : n === 'assets/index-*.css' ? 1 : n === 'assets/index-*.js' ? 2 : 3);
   return (JSON.parse(m[1]) as string[])
     .map(unhash)
-    .filter((n) => !(SWITCHED && BUSAN_CHUNK.test(n)))
+    .filter((n) => !added(n))
     .sort((a, b) => rank(a) - rank(b));
 }
 
