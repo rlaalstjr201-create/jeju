@@ -24,9 +24,11 @@ const all = file.filter((s) => s.area === '강릉');
 const spots = all.map(({ area: _area, ...s }) => s as Spot);
 const GANGNEUNG_BOX = (p: { lat: number; lng: number }) => inBox('강릉', p);
 const inputs = loadInputs('gangwon', ['강릉']);
-const CITIES = ['강릉', '속초', '춘천', '양양'];
-// 양양 이름과 겹쳐 파일 전체 규칙(pop-criteria 8절 (b))으로 읍·면을 붙인 강릉 곳: 강릉만 지으면 붙지 않는다
+const CITIES = ['강릉', '속초', '춘천', '양양', '평창'];
+// 양양·평창 이름과 겹쳐 파일 전체 규칙(pop-criteria 8절 (b))으로 읍·면을 붙인 강릉·춘천 곳: 그 도시만 지으면 붙지 않는다
 const RENAMED_BY_YANGYANG = new Map([['nt-125748', '남대천 (성산면)']]);
+const RENAMED_BY_PYEONGCHANG = new Map([['nt-623201', '대관령황태촌 (주문로)'], ['nt-2903398', '시골식당 (헌화로)'], ['nt-135934', '메밀촌 (동면)']]);
+const RENAMED_BY_OTHERS = new Map([...RENAMED_BY_YANGYANG, ...RENAMED_BY_PYEONGCHANG]);
 const item = new Map(inputs.items.map((i) => [i.id, i]));
 const volume = new Map(inputs.pop.map((r) => [r.id, r.volume as number]));
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
@@ -197,7 +199,7 @@ describe('강릉 이름 겹침 (pop-criteria 8절)', () => {
 describe('강릉 멱등·크기', () => {
   it('같은 입력으로 다시 지으면 바이트가 같고, 강릉 레코드는 강릉만 지은 것과 같다', () => {
     expect(JSON.stringify(build(loadInputs('gangwon', CITIES)).spots)).toBe(text);
-    expect(build(inputs).spots.map((s) => (RENAMED_BY_YANGYANG.has(s.id) ? { ...s, name: RENAMED_BY_YANGYANG.get(s.id) } : s))).toEqual(all);
+    expect(build(inputs).spots.map((s) => (RENAMED_BY_OTHERS.has(s.id) ? { ...s, name: RENAMED_BY_OTHERS.get(s.id) } : s))).toEqual(all);
   });
   it('파일 크기를 적는다', () => {
     const gz = gzipSync(text).length;
@@ -216,6 +218,7 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
     { city: '속초', keep: 196, out: ['nt-2549932'], famous: 12, broad: 11 },
     { city: '춘천', keep: 273, out: ['nt-3353336'], famous: 16, broad: 15 },
     { city: '양양', keep: 172, out: ['nt-3434330'], famous: 10, broad: 29 },
+    { city: '평창', keep: 466, out: [], famous: 28, broad: 21 },
   ];
   for (const { city, keep: n, out, famous, broad } of cases) {
     it(`${city}: keep ${n}곳 가운데 ${out.join('·')}만 빠지고, 상자 안·형식·도시 이름`, () => {
@@ -257,12 +260,41 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
   });
   it('양양을 더해도 강릉·속초·춘천 레코드는 양양 전 세 도시 빌드와 같다(같은 이름 규칙으로 바뀐 이름 1곳만 다름)', () => {
     const three = build(loadInputs('gangwon', ['강릉', '속초', '춘천'])).spots;
-    const others = file.filter((s) => s.area !== '양양');
+    const others = file.filter((s) => s.area !== '양양' && s.area !== '평창');
     expect(others.map((s) => s.id)).toEqual(three.map((s) => s.id));
     for (let i = 0; i < three.length; i++) {
-      const want = RENAMED_BY_YANGYANG.has(three[i].id) ? { ...three[i], name: RENAMED_BY_YANGYANG.get(three[i].id) } : three[i];
+      const want = RENAMED_BY_OTHERS.has(three[i].id) ? { ...three[i], name: RENAMED_BY_OTHERS.get(three[i].id) } : three[i];
       expect(JSON.stringify(others[i]), three[i].id).toBe(JSON.stringify(want));
     }
+  });
+});
+
+describe('평창 (criteria-04.md, pop-criteria 13절)', () => {
+  const dir = resolve(root, 'review/gangwon');
+  it('04 감사가 통과했고(표본 120곳), 평창을 더해도 다른 네 도시 레코드는 같은 이름 규칙으로 바뀐 이름 3곳만 다르다', () => {
+    const a = JSON.parse(readFileSync(resolve(dir, 'audit-평창-04.json'), 'utf8'));
+    expect(a.pass).toBe(true);
+    expect(a.metrics.n).toBe(120);
+    const four = build(loadInputs('gangwon', ['강릉', '속초', '춘천', '양양'])).spots;
+    const others = file.filter((s) => s.area !== '평창');
+    expect(others.map((s) => s.id)).toEqual(four.map((s) => s.id));
+    const changed = others.filter((s, i) => JSON.stringify(s) !== JSON.stringify(four[i]));
+    expect(changed.map((s) => s.id).sort()).toEqual([...RENAMED_BY_PYEONGCHANG.keys()].sort());
+    for (const s of changed) expect(JSON.stringify(s)).toBe(JSON.stringify({ ...four.find((x) => x.id === s.id), name: RENAMED_BY_PYEONGCHANG.get(s.id) }));
+  });
+  it('출하된 평창 466곳의 이유 문장을 빠짐없이 사실 확인했고(factcheck-평창-04), 오류로 고친 곳만 fixes에 있다', () => {
+    const fc = resolve(dir, 'factcheck-평창-04');
+    const read = (p: string) => readdirSync(fc).filter((f) => new RegExp(`^${p}-\\d{2}\\.json$`).test(f)).sort().flatMap((f) => JSON.parse(readFileSync(resolve(fc, f), 'utf8')));
+    const pc = file.filter((s) => s.area === '평창');
+    const input = read('input') as { id: string; reason: string }[];
+    const facts = read('facts') as { id: string; factError: boolean }[];
+    expect(input.map((x) => x.id)).toEqual(pc.map((s) => s.id));
+    expect(facts.map((x) => x.id)).toEqual(pc.map((s) => s.id));
+    const every = loadInputs('gangwon', CITIES);
+    const ours = every.fixes.filter((f) => (f as { source?: string }).source === 'factcheck-평창-04');
+    expect(ours.map((f) => f.id).sort()).toEqual(facts.filter((x) => x.factError).map((x) => x.id).sort());
+    const fixedIds = new Set(ours.map((f) => f.id));
+    expect(pc.filter((s) => !fixedIds.has(s.id)).map((s) => s.reason)).toEqual(input.filter((x) => !fixedIds.has(x.id)).map((x) => x.reason));
   });
 });
 
