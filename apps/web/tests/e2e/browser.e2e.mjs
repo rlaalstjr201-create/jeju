@@ -56,7 +56,7 @@ const GEO_STUB = `(() => {
 })();`;
 /** plans/busan.md S5: a build with the switch on (`vite build --mode busan`) ships spots-busan.json; the off build never does. */
 const BUSAN = existsSync(join(appDir, 'dist/spots-busan.json'));
-/** plans/nationwide-app.md U4: the 자동 지역 build (`vite build --mode nation`) ships dist/nation/; every other build has none. */
+/** plans/nationwide-app.md U4·U19: the 자동 지역 build (`vite build`, `--mode nation`) ships dist/nation/; `--mode busan`·`--mode jeju` have none. */
 const NATION = existsSync(join(appDir, 'dist/nation/index.json'));
 /** With the switch on, a device that has chosen Jeju (jeju.dest) unless the check asks for a new browser
  * (`storage: null`): the Jeju checks then run on the Jeju home, as on every device that has used the app. */

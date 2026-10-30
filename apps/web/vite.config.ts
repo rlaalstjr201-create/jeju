@@ -198,8 +198,9 @@ function analytics(env: AnalyticsEnv | null): Plugin {
 const switchOn = (command: string, mode: string) => mode === 'busan' || (command === 'build' && mode !== 'jeju');
 
 export default defineConfig(({ command, mode: given }) => {
-  // 자동 지역 (plans/nationwide-app.md U4): mode `nation` only (`vite build --mode nation`, `vitest run --mode nation`), Busan on with it
-  const nation = given === 'nation';
+  // 자동 지역 (plans/nationwide-app.md U19): on in the production build (`vite build`) and in mode `nation` (`vitest run
+  // --mode nation`), Busan on with it; off in `--mode busan` (Jeju and Busan only) and `--mode jeju`, the builds kept to switch back to
+  const nation = given === 'nation' || (command === 'build' && given !== 'busan' && given !== 'jeju');
   const mode = nation || switchOn(command, given) ? 'busan' : given;
   return {
   // Absolute: index.html served at any path (a deep link, a fallback) still finds /assets/… (ADR-0063).

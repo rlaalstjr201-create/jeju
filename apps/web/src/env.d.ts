@@ -8,7 +8,7 @@ declare const __PLACES_V__: string;
 declare const __BUSAN__: boolean;
 /** sha256 of public/spots-busan.json (first 10 hex chars), '' while there is none; injected by vite.config.ts. */
 declare const __BUSAN_V__: string;
-/** 자동 지역 스위치 (plans/nationwide-app.md 1.2): true only with `--mode nation`. Read in src/release.ts only. */
+/** 자동 지역 스위치 (plans/nationwide-app.md 1.2): true in `vite build` and `--mode nation`, false in `--mode busan`·`--mode jeju` and npm test. Read in src/release.ts only. */
 declare const __NATION__: boolean;
 /** sha256 of data/nation/index.json (first 10 hex chars), '' while there is none; injected by vite.config.ts. */
 declare const __NATION_V__: string;
