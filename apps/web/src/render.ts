@@ -1267,12 +1267,14 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   }
 
   /** 지금 여기서 (ADR-0101, specs/home-v2.md 1): the one place the 아무거나 rule would show first, over the moods; not drawn
-   * while no place with a photo can be shown. The card's name is not a link: its one tap is 길찾기. */
+   * while no place with a photo can be shown. The card's name is not a link: its one tap is 길찾기. Until the data is in,
+   * the empty card keeps its place (.now:empty): the moods under it do not move when it comes. */
   function renderNow(s: State, spots: Spot[] | null, origin: Origin | null) {
     const spot = spots ? nowSpot(s, spots, origin) : null;
     if (!spot) {
-      els.now.hidden = true;
+      els.now.hidden = !!spots;
       els.now.replaceChildren();
+      setAttr(els.now, 'aria-label', null);
       return;
     }
     const photo = el(doc, 'div', { class: 'now-photo' });
@@ -1324,7 +1326,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     els.today.querySelector(':scope > .act')?.remove();
     const first = acts[0];
     if (first) els.today.append(first.k === 'rain' ? rainRow(s.indoor) : first.k === 'sunset' ? sunsetRow(first.rows.length) : todayRow(first.row, dated));
-    // until the data is in, the board keeps the second line's place: the moods do not move under the thumb
+    // until the data is in (.wait marks it): no place held for a row to tap, which most first draws are without — the
+    // row, when there is one, comes with the data and the 지금 여기서 card below it
     els.today.classList.toggle('wait', !spots);
     renderNow(s, spots || null, origin);
 
@@ -1344,7 +1347,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
         b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin || s.dest === 'nation' ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
-        pair.append(...ex.map((x) => homePhoto(x, false)));
+        // the second photo is not shown (.pair img + img): lazy, so it does not hold up the first ones on a slow line
+        pair.append(...ex.map((x, i) => homePhoto(x, i > 0)));
         b.querySelector('.i-check')!.before(pair);
       }
     };
