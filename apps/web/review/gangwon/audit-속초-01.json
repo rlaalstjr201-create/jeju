@@ -1,0 +1,2629 @@
+{
+ "round": "01",
+ "city": "속초",
+ "criteria": "review/gangwon/criteria.md",
+ "sample": "audit-속초-01-sample.json (seed 20261030)",
+ "judgments": "audit-속초-01-judgments.json",
+ "facts": "audit-속초-01-facts.json",
+ "metrics": {
+  "n": 120,
+  "keepMood": {
+   "agree": 114,
+   "rate": 0.95,
+   "threshold": 0.9,
+   "pass": true
+  },
+  "keepOnly": {
+   "agree": 118,
+   "rate": 0.9833,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 119,
+   "rate": 0.9917,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 0,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 90,
+   "of": 91,
+   "note": "기록만"
+  }
+ },
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-2812084",
+   "name": "프리미엄 이가한우 정육참숯식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "정육코너에서 한우를 숙성해 참숯화로에 굽는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125805",
+   "name": "설악산 울산바위",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "소공원에서 신흥사, 흔들바위를 거쳐 오르는 바위산이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901225",
+   "name": "순자집곰치국",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "얼큰하거나 시원하게 끓인 곰치국이 대표인 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1959024",
+   "name": "솔밭가든막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "봉평 메밀로 막국수를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2629590",
+   "name": "옛고을순두부",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "삼색두부와 순두부전골을 내는 순두부집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839817",
+   "name": "봉브레드",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "마늘바게트로 알려진 속초 교동의 빵집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-133781",
+   "name": "두메산골",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황태정식과 황태구이를 내는 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2891983",
+   "name": "미가",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황태구이 정식과 더덕구이 정식을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2609150",
+   "name": "뉴욕제과",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "오징어쌀빵을 내는 오래된 속초 제과점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "'오래된' = 원문 '지역에서 가장 오래된 제과점'"
+  },
+  {
+   "id": "nt-2788935",
+   "name": "영랑호 설화공원",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "영랑호 설화를 조각상으로 만든 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714645",
+   "name": "청호해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "아바이마을 끝자락의 잔잔하고 수심 얕은 간이해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892369",
+   "name": "동해안붉은대게",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "홍게 간장게장이 대표인 홍게요리 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1799724",
+   "name": "속초스파랜드",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": true,
+    "reason": "장작 불가마와 소금방을 갖춘 찜질방이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125674",
+   "name": "육담폭포",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "여섯 개의 담소가 계단식 암반으로 이어진 폭포예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "'계단식 암반으로 이어진' = 원문 '계단식 암반 위로 흐르며'"
+  },
+  {
+   "id": "nt-1993692",
+   "name": "속초 하도문쌈채 마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "쌈 채소를 키우는 농촌마을로 농촌체험 프로그램을 운영해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789524",
+   "name": "단천면옥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "명태회냉면과 아바이 순대를 내는 3대째 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-134395",
+   "name": "황두막",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한옥 분위기에서 순두부와 생선구이정식을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125680",
+   "name": "천불동계곡",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "비선대에서 대청봉까지 약 7㎞ 이어지는 설악산 계곡이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2855262",
+   "name": "이선장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "동명항 근처에서 복어 코스요리를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 복어 요리 전문점·코스요리가 대표 메뉴라고만 함, '복어 코스요리'는 둘을 합친 표현"
+  },
+  {
+   "id": "nt-2714833",
+   "name": "속초해안로",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "장사항에서 설악해맞이공원까지 바다를 끼고 드라이브하는 길이에요"
+   },
+   "audit": {
+    "keep": false,
+    "reject": "OUT_OF_SCOPE",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2659548",
+   "name": "상도문돌담마을",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "돌담길을 따라 걸으며 돌 미술작품을 만나는 마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1828984",
+   "name": "감나무집 감자옹심이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감자옹심이와 오징어순대 두 가지만 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3083216",
+   "name": "뮤지엄엑스",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "빛과 영상으로 꾸민 4층 몰입형 전시 체험관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892223",
+   "name": "황가네찜",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "생선 모둠찜과 가오리찜을 내는 전문 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2905623",
+   "name": "홍용가",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "유산슬을 올린 짜장면을 내는 예약제 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710946",
+   "name": "원조88순대국",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "아바이순대와 순대국밥을 내는 순대국집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892345",
+   "name": "금이야옥이야",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "속초해수욕장 근처에서 장칼국수와 장칼제비를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901276",
+   "name": "유진게찜",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "직접 잡아 온 대게로 게 요리를 내는 영랑해안길 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "원문 '가족이 직접 바다에 나가 잡아 온 대게'"
+  },
+  {
+   "id": "nt-1260275",
+   "name": "속초관광수산시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "오징어순대와 닭강정 같은 먹거리 골목이 모인 수산시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125675",
+   "name": "천당폭포",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "천불동계곡 산행길 끝에서 만나는 약 33m 폭포예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "'산행길 끝' = 원문 '천불동 계곡의 끝에 위치'"
+  },
+  {
+   "id": "nt-125806",
+   "name": "설악 흔들바위",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "밀면 흔들리는 둥근 바위로 계조암 입구에 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782493",
+   "name": "[해파랑길] 46코스",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "장사항에서 삼포해변까지 해변을 따라 걷는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2791156",
+   "name": "코마린요트",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "청초호 인근과 조도를 도는 코스로 요트를 타요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901293",
+   "name": "제제네식탁",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "홍새우로 담근 새우장과 덮밥을 내는 집밥 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774680",
+   "name": "완도회식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "산오징어물회와 가자미물회를 내는 물회집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041720",
+   "name": "청호해수욕장(아바이마을 해변)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "아바이마을 앞에 있는 파도 잔잔한 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-4065554",
+   "name": "설악산소공원",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "울산바위 코스 시작점이자 신흥사 청동좌불상이 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125707",
+   "name": "속초해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "소나무 숲과 작은 공원이 뒤편에 있는 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3038513",
+   "name": "완앤송",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "소고기쌀국수와 사태국밥을 내는 퓨전 음식점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-126714",
+   "name": "한화리조트 설악 워터피아",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "온천욕과 워터파크 어트랙션을 함께 갖춘 온천 테마파크예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": false,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2791166",
+   "name": "속초마리나",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "요트투어를 하고 수제맥주 양조장과 카페도 있는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127586",
+   "name": "설악산 국립공원(외설악)",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "소공원에서 여러 탐방로가 갈라지는 외설악 국립공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "'갈라지는' = 원문 '소공원에서 출발하는 다양한 탐방로'"
+  },
+  {
+   "id": "nt-2837253",
+   "name": "이모네식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "가오리찜과 생선모듬찜을 내는 생선찜집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-626427",
+   "name": "왕건횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "사계절 대게찜을 특선 메뉴로 내는 동명동 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127749",
+   "name": "보광사(속초)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "영랑호 가에 있는 절로 옥으로 만든 와불상이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041546",
+   "name": "대포만세운동기념관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "1919년 대포만세운동 자리에 세운 기념관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 만세운동 때 일본 경찰 주재소가 있던 자리(주재소 자리에서 만세운동이 벌어짐)"
+  },
+  {
+   "id": "nt-2892151",
+   "name": "정든식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "강원도에서 처음 장칼국수를 개발했다는 원조 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129027",
+   "name": "장사어촌체험마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "횟집타운으로 유명하고 바다낚시도 하는 어촌마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892333",
+   "name": "구구집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "등대해수욕장 앞에서 물회를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041240",
+   "name": "동그란책",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "옛 조선소 부지 안 독립서점이자 소품샵이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788927",
+   "name": "동명동성당",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "앞마당에서 속초 앞바다가 보이는 성당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2607179",
+   "name": "발해역사관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "발해 역사와 정효공주 고분을 소개하는 전시관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2628972",
+   "name": "함흥막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1984년부터 명태회 고명 막국수를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892069",
+   "name": "아쿠아딜리버리 회포장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "제철 횟감으로 모둠회를 포장해 가는 회 포장 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901372",
+   "name": "콩서리",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "파주 장단콩으로 만든 초당 순두부가 주메뉴인 콩 요리 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 장단콩으로 '두부'를 만든다고 함, 초당 순두부에 적용은 같은 뜻으로 봄"
+  },
+  {
+   "id": "nt-2513888",
+   "name": "설악산 자생식물원",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "설악산 자생식물 122종을 보는 식물원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문 122종은 설악산 자생 희귀식물부터 흔한 야생화까지 합친 수"
+  },
+  {
+   "id": "nt-2905230",
+   "name": "명성게찜",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "장사항 횟집 타운에서 대게와 홍게 게찜을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-626407",
+   "name": "오대양횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "장사항 부둣가에서 바다를 보며 회를 먹는 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1828975",
+   "name": "진양횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "아바이마을에서 수제 오징어순대와 물회를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901360",
+   "name": "초원순두부",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "국산 콩으로 만든 순두부와 황태구이를 내는 순두부촌 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3533176",
+   "name": "설악향기로",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "벚꽃터널부터 스카이워크, 출렁다리까지 걷는 산책로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710907",
+   "name": "크래프트루트",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "양조장이 들여다보이는 속초 첫 브루 펍이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892120",
+   "name": "왕가수라청",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황태구이와 더덕구이를 30년 넘게 내는 황태요리 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127565",
+   "name": "영랑호",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "둘레 7.8㎞ 호수를 따라 산책로가 이어져요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892017",
+   "name": "범바위막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "명태회를 올린 막국수를 내는 막국수 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2905574",
+   "name": "해녀전복뚝배기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "전복해물뚝배기와 전복죽이 주메뉴인 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892363",
+   "name": "대포대게회직판장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "대포항이 내려다보이는 창가에서 대게와 회를 먹는 직판 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문 '창가 자리에 앉으면 대포항이 한눈에 들어온다' — '내려다보이는'은 높이를 덧붙인 표현"
+  },
+  {
+   "id": "nt-2608621",
+   "name": "함흥냉면옥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "속초식 명태회냉면을 처음 만든 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3468741",
+   "name": "과자의성",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "빵 만드는 과정을 보고 루프탑 카페에서 울산바위를 봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710893",
+   "name": "설악해맞이공원 인어연인상",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "갯바위 위에 인어 한 쌍이 앉은 조각상이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2891934",
+   "name": "모녀가리비",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "대포항 난전 먹거리 시장에서 오징어순대를 바싹 구워 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2891854",
+   "name": "대청마루",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "초당순두부와 황태구이를 내는 황토집 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2549932",
+   "name": "외옹치바다향기로",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "속초해수욕장에서 외옹치항까지 이어지는 해안 산책 코스예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3012422",
+   "name": "스테이 오롯이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "펜션을 개조한 카페로 테라스에서 설악산이 보여요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2819992",
+   "name": "효키",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 로스팅하는 마이크로 로스터리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041652",
+   "name": "카페우디",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "나무로 꾸민 산장 느낌 카페로 앞에 등대해수욕장이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892032",
+   "name": "속초생대구",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "맑게 끓인 생대구탕과 생대구전을 내는 대구 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774724",
+   "name": "속초해녀마을",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해녀가 딴 해산물로 전복죽과 성게알 비빔밥을 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1932003",
+   "name": "외옹치해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "백사장 길이 400m의 작은 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892339",
+   "name": "그리운보리밥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "보리밥에 나물을 넣어 비벼 먹는 한정식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-134006",
+   "name": "본가 궁중해장국",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황태해장국과 선지해장국을 내는 해장국집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2825250",
+   "name": "연화 티앤에프",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "설악산과 울산바위가 보이는 사찰제과 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1936779",
+   "name": "청초수물회",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해전물회와 섭국, 성게알 비빔밥을 내는 물회집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2905643",
+   "name": "황대구탕",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "생대구탕과 물곰탕이 주메뉴인 생대구탕 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125779",
+   "name": "영금정",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "바닷가 바위 위 해상 정자에서 바다를 바라봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-133782",
+   "name": "낙천회관",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "명태회냉면이 대표 메뉴인 속초냉면집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2994127",
+   "name": "여로요가",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "해변에서 새벽 명상과 요가를 하는 클래스예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129032",
+   "name": "대포마을",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "활어 난전이 500m 이상 늘어선 대포항 인근 마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710858",
+   "name": "노리숲길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "전망 쉼터가 다섯 곳 있는 숲속 산책로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041101",
+   "name": "대포항 원조튀김골목",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "새우튀김과 오징어순대를 파는 가게가 모인 골목이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710965",
+   "name": "문우당서림",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "속초를 대표하는 서점 가운데 하나예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839860",
+   "name": "카페 설악산로",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "한옥 베이커리 카페로 곶감그릭요거트를 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3040955",
+   "name": "동명항오징어난전",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "동명항 부두에서 오징어회와 물회를 먹는 난전이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774493",
+   "name": "칠성조선소",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "옛 조선소를 고쳐 만든 청초호 옆 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3526067",
+   "name": "속초보스대게",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "동명항 인근에서 수족관의 대게를 골라 먹는 대게 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1936796",
+   "name": "속초아바이신다신",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "모둠순대와 이북식 국밥을 내는 이북음식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2905555",
+   "name": "팔팔회센타",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "대포항에서 활어회와 해물라면까지 한 상으로 내는 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129596",
+   "name": "대포항",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "신선한 생선을 먹으러 관광객이 찾는 항구예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774722",
+   "name": "봉포머구리집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "바다가 보이는 창가에서 물회와 성게 알밥을 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782125",
+   "name": "속초파워보트클럽",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "멀티 파워 보트와 바나나보트를 타는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-4059119",
+   "name": "햅칠탐",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "상도문 마을 안에서 말차폼라떼를 내는 북카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041483",
+   "name": "영금정갯바위",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "천연 암반에 파도가 부서지고 해돋이정자가 있는 갯바위예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901165",
+   "name": "속초어장물회",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "세꼬시와 전복과 문어를 넣은 어장물회가 대표인 물회식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2607515",
+   "name": "화랑도체험장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "마상무예 공연을 보고 승마와 활쏘기를 해 보는 체험장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041622",
+   "name": "아루나",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "동해를 마주한 루프탑 카페로 말차와 스콘을 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901674",
+   "name": "돈까스렛",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "숙성한 고기로 만든 일식풍 돈가스를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710897",
+   "name": "쌍천길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "코스모스 길 약 1.2㎞가 이어지는 쌍천 하류 탐방로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2929178",
+   "name": "키친온유",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해산물 파스타와 오징어 리소토를 내는 이탈리안 레스토랑이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2901341",
+   "name": "진미동치미메밀막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "명태회 막국수와 동치미 막국수가 주메뉴인 막국수 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128803",
+   "name": "속초등대전망대",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "대나무숲 데크길을 올라 동해와 청초호를 내려다봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2913408",
+   "name": "카페 긷",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "울산바위가 올려다보이는 순두부 골목의 디저트 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-131264",
+   "name": "설악프라자컨트리클럽",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "설악산 코스와 동해 코스를 도는 골프장이에요"
+   },
+   "audit": {
+    "keep": false,
+    "reject": "NOT_DESTINATION",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 '설악산을 바라보는 마운틴 뷰 코스'·'동해를 바라보는 선라이즈 코스' — 줄여 쓴 표현"
+  },
+  {
+   "id": "nt-129454",
+   "name": "동명항",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "방파제 낚시와 활어시장이 있고 일출을 보러 오는 항구예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041283",
+   "name": "동명항 포장마차 거리",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "바다를 보며 모둠 해산물과 골뱅이구이를 먹는 포장마차 거리예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710914",
+   "name": "테디베어팜",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "테디베어 곰인형을 테마별로 전시한 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710899",
+   "name": "보광미니골프장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "1963년에 연 전국에서 유일한 미니 골프 게임장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710922",
+   "name": "해피아울하우스",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "세계 각국의 부엉이 수집품 5,000여 점을 전시한 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128571",
+   "name": "설악해맞이공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "바다를 배경으로 조각 작품과 테마 길이 이어진 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129468",
+   "name": "아바이마을 갯배",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "줄을 직접 당겨 청초호 하구 물길을 건너는 무동력 배예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127284",
+   "name": "청대산",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "정상까지 30분, 시가지와 동해가 보이는 산이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}

@@ -1,0 +1,2589 @@
+{
+ "round": "01",
+ "city": "양양",
+ "criteria": "review/gangwon/criteria.md",
+ "sample": "audit-양양-01-sample.json (seed 20261030)",
+ "judgments": "audit-양양-01-judgments.json",
+ "facts": "audit-양양-01-facts.json",
+ "metrics": {
+  "n": 120,
+  "keepMood": {
+   "agree": 106,
+   "rate": 0.8833,
+   "threshold": 0.9,
+   "pass": false
+  },
+  "keepOnly": {
+   "agree": 119,
+   "rate": 0.9917,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 120,
+   "rate": 1,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 0,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 70,
+   "of": 70,
+   "note": "기록만"
+  }
+ },
+ "pass": false,
+ "rows": [
+  {
+   "id": "nt-2838085",
+   "name": "파머스키친",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "죽도해변에서 수제버거와 셰이크를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128562",
+   "name": "남애어촌체험마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "배낚시와 오징어순대 만들기를 해 보는 어촌체험마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2841480",
+   "name": "여운포리빵집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "깜빠뉴와 소금빵을 내는 붉은 벽돌 빵집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714604",
+   "name": "잔교리해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해송 사이 야영장이 있는 작은 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125651",
+   "name": "공수전계곡",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "용소와 폭포가 있고 여름엔 물놀이하는 계곡이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2717260",
+   "name": "금풀애마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "남대천 상류 마을에서 계곡물놀이와 산촌 체험을 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2383582",
+   "name": "설악산 흘림골",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "계곡 따라 등선대로 올라 여심폭포를 보는 탐방로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2718844",
+   "name": "하광정항",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "작은 어선이 정박하는 항구로 해맞이 명소예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-252567",
+   "name": "죽도정·죽도 전망대",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "섬 둘레 산책로를 걸어 죽도정과 전망대에 오르는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 산책로는 섬 둘레, 정자·전망대는 계단으로 오름 — 함께 묶은 서술이나 원문 시설 모두 있음"
+  },
+  {
+   "id": "nt-2715216",
+   "name": "38평화마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "38선이 지나던 마을에서 두릅 따기 체험을 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072234",
+   "name": "엉클서프양양",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "인구해변에서 서핑 강습을 하는 서핑 스쿨이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125749",
+   "name": "현산공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "정상에서 대청봉까지 보이고 봄엔 벚꽃이 피는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702823",
+   "name": "정암해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해변 따라 산책로가 있고 바다 앞에 카페가 모인 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774683",
+   "name": "수산항물회",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "째복국과 째복탕, 째복무침을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125618",
+   "name": "오색령(한계령)",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "대청봉과 점봉산 등산로가 시작되는 고갯길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072010",
+   "name": "서프팩토리 양양설악점",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "설악해수욕장에서 서핑 강습과 보드 대여를 하는 스쿨이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777057",
+   "name": "이두형가옥",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "강원도 유형문화재로 지정된 겹집 민가예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-610533",
+   "name": "어민후계자횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "남애항 회센터에서 활어회와 물회를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125681",
+   "name": "지경리해변(양양)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "송림에서 텐트 치고 야영하는 간이해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-134091",
+   "name": "등불가든",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "양양 한우와 자연산 송이버섯을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714824",
+   "name": "낙산해안로",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "물치항에서 낙산대교까지 이어지는 해안로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-686158",
+   "name": "송이버섯마을",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "송이버섯전골과 한우 샤브샤브를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129182",
+   "name": "오색약수골전통장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "전통 방식으로 장 담그는 곳에서 청국장 제조 과정을 견학해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125704",
+   "name": "송전해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "900m 모래사장 뒤로 소나무 숲이 있는 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125720",
+   "name": "죽도해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "2㎞ 모래사장 옆에 죽도봉과 서핑숍이 있는 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 죽도는 해변과 연결된 섬, 죽도봉·서핑숍은 주변 — 「옆에」는 위치 바꿔 쓰기로 봄"
+  },
+  {
+   "id": "nt-3038535",
+   "name": "남애스쿠버리조트",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "남애리에서 펀다이빙과 교육다이빙을 하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2808938",
+   "name": "알로하웨이브",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "죽도해변 바다 옆에서 음료와 식사를 하는 라운지예요"
+   },
+   "audit": {
+    "keep": false,
+    "reject": "INSUFFICIENT_INFO",
+    "indoor": true
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 「바다 옆」은 원문 「오션 라운지」를 바꿔 쓴 것으로 봄"
+  },
+  {
+   "id": "nt-252570",
+   "name": "양양동해신묘지",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "동해 용왕에게 제사를 지내던 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125682",
+   "name": "북분리해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "소나무 숲 옆 350m 백사장이 있는 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2929258",
+   "name": "컨센트릭양양",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "낙산사 근처에서 휘낭시에와 스콘을 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127805",
+   "name": "국립미천골자연휴양림",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "미천골 계곡을 따라 폭포와 숲이 이어지는 휴양림이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2500865",
+   "name": "롱비치 서프스쿨",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "해변에서 서핑을 가르쳐 주는 강습 스쿨이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2927441",
+   "name": "레포밸리",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "엎드린 자세로 타는 집라인을 체험하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-743036",
+   "name": "해담마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "수륙양용차 체험을 하는 산골 계곡 마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892498",
+   "name": "하조맛식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "생선구이 돌솥밥이 인기인 하조대 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-403576",
+   "name": "오색식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "약수로 지은 밥과 산채정식을 내는 오색약수터 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125702",
+   "name": "낙산해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "소나무 숲 앞 4㎞ 모래사장이 펼쳐진 양양 대표 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125650",
+   "name": "둔전계곡",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "계곡 트레킹과 진전사지 3층석탑을 함께 보는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-4066341",
+   "name": "양지바른 버거 & 쌀국수 본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "소고기모듬쌀국수와 베이컨버거를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2925460",
+   "name": "카페 달파도",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "동호해변 바다를 보며 브런치를 먹는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072439",
+   "name": "설온",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "옛 온천장을 고친 카페, 족욕탕도 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2903557",
+   "name": "광주빛고을식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "물곰탕과 생태찌개가 대표인 해물 요리집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2773621",
+   "name": "기사문항",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "방파제 낚시와 배낚시를 하는 작은 어항이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702316",
+   "name": "인구항 배낚시",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "작은 어항에서 삼치와 도다리를 낚는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710732",
+   "name": "하조대 둘레길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "하조대 전망대에서 등대 쪽으로 해안 따라 걷는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-627070",
+   "name": "옛뜰",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "가마솥 손두부와 자연산 섭국으로 이름난 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2838104",
+   "name": "해촌",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "자연산 홍합으로 끓인 섭국으로 이름난 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-250393",
+   "name": "양양 진전사지 삼층석탑",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "진전사 옛터에 선 통일신라 3층 석탑이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125795",
+   "name": "낙산사 의상대",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "바닷가 절벽 위 정자에서 동해와 일출을 봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-134786",
+   "name": "산골식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오색약수정식을 내는 오색약수터 인근 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3434330",
+   "name": "등불가든",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우 꽃등심과 자연산 송이버섯을 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-126891",
+   "name": "양양선림원지",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "석등과 승탑, 탑비가 전해지는 통일신라 절터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788875",
+   "name": "수산항",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "요트 체험을 해볼 수 있는 일출 명소 항구예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2927413",
+   "name": "레이크지움",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "호수가 보이는 갤러리 카페, 작품이 전시돼 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2752126",
+   "name": "동산항",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "스킨스쿠버와 낚시를 하는 사람들이 찾는 항구예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3041749",
+   "name": "양리단길",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "서핑숍과 카페, 가게가 모인 인구해변 앞 거리예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2713095",
+   "name": "서림사지",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "삼층석탑과 석조비로자나불좌상이 서 있는 절터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3454400",
+   "name": "양양새활용센터",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "reason": "버려진 포도주 병으로 허브 보틀을 만드는 체험을 해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-252568",
+   "name": "양양향교",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "대성전과 명륜당이 남은 고려 시대 향교예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710838",
+   "name": "동산해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "탁 트인 바다 위로 죽도가 보이는 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788991",
+   "name": "남대천연어생태공원",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "데크 산책로와 전망대로 갈대를 보는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2915989",
+   "name": "카페 로그",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "소나무 숲이 보이는 북 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127900",
+   "name": "어성전계곡",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "물살이 세지 않아 아이들과 물놀이하는 계곡이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127135",
+   "name": "법수치계곡",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "대승폭포가 있고 기암절벽 사이로 계곡물이 흐르는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892476",
+   "name": "하조대반점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해물짬뽕과 탕수육을 내는 하조대 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-250380",
+   "name": "양양 진전사지 도의선사탑",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "진전사터 언덕 위에 선 도의선사의 8각 묘탑이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129594",
+   "name": "하조대 무인등대",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "하조대 정자에서 기암절벽을 따라 걸으면 흰 등대가 나와요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892419",
+   "name": "송월메밀국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한옥 식당에서 물메밀국수와 수육을 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127473",
+   "name": "오색약수터",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "암반 세 곳에서 철분 약수가 솟는 약수터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-135824",
+   "name": "하조대막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "막국수가 대표 메뉴이고 한방수육과 손왕만두도 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2707937",
+   "name": "물치항",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "방파제 산책로 끝에 송이버섯 모양 흰 등대가 서 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-4066352",
+   "name": "킨십",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "물치해수욕장 인근에서 초당옥수수 크럼블 케이크를 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892660",
+   "name": "범바우막국수 양양본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "꾸지뽕과 비트로 육수를 만든 막국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127535",
+   "name": "갈천약수터",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "구룡령 계곡 바위에서 철분 약수가 나오는 약수터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714611",
+   "name": "갯마을해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "모래를 파면 조개가 나오는 조용한 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2903512",
+   "name": "강원횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "남애항에서 자연산 모둠회를 내는 어촌계 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710808",
+   "name": "해담마을 수륙양용차",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "수륙양용차로 미천골 계곡을 달리는 체험이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2712951",
+   "name": "명주사부도군",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "부도 열두 기와 비석 네 개가 모여 있는 부도밭이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892463",
+   "name": "전라도식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "낙산사 입구에서 황태구이와 생선구이를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2914112",
+   "name": "동해막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1986년부터 물막국수와 비빔막국수를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788996",
+   "name": "영혈사",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "원효대사가 세웠다고 전하는 신흥사의 말사예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2704932",
+   "name": "인구해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "초보 서퍼가 즐겨 찾는 서핑 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784323",
+   "name": "후진항",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "빨간 등대와 작은 배, 활어회 판매센터가 있는 항구예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839872",
+   "name": "바다뷰제빵소",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "후진항과 바다가 내려다보이는 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714816",
+   "name": "낙산항",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "낙산사 옆 항구에서 바다를 보며 횟감을 맛봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1830997",
+   "name": "불바라기약수터",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "청룡폭포와 황룡폭포 중간에서 약수가 솟는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3042140",
+   "name": "양양남대천체육공원",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "남대천 따라 자전거 도로와 조깅 코스가 뻗은 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 「남대천 따라」 — 원문은 물줄기를 바라보며 뻗은 도로, 공원명이 남대천"
+  },
+  {
+   "id": "nt-1955961",
+   "name": "동명서원",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "조인벽을 모시는 충현사와 홍살문이 있는 서원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2903606",
+   "name": "동쪽바다 세꼬시",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "수산항에서 잡은 참가자미 세꼬시를 내는 가족 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3428269",
+   "name": "카페 둔치",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "남대천 하류에서 바다와 산이 보이는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777254",
+   "name": "양양 오색리 삼층석탑",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "오색석사 터로 추정되는 곳에 선 삼층석탑이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702446",
+   "name": "수산항 낚시터",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "방파제에서 우럭과 노래미를 낚는 수산항이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-633546",
+   "name": "오색통나무집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오색약수터에서 돌솥밥과 더덕구이를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702630",
+   "name": "연어 자전거길",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "남대천 따라 읍내에서 하구까지 달리는 자전거길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072009",
+   "name": "빅웨이브",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "기사문해변에서 서핑 강습과 장비 대여를 하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127528",
+   "name": "홍련암",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "절벽 위 암자로 법당 마루 아래 바닷물이 내려다보여요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125716",
+   "name": "동호해변(양양)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "500m 모래밭에서 조개 잡는 아담한 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-133226",
+   "name": "영광정메밀국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "메밀로 만든 막국수에 동치미를 곁들이는 3대째 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 「3대째」 — 원문 「3대가 함께 운영」"
+  },
+  {
+   "id": "nt-2781736",
+   "name": "동일식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "곰치국과 산나물 반찬을 내는 양양 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2946583",
+   "name": "리버티",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "스케이트보드 타는 콘크리트 파크가 있는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1910256",
+   "name": "달래촌",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한약재와 산채를 한 상에 차려 주는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125621",
+   "name": "설악산 대청봉",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "오색 쪽 코스로 4시간쯤 걸려 오르는 설악산 최고봉이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2704383",
+   "name": "물치해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "물치항 옆 백사장에서 설악산을 배경으로 바다를 봐요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 설악산 배경으로 사진, 이유는 바다를 봄 — 같은 뜻으로 봄"
+  },
+  {
+   "id": "nt-252571",
+   "name": "남대천(양양)",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "연어가 돌아오는 하천 하구에 갈대숲 관찰로가 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3082559",
+   "name": "서프월드",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "인구해변에서 서핑 강습을 받고 버거도 먹는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710821",
+   "name": "중광정해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "하조대와 붙은 해변으로 서핑 전용 해변이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072232",
+   "name": "인구서프",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "인구해변에서 서핑 강습과 보드 대여를 하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 「보드 대여」 — 원문 「관련 물품 쇼핑 및 대여」"
+  },
+  {
+   "id": "nt-127037",
+   "name": "양양 송천떡마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "떡메치기와 전통 떡 만들기를 해 보는 산촌체험마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892381",
+   "name": "메밀꽃향기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "메밀막국수와 감자옹심이를 내는 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2892548",
+   "name": "흥부네밥상",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "약수 돌솥밥과 곤드레 돌솥밥을 내는 한식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710849",
+   "name": "동산포해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해변에서 조도가 바로 보이는 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3479339",
+   "name": "르온다",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "20층에서 바다를 보는 스카이 오션뷰 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2915995",
+   "name": "양양송이조각공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "남대천 강변 잔디밭에 어린이 놀이시설이 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-126738",
+   "name": "남애항",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "방파제 스카이워크에 올라 항구와 동해를 보는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125773",
+   "name": "낙산사",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "의상대사가 세운 관음성지로 해수관음상과 홍련암이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774463",
+   "name": "38횟집 (삼팔횟집)",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "기사문해수욕장 근처에서 모둠회를 내는 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710791",
+   "name": "[해파랑길] 43코스",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "하조대해변에서 수산항까지 해안 따라 걷는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710736",
+   "name": "남대천 생태관찰로",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "남대천 갈대숲 사이 덱 탐방로를 걷는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710829",
+   "name": "잔교리해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해송 숲 사이 야영장이 있는 한적한 해수욕장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2570330",
+   "name": "송이밸리자연휴양림",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "송이생태관과 짚라인, 모노레일이 있는 휴양림이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}
