@@ -24,7 +24,9 @@ const all = file.filter((s) => s.area === '강릉');
 const spots = all.map(({ area: _area, ...s }) => s as Spot);
 const GANGNEUNG_BOX = (p: { lat: number; lng: number }) => inBox('강릉', p);
 const inputs = loadInputs('gangwon', ['강릉']);
-const CITIES = ['강릉', '속초', '춘천'];
+const CITIES = ['강릉', '속초', '춘천', '양양'];
+// 양양 이름과 겹쳐 파일 전체 규칙(pop-criteria 8절 (b))으로 읍·면을 붙인 강릉 곳: 강릉만 지으면 붙지 않는다
+const RENAMED_BY_YANGYANG = new Map([['nt-125748', '남대천 (성산면)']]);
 const item = new Map(inputs.items.map((i) => [i.id, i]));
 const volume = new Map(inputs.pop.map((r) => [r.id, r.volume as number]));
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
@@ -195,7 +197,7 @@ describe('강릉 이름 겹침 (pop-criteria 8절)', () => {
 describe('강릉 멱등·크기', () => {
   it('같은 입력으로 다시 지으면 바이트가 같고, 강릉 레코드는 강릉만 지은 것과 같다', () => {
     expect(JSON.stringify(build(loadInputs('gangwon', CITIES)).spots)).toBe(text);
-    expect(build(inputs).spots).toEqual(all);
+    expect(build(inputs).spots.map((s) => (RENAMED_BY_YANGYANG.has(s.id) ? { ...s, name: RENAMED_BY_YANGYANG.get(s.id) } : s))).toEqual(all);
   });
   it('파일 크기를 적는다', () => {
     const gz = gzipSync(text).length;
@@ -213,6 +215,7 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
   const cases = [
     { city: '속초', keep: 196, out: ['nt-2549932'], famous: 12, broad: 11 },
     { city: '춘천', keep: 273, out: ['nt-3353336'], famous: 16, broad: 15 },
+    { city: '양양', keep: 172, out: ['nt-3434330'], famous: 10, broad: 29 },
   ];
   for (const { city, keep: n, out, famous, broad } of cases) {
     it(`${city}: keep ${n}곳 가운데 ${out.join('·')}만 빠지고, 상자 안·형식·도시 이름`, () => {
@@ -243,8 +246,18 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
       expect(every.pop.filter((r) => cityOf.get(r.id)?.city === city).every((r) => Number.isInteger(r.volume))).toBe(true);
     });
   }
-  it('양양은 감사에서 떨어져 싣지 않는다', () => {
-    expect(file.some((s) => s.area === '양양')).toBe(false);
+  it('양양은 01이 감사에서 떨어지고 02(criteria-02.md)가 통과해 02 판정으로 싣는다', () => {
     expect(JSON.parse(readFileSync(resolve(dir, 'audit-양양-01.json'), 'utf8')).pass).toBe(false);
+    expect(JSON.parse(readFileSync(resolve(dir, 'audit-양양-02.json'), 'utf8')).pass).toBe(true);
+    expect(file.some((s) => s.area === '양양')).toBe(true);
+  });
+  it('양양을 더해도 강릉·속초·춘천 레코드는 양양 전 세 도시 빌드와 같다(같은 이름 규칙으로 바뀐 이름 1곳만 다름)', () => {
+    const three = build(loadInputs('gangwon', ['강릉', '속초', '춘천'])).spots;
+    const others = file.filter((s) => s.area !== '양양');
+    expect(others.map((s) => s.id)).toEqual(three.map((s) => s.id));
+    for (let i = 0; i < three.length; i++) {
+      const want = RENAMED_BY_YANGYANG.has(three[i].id) ? { ...three[i], name: RENAMED_BY_YANGYANG.get(three[i].id) } : three[i];
+      expect(JSON.stringify(others[i]), three[i].id).toBe(JSON.stringify(want));
+    }
   });
 });
