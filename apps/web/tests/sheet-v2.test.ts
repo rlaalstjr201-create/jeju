@@ -6,10 +6,18 @@ import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { normalizeNation } from '../src/nation';
 import { NATION, loadNation } from '../src/release';
+import type * as Release from '../src/release';
 import { KEYS, destKey } from '../src/store';
 import type { GeoHit } from '../src/types';
 import { fileSpots } from './fixtures';
 import { $, $$, current, flush, render, reset, settle, tap } from './harness';
+
+// the 자동 지역's part not coming (no connection), for one test: loadNation answers false
+const nationFails = vi.hoisted(() => ({ on: false }));
+vi.mock('../src/release', async (orig) => {
+  const m = await orig<typeof Release>();
+  return { ...m, loadNation: () => (nationFails.on ? Promise.resolve(false) : m.loadNation()) };
+});
 
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const 동문시장 = { lat: 33.5122, lng: 126.5272 };
@@ -21,18 +29,21 @@ const wait = async () => {
   await settle();
 };
 type Answer = { status: number; hits?: GeoHit[] } | 'throw';
-function mount(o: { dest?: string; answer?: Answer } = {}) {
+function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void> } = {}) {
   if (o.dest) localStorage.setItem(KEYS.dest, JSON.stringify(o.dest));
   const asked: string[] = [];
   render({
     loadSpots: (d, sgg) => Promise.resolve(d === 'nation' || d === 'gangwon' ? normalizeNation(JSON.parse(file('51')), [], sgg) : fileSpots),
     locate: () => Promise.resolve(동문시장),
-    fetch: (url: string) => {
-      if (!url.startsWith('/api/geo')) return Promise.resolve({ ok: false, status: 204, json: () => Promise.resolve(null) });
-      asked.push(decodeURIComponent(url.slice('/api/geo?q='.length)));
+    fetch: async (url: string, init?: { method?: string; headers?: Record<string, string>; body?: string }) => {
+      if (!url.startsWith('/api/geo')) return { ok: false, status: 204, json: () => Promise.resolve(null) };
+      // the words in a POST body only, never in the URL (m-5)
+      expect([url, init?.method, init?.headers?.['Content-Type']]).toEqual(['/api/geo', 'POST', 'application/json']);
+      asked.push((JSON.parse(init!.body!) as { q: string }).q);
+      await o.hold;
       const a = o.answer ?? { status: 200, hits: [애월] };
-      if (a === 'throw') return Promise.reject(new Error('offline'));
-      return Promise.resolve({ ok: a.status === 200, status: a.status, json: () => Promise.resolve({ hits: a.hits ?? [] }) });
+      if (a === 'throw') throw new Error('offline');
+      return { ok: a.status === 200, status: a.status, json: () => Promise.resolve({ hits: a.hits ?? [] }) };
     },
   });
   return { asked };
@@ -127,6 +138,8 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect($('#sheet [data-basis="stay"] .nm').textContent).toBe('주소·숙소');
     const q = $<HTMLInputElement>('#sheet .addr-q');
     expect([q.type, q.getAttribute('aria-label'), q.getAttribute('maxlength')]).toEqual(['search', '주소나 숙소 이름 검색', '40']);
+    // a name or an address: no spelling underline, no capital or correction (n-3)
+    expect([q.getAttribute('spellcheck'), q.getAttribute('autocapitalize'), q.getAttribute('autocorrect')]).toEqual(['false', 'off', 'off']);
     expect($('#sheet .addr-go').getAttribute('aria-label')).toBe('검색');
     await search('  애월   게스트하우스 ');
     expect(asked).toEqual(['애월 게스트하우스']);
@@ -135,6 +148,7 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
       [해운대.name, 해운대.addr],
     ]);
     expect($('#sheet .addr-err').hidden).toBe(true);
+    expect($('#sheet .addr-live').textContent).toBe('2곳 찾았어요.');
     await tap('#sheet [data-hit="0"]');
     await wait();
     expect(current().state()).toMatchObject({ dest: 'jeju', basis: 'stay', overlay: null, stay: { lat: 애월.lat, lng: 애월.lng, area: '애월', source: 'addr' } });
@@ -174,6 +188,8 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     await search('애월');
     expect($('#sheet .addr-err').textContent).toBe('검색을 쓸 수 없어요.');
     expect($('#sheet .addr-err').hidden).toBe(false);
+    // told politely, once: the seen line is not a second live region (m-4)
+    expect([$('#sheet .addr-live').getAttribute('role'), $('#sheet .addr-live').textContent, $('#sheet .addr-err').getAttribute('role')]).toEqual(['status', '검색을 쓸 수 없어요.', null]);
     expect($$('#sheet .hit-row')).toHaveLength(0);
     reset();
     mount({ dest: 'jeju', answer: { status: 200, hits: [] } });
@@ -181,6 +197,7 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     await tap('#basis');
     await search('없는 곳');
     expect($('#sheet .addr-err').textContent).toBe('찾는 곳이 없어요. 다른 이름으로 검색해 주세요.');
+    expect($('#sheet .addr-live').textContent).toBe('찾는 곳이 없어요. 다른 이름으로 검색해 주세요.');
     reset();
     mount({ dest: 'jeju', answer: 'throw' });
     await wait();
@@ -201,5 +218,67 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     await wait();
     await tap('#basis');
     expect($$('#sheet .hit-row')).toHaveLength(0);
+  });
+
+  it('검색 pressed: the focus stays on it while asking (aria-disabled, aria-busy, not disabled); a second press asks nothing', async () => {
+    let answerNow = () => undefined as void;
+    const hold = new Promise<void>((r) => (answerNow = r));
+    const { asked } = mount({ dest: 'jeju', hold, answer: { status: 200, hits: [애월] } });
+    await wait();
+    await tap('#basis');
+    $<HTMLInputElement>('#sheet .addr-q').value = '애월';
+    const go = $<HTMLButtonElement>('#sheet .addr-go');
+    go.focus();
+    await tap(go);
+    expect([go.disabled, go.getAttribute('aria-disabled'), go.getAttribute('aria-busy')]).toEqual([false, 'true', 'true']);
+    expect(document.activeElement).toBe(go);
+    expect($('#sheet .addr-live').textContent).toBe('');
+    await tap(go);
+    expect(asked).toEqual(['애월']);
+    answerNow();
+    await wait();
+    expect(document.activeElement).toBe($('#sheet .addr-go'));
+    expect([go.getAttribute('aria-disabled'), go.getAttribute('aria-busy')]).toEqual([null, null]);
+    expect($('#sheet .addr-live').textContent).toBe('1곳 찾았어요.');
+  });
+
+  it('40 characters counted as the server does: an emoji is one, never cut in half', async () => {
+    const { asked } = mount({ dest: 'jeju' });
+    await wait();
+    await tap('#basis');
+    await search(`${'가'.repeat(39)}😀😀`);
+    expect(asked).toEqual([`${'가'.repeat(39)}😀`]);
+  });
+
+  it('Esc in the search box with words in it empties the box and keeps the sheet; Esc again closes it', async () => {
+    mount({ dest: 'jeju' });
+    await wait();
+    await tap('#basis');
+    const q = $<HTMLInputElement>('#sheet .addr-q');
+    q.value = '애월';
+    q.focus();
+    q.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await flush();
+    expect([q.value, current().state().overlay, document.activeElement === q]).toEqual(['', 'basis', true]);
+    q.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await wait();
+    expect(current().state().overlay).toBeNull();
+  });
+
+  it("an answer outside Jeju with the 자동 지역's part not coming: 「검색하지 못했어요…」, not 「장소 자료가 없어요」; the basis unchanged", async () => {
+    mount({ dest: 'jeju', answer: { status: 200, hits: [해운대] } });
+    await wait();
+    await tap('#basis');
+    await search('해운대');
+    nationFails.on = true;
+    try {
+      await tap('#sheet [data-hit="0"]');
+      await wait();
+    } finally {
+      nationFails.on = false;
+    }
+    expect($('#sheet .addr-err').textContent).toBe('검색하지 못했어요. 연결을 확인하고 다시 검색해 주세요.');
+    expect(current().state()).toMatchObject({ dest: 'jeju', basis: 'gps', overlay: 'basis' });
+    expect($$('#sheet .hit-row')).toHaveLength(1);
   });
 });

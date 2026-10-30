@@ -1,6 +1,7 @@
-// 주소·숙소 검색 함수 (ADR-0103): the words in, Kakao's two answers out as at most 6 hits inside Korea; no key → 503.
+// 주소·숙소 검색 함수 (ADR-0103): the words in (a POST body, from this site only), Kakao's two answers out as at most 6 hits
+// inside Korea; no key, or one Kakao refuses → 503.
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { hitsOf, limited, onRequestGet, queryOf } from '../functions/api/geo';
+import { cacheKeyOf, hitsOf, limited, onRequestPost, queryOf, sameSite } from '../functions/api/geo';
 
 const ADDRESS = {
   documents: [
@@ -24,6 +25,32 @@ describe('queryOf', () => {
     expect(queryOf('가'.repeat(40))).toBe('가'.repeat(40));
     expect(queryOf('가'.repeat(41))).toBeNull();
     expect(queryOf('a\u0000b')).toBeNull();
+    expect(queryOf(42)).toBeNull();
+  });
+});
+
+describe('sameSite', () => {
+  const at = (h: Record<string, string>) => new Request('https://yeochana.com/api/geo', { method: 'POST', headers: h });
+  it('Sec-Fetch-Site same-origin; without it an Origin of this site; without that a Referer of it; nothing else', () => {
+    expect(sameSite(at({ 'Sec-Fetch-Site': 'same-origin' }))).toBe(true);
+    expect(sameSite(at({ 'Sec-Fetch-Site': 'cross-site', Origin: 'https://yeochana.com' }))).toBe(false);
+    expect(sameSite(at({ 'Sec-Fetch-Site': 'same-site' }))).toBe(false);
+    expect(sameSite(at({ 'Sec-Fetch-Site': 'none' }))).toBe(false);
+    expect(sameSite(at({ Origin: 'https://yeochana.com' }))).toBe(true);
+    expect(sameSite(at({ Origin: 'https://evil.example' }))).toBe(false);
+    expect(sameSite(at({ Referer: 'https://yeochana.com/?d=1' }))).toBe(true);
+    expect(sameSite(at({ Referer: 'https://evil.example/' }))).toBe(false);
+    expect(sameSite(at({}))).toBe(false);
+  });
+});
+
+describe('cacheKeyOf', () => {
+  it('the SHA-256 of the words, never the words', async () => {
+    const k = await cacheKeyOf('애월 해안로');
+    expect(k).toMatch(/^https:\/\/geo\.cache\/[0-9a-f]{64}$/);
+    expect(k).not.toContain(encodeURIComponent('애월'));
+    expect(await cacheKeyOf('애월 해안로')).toBe(k);
+    expect(await cacheKeyOf('애월')).not.toBe(k);
   });
 });
 
@@ -50,22 +77,39 @@ describe('limited', () => {
   });
 });
 
-describe('onRequestGet', () => {
+describe('onRequestPost', () => {
   afterEach(() => void vi.unstubAllGlobals());
-  const req = (q: string) => new Request(`https://x.test/api/geo?q=${encodeURIComponent(q)}`, { headers: { 'CF-Connecting-IP': `t-${Math.random()}` } });
+  const req = (q: string, h: Record<string, string> = {}) =>
+    new Request('https://x.test/api/geo', {
+      method: 'POST',
+      body: JSON.stringify({ q }),
+      headers: { 'Content-Type': 'application/json', 'Sec-Fetch-Site': 'same-origin', 'CF-Connecting-IP': `t-${Math.random()}`, ...h },
+    });
 
   it('no key: 503, nothing asked', async () => {
     const f = vi.fn();
     vi.stubGlobal('fetch', f);
-    const res = await onRequestGet({ request: req('애월'), env: {} });
+    const res = await onRequestPost({ request: req('애월'), env: {} });
     expect(res.status).toBe(503);
     expect(res.headers.get('Cache-Control')).toBe('no-store');
     expect(f).not.toHaveBeenCalled();
   });
 
-  it('bad words: 400', async () => {
-    expect((await onRequestGet({ request: req(''), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
-    expect((await onRequestGet({ request: req('가'.repeat(41)), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
+  it('from another site: 403, nothing asked', async () => {
+    const f = vi.fn();
+    vi.stubGlobal('fetch', f);
+    const res = await onRequestPost({ request: req('애월', { 'Sec-Fetch-Site': 'cross-site' }), env: { KAKAO_REST_API_KEY: 'k' } });
+    expect([res.status, res.headers.get('X-Geo-Reason')]).toEqual([403, 'cross-site']);
+    expect(f).not.toHaveBeenCalled();
+  });
+
+  it('bad words: 400 (not JSON, no q)', async () => {
+    const raw = (body: string, type = 'application/json') => new Request('https://x.test/api/geo', { method: 'POST', body, headers: { 'Content-Type': type, 'Sec-Fetch-Site': 'same-origin' } });
+    expect((await onRequestPost({ request: raw('q=애월', 'application/x-www-form-urlencoded'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
+    expect((await onRequestPost({ request: raw('{'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
+    expect((await onRequestPost({ request: raw('{}'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
+    expect((await onRequestPost({ request: req(''), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
+    expect((await onRequestPost({ request: req('가'.repeat(41)), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(400);
   });
 
   it('asks both searches with the key in the header and only the words, answers the hits, not kept by the browser', async () => {
@@ -74,7 +118,7 @@ describe('onRequestGet', () => {
       asked.push({ url, auth: new Headers(init.headers).get('Authorization') });
       return new Response(JSON.stringify(url.includes('address') ? ADDRESS : KEYWORD), { status: 200 });
     });
-    const res = await onRequestGet({ request: req('애월 해안로'), env: { KAKAO_REST_API_KEY: ' secret ' } });
+    const res = await onRequestPost({ request: req('애월 해안로'), env: { KAKAO_REST_API_KEY: ' secret ' } });
     expect(res.status).toBe(200);
     expect(res.headers.get('Cache-Control')).toBe('no-store');
     expect(((await res.json()) as { hits: unknown[] }).hits).toHaveLength(3);
@@ -83,12 +127,38 @@ describe('onRequestGet', () => {
     expect(asked.every((a) => !a.url.includes('secret'))).toBe(true);
   });
 
+  it('a key Kakao refuses (401/403): 503, as no key; the reason header ASCII only', async () => {
+    for (const status of [401, 403]) {
+      vi.stubGlobal('fetch', async () => new Response('', { status }));
+      const res = await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } });
+      expect([res.status, res.headers.get('X-Geo-Reason')]).toEqual([503, `bad-key ${status}`]);
+    }
+    vi.stubGlobal('fetch', async () => {
+      throw new Error('연결 끊김 \u2014 network');
+    });
+    const res = await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } });
+    expect([res.status, res.headers.get('X-Geo-Reason')]).toEqual([502, 'network']);
+  });
+
   it('both searches failing: 502; one failing: the other one answers', async () => {
-    vi.stubGlobal('fetch', async () => new Response('', { status: 401 }));
-    expect((await onRequestGet({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(502);
+    vi.stubGlobal('fetch', async () => new Response('', { status: 500 }));
+    expect((await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(502);
     vi.stubGlobal('fetch', async (url: string) => (url.includes('address') ? new Response('', { status: 500 }) : new Response(JSON.stringify(KEYWORD))));
-    const res = await onRequestGet({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } });
+    const res = await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } });
     expect(res.status).toBe(200);
     expect(((await res.json()) as { hits: { name: string }[] }).hits.map((h) => h.name)).toEqual(['애월 게스트하우스', '속초해수욕장']);
+  });
+  it('kept at the edge a day under the words\' hash, only when both searches answered', async () => {
+    const put = vi.fn(async () => undefined);
+    vi.stubGlobal('caches', { default: { match: async () => undefined, put } });
+    vi.stubGlobal('fetch', async (url: string) => (url.includes('address') ? new Response('', { status: 500 }) : new Response(JSON.stringify(KEYWORD))));
+    expect((await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(200);
+    expect(put).not.toHaveBeenCalled();
+    vi.stubGlobal('fetch', async (url: string) => new Response(JSON.stringify(url.includes('address') ? ADDRESS : KEYWORD)));
+    expect((await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(200);
+    expect(put).toHaveBeenCalledTimes(1);
+    const [key, res] = put.mock.calls[0] as unknown as [Request, Response];
+    expect(key.url).toBe(await cacheKeyOf('애월'));
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=86400');
   });
 });

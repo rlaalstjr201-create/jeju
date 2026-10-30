@@ -202,6 +202,7 @@ export const ZH: Lang = {
     addrOption: '地址·住处',
     addrSearch: '搜索地址或住处名称',
     addrGo: '搜索',
+    addrFound: (n) => `找到了${n}个地方。`,
     addrError: {
       off: '暂时无法使用搜索。',
       none: '没有找到。请换个名称再搜索。',

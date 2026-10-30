@@ -51,20 +51,24 @@ export async function resolveOrigin(basis: Basis, region: RegionName | null, sta
 }
 
 /** fetch, as far as 비 소식 needs it. */
-export type Fetch = (url: string, init?: { signal?: AbortSignal }) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;
+export type Fetch = (
+  url: string,
+  init?: { signal?: AbortSignal; method?: 'POST'; headers?: Record<string, string>; body?: string },
+) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;
 
 /** 비 소식 (ADR-0076): will it rain in `area` (slug) within 3 hours. Only the area's name leaves the device — for a
  * 자동 지역 시군구 (a code), the KMA grid of its centre (plans/nationwide-app.md 5: never the device's point).
  * null — nothing to show — for a 204 (no key, the agency failing), an error, a non-JSON answer (no function
  * here: the host's 404 page) or no answer within `timeoutMs`. */
-/** 주소·숙소 검색 (ADR-0103): the words typed, to /api/geo (Kakao Local behind it). `off`: no key on the server (503);
- * `fail`: anything else that is not an answer (an error, a 429, no function here, no answer within `timeoutMs`). */
+/** 주소·숙소 검색 (ADR-0103): the words typed, to /api/geo (Kakao Local behind it) in a POST body — never in the URL, so
+ * not in a request log's address. `off`: no key on the server, or one Kakao refuses (503); `fail`: anything else that is
+ * not an answer (an error, a 429, no function here, no answer within `timeoutMs`). */
 export async function fetchGeo(q: string, get: Fetch, timeoutMs = 6000): Promise<{ ok: true; hits: GeoHit[] } | { ok: false; why: 'off' | 'fail' }> {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), timeoutMs);
   try {
     const res = await Promise.race([
-      get(`/api/geo?q=${encodeURIComponent(q)}`, { signal: ctl.signal }),
+      get('/api/geo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q }), signal: ctl.signal }),
       new Promise<never>((_, reject) => ctl.signal.addEventListener('abort', () => reject(new Error('timeout')))),
     ]);
     if (res.status === 503) return { ok: false, why: 'off' };

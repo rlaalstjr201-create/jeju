@@ -535,7 +535,7 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 /* width 0: the field takes what 검색 leaves, never its own default width (wider than the sheet at large text) */
 .addr-q { width: 0; -webkit-appearance: none; appearance: none; }
 .addr .addr-go { justify-content: center; margin: 0; padding: 0 12px; }
-.addr-go:disabled { color: var(--muted); }
+.addr-go[aria-disabled="true"] { color: var(--muted); }
 /* 날짜 고르기 where the browser has no picker to open: the date field and 이 날로, on their own line */
 .date-fb { display: contents; }
 /* the hidden field keeps the page's font: Chrome draws a date field in monospace, and a font loaded for it alone

@@ -238,6 +238,8 @@ export const BUSAN_COPY = {
   addrOption: '주소·숙소',
   addrSearch: '주소나 숙소 이름 검색',
   addrGo: '검색',
+  /** told to a screen reader when the answers come (render.ts patchAddr) */
+  addrFound: (n: number) => `${n}곳 찾았어요.`,
   addrError: {
     off: '검색을 쓸 수 없어요.',
     none: '찾는 곳이 없어요. 다른 이름으로 검색해 주세요.',
@@ -600,6 +602,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   let opener: HTMLElement | null = null;
   let closeTimer: ReturnType<typeof setTimeout> | null = null;
   let announceSeq = 0;
+  /** 주소·숙소 검색's answer last told (patchAddr) */
+  let geoSaid: State['geo'] | null = null;
   let revealedSeq = 0;
   let lastStatus = '|false';
   let shownView: View = 'home';
@@ -1493,7 +1497,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   /** 주소·숙소 검색 (ADR-0103) under its option: the words, then 검색 */
   function addrBox(): HTMLElement {
     const box = el(doc, 'div', { class: 'addr' });
-    const q = el(doc, 'input', { type: 'search', class: 'date-in addr-q', 'aria-label': BUSAN_COPY.addrSearch, placeholder: BUSAN_COPY.addrSearch, maxlength: '40', enterkeyhint: 'search', autocomplete: 'off' });
+    // a name or an address, not prose: no spelling underline, no capital or correction on a phone's keyboard
+    const q = el(doc, 'input', { type: 'search', class: 'date-in addr-q', 'aria-label': BUSAN_COPY.addrSearch, placeholder: BUSAN_COPY.addrSearch, maxlength: '40', enterkeyhint: 'search', autocomplete: 'off', spellcheck: 'false', autocapitalize: 'off', autocorrect: 'off' });
     // what was typed survives a rebuild of the sheet (언제 picked meanwhile)
     q.value = els.sheet.querySelector<HTMLInputElement>('.addr-q')?.value ?? '';
     const go = el(doc, 'button', { type: 'button', class: 'tbtn addr-go', 'data-action': 'addr-go', 'aria-label': BUSAN_COPY.addrGo });
@@ -1506,9 +1511,11 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const row = els.sheet.querySelector<HTMLElement>('.addr')?.closest<HTMLElement>('.optrow');
     if (!row) return;
     const go = row.querySelector<HTMLButtonElement>('.addr-go')!;
-    go.disabled = s.geo.pending;
-    if (s.geo.pending) go.setAttribute('aria-busy', 'true');
-    else go.removeAttribute('aria-busy');
+    // asking: never `disabled` (the focus on it would drop to the page) — marked, and app.ts searchAddr ignores it
+    for (const a of ['aria-busy', 'aria-disabled']) {
+      if (s.geo.pending) go.setAttribute(a, 'true');
+      else go.removeAttribute(a);
+    }
     const hits = s.geo.hits ?? [];
     const sig = JSON.stringify(hits);
     if (row.dataset.hits !== sig) {
@@ -1526,6 +1533,12 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (err) {
       setText(err, s.geo.error ? BUSAN_COPY.addrError[s.geo.error] : '');
       err.hidden = !s.geo.error;
+    }
+    // told to a screen reader once per answer (polite): how many were found, or why none — not again when the sheet is rebuilt
+    const live = els.sheet.querySelector<HTMLElement>('.addr-live');
+    if (live && s.geo !== geoSaid) {
+      geoSaid = s.geo;
+      live.textContent = s.geo.pending ? '' : s.geo.error ? BUSAN_COPY.addrError[s.geo.error] : s.geo.hits ? BUSAN_COPY.addrFound(s.geo.hits.length) : '';
     }
   }
 
@@ -1642,7 +1655,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         regionRow.push(row);
       }
       optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow, ...regionRow]);
-      if (NATION) panel.append(el(doc, 'p', { class: 'form-err addr-err', role: 'alert', hidden: '' }));
+      // the search's line, seen; what a screen reader is told is the polite .addr-live beside it (patchAddr)
+      if (NATION) panel.append(el(doc, 'p', { class: 'form-err addr-err', hidden: '' }), el(doc, 'p', { class: 'sr addr-live', role: 'status' }));
       // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
       // The same thin-rule rows with a check. Choosing one closes the sheet.
       optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));

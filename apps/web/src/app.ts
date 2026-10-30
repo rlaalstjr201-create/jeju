@@ -974,7 +974,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   function searchAddr() {
     if (state.overlay !== 'basis' || state.geo.pending) return;
     const input = els.sheet.querySelector<HTMLInputElement>('.addr-q');
-    const q = (input?.value ?? '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    // 40 characters counted as the server does (code points: an emoji is one, never cut in half)
+    const q = [...(input?.value ?? '').replace(/\s+/g, ' ').trim()].slice(0, 40).join('');
     if (!q) return input?.focus();
     if (!deps.fetch) return dispatch({ type: 'geo', pending: false, hits: null, error: 'off' });
     const token = ++stayToken;
@@ -992,8 +993,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (state.overlay !== 'basis' || !hit) return;
     const p = { lat: hit.lat, lng: hit.lng };
     const token = ++stayToken;
-    const go = () => {
+    // `ok` false: the 자동 지역's part did not come (no connection) — that, not 「장소 자료가 없어요」
+    const go = (ok = true) => {
       if (token !== stayToken || signal.aborted || state.overlay !== 'basis') return;
+      if (!ok) return dispatch({ type: 'geo', pending: false, error: 'fail' });
       const d = releasedDestOf(p);
       if (!d) return dispatch({ type: 'geo', pending: false, error: 'nodata' });
       const area = areaOfPoint(p, d);
@@ -1362,6 +1365,12 @@ export function mountApp(doc: Document, deps: Deps): App {
       // 의견 보내기: Esc never throws away what is being typed (an IME composing, or words in a box)
       if (k.isComposing || [...els.sheet.querySelectorAll('textarea')].some((t) => t.value.trim())) return;
       k.preventDefault();
+      // 주소·숙소 검색 with words in it: Esc empties the box (as a search box does), the sheet stays
+      const t = k.target as HTMLInputElement;
+      if (t.classList?.contains('addr-q') && t.value) {
+        t.value = '';
+        return;
+      }
       closeOverlay();
     } else if (k.key === 'Tab') {
       // Focus stays inside the sheet (inert covers modern browsers; this covers the rest, S58).

@@ -1,11 +1,14 @@
-// GET /api/geo?q=<주소나 장소 이름> (ADR-0103): 주소·숙소 검색 in the basis sheet — Kakao Local's address and keyword search,
-// answered as at most 6 { name, addr, lat, lng } inside Korea. Only the words typed come in; the key stays here (env
-// KAKAO_REST_API_KEY, `wrangler pages secret put`). Without it: 503, and the app says 「검색을 쓸 수 없어요.」
+// POST /api/geo, body {"q": "<주소나 장소 이름>"} (ADR-0103): 주소·숙소 검색 in the basis sheet — Kakao Local's address and
+// keyword search, answered as at most 6 { name, addr, lat, lng } inside Korea. Only the words typed come in, in the body
+// (never the URL, so they are not in a request log's address); the key stays here (env KAKAO_REST_API_KEY,
+// `wrangler pages secret put`). Without it, or with one Kakao refuses (401/403): 503, and the app says 「검색을 쓸 수 없어요.」
 const ADDRESS = 'https://dapi.kakao.com/v2/local/search/address.json';
 const KEYWORD = 'https://dapi.kakao.com/v2/local/search/keyword.json';
 const TIMEOUT_MS = 4000;
 /** the app sends at most 40 characters (render.ts maxlength) */
 const MAX_Q = 40;
+/** the body: {"q": …} of at most 40 characters, with room for JSON escapes */
+const MAX_BODY = 1024;
 const MAX_HITS = 6;
 /** per address, per minute, in one isolate's memory only (never stored, never logged) */
 const LIMIT = 20;
@@ -24,14 +27,31 @@ export interface Hit {
 }
 
 const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' };
+/** `why` (X-Geo-Reason) says which step failed, for whoever runs the site — a status or a word, never the key or the words
+ * searched; kept to header-safe ASCII as rain.ts does. */
 const plain = (status: number, body: string, why: string) =>
-  new Response(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Geo-Reason': why } });
+  new Response(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Geo-Reason': why.replace(/[^\w .:-]/g, '').slice(0, 80) } });
 
 /** The words, spaces folded, or null: empty, longer than MAX_Q, or with a control character. */
-export function queryOf(v: string | null): string | null {
-  const q = (v ?? '').normalize('NFC').replace(/\s+/g, ' ').trim();
+export function queryOf(v: unknown): string | null {
+  const q = (typeof v === 'string' ? v : '').normalize('NFC').replace(/\s+/g, ' ').trim();
   // eslint-disable-next-line no-control-regex
   return q && [...q].length <= MAX_Q && !/[\u0000-\u001f\u007f]/.test(q) ? q : null;
+}
+
+/** Asked from this site's own pages only (a cheap guard against other sites spending the Kakao quota through their
+ * visitors' browsers): Sec-Fetch-Site same-origin; without it, an Origin of this site; without that, a Referer of it. */
+export function sameSite(req: Request): boolean {
+  const own = new URL(req.url).origin;
+  const site = req.headers.get('Sec-Fetch-Site');
+  if (site) return site === 'same-origin';
+  const origin = req.headers.get('Origin');
+  if (origin) return origin === own;
+  try {
+    return new URL(req.headers.get('Referer') ?? '').origin === own;
+  } catch {
+    return false;
+  }
 }
 
 /** Korea drawn wide (마라도 to the DMZ, 백령도 to 독도); Kakao answers only there, this keeps it so. */
@@ -65,6 +85,12 @@ export function hitsOf(address: unknown, keyword: unknown): Hit[] {
 const edge = (): Cache | null =>
   typeof caches !== 'undefined' ? ((caches as unknown as { default?: Cache }).default ?? null) : null;
 
+/** The edge cache's key for the words: their SHA-256, never the words themselves. */
+export async function cacheKeyOf(q: string): Promise<string> {
+  const d = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(q)));
+  return `https://geo.cache/${[...d].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
+}
+
 const counts = new Map<string, { n: number; since: number }>();
 /** true when this address has asked more than LIMIT times in the last minute (this isolate) */
 export function limited(ip: string, now: number): boolean {
@@ -78,37 +104,62 @@ export function limited(ip: string, now: number): boolean {
   return c.n > LIMIT;
 }
 
+class KakaoError extends Error {
+  constructor(readonly status: number) {
+    super(`http ${status}`);
+  }
+}
 async function kakao(url: string, q: string, key: string, signal: AbortSignal): Promise<unknown> {
   const res = await fetch(`${url}?${new URLSearchParams({ query: q, size: String(MAX_HITS) })}`, { headers: { Authorization: `KakaoAK ${key}` }, signal });
-  if (!res.ok) throw new Error(`http ${res.status}`);
+  if (!res.ok) throw new KakaoError(res.status);
   return res.json();
 }
 
-export async function onRequestGet(ctx: Ctx): Promise<Response> {
-  const q = queryOf(new URL(ctx.request.url).searchParams.get('q'));
+/** The words from the body ({"q": …}, at most MAX_BODY bytes), or null. */
+async function bodyQuery(req: Request): Promise<string | null> {
+  if (!/^application\/json\b/i.test(req.headers.get('Content-Type') ?? '')) return null;
+  const raw = await req.text().catch(() => '');
+  if (!raw || new TextEncoder().encode(raw).length > MAX_BODY) return null;
+  try {
+    return queryOf((JSON.parse(raw) as { q?: unknown } | null)?.q);
+  } catch {
+    return null;
+  }
+}
+
+export async function onRequestPost(ctx: Ctx): Promise<Response> {
+  if (!sameSite(ctx.request)) return plain(403, '', 'cross-site');
+  const q = await bodyQuery(ctx.request);
   if (!q) return plain(400, 'bad q', 'bad-q');
   const key = ctx.env.KAKAO_REST_API_KEY?.trim();
   if (!key) return plain(503, '', 'no-key');
   if (limited(ctx.request.headers.get('CF-Connecting-IP') ?? '', Date.now())) return plain(429, '', 'limit');
 
   const cache = edge();
-  const cacheKey = new Request(`https://geo.cache/${encodeURIComponent(q)}`);
+  const cacheKey = new Request(await cacheKeyOf(q));
   const hit = await cache?.match(cacheKey).catch(() => undefined);
   if (hit) return new Response(hit.body, { status: 200, headers: JSON_HEADERS });
 
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   let hits: Hit[];
+  let whole: boolean;
   try {
     const [address, keyword] = await Promise.allSettled([kakao(ADDRESS, q, key, ctl.signal), kakao(KEYWORD, q, key, ctl.signal)]);
-    if (address.status === 'rejected' && keyword.status === 'rejected') return plain(502, '', (ctl.signal.aborted ? 'timeout' : String((keyword.reason as Error)?.message ?? 'network')).slice(0, 40));
+    const failed = [address, keyword].flatMap((r) => (r.status === 'rejected' ? [r.reason as unknown] : []));
+    // a key Kakao refuses (wrong, or 카카오맵 not switched on for it): the same as no key
+    const refused = failed.find((e): e is KakaoError => e instanceof KakaoError && (e.status === 401 || e.status === 403));
+    if (refused) return plain(503, '', `bad-key ${refused.status}`);
+    if (failed.length === 2) return plain(502, '', ctl.signal.aborted ? 'timeout' : String((failed[1] as Error)?.message ?? 'network'));
     hits = hitsOf(address.status === 'fulfilled' ? address.value : null, keyword.status === 'fulfilled' ? keyword.value : null);
+    whole = !failed.length;
   } finally {
     clearTimeout(timer);
   }
   const body = JSON.stringify({ hits });
-  if (cache) {
-    // a day at the edge (an address does not move); the browser keeps nothing
+  // a day at the edge (an address does not move), only when both searches answered — half an answer is not kept;
+  // the browser keeps nothing
+  if (cache && whole) {
     const put = cache.put(cacheKey, new Response(body, { headers: { 'Content-Type': JSON_HEADERS['Content-Type'], 'Cache-Control': 'public, max-age=86400' } })).catch(() => undefined);
     if (ctx.waitUntil) ctx.waitUntil(put);
   }

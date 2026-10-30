@@ -206,6 +206,7 @@ export const JA: Lang = {
     addrOption: '住所・宿',
     addrSearch: '住所や宿の名前で検索',
     addrGo: '検索',
+    addrFound: (n) => `${n}か所見つかりました。`,
     addrError: {
       off: '検索を使えません。',
       none: '見つかりませんでした。別の名前で検索してください。',

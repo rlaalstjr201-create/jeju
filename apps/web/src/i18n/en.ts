@@ -209,6 +209,7 @@ export const EN: Lang = {
     addrOption: 'Address or stay',
     addrSearch: 'Search an address or place',
     addrGo: 'Search',
+    addrFound: (n) => `Found ${plural(n, 'place')}.`,
     addrError: {
       off: "Search isn't available.",
       none: 'Nothing found. Try another name.',

@@ -4899,10 +4899,11 @@ const SHEET_SHOTS = NATION ? join(appDir, 'design/qa/sheet-v2') : '';
 if (SHEET_SHOTS) mkdirSync(SHEET_SHOTS, { recursive: true });
 const 애월GH = { name: '애월 게스트하우스', addr: '제주특별자치도 제주시 애월읍 애월해안로 1', lat: 33.4631, lng: 126.3105 };
 const 해운대HS = { name: '해운대해수욕장', addr: '부산 해운대구 우동', lat: 35.1587, lng: 129.1604 };
-/** /api/geo answered here (no function under vite preview): `status` 200 with `hits`, or 503 (no key); the words asked kept */
+/** /api/geo answered here (no function under vite preview): `status` 200 with `hits`, or 503 (no key); what was asked kept
+ * (method, the URL's query — none — and the body's words) */
 const geoRoute = (asked, status = 200, hits = [애월GH, 해운대HS]) => (c) =>
   c.route('**/api/geo*', (r) => {
-    asked.push(r.request().url());
+    asked.push(`${r.request().method()} ${new URL(r.request().url()).search}|${r.request().postDataJSON()?.q}`);
     return status === 200 ? r.fulfill({ status, contentType: 'application/json', body: JSON.stringify({ hits }) }) : r.fulfill({ status, body: '' });
   });
 /** the open sheet: sideways overflow of the page and of the sheet, tap boxes under 44, what is pressed */
@@ -4977,7 +4978,7 @@ if (NATION) {
     assert(g.chipScroll > 0 && g.over <= 0 && g.sheetOver <= 0 && end.left > 0 && end.inside && moved, `${JSON.stringify(g)} end ${JSON.stringify(end)} moved ${moved}`);
   });
 
-  await check('SV-3', '주소·숙소 검색 at 375·320: Enter asks /api/geo with only q (words folded); answers as rows (≥ 44, overflow 0, shots); the first → 숙소 근처, jeju.stay source addr, sheet says 애월 숙소; 해운대 → 여차나:부산 with its 숙소', async () => {
+  await check('SV-3', '주소·숙소 검색 at 375·320: Enter asks /api/geo with only q in a POST body (words folded, nothing in the URL); answers as rows (≥ 44, overflow 0, shots); the first → 숙소 근처, jeju.stay source addr, sheet says 애월 숙소; 해운대 → 여차나:부산 with its 숙소', async () => {
     const problems = [];
     for (const [w, h] of [[375, 812], [320, 568]]) {
       const asked = [];
@@ -4989,8 +4990,7 @@ if (NATION) {
       await page.locator('.sheet .addr-q').fill('  애월   게스트하우스 ');
       await page.locator('.sheet .addr-q').press('Enter');
       await page.waitForSelector('.sheet .hit-row', { timeout: 5000 });
-      const q = asked.map((u) => [...new URL(u).searchParams].map(([k, v]) => `${k}=${v}`).join('&'));
-      if (q.join() !== 'q=애월 게스트하우스') problems.push(`${w} asked ${q.join(' ')}`);
+      if (asked.join() !== 'POST |애월 게스트하우스') problems.push(`${w} asked ${asked.join(' ')}`);
       await page.locator('.sheet .hit-row').last().scrollIntoViewIfNeeded();
       const g = await page.evaluate(SHEET_GEOM);
       const rows = await page.$$eval('.sheet .hit-row .nm', (els) => els.map((e) => e.textContent));
@@ -5017,7 +5017,7 @@ if (NATION) {
     assert(!problems.length, problems.join(' | '));
   });
 
-  await check('SV-4', '검색을 쓸 수 없을 때(503, 키 없음) at 375·320: 「검색을 쓸 수 없어요.」 under 어디 (role alert, in view after the search), no rows, basis unchanged (shots)', async () => {
+  await check('SV-4', '검색을 쓸 수 없을 때(503, 키 없음) at 375·320: 「검색을 쓸 수 없어요.」 under 어디 (in view after the search, told by the polite status beside it), no rows, basis unchanged (shots)', async () => {
     const problems = [];
     for (const [w, h] of [[375, 812], [320, 568]]) {
       const asked = [];
@@ -5030,12 +5030,12 @@ if (NATION) {
       await page.locator('.sheet .addr-err').scrollIntoViewIfNeeded().catch(() => undefined);
       const s = await page.evaluate(() => ({
         err: document.querySelector('.sheet .addr-err')?.textContent,
-        role: document.querySelector('.sheet .addr-err')?.getAttribute('role'),
+        live: `${document.querySelector('.sheet .addr-live')?.getAttribute('role')} ${document.querySelector('.sheet .addr-live')?.textContent}`,
         rows: document.querySelectorAll('.sheet .hit-row').length,
         basis: document.querySelector('#basis > span')?.textContent,
         over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       }));
-      if (s.err !== '검색을 쓸 수 없어요.' || s.role !== 'alert' || s.rows || s.basis !== '내 위치 근처' || s.over > 0 || asked.length !== 1) problems.push(`${w} ${JSON.stringify(s)} asked ${asked.length}`);
+      if (s.err !== '검색을 쓸 수 없어요.' || s.live !== 'status 검색을 쓸 수 없어요.' || s.rows || s.basis !== '내 위치 근처' || s.over > 0 || asked.length !== 1) problems.push(`${w} ${JSON.stringify(s)} asked ${asked.length}`);
       if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `search-off-${w}.png`) });
       await ctx.close();
     }
