@@ -10,7 +10,7 @@ import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
 import { OPEN_AREAS, openAreasOf } from './release';
 import { nightNow } from './sun';
-import type { Basis, GeoPermission, NoOrigin, Origin, Overlay, Route, SavedEntry, Stay, View, When } from './types';
+import type { Basis, GeoPermission, NoOrigin, Origin, OutsideAt, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';
 /** 가 봤어요 (ADR-0087): `name` left out / put back, or `n` put back at once (모두 다시 넣기). `id`: the place a
@@ -20,7 +20,7 @@ export type Phase =
   | { k: 'idle' }
   | { k: 'pending'; req: number; intent: Intent; step: 'locating' | 'loading'; slow: boolean; long: boolean }
   | { k: 'ready' }
-  | { k: 'noOrigin'; why: NoOrigin }
+  | { k: 'noOrigin'; why: NoOrigin; at?: OutsideAt }
   | { k: 'loadError'; offline: boolean }
   | { k: 'empty' };
 
@@ -127,7 +127,7 @@ export interface State {
   tracking: boolean;
   /** the map app the cards open (ADR-0071). */
   mapApp: MapApp;
-  stayForm: { pending: boolean; error: NoOrigin | null };
+  stayForm: { pending: boolean; error: NoOrigin | null; at?: OutsideAt };
   offline: boolean;
   keep: Keep;
   /** what the screen reader is told about new cards (render.ts words it); `seq` bumps per announcement. */
@@ -154,7 +154,7 @@ export type Action =
   | { type: 'long'; req: number }
   /** GPS answered (`why` = it failed), or the wait was given up without learning anything (`unknown`). */
   | { type: 'located'; req: number; why?: NoOrigin; unknown?: boolean }
-  | { type: 'noOrigin'; req: number; why: NoOrigin }
+  | { type: 'noOrigin'; req: number; why: NoOrigin; at?: OutsideAt }
   /** `clock`: the time of day it came at, minutes after midnight KST (ADR-0091: the picks' night is read then). */
   | { type: 'resolved'; req: number; origin: Origin | null; spots: Spot[]; clock?: number }
   | { type: 'loadError'; req: number; offline: boolean }
@@ -168,7 +168,7 @@ export type Action =
   | { type: 'src'; src: string }
   | { type: 'reach'; reach: Reach }
   | { type: 'indoor'; on: boolean }
-  | { type: 'stayForm'; pending: boolean; error: NoOrigin | null }
+  | { type: 'stayForm'; pending: boolean; error: NoOrigin | null; at?: OutsideAt }
   /** the saved list as stored now; `removed`: a row taken out in the saved list (kept on screen). */
   | { type: 'saved'; entries: SavedEntry[]; removed?: SavedEntry | null }
   | { type: 'when'; when: When }
@@ -579,7 +579,7 @@ function step(s: State, a: Action): State {
       };
     case 'noOrigin':
       if (!isReq(s, a.req)) return s;
-      return { ...s, phase: { k: 'noOrigin', why: a.why }, lastFail: a.why, cards: null };
+      return { ...s, phase: { k: 'noOrigin', why: a.why, ...(a.at ? { at: a.at } : {}) }, lastFail: a.why, cards: null };
     case 'resolved': {
       if (!isReq(s, a.req) || s.phase.k !== 'pending') return s;
       const intent = s.phase.intent;
@@ -630,7 +630,7 @@ function step(s: State, a: Action): State {
       return a.on === s.indoor ? s : { ...s, indoor: a.on };
     case 'stayForm':
       // the 숙소 GPS failing is as much news about GPS as a failed pick: 내 주변 → 지역 고르기
-      return { ...s, stayForm: { pending: a.pending, error: a.error }, lastFail: a.error ?? s.lastFail };
+      return { ...s, stayForm: { pending: a.pending, error: a.error, ...(a.at ? { at: a.at } : {}) }, lastFail: a.error ?? s.lastFail };
     case 'saved': {
       const unsaved = a.removed && s.view === 'saved' ? [...s.unsaved, a.removed] : s.unsaved;
       // a row put back (here or in another tab) is live again

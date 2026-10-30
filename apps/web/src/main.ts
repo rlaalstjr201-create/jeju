@@ -4,7 +4,7 @@ import { LocateError, mountApp, type Deps } from './app';
 import { DEST, type Dest } from './dest';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
-import { BUSAN, NATION, loadBusan, loadNation, nationSpots, releasedDestOf } from './release';
+import { BUSAN, NATION, loadBusan, loadNation, nationSpots, outsideAt, releasedDestOf } from './release';
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 
@@ -18,7 +18,8 @@ function locate(): Promise<Point> {
         // Jeju with the switch on, Busan's part (its boundary) is asked for first (src/release.ts) — the 자동 지역's with it
         // where that is on (plans/nationwide-app.md 9: a position outside Jeju and Busan).
         if (releasedDestOf(p)) resolve(p);
-        else if (BUSAN) void (NATION ? loadNation() : loadBusan()).then(() => (releasedDestOf(p) ? resolve(p) : reject(new LocateError('outside'))));
+        // (where it is, for the words: outside Korea only by nation.ts inKorea — predeploy review M-1)
+        else if (BUSAN) void (NATION ? loadNation() : loadBusan()).then(() => (releasedDestOf(p) ? resolve(p) : reject(new LocateError('outside', outsideAt(p)))));
         else reject(new LocateError('outside'));
       },
       (err) => reject(new LocateError(err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable')),

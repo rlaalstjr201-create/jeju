@@ -1,7 +1,7 @@
 // 15 destination areas with fixed centres (ADR-0029, plans/tomorrow-picker.md "지역 15곳 중심 좌표").
 import type { BUSAN_AREAS } from './busan';
 import type { Dest } from './dest';
-import { distanceKm, type Point } from './pick';
+import { distanceKm, islandOf, type Point } from './pick';
 
 // Listed west → east within each group (longitude order), so the grid reads like a map (design/SPEC.md §6.9).
 // `name` is the stored key (plans/tomorrow-picker.md); `slug` is its URL name (specs/seo-landing.md, the deep link of
@@ -82,10 +82,8 @@ export function nearestArea<A extends Area = (typeof AREAS)[number]>(p: Point, a
 }
 
 const JEJU = { latMin: 33.0, latMax: 33.7, lngMin: 126.0, lngMax: 127.1 };
+/** Jeju's box, and 추자도 (제주시 추자면, north of it: pick.ts's island box) */
 export const inJeju = (p: Point) =>
   Number.isFinite(p.lat) &&
   Number.isFinite(p.lng) &&
-  p.lat >= JEJU.latMin &&
-  p.lat <= JEJU.latMax &&
-  p.lng >= JEJU.lngMin &&
-  p.lng <= JEJU.lngMax;
+  ((p.lat >= JEJU.latMin && p.lat <= JEJU.latMax && p.lng >= JEJU.lngMin && p.lng <= JEJU.lngMax) || islandOf(p) === '추자도');

@@ -182,7 +182,8 @@ describe('start.ts', () => {
     await tick();
     await tick();
     expect(out.screen.state()).toBe('outside');
-    expect(out.doc.getElementById('ycMsg')!.textContent).toBe(NATION ? '지금은 한국 밖이에요. 여행지를 골라 주세요.' : '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
+    // where it was not known (the 자동 지역's part not in): 제주·부산 밖, never 한국 밖 (predeploy review M-1)
+    expect(out.doc.getElementById('ycMsg')!.textContent).toBe('지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
   });
   it('denied, not found (다시 시도), outside: the words in the big button’s place; a destination then chosen says it was denied', async () => {
     const d = started({ at: 'denied' });
@@ -206,11 +207,25 @@ describe('start.ts', () => {
   it("the reasons come in the page's language (with Busan's part, not in the inline table)", async () => {
     const { dom, doc } = open('/?lang=ja');
     const ctl = new (dom.window as unknown as typeof globalThis).AbortController();
-    mountStart(doc, { signal: ctl.signal, geo: { geoPermission: () => Promise.resolve('prompt'), locate: () => Promise.reject(new LocateError('outside')) }, choose: () => undefined });
+    mountStart(doc, { signal: ctl.signal, geo: { geoPermission: () => Promise.resolve('prompt'), locate: () => Promise.reject(new LocateError('outside', 'abroad')) }, choose: () => undefined });
     (doc.getElementById('ycGps') as HTMLElement).click();
     await tick();
     await tick();
     expect(doc.getElementById('ycMsg')!.textContent).toBe(NATION ? 'いまは韓国の外にいます。旅行先を選んでください。' : 'いまは済州・釜山の外にいます。旅行先を選んでください。');
+  });
+  // predeploy review M-1: 한국 밖 only where the position was found outside Korea; in Korea with no 시군구 near, no word about where
+  it.each([
+    ['abroad', '지금은 한국 밖이에요. 여행지를 골라 주세요.'],
+    ['nodata', '이 근처는 아직 장소 자료가 없어요. 여행지를 골라 주세요.'],
+    [undefined, '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.'],
+  ] as const)('outside at %s: its words', async (at, words) => {
+    const { dom, doc } = open('/');
+    const ctl = new (dom.window as unknown as typeof globalThis).AbortController();
+    mountStart(doc, { signal: ctl.signal, geo: { geoPermission: () => Promise.resolve('prompt'), locate: () => Promise.reject(new LocateError('outside', at)) }, choose: () => undefined });
+    (doc.getElementById('ycGps') as HTMLElement).click();
+    await tick();
+    await tick();
+    expect(doc.getElementById('ycMsg')!.textContent).toBe(NATION || !at ? words : '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
   });
   it('a press before the app ran is carried out at mount', async () => {
     expect(started({ early: 'jeju' }).chosen).toEqual([['jeju', 'pick', null]]);

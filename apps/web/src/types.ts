@@ -1,6 +1,7 @@
 // Shared domain types (no runtime code).
 import type { RegionName } from './areas';
 import type { Day } from './dates';
+import type { Dest } from './dest';
 import type { Point } from './pick';
 
 export type Basis = 'gps' | 'stay' | 'region';
@@ -14,6 +15,9 @@ export interface Stay extends Point {
 export type GeoPermission = 'granted' | 'denied' | 'prompt' | 'unknown';
 /** Why there is no usable position. */
 export type NoOrigin = 'denied' | 'unavailable' | 'outside';
+/** Where a position `outside` the destination in use was (predeploy review M-1): outside Korea (nation.ts inKorea, drawn
+ * wide), in Korea where no 시군구 is near, or in that destination. Only `abroad` is ever said to be outside Korea. */
+export type OutsideAt = 'abroad' | 'nodata' | Dest;
 /** The point cards are measured from. `key` identifies it across renders (basis + which 숙소/지역). */
 export interface Origin {
   key: string;

@@ -5,7 +5,7 @@
 import type { SggCode } from './areas';
 import { destOf } from './busan';
 import { DEST, DESTS, type Dest } from './dest';
-import { filesFor, normalizeNation, parseIndex, regionOf, sggShorts } from './nation';
+import { filesFor, inKorea, normalizeNation, parseIndex, regionOf, sggShorts } from './nation';
 import { installNation } from './release';
 import { kmaGrid } from '../functions/_lib/kma';
 
@@ -15,8 +15,14 @@ export const NATION_COPY = {
   title: (short: string) => `여차나:${short} · P를 위한 여행동반자`,
   /** the results' 고르는 방식 line: no reason written for these places, the nearest first */
   how: '공공 데이터로 가까운 순으로 골랐어요.',
+  /** only where the position is outside Korea (nation.ts inKorea, drawn wide: predeploy review M-1) */
   outside: '지금은 한국 밖이에요.',
   stayOutside: '지금은 한국 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
+  /** in Korea, or not surely outside it, with no 시군구 near: nothing said about where it is */
+  nodata: '이 근처는 아직 장소 자료가 없어요.',
+  stayNodata: '이 근처는 아직 장소 자료가 없어요. 아래에서 숙소 동네를 골라 주세요.',
+  /** 숙소 by GPS inside a 검수한 곳 (its name) while the 자동 지역 is in use */
+  stayIn: (name: string) => `지금은 ${name}에 있어요. 아래에서 숙소 동네를 골라 주세요.`,
   otherSido: '다른 시도',
   /** the 시도 by code, in this language ('' or missing: the index's Korean short name) */
   sido: {} as Record<string, string>,
@@ -59,6 +65,7 @@ export async function install(): Promise<boolean> {
   installNation({
     list: ix.sgg.map((s) => ({ name: s.c as SggCode, slug: s.c as SggCode, label: s.n, landmark: sido.get(s.s) ?? '', lat: s.lat, lng: s.lng, group: 'nation' })),
     region: (p) => regionOf(p, ix.sgg, destOf, curated),
+    abroad: (p) => !inKorea(p),
     short: (c) => short[c] ?? '',
     copy: NATION_COPY,
     sido: () => sidos.map((c) => ({ c, name: sidoName(c) })),

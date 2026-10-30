@@ -6,7 +6,9 @@ import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { normalizeNation } from '../src/nation';
 import type { Point } from '../src/pick';
-import { NATION, loadNation } from '../src/release';
+import { LocateError } from '../src/app';
+import { NATION, loadNation, outsideAt } from '../src/release';
+import type { OutsideAt } from '../src/types';
 import { homeOrigin } from '../src/state';
 import { KEYS } from '../src/store';
 import { fileSpots } from './fixtures';
@@ -136,6 +138,49 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
     await wait();
     const url = new URL(document.querySelector('#homeNote a[data-action="inapp-open"]')!.getAttribute('href')!).searchParams.get('url')!;
     expect(new URL(url).search).toBe('?dest=nation&area=51150');
+  });
+
+  // predeploy review M-1·m-2: 「한국 밖」 only outside Korea; a position in Korea with no 시군구 near says nothing about where
+  // it is; Jeju's and Busan's own 「~ 밖」 words stay theirs
+  const 도쿄 = { lat: 35.6812, lng: 139.7671 };
+  const 서해 = { lat: 35.5, lng: 125.5 }; // a boat in the Yellow Sea, ~100 km off 부안: in Korea's wide drawing, no 시군구 near
+  const stayErr = async (o: { dest: string; sgg?: string; at: Point }) => {
+    reset();
+    mount({ dest: o.dest, sgg: o.sgg, at: o.at });
+    await wait();
+    await tap('#basis');
+    await tap('#sheet [data-basis="stay"]');
+    await tap('#sheet [data-action="stay-here"]');
+    await wait();
+    return document.querySelector('#sheet .form-err')!.textContent;
+  };
+  it('숙소 by GPS: 도쿄 → 한국 밖; 서해 → no data (자동 지역) or 제주 밖 (제주); 강릉 from 제주 → 제주 밖; 동문시장 from the 자동 지역 → 제주에 있어요', async () => {
+    expect(outsideAt(도쿄)).toBe('abroad');
+    expect(outsideAt(서해)).toBe('nodata');
+    expect(await stayErr({ dest: 'nation', sgg: '51150', at: 도쿄 })).toBe('지금은 한국 밖이에요. 아래에서 숙소 동네를 골라 주세요.');
+    expect(await stayErr({ dest: 'nation', sgg: '51150', at: 서해 })).toBe('이 근처는 아직 장소 자료가 없어요. 아래에서 숙소 동네를 골라 주세요.');
+    expect(await stayErr({ dest: 'jeju', at: 서해 })).toBe('지금은 제주 밖이에요. 아래에서 숙소 동네를 골라 주세요.');
+    expect(await stayErr({ dest: 'jeju', at: 강릉역 })).toBe('지금은 제주 밖이에요. 아래에서 숙소 동네를 골라 주세요.');
+    expect(await stayErr({ dest: 'jeju', at: 도쿄 })).toBe('지금은 한국 밖이에요. 아래에서 숙소 동네를 골라 주세요.');
+    expect(await stayErr({ dest: 'nation', sgg: '51150', at: 동문시장 })).toBe('지금은 제주에 있어요. 아래에서 숙소 동네를 골라 주세요.');
+  });
+
+  it('내 위치 outside (main.ts locate: LocateError with where it was): 한국 밖 only abroad; no data in the 자동 지역; 제주 밖 on Jeju', async () => {
+    const notice = async (dest: string, at?: OutsideAt) => {
+      reset();
+      localStorage.setItem(KEYS.dest, JSON.stringify(dest));
+      localStorage.setItem(KEYS.sgg, '"51150"');
+      render({ loadSpots: (d, sgg) => Promise.resolve(d === 'nation' ? normalizeNation(raw51, [], sgg) : fileSpots), locate: () => Promise.reject(new LocateError('outside', at)) });
+      await wait();
+      await tap('[data-mood="walk"]');
+      await wait();
+      return document.querySelector('#cards .notice-t')!.textContent;
+    };
+    expect(await notice('nation', 'abroad')).toBe('지금은 한국 밖이에요.');
+    expect(await notice('nation', 'nodata')).toBe('이 근처는 아직 장소 자료가 없어요.');
+    expect(await notice('jeju', 'abroad')).toBe('지금은 한국 밖이에요.');
+    expect(await notice('jeju', 'nodata')).toBe('지금은 제주 밖이에요.');
+    expect(await notice('jeju')).toBe('지금은 제주 밖이에요.');
   });
 
   it('nation kept but no 시군구 known: Jeju for this visit, the choice left on the device', async () => {

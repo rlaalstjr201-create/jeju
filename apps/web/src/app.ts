@@ -9,7 +9,7 @@ import { DEST, destOfId, isDest, type Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, released, releasedDestOf, sggOf, startScreen } from './release';
+import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, startScreen } from './release';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
@@ -527,7 +527,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (req !== reqSeq || signal.aborted) return;
       if (!o.ok && !forSaved) {
         clearReqTimers();
-        dispatch({ type: 'noOrigin', req, why: o.why });
+        dispatch({ type: 'noOrigin', req, why: o.why, ...('at' in o && o.at ? { at: o.at } : {}) });
         return;
       }
       // Saved list without a position is still shown, in saved order — never a dead end.
@@ -851,9 +851,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     dispatch({ type: 'stayForm', pending: true, error: null });
     void locateGps(deps).then((r) => {
       if (token !== stayToken || signal.aborted || state.overlay !== 'stay') return; // sheet closed or replaced
-      if (!r.ok) dispatch({ type: 'stayForm', pending: false, error: r.why });
-      // a 숙소 is the destination's own (ADR-0097): a position in the other one is outside this one
-      else if (releasedDestOf(r.point) !== state.dest) dispatch({ type: 'stayForm', pending: false, error: 'outside' });
+      if (!r.ok) dispatch({ type: 'stayForm', pending: false, error: r.why, ...(r.at ? { at: r.at } : {}) });
+      // a 숙소 is the destination's own (ADR-0097): a position in the other one is outside this one (and where it is)
+      else if (releasedDestOf(r.point) !== state.dest) dispatch({ type: 'stayForm', pending: false, error: 'outside', at: outsideAt(r.point) });
       else changeBasis({ basis: 'stay', stay: { ...r.point, area: areaOfPoint(r.point, state.dest).name, source: 'gps' } });
     });
   }

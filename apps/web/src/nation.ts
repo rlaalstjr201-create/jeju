@@ -110,12 +110,31 @@ export function normalizeNation(raw: unknown, curatedSgg: Iterable<string> = [],
 /** Where a point is (plans/nationwide-app.md 1.1). */
 export type Region = { k: 'dest'; dest: Dest } | { k: 'auto'; sgg: SggCode } | null;
 type SggRow = NationIndex['sgg'][number];
-/** a point farther than this from every 시군구 centre is outside Korea */
+/** a point farther than this from every 시군구 centre (and from every ISLANDS point) has no 시군구 */
 export const SGG_MAX_KM = 35;
 /** 부산·제주's 시군구 are their 검수한 곳's: never a centre for the 자동 지역 */
 const OWN = /^(26|50)/;
 
-/** A point's 시군구: the nearest centre (no boundary, like a 검수한 곳's 동네) within 35 km, Busan's and Jeju's left out. */
+/** 섬 (predeploy review M-1): islands farther than SGG_MAX_KM from every centre, each a point of its own 시군구 — tried
+ * only where no centre is near, within ISLAND_KM (백령도's holds 대청도·소청도, 흑산도's 홍도). */
+export const ISLANDS: readonly { n: string; c: string; lat: number; lng: number }[] = [
+  { n: '독도', c: '47940', lat: 37.2417, lng: 131.8647 },
+  { n: '백령도', c: '28720', lat: 37.96, lng: 124.67 },
+  { n: '연평도', c: '28720', lat: 37.6667, lng: 125.6983 },
+  { n: '흑산도', c: '12870', lat: 34.6838, lng: 125.436 },
+  { n: '가거도', c: '12870', lat: 34.0727, lng: 125.115 },
+  { n: '만재도', c: '12870', lat: 34.21, lng: 125.47 },
+  { n: '맹골도', c: '12860', lat: 34.228, lng: 125.853 },
+  { n: '여서도', c: '12850', lat: 33.988, lng: 126.923 },
+  { n: '거문도', c: '12130', lat: 34.029, lng: 127.309 },
+  { n: '어청도', c: '52130', lat: 36.1197, lng: 125.9787 },
+  { n: '외연도', c: '44180', lat: 36.225, lng: 126.08 },
+  { n: '격렬비열도', c: '44825', lat: 36.6, lng: 125.56 },
+];
+export const ISLAND_KM = 25;
+
+/** A point's 시군구: the nearest centre (no boundary, like a 검수한 곳's 동네) within 35 km, Busan's and Jeju's left out;
+ * else the 시군구 of an island (ISLANDS) within 25 km. */
 export function nearestSgg(p: Point, sgg: readonly SggRow[]): SggRow | null {
   let best: SggRow | null = null;
   let bestKm = SGG_MAX_KM;
@@ -127,11 +146,41 @@ export function nearestSgg(p: Point, sgg: readonly SggRow[]): SggRow | null {
       bestKm = km;
     }
   }
-  return best;
+  if (best) return best;
+  let isle: (typeof ISLANDS)[number] | null = null;
+  bestKm = ISLAND_KM;
+  for (const i of ISLANDS) {
+    const km = distanceKm(p, i);
+    if (km <= bestKm) {
+      isle = i;
+      bestKm = km;
+    }
+  }
+  return isle ? (sgg.find((s) => s.c === isle.c) ?? null) : null;
+}
+
+/** Korea, drawn wide ([lng, lat]): the peninsula and every island (독도 131.87°E, 백령도, 가거도, 마라도), with sea and a
+ * neighbour's edge (단둥, 쓰시마's north tip) in it. Only a point outside it is said to be outside Korea: in doubt, not. */
+const KOREA: readonly [number, number][] = [
+  [123.9, 37.3], [123.9, 39.6], [124.6, 40.6], [126.2, 41.6], [126.9, 42.1], [128.1, 42.2], [129.2, 42.5], [130.0, 43.1],
+  [130.5, 42.8], [130.9, 42.3], [132.2, 37.9], [132.2, 36.9], [129.65, 34.95], [128.9, 34.25], [127.9, 33.6], [126.9, 32.95],
+  [126.0, 32.95], [124.8, 33.7], [124.6, 34.5],
+];
+/** Inside KOREA (even–odd ray test, as inBusan); false for a broken point. */
+export function inKorea(p: Point): boolean {
+  if (!Number.isFinite(p.lat) || !Number.isFinite(p.lng)) return false;
+  let c = false;
+  for (let i = 0, j = KOREA.length - 1; i < KOREA.length; j = i++) {
+    const [xi, yi] = KOREA[i];
+    const [xj, yj] = KOREA[j];
+    if (yi > p.lat !== yj > p.lat && p.lng < ((xj - xi) * (p.lat - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
 }
 
 /** The 검수한 곳 a point is in by its boundary (`inside`: Jeju's box, Busan's ring), else the destination whose 시군구 list
- * (`curated`, DEST[d].sgg) has its 시군구, else the 자동 지역's 시군구; null outside Korea. */
+ * (`curated`, DEST[d].sgg) has its 시군구, else the 자동 지역's 시군구; null where no 시군구 is near (outside Korea only
+ * where `inKorea` says so). */
 export function regionOf(p: Point, sgg: readonly SggRow[], inside: (p: Point) => Dest | null, curated: Partial<Record<Dest, readonly string[]>> = {}): Region {
   const d = inside(p);
   if (d) return { k: 'dest', dest: d };

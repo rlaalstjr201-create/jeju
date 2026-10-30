@@ -4,12 +4,16 @@ import type { RegionName } from './areas';
 import type { Point } from './pick';
 import { nationPart } from './release';
 import { gpsOrigin, staticOrigin } from './state';
-import type { Basis, GeoPermission, NoOrigin, Origin, Stay } from './types';
+import type { Basis, GeoPermission, NoOrigin, Origin, OutsideAt, Stay } from './types';
 
 export type { GeoPermission };
 
 export class LocateError extends Error {
-  constructor(readonly reason: NoOrigin) {
+  /** `at`: where an `outside` position was (release.ts outsideAt), when known */
+  constructor(
+    readonly reason: NoOrigin,
+    readonly at?: OutsideAt,
+  ) {
     super(reason);
   }
 }
@@ -21,10 +25,10 @@ export interface GeoDeps {
   geoPermission?(): Promise<GeoPermission>;
 }
 
-export type OriginResult = { ok: true; origin: Origin } | { ok: false; why: NoOrigin };
+export type OriginResult = { ok: true; origin: Origin } | { ok: false; why: NoOrigin; at?: OutsideAt };
 
 /** GPS position, skipping the prompt when the Permissions API already says denied (S07). */
-export async function locateGps(deps: GeoDeps): Promise<{ ok: true; point: Point } | { ok: false; why: NoOrigin }> {
+export async function locateGps(deps: GeoDeps): Promise<{ ok: true; point: Point } | { ok: false; why: NoOrigin; at?: OutsideAt }> {
   try {
     if (deps.geoPermission && (await deps.geoPermission()) === 'denied') return { ok: false, why: 'denied' };
   } catch {
@@ -34,7 +38,7 @@ export async function locateGps(deps: GeoDeps): Promise<{ ok: true; point: Point
     const p = await deps.locate();
     return { ok: true, point: { lat: p.lat, lng: p.lng } };
   } catch (e) {
-    return { ok: false, why: e instanceof LocateError ? e.reason : 'unavailable' };
+    return e instanceof LocateError ? { ok: false, why: e.reason, ...(e.at ? { at: e.at } : {}) } : { ok: false, why: 'unavailable' };
   }
 }
 

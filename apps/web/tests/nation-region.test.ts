@@ -1,10 +1,11 @@
 // 자동 지역 지역 판정 (plans/nationwide-app.md 1.1, U6): a point goes to its 검수한 곳 by the boundary, else to the nearest
-// 시군구 centre within 35 km (부산·제주's left out), else nowhere (한국 밖). The index is the shipped one.
+// 시군구 centre within 35 km (부산·제주's left out), else an island's 시군구 within 25 km, else nowhere (한국 밖 only where
+// inKorea says so). The index is the shipped one.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { destOf } from '../src/busan';
-import { SGG_MAX_KM, filesFor, parseIndex, regionOf } from '../src/nation';
+import { ISLANDS, SGG_MAX_KM, filesFor, inKorea, parseIndex, regionOf } from '../src/nation';
 import { NATION, loadNation, nationSpots, openAreasOf, released, releasedDestOf, sggOf, sggShort } from '../src/release';
 
 const ix = parseIndex(JSON.parse(readFileSync(resolve(__dirname, '../data/nation/index.json'), 'utf8')))!;
@@ -29,6 +30,44 @@ describe('regionOf', () => {
     expect(at(34.2031, 129.2887)).toBeNull();
     expect(at(35.6812, 139.7671)).toBeNull();
     expect(at(Number.NaN, 127)).toBeNull();
+  });
+
+  // predeploy review M-1: islands past 35 km from every centre are their own 시군구's (ISLANDS); 추자도 is Jeju's
+  it('섬: 독도 → 울릉군, 백령도·대청도·연평도 → 옹진군, 흑산도·홍도·가거도 → 신안군, 거문도 → 여수시, 추자도 → 제주', () => {
+    const isles = {
+      독도: [37.2417, 131.8647, '울릉군'],
+      백령도: [37.9665, 124.6766, '옹진군'],
+      대청도: [37.83, 124.71, '옹진군'],
+      연평도: [37.6667, 125.6983, '옹진군'],
+      흑산도: [34.6838, 125.436, '신안군'],
+      홍도: [34.68, 125.19, '신안군'],
+      가거도: [34.0727, 125.115, '신안군'],
+      거문도: [34.029, 127.309, '여수시'],
+      어청도: [36.1197, 125.9787, '군산시'],
+      여서도: [33.988, 126.923, '완도군'],
+    } as const;
+    for (const [k, [lat, lng, name]] of Object.entries(isles)) expect(nameOf(at(lat, lng)), k).toBe(name);
+    expect(at(33.9612, 126.2985)).toEqual({ k: 'dest', dest: 'jeju' }); // 추자도 (상추자)
+    expect(at(33.1182, 126.2669)).toEqual({ k: 'dest', dest: 'jeju' }); // 마라도
+    // an island's point is tried only where no centre is near: the mainland is as it was
+    expect(nameOf(at(37.4844, 130.9057))).toBe('울릉군');
+    expect(ISLANDS.every((i) => ix.sgg.some((s) => s.c === i.c))).toBe(true);
+  });
+
+  it('inKorea (drawn wide): every 시군구 centre, every 자동 지역 place, Jeju\'s and Busan\'s places and the islands are in; 쓰시마, 후쿠오카, 도쿄, 베이징, 상하이, 블라디보스토크 are not', () => {
+    const korea = { 독도: [37.2417, 131.8647], 울릉도: [37.4844, 130.9057], 백령도: [37.9665, 124.6766], 연평도: [37.6667, 125.6983], 가거도: [34.0727, 125.115], 마라도: [33.1182, 126.2669], 거문도: [34.029, 127.309], 추자도: [33.9612, 126.2985], 서울시청: [37.5663, 126.9779], 우도: [33.5, 126.95] };
+    for (const [k, [lat, lng]] of Object.entries(korea)) expect(inKorea({ lat, lng }), k).toBe(true);
+    const abroad = { 쓰시마: [34.2031, 129.2887], 후쿠오카: [33.5902, 130.4017], 도쿄: [35.6812, 139.7671], 베이징: [39.9042, 116.4074], 상하이: [31.2304, 121.4737], 블라디보스토크: [43.1155, 131.8855], 오키: [36.2, 133.3] };
+    for (const [k, [lat, lng]] of Object.entries(abroad)) expect(inKorea({ lat, lng }), k).toBe(false);
+    expect(inKorea({ lat: Number.NaN, lng: 127 })).toBe(false);
+    expect(ix.sgg.filter((s) => !inKorea(s)).map((s) => s.n)).toEqual([]);
+    const places = Object.keys(ix.files).flatMap((f) => JSON.parse(readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8')) as { id: string; lat: number; lng: number }[]);
+    expect(places.length).toBeGreaterThan(1000);
+    expect(places.filter((s) => !inKorea(s)).map((s) => s.id)).toEqual([]);
+    for (const f of ['spots.json', 'spots-busan.json']) {
+      const list = JSON.parse(readFileSync(resolve(__dirname, `../public/${f}`), 'utf8')) as { id: string; lat: number; lng: number }[];
+      expect(list.filter((s) => !inKorea(s)).map((s) => s.id), f).toEqual([]);
+    }
   });
 
   it(`${SGG_MAX_KM} km from the nearest centre is still in; past it, out. 부산·제주 centres never count`, () => {

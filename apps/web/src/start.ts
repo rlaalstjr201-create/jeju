@@ -7,8 +7,8 @@ import { areaByName, type SggCode } from './areas';
 import { isDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
 import type { Point } from './pick';
-import { NATION, loadNation, nationPart, openAreasOf, releasedDestOf } from './release';
-import type { NoOrigin } from './types';
+import { NATION, loadNation, nationPart, openAreasOf, outsideAt, releasedDestOf } from './release';
+import type { NoOrigin, OutsideAt } from './types';
 
 /** The start screen's words, in the order index.html's table keeps them per language (window.__ycT). */
 export interface StartWords {
@@ -34,17 +34,20 @@ const FAILED: Record<string, Record<NoOrigin, string>> = {
  * 다른 곳's part did not come (the list's own words, render.ts loadError); `popular`: the 인기 칸 in POPULAR's order, in
  * Korean's official forms (Revised Romanization, the Hanja names: 首尔·ソウル for 서울) — a cover in another language has
  * no Korean (B13); the 시군구 lists stay Korean (plans/nationwide-app.md 8) */
-const NATION_WORDS: Record<string, { outside: string; other: string; back: string; failed: string; popular?: readonly string[] }> = {
-  ko: { outside: '지금은 한국 밖이에요. 여행지를 골라 주세요.', other: '다른 곳', back: '뒤로', failed: '목록을 불러오지 못했어요. 연결을 확인하고 다시 불러와 주세요.' },
+// `outside` only where the position is outside Korea (nation.ts inKorea, drawn wide), `nodata` where it is in Korea (or
+// not surely outside it) with no 시군구 near: nothing said about where it is (predeploy review M-1)
+const NATION_WORDS: Record<string, { outside: string; nodata: string; other: string; back: string; failed: string; popular?: readonly string[] }> = {
+  ko: { outside: '지금은 한국 밖이에요. 여행지를 골라 주세요.', nodata: '이 근처는 아직 장소 자료가 없어요. 여행지를 골라 주세요.', other: '다른 곳', back: '뒤로', failed: '목록을 불러오지 못했어요. 연결을 확인하고 다시 불러와 주세요.' },
   en: {
     outside: "You're outside Korea right now. Please choose where you are.",
+    nodata: "We don't have place data for around here yet. Please choose where you are.",
     other: 'Somewhere else',
     back: 'Back',
     failed: "Couldn't load the list. Check your connection and try again.",
     popular: ['Seoul', 'Gangneung', 'Gyeongju', 'Jeonju', 'Yeosu', 'Sokcho'],
   },
-  'zh-Hans': { outside: '你现在不在韩国。请选择旅行地。', other: '其他地方', back: '返回', failed: '列表没加载出来。检查一下网络再试。', popular: ['首尔', '江陵', '庆州', '全州', '丽水', '束草'] },
-  ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', other: 'ほかの場所', back: '戻る', failed: 'リストを読み込めませんでした。接続を確認して、もう一度読み込んでください。', popular: ['ソウル', '江陵', '慶州', '全州', '麗水', '束草'] },
+  'zh-Hans': { outside: '你现在不在韩国。请选择旅行地。', nodata: '这附近还没有地点资料。请选择旅行地。', other: '其他地方', back: '返回', failed: '列表没加载出来。检查一下网络再试。', popular: ['首尔', '江陵', '庆州', '全州', '丽水', '束草'] },
+  ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', nodata: 'このあたりの場所データはまだありません。旅行先を選んでください。', other: 'ほかの場所', back: '戻る', failed: 'リストを読み込めませんでした。接続を確認して、もう一度読み込んでください。', popular: ['ソウル', '江陵', '慶州', '全州', '麗水', '束草'] },
 };
 /** 인기 칸 (plans/nationwide-app.md 13 R14): name and 시군구 (서울: 서울시청's 중구, 전주: 한옥마을's 완산구) */
 const POPULAR: readonly [string, SggCode][] = [
@@ -81,13 +84,15 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
   const a = w?.__ycT;
   const lang = doc.documentElement.lang;
   const N = NATION_WORDS[lang] ?? NATION_WORDS.ko;
-  const T: (Pick<StartWords, 'gps' | 'locating'> & Record<NoOrigin, string>) | null = a ? { gps: a[1], locating: a[6], ...(FAILED[lang] ?? FAILED.ko), ...(NATION ? { outside: N.outside } : {}) } : null;
+  const T: (Pick<StartWords, 'gps' | 'locating'> & Record<NoOrigin, string>) | null = a ? { gps: a[1], locating: a[6], ...(FAILED[lang] ?? FAILED.ko) } : null;
   const big = doc.getElementById('ycGps') as HTMLButtonElement | null;
   const msg = doc.getElementById('ycMsg');
   const note = doc.getElementById('ycNote');
   const retry = doc.getElementById('ycRetry');
   if (!box || !T || !big || !msg || !note || !retry) return null;
   let now: 'start' | 'locating' | NoOrigin = 'start';
+  /** where an `outside` position was, once the 자동 지역's part is in (release.ts outsideAt) */
+  let at: OutsideAt | undefined;
   let done = false;
 
   function close() {
@@ -103,7 +108,7 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
     big!.textContent = next === 'locating' ? T!.locating : T!.gps;
     note!.hidden = failed;
     msg!.hidden = !failed;
-    msg!.textContent = failed ? T![next] : '';
+    msg!.textContent = !failed ? '' : NATION && next === 'outside' && at === 'abroad' ? N.outside : NATION && next === 'outside' && at === 'nodata' ? N.nodata : T![next];
     retry!.hidden = next !== 'unavailable';
     // the big button that had the focus is gone: the message's first way on takes it
     const lost = !doc.activeElement || doc.activeElement === doc.body || doc.activeElement === big;
@@ -125,7 +130,10 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
       if (r.ok && d) {
         close();
         deps.choose(d, 'gps', null, r.point);
-      } else show(quiet && (r.ok || r.why !== 'outside') ? 'start' : r.ok ? 'outside' : r.why);
+        return;
+      }
+      at = r.ok ? outsideAt(r.point) : r.at;
+      show(quiet && (r.ok || r.why !== 'outside') ? 'start' : r.ok ? 'outside' : r.why);
     });
   }
 

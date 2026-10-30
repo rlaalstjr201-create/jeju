@@ -32,6 +32,12 @@ describe('destOf', () => {
     expect(fileSpots.every((s) => destOf(s) === 'jeju')).toBe(true);
   });
 
+  it('추자도 (제주시 추자면, north of the box) is Jeju; 여서도 (완도군, east of it) is not', () => {
+    expect(destOf({ lat: 33.9612, lng: 126.2985 })).toBe('jeju');
+    expect(inJeju({ lat: 33.9612, lng: 126.2985 })).toBe(true);
+    expect(destOf({ lat: 33.988, lng: 126.923 })).toBeNull();
+  });
+
   it('outside every destination is null: 서울시청, a broken point', () => {
     expect(destOf(서울시청)).toBeNull();
     expect(destOf({ lat: Number.NaN, lng: 126.5 })).toBeNull();

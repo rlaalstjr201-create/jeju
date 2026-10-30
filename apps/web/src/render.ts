@@ -15,7 +15,7 @@ import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDay
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
-import type { NoOrigin, Origin, Overlay, View } from './types';
+import type { NoOrigin, Origin, OutsideAt, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
 export const COPY = {
@@ -507,6 +507,19 @@ function savedBodyOf(s: State, showing: boolean): SavedBody {
   return { k: 'head' };
 }
 
+/** The 자동 지역's words for a position `outside` (predeploy review M-1·m-2): outside Korea only where it was found to be
+ * (`abroad`); with the 자동 지역 in use, no 시군구 near — or, for a 숙소, the 검수한 곳 it is in; else null: Jeju's and
+ * Busan's own 「~ 밖」 words. */
+function nationOutside(s: State, at: OutsideAt | undefined, stay: boolean): string | null {
+  if (!NATION) return null;
+  const n = nationPart();
+  if (!n) return null;
+  if (at === 'abroad') return stay ? n.copy.stayOutside : n.copy.outside;
+  if (s.dest !== 'nation') return null;
+  if (stay && (at === 'jeju' || at === 'busan')) return n.copy.stayIn(BUSAN_COPY.destName[at]);
+  return stay ? n.copy.stayNodata : n.copy.nodata;
+}
+
 export interface Renderer {
   render(s: State): void;
   setDate(text: string): void;
@@ -802,7 +815,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const box = el(doc, 'div', { class: 'notice' });
     const p = s.phase;
     let lines: readonly string[];
-    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [NATION && p.why === 'outside' && nationPart() ? nationPart()!.copy.outside : BUSAN && p.why === 'outside' && s.dest === 'busan' ? BUSAN_COPY.outside : COPY.noOrigin[p.why], COPY.noOriginBody];
+    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [(p.why === 'outside' && nationOutside(s, p.at, false)) || (BUSAN && p.why === 'outside' && s.dest === 'busan' ? BUSAN_COPY.outside : COPY.noOrigin[p.why]), COPY.noOriginBody];
     else if (kind === 'loadError' && p.k === 'loadError') lines = p.offline ? COPY.loadErrorOffline : COPY.loadError;
     else lines = COPY.empty;
     box.append(el(doc, 'p', { class: 'notice-t' }, lines[0]), el(doc, 'p', { class: 'notice-b' }, lines[1]));
@@ -823,7 +836,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (b.k === 'cards') return `cards|${s.cards!.seq}|${s.mapApp}${s.cards!.list.some((c) => c.spot.market || c.spot.season) ? `|${whenDay(s)}|${s.when === 'now'}` : ''}`;
     if (b.k === 'notice') {
       const p = s.phase;
-      const detail = p.k === 'noOrigin' ? p.why : p.k === 'loadError' ? String(p.offline) : '';
+      const detail = p.k === 'noOrigin' ? `${p.why}${p.at ?? ''}` : p.k === 'loadError' ? String(p.offline) : '';
       return `notice|${b.kind}|${detail}|${s.basis}|${s.region}|${s.dest}`;
     }
     return b.k;
@@ -1576,7 +1589,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const err = els.sheet.querySelector<HTMLElement>('.form-err');
     if (err) {
       // The button stays a button; the reason goes on its own line (S09).
-      setText(err, s.stayForm.error ? (NATION && s.stayForm.error === 'outside' && nationPart() ? nationPart()!.copy.stayOutside : BUSAN && s.stayForm.error === 'outside' && s.dest === 'busan' ? BUSAN_COPY.stayOutside : COPY.stayError[s.stayForm.error]) : '');
+      setText(err, s.stayForm.error ? (s.stayForm.error === 'outside' && nationOutside(s, s.stayForm.at, true)) || (BUSAN && s.stayForm.error === 'outside' && s.dest === 'busan' ? BUSAN_COPY.stayOutside : COPY.stayError[s.stayForm.error]) : '');
       err.hidden = !s.stayForm.error;
     }
   }

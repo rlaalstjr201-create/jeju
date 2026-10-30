@@ -11,6 +11,7 @@ import type { Region } from './nation';
 import type { NationCopy } from './nation-part';
 import type { Point } from './pick';
 import type { StartDeps, StartScreen } from './start';
+import type { OutsideAt } from './types';
 
 /** On in a build or test run with `--mode busan`; off (and safe to read) where no define exists. */
 export const BUSAN: boolean = typeof __BUSAN__ !== 'undefined' && __BUSAN__;
@@ -64,6 +65,8 @@ interface NationPart {
   /** its 시군구, as areas */
   list: readonly SggArea[];
   region(p: Point): Region;
+  /** outside Korea, drawn wide (nation.ts inKorea): in doubt, false */
+  abroad(p: Point): boolean;
   short(sgg: string): string;
   spots(sgg: string): Promise<unknown>;
   /** its words (plans/nationwide-app.md 8) */
@@ -120,6 +123,13 @@ export const released = (d: Dest): boolean => (d === 'nation' ? NATION && !!nati
  * switch off the boundary is never read (and, with it, never in the Jeju bundle: plans/busan.md budget). */
 export function releasedDestOf(p: Point): Dest | null {
   return inJeju(p) ? 'jeju' : BUSAN && part?.inside(p) ? 'busan' : NATION && sggOf(p) ? 'nation' : null;
+}
+
+/** Where a position is when it is not usable for the destination in use (predeploy review M-1): the open destination it
+ * is in, else outside Korea or in Korea with no 시군구 near (`nodata`); undefined, outside every destination, before the
+ * 자동 지역's part is in. */
+export function outsideAt(p: Point): OutsideAt | undefined {
+  return releasedDestOf(p) ?? (nation ? (nation.abroad(p) ? 'abroad' : 'nodata') : undefined);
 }
 
 /** One destination's areas (Jeju's with the switch off). */
