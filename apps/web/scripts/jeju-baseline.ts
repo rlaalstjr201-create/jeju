@@ -184,6 +184,8 @@ interface Snap {
   session: Record<string, string>;
   geoCalls: number;
   cards: string[];
+  /** the photos on screen (not display:none, nor in a hidden part such as the home under the results) */
+  shownImgs: string[];
 }
 const SNAP = `(() => {
   const props = ${JSON.stringify(STYLE_PROPS)};
@@ -204,6 +206,7 @@ const SNAP = `(() => {
     session: keep(sessionStorage),
     geoCalls: window.__geoCalls,
     cards: [...document.querySelectorAll('#cards .card:not(.ghost) .name')].map((e) => e.textContent),
+    shownImgs: [...document.querySelectorAll('img')].filter((e) => e.checkVisibility()).map((e) => e.currentSrc || e.src),
   };
 })()`;
 
@@ -262,10 +265,13 @@ async function browserRun(firstId: string) {
       await ctx.route('https://**/*', (r: any) => (/\.(png|jpe?g|webp|gif)(\?|$)/i.test(r.request().url()) ? r.fulfill({ status: 200, contentType: 'image/png', body: photo }) : r.fulfill({ status: 204 })));
       await ctx.route(`${BASE}api/**`, (r: any) => r.fulfill({ status: 204 }));
       const requests: string[] = [];
+      const urls: string[] = [];
       const page = await ctx.newPage();
       page.on('request', (r: any) => {
         const u: string = r.url();
-        if (!u.startsWith('data:')) requests.push(unhash(u.startsWith(BASE) ? `/${u.slice(BASE.length)}` : new URL(u).host + '/…'));
+        if (u.startsWith('data:')) return;
+        urls.push(u);
+        requests.push(unhash(u.startsWith(BASE) ? `/${u.slice(BASE.length)}` : new URL(u).host + '/…'));
       });
       await page.goto(BASE, { waitUntil: 'networkidle' });
       await page.waitForTimeout(1500);
@@ -279,11 +285,18 @@ async function browserRun(firstId: string) {
       await page.waitForSelector('#cards .card:not(.ghost) .name', { timeout: 8000 });
       await page.waitForTimeout(1000);
       const walk = await snap();
+      // a photo from elsewhere counts once it is on screen: the home's mood rows re-render under the results with lazy
+      // second photos that Chrome fetches or not before they are hidden (a race, 8 or 10 on the same build)
+      const shown = new Set(walk.shownImgs);
+      const walkRequests = requests.slice(homeRequests.length).filter((_, i) => {
+        const u = urls[homeRequests.length + i];
+        return u.startsWith(BASE) || !/\.(png|jpe?g|webp|gif)(\?|$)/i.test(u) || shown.has(u);
+      });
       const after = (s: typeof home) => ({ ...s, body: unhash(s.body) });
       summary[name] = {
         firstPaint: { html: short(dcl) },
         home: { body: short(unhash(home.body)), styles: `${home.styles.length} elements ${short(home.styles.join('\n'))}`, htmlClass: home.htmlClass, local: home.local, session: home.session, geoCalls: home.geoCalls, requests: tally(homeRequests) },
-        walk: { cards: walk.cards, body: short(unhash(walk.body)), styles: `${walk.styles.length} elements ${short(walk.styles.join('\n'))}`, local: walk.local, session: walk.session, geoCalls: walk.geoCalls, requests: tally(requests.slice(homeRequests.length)) },
+        walk: { cards: walk.cards, body: short(unhash(walk.body)), styles: `${walk.styles.length} elements ${short(walk.styles.join('\n'))}`, local: walk.local, session: walk.session, geoCalls: walk.geoCalls, requests: tally(walkRequests) },
       };
       detail[name] = { firstPaint: dcl, home: after(home), walk: after(walk) };
       await ctx.close();

@@ -181,7 +181,7 @@
     "geoCalls": 1,
     "requests": {
      "/api/rain?area=gujeju": 1,
-     "api.cdn.visitjeju.net/…": 10
+     "api.cdn.visitjeju.net/…": 3
     }
    }
   },
@@ -224,7 +224,7 @@
     "geoCalls": 1,
     "requests": {
      "/api/rain?area=gujeju": 1,
-     "api.cdn.visitjeju.net/…": 10
+     "api.cdn.visitjeju.net/…": 3
     }
    }
   }
