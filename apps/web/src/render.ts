@@ -216,15 +216,20 @@ export const COPY = {
 /** 여행지 (ADR-0094, specs/busan.md 1.3·1.4·3.5·6·8): the switched-on build's words, apart from COPY so that a Jeju build,
  * where every use of them is behind the switch, carries none of them (another language's table: Lang.busan). */
 export const BUSAN_COPY = {
-  destName: { jeju: '제주', busan: '부산', gangwon: '강릉', nation: '다른 곳' } satisfies Record<Dest, string>,
+  /** the 여행지 row's words (강원: ADR-0102 Amendment 2 — its 시군구 are listed in its 동네 index) */
+  destName: { jeju: '제주', busan: '부산', gangwon: '강원', nation: '다른 곳' } satisfies Record<Dest, string>,
+  /** 강원's 시군구 by code (DEST.gangwon.sgg): the name line, the title, 「○○ 인기:」 and 「○○ 밖이에요」 say the one in use */
+  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천' } as Record<string, string>,
   destHead: '여행지',
-  /** a 검수한 곳 other than Jeju, by its name (부산, 강릉: ADR-0102) */
+  /** a 검수한 곳 other than Jeju, by its name (부산, 속초: ADR-0102) */
   title: (name: string) => `여차나:${name} · P를 위한 여행동반자`,
   examplePopular: (name: string, names: string[]) => `${name} 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 한국관광공사',
   outside: (name: string) => `지금은 ${name} 밖이에요.`,
   stayOutside: (name: string) => `지금은 ${name} 밖이에요. 아래에서 숙소 동네를 골라 주세요.`,
-  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', gangwon: '지금 계신 강릉으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Dest, string>,
+  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Exclude<Dest, 'gangwon'>, string>,
+  /** 강원's, by its 시군구 */
+  switchedTo: (name: string) => `지금 계신 ${josa(name, '으로', '로')} 바꿨어요.`,
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
   /** the name line's button (ADR-0094 Amendment 3): its words, e.g. 「여차나:제주」 */
   destAria: (name: string) => `${name}, 여행지 바꾸기`,
@@ -236,6 +241,9 @@ function josa(name: string, withFinal: string, without: string): string {
   const c = main.charCodeAt(main.length - 1) - 0xac00;
   return `${main}${c >= 0 && c < 11172 && c % 28 === 0 ? without : withFinal}`;
 }
+
+/** A 검수한 곳's name where the screen speaks of it: 강원's is its 시군구 in use (ADR-0102 Amendment 2). */
+export const destNameOf = (s: { dest: Dest; sgg: string | null }): string => (DEST[s.dest].sgg && BUSAN_COPY.sggName[s.sgg ?? '']) || BUSAN_COPY.destName[s.dest];
 
 /** The mood buttons' own words; the results title repeats the one chosen. */
 export const MOOD_LABEL: Record<Button, string> = {
@@ -328,7 +336,7 @@ export function statusOf(s: State): { text: string; chooseArea: boolean; undo: {
   if (p.k === 'pending' && p.step === 'locating' && p.slow) return { text: COPY.locating, chooseArea: p.long, undo: null };
   if (p.k === 'ready') {
     const parts: string[] = [];
-    if (BUSAN && s.destNote) parts.push(BUSAN_COPY.switched[s.destNote]);
+    if (BUSAN && s.destNote) parts.push(s.destNote === 'gangwon' ? BUSAN_COPY.switchedTo(destNameOf(s)) : BUSAN_COPY.switched[s.destNote]);
     if (s.cards?.wrapped) parts.push(COPY.wrapped);
     if (s.cards?.nightShifted) parts.push(COPY.nightShifted[s.cards.nightShifted]);
     if (s.offline) parts.push(COPY.offline);
@@ -781,7 +789,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: RegionName | null, dest: Dest = 'jeju', sgg: string | null = null) {
     // the 자동 지역: its 시도's 시군구 and 다른 시도, drawn by its part (plans/nationwide-app.md 4)
     // 강원 (ADR-0102): its 시도's 시군구, the same index as the 자동 지역's — another one picked there moves to it (app.ts toSgg)
-    if (NATION && (dest === 'nation' || DEST[dest].sgg)) return nationPart()?.areas(parent, where, selected, dest === 'nation' ? sgg : DEST[dest].sgg![0], option);
+    if (NATION && (dest === 'nation' || DEST[dest].sgg)) return nationPart()?.areas(parent, where, selected, dest === 'nation' ? sgg : (sgg ?? DEST[dest].sgg![0]), option);
     if (BUSAN && dest === 'busan') {
       // specs/busan.md 2절: one group, no heading, west → east
       const id = `areas-${where}-busan`;
@@ -820,7 +828,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const box = el(doc, 'div', { class: 'notice' });
     const p = s.phase;
     let lines: readonly string[];
-    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [(p.why === 'outside' && nationOutside(s, p.at, false)) || (BUSAN && p.why === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.outside(BUSAN_COPY.destName[s.dest]) : COPY.noOrigin[p.why]), COPY.noOriginBody];
+    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [(p.why === 'outside' && nationOutside(s, p.at, false)) || (BUSAN && p.why === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.outside(destNameOf(s)) : COPY.noOrigin[p.why]), COPY.noOriginBody];
     else if (kind === 'loadError' && p.k === 'loadError') lines = p.offline ? COPY.loadErrorOffline : COPY.loadError;
     else lines = COPY.empty;
     box.append(el(doc, 'p', { class: 'notice-t' }, lines[0]), el(doc, 'p', { class: 'notice-b' }, lines[1]));
@@ -1356,7 +1364,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
-        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin || s.dest === 'nation' ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(BUSAN_COPY.destName[s.dest], names) : COPY.examplePopular(names)));
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin || s.dest === 'nation' ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(destNameOf(s), names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         // the second photo is not shown (.pair img + img): lazy, so it does not hold up the first ones on a slow line
         pair.append(...ex.map((x, i) => homePhoto(x, i > 0)));
@@ -1606,7 +1614,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const err = els.sheet.querySelector<HTMLElement>('.form-err');
     if (err) {
       // The button stays a button; the reason goes on its own line (S09).
-      setText(err, s.stayForm.error ? (s.stayForm.error === 'outside' && nationOutside(s, s.stayForm.at, true)) || (BUSAN && s.stayForm.error === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.stayOutside(BUSAN_COPY.destName[s.dest]) : COPY.stayError[s.stayForm.error]) : '');
+      setText(err, s.stayForm.error ? (s.stayForm.error === 'outside' && nationOutside(s, s.stayForm.at, true)) || (BUSAN && s.stayForm.error === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.stayOutside(destNameOf(s)) : COPY.stayError[s.stayForm.error]) : '');
       err.hidden = !s.stayForm.error;
     }
   }
@@ -1764,17 +1772,19 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   const jejuTitle = doc.title;
   const credits = [...doc.querySelectorAll<HTMLElement>('#results > .credit, #savedView .about > .credit:first-of-type')].map((e) => ({ e, html: e.innerHTML }));
   function renderDest(s: State) {
-    // the 자동 지역 is named by its 시군구 (plans/nationwide-app.md 1.5): another one is another name
+    // the 자동 지역 is named by its 시군구 (plans/nationwide-app.md 1.5): another one is another name; 강원 by its own
+    // (ADR-0102 Amendment 2)
     const short = DEST[s.dest].label === 'sgg' ? sggShort(s.sgg ?? '') : '';
-    const key = `${s.dest}|${short}`;
+    const name = short || destNameOf(s);
+    const key = `${s.dest}|${name}`;
     if (key === destDrawn) return;
     destDrawn = key;
     const busan = s.dest !== 'jeju';
     const tour = DEST[s.dest].credit === 'tour';
-    for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${short || BUSAN_COPY.destName[s.dest]}`);
+    for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${name}`);
     const logo = doc.getElementById('logo');
     if (BUSAN && logo) setAttr(logo, 'aria-label', BUSAN_COPY.destAria(logo.textContent ?? ''));
-    doc.title = short ? nationPart()!.copy.title(short) : busan ? BUSAN_COPY.title(BUSAN_COPY.destName[s.dest]) : jejuTitle;
+    doc.title = short ? nationPart()!.copy.title(short) : busan ? BUSAN_COPY.title(name) : jejuTitle;
     for (const c of credits) {
       if (tour) c.e.textContent = BUSAN_COPY.homeCredit;
       else c.e.innerHTML = c.html;

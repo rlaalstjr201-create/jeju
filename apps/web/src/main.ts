@@ -137,31 +137,39 @@ window.addEventListener('pageshow', (e) => {
   }
 });
 
+// Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
+// The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
+// task (audit 2026-10-15), and a list that came in before the first paint held that paint back (audit 2026-10-16).
+function listOf(dest: Dest): Promise<unknown> {
+  // Busan in another language: its place texts, asked for with its list (ADR-0093 Amendment 9)
+  const lang = document.documentElement.lang;
+  const more = BUSAN && dest === 'busan' && inLang ? inLang.addPlaces(json(`${BASE}i18n/places-busan.${lang}.json?v=${__BUSAN_PLACES_V__}`)) : null;
+  return fetch(spotsUrl(dest))
+    .then(async (r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      const text = await r.text();
+      listSettled();
+      await afterPaint();
+      const raw = JSON.parse(text) as unknown;
+      // the place texts if they come within 3 s more; later ones are used from the next draw on
+      await within(Promise.all([placesIn, more]), 3000).catch(() => undefined);
+      return raw;
+    })
+    .catch((e: unknown) => {
+      listSettled();
+      throw e;
+    });
+}
+let gangwonList: Promise<unknown> | null = null;
+
 const deps: Deps = {
-  // Versioned URL: a returning user's old service worker can never pair new code with old data (S26).
-  // The text, then the parse only once the first screen has been painted: json() on the whole 1.2MB was one long
-  // task (audit 2026-10-15), and a list that came in before the first paint held that paint back (audit 2026-10-16).
   loadSpots: (dest, sgg) => {
     // the 자동 지역: a 시군구's files, through its part (plans/nationwide-app.md 2)
     if (NATION && dest === 'nation') return nationSpots(sgg ?? '').finally(listSettled);
-    // Busan in another language: its place texts, asked for with its list (ADR-0093 Amendment 9)
-    const lang = document.documentElement.lang;
-    const more = BUSAN && dest === 'busan' && inLang ? inLang.addPlaces(json(`${BASE}i18n/places-busan.${lang}.json?v=${__BUSAN_PLACES_V__}`)) : null;
-    return fetch(spotsUrl(dest))
-      .then(async (r) => {
-        if (!r.ok) throw new Error(String(r.status));
-        const text = await r.text();
-        listSettled();
-        await afterPaint();
-        const raw = JSON.parse(text) as unknown;
-        // the place texts if they come within 3 s more; later ones are used from the next draw on
-        await within(Promise.all([placesIn, more]), 3000).catch(() => undefined);
-        return raw;
-      })
-      .catch((e: unknown) => {
-        listSettled();
-        throw e;
-      });
+    // 강원: one file for its 시군구, asked for once (again after a failure); the app takes each one's places from it
+    // (ADR-0102 Amendment 2)
+    if (NATION && dest === 'gangwon') return (gangwonList ??= listOf(dest).catch((e: unknown) => ((gangwonList = null), Promise.reject(e))));
+    return listOf(dest);
   },
   locate,
   geoPermission,

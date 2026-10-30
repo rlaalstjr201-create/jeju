@@ -242,7 +242,7 @@ describe('start.ts', () => {
     await tick();
     expect(t.chosen).toEqual([['busan', 'gps', null, 해운대]]);
   });
-  it.runIf(NATION)('자동 지역: 인기 칸 6 under the two; one pressed chooses its 시군구 (강릉: 강원, ADR-0102); 다른 곳 → 시도 → 시군구, 뒤로 back', async () => {
+  it.runIf(NATION)('자동 지역: 인기 칸 6 under the two; one pressed chooses its 시군구 (강릉·속초: 강원 at that 시군구, ADR-0102 Amendment 2); 다른 곳 → 시도 → 시군구, 뒤로 back', async () => {
     vi.stubGlobal('fetch', (url: string) => {
       const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
       return Promise.resolve(m ? { ok: true, json: () => Promise.resolve(JSON.parse(readFileSync(resolve(__dirname, `../data/nation/${m[1]}.json`), 'utf8'))) } : { ok: false, status: 404 });
@@ -253,10 +253,10 @@ describe('start.ts', () => {
     const t = started({});
     expect(words(t.doc)).toEqual(['내 위치로 시작하기', '제주', '부산', '서울', '강릉', '경주', '전주', '여수', '속초', '다른 곳']);
     ([...t.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === '강릉') as HTMLElement).click();
-    expect(t.chosen).toEqual([['gangwon', 'pick', null, undefined, undefined]]);
+    expect(t.chosen).toEqual([['gangwon', 'pick', null, undefined, '51150']]);
     const u = started({});
     ([...u.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === '속초') as HTMLElement).click();
-    expect(u.chosen).toEqual([['nation', 'pick', null, undefined, '51210']]);
+    expect(u.chosen).toEqual([['gangwon', 'pick', null, undefined, '51210']]);
     expect(t.doc.getElementById('ycStart')).toBeNull();
     const o = started({});
     const press = (w: string) => ([...o.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === w && !b.closest('[hidden]')) as HTMLElement).click();
@@ -268,7 +268,7 @@ describe('start.ts', () => {
     expect(words(o.doc)[0]).toBe('뒤로');
     press('강원');
     expect(words(o.doc)).toContain('속초시');
-    // 강릉시 is listed in the index's order among them, and opens 강원 (ADR-0102)
+    // 강원's 시군구 are listed in the index's order among the others, and open 강원 (ADR-0102)
     expect(words(o.doc).slice(1, 5)).toEqual(['춘천시', '원주시', '강릉시', '동해시']);
     press('뒤로');
     press('뒤로');
@@ -277,8 +277,17 @@ describe('start.ts', () => {
     await tick();
     await tick();
     press('강원');
-    press('속초시');
-    expect(o.chosen).toEqual([['nation', 'pick', null, undefined, '51210']]);
+    press('춘천시');
+    expect(o.chosen).toEqual([['gangwon', 'pick', null, undefined, '51110']]);
+    // 양양 stays 자동 지역
+    const y = started({});
+    const pressY = (w: string) => ([...y.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === w && !b.closest('[hidden]')) as HTMLElement).click();
+    pressY('다른 곳');
+    await tick();
+    await tick();
+    pressY('강원');
+    pressY('양양군');
+    expect(y.chosen).toEqual([['nation', 'pick', null, undefined, '51830']]);
     expect(o.w.__startTap).toBeUndefined(); // the cover's own handler did not take these for the big button
   });
   it.runIf(NATION)('자동 지역 in another language: the 인기 칸 in official forms, no Korean on the cover (B13); each still its 시군구', () => {
@@ -293,7 +302,7 @@ describe('start.ts', () => {
       expect(tiles.every((b) => !b.lang)).toBe(true);
       expect(doc.getElementById('ycStart')!.textContent).not.toMatch(/[가-힣]/);
       tiles[1].click();
-      expect(chosen).toEqual([['gangwon', 'pick', null, undefined, undefined]]);
+      expect(chosen).toEqual([['gangwon', 'pick', null, undefined, '51150']]);
     }
   });
 });

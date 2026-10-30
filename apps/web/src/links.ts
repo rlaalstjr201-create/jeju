@@ -1,6 +1,6 @@
 // Outbound links (ADR-0025: 예약은 외부 링크; ADR-0071: 지도 앱은 네이버지도 기본, 카카오맵 · TMAP 선택).
 import { DEST } from './dest';
-import { NATION, releasedDestOf as destOf, sggOf, sggShort } from './release';
+import { NATION, areaOfPoint, releasedDestOf as destOf, sggOf, sggShort } from './release';
 import { cleanName } from './data';
 import { distanceKm, islandOf, withinReach, type BookKind, type Island, type Point, type Spot } from './pick';
 
@@ -17,10 +17,11 @@ export function kakaoUrl(s: Spot): string {
  * and whether the name already says where it is. */
 const scope = (s: Spot): { word: string; said: RegExp } => {
   const d = destOf(s) ?? 'jeju';
-  if (!NATION || d !== 'nation') return DEST[d];
-  // the 자동 지역 (plans/nationwide-app.md U13): its 시군구's short name (강릉, 서울 중구), unless the name has its last word
-  const word = sggShort((s as { sgg?: string }).sgg ?? sggOf(s) ?? '');
-  return word ? { word, said: new RegExp(word.split(' ').pop()!) } : DEST.nation;
+  if (!NATION || (d !== 'nation' && !DEST[d].sgg)) return DEST[d];
+  // the 자동 지역 (plans/nationwide-app.md U13): its 시군구's short name (동해, 서울 중구), unless the name has its last word;
+  // 강원's (ADR-0102 Amendment 2) the same, its 시군구 the nearest of its own
+  const word = sggShort((d === 'nation' ? ((s as { sgg?: string }).sgg ?? sggOf(s)) : areaOfPoint(s, d).name) ?? '');
+  return word ? { word, said: new RegExp(word.split(' ').pop()!) } : DEST[d];
 };
 
 function searchUrl(s: Spot): string {

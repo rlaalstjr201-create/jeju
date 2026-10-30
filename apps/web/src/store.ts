@@ -59,6 +59,9 @@ export const KEYS = {
 /** ADR-0097: the keys that belong to one destination — `jeju.basis`, `jeju.region`, `jeju.stay` stay Jeju's; Busan's
  * carry `.busan`. Everything else (saved, visited, settings) is shared: an id says its destination. */
 export const destKey = (key: typeof KEYS.basis | typeof KEYS.region | typeof KEYS.stay, dest: Dest): string => (dest === 'jeju' ? key : `${key}.${dest}`);
+/** the last 시군구 of a destination named by 시군구: the 자동 지역's `jeju.sgg` (ADR-0097 Amendment 1), 강원's
+ * `jeju.sgg.gangwon` (ADR-0102 Amendment 2) */
+const sggKey = (d: Dest): string => (d === 'nation' ? KEYS.sgg : `${KEYS.sgg}.${d}`);
 export const MAX_SAVED = 500;
 export const MAX_VISITED = 500;
 
@@ -306,9 +309,9 @@ export interface Store {
   /** the destination kept on this device (`jeju.dest`), or null. */
   dest(): Dest | null;
   setDest(d: Dest): void;
-  /** the 자동 지역's last 시군구 (`jeju.sgg`), or null. */
-  sgg(): SggCode | null;
-  setSgg(c: SggCode): void;
+  /** the 자동 지역's last 시군구 (`jeju.sgg`), or null; 강원's (`jeju.sgg.gangwon`, ADR-0102 Amendment 2) with `d`. */
+  sgg(d?: Dest): SggCode | null;
+  setSgg(c: SggCode, d?: Dest): void;
   /** 오늘 판's row ahead for `dest` (KEYS.row); no times removes it. Written only when it changes. */
   setRow(dest: Dest, times: readonly number[]): void;
   setBasis(b: Basis): void;
@@ -480,11 +483,11 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       return isDest(v) && ((v !== 'nation' && v !== 'gangwon') || NATION) ? v : null;
     },
     setDest: (d) => void set(local, KEYS.dest, d),
-    sgg() {
-      const v = get(local, KEYS.sgg);
+    sgg(d = 'nation') {
+      const v = get(local, sggKey(d));
       return typeof v === 'string' && SGG_CODE.test(v) ? (v as SggCode) : null;
     },
-    setSgg: (c) => void set(local, KEYS.sgg, c),
+    setSgg: (c, d = 'nation') => void set(local, sggKey(d), c),
     setRow(dest, times) {
       const v = [dest, ...times];
       if (!times.length) removeQuietly(local, KEYS.row);

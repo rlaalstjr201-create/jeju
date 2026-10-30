@@ -190,14 +190,16 @@ export const JA: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: '済州', busan: '釜山', gangwon: '江陵', nation: 'ほかの場所' },
+    destName: { jeju: '済州', busan: '釜山', gangwon: '江原', nation: 'ほかの場所' },
+    sggName: { '51150': '江陵', '51210': '束草', '51110': '春川' },
     destHead: '旅行先',
     title: (name) => `Yeochana:${name} · ノープラン旅のおとも`,
     examplePopular: (name, names) => `${name}の人気：${names.join('、')}`,
     homeCredit: '情報・写真：韓国観光公社',
     outside: (name) => `いまは${name}の外にいます。`,
     stayOutside: (name) => `いまは${name}の外にいます。下から宿のエリアを選んでください。`,
-    switched: { jeju: '済州にいるので、済州に切り替えました。', busan: '釜山にいるので、釜山に切り替えました。', gangwon: '江陵にいるので、江陵に切り替えました。', nation: '今いる場所に切り替えました。' },
+    switched: { jeju: '済州にいるので、済州に切り替えました。', busan: '釜山にいるので、釜山に切り替えました。', nation: '今いる場所に切り替えました。' },
+    switchedTo: (name) => `${name}にいるので、${name}に切り替えました。`,
     otherSaved: { jeju: (n) => `済州で保存した場所 ${n}か所`, busan: (n) => `釜山で保存した場所 ${n}か所` },
     destAria: (name) => `${name}、旅行先を変更`,
   },

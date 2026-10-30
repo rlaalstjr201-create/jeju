@@ -65,7 +65,8 @@ export interface State {
   /** specs/busan.md 1.3: the destination a GPS read just switched to (the status line says so); gone with the next intent. */
   destNote: Dest | null;
   /** 자동 지역 (plans/nationwide-app.md 1.2): the 시군구 whose places are in use while `dest` is 'nation' — the last one
-   * known otherwise (store `jeju.sgg`); null before any. */
+   * known otherwise (store `jeju.sgg`); null before any. While `dest` is 강원 (ADR-0102 Amendment 2), its 시군구 in use
+   * (store `jeju.sgg.gangwon`). */
   sgg: SggCode | null;
   view: View;
   overlay: Overlay;

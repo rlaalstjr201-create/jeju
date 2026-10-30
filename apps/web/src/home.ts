@@ -12,9 +12,9 @@ import type { Origin } from './types';
 
 export { homeOrigin } from './state';
 
-/** The sun's place: the basis, else the destination's city hall (the 자동 지역: its 시군구's centre, plans/nationwide-app.md 5). */
+/** The sun's place: the basis, else the destination's city hall (the 자동 지역 and 강원: its 시군구's centre, plans/nationwide-app.md 5). */
 export const sunPoint = (origin: Origin | null, dest: Dest = 'jeju', sgg: string | null = null): Point => {
-  const a = NATION && dest === 'nation' && !origin ? areaByName(sgg, OPEN_AREAS) : null;
+  const a = NATION && (dest === 'nation' || DEST[dest].sgg) && !origin ? areaByName(sgg, OPEN_AREAS) : null;
   return origin?.point ?? (a ? { lat: a.lat, lng: a.lng } : DEST[BUSAN ? dest : 'jeju'].cityHall);
 };
 

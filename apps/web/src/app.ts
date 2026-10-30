@@ -9,7 +9,7 @@ import { DEST, destOfId, isDest, type Dest } from './dest';
 import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, startScreen } from './release';
+import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './release';
 import { HOME, createNav } from './nav';
 import { REACHES, type Button, type Reach, type Spot, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
@@ -140,16 +140,29 @@ export function mountApp(doc: Document, deps: Deps): App {
   // per 시군구 (plans/nationwide-app.md 2: the same array while the 시군구 is the same).
   const loadSpots = deps.loadSpots;
   const sources: Record<string, SpotSource> = {};
-  const keyOf = (d: Dest, sgg: SggCode | null) => (d === 'nation' ? `nation:${sgg}` : d);
-  /** The 검수한 곳 that covers a 시군구 (강릉 → 강원, ADR-0102), or null (a 자동 지역 one, or the part not in). */
+  // 강원 (ADR-0102 Amendment 2) is named by 시군구 too: one 시군구's places at a time, out of its one file
+  const keyOf = (d: Dest, sgg: SggCode | null) => (d === 'nation' || DEST[d].sgg ? `${d}:${sgg}` : d);
+  /** The 검수한 곳 that covers a 시군구 (강릉·속초·춘천 → 강원, ADR-0102), or null (a 자동 지역 one, or the part not in). */
   function coveredBy(sgg: string | null): Dest | null {
     const a = areaByName(sgg, OPEN_AREAS);
     return a && a.group === 'gangwon' ? destOfArea(a) : null;
   }
+  /** 강원's 시군구 in use (ADR-0102 Amendment 2): the first of `want` that is one of its own, else the one its basis
+   * stands on (the region, the 숙소's), else either, else its first. Null for a destination not named by 시군구. */
+  function sggFor(d: Dest, p: { basis: Basis; region: RegionName | null; stay: Stay | null }, ...want: (string | null | undefined)[]): SggCode | null {
+    const own = DEST[d].sgg;
+    if (!own) return null;
+    return [...want, p.basis === 'stay' ? p.stay?.area : p.basis === 'region' ? p.region : null, p.region, p.stay?.area, own[0]].find((c): c is SggCode => !!c && own.includes(c))!;
+  }
+  /** one 시군구's places of a list that has several (their `area`, its short name) */
+  function ofSgg(raw: unknown, sgg: SggCode | null): unknown {
+    const word = sggShort(sgg ?? '');
+    return Array.isArray(raw) ? raw.filter((r) => (r as { area?: unknown } | null)?.area === word) : raw;
+  }
   const sourceOf = (d: Dest, sgg: SggCode | null): SpotSource => {
     const key = keyOf(d, sgg);
     return (sources[key] ??= createSpotSource(
-      () => (d === 'nation' ? loadSpots(d, sgg ?? '') : loadSpots(d)),
+      () => (d === 'nation' ? loadSpots(d, sgg ?? '') : DEST[d].sgg ? loadSpots(d, sgg ?? '').then((raw) => ofSgg(raw, sgg)) : loadSpots(d)),
       delays.dataTimeout,
       (spots) => {
         if (keyOf(state.dest, state.sgg) !== key) return;
@@ -200,6 +213,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   let dest0: Dest = 'jeju';
   // 자동 지역 (plans/nationwide-app.md 1.2): its 시군구 — a link's (`dest=nation&area=<code>`), else the one kept
   let sgg0: SggCode | null = store.sgg();
+  // 강원 (ADR-0102 Amendment 2): the 시군구 a link names (its `area=`, its 숙소's), and the one an older device had as the
+  // 자동 지역's — ahead of the one kept for it
+  const sggWant: (string | null)[] = [];
   if (BUSAN) {
     const search = win?.location.search ?? '';
     const link = early?.__destBy === 'link' && win ? readDeepLink(search, today0) : null;
@@ -207,17 +223,22 @@ export function mountApp(doc: Document, deps: Deps): App {
     // `dest=`: 브라우저로 열기 from an in-app browser (keep.ts handoffUrl) carries the 여행지 in use
     const named = /[?&]dest=([a-z]{2,10})(?:[&#]|$)/.exec(search)?.[1];
     const handed = isDest(named) ? named : undefined;
-    const sggLink = handed === 'nation' ? /[?&]area=(\d{4,8})(?:[&#]|$)/.exec(search)?.[1] : undefined;
-    if (sggLink && areaByName(sggLink, OPEN_AREAS)) sgg0 = sggLink as SggCode;
+    const sggLink = handed === 'nation' || handed === 'gangwon' ? /[?&]area=(\d{4,8})(?:[&#]|$)/.exec(search)?.[1] : undefined;
+    if (sggLink && areaByName(sggLink, OPEN_AREAS)) {
+      if (handed === 'nation') sgg0 = sggLink as SggCode;
+      else sggWant.push(sggLink);
+    }
     const linked = area ? destOfArea(area) : link?.stay ? releasedDestOf(link.stay) : (handed ?? null);
     const said = isDest(early?.__dest) ? early.__dest : null;
     let want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
     if (want === 'nation' && link?.stay) sgg0 = sggOf(link.stay) ?? sgg0;
-    // a 시군구 a 검수한 곳 has taken over (강릉, chosen as 자동 지역 before ADR-0102, or an older 브라우저로 열기 link): that
-    // destination
+    if (want !== 'nation' && DEST[want].sgg && link?.stay && released(want)) sggWant.push(areaOfPoint(link.stay, want).name);
+    // a 시군구 a 검수한 곳 has taken over (강릉·속초·춘천, chosen as 자동 지역 before ADR-0102, or an older 브라우저로 열기
+    // link): that destination, at that 시군구
     const taken = want === 'nation' ? coveredBy(sgg0) : null;
     if (taken) {
       want = taken;
+      sggWant.push(sgg0);
       // and its basis, region and 숙소 (ADR-0102 Amendment 1, m-1)
       store.carry();
     }
@@ -229,6 +250,10 @@ export function mountApp(doc: Document, deps: Deps): App {
   }
   store.useDest(dest0);
   const loaded = store.load(today0);
+  if (DEST[dest0].sgg) {
+    sgg0 = sggFor(dest0, loaded, ...sggWant, store.sgg(dest0));
+    store.setSgg(sgg0!, dest0);
+  }
   // ADR-0063 2: an in-app browser keeps its own storage (say so, once); the home-screen nudge, once.
   const nav0 = win?.navigator;
   const ua = deps.userAgent ?? nav0?.userAgent ?? '';
@@ -1049,7 +1074,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (basis === 'gps') return basisIsCurrent(state, 'gps') ? closeOverlay() : changeBasis({ basis: 'gps' });
     if (basis === 'stay') {
       if (!state.stay) return openOverlay('stay');
-      return basisIsCurrent(state, 'stay') ? closeOverlay() : changeBasis({ basis: 'stay' });
+      if (basisIsCurrent(state, 'stay')) return closeOverlay();
+      // a 숙소 in another 시군구 than the one in use (강원's, the 자동 지역's): its list (ADR-0102 Amendment 2)
+      const at = areaByName(state.stay.area, OPEN_AREAS);
+      if (at) toSgg(at);
+      return changeBasis({ basis: 'stay' });
     }
     const area = areaByName(b.dataset.area, OPEN_AREAS);
     if (!area) return;
@@ -1368,15 +1397,17 @@ export function mountApp(doc: Document, deps: Deps): App {
   const partOf = (d: Dest) => (d === 'busan' ? loadBusan() : loadNation());
   /** To `d`: its basis, region and 숙소 (each destination keeps its own, ADR-0097), its list asked for, kept on this
    * device. `basis`: what to start it with instead of the one kept there. `sgg`: the 자동 지역's 시군구 (the one in use, or
-   * the one kept, when not given); another one is another list. */
+   * the one kept, when not given) or 강원's (ADR-0102 Amendment 2: the one in use, the one kept for it, the one its basis
+   * stands on); another one is another list. */
   function switchDest(d: Dest, opts: { basis?: Basis; note?: boolean; sgg?: SggCode | null } = {}) {
-    const sgg = d === 'nation' ? (opts.sgg ?? state.sgg ?? store.sgg()) : null;
+    let sgg = d === 'nation' ? (opts.sgg ?? state.sgg ?? store.sgg()) : null;
     if (!released(d) || (d === 'nation' && !sgg)) return;
     store.useDest(d);
     store.setDest(d);
-    if (sgg) store.setSgg(sgg);
-    if (d === state.dest && !opts.basis && (!sgg || sgg === state.sgg)) return;
     const p = store.place();
+    if (DEST[d].sgg) sgg = sggFor(d, p, opts.sgg, d === state.dest ? state.sgg : null, store.sgg(d));
+    if (sgg) store.setSgg(sgg, d);
+    if (d === state.dest && !opts.basis && (!sgg || sgg === state.sgg)) return;
     const basis = opts.basis ?? p.basis;
     batch(() => {
       dispatch({ type: 'dest', dest: d, basis, region: basis === 'region' ? null : p.region, stay: p.stay, note: opts.note, ...(sgg ? { sgg } : {}) });
@@ -1389,19 +1420,21 @@ export function mountApp(doc: Document, deps: Deps): App {
     warm();
   }
   /** A 시군구 picked in the 자동 지역's 동네 index (another 시도's, plans/nationwide-app.md 4): its list from now on. The
-   * same index lists a 검수한 곳's 시군구 (강릉, ADR-0102) and is drawn there too: one picked moves between the two. */
+   * same index lists a 검수한 곳's 시군구 (강릉·속초·춘천, ADR-0102) and is drawn there too: one picked moves between the
+   * two, or to another of 강원's (its list too, Amendment 2). */
   function toSgg(area: Area) {
-    if (!NATION || (state.dest !== 'nation' && area.group !== 'nation')) return;
+    if (!NATION || (area.group !== 'nation' && area.group !== 'gangwon')) return;
     const d = destOfArea(area);
-    if (d === 'nation' ? area.name !== state.sgg || state.dest !== 'nation' : d !== state.dest) switchDest(d, { basis: state.basis, ...(d === 'nation' ? { sgg: area.name as SggCode } : {}) });
+    if (d !== state.dest || area.name !== state.sgg) switchDest(d, { basis: state.basis, sgg: area.name as SggCode });
   }
   /** A GPS point inside another open destination (or, in the 자동 지역, another 시군구), while the basis is 내 위치: moves
    * there (true). */
   function followGps(p: { lat: number; lng: number }): boolean {
     if (!BUSAN || state.basis !== 'gps') return false;
     const d = releasedDestOf(p);
-    const sgg = d === 'nation' ? sggOf(p) : null;
-    if (!d || (d === state.dest && sgg === (d === 'nation' ? state.sgg : null)) || !released(d)) return false;
+    // the 자동 지역's 시군구, or 강원's nearest (ADR-0102 Amendment 2)
+    const sgg = d === 'nation' ? sggOf(p) : d && DEST[d].sgg ? (areaOfPoint(p, d).name as SggCode) : null;
+    if (!d || (d === state.dest && sgg === (d === 'nation' || DEST[d].sgg ? state.sgg : null)) || !released(d)) return false;
     switchDest(d, { basis: 'gps', note: d !== state.dest, sgg });
     return true;
   }
@@ -1413,9 +1446,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (BUSAN && !released(d)) return void partOf(d).then((ok) => ok && !signal.aborted && pickDest(d));
     const fix = state.origin?.key === GPS_KEY ? state.origin.point : null;
     // the 자동 지역 never chosen on this device: 서울시청's 시군구 until one is picked in its index
-    // (not one a 검수한 곳 has taken over since it was kept: 강릉, ADR-0102)
-    const sgg = d !== 'nation' ? undefined : ((fix && sggOf(fix)) ?? [state.sgg, store.sgg()].find((c) => c && !coveredBy(c)) ?? sggOf(DEST.nation.cityHall));
-    switchDest(d, { basis: fix && releasedDestOf(fix) === d ? 'gps' : 'region', sgg });
+    // (not one a 검수한 곳 has taken over since it was kept: 강릉, ADR-0102); 강원 at the position's 시군구 when it is in 강원,
+    // else the one kept for it (switchDest)
+    const here = fix && releasedDestOf(fix) === d;
+    const sgg = d === 'nation' ? ((fix && sggOf(fix)) ?? [state.sgg, store.sgg()].find((c) => c && !coveredBy(c)) ?? sggOf(DEST.nation.cityHall)) : fix && here && DEST[d].sgg ? (areaOfPoint(fix, d).name as SggCode) : undefined;
+    switchDest(d, { basis: here ? 'gps' : 'region', sgg });
     if (state.view !== 'home') request('show');
     later(0, toAreas);
   }
@@ -1496,8 +1531,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       choose(d, how, why, point, sgg) {
         startOpen = false;
         if (seeStart()) countStart({ e: 'start_done', how, why: why ?? 'none', dest: d, d: state.today });
-        // the 자동 지역: the 시군구 picked, or the one the position is in
-        switchDest(d, { basis: 'gps', sgg: d === 'nation' ? (sgg ?? (point ? sggOf(point) : null)) : undefined });
+        // the 자동 지역 (강원, ADR-0102 Amendment 2): the 시군구 picked, or the one the position is in
+        switchDest(d, { basis: 'gps', sgg: d === 'nation' ? (sgg ?? (point ? sggOf(point) : null)) : DEST[d].sgg ? (sgg ?? (point ? (areaOfPoint(point, d).name as SggCode) : null)) : undefined });
         // 거절 뒤에 골랐다면 라벨은 지금처럼 지역 고르기 (spec 1.2)
         if (why === 'denied') dispatch({ type: 'permission', permission: 'denied' });
         if (how === 'gps' && point) dispatch({ type: 'homeFix', point });

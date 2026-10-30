@@ -193,14 +193,16 @@ export const EN: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: 'Jeju', busan: 'Busan', gangwon: 'Gangneung', nation: 'Somewhere else' },
+    destName: { jeju: 'Jeju', busan: 'Busan', gangwon: 'Gangwon', nation: 'Somewhere else' },
+    sggName: { '51150': 'Gangneung', '51210': 'Sokcho', '51110': 'Chuncheon' },
     destHead: 'Destination',
     title: (name) => `Yeochana:${name} · Your no-plan travel buddy`,
     examplePopular: (name, names) => `${name} favorites: ${names.join(', ')}`,
     homeCredit: 'Info & photos: Korea Tourism Organization',
     outside: (name) => `You're not in ${name} right now.`,
     stayOutside: (name) => `You're not in ${name} right now. Pick your stay's area below.`,
-    switched: { jeju: "You're in Jeju, so we switched to Jeju.", busan: "You're in Busan, so we switched to Busan.", gangwon: "You're in Gangneung, so we switched to Gangneung.", nation: 'We switched to where you are.' },
+    switched: { jeju: "You're in Jeju, so we switched to Jeju.", busan: "You're in Busan, so we switched to Busan.", nation: 'We switched to where you are.' },
+    switchedTo: (name) => `You're in ${name}, so we switched to ${name}.`,
     otherSaved: { jeju: (n) => `Saved in Jeju (${n})`, busan: (n) => `Saved in Busan (${n})` },
     destAria: (name) => `${name}, change destination`,
   },

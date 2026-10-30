@@ -17,7 +17,7 @@ import { cardIds, current, flush, render, reset, settle, tap } from './harness';
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const raw51 = JSON.parse(file('51')) as unknown;
 const 동해역 = { lat: 37.4985, lng: 129.124 };
-const 속초해수욕장 = { lat: 38.1906, lng: 128.6014 };
+const 양양시외버스터미널 = { lat: 38.0754, lng: 128.6189 };
 const 동문시장 = { lat: 33.5122, lng: 126.5272 };
 const wait = async () => {
   for (let i = 0; i < 4; i++) await flush();
@@ -86,17 +86,17 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
     expect(reads).toBe(1);
   });
 
-  it('GPS in another 시군구 (동해 → 속초): its list, the 시군구 kept on the device; the same 시군구 again asks nothing more', async () => {
-    const { asked } = mount({ dest: 'nation', sgg: '51170', at: 속초해수욕장 });
+  it('GPS in another 시군구 (동해 → 양양): its list, the 시군구 kept on the device; the same 시군구 again asks nothing more', async () => {
+    const { asked } = mount({ dest: 'nation', sgg: '51170', at: 양양시외버스터미널 });
     await wait();
     await tap('[data-mood="walk"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51210' });
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51830' });
     expect(ntIds()).toBe(true);
-    expect(localStorage.getItem(KEYS.sgg)).toBe('"51210"');
+    expect(localStorage.getItem(KEYS.sgg)).toBe('"51830"');
     await tap('[data-mood="new"]');
     await wait();
-    expect(asked).toEqual(['nation:51170', 'nation:51210']);
+    expect(asked).toEqual(['nation:51170', 'nation:51830']);
   });
 
   it('제주 device, a GPS read in 동해: moves to the 자동 지역 (its 시군구), and back to 제주 with a read in Jeju', async () => {
@@ -119,9 +119,9 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
   });
 
   it('브라우저로 열기 (`dest=nation&area=<시군구>`): that 시군구; a code the index lacks keeps the one on the device', async () => {
-    mount({ search: '?dest=nation&area=51210' });
+    mount({ search: '?dest=nation&area=51830' });
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51210' });
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51830' });
     reset();
     mount({ sgg: '51170', search: '?dest=nation&area=99999' });
     await wait();
@@ -141,16 +141,16 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
   });
 
   // predeploy review m-3: 지금 위치를 숙소로 in the 자동 지역 moves its 시군구 (list, 비 소식) as the 동네 index does
-  it('숙소 by GPS in another 시군구 (동해 → 속초): the 시군구 follows, its list asked for, the 숙소 named by it', async () => {
-    const { asked } = mount({ dest: 'nation', sgg: '51170', at: 속초해수욕장 });
+  it('숙소 by GPS in another 시군구 (동해 → 양양): the 시군구 follows, its list asked for, the 숙소 named by it', async () => {
+    const { asked } = mount({ dest: 'nation', sgg: '51170', at: 양양시외버스터미널 });
     await wait();
     await tap('#basis');
     await tap('#sheet [data-basis="stay"]');
     await tap('#sheet [data-action="stay-here"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51210', basis: 'stay', stay: { area: '51210', source: 'gps' } });
-    expect(localStorage.getItem(KEYS.sgg)).toBe('"51210"');
-    expect(asked).toContain('nation:51210');
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51830', basis: 'stay', stay: { area: '51830', source: 'gps' } });
+    expect(localStorage.getItem(KEYS.sgg)).toBe('"51830"');
+    expect(asked).toContain('nation:51830');
   });
 
   // predeploy review M-1·m-2: 「한국 밖」 only outside Korea; a position in Korea with no 시군구 near says nothing about where

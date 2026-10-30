@@ -50,7 +50,7 @@ const NATION_WORDS: Record<string, { outside: string; nodata: string; other: str
   ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', nodata: 'このあたりの場所データはまだありません。旅行先を選んでください。', other: 'ほかの場所', back: '戻る', failed: 'リストを読み込めませんでした。接続を確認して、もう一度読み込んでください。', popular: ['ソウル', '江陵', '慶州', '全州', '麗水', '束草'] },
 };
 /** 인기 칸 (plans/nationwide-app.md 13 R14): name and 시군구 (서울: 서울시청's 중구, 전주: 한옥마을's 완산구); one a 검수한 곳
- * covers opens that destination (강릉 → 강원's, ADR-0102) */
+ * covers opens that destination at that 시군구 (강릉·속초 → 강원's, ADR-0102 Amendment 2) */
 const POPULAR: readonly [string, SggCode][] = [
   ['서울', '11140'],
   ['강릉', '51150'],
@@ -75,7 +75,7 @@ export interface StartDeps {
   geo: GeoDeps;
   signal: AbortSignal;
   /** chosen: by the position (`point`) or a button (`why` = what the position said before, if anything); `sgg`: the
-   * 자동 지역's 시군구 picked (plans/nationwide-app.md 4) */
+   * 시군구 picked, the 자동 지역's or 강원's (plans/nationwide-app.md 4, ADR-0102 Amendment 2) */
   choose(d: Dest, how: 'gps' | 'pick', why: NoOrigin | null, point?: Point, sgg?: SggCode): void;
 }
 
@@ -165,7 +165,7 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
       const why = now === 'start' || now === 'locating' ? null : now;
       close();
       const d = destOfArea(a);
-      deps.choose(d, 'pick', why, undefined, d === 'nation' ? (a.name as SggCode) : undefined);
+      deps.choose(d, 'pick', why, undefined, a.name as SggCode);
     };
     const tiles = POPULAR.flatMap(([name, c], i) => {
       const a = areaByName(c, sggAreas());

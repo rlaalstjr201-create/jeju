@@ -159,12 +159,12 @@ export function inAppOf(ua: string): InApp | null {
  * and, after a 숙소 링크 (ADR-0089), that 숙소 (`stay`, only when it came from the link) and this visit's tag with
  * `relay=1` (the arrival was counted here), a language other than Korean (`lang`, ADR-0093) and, with the switch on, the
  * 여행지 in use (`dest`, ADR-0096: the phone's browser opens there, no 시작 화면) — the 자동 지역 with its 시군구 (`area`,
- * plans/nationwide-app.md 7: the phone's browser has none kept). The comma as %2C: a messenger may end a link at a bare one. */
+ * plans/nationwide-app.md 7: the phone's browser has none kept), 강원 with its own (ADR-0102 Amendment 2). The comma as %2C: a messenger may end a link at a bare one. */
 export function handoffUrl(home: string, s: { saved: readonly SavedEntry[]; indoor: boolean; mapApp: MapApp; stay: Stay | null; src: string | null; dest?: Dest; sgg?: string | null }, lang = 'ko'): string {
   const q = [
     ...(lang && lang !== 'ko' ? [`lang=${lang}`] : []),
     ...(BUSAN && s.dest ? [`dest=${s.dest}`] : []),
-    ...(BUSAN && s.dest === 'nation' && s.sgg ? [`area=${s.sgg}`] : []),
+    ...(BUSAN && (s.dest === 'nation' || s.dest === 'gangwon') && s.sgg ? [`area=${s.sgg}`] : []),
     ...(s.stay?.source === 'link' ? [`stay=${s.stay.lat}%2C${s.stay.lng}`] : []),
     ...(s.src ? [`src=${s.src}`, 'relay=1'] : []),
   ];

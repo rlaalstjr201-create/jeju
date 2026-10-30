@@ -6,7 +6,7 @@
 import type { Kind, Mood } from './pick';
 
 /** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. `gangwon` (ADR-0102): 강원's, named by
- * 시군구 — 강릉 for now; the others stay 자동 지역 until theirs are checked. */
+ * 시군구 — 강릉·속초·춘천 now (Amendment 2); the others stay 자동 지역 until theirs are checked. */
 export type Curated = 'jeju' | 'busan' | 'gangwon';
 /** `nation`: the 자동 지역 as a whole (plans/nationwide-app.md 1.2); which 시군구 is State.sgg. */
 export type Dest = Curated | 'nation';
@@ -30,9 +30,11 @@ export interface DestRow {
   /** the moods it offers (ADR-0101 2: no 쉬기, no 유명한 데 in the 자동 지역), and the ones 아무거나 takes a card from */
   moods: readonly Kind[];
   any: readonly Mood[];
-  /** what the 이름 줄 says after the colon: the destination's name, or the 시군구's (sggShort) */
+  /** what the 이름 줄 says after the colon: the destination's name (a 검수한 곳 with `sgg`: its 시군구 in use, named in
+   * the page's language, render.ts destNameOf), or the 시군구's (sggShort) */
   label: 'name' | 'sgg';
-  /** a 검수한 곳 named by 시군구 (plans/nationwide-app.md 1.3): its codes, which the 자동 지역 then leaves to it */
+  /** a 검수한 곳 named by 시군구 (plans/nationwide-app.md 1.3): its codes, which the 자동 지역 then leaves to it; one is in
+   * use at a time (State.sgg) and its list is that 시군구's places (their `area`, the 시군구's short name) */
   sgg?: readonly string[];
 }
 
@@ -46,9 +48,10 @@ export const DEST: Record<Dest, DestRow> = {
   // 자동 지역: its files are nation/<f>.json (src/nation-part.ts); 서울시청 until a 시군구 is known; a map search by the
   // name alone (plans/nationwide-app.md U13 scopes it)
   nation: { file: '', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '', said: /(?:)/, moods: ['walk', 'new', 'food'], any: ['walk', 'new'], label: 'sgg' },
-  // 강원 (ADR-0102): 강릉시청 (강릉대로 33); its 시군구, which the 자동 지역 leaves to it. 강릉 only for now, so the name line
-  // says 강릉
-  gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강릉', said: /강릉/, moods: ALL, any: ANY, label: 'name', sgg: ['51150'] },
+  // 강원 (ADR-0102): 강릉시청 (강릉대로 33); its 시군구 강릉·속초·춘천 (Amendment 2), which the 자동 지역 leaves to it — the
+  // first is the one used when none is known. A map search is scoped by the place's own 시군구 (links.ts); `word` only
+  // before the 자동 지역's part is in
+  gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강원', said: /강원|강릉|속초|춘천/, moods: ALL, any: ANY, label: 'name', sgg: ['51150', '51210', '51110'] },
 };
 
 export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';
