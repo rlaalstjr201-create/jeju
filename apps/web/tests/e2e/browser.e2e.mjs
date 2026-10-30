@@ -5055,7 +5055,7 @@ if (NATION) {
 }
 
 if (NATION) {
-  await check('SV-5', '고른 곳의 공공 주소를 못 받을 때(/api/addr 503) at 375: Kakao의 점은 이번에만 — 숙소 근처가 되지만 jeju.stay·jeju.basis는 그대로, 시트는 남아 「이번에만 이곳을 숙소로 써요…」 (shot)', async () => {
+  await check('SV-5', '고른 곳의 공공 주소를 못 받을 때(/api/addr 503) at 375: Kakao의 점은 이번에만 — 숙소 근처가 되지만 jeju.stay·jeju.basis는 그대로, 시트는 남아 「이번에만 이곳을 숙소로 써요…」 (shot); 카드를 본 뒤 새로고침해도 localStorage·sessionStorage에 카카오 좌표 없음, 예전 기준으로', async () => {
     const asked = [];
     const { ctx, page } = await fresh({ width: 375, height: 812, storage: {}, route: geoRoute(asked, 200, [애월GH, 해운대HS], 503) });
     await page.waitForSelector('#today:not(.wait)');
@@ -5076,10 +5076,20 @@ if (NATION) {
     if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `pick-once-375.png`) });
     await tapText(page, '.sheet .sheet-close');
     const basis = await page.textContent('#basis > span');
+    // the cards from Kakao's point, then a reload: nothing of it on the device (session record included), the saved basis back
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    const kakao = [String(애월GH.lat), String(애월GH.lng)];
+    const stored = () => page.evaluate(() => [...Object.values({ ...localStorage }), ...Object.values({ ...sessionStorage })].join('\n'));
+    const shown = await stored();
+    await page.reload();
+    await waitCards(page);
+    const reloaded = { stored: await stored(), basis: await page.textContent('#basis > span') };
+    const leaked = kakao.filter((v) => shown.includes(v) || reloaded.stored.includes(v));
     await ctx.close();
     assert(
-      s.err === '이번에만 이곳을 숙소로 써요. 주소를 확인하지 못해 저장하지 않았어요.' && s.stay === 'true' && JSON.stringify(s.kept) === JSON.stringify(before) && !s.over && basis === '숙소 근처' && asked[1] === `POST addr|${애월GH.addr}`,
-      `${JSON.stringify(s)} before ${JSON.stringify(before)} basis ${basis} asked ${asked.join(' ')}`,
+      s.err === '이번에만 이곳을 숙소로 써요. 주소를 확인하지 못해 저장하지 않았어요.' && s.stay === 'true' && JSON.stringify(s.kept) === JSON.stringify(before) && !s.over && basis === '숙소 근처' && asked[1] === `POST addr|${애월GH.addr}` && !leaked.length && reloaded.basis !== '숙소 근처',
+      `${JSON.stringify(s)} before ${JSON.stringify(before)} basis ${basis} asked ${asked.join(' ')} leaked ${leaked.join(',')} reloaded ${reloaded.basis}`,
     );
   });
 }

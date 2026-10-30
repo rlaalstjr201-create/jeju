@@ -37,7 +37,7 @@ type Answer = { status: number; hits?: GeoHit[] } | 'throw';
 type Pub = 'near' | 'far' | number;
 const PUBLIC = '(공공) ';
 const kakaoOf = (addr: string) => [애월, 해운대, 속초, 이름만].find((h) => (h.addr || h.name) === addr);
-function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void>; pub?: Pub } = {}) {
+function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void>; pub?: Pub; pubHold?: Promise<void> } = {}) {
   if (o.dest) localStorage.setItem(KEYS.dest, JSON.stringify(o.dest));
   const asked: string[] = [];
   const picked: string[] = [];
@@ -49,6 +49,7 @@ function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void>; pub?: 
         expect([init?.method, init?.headers?.['Content-Type']]).toEqual(['POST', 'application/json']);
         const addr = (JSON.parse(init!.body!) as { addr: string }).addr;
         picked.push(addr);
+        await o.pubHold;
         const pub = o.pub ?? 'near';
         const k = kakaoOf(addr)!;
         if (typeof pub === 'number') return { ok: false, status: pub, json: () => Promise.resolve(null) };
@@ -309,6 +310,24 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect(localStorage.getItem(KEYS.stay)).toBeNull();
     expect(localStorage.getItem(KEYS.basis)).toBe('"gps"');
     expect(Object.values({ ...localStorage }).some((v) => v.includes(String(이름만.lat)))).toBe(false);
+  });
+
+  it('검색 again while a picked answer is being found (n-b): nothing is asked, and the answer lands as it would', async () => {
+    let answerNow = () => undefined as void;
+    const pubHold = new Promise<void>((r) => (answerNow = r));
+    const { asked, picked } = mount({ dest: 'jeju', pubHold, answer: { status: 200, hits: [애월, 해운대] } });
+    await wait();
+    await tap('#basis');
+    await search('애월');
+    await tap('#sheet [data-hit="0"]');
+    await wait();
+    expect(picked).toEqual([애월.addr]);
+    await search('해운대');
+    await tap('#sheet .addr-go');
+    expect(asked).toEqual(['애월']);
+    answerNow();
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'jeju', basis: 'stay', overlay: null, stay: { lat: north(애월), source: 'addr' } });
   });
 
   it("an answer outside Jeju with the 자동 지역's part not coming: 「검색하지 못했어요…」, not 「장소 자료가 없어요」; the basis unchanged", async () => {

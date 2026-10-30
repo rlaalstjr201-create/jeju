@@ -256,6 +256,20 @@ describe('QA 2026-09-30 — 세션 기록·위치 대기', () => {
     expect(sessionOf(run(failed, { type: 'route', route: { view: 'home', overlay: null } }))).toBeNull();
   });
 
+  it("a 숙소 for this visit only (Kakao's point, ADR-0103 Amendment 2): its point never goes into the record — a reload picks from the saved basis", () => {
+    const stay = { lat: 33.4139, lng: 126.2672, area: '한림' as const, source: 'addr' as const, once: true as const };
+    const at = staticOrigin('stay', null, stay)!;
+    const s = pick(run(s0(), { type: 'basis', basis: 'stay', stay }), 'rest', 1, at);
+    expect(s.origin?.key).toBe(at.key);
+    const rec = sessionOf(s)!;
+    expect(rec).toMatchObject({ mood: 'rest', origin: null, shown: {}, histories: {} });
+    expect(JSON.stringify(rec)).not.toContain('33.4139');
+    expect(JSON.stringify(sessionOf(pick(s, 'rest', 2, at, 'more')))).not.toContain('33.4139');
+    // a kept 숙소 (the public point) is written as before
+    const kept = { ...stay, once: undefined };
+    expect(sessionOf(pick(run(s0(), { type: 'basis', basis: 'stay', stay: kept }), 'rest', 1, staticOrigin('stay', null, kept)!))?.origin?.key).toBe(at.key);
+  });
+
   it('giving up on an unanswered GPS wait learns nothing: a known failure stays, none is invented', () => {
     const base = run(s0(), { type: 'openSaved' }, { type: 'request', req: 1, intent: 'show', step: 'locating' });
     expect(run(base, { type: 'located', req: 1, unknown: true }).lastFail).toBeNull();

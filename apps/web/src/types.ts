@@ -10,6 +10,9 @@ export type Basis = 'gps' | 'stay' | 'region';
 export interface Stay extends Point {
   area: RegionName;
   source: 'gps' | 'area' | 'link' | 'addr';
+  /** Kakao's point with no public address (ADR-0103 Amendment 2): this open page only — never written anywhere, the
+   * session record included. */
+  once?: true;
 }
 /** 주소·숙소 검색 (ADR-0103): one answer of /api/geo — a name, its address, its point. */
 export interface GeoHit extends Point {

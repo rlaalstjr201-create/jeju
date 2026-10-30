@@ -1014,7 +1014,7 @@ export function mountApp(doc: Document, deps: Deps): App {
         const area = areaOfPoint(p, d);
         if (d !== state.dest && !DEST[d].sgg && d !== 'nation') switchDest(d);
         toSgg(area);
-        changeBasis({ basis: 'stay', stay: { ...p, area: area.name, source: 'addr' } }, keep);
+        changeBasis({ basis: 'stay', stay: { ...p, area: area.name, source: 'addr', ...(keep ? {} : { once: true as const }) } }, keep);
         if (!keep) dispatch({ type: 'geo', pending: false, hits: null, error: 'once' });
       };
       // where the point is (Busan's boundary, the 시군구) needs the 자동 지역's part, Busan's with it

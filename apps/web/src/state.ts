@@ -775,6 +775,10 @@ function step(s: State, a: Action): State {
  * Null when the results are not on screen. */
 export function sessionOf(s: State): SessionRecord | null {
   if (s.view !== 'cards' || !s.mood) return null;
-  const rec: SessionRecord = { v: 1, mood: s.mood, sub: s.sub, newSub: s.newSub, origin: s.origin, indoor: s.originIndoor, shown: s.shown, histories: s.histories };
+  // a 숙소 for this visit only (Kakao's point, ADR-0103 Amendment 2) is not written: a reload picks from the saved basis
+  const once = s.stay?.once && s.origin?.key === staticOrigin('stay', null, s.stay)?.key;
+  const rec: SessionRecord = once
+    ? { v: 1, mood: s.mood, sub: s.sub, newSub: s.newSub, origin: null, indoor: s.originIndoor, shown: {}, histories: {} }
+    : { v: 1, mood: s.mood, sub: s.sub, newSub: s.newSub, origin: s.origin, indoor: s.originIndoor, shown: s.shown, histories: s.histories };
   return s.originReach ? { ...rec, reach: s.originReach } : rec;
 }
