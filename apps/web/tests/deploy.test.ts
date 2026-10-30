@@ -97,6 +97,10 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('<h2>주소·숙소 검색</h2>');
     expect(html).toContain('칸에 적은 글자를 이 사이트의 서버로 보내고, 서버는 그 글자로 카카오(카카오 로컬 API)에 주소와 장소를 물어');
     expect(html).toContain('글자를 칠 때마다 보내지 않고, 지금 위치는 보내지 않아요');
+    // the words in the body, not the URL; the edge cache keyed by their hash (sheet-v2 predeploy review m-5·n-6)
+    expect(html).toContain('글자는 요청 주소가 아니라 요청 본문에 담아 보내요');
+    expect(html).toContain('남는 주소(/api/geo)에는 검색한 글자가 들어 있지 않아요');
+    expect(html).toContain('그 캐시의 열쇠는 검색어 그대로가 아니라 검색어로 만든 해시 값(SHA-256)이에요');
     // 자동 지역 (plans/nationwide-app.md 5): a 시군구 centre's grid, never the position
     expect(html).toContain('그 시군구 가운데의 기상청 격자 번호(지금 위치가 아니에요) 하나를 보내요');
     // 시작 화면 (specs/busan.md 7): it asks for the position only on its big button; 부산's photos come from 한국관광공사
@@ -121,6 +125,17 @@ describe('privacy.html (ADR-0063 4)', () => {
     const html = text(f);
     expect(html).toContain(ask);
     expect(html).toContain(kept);
+  });
+
+  // sheet-v2 predeploy review m-5·n-6: the translations say it too — the words in the body, the cache under their hash
+  it.each([
+    ['privacy-en.html', 'The words go in the body of the request, not in its address', 'filed under a hash (SHA-256) made from the words rather than the words themselves'],
+    ['privacy-zh-Hans.html', '文字放在请求正文中发送，而不是放在请求网址中', '其键不是搜索词本身，而是由搜索词生成的哈希值（SHA-256）'],
+    ['privacy-ja.html', '文字はリクエストのURLではなく本文に入れて送ります', 'そのキーは検索語そのものではなく、検索語から作ったハッシュ値（SHA-256）です'],
+  ])('%s: 주소·숙소 검색 — the body, the hashed cache', (f, body, hashed) => {
+    const html = text(f);
+    expect(html).toContain(body);
+    expect(html).toContain(hashed);
   });
 
   // 출시 전 점검 F4 (idempotency-security.md K3): the repository is private, so its issues link was a 404 for everyone
