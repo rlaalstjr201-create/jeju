@@ -115,3 +115,4 @@
 | 0097 | [0097-storage-keys-per-destination.md](0097-storage-keys-per-destination.md) | 저장 키 머리말 jeju. 유지, 여행지별 기준·동네·숙소는 꼬리 .busan, jeju.dest, 다른 여행지 id 보존 (ADR-0063·0087 개정) | Accepted (2026-10-19) |  |
 | 0098 | [0098-busan-part-chunk-and-terser.md](0098-busan-part-chunk-and-terser.md) | 부산 몫(동네 12·경계·시작 화면 모듈)은 부산이 쓰일 때만 받는 청크, 압축은 terser — 켠 빌드 한국어 진입 gzip ≤ 50KB | Accepted (2026-10-20) |  |
 | 0099 | [0099-busan-landing-phase-1.md](0099-busan-landing-phase-1.md) | 부산 랜딩 1단계 — 엔티티 문장은 여행지마다(「여차나:부산은 … 부산 무계획 여행 앱」), 허브 1 + 동네 12쪽만, 장소 쪽은 사전등록 조건 뒤 | Accepted (2026-10-24) | Amendment 1: 제주·부산 허브끼리 「다른 여행지」 한 줄로 잇는다 |
+| 0102 | [0102-gangwon-curated-gangneung.md](0102-gangwon-curated-gangneung.md) | 강원 검수한 곳 — 여행지 gangwon, 지금은 강릉(51150) 한 시군구, 판정·동네는 자동 지역 색인, 자기 청크 없이 spots-gangwon.json, 이유 줄·기분 다섯 | Accepted (2026-10-30) |  |
