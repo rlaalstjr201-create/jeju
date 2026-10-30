@@ -261,4 +261,19 @@ describe('start.ts', () => {
     expect(o.chosen).toEqual([['nation', 'pick', null, undefined, '51210']]);
     expect(o.w.__startTap).toBeUndefined(); // the cover's own handler did not take these for the big button
   });
+  it.runIf(NATION)('자동 지역 in another language: the 인기 칸 in official forms, no Korean on the cover (B13); each still its 시군구', () => {
+    const want: Record<string, string[]> = { en: ['Seoul', 'Gangneung', 'Gyeongju', 'Jeonju', 'Yeosu', 'Sokcho'], 'zh-Hans': ['首尔', '江陵', '庆州', '全州', '丽水', '束草'], ja: ['ソウル', '江陵', '慶州', '全州', '麗水', '束草'] };
+    for (const [lang, names] of Object.entries(want)) {
+      const { dom, doc } = open(`/?lang=${lang}`);
+      const chosen: unknown[] = [];
+      const ctl = new (dom.window as unknown as typeof globalThis).AbortController();
+      mountStart(doc, { signal: ctl.signal, geo: { geoPermission: () => Promise.resolve('prompt'), locate: () => Promise.reject(new LocateError('outside')) }, choose: (...a) => chosen.push(a) });
+      const tiles = [...doc.querySelectorAll<HTMLElement>('#ycStart .yc-pop button')];
+      expect(tiles.map((b) => b.textContent)).toEqual(names);
+      expect(tiles.every((b) => !b.lang)).toBe(true);
+      expect(doc.getElementById('ycStart')!.textContent).not.toMatch(/[가-힣]/);
+      tiles[1].click();
+      expect(chosen).toEqual([['nation', 'pick', null, undefined, '51150']]);
+    }
+  });
 });

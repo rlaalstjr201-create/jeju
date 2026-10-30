@@ -56,6 +56,8 @@ const GEO_STUB = `(() => {
 })();`;
 /** plans/busan.md S5: a build with the switch on (`vite build --mode busan`) ships spots-busan.json; the off build never does. */
 const BUSAN = existsSync(join(appDir, 'dist/spots-busan.json'));
+/** plans/nationwide-app.md U4: the 자동 지역 build (`vite build --mode nation`) ships dist/nation/; every other build has none. */
+const NATION = existsSync(join(appDir, 'dist/nation/index.json'));
 /** With the switch on, a device that has chosen Jeju (jeju.dest) unless the check asks for a new browser
  * (`storage: null`): the Jeju checks then run on the Jeju home, as on every device that has used the app. */
 const seeded = (storage) => (storage === null ? {} : BUSAN && !('jeju.dest' in storage) ? { 'jeju.dest': 'jeju', ...storage } : storage);
@@ -1190,7 +1192,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
     // Changed on purpose (ADR-0090 6): the 동네 row's 「다른 동네는 아래에서 골라요」 became the button 다른 동네 고르기 beside it
     // the switched-on build's 여행지 row comes first (specs/busan.md 1.4)
-    assert(rows.join('/') === `${BUSAN ? '제주/부산/' : ''}지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
+    assert(rows.join('/') === `${BUSAN ? (NATION ? '제주/부산/다른 곳/' : '제주/부산/') : ''}지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
     assert((await b.page.textContent('#sheet .optrow:has([data-action="close"][aria-pressed="true"]) [data-action="other-area"]')) === '다른 동네 고르기', 'no 다른 동네 고르기 on the 동네 row');
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
@@ -4174,8 +4176,9 @@ if (BUSAN) {
     await o.ctx.close();
     o = await run({ mode: 'ok', lat: 33.4584, lng: 126.9426, delay: 30 }, (s) => !s.start && s.rg === ':제주');
     await o.ctx.close();
-    o = await run({ mode: 'ok', lat: 37.5663, lng: 126.9779, delay: 30 }, (s) => s.start && s.msg === '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.');
-    await busanShot(o.page, 'start-outside-375');
+    // the 자동 지역 build (plans/nationwide-app.md 4): 서울 is open — its 시군구, no message
+    o = await run({ mode: 'ok', lat: 37.5663, lng: 126.9779, delay: 30 }, (s) => (NATION ? !s.start && s.rg === ':서울 중구' && s.basis === '내 위치 근처' : s.start && s.msg === '지금은 제주·부산 밖이에요. 여행지를 골라 주세요.'));
+    if (!NATION) await busanShot(o.page, 'start-outside-375');
     await o.ctx.close();
     o = await run({ mode: 'deny' }, (s) => s.start && s.msg === '위치를 쓸 수 없어요. 여행지를 골라 주세요.');
     await busanShot(o.page, 'start-denied-375');
@@ -4337,6 +4340,305 @@ if (BUSAN) {
       await ctx.close();
     }
     assert(!problems.length, problems.join(' | '));
+  });
+}
+
+// --- 자동 지역 (plans/nationwide-app.md 11, NT-*): the nation build only (`npm run e2e:nation`); NT-14 the build without it ---
+// E2E_SHOTS_NATION=1 saves the 시작 화면 at 375×812 and 320×568 (Korean and English) to design/qa/nation/.
+const NATION_SHOTS = NATION && process.env.E2E_SHOTS_NATION ? join(appDir, 'design/qa/nation') : '';
+if (NATION_SHOTS) mkdirSync(NATION_SHOTS, { recursive: true });
+const nationShot = async (page, name) => NATION_SHOTS && page.screenshot({ path: join(NATION_SHOTS, `${name}.png`) });
+const 강릉역 = { mode: 'ok', lat: 37.7643, lng: 128.8996, delay: 30 };
+/** the 자동 지역's photos (한국관광공사) stand in like Jeju's */
+const TOUR_HOST = 'https://tong.visitkorea.or.kr/**';
+/** a page at `path` (a new browser unless `storage`), every request's address kept in `urls` */
+async function nationAt(path, { storage = null, geo, width = 375, height = 812, route, sw = false } = {}) {
+  const urls = [];
+  const { ctx, page } = await fresh({
+    width,
+    height,
+    storage,
+    geo,
+    sw,
+    route: async (c) => {
+      await c.route(TOUR_HOST, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: PHOTO }));
+      c.on('request', (r) => urls.push(r.url()));
+      if (route) await route(c);
+    },
+  });
+  if (path !== '/') await page.goto(BASE + path.replace(/^\//, ''));
+  await sleep(600);
+  return { ctx, page, urls };
+}
+const startButton = (page, name) => page.locator('#ycStart button:not([hidden])', { hasText: new RegExp(`^${name}$`) }).first();
+const rgIs = (page, rg, timeout = 8000) =>
+  page.waitForFunction((want) => document.querySelector('.logo .rg')?.textContent === want, rg, { timeout }).then(
+    () => true,
+    () => false,
+  );
+/** a device that chose the 자동 지역 at 강릉 (store.ts keys) */
+const NATION_DEVICE = { 'jeju.dest': 'nation', 'jeju.sgg': '51150' };
+
+if (NATION) {
+  await check('NT-1', 'GPS 강릉 → 여차나:강릉, 쉬기·유명한 데 없음; 아무거나 3장, .reason 없음, #how 공공 데이터 줄, 출처 한국관광공사; /nation/51.json 1회', async () => {
+    const problems = [];
+    const { ctx, page, urls } = await nationAt('/', { geo: 강릉역 });
+    urls.length = 0;
+    await page.click('#ycGps');
+    if (!(await rgIs(page, ':강릉'))) problems.push(`rg ${JSON.stringify(await said(page))}`);
+    await page.waitForSelector('#today:not(.wait)');
+    const home = await page.evaluate(() => ({
+      title: document.title,
+      shown: ['rest', 'walk', 'new', 'famous', 'food', 'any'].filter((m) => document.querySelector(`[data-mood="${m}"]`)?.offsetParent),
+    }));
+    if (!home.title.startsWith('여차나:강릉') || home.shown.includes('rest') || home.shown.includes('famous') || !home.shown.includes('any')) problems.push(`home ${JSON.stringify(home)}`);
+    await tapText(page, '[data-mood="any"]');
+    await waitCards(page);
+    const r = await page.evaluate(() => ({
+      cards: document.querySelectorAll('#cards .card:not(.ghost) .name').length,
+      reasons: document.querySelectorAll('#cards .reason').length,
+      ids: [...document.querySelectorAll('#cards .card:not(.ghost) [data-id]')].map((e) => e.getAttribute('data-id')),
+      how: document.getElementById('how')?.textContent,
+      credit: document.querySelector('#results > .credit')?.textContent ?? '',
+    }));
+    if (r.cards !== 3 || r.reasons || r.how !== '공공 데이터로 가까운 순으로 골랐어요.' || !r.credit.includes('한국관광공사') || !r.ids.every((id) => id.startsWith('nt-')))
+      problems.push(`results ${JSON.stringify(r)}`);
+    const files = urls.filter((u) => /\/nation\/51\.json/.test(u));
+    if (files.length !== 1) problems.push(`/nation/51.json asked ${files.length} times`);
+    await ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-2', '도쿄에서 내 위치 → 「지금은 한국 밖이에요. 여행지를 골라 주세요.」, 시작 화면 그대로', async () => {
+    const { ctx, page } = await nationAt('/', { geo: { mode: 'ok', lat: 35.6812, lng: 139.7671, delay: 30 } });
+    await page.click('#ycGps');
+    await sleep(900);
+    const s = await said(page);
+    await ctx.close();
+    assert(s.start && s.msg === '지금은 한국 밖이에요. 여행지를 골라 주세요.', JSON.stringify(s));
+  });
+
+  await check('NT-3', '거절 → 다른 곳 → 강원 → 속초시 → 여차나:속초; 뒤로가 한 단계씩; 몫을 못 받으면 다른 곳이 그 까닭을 말함', async () => {
+    const problems = [];
+    let o = await nationAt('/', { geo: { mode: 'deny' } });
+    await o.page.click('#ycGps');
+    await o.page.waitForFunction(() => document.getElementById('ycMsg')?.textContent, null, { timeout: 3000 });
+    await startButton(o.page, '다른 곳').click();
+    await startButton(o.page, '강원').waitFor({ timeout: 5000 });
+    await nationShot(o.page, 'start-other-375');
+    await startButton(o.page, '강원').click();
+    await startButton(o.page, '뒤로').click();
+    await startButton(o.page, '뒤로').click();
+    if (!(await startButton(o.page, '다른 곳').isVisible())) problems.push('뒤로 뒤로 → not the first list');
+    await startButton(o.page, '다른 곳').click();
+    await startButton(o.page, '강원').click();
+    await nationShot(o.page, 'start-gangwon-375');
+    await startButton(o.page, '속초시').click();
+    if (!(await rgIs(o.page, ':속초'))) problems.push(`속초 ${JSON.stringify(await said(o.page))}`);
+    await o.ctx.close();
+    // the part's index does not come: no 인기 칸, and 다른 곳 says so (not a press that does nothing)
+    o = await nationAt('/', { route: (c) => c.route('**/nation/index.json*', (r) => r.abort()) });
+    const tiles = await o.page.locator('#ycStart .yc-pop button').count();
+    await startButton(o.page, '다른 곳').click();
+    const msg = await o.page
+      .waitForFunction(() => { const m = document.getElementById('ycMsg'); return m && !m.hidden && m.textContent; }, null, { timeout: 5000 })
+      .then((h) => h.jsonValue(), () => '');
+    if (tiles || msg !== '목록을 불러오지 못했어요. 연결을 확인하고 다시 불러와 주세요.') problems.push(`index failed: tiles ${tiles}, message "${msg}"`);
+    await o.ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-4', '인기 칸: 서울 → 여차나:서울 중구, 경주 → 여차나:경주 (위치는 읽지 않음)', async () => {
+    const problems = [];
+    for (const [tile, rg] of [['서울', ':서울 중구'], ['경주', ':경주']]) {
+      const { ctx, page } = await nationAt('/');
+      await startButton(page, tile).click();
+      if (!(await rgIs(page, rg))) problems.push(`${tile} ${JSON.stringify(await said(page))}`);
+      if ((await said(page)).calls) problems.push(`${tile}: position read`);
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-5', '비 소식: 시군구 중심 격자만(?grid=nx,ny, GPS 좌표 없음) → 실내만; 해 지는 시각은 있고 노을·장날 줄은 없음 (NT-6)', async () => {
+    const problems = [];
+    for (const how of ['tile', 'gps']) {
+      const asked = [];
+      const { ctx, page, urls } = await nationAt('/', {
+        geo: 강릉역,
+        route: (c) =>
+          c.route('**/api/rain*', (r) => {
+            asked.push(decodeURIComponent(new URL(r.request().url()).search));
+            return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: true }) });
+          }),
+      });
+      if (how === 'tile') await startButton(page, '강릉').click();
+      else await page.click('#ycGps');
+      await rgIs(page, ':강릉');
+      const row = await page.locator('#today:not(.wait) [data-action="rain-indoor"]').waitFor({ timeout: 6000 }).then(() => true, () => false);
+      if (!row || !asked.length || asked.some((q) => !/^\?grid=\d{1,3},\d{1,3}$/.test(q))) problems.push(`${how}: row ${row}, asked ${asked.join(' ')}`);
+      const leaks = urls.filter((u) => /37\.76|128\.89/.test(u));
+      if (leaks.length) problems.push(`${how}: the position left the device ${leaks.join(' ')}`);
+      if (how === 'tile') {
+        await tapText(page, '#today [data-action="rain-indoor"]');
+        const basis = (await page.textContent('#basis')).replace(/ /g, ' ');
+        if (!basis.includes('· 실내만')) problems.push(`#basis "${basis}"`);
+        const t = await page.evaluate(() => ({ today: document.getElementById('today')?.textContent ?? '', all: document.body.innerText }));
+        if (!t.today.includes('해 지는 시각') || /장날|노을/.test(t.all)) problems.push(`오늘 판 "${t.today}"`);
+      }
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-7', '제주 기기(이 빌드): 홈·결과에서 /nation/ 요청 0, 자동 지역 몫 청크 요청 0', async () => {
+    const { ctx, page, urls } = await nationAt('/', { storage: {} });
+    // fresh() first opened a new browser (the 시작 화면, which asks for the part): from the Jeju device's own load on
+    urls.length = 0;
+    await page.reload();
+    await page.waitForSelector('#today:not(.wait)');
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    const s = await said(page);
+    const nation = urls.filter((u) => /\/nation\/|nation-part/.test(u));
+    await ctx.close();
+    assert(s.rg === ':제주' && !nation.length, `${JSON.stringify(s)} ${nation.join(' ')}`);
+  });
+
+  await check('NT-8', '기준 시트 여행지 줄: 자동 지역(강릉) → 부산 → 다른 곳은 마지막 시군구(강릉)로', async () => {
+    const problems = [];
+    const { ctx, page } = await nationAt('/');
+    await startButton(page, '강릉').click();
+    await rgIs(page, ':강릉');
+    await tapText(page, '#basis');
+    await page.click('.sheet [data-dest="busan"]');
+    if (!(await rgIs(page, ':부산', 5000))) problems.push(`→ 부산 ${JSON.stringify(await said(page))}`);
+    await page.click('.sheet [data-dest="nation"]');
+    if (!(await rgIs(page, ':강릉', 5000))) problems.push(`→ 다른 곳 ${JSON.stringify(await said(page))}`);
+    await ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-9', '기준 시트 동네 칸: 지금 시도(강원)의 시군구 + 다른 시도 → 전북 → 전주시 완산구 → 여차나:전주', async () => {
+    const problems = [];
+    const { ctx, page } = await nationAt('/');
+    await startButton(page, '강릉').click();
+    await rgIs(page, ':강릉');
+    await tapText(page, '#basis');
+    await page.waitForSelector('#sheet [data-sido=""]');
+    const first = await page.$$eval('#sheet .areas [data-area]', (els) => els.map((e) => e.textContent));
+    if (!first.some((t) => t.includes('속초'))) problems.push(`강원 칸 ${first.join(',')}`);
+    await page.click('#sheet [data-sido=""]');
+    await page.click('#sheet [data-sido="52"]');
+    await page.click('#sheet [data-area="52111"]');
+    if (!(await rgIs(page, ':전주', 5000))) problems.push(`전주 ${JSON.stringify(await said(page))}`);
+    await ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-10', '외국어: en·zh-Hans·ja 시작 화면 인기 칸 강릉(공식 표기) → 그 언어의 #how 줄, 아무거나 3장', async () => {
+    const problems = [];
+    const want = { en: ['Gangneung', 'Picked from public data, nearest first.'], 'zh-Hans': ['江陵'], ja: ['江陵'] };
+    for (const [lang, [tile, how]] of Object.entries(want)) {
+      // the device is at 강릉 too: a mood on 내 위치 reads the position, and one in Jeju would move it there (specs/busan.md 1.3)
+      const { ctx, page } = await nationAt(`/?lang=${lang}`, { geo: 강릉역 });
+      await startButton(page, tile).click();
+      await page.waitForSelector('#today:not(.wait)');
+      await page.locator('[data-mood="any"]').first().click();
+      await sleep(350);
+      await waitCards(page);
+      const r = await page.evaluate(() => ({ lang: document.documentElement.lang, title: document.title, cards: document.querySelectorAll('#cards .card:not(.ghost) .name').length, ids: [...document.querySelectorAll('#cards .card:not(.ghost) [data-id]')].map((e) => e.getAttribute('data-id')), how: document.getElementById('how')?.textContent ?? '' }));
+      if (r.lang !== lang || r.cards !== 3 || !r.ids.every((id) => id.startsWith('nt-')) || !r.how || /[가-힣]/.test(r.how) || (how && r.how !== how)) problems.push(`${lang} ${JSON.stringify(r)}`);
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-11', '375·320: 시작 화면·강릉 홈·결과 가로 넘침 0; 200%(195×422) 홈·결과 잘린 버튼 0', async () => {
+    const problems = [];
+    const over = (page) => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    for (const [w, h] of [[375, 812], [320, 568], [195, 422]]) {
+      for (const lang of w === 195 ? ['ko'] : ['ko', 'en']) {
+        const { ctx, page } = await nationAt(lang === 'ko' ? '/' : `/?lang=${lang}`, { width: w, height: h, geo: 강릉역 });
+        const box = await page.evaluate(() => { const b = document.getElementById('ycStart'); return b && { sw: b.scrollWidth - b.clientWidth, sh: b.scrollHeight - b.clientHeight }; });
+        if (!box || box.sw > 0 || (w !== 195 && box.sh > 0)) problems.push(`${lang} ${w} start ${JSON.stringify(box)}`);
+        if (w !== 195) await nationShot(page, `start-${lang === 'ko' ? '' : `${lang}-`}${w}`);
+        if (lang === 'ko') {
+          await startButton(page, '강릉').click();
+          await page.waitForSelector('#today:not(.wait)');
+          if ((await over(page)) > 0) problems.push(`${w} home sideways`);
+          await tapText(page, '[data-mood="any"]');
+          await waitCards(page);
+          const r = await page.evaluate(LINES);
+          if (r.over > 0 || r.cut.length) problems.push(`${w} results ${JSON.stringify(r)}`);
+        }
+        await ctx.close();
+      }
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('NT-12', '카카오톡 안 자동 지역(강릉): 브라우저로 열기 주소가 ?dest=nation&area=51150, 그 주소를 새 브라우저로 열면 시작 화면 없이 여차나:강릉', async () => {
+    const ctx = await browser.newContext({ newBrowser: true, viewport: { width: 390, height: 844 }, serviceWorkers: 'block', locale: 'ko-KR', userAgent: KAKAO_UA });
+    await ctx.addInitScript(GEO_STUB);
+    await ctx.addInitScript((kept) => {
+      for (const [k, v] of Object.entries(kept)) if (localStorage.getItem(k) === null) localStorage.setItem(k, JSON.stringify(v));
+    }, NATION_DEVICE);
+    const page = await ctx.newPage();
+    await page.goto(BASE);
+    await page.waitForSelector('#homeNote:not([hidden])');
+    const href = await page.getAttribute('#homeNote a[data-action="inapp-open"]', 'href');
+    await ctx.close();
+    const want = `kakaotalk://web/openExternal?url=${encodeURIComponent(`${BASE}?dest=nation&area=51150`)}`;
+    const o = await nationAt('/?dest=nation&area=51150');
+    const ok = await rgIs(o.page, ':강릉');
+    const s = await said(o.page);
+    await o.ctx.close();
+    assert(href === want && ok && !s.start, `href ${href} → ${JSON.stringify(s)}`);
+  });
+
+  await check('NT-13', '오프라인 다시 열기(SW): 자동 지역 기기 강릉 홈 → 아무거나 3장', async () => {
+    const { ctx, page } = await nationAt('/', { sw: true, geo: 강릉역 });
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+    });
+    await page.reload(); // now controlled
+    await sleep(300);
+    await startButton(page, '강릉').click();
+    await rgIs(page, ':강릉');
+    await page.waitForSelector('#today:not(.wait)');
+    await sleep(500);
+    await ctx.setOffline(true);
+    await page.reload();
+    const ok = await rgIs(page, ':강릉');
+    await tapText(page, '[data-mood="any"]');
+    const cards = await waitCards(page).then(() => page.$$eval('#cards .card:not(.ghost) .name', (els) => els.map((e) => e.closest('.card').querySelector('[data-id]')?.getAttribute('data-id'))), () => []);
+    await ctx.setOffline(false);
+    await ctx.close();
+    assert(ok && cards.length === 3 && cards.every((id) => id?.startsWith('nt-')), `rg ${ok}, cards ${cards.join(',')}`);
+  });
+
+  await check('NT-15', '자동 지역 기기를 열 때 위치 읽기 0회 (여차나:강릉, 시작 화면 없음)', async () => {
+    const { ctx, page } = await nationAt('/', { storage: NATION_DEVICE, geo: 강릉역 });
+    const ok = await rgIs(page, ':강릉');
+    await page.waitForSelector('#today:not(.wait)');
+    const s = await said(page);
+    await ctx.close();
+    assert(ok && !s.start && s.calls === 0, JSON.stringify(s));
+  });
+}
+
+if (BUSAN && !NATION) {
+  await check('NT-14', '되돌림 빌드(자동 지역 없음): jeju.dest가 nation인 기기 → 시작 화면 없이 여차나:제주, /nation/ 요청 0, 고른 값은 기기에 남음', async () => {
+    const urls = [];
+    const { ctx, page } = await fresh({ width: 375, height: 812, storage: NATION_DEVICE, route: (c) => c.on('request', (r) => urls.push(r.url())) });
+    await page.waitForSelector('#today:not(.wait)');
+    await sleep(300);
+    const s = await said(page);
+    const kept = await page.evaluate(() => localStorage.getItem('jeju.dest'));
+    const nation = urls.filter((u) => /\/nation\/|nation-part/.test(u));
+    await ctx.close();
+    assert(s.rg === ':제주' && !s.start && !nation.length && kept === '"nation"', `${JSON.stringify(s)} kept ${kept} ${nation.join(' ')}`);
   });
 }
 

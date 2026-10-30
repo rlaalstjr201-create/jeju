@@ -158,10 +158,16 @@ export function inAppOf(ua: string): InApp | null {
 /** What 브라우저로 열기 hands the phone's browser (SPEC 6.14): the app's address with what is saved here after `#s=`
  * and, after a 숙소 링크 (ADR-0089), that 숙소 (`stay`, only when it came from the link) and this visit's tag with
  * `relay=1` (the arrival was counted here), a language other than Korean (`lang`, ADR-0093) and, with the switch on, the
- * 여행지 in use (`dest`, ADR-0096: the phone's browser opens there, no 시작 화면). The comma as %2C: a messenger may end a
- * link at a bare one. */
-export function handoffUrl(home: string, s: { saved: readonly SavedEntry[]; indoor: boolean; mapApp: MapApp; stay: Stay | null; src: string | null; dest?: Dest }, lang = 'ko'): string {
-  const q = [...(lang && lang !== 'ko' ? [`lang=${lang}`] : []), ...(BUSAN && s.dest ? [`dest=${s.dest}`] : []), ...(s.stay?.source === 'link' ? [`stay=${s.stay.lat}%2C${s.stay.lng}`] : []), ...(s.src ? [`src=${s.src}`, 'relay=1'] : [])];
+ * 여행지 in use (`dest`, ADR-0096: the phone's browser opens there, no 시작 화면) — the 자동 지역 with its 시군구 (`area`,
+ * plans/nationwide-app.md 7: the phone's browser has none kept). The comma as %2C: a messenger may end a link at a bare one. */
+export function handoffUrl(home: string, s: { saved: readonly SavedEntry[]; indoor: boolean; mapApp: MapApp; stay: Stay | null; src: string | null; dest?: Dest; sgg?: string | null }, lang = 'ko'): string {
+  const q = [
+    ...(lang && lang !== 'ko' ? [`lang=${lang}`] : []),
+    ...(BUSAN && s.dest ? [`dest=${s.dest}`] : []),
+    ...(BUSAN && s.dest === 'nation' && s.sgg ? [`area=${s.sgg}`] : []),
+    ...(s.stay?.source === 'link' ? [`stay=${s.stay.lat}%2C${s.stay.lng}`] : []),
+    ...(s.src ? [`src=${s.src}`, 'relay=1'] : []),
+  ];
   const url = q.length ? `${home}?${q.join('&')}` : home;
   return s.saved.length ? backupUrl(url, s.saved, s.indoor, s.mapApp) : url;
 }

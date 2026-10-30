@@ -126,6 +126,18 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
     expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51150' });
   });
 
+  it('KakaoTalk in the 자동 지역: 브라우저로 열기 hands over its 시군구 (`dest=nation&area=`), which opens it above', async () => {
+    localStorage.setItem(KEYS.dest, '"nation"');
+    localStorage.setItem(KEYS.sgg, '"51150"');
+    render({
+      loadSpots: (d, sgg) => Promise.resolve(d === 'nation' ? normalizeNation(raw51, [], sgg) : fileSpots),
+      userAgent: 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36 KAKAOTALK 10.8.0',
+    });
+    await wait();
+    const url = new URL(document.querySelector('#homeNote a[data-action="inapp-open"]')!.getAttribute('href')!).searchParams.get('url')!;
+    expect(new URL(url).search).toBe('?dest=nation&area=51150');
+  });
+
   it('nation kept but no 시군구 known: Jeju for this visit, the choice left on the device', async () => {
     const { asked } = mount({ dest: 'nation' });
     await wait();

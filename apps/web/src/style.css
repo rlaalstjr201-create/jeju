@@ -160,6 +160,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 /* 시작 화면's 다른 곳 and 뒤로 (src/start.ts, plans/nationwide-app.md 4): words, not a face; its lists in the cover's place */
 #ycStart div[hidden] { display: none; }
 #ycStart .yc-link { align-self: flex-start; min-height: 48px; background: none; color: var(--main); text-decoration: underline; }
+/* its 인기 칸, three to a row and lower than the two, and less room above (B13: 320×568 without a scroll) */
+#ycStart.yc-nation { padding-top: 40px; }
+#ycStart .yc-pop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#ycStart .yc-pop button { min-height: 48px; font-size: 0.9375rem; }
 .lang-suggest a { flex: 1; min-width: 0; padding: 10px 0; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .lang-suggest .x { flex: none; display: grid; place-items: center; width: 44px; min-height: 44px; align-self: stretch; color: var(--muted); }
 /* 오늘 판 (ADR-0088): one grey face, 16 round, the sun in a 32px 귤-tint cell on the left; the lines beside it */

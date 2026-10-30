@@ -30,12 +30,21 @@ const FAILED: Record<string, Record<NoOrigin, string>> = {
   'zh-Hans': { denied: '无法使用位置。请选择旅行地。', unavailable: '找不到你的位置。请选择旅行地。', outside: '你现在不在济州或釜山。请选择旅行地。' },
   ja: { denied: '位置情報を使えません。旅行先を選んでください。', unavailable: '現在地が見つかりませんでした。旅行先を選んでください。', outside: 'いまは済州・釜山の外にいます。旅行先を選んでください。' },
 };
-/** 자동 지역 (plans/nationwide-app.md 4): anywhere in Korea is open, so outside is outside Korea; 다른 곳 and 뒤로 */
-const NATION_WORDS: Record<string, { outside: string; other: string; back: string }> = {
-  ko: { outside: '지금은 한국 밖이에요. 여행지를 골라 주세요.', other: '다른 곳', back: '뒤로' },
-  en: { outside: "You're outside Korea right now. Please choose where you are.", other: 'Somewhere else', back: 'Back' },
-  'zh-Hans': { outside: '你现在不在韩国。请选择旅行地。', other: '其他地方', back: '返回' },
-  ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', other: 'ほかの場所', back: '戻る' },
+/** 자동 지역 (plans/nationwide-app.md 4): anywhere in Korea is open, so outside is outside Korea; 다른 곳 and 뒤로; `failed`:
+ * 다른 곳's part did not come (the list's own words, render.ts loadError); `popular`: the 인기 칸 in POPULAR's order, in
+ * Korean's official forms (Revised Romanization, the Hanja names: 首尔·ソウル for 서울) — a cover in another language has
+ * no Korean (B13); the 시군구 lists stay Korean (plans/nationwide-app.md 8) */
+const NATION_WORDS: Record<string, { outside: string; other: string; back: string; failed: string; popular?: readonly string[] }> = {
+  ko: { outside: '지금은 한국 밖이에요. 여행지를 골라 주세요.', other: '다른 곳', back: '뒤로', failed: '목록을 불러오지 못했어요. 연결을 확인하고 다시 불러와 주세요.' },
+  en: {
+    outside: "You're outside Korea right now. Please choose where you are.",
+    other: 'Somewhere else',
+    back: 'Back',
+    failed: "Couldn't load the list. Check your connection and try again.",
+    popular: ['Seoul', 'Gangneung', 'Gyeongju', 'Jeonju', 'Yeosu', 'Sokcho'],
+  },
+  'zh-Hans': { outside: '你现在不在韩国。请选择旅行地。', other: '其他地方', back: '返回', failed: '列表没加载出来。检查一下网络再试。', popular: ['首尔', '江陵', '庆州', '全州', '丽水', '束草'] },
+  ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', other: 'ほかの場所', back: '戻る', failed: 'リストを読み込めませんでした。接続を確認して、もう一度読み込んでください。', popular: ['ソウル', '江陵', '慶州', '全州', '麗水', '束草'] },
 };
 /** 인기 칸 (plans/nationwide-app.md 13 R14): name and 시군구 (서울: 서울시청's 중구, 전주: 한옥마을's 완산구) */
 const POPULAR: readonly [string, SggCode][] = [
@@ -120,10 +129,12 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
     });
   }
 
-  // 자동 지역 (plans/nationwide-app.md 4): under the two destinations, the 인기 칸 (rows of two, as theirs) and 다른 곳,
-  // which lists the 시도 and then a 시도's 시군구 in the cover's own place (its part asked for when it is not in yet)
+  // 자동 지역 (plans/nationwide-app.md 4): under the two destinations, the 인기 칸 (three to a row, lower: B13 keeps the
+  // three ways on in the lower half at 375×812 and no scroll at 320×568) and 다른 곳, which lists the 시도 and then a 시도's
+  // 시군구 in the cover's own place (its part asked for when it is not in yet)
   const main = box.querySelector<HTMLElement>(':scope > div');
   if (NATION && main) {
+    box.classList.add('yc-nation');
     const button = (text: string, fn: () => void, ko = false) => {
       const b = doc.createElement('button');
       b.type = 'button';
@@ -144,7 +155,10 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
       close();
       deps.choose('nation', 'pick', why, undefined, sgg);
     };
-    const tiles = POPULAR.filter(([, c]) => areaByName(c, openAreasOf('nation'))).map(([name, c]) => button(name, () => nation(c), true));
+    const tiles = POPULAR.flatMap(([name, c], i) => (areaByName(c, openAreasOf('nation')) ? [button(N.popular?.[i] ?? name, () => nation(c), !N.popular)] : []));
+    const popular = doc.createElement('div');
+    popular.className = 'yc-pop';
+    popular.append(...tiles);
     const panel = doc.createElement('div');
     panel.hidden = true;
     const back = (to: () => void) => {
@@ -177,11 +191,17 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
       asking = true;
       void loadNation().then((ok) => {
         asking = false;
-        if (ok && !done && !deps.signal.aborted) showSido();
+        if (done || deps.signal.aborted) return;
+        if (ok) showSido();
+        else {
+          // not silent: the list's own words where the cover says why (the next press tries again)
+          msg.hidden = false;
+          msg.textContent = N.failed;
+        }
       });
     });
     other.className = 'yc-link';
-    main.append(...rows(tiles), other);
+    main.append(...(tiles.length ? [popular] : []), other);
     box.append(panel);
   }
 
