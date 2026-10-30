@@ -142,7 +142,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   const sources: Record<string, SpotSource> = {};
   // 강원 (ADR-0102 Amendment 2) is named by 시군구 too: one 시군구's places at a time, out of its one file
   const keyOf = (d: Dest, sgg: SggCode | null) => (d === 'nation' || DEST[d].sgg ? `${d}:${sgg}` : d);
-  /** The 검수한 곳 that covers a 시군구 (강릉·속초·춘천·양양 → 강원, ADR-0102), or null (a 자동 지역 one, or the part not in). */
+  /** The 검수한 곳 that covers a 시군구 (강릉·속초·춘천·양양·평창 → 강원, ADR-0102), or null (a 자동 지역 one, or the part not in). */
   function coveredBy(sgg: string | null): Dest | null {
     const a = areaByName(sgg, OPEN_AREAS);
     return a && a.group === 'gangwon' ? destOfArea(a) : null;
@@ -251,7 +251,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     let want = early?.__destBy === 'link' ? (linked ?? 'jeju') : (said ?? store.dest() ?? 'jeju');
     if (want === 'nation' && link?.stay) sgg0 = sggOf(link.stay) ?? sgg0;
     if (want !== 'nation' && DEST[want].sgg && link?.stay && released(want)) sggWant.push(areaOfPoint(link.stay, want).name);
-    // a 시군구 a 검수한 곳 has taken over (강릉·속초·춘천·양양, chosen as 자동 지역 before ADR-0102, or an older 브라우저로 열기
+    // a 시군구 a 검수한 곳 has taken over (강릉·속초·춘천·양양·평창, chosen as 자동 지역 before ADR-0102, or an older 브라우저로 열기
     // link): that destination, at that 시군구
     const taken = want === 'nation' ? coveredBy(sgg0) : null;
     if (taken) {
@@ -1534,7 +1534,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     warm();
   }
   /** A 시군구 picked in the 자동 지역's 동네 index (another 시도's, plans/nationwide-app.md 4): its list from now on. The
-   * same index lists a 검수한 곳's 시군구 (강릉·속초·춘천·양양, ADR-0102) and is drawn there too: one picked moves between the
+   * same index lists a 검수한 곳's 시군구 (강릉·속초·춘천·양양·평창, ADR-0102) and is drawn there too: one picked moves between the
    * two, or to another of 강원's (its list too, Amendment 2). */
   function toSgg(area: Area) {
     if (!NATION || (area.group !== 'nation' && area.group !== 'gangwon')) return;

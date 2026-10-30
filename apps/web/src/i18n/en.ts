@@ -194,7 +194,7 @@ export const EN: Lang = {
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
     destName: { jeju: 'Jeju', busan: 'Busan', gangwon: 'Gangwon', nation: 'Somewhere else' },
-    sggName: { '51150': 'Gangneung', '51210': 'Sokcho', '51110': 'Chuncheon', '51830': 'Yangyang' },
+    sggName: { '51150': 'Gangneung', '51210': 'Sokcho', '51110': 'Chuncheon', '51830': 'Yangyang', '51760': 'Pyeongchang' },
     destHead: 'Destination',
     title: (name) => `Yeochana:${name} · Your no-plan travel buddy`,
     examplePopular: (name, names) => `${name} favorites: ${names.join(', ')}`,
