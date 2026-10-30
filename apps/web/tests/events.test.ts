@@ -468,7 +468,7 @@ describe('M6 여행지·시작 화면 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(START_IDS).toContain(r.id);
-    expect(START_IDS).toHaveLength(1 + 2 * 4 * 3);
+    expect(START_IDS).toHaveLength(1 + 2 * 4 * 4);
     expect(aggregate(rows)).toEqual([]);
   });
 
@@ -524,6 +524,33 @@ describe('U1 자동 지역 — 받는 쪽', () => {
     ['a 시군구 code as area', [{ e: 'shown', id: NT, range: '30', basis: 'area', area: '51150', dated: false, dest: 'nation', d }]],
     ['sgg on start_done', [{ e: 'start_done', how: 'pick', why: 'none', dest: 'nation', sgg: '51150', d }]],
   ])('refuses %s — and counts nothing', async (_, body) => {
+    const store = memoryStore();
+    expect((await handle(post(body), store)).status).toBe(400);
+    expect(await store.dump()).toEqual([]);
+  });
+});
+// 강원 (ADR-0102): the collector takes dest gangwon, and its 동네 (a 시군구) as sgg on an area basis, as the 자동 지역's.
+describe('C3 강원 — 받는 쪽', () => {
+  const NT = 'nt-2900682';
+  it('takes dest gangwon, with sgg on an area basis; start_done under start:<how>:<why>:gangwon', async () => {
+    const batch = [
+      { e: 'tap', mood: 'rest', ...base, dest: 'gangwon' },
+      { e: 'shown', id: NT, mood: 'famous', range: '30', basis: 'area', sgg: '51150', dated: false, dest: 'gangwon', d },
+      { e: 'start_done', how: 'pick', why: 'none', dest: 'gangwon', d },
+    ];
+    expect(parseBatch(JSON.stringify(batch)).ok).toBe(true);
+    const store = memoryStore();
+    expect((await handle(post(batch), store)).status).toBe(204);
+    const rows = await store.dump();
+    expect(rows).toContainEqual({ d, id: NT, e: 'shown', n: 1 });
+    expect(rows).toContainEqual({ d, id: 'start:pick:none:gangwon', e: 'start_done', n: 1 });
+    expect(START_IDS).toContain('start:gps:none:gangwon');
+  });
+  it.each([
+    ['sgg with dest busan', [{ e: 'shown', id: NT, range: '30', basis: 'area', sgg: '51150', dated: false, dest: 'busan', d }]],
+    ['a 시군구 code as area', [{ e: 'shown', id: NT, range: '30', basis: 'area', area: '51150', dated: false, dest: 'gangwon', d }]],
+    ['dest gangneung', [{ e: 'tap', mood: 'walk', ...base, dest: 'gangneung' }]],
+  ])('refuses %s', async (_, body) => {
     const store = memoryStore();
     expect((await handle(post(body), store)).status).toBe(400);
     expect(await store.dump()).toEqual([]);
