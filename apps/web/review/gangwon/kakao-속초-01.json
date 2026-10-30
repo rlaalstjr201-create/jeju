@@ -1,0 +1,1590 @@
+{
+ "criteria": "review/gangwon/kakao-criteria.md",
+ "city": "속초",
+ "source": "Kakao Local keyword search (id·place_url만 저장)",
+ "callsAllCities": 746,
+ "targets": 196,
+ "done": 196,
+ "status": {
+  "matched": 160,
+  "unmatched": 35,
+  "closed": 1
+ },
+ "rule": {
+  "exact": 139,
+  "contains": 22,
+  "none": 35
+ },
+ "matchedRate": 0.8163265306122449,
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-1052565",
+   "query": "시골이모순두부",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10543253",
+   "placeUrl": "http://place.map.kakao.com/10543253"
+  },
+  {
+   "id": "nt-125671",
+   "query": "비룡폭포",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7902860",
+   "placeUrl": "http://place.map.kakao.com/7902860"
+  },
+  {
+   "id": "nt-125674",
+   "query": "육담폭포",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10688023",
+   "placeUrl": "http://place.map.kakao.com/10688023"
+  },
+  {
+   "id": "nt-125675",
+   "query": "천당폭포",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10762824",
+   "placeUrl": "http://place.map.kakao.com/10762824"
+  },
+  {
+   "id": "nt-125676",
+   "query": "토왕성폭포",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25035970",
+   "placeUrl": "http://place.map.kakao.com/25035970"
+  },
+  {
+   "id": "nt-125680",
+   "query": "천불동계곡",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8091417",
+   "placeUrl": "http://place.map.kakao.com/8091417"
+  },
+  {
+   "id": "nt-125707",
+   "query": "속초해수욕장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "22099937",
+   "placeUrl": "http://place.map.kakao.com/22099937"
+  },
+  {
+   "id": "nt-125730",
+   "query": "금강굴",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8206191",
+   "placeUrl": "http://place.map.kakao.com/8206191"
+  },
+  {
+   "id": "nt-125750",
+   "query": "청초호",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8105816",
+   "placeUrl": "http://place.map.kakao.com/8105816"
+  },
+  {
+   "id": "nt-125756",
+   "query": "계조암",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11041736",
+   "placeUrl": "http://place.map.kakao.com/11041736"
+  },
+  {
+   "id": "nt-125779",
+   "query": "영금정",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7999903",
+   "placeUrl": "http://place.map.kakao.com/7999903"
+  },
+  {
+   "id": "nt-125798",
+   "query": "설악산 권금성",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "8216362",
+   "placeUrl": "http://place.map.kakao.com/8216362"
+  },
+  {
+   "id": "nt-125805",
+   "query": "설악산 울산바위",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8036325",
+   "placeUrl": "http://place.map.kakao.com/8036325"
+  },
+  {
+   "id": "nt-125806",
+   "query": "설악 흔들바위",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-1260275",
+   "query": "속초관광수산시장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12797187",
+   "placeUrl": "http://place.map.kakao.com/12797187"
+  },
+  {
+   "id": "nt-126714",
+   "query": "한화리조트 설악 워터피아",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "10482115",
+   "placeUrl": "http://place.map.kakao.com/10482115"
+  },
+  {
+   "id": "nt-127284",
+   "query": "청대산",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8088618",
+   "placeUrl": "http://place.map.kakao.com/8088618"
+  },
+  {
+   "id": "nt-127565",
+   "query": "영랑호",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8008145",
+   "placeUrl": "http://place.map.kakao.com/8008145"
+  },
+  {
+   "id": "nt-127586",
+   "query": "설악산 국립공원",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "2126651418",
+   "placeUrl": "http://place.map.kakao.com/2126651418"
+  },
+  {
+   "id": "nt-127671",
+   "query": "신흥사",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10602692",
+   "placeUrl": "http://place.map.kakao.com/10602692"
+  },
+  {
+   "id": "nt-127749",
+   "query": "보광사",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11305083",
+   "placeUrl": "http://place.map.kakao.com/11305083"
+  },
+  {
+   "id": "nt-128571",
+   "query": "설악해맞이공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8376588",
+   "placeUrl": "http://place.map.kakao.com/8376588"
+  },
+  {
+   "id": "nt-128788",
+   "query": "설악산 케이블카",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-128803",
+   "query": "속초등대전망대",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "7952590",
+   "placeUrl": "http://place.map.kakao.com/7952590"
+  },
+  {
+   "id": "nt-128804",
+   "query": "속초 엑스포타워",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "1211473843",
+   "placeUrl": "http://place.map.kakao.com/1211473843"
+  },
+  {
+   "id": "nt-129001",
+   "query": "학사평 콩꽃마을 순두부촌",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12706186",
+   "placeUrl": "http://place.map.kakao.com/12706186"
+  },
+  {
+   "id": "nt-129027",
+   "query": "장사어촌체험마을",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-129032",
+   "query": "대포마을",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "21814112",
+   "placeUrl": "http://place.map.kakao.com/21814112"
+  },
+  {
+   "id": "nt-129454",
+   "query": "동명항",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7843350",
+   "placeUrl": "http://place.map.kakao.com/7843350"
+  },
+  {
+   "id": "nt-129468",
+   "query": "아바이마을 갯배",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-129596",
+   "query": "대포항",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1639598304",
+   "placeUrl": "http://place.map.kakao.com/1639598304"
+  },
+  {
+   "id": "nt-129598",
+   "query": "외옹치항",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8021355",
+   "placeUrl": "http://place.map.kakao.com/8021355"
+  },
+  {
+   "id": "nt-130466",
+   "query": "석봉도자기미술관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7951458",
+   "placeUrl": "http://place.map.kakao.com/7951458"
+  },
+  {
+   "id": "nt-130895",
+   "query": "속초시립박물관·속초실향민문화촌",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-131264",
+   "query": "설악프라자컨트리클럽",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-133781",
+   "query": "두메산골",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10364864",
+   "placeUrl": "http://place.map.kakao.com/10364864"
+  },
+  {
+   "id": "nt-133782",
+   "query": "낙천회관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11891822",
+   "placeUrl": "http://place.map.kakao.com/11891822"
+  },
+  {
+   "id": "nt-134006",
+   "query": "본가 궁중해장국",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-134033",
+   "query": "88생선구이",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25622898",
+   "placeUrl": "http://place.map.kakao.com/25622898"
+  },
+  {
+   "id": "nt-134060",
+   "query": "진솔할머니순두부",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10763109",
+   "placeUrl": "http://place.map.kakao.com/10763109"
+  },
+  {
+   "id": "nt-134314",
+   "query": "재래식할머니순두부",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "21345651",
+   "placeUrl": "http://place.map.kakao.com/21345651"
+  },
+  {
+   "id": "nt-134327",
+   "query": "옥돌할머니순두부",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "9267011",
+   "placeUrl": "http://place.map.kakao.com/9267011"
+  },
+  {
+   "id": "nt-134395",
+   "query": "황두막",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "11203702",
+   "placeUrl": "http://place.map.kakao.com/11203702"
+  },
+  {
+   "id": "nt-134553",
+   "query": "최옥란할머니순두부",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "9511628",
+   "placeUrl": "http://place.map.kakao.com/9511628"
+  },
+  {
+   "id": "nt-135817",
+   "query": "전주속풀이해장국",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11170136",
+   "placeUrl": "http://place.map.kakao.com/11170136"
+  },
+  {
+   "id": "nt-135821",
+   "query": "평강막국수",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11620926",
+   "placeUrl": "http://place.map.kakao.com/11620926"
+  },
+  {
+   "id": "nt-1370454",
+   "query": "양반댁함흥냉면",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10063571",
+   "placeUrl": "http://place.map.kakao.com/10063571"
+  },
+  {
+   "id": "nt-1799724",
+   "query": "속초스파랜드",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24751102",
+   "placeUrl": "http://place.map.kakao.com/24751102"
+  },
+  {
+   "id": "nt-1828975",
+   "query": "진양횟집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8086427",
+   "placeUrl": "http://place.map.kakao.com/8086427"
+  },
+  {
+   "id": "nt-1828984",
+   "query": "감나무집 감자옹심이",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "8141879",
+   "placeUrl": "http://place.map.kakao.com/8141879"
+  },
+  {
+   "id": "nt-1932003",
+   "query": "외옹치해변",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-1936779",
+   "query": "청초수물회",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "26602585",
+   "placeUrl": "http://place.map.kakao.com/26602585"
+  },
+  {
+   "id": "nt-1936796",
+   "query": "속초아바이신다신",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1098447501",
+   "placeUrl": "http://place.map.kakao.com/1098447501"
+  },
+  {
+   "id": "nt-1959024",
+   "query": "솔밭가든막국수",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19947943",
+   "placeUrl": "http://place.map.kakao.com/19947943"
+  },
+  {
+   "id": "nt-1993692",
+   "query": "속초 하도문쌈채 마을",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19304774",
+   "placeUrl": "http://place.map.kakao.com/19304774"
+  },
+  {
+   "id": "nt-2369002",
+   "query": "속초 얼라이브 하트",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "27351432",
+   "placeUrl": "http://place.map.kakao.com/27351432"
+  },
+  {
+   "id": "nt-2501140",
+   "query": "시골할머니나물밥",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "10532834",
+   "placeUrl": "http://place.map.kakao.com/10532834"
+  },
+  {
+   "id": "nt-250344",
+   "query": "장사항",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10737561",
+   "placeUrl": "http://place.map.kakao.com/10737561"
+  },
+  {
+   "id": "nt-250359",
+   "query": "비선대",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7904044",
+   "placeUrl": "http://place.map.kakao.com/7904044"
+  },
+  {
+   "id": "nt-2513888",
+   "query": "설악산 자생식물원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24414762",
+   "placeUrl": "http://place.map.kakao.com/24414762"
+  },
+  {
+   "id": "nt-2513889",
+   "query": "국립산악박물관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25625906",
+   "placeUrl": "http://place.map.kakao.com/25625906"
+  },
+  {
+   "id": "nt-251738",
+   "query": "아바이마을",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11951680",
+   "placeUrl": "http://place.map.kakao.com/11951680"
+  },
+  {
+   "id": "nt-2549932",
+   "query": "외옹치바다향기로",
+   "status": "closed",
+   "rule": "exact",
+   "kakaoPlaceId": "1970947390",
+   "placeUrl": "http://place.map.kakao.com/1970947390"
+  },
+  {
+   "id": "nt-2607179",
+   "query": "발해역사관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "20706973",
+   "placeUrl": "http://place.map.kakao.com/20706973"
+  },
+  {
+   "id": "nt-2607515",
+   "query": "화랑도체험장",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2608621",
+   "query": "함흥냉면옥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19125965",
+   "placeUrl": "http://place.map.kakao.com/19125965"
+  },
+  {
+   "id": "nt-2609150",
+   "query": "뉴욕제과",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "21449945",
+   "placeUrl": "http://place.map.kakao.com/21449945"
+  },
+  {
+   "id": "nt-2628972",
+   "query": "함흥막국수",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10924317",
+   "placeUrl": "http://place.map.kakao.com/10924317"
+  },
+  {
+   "id": "nt-2629590",
+   "query": "옛고을순두부",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24451703",
+   "placeUrl": "http://place.map.kakao.com/24451703"
+  },
+  {
+   "id": "nt-2659548",
+   "query": "상도문돌담마을",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "853690564",
+   "placeUrl": "http://place.map.kakao.com/853690564"
+  },
+  {
+   "id": "nt-2702210",
+   "query": "동명 방파제",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27010613",
+   "placeUrl": "http://place.map.kakao.com/27010613"
+  },
+  {
+   "id": "nt-2702522",
+   "query": "45코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2710858",
+   "query": "노리숲길",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1448195523",
+   "placeUrl": "http://place.map.kakao.com/1448195523"
+  },
+  {
+   "id": "nt-2710893",
+   "query": "설악해맞이공원 인어연인상",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "2053408912",
+   "placeUrl": "http://place.map.kakao.com/2053408912"
+  },
+  {
+   "id": "nt-2710895",
+   "query": "대포항 전망대",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "392369009",
+   "placeUrl": "http://place.map.kakao.com/392369009"
+  },
+  {
+   "id": "nt-2710897",
+   "query": "쌍천길",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2710899",
+   "query": "보광미니골프장",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "10381708",
+   "placeUrl": "http://place.map.kakao.com/10381708"
+  },
+  {
+   "id": "nt-2710907",
+   "query": "크래프트루트",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "1596890615",
+   "placeUrl": "http://place.map.kakao.com/1596890615"
+  },
+  {
+   "id": "nt-2710914",
+   "query": "테디베어팜",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8126660",
+   "placeUrl": "http://place.map.kakao.com/8126660"
+  },
+  {
+   "id": "nt-2710922",
+   "query": "해피아울하우스",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1401522350",
+   "placeUrl": "http://place.map.kakao.com/1401522350"
+  },
+  {
+   "id": "nt-2710923",
+   "query": "테라크랩팜",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27136433",
+   "placeUrl": "http://place.map.kakao.com/27136433"
+  },
+  {
+   "id": "nt-2710945",
+   "query": "동아서점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26465703",
+   "placeUrl": "http://place.map.kakao.com/26465703"
+  },
+  {
+   "id": "nt-2710946",
+   "query": "원조88순대국",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2710947",
+   "query": "동해순대국집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11892233",
+   "placeUrl": "http://place.map.kakao.com/11892233"
+  },
+  {
+   "id": "nt-2710965",
+   "query": "문우당서림",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10415447",
+   "placeUrl": "http://place.map.kakao.com/10415447"
+  },
+  {
+   "id": "nt-2713187",
+   "query": "영랑호 습지생태공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "579624492",
+   "placeUrl": "http://place.map.kakao.com/579624492"
+  },
+  {
+   "id": "nt-2714545",
+   "query": "등대해수욕장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7851701",
+   "placeUrl": "http://place.map.kakao.com/7851701"
+  },
+  {
+   "id": "nt-2714645",
+   "query": "청호해변",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2714833",
+   "query": "속초해안로",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2715992",
+   "query": "학무정",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8133251",
+   "placeUrl": "http://place.map.kakao.com/8133251"
+  },
+  {
+   "id": "nt-2715993",
+   "query": "척산족욕공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18682831",
+   "placeUrl": "http://place.map.kakao.com/18682831"
+  },
+  {
+   "id": "nt-2774493",
+   "query": "칠성조선소",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "945954282",
+   "placeUrl": "http://place.map.kakao.com/945954282"
+  },
+  {
+   "id": "nt-2774680",
+   "query": "완도회식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "21449776",
+   "placeUrl": "http://place.map.kakao.com/21449776"
+  },
+  {
+   "id": "nt-2774688",
+   "query": "어나더블루",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1445620783",
+   "placeUrl": "http://place.map.kakao.com/1445620783"
+  },
+  {
+   "id": "nt-2774722",
+   "query": "봉포머구리집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25737281",
+   "placeUrl": "http://place.map.kakao.com/25737281"
+  },
+  {
+   "id": "nt-2774724",
+   "query": "속초해녀마을",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1392852751",
+   "placeUrl": "http://place.map.kakao.com/1392852751"
+  },
+  {
+   "id": "nt-2776855",
+   "query": "속초 범바위",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "17809103",
+   "placeUrl": "http://place.map.kakao.com/17809103"
+  },
+  {
+   "id": "nt-2776859",
+   "query": "청초호 호수공원",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2776866",
+   "query": "대포항관광수산시장",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2782125",
+   "query": "속초파워보트클럽",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2782129",
+   "query": "섭죽마을",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8374436",
+   "placeUrl": "http://place.map.kakao.com/8374436"
+  },
+  {
+   "id": "nt-2782135",
+   "query": "이조면옥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10760412",
+   "placeUrl": "http://place.map.kakao.com/10760412"
+  },
+  {
+   "id": "nt-2782493",
+   "query": "46코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2788927",
+   "query": "동명동성당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12819876",
+   "placeUrl": "http://place.map.kakao.com/12819876"
+  },
+  {
+   "id": "nt-2788935",
+   "query": "영랑호 설화공원",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2789524",
+   "query": "단천면옥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1961524393",
+   "placeUrl": "http://place.map.kakao.com/1961524393"
+  },
+  {
+   "id": "nt-2791156",
+   "query": "코마린요트",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2791166",
+   "query": "속초마리나",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2001079056",
+   "placeUrl": "http://place.map.kakao.com/2001079056"
+  },
+  {
+   "id": "nt-2809897",
+   "query": "하마식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1042777271",
+   "placeUrl": "http://place.map.kakao.com/1042777271"
+  },
+  {
+   "id": "nt-2811400",
+   "query": "문어국밥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24720402",
+   "placeUrl": "http://place.map.kakao.com/24720402"
+  },
+  {
+   "id": "nt-2812084",
+   "query": "프리미엄 이가한우 정육참숯식당",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2814180",
+   "query": "속초아이대관람차",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2072003206",
+   "placeUrl": "http://place.map.kakao.com/2072003206"
+  },
+  {
+   "id": "nt-2819992",
+   "query": "효키",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "538770333",
+   "placeUrl": "http://place.map.kakao.com/538770333"
+  },
+  {
+   "id": "nt-2824083",
+   "query": "왕박골식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "9286336",
+   "placeUrl": "http://place.map.kakao.com/9286336"
+  },
+  {
+   "id": "nt-2825250",
+   "query": "연화 티앤에프",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2837253",
+   "query": "이모네식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18945406",
+   "placeUrl": "http://place.map.kakao.com/18945406"
+  },
+  {
+   "id": "nt-2839793",
+   "query": "김영애할머니순두부 본점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10196616",
+   "placeUrl": "http://place.map.kakao.com/10196616"
+  },
+  {
+   "id": "nt-2839817",
+   "query": "봉브레드",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26634072",
+   "placeUrl": "http://place.map.kakao.com/26634072"
+  },
+  {
+   "id": "nt-2839860",
+   "query": "카페 설악산로",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1857179118",
+   "placeUrl": "http://place.map.kakao.com/1857179118"
+  },
+  {
+   "id": "nt-2855262",
+   "query": "이선장",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2891819",
+   "query": "남경막국수",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "909684968",
+   "placeUrl": "http://place.map.kakao.com/909684968"
+  },
+  {
+   "id": "nt-2891854",
+   "query": "대청마루",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12277295",
+   "placeUrl": "http://place.map.kakao.com/12277295"
+  },
+  {
+   "id": "nt-2891900",
+   "query": "매자식당",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2891934",
+   "query": "모녀가리비",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18857457",
+   "placeUrl": "http://place.map.kakao.com/18857457"
+  },
+  {
+   "id": "nt-2891983",
+   "query": "미가",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "10411069",
+   "placeUrl": "http://place.map.kakao.com/10411069"
+  },
+  {
+   "id": "nt-2892017",
+   "query": "범바위막국수",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26618196",
+   "placeUrl": "http://place.map.kakao.com/26618196"
+  },
+  {
+   "id": "nt-2892032",
+   "query": "속초생대구",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12786462",
+   "placeUrl": "http://place.map.kakao.com/12786462"
+  },
+  {
+   "id": "nt-2892069",
+   "query": "아쿠아딜리버리 회포장",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2892088",
+   "query": "영식이네순대국밥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27298071",
+   "placeUrl": "http://place.map.kakao.com/27298071"
+  },
+  {
+   "id": "nt-2892120",
+   "query": "왕가수라청",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "820952102",
+   "placeUrl": "http://place.map.kakao.com/820952102"
+  },
+  {
+   "id": "nt-2892151",
+   "query": "정든식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10723598",
+   "placeUrl": "http://place.map.kakao.com/10723598"
+  },
+  {
+   "id": "nt-2892186",
+   "query": "감자바우",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10114520",
+   "placeUrl": "http://place.map.kakao.com/10114520"
+  },
+  {
+   "id": "nt-2892193",
+   "query": "조개상회 본점",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2892223",
+   "query": "황가네찜",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11205456",
+   "placeUrl": "http://place.map.kakao.com/11205456"
+  },
+  {
+   "id": "nt-2892333",
+   "query": "구구집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "261994890",
+   "placeUrl": "http://place.map.kakao.com/261994890"
+  },
+  {
+   "id": "nt-2892339",
+   "query": "그리운보리밥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "15197397",
+   "placeUrl": "http://place.map.kakao.com/15197397"
+  },
+  {
+   "id": "nt-2892345",
+   "query": "금이야옥이야",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "199611619",
+   "placeUrl": "http://place.map.kakao.com/199611619"
+  },
+  {
+   "id": "nt-2892351",
+   "query": "김삿갓회막국수",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18907067",
+   "placeUrl": "http://place.map.kakao.com/18907067"
+  },
+  {
+   "id": "nt-2892357",
+   "query": "김정옥할머니순두부 본점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8821313",
+   "placeUrl": "http://place.map.kakao.com/8821313"
+  },
+  {
+   "id": "nt-2892363",
+   "query": "대포대게회직판장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26313360",
+   "placeUrl": "http://place.map.kakao.com/26313360"
+  },
+  {
+   "id": "nt-2892369",
+   "query": "동해안붉은대게",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2071560370",
+   "placeUrl": "http://place.map.kakao.com/2071560370"
+  },
+  {
+   "id": "nt-2901065",
+   "query": "설악본가설렁탕",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11703815",
+   "placeUrl": "http://place.map.kakao.com/11703815"
+  },
+  {
+   "id": "nt-2901143",
+   "query": "속초신토불이감자옹심이",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1988084034",
+   "placeUrl": "http://place.map.kakao.com/1988084034"
+  },
+  {
+   "id": "nt-2901165",
+   "query": "속초어장물회",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26636657",
+   "placeUrl": "http://place.map.kakao.com/26636657"
+  },
+  {
+   "id": "nt-2901191",
+   "query": "속초오징어짬뽕",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26853968",
+   "placeUrl": "http://place.map.kakao.com/26853968"
+  },
+  {
+   "id": "nt-2901225",
+   "query": "순자집곰치국",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "600719055",
+   "placeUrl": "http://place.map.kakao.com/600719055"
+  },
+  {
+   "id": "nt-2901276",
+   "query": "유진게찜",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "9946332",
+   "placeUrl": "http://place.map.kakao.com/9946332"
+  },
+  {
+   "id": "nt-2901293",
+   "query": "제제네식탁",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "163360667",
+   "placeUrl": "http://place.map.kakao.com/163360667"
+  },
+  {
+   "id": "nt-2901341",
+   "query": "진미동치미메밀막국수",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2901353",
+   "query": "초당본점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "655074925",
+   "placeUrl": "http://place.map.kakao.com/655074925"
+  },
+  {
+   "id": "nt-2901360",
+   "query": "초원순두부",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "16854401",
+   "placeUrl": "http://place.map.kakao.com/16854401"
+  },
+  {
+   "id": "nt-2901372",
+   "query": "콩서리",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "902001334",
+   "placeUrl": "http://place.map.kakao.com/902001334"
+  },
+  {
+   "id": "nt-2901674",
+   "query": "돈까스렛",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1366177663",
+   "placeUrl": "http://place.map.kakao.com/1366177663"
+  },
+  {
+   "id": "nt-2902990",
+   "query": "속초해물칼국수",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2905230",
+   "query": "명성게찜",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "196337903",
+   "placeUrl": "http://place.map.kakao.com/196337903"
+  },
+  {
+   "id": "nt-2905294",
+   "query": "후포식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "9622382",
+   "placeUrl": "http://place.map.kakao.com/9622382"
+  },
+  {
+   "id": "nt-2905555",
+   "query": "팔팔회센타",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "802360200",
+   "placeUrl": "http://place.map.kakao.com/802360200"
+  },
+  {
+   "id": "nt-2905574",
+   "query": "해녀전복뚝배기",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25539163",
+   "placeUrl": "http://place.map.kakao.com/25539163"
+  },
+  {
+   "id": "nt-2905623",
+   "query": "홍용가",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2112360287",
+   "placeUrl": "http://place.map.kakao.com/2112360287"
+  },
+  {
+   "id": "nt-2905643",
+   "query": "황대구탕",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8691919",
+   "placeUrl": "http://place.map.kakao.com/8691919"
+  },
+  {
+   "id": "nt-2913408",
+   "query": "카페 긷",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1412106760",
+   "placeUrl": "http://place.map.kakao.com/1412106760"
+  },
+  {
+   "id": "nt-2925411",
+   "query": "너울집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "766017996",
+   "placeUrl": "http://place.map.kakao.com/766017996"
+  },
+  {
+   "id": "nt-2925428",
+   "query": "앤커피스토리",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2099139428",
+   "placeUrl": "http://place.map.kakao.com/2099139428"
+  },
+  {
+   "id": "nt-2929178",
+   "query": "키친온유",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "332187244",
+   "placeUrl": "http://place.map.kakao.com/332187244"
+  },
+  {
+   "id": "nt-2994127",
+   "query": "여로요가",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "918591562",
+   "placeUrl": "http://place.map.kakao.com/918591562"
+  },
+  {
+   "id": "nt-3012422",
+   "query": "스테이 오롯이",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27600208",
+   "placeUrl": "http://place.map.kakao.com/27600208"
+  },
+  {
+   "id": "nt-3038513",
+   "query": "완앤송",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1647801728",
+   "placeUrl": "http://place.map.kakao.com/1647801728"
+  },
+  {
+   "id": "nt-3040955",
+   "query": "동명항오징어난전",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "371704010",
+   "placeUrl": "http://place.map.kakao.com/371704010"
+  },
+  {
+   "id": "nt-3041101",
+   "query": "대포항 원조튀김골목",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27478622",
+   "placeUrl": "http://place.map.kakao.com/27478622"
+  },
+  {
+   "id": "nt-3041179",
+   "query": "완벽한 날들",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3041240",
+   "query": "동그란책",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "562225742",
+   "placeUrl": "http://place.map.kakao.com/562225742"
+  },
+  {
+   "id": "nt-3041283",
+   "query": "동명항 포장마차 거리",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "27550338",
+   "placeUrl": "http://place.map.kakao.com/27550338"
+  },
+  {
+   "id": "nt-3041338",
+   "query": "닭전 골목",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3041483",
+   "query": "영금정갯바위",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3041546",
+   "query": "대포만세운동기념관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "32362308",
+   "placeUrl": "http://place.map.kakao.com/32362308"
+  },
+  {
+   "id": "nt-3041622",
+   "query": "아루나",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1800923786",
+   "placeUrl": "http://place.map.kakao.com/1800923786"
+  },
+  {
+   "id": "nt-3041652",
+   "query": "카페우디",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "377885864",
+   "placeUrl": "http://place.map.kakao.com/377885864"
+  },
+  {
+   "id": "nt-3041720",
+   "query": "청호해수욕장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11247110",
+   "placeUrl": "http://place.map.kakao.com/11247110"
+  },
+  {
+   "id": "nt-3041816",
+   "query": "어느멋진날카페",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "681749749",
+   "placeUrl": "http://place.map.kakao.com/681749749"
+  },
+  {
+   "id": "nt-3083216",
+   "query": "뮤지엄엑스",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1673503309",
+   "placeUrl": "http://place.map.kakao.com/1673503309"
+  },
+  {
+   "id": "nt-3354271",
+   "query": "등대생선구이",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "22704674",
+   "placeUrl": "http://place.map.kakao.com/22704674"
+  },
+  {
+   "id": "nt-3354272",
+   "query": "속초관광수산시장 회센터",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3354487",
+   "query": "웨일라잇",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1634864979",
+   "placeUrl": "http://place.map.kakao.com/1634864979"
+  },
+  {
+   "id": "nt-3468741",
+   "query": "과자의성",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3526067",
+   "query": "속초보스대게",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2059236006",
+   "placeUrl": "http://place.map.kakao.com/2059236006"
+  },
+  {
+   "id": "nt-3533176",
+   "query": "설악향기로",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8225320",
+   "placeUrl": "http://place.map.kakao.com/8225320"
+  },
+  {
+   "id": "nt-4020574",
+   "query": "오우션",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "618791054",
+   "placeUrl": "http://place.map.kakao.com/618791054"
+  },
+  {
+   "id": "nt-402689",
+   "query": "점봉산산채",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "13320662",
+   "placeUrl": "http://place.map.kakao.com/13320662"
+  },
+  {
+   "id": "nt-4054504",
+   "query": "아바이벽화마을",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "1951756636",
+   "placeUrl": "http://place.map.kakao.com/1951756636"
+  },
+  {
+   "id": "nt-4059119",
+   "query": "햅칠탐",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1795469495",
+   "placeUrl": "http://place.map.kakao.com/1795469495"
+  },
+  {
+   "id": "nt-4062234",
+   "query": "ICT 스포츠 체험관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "361338743",
+   "placeUrl": "http://place.map.kakao.com/361338743"
+  },
+  {
+   "id": "nt-4065554",
+   "query": "설악산소공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26290244",
+   "placeUrl": "http://place.map.kakao.com/26290244"
+  },
+  {
+   "id": "nt-579035",
+   "query": "단천식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "9703855",
+   "placeUrl": "http://place.map.kakao.com/9703855"
+  },
+  {
+   "id": "nt-626407",
+   "query": "오대양횟집",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-626427",
+   "query": "왕건횟집",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-631755",
+   "query": "사돈집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8340024",
+   "placeUrl": "http://place.map.kakao.com/8340024"
+  }
+ ]
+}
