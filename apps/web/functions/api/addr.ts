@@ -50,12 +50,14 @@ class JusoError extends Error {
     super(`juso ${code}`);
   }
 }
-/** One answer of the 도로명주소 API: its first `juso`, or null when there is none; an error code (`E…`) thrown. */
+/** One answer of the 도로명주소 API: its first `juso`, or null when there is none; its error code (`E…`, `-999`), an HTTP
+ * error (`http-<status>`) or an answer that is not JSON (`bad`) thrown — a fixed word, never the URL (its key). */
 async function juso(url: string, params: Record<string, string>, signal: AbortSignal): Promise<Record<string, unknown> | null> {
   const res = await fetch(`${url}?${new URLSearchParams({ ...params, resultType: 'json' })}`, { signal });
-  if (!res.ok) throw new Error(`http ${res.status}`);
-  const r = ((await res.json()) as { results?: { common?: { errorCode?: string }; juso?: unknown } } | null)?.results;
-  const code = String(r?.common?.errorCode ?? '');
+  if (!res.ok) throw new JusoError(`http-${res.status}`);
+  const body = (await res.json().catch(() => null)) as { results?: { common?: { errorCode?: string }; juso?: unknown } } | null;
+  const r = body?.results;
+  const code = String(r?.common?.errorCode ?? '').replace(/[^\w-]/g, '').slice(0, 12);
   if (code !== '0') throw new JusoError(code || 'bad');
   return Array.isArray(r?.juso) && r.juso.length ? (r.juso[0] as Record<string, unknown>) : null;
 }
@@ -88,8 +90,15 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     const name = (str(found.roadAddrPart1) || str(found.roadAddr)).replace(/\s+/g, ' ').slice(0, MAX_ADDR);
     return new Response(JSON.stringify({ addr: name, lat: p.lat, lng: p.lng }), { status: 200, headers: JSON_HEADERS });
   } catch (e) {
-    if (e instanceof JusoError) return KEY_CODES.has(e.code) ? plain(503, '', `bad-key ${e.code}`) : plain(404, '', `none ${e.code}`);
-    return plain(502, '', ctl.signal.aborted ? 'timeout' : String((e as Error)?.message ?? 'network'));
+    if (e instanceof JusoError) {
+      if (KEY_CODES.has(e.code)) return plain(503, '', `bad-key ${e.code}`);
+      // E0005…E0015: the words themselves (none, too short, too broad…) — not found with them
+      if (/^E\d{4}$/.test(e.code)) return plain(404, '', `none ${e.code}`);
+      // -999 (the API's own failure), an HTTP error, an answer not JSON: it failed, it did not find nothing
+      return plain(502, '', ctl.signal.aborted ? 'timeout' : `juso ${e.code}`);
+    }
+    // a fixed word only: a fetch error's message may carry the URL, and the key is in its query
+    return plain(502, '', ctl.signal.aborted ? 'timeout' : 'network');
   } finally {
     clearTimeout(timer);
   }

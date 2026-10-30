@@ -103,4 +103,27 @@ describe('onRequestPost', () => {
     const res = await onRequestPost({ request: req('애월해안로 1'), env: KEYS });
     expect([res.status, res.headers.get('X-Geo-Reason')]).toEqual([502, 'network']);
   });
+
+  it('the API failing is not 「not found」: -999 (in either API), an HTTP error, an answer not JSON → 502 with a fixed reason (m-b)', async () => {
+    const why = async () => {
+      const res = await onRequestPost({ request: req('애월해안로 1'), env: KEYS });
+      return [res.status, res.headers.get('X-Geo-Reason')];
+    };
+    vi.stubGlobal('fetch', async () => err('-999'));
+    expect(await why()).toEqual([502, 'juso -999']);
+    vi.stubGlobal('fetch', async (url: string) => (url.includes('addrLinkApi') ? ok([FOUND]) : err('-999')));
+    expect(await why()).toEqual([502, 'juso -999']);
+    vi.stubGlobal('fetch', async () => new Response('', { status: 500 }));
+    expect(await why()).toEqual([502, 'juso http-500']);
+    vi.stubGlobal('fetch', async () => new Response('<html>점검 중</html>'));
+    expect(await why()).toEqual([502, 'juso bad']);
+  });
+
+  it('a fetch error carrying the URL (its key in the query) leaves only a fixed word in X-Geo-Reason (n-a)', async () => {
+    vi.stubGlobal('fetch', async (url: string) => {
+      throw new TypeError(`fetch failed: ${url}`);
+    });
+    const res = await onRequestPost({ request: req('애월해안로 1'), env: { JUSO_SEARCH_KEY: 'SECRETKEY123', JUSO_COORD_KEY: 'ck' } });
+    expect([res.status, res.headers.get('X-Geo-Reason')]).toEqual([502, 'network']);
+  });
 });
