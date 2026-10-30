@@ -30,6 +30,7 @@ export const BOXES = {
   강릉: { lat: [37.4, 38.0], lng: [128.4, 129.1] },
   속초: { lat: [38.1, 38.3], lng: [128.4, 128.7] },
   춘천: { lat: [37.6, 38.2], lng: [127.4, 128.1] },
+  양양: { lat: [37.85, 38.2], lng: [128.35, 128.85] },
 };
 export const inBox = (city, p) => {
   const b = BOXES[city];
