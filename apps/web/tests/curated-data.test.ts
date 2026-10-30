@@ -288,3 +288,27 @@ describe('주인 덮어쓰기 (review/gangwon/owner-overrides.json)', () => {
     expect(() => build({ ...every, overrides: [{ id: ids[0], field: 'mood', before: 'food', after: 'walk' }] })).toThrow(/owner override/);
   });
 });
+
+describe('양양 이유 문장 전수 사실 확인 (review/gangwon/factcheck-양양-03.md)', () => {
+  const dir = resolve(root, 'review/gangwon/factcheck-양양-03');
+  const every = loadInputs('gangwon', CITIES);
+  const read = (p: string) => readdirSync(dir).filter((f) => new RegExp(`^${p}-\\d{2}\\.json$`).test(f)).sort().flatMap((f) => JSON.parse(readFileSync(resolve(dir, f), 'utf8')));
+  it('출하된 양양 171곳의 이유 문장을 빠짐없이 봤고, 오류로 고친 곳은 이유 문장만 바뀐다', () => {
+    const yy = file.filter((s) => s.area === '양양');
+    const input = read('input') as { id: string; reason: string }[];
+    const facts = read('facts') as { id: string; factError: boolean }[];
+    expect(input.map((x) => x.id)).toEqual(yy.map((s) => s.id));
+    expect(facts.map((x) => x.id)).toEqual(yy.map((s) => s.id));
+    const ours = every.fixes.filter((f) => (f as { source?: string }).source === 'factcheck-양양-03');
+    expect(ours.map((f) => f.id).sort()).toEqual(facts.filter((x) => x.factError).map((x) => x.id).sort());
+    const before = build({ ...every, fixes: every.fixes.filter((f) => !ours.includes(f)) }).spots;
+    const after = build(every).spots;
+    const changed = after.filter((s, i) => JSON.stringify(s) !== JSON.stringify(before[i]));
+    expect(changed.map((s) => s.id).sort()).toEqual(ours.map((f) => f.id).sort());
+    for (const s of changed) {
+      expect(s.area).toBe('양양');
+      expect({ ...s, reason: '' }).toEqual({ ...before.find((p) => p.id === s.id), reason: '' });
+    }
+    expect(JSON.stringify(after)).toBe(text);
+  });
+});
