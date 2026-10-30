@@ -1,0 +1,576 @@
+[
+ {
+  "id": "nt-2744429",
+  "name": "자연에 머물다",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2759582",
+  "name": "버즈글램핑",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2759590",
+  "name": "강촌포도펜션 오토캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2759597",
+  "name": "늘푸른관광농원",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2761774",
+  "name": "다볼 카라반 오토캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2761798",
+  "name": "더시크릿가든 캠프지라운드",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2761834",
+  "name": "춘천숲자연휴양림엔글램핑",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2761849",
+  "name": "춘천하늘캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2761865",
+  "name": "호반 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2761880",
+  "name": "춘천캠핑월드",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2765136",
+  "name": "인스타글램",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774552",
+  "name": "골든몽키",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "홍천강 상류에서 워터슬라이드와 제트보트를 타는 수상 레저시설이에요",
+  "basis": [
+   "홍천강 상류에 위치한 수상 레저시설이다",
+   "대형 워터슬라이드, 제트보트, 더블바나나보트"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774559",
+  "name": "강촌레일파크경강레일바이크",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "옛 경강역에서 출발해 북한강 철교를 건너는 레일바이크예요",
+  "basis": [
+   "옛 경강역 자리에 레일바이크를 즐길 수 있는 레저시설이다",
+   "느티나무 터널을 지나 북한강 철교를 건너"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774561",
+  "name": "강촌테마랜드",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "북한강변에서 서바이벌 게임과 래프팅을 하는 레포츠 시설이에요",
+  "basis": [
+   "서바이벌 게임장과 사륜바이크, 카트 라이더 같은 육상 레포츠",
+   "래프팅과 수상스키, 플라이피시, 바나나보트, 웨이크보드"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774566",
+  "name": "춘천중도 물레길",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "의암호에서 카누를 타고 우든 카누도 만드는 곳이에요",
+  "basis": [
+   "의암호에서 1~2시간 이내의 다양한 카누 코스를 운영하고 있다",
+   "5주 코스로 우든 카누 제작 교실을 운영하고 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2791619",
+  "name": "춘천별빛캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2792017",
+  "name": "구곡폭포 국민여가 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2792289",
+  "name": "늘솔길캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2792314",
+  "name": "그레이스글램핑",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2908950",
+  "name": "봄봄캠핑",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2908991",
+  "name": "숲이야기 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2909028",
+  "name": "스칼라캠프장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2909053",
+  "name": "청평사 국민여가 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3007677",
+  "name": "춘천송암레포츠타운빙상장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "스케이트를 빌려 타는 송암스포츠타운 빙상장이에요",
+  "basis": [
+   "스케이트는 대여 가능하다",
+   "30m와 61m의 링크 규격에 관람석 수는 총 656석"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3017802",
+  "name": "북한강포시즌수상레저",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "수상스키와 웨이크보드를 타고 보트 투어도 하는 수상레저타운이에요",
+  "basis": [
+   "수상스키와 웨이크보드, 밴드웨건, 핵사곤, 단군, 플라이피시를 비롯하여",
+   "깨끗한 자연환경을 갖춘 수상레저타운이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3017803",
+  "name": "비버네선착장수상레저",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "북한강변에서 수상스키와 웨이크보드를 타는 수상레저시설이에요",
+  "basis": [
+   "청정한 북한강변에 위치한 수상레저시설이다",
+   "수상스키와 웨이크보드를 비롯해 밴드웨건, 핵사곤, 디스코보트"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3017810",
+  "name": "빠지에빠지다수상레저",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "수상스키와 워터슬라이드를 타고 남이섬 보팅도 하는 곳이에요",
+  "basis": [
+   "수상스키와 웨이크보드 외에 자이언트 워터슬라이드, 밴드웨건",
+   "가까운 남이섬 보팅도 준비되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3064930",
+  "name": "힐링브릿지수상레저",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "워터슬라이드와 수상레저를 즐기는 레저시설이에요",
+  "basis": [
+   "다양한 수상레저와 숙박을 함께 즐길 수 있는 레저시설이다",
+   "규모가 큰 워터슬라이드를 보유하고 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3064957",
+  "name": "수상레저V",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "블롭 점프와 더블 레인 워터슬라이드가 있는 워터파크예요",
+  "basis": [
+   "더블 레인 워터슬라이드를 갖춘 초대형 워터파크",
+   "가평역에서 차량으로 10분 거리에 위치해 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072025",
+  "name": "토비스수상레져",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "북한강에서 수상스키와 웨이크보드를 타는 수상레저 시설이에요",
+  "basis": [
+   "1급수 북한강 맑은 물에서 수상 스포츠를 즐길 수 있으며",
+   "수상스키와 웨이크보드 등을 탈 수 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072026",
+  "name": "빅베어워터스키팀 인 워터랜드춘천",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "북한강에서 워터스키 강습을 받는 수상레저 업체예요",
+  "basis": [
+   "초보와 입문자 강습 등의 교육 커리큘럼을 제공하고 있다",
+   "1 급수 북한강에 위치하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072802",
+  "name": "스피드존",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "워터파크와 ATV 라이딩, 카트레이싱을 하는 레저 시설이에요",
+  "basis": [
+   "가평 최대 규모 워터파크 빠지",
+   "최신 ATV 라이딩",
+   "카트레이싱까지 모두 체험이 가능하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3074811",
+  "name": "텐파크",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "슈퍼타워와 블롭점프가 있는 수상레저 워터파크예요",
+  "basis": [
+   "높이 15m에 이르는 슈퍼타워와 블롭점프",
+   "높이 10m의 빅워터슬라이드"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3083018",
+  "name": "원수상레저",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "홍천강 상류에서 수상스키와 웨이크보드 강습을 하는 곳이에요",
+  "basis": [
+   "강원도 홍천강 상류에 자리한 수상 레저·펜션 복합 운영지이다",
+   "수상스키와 웨이크보드 초보자를 위한 강습을 진행한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3083085",
+  "name": "가평1등수상레저",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "대형 워터파크와 워터슬라이드가 있는 수상레포츠 시설이에요",
+  "basis": [
+   "대형 워터파크와 다양한 크기와 모양의 워터슬라이드",
+   "프로선수 출신의 강사진으로 이루어진 전문화된 수상레포츠 시설이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-645823",
+  "name": "춘천숲자연휴양림",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "참나무와 잣나무 숲속에서 조용히 쉬어가는 휴양림이에요",
+  "basis": [
+   "참나무와 잣나무가 울창한 숲속에서 조용하게 쉬어가기 좋은 휴양림이다",
+   "숲해설가와 함께하는 숲 체험 프로그램을 진행하며 등산로도 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-132747",
+  "name": "춘천 중앙시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "아케이드 아래 국수와 순댓국 가게가 있는 춘천 대표 시장이에요",
+  "basis": [
+   "1960년 개설된 춘천 대표 상설시장으로",
+   "국수, 순댓국, 베트남 쌀국수 등을 파는 음식점도 여럿 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-132749",
+  "name": "춘천 서부시장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-132750",
+  "name": "춘천 동부시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "전과 떡, 튀김 노포가 모인 먹거리로 이름난 시장이에요",
+  "basis": [
+   "특히, 먹거리로 유명하다",
+   "지하상가 튀김집과 떡집, 전집 등의 맛집 등이 즐비하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-132751",
+  "name": "춘천 남부시장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-132761",
+  "name": "춘천 풍물시장(2, 7일)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "메밀전병과 닭갈비를 맛보는 철교 아래 전통시장이에요",
+  "basis": [
+   "경춘선 철로 교각 아래 자리한다",
+   "메밀전, 메밀전병, 장떡 등 강원도 토속음식과 닭갈비"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710606",
+  "name": "육림고개",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "막걸리 바와 카페, 오래된 가게가 어우러진 옛 상권 골목이에요",
+  "basis": [
+   "낡은 주택을 개조한 감각적인 카페, 신개념 막걸리 바",
+   "오래된 신발가게, 올챙이 국숫집, 기름집, 뻥튀기 가게"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2787564",
+  "name": "샘밭장터",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "농산물과 군것질거리를 만나는 오일장 장터예요",
+  "basis": [
+   "샘밭장터 오일장에 가면 춘천 사람들이 손수 재배한 싱싱한 농산물",
+   "쉬이 지나칠 수 없는 군침 도는 군것질거리도 많다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3007656",
+  "name": "춘천번개시장",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "야시장에서 먹거리와 버스킹을 만나는 시장이에요",
+  "basis": [
+   "플리마켓을 비롯한 다양한 먹거리와 공연, 버스킹도 즐길 수 있다",
+   "깔끔한 전통시장이라는 이미지를 내세워"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-133001",
+  "name": "부안막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수와 보쌈, 메밀부침에 만 총떡을 내는 집이에요",
+  "basis": [
+   "대표메뉴는 막국수와 보쌈이다",
+   "담백한 야채 무침을 메밀부침에 말아먹는 총떡"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133302",
+  "name": "봉운장갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "숯불 한우갈비를 내는 갈비 전문점이에요",
+  "basis": [
+   "숯불 한우갈비는 조금 질긴맛이 특징이며",
+   "50년 넘게 한 자리에서 갈비(한우)전문점을"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-133483",
+  "name": "소양강양어장",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "직접 키운 송어와 산천어를 내는 집이에요",
+  "basis": [
+   "송어, 산천어 양식장을 직접 운영하고 있는 곳이다",
+   "내부는 통창을 통해 소양강 풍경을 조망할 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-134089",
+  "name": "시골막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수와 편육, 총떡을 내는 신북읍 막국수집이에요",
+  "basis": [
+   "춘천의 대표적 막국수집의 하나인 시골막국수는",
+   "편육과 총떡(메밀전병) 등의 다양한 메뉴를 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-134544",
+  "name": "서울녹각삼계탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "녹각과 인삼을 넣은 삼계탕을 내는 집이에요",
+  "basis": [
+   "녹각, 갈근, 인삼, 밤, 대추, 구기자, 암초, 잣, 마늘, 찹쌀",
+   "녹각, 상황, 옻, 매생이, 전복 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-134637",
+  "name": "4단지닭갈비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "춘천 닭갈비와 동치미 국물을 내는 집이에요",
+  "basis": [
+   "40년 전통 춘천 닭갈비 원조의 맛을 그대로 이어가고 있다",
+   "동치미 국물 맛 또한 일품이다"
+  ],
+  "confidence": "high"
+ }
+]

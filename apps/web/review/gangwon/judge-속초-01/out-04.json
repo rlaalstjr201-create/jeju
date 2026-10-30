@@ -1,0 +1,700 @@
+[
+ {
+  "id": "nt-2891934",
+  "name": "모녀가리비",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": false,
+  "reason": "대포항 난전 먹거리 시장에서 오징어순대를 바싹 구워 내는 집이에요",
+  "basis": [
+   "대포항에 있는 난전 먹거리 시장에 있다",
+   "오징어순대를 누룽지처럼 바싹 구워"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2891983",
+  "name": "미가",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "황태구이 정식과 더덕구이 정식을 내는 집이에요",
+  "basis": [
+   "주메뉴는 황태구이 정식과 더덕구이 정식"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892017",
+  "name": "범바위막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "명태회를 올린 막국수를 내는 막국수 전문점이에요",
+  "basis": [
+   "막국수 전문점이다",
+   "대관령의 특산물인 명태회를 올려 주는 곳이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892032",
+  "name": "속초생대구",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "맑게 끓인 생대구탕과 생대구전을 내는 대구 전문점이에요",
+  "basis": [
+   "고춧가루를 넣지 않고 맑게 끓이는 스타일이다",
+   "메뉴도 간단하게 생대구탕, 생대구전만 있으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892069",
+  "name": "아쿠아딜리버리 회포장",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": false,
+  "reason": "제철 횟감으로 모둠회를 포장해 가는 회 포장 전문점이에요",
+  "basis": [
+   "회 포장 배달 전문점이다",
+   "제철마다 상이한 횟감과 해산물로 이루어진 푸짐한 모둠회"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2892088",
+  "name": "영식이네순대국밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "아바이순대국밥과 김치순대국밥 같은 순댓국을 파는 집이에요",
+  "basis": [
+   "순대국밥 전문점이다",
+   "일반 순댓국 외에 아바이순대국밥, 김치순대국밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892120",
+  "name": "왕가수라청",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "황태구이와 더덕구이를 30년 넘게 내는 황태요리 전문점이에요",
+  "basis": [
+   "황태요리 전문점이다",
+   "30년 넘게 한곳에서 같은 메뉴로 영업을 하는 집이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892151",
+  "name": "정든식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "강원도에서 처음 장칼국수를 개발했다는 원조 식당이에요",
+  "basis": [
+   "장칼국수 원조 식당이다",
+   "1994년에 강원도에서 처음으로 장칼국수라는 음식을 개발해서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892186",
+  "name": "감자바우",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "감자옹심이와 회국수를 내는 강원도 토속음식점이에요",
+  "basis": [
+   "강원도 토속음식점이다",
+   "대표 메뉴는 감자옹심이와 회국수이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892193",
+  "name": "조개상회 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "등대해수욕장 옆 해안 길에서 조개구이를 내는 집이에요",
+  "basis": [
+   "조개구이 전문점이다",
+   "등대 해수욕장 바로 옆 해안 길에 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892223",
+  "name": "황가네찜",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생선 모둠찜과 가오리찜을 내는 전문 식당이에요",
+  "basis": [
+   "생선 모둠 찜, 가오리찜 전문 식당이다",
+   "바다를 전망할 수 있는 뷰 맛집이기도 하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892333",
+  "name": "구구집",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "등대해수욕장 앞에서 물회를 내는 식당이에요",
+  "basis": [
+   "속초시 등대해수욕장에 있는 물회식당이다",
+   "바닷가 앞에 식당이 있어서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892339",
+  "name": "그리운보리밥",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "보리밥에 나물을 넣어 비벼 먹는 한정식집이에요",
+  "basis": [
+   "한정식 전문점이다",
+   "보리밥에 나물을 넉넉히 넣고 고추장 양념에"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892345",
+  "name": "금이야옥이야",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "속초해수욕장 근처에서 장칼국수와 장칼제비를 내는 집이에요",
+  "basis": [
+   "속초해수욕장 근처에 있는 장칼국수와 만두 맛집이다",
+   "대표 메뉴는 장칼국수와 장칼제비이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892351",
+  "name": "김삿갓회막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "명태회 막국수와 수육을 내는 막국수 전문점이에요",
+  "basis": [
+   "막국수 전문점이다",
+   "명태회를 올린 명태회 막국수이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892357",
+  "name": "김정옥할머니순두부 본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "순두부에 황태구이와 도토리묵까지 내는 순두부 전문점이에요",
+  "basis": [
+   "순두부 전문점이다",
+   "황태구이, 모두부, 도토리묵, 감자전"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892363",
+  "name": "대포대게회직판장",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대포항이 내려다보이는 창가에서 대게와 회를 먹는 직판 식당이에요",
+  "basis": [
+   "대게 직판장이다",
+   "창가 자리에 앉으면 대포항이 한눈에 들어온다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2892369",
+  "name": "동해안붉은대게",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "홍게 간장게장이 대표인 홍게요리 전문점이에요",
+  "basis": [
+   "홍게요리 전문점이다",
+   "대표 메뉴는 홍게 간장게장이고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901065",
+  "name": "설악본가설렁탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "설렁탕과 갈비탕을 내는 설렁탕 전문점이에요",
+  "basis": [
+   "설렁탕 전문점이다",
+   "메뉴는 설렁탕, 갈비탕, 우거지 해장국"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901143",
+  "name": "속초신토불이감자옹심이",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "중앙시장 안에서 감자로만 빚은 옹심이를 파는 집이에요",
+  "basis": [
+   "속초 중앙시장 안에 있는 강원도 토속 음식점이다",
+   "100% 감자로만 만든 감자옹심이를 판매하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901165",
+  "name": "속초어장물회",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "세꼬시와 전복과 문어를 넣은 어장물회가 대표인 물회식당이에요",
+  "basis": [
+   "엑스포 공원 근처에 있는 물회식당이다",
+   "대표 메뉴인 어장물회는 세꼬시와 전복, 문어, 새우, 소라"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901191",
+  "name": "속초오징어짬뽕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "오징어가 한 마리 통째로 들어간 짬뽕을 내는 중식당이에요",
+  "basis": [
+   "오징어 짬뽕에는 싱싱한 오징어가 한 마리 통째로 들어 있다",
+   "청초호 근처에 자리해 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901225",
+  "name": "순자집곰치국",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "얼큰하거나 시원하게 끓인 곰치국이 대표인 식당이에요",
+  "basis": [
+   "대표 메뉴는 얼큰하게 혹은 시원하게 끓인 곰치국이다",
+   "순두부와 황태해장국도 판매하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901276",
+  "name": "유진게찜",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "직접 잡아 온 대게로 게 요리를 내는 영랑해안길 식당이에요",
+  "basis": [
+   "게 요리 전문점이다",
+   "가족이 직접 바다에 나가 잡아 온 대게를 사용해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901293",
+  "name": "제제네식탁",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "홍새우로 담근 새우장과 덮밥을 내는 집밥 식당이에요",
+  "basis": [
+   "가정식 집밥을 하는 식당이다",
+   "홍새우로 양념 새우장, 간장새우장을 담그고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901341",
+  "name": "진미동치미메밀막국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "명태회 막국수와 동치미 막국수가 주메뉴인 막국수 전문점이에요",
+  "basis": [
+   "막국수 전문점이다",
+   "명태회를 올린 명태회 막국수와"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901353",
+  "name": "초당본점",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "1962년부터 대를 이어 초당 순두부를 내는 집이에요",
+  "basis": [
+   "순두부 전문점이다",
+   "1962년도부터 현재까지 대를 이어 전통 있는 순두부를 제공한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901360",
+  "name": "초원순두부",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "국산 콩으로 만든 순두부와 황태구이를 내는 순두부촌 식당이에요",
+  "basis": [
+   "학사평 콩꽃마을 순두부촌에 있는 순두부 전문점이다",
+   "100% 국산 콩만 사용하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901372",
+  "name": "콩서리",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "파주 장단콩으로 만든 초당 순두부가 주메뉴인 콩 요리 식당이에요",
+  "basis": [
+   "콩 요리 전문점이다",
+   "DMZ 마사토에서 자란 파주 장단콩과 해양심층수를 이용해 두부를 만들며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2901674",
+  "name": "돈까스렛",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "숙성한 고기로 만든 일식풍 돈가스를 내는 집이에요",
+  "basis": [
+   "3단계의 숙성과정을 거쳐 고기의 식감과 육즙을 살리고 있으며",
+   "전통 일식풍의 돈까스이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2902990",
+  "name": "속초해물칼국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "해물이 가득한 황제해물칼국수와 보쌈을 내는 집이에요",
+  "basis": [
+   "칼국수와 보쌈을 선보이는 식당이다",
+   "오징어, 낙지, 홍합, 새우가 잔뜩 들어있는 황제해물칼국수"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905230",
+  "name": "명성게찜",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "장사항 횟집 타운에서 대게와 홍게 게찜을 내는 집이에요",
+  "basis": [
+   "장사항 횟집 타운에 있는 게찜 전문점이다",
+   "대게나 홍게를 단품 메뉴로 주문할 수도 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905294",
+  "name": "후포식당",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "제철 생선 조림과 매운탕을 내는 바닷가 한식집이에요",
+  "basis": [
+   "조림과 탕을 주로 하는 식당이다",
+   "바닷가에 있는 한식 전문점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905555",
+  "name": "팔팔회센타",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "대포항에서 활어회와 해물라면까지 한 상으로 내는 횟집이에요",
+  "basis": [
+   "속초시 대포항에 위치한 횟집이다",
+   "전채 음식부터 해물라면까지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905574",
+  "name": "해녀전복뚝배기",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "전복해물뚝배기와 전복죽이 주메뉴인 식당이에요",
+  "basis": [
+   "전복을 넣은 해물뚝배기와 전복죽이 주요 메뉴이다",
+   "동명항과 엑스포 공원 사이에 있는 식당이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905623",
+  "name": "홍용가",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "유산슬을 올린 짜장면을 내는 예약제 중식당이에요",
+  "basis": [
+   "짜장면을 시키면 짜장 위에 유산슬이 올라가 있다",
+   "예약제로만 운영하는 식당이라"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2905643",
+  "name": "황대구탕",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "생대구탕과 물곰탕이 주메뉴인 생대구탕 전문점이에요",
+  "basis": [
+   "생대구탕 전문점이다",
+   "생대구탕과 물곰탕을 주메뉴로 내고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2913408",
+  "name": "카페 긷",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "울산바위가 올려다보이는 순두부 골목의 디저트 카페예요",
+  "basis": [
+   "학사평 순두부 골목에 위치한 디저트 카페이다",
+   "울산바위가 바로 올려다보이는 경치"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2925411",
+  "name": "너울집",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "한옥민박마을 안 한옥 카페로 너울라떼와 티라미수가 대표예요",
+  "basis": [
+   "한옥민박마을에 위치한 한옥 카페이다",
+   "대표 메뉴는 너울라떼와 티라미수"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2925428",
+  "name": "앤커피스토리",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "빨강머리 앤을 주제로 꾸민 카페예요",
+  "basis": [
+   "소설 빨강머리앤을 주제로 한 카페이다",
+   "앤과 그 친구들의 일러스트로 장식되어 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2929178",
+  "name": "키친온유",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "해산물 파스타와 오징어 리소토를 내는 이탈리안 레스토랑이에요",
+  "basis": [
+   "이탈리안 레스토랑으로",
+   "해산물의 풍미를 살린 파스타와 오징어 리소토를 중심으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3012422",
+  "name": "스테이 오롯이",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "펜션을 개조한 카페로 테라스에서 설악산이 보여요",
+  "basis": [
+   "펜션으로 운영하던 곳을 카페로 개조하여 오픈한 곳이다",
+   "야외 테라스로 나가면 멀리 설악산이 보이고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3038513",
+  "name": "완앤송",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "소고기쌀국수와 사태국밥을 내는 퓨전 음식점이에요",
+  "basis": [
+   "쌀국수와 사태국밥 등 퓨전음식점이다",
+   "주요 메뉴는 소고기쌀국수, 사태국밥"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3041179",
+  "name": "완벽한 날들",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "독립서점에서 커피를 마시며 책을 보는 카페예요",
+  "basis": [
+   "독립서점이면서 카페와 숙박시설도 갖추고 있는",
+   "서점에서는 커피도 함께 마시며 책을 볼 수 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3041622",
+  "name": "아루나",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "동해를 마주한 루프탑 카페로 말차와 스콘을 내요",
+  "basis": [
+   "카페 바로 건너편이 드넓은 동해다",
+   "말차와 스콘, 쿠키 등의 디저트와 함께 커피를"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3041652",
+  "name": "카페우디",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "나무로 꾸민 산장 느낌 카페로 앞에 등대해수욕장이 있어요",
+  "basis": [
+   "산장 느낌이 나는 나무 목재를 사용하여 인테리어를 꾸몄다는",
+   "카페를 나가면 바로 앞에 속초등대해수욕장이 자리하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3041816",
+  "name": "어느멋진날카페",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "대관람차 모양 빵과 파인애플 주스를 내는 해수욕장 앞 카페예요",
+  "basis": [
+   "귀여운 대관람차 모양에 치즈를 넣어",
+   "통파인애플을 통째로 갈아 뚜껑만 잘라 서빙되는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3354271",
+  "name": "등대생선구이",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "아바이마을에서 이름난 생선구이 집이에요",
+  "basis": [
+   "속초 아바이마을에서 유명한 생선구이 맛집이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3354272",
+  "name": "속초관광수산시장 회센터",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": false,
+  "reason": "속초항 옆 수산시장에서 활어를 포장해 가는 식당가예요",
+  "basis": [
+   "속초항에 인접한 수산시장으로",
+   "활어 포장이 가능한 식당이 모여 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3354487",
+  "name": "웨일라잇",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "속초해수욕장 근처 4층 규모의 바다 전망 카페예요",
+  "basis": [
+   "속초해수욕장 속초아이 대관람차 인근",
+   "4층 규모의 카페로 바다 전망이"
+  ],
+  "confidence": "high"
+ }
+]

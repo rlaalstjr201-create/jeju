@@ -1,0 +1,587 @@
+[
+ {
+  "id": "nt-800528",
+  "name": "춘천 강언덕마을 [농촌전통테마]",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "홍천강이 세 면을 감싼 농촌체험 마을이에요",
+  "basis": [
+   "홍천강으로 동, 남, 서 삼면이 둘러싸여 있어 육지섬이라고 불리기도 한다",
+   "매년 농촌체험을 하러 많은 방문객들이 찾는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-914428",
+  "name": "춘천지구 전적비(춘천지구 전적기념관)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "6사단이 소양강 방어선을 지킨 전투를 기리는 전적비예요",
+  "basis": [
+   "춘천지구 전투를 기념하기 위해 만든 전적비이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-917305",
+  "name": "충렬탑(강원)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "한국전쟁 초기 우두산 전투의 호국영령을 기리는 탑이에요",
+  "basis": [
+   "6·25 당시 전사한 호국영령을 추모하기 위해"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-917521",
+  "name": "조양루",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "춘천 이궁에 남은 유일한 건물인 문루예요",
+  "basis": [
+   "춘천 이궁의 유일한 잔존 건물로서 역사적 의의가 크다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1279232",
+  "name": "축제극장몸짓",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "공연예술축제를 시즌별로 여는 극장이에요",
+  "basis": [
+   "춘천의 공연예술축제가 시즌별로 진행되고"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-129759",
+  "name": "춘천문화예술회관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-129819",
+  "name": "한림대학교박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "선사시대부터 조선시대 유물을 보는 대학 박물관이에요",
+  "basis": [
+   "제1전시실은 고고역사실, 제2전시실은 민속·공예실"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129840",
+  "name": "강원대학교중앙박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "선사 유물부터 의병 사료까지 층마다 전시한 박물관이에요",
+  "basis": [
+   "전시실은 2~4층에 위치하며",
+   "의병 사료실에는 구한말의 강원도 의병활동과"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129940",
+  "name": "춘천문화원",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130472",
+  "name": "춘천 애니메이션박물관·토이로봇관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "애니메이션 제작 과정을 보고 더빙을 해 보는 박물관이에요",
+  "basis": [
+   "애니메이션 음향효과와 더빙 제작 체험 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130487",
+  "name": "춘천인형극장&인형극박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "인형극 전용 극장과 인형극박물관이 나란한 곳이에요",
+  "basis": [
+   "우리나라 최초의 인형극 전용 극장인 춘천인형극장과"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130654",
+  "name": "국립춘천박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "강원의 구석기 유물부터 조선 문화유산까지 보는 국립박물관이에요",
+  "basis": [
+   "구석기 유물부터 고려 불교문화, 조선시대 문화유산까지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130661",
+  "name": "춘천미술관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "옛 중앙감리교회 건물을 전시장으로 쓰는 미술관이에요",
+  "basis": [
+   "옥천동 옛 중앙감리교회 건물을 전시장으로 단장하여"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-130662",
+  "name": "모형항공기박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "직접 만든 비행기 모형과 글라이더를 전시한 박물관이에요",
+  "basis": [
+   "20여 년 동안 직접 제작한 비행기 모형과 함께"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130664",
+  "name": "강원경찰박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "강원 경찰의 변천을 유물로 보여 주는 박물관이에요",
+  "basis": [
+   "강원경찰의 변천과 발전상을 한눈에 보고 느낄 수 있도록"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130727",
+  "name": "소양도서관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130728",
+  "name": "강원특별자치도산림박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "화목원 안에서 산림 표본과 3D영상관을 보는 박물관이에요",
+  "basis": [
+   "5개 전시실(제1전시실~제4전시실, 기획전시실) 및 3D영상관"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130729",
+  "name": "남산도서관(춘천)",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130730",
+  "name": "동내도서관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-130833",
+  "name": "춘천시립도서관(장난감도서관)",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-130908",
+  "name": "춘천막국수체험박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "직접 메밀을 반죽해 막국수 면을 뽑아 보는 박물관이에요",
+  "basis": [
+   "고객이 직접 메밀을 반죽하여 전통 방식의 막국수틀에서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2472919",
+  "name": "책과인쇄박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "활판인쇄기와 고서를 보고 엽서 만들기를 하는 박물관이에요",
+  "basis": [
+   "엽서 만들기와 활판인쇄 체험"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2557970",
+  "name": "남이섬 노래박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "가요사 전시와 세계 민족악기 전시가 있는 박물관이에요",
+  "basis": [
+   "가요사 및 가요 문화 관련 전시, 세계민족악기 전시 및 체험"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2648390",
+  "name": "이상원미술관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "이상원 화백의 작품을 상설전시하는 미술관이에요",
+  "basis": [
+   "이상원화백(1935~2024)의 작품을 상설전시하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710577",
+  "name": "KT&G 상상마당 춘천",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "의암호 수변에 공연장과 갤러리, 카페가 모인 문화 시설이에요",
+  "basis": [
+   "공연장, 라이브 스튜디오, 갤러리, 강의실, 카페 등을 갖춘"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2710596",
+  "name": "근화동396청년창업공간",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710607",
+  "name": "의암류인석기념관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "의병장 류인석의 유품을 전시하고 묘역이 있는 기념관이에요",
+  "basis": [
+   "의병장 의암 류인석의 유품과 관련 자료를 전시하는 기념관이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2787580",
+  "name": "붓이야기박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "붓 만드는 과정을 보고 나만의 붓을 만드는 박물관이에요",
+  "basis": [
+   "캘리그래피 작품 만들기와 나만의 붓 만들기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4068820",
+  "name": "실레책방",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "김유정이 자란 실레마을 한옥에 중고책이 쌓인 서점이에요",
+  "basis": [
+   "실레마을의 한옥을 활용한 독립 서점으로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-4087797",
+  "name": "화동2571",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "퓨전 요리 가게와 로컬 마켓, 공동 주방이 모인 곳이에요",
+  "basis": [
+   "지역의 신선한 로컬 특산품을 한눈에 살펴보는 '마켓2571'"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-915509",
+  "name": "에티오피아한국전참전기념관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "에티오피아군 참전 과정과 나라의 문화를 전시한 기념관이에요",
+  "basis": [
+   "1층에는 에티오피아군의 참전 과정과 전투 상황에 대한 전시가"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131456",
+  "name": "강원특별자치도청소년수련원",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131759",
+  "name": "엘리시안 강촌 스키장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "초보자도 타기 쉽게 안전 시설을 갖춘 스키장이에요",
+  "basis": [
+   "스키 초보자에게 최적의 환경을 제공하고 있다는 점이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131840",
+  "name": "알프스벨리 사계절썰매장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "여름엔 계곡 워터슬라이드, 겨울엔 눈썰매를 타는 곳이에요",
+  "basis": [
+   "여름에는 시원하고 맑은 계곡물에서 워터슬라이드도 타고",
+   "겨울에는 눈썰매장에서 썰매를 탈 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1744974",
+  "name": "물레길",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "삼악산을 바라보며 우든 카누를 타는 체험이에요",
+  "basis": [
+   "삼악산을 바라보며 카누 체험을 하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1849403",
+  "name": "샘마을레저파크",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "북한강변에서 수상놀이기구와 워터파크를 즐기는 곳이에요",
+  "basis": [
+   "다양한 수상놀이기구를 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1947118",
+  "name": "강촌레일파크(김유정레일바이크)",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "옛 경춘선 철로를 레일바이크로 달리는 체험이에요",
+  "basis": [
+   "옛 경춘선 철로에 이제는 기차 대신 레일바이크가 달린다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-250473",
+  "name": "엘리시안 강촌 컨트리클럽",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2605226",
+  "name": "강촌 자전거 하이킹",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "북한강 강변 자전거도로를 달리는 코스예요",
+  "basis": [
+   "강촌 유원지에서 경강교로 약 20㎞로 이어지는 강촌길은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2660545",
+  "name": "박사마을 어린이 글램핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702318",
+  "name": "거두리낚시터",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "잉어와 붕어를 낚는 민물 낚시터예요",
+  "basis": [
+   "자연산 잉어와 붕어 등의 낚시를 사시사철 즐길 수 있는 곳이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2702542",
+  "name": "봄내길 1코스(실레이야기길)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "김유정문학촌에서 산신각과 저수지를 지나 도는 걷기길이에요",
+  "basis": [
+   "김유정문학촌→실레마을길(문학촌 윗마을)→산신각→저수지"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702544",
+  "name": "[봄내길 2코스] 물깨말구구리길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "구곡폭포 주차장에서 봉화산길과 문배마을을 도는 길이에요",
+  "basis": [
+   "구곡폭포 주차장→봉화산길(임도)→문배마을→구곡폭포 주차장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702545",
+  "name": "[봄내길 3코스] 석파령 너미길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "석파령 고갯길을 넘어 신숭겸 묘역까지 걷는 길이에요",
+  "basis": [
+   "험한 고갯길인 석파령을 넘어",
+   "고려충신 장절공 신숭겸의 묘역 등이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702547",
+  "name": "[봄내길 4코스] 의암호나들길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "의암호를 끼고 소양강 처녀상과 공지천을 지나는 길이에요",
+  "basis": [
+   "의암호를 끼고 서면에서부터 삼천동까지 걷는 이곳은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702636",
+  "name": "춘천 자전거길",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "공지천과 춘천레포츠타운 근처를 달리는 자전거 코스예요",
+  "basis": [
+   "인근에 금병산, 춘천레포츠타운, 공지천 등"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2706717",
+  "name": "킹카누 나루터",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "의암호에서 12인승 캐나디안 카누를 타는 체험이에요",
+  "basis": [
+   "국내 유일의 캐나디안 카누 체험인 킹카누 나루터는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2726691",
+  "name": "아웃오브파크",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2732970",
+  "name": "어반슬로우시티",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2734051",
+  "name": "프라임캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "high"
+ }
+]

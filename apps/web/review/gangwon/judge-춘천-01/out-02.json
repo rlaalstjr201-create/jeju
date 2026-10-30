@@ -1,0 +1,656 @@
+[
+ {
+  "id": "nt-2699754",
+  "name": "춘천내평전투 호국경찰추모상",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "호국영웅 11인을 추모하는 동상이에요",
+  "basis": [
+   "호국영웅 11인을 추모하는 동상이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2702541",
+  "name": "소양로비석군",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "비석 26기를 모아 둔 곳이에요",
+  "basis": [
+   "총 26기의 비석이 자리하고 있으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702652",
+  "name": "혈거유지",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "신석기시대 말기 주거지 유적이에요",
+  "basis": [
+   "신석기시대 말기에 살았던 사람의 주거지 유적으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2705409",
+  "name": "강아지숲",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "반려견과 함께 박물관 전시를 보고 숲길을 걷는 테마파크예요",
+  "basis": [
+   "국내 최대 규모의 반려견 테마파크",
+   "연못과 자작나무 숲길을 따라 이어지는 산책로는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2706334",
+  "name": "강촌 출렁다리공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "걸어서 건너는 출렁다리 공원",
+  "basis": [
+   "출렁다리는 보행만 가능한 관광형이며",
+   "출렁다리 양 끝에는 추억광장과 공원이 조성되어 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710586",
+  "name": "공지천유원지",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "공지천 수변 산책로와 자전거길, 오리배 타기",
+  "basis": [
+   "수변 산책로와 자전거길은 계절별로",
+   "공지천 일대는 춘천의 도심 속 휴식처다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710587",
+  "name": "국립춘천숲체원",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "모험숲과 실내암벽, 계곡트레킹 같은 산림레포츠를 해요",
+  "basis": [
+   "모험숲, 실내암벽, 계곡트레킹 등 산림레포츠 특화 프로그램과"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710610",
+  "name": "하중도수변생태공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "수변 둘레길과 섬 안 산책로를 걷는 생태공원이에요",
+  "basis": [
+   "수변을 따라 걷는 둘레길과 섬 안을 걷는 산책로가 조성되어 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2710612",
+  "name": "효자동낭만골목",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "벽화와 조형물이 골목 곳곳에 놓인 동네 골목",
+  "basis": [
+   "이 설화를 담은 조형물과 벽화가 골목 곳곳에 조성되었다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2713413",
+  "name": "천전리 지석묘군",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "탁자식 고인돌 5기가 남은 유적이에요",
+  "basis": [
+   "이 고인돌은 탁자식으로 발굴조사 때 10기가 무리 지어 있었으나",
+   "현재는 5기가 남아있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714536",
+  "name": "문배마을",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "능선길을 40여 분 올라 닿는 분지 마을",
+  "basis": [
+   "오른쪽 능선길로 길을 잡아 40여 분 정도 오르면",
+   "산채비빔밥과 손두부 등 등산 중 별미를"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2714558",
+  "name": "구봉산",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "정상에서 춘천시가지와 의암호가 내려다보이는 산이에요",
+  "basis": [
+   "정상에서는 춘천시가지와 봉의산, 의암호를 한눈에 볼 수 있다",
+   "명봉으로 이어지는 등산 코스가"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2715365",
+  "name": "김청풍부원군묘역",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "둥근돌 박힌 묘담장이 특색인 김우명 묘역",
+  "basis": [
+   "충익공 김우명의 묘역이다",
+   "둥근돌(월석)이 박힌 묘담장이 둘러져 있는 것이 특색이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2715374",
+  "name": "김정묘역 문인석",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2764599",
+  "name": "춘천 박사마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "박사 150여 명을 낸 마을과 신숭겸 장군 묘",
+  "basis": [
+   "현재까지 150여 명의 박사를 배출했다",
+   "신숭겸 장군 묘이다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2774532",
+  "name": "현지사",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "북한강이 내려다보이고 석가탑과 다보탑이 선 절이에요",
+  "basis": [
+   "북한강이 내려다보이는 곳에 자리 잡고 있으며",
+   "불국사와는 다른 형태의 석가탑과 다보탑이 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774537",
+  "name": "의암공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "공지천 산책로를 따라 둘레길과 벤치가 이어지는 공원이에요",
+  "basis": [
+   "강변을 따라 걸을 수 있는 둘레길이 연결되어 있다",
+   "산책로 주변에는 벤치가 많이 설치되어 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774546",
+  "name": "월드온천24",
+  "keep": true,
+  "mood": "rest",
+  "indoor": true,
+  "reason": "노천탕과 찜질방, 불가마를 갖춘 온천이에요",
+  "basis": [
+   "월드온천24는 춘천시 신북읍에 위치한 온천이다",
+   "남탕, 여탕은 물론 노천탕과 찜질방, 불가마를 갖추고 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774556",
+  "name": "건봉령승호대",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "소양호와 둘러싼 산들이 한눈에 들어오는 고개",
+  "basis": [
+   "거대한 소양호와 그 소양호를 둘러싸고 있는 산들이 한눈에 들어온다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2774564",
+  "name": "춘천꿈자람어린이공원",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "에어바운스와 트램펄린, 실외 모험 시설을 갖춘 어린이공원",
+  "basis": [
+   "대형 에어바운스, 트램펄린, 정글짐, 실내 암벽, 에어볼",
+   "스카이워크, 더블 돔, 외줄 타기, 출렁다리 등의 모험 시설"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2778008",
+  "name": "춘천시 수변공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "공지천 조각공원으로 이어지는 수변 산책로예요",
+  "basis": [
+   "공지천 조각공원으로 이어지는 수변 산책로다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2787555",
+  "name": "매운탕골",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "민물고기 음식점 10여 곳이 문을 연 계곡 마을",
+  "basis": [
+   "민물고기 음식점이 20여 곳이었지만",
+   "지금은 10여 곳만 문을 열고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2787556",
+  "name": "죽림동성당",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "청동 예수 성심상이 서 있는 춘천 첫 성당이에요",
+  "basis": [
+   "죽림동성당은 춘천의 첫 성당이자 천주교 춘천교구 주교좌성당이다",
+   "청동으로 만든 예수 성심상이 있는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2787575",
+  "name": "소양정",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "봉의산 기슭에서 강과 산을 내려다보는 정자예요",
+  "basis": [
+   "봉의산 기슭에 자리한 소양정은 삼국 시대에 세워진 정자이다",
+   "소양정은 강과 산이 어우러진 경치 속에 위치해 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2788118",
+  "name": "춘천칠층석탑",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "보물 제77호 칠층 석탑이 선 작은 공원",
+  "basis": [
+   "이곳에 보물 제77호 춘천 칠층 석탑이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2788128",
+  "name": "춘천한백록묘역",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "한백록 장군과 사내종 득충의 묘가 나란한 묘역",
+  "basis": [
+   "강원특별자치도 문화유산자료로 지정되어 있다",
+   "그의 사내종이었던 득충의 묘도 함께 자리하고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2789885",
+  "name": "명월리산촌생태마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "겨울엔 김장 체험과 얼음낚시, 썰매체험을 하는 산촌 마을이에요",
+  "basis": [
+   "겨울에는 절임 배추, 김장 체험, 얼음낚시, 썰매체험이 가능하다",
+   "마을에서는 1년 내내 떡메 체험도 운영하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2814588",
+  "name": "춘천 삼악산 호수케이블카",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "의암호를 가로질러 삼악산에 오르는 케이블카",
+  "basis": [
+   "삼천동에서 의암호를 지나 삼악산을 연결하는 3.61㎞의 케이블카이다",
+   "바닥이 통유리로 되어 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2815362",
+  "name": "레고랜드 코리아 리조트",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "놀이기구 40여 개와 쇼를 갖춘 레고랜드 테마파크예요",
+  "basis": [
+   "국내 최초의 글로벌 테마파크",
+   "약 40여 개의 놀이기구, 엔터테인먼트 쇼"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2914353",
+  "name": "배후령고개",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "오봉산 들머리이자 38선 경계석이 선 고개",
+  "basis": [
+   "오봉산을 오르는 가장 빠른 들머리가 배후령 정상이다",
+   "배후령 정상이 북위 38도여서 38선 경계석이 서 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2930371",
+  "name": "춘천시 반려견놀이터 같이놀개",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2932103",
+  "name": "클랑포레스트",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "음악치료사가 소리치유 프로그램을 여는 곳이에요",
+  "basis": [
+   "일반인을 대상으로 하는 소리치유프로그램을 열고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3007469",
+  "name": "나의향수",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "향수와 디퓨저를 직접 만들어 보는 곳이에요",
+  "basis": [
+   "나만의 향수와 디퓨져를 만들 수 있는 특별한 공간이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3007507",
+  "name": "호수양조장",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "직접 빚은 전통주와 상차림을 내는 양조장이에요",
+  "basis": [
+   "술과 요리를 즐길 수 있는 푸드 다이닝 공간이자",
+   "간단한 도시락 메뉴와 점심, 저녁 상차림 메뉴 외에"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3007532",
+  "name": "봄내향기공방",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "수제비누를 직접 만들어 보는 공방이에요",
+  "basis": [
+   "봄내향기 공방은 춘천에 위치한 수제비누 공방이다",
+   "나만의 비누가 만들어 지는 시간이"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3007602",
+  "name": "봉황대(춘천)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "의암호와 중도가 내려다보이는 낮은 봉우리",
+  "basis": [
+   "봄내길 4코스(의암호 나들길)에서 봉황대를 만날 수 있다",
+   "정상에 오르면 의암호와 중도가"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3011803",
+  "name": "백풍밀원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "남이섬에서 단풍나무 100그루가 모인 숲이에요",
+  "basis": [
+   "100그루의 단풍나무가 있다는",
+   "남이섬 남이나루에서 도보로 5분거리에 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3046002",
+  "name": "춘천대교",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "야경과 저녁 분수쇼를 보는 의암호 다리",
+  "basis": [
+   "다채로운 조명이 빛나는 야경 명소이자",
+   "화려한 분수쇼도 볼거리 중 하나로 매일 저녁 진행된다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3074839",
+  "name": "부귀리벚꽃길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "늦게 피는 벚꽃을 보는 산간마을 벚꽃길이에요",
+  "basis": [
+   "가장 늦게 개화하는 벚꽃을 볼 수 있는 곳이기도 하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3082860",
+  "name": "에이치더블유알(HWR)",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "가죽으로 키링과 안경케이스를 만드는 공방이에요",
+  "basis": [
+   "2015년부터 가죽 공방을 운영해오고 있으며",
+   "간단한 키링부터 안경케이스, 앞치마, 애플워치스트랩 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-317569",
+  "name": "상원사(춘천)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "삼악산 등산로를 30분가량 올라 닿는 작은 절이에요",
+  "basis": [
+   "가파른 등산로를 30분가량 걸어 올라가야 한다",
+   "사찰의 규모는 크지 않으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3351620",
+  "name": "플레이정글 춘천엔타점",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "70여 종 동물을 가까이서 보는 실내 동물원이에요",
+  "basis": [
+   "실내 동물원으로 70여 종의 다양한 동물들을"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3353336",
+  "name": "춘천꿈자람어린이공원",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "에어바운스와 트램펄린, 여름 물놀이 시설을 갖춘 어린이공원",
+  "basis": [
+   "대형 에어바운스, 트램펄린, 정글짐, 실내 암벽, 에어볼",
+   "여름에는 야외풀장과 물놀이 시설이 추가 운영되고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3428601",
+  "name": "봄내길 7코스(북한강 물새길)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "구 강촌역에서 구 백양리역까지 옛 철길을 걷는 길이에요",
+  "basis": [
+   "2.1km 의 옛 철길을 따라 걷는 코스다",
+   "구 백양리역을 잇는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3485602",
+  "name": "근화수변 문화광장숲",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "의암호 수변에 산책로와 자전거 도로가 놓인 광장숲",
+  "basis": [
+   "자전거 도로와 산책로가 잘 조성되어 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3485635",
+  "name": "사이로248 출렁다리",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "길이 248m 출렁다리에서 의암호를 내려다봐요",
+  "basis": [
+   "총 길이 248m, 폭 1.5m의 현수교인 출렁다리는"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3569888",
+  "name": "나무향기 한증막",
+  "keep": true,
+  "mood": "rest",
+  "indoor": true,
+  "reason": "소나무 장작을 때는 불한증막이 있는 곳",
+  "basis": [
+   "소나무 장작을 넣고 불을 지피고 있다",
+   "나무향기 한증막은 춘천시의 조용한 곳에 있는"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-4039441",
+  "name": "레이저아레나 춘천점",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "레이저 서바이벌과 LED 발판 게임을 하는 곳이에요",
+  "basis": [
+   "ICT 융복합 실내 서바이벌 스포츠다",
+   "LED 타일의 색상 변화에 반응하는 발판 게임이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-407225",
+  "name": "국립 용화산자연휴양림",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "등산로와 산림욕장, 집라인과 암벽 체험을 갖춘 휴양림이에요",
+  "basis": [
+   "숙박 시설과 야영장, 등산로, 산책로, 산림욕장을 갖춰",
+   "실내 산림 레포츠 체험 시설인 산림 복합 체험센터를 운영한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-776735",
+  "name": "삼운사(춘천)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "도심 속에서 템플스테이를 운영하는 절이에요",
+  "basis": [
+   "봉의산 아래 자리하고 있으면서 도심 속에 세워진 절로",
+   "1박 2일 과정의 템플스테이를 운영하고 있으며"
+  ],
+  "confidence": "high"
+ }
+]

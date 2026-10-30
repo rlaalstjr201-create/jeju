@@ -1,0 +1,11 @@
+[
+ {"id":"nt-3526067","name":"속초보스대게","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"동명항 인근에서 수족관의 대게를 골라 먹는 대게 전문점이에요","basis":["속초 동명항과 영금정 인근에 위치한 대게·킹크랩 전문점이다","매장 1층 수족관에서 직접 살아있는 대게를 고를 수 있어"],"confidence":"high"},
+ {"id":"nt-4020574","name":"오우션","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"감자와 옥수수 같은 강원도 작물로 만든 수제 젤라또 가게예요","basis":["수제 젤라또 전문점으로","감자와 옥수수 같은 강원도의 대표적인 구황작물부터"],"confidence":"high"},
+ {"id":"nt-402689","name":"점봉산산채","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"12가지 산나물 모둠이 나오는 산채정식 전문점이에요","basis":["산채정식 전문 음식점이다","점봉산 산채정식을 주문하면 12가지 산나물 모둠과 기본 상차림으로"],"confidence":"high"},
+ {"id":"nt-4059119","name":"햅칠탐","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"상도문 마을 안에서 말차폼라떼를 내는 북카페예요","basis":["속초 상도문 마을 안 북카페다","대표 메뉴인 말차폼라떼는"],"confidence":"high"},
+ {"id":"nt-579035","name":"단천식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"아바이순대와 오징어순대를 내는 아바이마을 순대집이에요","basis":["속초의 명물 아바이 순대 전문점으로","아바이냉면, 아바이순대, 오징어순대, 가자미식해 등"],"confidence":"high"},
+ {"id":"nt-626353","name":"갈릴리회집","keep":false,"reject":"INSUFFICIENT_INFO","basis":[],"confidence":"low"},
+ {"id":"nt-626407","name":"오대양횟집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"장사항 부둣가에서 바다를 보며 회를 먹는 횟집이에요","basis":["장사항에서 100m 이내 부둣가에 위치하여","속초에서 소문난 횟집이다"],"confidence":"high"},
+ {"id":"nt-626427","name":"왕건횟집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"사계절 대게찜을 특선 메뉴로 내는 동명동 횟집이에요","basis":["사계절 대게찜을 특선 메뉴로 제공하고 있다","속초시 동명동에 위치하여"],"confidence":"high"},
+ {"id":"nt-631755","name":"사돈집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"곰치로 끓인 물곰탕과 가자미조림을 내는 집이에요","basis":["동해안에서 잡은 신선한 곰치를 이용한 물곰탕으로","물곰탕과 가자미조림을 대표 메뉴로 선보이고 있다"],"confidence":"high"}
+]

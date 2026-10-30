@@ -1,0 +1,641 @@
+[
+ {
+  "id": "nt-125604",
+  "name": "삼악산(춘천)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "의암호와 북한강을 끼고 폭포와 봉우리가 이어지는 산이에요",
+  "basis": [
+   "의암호와 북한강을 끼고 솟은 삼악산은",
+   "등선폭포와 승학폭포, 주렴폭포 등 크고 작은 폭포가"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125605",
+  "name": "강촌유원지",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "북한강을 따라 산책로가 이어지는 유원지예요",
+  "basis": [
+   "북한강을 따라 조성된 산책로에서는"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125655",
+  "name": "등선폭포(삼악산)",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "협곡을 따라 폭포가 이어지는 등선폭포 산행로예요",
+  "basis": [
+   "협곡을 따라 크고 작은 폭포가 이어지는데",
+   "등선폭포 산행로에 들어서면 좁고 깊은 협곡이 나타난다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125656",
+  "name": "구성폭포",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "청평사로 오르는 계곡 숲길에 있는 높이 9m 폭포예요",
+  "basis": [
+   "청평사로 오르는 계곡 숲길에 높이 약 9m의 구성폭포가 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125657",
+  "name": "청평사계곡",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "청평사 가는 계곡을 따라 걸으며 구성폭포를 만나요",
+  "basis": [
+   "계곡물소리와 우거진 나무숲 사이를 걷다 보면",
+   "구성폭포가 모습을 드러낸다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125725",
+  "name": "추곡약수터",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "상탕과 하탕으로 나뉜 약수터예요",
+  "basis": [
+   "상탕과 하탕으로 나뉘어 있는 약수가 나타난다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125731",
+  "name": "육림랜드",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "놀이동산과 동물원, 캠프촌을 갖춘 테마파크예요",
+  "basis": [
+   "놀이동산, 동물원, 야외수영장, 캠프촌 등 다채로운 시설을 갖췄다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125747",
+  "name": "춘천호",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "춘천댐으로 생긴 인공 호수에 드라이브 코스와 낚시터가 있어요",
+  "basis": [
+   "1965년 춘천댐 건설로 형성되었으며",
+   "의암호와 연결되는 드라이브 코스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125762",
+  "name": "청평사(춘천)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "고려 광종 때 창건한 춘천 대표 사찰이에요",
+  "basis": [
+   "고려 광종 24년(973년)에 창건되었으며",
+   "춘천을 대표하는 사찰이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125780",
+  "name": "춘천향교",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "대성전과 명륜당이 남아 있는 향교예요",
+  "basis": [
+   "대성전과 명륜당·장수루·동재·서재"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125802",
+  "name": "소양호(춘천)",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "소양강댐이 만든 호수에서 유람선 타고 청평사에 가요",
+  "basis": [
+   "소양강 선착장에서 유람선을 타면 고려시대 사찰인 청평사를",
+   "소양강댐 주변에는 산책로와 둘레길이 조성되어 있으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-126693",
+  "name": "지암계곡",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "화악산 중턱에서 춘천호로 내려오는 물가 계곡이에요",
+  "basis": [
+   "화악산 중턱부터 춘천호에 이르는 계곡이다",
+   "아이들이 놀기에 안성맞춤이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127433",
+  "name": "강원특별자치도립화목원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "식물 1,827종류와 산림박물관, 유리온실이 있는 수목원이에요",
+  "basis": [
+   "총 1,827종류, 8만 5천여 본의 식물을 보유하고 있으며",
+   "화목원 내에는 산림박물관도 운영되고 있는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127476",
+  "name": "소양강댐",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "댐 위 길을 걸어 팔각정 전망대까지 다녀오는 곳이에요",
+  "basis": [
+   "댐 위를 걷는 댐정상길을 일반에 개방하고 있다",
+   "댐 정상을 걸어 건너편 팔각정 전망대까지 왕복하는 산책길로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127531",
+  "name": "집다리골자연휴양림",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "화악산 자락 계곡과 원시림에 등산로와 산책로가 있어요",
+  "basis": [
+   "천연 활엽수 원시림이 있다",
+   "등산로, 산책로 시설을 조성하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127747",
+  "name": "구곡폭포",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "매표소에서 20분 걸어가면 47m 높이 폭포가 나와요",
+  "basis": [
+   "구곡폭포 매표소에서 걸어서 약 20분 거리에 폭포가 나타나는데",
+   "47m 높이에서 떨어지는 하얀 물줄기가 장관을 이룬다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-127933",
+  "name": "김유정문학촌",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "김유정 생가터에 전시관과 생가를 꾸민 문학촌이에요",
+  "basis": [
+   "김유정 생가터를 중심으로 조성한 문학촌이다",
+   "기념전시관은 김유정의 생애와 작품 등을 간결하게 전시하고 있으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128019",
+  "name": "남이섬",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "노래 박물관과 그림책 놀이터가 있는 섬이에요",
+  "basis": [
+   "노래 박물관, 그림책 놀이터, MICE 센터"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128370",
+  "name": "원평 팜스테이",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "짚공예와 떡메치기, 된장 담그기 체험을 하는 농가 마을이에요",
+  "basis": [
+   "짚공예, 떡메치기, 유기농 된장 담그기, 검은콩두부 만들기"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128644",
+  "name": "춘천김정은가옥",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "안채와 사랑채, 솟을대문을 갖춘 1920년 한옥이에요",
+  "basis": [
+   "1920년에 건립되었으며",
+   "ㄱ자형 안채와 ㅡ자형 사랑채, 솟을대문으로 구성되어 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128645",
+  "name": "춘천최재근가옥",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128778",
+  "name": "강원 경찰충혼탑",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128780",
+  "name": "서상리삼층석탑",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "통일신라 후기 삼층석탑이 밭 가운데 서 있어요",
+  "basis": [
+   "통일신라 후기의 삼층석탑이다",
+   "밭 가운데에 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128781",
+  "name": "위봉문",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "강원도청 안에 복원한 내삼문으로 솟을대문 형식이에요",
+  "basis": [
+   "2013년 조양루와 함께 강원도청사 내로 이전·복원되었다",
+   "솟을대문 형식을 온전히 보존하고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128782",
+  "name": "신장절공묘역",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "신숭겸 장군의 묘소로 세 개의 봉분이 남아 있어요",
+  "basis": [
+   "고려 개국공신 장절공(壯節公) 신숭겸 장군의 묘소로",
+   "현재 묘역에는 세 개의 봉분과 신도비"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128783",
+  "name": "춘천 근화동 당간지주",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "원위치에 동서로 마주 서 있는 당간지주예요",
+  "basis": [
+   "원위치에 원래 모습대로 동서로 마주 서 있는데"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128785",
+  "name": "윤희순의사 동상",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "공지천 의암공원에 있는 여성 의병 윤희순 의사 동상이에요",
+  "basis": [
+   "춘천시 공지천 의암공원으로 이전했으며",
+   "여성 의병 활동을 이끌며 평생 항일 독립운동에 헌신한"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128786",
+  "name": "방동리 고구려고분",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "신숭겸 장군 묘 남쪽에 있는 고구려식 돌방무덤 두 기예요",
+  "basis": [
+   "신숭겸 장군 무덤 남쪽에 있는 2기의 무덤이다",
+   "고구려 무덤의 후기 양식이 지방화된 형태로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-128787",
+  "name": "춘천봉의산성",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "봉의산 능선에 쌓은 산성으로 우물터와 건물터가 남아 있어요",
+  "basis": [
+   "봉의산 능선 가파른 지형을 이용해 쌓은 고대산성이다",
+   "성 내부에는 우물터가 남아 있고 3개의 건물터와"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128934",
+  "name": "소양호 유람선",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "소양댐과 청평사를 잇는 유람선이에요",
+  "basis": [
+   "소양호 유람선은 소양댐과 청평사를 잇는다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129004",
+  "name": "공지천 조각공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "공지천 옆 잔디밭에 조각품 29점이 놓인 공원이에요",
+  "basis": [
+   "29점의 작품이 전시되어 있고",
+   "넓은 잔디밭은 아이들이 뛰어놀기에도 좋으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129303",
+  "name": "춘천 솔바우마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "오리농법 쌀을 짓는 농촌마을로 체험 프로그램을 운영해요",
+  "basis": [
+   "오리농법으로 재배한 쌀을 비롯해",
+   "다양한 체험 프로그램도 운영한다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-129416",
+  "name": "소양강처녀상",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "소양강스카이워크 옆에 서 있는 높이 12m 처녀상이에요",
+  "basis": [
+   "전체 높이는 12m에 이르며",
+   "소양강스카이워크와 소양 2교 사이에 위치한 조형물로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129686",
+  "name": "구봉산 전망대 카페거리",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": true,
+  "reason": "카페 여럿이 모여 춘천 도심을 내려다보는 전망 거리예요",
+  "basis": [
+   "통유리창으로 외관을 두르거나 야외 테라스를 두고 있다",
+   "도심을 조망하기 좋다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-131036",
+  "name": "의암호",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "북한강 중류 인공호수에서 카누와 자전거 타기를 해요",
+  "basis": [
+   "물레길 카누 체험, 자전거 라이딩, 윈드서핑",
+   "북한강 중류에 의암댐이 건설되면서 형성되었다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1600871",
+  "name": "춘천문학공원",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "의암호반 산책로에 시와 문학 조형물이 놓인 공원이에요",
+  "basis": [
+   "의암호반에 문학을 주제로 조성한 공원이다",
+   "풍광 좋은 산책로를 따라 걸으며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1607565",
+  "name": "제이드가든",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "24개 테마 정원을 산책로로 돌아보는 수목원이에요",
+  "basis": [
+   "24개의 테마 정원을 조성했다",
+   "산책로는 크게 나무내음길, 숲 속바람길로 나눠진다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2396037",
+  "name": "소양강스카이워크",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "강 위로 174m 뻗은 투명 유리 바닥 스카이워크예요",
+  "basis": [
+   "전체 길이가 174m로",
+   "바닥이 투명 강화유리로 된 구간만 무려 156m에 이른다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2465230",
+  "name": "의암수력발전소",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2465233",
+  "name": "춘천수력발전소",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "북한강 상류 수력발전소로 벚꽃 명소이자 드라이브 코스예요",
+  "basis": [
+   "봄에는 벚꽃이 만발해 벚꽃 명소로도 손꼽힌다",
+   "자전거 주행이나 드라이브 코스로도 사랑받고 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2470375",
+  "name": "소양강댐 물 문화관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "소양강댐 역사와 수몰 마을을 전시한 물 문화관이에요",
+  "basis": [
+   "소양강댐의 역사와 건설과정을 스토리텔링을 통해",
+   "수몰된 옛 마을을 재현한 디오라마와 기록물"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2590796",
+  "name": "해피초원목장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "한우와 양, 염소에게 먹이를 주는 체험 목장이에요",
+  "basis": [
+   "소, 양, 토끼, 염소 등 다양한 동물들에게 직접 먹이를 주며",
+   "한우를 방목하는 강원 한우 체험 농장으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2605236",
+  "name": "의암호스카이워크",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "의암호자전거길에 있는 투명 바닥 스카이워크예요",
+  "basis": [
+   "전 구간의 바닥이 투명 강화 유리로 제작돼",
+   "의암호자전거길(도보 이용 가능)을 따라 15분 정도 걸으면"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2605271",
+  "name": "소양호 막국수거리",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "막국수 맛집이 모여 있는 소양호 근처 거리예요",
+  "basis": [
+   "춘천의 소양호 부근은 막국수 거리로 유명하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2610850",
+  "name": "강원숲체험장",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "목공예 체험과 숲놀이터, 집라인이 있는 숲 체험장이에요",
+  "basis": [
+   "목공예체험을 진행하는데",
+   "야외에도 숲놀이터와 집라인 등 즐길 거리들이 많다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-264432",
+  "name": "춘천 명동 닭갈비 골목",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "닭갈비 가게가 양쪽에 늘어선 골목이에요",
+  "basis": [
+   "골목 양쪽으로 닭갈비 가게가 늘어서 있다",
+   "숯불 닭갈비와 철판 닭갈비는 물론"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-264434",
+  "name": "춘천명동거리",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2663739",
+  "name": "려우도예",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": true,
+  "reason": "물레 체험과 도자기 핸드페이팅, 흙 빚기를 하는 체험 장소예요",
+  "basis": [
+   "물레 체험과 도자기 핸드페이팅, 흙 빚기를 통해서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2667888",
+  "name": "김유정역 폐역",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "옛 역사와 무궁화호 열차를 북카페로 꾸민 곳이에요",
+  "basis": [
+   "열차 내부는 북카페와 관광안내센터로 개조했다",
+   "옛 경춘선 위를 달리던 무궁화호 열차도 철로에 남아"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2699726",
+  "name": "인어상",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ }
+]
