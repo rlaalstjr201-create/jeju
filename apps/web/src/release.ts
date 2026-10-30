@@ -5,7 +5,7 @@
 // only where Busan is in play — the 시작 화면, a Busan link or a device that chose Busan (main.ts, before the app mounts),
 // Busan chosen in the sheet, a position outside Jeju — so a Jeju visit never downloads it (plans/busan.md budget: the
 // Korean entry ≤ 50 kB). Until it is in, Busan is not open: `released('busan')` is false and the app is Jeju's.
-import { AREAS, inJeju, nearestArea, type Area, type SggArea, type SggCode } from './areas';
+import { AREAS, areaByName, inJeju, nearestArea, type Area, type SggArea, type SggCode } from './areas';
 import type { Dest } from './dest';
 import type { Region } from './nation';
 import type { NationCopy } from './nation-part';
@@ -134,5 +134,7 @@ export function outsideAt(p: Point): OutsideAt | undefined {
 
 /** One destination's areas (Jeju's with the switch off). */
 export const openAreasOf = (d: Dest): readonly Area[] => (BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : AREAS);
-/** A point's 동네: the nearest centre of its destination's areas (Jeju's outside both, as before). */
-export const areaOfPoint = (p: Point, d: Dest = releasedDestOf(p) ?? 'jeju'): Area => nearestArea(p, openAreasOf(d));
+/** A point's 동네: the nearest centre of its destination's areas (Jeju's outside both, as before); in the 자동 지역, its
+ * 시군구 (sggOf: an island's is not always the nearest centre). */
+export const areaOfPoint = (p: Point, d: Dest = releasedDestOf(p) ?? 'jeju'): Area =>
+  (NATION && d === 'nation' && areaByName(sggOf(p), NATION_OPEN)) || nearestArea(p, openAreasOf(d));

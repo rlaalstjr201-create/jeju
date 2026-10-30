@@ -140,6 +140,19 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
     expect(new URL(url).search).toBe('?dest=nation&area=51150');
   });
 
+  // predeploy review m-3: 지금 위치를 숙소로 in the 자동 지역 moves its 시군구 (list, 비 소식) as the 동네 index does
+  it('숙소 by GPS in another 시군구 (강릉 → 속초): the 시군구 follows, its list asked for, the 숙소 named by it', async () => {
+    const { asked } = mount({ dest: 'nation', sgg: '51150', at: 속초해수욕장 });
+    await wait();
+    await tap('#basis');
+    await tap('#sheet [data-basis="stay"]');
+    await tap('#sheet [data-action="stay-here"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51210', basis: 'stay', stay: { area: '51210', source: 'gps' } });
+    expect(localStorage.getItem(KEYS.sgg)).toBe('"51210"');
+    expect(asked).toContain('nation:51210');
+  });
+
   // predeploy review M-1·m-2: 「한국 밖」 only outside Korea; a position in Korea with no 시군구 near says nothing about where
   // it is; Jeju's and Busan's own 「~ 밖」 words stay theirs
   const 도쿄 = { lat: 35.6812, lng: 139.7671 };

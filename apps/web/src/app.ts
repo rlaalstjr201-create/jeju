@@ -854,7 +854,12 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (!r.ok) dispatch({ type: 'stayForm', pending: false, error: r.why, ...(r.at ? { at: r.at } : {}) });
       // a 숙소 is the destination's own (ADR-0097): a position in the other one is outside this one (and where it is)
       else if (releasedDestOf(r.point) !== state.dest) dispatch({ type: 'stayForm', pending: false, error: 'outside', at: outsideAt(r.point) });
-      else changeBasis({ basis: 'stay', stay: { ...r.point, area: areaOfPoint(r.point, state.dest).name, source: 'gps' } });
+      else {
+        const area = areaOfPoint(r.point, state.dest);
+        // the 자동 지역: its 시군구 goes with it, as one picked in the 동네 index (predeploy review m-3)
+        toSgg(area);
+        changeBasis({ basis: 'stay', stay: { ...r.point, area: area.name, source: 'gps' } });
+      }
     });
   }
 
