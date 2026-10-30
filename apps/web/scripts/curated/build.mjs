@@ -27,6 +27,8 @@ export const famousCount = (keep) => Math.round((BUSAN_FAMOUS * keep) / BUSAN_KE
 /** pop-criteria.md 8절: 도시 상자(TourAPI 좌표 오류를 거르는 네모). */
 export const BOXES = {
   강릉: { lat: [37.4, 38.0], lng: [128.4, 129.1] },
+  속초: { lat: [38.1, 38.3], lng: [128.4, 128.7] },
+  춘천: { lat: [37.6, 38.2], lng: [127.4, 128.1] },
 };
 export const inBox = (city, p) => {
   const b = BOXES[city];
@@ -112,6 +114,7 @@ export function build(inputs = loadInputs()) {
   const closed = [];
   const unknownPosition = [];
   let keepTotal = 0;
+  const keepByCity = new Map();
   for (const item of items) {
     const v = verdicts.get(item.id);
     if (!v) {
@@ -120,6 +123,7 @@ export function build(inputs = loadInputs()) {
     }
     if (!v.keep) continue;
     keepTotal += 1;
+    keepByCity.set(item.city, (keepByCity.get(item.city) ?? 0) + 1);
     const k = kakaoRow.get(item.id);
     if (!k) problems.push(`${item.id}: no kakao row (확인 실패)`);
     if (k?.status === 'closed') {
@@ -149,14 +153,20 @@ export function build(inputs = loadInputs()) {
   kept.push(...rest);
   const ids = new Set(kept.map((k) => k.item.id));
   const kakaoById = kakaoIds(kakao, ids);
-  const group = (food) => new Map(kept.filter((k) => (k.v.mood === 'food') === food).map((k) => [k.item.id, volumeById.get(k.item.id)]));
-  const scoreById = new Map([...quintileScores(group(true)), ...quintileScores(group(false))]);
-  const famous = famousIds(
-    kept.filter((k) => famousCandidate(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
-    volumeById,
-    famousCount(keepTotal),
-  );
-  const pops = popScores(volumeById, famous);
+  // pop-criteria.md 10절: 만족도·유명한 곳(개수·pop)은 도시마다 따로 센다(도시 하나면 예전과 같다)
+  const scoreById = new Map();
+  const pops = new Map();
+  for (const city of keepByCity.keys()) {
+    const inCity = kept.filter((k) => k.item.city === city);
+    const group = (food) => new Map(inCity.filter((k) => (k.v.mood === 'food') === food).map((k) => [k.item.id, volumeById.get(k.item.id)]));
+    for (const food of [true, false]) for (const [id, s] of quintileScores(group(food))) scoreById.set(id, s);
+    const famous = famousIds(
+      inCity.filter((k) => famousCandidate(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
+      volumeById,
+      famousCount(keepByCity.get(city)),
+    );
+    for (const [id, p] of popScores(volumeById, famous)) pops.set(id, p);
+  }
 
   const nameOf = (item) => renamed.get(item.id) ?? displayName(item.title, item.city);
   const names = kept.map(({ item }) => nameOf(item));
