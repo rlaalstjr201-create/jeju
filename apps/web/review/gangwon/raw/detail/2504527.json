@@ -1,0 +1,52 @@
+{
+ "contentid": "2504527",
+ "modifiedtime": "20251119144139",
+ "fetchedAt": "2026-10-30T07:59:28.920Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2504527",
+       "contenttypeid": "39",
+       "title": "곰배령",
+       "createdtime": "20170828235007",
+       "modifiedtime": "20251119144139",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "13",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 춘천시 춘천로 19",
+       "addr2": "",
+       "zipcode": "24364",
+       "mapx": "127.7213057735",
+       "mapy": "37.8669495701",
+       "mlevel": "6",
+       "overview": "강원특별자치도의 산나물을 활용한 나물밥과 한정식을 맛볼 수 있는 토속음식점이다.\n나물밥에는 간장곰취소스, 약장참취소스, 청양부추소스, 볶은고추장어수리소스가 제공되어 취향에 따라 비벼먹을 수 있다. 수제떡갈비, 감자전, 황태구이 등 다양한 반찬이 함께 제공되며 정갈하고 건강한 맛이다. 고풍스러운 한국식 인테리어와 고급스러운 분위기에 돌잔치, 상견례 등 중요한 행사를 위해 찾는 이들이 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

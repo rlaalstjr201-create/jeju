@@ -1,0 +1,52 @@
+{
+ "contentid": "2849211",
+ "modifiedtime": "20260908103435",
+ "fetchedAt": "2026-10-30T07:59:33.194Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2849211",
+       "contenttypeid": "39",
+       "title": "스윙까페&베이커리",
+       "createdtime": "20220905175538",
+       "modifiedtime": "20260908103435",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/76/4108676_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/76/4108676_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 남이섬길 1 남이섬",
+       "addr2": "노래박물관 1층",
+       "zipcode": "24464",
+       "mapx": "127.5267694218",
+       "mapy": "37.7943889054",
+       "mlevel": "6",
+       "overview": "푸른 북한강변의 고즈넉한 풍경과 음악, 그리고 달콤한 맛이 어우러진 남이섬 스윙까페 & 베이커리이다. 야외테라스와 매장 내 펫프렌들리존(PET FRIENDLY ZONE)은 사랑하는 반려동물과 함께 이용할 수 있다. 매일 매장에서 직접 굽는 빵을 맛 볼 수 있고, 카페 내부는 넓고 편안한 분위기로 북한강이 흐르는 풍경을 감상할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2922569",
+ "modifiedtime": "20260630100905",
+ "fetchedAt": "2026-10-30T07:59:30.816Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2922569",
+       "contenttypeid": "39",
+       "title": "리퍼블릭",
+       "createdtime": "20221125113409",
+       "modifiedtime": "20260630100905",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/66/2922566_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/66/2922566_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 동면 춘천순환로 330",
+       "addr2": "",
+       "zipcode": "24218",
+       "mapx": "127.7713851591",
+       "mapy": "37.8716083352",
+       "mlevel": "6",
+       "overview": "리퍼블릭은 춘천시 동면 만천리에 있는 대형 베이커리 카페이다. 구봉산 카페거리와 가깝고 실내에 식물이 많아 쾌적한 느낌을 준다. 또한 넓은 야외 잔디마당과 테라스 형태의 데크에 파라솔과 테이블이 여럿 놓여있어 전원에 와 있는 듯 편안한 분위기를 느낄 수 있다. 흑임자 크림라테, 버터스카치 크림라테, 핑크솔트 크림라테가 시그니처 메뉴이고, 커피도 산미를 선택할 수 있으며 특히 베이커리가 다양하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

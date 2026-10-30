@@ -1,0 +1,52 @@
+{
+ "contentid": "2824083",
+ "modifiedtime": "20260414091950",
+ "fetchedAt": "2026-10-30T07:58:47.869Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2824083",
+       "contenttypeid": "39",
+       "title": "왕박골식당",
+       "createdtime": "20220616143456",
+       "modifiedtime": "20260414091950",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 중앙로 431-1 (장사동)",
+       "addr2": "",
+       "zipcode": "24803",
+       "mapx": "128.58642405838566",
+       "mapy": "38.22569087670165",
+       "mlevel": "6",
+       "overview": "왕박골식당은 속초 장사항 근처에 위치하는 장칼국수 맛집이다. 고추장과 된장을 풀어 육수 맛을 낸 장칼국수와 꿩고기로 속을 만든 꿩만두국이 유명한 곳이다. 각종 야채와 된장, 고추장으로 맛을 낸 칼국수는 얼큰하면서도 개운한 맛이다. 식사 시간 때엔 항상 긴 줄이 있을 정도로 관광객들에게도 인기가 많은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

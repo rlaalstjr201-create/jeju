@@ -1,0 +1,52 @@
+{
+ "contentid": "134090",
+ "modifiedtime": "20260224121340",
+ "fetchedAt": "2026-10-30T07:59:04.558Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134090",
+       "contenttypeid": "39",
+       "title": "녹원갈비",
+       "createdtime": "20040102090000",
+       "modifiedtime": "20260224121340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 양양읍 거마천로 60",
+       "addr2": "",
+       "zipcode": "25019",
+       "mapx": "128.604639485258",
+       "mapy": "38.0775736078242",
+       "mlevel": "6",
+       "overview": "녹원갈비는 강원특별자치도 양양에 위치한 수제 갈비 전문점이다. \n생돼지갈빗살을 손질하여 수제로 만든 양념으로 양념돼지갈비를 제공하고 있다. 밑반찬은 직접 생산하고 재배한 재료로 8가지의 반찬을 제공하고 있으며 직접 만든 된장과 재배한 쌀로 된장찌개와 밥을 제공한다. 내부에 넓은 홀이 있어 회식이나 모임 장소로 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2761826",
+ "modifiedtime": "20260804104801",
+ "fetchedAt": "2026-10-30T07:59:52.587Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2761826",
+       "contenttypeid": "28",
+       "title": "리프레쉬 캠핑장",
+       "createdtime": "20211026000710",
+       "modifiedtime": "20260804104801",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/66/4095666_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/66/4095666_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "AC",
+       "lclsSystm2": "AC05",
+       "lclsSystm3": "AC050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 봉평면 흥정계곡4길 7-25",
+       "addr2": "",
+       "zipcode": "25300",
+       "mapx": "128.3198869768",
+       "mapy": "37.6502226165",
+       "mlevel": "6",
+       "overview": "리프레쉬 캠핑장은 강원도 평창군 봉평면에 위치하고 있다. 인간의 신진대사를 가장 활발하게 해준다는 해발 700m 청정고원인 평창군 중에서도 1급수 물이 흐르는 흥정계곡 바로 앞에 위치해 지친몸과 마음을 리프레시 할 수 있는 최적의 장소를 제공하고 있다. 개별 화장실을 제공하는 것이 가장 큰 장점이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

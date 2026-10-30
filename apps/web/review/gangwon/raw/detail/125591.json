@@ -1,0 +1,52 @@
+{
+ "contentid": "125591",
+ "modifiedtime": "20261029144233",
+ "fetchedAt": "2026-10-30T07:59:45.056Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "125591",
+       "contenttypeid": "12",
+       "title": "오대산국립공원",
+       "createdtime": "20040216090000",
+       "modifiedtime": "20261029144233",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://odae.knps.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource_photo/76/2778376_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource_photo/76/2778376_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA04",
+       "lclsSystm3": "NA040100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 진부면 오대산로 2",
+       "addr2": "",
+       "zipcode": "25318",
+       "mapx": "128.6021715309",
+       "mapy": "37.7028719747",
+       "mlevel": "6",
+       "overview": "1975년 11번째 국립공원으로 지정되었으며 면적은 327.904㎢이다. 해발 1,563m의 비로봉을 주봉으로 동대산(1,434m), 두로봉(1,422m), 상왕봉(1,491m), 호령봉(1,561m) 등 다섯 봉우리가 병풍처럼 늘어서 있고 동쪽으로 따로 떨어져 나온 노인봉(1,338m) 아래로는 천하의 절경 소금강산이 자리하고 있다. 또한 서쪽에는 설경이 아름다운 계방산(1,577m)이 위치하고 있다. 오대산국립공원은 우리나라 문수신앙의 성지이자 조선왕조실록을 보관하였던 오대산 사고가 있던 역사적 장소이자 백두대간의 중추로 생태적 가치가 높은 장소이다.\n\n(출처 : 오대산국립공원)"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

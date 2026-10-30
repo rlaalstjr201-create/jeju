@@ -1,0 +1,52 @@
+{
+ "contentid": "133483",
+ "modifiedtime": "20260818143705",
+ "fetchedAt": "2026-10-30T07:59:32.910Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133483",
+       "contenttypeid": "39",
+       "title": "소양강양어장",
+       "createdtime": "20030410090000",
+       "modifiedtime": "20260818143705",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/48/1842848_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/48/1842848_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 동면 소양강로 675",
+       "addr2": "",
+       "zipcode": "24211",
+       "mapx": "127.7818459392",
+       "mapy": "37.9250629737",
+       "mlevel": "6",
+       "overview": "소양강양어장은 송어, 산천어 양식장을 직접 운영하고 있는 곳이다. 1급수의 깨끗한 물에서 오랜 세월 노하우로 키운 송어와 산천어를 맛볼 수 있다. 내부는 통창을 통해 소양강 풍경을 조망할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

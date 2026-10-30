@@ -1,0 +1,52 @@
+{
+ "contentid": "2774680",
+ "modifiedtime": "20251224132632",
+ "fetchedAt": "2026-10-30T07:58:47.455Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2774680",
+       "contenttypeid": "39",
+       "title": "완도회식당",
+       "createdtime": "20211116182417",
+       "modifiedtime": "20251224132632",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 속초시 먹거리4길 21 (교동)",
+       "addr2": "",
+       "zipcode": "24858",
+       "mapx": "128.5729905485",
+       "mapy": "38.1957219724",
+       "mlevel": "6",
+       "overview": "완도회식당은 속초 여행 중 꼭 방문해야 할 물회 맛집으로, 신선한 오징어와 가자미로 만든 물회가 일품이다. 메뉴는 산오징어물회, 가자미물회, 반반물회, 회덮밥 등으로 구성되어 있으며, 특 사이즈로 주문하면 넉넉한 양을 제공한다. 매장 내부는 깔끔하고 대기실은 넓고 쾌적하다. 물회에는 소면과 밥 중 선택할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

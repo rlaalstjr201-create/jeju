@@ -1,0 +1,52 @@
+{
+ "contentid": "2891819",
+ "modifiedtime": "20250909173100",
+ "fetchedAt": "2026-10-30T07:58:43.139Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2891819",
+       "contenttypeid": "39",
+       "title": "남경막국수",
+       "createdtime": "20221101094227",
+       "modifiedtime": "20250909173100",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/98/2891798_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/98/2891798_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 속초시 대포항희망길 47 (대포동)",
+       "addr2": "",
+       "zipcode": "24901",
+       "mapx": "128.6063910063",
+       "mapy": "38.1728669480",
+       "mlevel": "6",
+       "overview": "남경막국수는 강원도 속초에 있는 막국수 전문점이다. 이곳의 주메뉴는 곤드레 막국수와 들깨 막국수이다. 다른 집과 차별화한 메뉴로 강원도의 곤드레나물을 얹어 먹는 막국수와 그릇 전체가 들깨로 뒤덮어 고소한 맛을 내는 들깨 막국수이다. 곁들임으로는 메밀손만두, 즉석감자전, 오징어 순대가 있다. 주차는 전용 주차장이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

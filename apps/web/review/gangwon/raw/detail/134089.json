@@ -1,0 +1,52 @@
+{
+ "contentid": "134089",
+ "modifiedtime": "20260205101155",
+ "fetchedAt": "2026-10-30T07:59:33.289Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134089",
+       "contenttypeid": "39",
+       "title": "시골막국수",
+       "createdtime": "20040102090000",
+       "modifiedtime": "20260205101155",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 신북읍 율문길 100",
+       "addr2": "",
+       "zipcode": "24206",
+       "mapx": "127.748646945043",
+       "mapy": "37.9246257903067",
+       "mlevel": "6",
+       "overview": "춘천의 대표적 막국수집의 하나인 시골막국수는 춘천 시내를 벗어나 북쪽으로 달리다 보면 여우고개가 나오는데, 그 고개를 지나 자리 잡은 신북읍에 위치하고 있다. 2대째 이어오는 30년 넘는 오랜 전통을 가진 이곳은 자극적이지 않은 막국수 본래의 맛을 자랑한다. 또한 편육과 총떡(메밀전병) 등의 다양한 메뉴를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

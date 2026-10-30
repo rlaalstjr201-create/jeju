@@ -1,0 +1,52 @@
+{
+ "contentid": "134006",
+ "modifiedtime": "20260206132611",
+ "fetchedAt": "2026-10-30T07:58:44.654Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134006",
+       "contenttypeid": "39",
+       "title": "본가 궁중해장국",
+       "createdtime": "20040102090000",
+       "modifiedtime": "20260206132611",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 관광로 447",
+       "addr2": "",
+       "zipcode": "24867",
+       "mapx": "128.534939648425",
+       "mapy": "38.1994656991324",
+       "mlevel": "6",
+       "overview": "강원특별자치도 속초시에 위치한 해장국 전문점이다.\n구수하고 시원한 황태해장국과 부드러운 선지해장국, 황태구이 등 다양한 한식 메뉴를 맛볼 수 있다. 이른 아침부터 영업하기 때문에, 아침식사를 하기에도 좋다. 전용 주차장이 구비되어 있어 가족과 함께 방문하기에도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

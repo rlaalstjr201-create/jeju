@@ -1,0 +1,52 @@
+{
+ "contentid": "2702210",
+ "modifiedtime": "20260819143358",
+ "fetchedAt": "2026-10-30T07:58:41.101Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2702210",
+       "contenttypeid": "28",
+       "title": "동명 방파제",
+       "createdtime": "20201229223209",
+       "modifiedtime": "20260819143358",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/69/3394169_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/69/3394169_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS02",
+       "lclsSystm3": "LS020600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 영금정로 46",
+       "addr2": "",
+       "zipcode": "24824",
+       "mapx": "128.6009328476",
+       "mapy": "38.2114294247",
+       "mlevel": "6",
+       "overview": "동명(속초항) 방파제는 속초시를 대표하는 대형 방파제로, 도심과 가까워 접근성이 좋은 낚시 명소다. 특히 강원권에서 야간 낚시를 즐길 수 있는 곳 중 하나로, 사계절 다양한 어종이 풍부해 현지 낚시객은 물론 관광객들도 낚시를 즐기기 위해 찾는다. 방파제에서 바다를 바라보며 낚시를 즐길 수 있어 여유로운 시간을 보내기 좋으며, 인근에는 동명항과 동명마을, 영금정, 등대해변 등이 자리하고 있어 낚시와 함께 주변 관광지를 둘러보기에도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

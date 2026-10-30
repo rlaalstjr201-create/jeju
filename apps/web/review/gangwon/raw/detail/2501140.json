@@ -1,0 +1,52 @@
+{
+ "contentid": "2501140",
+ "modifiedtime": "20251224142305",
+ "fetchedAt": "2026-10-30T07:58:46.308Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2501140",
+       "contenttypeid": "39",
+       "title": "시골할머니나물밥",
+       "createdtime": "20170725235438",
+       "modifiedtime": "20251224142305",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 속초시 설악산로 214-1 (도문동)",
+       "addr2": "",
+       "zipcode": "24904",
+       "mapx": "128.5843821724",
+       "mapy": "38.1639258941",
+       "mlevel": "6",
+       "overview": "시골할머니는 설악산 국립공원 초입에 위치한 한식 전문점이다. 2016년 신축 이전하여 깨끗한 실내 및 주방, 넓은 주차공간을 자랑하며 매장 근처에서 직접 농사지은 농산물로 만든 음식을 제공한다. 특히 직접 농사지은 콩으로 만든 청국장과 두부는 자연의 건강한 맛이 더해져 인기 메뉴이기도 하다. 이 외에 황태해장국, 산채나물 등 다양한 메뉴가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

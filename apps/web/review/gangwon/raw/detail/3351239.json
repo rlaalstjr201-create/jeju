@@ -1,0 +1,52 @@
+{
+ "contentid": "3351239",
+ "modifiedtime": "20260408093833",
+ "fetchedAt": "2026-10-30T07:59:51.243Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3351239",
+       "contenttypeid": "14",
+       "title": "진부문화예술창작스튜디오",
+       "createdtime": "20240821092325",
+       "modifiedtime": "20260408093833",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/08/3380908_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/08/3380908_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 진부면 석두로 12-6",
+       "addr2": "",
+       "zipcode": "25333",
+       "mapx": "128.55404365499584",
+       "mapy": "37.63553378502561",
+       "mlevel": "6",
+       "overview": "평창군 진부면에 위치한 진부문화예술창작스튜디오는 보건소 건물을 리모델링한 후 2020년 주민들을 위한 개관한 문화 공간이다. 스튜디오는 작품 전시공간 2곳과 사무실, 지역 주민들을 위한 교육 강의실로 구성되어 있으며, 연중 다양한 작품이 전시되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

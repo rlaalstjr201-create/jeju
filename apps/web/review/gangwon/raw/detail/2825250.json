@@ -1,0 +1,52 @@
+{
+ "contentid": "2825250",
+ "modifiedtime": "20260318101005",
+ "fetchedAt": "2026-10-30T07:58:46.948Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2825250",
+       "contenttypeid": "39",
+       "title": "연화 티앤에프",
+       "createdtime": "20220627165824",
+       "modifiedtime": "20260318101005",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/16/3589416_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/16/3589416_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 관광로 348 (노학동)",
+       "addr2": "",
+       "zipcode": "24859",
+       "mapx": "128.5405060725207",
+       "mapy": "38.19165685319033",
+       "mlevel": "6",
+       "overview": "연화 T&F는 전국 여러 사찰에 사찰제과를 유통하는 대형 제빵 공장이면서 동시에 커피와 다과를 판매하는 카페이다. 카페에서는 설악산과 울산바위 뷰를 감상하며 음료와 다과를 즐길 수 있다. 선물용으로 포장된 연꿀빵 세트도 판매하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

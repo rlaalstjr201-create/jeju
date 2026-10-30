@@ -1,0 +1,52 @@
+{
+ "contentid": "1920010",
+ "modifiedtime": "20261008135813",
+ "fetchedAt": "2026-10-30T07:59:30.011Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1920010",
+       "contenttypeid": "39",
+       "title": "댄싱카페인",
+       "createdtime": "20140520201054",
+       "modifiedtime": "20261008135813",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/67/1919167_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/67/1919167_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 스포츠타운길399번길 25",
+       "addr2": "",
+       "zipcode": "24239",
+       "mapx": "127.7022418873",
+       "mapy": "37.8736561380",
+       "mlevel": "6",
+       "overview": "댄싱카페인은 상상마당 춘천에 위치한 커피 전문점이다. 호수와 자연을 감상하며 커피를 음미할 수 있는 카페로써 많은 문화예술인들이 즐겨찾는 장소로, 쉼터이자 소통과 담론이 오가는 교류가 이루어지는 공간이다. 커피의 유래에서 온 ‘댄싱 고트(Dancing goat)’로 부터 연상시킨 댄싱 카페인(dancing caffeine)은 ‘커피 리브레’ 원두를 사용하며, 바게트와 피자 등 매장에서 직접 구워내는 풍미 깊은 사이드 메뉴도 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

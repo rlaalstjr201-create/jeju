@@ -1,0 +1,52 @@
+{
+ "contentid": "134637",
+ "modifiedtime": "20260227150259",
+ "fetchedAt": "2026-10-30T07:59:39.204Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134637",
+       "contenttypeid": "39",
+       "title": "4단지닭갈비",
+       "createdtime": "20040906090000",
+       "modifiedtime": "20260227150259",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/00/1842800_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/00/1842800_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 후만로 81",
+       "addr2": "(후평3동)",
+       "zipcode": "24304",
+       "mapx": "127.753481256945",
+       "mapy": "37.8763428858723",
+       "mlevel": "6",
+       "overview": "4단지 닭갈비는 닭갈비의 고장 강원 춘천시에 위치하고 있다.\n100% 국산 닭만 엄선하여 취급하는 곳으로 40년 전통 춘천 닭갈비 원조의 맛을 그대로 이어가고 있다. 담백하고 푸짐한 닭갈비와 함께하는 동치미 국물 맛 또한 일품이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

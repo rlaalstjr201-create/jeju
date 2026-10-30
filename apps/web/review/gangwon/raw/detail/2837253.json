@@ -1,0 +1,52 @@
+{
+ "contentid": "2837253",
+ "modifiedtime": "20250113103529",
+ "fetchedAt": "2026-10-30T07:58:48.216Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2837253",
+       "contenttypeid": "39",
+       "title": "이모네식당",
+       "createdtime": "20220816165806",
+       "modifiedtime": "20250113103529",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2837245_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/45/2837245_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 속초시 영랑해안6길 16",
+       "addr2": "",
+       "zipcode": "24810",
+       "mapx": "128.5960878399",
+       "mapy": "38.2152590363",
+       "mlevel": "6",
+       "overview": "속초 영랑해안길 골목 안쪽에 있는 이모네식당은 생선찜 전문점이다. 메뉴는 가오리찜, 생선모듬찜, 대구뽈찜 3종류다. 생선찜은 종류별로 사이즈를 선택해 주문할 수 있다. 대표 메뉴는 가오리찜으로 재료가 일찍 소진되면 영업 중이라도 주문이 어려울 수 있다. 오후 3시부터 5시까지 브레이크 타임이며, 오후 5시부터 6시까지 주문이 가능하다. 재료가 소진되면 일찍 마감될 수 있다. 멀리서 일부러 찾아가는 것이라면 예약하고 방문하는 것을 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2893912",
+ "modifiedtime": "20250114165556",
+ "fetchedAt": "2026-10-30T07:59:33.475Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2893912",
+       "contenttypeid": "39",
+       "title": "신남큰집",
+       "createdtime": "20221102151015",
+       "modifiedtime": "20250114165556",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/02/2893902_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/02/2893902_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "13",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 춘천시 김유정로 1412-1",
+       "addr2": "",
+       "zipcode": "24412",
+       "mapx": "127.7154911066",
+       "mapy": "37.8172885692",
+       "mlevel": "6",
+       "overview": "신남큰집은 강원도 춘천시에 있는 삼계탕 전문점이다. 오래된 한옥을 리모델링해서 식당으로 사용하고 있다. 내부는 가정집 분위기에 노포 같은 느낌이다. 식당 테이블은 입식과 좌식으로 나뉘어 있다. 방 쪽 자리는 좌식이고 마루 자리는 입식이다. 식당 한편에 엄청나게 많은 담금주가 전시되어 있다. 삼계탕을 주문하면 밑반찬으로 백김치, 깍두기, 생양파, 마늘종, 고추가 나온다. 부족하면 추가할 수 있다. 누룽지 삼계탕을 1인분씩 판매한다. 주차는 매장 앞에 넓은 전용 주차장이 있어 이용이 편리하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

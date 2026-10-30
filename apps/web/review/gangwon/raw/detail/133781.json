@@ -1,0 +1,52 @@
+{
+ "contentid": "133781",
+ "modifiedtime": "20251224134743",
+ "fetchedAt": "2026-10-30T07:58:43.975Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133781",
+       "contenttypeid": "39",
+       "title": "두메산골",
+       "createdtime": "20031002090000",
+       "modifiedtime": "20251224134743",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 속초시 관광로 457-11 (노학동)",
+       "addr2": "",
+       "zipcode": "24867",
+       "mapx": "128.5332551123",
+       "mapy": "38.2007789450",
+       "mlevel": "6",
+       "overview": "두메산골은 황태정식, 황태해장국, 황태구이 등 황태 요리가 일품인 한식당이다. 황태정식, 황태 해장국, 황태 찜 등 황태 메뉴뿐만 아니라 속초의 대표 음식인 오징어순대도 맛볼 수 있다. 모든 메뉴에는 화학조미료를 사용하지 않고 재료 본연의 맛을 살려 정성껏 요리한다. 주차장이 넓게 마련되어 있어 방문이 편리하다. 시골집 같은 푸근한 실내 인테리어가 편안한 분위기를 만들어준다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

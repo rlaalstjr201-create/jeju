@@ -1,0 +1,52 @@
+{
+ "contentid": "2855262",
+ "modifiedtime": "20260804110644",
+ "fetchedAt": "2026-10-30T07:58:48.301Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2855262",
+       "contenttypeid": "39",
+       "title": "이선장",
+       "createdtime": "20220919154109",
+       "modifiedtime": "20260804110644",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/27/3577627_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/27/3577627_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 영금정로 24-1",
+       "addr2": "",
+       "zipcode": "24824",
+       "mapx": "128.5990829962",
+       "mapy": "38.2124209339",
+       "mlevel": "6",
+       "overview": "이선장은 속초 동명항 근처에 있는 복어 요리 전문점이다. 이곳은 복어 요리가 유명한 집이다. 국가 기술 자격증을 여러 개 취득한 숙련된 장인이 하는 요리를 맛볼 수 있다. 깔끔하고 널찍한 1층과 2층을 모두 이용할 수 있다. 다양한 요리를 맛볼 수 있는 코스요리가 대표 메뉴이며 이 외에도 대게, 활복 사시미, 회덮밥, 물회 등 다양한 메뉴가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

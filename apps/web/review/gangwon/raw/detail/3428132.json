@@ -1,0 +1,52 @@
+{
+ "contentid": "3428132",
+ "modifiedtime": "20260323095249",
+ "fetchedAt": "2026-10-30T07:59:34.895Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3428132",
+       "contenttypeid": "39",
+       "title": "우미닭갈비 본점",
+       "createdtime": "20241128115255",
+       "modifiedtime": "20260323095249",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 영서로 2345 (온의동)",
+       "addr2": "",
+       "zipcode": "24433",
+       "mapx": "127.7157251274497",
+       "mapy": "37.86870921789368",
+       "mlevel": "6",
+       "overview": "1970년 개업해 춘천닭갈비골목의 명성을 만든 식당 중 하나다. 철판에 양념한 닭고기를 올려 구워주며, 떡이나 치즈 등 여러 가지 사리를 추가할 수 있다. 하루 50인분에 한해 판매하는 매콤한 닭갈비가 인기 메뉴다. 간장닭갈비, 자연치즈닭갈비 등 다양한 닭갈비를 판매한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

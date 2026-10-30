@@ -1,0 +1,52 @@
+{
+ "contentid": "2717292",
+ "modifiedtime": "20250626113240",
+ "fetchedAt": "2026-10-30T07:59:47.243Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2717292",
+       "contenttypeid": "12",
+       "title": "카페 방림별곡",
+       "createdtime": "20210515004217",
+       "modifiedtime": "20250626113240",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/06/3300006_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/06/3300006_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "강원특별자치도 평창군 방림면 서동로 1339",
+       "addr2": "",
+       "zipcode": "25365",
+       "mapx": "128.3946856968",
+       "mapy": "37.4264993838",
+       "mlevel": "6",
+       "overview": "카페 방림별곡은 방림드림주민주식회사에서 운영하는 마을 카페다. 대표도 직원도 모두 마을주민이다. 방림 주민들의 소통의 장이자 사랑방 장소로 즐겨 찾고 있다. 쿠키만들기 체험이 가능하며, 카페 방림별곡에는지속가능한 지구환경을 위한 제로 웨이스트샵인 방림드림마켓도 운영되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

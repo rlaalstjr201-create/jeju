@@ -1,0 +1,52 @@
+{
+ "contentid": "127747",
+ "modifiedtime": "20260619093209",
+ "fetchedAt": "2026-10-30T07:59:09.778Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "127747",
+       "contenttypeid": "12",
+       "title": "구곡폭포",
+       "createdtime": "20030925090000",
+       "modifiedtime": "20260619093209",
+       "tel": "",
+       "telname": "",
+       "homepage": "춘천도시공사 https://www.cuc.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource_photo/08/3582808_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource_photo/08/3582808_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA01",
+       "lclsSystm3": "NA010300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 남산면 강촌구곡길 254",
+       "addr2": "",
+       "zipcode": "24465",
+       "mapx": "127.6092783257",
+       "mapy": "37.7938780176",
+       "mlevel": "6",
+       "overview": "봉화산 근처에 위치한 구곡포포는 1981년 2월 13일 관광지로 지정되었으며 지정면적은 2,423㎢이다.\n구곡폭포 매표소에서 걸어서 약 20분 거리에 폭포가 나타나는데 47m 높이에서 떨어지는 하얀 물줄기가 장관을 이룬다. 특히 겨울철에는 떨어지는 폭포가 그대로 빙벽으로 변해 빙벽 등반인들이 찾는 관광명소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

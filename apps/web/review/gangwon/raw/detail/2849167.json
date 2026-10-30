@@ -1,0 +1,52 @@
+{
+ "contentid": "2849167",
+ "modifiedtime": "20260805082824",
+ "fetchedAt": "2026-10-30T07:59:32.728Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2849167",
+       "contenttypeid": "39",
+       "title": "소나타까페",
+       "createdtime": "20220905173259",
+       "modifiedtime": "20260805082824",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/77/3555377_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/77/3555377_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 남산면 남이섬길 1",
+       "addr2": "",
+       "zipcode": "24464",
+       "mapx": "127.5254909651",
+       "mapy": "37.7962667354",
+       "mlevel": "6",
+       "overview": "소나타까페는 메타세쿼이아 길 초입에 자리한 카페로, 남이섬의 명물 남이섬 찹쌀 씨앗호떡을 비롯한 특별한 간식을 맛볼 수 있는 공간이다. 커피와 다양한 음료는 물론, 시원한 아이스크림, 따뜻하고 쫀득한 남이섬 찹쌀 씨앗호떡이 남이섬 대표 간식으로 꾸준한 사랑을 받고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

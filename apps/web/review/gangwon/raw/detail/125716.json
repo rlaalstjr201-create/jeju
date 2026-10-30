@@ -1,0 +1,52 @@
+{
+ "contentid": "125716",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-30T07:58:53.808Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "125716",
+       "contenttypeid": "12",
+       "title": "동호해변(양양)",
+       "createdtime": "20031204090000",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://tour.yangyang.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/49/3518249_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/49/3518249_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA02",
+       "lclsSystm3": "NA020900",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 손양면 동호리 141-26",
+       "addr2": "",
+       "zipcode": "25042",
+       "mapx": "128.683107503147",
+       "mapy": "38.0573415060586",
+       "mlevel": "6",
+       "overview": "동호해변은 양양군 손양면 동호리에 위치한 길이 500m, 폭 55m의 아담한 해변이다. \n청정구역으로 모래 질이 뛰어나며 바닷물이 깨끗하고 경관이 좋아 조용히 피서를 즐기려는 이들에게 좋은 장소이다. 특히 수심이 얕고 모래가 부드럽고 조개가 많아 조개 잡는 재미가 있어 해마다 많은 피서객이 찾는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "133322",
+ "modifiedtime": "20261013150120",
+ "fetchedAt": "2026-10-30T07:59:07.442Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133322",
+       "contenttypeid": "39",
+       "title": "입암메밀타운",
+       "createdtime": "20030828090000",
+       "modifiedtime": "20261013150120",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/18/3071518_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/18/3071518_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 현남면 화상천로 155",
+       "addr2": "",
+       "zipcode": "25058",
+       "mapx": "128.7772136681",
+       "mapy": "37.9245984116",
+       "mlevel": "6",
+       "overview": "입암메밀타운은 40년 이상의 역사를 자랑하는 막국수 전문점이다. 인근 농가로부터 공급받은 메밀을 직접 운영하는 메밀가공공장에서 제분하여 사용한다. 함께 나오는 야채는 저농약으로 직접 재배한 친환경 채소를 사용하고 있다. 막국수는 25종의 재료, 양념으로 만들어지며, 수육은 부드러운 암퇘지를 사용하여 제공된다.\n입암메밀타운은 막국수의 참맛을 위해 많은 사람들이 찾고 있으며, 대표 메뉴는 물막국수와 새콤한 비빔막국수, 수육이다. 역사와 전통의 맛으로 유명한 곳에서 물막국수와 부드럽고 쫄깃한 수육을 함께 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

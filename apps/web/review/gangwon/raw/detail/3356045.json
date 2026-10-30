@@ -1,0 +1,52 @@
+{
+ "contentid": "3356045",
+ "modifiedtime": "20241119154551",
+ "fetchedAt": "2026-10-30T07:59:38.187Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3356045",
+       "contenttypeid": "39",
+       "title": "퇴골오리",
+       "createdtime": "20240829133622",
+       "modifiedtime": "20241119154551",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/15/3421715_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/15/3421715_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "13",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 춘천시 동면 춘천로 492-14",
+       "addr2": "",
+       "zipcode": "24213",
+       "mapx": "127.7603819877",
+       "mapy": "37.8933750028",
+       "mlevel": "6",
+       "overview": "강원도 춘천 노루목저수지 근처에 위치한 퇴골오리집은 참숯으로 오리를 구워 파는 특징을 가진 음식점이다. 무항생제 오리와 직접양봉한 꿀을 통해 건강한 음식을 제공한다. 오리고기와 함께 오리뼈탕은 특유의 깔끔함으로 많은 사람들이 찾는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

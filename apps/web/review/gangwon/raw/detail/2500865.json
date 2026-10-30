@@ -1,0 +1,52 @@
+{
+ "contentid": "2500865",
+ "modifiedtime": "20250626104234",
+ "fetchedAt": "2026-10-30T07:59:00.755Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2500865",
+       "contenttypeid": "28",
+       "title": "롱비치 서프스쿨",
+       "createdtime": "20170724183720",
+       "modifiedtime": "20250626104234",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/57/2500857_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/57/2500857_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "7",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS02",
+       "lclsSystm3": "LS020100",
+       "cat1": "A03",
+       "cat2": "A0303",
+       "cat3": "A03030100",
+       "addr1": "강원특별자치도 양양군 현남면 갯마을길 42-20",
+       "addr2": "",
+       "zipcode": "25057",
+       "mapx": "128.7789684675",
+       "mapy": "37.9486463554",
+       "mlevel": "6",
+       "overview": "강원도 양양군에 위치한 서핑 전문 강습스쿨이다. 다년간 서핑을 접해 온 경력 있는 서퍼들이 서핑에 대한 기본이해와 기술을 교육하고 지속적인 연습을 통해 다양한 파도를 즐길 수 있게 교육하는 게 롱비치 서프스쿨의 가장 큰 목표이다. 수심이 낮고 양질의 파도가 들어오며 넓은 해변에 위치하고 있어 초보자들이 안전하게 부상 없이 서핑을 배울 수 있는 최적의 장소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

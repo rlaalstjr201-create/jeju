@@ -1,0 +1,52 @@
+{
+ "contentid": "2916001",
+ "modifiedtime": "20261013132036",
+ "fetchedAt": "2026-10-30T07:58:53.056Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2916001",
+       "contenttypeid": "12",
+       "title": "남애1리해수욕장",
+       "createdtime": "20221123122341",
+       "modifiedtime": "20261013132036",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://tour.yangyang.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/35/4120435_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/35/4120435_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA02",
+       "lclsSystm3": "NA020900",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 현남면 화상해안길 245",
+       "addr2": "",
+       "zipcode": "25057",
+       "mapx": "128.7862834286",
+       "mapy": "37.9455252450",
+       "mlevel": "6",
+       "overview": "양양을 대표하는 항구가 남애항이다. 이를 중심으로 위쪽이 3리 해변, 전망대와 항구가 있는 곳이 2리, 항구방파제 남쪽 해변이 1리 해변이다. 1리 해변은 2리, 3리와 달리 조용하고 작은 어촌의 풍경을 보여준다. 여기서부터 아래쪽으로 원포해변과 지경해수욕장, 주문진해수욕장까지 길게 해변이 이어진다. 여름에는 해당화가 해변 가득 피어 볼거리를 주고 해변 중간에는 차박을 할 수 있는 야영장도 마련되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

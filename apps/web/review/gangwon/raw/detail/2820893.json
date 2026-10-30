@@ -1,0 +1,52 @@
+{
+ "contentid": "2820893",
+ "modifiedtime": "20250626144912",
+ "fetchedAt": "2026-10-30T07:59:48.509Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2820893",
+       "contenttypeid": "12",
+       "title": "평창사랑",
+       "createdtime": "20220520141611",
+       "modifiedtime": "20250626144912",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/29/3300029_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/29/3300029_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "강원특별자치도 평창군 대화면 상안미옛길 164-141",
+       "addr2": "",
+       "zipcode": "25362",
+       "mapx": "128.4106962308",
+       "mapy": "37.4905339600",
+       "mlevel": "6",
+       "overview": "평창사랑은 귀농&귀촌을 꿈꾸는 사람들에게 다양한 귀농인들의 삶을 모델로 제시하여 다양한 체험과 숙박, 농산물 꾸러미 판매등을 하며, 모듈형 투어 프로그램을 제공하고 있다.\n힐링 팜크닉, 산마늘 및 사과 수확 체험, 송어낚시체험 등의 프로그램이 있으며 시즌별로 체험 가능한 프로그램이 달라지므로 홈페이지 참고를 해야 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

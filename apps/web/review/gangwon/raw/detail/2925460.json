@@ -1,0 +1,52 @@
+{
+ "contentid": "2925460",
+ "modifiedtime": "20260612171908",
+ "fetchedAt": "2026-10-30T07:59:07.788Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2925460",
+       "contenttypeid": "39",
+       "title": "카페 달파도",
+       "createdtime": "20221130124839",
+       "modifiedtime": "20260612171908",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/58/2925458_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/58/2925458_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 선사유적로 327",
+       "addr2": "1층",
+       "zipcode": "25042",
+       "mapx": "128.6812159530",
+       "mapy": "38.0594717648",
+       "mlevel": "6",
+       "overview": "양양 쏠비치에서 차로 약 5분 거리에 위치한 동호해변 오션뷰 브런치 카페이다. 탁 트인 창 너머로 바다 풍경을 감상하며 브런치를 즐길 수 있는 곳으로, 취향에 따라 토끼브런치와 곰브런치 가운데 선택할 수 있다. 디저트 메뉴로는 별빛 크로플이 있으며, 파도를 연상시키는 파도라떼와 알록달록한 색감의 레인보우주스 등 다양한 음료도 함께 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

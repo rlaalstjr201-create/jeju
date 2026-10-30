@@ -1,0 +1,52 @@
+{
+ "contentid": "2702452",
+ "modifiedtime": "20260819134313",
+ "fetchedAt": "2026-10-30T07:59:01.204Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2702452",
+       "contenttypeid": "28",
+       "title": "사이클경기장",
+       "createdtime": "20201230182949",
+       "modifiedtime": "20260819134313",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.yangyang.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/16/3378616_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/16/3378616_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 손양면 공항로 149",
+       "addr2": "",
+       "zipcode": "25042",
+       "mapx": "128.6557988903",
+       "mapy": "38.0621820453",
+       "mlevel": "6",
+       "overview": "양양의 사이클경기장은 2012년에 양양종합스포츠타운 내에 지하 1층~지상 3층 규모로 조성되었다. \n전국 사이클 선수권 대회를 비롯하여 각종 세계  대회를 치를 수 있는 국제규모의 경기장이다. 일반시민도 사이클경기장과 인조잔디구장을 이용할 수 있으며, 사전에 체육시설 사용허가 신청서를 제출해야 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

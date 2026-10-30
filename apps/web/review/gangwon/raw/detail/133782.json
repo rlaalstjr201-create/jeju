@@ -1,0 +1,52 @@
+{
+ "contentid": "133782",
+ "modifiedtime": "20260205130245",
+ "fetchedAt": "2026-10-30T07:58:43.063Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133782",
+       "contenttypeid": "39",
+       "title": "낙천회관",
+       "createdtime": "20030908090000",
+       "modifiedtime": "20260205130245",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 속초시 수복로 128",
+       "addr2": "(교동)",
+       "zipcode": "24835",
+       "mapx": "128.582876585787",
+       "mapy": "38.201483061577",
+       "mlevel": "6",
+       "overview": "낙천회관은 전통 속초냉면을 맛볼 수 있는 곳이다. \n고구마전분으로 만든 쫄깃한 면발에 명태회를 올려먹는 속초식 명태회냉면이 대표메뉴이다. 돼지고기 삶은 편육이나 소고기 아롱사태로 삶은 수육도 함께 곁들이면 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

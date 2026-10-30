@@ -1,0 +1,52 @@
+{
+ "contentid": "131759",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-30T07:59:25.428Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "131759",
+       "contenttypeid": "28",
+       "title": "엘리시안 강촌 스키장",
+       "createdtime": "20051124090000",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.elysian.co.kr",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS01",
+       "lclsSystm3": "LS010800",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 남산면 북한강변길 688",
+       "addr2": "(남산면)",
+       "zipcode": "24464",
+       "mapx": "127.578777446215",
+       "mapy": "37.8300785864372",
+       "mlevel": "6",
+       "overview": "엘리시안 강촌은 경춘선 전철이나 ITX-청춘 열차로 접근 가능한 국내 유일 리조트로 탑승 대기시간을 최소화시키는 6인승 고속리프트와 프리미엄 티켓 예약제를 운영하는 스키장이 인기다. 가장 큰 특징은 스키 초보자에게 최적의 환경을 제공하고 있다는 점이다. 렌탈 장비를 전용 창구에서 곧바로 수령할 수 있는 것 뿐만 아니라 리프트 낙하방지 시스템, 안전펜스, 안전매트, 주요 지역 패트롤까지 스키장 전역에 걸쳐 안전망을 확보한 상태라 초보자도 안심하고 이용할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

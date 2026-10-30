@@ -1,0 +1,52 @@
+{
+ "contentid": "2701896",
+ "modifiedtime": "20260305095851",
+ "fetchedAt": "2026-10-30T07:59:48.678Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2701896",
+       "contenttypeid": "12",
+       "title": "평창지동봉가옥",
+       "createdtime": "20201229020310",
+       "modifiedtime": "20260305095851",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.heritage.go.kr",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS01",
+       "lclsSystm3": "HS010400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 평창읍 천동길 160",
+       "addr2": "",
+       "zipcode": "25373",
+       "mapx": "128.379317462685",
+       "mapy": "37.3334624149254",
+       "mlevel": "6",
+       "overview": "평창읍 천동리에 있는 일제 강점기의 가옥이다. 강원특별자치도 문화유산자료로 지정되었으며, 언제 건립되었는지는 정확하게 알려지지 않았으나 기와에 남아있는 명문으로 볼 때 일제 강점기인 1941년에 세워진 것으로 추정되는 가옥으로 지동봉이 소유하였다. 대지 52평에 안채와 행랑채, 별채로 이루어진 가옥으로 지동봉이란 사람의 증조부가 분가하여 집을 지은 뒤 지금까지 4대가 걸쳐서 살고 있는 역사가 깊은 가옥이다. 안채와 사랑채, 별채로 이루어졌지만 지어졌던 당시의 상태 그대로 유지하고 있는 것은 안채뿐이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

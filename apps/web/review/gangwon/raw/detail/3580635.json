@@ -1,0 +1,52 @@
+{
+ "contentid": "3580635",
+ "modifiedtime": "20260424091626",
+ "fetchedAt": "2026-10-30T07:59:34.692Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3580635",
+       "contenttypeid": "39",
+       "title": "온이",
+       "createdtime": "20251210131549",
+       "modifiedtime": "20260424091626",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/26/3580626_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/26/3580626_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 영서로 2297 (온의동)",
+       "addr2": "",
+       "zipcode": "24435",
+       "mapx": "127.7193405474542",
+       "mapy": "37.86558840474816",
+       "mlevel": "6",
+       "overview": "온이는 춘천시 온의동에 위치한 감성 카페이다. 옛 주택을 개조하여 만들어진 공간으로 시골 할머니 집 같은 정취가 느껴지는 카페이다. 내부 공간은 방으로 이루어져 아늑한 느낌을 주고, 통창으로 작은 정원이 보이는 것이 특징이다. 카페 온이의 대표 메뉴로는 코르타도로 에스프레소에 우유와 생크림을 더해 두가지 맛을 동시에 느낄 수 있는 색다른 음료를 판매하고 있다. 춘천을 여행하며 향긋한 커피와 달콤한 디저트를 즐기기에 적합한 장소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

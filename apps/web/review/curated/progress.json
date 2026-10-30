@@ -1,14 +1,14 @@
 {
- "updatedAt": "2026-10-29T20:23:24.733Z",
+ "updatedAt": "2026-10-30T08:00:19.129Z",
  "kstDay": "2026-10-30",
- "callsThisRun": 812,
+ "callsThisRun": 0,
  "callsToday": 900,
  "dests": {
   "gangwon": {
    "lDongRegnCd": 51,
    "inScope": 1968,
-   "detailed": 812,
-   "remaining": 1156,
+   "detailed": 1613,
+   "remaining": 355,
    "cities": {
     "150 강릉": {
      "inScope": 724,
@@ -17,23 +17,23 @@
     },
     "210 속초": {
      "inScope": 209,
-     "detailed": 88,
-     "remaining": 121
+     "detailed": 209,
+     "remaining": 0
     },
     "830 양양": {
      "inScope": 202,
-     "detailed": 0,
-     "remaining": 202
+     "detailed": 202,
+     "remaining": 0
     },
     "110 춘천": {
      "inScope": 314,
-     "detailed": 0,
-     "remaining": 314
+     "detailed": 314,
+     "remaining": 0
     },
     "760 평창": {
      "inScope": 519,
-     "detailed": 0,
-     "remaining": 519
+     "detailed": 164,
+     "remaining": 355
     }
    }
   },

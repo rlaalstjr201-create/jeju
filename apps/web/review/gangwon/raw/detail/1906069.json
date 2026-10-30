@@ -1,0 +1,52 @@
+{
+ "contentid": "1906069",
+ "modifiedtime": "20260204165642",
+ "fetchedAt": "2026-10-30T07:59:37.240Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1906069",
+       "contenttypeid": "39",
+       "title": "커피쟁이비버씨",
+       "createdtime": "20140318194416",
+       "modifiedtime": "20260204165642",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/1905911_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/1905911_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 동내면 거두택지길 93-1",
+       "addr2": "",
+       "zipcode": "24402",
+       "mapx": "127.75914797489",
+       "mapy": "37.8562176703754",
+       "mlevel": "6",
+       "overview": "커피쟁이비버씨는 춘천시 동내면 거두리에 있는 로스팅 커피 전문점이다. 생두를 직접 로스팅하여 커피를 제공하며, 다양한 종류의 커피와 디저트를 제공한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

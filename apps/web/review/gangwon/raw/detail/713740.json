@@ -1,0 +1,52 @@
+{
+ "contentid": "713740",
+ "modifiedtime": "20260409164407",
+ "fetchedAt": "2026-10-30T07:59:32.453Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "713740",
+       "contenttypeid": "39",
+       "title": "산토리니",
+       "createdtime": "20090330231609",
+       "modifiedtime": "20260409164407",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 동면 순환대로 1154-97",
+       "addr2": "",
+       "zipcode": "24212",
+       "mapx": "127.776467454133",
+       "mapy": "37.8913831507054",
+       "mlevel": "6",
+       "overview": "춘천 산토리니는 정통 이탈리안 레스토랑이자 전망 좋은 카페로 유명하다. 고급스러운 인테리어, 소규모 웨딩과 연회가 치러지는 예쁜 야외 잔디밭, 포토존으로 유명한 소원의 종탑이 설치되어 있으며, 춘천 시내가 내려다보이는 위치에 있어 전망이 매우 좋다. 카페테리아, 베이커리, 이탈리안 피자와 파스타 등 가볍게 먹고 마시면서 쉴 수 있는 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

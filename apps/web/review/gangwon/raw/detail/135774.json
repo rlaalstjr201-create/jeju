@@ -1,0 +1,52 @@
+{
+ "contentid": "135774",
+ "modifiedtime": "20260225135024",
+ "fetchedAt": "2026-10-30T07:59:31.292Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135774",
+       "contenttypeid": "39",
+       "title": "명동1번지닭갈비",
+       "createdtime": "20070620090000",
+       "modifiedtime": "20260225135024",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/99/1842799_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/99/1842799_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 춘천시 금강로62번길 7",
+       "addr2": "",
+       "zipcode": "24353",
+       "mapx": "127.727883662739",
+       "mapy": "37.8793142632889",
+       "mlevel": "6",
+       "overview": "호수의 도시 그리고 닭갈비의 본고장으로 유명한 춘천에 자리잡고 있는 음식점이다. 수려한 자연경관과 토속적인 음식이 발달하여 여행객들의 발걸음을 붙잡는 도시 춘천의 명동1번지닭갈비는 닭갈비로 한층 더 유명해진 춘천 명동 닭갈비골목에서 춘천의 대표가 되어 식도락가들의 발길을 끄는 고유의 양념과 요리법을 가진 맛깔스런 음식점이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3354272",
+ "modifiedtime": "20250728144749",
+ "fetchedAt": "2026-10-30T07:58:45.149Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3354272",
+       "contenttypeid": "39",
+       "title": "속초관광수산시장 회센터",
+       "createdtime": "20240827114054",
+       "modifiedtime": "20250728144749",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/99/3421499_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/99/3421499_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "32",
+       "sigungucode": "5",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "210",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 속초시 중앙로147번길 12 (중앙동)",
+       "addr2": "",
+       "zipcode": "24832",
+       "mapx": "128.5905775798",
+       "mapy": "38.2040463451",
+       "mlevel": "6",
+       "overview": "속초항에 인접한 수산시장으로 대형 주차장 등 접근성이 좋으며 활어 포장이 가능한 식당이 모여 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

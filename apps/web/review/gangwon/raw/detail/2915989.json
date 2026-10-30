@@ -1,0 +1,52 @@
+{
+ "contentid": "2915989",
+ "modifiedtime": "20260722171153",
+ "fetchedAt": "2026-10-30T07:59:07.958Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2915989",
+       "contenttypeid": "39",
+       "title": "카페 로그",
+       "createdtime": "20221123121301",
+       "modifiedtime": "20260722171153",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/82/4091182_image2_1.jpeg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/82/4091182_image3_1.jpeg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "830",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 양양군 송이로 86-32",
+       "addr2": "",
+       "zipcode": "25046",
+       "mapx": "128.7125168104",
+       "mapy": "38.0240183676",
+       "mlevel": "6",
+       "overview": "양양의 7번 국도 중광정 해수욕장 근처, 한국 검인정교과서 협회 연수원 내에 위치한 북 카페이다. 넓게 탁 트인 실내와 전면 창으로 보이는 소나무 숲 뷰가 인상적이다. 역사, 문화, 인문, 아동 등 마음껏 읽을 수 있는 다양한 도서가 10,000권가량 구비되어 있다. 책을 읽다 지치면, 창밖으로 보이는 숲 전망을 즐길 수 있다. 커피를 비롯한 음료들이 합리적인 가격으로 판매되며, 쿠키와 빵 같은 디저트류도 다양하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

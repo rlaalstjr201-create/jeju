@@ -1,0 +1,52 @@
+{
+ "contentid": "2728430",
+ "modifiedtime": "20261022161921",
+ "fetchedAt": "2026-10-30T07:59:40.732Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2728430",
+       "contenttypeid": "12",
+       "title": "금당산",
+       "createdtime": "20210729020634",
+       "modifiedtime": "20261022161921",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://tour.pc.go.kr/",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA01",
+       "lclsSystm3": "NA010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 용평면 재산리 산 900",
+       "addr2": "",
+       "zipcode": "25317",
+       "mapx": "128.4147767227",
+       "mapy": "37.5410778186",
+       "mlevel": "6",
+       "overview": "용평면 장평리에서 남쪽으로 약 9㎞ 정도 들어간 31번 국도변에서 서쪽에 자리한 산으로 오대산에서 가리왕산으로 이어지는 주능선인 백석산에서 남서쪽으로 뻗어 있다. 높이는 1,173m로 동쪽으로는 백석산, 서쪽으로는 대미산의 중간지점에 있다. 평창강 상류의 금당계곡을 끼고 있어 물놀이를 겸할 수 있어 좋다. 높이 60m의 직벽으로 된 봉황대가 있는데 예로부터 이곳에는 봉황새 이외의 새는 접근할 수 없었다는 이야기가 전해진다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}
