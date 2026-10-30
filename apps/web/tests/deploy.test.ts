@@ -105,7 +105,10 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).not.toContain('SHA-256');
     expect(html).not.toContain('하루 동안 Cloudflare 캐시에');
     expect(html).toContain('서버는 검색어도 결과도 저장하지 않고, Cloudflare 캐시에도 두지 않아요');
-    expect(html).toContain('카카오가 준 주소와 좌표는 결과를 보여 줄 때만 쓰고 이 기기에도 저장하지 않아요');
+    // and Kakao's point for this visit only is in the open page, never on the device (addr 검토 m-a, M-1)
+    expect(html).toContain('카카오가 준 주소와 좌표는 결과를 보여 줄 때와, 공공 주소를 찾지 못했을 때 열어 둔 이 페이지에서 이번 방문의 숙소로 쓸 때만 쓰고, 이 기기에는 저장하지 않아요');
+    expect(html).toContain('새로고침하거나 다시 열면 예전에 저장한 기준으로 돌아와요');
+    expect(html).not.toContain('결과를 보여 줄 때만 쓰고');
     expect(html).toContain('행정안전부 도로명주소 API(business.juso.go.kr)에 공공 주소와 좌표를 물어');
     expect(html).toContain('숙소로 이 기기에만 저장하는 것은 이 공공 좌표예요');
     expect(html).toContain('공공 주소를 찾지 못하면 고른 곳을 이번 방문에만 숙소로 쓰고 저장하지 않아요');
@@ -139,9 +142,9 @@ describe('privacy.html (ADR-0063 4)', () => {
   // sheet-v2 predeploy review m-5, ADR-0103 Amendment 2: the translations say it too — the words in the body, nothing
   // cached, Kakao's address and point never kept, the public one kept (or nothing, for this visit only)
   it.each([
-    ['privacy-en.html', 'The words go in the body of the request, not in its address', "The server stores neither your search nor its results, and doesn't keep them in Cloudflare's cache either.", "the Ministry of the Interior and Safety's road name address API (business.juso.go.kr)", 'What\'s saved only on this device, as your stay, are these official coordinates.', 'used as your stay for this visit only and isn\'t saved'],
-    ['privacy-zh-Hans.html', '文字放在请求正文中发送，而不是放在请求网址中', '服务器既不保存搜索词也不保存结果，也不放在Cloudflare缓存中。', '行政安全部道路名地址API（business.juso.go.kr）', '作为住处只保存在这台设备上的，是这个官方坐标。', '所选地点只在本次访问中作为住处使用，不会保存'],
-    ['privacy-ja.html', '文字はリクエストのURLではなく本文に入れて送ります', 'サーバーは検索語も結果も保存せず、Cloudflareのキャッシュにも置きません。', '行政安全部の道路名住所API（business.juso.go.kr）', '宿としてこの端末にだけ保存するのは、この公的な座標です。', '選んだ場所を今回の訪問だけ宿として使い、保存しません'],
+    ['privacy-en.html', 'The words go in the body of the request, not in its address', "The server stores neither your search nor its results, and doesn't keep them in Cloudflare's cache either.", "the Ministry of the Interior and Safety's road name address API (business.juso.go.kr)", 'What\'s saved only on this device, as your stay, are these official coordinates.', 'used as your stay for this visit only and isn\'t saved', 'as your stay in the page you have open for this visit; they\'re never saved on this device.', 'goes back to the starting point you saved before'],
+    ['privacy-zh-Hans.html', '文字放在请求正文中发送，而不是放在请求网址中', '服务器既不保存搜索词也不保存结果，也不放在Cloudflare缓存中。', '行政安全部道路名地址API（business.juso.go.kr）', '作为住处只保存在这台设备上的，是这个官方坐标。', '所选地点只在本次访问中作为住处使用，不会保存', '找不到官方地址时在当前打开的这个页面中作为本次访问的住处使用，不会保存在这台设备上。', '会回到之前保存的基准'],
+    ['privacy-ja.html', '文字はリクエストのURLではなく本文に入れて送ります', 'サーバーは検索語も結果も保存せず、Cloudflareのキャッシュにも置きません。', '行政安全部の道路名住所API（business.juso.go.kr）', '宿としてこの端末にだけ保存するのは、この公的な座標です。', '選んだ場所を今回の訪問だけ宿として使い、保存しません', '開いているこのページで今回の訪問の宿として使うときだけ使い、この端末には保存しません。', '以前に保存した基準に戻ります'],
   ])('%s: 주소·숙소 검색 — the body, no cache, the public address kept', (f, ...says) => {
     const html = text(f);
     for (const t of says) expect(html).toContain(t);
