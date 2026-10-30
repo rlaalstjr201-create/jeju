@@ -212,6 +212,7 @@ export const JA: Lang = {
       none: '見つかりませんでした。別の名前で検索してください。',
       fail: '検索できませんでした。接続を確認してもう一度お試しください。',
       nodata: 'このあたりの場所データはまだありません。',
+      once: '今回だけこの場所を宿として使います。住所を確認できなかったため保存していません。',
     },
   },
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in their Japanese names, 시군구 and places stay Korean */

@@ -86,6 +86,29 @@ export async function fetchGeo(q: string, get: Fetch, timeoutMs = 6000): Promise
   }
 }
 
+/** 고른 주소를 공공 주소로 (ADR-0103 Amendment 2): a picked answer's address, to /api/addr (the 행정안전부 도로명주소 API
+ * behind it) in a POST body. Its { addr, lat, lng } is what may be kept on the device; null for anything else (no key,
+ * nothing found, an error, no answer within `timeoutMs`). */
+export async function fetchAddr(addr: string, get: Fetch, timeoutMs = 6000): Promise<{ addr: string; lat: number; lng: number } | null> {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), timeoutMs);
+  try {
+    const res = await Promise.race([
+      get('/api/addr', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ addr }), signal: ctl.signal }),
+      new Promise<never>((_, reject) => ctl.signal.addEventListener('abort', () => reject(new Error('timeout')))),
+    ]);
+    if (res.status !== 200) return null;
+    const b = (await res.json()) as { addr?: unknown; lat?: unknown; lng?: unknown } | null;
+    return b && typeof b.addr === 'string' && typeof b.lat === 'number' && typeof b.lng === 'number' && Number.isFinite(b.lat) && Number.isFinite(b.lng)
+      ? { addr: b.addr.slice(0, 80), lat: b.lat, lng: b.lng }
+      : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function fetchRain(area: string, get: Fetch, timeoutMs = 5000): Promise<boolean | null> {
   const g = /^\d{4,8}$/.test(area) ? nationPart()?.grid(area) : undefined;
   if (g === null) return null;

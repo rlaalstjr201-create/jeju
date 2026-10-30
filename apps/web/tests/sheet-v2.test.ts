@@ -24,18 +24,37 @@ const 동문시장 = { lat: 33.5122, lng: 126.5272 };
 const 애월 = { name: '애월 게스트하우스', addr: '제주특별자치도 제주시 애월읍 애월해안로 1', lat: 33.4631, lng: 126.3105 };
 const 해운대 = { name: '해운대해수욕장', addr: '부산 해운대구 우동', lat: 35.1587, lng: 129.1604 };
 const 속초 = { name: '속초해수욕장', addr: '강원 속초시 조양동', lat: 38.1906, lng: 128.6014 };
+/** an address answer with no building name: its name is the address, `addr` empty */
+const 이름만 = { name: '제주특별자치도 제주시 한림읍 한림리 1', addr: '', lat: 33.4139, lng: 126.2672 };
+const north = (p: { lat: number }) => Math.round((p.lat + 0.0002) * 1e6) / 1e6;
 const wait = async () => {
   for (let i = 0; i < 4; i++) await flush();
   await settle();
 };
 type Answer = { status: number; hits?: GeoHit[] } | 'throw';
-function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void> } = {}) {
+/** /api/addr (the 도로명주소 API, ADR-0103 Amendment 2): `near` — the public point 0.0002° north of Kakao's (about 22 m); `far`
+ * — 2 km away; a status — no answer */
+type Pub = 'near' | 'far' | number;
+const PUBLIC = '(공공) ';
+const kakaoOf = (addr: string) => [애월, 해운대, 속초, 이름만].find((h) => (h.addr || h.name) === addr);
+function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void>; pub?: Pub } = {}) {
   if (o.dest) localStorage.setItem(KEYS.dest, JSON.stringify(o.dest));
   const asked: string[] = [];
+  const picked: string[] = [];
   render({
     loadSpots: (d, sgg) => Promise.resolve(d === 'nation' || d === 'gangwon' ? normalizeNation(JSON.parse(file('51')), [], sgg) : fileSpots),
     locate: () => Promise.resolve(동문시장),
     fetch: async (url: string, init?: { method?: string; headers?: Record<string, string>; body?: string }) => {
+      if (url === '/api/addr') {
+        expect([init?.method, init?.headers?.['Content-Type']]).toEqual(['POST', 'application/json']);
+        const addr = (JSON.parse(init!.body!) as { addr: string }).addr;
+        picked.push(addr);
+        const pub = o.pub ?? 'near';
+        const k = kakaoOf(addr)!;
+        if (typeof pub === 'number') return { ok: false, status: pub, json: () => Promise.resolve(null) };
+        const at = { addr: PUBLIC + addr, lat: Math.round((k.lat + (pub === 'near' ? 0.0002 : 0.018)) * 1e6) / 1e6, lng: k.lng };
+        return { ok: true, status: 200, json: () => Promise.resolve(at) };
+      }
       if (!url.startsWith('/api/geo')) return { ok: false, status: 204, json: () => Promise.resolve(null) };
       // the words in a POST body only, never in the URL (m-5)
       expect([url, init?.method, init?.headers?.['Content-Type']]).toEqual(['/api/geo', 'POST', 'application/json']);
@@ -46,7 +65,7 @@ function mount(o: { dest?: string; answer?: Answer; hold?: Promise<void> } = {})
       return { ok: a.status === 200, status: a.status, json: () => Promise.resolve({ hits: a.hits ?? [] }) };
     },
   });
-  return { asked };
+  return { asked, picked };
 }
 const pressed = (sel: string) => $$(sel).filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.seg ?? b.dataset.dest);
 async function search(words: string) {
@@ -131,8 +150,8 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect(document.activeElement).toBe($('#sheet .chips [data-dest="jeju"]'));
   });
 
-  it('주소·숙소: searched on Enter (only the words), the answers as rows; one picked is the 숙소 and the basis (source addr), kept', async () => {
-    const { asked } = mount({ dest: 'jeju', answer: { status: 200, hits: [애월, 해운대] } });
+  it('주소·숙소: searched on Enter (only the words), the answers as rows; one picked is found again by its address in the public API, whose point is the 숙소 and the basis (source addr), kept', async () => {
+    const { asked, picked } = mount({ dest: 'jeju', answer: { status: 200, hits: [애월, 해운대] } });
     await wait();
     await tap('#basis');
     expect($('#sheet [data-basis="stay"] .nm').textContent).toBe('주소·숙소');
@@ -151,9 +170,12 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect($('#sheet .addr-live').textContent).toBe('2곳 찾았어요.');
     await tap('#sheet [data-hit="0"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'jeju', basis: 'stay', overlay: null, stay: { lat: 애월.lat, lng: 애월.lng, area: '애월', source: 'addr' } });
+    expect(picked).toEqual([애월.addr]);
+    // the public point, never Kakao's, in the state and on the device
+    expect(current().state()).toMatchObject({ dest: 'jeju', basis: 'stay', overlay: null, stay: { lat: north(애월), lng: 애월.lng, area: '애월', source: 'addr' } });
     expect($('#basis > span').textContent).toBe('숙소 근처');
-    expect(JSON.parse(localStorage.getItem(KEYS.stay)!)).toMatchObject({ lat: 애월.lat, source: 'addr' });
+    expect(JSON.parse(localStorage.getItem(KEYS.stay)!)).toEqual({ lat: north(애월), lng: 애월.lng, area: '애월', source: 'addr' });
+    expect(localStorage.getItem(KEYS.basis)).toBe('"stay"');
     // back in the sheet: 애월 숙소, checked
     await tap('#basis');
     expect($('#sheet [data-basis="stay"] .lm').textContent).toBe('애월 숙소');
@@ -167,9 +189,9 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     await search('해수욕장');
     await tap('#sheet [data-hit="0"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'busan', basis: 'stay', stay: { lat: 해운대.lat, source: 'addr' } });
+    expect(current().state()).toMatchObject({ dest: 'busan', basis: 'stay', stay: { lat: north(해운대), source: 'addr' } });
     expect($('.logo .rg').textContent).toBe(':부산');
-    expect(JSON.parse(localStorage.getItem(destKey(KEYS.stay, 'busan'))!)).toMatchObject({ lat: 해운대.lat, source: 'addr' });
+    expect(JSON.parse(localStorage.getItem(destKey(KEYS.stay, 'busan'))!)).toMatchObject({ lat: north(해운대), source: 'addr' });
     expect(localStorage.getItem(KEYS.stay)).toBeNull(); // Jeju's own 숙소 untouched
     await tap('#basis');
     await search('해수욕장');
@@ -263,6 +285,30 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     q.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await wait();
     expect(current().state().overlay).toBeNull();
+  });
+
+  // 카카오 로컬의 주소·좌표는 실시간으로만 (ADR-0103 Amendment 2): with no public point, Kakao's for this visit and nothing saved
+  it.each<[string, Pub]>([
+    ['no key for the public API (503)', 503],
+    ['not found there (404)', 404],
+    ['its point more than 1 km from Kakao\'s', 'far'],
+  ])('%s: Kakao\'s point is the 숙소 for this visit only — nothing saved, the sheet stays and says so', async (_, pub) => {
+    localStorage.setItem(KEYS.basis, JSON.stringify('gps'));
+    const { picked } = mount({ dest: 'jeju', pub, answer: { status: 200, hits: [이름만] } });
+    await wait();
+    await tap('#basis');
+    await search('한림리 1');
+    await tap('#sheet [data-hit="0"]');
+    await wait();
+    expect(picked).toEqual([이름만.name]); // no address line: the name, which is the address
+    expect(current().state()).toMatchObject({ dest: 'jeju', basis: 'stay', overlay: 'basis', stay: { lat: 이름만.lat, lng: 이름만.lng, source: 'addr' } });
+    expect($('#sheet .addr-err').textContent).toBe('이번에만 이곳을 숙소로 써요. 주소를 확인하지 못해 저장하지 않았어요.');
+    expect($('#sheet .addr-live').textContent).toBe('이번에만 이곳을 숙소로 써요. 주소를 확인하지 못해 저장하지 않았어요.');
+    expect($('#sheet [data-basis="stay"]').getAttribute('aria-pressed')).toBe('true');
+    expect($$('#sheet .hit-row')).toHaveLength(0);
+    expect(localStorage.getItem(KEYS.stay)).toBeNull();
+    expect(localStorage.getItem(KEYS.basis)).toBe('"gps"');
+    expect(Object.values({ ...localStorage }).some((v) => v.includes(String(이름만.lat)))).toBe(false);
   });
 
   it("an answer outside Jeju with the 자동 지역's part not coming: 「검색하지 못했어요…」, not 「장소 자료가 없어요」; the basis unchanged", async () => {

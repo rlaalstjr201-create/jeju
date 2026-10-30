@@ -208,6 +208,7 @@ export const ZH: Lang = {
       none: '没有找到。请换个名称再搜索。',
       fail: '搜索失败。请检查网络后再试。',
       nodata: '这附近还没有地点资料。',
+      once: '仅本次把这里当作住处。无法确认地址，所以没有保存。',
     },
   },
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in their Chinese names, 시군구 and places stay Korean */

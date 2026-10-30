@@ -215,6 +215,7 @@ export const EN: Lang = {
       none: 'Nothing found. Try another name.',
       fail: "Couldn't search. Check your connection and try again.",
       nodata: "We don't have place data for around here yet.",
+      once: "Using this place as your stay for this visit only. We couldn't confirm the address, so it isn't saved.",
     },
   },
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in Revised Romanization, 시군구 and places stay Korean */

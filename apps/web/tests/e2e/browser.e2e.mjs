@@ -4901,11 +4901,21 @@ const 애월GH = { name: '애월 게스트하우스', addr: '제주특별자치�
 const 해운대HS = { name: '해운대해수욕장', addr: '부산 해운대구 우동', lat: 35.1587, lng: 129.1604 };
 /** /api/geo answered here (no function under vite preview): `status` 200 with `hits`, or 503 (no key); what was asked kept
  * (method, the URL's query — none — and the body's words) */
-const geoRoute = (asked, status = 200, hits = [애월GH, 해운대HS]) => (c) =>
-  c.route('**/api/geo*', (r) => {
+/** the public point /api/addr answers (ADR-0103 Amendment 2): 0.0002° north of Kakao's (about 22 m) */
+const north = (h) => Math.round((h.lat + 0.0002) * 1e6) / 1e6;
+const geoRoute = (asked, status = 200, hits = [애월GH, 해운대HS], pub = 200) => async (c) => {
+  await c.route('**/api/geo*', (r) => {
     asked.push(`${r.request().method()} ${new URL(r.request().url()).search}|${r.request().postDataJSON()?.q}`);
     return status === 200 ? r.fulfill({ status, contentType: 'application/json', body: JSON.stringify({ hits }) }) : r.fulfill({ status, body: '' });
   });
+  // /api/addr: the picked answer's address found again in the 도로명주소 API (no function under vite preview either)
+  await c.route('**/api/addr', (r) => {
+    const addr = r.request().postDataJSON()?.addr;
+    asked.push(`${r.request().method()} addr|${addr}`);
+    const k = hits.find((h) => (h.addr || h.name) === addr);
+    return pub === 200 && k ? r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ addr, lat: north(k), lng: k.lng }) }) : r.fulfill({ status: pub === 200 ? 404 : pub, body: '' });
+  });
+};
 /** the open sheet: sideways overflow of the page and of the sheet, tap boxes under 44, what is pressed */
 const SHEET_GEOM = () => {
   const sheet = document.querySelector('.sheet');
@@ -4999,7 +5009,8 @@ if (NATION) {
       await tapText(page, '.sheet [data-hit="0"]');
       await page.waitForFunction(() => document.querySelector('#basis > span')?.textContent === '숙소 근처', null, { timeout: 5000 }).catch(() => undefined);
       const after = await page.evaluate(() => ({ basis: document.querySelector('#basis > span')?.textContent, stay: JSON.parse(localStorage.getItem('jeju.stay') || 'null'), sheet: !!document.querySelector('.sheet') }));
-      if (after.basis !== '숙소 근처' || after.stay?.source !== 'addr' || after.stay?.lat !== 애월GH.lat || after.sheet) problems.push(`${w} picked ${JSON.stringify(after)}`);
+      // the public point is what the device keeps, never Kakao's (ADR-0103 Amendment 2)
+      if (after.basis !== '숙소 근처' || after.stay?.source !== 'addr' || after.stay?.lat !== north(애월GH) || after.sheet || asked[1] !== `POST addr|${애월GH.addr}`) problems.push(`${w} picked ${JSON.stringify(after)} ${asked.join(' ')}`);
       await tapText(page, '#basis');
       const lm = await page.textContent('.sheet [data-basis="stay"] .lm');
       if (lm !== '애월 숙소') problems.push(`${w} 다시 열기 ${lm}`);
@@ -5010,7 +5021,7 @@ if (NATION) {
         await tapText(page, '.sheet [data-hit="1"]');
         if (!(await rgIs(page, ':부산', 8000))) problems.push(`해운대 ${JSON.stringify(await said(page))}`);
         const busan = await page.evaluate(() => JSON.parse(localStorage.getItem('jeju.stay.busan') || 'null'));
-        if (busan?.source !== 'addr' || busan?.lat !== 해운대HS.lat) problems.push(`부산 숙소 ${JSON.stringify(busan)}`);
+        if (busan?.source !== 'addr' || busan?.lat !== north(해운대HS)) problems.push(`부산 숙소 ${JSON.stringify(busan)}`);
       }
       await ctx.close();
     }
@@ -5040,6 +5051,36 @@ if (NATION) {
       await ctx.close();
     }
     assert(!problems.length, problems.join(' | '));
+  });
+}
+
+if (NATION) {
+  await check('SV-5', '고른 곳의 공공 주소를 못 받을 때(/api/addr 503) at 375: Kakao의 점은 이번에만 — 숙소 근처가 되지만 jeju.stay·jeju.basis는 그대로, 시트는 남아 「이번에만 이곳을 숙소로 써요…」 (shot)', async () => {
+    const asked = [];
+    const { ctx, page } = await fresh({ width: 375, height: 812, storage: {}, route: geoRoute(asked, 200, [애월GH, 해운대HS], 503) });
+    await page.waitForSelector('#today:not(.wait)');
+    const before = await page.evaluate(() => [localStorage.getItem('jeju.stay'), localStorage.getItem('jeju.basis')]);
+    await tapText(page, '#basis');
+    await page.locator('.sheet .addr-q').fill('애월');
+    await page.locator('.sheet .addr-q').press('Enter');
+    await page.waitForSelector('.sheet [data-hit="0"]', { timeout: 5000 });
+    await tapText(page, '.sheet [data-hit="0"]');
+    await page.waitForSelector('.sheet .addr-err:not([hidden])', { timeout: 5000 }).catch(() => undefined);
+    await page.locator('.sheet .addr-err').scrollIntoViewIfNeeded().catch(() => undefined);
+    const s = await page.evaluate(() => ({
+      err: document.querySelector('.sheet .addr-err')?.textContent,
+      kept: [localStorage.getItem('jeju.stay'), localStorage.getItem('jeju.basis')],
+      stay: document.querySelector('.sheet [data-basis="stay"]')?.getAttribute('aria-pressed'),
+      over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    }));
+    if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `pick-once-375.png`) });
+    await tapText(page, '.sheet .sheet-close');
+    const basis = await page.textContent('#basis > span');
+    await ctx.close();
+    assert(
+      s.err === '이번에만 이곳을 숙소로 써요. 주소를 확인하지 못해 저장하지 않았어요.' && s.stay === 'true' && JSON.stringify(s.kept) === JSON.stringify(before) && !s.over && basis === '숙소 근처' && asked[1] === `POST addr|${애월GH.addr}`,
+      `${JSON.stringify(s)} before ${JSON.stringify(before)} basis ${basis} asked ${asked.join(' ')}`,
+    );
   });
 }
 

@@ -245,6 +245,7 @@ export const BUSAN_COPY = {
     none: '찾는 곳이 없어요. 다른 이름으로 검색해 주세요.',
     fail: '검색하지 못했어요. 연결을 확인하고 다시 검색해 주세요.',
     nodata: '이 근처는 아직 장소 자료가 없어요.',
+    once: '이번에만 이곳을 숙소로 써요. 주소를 확인하지 못해 저장하지 않았어요.',
   } satisfies Record<GeoError, string>,
 } as const;
 

@@ -16,9 +16,10 @@ export interface GeoHit extends Point {
   name: string;
   addr: string;
 }
-/** Why a search shows no answers: no key on the server (`off`), none found, the request failed, or the point is where
- * no destination is open (`nodata`). */
-export type GeoError = 'off' | 'none' | 'fail' | 'nodata';
+/** Why a search shows no answers: no key on the server (`off`), none found, the request failed, the point is where
+ * no destination is open (`nodata`), or the one picked is used for this visit only — no public address for it, so
+ * nothing saved (`once`, ADR-0103 Amendment 2). */
+export type GeoError = 'off' | 'none' | 'fail' | 'nodata' | 'once';
 /** Permissions API answer for geolocation ('unknown' where the API is missing). */
 export type GeoPermission = 'granted' | 'denied' | 'prompt' | 'unknown';
 /** Why there is no usable position. */

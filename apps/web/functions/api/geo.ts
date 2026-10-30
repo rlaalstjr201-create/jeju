@@ -28,7 +28,7 @@ export interface Hit {
 const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' };
 /** `why` (X-Geo-Reason) says which step failed, for whoever runs the site — a status or a word, never the key or the words
  * searched; kept to header-safe ASCII as rain.ts does. */
-const plain = (status: number, body: string, why: string) =>
+export const plain = (status: number, body: string, why: string) =>
   new Response(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Geo-Reason': why.replace(/[^\w .:-]/g, '').slice(0, 80) } });
 
 /** The words, spaces folded, or null: empty, longer than MAX_Q, or with a control character. */

@@ -6,12 +6,12 @@ import { createSpotSource, normalizeSpots, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
 import { DEST, destOfId, isDest, type Dest } from './dest';
-import { LocateError, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
+import { LocateError, fetchAddr, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './release';
 import { HOME, createNav } from './nav';
-import { REACHES, type Button, type Reach, type Spot, type Tab } from './pick';
+import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './home';
 import { sunriseMinutes, sunsetMinutes } from './sun';
@@ -904,12 +904,16 @@ export function mountApp(doc: Document, deps: Deps): App {
     nav.back();
   }
 
-  function changeBasis(next: { basis: Basis; region?: RegionName; stay?: Stay }) {
+  /** `keep` false (주소·숙소 with no public address, ADR-0103 Amendment 2): for this visit only — nothing saved, the sheet
+   * stays open to say so. */
+  function changeBasis(next: { basis: Basis; region?: RegionName; stay?: Stay }, keep = true) {
     dispatch({ type: 'basis', ...next });
-    store.setBasis(next.basis);
-    if (next.region) store.setRegion(next.region);
-    if (next.stay) store.setStay(next.stay);
-    closeOverlay();
+    if (keep) {
+      store.setBasis(next.basis);
+      if (next.region) store.setRegion(next.region);
+      if (next.stay) store.setStay(next.stay);
+      closeOverlay();
+    }
     // A new request also abandons any GPS request still in flight (S37·S38).
     if (state.view === 'home') abortRequest();
     else request('show');
@@ -986,27 +990,37 @@ export function mountApp(doc: Document, deps: Deps): App {
       else dispatch({ type: 'geo', pending: false, hits: r.hits, error: r.hits.length ? null : 'none' });
     });
   }
-  /** An answer picked: its point is the 숙소 (`addr`) and the basis, in the destination (and 시군구) it is in — another one
-   * is moved to, as a 시군구 picked in the 동네 index. Outside every open one: 「이 근처는 아직 장소 자료가 없어요.」 */
+  /** An answer picked: found again in the 도로명주소 API (/api/addr), whose address and point the device may keep — Kakao's
+   * may be used only as they come (ADR-0103 Amendment 2). That point is the 숙소 (`addr`) and the basis, in the destination
+   * (and 시군구) it is in — another one is moved to, as a 시군구 picked in the 동네 index. Not found there (or more than 1 km
+   * from Kakao's): Kakao's point for this visit only, never saved, and the sheet says so. Outside every open one:
+   * 「이 근처는 아직 장소 자료가 없어요.」 */
   function pickHit(i: number) {
     const hit = state.geo.hits?.[i];
-    if (state.overlay !== 'basis' || !hit) return;
-    const p = { lat: hit.lat, lng: hit.lng };
+    if (state.overlay !== 'basis' || !hit || state.geo.pending) return;
     const token = ++stayToken;
-    // `ok` false: the 자동 지역's part did not come (no connection) — that, not 「장소 자료가 없어요」
-    const go = (ok = true) => {
-      if (token !== stayToken || signal.aborted || state.overlay !== 'basis') return;
-      if (!ok) return dispatch({ type: 'geo', pending: false, error: 'fail' });
-      const d = releasedDestOf(p);
-      if (!d) return dispatch({ type: 'geo', pending: false, error: 'nodata' });
-      const area = areaOfPoint(p, d);
-      if (d !== state.dest && !DEST[d].sgg && d !== 'nation') switchDest(d);
-      toSgg(area);
-      changeBasis({ basis: 'stay', stay: { ...p, area: area.name, source: 'addr' } });
-    };
-    // where the point is (Busan's boundary, the 시군구) needs the 자동 지역's part, Busan's with it
-    if (inJeju(p)) go();
-    else void loadNation().then(go);
+    const live = () => token === stayToken && !signal.aborted && state.overlay === 'basis';
+    dispatch({ type: 'geo', pending: true });
+    void (deps.fetch ? fetchAddr(hit.addr || hit.name, deps.fetch) : Promise.resolve(null)).then((pub) => {
+      if (!live()) return;
+      const keep = !!pub && distanceKm(pub, hit) <= 1;
+      const p = pub && keep ? { lat: pub.lat, lng: pub.lng } : { lat: hit.lat, lng: hit.lng };
+      // `ok` false: the 자동 지역's part did not come (no connection) — that, not 「장소 자료가 없어요」
+      const go = (ok = true) => {
+        if (!live()) return;
+        if (!ok) return dispatch({ type: 'geo', pending: false, error: 'fail' });
+        const d = releasedDestOf(p);
+        if (!d) return dispatch({ type: 'geo', pending: false, error: 'nodata' });
+        const area = areaOfPoint(p, d);
+        if (d !== state.dest && !DEST[d].sgg && d !== 'nation') switchDest(d);
+        toSgg(area);
+        changeBasis({ basis: 'stay', stay: { ...p, area: area.name, source: 'addr' } }, keep);
+        if (!keep) dispatch({ type: 'geo', pending: false, hits: null, error: 'once' });
+      };
+      // where the point is (Busan's boundary, the 시군구) needs the 자동 지역's part, Busan's with it
+      if (inJeju(p)) go();
+      else void loadNation().then(go);
+    });
   }
 
   /** `day`: a saved-list row's heart (that day); a card's heart is about the day chosen now (지금 = today). */
