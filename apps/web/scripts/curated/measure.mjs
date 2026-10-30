@@ -14,6 +14,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { env, keywordstool, volume03 } from '../famous-measure.mjs';
 import { BATCH, FOOD_TYPE, GAP_MS, SUFFIX, callWithRetry, mainOf, placeVolume, squash } from '../busan/measure.mjs';
+import { judgeRound } from './rounds.mjs';
 
 export { BATCH, GAP_MS, placeVolume, callWithRetry };
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -95,7 +96,7 @@ export function keywordsOf(place, city, otherK1 = new Set()) {
 /** pop-criteria.md 1절: 도시의 keep 곳 전부, id 순. */
 export function targets(dir, city) {
   const verdicts = new Map();
-  const judgeDir = resolve(dir, `judge-${city}-01`);
+  const judgeDir = resolve(dir, `judge-${city}-${judgeRound(city)}`);
   for (const f of readdirSync(judgeDir).filter((f) => /^out-\d{2}\.json$/.test(f)).sort()) {
     for (const v of JSON.parse(readFileSync(resolve(judgeDir, f), 'utf8'))) verdicts.set(v.id, v);
   }

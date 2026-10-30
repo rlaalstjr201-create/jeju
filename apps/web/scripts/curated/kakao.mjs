@@ -14,6 +14,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { callsOn, kstDay } from '../busan/collect.mjs';
 import { DAY_LIMIT, FOOD_TYPE, PASS_RATE, haversine, kakaoLocal, normName, queryOf, radiusOf } from '../busan/kakao.mjs';
+import { judgeRound } from './rounds.mjs';
 
 export { DAY_LIMIT, PASS_RATE, queryOf, kakaoLocal };
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -81,7 +82,7 @@ function writeJson(p, value) {
 /** 대상(1절): 도시의 keep만, id 순. dir = review/<dest>. */
 export function targets(dir, city) {
   const keep = new Map();
-  const judgeDir = resolve(dir, `judge-${city}-01`);
+  const judgeDir = resolve(dir, `judge-${city}-${judgeRound(city)}`);
   for (const f of readdirSync(judgeDir).filter((f) => /^out-\d{2}\.json$/.test(f)).sort()) {
     for (const v of readJson(resolve(judgeDir, f))) if (v.keep) keep.set(v.id, v.mood);
   }

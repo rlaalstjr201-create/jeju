@@ -7,6 +7,7 @@
  *   npx tsx scripts/curated/judge.mjs sample gangwon 강릉        keep 120곳 표본(씨앗 20261030) → audit-강릉-01-sample.json
  *   npx tsx scripts/curated/judge.mjs score  gangwon 강릉        → audit-강릉-01.json
  *
+ * 회차(judge-<도시>-NN)와 씨앗은 rounds.mjs(양양 02, 그 밖 01).
  * 부산 judge.mjs는 import 때 argv로 명령을 실행해서 가져오지 않고 같은 규칙을 다시 적었다(부산 파일은 건드리지 않는다).
  * tsx로 돌린다(REASON_BANNED가 check-slop.ts에 있다).
  */
@@ -15,6 +16,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { REASON_BANNED } from '../check-slop.ts';
 import { reasonPunctuationProblem, shipReason } from '../reason.mjs';
+import { CRITERIA, SEEDS, judgeRound } from './rounds.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -38,18 +40,20 @@ const writeJson = (p, v) => {
 };
 
 /** 경로 모음. root는 review 폴더의 부모(테스트에서 바꾼다). */
-export function paths(dest, city, root = webRoot) {
+export function paths(dest, city, root = webRoot, round = judgeRound(city)) {
   const base = resolve(root, 'review', dest);
   return {
     base,
+    round,
+    seed: SEEDS[round],
     scope: resolve(base, 'scope.json'),
     detail: (contentid) => resolve(base, 'raw', 'detail', `${contentid}.json`),
-    judgeDir: resolve(base, `judge-${city}-01`),
-    sample: resolve(base, `audit-${city}-01-sample.json`),
-    judgments: resolve(base, `audit-${city}-01-judgments.json`),
-    facts: resolve(base, `audit-${city}-01-facts.json`),
-    audit: resolve(base, `audit-${city}-01.json`),
-    criteria: `review/${dest}/criteria.md`,
+    judgeDir: resolve(base, `judge-${city}-${round}`),
+    sample: resolve(base, `audit-${city}-${round}-sample.json`),
+    judgments: resolve(base, `audit-${city}-${round}-judgments.json`),
+    facts: resolve(base, `audit-${city}-${round}-facts.json`),
+    audit: resolve(base, `audit-${city}-${round}.json`),
+    criteria: `review/${dest}/${CRITERIA[round]}`,
   };
 }
 
@@ -204,8 +208,8 @@ function sample(P) {
   if (existsSync(P.sample)) throw new Error(`${P.sample}이 이미 있다 — 표본은 한 번만 뽑는다`);
   const keepIds = [...loadVerdicts(P).values()].filter((v) => v.keep).map((v) => v.id);
   const byId = new Map(loadInputs(P).map((i) => [i.id, i]));
-  const ids = drawSample(keepIds);
-  writeJson(P.sample, { seed: SEED, n: ids.length, from: keepIds.length, items: ids.map((id) => byId.get(id)) });
+  const ids = drawSample(keepIds, P.seed);
+  writeJson(P.sample, { seed: P.seed, n: ids.length, from: keepIds.length, items: ids.map((id) => byId.get(id)) });
   console.log(`keep ${keepIds.length}곳에서 ${ids.length}곳`);
 }
 
@@ -248,12 +252,12 @@ function score(P, city) {
   };
   const pass = metrics.keepMood.pass && metrics.indoor.pass && metrics.factErrors.pass;
   writeJson(P.audit, {
-    round: '01',
+    round: P.round,
     city,
     criteria: P.criteria,
-    sample: `audit-${city}-01-sample.json (seed ${SEED})`,
-    judgments: `audit-${city}-01-judgments.json`,
-    facts: `audit-${city}-01-facts.json`,
+    sample: `audit-${city}-${P.round}-sample.json (seed ${P.seed})`,
+    judgments: `audit-${city}-${P.round}-judgments.json`,
+    facts: `audit-${city}-${P.round}-facts.json`,
     metrics,
     pass,
     rows,

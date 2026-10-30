@@ -15,6 +15,7 @@ import { popScores } from '../famous.mjs';
 import { shipReason } from '../reason.mjs';
 import { haversine } from '../busan/kakao.mjs';
 import { CAFE_WORDS, FAMOUS_TYPE, LEPORTS_TYPE, famousCandidate, famousIds, kakaoIds, quintileScores, reasonProblem } from '../busan/build.mjs';
+import { judgeRound } from './rounds.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 export { CAFE_WORDS, FAMOUS_TYPE, LEPORTS_TYPE, famousCandidate, famousIds, kakaoIds, quintileScores, reasonProblem };
@@ -51,7 +52,7 @@ export function loadInputs(dest = 'gangwon', cities = ['강릉'], dir = resolve(
   const kakao = [];
   const pop = [];
   for (const city of cities) {
-    const judgeDir = resolve(dir, `judge-${city}-01`);
+    const judgeDir = resolve(dir, `judge-${city}-${judgeRound(city)}`);
     for (const f of readdirSync(judgeDir).filter((f) => /^out-\d{2}\.json$/.test(f)).sort()) for (const v of readJson(resolve(judgeDir, f))) verdicts.set(v.id, v);
     if (existsSync(resolve(judgeDir, 'fixes-01.json'))) fixes.push(...readJson(resolve(judgeDir, 'fixes-01.json')));
     kakao.push(...readJson(resolve(dir, `kakao-${city}-01.json`)).rows);
