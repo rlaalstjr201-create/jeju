@@ -12,7 +12,8 @@
  * - 끝나면 review/<dest>/scope.json(부산 scope.json과 같은 모양, 곳마다 detail 여부)과 review/curated/progress.json을 다시 쓴다.
  * - id는 전국 층과 맞추려고 부산의 bs-가 아니라 `nt-<contentid>`를 쓴다(전국 scope 레코드의 id를 그대로 가져옴).
  *
- * 키는 저장소 루트 .env의 DATA_GO_KR_SERVICE_KEY. 출력·로그·파일 어디에도 남기지 않는다.
+ * 키는 환경 변수 또는 저장소 루트 .env의 DATA_GO_KR_SERVICE_KEY, 있으면 _2(다른 포털 계정 키, 제 한도·calls-2.log)로
+ * 첫 키가 한도에 닿은 뒤 이어 간다. 출력·로그·파일 어디에도 키를 남기지 않는다.
  *
  *   node scripts/curated/collect.mjs
  */
@@ -86,9 +87,9 @@ class StopError extends Error {}
  * outDir: review 폴더, nationDir: review/nation, otherLogs: 합산할 다른 로그 경로들(부산·전국).
  * stopped: 'done' | 'limit' | 'error'.
  */
-export async function collect({ outDir, nationDir, fetchJson, otherLogs = [], now = () => new Date(), limit = DAY_LIMIT, dests = DESTS }) {
+export async function collect({ outDir, nationDir, fetchJson, otherLogs = [], now = () => new Date(), limit = DAY_LIMIT, dests = DESTS, logName = 'calls.log' }) {
   const curatedDir = resolve(outDir, 'curated');
-  const ownLog = resolve(curatedDir, 'calls.log');
+  const ownLog = resolve(curatedDir, logName);
   mkdirSync(curatedDir, { recursive: true });
   const logs = [...otherLogs, ownLog];
   let calls = 0;
@@ -191,8 +192,12 @@ function writeOutputs({ outDir, plan, logs, now, calls }) {
   return progress;
 }
 
+/** 환경 변수(클라우드 예약 작업) 먼저, 없으면 저장소 루트 .env. */
 function env(key) {
-  for (const line of readFileSync(resolve(webRoot, '../../.env'), 'utf8').split(/\r?\n/)) {
+  if (process.env[key]) return process.env[key].trim();
+  const path = resolve(webRoot, '../../.env');
+  if (!existsSync(path)) return '';
+  for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
     const eq = line.indexOf('=');
     if (eq > 0 && line.slice(0, eq).trim() === key) return line.slice(eq + 1).trim().replace(/^["']|["']$/g, '');
   }
@@ -200,15 +205,19 @@ function env(key) {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const key = env('DATA_GO_KR_SERVICE_KEY');
-  if (!key) throw new Error('DATA_GO_KR_SERVICE_KEY missing in the repo-root .env');
   const outDir = resolve(webRoot, 'review');
-  const r = await collect({
-    outDir,
-    nationDir: resolve(outDir, 'nation'),
-    fetchJson: tourApi(key),
-    otherLogs: [resolve(outDir, 'busan/raw/calls.log'), resolve(outDir, 'nation/calls.log')],
-  });
-  console.log(JSON.stringify({ calls: r.calls, stopped: r.stopped, message: r.message, errors: r.errors, dests: r.summary }, null, 1));
-  if (r.stopped === 'error') process.exitCode = 1;
+  // 키마다 하루 한도가 따로다. 첫 키는 부산·전국 로그와 합산하고, 둘째 키(다른 포털 계정)는 제 로그만 센다.
+  const KEYS = [
+    { name: 'DATA_GO_KR_SERVICE_KEY', logName: 'calls.log', otherLogs: [resolve(outDir, 'busan/raw/calls.log'), resolve(outDir, 'nation/calls.log')] },
+    { name: 'DATA_GO_KR_SERVICE_KEY_2', logName: 'calls-2.log', otherLogs: [] },
+  ];
+  if (!env(KEYS[0].name)) throw new Error('DATA_GO_KR_SERVICE_KEY missing (env or repo-root .env)');
+  for (const k of KEYS) {
+    const key = env(k.name);
+    if (!key) continue;
+    const r = await collect({ outDir, nationDir: resolve(outDir, 'nation'), fetchJson: tourApi(key), otherLogs: k.otherLogs, logName: k.logName });
+    console.log(JSON.stringify({ key: k.name, calls: r.calls, stopped: r.stopped, message: r.message, errors: r.errors, dests: r.summary }, null, 1));
+    if (r.stopped === 'error') process.exitCode = 1;
+    if (r.stopped !== 'limit') break;
+  }
 }
