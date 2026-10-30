@@ -17,11 +17,14 @@ import { JEJU_RECORD_BOX, recordProblems } from './spot-record';
 const root = resolve(__dirname, '..');
 const text = readFileSync(resolve(root, 'data/gangwon/spots-gangwon.json'), 'utf8');
 type Rec = Spot & { area: string };
-const all = JSON.parse(text) as Rec[];
+const file = JSON.parse(text) as Rec[];
+// 강릉 시험은 강릉 레코드만 본다(파일에는 속초·춘천도 있다, pop-criteria 10절)
+const all = file.filter((s) => s.area === '강릉');
 // 출하 레코드 11칸 형식 검사는 부산과 같은 함수(tests/spot-record.ts)로, `area`(도시 이름, 동네 나누기 전)는 따로 본다.
 const spots = all.map(({ area: _area, ...s }) => s as Spot);
 const GANGNEUNG_BOX = (p: { lat: number; lng: number }) => inBox('강릉', p);
 const inputs = loadInputs('gangwon', ['강릉']);
+const CITIES = ['강릉', '속초', '춘천'];
 const item = new Map(inputs.items.map((i) => [i.id, i]));
 const volume = new Map(inputs.pop.map((r) => [r.id, r.volume as number]));
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
@@ -190,13 +193,58 @@ describe('강릉 이름 겹침 (pop-criteria 8절)', () => {
 });
 
 describe('강릉 멱등·크기', () => {
-  it('같은 입력으로 다시 지으면 바이트가 같다', () => {
-    expect(JSON.stringify(build(inputs).spots)).toBe(text);
+  it('같은 입력으로 다시 지으면 바이트가 같고, 강릉 레코드는 강릉만 지은 것과 같다', () => {
+    expect(JSON.stringify(build(loadInputs('gangwon', CITIES)).spots)).toBe(text);
+    expect(build(inputs).spots).toEqual(all);
   });
   it('파일 크기를 적는다', () => {
     const gz = gzipSync(text).length;
     // eslint-disable-next-line no-console
-    console.log(`spots-gangwon.json: ${all.length} places, ${Buffer.byteLength(text)} B, gzip ${gz} B`);
+    console.log(`spots-gangwon.json: ${file.length} places, ${Buffer.byteLength(text)} B, gzip ${gz} B`);
     expect(gz).toBeGreaterThan(0);
+  });
+});
+
+describe('속초·춘천 (pop-criteria 10절)', () => {
+  const dir = resolve(root, 'review/gangwon');
+  const every = loadInputs('gangwon', CITIES);
+  const vol = new Map(every.pop.map((r) => [r.id, r.volume as number]));
+  const cityOf = new Map(every.items.map((i) => [i.id, i]));
+  const cases = [
+    { city: '속초', keep: 196, out: ['nt-2549932'], famous: 12, broad: 11 },
+    { city: '춘천', keep: 273, out: ['nt-3353336'], famous: 16, broad: 15 },
+  ];
+  for (const { city, keep: n, out, famous, broad } of cases) {
+    it(`${city}: keep ${n}곳 가운데 ${out.join('·')}만 빠지고, 상자 안·형식·도시 이름`, () => {
+      const recs = file.filter((s) => s.area === city);
+      const kept = [...every.verdicts.values()].filter((v) => v.keep && cityOf.get(v.id)?.city === city);
+      expect(kept).toHaveLength(n);
+      const shipped = new Set(recs.map((s) => s.id));
+      expect(kept.filter((v) => !shipped.has(v.id)).map((v) => v.id)).toEqual(out);
+      expect(recs.every((s) => cityOf.get(s.id)!.city === city)).toBe(true);
+      expect(recordProblems(recs.map(({ area: _a, ...s }) => s as Spot), (p) => inBox(city, p), { noPhoto: true })).toEqual([]);
+    });
+    it(`${city}: 유명한 곳 ${famous}곳은 도시 안 후보의 검색수 상위, 만족도도 도시 안에서`, () => {
+      expect(famousCount(n)).toBe(famous);
+      const recs = file.filter((s) => s.area === city);
+      const candidates = recs
+        .filter((s) => cityOf.get(s.id)!.contenttypeid === 12 && s.mood !== 'food' && !/카페|커피|빵|베이커리|디저트/.test(s.name))
+        .sort((a, b) => vol.get(b.id)! - vol.get(a.id)! || (a.id < b.id ? -1 : 1));
+      expect(recs.filter((s) => s.famous).map((s) => s.id).sort()).toEqual(candidates.slice(0, famous).map((s) => s.id).sort());
+      for (const food of [true, false]) {
+        const group = recs.filter((s) => (s.mood === 'food') === food);
+        for (const s of group) expect(s.score, s.id).toBe(5 - Math.floor((5 * group.filter((x) => vol.get(x.id)! > vol.get(s.id)!).length) / group.length));
+      }
+    });
+    it(`${city}: 뺄 말 ${broad}개, 계획 파일은 지금 규칙 그대로, 카카오·검색수 대상이 같다`, () => {
+      expect(BROAD[city].size).toBe(broad);
+      expect(plan(popTargets(dir, city), city)).toEqual(JSON.parse(readFileSync(resolve(dir, `pop-${city}-01-plan.json`), 'utf8')).rows);
+      expect(kakaoTargets(dir, city).map((p) => p.id)).toEqual(popTargets(dir, city).map((p) => p.id));
+      expect(every.pop.filter((r) => cityOf.get(r.id)?.city === city).every((r) => Number.isInteger(r.volume))).toBe(true);
+    });
+  }
+  it('양양은 감사에서 떨어져 싣지 않는다', () => {
+    expect(file.some((s) => s.area === '양양')).toBe(false);
+    expect(JSON.parse(readFileSync(resolve(dir, 'audit-양양-01.json'), 'utf8')).pass).toBe(false);
   });
 });
