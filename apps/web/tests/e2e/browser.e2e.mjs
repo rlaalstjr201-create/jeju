@@ -1192,7 +1192,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
     // Changed on purpose (ADR-0090 6): the 동네 row's 「다른 동네는 아래에서 골라요」 became the button 다른 동네 고르기 beside it
     // the switched-on build's 여행지 row comes first (specs/busan.md 1.4)
-    assert(rows.join('/') === `${BUSAN ? (NATION ? '제주/부산/강릉/다른 곳/' : '제주/부산/') : ''}지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
+    assert(rows.join('/') === `${BUSAN ? (NATION ? '제주/부산/강원/다른 곳/' : '제주/부산/') : ''}지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
     assert((await b.page.textContent('#sheet .optrow:has([data-action="close"][aria-pressed="true"]) [data-action="other-area"]')) === '다른 동네 고르기', 'no 다른 동네 고르기 on the 동네 row');
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
@@ -4420,7 +4420,7 @@ if (NATION) {
     assert(s.start && s.msg === '지금은 한국 밖이에요. 여행지를 골라 주세요.', JSON.stringify(s));
   });
 
-  await check('NT-3', '거절 → 다른 곳 → 강원 → 속초시 → 여차나:속초; 뒤로가 한 단계씩; 몫을 못 받으면 다른 곳이 그 까닭을 말함', async () => {
+  await check('NT-3', '거절 → 다른 곳 → 강원 → 양양군 → 여차나:양양; 뒤로가 한 단계씩; 몫을 못 받으면 다른 곳이 그 까닭을 말함', async () => {
     const problems = [];
     let o = await nationAt('/', { geo: { mode: 'deny' } });
     await o.page.click('#ycGps');
@@ -4435,8 +4435,9 @@ if (NATION) {
     await startButton(o.page, '다른 곳').click();
     await startButton(o.page, '강원').click();
     await nationShot(o.page, 'start-gangwon-375');
-    await startButton(o.page, '속초시').click();
-    if (!(await rgIs(o.page, ':속초'))) problems.push(`속초 ${JSON.stringify(await said(o.page))}`);
+    // 양양 (강원's, not checked: ADR-0102 Amendment 2) stays 자동 지역
+    await startButton(o.page, '양양군').click();
+    if (!(await rgIs(o.page, ':양양'))) problems.push(`양양 ${JSON.stringify(await said(o.page))}`);
     await o.ctx.close();
     // the part's index does not come: no 인기 칸, and 다른 곳 says so (not a press that does nothing)
     o = await nationAt('/', { route: (c) => c.route('**/nation/index.json*', (r) => r.abort()) });
@@ -4630,11 +4631,14 @@ if (NATION) {
   });
 }
 
-// --- 강원 (ADR-0102, plans/nationwide-app.md 1.3, GW-*): 강릉 as a 검수한 곳 — the nation build only ---
-// E2E_SHOTS_GANGWON=1 saves 강릉's home and results at 375×812 and 320×568 to design/qa/gangwon/.
+// --- 강원 (ADR-0102, plans/nationwide-app.md 1.3, GW-*): 강릉·속초·춘천 as a 검수한 곳 (Amendment 2), 양양 still 자동
+// 지역 — the nation build only ---
+// E2E_SHOTS_GANGWON=1 saves each one's home and results at 375×812 and 320×568 to design/qa/gangwon/.
 const GANGWON_SHOTS = NATION && process.env.E2E_SHOTS_GANGWON ? join(appDir, 'design/qa/gangwon') : '';
 if (GANGWON_SHOTS) mkdirSync(GANGWON_SHOTS, { recursive: true });
 const 강릉역 = { mode: 'ok', lat: 37.7643, lng: 128.8996, delay: 30 };
+const 속초해수욕장 = { mode: 'ok', lat: 38.1906, lng: 128.6014, delay: 30 };
+const 춘천역 = { mode: 'ok', lat: 37.8846, lng: 127.7166, delay: 30 };
 /** the results' cards: how many, their ids, and each one's reason line */
 const gwCards = (page) =>
   page.evaluate(() => {
@@ -4723,7 +4727,7 @@ if (NATION) {
     assert(!problems.length, problems.join(' | '));
   });
 
-  await check('GW-4', '기준 시트: 여행지 줄 제주·부산·강릉·다른 곳(강릉 눌림); 동네 칸 강원 시군구 — 속초시 → 여차나:속초(자동 지역), 강릉시 → 다시 여차나:강릉', async () => {
+  await check('GW-4', '기준 시트: 여행지 줄 제주·부산·강원·다른 곳(강원 눌림); 동네 칸 강원 시군구 — 속초시 → 여차나:속초(강원, 이유 줄), 양양군 → 여차나:양양(자동 지역), 강릉시 → 다시 여차나:강릉', async () => {
     const problems = [];
     const { ctx, page } = await nationAt('/');
     await startButton(page, '강릉').click();
@@ -4731,41 +4735,141 @@ if (NATION) {
     await tapText(page, '#basis');
     await page.waitForSelector('#sheet [data-area="51210"]');
     const row = await page.$$eval('#sheet [data-dest]', (els) => els.map((e) => `${e.textContent}${e.getAttribute('aria-pressed') === 'true' ? '*' : ''}`));
-    if (row.join('/') !== '제주/부산/강릉*/다른 곳') problems.push(`여행지 줄 ${row.join('/')}`);
+    if (row.join('/') !== '제주/부산/강원*/다른 곳') problems.push(`여행지 줄 ${row.join('/')}`);
     const areas = await page.$$eval('#sheet .areas [data-area]', (els) => els.map((e) => e.textContent));
-    if (!areas.includes('강릉시') || !areas.includes('속초시')) problems.push(`동네 칸 ${areas.join(',')}`);
+    if (!['강릉시', '속초시', '춘천시', '양양군'].every((a) => areas.includes(a))) problems.push(`동네 칸 ${areas.join(',')}`);
     await page.click('#sheet [data-area="51210"]');
     if (!(await rgIs(page, ':속초', 5000))) problems.push(`→ 속초 ${JSON.stringify(await said(page))}`);
+    const title = await page.title();
+    if (title !== '여차나:속초 · P를 위한 여행동반자') problems.push(`title ${title}`);
     await sleep(400); // the tap that closed the sheet: a tap within 300 ms of it is taken for the 2nd half of a double tap
-    await tapText(page, '#basis');
+    await tapText(page, '[data-mood="walk"]');
+    await waitCards(page);
+    const r = await gwCards(page);
+    if (r.n !== 3 || r.reasons.some((x) => !x) || /공공 데이터/.test(r.how)) problems.push(`속초 results ${JSON.stringify(r)}`);
+    await tapText(page, '#back');
+    await sleep(400);
     // a 동네 in use: the index opens with 다른 동네 고르기 (ADR-0090 6)
-    if (!(await visible(page, '#sheet [data-area="51150"]'))) await tapText(page, '#sheet [data-action="other-area"]');
-    await page.click('#sheet [data-area="51150"]');
+    const pick = async (code) => {
+      await tapText(page, '#basis');
+      if (!(await visible(page, `#sheet [data-area="${code}"]`))) await tapText(page, '#sheet [data-action="other-area"]');
+      await page.click(`#sheet [data-area="${code}"]`);
+    };
+    await pick('51830');
+    if (!(await rgIs(page, ':양양', 5000))) problems.push(`→ 양양 ${JSON.stringify(await said(page))}`);
+    await sleep(400);
+    await pick('51150');
     if (!(await rgIs(page, ':강릉', 5000))) problems.push(`→ 강릉 ${JSON.stringify(await said(page))}`);
     await ctx.close();
     assert(!problems.length, problems.join(' | '));
   });
 
-  await check('GW-5', '375·320: 강릉 홈·결과 가로 넘침 0, 잘린 버튼 0', async () => {
+  // ADR-0102 Amendment 2: 속초·춘천 (속초 by its 인기 칸, 춘천 by 다른 곳 → 강원 → 춘천시)
+  const openGangwon = async (page, city) => {
+    if (city === '강릉' || city === '속초') return startButton(page, city).click();
+    await startButton(page, '다른 곳').click();
+    await startButton(page, '강원').click();
+    await startButton(page, `${city}시`).click();
+  };
+  await check('GW-5', '375·320: 강릉·속초·춘천 홈·결과 가로 넘침 0, 잘린 버튼 0 (스크린숏 홈·결과)', async () => {
     const problems = [];
-    for (const [w, h] of [[375, 812], [320, 568]]) {
-      const { ctx, page } = await nationAt('/', { width: w, height: h, geo: 강릉역 });
-      await startButton(page, '강릉').click();
-      await rgIs(page, ':강릉');
-      await page.waitForSelector('#today:not(.wait)');
-      await sleep(300);
-      const home = await page.evaluate(LINES);
-      if (home.over > 0 || home.cut.length) problems.push(`${w} home ${JSON.stringify(home)}`);
-      if (GANGWON_SHOTS) await page.screenshot({ path: join(GANGWON_SHOTS, `home-${w}.png`) });
-      await tapText(page, '[data-mood="rest"]');
-      await waitCards(page);
-      await sleep(300);
-      const r = await page.evaluate(LINES);
-      if (r.over > 0 || r.cut.length) problems.push(`${w} results ${JSON.stringify(r)}`);
-      if (GANGWON_SHOTS) await page.screenshot({ path: join(GANGWON_SHOTS, `results-${w}.png`) });
-      await ctx.close();
+    for (const [city, file, geo] of [['강릉', '', 강릉역], ['속초', 'sokcho-', 속초해수욕장], ['춘천', 'chuncheon-', 춘천역]]) {
+      for (const [w, h] of [[375, 812], [320, 568]]) {
+        // the position in that city: a mood on 내 위치 reads it (one elsewhere would move there)
+        const { ctx, page } = await nationAt('/', { width: w, height: h, geo });
+        await openGangwon(page, city);
+        if (!(await rgIs(page, `:${city}`))) problems.push(`${city} ${w} rg ${JSON.stringify(await said(page))}`);
+        await page.waitForSelector('#today:not(.wait)');
+        await sleep(300);
+        const home = await page.evaluate(LINES);
+        if (home.over > 0 || home.cut.length) problems.push(`${city} ${w} home ${JSON.stringify(home)}`);
+        if (GANGWON_SHOTS) await page.screenshot({ path: join(GANGWON_SHOTS, `home-${file}${w}.png`) });
+        await tapText(page, '[data-mood="rest"]');
+        await waitCards(page);
+        await sleep(300);
+        const r = await page.evaluate(LINES);
+        if (r.over > 0 || r.cut.length) problems.push(`${city} ${w} results ${JSON.stringify(r)}`);
+        if (GANGWON_SHOTS) await page.screenshot({ path: join(GANGWON_SHOTS, `results-${file}${w}.png`) });
+        await ctx.close();
+      }
     }
     assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('GW-7', 'GPS 속초 → 여차나:속초(검수한 곳): 기분 다섯, 유명한 데 3장 이유 줄, spots-gangwon.json 1회·/nation/51.json 0회; 인기 칸 속초 → 「속초 인기:」, 위치 읽지 않음', async () => {
+    const problems = [];
+    let o = await nationAt('/', { geo: 속초해수욕장 });
+    o.urls.length = 0;
+    await o.page.click('#ycGps');
+    if (!(await rgIs(o.page, ':속초'))) problems.push(`rg ${JSON.stringify(await said(o.page))}`);
+    await o.page.waitForSelector('#today:not(.wait)');
+    const shown = await o.page.evaluate(() => ['rest', 'walk', 'new', 'famous', 'food', 'any'].filter((m) => document.querySelector(`[data-mood="${m}"]`)?.offsetParent).length);
+    if (shown !== 6) problems.push(`moods ${shown}`);
+    await tapText(o.page, '[data-mood="famous"]');
+    await waitCards(o.page);
+    const r = await gwCards(o.page);
+    if (r.n !== 3 || r.reasons.some((x) => !x) || /공공 데이터/.test(r.how) || !r.ids.every((id) => id?.startsWith('nt-'))) problems.push(`results ${JSON.stringify(r)}`);
+    const own = o.urls.filter((u) => /\/spots-gangwon\.json\?v=[0-9a-f]{10}$/.test(u));
+    const auto = o.urls.filter((u) => /\/nation\/\d+\.json/.test(u));
+    if (own.length !== 1 || auto.length) problems.push(`spots-gangwon ${own.length}, nation files ${auto.join(' ')}`);
+    await o.ctx.close();
+    o = await nationAt('/', { geo: 속초해수욕장 });
+    await startButton(o.page, '속초').click();
+    if (!(await rgIs(o.page, ':속초'))) problems.push(`tile ${JSON.stringify(await said(o.page))}`);
+    await o.page.waitForSelector('#today:not(.wait)');
+    const ex = await o.page.evaluate(() => document.querySelector('[data-mood="rest"] .ex')?.textContent ?? '');
+    if (!ex.startsWith('속초 인기: ')) problems.push(`예 "${ex}"`);
+    if ((await said(o.page)).calls) problems.push('position read');
+    await o.ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('GW-8', '춘천: 다른 곳 → 강원 → 춘천시 → 여차나:춘천, 쉬기 3장 이유 줄; 다시 열어도 여차나:춘천(기억); 비 소식은 춘천 격자', async () => {
+    const problems = [];
+    const asked = [];
+    const { ctx, page } = await nationAt('/', {
+      geo: 춘천역,
+      route: (c) =>
+        c.route('**/api/rain*', (r) => {
+          asked.push(decodeURIComponent(new URL(r.request().url()).search));
+          return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ rain: false }) });
+        }),
+    });
+    await openGangwon(page, '춘천');
+    if (!(await rgIs(page, ':춘천'))) problems.push(`rg ${JSON.stringify(await said(page))}`);
+    await page.waitForSelector('#today:not(.wait)');
+    await tapText(page, '[data-mood="rest"]');
+    await waitCards(page);
+    const r = await gwCards(page);
+    if (r.n !== 3 || r.reasons.some((x) => !x) || /공공 데이터/.test(r.how)) problems.push(`results ${JSON.stringify(r)}`);
+    // 지역 춘천시: 비 소식 asks the grid of 춘천's centre (37.874, 127.721 → 72,134)
+    await tapText(page, '#back');
+    await sleep(400);
+    await tapText(page, '#basis');
+    if (!(await visible(page, '#sheet [data-area="51110"]'))) await tapText(page, '#sheet [data-action="other-area"]');
+    await page.click('#sheet [data-area="51110"]');
+    await page.waitForFunction(() => document.querySelector('#basis')?.textContent?.includes('춘천시'), null, { timeout: 5000 }).catch(() => undefined);
+    await sleep(800);
+    if (!asked.length || asked.some((q) => q !== '?grid=72,134')) problems.push(`rain asked ${asked.join(' ')}`);
+    await page.reload();
+    if (!(await rgIs(page, ':춘천')) || (await said(page)).start) problems.push(`reload ${JSON.stringify(await said(page))}`);
+    await ctx.close();
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('GW-9', '양양은 자동 지역: GPS 양양 → 여차나:양양, 쉬기 없음, #how 공공 데이터 줄, spots-gangwon.json 요청 0', async () => {
+    const { ctx, page, urls } = await nationAt('/', { geo: { mode: 'ok', lat: 38.0754, lng: 128.6189, delay: 30 } });
+    urls.length = 0;
+    await page.click('#ycGps');
+    const ok = await rgIs(page, ':양양');
+    await page.waitForSelector('#today:not(.wait)');
+    const rest = await page.evaluate(() => !!document.querySelector('[data-mood="rest"]')?.offsetParent);
+    await tapText(page, '[data-mood="any"]');
+    await waitCards(page);
+    const r = await gwCards(page);
+    const own = urls.filter((u) => /spots-gangwon\.json/.test(u));
+    await ctx.close();
+    assert(ok && !rest && r.n === 3 && r.how === '공공 데이터로 가까운 순으로 골랐어요.' && !own.length, `rg ${ok} rest ${rest} ${JSON.stringify(r)} gangwon ${own.length}`);
   });
 
   await check('GW-6', '영어: 인기 칸 Gangneung → 여차나:Gangneung, 걷기 3장, #how 끝에 장소 이름은 한국어라는 한 줄', async () => {
