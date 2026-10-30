@@ -1,0 +1,3927 @@
+{
+ "round": "01",
+ "city": "양양",
+ "criteria": "review/gangwon/pop-criteria.md",
+ "source": "Naver 검색광고 keywordstool, showDetail=1",
+ "places": 172,
+ "keywords": 182,
+ "calls": 37,
+ "tries": 37,
+ "failed": [],
+ "missingKeywords": [],
+ "failedCalls": [],
+ "rows": [
+  {
+   "id": "nt-125586",
+   "name": "설악산국립공원(남설악)",
+   "keywords": [
+    {
+     "keyword": "설악산국립공원",
+     "why": "카드 이름",
+     "pc": 4370,
+     "mobile": 17000,
+     "volume": 21370
+    }
+   ],
+   "volume": 21370
+  },
+  {
+   "id": "nt-125589",
+   "name": "낙산도립공원",
+   "keywords": [
+    {
+     "keyword": "낙산도립공원",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 50,
+     "volume": 60
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-125618",
+   "name": "오색령(한계령)",
+   "keywords": [
+    {
+     "keyword": "오색령",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 170,
+     "volume": 200
+    },
+    {
+     "keyword": "한계령",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": 1030,
+     "mobile": 7180,
+     "volume": 8210
+    }
+   ],
+   "volume": 8410
+  },
+  {
+   "id": "nt-125621",
+   "name": "설악산 대청봉",
+   "keywords": [
+    {
+     "keyword": "설악산대청봉",
+     "why": "카드 이름",
+     "pc": 900,
+     "mobile": 7430,
+     "volume": 8330
+    }
+   ],
+   "volume": 8330
+  },
+  {
+   "id": "nt-125650",
+   "name": "둔전계곡",
+   "keywords": [
+    {
+     "keyword": "둔전계곡",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-125651",
+   "name": "공수전계곡",
+   "keywords": [
+    {
+     "keyword": "공수전계곡",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 60,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-125667",
+   "name": "미천골계곡",
+   "keywords": [
+    {
+     "keyword": "미천골계곡",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 70,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-125668",
+   "name": "설악산 오색주전골",
+   "keywords": [
+    {
+     "keyword": "설악산오색주전골",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 120,
+     "volume": 140
+    }
+   ],
+   "volume": 140
+  },
+  {
+   "id": "nt-125681",
+   "name": "지경리해변(양양)",
+   "keywords": [
+    {
+     "keyword": "양양지경리해변",
+     "why": "이름 끝 「(양양)」: 다른 지역에 같은 이름이 있음 → 양양 + 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-125682",
+   "name": "북분리해수욕장",
+   "keywords": [
+    {
+     "keyword": "북분리해수욕장",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 60,
+     "volume": 70
+    }
+   ],
+   "volume": 70
+  },
+  {
+   "id": "nt-125701",
+   "name": "하조대해수욕장",
+   "keywords": [
+    {
+     "keyword": "하조대해수욕장",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 960,
+     "volume": 1130
+    }
+   ],
+   "volume": 1130
+  },
+  {
+   "id": "nt-125702",
+   "name": "낙산해수욕장",
+   "keywords": [
+    {
+     "keyword": "낙산해수욕장",
+     "why": "카드 이름",
+     "pc": 870,
+     "mobile": 7190,
+     "volume": 8060
+    }
+   ],
+   "volume": 8060
+  },
+  {
+   "id": "nt-125704",
+   "name": "송전해수욕장",
+   "keywords": [
+    {
+     "keyword": "송전해수욕장",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 720,
+     "volume": 840
+    }
+   ],
+   "volume": 840
+  },
+  {
+   "id": "nt-125716",
+   "name": "동호해변(양양)",
+   "keywords": [
+    {
+     "keyword": "양양동호해변",
+     "why": "이름 끝 「(양양)」: 다른 지역에 같은 이름이 있음 → 양양 + 이름",
+     "pc": 170,
+     "mobile": 1090,
+     "volume": 1260
+    }
+   ],
+   "volume": 1260
+  },
+  {
+   "id": "nt-125720",
+   "name": "죽도해수욕장",
+   "keywords": [
+    {
+     "keyword": "죽도해수욕장",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 380,
+     "volume": 450
+    }
+   ],
+   "volume": 450
+  },
+  {
+   "id": "nt-125749",
+   "name": "현산공원",
+   "keywords": [
+    {
+     "keyword": "현산공원",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  },
+  {
+   "id": "nt-125773",
+   "name": "낙산사",
+   "keywords": [
+    {
+     "keyword": "낙산사",
+     "why": "카드 이름",
+     "pc": 7490,
+     "mobile": 55200,
+     "volume": 62690
+    }
+   ],
+   "volume": 62690
+  },
+  {
+   "id": "nt-125795",
+   "name": "낙산사 의상대",
+   "keywords": [
+    {
+     "keyword": "낙산사의상대",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 630,
+     "volume": 700
+    }
+   ],
+   "volume": 700
+  },
+  {
+   "id": "nt-126738",
+   "name": "남애항",
+   "keywords": [
+    {
+     "keyword": "남애항",
+     "why": "카드 이름",
+     "pc": 460,
+     "mobile": 2020,
+     "volume": 2480
+    }
+   ],
+   "volume": 2480
+  },
+  {
+   "id": "nt-126891",
+   "name": "양양선림원지",
+   "keywords": [
+    {
+     "keyword": "양양선림원지",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-127037",
+   "name": "양양 송천떡마을",
+   "keywords": [
+    {
+     "keyword": "양양송천떡마을",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 940,
+     "volume": 990
+    },
+    {
+     "keyword": "송천떡마을",
+     "why": "앞의 「양양」·「국립」을 뗀 이름",
+     "pc": 90,
+     "mobile": 400,
+     "volume": 490
+    }
+   ],
+   "volume": 1480
+  },
+  {
+   "id": "nt-127135",
+   "name": "법수치계곡",
+   "keywords": [
+    {
+     "keyword": "법수치계곡",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 190,
+     "volume": 210
+    }
+   ],
+   "volume": 210
+  },
+  {
+   "id": "nt-127473",
+   "name": "오색약수터",
+   "keywords": [
+    {
+     "keyword": "오색약수터",
+     "why": "카드 이름",
+     "pc": 890,
+     "mobile": 7920,
+     "volume": 8810
+    }
+   ],
+   "volume": 8810
+  },
+  {
+   "id": "nt-127528",
+   "name": "홍련암",
+   "keywords": [
+    {
+     "keyword": "홍련암",
+     "why": "카드 이름",
+     "pc": 210,
+     "mobile": 1720,
+     "volume": 1930
+    }
+   ],
+   "volume": 1930
+  },
+  {
+   "id": "nt-127535",
+   "name": "갈천약수터",
+   "keywords": [
+    {
+     "keyword": "갈천약수터",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 70,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-127805",
+   "name": "국립미천골자연휴양림",
+   "keywords": [
+    {
+     "keyword": "국립미천골자연휴양림",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 60,
+     "volume": 80
+    },
+    {
+     "keyword": "미천골자연휴양림",
+     "why": "앞의 「양양」·「국립」을 뗀 이름",
+     "pc": 640,
+     "mobile": 2610,
+     "volume": 3250
+    }
+   ],
+   "volume": 3330
+  },
+  {
+   "id": "nt-127900",
+   "name": "어성전계곡",
+   "keywords": [
+    {
+     "keyword": "어성전계곡",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 50,
+     "volume": 60
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-127952",
+   "name": "오색탄산온천",
+   "keywords": [
+    {
+     "keyword": "오색탄산온천",
+     "why": "카드 이름",
+     "pc": 740,
+     "mobile": 6000,
+     "volume": 6740
+    }
+   ],
+   "volume": 6740
+  },
+  {
+   "id": "nt-128288",
+   "name": "명주사(양양)",
+   "keywords": [
+    {
+     "keyword": "양양명주사",
+     "why": "이름 끝 「(양양)」: 다른 지역에 같은 이름이 있음 → 양양 + 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-128414",
+   "name": "탁장사고을",
+   "keywords": [
+    {
+     "keyword": "탁장사고을",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-128562",
+   "name": "남애어촌체험마을",
+   "keywords": [
+    {
+     "keyword": "남애어촌체험마을",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-129182",
+   "name": "오색약수골전통장",
+   "keywords": [
+    {
+     "keyword": "오색약수골전통장",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-129593",
+   "name": "휴휴암(강원)",
+   "keywords": [
+    {
+     "keyword": "휴휴암",
+     "why": "카드 이름",
+     "pc": 1780,
+     "mobile": 11600,
+     "volume": 13380
+    }
+   ],
+   "volume": 13380
+  },
+  {
+   "id": "nt-129594",
+   "name": "하조대 무인등대",
+   "keywords": [
+    {
+     "keyword": "하조대무인등대",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-130930",
+   "name": "오산리선사유적박물관",
+   "keywords": [
+    {
+     "keyword": "오산리선사유적박물관",
+     "why": "카드 이름",
+     "pc": 200,
+     "mobile": 530,
+     "volume": 730
+    }
+   ],
+   "volume": 730
+  },
+  {
+   "id": "nt-131471",
+   "name": "어성전 산림교육관",
+   "keywords": [
+    {
+     "keyword": "어성전산림교육관",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-131998",
+   "name": "양양전통시장 (4, 9일)",
+   "keywords": [
+    {
+     "keyword": "양양전통시장",
+     "why": "카드 이름",
+     "pc": 380,
+     "mobile": 3990,
+     "volume": 4370
+    }
+   ],
+   "volume": 4370
+  },
+  {
+   "id": "nt-133226",
+   "name": "영광정메밀국수",
+   "keywords": [
+    {
+     "keyword": "영광정메밀국수",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 1360,
+     "volume": 1530
+    }
+   ],
+   "volume": 1530
+  },
+  {
+   "id": "nt-133322",
+   "name": "입암메밀타운",
+   "keywords": [
+    {
+     "keyword": "입암메밀타운",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 600,
+     "volume": 660
+    }
+   ],
+   "volume": 660
+  },
+  {
+   "id": "nt-133783",
+   "name": "천선식당",
+   "keywords": [
+    {
+     "keyword": "천선식당",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 320,
+     "volume": 340
+    }
+   ],
+   "volume": 340
+  },
+  {
+   "id": "nt-134090",
+   "name": "녹원갈비",
+   "keywords": [
+    {
+     "keyword": "녹원갈비",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 560,
+     "volume": 640
+    }
+   ],
+   "volume": 640
+  },
+  {
+   "id": "nt-134091",
+   "name": "등불가든",
+   "keywords": [
+    {
+     "keyword": "등불가든",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 100,
+     "volume": 110
+    }
+   ],
+   "volume": 110
+  },
+  {
+   "id": "nt-134786",
+   "name": "산골식당",
+   "keywords": [
+    {
+     "keyword": "산골식당",
+     "why": "카드 이름",
+     "pc": 160,
+     "mobile": 1900,
+     "volume": 2060
+    }
+   ],
+   "volume": 2060
+  },
+  {
+   "id": "nt-135824",
+   "name": "하조대막국수",
+   "keywords": [
+    {
+     "keyword": "하조대막국수",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 350,
+     "volume": 380
+    }
+   ],
+   "volume": 380
+  },
+  {
+   "id": "nt-1830997",
+   "name": "불바라기약수터",
+   "keywords": [
+    {
+     "keyword": "불바라기약수터",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 20,
+     "volume": 30
+    }
+   ],
+   "volume": 30
+  },
+  {
+   "id": "nt-1910256",
+   "name": "달래촌",
+   "keywords": [
+    {
+     "keyword": "양양달래촌",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 30,
+     "mobile": 330,
+     "volume": 360
+    }
+   ],
+   "volume": 360
+  },
+  {
+   "id": "nt-1955961",
+   "name": "동명서원",
+   "keywords": [
+    {
+     "keyword": "동명서원",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 20,
+     "volume": 30
+    }
+   ],
+   "volume": 30
+  },
+  {
+   "id": "nt-2046961",
+   "name": "물치한우설렁탕",
+   "keywords": [
+    {
+     "keyword": "물치한우설렁탕",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 130,
+     "volume": 140
+    }
+   ],
+   "volume": 140
+  },
+  {
+   "id": "nt-2383582",
+   "name": "설악산 흘림골",
+   "keywords": [
+    {
+     "keyword": "설악산흘림골",
+     "why": "카드 이름",
+     "pc": 1290,
+     "mobile": 7830,
+     "volume": 9120
+    }
+   ],
+   "volume": 9120
+  },
+  {
+   "id": "nt-2388953",
+   "name": "애견전용해수욕장 멍비치",
+   "keywords": [
+    {
+     "keyword": "애견전용해수욕장멍비치",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2465077",
+   "name": "양양 에너지팜",
+   "keywords": [
+    {
+     "keyword": "양양에너지팜",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 330,
+     "volume": 390
+    }
+   ],
+   "volume": 390
+  },
+  {
+   "id": "nt-2500865",
+   "name": "롱비치 서프스쿨",
+   "keywords": [
+    {
+     "keyword": "롱비치서프스쿨",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2501905",
+   "name": "서피비치",
+   "keywords": [
+    {
+     "keyword": "서피비치",
+     "why": "카드 이름",
+     "pc": 220,
+     "mobile": 950,
+     "volume": 1170
+    }
+   ],
+   "volume": 1170
+  },
+  {
+   "id": "nt-250380",
+   "name": "양양 진전사지 도의선사탑",
+   "keywords": [
+    {
+     "keyword": "양양진전사지도의선사탑",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    },
+    {
+     "keyword": "진전사지도의선사탑",
+     "why": "앞의 「양양」·「국립」을 뗀 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-250393",
+   "name": "양양 진전사지 삼층석탑",
+   "keywords": [
+    {
+     "keyword": "양양진전사지삼층석탑",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 10,
+     "volume": 20
+    },
+    {
+     "keyword": "진전사지삼층석탑",
+     "why": "앞의 「양양」·「국립」을 뗀 이름",
+     "pc": 20,
+     "mobile": 20,
+     "volume": 40
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-252567",
+   "name": "죽도정·죽도 전망대",
+   "keywords": [
+    {
+     "keyword": "죽도정죽도전망대",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-252568",
+   "name": "양양향교",
+   "keywords": [
+    {
+     "keyword": "양양향교",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 40,
+     "volume": 60
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-252570",
+   "name": "양양동해신묘지",
+   "keywords": [
+    {
+     "keyword": "양양동해신묘지",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-252571",
+   "name": "남대천(양양)",
+   "keywords": [
+    {
+     "keyword": "양양남대천",
+     "why": "이름 끝 「(양양)」: 다른 지역에 같은 이름이 있음 → 양양 + 이름",
+     "pc": 230,
+     "mobile": 1350,
+     "volume": 1580
+    }
+   ],
+   "volume": 1580
+  },
+  {
+   "id": "nt-2570330",
+   "name": "송이밸리자연휴양림",
+   "keywords": [
+    {
+     "keyword": "송이밸리자연휴양림",
+     "why": "카드 이름",
+     "pc": 370,
+     "mobile": 950,
+     "volume": 1320
+    },
+    {
+     "keyword": "송이밸리",
+     "why": "끝의 「자연휴양림」를 뗀 짧은 이름",
+     "pc": 30,
+     "mobile": 80,
+     "volume": 110
+    }
+   ],
+   "volume": 1430
+  },
+  {
+   "id": "nt-2702316",
+   "name": "인구항 배낚시",
+   "keywords": [
+    {
+     "keyword": "인구항배낚시",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  },
+  {
+   "id": "nt-2702327",
+   "name": "구룡령 옛길",
+   "keywords": [
+    {
+     "keyword": "구룡령옛길",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 340,
+     "volume": 380
+    }
+   ],
+   "volume": 380
+  },
+  {
+   "id": "nt-2702446",
+   "name": "수산항 낚시터",
+   "keywords": [
+    {
+     "keyword": "수산항낚시터",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2702507",
+   "name": "[해파랑길] 44코스",
+   "keywords": [
+    {
+     "keyword": "해파랑길44코스",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 70,
+     "volume": 110
+    }
+   ],
+   "volume": 110
+  },
+  {
+   "id": "nt-2702630",
+   "name": "연어 자전거길",
+   "keywords": [
+    {
+     "keyword": "연어자전거길",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2702823",
+   "name": "정암해수욕장",
+   "keywords": [
+    {
+     "keyword": "정암해수욕장",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 640,
+     "volume": 720
+    }
+   ],
+   "volume": 720
+  },
+  {
+   "id": "nt-2704383",
+   "name": "물치해수욕장",
+   "keywords": [
+    {
+     "keyword": "물치해수욕장",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 690,
+     "volume": 760
+    }
+   ],
+   "volume": 760
+  },
+  {
+   "id": "nt-2704932",
+   "name": "인구해수욕장",
+   "keywords": [
+    {
+     "keyword": "인구해수욕장",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 150,
+     "volume": 180
+    }
+   ],
+   "volume": 180
+  },
+  {
+   "id": "nt-2707937",
+   "name": "물치항",
+   "keywords": [
+    {
+     "keyword": "물치항",
+     "why": "카드 이름",
+     "pc": 350,
+     "mobile": 2330,
+     "volume": 2680
+    }
+   ],
+   "volume": 2680
+  },
+  {
+   "id": "nt-2710732",
+   "name": "하조대 둘레길",
+   "keywords": [
+    {
+     "keyword": "하조대둘레길",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 170,
+     "volume": 200
+    }
+   ],
+   "volume": 200
+  },
+  {
+   "id": "nt-2710734",
+   "name": "하조대",
+   "keywords": [
+    {
+     "keyword": "하조대",
+     "why": "카드 이름",
+     "pc": 1020,
+     "mobile": 8420,
+     "volume": 9440
+    }
+   ],
+   "volume": 9440
+  },
+  {
+   "id": "nt-2710736",
+   "name": "남대천 생태관찰로",
+   "keywords": [
+    {
+     "keyword": "남대천생태관찰로",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 440,
+     "volume": 510
+    }
+   ],
+   "volume": 510
+  },
+  {
+   "id": "nt-2710737",
+   "name": "동해생명자원센터",
+   "keywords": [
+    {
+     "keyword": "동해생명자원센터",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 30,
+     "volume": 70
+    }
+   ],
+   "volume": 70
+  },
+  {
+   "id": "nt-2710739",
+   "name": "진전사",
+   "keywords": [
+    {
+     "keyword": "진전사",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 220,
+     "volume": 270
+    }
+   ],
+   "volume": 270
+  },
+  {
+   "id": "nt-2710789",
+   "name": "[해파랑길] 42코스",
+   "keywords": [
+    {
+     "keyword": "해파랑길42코스",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 60,
+     "volume": 100
+    }
+   ],
+   "volume": 100
+  },
+  {
+   "id": "nt-2710791",
+   "name": "[해파랑길] 43코스",
+   "keywords": [
+    {
+     "keyword": "해파랑길43코스",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 50,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-2710808",
+   "name": "해담마을 수륙양용차",
+   "keywords": [
+    {
+     "keyword": "해담마을수륙양용차",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 140,
+     "volume": 160
+    }
+   ],
+   "volume": 160
+  },
+  {
+   "id": "nt-2710813",
+   "name": "요트&수산어촌체험(양양)",
+   "keywords": [
+    {
+     "keyword": "양양요트수산어촌체험",
+     "why": "이름 끝 「(양양)」: 다른 지역에 같은 이름이 있음 → 양양 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2710820",
+   "name": "설악해수욕장",
+   "keywords": [
+    {
+     "keyword": "설악해수욕장",
+     "why": "카드 이름",
+     "pc": 110,
+     "mobile": 610,
+     "volume": 720
+    }
+   ],
+   "volume": 720
+  },
+  {
+   "id": "nt-2710821",
+   "name": "중광정해수욕장",
+   "keywords": [
+    {
+     "keyword": "중광정해수욕장",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 110,
+     "volume": 120
+    }
+   ],
+   "volume": 120
+  },
+  {
+   "id": "nt-2710823",
+   "name": "기사문해수욕장",
+   "keywords": [
+    {
+     "keyword": "기사문해수욕장",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 40,
+     "volume": 45
+    }
+   ],
+   "volume": 45
+  },
+  {
+   "id": "nt-2710829",
+   "name": "잔교리해수욕장",
+   "keywords": [
+    {
+     "keyword": "잔교리해수욕장",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-2710838",
+   "name": "동산해수욕장",
+   "keywords": [
+    {
+     "keyword": "동산해수욕장",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 210,
+     "volume": 240
+    }
+   ],
+   "volume": 240
+  },
+  {
+   "id": "nt-2710849",
+   "name": "동산포해수욕장",
+   "keywords": [
+    {
+     "keyword": "동산포해수욕장",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 40,
+     "volume": 45
+    }
+   ],
+   "volume": 45
+  },
+  {
+   "id": "nt-2712951",
+   "name": "명주사부도군",
+   "keywords": [
+    {
+     "keyword": "명주사부도군",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2713095",
+   "name": "서림사지",
+   "keywords": [
+    {
+     "keyword": "서림사지",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2713784",
+   "name": "광진해수욕장",
+   "keywords": [
+    {
+     "keyword": "광진해수욕장",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 70,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-2714604",
+   "name": "잔교리해변",
+   "keywords": [
+    {
+     "keyword": "잔교리해변",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 230,
+     "volume": 260
+    }
+   ],
+   "volume": 260
+  },
+  {
+   "id": "nt-2714607",
+   "name": "원포리해변",
+   "keywords": [
+    {
+     "keyword": "원포리해변",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 70,
+     "volume": 75
+    }
+   ],
+   "volume": 75
+  },
+  {
+   "id": "nt-2714611",
+   "name": "갯마을해변",
+   "keywords": [
+    {
+     "keyword": "갯마을해변",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 100,
+     "volume": 120
+    }
+   ],
+   "volume": 120
+  },
+  {
+   "id": "nt-2714816",
+   "name": "낙산항",
+   "keywords": [
+    {
+     "keyword": "낙산항",
+     "why": "카드 이름",
+     "pc": 190,
+     "mobile": 820,
+     "volume": 1010
+    }
+   ],
+   "volume": 1010
+  },
+  {
+   "id": "nt-2714824",
+   "name": "낙산해안로",
+   "keywords": [
+    {
+     "keyword": "낙산해안로",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2715216",
+   "name": "38평화마을",
+   "keywords": [
+    {
+     "keyword": "38평화마을",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-2717260",
+   "name": "금풀애마을",
+   "keywords": [
+    {
+     "keyword": "금풀애마을",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-2717271",
+   "name": "성국사",
+   "keywords": [
+    {
+     "keyword": "성국사",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 180,
+     "volume": 200
+    }
+   ],
+   "volume": 200
+  },
+  {
+   "id": "nt-2717590",
+   "name": "김성래 가옥",
+   "keywords": [
+    {
+     "keyword": "김성래가옥",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2718844",
+   "name": "하광정항",
+   "keywords": [
+    {
+     "keyword": "하광정항",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2752126",
+   "name": "동산항",
+   "keywords": [
+    {
+     "keyword": "동산항",
+     "why": "카드 이름",
+     "pc": 190,
+     "mobile": 710,
+     "volume": 900
+    }
+   ],
+   "volume": 900
+  },
+  {
+   "id": "nt-2773573",
+   "name": "오색 용소폭포",
+   "keywords": [
+    {
+     "keyword": "오색용소폭포",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    },
+    {
+     "keyword": "오색용소",
+     "why": "끝의 「폭포」를 뗀 짧은 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-2773621",
+   "name": "기사문항",
+   "keywords": [
+    {
+     "keyword": "기사문항",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 270,
+     "volume": 350
+    }
+   ],
+   "volume": 350
+  },
+  {
+   "id": "nt-2774463",
+   "name": "38횟집 (삼팔횟집)",
+   "keywords": [
+    {
+     "keyword": "38횟집",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 340,
+     "volume": 380
+    },
+    {
+     "keyword": "삼팔횟집",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": 60,
+     "mobile": 1290,
+     "volume": 1350
+    }
+   ],
+   "volume": 1730
+  },
+  {
+   "id": "nt-2774683",
+   "name": "수산항물회",
+   "keywords": [
+    {
+     "keyword": "수산항물회",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 1270,
+     "volume": 1340
+    }
+   ],
+   "volume": 1340
+  },
+  {
+   "id": "nt-2777043",
+   "name": "김택준가옥",
+   "keywords": [
+    {
+     "keyword": "김택준가옥",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2777057",
+   "name": "이두형가옥",
+   "keywords": [
+    {
+     "keyword": "이두형가옥",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2777254",
+   "name": "양양 오색리 삼층석탑",
+   "keywords": [
+    {
+     "keyword": "양양오색리삼층석탑",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "오색리삼층석탑",
+     "why": "앞의 「양양」·「국립」을 뗀 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-2778084",
+   "name": "인구항",
+   "keywords": [
+    {
+     "keyword": "인구항",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 220,
+     "volume": 260
+    }
+   ],
+   "volume": 260
+  },
+  {
+   "id": "nt-2781370",
+   "name": "자연횟집",
+   "keywords": [
+    {
+     "keyword": "자연횟집",
+     "why": "카드 이름",
+     "pc": 100,
+     "mobile": 610,
+     "volume": 710
+    }
+   ],
+   "volume": 710
+  },
+  {
+   "id": "nt-2781736",
+   "name": "동일식당",
+   "keywords": [
+    {
+     "keyword": "동일식당",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 960,
+     "volume": 1050
+    }
+   ],
+   "volume": 1050
+  },
+  {
+   "id": "nt-2784323",
+   "name": "후진항",
+   "keywords": [
+    {
+     "keyword": "후진항",
+     "why": "카드 이름",
+     "pc": 220,
+     "mobile": 1150,
+     "volume": 1370
+    }
+   ],
+   "volume": 1370
+  },
+  {
+   "id": "nt-2788875",
+   "name": "수산항",
+   "keywords": [
+    {
+     "keyword": "수산항",
+     "why": "카드 이름",
+     "pc": 230,
+     "mobile": 1150,
+     "volume": 1380
+    }
+   ],
+   "volume": 1380
+  },
+  {
+   "id": "nt-2788978",
+   "name": "38선휴게소",
+   "keywords": [
+    {
+     "keyword": "38선휴게소",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 940,
+     "volume": 1060
+    }
+   ],
+   "volume": 1060
+  },
+  {
+   "id": "nt-2788991",
+   "name": "남대천연어생태공원",
+   "keywords": [
+    {
+     "keyword": "남대천연어생태공원",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 330,
+     "volume": 400
+    }
+   ],
+   "volume": 400
+  },
+  {
+   "id": "nt-2788996",
+   "name": "영혈사",
+   "keywords": [
+    {
+     "keyword": "영혈사",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 100,
+     "volume": 120
+    }
+   ],
+   "volume": 120
+  },
+  {
+   "id": "nt-2789002",
+   "name": "조규승가옥",
+   "keywords": [
+    {
+     "keyword": "조규승가옥",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2789008",
+   "name": "포매리 백로와 왜가리 번식지",
+   "keywords": [
+    {
+     "keyword": "포매리백로와왜가리번식지",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2837935",
+   "name": "공가네감자옹심이",
+   "keywords": [
+    {
+     "keyword": "공가네감자옹심이",
+     "why": "카드 이름",
+     "pc": 290,
+     "mobile": 5200,
+     "volume": 5490
+    }
+   ],
+   "volume": 5490
+  },
+  {
+   "id": "nt-2838085",
+   "name": "파머스키친",
+   "keywords": [
+    {
+     "keyword": "파머스키친",
+     "why": "카드 이름",
+     "pc": 100,
+     "mobile": 1310,
+     "volume": 1410
+    }
+   ],
+   "volume": 1410
+  },
+  {
+   "id": "nt-2838104",
+   "name": "해촌",
+   "keywords": [
+    {
+     "keyword": "양양해촌",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 130,
+     "mobile": 1590,
+     "volume": 1720
+    }
+   ],
+   "volume": 1720
+  },
+  {
+   "id": "nt-2839872",
+   "name": "바다뷰제빵소",
+   "keywords": [
+    {
+     "keyword": "바다뷰제빵소",
+     "why": "카드 이름",
+     "pc": 130,
+     "mobile": 1970,
+     "volume": 2100
+    }
+   ],
+   "volume": 2100
+  },
+  {
+   "id": "nt-2841480",
+   "name": "여운포리빵집",
+   "keywords": [
+    {
+     "keyword": "여운포리빵집",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 1830,
+     "volume": 1950
+    }
+   ],
+   "volume": 1950
+  },
+  {
+   "id": "nt-2892381",
+   "name": "메밀꽃향기",
+   "keywords": [
+    {
+     "keyword": "메밀꽃향기",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 770,
+     "volume": 830
+    }
+   ],
+   "volume": 830
+  },
+  {
+   "id": "nt-2892400",
+   "name": "사랑대게",
+   "keywords": [
+    {
+     "keyword": "사랑대게",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 240,
+     "volume": 250
+    }
+   ],
+   "volume": 250
+  },
+  {
+   "id": "nt-2892419",
+   "name": "송월메밀국수",
+   "keywords": [
+    {
+     "keyword": "송월메밀국수",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 370,
+     "volume": 410
+    }
+   ],
+   "volume": 410
+  },
+  {
+   "id": "nt-2892438",
+   "name": "수라상",
+   "keywords": [
+    {
+     "keyword": "양양수라상",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 30,
+     "mobile": 240,
+     "volume": 270
+    }
+   ],
+   "volume": 270
+  },
+  {
+   "id": "nt-2892463",
+   "name": "전라도식당",
+   "keywords": [
+    {
+     "keyword": "전라도식당",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 1770,
+     "volume": 1890
+    }
+   ],
+   "volume": 1890
+  },
+  {
+   "id": "nt-2892476",
+   "name": "하조대반점",
+   "keywords": [
+    {
+     "keyword": "하조대반점",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 230,
+     "volume": 250
+    }
+   ],
+   "volume": 250
+  },
+  {
+   "id": "nt-2892498",
+   "name": "하조맛식당",
+   "keywords": [
+    {
+     "keyword": "하조맛식당",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 650,
+     "volume": 700
+    }
+   ],
+   "volume": 700
+  },
+  {
+   "id": "nt-2892548",
+   "name": "흥부네밥상",
+   "keywords": [
+    {
+     "keyword": "흥부네밥상",
+     "why": "카드 이름",
+     "pc": 140,
+     "mobile": 2880,
+     "volume": 3020
+    }
+   ],
+   "volume": 3020
+  },
+  {
+   "id": "nt-2892660",
+   "name": "범바우막국수 양양본점",
+   "keywords": [
+    {
+     "keyword": "범바우막국수양양본점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    },
+    {
+     "keyword": "범바우막국수",
+     "why": "「본점」을 뗀 이름",
+     "pc": 100,
+     "mobile": 1490,
+     "volume": 1590
+    }
+   ],
+   "volume": 1605
+  },
+  {
+   "id": "nt-2903512",
+   "name": "강원횟집",
+   "keywords": [
+    {
+     "keyword": "강원횟집",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 250,
+     "volume": 290
+    }
+   ],
+   "volume": 290
+  },
+  {
+   "id": "nt-2903557",
+   "name": "광주빛고을식당",
+   "keywords": [
+    {
+     "keyword": "광주빛고을식당",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 1230,
+     "volume": 1300
+    }
+   ],
+   "volume": 1300
+  },
+  {
+   "id": "nt-2903591",
+   "name": "다래횟집",
+   "keywords": [
+    {
+     "keyword": "다래횟집",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 690,
+     "volume": 810
+    }
+   ],
+   "volume": 810
+  },
+  {
+   "id": "nt-2903606",
+   "name": "동쪽바다 세꼬시",
+   "keywords": [
+    {
+     "keyword": "동쪽바다세꼬시",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 890,
+     "volume": 960
+    }
+   ],
+   "volume": 960
+  },
+  {
+   "id": "nt-2914112",
+   "name": "동해막국수",
+   "keywords": [
+    {
+     "keyword": "동해막국수",
+     "why": "카드 이름",
+     "pc": 550,
+     "mobile": 6810,
+     "volume": 7360
+    }
+   ],
+   "volume": 7360
+  },
+  {
+   "id": "nt-2914325",
+   "name": "실로암메밀국수",
+   "keywords": [
+    {
+     "keyword": "실로암메밀국수",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 580,
+     "volume": 650
+    }
+   ],
+   "volume": 650
+  },
+  {
+   "id": "nt-2915989",
+   "name": "카페 로그",
+   "keywords": [
+    {
+     "keyword": "카페로그",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 1470,
+     "volume": 1640
+    }
+   ],
+   "volume": 1640
+  },
+  {
+   "id": "nt-2915995",
+   "name": "양양송이조각공원",
+   "keywords": [
+    {
+     "keyword": "양양송이조각공원",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 460,
+     "volume": 530
+    }
+   ],
+   "volume": 530
+  },
+  {
+   "id": "nt-2916001",
+   "name": "남애1리해수욕장",
+   "keywords": [
+    {
+     "keyword": "남애1리해수욕장",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-2925460",
+   "name": "카페 달파도",
+   "keywords": [
+    {
+     "keyword": "카페달파도",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 200,
+     "volume": 220
+    }
+   ],
+   "volume": 220
+  },
+  {
+   "id": "nt-2925466",
+   "name": "로드3521",
+   "keywords": [
+    {
+     "keyword": "로드3521",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 240,
+     "volume": 250
+    }
+   ],
+   "volume": 250
+  },
+  {
+   "id": "nt-2927413",
+   "name": "레이크지움",
+   "keywords": [
+    {
+     "keyword": "레이크지움",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 770,
+     "volume": 850
+    }
+   ],
+   "volume": 850
+  },
+  {
+   "id": "nt-2927441",
+   "name": "레포밸리",
+   "keywords": [
+    {
+     "keyword": "레포밸리",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 190,
+     "volume": 230
+    }
+   ],
+   "volume": 230
+  },
+  {
+   "id": "nt-2929243",
+   "name": "P.E.I coffee",
+   "keywords": [
+    {
+     "keyword": "PEICOFFEE",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 70,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-2929258",
+   "name": "컨센트릭양양",
+   "keywords": [
+    {
+     "keyword": "컨센트릭양양",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 190,
+     "volume": 210
+    }
+   ],
+   "volume": 210
+  },
+  {
+   "id": "nt-2946583",
+   "name": "리버티",
+   "keywords": [
+    {
+     "keyword": "리버티",
+     "why": "카드 이름",
+     "pc": 560,
+     "mobile": 3000,
+     "volume": 3560
+    }
+   ],
+   "volume": 3560
+  },
+  {
+   "id": "nt-3038535",
+   "name": "남애스쿠버리조트",
+   "keywords": [
+    {
+     "keyword": "남애스쿠버리조트",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 100,
+     "volume": 150
+    }
+   ],
+   "volume": 150
+  },
+  {
+   "id": "nt-3041749",
+   "name": "양리단길",
+   "keywords": [
+    {
+     "keyword": "양리단길",
+     "why": "카드 이름",
+     "pc": 160,
+     "mobile": 690,
+     "volume": 850
+    }
+   ],
+   "volume": 850
+  },
+  {
+   "id": "nt-3042140",
+   "name": "양양남대천체육공원",
+   "keywords": [
+    {
+     "keyword": "양양남대천체육공원",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 120,
+     "volume": 140
+    }
+   ],
+   "volume": 140
+  },
+  {
+   "id": "nt-3072009",
+   "name": "빅웨이브",
+   "keywords": [
+    {
+     "keyword": "빅웨이브",
+     "why": "카드 이름",
+     "pc": 1460,
+     "mobile": 6390,
+     "volume": 7850
+    }
+   ],
+   "volume": 7850
+  },
+  {
+   "id": "nt-3072010",
+   "name": "서프팩토리 양양설악점",
+   "keywords": [
+    {
+     "keyword": "서프팩토리양양설악점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-3072044",
+   "name": "더 스탠드",
+   "keywords": [
+    {
+     "keyword": "더스탠드",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 280,
+     "volume": 320
+    }
+   ],
+   "volume": 320
+  },
+  {
+   "id": "nt-3072225",
+   "name": "모쿠서프",
+   "keywords": [
+    {
+     "keyword": "모쿠서프",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 50,
+     "volume": 60
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-3072232",
+   "name": "인구서프",
+   "keywords": [
+    {
+     "keyword": "인구서프",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 50,
+     "volume": 55
+    }
+   ],
+   "volume": 55
+  },
+  {
+   "id": "nt-3072233",
+   "name": "양파다이브",
+   "keywords": [
+    {
+     "keyword": "양파다이브",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 150,
+     "volume": 210
+    }
+   ],
+   "volume": 210
+  },
+  {
+   "id": "nt-3072234",
+   "name": "엉클서프양양",
+   "keywords": [
+    {
+     "keyword": "엉클서프양양",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-3072439",
+   "name": "설온",
+   "keywords": [
+    {
+     "keyword": "양양설온",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 60,
+     "mobile": 850,
+     "volume": 910
+    }
+   ],
+   "volume": 910
+  },
+  {
+   "id": "nt-3082559",
+   "name": "서프월드",
+   "keywords": [
+    {
+     "keyword": "서프월드",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-3082578",
+   "name": "쏠비치 양양 오션플레이",
+   "keywords": [
+    {
+     "keyword": "쏠비치양양오션플레이",
+     "why": "카드 이름",
+     "pc": 210,
+     "mobile": 790,
+     "volume": 1000
+    }
+   ],
+   "volume": 1000
+  },
+  {
+   "id": "nt-3428269",
+   "name": "카페 둔치",
+   "keywords": [
+    {
+     "keyword": "카페둔치",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 690,
+     "volume": 760
+    }
+   ],
+   "volume": 760
+  },
+  {
+   "id": "nt-3434330",
+   "name": "등불가든",
+   "keywords": [
+    {
+     "keyword": "등불가든",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 100,
+     "volume": 110
+    }
+   ],
+   "volume": 110
+  },
+  {
+   "id": "nt-3454400",
+   "name": "양양새활용센터",
+   "keywords": [
+    {
+     "keyword": "양양새활용센터",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 30,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-3479339",
+   "name": "르온다",
+   "keywords": [
+    {
+     "keyword": "양양르온다",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 10,
+     "mobile": 250,
+     "volume": 260
+    }
+   ],
+   "volume": 260
+  },
+  {
+   "id": "nt-3558855",
+   "name": "마음이동해",
+   "keywords": [
+    {
+     "keyword": "마음이동해",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 230,
+     "volume": 260
+    }
+   ],
+   "volume": 260
+  },
+  {
+   "id": "nt-403576",
+   "name": "오색식당",
+   "keywords": [
+    {
+     "keyword": "오색식당",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 460,
+     "volume": 520
+    }
+   ],
+   "volume": 520
+  },
+  {
+   "id": "nt-4066341",
+   "name": "양지바른 버거 & 쌀국수 본점",
+   "keywords": [
+    {
+     "keyword": "양지바른버거쌀국수본점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "양지바른버거쌀국수",
+     "why": "「본점」을 뗀 이름",
+     "pc": 10,
+     "mobile": 90,
+     "volume": 100
+    }
+   ],
+   "volume": 110
+  },
+  {
+   "id": "nt-4066352",
+   "name": "킨십",
+   "keywords": [
+    {
+     "keyword": "양양킨십",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 20,
+     "mobile": 320,
+     "volume": 340
+    }
+   ],
+   "volume": 340
+  },
+  {
+   "id": "nt-610533",
+   "name": "어민후계자횟집",
+   "keywords": [
+    {
+     "keyword": "어민후계자횟집",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 160,
+     "volume": 180
+    }
+   ],
+   "volume": 180
+  },
+  {
+   "id": "nt-627070",
+   "name": "옛뜰",
+   "keywords": [
+    {
+     "keyword": "양양옛뜰",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 양양 + 이름",
+     "pc": 230,
+     "mobile": 3360,
+     "volume": 3590
+    }
+   ],
+   "volume": 3590
+  },
+  {
+   "id": "nt-633536",
+   "name": "단양면옥",
+   "keywords": [
+    {
+     "keyword": "단양면옥",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 260,
+     "volume": 310
+    }
+   ],
+   "volume": 310
+  },
+  {
+   "id": "nt-633546",
+   "name": "오색통나무집",
+   "keywords": [
+    {
+     "keyword": "오색통나무집",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 550,
+     "volume": 620
+    }
+   ],
+   "volume": 620
+  },
+  {
+   "id": "nt-686158",
+   "name": "송이버섯마을",
+   "keywords": [
+    {
+     "keyword": "송이버섯마을",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 750,
+     "volume": 870
+    }
+   ],
+   "volume": 870
+  },
+  {
+   "id": "nt-743036",
+   "name": "해담마을",
+   "keywords": [
+    {
+     "keyword": "해담마을",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 490,
+     "volume": 580
+    }
+   ],
+   "volume": 580
+  }
+ ],
+ "callLog": [
+  {
+   "at": "2026-10-30T16:07:47.919Z",
+   "batch": [
+    "38선휴게소",
+    "38평화마을",
+    "38횟집",
+    "PEICOFFEE",
+    "갈천약수터"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "38선휴게소",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 940
+    },
+    {
+     "relKeyword": "38평화마을",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "38횟집",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 340
+    },
+    {
+     "relKeyword": "PEICOFFEE",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "갈천약수터",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 70
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:48.526Z",
+   "batch": [
+    "강원횟집",
+    "갯마을해변",
+    "공가네감자옹심이",
+    "공수전계곡",
+    "광주빛고을식당"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "강원횟집",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 250
+    },
+    {
+     "relKeyword": "갯마을해변",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "공가네감자옹심이",
+     "monthlyPcQcCnt": 290,
+     "monthlyMobileQcCnt": 5200
+    },
+    {
+     "relKeyword": "공수전계곡",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "광주빛고을식당",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 1230
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:49.154Z",
+   "batch": [
+    "광진해수욕장",
+    "구룡령옛길",
+    "국립미천골자연휴양림",
+    "금풀애마을",
+    "기사문항"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "광진해수욕장",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "구룡령옛길",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 340
+    },
+    {
+     "relKeyword": "국립미천골자연휴양림",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "금풀애마을",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "기사문항",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 270
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:49.831Z",
+   "batch": [
+    "기사문해수욕장",
+    "김성래가옥",
+    "김택준가옥",
+    "낙산도립공원",
+    "낙산사"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "기사문해수욕장",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "김성래가옥",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "김택준가옥",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "낙산도립공원",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 50
+    },
+    {
+     "relKeyword": "낙산사",
+     "monthlyPcQcCnt": 7490,
+     "monthlyMobileQcCnt": 55200
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:50.494Z",
+   "batch": [
+    "낙산사의상대",
+    "낙산항",
+    "낙산해수욕장",
+    "낙산해안로",
+    "남대천생태관찰로"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "낙산사의상대",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 630
+    },
+    {
+     "relKeyword": "낙산항",
+     "monthlyPcQcCnt": 190,
+     "monthlyMobileQcCnt": 820
+    },
+    {
+     "relKeyword": "낙산해수욕장",
+     "monthlyPcQcCnt": 870,
+     "monthlyMobileQcCnt": 7190
+    },
+    {
+     "relKeyword": "낙산해안로",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "남대천생태관찰로",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 440
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:51.099Z",
+   "batch": [
+    "남대천연어생태공원",
+    "남애1리해수욕장",
+    "남애스쿠버리조트",
+    "남애어촌체험마을",
+    "남애항"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "남대천연어생태공원",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 330
+    },
+    {
+     "relKeyword": "남애1리해수욕장",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "남애스쿠버리조트",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "남애어촌체험마을",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "남애항",
+     "monthlyPcQcCnt": 460,
+     "monthlyMobileQcCnt": 2020
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:51.709Z",
+   "batch": [
+    "녹원갈비",
+    "다래횟집",
+    "단양면옥",
+    "더스탠드",
+    "동명서원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "녹원갈비",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 560
+    },
+    {
+     "relKeyword": "다래횟집",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 690
+    },
+    {
+     "relKeyword": "단양면옥",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 260
+    },
+    {
+     "relKeyword": "더스탠드",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 280
+    },
+    {
+     "relKeyword": "동명서원",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 20
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:52.306Z",
+   "batch": [
+    "동산포해수욕장",
+    "동산항",
+    "동산해수욕장",
+    "동일식당",
+    "동쪽바다세꼬시"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "동산포해수욕장",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "동산항",
+     "monthlyPcQcCnt": 190,
+     "monthlyMobileQcCnt": 710
+    },
+    {
+     "relKeyword": "동산해수욕장",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 210
+    },
+    {
+     "relKeyword": "동일식당",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 960
+    },
+    {
+     "relKeyword": "동쪽바다세꼬시",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 890
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:52.922Z",
+   "batch": [
+    "동해막국수",
+    "동해생명자원센터",
+    "둔전계곡",
+    "등불가든",
+    "레이크지움"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "동해막국수",
+     "monthlyPcQcCnt": 550,
+     "monthlyMobileQcCnt": 6810
+    },
+    {
+     "relKeyword": "동해생명자원센터",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "둔전계곡",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "등불가든",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "레이크지움",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 770
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:53.528Z",
+   "batch": [
+    "레포밸리",
+    "로드3521",
+    "롱비치서프스쿨",
+    "리버티",
+    "마음이동해"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "레포밸리",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 190
+    },
+    {
+     "relKeyword": "로드3521",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 240
+    },
+    {
+     "relKeyword": "롱비치서프스쿨",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "리버티",
+     "monthlyPcQcCnt": 560,
+     "monthlyMobileQcCnt": 3000
+    },
+    {
+     "relKeyword": "마음이동해",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 230
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:54.132Z",
+   "batch": [
+    "메밀꽃향기",
+    "명주사부도군",
+    "모쿠서프",
+    "물치한우설렁탕",
+    "물치항"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "메밀꽃향기",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 770
+    },
+    {
+     "relKeyword": "명주사부도군",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "모쿠서프",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 50
+    },
+    {
+     "relKeyword": "물치한우설렁탕",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 130
+    },
+    {
+     "relKeyword": "물치항",
+     "monthlyPcQcCnt": 350,
+     "monthlyMobileQcCnt": 2330
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:54.829Z",
+   "batch": [
+    "물치해수욕장",
+    "미천골계곡",
+    "미천골자연휴양림",
+    "바다뷰제빵소",
+    "범바우막국수"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "물치해수욕장",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 690
+    },
+    {
+     "relKeyword": "미천골계곡",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "미천골자연휴양림",
+     "monthlyPcQcCnt": 640,
+     "monthlyMobileQcCnt": 2610
+    },
+    {
+     "relKeyword": "바다뷰제빵소",
+     "monthlyPcQcCnt": 130,
+     "monthlyMobileQcCnt": 1970
+    },
+    {
+     "relKeyword": "범바우막국수",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 1490
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:55.436Z",
+   "batch": [
+    "범바우막국수양양본점",
+    "법수치계곡",
+    "북분리해수욕장",
+    "불바라기약수터",
+    "빅웨이브"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "범바우막국수양양본점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "법수치계곡",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 190
+    },
+    {
+     "relKeyword": "북분리해수욕장",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "불바라기약수터",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "빅웨이브",
+     "monthlyPcQcCnt": 1460,
+     "monthlyMobileQcCnt": 6390
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:56.045Z",
+   "batch": [
+    "사랑대게",
+    "산골식당",
+    "삼팔횟집",
+    "서림사지",
+    "서프월드"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "사랑대게",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 240
+    },
+    {
+     "relKeyword": "산골식당",
+     "monthlyPcQcCnt": 160,
+     "monthlyMobileQcCnt": 1900
+    },
+    {
+     "relKeyword": "삼팔횟집",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 1290
+    },
+    {
+     "relKeyword": "서림사지",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서프월드",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:56.772Z",
+   "batch": [
+    "서프팩토리양양설악점",
+    "서피비치",
+    "설악산국립공원",
+    "설악산대청봉",
+    "설악산오색주전골"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서프팩토리양양설악점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서피비치",
+     "monthlyPcQcCnt": 220,
+     "monthlyMobileQcCnt": 950
+    },
+    {
+     "relKeyword": "설악산국립공원",
+     "monthlyPcQcCnt": 4370,
+     "monthlyMobileQcCnt": 17000
+    },
+    {
+     "relKeyword": "설악산대청봉",
+     "monthlyPcQcCnt": 900,
+     "monthlyMobileQcCnt": 7430
+    },
+    {
+     "relKeyword": "설악산오색주전골",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 120
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:57.417Z",
+   "batch": [
+    "설악산흘림골",
+    "설악해수욕장",
+    "성국사",
+    "송월메밀국수",
+    "송이밸리"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "설악산흘림골",
+     "monthlyPcQcCnt": 1290,
+     "monthlyMobileQcCnt": 7830
+    },
+    {
+     "relKeyword": "설악해수욕장",
+     "monthlyPcQcCnt": 110,
+     "monthlyMobileQcCnt": 610
+    },
+    {
+     "relKeyword": "성국사",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 180
+    },
+    {
+     "relKeyword": "송월메밀국수",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 370
+    },
+    {
+     "relKeyword": "송이밸리",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 80
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:58.054Z",
+   "batch": [
+    "송이밸리자연휴양림",
+    "송이버섯마을",
+    "송전해수욕장",
+    "송천떡마을",
+    "수산항"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "송이밸리자연휴양림",
+     "monthlyPcQcCnt": 370,
+     "monthlyMobileQcCnt": 950
+    },
+    {
+     "relKeyword": "송이버섯마을",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 750
+    },
+    {
+     "relKeyword": "송전해수욕장",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 720
+    },
+    {
+     "relKeyword": "송천떡마을",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 400
+    },
+    {
+     "relKeyword": "수산항",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 1150
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:58.672Z",
+   "batch": [
+    "수산항낚시터",
+    "수산항물회",
+    "실로암메밀국수",
+    "쏠비치양양오션플레이",
+    "애견전용해수욕장멍비치"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "수산항낚시터",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "수산항물회",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 1270
+    },
+    {
+     "relKeyword": "실로암메밀국수",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 580
+    },
+    {
+     "relKeyword": "쏠비치양양오션플레이",
+     "monthlyPcQcCnt": 210,
+     "monthlyMobileQcCnt": 790
+    },
+    {
+     "relKeyword": "애견전용해수욕장멍비치",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:59.315Z",
+   "batch": [
+    "양리단길",
+    "양양남대천",
+    "양양남대천체육공원",
+    "양양달래촌",
+    "양양동해신묘지"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양리단길",
+     "monthlyPcQcCnt": 160,
+     "monthlyMobileQcCnt": 690
+    },
+    {
+     "relKeyword": "양양남대천",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 1350
+    },
+    {
+     "relKeyword": "양양남대천체육공원",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 120
+    },
+    {
+     "relKeyword": "양양달래촌",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 330
+    },
+    {
+     "relKeyword": "양양동해신묘지",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:07:59.915Z",
+   "batch": [
+    "양양동호해변",
+    "양양르온다",
+    "양양명주사",
+    "양양새활용센터",
+    "양양선림원지"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양양동호해변",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 1090
+    },
+    {
+     "relKeyword": "양양르온다",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 250
+    },
+    {
+     "relKeyword": "양양명주사",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "양양새활용센터",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "양양선림원지",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:00.551Z",
+   "batch": [
+    "양양설온",
+    "양양송이조각공원",
+    "양양송천떡마을",
+    "양양수라상",
+    "양양에너지팜"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양양설온",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 850
+    },
+    {
+     "relKeyword": "양양송이조각공원",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 460
+    },
+    {
+     "relKeyword": "양양송천떡마을",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 940
+    },
+    {
+     "relKeyword": "양양수라상",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 240
+    },
+    {
+     "relKeyword": "양양에너지팜",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 330
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:01.156Z",
+   "batch": [
+    "양양옛뜰",
+    "양양오색리삼층석탑",
+    "양양요트수산어촌체험",
+    "양양전통시장",
+    "양양지경리해변"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양양옛뜰",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 3360
+    },
+    {
+     "relKeyword": "양양오색리삼층석탑",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "양양요트수산어촌체험",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "양양전통시장",
+     "monthlyPcQcCnt": 380,
+     "monthlyMobileQcCnt": 3990
+    },
+    {
+     "relKeyword": "양양지경리해변",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:01.770Z",
+   "batch": [
+    "양양진전사지도의선사탑",
+    "양양진전사지삼층석탑",
+    "양양킨십",
+    "양양해촌",
+    "양양향교"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양양진전사지도의선사탑",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "양양진전사지삼층석탑",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "양양킨십",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 320
+    },
+    {
+     "relKeyword": "양양해촌",
+     "monthlyPcQcCnt": 130,
+     "monthlyMobileQcCnt": 1590
+    },
+    {
+     "relKeyword": "양양향교",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 40
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:02.408Z",
+   "batch": [
+    "양지바른버거쌀국수",
+    "양지바른버거쌀국수본점",
+    "양파다이브",
+    "어민후계자횟집",
+    "어성전계곡"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양지바른버거쌀국수",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 90
+    },
+    {
+     "relKeyword": "양지바른버거쌀국수본점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "양파다이브",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 150
+    },
+    {
+     "relKeyword": "어민후계자횟집",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 160
+    },
+    {
+     "relKeyword": "어성전계곡",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 50
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:03.047Z",
+   "batch": [
+    "어성전산림교육관",
+    "엉클서프양양",
+    "여운포리빵집",
+    "연어자전거길",
+    "영광정메밀국수"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "어성전산림교육관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "엉클서프양양",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "여운포리빵집",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 1830
+    },
+    {
+     "relKeyword": "연어자전거길",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "영광정메밀국수",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 1360
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:03.687Z",
+   "batch": [
+    "영혈사",
+    "오산리선사유적박물관",
+    "오색령",
+    "오색리삼층석탑",
+    "오색식당"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "영혈사",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "오산리선사유적박물관",
+     "monthlyPcQcCnt": 200,
+     "monthlyMobileQcCnt": 530
+    },
+    {
+     "relKeyword": "오색령",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 170
+    },
+    {
+     "relKeyword": "오색리삼층석탑",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "오색식당",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 460
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:04.320Z",
+   "batch": [
+    "오색약수골전통장",
+    "오색약수터",
+    "오색용소",
+    "오색용소폭포",
+    "오색탄산온천"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "오색약수골전통장",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "오색약수터",
+     "monthlyPcQcCnt": 890,
+     "monthlyMobileQcCnt": 7920
+    },
+    {
+     "relKeyword": "오색용소",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "오색용소폭포",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "오색탄산온천",
+     "monthlyPcQcCnt": 740,
+     "monthlyMobileQcCnt": 6000
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:04.920Z",
+   "batch": [
+    "오색통나무집",
+    "원포리해변",
+    "이두형가옥",
+    "인구서프",
+    "인구항"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "오색통나무집",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 550
+    },
+    {
+     "relKeyword": "원포리해변",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "이두형가옥",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "인구서프",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 50
+    },
+    {
+     "relKeyword": "인구항",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 220
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:05.534Z",
+   "batch": [
+    "인구항배낚시",
+    "인구해수욕장",
+    "입암메밀타운",
+    "자연횟집",
+    "잔교리해변"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "인구항배낚시",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "인구해수욕장",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 150
+    },
+    {
+     "relKeyword": "입암메밀타운",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 600
+    },
+    {
+     "relKeyword": "자연횟집",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 610
+    },
+    {
+     "relKeyword": "잔교리해변",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 230
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:06.140Z",
+   "batch": [
+    "잔교리해수욕장",
+    "전라도식당",
+    "정암해수욕장",
+    "조규승가옥",
+    "죽도정죽도전망대"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "잔교리해수욕장",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "전라도식당",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 1770
+    },
+    {
+     "relKeyword": "정암해수욕장",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 640
+    },
+    {
+     "relKeyword": "조규승가옥",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "죽도정죽도전망대",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:06.759Z",
+   "batch": [
+    "죽도해수욕장",
+    "중광정해수욕장",
+    "진전사",
+    "진전사지도의선사탑",
+    "진전사지삼층석탑"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "죽도해수욕장",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 380
+    },
+    {
+     "relKeyword": "중광정해수욕장",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "진전사",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 220
+    },
+    {
+     "relKeyword": "진전사지도의선사탑",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "진전사지삼층석탑",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 20
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:07.366Z",
+   "batch": [
+    "천선식당",
+    "카페달파도",
+    "카페둔치",
+    "카페로그",
+    "컨센트릭양양"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "천선식당",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 320
+    },
+    {
+     "relKeyword": "카페달파도",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 200
+    },
+    {
+     "relKeyword": "카페둔치",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 690
+    },
+    {
+     "relKeyword": "카페로그",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 1470
+    },
+    {
+     "relKeyword": "컨센트릭양양",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 190
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:08.024Z",
+   "batch": [
+    "탁장사고을",
+    "파머스키친",
+    "포매리백로와왜가리번식지",
+    "하광정항",
+    "하조대"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "탁장사고을",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "파머스키친",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 1310
+    },
+    {
+     "relKeyword": "포매리백로와왜가리번식지",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "하광정항",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "하조대",
+     "monthlyPcQcCnt": 1020,
+     "monthlyMobileQcCnt": 8420
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:08.669Z",
+   "batch": [
+    "하조대둘레길",
+    "하조대막국수",
+    "하조대무인등대",
+    "하조대반점",
+    "하조대해수욕장"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "하조대둘레길",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 170
+    },
+    {
+     "relKeyword": "하조대막국수",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 350
+    },
+    {
+     "relKeyword": "하조대무인등대",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "하조대반점",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 230
+    },
+    {
+     "relKeyword": "하조대해수욕장",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 960
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:09.276Z",
+   "batch": [
+    "하조맛식당",
+    "한계령",
+    "해담마을",
+    "해담마을수륙양용차",
+    "해파랑길42코스"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "하조맛식당",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 650
+    },
+    {
+     "relKeyword": "한계령",
+     "monthlyPcQcCnt": 1030,
+     "monthlyMobileQcCnt": 7180
+    },
+    {
+     "relKeyword": "해담마을",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 490
+    },
+    {
+     "relKeyword": "해담마을수륙양용차",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 140
+    },
+    {
+     "relKeyword": "해파랑길42코스",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 60
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:09.870Z",
+   "batch": [
+    "해파랑길43코스",
+    "해파랑길44코스",
+    "현산공원",
+    "홍련암",
+    "후진항"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "해파랑길43코스",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 50
+    },
+    {
+     "relKeyword": "해파랑길44코스",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "현산공원",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "홍련암",
+     "monthlyPcQcCnt": 210,
+     "monthlyMobileQcCnt": 1720
+    },
+    {
+     "relKeyword": "후진항",
+     "monthlyPcQcCnt": 220,
+     "monthlyMobileQcCnt": 1150
+    }
+   ]
+  },
+  {
+   "at": "2026-10-30T16:08:10.492Z",
+   "batch": [
+    "휴휴암",
+    "흥부네밥상"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "휴휴암",
+     "monthlyPcQcCnt": 1780,
+     "monthlyMobileQcCnt": 11600
+    },
+    {
+     "relKeyword": "흥부네밥상",
+     "monthlyPcQcCnt": 140,
+     "monthlyMobileQcCnt": 2880
+    }
+   ]
+  }
+ ]
+}
