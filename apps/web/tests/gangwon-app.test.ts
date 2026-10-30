@@ -11,7 +11,7 @@ import { DEST } from '../src/dest';
 import { apply } from '../src/i18n/apply';
 import { EN } from '../src/i18n/en';
 import { normalizeNation } from '../src/nation';
-import type { Point } from '../src/pick';
+import type { Point, Spot } from '../src/pick';
 import { LocateError } from '../src/effects';
 import { NATION, loadNation } from '../src/release';
 import { rainArea } from '../src/state';
@@ -48,7 +48,7 @@ function mount(o: { dest?: string; sgg?: string; at?: Point; granted?: boolean; 
   });
   return { asked };
 }
-const byId = (id: string | null | undefined) => normalizeSpots(gangwonRaw).find((s) => s.id === id);
+const byId = (id: string | null | undefined) => normalizeSpots(gangwonRaw).find((s) => s.id === id) as (Spot & { area?: string }) | undefined;
 /** the 시군구 each of the list in use is (its `area`) */
 const areasInUse = () => [...new Set((current().state().spots ?? []).map((s) => (s as { area?: string }).area))];
 
@@ -152,6 +152,86 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     expect($('#basis > span').textContent).toBe('속초시 근처');
     expect($('.logo .rg').textContent).toBe(':속초');
     expect(areasInUse()).toEqual(['속초']);
+  });
+
+  // predeploy review 2 m-1: the 시군구 wanted last wins, and the basis goes with it — never :속초 with 「강릉시 근처」
+  it('review 2 m-1: a 강원(강릉) device with 지역 강릉시 that picked 속초시 when it was the 자동 지역 (before Amendment 2): 강원 속초, 속초시 근처, its 비 소식 and cards', async () => {
+    localStorage.setItem(destKey(KEYS.basis, 'gangwon'), '"region"');
+    localStorage.setItem(destKey(KEYS.region, 'gangwon'), '"51150"');
+    localStorage.setItem(destKey(KEYS.basis, 'nation'), '"region"');
+    localStorage.setItem(destKey(KEYS.region, 'nation'), '"51210"');
+    mount({ dest: 'nation', sgg: '51210', at: 강릉역 });
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51210', basis: 'region', region: '51210' });
+    expect($('.logo .rg').textContent).toBe(':속초');
+    expect($('#basis > span').textContent).toBe('속초시 근처');
+    expect(rainArea(current().state())).toBe('51210');
+    expect(localStorage.getItem(destKey(KEYS.region, 'gangwon'))).toBe('"51210"');
+    await tap('[data-mood="walk"]');
+    await wait();
+    expect(cardIds()).toHaveLength(3);
+    expect(cardIds().every((id) => byId(id)?.area === '속초')).toBe(true);
+  });
+
+  it('review 2 m-1: 브라우저로 열기 at 속초 (dest=gangwon&area=51210) on a device with 지역 강릉시: 속초, 속초시 근처', async () => {
+    localStorage.setItem(destKey(KEYS.basis, 'gangwon'), '"region"');
+    localStorage.setItem(destKey(KEYS.region, 'gangwon'), '"51150"');
+    window.history.replaceState(null, '', '/?dest=gangwon&area=51210');
+    Object.assign(window, { __dest: 'gangwon', __destBy: 'link' });
+    try {
+      mount({ dest: 'gangwon', at: 강릉역 });
+      await wait();
+      expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51210', basis: 'region', region: '51210' });
+      expect($('.logo .rg').textContent).toBe(':속초');
+      expect($('#basis > span').textContent).toBe('속초시 근처');
+      expect(rainArea(current().state())).toBe('51210');
+    } finally {
+      window.history.replaceState(null, '', '/');
+      delete (window as { __dest?: unknown }).__dest;
+      delete (window as { __destBy?: unknown }).__destBy;
+    }
+  });
+
+  it('review 2 m-1: a 숙소 in 강릉 as the basis, 춘천 the 시군구 kept: 춘천, 춘천시 근처 (the 숙소 kept; picked again, 강릉)', async () => {
+    localStorage.setItem(destKey(KEYS.basis, 'gangwon'), '"stay"');
+    localStorage.setItem(destKey(KEYS.stay, 'gangwon'), JSON.stringify({ ...강릉역, area: '51150', source: 'gps' }));
+    localStorage.setItem(SGG_KEY, '"51110"');
+    mount({ dest: 'gangwon', at: 강릉역 });
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51110', basis: 'region', region: '51110', stay: { area: '51150' } });
+    expect($('.logo .rg').textContent).toBe(':춘천');
+    expect($('#basis > span').textContent).toBe('춘천시 근처');
+    expect(rainArea(current().state())).toBe('51110');
+    expect(localStorage.getItem(destKey(KEYS.basis, 'gangwon'))).toBe('"region"');
+    await tap('#basis');
+    await tap('#sheet [data-basis="stay"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51150', basis: 'stay' });
+    expect($('.logo .rg').textContent).toBe(':강릉');
+  });
+
+  it('review 2 m-2: a place saved in 강릉 stays in ♥ N and the saved list after moving to 속초', async () => {
+    mount({ dest: 'gangwon', at: 강릉역 });
+    await wait();
+    await tap('[data-mood="walk"]');
+    await wait();
+    const id = cardIds()[0];
+    ($(`.card[data-id="${id}"] .heart`) as HTMLButtonElement).click();
+    await flush();
+    expect($('#saved').textContent).toBe('1');
+    await tap('#back');
+    await wait();
+    await tap('#basis');
+    if (!$$('#sheet [data-area="51210"]').length) await tap('#sheet [data-action="other-area"]');
+    await tap('#sheet [data-area="51210"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', sgg: '51210' });
+    expect(areasInUse()).toEqual(['속초']);
+    expect($('#saved').hidden).toBe(false);
+    expect($('#saved').textContent).toBe('1');
+    await tap('#saved');
+    await wait();
+    expect($$('#savedView .card').map((c) => c.getAttribute('data-id'))).toEqual([id]);
   });
 
   it('m-1: that device with 강릉시 as its region, location allowed, in 서울: its basis and region come along — 강원, 강릉시 근처, not the GPS', async () => {

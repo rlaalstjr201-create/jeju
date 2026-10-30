@@ -2,7 +2,7 @@
 // Controller only: user intents → reduce(state) → render(state); effects (GPS, data, storage, history)
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
 import { AREAS, areaByName, destOfArea, inJeju, type Area, type RegionName, type SggCode } from './areas';
-import { createSpotSource, type SpotSource } from './data';
+import { createSpotSource, normalizeSpots, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
 import { DEST, destOfId, isDest, type Dest } from './dest';
@@ -159,14 +159,32 @@ export function mountApp(doc: Document, deps: Deps): App {
     const word = sggShort(sgg ?? '');
     return Array.isArray(raw) ? raw.filter((r) => (r as { area?: unknown } | null)?.area === word) : raw;
   }
+  /** a file of several 시군구 as it came (강원's), and each 시군구's list with the file's other places (savedPool) */
+  const files: Partial<Record<Dest, unknown[]>> = {};
+  const pools = new WeakMap<Spot[], Spot[]>();
+  function poolOf(d: Dest, sgg: SggCode | null, spots: Spot[]): Spot[] | undefined {
+    const raw = files[d];
+    if (!raw) return undefined;
+    let pool = pools.get(spots);
+    if (!pool) pools.set(spots, (pool = [...spots, ...normalizeSpots(raw.filter((r) => (r as { area?: unknown } | null)?.area !== sggShort(sgg ?? '')))]));
+    return pool;
+  }
   const sourceOf = (d: Dest, sgg: SggCode | null): SpotSource => {
     const key = keyOf(d, sgg);
     return (sources[key] ??= createSpotSource(
-      () => (d === 'nation' ? loadSpots(d, sgg ?? '') : DEST[d].sgg ? loadSpots(d, sgg ?? '').then((raw) => ofSgg(raw, sgg)) : loadSpots(d)),
+      () =>
+        d === 'nation'
+          ? loadSpots(d, sgg ?? '')
+          : DEST[d].sgg
+            ? loadSpots(d, sgg ?? '').then((raw) => {
+                if (Array.isArray(raw)) files[d] = raw;
+                return ofSgg(raw, sgg);
+              })
+            : loadSpots(d),
       delays.dataTimeout,
       (spots) => {
         if (keyOf(state.dest, state.sgg) !== key) return;
-        dispatch({ type: 'spots', spots });
+        dispatch({ type: 'spots', spots, savedPool: poolOf(d, sgg, spots) });
         retryFailedLoad();
       },
       deps.yieldToMain,
@@ -253,6 +271,13 @@ export function mountApp(doc: Document, deps: Deps): App {
   if (DEST[dest0].sgg) {
     sgg0 = sggFor(dest0, loaded, ...sggWant, store.sgg(dest0));
     store.setSgg(sgg0!, dest0);
+    // the basis stands in that 시군구 (predeploy review 2 m-1: the 시군구 wanted last wins): a region or 숙소 in another of
+    // 강원's becomes that 시군구's region — the 숙소 is kept, and picked again moves to its own 시군구
+    if ((loaded.basis === 'region' && loaded.region !== sgg0) || (loaded.basis === 'stay' && loaded.stay?.area !== sgg0)) {
+      Object.assign(loaded, { basis: 'region', region: sgg0 });
+      store.setBasis('region');
+      store.setRegion(sgg0!);
+    }
   }
   // ADR-0063 2: an in-app browser keeps its own storage (say so, once); the home-screen nudge, once.
   const nav0 = win?.navigator;
@@ -1414,7 +1439,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       // its list already in (warmed under the 시작 화면, or before a trip to the other one): its onLoad has been, so
       // nothing else would bring it back and the home stayed without 「예:」, photos or 장날 (owner report 2026-10-24)
       const ready = data.peek();
-      if (ready) dispatch({ type: 'spots', spots: ready });
+      if (ready) dispatch({ type: 'spots', spots: ready, savedPool: poolOf(d, sgg, ready) });
     });
     if (opts.basis && opts.basis !== 'region') store.setBasis(opts.basis);
     warm();

@@ -11,7 +11,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { CARD_COUNT, REACHES, TRAVEL_TEXT, historyKey, listed, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, rainArea, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, rainArea, savedCount, savedDays, savedIndex, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
@@ -938,7 +938,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   function savedListNodes(s: State): HTMLElement[] {
     const { upcoming, past } = savedDays(s);
     const o = s.savedList!.origin;
-    const idx = spotIndex(s.spots!);
+    const idx = savedIndex(s)!;
     const used = new Set<string>();
     let first = true;
     // The first row says where the trips are measured from (the current basis, not that day's) and where a
@@ -1048,7 +1048,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       }
       // Back online: a card that lost its photo only for want of a connection gets it back in place.
       if (was.length > s.broken.length) {
-        const idx = s.spots ? spotIndex(s.spots) : null;
+        const idx = savedIndex(s);
         for (const card of els.main.querySelectorAll<HTMLElement>('.card.noimg[data-id]')) {
           const id = card.dataset.id!;
           const spot = broken.has(id) ? null : (s.cards?.list.find((x) => x.spot.id === id)?.spot ?? idx?.get(id));

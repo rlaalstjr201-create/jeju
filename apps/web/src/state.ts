@@ -119,6 +119,9 @@ export interface State {
   /** 뺀 곳 N곳 opened in the saved list (ADR-0087); closed each time the list opens. */
   visitedOpen: boolean;
   spots: Spot[] | null;
+  /** the places saved ids are looked up in, where `spots` is one 시군구 of a file that has several (강원's, predeploy
+   * review 2 m-2): the whole file, so a place saved in another of its 시군구 stays in ♥ N and the list. Else null. */
+  savedPool: Spot[] | null;
   /** the home's list did not come (failed, or not within the wait): the home stops holding places for it. False again
    * once it comes, or with another destination. */
   listFailed: boolean;
@@ -163,7 +166,7 @@ export type Action =
   | { type: 'resolved'; req: number; origin: Origin | null; spots: Spot[]; clock?: number }
   | { type: 'loadError'; req: number; offline: boolean }
   | { type: 'abort' }
-  | { type: 'spots'; spots: Spot[] }
+  | { type: 'spots'; spots: Spot[]; savedPool?: Spot[] }
   | { type: 'openSaved'; restored?: boolean }
   | { type: 'closeSaved' }
   | { type: 'route'; route: Route }
@@ -267,6 +270,7 @@ export function initialState(init: {
     visitNote: null,
     visitedOpen: false,
     spots: null,
+    savedPool: null,
     listFailed: false,
     broken: [],
     brokenOffline: [],
@@ -418,11 +422,15 @@ export function heldDay(s: State, id: string, day: Day = whenDay(s)): Day | null
   return days.find((d) => d >= s.today) ?? days[days.length - 1];
 }
 
+/** The saved ids' places: the whole file the list in use is one 시군구 of (savedPool), else that list; null before it. */
+export const savedIndex = (s: State): Map<string, Spot> | null => {
+  const from = s.savedPool ?? s.spots;
+  return from && spotIndex(from);
+};
 /** Once data is loaded, only ids that still exist count (S42). */
 function known(s: State): SavedEntry[] {
-  if (!s.spots) return s.saved;
-  const idx = spotIndex(s.spots);
-  return s.saved.filter((e) => idx.has(e.id));
+  const idx = savedIndex(s);
+  return idx ? s.saved.filter((e) => idx.has(e.id)) : s.saved;
 }
 /** ♥ N: today and later — the days gone by are not counted. */
 export function savedCount(s: State): number {
@@ -444,7 +452,7 @@ export interface SavedDay {
  * order the user set; rows taken out in this visit stay where they were. Ids missing from the data are
  * left out. */
 export function savedDays(s: State): { upcoming: SavedDay[]; past: SavedDay[] } {
-  const idx = s.spots ? spotIndex(s.spots) : null;
+  const idx = savedIndex(s);
   const byDay = new Map<Day, SavedRow[]>();
   const add = (day: Day) => {
     let rows = byDay.get(day);
@@ -603,7 +611,7 @@ function step(s: State, a: Action): State {
     case 'abort':
       return s.phase.k === 'pending' ? { ...s, phase: { k: 'idle' } } : s;
     case 'spots':
-      return s.spots === a.spots && !s.listFailed ? s : { ...s, spots: a.spots, listFailed: false };
+      return s.spots === a.spots && !s.listFailed && (!a.savedPool || s.savedPool === a.savedPool) ? s : { ...s, spots: a.spots, savedPool: a.savedPool ?? s.savedPool, listFailed: false };
     case 'listFailed':
       return s.spots || s.listFailed ? s : { ...s, listFailed: true };
     case 'openSaved': {
@@ -718,6 +726,7 @@ function step(s: State, a: Action): State {
         region: a.region,
         stay: a.stay,
         spots: null,
+        savedPool: null,
         listFailed: false,
         cards: null,
         origin: null,
