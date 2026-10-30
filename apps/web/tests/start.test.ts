@@ -115,7 +115,7 @@ describe('1.2 시작 화면 (index.html 바디 인라인)', () => {
       expect(HANGUL.test(words)).toBe(false);
     });
   it('the page without the switch has neither script (the build takes the blocks out)', () => {
-    const off = source.replace(/<!--busan-->[\s\S]*?<!--\/busan-->/g, '');
+    const off = source.replace(/<!--busan-->[\s\S]*?<!--\/busan-->/g, '').replace(/<!--nation-->[\s\S]*?<!--\/nation-->/g, '');
     expect(off).not.toMatch(/yc-start|ycStart|jeju\.dest/);
   });
 });

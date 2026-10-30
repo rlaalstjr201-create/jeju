@@ -41,7 +41,9 @@ const BUSAN_CHUNK = /^assets\/busan-part-\*\.js$/;
 const NATION = existsSync(join(DIST, 'nation/index.json'));
 const NATION_CHUNK = /^assets\/(?:nation-part|busan)-\*\.js$/;
 const added = (n: string) => (SWITCHED && BUSAN_CHUNK.test(n)) || (NATION && NATION_CHUNK.test(n));
-const withoutBlocks = (html: string) => (SWITCHED ? BUSAN_BLOCKS.reduce((h, b) => h.replace(b, ''), html) : html);
+/** index.html's `<!--nation-->…<!--/nation-->` contents, kept by the 자동 지역 build only (vite.config.ts busanBlock) */
+const NATION_BLOCKS = NATION ? [...readFileSync(join(APP, 'index.html'), 'utf8').matchAll(/<!--nation-->([\s\S]*?)<!--\/nation-->/g)].map((m) => m[1]) : [];
+const withoutBlocks = (html: string) => (SWITCHED ? [...BUSAN_BLOCKS, ...NATION_BLOCKS].reduce((h, b) => h.replace(b, ''), html) : html);
 const sha = (b: Uint8Array | string) => createHash('sha256').update(b).digest('hex');
 const short = (b: Uint8Array | string) => sha(b).slice(0, 16);
 /** Hashed asset names change with any code change (the build commit is in the JS): only the name is kept. */
@@ -269,7 +271,7 @@ async function browserRun(firstId: string) {
       // a string, not a function: tsx would wrap a function's inner arrows in a helper the page does not have
       const snap = (): Promise<Snap> => page.evaluate(SNAP);
       // the switched-on build's two inline blocks (ADR-0096), as index.html has them: taken out before the hash
-      const dcl = BUSAN_BLOCKS.reduce((h, b) => h.replace(b, ''), unhash(await page.evaluate('window.__dcl')));
+      const dcl = [...BUSAN_BLOCKS, ...NATION_BLOCKS].reduce((h, b) => h.replace(b, ''), unhash(await page.evaluate('window.__dcl')));
       const home = await snap();
       const homeRequests = [...requests];
       await page.locator('[data-mood="walk"]').first().click();

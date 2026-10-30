@@ -142,11 +142,14 @@ function nationFiles(nation: boolean): Plugin {
 
 /** 시작 화면 (ADR-0096): index.html's `<!--busan-->…<!--/busan-->` blocks (the destination decided before the first paint,
  * the start screen) go out with a switched-on build only; with the switch off they are taken out whole, so the Jeju page
- * is the same bytes as before (plans/busan.md M3 b). */
-function busanBlock(mode: string): Plugin {
+ * is the same bytes as before (plans/busan.md M3 b). `<!--nation-->…<!--/nation-->` the same way, with the 자동 지역 only. */
+function busanBlock(mode: string, nation: boolean): Plugin {
   return {
     name: 'busan-block',
-    transformIndexHtml: (html) => (mode === 'busan' ? html.replace(/<!--\/?busan-->/g, '') : html.replace(/<!--busan-->[\s\S]*?<!--\/busan-->/g, '')),
+    transformIndexHtml: (html) => {
+      const h = nation ? html.replace(/<!--\/?nation-->/g, '') : html.replace(/<!--nation-->[\s\S]*?<!--\/nation-->/g, '');
+      return mode === 'busan' ? h.replace(/<!--\/?busan-->/g, '') : h.replace(/<!--busan-->[\s\S]*?<!--\/busan-->/g, '');
+    },
   };
 }
 
@@ -219,7 +222,7 @@ export default defineConfig(({ command, mode: given }) => {
     __NATION_V__: JSON.stringify(nation ? NATION_V : ''),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
-  plugins: [busanBlock(mode), serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
+  plugins: [busanBlock(mode, nation),serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the dynamic imports are the other languages' words, which a Korean visit never asks for,
   // and Busan's part (switched-on build only, src/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
   // switch on
