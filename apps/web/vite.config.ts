@@ -133,6 +133,9 @@ function nationFiles(nation: boolean): Plugin {
       if (!nation || !existsSync(NATION_DIR)) return;
       mkdirSync(out, { recursive: true });
       for (const f of readdirSync(NATION_DIR).filter((f) => f.endsWith('.json'))) cpSync(resolve(NATION_DIR, f), resolve(out, f));
+      // U16: always asked for as nation/<f>.json?v=<content hash> (nation-part) — immutable, like spots-busan.json
+      const h = resolve(outDir, '_headers');
+      if (existsSync(h)) writeFileSync(h, readFileSync(h, 'utf8').replace('/i18n/*\n', '/nation/*\n  Cache-Control: public, max-age=31536000, immutable\n/i18n/*\n'));
     },
   };
 }
