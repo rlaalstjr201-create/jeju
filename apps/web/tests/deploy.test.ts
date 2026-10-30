@@ -181,9 +181,9 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
     for (const k of keys) expect(ga, k).toContain(said[k]);
   });
 
-  it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 31일 (plans/nationwide-app.md U19: 자동 지역 출시)', () => {
+  it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 30일 (plans/nationwide-app.md U19: 자동 지역 출시)', () => {
     for (const w of ['세부 종류', '실내만', '카드에 보인 철', '지금 여행지(제주·부산·다른 곳)', '다른 곳에서는 고른 시군구', '시작 화면이 보였는지', '위치로 시작했는지 직접 골랐는지']) expect(own, w).toContain(w);
-    expect(html).toContain('<p class="date">2026년 10월 31일부터 적용해요.</p>');
+    expect(html).toContain('<p class="date">2026년 10월 30일부터 적용해요.</p>');
   });
 });
 
