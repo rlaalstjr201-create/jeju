@@ -8,6 +8,9 @@
  * 이름 끝 「(부산)」이 「(도시)」, K2의 앞 「부산」이 「도시」·「도시시」, 뺄 말(BROAD)이 도시별 표. 측정은 한 번이다: pop-<도시>-01.json이
  * 있으면 멈춘다. 중간에 끊기면 같은 실행의 이어 하기(--resume: 이미 받은 호출 묶음은 다시 부르지 않음)만 쓴다. 키는 저장소 루트
  * .env의 NAVER_AD_*이고 출력·파일 어디에도 남기지 않는다. 부산 파일은 고치지 않는다.
+ *
+ *   node scripts/curated/measure.mjs gangwon 양양 --add   판정 회차가 바뀌어 keep이 달라졌을 때(criteria-03.md 6절), 계획에서 키워드가
+ *                                                          pop-<도시>-01.json과 다른 곳만 한 번 잰다 → pop-<도시>-01-add.json(있으면 멈춘다)
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -176,6 +179,38 @@ async function measure(dir, city, resume) {
   console.log(`\npop-${city}-01.json: ${rows.length} places, ${all.length} keywords, ${calls.length} calls (${totalTries} tries), 확인 실패 곳 ${failed.length}, 빠진 키워드 ${missingKeywords.length}`);
 }
 
+/** 새로 keep됐거나 키워드가 바뀐 곳만 한 번 잰다. 이미 잰 곳의 값은 pop-<도시>-01.json 그대로 둔다. */
+async function measureAdd(dir, city) {
+  const out = resolve(dir, `pop-${city}-01-add.json`);
+  if (existsSync(out)) throw new Error(`${out} exists — the measurement runs once`);
+  const keys = { customer: env('NAVER_AD_CUSTOMER_ID'), api: env('NAVER_AD_API_KEY'), secret: env('NAVER_AD_SECRET_KEY') };
+  if (!keys.customer || !keys.api || !keys.secret) throw new Error('NAVER_AD_* missing in the repo-root .env');
+  const committed = JSON.parse(readFileSync(resolve(dir, `pop-${city}-01-plan.json`), 'utf8'));
+  const now = plan(targets(dir, city), city);
+  if (JSON.stringify(now) !== JSON.stringify(committed.rows)) throw new Error('the plan file is not what the rules make now — the plan is fixed before measuring');
+  const before = new Map(JSON.parse(readFileSync(resolve(dir, `pop-${city}-01.json`), 'utf8')).rows.map((r) => [r.id, r.keywords.map((x) => x.keyword).join('|')]));
+  const rows = now.filter((r) => before.get(r.id) !== r.keywords.map((x) => x.keyword).join('|'));
+  const all = [...new Set(rows.flatMap((r) => r.keywords.map((x) => x.keyword)))].sort();
+  const calls = [];
+  for (let i = 0; i < all.length; i += BATCH) {
+    const batch = all.slice(i, i + BATCH);
+    const r = await callWithRetry(batch, keys, keywordstool);
+    const hits = batch.map((k) => r.rows?.find((x) => x.relKeyword.replace(/\s+/g, '') === k) ?? null);
+    calls.push({ at: new Date().toISOString(), batch, status: r.status, tries: r.tries, raw: hits.filter(Boolean).map((h) => ({ relKeyword: h.relKeyword, monthlyPcQcCnt: h.monthlyPcQcCnt, monthlyMobileQcCnt: h.monthlyMobileQcCnt })) });
+    await new Promise((ok) => setTimeout(ok, GAP_MS));
+  }
+  for (const row of rows) {
+    for (const x of row.keywords) {
+      const hit = calls.flatMap((c) => c.raw).find((h) => h.relKeyword.replace(/\s+/g, '') === x.keyword);
+      Object.assign(x, hit ? { pc: hit.monthlyPcQcCnt, mobile: hit.monthlyMobileQcCnt, volume: volume03(hit) } : { volume: null });
+    }
+    row.volume = placeVolume(row.keywords);
+  }
+  const failed = rows.filter((r) => r.volume === null).map((r) => r.id);
+  writeFileSync(out, `${JSON.stringify({ round: '01-add', city, criteria: 'review/gangwon/pop-criteria.md', source: 'Naver 검색광고 keywordstool, showDetail=1', places: rows.length, keywords: all.length, calls: calls.length, failed, rows, callLog: calls }, null, 1)}\n`);
+  console.log(`pop-${city}-01-add.json: ${rows.length} places, ${all.length} keywords, ${calls.length} calls, 확인 실패 곳 ${failed.length}`);
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [dest, city] = process.argv.slice(2).filter((a) => !a.startsWith('--'));
   if (!dest || !city) throw new Error('usage: node scripts/curated/measure.mjs <dest> <city> [--plan|--resume]');
@@ -185,5 +220,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const n = new Set(rows.flatMap((r) => r.keywords.map((x) => x.keyword))).size;
     writeFileSync(resolve(dir, `pop-${city}-01-plan.json`), `${JSON.stringify({ criteria: 'review/gangwon/pop-criteria.md', city, places: rows.length, keywords: n, calls: Math.ceil(n / BATCH), rows }, null, 1)}\n`);
     console.log(`pop-${city}-01-plan.json: ${rows.length} places, ${n} keywords, ${Math.ceil(n / BATCH)} calls`);
-  } else await measure(dir, city, process.argv.includes('--resume'));
+  } else if (process.argv.includes('--add')) await measureAdd(dir, city);
+  else await measure(dir, city, process.argv.includes('--resume'));
 }

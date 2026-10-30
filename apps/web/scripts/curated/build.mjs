@@ -58,6 +58,8 @@ export function loadInputs(dest = 'gangwon', cities = ['강릉'], dir = resolve(
     if (existsSync(resolve(judgeDir, 'fixes-01.json'))) fixes.push(...readJson(resolve(judgeDir, 'fixes-01.json')));
     kakao.push(...readJson(resolve(dir, `kakao-${city}-01.json`)).rows);
     pop.push(...readJson(resolve(dir, `pop-${city}-01.json`)).rows);
+    // 판정 회차가 바뀌어 새로 잰 곳(measure.mjs --add)은 뒤에 붙여 같은 id의 앞 값을 덮는다
+    if (existsSync(resolve(dir, `pop-${city}-01-add.json`))) pop.push(...readJson(resolve(dir, `pop-${city}-01-add.json`)).rows);
   }
   const items = readJson(resolve(dir, 'scope.json')).items.filter((it) => cities.includes(it.city));
   return { dest, cities, items, verdicts, fixes, kakao, pop };
