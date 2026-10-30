@@ -12,7 +12,7 @@ import { EN } from '../src/i18n/en';
 import { normalizeNation } from '../src/nation';
 import type { Point } from '../src/pick';
 import { NATION, loadNation } from '../src/release';
-import { KEYS } from '../src/store';
+import { KEYS, createStore, destKey } from '../src/store';
 import { contextOf } from '../src/track';
 import { fileSpots } from './fixtures';
 import { $, $$, cardIds, current, flush, render, reset, settle, tap } from './harness';
@@ -21,15 +21,17 @@ const nationFile = (f: string) => readFileSync(resolve(__dirname, `../data/natio
 const gangwonRaw = JSON.parse(readFileSync(resolve(__dirname, '../data/gangwon/spots-gangwon.json'), 'utf8')) as Record<string, unknown>[];
 const 강릉역 = { lat: 37.7643, lng: 128.8996 };
 const 속초해수욕장 = { lat: 38.1906, lng: 128.6014 };
+const 서울시청 = { lat: 37.5663, lng: 126.9779 };
 const wait = async () => {
   for (let i = 0; i < 4; i++) await flush();
   await settle();
 };
-function mount(o: { dest?: string; sgg?: string; at?: Point } = {}) {
+function mount(o: { dest?: string; sgg?: string; at?: Point; granted?: boolean } = {}) {
   if (o.dest) localStorage.setItem(KEYS.dest, JSON.stringify(o.dest));
   if (o.sgg) localStorage.setItem(KEYS.sgg, JSON.stringify(o.sgg));
   const asked: string[] = [];
   render({
+    ...(o.granted ? { geoPermission: () => Promise.resolve('granted' as const) } : {}),
     loadSpots: (d, sgg) => {
       asked.push(sgg ? `${d}:${sgg}` : d);
       // the 자동 지역's list as nation-part gives it: 강릉's records left to 강원
@@ -99,6 +101,47 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     expect(current().state().dest).toBe('gangwon');
     expect(localStorage.getItem(KEYS.dest)).toBe('"gangwon"');
     expect(asked).toEqual(['gangwon']);
+  });
+
+  it('m-1: that device with 강릉시 as its region, location allowed, in 서울: its basis and region come along — 강원, 강릉시 근처, not the GPS', async () => {
+    localStorage.setItem(destKey(KEYS.basis, 'nation'), '"region"');
+    localStorage.setItem(destKey(KEYS.region, 'nation'), '"51150"');
+    const { asked } = mount({ dest: 'nation', sgg: '51150', at: 서울시청, granted: true });
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', basis: 'region', region: '51150' });
+    expect($('.logo .rg').textContent).toBe(':강릉');
+    expect(localStorage.getItem(KEYS.dest)).toBe('"gangwon"');
+    expect(localStorage.getItem(destKey(KEYS.basis, 'gangwon'))).toBe('"region"');
+    expect(asked).toEqual(['gangwon']);
+  });
+
+  it('m-1: that device with a 숙소 in 강릉: the 숙소 comes along (the basis too)', async () => {
+    localStorage.setItem(destKey(KEYS.basis, 'nation'), '"stay"');
+    localStorage.setItem(destKey(KEYS.stay, 'nation'), JSON.stringify({ ...강릉역, area: '51150', source: 'gps' }));
+    mount({ dest: 'nation', sgg: '51150', at: 서울시청, granted: true });
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'gangwon', basis: 'stay', stay: { ...강릉역 } });
+    expect(JSON.parse(localStorage.getItem(destKey(KEYS.stay, 'gangwon'))!)).toMatchObject(강릉역);
+  });
+
+  it('m-1 store: the 자동 지역\'s keys read with 강원\'s region and 숙소 in them move to .gangwon before they are repaired away', () => {
+    localStorage.setItem(destKey(KEYS.basis, 'nation'), '"stay"');
+    localStorage.setItem(destKey(KEYS.region, 'nation'), '"51150"');
+    localStorage.setItem(destKey(KEYS.stay, 'nation'), JSON.stringify({ ...강릉역, area: '51150', source: 'gps' }));
+    const store = createStore(localStorage, null);
+    store.useDest('nation');
+    expect(store.place()).toEqual({ basis: 'gps', region: null, stay: null });
+    expect(localStorage.getItem(destKey(KEYS.stay, 'nation'))).toBeNull();
+    store.useDest('gangwon');
+    expect(store.place()).toMatchObject({ basis: 'stay', region: '51150', stay: { ...강릉역 } });
+    // a 강원 choice of its own is not overwritten
+    localStorage.removeItem(destKey(KEYS.region, 'gangwon'));
+    localStorage.setItem(destKey(KEYS.region, 'nation'), '"51150"');
+    localStorage.setItem(destKey(KEYS.basis, 'nation'), '"region"');
+    localStorage.setItem(destKey(KEYS.basis, 'gangwon'), '"gps"');
+    store.carry();
+    expect(localStorage.getItem(destKey(KEYS.region, 'gangwon'))).toBe('"51150"');
+    expect(localStorage.getItem(destKey(KEYS.basis, 'gangwon'))).toBe('"gps"');
   });
 
   it('기준 시트: 여행지 row 제주·부산·강릉·다른 곳; 강릉 pressed → its 동네 index is 강원\'s 시군구, 강릉시 among them; 속초시 → 자동 지역 속초; 강릉시 again → 강원', async () => {

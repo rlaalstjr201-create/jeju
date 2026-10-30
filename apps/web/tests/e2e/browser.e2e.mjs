@@ -4690,7 +4690,7 @@ if (NATION) {
     assert(!problems.length, problems.join(' | '));
   });
 
-  await check('GW-3', '링크: /?dest=gangwon 은 시작 화면 없이 여차나:강릉; /?dest=gangwon&mood=walk 는 걷기 3장(이유 줄); 자동 지역 강릉을 골랐던 기기(jeju.sgg 51150)는 강원으로 열고 기억', async () => {
+  await check('GW-3', '링크: /?dest=gangwon 은 시작 화면 없이 여차나:강릉; /?dest=gangwon&mood=walk 는 걷기 3장(이유 줄); 자동 지역 강릉을 골랐던 기기(jeju.sgg 51150)는 강원으로 열고 기억, 그 기기의 강릉 숙소 기준도 따라옴(위치 허용·서울에서도 강릉)', async () => {
     const problems = [];
     let o = await nationAt('/?dest=gangwon');
     if (!(await rgIs(o.page, ':강릉')) || (await said(o.page)).start) problems.push(`dest=gangwon ${JSON.stringify(await said(o.page))}`);
@@ -4704,6 +4704,21 @@ if (NATION) {
     const ok = await rgIs(o.page, ':강릉');
     const kept = await o.page.evaluate(() => localStorage.getItem('jeju.dest'));
     if (!ok || kept !== '"gangwon"') problems.push(`old device ${JSON.stringify(await said(o.page))} kept ${kept}`);
+    await o.ctx.close();
+    // m-1: that device with a 강릉 숙소 as its basis, location allowed, now in 서울 — the basis and 숙소 come along, so the
+    // GPS read does not take it to 서울
+    const stay = { lat: 강릉역.lat, lng: 강릉역.lng, area: '51150', source: 'gps' };
+    const storage = { 'jeju.dest': 'nation', 'jeju.sgg': '51150', 'jeju.basis.nation': 'stay', 'jeju.stay.nation': stay };
+    o = await nationAt('/', { storage, geo: { mode: 'ok', perm: 'granted', lat: 37.5663, lng: 126.9779, delay: 30 } });
+    await rgIs(o.page, ':강릉');
+    await o.page.waitForTimeout(500);
+    const moved = await o.page.evaluate(() => ({
+      rg: document.querySelector('.logo .rg')?.textContent,
+      dest: localStorage.getItem('jeju.dest'),
+      basis: localStorage.getItem('jeju.basis.gangwon'),
+      stay: JSON.parse(localStorage.getItem('jeju.stay.gangwon') || 'null'),
+    }));
+    if (moved.rg !== ':강릉' || moved.dest !== '"gangwon"' || moved.basis !== '"stay"' || moved.stay?.lat !== stay.lat) problems.push(`숙소 device ${JSON.stringify(moved)}`);
     await o.ctx.close();
     assert(!problems.length, problems.join(' | '));
   });

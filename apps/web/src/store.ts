@@ -300,6 +300,9 @@ export interface Store {
   useDest(d: Dest): void;
   /** that destination's basis, region and 숙소, read (and repaired) as `load` does. */
   place(): Pick<Loaded, 'basis' | 'region' | 'stay'>;
+  /** ADR-0102 Amendment 1 (m-1): the 자동 지역's region and 숙소 inside 강원's 시군구 (chosen there before it became 검수한
+   * 곳), and the basis naming them, copied to `.gangwon` where it has none of its own. The `.nation` keys are left. */
+  carry(): void;
   /** the destination kept on this device (`jeju.dest`), or null. */
   dest(): Dest | null;
   setDest(d: Dest): void;
@@ -430,7 +433,21 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
 
   // ADR-0097: whose basis, region and 숙소 the keys below are (only that destination's keys are read or repaired)
   let cur: Dest = 'jeju';
+  function carry() {
+    const into = (key: typeof KEYS.region | typeof KEYS.stay, v: unknown) => {
+      const k = destKey(key, 'gangwon');
+      if (v && get(local, k) == null) return set(local, k, v);
+      return false;
+    };
+    const region = into(KEYS.region, parseRegion(get(local, destKey(KEYS.region, 'nation')), 'gangwon'));
+    const stay = into(KEYS.stay, parseStay(get(local, destKey(KEYS.stay, 'nation')), 'gangwon'));
+    const basis = get(local, destKey(KEYS.basis, 'nation'));
+    const bk = destKey(KEYS.basis, 'gangwon');
+    if (((basis === 'region' && region) || (basis === 'stay' && stay)) && get(local, bk) == null) set(local, bk, basis);
+  }
   function place() {
+    // the 자동 지역's keys a 검수한 곳 took over are repaired away below: theirs first (m-1)
+    if (cur === 'nation') carry();
     const rk = destKey(KEYS.region, cur);
     const rawRegion = get(local, rk);
     const region = parseRegion(rawRegion, cur);
@@ -455,6 +472,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
   return {
     useDest: (d) => void (cur = d),
     place,
+    carry,
     dest() {
       const v = get(local, KEYS.dest);
       // 'nation' (and 'gangwon', which opens with it: ADR-0102) with the 자동 지역 switch only: a build without it opens

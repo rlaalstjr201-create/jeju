@@ -215,7 +215,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (want === 'nation' && link?.stay) sgg0 = sggOf(link.stay) ?? sgg0;
     // a 시군구 a 검수한 곳 has taken over (강릉, chosen as 자동 지역 before ADR-0102, or an older 브라우저로 열기 link): that
     // destination
-    if (want === 'nation') want = coveredBy(sgg0) ?? want;
+    const taken = want === 'nation' ? coveredBy(sgg0) : null;
+    if (taken) {
+      want = taken;
+      // and its basis, region and 숙소 (ADR-0102 Amendment 1, m-1)
+      store.carry();
+    }
     // Busan's (the 자동 지역's) part not in (it could not be loaded), or no 시군구 to show: Jeju for this visit, the choice
     // kept on the device as it was
     dest0 = released(want) && (want !== 'nation' || !!sgg0) ? want : 'jeju';
