@@ -23,7 +23,7 @@ Status: Accepted (2026-10-30, `plans/nationwide.md` 4·C3, 주인 지시 「서�
 
 ## Consequences
 
-- 2026-10-30 측정(`SITE_URL=https://yeochana.com` 운영 빌드): 한국어 진입 JS+CSS gzip 53,809 → 54,174 B(+365 B, 예산 60,000). 인라인 블록 +1,914 B 그대로(상한 2,000). `check:jeju`는 허용 목록을 늘리지 않고 통과(`spots-gangwon.json`과 그 캐시 줄은 자동 지역 파일처럼 비교 전에 뺌).
+- 2026-10-30 측정(`SITE_URL=https://yeochana.com` 운영 빌드): 한국어 진입 JS+CSS gzip 53,809 → 54,214 B(+405 B, 여행지 줄 CSS 포함, 예산 60,000). 인라인 블록 +1,914 B 그대로(상한 2,000). `check:jeju`는 허용 목록을 늘리지 않고 통과(`spots-gangwon.json`과 그 캐시 줄은 자동 지역 파일처럼 비교 전에 뺌).
 - 경계는 다각형이 아니라 가까운 중심이다. 동해·평창 쪽 경계 근처 점은 강릉 중심이 더 가까우면 강원이 된다(ADR-0101 R3와 같이 받아들임).
 - `nt-` id가 자동 지역과 같아 `destOfId`는 둘 다 `nation`이다. 그래서 저장한 곳 화면에 「강릉에 저장한 곳 N곳」 줄이 없다. 강릉에서 저장한 곳은 강릉을 쓸 때만 보인다(자동 지역의 다른 시도 저장과 같은 일, `.scratch/nation-followups` m-4).
 - 자동 지역 시험(vitest·e2e)의 예는 강릉에서 동해(GPS)·경주(인기 칸)로 옮겼다.
