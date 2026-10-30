@@ -1,0 +1,52 @@
+{
+ "contentid": "2900179",
+ "modifiedtime": "20250923101146",
+ "fetchedAt": "2026-10-30T16:48:49.479Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2900179",
+       "contenttypeid": "39",
+       "title": "소랑호젠",
+       "createdtime": "20221107150325",
+       "modifiedtime": "20250923101146",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/65/2900165_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/65/2900165_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "서울특별시 성동구 왕십리로 58 (성수동1가)",
+       "addr2": "",
+       "zipcode": "04778",
+       "mapx": "127.0452211721",
+       "mapy": "37.5427498754",
+       "mlevel": "6",
+       "overview": "소랑호젠은 제주의 감성이 담긴 오픈 키친 레스토랑이다. 이곳은 제주의 식재료를 받아 제주도의 사랑을 담은 제주식 요리를 하고 있다. 대표메뉴는 제주 흑돼지로 만든 프렌치렉 스테이크이다. 크림 뇨끼와 바질크림 뇨끼는 부드러운 식감과 풍부한 맛으로 사랑받고 있으며, 마르게리따 피자의 쫀득한 도우와 새콤한 토마토 소스도 인상적이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

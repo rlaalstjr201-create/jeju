@@ -1,0 +1,52 @@
+{
+ "contentid": "2793285",
+ "modifiedtime": "20250318202725",
+ "fetchedAt": "2026-10-30T16:43:16.395Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2793285",
+       "contenttypeid": "39",
+       "title": "부산식육식당",
+       "createdtime": "20211213233420",
+       "modifiedtime": "20250318202725",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/39/2793239_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/39/2793239_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 대관령로 108",
+       "addr2": "",
+       "zipcode": "25346",
+       "mapx": "128.7085555685",
+       "mapy": "37.6720853504",
+       "mlevel": "6",
+       "overview": "부산식육식당은 1966년도에 오픈한 대관령 첫 번째 고깃집으로 노포 분위기에 직접 만든 음식들과 키운 채소들을 즐길 수 있으며 돌판에 등심과 급냉시킨 삼겹살을 구워 먹을 수 있다. 신선하고 저렴한 소고기와 돼지고기를 맛볼 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "747753",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-30T16:47:18.276Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "747753",
+       "contenttypeid": "39",
+       "title": "전주식당",
+       "createdtime": "20090605192421",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 남대문시장길 18-7",
+       "addr2": "",
+       "zipcode": "04528",
+       "mapx": "126.976977343286",
+       "mapy": "37.5597560563936",
+       "mlevel": "6",
+       "overview": "서울역 인근 남대문시장 갈치조림골목 내에 위치하였다. 갈치조림을 대표 메뉴로 40여 년간 영업 중인 전통 있는 음식점이다. 갈치조림을 주문하면 기본 반찬과 계란찜을 제공한다. 짭짤한 갈치조림과 갈치튀김의 조합이 좋다. 든든한 식사 메뉴로 적절하여 점심시간에는 대기 줄이 있는 경우가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

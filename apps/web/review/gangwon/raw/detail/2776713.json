@@ -1,0 +1,52 @@
+{
+ "contentid": "2776713",
+ "modifiedtime": "20260813105415",
+ "fetchedAt": "2026-10-30T16:43:51.606Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2776713",
+       "contenttypeid": "39",
+       "title": "카페 연월일",
+       "createdtime": "20211120001954",
+       "modifiedtime": "20260813105415",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 진부면 진고개로 129",
+       "addr2": "",
+       "zipcode": "25322",
+       "mapx": "128.5964583020",
+       "mapy": "37.6791820715",
+       "mlevel": "6",
+       "overview": "카페 연월일은 탁 트인 창문으로 보이는 아름다운 풍경이 인상적인 곳이다. 여름과 가을엔 푸른 파밭이, 겨울에는 포근한 설경이 펼쳐진다. 카페 내부는 감성 가득한 소품들과 인테리어로 편안한 마음으로 휴식할 수 있다. 대표 메뉴인 당근케이크, 감자케이크, 대파빵은 모두 매장에서 직접 만드는 수제 디저트이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

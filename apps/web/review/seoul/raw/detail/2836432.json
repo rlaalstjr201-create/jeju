@@ -1,0 +1,52 @@
+{
+ "contentid": "2836432",
+ "modifiedtime": "20260312164840",
+ "fetchedAt": "2026-10-30T16:48:11.852Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2836432",
+       "contenttypeid": "39",
+       "title": "태향",
+       "createdtime": "20220812150603",
+       "modifiedtime": "20260312164840",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 후암로57길 3-10",
+       "addr2": "",
+       "zipcode": "04324",
+       "mapx": "126.974638869409",
+       "mapy": "37.5532012577657",
+       "mlevel": "6",
+       "overview": "태향은 서울역 근처에 위치한 중화요리 전문점이다. 모든 메뉴의 가격이 저렴하고 양이 많아 점심시간에 손님들로 북적북적하다. 양꼬치 메뉴도 있어 저녁에는 회식하는 회사원들도 많다. 대표 메뉴로는 태향특면이 있다. 이뿐만 아니라 삼선간짜장, 짬뽕 등도 맛볼 수 있다. 근처에서 유명한 곳이라 사람들의 발길이 끊이지 않는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

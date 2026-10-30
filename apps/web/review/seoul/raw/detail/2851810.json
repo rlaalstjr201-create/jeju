@@ -1,0 +1,52 @@
+{
+ "contentid": "2851810",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-30T16:49:55.601Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2851810",
+       "contenttypeid": "39",
+       "title": "찜집",
+       "createdtime": "20220908100550",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/2851807_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/07/2851807_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "25",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 중랑구 면목로 287",
+       "addr2": "1층",
+       "zipcode": "02239",
+       "mapx": "127.0859581133",
+       "mapy": "37.5785103427",
+       "mlevel": "6",
+       "overview": "찜집본점은 사가정역 인근 지역 전통의 찜 전문점이다. 주차장은 매장 바로 옆과 뒤편에 구비되어 있어서 주차가능하다. 매장 내부는 넓고 쾌적해서 단체 모임도 가능하다. 국내산 산꽃게를 사용한 꽃게찜과 꽃게범벅이 인기 메뉴다. 아구찜, 낙지찜, 알찜 등 다양한 찜 메뉴와 해물탕, 알탕 등의 탕 메뉴도 준비되어 있어 취향에 따라 선택할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

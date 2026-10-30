@@ -1,0 +1,52 @@
+{
+ "contentid": "2790453",
+ "modifiedtime": "20250806152900",
+ "fetchedAt": "2026-10-30T16:42:49.213Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2790453",
+       "contenttypeid": "39",
+       "title": "김박사봉평막국수",
+       "createdtime": "20211209194456",
+       "modifiedtime": "20250806152900",
+       "tel": "",
+       "telname": "",
+       "homepage": "평창문화관광 <a href=\"https://tour.pc.go.kr/Home/H40000/H40100/placeDetail?place_no=656&viewType=gallery&curationGroup=4&page=1&pageSize=12&search_column=2&search_keyword=%EC%A0%84%EB%B3%91&order_column=1&place_type=39\" target=\"_blank\" title=\"새창 : 평창문화관광 홈페이지로 이동\">https://tour.pc.go.kr/Home</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/2790474_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/74/2790474_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 허생원장터길 17-1",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3770677257",
+       "mapy": "37.6158049486",
+       "mlevel": "6",
+       "overview": "김박사봉평막국수는 강원 평창군에 위치한 막국수 전문점이다. 메밀순도가 높은 즉석반죽과 생면만을 사용하여 구수하고 깔끔한 메밀의 맛을 돋보이게 한다. 메밀 막국수, 메밀 전, 메밀전병 등 다양한 메밀 요리를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

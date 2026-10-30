@@ -1,0 +1,52 @@
+{
+ "contentid": "2709615",
+ "modifiedtime": "20260804170842",
+ "fetchedAt": "2026-10-30T16:49:51.368Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2709615",
+       "contenttypeid": "28",
+       "title": "중랑숲캠핑장",
+       "createdtime": "20210311204032",
+       "modifiedtime": "20260804170842",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/10/4096010_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/10/4096010_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "AC",
+       "lclsSystm2": "AC05",
+       "lclsSystm3": "AC050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중랑구 망우로87길 110",
+       "addr2": "(망우동)",
+       "zipcode": "02062",
+       "mapx": "127.1099602999",
+       "mapy": "37.6049529576",
+       "mlevel": "6",
+       "overview": "중랑숲캠핑장은 개발 제한구역 내 훼손된 부지를 복원하여 도심 속에서도 자연을 느낄 수 있도록 조성된 가족 캠핑장으로 중앙선 전철 양원역이 공원 입구에 위치해 대중교통으로도 접근이 용이하며 가족 피크닉, 연인 데이트코스, 단체 모임, 동호회 모임 등으로 인기 많은 캠핑장이다. 또한 캠핑 장비가 없어도 캠핑을 경험할 수 있도록 장비 대여가 가능하며 바베큐장도 마련되어 있어 도심 속에서도 힐링이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

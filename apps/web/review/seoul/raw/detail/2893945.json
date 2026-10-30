@@ -1,0 +1,52 @@
+{
+ "contentid": "2893945",
+ "modifiedtime": "20250919172228",
+ "fetchedAt": "2026-10-30T16:48:59.776Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2893945",
+       "contenttypeid": "39",
+       "title": "죽변항",
+       "createdtime": "20221102151642",
+       "modifiedtime": "20250919172228",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/35/2893935_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/35/2893935_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 성동구 상원길 40 (성수동1가)",
+       "addr2": "",
+       "zipcode": "04790",
+       "mapx": "127.0488512604",
+       "mapy": "37.5475827125",
+       "mlevel": "6",
+       "overview": "죽변항은 서울 뚝섬역 인근에 위치한 횟집이다. 이곳은 울진 죽변항에서 직송되는 해산물을 사용한다. 자연산 막회와 물회가 대표메뉴이며, 이외에도 참소라, 문어, 과메기 등 다양한 계절 해산물 요리와 곰치탕, 생대구탕, 생우럭탕 등이 준비되어 있다. 자연산 소라는 달고 부드러우며, 대구탕은 싱싱한 대구 살과 시원한 국물이 특징이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

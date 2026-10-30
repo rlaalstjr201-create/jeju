@@ -1,0 +1,52 @@
+{
+ "contentid": "704434",
+ "modifiedtime": "20261029092116",
+ "fetchedAt": "2026-10-30T16:48:05.550Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "704434",
+       "contenttypeid": "39",
+       "title": "원대구탕",
+       "createdtime": "20090310192953",
+       "modifiedtime": "20261029092116",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/09/3474809_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/09/3474809_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 한강대로62가길 8",
+       "addr2": "(한강로1가)",
+       "zipcode": "04382",
+       "mapx": "126.9742199937",
+       "mapy": "37.5346757308",
+       "mlevel": "6",
+       "overview": "1979년에 문을 열었다. 그 이전에는 한식집을 했으니 경력으로 보면 40년이 훨씬 지난 역사를 가지고 있다. \n대구탕만 끓여 낸 세월이 40여 년이다. 매일 직접 손질한 대구와 신선한 미나리로 대구탕을 끓여 낸다.\n얼큰하고 시원한 대구탕 국물이 일품이며 대구와 함께 콩나물과 미나리의 맛이 국물에 우러나도록 푹 끓여먹으면 예술이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

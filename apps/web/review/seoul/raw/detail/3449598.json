@@ -1,0 +1,52 @@
+{
+ "contentid": "3449598",
+ "modifiedtime": "20250107100457",
+ "fetchedAt": "2026-10-30T16:44:23.352Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3449598",
+       "contenttypeid": "12",
+       "title": "석파정",
+       "createdtime": "20241218152258",
+       "modifiedtime": "20250107100457",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/32/3449432_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/32/3449432_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS04",
+       "lclsSystm3": "HS040400",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02011000",
+       "addr1": "서울특별시 종로구 창의문로11길 4-1 (부암동)",
+       "addr2": "",
+       "zipcode": "03021",
+       "mapx": "126.9627744300",
+       "mapy": "37.5948701151",
+       "mlevel": "6",
+       "overview": "석파정은 조선 후기의 대표적인 별서 정원으로, 자연과 조화를 이루는 전통 건축과 아름다운 정원을 자랑한다. 본래 안동 김 씨 가문의 별정이었으나, 조선 후기 정치가인 흥선대원군이 매입해 자신의 이름인 “석파(石坡)”를 따서 석파정이라고 명명했다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

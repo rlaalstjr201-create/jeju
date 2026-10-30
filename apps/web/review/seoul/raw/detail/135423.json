@@ -1,0 +1,52 @@
+{
+ "contentid": "135423",
+ "modifiedtime": "20260206163201",
+ "fetchedAt": "2026-10-30T16:47:53.480Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135423",
+       "contenttypeid": "39",
+       "title": "니와",
+       "createdtime": "20070911090000",
+       "modifiedtime": "20260206163201",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 이촌로75길 22",
+       "addr2": "(이촌동)",
+       "zipcode": "04423",
+       "mapx": "126.974478699341",
+       "mapy": "37.5207107709851",
+       "mlevel": "6",
+       "overview": "니와는 서울특별시 용산구 이촌동에 위치한 일식 전문점이다. 이곳은 정통적인 맛을 추구하고자 일본 히로시마의 선술집 체인을 운영하는 회사와 손잡고 조리 시스템 및 맛을 구현하고 있다. 또한 직접 일본에 가지 않고도 일본 정통 선술집의 분위기 및 요리를 맛볼 수 있으며 다양한 메뉴 구성 및 주기적인 메뉴 업데이트로 항시 새로운 메뉴를 선보이고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

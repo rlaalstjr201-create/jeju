@@ -1,0 +1,52 @@
+{
+ "contentid": "1877251",
+ "modifiedtime": "20260313163640",
+ "fetchedAt": "2026-10-30T16:45:46.646Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1877251",
+       "contenttypeid": "39",
+       "title": "모뜨",
+       "createdtime": "20131231022332",
+       "modifiedtime": "20260313163640",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/64/4003764_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/64/4003764_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 평창30길 24",
+       "addr2": "",
+       "zipcode": "03004",
+       "mapx": "126.975087153688",
+       "mapy": "37.611769122989",
+       "mlevel": "6",
+       "overview": "카페 모뜨는 평창동 서울 옥션과 가나아트갤러리 근처에 있는 이탈리아 음식을 선보이는 카페 겸 레스토랑이다. 테라스에서는 북한산이 보여 전망이 좋으며, 근처 갤러리에 들러 전시 관람 후 이용하기에도 좋다. 경치 좋은 이곳 모뜨에서는 식사와 음료를 모두 즐길 수 있다. 예약은 식사 손님만 가능하며 음료를 즐기러 오시는 손님은 도착 순서대로 입장 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

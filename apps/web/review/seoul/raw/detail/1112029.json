@@ -1,0 +1,52 @@
+{
+ "contentid": "1112029",
+ "modifiedtime": "20261012104618",
+ "fetchedAt": "2026-10-30T16:45:19.363Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1112029",
+       "contenttypeid": "14",
+       "title": "창덕궁 소극장",
+       "createdtime": "20101015195326",
+       "modifiedtime": "20261012104618",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 창경궁로 227 (명륜4가)",
+       "addr2": "",
+       "zipcode": "03073",
+       "mapx": "126.9977596331",
+       "mapy": "37.5824266105",
+       "mlevel": "6",
+       "overview": "창덕궁 소극장은 한국음악의 활성화를 위해 지정된 문화특구인 국악로 창덕궁 바로 맞은편에 위치한 국악 전용 극장이다. 소극장이지만 아늑하고 편안한 분위기의 한국형 공연장으로, 매년 마당극, 실내악, 창극, 산조, 국악 발표, 콘서트 등 국악과 관련된 공연과 다채로운 공연이 펼쳐진다. 소극장의 공연을 통해 한국의 독창적이고 아름다운 문화를 보다 가깝고 편하게 느낄 수 있을 뿐만 아니라 색다른 예술을 경험할 수 있다.\n인근에는 창경궁, 대학로 등과 인접해 있어 다양한 문화 관광이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

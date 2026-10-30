@@ -1,0 +1,52 @@
+{
+ "contentid": "2790292",
+ "modifiedtime": "20250827141332",
+ "fetchedAt": "2026-10-30T16:43:38.855Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2790292",
+       "contenttypeid": "39",
+       "title": "유명순대국",
+       "createdtime": "20211209191808",
+       "modifiedtime": "20250827141332",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/2790271_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/2790271_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 태기로 559",
+       "addr2": "",
+       "zipcode": "25309",
+       "mapx": "128.3576404770",
+       "mapy": "37.5640994491",
+       "mlevel": "6",
+       "overview": "깔끔한 맛의 순대와 진한 육수의 순대국전문점이다. 뜨끈한 국물이 생각날때나 고소한 순대가 생각날때 떠오르는 맛집이다. 향이 좋은 곤드레밥과 순대국밥 한그릇으로 건강한 한식 한끼를 챙겨 먹을 수 있다. 휘닉스파크 근처에 있어 연계관광이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

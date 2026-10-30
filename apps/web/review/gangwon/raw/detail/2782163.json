@@ -1,0 +1,52 @@
+{
+ "contentid": "2782163",
+ "modifiedtime": "20250822110745",
+ "fetchedAt": "2026-10-30T16:43:59.531Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782163",
+       "contenttypeid": "39",
+       "title": "푸우의 정원",
+       "createdtime": "20211126232706",
+       "modifiedtime": "20250822110745",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/2782143_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/2782143_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020200",
+       "addr1": "강원특별자치도 평창군 봉평면 메밀꽃길 10-9",
+       "addr2": "1층",
+       "zipcode": "25302",
+       "mapx": "128.3717126548",
+       "mapy": "37.6157742945",
+       "mlevel": "6",
+       "overview": "봉평면에 위치한 양식당으로 야외 테라스도 마련되어 있는 넓은 규모의 음식점이다. 북미 가정식 느낌의 스테이크, 특허받은 감자 돈가스와 메밀 돈가스, 그리고 돼지고기 야채 스튜, 홈메이드 샌드위치, 샐러드 등 다양한 종류의 메뉴들을 판매하고 있다. 야외 테라스는 정원이 꾸며져 있어 동화 같은 분위기를 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "747779",
+ "modifiedtime": "20260921102140",
+ "fetchedAt": "2026-10-30T16:47:20.121Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "747779",
+       "contenttypeid": "39",
+       "title": "중앙갈치식당",
+       "createdtime": "20090605193204",
+       "modifiedtime": "20260921102140",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 남대문시장길 22-12",
+       "addr2": "",
+       "zipcode": "04528",
+       "mapx": "126.9770217839",
+       "mapy": "37.5597393926",
+       "mlevel": "6",
+       "overview": "50년 넘는 전통을 자랑하는 중앙갈치식당은 갈치조림 골목에서도 유명한 가게 중 한 곳이다. 미원을 사용하지 않고 표고버섯을 이용한 천연 양념으로 만드는 갈치조림은 다른 식당과는 다른 매콤한 맛이 있다. 또한 국내산을 고집하는 갈치를 비롯해 모든 식재료들을 직접 하나하나 챙긴다고 하니 더욱 정성이 느껴진다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

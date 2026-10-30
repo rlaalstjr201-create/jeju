@@ -1,0 +1,52 @@
+{
+ "contentid": "2777184",
+ "modifiedtime": "20250122093744",
+ "fetchedAt": "2026-10-30T16:43:51.058Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2777184",
+       "contenttypeid": "39",
+       "title": "친정엄마",
+       "createdtime": "20211122222545",
+       "modifiedtime": "20250122093744",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/40/2777040_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/40/2777040_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 송정택지1길 2",
+       "addr2": "",
+       "zipcode": "25331",
+       "mapx": "128.5609533165",
+       "mapy": "37.6356283922",
+       "mlevel": "6",
+       "overview": "친정엄마는 강원도 평창군 진부면에 있는 한식 전문점이다. 제철 반찬에 정갈한 음식들과 부담 없는 양념이 맛난 한 끼를 해결해 주는 한정식 코스 요리가 인기가 좋다. 코스 요리 외에도 기본 백반, 다슬기 해장국 등 다양한 요리가 제공된다. 제공되는 돌솥밥은 찰기가 넘치며 누룽지와 숭늉을 만들어 먹는 것도 별미이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

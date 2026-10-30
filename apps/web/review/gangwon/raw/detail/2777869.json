@@ -1,0 +1,52 @@
+{
+ "contentid": "2777869",
+ "modifiedtime": "20250729131844",
+ "fetchedAt": "2026-10-30T16:42:43.216Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2777869",
+       "contenttypeid": "39",
+       "title": "강변식당",
+       "createdtime": "20211123183438",
+       "modifiedtime": "20250729131844",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/54/2777854_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/54/2777854_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 용평면 경강로 2017-20",
+       "addr2": "",
+       "zipcode": "25313",
+       "mapx": "128.4389429572",
+       "mapy": "37.6071932349",
+       "mlevel": "6",
+       "overview": "평창군 용평면 용평우체국 바로 앞에 위치한  2대째 내려오는 백반 전문점이다. 이 집의 대표 메뉴는 주꾸미삼겹살로, 둥글게 깔린 삼겹살 가운데에 주꾸미와 야채, 떡이 올라간 모양이 마치 꽃과 같은 모습이다. 그 외에도 김치두루치기, 두부버섯전골과 예약 메뉴인 닭볶음탕과 토종닭백숙 등 다양한 한식 메뉴로 집밥 먹는 기분을 들게 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

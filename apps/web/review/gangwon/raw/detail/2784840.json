@@ -1,0 +1,52 @@
+{
+ "contentid": "2784840",
+ "modifiedtime": "20250714095941",
+ "fetchedAt": "2026-10-30T16:42:43.727Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2784840",
+       "contenttypeid": "39",
+       "title": "강촌갈비",
+       "createdtime": "20211202000603",
+       "modifiedtime": "20250714095941",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/31/2784831_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/31/2784831_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 횡계2길 9",
+       "addr2": "",
+       "zipcode": "25344",
+       "mapx": "128.7089638364",
+       "mapy": "37.6730324712",
+       "mlevel": "6",
+       "overview": "강촌갈비는 강원도 평창군 대관령면에 있는 고기 전문점이다. 식당 이름의 강촌은 지명이 아니라 바로 옆에 강이 있는 촌(시골)이라는 의미이며 맛을 책임지는 주방장님은 요평 호텔 출신 요리사이다. 돼지양념갈비와 된장찌개가 이곳의 인기 요리이며, 제공되는 반찬들도 맛이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

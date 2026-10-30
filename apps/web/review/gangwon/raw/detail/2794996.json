@@ -1,0 +1,52 @@
+{
+ "contentid": "2794996",
+ "modifiedtime": "20250827151646",
+ "fetchedAt": "2026-10-30T16:43:34.049Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2794996",
+       "contenttypeid": "39",
+       "title": "오대산산채나라",
+       "createdtime": "20211214181207",
+       "modifiedtime": "20250827151646",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/89/2794989_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/89/2794989_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 진고개로 159",
+       "addr2": "",
+       "zipcode": "25322",
+       "mapx": "128.5970403228",
+       "mapy": "37.6818598479",
+       "mlevel": "6",
+       "overview": "오대산산채나라는 강원도 평창군 진부면에 위치한 산채 요리 전문점이다. 고객이 아닌 내 가족이 먹는다는 마음으로 재료를 준비하여 음식을 만드는 이곳은 직접 채취한 곤드레로 지은 산채정식이 일품이다. 다양한 나물을 제공해 맛과 건강을 더하고 관광객과 현지 군민들도 자주 방문하는 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

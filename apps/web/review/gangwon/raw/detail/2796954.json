@@ -1,0 +1,52 @@
+{
+ "contentid": "2796954",
+ "modifiedtime": "20250904173058",
+ "fetchedAt": "2026-10-30T16:43:31.426Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2796954",
+       "contenttypeid": "39",
+       "title": "오대산 농원식당",
+       "createdtime": "20211215012942",
+       "modifiedtime": "20250904173058",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/26/2796926_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/26/2796926_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 진고개로 36-29",
+       "addr2": "",
+       "zipcode": "25322",
+       "mapx": "128.5970017851",
+       "mapy": "37.6704417241",
+       "mlevel": "6",
+       "overview": "평창군 진부면에 위치한 곳으로 맛과 정성을 다하는 한식당이다. 언제 어디서나 고객님 곁에 머물러주는 곳이다. 또 한식당과 별개로 민박도 운영하고 있어 가족과 힐링하기도 좋은 장소이다. 갖가지 정갈한 반찬과 따듯한 찌개를 곁들여 먹으면 나물 반찬이 많아 건강한 한끼를 책임질 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

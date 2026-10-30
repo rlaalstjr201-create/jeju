@@ -1,0 +1,52 @@
+{
+ "contentid": "820593",
+ "modifiedtime": "20260409161758",
+ "fetchedAt": "2026-10-30T16:47:56.035Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "820593",
+       "contenttypeid": "39",
+       "title": "두바이레스토랑",
+       "createdtime": "20091015050400",
+       "modifiedtime": "20260409161758",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 이태원로 192",
+       "addr2": "",
+       "zipcode": "04406",
+       "mapx": "126.995354054838",
+       "mapy": "37.5342900486439",
+       "mlevel": "6",
+       "overview": "이태원에 위치한 두바이레스토랑은 정통 아랍 음식을 제공하고 있으며 시샤(물 담배)를 경험해 볼 수도 있다. 이태원의 중심지역에 위치해 있어 외국인들은 물론 내국인도 많이 찾는 레스토랑이기도 하다. 대표 메뉴로는 다양한 종류의 커리이며 케밥, 스프, 샐러드 등도 취급한다. 후식으로는 아랍커피, 밀크티 등도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

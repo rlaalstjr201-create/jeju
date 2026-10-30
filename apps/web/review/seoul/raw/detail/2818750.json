@@ -1,0 +1,52 @@
+{
+ "contentid": "2818750",
+ "modifiedtime": "20260220154326",
+ "fetchedAt": "2026-10-30T16:45:49.848Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2818750",
+       "contenttypeid": "39",
+       "title": "뼈탄집",
+       "createdtime": "20220506160445",
+       "modifiedtime": "20260220154326",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 자하문로1길 13 (내자동)",
+       "addr2": "(내자동)",
+       "zipcode": "03041",
+       "mapx": "126.971667142925",
+       "mapy": "37.5764202233299",
+       "mlevel": "6",
+       "overview": "뼈탄집은 방송에서도 여러 번 홍보된 맛집으로 다양한 부위의 고기를 맛볼 수 있는 식당이다. 삼겹살 부위 중 가장 맛있는 부위는 뼈 옆에 붙어있는 부위라고 한다. 뼈탄집에서는 가장 맛있는 뼈대를 선별하여 자체 노하우가 담긴 숙성을 시켜 직접 구워 제공한다. 직접 구워주는 고기와 함께 정갈한 밑반찬이 제공된다. 숙성 삼겹살, 숙성 뼈탄삼겹살 등의 인기메뉴이며 매운직화 뼈구이와 같은 특색 있는 메뉴도 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

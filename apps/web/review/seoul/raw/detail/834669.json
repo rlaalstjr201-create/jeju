@@ -1,0 +1,52 @@
+{
+ "contentid": "834669",
+ "modifiedtime": "20260921080407",
+ "fetchedAt": "2026-10-30T16:46:06.088Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "834669",
+       "contenttypeid": "39",
+       "title": "자하손만두",
+       "createdtime": "20091028015236",
+       "modifiedtime": "20260921080407",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/52/3446752_image2_1.jpeg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/52/3446752_image3_1.jpeg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 백석동길 12 (부암동)",
+       "addr2": "",
+       "zipcode": "03020",
+       "mapx": "126.9660825667",
+       "mapy": "37.5931721862",
+       "mlevel": "6",
+       "overview": "자하손만두는 1993년부터 종로구 부암동을 지켜온 만두 전문점으로, 전통적인 손맛을 고수한다. 국내산 밀가루로 만든 쫄깃한 만두피와 신선한 재료로 속을 채워 빚어낸 손 만두는 그 맛과 식감이 뛰어나며, 오랜 시간 동안 이어져온 전통을 자랑한다. 이곳 만둣국의 특징은 화학조미료를 일제 사용하지 않고 직접 담근 조선간장으로 맛을 낸 삼삼한 국물에 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

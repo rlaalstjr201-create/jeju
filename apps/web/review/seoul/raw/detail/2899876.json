@@ -1,0 +1,52 @@
+{
+ "contentid": "2899876",
+ "modifiedtime": "20260922184149",
+ "fetchedAt": "2026-10-30T16:48:44.332Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2899876",
+       "contenttypeid": "39",
+       "title": "베티버",
+       "createdtime": "20221107134939",
+       "modifiedtime": "20260922184149",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/71/2899871_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/71/2899871_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 성덕정11길 18 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04775",
+       "mapx": "127.0531943554",
+       "mapy": "37.5389223686",
+       "mlevel": "6",
+       "overview": "베티버는 서울지하철 2호선 성수역 3번 출구에서 약 700여 미터 떨어진 성원중학교 인근에 있다. 이곳은 주택가 골목에 있는 아주 심플하고 현대적인 분위기의 카페로, 내부에는 베이지와 그레이 톤의 심플한 테이블이 놓여 있다. 크로플 전문 카페로, 아이스크림라떼와 흑임자 크림라떼가 특히 인기다. 크로플은 바삭함과 부드러움을 동시에 갖췄으며, 올리브오일과 후추 추가 시 특별한 맛을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

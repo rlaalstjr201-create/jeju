@@ -1,0 +1,52 @@
+{
+ "contentid": "3080741",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-30T16:45:00.621Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3080741",
+       "contenttypeid": "14",
+       "title": "봄날아트홀",
+       "createdtime": "20231205145318",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/20/3506720_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/20/3506720_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 동숭길 39 (동숭동)",
+       "addr2": "지하 1층~2층",
+       "zipcode": "03086",
+       "mapx": "127.00426530119238",
+       "mapy": "37.57999067069077",
+       "mlevel": "6",
+       "overview": "봄날아트홀은 예전 아리랑소극장의 새 이름이다. 1관은 지하 1층 123석, 2관은 지하 2층 129석이다. 좌석은 앞에 두 줄만 제외하고는 층마다 단차가 있어서 뒤에 앉아도 잘 보인다. 소극장이라 출연진과 객석이 가까워서 서로의 호흡을 느끼며 공연을 보는 즐거움이 있다. 공연 시작 30분 전부터 매표할 수 있고 좌석은 선착순 배정이라 일찍 도착하면 원하는 자리에 앉을 수 있으며 방송통신대학교에 주차하면 공연 관람 시 30% 할인이 적용된다. 주변에는 대학로 볼거리, 즐길 거리, 먹거리가 많아 공연 전후로 방문해 보는 것도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

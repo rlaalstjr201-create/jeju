@@ -1,0 +1,52 @@
+{
+ "contentid": "2789014",
+ "modifiedtime": "20250827104901",
+ "fetchedAt": "2026-10-30T16:43:52.419Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789014",
+       "contenttypeid": "39",
+       "title": "카페노람뜰",
+       "createdtime": "20211208192133",
+       "modifiedtime": "20250827104901",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/94/2788994_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/94/2788994_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 평창군 평창읍 바위공원길 111",
+       "addr2": "",
+       "zipcode": "25375",
+       "mapx": "128.4098469363",
+       "mapy": "37.3764165623",
+       "mlevel": "6",
+       "overview": "커피도 마시고 박물관도 구경하고 산책도 할 수 있는 다양한 즐길거리가 있는 문화공간 커피 전문점이다. 관광지에 있는 카페여서 저렴하고 맛도 좋고 좋은 재료로 메뉴를 선사한다고 정평이 나있다. 평창돌문화 체험관이 바로 옆에 있어서 연계관광에 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

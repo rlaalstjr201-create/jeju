@@ -1,0 +1,52 @@
+{
+ "contentid": "2787146",
+ "modifiedtime": "20250807155448",
+ "fetchedAt": "2026-10-30T16:43:56.298Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2787146",
+       "contenttypeid": "39",
+       "title": "평창갈비",
+       "createdtime": "20211207184644",
+       "modifiedtime": "20250807155448",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/41/2787141_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/41/2787141_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 평창읍 천변길 21",
+       "addr2": "",
+       "zipcode": "25376",
+       "mapx": "128.3965567516",
+       "mapy": "37.3667674242",
+       "mlevel": "6",
+       "overview": "평창갈비는 2대째 경영 중인 한우, 돼지갈비 숯불구이 전문맛집이다. 이곳의 채소는 직접 재배해 제공해 신선한 채소를 맛볼 수 있는 곳이다. 대표메뉴는 생갈비인데 부드러우면서 육즙이 많으며 숯불향이 배어있어 더욱 맛있게 즐길 수 있다. 이외에 달콤하면서 짭짤한 양념갈비와 돼지갈비도 인기가 좋은 메뉴이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

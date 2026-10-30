@@ -1,0 +1,52 @@
+{
+ "contentid": "2901550",
+ "modifiedtime": "20260723163848",
+ "fetchedAt": "2026-10-30T16:48:32.124Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2901550",
+       "contenttypeid": "39",
+       "title": "기미사 성수",
+       "createdtime": "20221108135453",
+       "modifiedtime": "20260723163848",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/33/2901533_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/33/2901533_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 성수이로26길 47 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04799",
+       "mapx": "127.0627724288",
+       "mapy": "37.5451344141",
+       "mlevel": "6",
+       "overview": "기미사는 독특한 동양적 감성이 돋보이는 인테리어와 다양한 좌석 구성을 갖춘 카페이다. 개성 있는 공간에서 여유롭게 머물며 커피와 디저트를 즐기기 좋다. 대표 메뉴인 애플시나몬 아포가토는 바닐라 아이스크림과 시나몬 향을 입힌 사과조림이 어우러져 달콤하면서도 색다른 풍미를 느낄 수 있다. 솔티드카라멜쉐이크는 수제 카라멜을 사용해 부드럽고 과하지 않은 단맛이 특징인 커피 쉐이크이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

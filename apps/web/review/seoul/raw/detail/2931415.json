@@ -1,0 +1,52 @@
+{
+ "contentid": "2931415",
+ "modifiedtime": "20260605094617",
+ "fetchedAt": "2026-10-30T16:49:44.882Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2931415",
+       "contenttypeid": "39",
+       "title": "컴플리트커피",
+       "createdtime": "20221207140119",
+       "modifiedtime": "20260605094617",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동대문구 천장산로7길 19 블루스카이",
+       "addr2": "",
+       "zipcode": "02449",
+       "mapx": "127.0568045648",
+       "mapy": "37.5982972473",
+       "mlevel": "6",
+       "overview": "서울 동대문구에 위치한 컴플리트커피는 경희대학교와 한국외국어대학교 사이에 자리한 로스터리 카페로, 대학생들 사이에서 꾸준히 입소문을 타고 있는 곳이다. 깔끔하고 모던한 분위기의 인테리어와 넓은 공간을 갖추고 있어 커피를 즐기거나 공부와 업무에 집중하기 좋다. 직접 로스팅 한 원두로 내린 커피를 선보여 커피 본연의 풍미를 느낄 수 있으며, 다양한 음료 메뉴도 함께 제공한다. 또한 매장에서 사용하는 원두와 드립백을 구매할 수 있어 집에서도 카페의 맛을 즐길 수 있다. 차분한 분위기와 수준 높은 커피 맛으로 학생은 물론 인근 주민들에게도 꾸준히 사랑받는 카페이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2900742",
+ "modifiedtime": "20260923160849",
+ "fetchedAt": "2026-10-30T16:48:53.330Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2900742",
+       "contenttypeid": "39",
+       "title": "에르제 성수",
+       "createdtime": "20221107172010",
+       "modifiedtime": "20260923160849",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/33/2900733_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/33/2900733_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 아차산로 135 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04797",
+       "mapx": "127.0589576171",
+       "mapy": "37.5438701220",
+       "mlevel": "6",
+       "overview": "에르제 성수는 서울지하철 2호선 성수역 2번 출구에서 약 170미터 거리에 있다. 다양한 크루아상, 깜빠뉴, 소금빵, 잠봉뵈르 등이 인기인 베이커리다. 크루아상은 파삭한 식감과 부드러운 크림이 조화롭고, 잠봉뵈르는 바게트를 하드/소프트 중 선택 가능하며 고소한 맛이 일품이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

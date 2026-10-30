@@ -1,0 +1,52 @@
+{
+ "contentid": "2739480",
+ "modifiedtime": "20261002113612",
+ "fetchedAt": "2026-10-30T16:47:15.188Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2739480",
+       "contenttypeid": "39",
+       "title": "원조남산왕돈까스",
+       "createdtime": "20210903003808",
+       "modifiedtime": "20261002113612",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/93/2790093_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/93/2790093_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 소파로 107",
+       "addr2": "(예장동)",
+       "zipcode": "04630",
+       "mapx": "126.9861181860",
+       "mapy": "37.5573815112",
+       "mlevel": "6",
+       "overview": "남산순환도로인 소파로에서 1977년부터 영업을 시작하여 2대에 걸쳐 한 자리에서 운영하고 있는 남산 옛날 돈가스로 맛집이다. 방송에서도 예능프로그램인 와  등 방송에서도 많이 소개되어 유명하다. 명동역 근처의 레트로 감성을 간직한 유구한 역사를 가진 식당으로 왕돈까스, 매운왕돈까스의 부드러운 고기와 바삭한 튀김이 일품이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

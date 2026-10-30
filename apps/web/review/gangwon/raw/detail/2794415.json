@@ -1,0 +1,52 @@
+{
+ "contentid": "2794415",
+ "modifiedtime": "20250115111655",
+ "fetchedAt": "2026-10-30T16:43:57.640Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2794415",
+       "contenttypeid": "39",
+       "title": "평창무이예술관 갤러리카페",
+       "createdtime": "20211214022657",
+       "modifiedtime": "20250115111655",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/26/2794326_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/26/2794326_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 평창군 봉평면 사리평길 233",
+       "addr2": "",
+       "zipcode": "25305",
+       "mapx": "128.3488091802",
+       "mapy": "37.6153294662",
+       "mlevel": "6",
+       "overview": "평창의 문화예술 공간인 평창무이예술관은 갤러리 겸 카페이다. 예술 작품을 관람하면서 커피 한 잔의 여유, 그리고 화덕피자까지 맛볼 수 있는 이용객의 안락한 쉼터 공간이다. 입장료가 있으며, 야간(18시 이후)에는 무료로 이용 가능하다. 외부 시설인 조각공원은 입장료 없이 이용할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

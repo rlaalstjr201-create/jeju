@@ -1,0 +1,52 @@
+{
+ "contentid": "2809943",
+ "modifiedtime": "20260312163559",
+ "fetchedAt": "2026-10-30T16:47:55.279Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2809943",
+       "contenttypeid": "39",
+       "title": "도깨비코티지",
+       "createdtime": "20220310142006",
+       "modifiedtime": "20260312163559",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 소월로2나길 6-1",
+       "addr2": "",
+       "zipcode": "04326",
+       "mapx": "126.97705529838",
+       "mapy": "37.5532707374065",
+       "mlevel": "6",
+       "overview": "도깨비코티지는 후암동 골목길에 위치한 온두라스 음식점이다. 온두라스식의 가벼운 아침식사인 발레아다와 커피, 건강한 점심식사인 칠리 쁠라또, 온두라스식 닭튀김은 대표 메뉴이다. 매일 직접 만드는 레몬라임 타르트와 생민트가 듬뿍 들어간 모히또도 인기 있는 메뉴이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

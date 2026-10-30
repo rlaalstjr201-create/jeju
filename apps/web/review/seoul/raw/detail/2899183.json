@@ -1,0 +1,52 @@
+{
+ "contentid": "2899183",
+ "modifiedtime": "20250922130920",
+ "fetchedAt": "2026-10-30T16:49:07.305Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2899183",
+       "contenttypeid": "39",
+       "title": "피어커피",
+       "createdtime": "20221104113826",
+       "modifiedtime": "20250922130920",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://peercoffee.co.kr/\"target=\"_blank\" title=\"새창 : 피어커피 홈페이지로 이동\">http://peercoffee.co.kr/</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/2899180_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/2899180_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 성동구 광나루로4가길 24 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04792",
+       "mapx": "127.0548951151",
+       "mapy": "37.5489743258",
+       "mlevel": "6",
+       "overview": "피어커피의 ‘피어(PEER)’는 ‘동료, 친구’라는 뜻으로, 피어커피는 동료에게 전하는 마음을 커피로 표현하고 있다. 가족에게 전해주듯 정성스러운 마음으로, 그리고 부담스럽지 않은 단맛과 클린컵이 뛰어난 커피를 만들고 있다. 아인슈페너는 진한 에스프레소 베이스에 부드러운 휘핑크림이 풍성하게 올려져 있으며, 바닐라 라떼는 수제 시럽을 사용해 깊은 단맛과 고소한 원두의 조화가 뛰어나다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

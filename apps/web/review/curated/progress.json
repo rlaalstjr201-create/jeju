@@ -1,14 +1,14 @@
 {
- "updatedAt": "2026-10-30T08:00:19.129Z",
- "kstDay": "2026-10-30",
- "callsThisRun": 0,
+ "updatedAt": "2026-10-30T16:50:25.519Z",
+ "kstDay": "2026-10-31",
+ "callsThisRun": 900,
  "callsToday": 900,
  "dests": {
   "gangwon": {
    "lDongRegnCd": 51,
    "inScope": 1968,
-   "detailed": 1613,
-   "remaining": 355,
+   "detailed": 1968,
+   "remaining": 0,
    "cities": {
     "150 강릉": {
      "inScope": 724,
@@ -32,56 +32,56 @@
     },
     "760 평창": {
      "inScope": 519,
-     "detailed": 164,
-     "remaining": 355
+     "detailed": 519,
+     "remaining": 0
     }
    }
   },
   "seoul": {
    "lDongRegnCd": 11,
    "inScope": 3171,
-   "detailed": 0,
-   "remaining": 3171,
+   "detailed": 1445,
+   "remaining": 1726,
    "cities": {
     "110 110": {
      "inScope": 510,
-     "detailed": 0,
-     "remaining": 510
+     "detailed": 510,
+     "remaining": 0
     },
     "140 140": {
      "inScope": 259,
-     "detailed": 0,
-     "remaining": 259
+     "detailed": 259,
+     "remaining": 0
     },
     "170 170": {
      "inScope": 183,
-     "detailed": 0,
-     "remaining": 183
+     "detailed": 183,
+     "remaining": 0
     },
     "200 200": {
      "inScope": 204,
-     "detailed": 0,
-     "remaining": 204
+     "detailed": 204,
+     "remaining": 0
     },
     "215 215": {
      "inScope": 75,
-     "detailed": 0,
-     "remaining": 75
+     "detailed": 75,
+     "remaining": 0
     },
     "230 230": {
      "inScope": 65,
-     "detailed": 0,
-     "remaining": 65
+     "detailed": 65,
+     "remaining": 0
     },
     "260 260": {
      "inScope": 41,
-     "detailed": 0,
-     "remaining": 41
+     "detailed": 41,
+     "remaining": 0
     },
     "290 290": {
      "inScope": 110,
-     "detailed": 0,
-     "remaining": 110
+     "detailed": 108,
+     "remaining": 2
     },
     "305 305": {
      "inScope": 53,

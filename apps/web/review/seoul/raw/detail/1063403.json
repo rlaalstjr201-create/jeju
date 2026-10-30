@@ -1,0 +1,52 @@
+{
+ "contentid": "1063403",
+ "modifiedtime": "20250311102921",
+ "fetchedAt": "2026-10-30T16:46:04.815Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1063403",
+       "contenttypeid": "39",
+       "title": "인사동찻집",
+       "createdtime": "20100722225952",
+       "modifiedtime": "20250311102921",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 종로구 인사동길 33-1 (관훈동)",
+       "addr2": "",
+       "zipcode": "03149",
+       "mapx": "126.9854729627",
+       "mapy": "37.5736202148",
+       "mlevel": "6",
+       "overview": "인사동찻집은 인사동에 위치한 한옥 찻집으로 모든 전통차는 직접 끓여 만들고 있다. 한옥 인테리어로 고즈넉하게 쉬어가기 좋은 찻집이다. 대표메뉴로는 단팥죽과 가래떡구이이며, 이외에도 대추차, 쌍화탕, 생강차, 오미자차 등 다양한 전통차와 커피 메뉴가 준비되어 있다. 또한, 여름 메뉴인 빙수의 팥 역시 직접 끓여서 빙수를 만들어 낸다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

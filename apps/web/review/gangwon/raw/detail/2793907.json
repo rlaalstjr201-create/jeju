@@ -1,0 +1,52 @@
+{
+ "contentid": "2793907",
+ "modifiedtime": "20250827144716",
+ "fetchedAt": "2026-10-30T16:43:48.684Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2793907",
+       "contenttypeid": "39",
+       "title": "창대식당",
+       "createdtime": "20211214011022",
+       "modifiedtime": "20250827144716",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/76/2793876_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/76/2793876_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 횡계길 11",
+       "addr2": "",
+       "zipcode": "25344",
+       "mapx": "128.7081222454",
+       "mapy": "37.6730157901",
+       "mlevel": "6",
+       "overview": "할아버지와 할머니께서 운영하시는 창대식당은 칼국수 전문 한식집이다. 관광객뿐 아니라 현지인들도 많이 찾는 곳이다. 대표 메뉴는 감자옹심이칼국수로 담백하고 구수한 맛이 좋다. 그밖에 장칼국수, 수제비, 감자전, 도토리전, 메밀전병이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

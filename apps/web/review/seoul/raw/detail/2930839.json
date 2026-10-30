@@ -1,0 +1,52 @@
+{
+ "contentid": "2930839",
+ "modifiedtime": "20261022102243",
+ "fetchedAt": "2026-10-30T16:47:29.004Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2930839",
+       "contenttypeid": "12",
+       "title": "경리단길",
+       "createdtime": "20221206170152",
+       "modifiedtime": "20261022102243",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/85/3568185_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/85/3568185_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 이태원동",
+       "addr2": "210-65",
+       "zipcode": "04343",
+       "mapx": "126.9874991482",
+       "mapy": "37.5383977393",
+       "mlevel": "6",
+       "overview": "경리단길은 국군재정관리단 정문으로부터 그랜드하얏트 호텔 방향으로 이어지는 길과 주변 골목길을 통칭하며, 과거 육군중앙경리단이 현 위치에 있어 경리단길이라 불리어왔다. 경리단길은 저마다 개성이 넘치는 식당과 카페의 다양하고 독특한 먹거리가 유명한 문화와 젊음의 공간이다. 또한, 서울의 평범한 동네 같으면서도 세계 각국에서 온 외국인들이 주민들과 자연스럽게 어울려 지내는 모습이 이국적이고 색다른 분위기를 자아낸다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

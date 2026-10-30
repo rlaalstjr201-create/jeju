@@ -1,0 +1,52 @@
+{
+ "contentid": "2685215",
+ "modifiedtime": "20260213143634",
+ "fetchedAt": "2026-10-30T16:43:36.464Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2685215",
+       "contenttypeid": "39",
+       "title": "외갓집",
+       "createdtime": "20201124200825",
+       "modifiedtime": "20260213143634",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 대관령면 횡계2길 11",
+       "addr2": "",
+       "zipcode": "25344",
+       "mapx": "128.708961439417",
+       "mapy": "37.6731137377958",
+       "mlevel": "6",
+       "overview": "외갓집식당은 강원도 평창군 횡계 2길에 있는 한식 전문 음식점이다. \n대표 메뉴로는 오징어와 삼겹살을 매콤한 양념에 볶아낸 오삼불고기가 있으며, 이 외에 돼지갈비, 물갈비, 삼겹살 등과 식사 메뉴도 맛볼 수 있다. 인근에 평창올림픽 기념관, 알펜시아 리조트 등의 관광지가 위치하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2683326",
+ "modifiedtime": "20251202194726",
+ "fetchedAt": "2026-10-30T16:42:46.610Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2683326",
+       "contenttypeid": "39",
+       "title": "교동짬뽕",
+       "createdtime": "20201118005537",
+       "modifiedtime": "20251202194726",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 평창군 대관령면 횡계길 30",
+       "addr2": "",
+       "zipcode": "25344",
+       "mapx": "128.7088999373",
+       "mapy": "37.6735601866",
+       "mlevel": "6",
+       "overview": "교동 짬뽕은 강원특별자치도 평창군 대관령면에 위치한 매운 짬뽕 전문점이다. \n교동 짬뽕, 짬뽕밥, 순두부 짬뽕, 옛날짜장, 탕수육 등 다양한 중화요리를 맛볼 수 있다. 식당은 입식 테이블로 구성되어 있다. 재료 소진이 되면 조기마감할 수 있으므로 방문 전 영업여부를 확인해 보는 것이 좋다. 식당 근처에 허브 나라, 월정사, 용평리조트 등 명소가 있어 둘러보기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

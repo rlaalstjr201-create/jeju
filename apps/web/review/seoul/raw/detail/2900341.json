@@ -1,0 +1,52 @@
+{
+ "contentid": "2900341",
+ "modifiedtime": "20260312171005",
+ "fetchedAt": "2026-10-30T16:48:39.963Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2900341",
+       "contenttypeid": "39",
+       "title": "마블상회",
+       "createdtime": "20221107153728",
+       "modifiedtime": "20260312171005",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/19/3591719_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/19/3591719_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 광나루로8길 11 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04799",
+       "mapx": "127.06394864827037",
+       "mapy": "37.547762780450086",
+       "mlevel": "6",
+       "overview": "마블상회는 성수동에서 유명한 소고기 맛집이다. 대표 메뉴는 진갈비살로, 환상의 마블링과 꽃의 조합 눈으로 즐기고 맛으로 즐길 수 있는 메뉴다. 황제주물럭도 인기가 많은 메뉴 중 하나인데, 황제늑간살에 수제 양념이 만나 적당한 간과 부드러운 것이 특징이다. 이외에도 쫀득한 식감의 앞양지살, 진한 육향의 흑돼지 안창살, 기름기 없이 담백한 제비추리 등 다양한 소고기 부위를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2804500",
+ "modifiedtime": "20251029090927",
+ "fetchedAt": "2026-10-30T16:47:15.439Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2804500",
+       "contenttypeid": "39",
+       "title": "원형들",
+       "createdtime": "20221231031446",
+       "modifiedtime": "20251029090927",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://instagram.com/wonhyeongdeul\" target=\"_blank\" title=\"새창 : 홈페이지로 이동\">http://instagram.com/wonhyeongdeul</a>",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "24",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 중구 창경궁로1길 38",
+       "addr2": "(충무로4가)",
+       "zipcode": "04558",
+       "mapx": "126.9963583950",
+       "mapy": "37.5625716946",
+       "mlevel": "6",
+       "overview": "을지로 원형들은 디저트바이다. 카페 겸 바이기도 한 이곳은 독특한 디저트와 커피, 와인을 판매하는 공간이다. 시그니처 메뉴로는 고수 케이크와 딜 케이크가 있다. 낡은 건물 4층에 위치하고 있으며 간판도, 문도 없는 것이 특징이다. 매장 내부에 창이 탁 트여있어서 개방감이 있으며 좌석이 다양하게 구성되어 있어서 혼자 방문하기에도 부담이 없다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

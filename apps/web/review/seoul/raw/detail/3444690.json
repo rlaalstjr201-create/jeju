@@ -1,0 +1,52 @@
+{
+ "contentid": "3444690",
+ "modifiedtime": "20250728104907",
+ "fetchedAt": "2026-10-30T16:49:06.796Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3444690",
+       "contenttypeid": "39",
+       "title": "플래드카페 서울숲",
+       "createdtime": "20241213143024",
+       "modifiedtime": "20250728104907",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/33/3444633_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/33/3444633_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 성동구 서울숲2길 12-7 (성수동1가)",
+       "addr2": "",
+       "zipcode": "04768",
+       "mapx": "127.0398882001",
+       "mapy": "37.5471437129",
+       "mlevel": "6",
+       "overview": "플래드(PLAD)는 Plan Art & Deisgn으로, 예술과 공간 더 나아가 사람과의 만남을 추구하고 있다. 플래드카페는 이러한 만남의 첫 시작점이 되는 공간으로 성수동을 시작으로 서울숲 - 카페 - 사람으로 이어지는 연결고리가 되고자 한다. 1층부터 3층, 숲의 뿌리부터 큰 줄기까지 이어지는 풍경에 맞춰 각각의 특색을 주는 공간으로 구성하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "578330",
+ "modifiedtime": "20261021101729",
+ "fetchedAt": "2026-10-30T16:47:21.135Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "578330",
+       "contenttypeid": "39",
+       "title": "진주회관",
+       "createdtime": "20080621030824",
+       "modifiedtime": "20261021101729",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 세종대로11길 26 (서소문동)",
+       "addr2": "",
+       "zipcode": "04513",
+       "mapx": "126.9744898182",
+       "mapy": "37.5622746304",
+       "mlevel": "6",
+       "overview": "진주회관은 1962년 개업하여 3대째 영업을 이어오고 있는 냉콩국수 전문점이다. 강원도 일대에서 생산되는 순수 우리나라 토종 황태콩만을 사용하여 만드는 영양만점의 콩국수이다. 콩국물이 진하고 고소하며, 쫀득한 면발과 잘 어우러진다. 함께 제공되는 김치는 톡 쏘는 맛이 나며 별미라고 한다. 콩국수는 3월부터 11월까지만 판매하며, 서울에서 콩국수의 진한 맛을 느끼고 싶다면 이곳을 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

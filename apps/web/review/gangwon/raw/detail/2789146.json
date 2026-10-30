@@ -1,0 +1,52 @@
+{
+ "contentid": "2789146",
+ "modifiedtime": "20250801111510",
+ "fetchedAt": "2026-10-30T16:43:52.681Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789146",
+       "contenttypeid": "39",
+       "title": "카페마노",
+       "createdtime": "20211208195153",
+       "modifiedtime": "20250801111510",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"https://blog.naver.com/10005cafe\" target=\"_blank\" title=\"새창 : 카페마노 블로그로 이동\">https://blog.naver.com/10005cafe</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/2789107_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/07/2789107_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 평창군 봉평면 봉평북로 214-4",
+       "addr2": "",
+       "zipcode": "25302",
+       "mapx": "128.3532557565",
+       "mapy": "37.6234563876",
+       "mlevel": "6",
+       "overview": "평창카페마노는 세계 3대 커피, 희귀 커피, 스페셜티 전문점으로 매일 소량씩 로스팅하여 신선하고 건강한 커피를 찾아오시는 이웃님들께 제공해 드리는 전문 로스터리카페로 커피 한잔에 건강과 힐링의 시간을 즐길 수 있는 편안한 장소이다. 커피메뉴 외에도 망고빙수, 팥빙수, 딸기주스 등 다양한 메뉴가 준비되어 있다. 매장 내부는 엔틱 가구로 꾸며져 있어 구경하며 시간 보내기 좋은 커피숍이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

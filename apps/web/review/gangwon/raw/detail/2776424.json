@@ -1,0 +1,52 @@
+{
+ "contentid": "2776424",
+ "modifiedtime": "20250116164419",
+ "fetchedAt": "2026-10-30T16:43:54.493Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2776424",
+       "contenttypeid": "39",
+       "title": "큰우리본점",
+       "createdtime": "20211119192534",
+       "modifiedtime": "20250116164419",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/2776443_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/2776443_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 대관령로 192",
+       "addr2": "",
+       "zipcode": "25343",
+       "mapx": "128.7166298254",
+       "mapy": "37.6725937809",
+       "mlevel": "6",
+       "overview": "대관령면에 위치한 큰우리본점은 장애인편의시설 완비, 친환경 야채와 최상의 고기만을 선별하여 청결하고 친철한 식당이다. 오픈형 주방과 단체석 완비, 큰 주차장, 장애인 출입계단이 있다. 메뉴는 생등심, 생삼겹살, 오삼불고기, 차돌박이, 곤드레밥정식 등의 구이류와 식사류가 다양하게 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

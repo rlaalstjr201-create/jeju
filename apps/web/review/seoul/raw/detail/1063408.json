@@ -1,0 +1,52 @@
+{
+ "contentid": "1063408",
+ "modifiedtime": "20260914144820",
+ "fetchedAt": "2026-10-30T16:46:00.126Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1063408",
+       "contenttypeid": "39",
+       "title": "옛찻집",
+       "createdtime": "20100722231522",
+       "modifiedtime": "20260914144820",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/86/3474886_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/86/3474886_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동길 33-1",
+       "addr2": "",
+       "zipcode": "03149",
+       "mapx": "126.9854094626",
+       "mapy": "37.5734712032",
+       "mlevel": "6",
+       "overview": "인사동에 위치한 옛찻집은 영화 촬영 장소로 이용될 만큼 유명한 전통찻집으로, 한국의 전통 고유 민속 차들과 전통적인 간식들을 판매한다.\n온돌바닥이 있어, 인사동과 한국 특유의 분위기를 느낄 수 있는 곳이다. 여름 메뉴인 빙수의 팥 역시 직접 끓여서 빙수를 만들어 낸다.\n이 외에도 콩가루 아이스크림, 복분자 에이드 등 다양한 디저트류를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

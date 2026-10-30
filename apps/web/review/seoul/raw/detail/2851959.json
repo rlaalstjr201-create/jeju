@@ -1,0 +1,52 @@
+{
+ "contentid": "2851959",
+ "modifiedtime": "20260414091950",
+ "fetchedAt": "2026-10-30T16:47:23.255Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2851959",
+       "contenttypeid": "39",
+       "title": "콤바크",
+       "createdtime": "20220908134938",
+       "modifiedtime": "20260414091950",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 만리재로 193 (만리동1가)",
+       "addr2": "101-4호",
+       "zipcode": "04501",
+       "mapx": "126.96721462607482",
+       "mapy": "37.555011764274546",
+       "mlevel": "6",
+       "overview": "콤바크는 만리동 서울 끝자락에 위치한 양식집이다. 5m의 탁 트인 높은 층고와 따뜻한 우드톤의 인테리어가 어우러져 있는 공간이다. 개방감 있는 인테리어 덕에 대화하기 좋으며 주차는 건물 내 지하주차장이 있어 차량 방문에 용이하다. 낮에는 커피와 브런치를, 저녁에는 분위기 있는 조명 아래에서 와인과 디너를 즐길 수 있다. 대표메뉴는 콤바크 플레터이며, 트러플 감자뇨끼, 프렌치토스트 등 다양한 브런치와 식사가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

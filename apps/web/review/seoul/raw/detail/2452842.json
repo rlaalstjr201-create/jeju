@@ -1,0 +1,52 @@
+{
+ "contentid": "2452842",
+ "modifiedtime": "20261013110408",
+ "fetchedAt": "2026-10-30T16:49:13.916Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2452842",
+       "contenttypeid": "12",
+       "title": "아리수나라",
+       "createdtime": "20161212231621",
+       "modifiedtime": "20261013110408",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://arisu.seoul.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/23/3540023_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/23/3540023_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "215",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX06",
+       "lclsSystm3": "EX061000",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 광진구 능동로 216 (능동)",
+       "addr2": "",
+       "zipcode": "04991",
+       "mapx": "127.0762632513",
+       "mapy": "37.5493032718",
+       "mlevel": "6",
+       "overview": "서울특별시 광진구 능동 서울어린이대공원에 위치한 아리수 나라는 전국 최초의 어린이 수돗물체험홍보관으로, 2010년 10월 26일 개관했다. 3세~9세 어린이를 대상으로 무료 예약제로 운영되고 있으며, 무한상상놀이터를 콘셉트로 프로그램을 새롭게 단장하여 2022년 7월 1일 재개관했다.\n아리수 나라에서는 수돗물로 상상한 모든 것이 놀이가 된다. 아리수 나라를 방문한 어린이들은 다양한 놀이와 체험을 통해 물과 환경의 중요성을 온몸으로 학습할 수 있다. 서울의 수돗물 ‘아리수’의 안전성과 우수성에 대한 교육 프로그램도 운영하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

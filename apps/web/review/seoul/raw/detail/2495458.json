@@ -1,0 +1,52 @@
+{
+ "contentid": "2495458",
+ "modifiedtime": "20251215152537",
+ "fetchedAt": "2026-10-30T16:50:14.839Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2495458",
+       "contenttypeid": "39",
+       "title": "명문막국수",
+       "createdtime": "20170106090050",
+       "modifiedtime": "20251215152537",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/02/2495202_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/02/2495202_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "17",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 성북구 창경궁로 319 (성북동1가)",
+       "addr2": "",
+       "zipcode": "02880",
+       "mapx": "127.0049541051",
+       "mapy": "37.5882633071",
+       "mlevel": "6",
+       "overview": "명문 막국수는 여름철의 별미 막국수로 유명한 곳이다. 메밀막국수, 메밀 들깨칼국수 등이 있으며, 국수 외에도 메밀로 만든 다양한 음식이 있다. 국수와 잘 어울리는 편육도 별미인데 수육과 비슷하며, 국수와 함께 먹어도 좋고 같이 나오는 새우젓에 찍어 먹어도 맛있다. 동절기인 10월부터 3월까지는 두부를 이용한 두부 요리가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

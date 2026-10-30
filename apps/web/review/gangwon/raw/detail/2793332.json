@@ -1,0 +1,52 @@
+{
+ "contentid": "2793332",
+ "modifiedtime": "20250714105120",
+ "fetchedAt": "2026-10-30T16:42:51.467Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2793332",
+       "contenttypeid": "39",
+       "title": "남산골",
+       "createdtime": "20211213234153",
+       "modifiedtime": "20250714105120",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/2792671_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/2792671_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대화면 남산길 127",
+       "addr2": "",
+       "zipcode": "25358",
+       "mapx": "128.4556168376",
+       "mapy": "37.5020945907",
+       "mlevel": "6",
+       "overview": "평창군 대화면에 위치한 곳으로 건강을 생각한 한식당이다. 염소전골, 염소탕, 영양전골, 영양탕, 토종닭백숙, 닭볶음탕 등 보양식 메뉴를 전문으로 하고 있다. 잡내 없이 구수하고 진한 국물 맛과 야들야들한 고기 역시 일품이다. 처음 접하는 사람도 부담 없이 즐길 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

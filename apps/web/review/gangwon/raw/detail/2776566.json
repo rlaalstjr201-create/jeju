@@ -1,0 +1,52 @@
+{
+ "contentid": "2776566",
+ "modifiedtime": "20250121182447",
+ "fetchedAt": "2026-10-30T16:43:08.396Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2776566",
+       "contenttypeid": "39",
+       "title": "바우골",
+       "createdtime": "20211119221322",
+       "modifiedtime": "20250121182447",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/56/2776556_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/56/2776556_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 눈마을길 39",
+       "addr2": "",
+       "zipcode": "25346",
+       "mapx": "128.7096721424",
+       "mapy": "37.6718326234",
+       "mlevel": "6",
+       "overview": "바우골은 대관령면에 위치한 돼지고기구이 전문점이다. 질 좋은 고기 그리고 모든 반찬은 집에서 직접 만들어 건강하면서 신선하고 맛있는 음식을 제공한다. 고기의 느끼함을 없애주고 집에서 직접 담근 된장으로 갖은 야채를 많이 넣어 빡빡하게 쫄인 강원도식 강 된장찌개도 인기가 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "697450",
+ "modifiedtime": "20260209140720",
+ "fetchedAt": "2026-10-30T16:47:19.581Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "697450",
+       "contenttypeid": "39",
+       "title": "종점떡볶이",
+       "createdtime": "20090221023046",
+       "modifiedtime": "20260209140720",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 다산로 217-1 (신당동)",
+       "addr2": "",
+       "zipcode": "04611",
+       "mapx": "127.0148",
+       "mapy": "37.5627",
+       "mlevel": "6",
+       "overview": "1978년에 처음 문을 연 집으로 신당동 떡볶이 거리에서도 유난히 인기가 많은 집이다. 떡볶이에 볶음밥을 추가해서 먹는 것이 특색 있다. 떡볶이가 대표 메뉴이지만 국물 닭발도 그에 버금가는 인기 메뉴이다. 떡볶이와 닭발 모두 밀키트를 구매하여 집에서도 쉽게 신당동 떡볶이의 맛을 즐길 수 있다. 24시간 영업 중이라 원하는 때에 방문하면 된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

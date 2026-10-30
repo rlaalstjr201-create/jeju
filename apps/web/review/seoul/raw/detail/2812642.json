@@ -1,0 +1,52 @@
+{
+ "contentid": "2812642",
+ "modifiedtime": "20260414091950",
+ "fetchedAt": "2026-10-30T16:45:41.890Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2812642",
+       "contenttypeid": "39",
+       "title": "돌솥추어탕",
+       "createdtime": "20220324134251",
+       "modifiedtime": "20260414091950",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/88/4002588_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/88/4002588_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 자하문로1길 54",
+       "addr2": "",
+       "zipcode": "03041",
+       "mapx": "126.969510912708",
+       "mapy": "37.5770177054223",
+       "mlevel": "6",
+       "overview": "돌솥추어탕은 서울 종로구 세종마을 음식문화거리에 위치한 한식당이다. 매일 아침 수급한 신선한 식재료로 끓인 재래식 추어탕을 돌솥에 담아 제공해 따뜻한 온기를 오래 유지하며 즐길 수 있는 것이 특징이다. 자극적이지 않고 담백한 맛의 추어탕과 정갈한 밑반찬으로 한 끼 식사를 편안하게 즐길 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

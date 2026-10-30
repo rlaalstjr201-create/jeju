@@ -1,0 +1,52 @@
+{
+ "contentid": "126487",
+ "modifiedtime": "20250718090000",
+ "fetchedAt": "2026-10-30T16:44:12.282Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "126487",
+       "contenttypeid": "12",
+       "title": "마로니에공원",
+       "createdtime": "20031106090000",
+       "modifiedtime": "20250718090000",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://parks.seoul.go.kr/parks/detailView.do?pIdx=72&tabTarget=1\" target=\"_blank\" title=\"서울의 공원 사이트로 이동\">http://parks.seoul.go.kr</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/35/3506735_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/35/3506735_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 종로구 대학로 104",
+       "addr2": "",
+       "zipcode": "03087",
+       "mapx": "127.0027239807",
+       "mapy": "37.5802419773",
+       "mlevel": "6",
+       "overview": "마로니에공원은 서울 시민들을 위한 문화예술의 터전으로 옛 서울대학교 문리대, 법대 자리에 있다. 이곳에는 마로니에나무가 자라고 있는데 1929년 4월 5일 서울대학교의 전신인 경성제국대학 시절에 심은 것으로, 이 나무 이름을 따서 마로니에공원이라는 이름이 붙었다.\n어린이놀이터가 있고 야외무대와 분수공원, 조각품 등이 전시되어 있다. 야외무대는 가수들의 공연장과 각종 문화행사장으로 활용되고 있다. 이 공원 주위로 문예회관 대극장과 바탕골소극장, 동숭아트센터 등의 소극장이 자리하고 있다. 유명한 맛집과 다양한 컨셉의 카페들이 주위에 많다. 이 공원에서는 연중무휴 무료로 개방되는 공연과 행사들에 많아서 언제 방문하더라도 참여하고 즐길 거리가 가득하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

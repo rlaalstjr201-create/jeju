@@ -1,0 +1,52 @@
+{
+ "contentid": "3354907",
+ "modifiedtime": "20241128104711",
+ "fetchedAt": "2026-10-30T16:47:02.501Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3354907",
+       "contenttypeid": "39",
+       "title": "라운드앤드",
+       "createdtime": "20240827181101",
+       "modifiedtime": "20241128104711",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/64/3427964_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/64/3427964_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "24",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 중구 정동길 35 (정동)",
+       "addr2": "",
+       "zipcode": "04518",
+       "mapx": "126.9723827022",
+       "mapy": "37.5661041865",
+       "mlevel": "6",
+       "overview": "서울 중구 정동길에 위치한 카페이다. 덕수궁 뒤 정동극장 옆에 위치하고 있으며 지하에는 직접 빵을 만드는 모습을 구경할 수 있다. 베이커리 종류가 다양해 평일에도 많은 사람이 찾는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

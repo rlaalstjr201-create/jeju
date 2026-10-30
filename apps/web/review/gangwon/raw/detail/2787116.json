@@ -1,0 +1,52 @@
+{
+ "contentid": "2787116",
+ "modifiedtime": "20250801104521",
+ "fetchedAt": "2026-10-30T16:43:37.774Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2787116",
+       "contenttypeid": "39",
+       "title": "운두령",
+       "createdtime": "20211207183659",
+       "modifiedtime": "20250801104521",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/04/2787104_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/04/2787104_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 용평면 운두령로 825",
+       "addr2": "",
+       "zipcode": "25312",
+       "mapx": "128.4628881161",
+       "mapy": "37.6958639867",
+       "mlevel": "6",
+       "overview": "전통 한옥집으로 구성되어 있고 2대에 걸쳐 운영되는 35년의 전통 송어 맛집이다. 식당 간판이 없어 아는 사람만 올 수 있는 숨은 맛집이다. 전통적인 인테리어와 신선한 회, 그리고 주변 경치까지 또 방문하고 싶어지게 하는 맛집이다. 1급수의 수질로 송어회의 품질이 뛰어나며 얼린 돌판 위에 송어회가 올라가 신선하게 식사를 할 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

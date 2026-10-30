@@ -1,0 +1,52 @@
+{
+ "contentid": "2783442",
+ "modifiedtime": "20250711130105",
+ "fetchedAt": "2026-10-30T16:43:36.977Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2783442",
+       "contenttypeid": "39",
+       "title": "용천짬뽕",
+       "createdtime": "20211130194504",
+       "modifiedtime": "20250711130105",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/18/2783418_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/18/2783418_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "강원특별자치도 평창군 대화면 대화시장2길 19",
+       "addr2": "",
+       "zipcode": "25358",
+       "mapx": "128.4542531308",
+       "mapy": "37.5001225696",
+       "mlevel": "6",
+       "overview": "용천짬뽕은 강원도 평창군 대화면에 위치한 짬뽕 전문점으로 푸짐한 해물이 들어있는 시원하고 얼큰한 짬뽕을 맛볼 수 있다. 또 다른 요리인 볶음밥은 불향이 가득하고, 탕수육은 바삭한 맛이 일품이다. 신선한 재료와 쫄깃한 면발로 사람들의 입맛을 사로잡은 가성비 좋은 평창의 중식 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

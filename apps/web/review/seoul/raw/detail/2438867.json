@@ -1,0 +1,52 @@
+{
+ "contentid": "2438867",
+ "modifiedtime": "20260313165004",
+ "fetchedAt": "2026-10-30T16:45:40.301Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2438867",
+       "contenttypeid": "39",
+       "title": "대성집",
+       "createdtime": "20161109234349",
+       "modifiedtime": "20260313165004",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 사직로 5",
+       "addr2": "",
+       "zipcode": "03029",
+       "mapx": "126.960900765386",
+       "mapy": "37.5726847449121",
+       "mlevel": "6",
+       "overview": "대성집은 서울 종로구에 위치한 도가니탕 전문점이다. 뽀얗고 맑은 국물에 고기가 붙은 도가니와 쫄깃한 힘줄이 풍성하게 들어있는 도가니탕이 대표 메뉴인데 도가니와 힘줄을 특제 간장 소스에 찍어먹는 맛이 별미이다. 이 외에도 수육과 해장국을 맛볼 수 있다. 미쉐린 가이드 서울 2023에 선정될 만큼 맛이 좋기로 유명한 곳이다. 재료 소진 시 조기 마감을 하고 있으므로 방문 전 영업여부를 확인해 보는 것이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

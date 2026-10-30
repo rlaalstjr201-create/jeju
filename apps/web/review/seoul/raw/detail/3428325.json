@@ -1,0 +1,52 @@
+{
+ "contentid": "3428325",
+ "modifiedtime": "20250808162353",
+ "fetchedAt": "2026-10-30T16:47:47.913Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3428325",
+       "contenttypeid": "14",
+       "title": "현대카드 뮤직 라이브러리",
+       "createdtime": "20241128150601",
+       "modifiedtime": "20250808162353",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://dive.hyundaicard.com/web/main.hdc",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/57/3432157_image2_1.JPEG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/57/3432157_image3_1.JPEG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "21",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060900",
+       "addr1": "서울특별시 용산구 이태원로 246 (한남동)",
+       "addr2": "",
+       "zipcode": "04400",
+       "mapx": "127.0007170640",
+       "mapy": "37.5366886688",
+       "mlevel": "6",
+       "overview": "현대카드 라이브러리는 디자인, 트래블, 쿠킹, 뮤직 분야에서 역사적으로 중요한 가치를 지닌 주요 간행물을 엄선해 ‘전권 보유 컬렉션(Complete Collection)’을 선보인다. 뮤직 라이브러리에서는 미국의 전설적 음악 전문 잡지 <롤링스톤 Rolling Stone>을 창간호부터 최신호까지 모두 만날 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2721231",
+ "modifiedtime": "20251128123649",
+ "fetchedAt": "2026-10-30T16:49:31.532Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2721231",
+       "contenttypeid": "12",
+       "title": "용두동 쭈꾸미골목",
+       "createdtime": "20210616001152",
+       "modifiedtime": "20251128123649",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/51/3567851_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/51/3567851_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "11",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030600",
+       "addr1": "서울특별시 동대문구 용두동",
+       "addr2": "",
+       "zipcode": "",
+       "mapx": "127.0372154044",
+       "mapy": "37.5759403196",
+       "mlevel": "",
+       "overview": "용두동 쭈꾸미 골목은 쭈꾸미 특화 거리로 지하철 1호선 제기동역 6번 출구 인근에 있다. 1990년대 초부터 형성된 거리로 쭈꾸미를 매운양념과 볶아내는 철판볶음이 인기 메뉴이다. 골목 초입 황금색 쭈꾸미 모형을 시작으로 쭈꾸미 전문점들이 들어서 있다. 오랜 시간 쭈꾸미골목을 찾아온 단골 손님이 많고, 여러 쭈꾸미 전문점들 중 끌리는 가게에 찾아 들어가는 재미도 있다. 고추장으로 매콤하게 양념한 쭈꾸미를 철판에 익혀 먹는 용두동 쭈꾸미는 별미 중의 별미이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

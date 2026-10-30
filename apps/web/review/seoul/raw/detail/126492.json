@@ -1,0 +1,52 @@
+{
+ "contentid": "126492",
+ "modifiedtime": "20250718100950",
+ "fetchedAt": "2026-10-30T16:44:33.685Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "126492",
+       "contenttypeid": "12",
+       "title": "종묘광장공원",
+       "createdtime": "20031107090000",
+       "modifiedtime": "20250718100950",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/98/3413898_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/98/3413898_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 종로구 종로 157",
+       "addr2": "(훈정동)",
+       "zipcode": "03135",
+       "mapx": "126.9944166605",
+       "mapy": "37.5711956572",
+       "mlevel": "6",
+       "overview": "종묘는 조선 왕조의 왕과 왕비, 그리고 사후에 추존된 왕과 왕비의 신주를 모신 사당이다. 종묘 건축물은 문화적, 건축적 가치를 인정받아 1995년 12월 유네스코 세계유산위원회의 정기총회 의결을 거쳐 세계문화유산으로 등록됐다. 공원 안에는 조선왕조 역대 임금들이 종묘를 드나들 때 물을 마셨다는 우물이 다시 만들어졌고 월남 이상재 선생의 동상과 편의시설을 갖춘 녹지대가 만들어져 있다.\n종묘 앞 일대 39,669m㎡(1만 2천여 평)의 마당에 주차시설을 갖춘 종묘광장공원은 서울시민들의 휴식 공간으로 널리 이용되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

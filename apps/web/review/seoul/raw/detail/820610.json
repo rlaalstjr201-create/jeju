@@ -1,0 +1,52 @@
+{
+ "contentid": "820610",
+ "modifiedtime": "20260409161942",
+ "fetchedAt": "2026-10-30T16:48:11.597Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "820610",
+       "contenttypeid": "39",
+       "title": "타지펠리스",
+       "createdtime": "20091015162004",
+       "modifiedtime": "20260409161942",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 우사단로 39",
+       "addr2": "2층",
+       "zipcode": "04406",
+       "mapx": "126.995420733767",
+       "mapy": "37.5336317967481",
+       "mlevel": "6",
+       "overview": "타지펠리스는 타지마할의 영어 이름으로 한국에서 정통 인도 요리를 알리고 싶다는 사업주의 생각으로 인도 현지 요리사를 초청, 고용해서 정통 인도 요리를 선보이고 있다. 유명한 인도요리인 카레뿐만 아니라, 탄두리(바비큐) 요리, 인도식 볶음밥 ‘비리야니’, 구운 빵, 인도 음료, 세트 메뉴 등의 다양한 메뉴를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

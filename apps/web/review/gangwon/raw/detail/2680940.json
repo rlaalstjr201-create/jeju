@@ -1,0 +1,52 @@
+{
+ "contentid": "2680940",
+ "modifiedtime": "20260206101559",
+ "fetchedAt": "2026-10-30T16:42:54.049Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2680940",
+       "contenttypeid": "39",
+       "title": "다래",
+       "createdtime": "20201109234645",
+       "modifiedtime": "20260206101559",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 봉평면 태기로 120",
+       "addr2": "",
+       "zipcode": "25306",
+       "mapx": "128.323734654362",
+       "mapy": "37.5860723957535",
+       "mlevel": "6",
+       "overview": "다래는 강원도 평창군 봉평면에 있는 한우 전문점이다. 식당 내부는 테이블로 된 홀과 좌식으로 된 방이 있어 단체로 방문해도 좋다. 메뉴로는 한우 특수모둠, 모둠 꽃살, 차돌박이 등 여러 가지 한우 요리들과 한우 불고기 전골, 갈비탕 등 다양한 식사메뉴들이 있다. 다래는 2018 평창올림픽조직위원회에서 추천한 평창대표 맛집이기도 하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

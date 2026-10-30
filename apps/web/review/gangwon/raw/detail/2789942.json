@@ -1,0 +1,52 @@
+{
+ "contentid": "2789942",
+ "modifiedtime": "20250122154032",
+ "fetchedAt": "2026-10-30T16:43:40.449Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789942",
+       "contenttypeid": "39",
+       "title": "육백마지기식당",
+       "createdtime": "20211209022643",
+       "modifiedtime": "20250122154032",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/09/2789909_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/09/2789909_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 미탄면 청옥산길 583-70",
+       "addr2": "",
+       "zipcode": "25380",
+       "mapx": "128.5128897058",
+       "mapy": "37.4012295475",
+       "mlevel": "6",
+       "overview": "육백마지기식당은 청옥산 육백마지기 꼭대기에 자리한 식당 겸 카페이다. 해발 높은 곳에 위치해 경치가 좋다. 식사로는 곤드레밥, 감자전, 녹두전 등이 준비되어 있고 커피와 차도 판매한다. 식당 앞뒤에 넓은 주차장이 있어 편하게 주차할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

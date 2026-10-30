@@ -1,0 +1,52 @@
+{
+ "contentid": "2815118",
+ "modifiedtime": "20260312163942",
+ "fetchedAt": "2026-10-30T16:47:58.404Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2815118",
+       "contenttypeid": "39",
+       "title": "몽탄",
+       "createdtime": "20220406112017",
+       "modifiedtime": "20260312163942",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 백범로99길 50",
+       "addr2": "",
+       "zipcode": "04375",
+       "mapx": "126.972242371179",
+       "mapy": "37.5359949787481",
+       "mlevel": "6",
+       "overview": "몽탄은 삼각지 맛집으로 유명한 식당이다. 소고기를 상대적으로 저렴한 가격에 맛볼 수 있으며, 대표 메뉴인 우대갈비의 부드러운 살코기를 다양한 소스에 곁들여 먹으면 그 맛이 일품이다. 또한 짚불항정살, 육회도 맛볼 수 있으며 냉면 등도 곁들이면 좋다. 인기 있는 식당이기 때문에 사전 웨이팅은 필수이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

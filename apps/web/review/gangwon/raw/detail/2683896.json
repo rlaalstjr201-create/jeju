@@ -1,0 +1,52 @@
+{
+ "contentid": "2683896",
+ "modifiedtime": "20260213143111",
+ "fetchedAt": "2026-10-30T16:43:07.622Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2683896",
+       "contenttypeid": "39",
+       "title": "미락초밥",
+       "createdtime": "20201119005613",
+       "modifiedtime": "20260213143111",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 진부면 진부중앙로 77",
+       "addr2": "",
+       "zipcode": "25325",
+       "mapx": "128.559318625216",
+       "mapy": "37.6384039241381",
+       "mlevel": "6",
+       "overview": "미락초밥은 강원도 평창군 하진부리에 있는 초밥 전문 일식집이다. 인기가 많은 메뉴는 모듬초밥, 돈까스, 연어초밥, 새우초밥 등이다. 다양한 메뉴가 준비되어 있으므로 모든 방문자의 만족도를 높일 수 있다. 포장과 배달도 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

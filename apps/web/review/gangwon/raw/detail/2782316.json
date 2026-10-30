@@ -1,0 +1,52 @@
+{
+ "contentid": "2782316",
+ "modifiedtime": "20250805143104",
+ "fetchedAt": "2026-10-30T16:42:53.790Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782316",
+       "contenttypeid": "39",
+       "title": "늘봄카페",
+       "createdtime": "20211127002250",
+       "modifiedtime": "20250805143104",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/94/2782294_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/94/2782294_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 평창군 봉평면 장촌길 3",
+       "addr2": "",
+       "zipcode": "25303",
+       "mapx": "128.3789065313",
+       "mapy": "37.6130802985",
+       "mlevel": "6",
+       "overview": "봉평면에 위치한 늘봄카페 한식당 늘봄먹거리와 함께 있는 곳으로 맷돌에 갈아먹는 특별한 커피를 맛 볼 수 있는 카페이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

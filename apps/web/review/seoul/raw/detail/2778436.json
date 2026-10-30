@@ -1,0 +1,52 @@
+{
+ "contentid": "2778436",
+ "modifiedtime": "20260414091950",
+ "fetchedAt": "2026-10-30T16:45:53.604Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2778436",
+       "contenttypeid": "39",
+       "title": "서울원조아구찜",
+       "createdtime": "20211124190601",
+       "modifiedtime": "20260414091950",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 삼일대로 436-1 (낙원동)",
+       "addr2": "1층",
+       "zipcode": "03133",
+       "mapx": "126.988019050876",
+       "mapy": "37.5736024516612",
+       "mlevel": "6",
+       "overview": "서울원조아구찜은 서울시 종로구 낙원동에 위치한 해물 요리 전문점이다. 해물찜을 대표 메뉴로 아귀찜과 아귀탕, 해물탕, 꽃게찜 등 다양한 해산물 요리를 선보이고 있다. 매콤한 양념과 푸짐한 구성의 해물찜이 특징이며, 지하철 5호선 종로3가역과 가까워 접근성이 좋다. 인근에는 낙산공원, 창덕궁, 창경궁, 북촌한옥마을, 덕수궁 등 주요 관광지가 위치해 함께 방문하기에도 용이하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

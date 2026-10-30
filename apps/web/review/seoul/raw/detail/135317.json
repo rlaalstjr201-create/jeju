@@ -1,0 +1,52 @@
+{
+ "contentid": "135317",
+ "modifiedtime": "20260410092957",
+ "fetchedAt": "2026-10-30T16:48:09.307Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135317",
+       "contenttypeid": "39",
+       "title": "챠크라",
+       "createdtime": "20060829090000",
+       "modifiedtime": "20260410092957",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 독서당로 83 (한남동)",
+       "addr2": "",
+       "zipcode": "04419",
+       "mapx": "127.00968614538513",
+       "mapy": "37.53448994546451",
+       "mlevel": "6",
+       "overview": "챠크라는 정통 인도 요리 전문점이다. 인근에 인도대사관과 많은 타국 대사관들이 위치해 있고, 가로질러 유엔빌리지가 위치해 있다. 대표메뉴는 탄두리 치킨이며, 닭을 요거트와 향신료로 양념하여 화덕에 구운 요리이다. 이외에도 사모사, 치킨 마카니, 치킨커리 등 다양한 인도요리 메뉴가 준비되어 있다. 주말에는 뷔페식으로 운영하고 있어 취향대로 골라 먹기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

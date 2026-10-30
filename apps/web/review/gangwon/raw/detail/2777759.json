@@ -1,0 +1,52 @@
+{
+ "contentid": "2777759",
+ "modifiedtime": "20250729131144",
+ "fetchedAt": "2026-10-30T16:42:47.118Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2777759",
+       "contenttypeid": "39",
+       "title": "굿후랜드",
+       "createdtime": "20211123020906",
+       "modifiedtime": "20250729131144",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/33/2777733_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/33/2777733_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 기풍로 151",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3779620837",
+       "mapy": "37.6160049418",
+       "mlevel": "6",
+       "overview": "굿후랜드는 평창군 봉평면에 위치한 치킨 전문점이다. 이곳은 25년 전통으로 봉평에서 가장 맛있는 후라이드 치킨과 강정, 피자, 족발등을 판매하는 맛집이다. 매장 내부에는 커튼을 활용한 독립된 공간과 대형룸이 있어 모임장소로 좋은 곳이다. 대표메뉴인 후라이드 치킨은 크기가 큰 닭을 사용하여 양이 많고 얇은 튀김옷이라 바삭한 식감과 함께 고기의 맛을 더욱 잘 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

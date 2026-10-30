@@ -1,0 +1,52 @@
+{
+ "contentid": "2853672",
+ "modifiedtime": "20260312165422",
+ "fetchedAt": "2026-10-30T16:48:10.322Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2853672",
+       "contenttypeid": "39",
+       "title": "카페미우",
+       "createdtime": "20220914165841",
+       "modifiedtime": "20260312165422",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 새창로14길 7",
+       "addr2": "1층",
+       "zipcode": "04356",
+       "mapx": "126.958518619005",
+       "mapy": "37.5391804537427",
+       "mlevel": "6",
+       "overview": "카페미우는 서울 효창공원역을 지나 경의선 공원 인근에 위치한 핸드드립 전문 카페이다. 카페의 이름은 사장님의 반려동물 미우의 이름을 따서 지어졌다. 핸드드립 커피 외에도 다양한 음료와 수제간식을 판매한다. 고즈넉하고 따듯한 분위기로 편히 머물다가 갈 수 있는 곳이다. 근처에 가게 된다면 한 번 방문해보는 것도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

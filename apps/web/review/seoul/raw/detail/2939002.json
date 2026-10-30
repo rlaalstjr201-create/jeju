@@ -1,0 +1,52 @@
+{
+ "contentid": "2939002",
+ "modifiedtime": "20260312172223",
+ "fetchedAt": "2026-10-30T16:48:57.711Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2939002",
+       "contenttypeid": "39",
+       "title": "이모네순대국",
+       "createdtime": "20221226145124",
+       "modifiedtime": "20260312172223",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 장터5길 4",
+       "addr2": "",
+       "zipcode": "04730",
+       "mapx": "127.021387218347",
+       "mapy": "37.5486276609244",
+       "mlevel": "6",
+       "overview": "금남시장 삼거리 골목에 위치한 순대국전문점이다. 찰순대만 쓰는 순대국밥이 특징이며 주문과 동시에 순대와 머릿고기를 썰어 펄펄 끓여주는 뜨거운 국물이 일품이다. 순대국밥을 주문하면 밥이 말아서 제공되며 따로국밥을 주문하면 밥은 별도로 제공된다. 기본에 충실한 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

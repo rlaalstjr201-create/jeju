@@ -1,0 +1,52 @@
+{
+ "contentid": "2789206",
+ "modifiedtime": "20250122160017",
+ "fetchedAt": "2026-10-30T16:43:39.661Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789206",
+       "contenttypeid": "39",
+       "title": "유여사네맛집",
+       "createdtime": "20211208200844",
+       "modifiedtime": "20250122160017",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/2789071_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/2789071_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 평창읍 송학로 7",
+       "addr2": "",
+       "zipcode": "25376",
+       "mapx": "128.3924876804",
+       "mapy": "37.3665451497",
+       "mlevel": "6",
+       "overview": "유여사네 맛집은 강원도 평창군에 있는 한식 전문점이다. 인기 요리는 갈치조림과 낙지볶음이지만 각종 찌개와 찜닭까지 제공하고 있다. 신선한 제철 식재료로 매일 만드는 반찬인 듯, 밑반찬은 정해져 있지 않고 바뀐다. 신선하고 간이 적절해 대표 요리와 잘 어울린다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

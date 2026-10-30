@@ -1,0 +1,52 @@
+{
+ "contentid": "130174",
+ "modifiedtime": "20260811103132",
+ "fetchedAt": "2026-10-30T16:49:50.580Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130174",
+       "contenttypeid": "14",
+       "title": "중랑구립정보도서관",
+       "createdtime": "20071106104530",
+       "modifiedtime": "20260811103132",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.jungnanglib.seoul.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/23/3509723_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/23/3509723_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중랑구 신내로15길 197",
+       "addr2": "(묵동)",
+       "zipcode": "02041",
+       "mapx": "127.0868761488",
+       "mapy": "37.6150985226",
+       "mlevel": "6",
+       "overview": "중랑구립정보도서관은 지역 주민과 함께 책으로 여는 미래를 꿈꾸며 지적 수준 향상과 지역 문화 증진을 목적으로 개관한 공공도서관이다. 다양한 자료를 소장하고 있으며, 많은 이용자가 찾는 지역 중심 도서관으로 자리 잡고 있다. 정보사회에 발맞춰 멀티미디어실을 운영하며 전자정보 제공 등 정보 접근성을 높이고 있다. 어린이 동화 구연 대회를 비롯해 학생과 주민을 위한 문화 행사와 교양 강좌 등 다양한 프로그램을 운영하고 있다. 이를 통해 지역 주민의 삶의 질 향상에 기여하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

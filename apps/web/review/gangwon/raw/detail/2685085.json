@@ -1,0 +1,52 @@
+{
+ "contentid": "2685085",
+ "modifiedtime": "20260814141946",
+ "fetchedAt": "2026-10-30T16:43:35.120Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2685085",
+       "contenttypeid": "39",
+       "title": "오셨뜨래요 메밀여행",
+       "createdtime": "20201124032328",
+       "modifiedtime": "20260814141946",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 봉평면 동이장터길 12",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3777170246",
+       "mapy": "37.6159322773",
+       "mlevel": "6",
+       "overview": "평창군 봉평재래시장 내에 위치한 메밀 전문 음식점이다. 메밀전, 메밀전병, 수수전병, 메밀막국수 등 메밀을 이용한 다양한 요리를 맛볼 수 있다. 메밀전 모듬은 메밀전, 메밀전병, 수수전병이 같이 나와 푸짐하게 먹을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

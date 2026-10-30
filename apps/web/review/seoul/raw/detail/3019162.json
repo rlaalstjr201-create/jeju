@@ -1,0 +1,52 @@
+{
+ "contentid": "3019162",
+ "modifiedtime": "20261016172919",
+ "fetchedAt": "2026-10-30T16:44:20.049Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3019162",
+       "contenttypeid": "12",
+       "title": "서순라길",
+       "createdtime": "20231011160909",
+       "modifiedtime": "20261016172919",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://korean.visitseoul.net/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/56/3019156_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/56/3019156_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 종로 150-3 (종로3가)",
+       "addr2": "",
+       "zipcode": "03193",
+       "mapx": "126.9942021769",
+       "mapy": "37.5703668702",
+       "mlevel": "6",
+       "overview": "서순라길은 서울 종로구 종로 150-3에서 권농동 26까지를 잇는 도로로, 옛 조선의 치안을 담당하는 순라군이 다니던 길이다. 종묘를 순찰하던 순라청의 서쪽에 위치한다고 하여 ‘서순라길’로 부른다. 주위에 익선동, 인사동, 북촌, 삼청동 등 전통적인 인기 관광 지역 있고, 서순라길 내에는 식당, 카페, 공방 등 즐길 거리가 많다. 특히 봄에 꽃이 피고, 가을에 단풍이 들면 돌담의 풍경이 아름다워 데이트 코스, 가족 나들이로 많이 찾는다. 거리를 걸으면서 멋진 사진을 남길 수 있는 곳들이 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

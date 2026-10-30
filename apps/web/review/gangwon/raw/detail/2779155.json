@@ -1,0 +1,52 @@
+{
+ "contentid": "2779155",
+ "modifiedtime": "20250122095315",
+ "fetchedAt": "2026-10-30T16:43:50.807Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2779155",
+       "contenttypeid": "39",
+       "title": "충주집소머리국밥",
+       "createdtime": "20211125011815",
+       "modifiedtime": "20250122095315",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/51/2779051_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/51/2779051_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 기풍로 145",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3781204176",
+       "mapy": "37.6155105579",
+       "mlevel": "6",
+       "overview": "충주집소머리국밥은 강원도 평창군 봉편면에 있는 국밥 전문점이다. 신선하고 품질 좋은 평창한우 소머리를 직접 구매해서 사용하고 있다. 매일매일 직접 삶아 손질하여 육수를 내고 조미료를 사용하지 않기 때문에 맛이 인위적이지 않으며, 잡내 없이 깔끔한 국물이 일품이다. 제공되는 김치는 직접 농사지은 것으로 만들어 국밥과의 조합이 환상적이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

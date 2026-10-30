@@ -1,0 +1,52 @@
+{
+ "contentid": "2899461",
+ "modifiedtime": "20250922132832",
+ "fetchedAt": "2026-10-30T16:48:50.795Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2899461",
+       "contenttypeid": "39",
+       "title": "스시오오모토",
+       "createdtime": "20221107102024",
+       "modifiedtime": "20250922132832",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/2899434_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/34/2899434_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 성동구 상원1길 39-1 (성수동1가)",
+       "addr2": "",
+       "zipcode": "04778",
+       "mapx": "127.0468597907",
+       "mapy": "37.5470327407",
+       "mlevel": "6",
+       "overview": "기본에 충실한 스시오오모토는 스시 오마카세 전문점이다. 뚝섬역과 서울숲역 가까이에 위치하고 있다. 신선한 재료와 정성 가득한 오마카세 코스로 특별한 날 방문하기 좋은 일식 전문점이다. 내부는 조금 어두우면서 아늑한 분위기로, 조용하게 식사를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

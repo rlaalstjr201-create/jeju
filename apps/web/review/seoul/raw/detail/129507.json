@@ -1,0 +1,52 @@
+{
+ "contentid": "129507",
+ "modifiedtime": "20260619093209",
+ "fetchedAt": "2026-10-30T16:44:37.661Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129507",
+       "contenttypeid": "12",
+       "title": "청계천",
+       "createdtime": "20070404090000",
+       "modifiedtime": "20260619093209",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.sisul.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource_photo/34/3538134_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource_photo/34/3538134_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 창신동",
+       "addr2": "",
+       "zipcode": "04563",
+       "mapx": "127.0050743200",
+       "mapy": "37.5696470253",
+       "mlevel": "6",
+       "overview": "청계천은 종로구와 중구 사이를 가르는 10.84㎞의 하천이다. 2003년 7월부터 2005년 9월까지 복개한 청계천로와 삼일로 주변 5.84㎞ 구간을 복원하고 총 22개의 다리를 설치하는 등 시민들의 쉼터로 탈바꿈하기 위한 대대적인 공사를 진행하였다. 청계광장을 중심으로 각종 문화행사 등이 열리고 있으며, 누구나 편하게 쉬어갈 수 있는 도심 속 휴식처의 역할을 하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

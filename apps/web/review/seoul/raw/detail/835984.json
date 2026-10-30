@@ -1,0 +1,52 @@
+{
+ "contentid": "835984",
+ "modifiedtime": "20260918140205",
+ "fetchedAt": "2026-10-30T16:49:38.135Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "835984",
+       "contenttypeid": "39",
+       "title": "도읍지",
+       "createdtime": "20091028023150",
+       "modifiedtime": "20260918140205",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3474711_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3474711_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동대문구 회기로21길 38-1",
+       "addr2": "",
+       "zipcode": "02453",
+       "mapx": "127.0530800800",
+       "mapy": "37.5930006034",
+       "mlevel": "6",
+       "overview": "서울 한복판에서 즐길 수 있는 옛날 주막의 분위기를 느낄 수 있는 음식점으로 황토 벽과 전통 소품들이 가득한 시골풍 인테리어가 돋보인다. 계란찜, 청국장, 제육볶음 등의 다양한 한식과 밑반찬들을 취급하고 있고 양이 푸짐하여 학생들에게 특히나 사랑받는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

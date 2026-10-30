@@ -1,0 +1,52 @@
+{
+ "contentid": "3427223",
+ "modifiedtime": "20250729102504",
+ "fetchedAt": "2026-10-30T16:46:37.775Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3427223",
+       "contenttypeid": "12",
+       "title": "충무로영상센터 오재미동",
+       "createdtime": "20241127161142",
+       "modifiedtime": "20250729102504",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.ohzemidong.co.kr/main.php",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/03/3430803_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/03/3430803_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "24",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE12",
+       "lclsSystm3": "VE120300",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "서울특별시 중구 퇴계로 지하214 (필동2가)",
+       "addr2": "충무로역사 지하1층",
+       "zipcode": "04625",
+       "mapx": "126.9942225138",
+       "mapy": "37.5613412436",
+       "mlevel": "6",
+       "overview": "오!재미동은 충무로역 지하 1층에 위치한 공공문화 공간으로,\n누구나 쉽고 편하게 다양한 영상 문화를 체험하고 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

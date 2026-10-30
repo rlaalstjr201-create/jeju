@@ -1,0 +1,52 @@
+{
+ "contentid": "3463600",
+ "modifiedtime": "20260724130713",
+ "fetchedAt": "2026-10-30T16:46:37.232Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3463600",
+       "contenttypeid": "12",
+       "title": "춘풍양조장",
+       "createdtime": "20250103105520",
+       "modifiedtime": "20260724130713",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.chunpoong.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/65/3463465_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/65/3463465_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 다산로 101-3 (신당동)",
+       "addr2": "",
+       "zipcode": "04599",
+       "mapx": "127.0091884066",
+       "mapy": "37.5532675020",
+       "mlevel": "6",
+       "overview": "서울에 위치한 춘풍양조장은 한국 술의 근본인 막걸리를 생산하는 양조장이다. 한국 술의 가치를 전달하는 양조장 투어 및 시음을 진행하고 있다. 역사 속으로 사라져 가는 한국 술의 근본인 막걸리에 대한 상세한 정보 전달과 한국의 귀중한 문화유산을 해외 관광객들에게 선보이고 정보를 전달한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

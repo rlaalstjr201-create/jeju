@@ -1,0 +1,52 @@
+{
+ "contentid": "2795963",
+ "modifiedtime": "20250904172434",
+ "fetchedAt": "2026-10-30T16:43:55.030Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2795963",
+       "contenttypeid": "39",
+       "title": "투모루파파",
+       "createdtime": "20211214222814",
+       "modifiedtime": "20250904172434",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/2795937_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/37/2795937_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 평창읍 백오로 130",
+       "addr2": "",
+       "zipcode": "25375",
+       "mapx": "128.3971400093",
+       "mapy": "37.3675673422",
+       "mlevel": "6",
+       "overview": "식사로도 좋고 안주로도 좋은 피자와 치킨을 판매하는 식당으로 항상 최선의 멋과 맛으로 정성을 다하는 음식점이다. 방문객들이 평창에 관광을 올 때마다 들려 먹는 맛집이기도 하다. 전체적으로 가성비가 좋고 맛도 있어 현지군민들도 자주 찾는 곳이다. 근처에 라움커피, 희희 카페, 노람뜰 등 디저트를 함께 파는 카페들도 있어 맛집 관광이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

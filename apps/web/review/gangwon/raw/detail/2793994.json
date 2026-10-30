@@ -1,0 +1,52 @@
+{
+ "contentid": "2793994",
+ "modifiedtime": "20250821152953",
+ "fetchedAt": "2026-10-30T16:43:39.112Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2793994",
+       "contenttypeid": "39",
+       "title": "유명식당",
+       "createdtime": "20211214012112",
+       "modifiedtime": "20250821152953",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/94/2793894_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/94/2793894_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 전나무길 5-5",
+       "addr2": "",
+       "zipcode": "25350",
+       "mapx": "128.6014902652",
+       "mapy": "37.6705834607",
+       "mlevel": "6",
+       "overview": "3대째 이어오는 전통 있는 유명식당의 대표 메뉴는 메밀막국수로 면발이 탱글하고 구수하다. 수육은 소머리 한우수육과 돼지수육 두 가지로 잡내 없이 고기가 부드럽고 맛이 좋아 인기가 많다. 그 밖에 도토리냉면, 꿩만두국, 찐만두가 있다. 만두는 계절 메뉴로 10월부터 3월까지 판매한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

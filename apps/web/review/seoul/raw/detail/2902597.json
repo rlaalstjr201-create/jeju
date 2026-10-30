@@ -1,0 +1,52 @@
+{
+ "contentid": "2902597",
+ "modifiedtime": "20260528135533",
+ "fetchedAt": "2026-10-30T16:46:06.341Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2902597",
+       "contenttypeid": "39",
+       "title": "자하싸리집",
+       "createdtime": "20221109100441",
+       "modifiedtime": "20260528135533",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 진흥로 463 (구기동)",
+       "addr2": "",
+       "zipcode": "03007",
+       "mapx": "126.95977128175814",
+       "mapy": "37.606851115023524",
+       "mlevel": "6",
+       "overview": "서울 종로구 구기동에 자리한 자하싸리집은 오랜 역사를 지닌 보양탕 전문점으로, 염소 보양식으로 이름난 곳이다. 한옥처럼 꾸며진 매장은 편안하고 정겨운 분위기를 자아내며, 대청마루 뒤편에 놓인 장독대가 전통적인 멋을 더한다. 쌀과 김치, 고춧가루 등 주요 식재료는 모두 국내산만 사용해 음식의 품질을 높였으며, 염소 수육과 염소 전골, 염소탕 등 다양한 염소 요리를 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

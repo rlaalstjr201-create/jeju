@@ -1,0 +1,52 @@
+{
+ "contentid": "2947970",
+ "modifiedtime": "20261001101846",
+ "fetchedAt": "2026-10-30T16:45:46.931Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2947970",
+       "contenttypeid": "39",
+       "title": "뮤직컴플렉스 서울",
+       "createdtime": "20230207151118",
+       "modifiedtime": "20261001101846",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/58/2947958_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/58/2947958_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동길 49",
+       "addr2": "",
+       "zipcode": "03145",
+       "mapx": "126.9835512822",
+       "mapy": "37.5744654927",
+       "mlevel": "6",
+       "overview": "인사동에 뜬 붉은 노을과 뮤직 콤플렉스 서울, 아날로그 감성과 힙한 감성이 공존하는 곳이다. 뮤직 콤플렉스 서울은 국내 최대 규모의 LP 카페로 각 자리마다 개별 턴테이블과 헤드셋이 구비되어 있으며 2만여 장의 LP 속에서 좋아하는 음악을 직접 디깅 하여 자유롭게 청음 할 수 있는 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

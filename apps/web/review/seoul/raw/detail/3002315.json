@@ -1,0 +1,52 @@
+{
+ "contentid": "3002315",
+ "modifiedtime": "20260616171422",
+ "fetchedAt": "2026-10-30T16:49:02.928Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3002315",
+       "contenttypeid": "39",
+       "title": "커피 바넷리",
+       "createdtime": "20230828153455",
+       "modifiedtime": "20260616171422",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 서울숲4길 28-14",
+       "addr2": "지하1층",
+       "zipcode": "04768",
+       "mapx": "127.0437386006",
+       "mapy": "37.5467167071",
+       "mlevel": "6",
+       "overview": "커피 바넷리는 파리지앵 아파트 무드를 콘셉트로 한 인테리어와 프라이빗 테라스를 갖춘 프렌치 감성 카페이다. 프랑스 스타일의 음료와 디저트를 제공하며, 같은 건물 내에서 프랑스 럭셔리 퍼퓸 시향 및 구매도 가능한 이색 복합문화 공간이다. 슈가드 프렌치 라떼, 스파클링 오 도레, 쇼콜라떼 등 프랑스 재료와 조합을 활용한 시그니처 메뉴를 선보인다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

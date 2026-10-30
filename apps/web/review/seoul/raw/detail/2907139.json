@@ -1,0 +1,52 @@
+{
+ "contentid": "2907139",
+ "modifiedtime": "20260708090001",
+ "fetchedAt": "2026-10-30T16:50:21.332Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2907139",
+       "contenttypeid": "39",
+       "title": "야마토텐동",
+       "createdtime": "20221114101224",
+       "modifiedtime": "20260708090001",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성북구 고려대로28길 2",
+       "addr2": "",
+       "zipcode": "02856",
+       "mapx": "127.0302186188",
+       "mapy": "37.5861038075",
+       "mlevel": "6",
+       "overview": "용산구 안암동에 위치한 야마토텐동은 일본의 장신정신이 깃든 일식 전문 식당이다. 오픈형 키친으로 튀김을 튀기는 모습이나 요리하는 모습을 직접 감상할 수 있다. 특히 사장님의 특별소스는 30일간 숙성이 되고 있어 텐동의 맛이 더욱 깊다. 주문 즉시 조리를 하기 때문에 다소 시간이 걸릴 수 있다. 또한 일본 홋카이도 프리미엄 생크림 소프트콘도 맛볼 수 있다. 규텐동, 아나고텐동 등이 이 집 인기 메뉴이다"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

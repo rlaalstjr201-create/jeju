@@ -1,0 +1,52 @@
+{
+ "contentid": "3434068",
+ "modifiedtime": "20260406104847",
+ "fetchedAt": "2026-10-30T16:45:38.245Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3434068",
+       "contenttypeid": "39",
+       "title": "낙원역",
+       "createdtime": "20241203101241",
+       "modifiedtime": "20260406104847",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/48/4055548_image2_1.png",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/48/4055548_image3_1.png",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 수표로28길 33-5 (익선동)",
+       "addr2": "",
+       "zipcode": "03133",
+       "mapx": "126.9901395759664",
+       "mapy": "37.57336132325985",
+       "mlevel": "6",
+       "overview": "서울에서 아날로그 감성을 가득 느낄 수 있는 낙원역은 간이역을 모티브로한 카페이다. 자갈 위에 깔린 철길을 따라 한옥의 안쪽으로 들어가면 카페가 등장하는데 철길 주변으로 초록빛을 머금은 식물들이 무성하게 자라나 있어 발걸음을 옮기다 보면 시간이 멈춘 간이역 속으로 들어가는 듯한 느낌을 준다. 기차 시간표처럼 만든 메뉴판부터 컨베이어 벨트를 타고 돌아가는 디저트들이 간이역의 느낌을 살리고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

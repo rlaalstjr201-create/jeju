@@ -1,0 +1,52 @@
+{
+ "contentid": "2796234",
+ "modifiedtime": "20250807160207",
+ "fetchedAt": "2026-10-30T16:42:54.813Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2796234",
+       "contenttypeid": "39",
+       "title": "대관령 마실",
+       "createdtime": "20211214230431",
+       "modifiedtime": "20250807160207",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/2796197_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/97/2796197_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 평창군 대관령면 오목길 43-58",
+       "addr2": "2층",
+       "zipcode": "25342",
+       "mapx": "128.7164745257",
+       "mapy": "37.6646863586",
+       "mlevel": "6",
+       "overview": "평창 대관령면에 위치한 마실 카페로, 평창 라마다 호텔 근처에 있다. 외관은 숲속 산장에 온 듯한 느낌이지만 카페 내부에는 중앙에 큰 벽난로가 위치하고 있어 전체적으로 따뜻하고 아늑한 분위기를 더해주고 있다. 커피를 비롯해 전통차, 허브티, 에이드, 뱅쇼, 그리고 아이스크림 메뉴까지 준비되어 있다. 또한 반려견 출입이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

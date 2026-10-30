@@ -1,0 +1,52 @@
+{
+ "contentid": "2782569",
+ "modifiedtime": "20250822113609",
+ "fetchedAt": "2026-10-30T16:43:37.516Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782569",
+       "contenttypeid": "39",
+       "title": "우미관 숯불구이 막국수",
+       "createdtime": "20211129192128",
+       "modifiedtime": "20250822113609",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/50/2782550_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/50/2782550_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 기풍3길 21-2",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3769927455",
+       "mapy": "37.6153661086",
+       "mlevel": "6",
+       "overview": "직접 만든 음식만 제공하며 원스푸드 실천 업소이다. 봉평면에 위치한 고기집으로, 각종 갈비를 주력 메뉴로 삼고 있다. 고기가 부드러우며 간이 쎄지 않아 질리지 않고 먹을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

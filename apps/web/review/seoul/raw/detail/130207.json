@@ -1,0 +1,52 @@
+{
+ "contentid": "130207",
+ "modifiedtime": "20260304100426",
+ "fetchedAt": "2026-10-30T16:45:18.569Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130207",
+       "contenttypeid": "14",
+       "title": "종로문화원",
+       "createdtime": "20071106104658",
+       "modifiedtime": "20260304100426",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.종로문화원.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/15/1894715_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/15/1894715_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 종로5길 31 (청진동)",
+       "addr2": "",
+       "zipcode": "03156",
+       "mapx": "126.980395589272",
+       "mapy": "37.5716918630193",
+       "mlevel": "6",
+       "overview": "종로문화원은 서울 시내 문화유산을 보유하고 있는 문화 특구인 종로에 있어 각종 향토 사료 조사, 수집, 보존과 함께 다양한 문화행사를 개최하는 곳이다. 종로문화원에서는 중국어를 배우는 중국어과, 경기민요 및 송서율창을 배울 수 있는 국악과, 닥종이 공예를 배울 수 있는 닥종이 공예과 등 문화학교 강좌를 개설하여 지역주민의 문화복지에 기여하고 있다. 또한, 3·1 만세의 날 거리 축제, 종로 전국 청소년 국악 경연대회, 어르신 문화프로그램, 월간 종로문화 발간, 향토 사료집 발간, 종로문화대학, 제1, 2차 지방문화탐방, 종로 이야기 강좌 등의 다양한 문화행사를 기획하여 지역 문화를 창달한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

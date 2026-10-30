@@ -1,0 +1,52 @@
+{
+ "contentid": "135525",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-30T16:42:45.530Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135525",
+       "contenttypeid": "39",
+       "title": "고향막국수",
+       "createdtime": "20070306090000",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/68/735068_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/68/735068_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 봉평면 이효석길 142",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.371107043334",
+       "mapy": "37.6127061838245",
+       "mlevel": "6",
+       "overview": "가산 이효석 선생의 소설 메밀꽃 필 무렵의 작품무대인 봉평에 위치한 고향막국수는 2대째 대를 이어 운영하고 있는 전통메밀음식점이다. 고향막국수에서는 시골의 넉넉한 인심과 고향만의 독특한 메밀음식 맛을 느낄 수 있는데 20여 가지의 야채와 양념을 첨가해 만든 특별한 육수가 고향막국수 고유의 독특한 맛의 비결이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

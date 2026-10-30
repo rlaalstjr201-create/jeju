@@ -1,0 +1,52 @@
+{
+ "contentid": "2783962",
+ "modifiedtime": "20250711130450",
+ "fetchedAt": "2026-10-30T16:43:33.535Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2783962",
+       "contenttypeid": "39",
+       "title": "오대산비로봉식당",
+       "createdtime": "20211201000700",
+       "modifiedtime": "20250711130450",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/57/2783957_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/57/2783957_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 오대산로 90",
+       "addr2": "",
+       "zipcode": "25318",
+       "mapx": "128.6001474948",
+       "mapy": "37.7107871162",
+       "mlevel": "6",
+       "overview": "평창군 진부면에 위치한 오대산비로봉식당은 다양한 종류의 나물로 최소한의 조리법을 고수하여 조리하는 음식점이다. 주변에 아름다운 전경은 식욕을 돋운다. 비로봉의 정기를 받아 오랜 전통과 숙련된 실력으로 평창 토속음식을 제공하고 있다. 특산품 황태를 사용한 황태구이정식을 비롯하여 산채정식, 산채비빔밥, 감자전, 더덕구이 등의 메뉴가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

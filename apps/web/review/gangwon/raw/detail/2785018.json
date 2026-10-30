@@ -1,0 +1,52 @@
+{
+ "contentid": "2785018",
+ "modifiedtime": "20250827101159",
+ "fetchedAt": "2026-10-30T16:43:28.065Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2785018",
+       "contenttypeid": "39",
+       "title": "아들부자집",
+       "createdtime": "20211202183931",
+       "modifiedtime": "20250827101159",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/2785012_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/12/2785012_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 청송로 74",
+       "addr2": "(시대진부아파트)",
+       "zipcode": "25333",
+       "mapx": "128.5545010973",
+       "mapy": "37.6363781813",
+       "mlevel": "6",
+       "overview": "진부면 인생맛집으로 깔끔한 백반과 가정식집이다. 직접 만든 반찬을 사용하여 만든 집밥 전문 식당이다. 솥뚜껑 위에 두툼한 벌집 삼겹살을 구워 먹을 수 있으며 반찬부터 고기까지 신선하고 맛있기로 유명하다. 매장 내부는 좌식 테이블로 구성되어 있으며 룸도 있어 개별적으로 식사도 가능하다. 메뉴 주문 시 기본찬들은 다양하며 정갈하게 구성되어 나온다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

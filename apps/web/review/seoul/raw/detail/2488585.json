@@ -1,0 +1,52 @@
+{
+ "contentid": "2488585",
+ "modifiedtime": "20261002133625",
+ "fetchedAt": "2026-10-30T16:48:27.917Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2488585",
+       "contenttypeid": "14",
+       "title": "헬로우뮤지움",
+       "createdtime": "20170403224836",
+       "modifiedtime": "20261002133625",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.instagram.com/hellomuseum/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/16/3467516_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/16/3467516_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 성수일로12길 20 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04793",
+       "mapx": "127.0532504664",
+       "mapy": "37.5481744308",
+       "mlevel": "6",
+       "overview": "국내 최초의 사립 어린이 미술관으로 2019년 10월 서울 성수동에 재개관을 했다. 헬로우 뮤지엄은 다음세대를 위한 미래적 가치를 실현하는 새로운 어린이미술관 모델을 선보이고 있으며, 지역 주민의 삶과 가까운 커뮤니티형 에코미술관으로 자리매김하고 있다. 어린이의 생태 감수성을 키우고, 어린이와 연결된 지역사회 구성원의 삶까지 풍요롭게 하는 전시와 교육 프로그램을 운영 중이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

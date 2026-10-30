@@ -1,0 +1,52 @@
+{
+ "contentid": "2784874",
+ "modifiedtime": "20250821133458",
+ "fetchedAt": "2026-10-30T16:43:07.873Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2784874",
+       "contenttypeid": "39",
+       "title": "미성식당",
+       "createdtime": "20211202003534",
+       "modifiedtime": "20250821133458",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/72/2784872_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/72/2784872_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 진부중앙로 85",
+       "addr2": "",
+       "zipcode": "25325",
+       "mapx": "128.5599033090",
+       "mapy": "37.6389724292",
+       "mlevel": "6",
+       "overview": "미성식당은 평창에 위치한 한식 전문점이다. 모든 식재료는 농사지어 사용하며 직접 손질한 요리를 판매한다. 밑반찬은 차려지는 종류가 매일 다르고, 정갈하고 깔끔하게 나와 모든 사람의 입맛에 잘 맞는다. 통통한 오징어와 부드러운 돼지고기가 들어간 오삼불고기는 양념이 많이 맵지도 않고 매콤 달달하여 밥이랑 잘 어울린다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

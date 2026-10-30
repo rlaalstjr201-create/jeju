@@ -1,0 +1,52 @@
+{
+ "contentid": "3056156",
+ "modifiedtime": "20260401131242",
+ "fetchedAt": "2026-10-30T16:49:49.784Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3056156",
+       "contenttypeid": "12",
+       "title": "중랑장미공원",
+       "createdtime": "20231204095518",
+       "modifiedtime": "20260401131242",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/92/3570592_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/92/3570592_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중랑구 묵동",
+       "addr2": "375",
+       "zipcode": "02031",
+       "mapx": "127.0731",
+       "mapy": "37.6152",
+       "mlevel": "6",
+       "overview": "중랑장미공원은 중랑천 길을 따라 다양한 품종의 장미가 구획별로 식재된 공원이다. 장미가 개화하는 5월이 되면 이곳을 따라 매년 200만 명 이상이 찾는 장미축제가 열린다. 중랑천 제방을 따라 조성된 5.4㎞의 국내 최대 규모의 장미 터널을 포함해 축제장 전역에서 장미를 감상할 수 있다. 안젤라, 핑크 퍼퓸, 골드파사데 등 다양한 품종의 장미들이 봄의 생동감을 전한다. 이 밖에도 중랑천을 바라보며 전경을 즐길 수 있는 전망데크, 포토존, 야간 조명 등이 마련되어 있어 도심 속에서 아름다운 장미와 함께 완연한 봄을 만끽할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

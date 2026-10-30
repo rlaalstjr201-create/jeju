@@ -1,0 +1,52 @@
+{
+ "contentid": "2795029",
+ "modifiedtime": "20250827151947",
+ "fetchedAt": "2026-10-30T16:42:42.162Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2795029",
+       "contenttypeid": "39",
+       "title": "가시머리식당",
+       "createdtime": "20211214182333",
+       "modifiedtime": "20250827151947",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/14/2795014_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/14/2795014_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 대관령면 대관령마루길 369",
+       "addr2": "",
+       "zipcode": "25342",
+       "mapx": "128.7438214416",
+       "mapy": "37.6849678755",
+       "mlevel": "6",
+       "overview": "평창군 대관령면에 위치한 막국수 전문점이다. 넓은 홀과 4개의 룸이 있어 프라이빗한 각종 모임 장소로 좋다. 대표 메뉴는 단연 막국수이지만 막국수 외에도 만둣국, 돼지수육도 인기다. 또한 예약 필수 메뉴인 닭백숙, 닭볶음탕, 오리구이가 있다. 직접 손질한 재료와 직접 만드는 반찬으로 정성을 다하는 식당으로 계산대 주변에는 여러 나물들을 판매하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

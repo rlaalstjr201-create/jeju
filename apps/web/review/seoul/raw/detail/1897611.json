@@ -1,0 +1,52 @@
+{
+ "contentid": "1897611",
+ "modifiedtime": "20260224155431",
+ "fetchedAt": "2026-10-30T16:46:06.600Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1897611",
+       "contenttypeid": "39",
+       "title": "장군굴보쌈",
+       "createdtime": "20140221023425",
+       "modifiedtime": "20260224155431",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 수표로20길 22",
+       "addr2": "",
+       "zipcode": "03192",
+       "mapx": "126.990800705604",
+       "mapy": "37.5698884042281",
+       "mlevel": "6",
+       "overview": "30년이 넘는 전통을 자랑하는 굴보쌈으로 유명한 보쌈 전문점이다. 통영에서 산지직송한 굴을 특제 양념에 버무려 돼지고기 수육과 함께 담아내며, 감자탕과 오징어볶음은 서비스로 제공된다. 오징어볶음은 요리사였던 주인의 손맛으로 탄생한 이 집만의 특별 서비스 메뉴다. 구수한 수육에 맛깔스러운 보쌈김치, 진한 국물의 감자탕, 칼칼한 오징어볶음 삼총사라면 밥과 함께 먹어도 푸짐하고 주당들의 술안주로도 안성맞춤이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "135684",
+ "modifiedtime": "20260410092222",
+ "fetchedAt": "2026-10-30T16:48:03.387Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135684",
+       "contenttypeid": "39",
+       "title": "엔그릴",
+       "createdtime": "20070327090000",
+       "modifiedtime": "20260410092222",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 남산공원길 105 (용산동2가)",
+       "addr2": "7층",
+       "zipcode": "04340",
+       "mapx": "126.98785960003548",
+       "mapy": "37.55111614648555",
+       "mlevel": "6",
+       "overview": "서울타워 7층에 위치한 엔그릴은 특별한 날, 특별한 장소를 원하는 사람들을 위한 전망 레스토랑이다. 식사를 하며 360° 파노라마처럼 펼쳐지는 서울의 풍경과 야경을 즐길 수 있다. 이곳의 좌석은 일반석과 커플석 2가지 형태로 구성되어 있으며, 전부 창가석에 배치되어 있다. 커플석은 나란히 앉는 쇼파 좌석이며, 디너 시간에 커플석 이용 시 커플코스 메뉴로 진행된다. 또한 디너 커플코스 이용 시 샴페인 2잔과 스페셜 디저트가 함께 제공된다. 일반석은 마주 보고 앉는 좌석이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

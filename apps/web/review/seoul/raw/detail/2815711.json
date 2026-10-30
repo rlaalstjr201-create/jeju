@@ -1,0 +1,52 @@
+{
+ "contentid": "2815711",
+ "modifiedtime": "20260226173006",
+ "fetchedAt": "2026-10-30T16:45:55.389Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2815711",
+       "contenttypeid": "39",
+       "title": "소울",
+       "createdtime": "20220411171028",
+       "modifiedtime": "20260226173006",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 자하문로 50",
+       "addr2": "",
+       "zipcode": "03043",
+       "mapx": "126.971382854295",
+       "mapy": "37.5804506539261",
+       "mlevel": "6",
+       "overview": "창성동에 위치한 소울은 새하얀 외관이 눈에 띄는 쌀디저트 전문점이다. 밀가루 대신 쌀가루를 이용하여 만든 디저트는 몸에도 좋고 고소한 맛도 풍부하다. 소울에서만 맛볼 수 있는 쌀막걸리스콘, 쌀 마들렌과 플라워 홀케이크, 한국 전통 디저트인 '주악' 등의 특별한 디저트도 만나볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

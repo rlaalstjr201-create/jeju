@@ -1,0 +1,52 @@
+{
+ "contentid": "2789446",
+ "modifiedtime": "20250827110453",
+ "fetchedAt": "2026-10-30T16:42:49.494Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789446",
+       "contenttypeid": "39",
+       "title": "김밥소풍",
+       "createdtime": "20211208223856",
+       "modifiedtime": "20250827110453",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/31/2789431_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/31/2789431_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 평창읍 평창시장2길 1",
+       "addr2": "",
+       "zipcode": "25376",
+       "mapx": "128.3942569637",
+       "mapy": "37.3666035106",
+       "mlevel": "6",
+       "overview": "평창읍에 위치한 김밥 소풍은 부담 없는 가격과 다양한 메뉴, 그리고 정성을 다한 음식을 맛볼 수 있는 곳이다. 김밥, 라볶이와 같은 분식류 외에도 직접 띄운 청국장 등 다양한 식사 메뉴를 맛볼 수 있다. 또한 돈가스, 김밥, 쫄면, 음료수를 한 번에 맛볼 수 있는 정식 메뉴도 준비되어 있다. 청국장은 직접 띄운 수제 청국장으로 만들어 더욱 구수한 맛을 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

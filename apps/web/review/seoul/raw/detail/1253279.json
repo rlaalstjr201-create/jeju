@@ -1,0 +1,52 @@
+{
+ "contentid": "1253279",
+ "modifiedtime": "20261020103726",
+ "fetchedAt": "2026-10-30T16:47:49.256Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1253279",
+       "contenttypeid": "38",
+       "title": "이태원시장",
+       "createdtime": "20110409005537",
+       "modifiedtime": "20261020103726",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/63/3568563_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/63/3568563_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 이태원로14길 6 (이태원동)",
+       "addr2": "",
+       "zipcode": "04390",
+       "mapx": "126.9900634375",
+       "mapy": "37.5338315598",
+       "mlevel": "6",
+       "overview": "이태원 시장은 대한민국 서울특별시 용산구 이태원동에 위치한 대표적인 시장 중 하나이다. 이태원은 다양한 문화와 다국적인 분위기가 어우러진 지역으로 유명하며, 이곳의 시장도 그 다양성을 반영하고 있다. 이태원 시장에는 전통적인 한국의 소품부터 현대적이고 유니크한 디자인의 제품까지 다양한 상점들이 즐비해 있어, 의류, 액세서리, 가구, 공예품 등을 살펴보며 독특한 제품을 찾을 수 있으며, 이태원은 다양한 국적의 사람들이 모여 사는 지역이기 때문에 다양한 나라의 음식을 즐길 수 있는 레스토랑과 카페가 많아 이색적인 체험이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

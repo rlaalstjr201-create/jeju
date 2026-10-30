@@ -1,0 +1,52 @@
+{
+ "contentid": "2894728",
+ "modifiedtime": "20250919174059",
+ "fetchedAt": "2026-10-30T16:49:04.479Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2894728",
+       "contenttypeid": "39",
+       "title": "탐광",
+       "createdtime": "20221103142942",
+       "modifiedtime": "20250919174059",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/20/2894720_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/20/2894720_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 성동구 연무장5가길 26 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04782",
+       "mapx": "127.0554341176",
+       "mapy": "37.5432277812",
+       "mlevel": "6",
+       "overview": "탐광은 서울지하철 2호선 성수역 3번 출구에서 약 220m 거리에 있는 성수동 카페거리 뒤편에 있다. 매장에 별도의 주차장은 마련되어 있지 않다. 빈티지한 분위기의 일식집으로 천정에 가득한 큰 구슬 조명이 이채롭다. 에비가츠동과 다양한 카레 누들 메뉴로 유명한 식당으로, 특히 치즈에비가츠동과 대창소고기카레누들이 인기 메뉴다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

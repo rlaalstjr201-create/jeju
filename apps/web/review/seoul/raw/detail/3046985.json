@@ -1,0 +1,52 @@
+{
+ "contentid": "3046985",
+ "modifiedtime": "20260612174441",
+ "fetchedAt": "2026-10-30T16:47:55.026Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3046985",
+       "contenttypeid": "39",
+       "title": "데이블러",
+       "createdtime": "20231123112944",
+       "modifiedtime": "20260612174441",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 한강대로 290-1 (남영동)",
+       "addr2": "",
+       "zipcode": "04352",
+       "mapx": "126.9725734866",
+       "mapy": "37.5442033961",
+       "mlevel": "6",
+       "overview": "데이블러는 서울시 용산구 남영동에 위치한 기차 식당칸 콘셉트의 카페이다. 대표 메뉴는 한우 불고기 샌드위치로, 20년 역사를 가진 부산 해운대 일품 한우의 한우 불고기를 사용해 만든다. 커피는 대중적으로 선호도가 높은 원두를 사용해 부담 없이 즐길 수 있다. 특히 모니터를 기차 창문 형태로 제작해 달리는 풍경을 재생함으로써 실제 기차 여행을 하는 듯한 분위기를 연출한다. 풍경 영상은 계절에 따라 바뀌어 색다른 매력을 선사한다. 아름다운 풍경이 펼쳐지는 기차 안에서 맛있는 음식과 커피를 즐기며 특별한 추억을 만들 수 있는 이색 카페이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

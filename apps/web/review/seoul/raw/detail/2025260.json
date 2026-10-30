@@ -1,0 +1,52 @@
+{
+ "contentid": "2025260",
+ "modifiedtime": "20250919170550",
+ "fetchedAt": "2026-10-30T16:45:45.361Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2025260",
+       "contenttypeid": "39",
+       "title": "마지",
+       "createdtime": "20150826224522",
+       "modifiedtime": "20250919170550",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020500",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "서울특별시 종로구 자하문로5길 19",
+       "addr2": "",
+       "zipcode": "03041",
+       "mapx": "126.9707714116",
+       "mapy": "37.5776167085",
+       "mlevel": "6",
+       "overview": "한국전통채식을 바탕으로 파, 마늘 등의 자극적인 재료를 사용하지 않은 웰빙채식 식사를 제공한다. 계란, 생선 등도 사용하지 않기 때문에 비건인 외국인과 할랄푸드를 찾지 못하는 무슬림들에게도 안전한 식단이 제공 가능하다. (주)마지는 백련사찰음식연구소를 겸하고 있어 사찰음식 만들기의 체험을 원하는 경우 쿠킹클래스와 병행한 행사가 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

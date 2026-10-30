@@ -1,0 +1,52 @@
+{
+ "contentid": "3461606",
+ "modifiedtime": "20250725092942",
+ "fetchedAt": "2026-10-30T16:50:17.191Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3461606",
+       "contenttypeid": "39",
+       "title": "서울 본크레페",
+       "createdtime": "20241227153307",
+       "modifiedtime": "20250725092942",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/94/3461594_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/94/3461594_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "17",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 성북구 동소문로20다길 30 (동선동1가)",
+       "addr2": "",
+       "zipcode": "02845",
+       "mapx": "127.0183055578",
+       "mapy": "37.5920825475",
+       "mlevel": "6",
+       "overview": "서울 본크레페는 서울 성북구 동선동1가에 위치한 크레페 전문점이다. 이곳은 프랑스식 전통 크레페를 제공하며, 다양한 재료와 소스로 달콤하거나 짭짤한 크레페를 맛볼 수 있다. 본크레페는 신선한 재료를 사용해 고유의 맛을 자랑하며, 크레페 외에도 다양한 음료와 디저트를 함께 즐길 수 있다. 이 카페는 아늑하고 편안한 분위기로, 많은 사람들이 여유로운 시간을 보내기에 적합한 장소로 알려져 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

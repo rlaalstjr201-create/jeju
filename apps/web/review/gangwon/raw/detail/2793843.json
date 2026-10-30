@@ -1,0 +1,52 @@
+{
+ "contentid": "2793843",
+ "modifiedtime": "20250821152457",
+ "fetchedAt": "2026-10-30T16:43:35.667Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2793843",
+       "contenttypeid": "39",
+       "title": "옹달샘",
+       "createdtime": "20211214005932",
+       "modifiedtime": "20250821152457",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/87/2793587_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/87/2793587_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 평창읍 평창강로 1423-3",
+       "addr2": "",
+       "zipcode": "25374",
+       "mapx": "128.3799972557",
+       "mapy": "37.3625509303",
+       "mlevel": "6",
+       "overview": "옹달샘식당은 신선하고 건강한 재료를 사용하여 맛있고 든든한 식사를 하기에 좋은 한식전문점이다. 음식들은 모두 국내산 재료로 만들어진다. 신선한 재료를 섞어 먹는 보리밥이 일품이며 바삭하고 고소한 감자전이 맛있기로 유명하다. 매장 내부뿐만 아니라 정원을 바라보며 외부에서도 식사가 가능한 점이 장점이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

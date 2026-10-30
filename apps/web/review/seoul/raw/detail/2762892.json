@@ -1,0 +1,52 @@
+{
+ "contentid": "2762892",
+ "modifiedtime": "20260224121340",
+ "fetchedAt": "2026-10-30T16:45:58.294Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2762892",
+       "contenttypeid": "39",
+       "title": "아델라베일리",
+       "createdtime": "20211027002142",
+       "modifiedtime": "20260224121340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 북악산로 48 (부암동)",
+       "addr2": "",
+       "zipcode": "03020",
+       "mapx": "126.970184830427",
+       "mapy": "37.595168080385",
+       "mlevel": "6",
+       "overview": "서울 종로구 북악스카이웨이 올라가는 길에 위치한 전망 좋은 카페 겸 레스토랑이다. 내부 통유리 창으로 보이는 나무들이 숲 속에 와있는 기분을 들게 하고 루프탑에서는 서울 시내가 훤히 내려다 보여 낮과 밤 모두 전망이 좋다. 런치와 디너 코스가 대표 메뉴이며 1층에는 베이커리가 별도로 운영되고 있다. 하우스 웨딩, 갤러리 전시, 기업 행사가 열리기도 하고 넓은 정원과 루프탑에서는 야간 야외 결혼식이 열리기도 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "132832",
+ "modifiedtime": "20251224124221",
+ "fetchedAt": "2026-10-30T16:48:05.805Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "132832",
+       "contenttypeid": "39",
+       "title": "유진막국수",
+       "createdtime": "20030529090000",
+       "modifiedtime": "20251224124221",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "21",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 용산구 장문로 18",
+       "addr2": "",
+       "zipcode": "04393",
+       "mapx": "126.9923708355",
+       "mapy": "37.5284339228",
+       "mlevel": "6",
+       "overview": "유진막국수는 1985년 서울 삼각지에서 춘천막국수로 출발하여 1988년도에 현재 위치로 이전하여 운영 중에 있다. 조리사(주방장)는 30년간 주방을 책임지고 있어 고유의 맛을 그대로 이어가고 있다. 주메뉴가 막국수인 이곳은 막국수의 고장이라 할 수 있는 강원권의 막국수 특징인 면발이 툭툭 끊어지는 것과 달리 면발이 약간의 쫄깃함을 유지하면서도 막국수 본연의 맛을 간직하는 서울식 막국수라 할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

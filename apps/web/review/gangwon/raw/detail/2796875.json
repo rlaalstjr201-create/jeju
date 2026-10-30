@@ -1,0 +1,52 @@
+{
+ "contentid": "2796875",
+ "modifiedtime": "20250922104236",
+ "fetchedAt": "2026-10-30T16:43:08.136Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2796875",
+       "contenttypeid": "39",
+       "title": "바람의언덕",
+       "createdtime": "20211215011154",
+       "modifiedtime": "20250922104236",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/2796861_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/61/2796861_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "강원특별자치도 평창군 대관령면 경강로 5721",
+       "addr2": "",
+       "zipcode": "25342",
+       "mapx": "128.7545593547",
+       "mapy": "37.6852236098",
+       "mlevel": "6",
+       "overview": "대관령 꼭대기의 박이추 커피공장에서 직접 가져온 원두로 로스팅하여 커피가 맛있는 특색있는 카페이다. 대관령 양떼목장 초입에 있는 카페로 항상 관광객들로 북적이는 곳이며 여름에는 다양한 종류의 시원한 커피를 맛볼 수 있다. 커피빵과 잼을 구입할 수 있다. 또 겨울에는 따뜻한 차를 즐길 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

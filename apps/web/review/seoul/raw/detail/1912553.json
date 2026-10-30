@@ -1,0 +1,52 @@
+{
+ "contentid": "1912553",
+ "modifiedtime": "20260305095851",
+ "fetchedAt": "2026-10-30T16:46:08.969Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1912553",
+       "contenttypeid": "39",
+       "title": "조선김밥",
+       "createdtime": "20140410014716",
+       "modifiedtime": "20260305095851",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 율곡로3길 68 (안국동)",
+       "addr2": "",
+       "zipcode": "03061",
+       "mapx": "126.9821834371108",
+       "mapy": "37.578600049276886",
+       "mlevel": "6",
+       "overview": "조선김밥은 덕성여자 중·고등학교 후문 인근에 위치한 분식집이다. 김밥은 조선김밥과 어묵김밥으로 총 두 종류가 있는데 모두 특색이 있다. 조선김밥은 시래기가 듬뿍 들어가 담백하고 건강한 맛이다. 어묵김밥은 고추냉이가 들어가 톡 쏘는 맛이 있다. 이외에도 콩비지와 조선 국시도 있다. 조선국시는 된장베이스 국물에 소면, 파김치가 들어간 국수이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

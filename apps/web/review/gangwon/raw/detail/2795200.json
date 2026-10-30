@@ -1,0 +1,52 @@
+{
+ "contentid": "2795200",
+ "modifiedtime": "20250821154407",
+ "fetchedAt": "2026-10-30T16:43:40.711Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2795200",
+       "contenttypeid": "39",
+       "title": "육칼밥 산아래",
+       "createdtime": "20211214185558",
+       "modifiedtime": "20250821154407",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/50/2795150_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/50/2795150_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 오대산로 152",
+       "addr2": "",
+       "zipcode": "25318",
+       "mapx": "128.6019054887",
+       "mapy": "37.7167114649",
+       "mlevel": "6",
+       "overview": "채식주의자를 위한 두부전골과 파기름을 이용해 건강하고 맛있는 육개장과 맛있는 칼국수의 만남이 조화롭다. 특히 여름철에는 막국수오 감자전을 곁들여 먹으면 시원하고 맛있게 여름을 날 수 있다. 밑반찬도 깔끔하게 잘 나오며 가족이나 지인들과 함께 방문하기 용이한 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

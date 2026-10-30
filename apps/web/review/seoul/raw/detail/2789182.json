@@ -1,0 +1,52 @@
+{
+ "contentid": "2789182",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-30T16:45:42.175Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2789182",
+       "contenttypeid": "39",
+       "title": "동경우동",
+       "createdtime": "20211208200209",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/14/2789814_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/14/2789814_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 종로구 새문안로9길 28 (도렴동)",
+       "addr2": "",
+       "zipcode": "03183",
+       "mapx": "126.9757044705",
+       "mapy": "37.5714341825",
+       "mlevel": "6",
+       "overview": "동경우동은 광화문 근처에서 우동과 돈까스를 맛볼 수 있는 곳으로, 특히 냉우동과 유부우동이 인기 메뉴다. 메뉴판에는 우동 종류뿐만 아니라 모밀, 회덮밥, 유부초밥 등 다양한 선택지가 있으며, 쫄깃한 면발과 바삭한 돈까스의 조합이 매력적이다. 지하철 5호선 광화문역 8번 출구 도보 1분 거리에 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

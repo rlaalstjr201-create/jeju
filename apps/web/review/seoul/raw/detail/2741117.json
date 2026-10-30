@@ -1,0 +1,52 @@
+{
+ "contentid": "2741117",
+ "modifiedtime": "20260623160351",
+ "fetchedAt": "2026-10-30T16:48:17.333Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2741117",
+       "contenttypeid": "12",
+       "title": "달맞이근린공원",
+       "createdtime": "20210908003704",
+       "modifiedtime": "20260623160351",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://parks.seoul.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/82/3512982_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/82/3512982_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 금호동4가",
+       "addr2": "산27",
+       "zipcode": "04743",
+       "mapx": "127.0210000000",
+       "mapy": "37.5434000000",
+       "mlevel": "6",
+       "overview": "달맞이근린공원은 옥수동 미타사와 현대아파트가 있는 뒷산으로 예전부터 정월 보름에 주민들이 이곳에 올라가 달을 맞이하였다 하여 붙여진 이름이다. 이 공원은 해돋이 명소이자 서울 야경 명소로 많은 사람들이 찾고 있다. 한강변에 우뚝 선 바위산으로 한강을 가깝게 바라볼 수 있다. 영화의 촬영지로도 유명하지만, 뚝섬부터 한남대교가 내려다 보이는 야경이 아름답기로 유명한 곳이며, 멋진 한강의 다리를 배경으로 찍을 수 있는 포토존도 있고 누워서 달과 별을 볼 수 있는 벤치도 설치되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

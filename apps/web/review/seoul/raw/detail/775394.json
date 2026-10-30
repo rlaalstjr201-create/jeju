@@ -1,0 +1,52 @@
+{
+ "contentid": "775394",
+ "modifiedtime": "20260703110602",
+ "fetchedAt": "2026-10-30T16:44:08.384Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "775394",
+       "contenttypeid": "12",
+       "title": "광화문광장",
+       "createdtime": "20090805025125",
+       "modifiedtime": "20260703110602",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://gwanghwamun.seoul.go.kr/main.do",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/02/4080502_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/02/4080502_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 세종대로 172",
+       "addr2": "",
+       "zipcode": "03154",
+       "mapx": "126.9769547555",
+       "mapy": "37.5726489283",
+       "mlevel": "6",
+       "overview": "새로운 모습으로 단장하여 시민들에게 개방된 광화문 광장은 600년 역사를 지닌 서울의 중심거리 세종로를 차량 중심의 거리에서 인간 중심의 공간으로 전환하고 경복궁과 북악산 등 아름다운 자연경관을 조망할 수 있는 공간으로 새롭게 조성하여 세종로의 옛 모습인 육조거리 복원을 통한 역사·문화 체험 공간으로 재탄생되었다. 초입 구간인 ‘광화문의 역사를 회복하는 광장’에는 월대를 재현하고 해태 상을 복원하였으며 세종로 공원 주변 구간인 ‘육조거리의 풍경을 재현하는 광장’에는 과거 한양의 중심거리였던 육조거리의 흔적을 재현하고 이를 형상화한 축소모형도 설치하였다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

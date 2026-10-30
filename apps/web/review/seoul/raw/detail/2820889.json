@@ -1,0 +1,52 @@
+{
+ "contentid": "2820889",
+ "modifiedtime": "20260224121340",
+ "fetchedAt": "2026-10-30T16:45:33.555Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2820889",
+       "contenttypeid": "39",
+       "title": "경복궁에 맛있는 부엌",
+       "createdtime": "20220520134223",
+       "modifiedtime": "20260224121340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 사직로 103",
+       "addr2": "",
+       "zipcode": "03041",
+       "mapx": "126.970246974024",
+       "mapy": "37.5762455906668",
+       "mlevel": "6",
+       "overview": "집 밥이 그리울 때 더 맛있게 먹을 수 있는 백반 식당으로 맛깔스러운 밑반찬과 집에서 먹는듯한 느낌을 주는 곳이며 혼자 와서 먹기에도 부담스럽지 않은 곳이다. 든든하게 한 끼식사를 하고 싶은 사람에게 추찬하며 혼밥러들을 위한 바 테이블도 있어 부담 없이 혼자 방문하기도 좋다. 메뉴가 다양해서 한식을 좋아하는 사람들이 오기 좋은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

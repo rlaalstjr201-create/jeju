@@ -1,0 +1,52 @@
+{
+ "contentid": "127942",
+ "modifiedtime": "20251224093703",
+ "fetchedAt": "2026-10-30T16:44:18.441Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "127942",
+       "contenttypeid": "12",
+       "title": "사직공원(서울)",
+       "createdtime": "20031030090000",
+       "modifiedtime": "20251224093703",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"https://parks.seoul.go.kr/parks/detailView.do?pIdx=106&tabTarget=1\" target=\"_blank\" title=\"새창 : 서울의 공원 사이트로 이동\">https://parks.seoul.go.kr</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/83/3400583_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/83/3400583_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 종로구 사직로 89 (사직동)",
+       "addr2": "",
+       "zipcode": "03027",
+       "mapx": "126.9687216489",
+       "mapy": "37.5758446558",
+       "mlevel": "6",
+       "overview": "종로구에는 이름난 공원이 세 개 있다. 탑골공원, 사직공원, 삼청공원 등이 그것이다. 정부종합청사 서쪽, 인왕산 남동쪽 기슭에 있는 총넓이 188,710㎡의 사직공원은 조선 태조 이성계가 1395년에 종묘와 함께 맨 처음 만든 사직단(사적)을 한복판에 두고 이루어진 공원이다. 사직이라는 말의 뜻을 보면 ‘사’는 땅의 신이며 ‘직’은 오곡의 신으로 이들에게 제사를 올려 풍년을 기원했던 곳이 사직단이다. 어린이 놀이터, 율곡 이이 선생과 신사임당의 동상, 활터(황학정), 시립 어린이 도서관 등이 자리 잡고 있으며, 단군성전, 종로도서관 등이 인접해 있다. 사직공원 옆 인왕산 길을 따라 5분 정도 걸어 올라가면 인왕산 등산로가 나온다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

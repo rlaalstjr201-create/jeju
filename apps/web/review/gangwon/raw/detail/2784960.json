@@ -1,0 +1,52 @@
+{
+ "contentid": "2784960",
+ "modifiedtime": "20250122134613",
+ "fetchedAt": "2026-10-30T16:43:50.269Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2784960",
+       "contenttypeid": "39",
+       "title": "초원식당",
+       "createdtime": "20211202015046",
+       "modifiedtime": "20250122134613",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/54/2784954_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/54/2784954_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 경강로 3969-2",
+       "addr2": "",
+       "zipcode": "25323",
+       "mapx": "128.5809646368",
+       "mapy": "37.6607841995",
+       "mlevel": "6",
+       "overview": "초원식당은 강원도 평창군 진부면에 있는 한식 전문점이다. 국산 직접 키운 토종닭과 염소로 만든 보양식이 주 메인이며, 90년대 판매한 원조 초원 보양식을 기반으로 2021년 새롭게 염소탕을 추가 판매 시작하였다. 야외테이블 및 좌식 마루가 있어 계절에 상관없이 자연을 느끼기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

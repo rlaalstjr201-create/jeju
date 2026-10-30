@@ -1,0 +1,52 @@
+{
+ "contentid": "130658",
+ "modifiedtime": "20260312090840",
+ "fetchedAt": "2026-10-30T16:48:27.374Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130658",
+       "contenttypeid": "14",
+       "title": "청계천박물관",
+       "createdtime": "20050927090000",
+       "modifiedtime": "20260312090840",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://museum.seoul.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3503011_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3503011_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 청계천로 530 (마장동)",
+       "addr2": "",
+       "zipcode": "04704",
+       "mapx": "127.03504321042874",
+       "mapy": "37.57126614487816",
+       "mlevel": "6",
+       "overview": "청계천박물관은 2005년 9월 26일에 개관한 박물관으로, 서울의 중심을 흐르는 청계천의 역사와 문화를 한눈에 볼 수 있는 공간이다. 박물관 건물의 정면은 길게 뻗은 유리 형태로 되어 있으며, 이는 2005년 10월 1일 시민의 품으로 돌아온 청계천의 물길을 상징적으로 표현한 것이다. 청계천박물관은 상설전시실과 기획전시실, 교육실, 소강당 등 다양한 시설을 갖춘 복합문화공간으로, 청계천과 관련된 다양한 역사와 문화 그리고 미래를 전시하고 있다. 청계천의 모습을 통해 서울의 과거와 현재, 그리고 미래에 대한 이해를 높일 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

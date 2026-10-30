@@ -1,0 +1,52 @@
+{
+ "contentid": "2822168",
+ "modifiedtime": "20260226173542",
+ "fetchedAt": "2026-10-30T16:47:20.373Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2822168",
+       "contenttypeid": "39",
+       "title": "지금 여기가 맨 앞",
+       "createdtime": "20220527154049",
+       "modifiedtime": "20260226173542",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 을지로20길 16",
+       "addr2": "3층",
+       "zipcode": "04549",
+       "mapx": "126.99524205905",
+       "mapy": "37.5656834417421",
+       "mlevel": "6",
+       "overview": "지금 여기가 맨 앞은 을지로 3-4가와 충무로 사이에 있는 이탈리안 가정식 레스토랑이다. 비건 음식도 판매하고 있어 비건과 논비건이 함께 할 수 있는 편안한 식사를 지향하는 곳으로 가정식 메뉴와 내추럴 와인이 제공된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

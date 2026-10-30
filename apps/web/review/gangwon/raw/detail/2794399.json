@@ -1,0 +1,52 @@
+{
+ "contentid": "2794399",
+ "modifiedtime": "20250827150647",
+ "fetchedAt": "2026-10-30T16:43:22.097Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2794399",
+       "contenttypeid": "39",
+       "title": "성주식당",
+       "createdtime": "20211214022409",
+       "modifiedtime": "20250827150647",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/66/2794366_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/66/2794366_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 방아다리로 306",
+       "addr2": "",
+       "zipcode": "25321",
+       "mapx": "128.5625933611",
+       "mapy": "37.6841589204",
+       "mlevel": "6",
+       "overview": "성주식당은 강원도 평창군 진부면에 위치한 한식 전문점으로 국내산 재료와 직접 농사지은 식재료로 정성스럽게 요리하는 곳이다. 대표 메뉴는 황태구이와 곤드레밥이며 유명 매체에 소개될 만큼 맛있는 음식으로 알려져 있다. 이 외에도 닭볶음탕, 메밀전, 감자전 등 다양한 토속적인 메뉴가 있다. 가게 앞쪽에는 계곡이 흐르고 있어 물놀이하기에도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

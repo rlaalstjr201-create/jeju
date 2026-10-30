@@ -1,0 +1,52 @@
+{
+ "contentid": "2782598",
+ "modifiedtime": "20250805143833",
+ "fetchedAt": "2026-10-30T16:43:53.729Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782598",
+       "contenttypeid": "39",
+       "title": "코지화로구이",
+       "createdtime": "20211129193012",
+       "modifiedtime": "20250805143833",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/30/2782530_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/30/2782530_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 태기로 445",
+       "addr2": "",
+       "zipcode": "25309",
+       "mapx": "128.3480718041",
+       "mapy": "37.5671433594",
+       "mlevel": "6",
+       "overview": "숯불에 삼겹살이나 돼지 갈비를 구워 먹는 숯불 전문 고기집으로, 강원도 참숯을 사용하여 음식을 제공한다. 메뉴로는 생삼겹살, 고추장 삼겹살, 숯불 닭갈비 등이 있다.\n근처 휘닉스파크를 방문한 후 들려 식사하기에 용이하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

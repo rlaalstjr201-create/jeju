@@ -1,0 +1,52 @@
+{
+ "contentid": "128776",
+ "modifiedtime": "20261023095121",
+ "fetchedAt": "2026-10-30T16:46:23.626Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "128776",
+       "contenttypeid": "12",
+       "title": "남산케이블카",
+       "createdtime": "20060202090000",
+       "modifiedtime": "20261023095121",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.cablecar.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/50/3590450_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/50/3590450_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 소파로 83",
+       "addr2": "",
+       "zipcode": "04630",
+       "mapx": "126.9840878410",
+       "mapy": "37.5569426391",
+       "mlevel": "6",
+       "overview": "남산케이블카는 회현동에서 남산 꼭대기까지 서울의 풍광을 한눈에 조망하며 오를 수 있는 시설이다. 1962년 5월 12일 운행을 시작하여 오늘날까지 이어가고 있다. 케이블카가 운행하는 거리는 회현동 승강장에서 남산 꼭대기에 있는 예장동동 승강장까지 약 600m이다. 케이블카는 산 정상으로 올라가는 것과 본관 승강장을 향해 내려오는 것 두 대가 동시에 운행되고 있다. 정원이 꽉 찼을 경우에도 안전하게 이용할 수 있는 시설을 완비하고 있다. 명동역 1번 출구나 서울역 서울스퀘어 정문 앞에서 셔틀버스를 타면 남산케이블카 승강장으로 갈 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

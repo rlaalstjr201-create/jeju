@@ -1,0 +1,52 @@
+{
+ "contentid": "3424542",
+ "modifiedtime": "20251023143000",
+ "fetchedAt": "2026-10-30T16:44:32.577Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3424542",
+       "contenttypeid": "12",
+       "title": "종로 무계원",
+       "createdtime": "20241126161710",
+       "modifiedtime": "20251023143000",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.jfac.or.kr/site/main/content/moogw01",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/35/3424735_image2_1.jpeg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/35/3424735_image3_1.jpeg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS01",
+       "lclsSystm3": "HS010600",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02010600",
+       "addr1": "서울특별시 종로구 창의문로11길 4-1 (부암동)",
+       "addr2": "",
+       "zipcode": "03021",
+       "mapx": "126.9627744300",
+       "mapy": "37.5948701151",
+       "mlevel": "6",
+       "overview": "무계원은 서울 종로구 부암동에 위치한 전통문화 공간으로, 과거 안평대군의 별장이 있던 자리이다. 한옥으로 조성된 이곳은 전시, 공연, 교육 등 다양한 전통문화 프로그램을 통해 한국의 아름다움을 체험할 수 있는 장소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

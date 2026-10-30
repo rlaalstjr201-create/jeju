@@ -1,0 +1,52 @@
+{
+ "contentid": "2820424",
+ "modifiedtime": "20260227151536",
+ "fetchedAt": "2026-10-30T16:45:39.794Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2820424",
+       "contenttypeid": "39",
+       "title": "다래국수",
+       "createdtime": "20220518141030",
+       "modifiedtime": "20260227151536",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 자하문로1길 12",
+       "addr2": "",
+       "zipcode": "03041",
+       "mapx": "126.971746818396",
+       "mapy": "37.5765705781455",
+       "mlevel": "6",
+       "overview": "다래국수는 서촌에 세종마을음식문화거리에 좁은 골목을 지나 위치한 국수집이다. 인근 어르신들의 단골 맛집 같은 분위기의 파전과 잔치국수 맛집이다. 가게 안은 협소하나 정감 있는 분위기이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

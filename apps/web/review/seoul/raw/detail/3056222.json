@@ -1,0 +1,52 @@
+{
+ "contentid": "3056222",
+ "modifiedtime": "20260929133435",
+ "fetchedAt": "2026-10-30T16:45:16.248Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3056222",
+       "contenttypeid": "14",
+       "title": "인사센트럴뮤지엄",
+       "createdtime": "20231204103143",
+       "modifiedtime": "20260929133435",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/06/3056206_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/06/3056206_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동길 49 (관훈동)",
+       "addr2": "B1",
+       "zipcode": "03145",
+       "mapx": "126.9835521539",
+       "mapy": "37.5744668963",
+       "mlevel": "6",
+       "overview": "인사센트럴뮤지엄은 2019년 개장한 인사동 복합문화공간인 안녕인사동 지하 1층에 자리한 전시장이다. 가족 동반 관람객이나 젊은 층 취향에 맞는 전시들을 선보이는 곳이다. 애니메이션 관련 전시, 고전 미술품 전시 등 폭넓은 주제의 전시를 선보이는 곳으로, 멀티미디어를 이용하고 다양한 테마 공간들로 전시를 구성해 실험적이고 색다른 전시를 경험해 볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

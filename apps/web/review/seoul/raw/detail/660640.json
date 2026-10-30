@@ -1,0 +1,52 @@
+{
+ "contentid": "660640",
+ "modifiedtime": "20260623105611",
+ "fetchedAt": "2026-10-30T16:46:47.701Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "660640",
+       "contenttypeid": "14",
+       "title": "우표박물관",
+       "createdtime": "20081202024158",
+       "modifiedtime": "20260623105611",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://stampmuseum.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/42/3569042_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/42/3569042_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 소공로 70 (충무로1가)",
+       "addr2": "지하2층",
+       "zipcode": "04535",
+       "mapx": "126.9821690444",
+       "mapy": "37.5615987284",
+       "mlevel": "6",
+       "overview": "우표박물관은 우표 문화를 장려하기 위해 우정사업본부에서 개관한 박물관이다. 당초 명칭은 우표문화누리였으나 2013년 우표박물관으로 명칭을 변경하였다. 우표는 단순한 통신 수단을 넘어 역사와 문화, 시대상을 담고 있는 문화 매체로 자리하고 있으며, 우표박물관에서는 우표에 담긴 다양한 이야기와 관련 자료를 만나볼 수 있다. 또한 전시와 체험시설을 통해 우표의 역사와 문화를 살펴볼 수 있으며, 우표에 관심 있는 사람들이 정보를 공유하고 교류할 수 있는 문화 공간으로 운영되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

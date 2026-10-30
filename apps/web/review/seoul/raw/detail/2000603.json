@@ -1,0 +1,52 @@
+{
+ "contentid": "2000603",
+ "modifiedtime": "20260828081607",
+ "fetchedAt": "2026-10-30T16:46:07.627Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2000603",
+       "contenttypeid": "39",
+       "title": "전주식당",
+       "createdtime": "20150430011337",
+       "modifiedtime": "20260828081607",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/74/2664374_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/74/2664374_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 수표로20길 16-17 (관수동)",
+       "addr2": "",
+       "zipcode": "03192",
+       "mapx": "126.9911009429",
+       "mapy": "37.5698070422",
+       "mlevel": "6",
+       "overview": "서울시 종로구 종로3가역 인근에 위치한 전주식당은 생선구이 맛집으로 유명한 곳이다. 정겹고 편안한 분위기에서 가격 대비 만족스러운 식사를 할 수 있다. 고등어구이를 비롯하여 삼치구이, 꽁치구이, 조기구이 등의 생선구이 백반이 인기 메뉴이다. 생선구이를 주문하면 된장찌개가 기본으로 제공된다. 다양한 생선구이를 맛보고 싶다면 모둠 메뉴를 시켜 먹으면 된다. 또한, 식사 메뉴도 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

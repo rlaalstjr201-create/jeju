@@ -1,0 +1,52 @@
+{
+ "contentid": "130230",
+ "modifiedtime": "20261001142126",
+ "fetchedAt": "2026-10-30T16:45:11.502Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130230",
+       "contenttypeid": "14",
+       "title": "아르코예술극장",
+       "createdtime": "20060612090000",
+       "modifiedtime": "20261001142126",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://theater.arko.or.kr",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 대학로8길 7 (동숭동)",
+       "addr2": "",
+       "zipcode": "03086",
+       "mapx": "127.0029733998",
+       "mapy": "37.5812120534",
+       "mlevel": "6",
+       "overview": "아르코예술극장은 1981년 개관 이래 새로운 가치와 시각을 제시하는 다양한 공연예술작품을 개발, 지원하고 수준 높은 서비스를 제공하여 예술적 가치창조를 위한 최고의 문화공간으로 자리매김하고 있다. 매년 10만여 명의 공연예술인들과 관객들이 한자리에 모이는 대표적인 공연예술 전문 극장인 아르코예술극장은 자체 기획공연을 비롯한 수준 높은 대관공연을 통해 관객들의 긍정적인 평가를 받고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2807930",
+ "modifiedtime": "20251203152956",
+ "fetchedAt": "2026-10-30T16:49:40.945Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2807930",
+       "contenttypeid": "39",
+       "title": "와가리피순대",
+       "createdtime": "20220222150220",
+       "modifiedtime": "20251203152956",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/3578180_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/3578180_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "11",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 동대문구 왕산로9길 22",
+       "addr2": "",
+       "zipcode": "02579",
+       "mapx": "127.0278356396",
+       "mapy": "37.5781676699",
+       "mlevel": "6",
+       "overview": "동대문구 용두동에 위치한 와가리피순대 본점은 신설동역 인근으로 푸짐한 피순대가 유명한 집이다. 돼지 막창 속에 선지와 채소가 들어간 피순대와 애기보, 오소리 등의 부속 고기가 들어간 순대 모둠이 대표 메뉴이다. 매콤한 맛의 순댓국도 한 끼 식사로 적당하다. 식사 메뉴로는 순댓국뿐만 아니라 술국, 도가니탕, 낙지볶음 등도 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

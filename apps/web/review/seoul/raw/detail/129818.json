@@ -1,0 +1,52 @@
+{
+ "contentid": "129818",
+ "modifiedtime": "20260529131955",
+ "fetchedAt": "2026-10-30T16:49:17.712Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129818",
+       "contenttypeid": "14",
+       "title": "건국대학교 박물관",
+       "createdtime": "20071106103148",
+       "modifiedtime": "20260529131955",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://museum.konkuk.ac.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/80/4069180_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/80/4069180_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "215",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 광진구 능동로 120",
+       "addr2": "",
+       "zipcode": "05029",
+       "mapx": "127.076290365142",
+       "mapy": "37.5428238080404",
+       "mlevel": "6",
+       "overview": "건국대학교 박물관은 고고, 역사, 미술, 민속, 학교역사자료 등 6천여 점을 소장하고 있는 종합박물관이다. 1963년 개관 이래 동국정운, 율곡 이이 선생가 분재기 등 귀중한 문화유산을 수집, 보존, 전시하고 있다. 설립자 상허 유석창 박사의 기념관으로 상허선생의 삶과 활동을 보여주는 다양한 학교역사자료와 유품을 상설 전시하고 있다. 또한 대학인과 지역주민을 대상으로 박물관대학(인문학강좌, 문화유적답사)을 운영하고 있으며, 소장품의 데이터베이스 구축, 특별전시, 역사·문화 교육 등 복합문화공간으로서의 기능을 확대하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

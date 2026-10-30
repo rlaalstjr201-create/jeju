@@ -1,0 +1,52 @@
+{
+ "contentid": "130640",
+ "modifiedtime": "20260318101005",
+ "fetchedAt": "2026-10-30T16:45:09.962Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130640",
+       "contenttypeid": "14",
+       "title": "세화미술관",
+       "createdtime": "20060621090000",
+       "modifiedtime": "20260318101005",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.sehwamuseum.org/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/40/3505640_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/40/3505640_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 새문안로 68 (신문로1가)",
+       "addr2": "3층",
+       "zipcode": "03184",
+       "mapx": "126.97212884937225",
+       "mapy": "37.56964809934034",
+       "mlevel": "6",
+       "overview": "세화미술관은 삶과 예술이 소통하는 도심 속 열린 미술관으로 역동적인 문화 예술의 장이 되고자 한다. 조나단 보로프스키의 , 강익중의  등 다양한 소장품을 공공장소에 상설 전시하여 더 많은 시민들이 일상 속에서 예술을 자연스럽게 만날 수 있도록 하고 있다. 국내외 작가 교류전, 신진작가 및 창작 지원전과 다양한 주제의 기획전을 통해 앞으로도 동시대 예술의 새로운 시선을 제안하고, 도시 속 예술 플랫폼으로서의 역할을 확장해 나갈 예정이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

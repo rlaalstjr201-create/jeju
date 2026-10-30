@@ -1,0 +1,52 @@
+{
+ "contentid": "2751414",
+ "modifiedtime": "20261015170848",
+ "fetchedAt": "2026-10-30T16:49:23.077Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2751414",
+       "contenttypeid": "38",
+       "title": "중곡제일골목시장",
+       "createdtime": "20210930000807",
+       "modifiedtime": "20261015170848",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/05/4126205_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/05/4126205_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "215",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 광진구 능동로47길 30 (중곡동)",
+       "addr2": "",
+       "zipcode": "04910",
+       "mapx": "127.0811267422",
+       "mapy": "37.5635999938",
+       "mlevel": "6",
+       "overview": "중곡제일골목시장은 서울 중랑구 중곡동에 위치한 전통시장으로, 지역 주민들의 일상적인 쇼핑 공간이다. 신선한 농산물과 수산물을 판매하고 있으며, 지역의 특산물도 만나볼 수 있다. 2005년 전국 최초로 공용 쿠폰과 자체 상품권을 도입했으며, 주민 편의를 위해 배송 서비스를 운영하고 있다. 또한, 최근에는 현대화 사업을 통해 더욱 쾌적한 쇼핑 환경을 제공하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

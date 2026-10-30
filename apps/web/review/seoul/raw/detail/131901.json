@@ -1,0 +1,52 @@
+{
+ "contentid": "131901",
+ "modifiedtime": "20261015190736",
+ "fetchedAt": "2026-10-30T16:46:52.363Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "131901",
+       "contenttypeid": "28",
+       "title": "명동실탄사격장",
+       "createdtime": "20070831090000",
+       "modifiedtime": "20261015190736",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/08/4127708_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/08/4127708_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS01",
+       "lclsSystm3": "LS011200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 명동8가길 27 (충무로2가)",
+       "addr2": "3층",
+       "zipcode": "04537",
+       "mapx": "126.9865262227",
+       "mapy": "37.5618458471",
+       "mlevel": "6",
+       "overview": "명동실탄사격장은 서울 번화가인 명동에 위치하여 쇼핑, 먹거리, 볼거리와 더불어 도심 속에서 짜릿한 사격을 즐길 수 있는 곳이다. 국제규격인 15m의 거리 조절이 자유로운 5개의 사격 사선은 물론 32구경에서 45구경 등 100정의 다양한 총기류를 구비하고 있다. 또한, 첨단 안전장치와 사격 전문 안전요원의 지도로 전문가는 물론, 여성과 초보자까지 안심하고 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

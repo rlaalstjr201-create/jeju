@@ -1,0 +1,52 @@
+{
+ "contentid": "1511411",
+ "modifiedtime": "20261007152851",
+ "fetchedAt": "2026-10-30T16:47:13.558Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1511411",
+       "contenttypeid": "39",
+       "title": "왕비집",
+       "createdtime": "20111227001115",
+       "modifiedtime": "20261007152851",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/46/3108346_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/46/3108346_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 명동8가길 45 (충무로2가)",
+       "addr2": "",
+       "zipcode": "04537",
+       "mapx": "126.9875563006",
+       "mapy": "37.5619468524",
+       "mlevel": "6",
+       "overview": "명동 인근에 위치한 숯불화로구이 전문점이다. 한국적인 모티브로 모던하게 꾸민 실내가 인상적이며, 농협안심한우 살치살, 안심스테이크, 등심 등 생고기와 양념왕갈비, 양념갈비살 등 구이용 고기 메뉴와 돼지갈비 정식, 차돌박이 정식 등의 식사 메뉴가 인기 있다.\n\n명동역에 인접한 가게이며, 전통 한식 분위기에서 숯불고기를 먹을 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

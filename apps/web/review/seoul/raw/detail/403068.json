@@ -1,0 +1,52 @@
+{
+ "contentid": "403068",
+ "modifiedtime": "20251212111959",
+ "fetchedAt": "2026-10-30T16:47:21.915Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "403068",
+       "contenttypeid": "39",
+       "title": "청송옥",
+       "createdtime": "20080120063812",
+       "modifiedtime": "20251212111959",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "24",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 중구 서소문로11길 14",
+       "addr2": "",
+       "zipcode": "04515",
+       "mapx": "126.9730910418",
+       "mapy": "37.5635933807",
+       "mlevel": "6",
+       "overview": "시청역 인근의 청송옥은 규모가 크지는 않지만, 장터국밥이 맛있기로 소문이 자자한 곳으로 출출한 날 허전한 속을 든든하게 채울 수 있다. 사극이나 드라마에 나오는 것처럼 펄펄 끓는 솥에서 휘휘 저어서 주인의 푸근한 인심까지 한 그릇 가득 담아주는 맛있는 장터국밥을 먹을 수 있으며 밥과 면이 함께 나온다. 빨간 색깔의 얼큰한 국물은 추운 날이면 생각나게 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

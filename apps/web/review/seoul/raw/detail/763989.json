@@ -1,0 +1,52 @@
+{
+ "contentid": "763989",
+ "modifiedtime": "20260921095402",
+ "fetchedAt": "2026-10-30T16:47:11.212Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "763989",
+       "contenttypeid": "39",
+       "title": "아리랑",
+       "createdtime": "20090709203008",
+       "modifiedtime": "20260921095402",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/90/3474890_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/90/3474890_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 남대문로7길 23",
+       "addr2": "",
+       "zipcode": "04532",
+       "mapx": "126.9805518787",
+       "mapy": "37.5638195144",
+       "mlevel": "6",
+       "overview": "서울 중구에 위차한 아리랑은 품질 좋은 한우를 먹을 수 있는 모임을 하기 좋은 한식 전문점이다. 양념갈비, 한우 꽃등심, 간장게장 등 다양하고 푸짐한 한식을 선보인다. 특히 알이 굵고 내장으로 깊은 맛을 내는 간장게장과 양념갈비가 인기이다. 넓은 공간과 프라이빗 한 룸, 주차장도 구비되어 있어, 단체 모임이나 가족모임, 차량 방문도 용이하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

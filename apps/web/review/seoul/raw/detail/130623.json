@@ -1,0 +1,52 @@
+{
+ "contentid": "130623",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-30T16:44:52.928Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130623",
+       "contenttypeid": "14",
+       "title": "김종영미술관",
+       "createdtime": "20050629090000",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://kimchongyung.com/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/96/3497596_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/96/3497596_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 평창32길 30 (평창동)",
+       "addr2": "",
+       "zipcode": "03004",
+       "mapx": "126.97758781386767",
+       "mapy": "37.61302229244211",
+       "mlevel": "6",
+       "overview": "2002년 12월 15일 개관한 김종영미술관은 ‘우성(又誠) 김종영’ (1915-1982)의 삶과 예술 세계를 재조명하고 후진 양성에 매진하고 있는 곳이다. 또한 초창기 조각계를 형성하는데 크게 기여한 그 뜻을 기리며 조각 예술의 발전을 위해 노력하는 미술관이 되는 것을 목표로 하고 있다. 김종영미술관은 김종영의 작품들을 다각도로 보여주는 기획 전시를 기본으로 「우성 김종영미술상 수상전」, 「오늘의 작가」, 「창작지원 전」 등 다양한 전시를 기획하고 개최하고 있다. 또한 작가 정신이 있는 젊은 작가들을 발굴하고 지원하여 한국 미술의 발전에 기여하고자 하며 다양한 예술에 관한 전시로 거듭나 현 미술계에 성장하는 미술관이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3444605",
+ "modifiedtime": "20241226130915",
+ "fetchedAt": "2026-10-30T16:48:21.849Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3444605",
+       "contenttypeid": "12",
+       "title": "왕십리맛골목",
+       "createdtime": "20241213135851",
+       "modifiedtime": "20241226130915",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/01/3444601_image2_1.jpeg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/01/3444601_image3_1.jpeg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "16",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030600",
+       "addr1": "서울특별시 성동구 마조로 17 (행당동)",
+       "addr2": "",
+       "zipcode": "04760",
+       "mapx": "127.0408710950",
+       "mapy": "37.5594339699",
+       "mlevel": "6",
+       "overview": "왕십리맛골목은 서울 성동구 왕십리역 인근에 위치한 음식 거리로, 한식, 중식, 일식 등 다양한 요리를 합리적인 가격에 즐길 수 있는 맛집들이 밀집해 있다. 교통이 편리하고 활기찬 분위기를 자랑하며, 직장인과 학생들의 모임 장소로 인기 있는 먹거리 명소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

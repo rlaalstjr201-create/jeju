@@ -1,0 +1,52 @@
+{
+ "contentid": "704438",
+ "modifiedtime": "20260409164525",
+ "fetchedAt": "2026-10-30T16:48:06.630Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "704438",
+       "contenttypeid": "39",
+       "title": "자원대구탕",
+       "createdtime": "20090310193536",
+       "modifiedtime": "20260409164525",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 한강대로62가길 6",
+       "addr2": "",
+       "zipcode": "04382",
+       "mapx": "126.974067231571",
+       "mapy": "37.5346479536844",
+       "mlevel": "6",
+       "overview": "대구탕 골목으로 들어서면 자원 대구탕을 포함한 몇몇 대구 음식점들이 보인다. 자원대구탕은 그중에서도 유독 오래된 곳이 바로 이 집이다. 그래서인지 인테리어에서 세월이 느껴지지만 그만큼 깊어진 맛은 사람들의 발길을 붙잡는다. 1층과 2층에 각각 60석씩 수용할 수 있어 단체 모임이나 회식을 하기에도 손색없다. 대구탕, 대구 내장탕, 대구 맑은 탕이 대표 메뉴이며 대구 찹쌀 튀김도 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

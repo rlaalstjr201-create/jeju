@@ -1,0 +1,52 @@
+{
+ "contentid": "697269",
+ "modifiedtime": "20260212161710",
+ "fetchedAt": "2026-10-30T16:47:01.981Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "697269",
+       "contenttypeid": "39",
+       "title": "들국화떡볶이",
+       "createdtime": "20090221002115",
+       "modifiedtime": "20260212161710",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/48/696248_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/48/696248_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 퇴계로76길 61",
+       "addr2": "",
+       "zipcode": "04611",
+       "mapx": "127.014695808976",
+       "mapy": "37.5624647418321",
+       "mlevel": "6",
+       "overview": "들국화 떡볶이는 신당동 떡볶이타운을 대표하는 맛집이다. 매콤한 맛이 일품인 즉석 떡볶이를 맛볼 수 있으며 중·고등학교 때 떡볶이를 먹으러 다녔던 사람들이 중년의 단골이 되어 계속 찾는 집이다. 들국화 떡볶이, 치즈떡볶이, 짜장떡볶이 세 가지 메뉴가 있으며 따로 추가할 수 있는 부재료들도 다양하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

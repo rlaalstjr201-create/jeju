@@ -1,0 +1,52 @@
+{
+ "contentid": "834750",
+ "modifiedtime": "20260921081012",
+ "fetchedAt": "2026-10-30T16:46:13.297Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "834750",
+       "contenttypeid": "39",
+       "title": "커피친구",
+       "createdtime": "20091028015441",
+       "modifiedtime": "20260921081012",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/10/1845010_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/10/1845010_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 삼봉로 81 (수송동)",
+       "addr2": "",
+       "zipcode": "03150",
+       "mapx": "126.9815062982",
+       "mapy": "37.5725639352",
+       "mlevel": "6",
+       "overview": "커피친구는 서울 종로구에 위치한 핸드드립 전문 카페이다. 매일 직접 볶은 원두로 내린 핸드드립 커피와 클래식한 분위기가 휴식하기에 좋은 카페다. 디카페인 커피도 있으며, 향기롭고 깔끔한 맛의 원두를 음미하며 조용하게 책을 읽을 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

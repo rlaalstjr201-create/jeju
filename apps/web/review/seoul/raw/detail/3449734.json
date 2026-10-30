@@ -1,0 +1,52 @@
+{
+ "contentid": "3449734",
+ "modifiedtime": "20250718090000",
+ "fetchedAt": "2026-10-30T16:50:21.866Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3449734",
+       "contenttypeid": "39",
+       "title": "오롯이",
+       "createdtime": "20241218153720",
+       "modifiedtime": "20250718090000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/75/3449675_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/75/3449675_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "17",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 성북구 보문로34길 87 (동선동3가)",
+       "addr2": "(동선동3가) 102호",
+       "zipcode": "02844",
+       "mapx": "127.0201915130",
+       "mapy": "37.5915187584",
+       "mlevel": "6",
+       "overview": "오롯이는 1인 매장으로 최소한의 인건비를 이용해 더많은 손님들께 더 질좋고 더 많은 양의 최고의 가성비 초밥을 제공하는 일식집이다. 가게 규모가 작아 1인식사, 혼밥에 특화되어 있어 눈치 안보시고 편안한 식사를 할 수 있다는 매력이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

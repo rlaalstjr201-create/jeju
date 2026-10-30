@@ -1,0 +1,52 @@
+{
+ "contentid": "4076764",
+ "modifiedtime": "20260618093812",
+ "fetchedAt": "2026-10-30T16:45:51.166Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4076764",
+       "contenttypeid": "39",
+       "title": "산1-1",
+       "createdtime": "20260618093351",
+       "modifiedtime": "20260618093812",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/66/4076766_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/66/4076766_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 낙산성곽서1길 25 (이화동)",
+       "addr2": "",
+       "zipcode": "03088",
+       "mapx": "127.0079120789",
+       "mapy": "37.5780743402",
+       "mlevel": "",
+       "overview": "산1-1은 낙산성곽을 품은 카페이다. 1층은 낙산바위가 카페 실내에 들어와 있으며 통유리로 내외부 경계없이 구성되어 있다. 2, 3층은 낙산바위 위에서 남산타워와 종로구의 야경을 한 눈에 조망할 수 있다. 시그니처 크림라떼, 프리미엄 아이스크림 와플이 인기가 많으며, 올데이 한국식 브런치 메뉴로 외국인 관광객 손님의 허기를 채워주고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "1604697",
+ "modifiedtime": "20261029161822",
+ "fetchedAt": "2026-10-30T16:44:24.888Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1604697",
+       "contenttypeid": "12",
+       "title": "세종로공원",
+       "createdtime": "20120417204043",
+       "modifiedtime": "20261029161822",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://parks.seoul.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/81/4123181_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/81/4123181_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 세종대로 지하189 (세종로)",
+       "addr2": "",
+       "zipcode": "03172",
+       "mapx": "126.9759604172",
+       "mapy": "37.5734304042",
+       "mlevel": "6",
+       "overview": "세종로공원은 우리나라의 중심인 세종로 가로(경복궁-광화문-세종문화회관-청계천-서울광장)에 조성된 녹지공간이다. 노후되고 폐쇄되어 시민 이용에 한계가 있던 곳을 광화문광장과 연계하여 개방형 공원으로 탈바꿈하여 새로운 시민소통의 공간으로 마련하였다. 공원 내에는 그늘집과 나무의자가 곳곳에 설치되어 인근 직장인들에게 도심 속의 휴식공간을 제공한다. 또한, 분수대와 야외 원형 무대, 각종 조형물이 들어서 깔끔하고 정돈된 분위기 속에서 휴식을 취할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

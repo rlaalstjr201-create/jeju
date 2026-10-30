@@ -1,0 +1,52 @@
+{
+ "contentid": "274399",
+ "modifiedtime": "20260209130304",
+ "fetchedAt": "2026-10-30T16:46:12.790Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "274399",
+       "contenttypeid": "39",
+       "title": "최대감네",
+       "createdtime": "20050510185153",
+       "modifiedtime": "20260209130304",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동8길 12-3",
+       "addr2": "",
+       "zipcode": "03148",
+       "mapx": "126.986098269253",
+       "mapy": "37.5739989290409",
+       "mlevel": "6",
+       "overview": "최대감네는 아담한 정원과 연못이 있는 전통 한옥이다. 테이블 사이에 심어져 있는 대추나무와 한국적인 인테리어가 먼저 식욕을 돋우는 이곳은 인사동에서 소문난 한식당이다. 신선한 유기농 야채를 사용한 쌈밥정식과 소고기 육수에 직접 뽑은 면을 넣어먹는 소고기 샤부샤부, 산지에서 매일매일 구입해 오는 부드러운 고기를 이용한 갈비 등 다양한 맛을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

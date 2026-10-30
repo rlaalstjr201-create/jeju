@@ -1,0 +1,52 @@
+{
+ "contentid": "2683800",
+ "modifiedtime": "20260814143907",
+ "fetchedAt": "2026-10-30T16:43:00.292Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2683800",
+       "contenttypeid": "39",
+       "title": "동이네막국수",
+       "createdtime": "20201118230519",
+       "modifiedtime": "20260814143907",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 봉평면 이효석길 144",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3716608755",
+       "mapy": "37.6127647457",
+       "mlevel": "6",
+       "overview": "동이네막국수는 메밀 요리 전문점이다. 메밀막국수와 메밀전병, 메밀부침, 메밀묵무침 등 다양한 메밀 요리를 맛볼 수 있다. 쫄깃한 식감과 향긋한 메밀향으로 맛있게 음식을 즐길 수 있다. \n식당 외관은 포근한 시골집처럼 정겨운 느낌이며, 내부는 깔끔하게 좌식테이블로 배치되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

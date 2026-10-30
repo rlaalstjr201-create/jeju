@@ -1,0 +1,52 @@
+{
+ "contentid": "3338707",
+ "modifiedtime": "20260520101435",
+ "fetchedAt": "2026-10-30T16:44:59.295Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3338707",
+       "contenttypeid": "14",
+       "title": "뮤지엄한미 삼청",
+       "createdtime": "20240726145145",
+       "modifiedtime": "20260520101435",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://museumhanmi.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3338711_image2_1.png",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3338711_image3_1.png",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 삼청로9길 45 (삼청동)",
+       "addr2": "",
+       "zipcode": "03049",
+       "mapx": "126.98087886945358",
+       "mapy": "37.58828104103312",
+       "mlevel": "6",
+       "overview": "뮤지엄한미는 국내 최초의 사진 전문 미술관으로 시작해 사진 예술의 대중화를 넘어, 디지털 이미지 기술을 활용한 사진 예술의 확장을 추구하고 있다. 사진을 기반으로 한 예술부터 사진을 기원으로 발전한 뉴미디어 영상까지 전시 영역을 넓히며, 삶과 예술이 공존하는 복합문화 플랫폼으로서 미술관의 공적 역할도 수행하고 있다. 또한 국내 사진사의 체계화와 사진문화예술 활성화를 위해 꾸준히 노력하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

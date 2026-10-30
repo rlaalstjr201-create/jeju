@@ -1,0 +1,52 @@
+{
+ "contentid": "2907200",
+ "modifiedtime": "20261001143043",
+ "fetchedAt": "2026-10-30T16:46:18.510Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2907200",
+       "contenttypeid": "39",
+       "title": "헤리티지클럽",
+       "createdtime": "20221114105401",
+       "modifiedtime": "20261001143043",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 서순라길 75",
+       "addr2": "",
+       "zipcode": "03134",
+       "mapx": "126.9924698759",
+       "mapy": "37.5737851815",
+       "mlevel": "6",
+       "overview": "헤리티지클럽은 여유로운 돌담길과 한옥풍 인테리어가 어우러진 카페이다. 낮에는 따뜻한 햇살 아래 커피와 차를 즐기며 편안한 시간을 보낼 수 있고, 해가 지면 은은한 조명과 함께 위스키와 와인을 즐길 수 있는 바로 운영되어 색다른 분위기를 선사한다. 전통미와 현대적인 감각이 조화를 이루는 공간은 사진 촬영 명소로도 인기가 높으며, 커피와 음료는 물론 위스키, 와인 등 다양한 주류를 함께 즐길 수 있어 낮과 밤 모두 매력적인 시간을 보낼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

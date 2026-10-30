@@ -1,0 +1,52 @@
+{
+ "contentid": "130231",
+ "modifiedtime": "20261016135321",
+ "fetchedAt": "2026-10-30T16:46:40.201Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130231",
+       "contenttypeid": "14",
+       "title": "국립극장",
+       "createdtime": "20071106104758",
+       "modifiedtime": "20261016135321",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.ntok.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/10/3083810_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/10/3083810_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 장충단로 59",
+       "addr2": "(장충동2가)",
+       "zipcode": "04621",
+       "mapx": "126.9996170038",
+       "mapy": "37.5526684410",
+       "mlevel": "6",
+       "overview": "국립극장은 1950년 4월 29일 아시아 최초의 국립극장으로 설립됐다. 전통예술을 동시대 예술로 창작하는 국내 유일의 제작극장으로, 대극장 규모의 '해오름극장(1,221석)'과 중극장 규모의 '달오름극장(512석)', 소극장 규모의 '별오름극장(100석)'을 비롯하여  원형무대 구조의 '하늘극장(627석)'을 가지고 있다.전속 예술단체로는 국립창극단·국립무용단·국립국악관현악단이 소속해 있으며, 다양한 신작과 레퍼토리 작품으로 국민과 호흡하고 있다.2012년 9월부터는 레퍼토리 시즌제를 도입한 이후 전속단체는 물론, 국내외 예술 단체와의 협업을 통해 대한민국 대표 공연기관으로서 공연예술 생태계의 균형과 조화를 견인하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

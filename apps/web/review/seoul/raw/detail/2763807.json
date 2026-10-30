@@ -1,0 +1,52 @@
+{
+ "contentid": "2763807",
+ "modifiedtime": "20260312090840",
+ "fetchedAt": "2026-10-30T16:49:29.470Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2763807",
+       "contenttypeid": "12",
+       "title": "간데메공원",
+       "createdtime": "20211027233001",
+       "modifiedtime": "20260312090840",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/80/3505480_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/80/3505480_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "230",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동대문구 서울시립대로2길 59 (답십리동)",
+       "addr2": "",
+       "zipcode": "02595",
+       "mapx": "127.04906426645805",
+       "mapy": "37.572780967593836",
+       "mlevel": "6",
+       "overview": "간데메공원은 서울 동대문구 답십리 천변에 위치한 근린공원이다. 어린이 놀이터와 연못, 팔각정 정자, 장미 넝쿨 터널, 소나무 쉼터, 맨발산책로까지 작지만 아기자기하게 조성된 공원이다. 농구장과 배드민턴장도 있다. 전매청 자리를 공원으로 조성하면서 옛날 답십리 일대 간데메(中山) 자연 부락 마을의 토박이 이름을 따서 간데메공원이라 이름을 정했다고 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

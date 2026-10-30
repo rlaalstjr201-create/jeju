@@ -1,0 +1,52 @@
+{
+ "contentid": "2776555",
+ "modifiedtime": "20250801102336",
+ "fetchedAt": "2026-10-30T16:43:42.009Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2776555",
+       "contenttypeid": "39",
+       "title": "일미통닭",
+       "createdtime": "20211119220204",
+       "modifiedtime": "20250801102336",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/35/2776535_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/35/2776535_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 진부시장안길 23",
+       "addr2": "",
+       "zipcode": "25325",
+       "mapx": "128.5583062654",
+       "mapy": "37.6378308641",
+       "mlevel": "6",
+       "overview": "진부면에 있는 일미통닭에서는 추억의 옛날 치킨을 맛볼 수 있다. 체인점이 아니며 닭을 미리 튀겨 놓지 않는다. 어릴 적부터 먹던 후라이드 치킨 본연의 맛을 느낄 수 있어 현지인과 관광객들의 향수를 불러일으키는 곳이다. 맑은 공기와 물이 있는 평창에서 맛있는 치킨을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

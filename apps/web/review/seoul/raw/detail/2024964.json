@@ -1,0 +1,52 @@
+{
+ "contentid": "2024964",
+ "modifiedtime": "20251224122800",
+ "fetchedAt": "2026-10-30T16:48:13.419Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2024964",
+       "contenttypeid": "39",
+       "title": "플랜트",
+       "createdtime": "20150825014737",
+       "modifiedtime": "20251224122800",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"https://www.instagram.com/plantcafeseoul\" target=\"_blank\" title=\"새창 : 플랜트 인스타그램으로 이동\">https://www.instagram.com/plantcafeseoul</a>",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "21",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020500",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "서울특별시 용산구 보광로 117",
+       "addr2": "2층",
+       "zipcode": "04391",
+       "mapx": "126.9942483066",
+       "mapy": "37.5332139565",
+       "mlevel": "6",
+       "overview": "서울 용산구에 위치한 플랜트는 버거, 파스타 등의 서양식을 따뜻한 분위기에서 맛볼 수 있다. 분위기 덕분에 편안하고 오붓하게 식사와 디저트를 즐길 수 있는 곳이다. 외국인들과 채식주의자들이 즐겨 찾는 곳이며 채식주의가 아니어도 플랜트 특유의 음식과 디저트를 맛보러 오는 손님들도 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

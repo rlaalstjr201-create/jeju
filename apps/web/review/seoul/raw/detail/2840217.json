@@ -1,0 +1,52 @@
+{
+ "contentid": "2840217",
+ "modifiedtime": "20250917091608",
+ "fetchedAt": "2026-10-30T16:49:24.076Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2840217",
+       "contenttypeid": "39",
+       "title": "대가식당",
+       "createdtime": "20220822092755",
+       "modifiedtime": "20250917091608",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/16/2840216_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/16/2840216_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "6",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "215",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 광진구 광나루로 596 (구의동)",
+       "addr2": "",
+       "zipcode": "05034",
+       "mapx": "127.0943861597",
+       "mapy": "37.5420841713",
+       "mlevel": "6",
+       "overview": "대가식당은 지하철 2호선 강변역 1번 출구 부근에 있다. 건물 앞 주차장이 넓어 자동차 이용에 불편함이 없고, 대리 주차 서비스도 받을 수 있다. 매장이 넓고 좌석에 여유가 많아 단체 행사나 각종 가족 행사 모임에 적합하다. 대표 메뉴로는 한우 생등심, 한우육회, 볶음밥이 있다. 소고기를 먹고 난 후, 기름에 깍두기 볶음밥을 비벼 먹는 게 코스처럼 되어 있다. 본 메뉴가 나오고 밑반찬이 나오는데, 깍두기와 파채가 특히 인기다. 주변에 서울 어린이대공원, 뚝섬공원, 광나루한강공원이 있어 함께 둘러보기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

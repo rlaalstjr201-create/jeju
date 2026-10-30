@@ -1,0 +1,52 @@
+{
+ "contentid": "2773304",
+ "modifiedtime": "20250711105603",
+ "fetchedAt": "2026-10-30T16:43:46.557Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2773304",
+       "contenttypeid": "39",
+       "title": "지박사의 낭만식당",
+       "createdtime": "20211111190000",
+       "modifiedtime": "20250711105603",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/68/2785768_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/68/2785768_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020500",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "강원특별자치도 평창군 대관령면 대관령로 89",
+       "addr2": "2층",
+       "zipcode": "25344",
+       "mapx": "128.7066445983",
+       "mapy": "37.6730990853",
+       "mlevel": "6",
+       "overview": "지박사의 낭만식당은 강원도 평창군에 있는 식당이다. 대관령 파출소 옆 2층에 있어 쉽게 찾을 수 있다. 파채 소불고기, 두루치기, 유린기, 아구꼬리찜 등 고기류뿐만 아니라 매콤한 음식 메뉴가 다양하게 준비되어있어 술안주에 알맞은 구성이다. 평창 대관령 스키장 인근에 위치하고 있고, 추운 겨울 몸을 녹여줄 친근하고 따뜻한 음식점이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2787227",
+ "modifiedtime": "20261021130725",
+ "fetchedAt": "2026-10-30T16:42:43.472Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2787227",
+       "contenttypeid": "39",
+       "title": "강원수산횟집",
+       "createdtime": "20211207190613",
+       "modifiedtime": "20261021130725",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/79/2787179_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/79/2787179_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 미탄면 송어길 30-4",
+       "addr2": "",
+       "zipcode": "25382",
+       "mapx": "128.5031182144",
+       "mapy": "37.3429701486",
+       "mlevel": "6",
+       "overview": "송어 양식장에서 송어 횟집으로 직접 생산한 송어를 대접하므로 신선하고 싱싱한 회를 제공하는 맛집이다. 리모델링한 이후 깔끔한 인테리어로 방문객들의 마음을 사로잡고 물 맑고 공기 좋은 평창에서 먹을 수 있는 신선한 회로 다시 방문하게 만드는 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

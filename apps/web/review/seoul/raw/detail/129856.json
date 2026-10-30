@@ -1,0 +1,52 @@
+{
+ "contentid": "129856",
+ "modifiedtime": "20260312090840",
+ "fetchedAt": "2026-10-30T16:47:43.099Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129856",
+       "contenttypeid": "14",
+       "title": "숙명여자대학교 박물관",
+       "createdtime": "20071106103320",
+       "modifiedtime": "20260312090840",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://home.sookmyung.ac.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/89/3515289_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/89/3515289_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 청파로47길 100",
+       "addr2": "",
+       "zipcode": "04310",
+       "mapx": "126.964545618063",
+       "mapy": "37.5458825232764",
+       "mlevel": "6",
+       "overview": "숙명여자대학교 박물관은 종합박물관으로서 매년 다양한 상설전, 기획전, 특별전을 통해 관람객에게 전통과 현대를 어우르는 다양한 문화를 소개하고 있으며, 외국 대사관 및 작가들과의 연합, 기획전을 통해 해외의 다양한 문화를 국내에 소개하고 우리의 문화를 세계에 알리고 있다. 도슨트와 함께 관람을 원하는 경우 전화나 이메일로 예약하면 원활한 전시 관람을 할 수 있다. 또한 박물관 청소년 교육센터에서는 다양한 교육프로그램을 개발하고 진행하여 박물관 교육을 선도하고 있다. 인근에 숙명여자대학교 정영양자수박물관과 식민지역사박물관도 있어 방문이 용이하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

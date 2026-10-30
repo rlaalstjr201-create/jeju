@@ -1,0 +1,52 @@
+{
+ "contentid": "697393",
+ "modifiedtime": "20261002104134",
+ "fetchedAt": "2026-10-30T16:47:26.716Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "697393",
+       "contenttypeid": "39",
+       "title": "허리케인박 떡볶이닭발 (약속떡볶이)",
+       "createdtime": "20090221015722",
+       "modifiedtime": "20261002104134",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 퇴계로76길 58",
+       "addr2": "",
+       "zipcode": "04611",
+       "mapx": "127.0146624714",
+       "mapy": "37.5627258205",
+       "mlevel": "6",
+       "overview": "서울 중구에 위치한 약속떡볶이는 옛날식 얇은 프라이팬에 떡볶이를 만들던 곳으로 20년 역사와 전통을 가진 가게다. 항상 감사하는 마음으로 더 나은 맛과 서비스를 위해 아낌없이 노력하고 있다. 가게를 넓히고 내부를 재단장하였다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

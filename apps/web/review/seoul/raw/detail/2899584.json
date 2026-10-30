@@ -1,0 +1,52 @@
+{
+ "contentid": "2899584",
+ "modifiedtime": "20251211153252",
+ "fetchedAt": "2026-10-30T16:48:12.916Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2899584",
+       "contenttypeid": "39",
+       "title": "페트라",
+       "createdtime": "20221107104603",
+       "modifiedtime": "20251211153252",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "21",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "서울특별시 용산구 녹사평대로40길 33",
+       "addr2": "2층",
+       "zipcode": "04345",
+       "mapx": "126.9877377467",
+       "mapy": "37.5347053328",
+       "mlevel": "6",
+       "overview": "요르단의 음식과 문화를 경험할 수 있는 이태원에 위치한 중동 음식점이다. 할랄의식을 거친 육류와 신선한 재료만을 사용하고 있고 중동 여러 국가의 대사관들로부터 한국 최고의 아랍 레스토랑으로 인정받았다. 대표메뉴로는 홈무스가 있고 그 외에 바바가누즈, 라바네흐, 미자, 라씨 등이 있고 채식주의자분들을 위한 메뉴들도 준비되어 있다. 향신료의 맛이 강하지 않기 때문에 어렵지 않게 접할 수 있다. 익숙하진 않지만 중동 음식을 경험하고 싶으신 분들은 한 번쯤 방문해 보면 좋은 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

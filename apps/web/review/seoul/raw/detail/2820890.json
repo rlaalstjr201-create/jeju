@@ -1,0 +1,52 @@
+{
+ "contentid": "2820890",
+ "modifiedtime": "20260220155057",
+ "fetchedAt": "2026-10-30T16:46:10.773Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2820890",
+       "contenttypeid": "39",
+       "title": "쭈먹",
+       "createdtime": "20220520134743",
+       "modifiedtime": "20260220155057",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 자하문로1길 20",
+       "addr2": "",
+       "zipcode": "03041",
+       "mapx": "126.971269088345",
+       "mapy": "37.5765316853638",
+       "mlevel": "6",
+       "overview": "탱글한 쭈꾸미와 아삭한 콩나물의 식감이 좋은 쭈꾸미볶음이 인기메뉴인 맛집이다. 쭈꾸미 뿐만 아니라 매운맛을 달래줄 부드러운 계란찜까지 인상적이며 식신로드 등 연예인들도 즐겨 찾는 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

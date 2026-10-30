@@ -1,0 +1,52 @@
+{
+ "contentid": "2777908",
+ "modifiedtime": "20260205110829",
+ "fetchedAt": "2026-10-30T16:43:24.913Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2777908",
+       "contenttypeid": "39",
+       "title": "수미카페",
+       "createdtime": "20211123185010",
+       "modifiedtime": "20260205110829",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 대관령면 횡계길 24",
+       "addr2": "",
+       "zipcode": "25344",
+       "mapx": "128.708719792124",
+       "mapy": "37.6732414953472",
+       "mlevel": "6",
+       "overview": "대관령의 대표 특산물 수미감자를 맛있게 먹을 방법을 연구 중 만들게 된 대관령 감자빵. 진짜 감자보다 더 감자 같은 생김새로 많은 사람들이 깜빡 속아 넘어간다. 근처 삼양 대관령 목장의 우유를 이용한 라떼음료와 삼양우유 특유의 고소함과 단맛이 에스프레소와 어우러져 그 맛이 일품인 수미카페의 베리에이션 음료들이 인기다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

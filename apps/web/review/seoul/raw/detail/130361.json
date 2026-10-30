@@ -1,0 +1,52 @@
+{
+ "contentid": "130361",
+ "modifiedtime": "20261012150155",
+ "fetchedAt": "2026-10-30T16:45:06.479Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130361",
+       "contenttypeid": "14",
+       "title": "서울역사박물관",
+       "createdtime": "20071106105413",
+       "modifiedtime": "20261012150155",
+       "tel": "",
+       "telname": "",
+       "homepage": "서울역사박물관 https://museum.seoul.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/87/2661487_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/87/2661487_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 새문안로 55 (신문로2가)",
+       "addr2": "",
+       "zipcode": "03177",
+       "mapx": "126.9707621336",
+       "mapy": "37.5698440675",
+       "mlevel": "6",
+       "overview": "세계도시로 성장한 서울이 어떻게 탄생했으며 어떻게 변해서 오늘에 이르렀는지를 배우고 앞으로 어떻게 바뀔 것인지를 가늠해 보는 곳이 서울역사박물관이다. 서울의 뿌리와 서울 사람의 생활, 현대 서울로의 변화를 보여주는 상설전시와 함께 서울의 역사·문화를 증언하는 다양한 기증유물이 전시되어 있다. 또한 어린이와 가족, 어른들을 위한 각종 체험교실과 문화행사들이 풍성하게 마련되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

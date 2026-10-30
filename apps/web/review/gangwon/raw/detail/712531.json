@@ -1,0 +1,52 @@
+{
+ "contentid": "712531",
+ "modifiedtime": "20260205160713",
+ "fetchedAt": "2026-10-30T16:44:03.225Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "712531",
+       "contenttypeid": "39",
+       "title": "황태덕장",
+       "createdtime": "20090327201406",
+       "modifiedtime": "20260205160713",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 대관령면 눈마을길 21",
+       "addr2": "",
+       "zipcode": "25346",
+       "mapx": "128.709772566999",
+       "mapy": "37.6700502364987",
+       "mlevel": "6",
+       "overview": "평창군 대관령면에 위치한 황태덕장은 대관령의 특산물인 황태요리 전문점이다.\n황태는 숙취 및 약물 해독에 탁월하고 노인이나 환자들의 보신용으로도 널리 이용되어 왔다. 특히 추운 겨울 얼음물로 깨끗하게 씻어 겨우내 찬 바람에 말린 대관령 횡계 황태는 맛이 담백하고 고소하며 육질이 부드러워 씹을수록 고소한 맛이 더하다고 한다. 황태구이, 황태해장국, 황태전골 등 다양한 황태요리가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

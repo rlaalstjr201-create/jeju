@@ -1,0 +1,52 @@
+{
+ "contentid": "134095",
+ "modifiedtime": "20261013131820",
+ "fetchedAt": "2026-10-30T16:42:45.813Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134095",
+       "contenttypeid": "39",
+       "title": "고향이야기",
+       "createdtime": "20040102090000",
+       "modifiedtime": "20261013131820",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/76/816876_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/76/816876_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 대관령면 눈마을길 9",
+       "addr2": "",
+       "zipcode": "25346",
+       "mapx": "128.7100003528",
+       "mapy": "37.6690809141",
+       "mlevel": "6",
+       "overview": "고향이야기는 강원특별자치도 평창군 대관령면에 위치한 한식 전문점이다.\n평창 알펜시아 리조트 인근에 위치하여 리조트를 이용하는 관광객들이 식사하기 위해 많이 찾는다. 한우 생등심과 돌솥 곤드레밥이 대표 메뉴이며, 매콤한 오삼불고기 또한 많은 이들이 찾는 인기 메뉴이다. 이 외에도 다양한 한식메뉴가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

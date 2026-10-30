@@ -1,0 +1,52 @@
+{
+ "contentid": "2773344",
+ "modifiedtime": "20250121180634",
+ "fetchedAt": "2026-10-30T16:43:17.441Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2773344",
+       "contenttypeid": "39",
+       "title": "브루어리엠",
+       "createdtime": "20211111191257",
+       "modifiedtime": "20250121180634",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/22/2773322_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/22/2773322_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "강원특별자치도 평창군 대관령면 올림픽로 715",
+       "addr2": "",
+       "zipcode": "25352",
+       "mapx": "128.7055814809",
+       "mapy": "37.6509988422",
+       "mlevel": "6",
+       "overview": "브루어리엠은 용평리조트 내 드래곤프라자에 있는 파스타, 피자, 버거, 돈까스 등 다양한 메뉴를 즐길 수 있는 패밀리 레스토랑이다. 내부는 넓고 깨끗하며, 수제 맥주를 판매한다. 멀리 가지 않고 리조트 내에서 맛있는 식사를 할 수 있어 인기가 좋다. 겨울 스키시즌에는 휴무 없이 운영된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

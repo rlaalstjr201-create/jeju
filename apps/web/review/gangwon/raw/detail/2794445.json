@@ -1,0 +1,52 @@
+{
+ "contentid": "2794445",
+ "modifiedtime": "20250116150138",
+ "fetchedAt": "2026-10-30T16:43:01.626Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2794445",
+       "contenttypeid": "39",
+       "title": "두일막국수",
+       "createdtime": "20211214023206",
+       "modifiedtime": "20250116150138",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/75/2794375_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/75/2794375_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 진부면 방아다리로 324",
+       "addr2": "",
+       "zipcode": "25321",
+       "mapx": "128.5618156109",
+       "mapy": "37.6855337466",
+       "mlevel": "6",
+       "overview": "강원도의 메밀막국수를 맛볼 수 있으며, 쫄깃쫄깃한 수육과 토종닭을 이용한 닭 볶음탕과 백숙이 일품인 한식전문점이다. 메밀막국수엔 국내산 메밀이 사용되며 바로 앞에 계곡이 있어 계곡을 바라보며 막국수를 즐길 수 있다. 매장이 넓어 단체로 방문하기에 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

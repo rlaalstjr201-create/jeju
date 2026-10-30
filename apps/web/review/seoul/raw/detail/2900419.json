@@ -1,0 +1,52 @@
+{
+ "contentid": "2900419",
+ "modifiedtime": "20261002162249",
+ "fetchedAt": "2026-10-30T16:48:08.000Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2900419",
+       "contenttypeid": "39",
+       "title": "주사부",
+       "createdtime": "20221107112621",
+       "modifiedtime": "20261002162249",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 이태원로 10",
+       "addr2": "",
+       "zipcode": "04382",
+       "mapx": "126.9748643708",
+       "mapy": "37.5348340565",
+       "mlevel": "6",
+       "overview": "용산구에 위치한 중식집 주사부는 TV프로그램 ‘생활의 달인’에서 탕수육 달인으로 인정 받은 탕수육 맛집이다. 탕수육 달인이 이전에는 특밥, 깐쇼새우가 맛있기로 유명했다. 세월감이 느껴지는 오래된 중식당이지만 가게 내부는 깔끔하고 쾌적하다. 주사부는 메뉴가 다양하고 어떤 메뉴를 시켜도 맛있다. 대표 메뉴로는 탕수육, 난자완스, 라조육, 양장피 등이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2039547",
+ "modifiedtime": "20260409135807",
+ "fetchedAt": "2026-10-30T16:50:13.118Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2039547",
+       "contenttypeid": "39",
+       "title": "금왕돈까스",
+       "createdtime": "20151109192130",
+       "modifiedtime": "20260409135807",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성북구 성북로 138 (성북동)",
+       "addr2": "",
+       "zipcode": "02838",
+       "mapx": "126.99438515182945",
+       "mapy": "37.59483160626182",
+       "mlevel": "6",
+       "overview": "성북동에 위치한 금왕돈까스는 그날 들여온 생고기를 사용하여 돈까스를 만드는 곳이다. 직접 만든 수프와 바삭한 튀김, 칼칼한 특제 소스가 이 집의 인기비결이다. TV 프로그램에도 소개될 만큼 항상 손님이 많으며, 식사 시간에 방문하면 대기줄이 있을 정도로 유명하다. 대표 메뉴는 돈까스와 치킨까스, 함박스테이크가 모두 나오는 금왕정식이다. 이외에도 안심돈까스, 등심돈까스, 치킨까스, 함박스테이크 메뉴도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

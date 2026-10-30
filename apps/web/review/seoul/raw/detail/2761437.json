@@ -1,0 +1,52 @@
+{
+ "contentid": "2761437",
+ "modifiedtime": "20260623174054",
+ "fetchedAt": "2026-10-30T16:49:48.769Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2761437",
+       "contenttypeid": "12",
+       "title": "용마랜드",
+       "createdtime": "20211025183919",
+       "modifiedtime": "20260623174054",
+       "tel": "",
+       "telname": "",
+       "homepage": "네이버 블로그 https://blog.naver.com/smartplaces네이버 카페 https://cafe.naver.com/yongmaland",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "260",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE02",
+       "lclsSystm3": "VE020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중랑구 망우로70길 118 (망우동)",
+       "addr2": "",
+       "zipcode": "02180",
+       "mapx": "127.1048896063",
+       "mapy": "37.5950106792",
+       "mlevel": "6",
+       "overview": "용마랜드는 1983년 용마산 끝자락에 조성된 사설 놀이공원으로, 2011년 폐장 이후 현재는 옛 시설이 그대로 남아 있는 폐놀이공원으로 알려져 있다. 크레용팝의  뮤직비디오 촬영지로 알려지면서 CF, 예능 프로그램, 웨딩 촬영 등 다양한 촬영지로 활용되고 있다. 현재는 촬영 및 대관 일정에 따라 출입이 제한될 수 있어 방문 전 확인이 필요하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

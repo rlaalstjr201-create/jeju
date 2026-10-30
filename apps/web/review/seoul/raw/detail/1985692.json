@@ -1,0 +1,52 @@
+{
+ "contentid": "1985692",
+ "modifiedtime": "20260313164627",
+ "fetchedAt": "2026-10-30T16:45:34.083Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1985692",
+       "contenttypeid": "39",
+       "title": "고궁의 아침",
+       "createdtime": "20150123192039",
+       "modifiedtime": "20260313164627",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/12/4002712_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/12/4002712_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 창경궁로 158 (원남동)",
+       "addr2": "(원남동)",
+       "zipcode": "03081",
+       "mapx": "126.997570843872",
+       "mapy": "37.5764587371697",
+       "mlevel": "6",
+       "overview": "서울특별시 종로구 원남동에 위치한 소·돼지갈비 전문 음식점 고궁의 아침은 1975년에 시작되었다. 창경궁 바로 앞에 있다고 해서 고궁의 아침이란 이름을 갖게 되었다. 창경궁 인근에 있는 주차시설과 모임용 별실 좌석도 구비되어 있다. 대표 메뉴로는 한우꽃등심, 한우불고기, 불낙전골이 있으며, 한우육회비빔밥, 갈비탕 등 식사류도 다양하게 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

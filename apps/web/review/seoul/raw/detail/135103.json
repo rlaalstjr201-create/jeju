@@ -1,0 +1,52 @@
+{
+ "contentid": "135103",
+ "modifiedtime": "20260226175444",
+ "fetchedAt": "2026-10-30T16:46:16.703Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135103",
+       "contenttypeid": "39",
+       "title": "풍류사랑",
+       "createdtime": "20050902090000",
+       "modifiedtime": "20260226175444",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/43/1353643_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/43/1353643_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동8길 12-7",
+       "addr2": "",
+       "zipcode": "03148",
+       "mapx": "126.986198264096",
+       "mapy": "37.5738378393822",
+       "mlevel": "6",
+       "overview": "서울시 종로구에 위치한 한식 전문점이다. 우리 콩을 주재료로 한 콩요리를 전문으로 하고 있으며 된장찌개, 청국장, 털레기탕 등 우리 고유의 향토음식을 제공한다. 점심 식사는 사전에 예약을 한 후 이용이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2739479",
+ "modifiedtime": "20261006141409",
+ "fetchedAt": "2026-10-30T16:45:22.975Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2739479",
+       "contenttypeid": "14",
+       "title": "한국미술관",
+       "createdtime": "20210903003541",
+       "modifiedtime": "20261006141409",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.koreagallery.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/76/3412076_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/76/3412076_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동길 12",
+       "addr2": "(인사동)",
+       "zipcode": "03163",
+       "mapx": "126.9872482171",
+       "mapy": "37.5718964284",
+       "mlevel": "6",
+       "overview": "한국 미술의 다양한 전시를 소화할 수 있는 첨단 시설을 갖춘 1,460㎡의 한국 최대 규모를 갖춘 대형 전시관이다. 넓고 시원한 전시 공간과 시설로 전시 작품을 돋보이게 한다. 최신 장비를 설비하여 작품 감상을 위한 최상의 환경을 구축하였으며 미술에 친근하게 다가갈 수 있는 부대시설도 조성되어 있다. 한국 미술의 중심지이자 대표 화랑가인 인사동의 중심에 위치하여 국내외 관광객은 물론 미술 애호가, 일반인들이 쉽게 방문할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

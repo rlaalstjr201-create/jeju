@@ -1,0 +1,52 @@
+{
+ "contentid": "685544",
+ "modifiedtime": "20261001142629",
+ "fetchedAt": "2026-10-30T16:45:44.322Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "685544",
+       "contenttypeid": "39",
+       "title": "라브리",
+       "createdtime": "20090129200512",
+       "modifiedtime": "20261001142629",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 종로 1",
+       "addr2": "",
+       "zipcode": "03154",
+       "mapx": "126.9757437331",
+       "mapy": "37.5736793363",
+       "mlevel": "6",
+       "overview": "프랑스어로 ‘안식처’, ‘쉼터’라는 뜻의 대형 프랑스 레스토랑이며, 특히 램 스테이크가 맛이 좋은 것으로 소문이 나 있다. 각종 모임, 연회 등으로 항상 사람이 많기 때문에 식사 전 예약을 해두는 것이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

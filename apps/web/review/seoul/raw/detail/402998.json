@@ -1,0 +1,52 @@
+{
+ "contentid": "402998",
+ "modifiedtime": "20260929113444",
+ "fetchedAt": "2026-10-30T16:46:00.894Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "402998",
+       "contenttypeid": "39",
+       "title": "온마을",
+       "createdtime": "20080120063531",
+       "modifiedtime": "20260929113444",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/08/399208_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/08/399208_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 삼청로 127",
+       "addr2": "",
+       "zipcode": "03049",
+       "mapx": "126.9815344637",
+       "mapy": "37.5866750784",
+       "mlevel": "6",
+       "overview": "온마을 두부전문점은 삼청동 금융연수원에서 삼청터널 방면으로 50m쯤 가다 감사원 삼거리 나오면 왼쪽 대로변에 위치한다. 내부에 들어서면 온통 나무와 황토를 이용한 인테리어에 마음을 빼앗기게 되는데, 인테리어만큼 토속적인 이 집의 메뉴는 손으로 만든 두부요리다. 이 집의 특이한 점은 메뉴를 적은 주걱을 볼 수 있는데, 그 모습에 오는 손님들마다 웃음을 자아낸다. 온마을 두부전문점이 있는 이 길은 맛있는 집으로 소문난 곳이 많은 지역이다. 하지만 주변의 쟁쟁한 음식점들과 비교하여도 전혀 밀리지 않는 맛과 전문성을 자랑한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

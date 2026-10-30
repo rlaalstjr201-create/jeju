@@ -1,0 +1,52 @@
+{
+ "contentid": "2439096",
+ "modifiedtime": "20260309093631",
+ "fetchedAt": "2026-10-30T16:45:48.222Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2439096",
+       "contenttypeid": "39",
+       "title": "부산식당 (외국어사이트용)",
+       "createdtime": "20161110194907",
+       "modifiedtime": "20260309093631",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/59/2478159_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/59/2478159_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동11길 12",
+       "addr2": "",
+       "zipcode": "03145",
+       "mapx": "126.983987367667",
+       "mapy": "37.5738739061067",
+       "mlevel": "6",
+       "overview": "1976년부터 한자리를 지키고 있는 부산식당은 깔끔하고 삼삼한 국물과 손님들이 도착하면 짓는 고슬고슬한 밥이 맛있는 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

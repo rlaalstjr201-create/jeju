@@ -1,0 +1,52 @@
+{
+ "contentid": "3359119",
+ "modifiedtime": "20260612171956",
+ "fetchedAt": "2026-10-30T16:47:50.333Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3359119",
+       "contenttypeid": "39",
+       "title": "고라니커피클럽",
+       "createdtime": "20240904172120",
+       "modifiedtime": "20260612171956",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 한강대로 262 (남영동)",
+       "addr2": "",
+       "zipcode": "04352",
+       "mapx": "126.9731996719",
+       "mapy": "37.5416693479",
+       "mlevel": "6",
+       "overview": "고라니 커피클럽은 서울역에서 한강으로 이어지는 한강 대로변에 자리한 커피 전문점이다. 차분하고 아늑한 분위기의 공간으로, 카페 곳곳에 대표의 취향이 녹아 있어 편안한 시간을 보내기 좋다. 3가지 원두를 사용해 취향에 맞는 커피를 즐길 수 있으며, 까눌레와 크럼블, 티그레 등 다양한 디저트도 함께 맛볼 수 있다. 조용한 공간에서 커피 한 잔과 함께 여유를 즐기거나, 깊이 있는 대화를 나누고 싶은 이들에게 추천하는 카페다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

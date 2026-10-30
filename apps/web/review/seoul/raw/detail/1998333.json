@@ -1,0 +1,52 @@
+{
+ "contentid": "1998333",
+ "modifiedtime": "20251210092039",
+ "fetchedAt": "2026-10-30T16:45:46.126Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1998333",
+       "contenttypeid": "39",
+       "title": "모녀김밥",
+       "createdtime": "20150418023521",
+       "modifiedtime": "20251210092039",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "23",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 종로구 동호로 403-23",
+       "addr2": "",
+       "zipcode": "03195",
+       "mapx": "127.0011132988",
+       "mapy": "37.5702819948",
+       "mlevel": "6",
+       "overview": "모녀김밥은 서울 종로구 광장시장에 위치한 김밥 전문점으로 흔히 떠오르는 김밥이라고 여긴다면 오산이다. 광장시장의 명물인 40년 전통의 모녀김밥은 다른 김밥과 달리 겨자 소스에 찍어 먹는 한 입 크기의 김밥이다. 처음 시식한 이들은 그다지 특색 없는 맛에 실망할지 모르지만 나도 모르게 자꾸 생각나는 중독적인 맛에 이끌리게 된다고 한다. 대표 메뉴로 마약김밥 외에 육회, 탕탕이, 녹두빈대떡 등이 있어 다양한 메뉴의 식사를 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "3085313",
+ "modifiedtime": "20260401162340",
+ "fetchedAt": "2026-10-30T16:48:44.851Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3085313",
+       "contenttypeid": "39",
+       "title": "부부요리단",
+       "createdtime": "20231205154934",
+       "modifiedtime": "20260401162340",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 독서당로40길 25-1 (옥수동)",
+       "addr2": "",
+       "zipcode": "04739",
+       "mapx": "127.0175351632016",
+       "mapy": "37.54281068789206",
+       "mlevel": "6",
+       "overview": "부부요리단은 롯데호텔 일식당 모모야마 출신의 셰프 부부가 운영하는 옥수동 맛집으로 소문난 곳이다. 대표메뉴는 완도산 문어와 생황, 황기, 대추, 노각, 헛개나무 등을 넣고 흑돼지를 삶은 수육이 나오는 진황제찜과 매콤한 감칠맛의 갑오징어 볶음인 오삼불 있으며 이외에도 삼겹찜, 갑오징어파전 등 다양하다. 요리와 함께 와인, 사케, 막걸리, 맥주 등 다양한 주종을 함께 판매하고 있어 음식과 곁들이기에 좋다. 또한 재료도 갑오징어를 제외한 모든 재료가 국내산이며 밑반찬으로 나오는 반찬들마저 반찬 가짓수를 채우려고 준비한 반찬이 아닌 메뉴와 어울리는 반찬으로 세심함이 돋보인다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

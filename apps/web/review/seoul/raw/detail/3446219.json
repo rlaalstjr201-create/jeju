@@ -1,0 +1,52 @@
+{
+ "contentid": "3446219",
+ "modifiedtime": "20241223120823",
+ "fetchedAt": "2026-10-30T16:50:13.683Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3446219",
+       "contenttypeid": "39",
+       "title": "더웍",
+       "createdtime": "20241216151515",
+       "modifiedtime": "20241223120823",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "17",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 성북구 길음로 11 (길음동, 길음역롯데캐슬트윈골드아파트)",
+       "addr2": "롯데캐슬 골드 트윈상가 지하1층",
+       "zipcode": "02722",
+       "mapx": "127.0234880845",
+       "mapy": "37.6038534948",
+       "mlevel": "6",
+       "overview": "중국집 더웍은 인천에 위치한 중식 전문 음식점으로, 정통 중국 요리를 현대적인 감각으로 재해석한 메뉴를 제공한다.\n신선한 재료를 사용해 다양한 중화 요리, 특히 볶음 요리와 탕 요리가 인기이다. 또한  깔끔하고 세련된 인테리어와 편안한 분위기에서 고급스러운 식사를 즐길 수 있는 곳으로, 현지 주민들 사이에서 인기가 있는 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

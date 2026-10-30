@@ -1,0 +1,52 @@
+{
+ "contentid": "2795136",
+ "modifiedtime": "20260921160914",
+ "fetchedAt": "2026-10-30T16:43:18.764Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2795136",
+       "contenttypeid": "39",
+       "title": "산채한마당",
+       "createdtime": "20211214183858",
+       "modifiedtime": "20260921160914",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/07/2795107_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/07/2795107_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 진부면 오대산로 152",
+       "addr2": "10동 1층 1호",
+       "zipcode": "25318",
+       "mapx": "128.6013056335",
+       "mapy": "37.7160494973",
+       "mlevel": "6",
+       "overview": "특별하고 맛있는 정갈한 밥상 남들과는 다른, 흔하지 않은 오대산의 정기 품은 산채정식은 월정사 관광객들에게 인기있는 메뉴이다. 주차장이 넓어 방문하기 용이하고 나물종류도 다양해 건강한 한 끼를 먹을 수 있어 방문객들의 만족도가 높다. 나들이, 등산 후 들리는 맛집으로 유명하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

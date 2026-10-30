@@ -1,0 +1,52 @@
+{
+ "contentid": "1494435",
+ "modifiedtime": "20260220094935",
+ "fetchedAt": "2026-10-30T16:46:09.476Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1494435",
+       "contenttypeid": "39",
+       "title": "종로할머니칼국수",
+       "createdtime": "20111215220054",
+       "modifiedtime": "20260220094935",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 돈화문로11다길 14-2",
+       "addr2": "",
+       "zipcode": "03133",
+       "mapx": "126.990825620143",
+       "mapy": "37.5727963834194",
+       "mlevel": "6",
+       "overview": "1988년부터 가업을 이어온 칼국수 전문점으로 종로의 좁은 골목 안에서 칼국수와 칼제비 메뉴를 판매하고 있다. 최상급 멸치로 우려낸 육수와 전날 반죽하여 12시간 동안 숙성시킨 칼국수 면을 직접 손으로 썰어 당일 소진을 원칙으로 사용하고 있으며 매일 직접 담은 겉절이 김치를 제공하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

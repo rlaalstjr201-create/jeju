@@ -1,0 +1,52 @@
+{
+ "contentid": "133862",
+ "modifiedtime": "20261013133931",
+ "fetchedAt": "2026-10-30T16:46:02.167Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133862",
+       "contenttypeid": "39",
+       "title": "이모집",
+       "createdtime": "20030813090000",
+       "modifiedtime": "20261013133931",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 인사동14길 5-3",
+       "addr2": "(관훈동)",
+       "zipcode": "03146",
+       "mapx": "126.9843039727",
+       "mapy": "37.5749515582",
+       "mlevel": "6",
+       "overview": "이모집은 숯불에 구운 연탄 불고기와 모둠전으로 유명한 음식점이다. 이 외에도 낙지볶음, 북어구이, 간장게장 등 다양한 메뉴가 있다. 한옥의 분위기를 잘 살려낸 가정집을 연상케 하는 음식점이다. 정갈하게 차려내는 10여가지의 기본찬이 준비되며 게장과 불고기는 기본 가격외에 5천원을 추가하면 식사와 함께 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "712490",
+ "modifiedtime": "20260921155510",
+ "fetchedAt": "2026-10-30T16:42:53.273Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "712490",
+       "contenttypeid": "39",
+       "title": "노다지",
+       "createdtime": "20090327200122",
+       "modifiedtime": "20260921155510",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 대관령면 올림픽로 153",
+       "addr2": "",
+       "zipcode": "25347",
+       "mapx": "128.7089088080",
+       "mapy": "37.6685448467",
+       "mlevel": "6",
+       "overview": "노다지는 평창군 대관령면에 위치한 한식 전문점이다.\n국내산 돼지고기와 오징어를 넣고 매콤한 양념에 버무려 볶아 먹는 오삼불고기와 강된장이 곁들여진 곤드레 나물밥이 대표메뉴이다. 이 외에도 한우 생등심, 한우 불고기, 생삼겹살, 황태구이 정식 등 다양한 메뉴를 맛볼 수 있다. 근처에 휘닉스파크, 대관령 양떼목장 등 평창 명소가 위치하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

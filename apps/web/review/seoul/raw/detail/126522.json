@@ -1,0 +1,52 @@
+{
+ "contentid": "126522",
+ "modifiedtime": "20260727131442",
+ "fetchedAt": "2026-10-30T16:44:21.158Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "126522",
+       "contenttypeid": "12",
+       "title": "서울 동관왕묘",
+       "createdtime": "20031230090000",
+       "modifiedtime": "20260727131442",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.heritage.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/61/4092661_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/61/4092661_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS01",
+       "lclsSystm3": "HS010800",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 난계로27길 84",
+       "addr2": "",
+       "zipcode": "03115",
+       "mapx": "127.0184229305",
+       "mapy": "37.5727080049",
+       "mlevel": "6",
+       "overview": "서울 동관왕묘는 중국의 고전인 삼국지에 나오는 명장 관우의 사당이다. 조선 선조 34년(1601년)에 동묘, 서묘 및 북묘를 세웠으나 지금은 동묘만 남아 있다. 임진왜란 때 왜병을 격퇴하는 데 관우의 힘이 컸다고 하여 명의 신종이 임진왜란 후에 비용과 친필로 쓴 편액을 보내와서 창건하였고, 영조 15년(1739년)에 중수하였다. 중국 묘사 건축의 영향을 받아 그 평면과 외관이 우리나라 건축과 비교할 때 매우 색다른 모습을 이루고 있다. 흙 돌담으로 둘러싸여 있고 각종 정원수와 의자가 있어 시민들의 휴식처 역할을 하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

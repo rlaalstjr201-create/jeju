@@ -1,0 +1,52 @@
+{
+ "contentid": "2022495",
+ "modifiedtime": "20260813155500",
+ "fetchedAt": "2026-10-30T16:44:00.564Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2022495",
+       "contenttypeid": "39",
+       "title": "하박국식당",
+       "createdtime": "20150804202157",
+       "modifiedtime": "20260813155500",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/87/2022287_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/87/2022287_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 대화면 대화중앙로 45-2",
+       "addr2": "",
+       "zipcode": "25359",
+       "mapx": "128.4569850577",
+       "mapy": "37.4932677678",
+       "mlevel": "6",
+       "overview": "하박국식당은 구약성경 ‘하박국’에서 이름을 따왔다고 한다. 가정식 한식뷔페로 운영하고 있으며, 저녁에는 부대찌개와 제육볶음 주문이 가능하다. 또한 예약 시 묵은지등갈비, 한우불고기, 삼겹살 등의 메뉴도 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2780669",
+ "modifiedtime": "20250729134613",
+ "fetchedAt": "2026-10-30T16:44:03.525Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2780669",
+       "contenttypeid": "39",
+       "title": "황태명가",
+       "createdtime": "20211126013028",
+       "modifiedtime": "20250729134613",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/31/2780631_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/31/2780631_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "32",
+       "sigungucode": "15",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "강원특별자치도 평창군 봉평면 이효석길 118",
+       "addr2": "",
+       "zipcode": "25304",
+       "mapx": "128.3690463643",
+       "mapy": "37.6112664321",
+       "mlevel": "6",
+       "overview": "이효석 문학관 맞은편에 위치한 황태명가는 대관령덕장에서 말린 황태와 청정 평창에서나오는 제출 나물을 사용해 음식을 만들어 파는 한식당이다. 식사 주문시 나오는 반찬과 각종 장아찌가 맛있기로 유명하다. 특제 소스를 곁들여 먹는 곤드레 돌솥밥과 황태요리는 건강한 식단으로 어르신들 뿐만 아니라 남녀노소 즐기기에 좋은 음식이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

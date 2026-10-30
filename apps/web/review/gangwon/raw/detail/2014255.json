@@ -1,0 +1,52 @@
+{
+ "contentid": "2014255",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-30T16:42:48.945Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2014255",
+       "contenttypeid": "39",
+       "title": "기화양어장횟집",
+       "createdtime": "20150707234812",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/64/2014064_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/64/2014064_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "51",
+       "lDongSignguCd": "760",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "강원특별자치도 평창군 미탄면 평창동강로 495-6",
+       "addr2": "",
+       "zipcode": "25384",
+       "mapx": "128.541205553932",
+       "mapy": "37.3037107874778",
+       "mlevel": "6",
+       "overview": "평창군 미탄면에 위치한 기화양어장횟집은 이름처럼 양식장을 갖춘 전문 횟집으로, 싱싱한 송어와 철갑상어 요리를 바로 맛볼 수 있는 숨은 맛집으로 유명하다. 맑고 깨끗한 물에서 자란 송어는 육질이 부드러우며, 철갑상어는 쫀득쫀득하다. 식당 앞에서 직접 양식하는 싱싱한 송어와 철갑상어를 구경할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

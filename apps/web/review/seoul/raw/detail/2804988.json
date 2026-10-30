@@ -1,0 +1,52 @@
+{
+ "contentid": "2804988",
+ "modifiedtime": "20260213134537",
+ "fetchedAt": "2026-10-30T16:48:06.912Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2804988",
+       "contenttypeid": "39",
+       "title": "자코비버거",
+       "createdtime": "20220120144043",
+       "modifiedtime": "20260213134537",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 용산구 용산동2가 신흥로 (38)",
+       "addr2": "",
+       "zipcode": "04339",
+       "mapx": "126.987421280842",
+       "mapy": "37.5418056558006",
+       "mlevel": "6",
+       "overview": "자코비버거의 수제버거는 목심과 차돌양지 100%의 소고기 패티, 신선한 야채와 매일 직접 구운 빵으로 만들어진다.\n버거는 주문과 동시에 만들어지고 토핑은 개인의 취향에 맞게 선택할 수 있어서 취향에 따른 다양한 수제버거를 맥주와 함께 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

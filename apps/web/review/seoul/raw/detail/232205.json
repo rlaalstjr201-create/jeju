@@ -1,0 +1,52 @@
+{
+ "contentid": "232205",
+ "modifiedtime": "20260206092412",
+ "fetchedAt": "2026-10-30T16:45:50.133Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "232205",
+       "contenttypeid": "39",
+       "title": "뿌자",
+       "createdtime": "20070918090000",
+       "modifiedtime": "20260206092412",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "110",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 종로구 종로 327",
+       "addr2": "",
+       "zipcode": "03104",
+       "mapx": "127.013951145071",
+       "mapy": "37.5726857043961",
+       "mlevel": "6",
+       "overview": "뿌자란 힌두어로 ‘신에게 기원한다’는 뜻으로 다양한 문화와 음식을 접할 수 있는 곳이다. 기름기 없는 담백한 맛의 인도 전통 화덕 빵인 난과 인도·네팔 전통음식 탄두리치킨, 다양한 커리를 맛볼 수 있다. 현지에서 온 요리사가 현지에서 가져온 향신료와 재료만을 사용해 인도와 네팔 현지의 맛을 느낄 수 있게 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

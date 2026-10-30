@@ -1,0 +1,52 @@
+{
+ "contentid": "836350",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-30T16:46:59.181Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "836350",
+       "contenttypeid": "39",
+       "title": "너비집",
+       "createdtime": "20091028024318",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "140",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 중구 명동9길 37-8",
+       "addr2": "",
+       "zipcode": "04534",
+       "mapx": "126.983773737832",
+       "mapy": "37.5655276977452",
+       "mlevel": "6",
+       "overview": "너비집은 매운 갈비찜과 한우 숯불구이를 맛볼 수 있는 곳이다. 오랜 시간 동안 자리를 지켜왔다. 대표메뉴는 너비 스페셜 코스이다. 고급 한우 육회, 우설, 부챗살, 등심, 차돌더덕말이, 등심주물럭, 된장찌개, 돌솥비빔밥이 제공된다. 또한, 매운 소갈비찜도 인기가 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

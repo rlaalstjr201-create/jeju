@@ -1,0 +1,52 @@
+{
+ "contentid": "2900881",
+ "modifiedtime": "20261001113529",
+ "fetchedAt": "2026-10-30T16:48:56.179Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2900881",
+       "contenttypeid": "39",
+       "title": "옹근달",
+       "createdtime": "20221108095832",
+       "modifiedtime": "20261001113529",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/61/2900861_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/61/2900861_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "200",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성동구 성수이로7길 41-1 (성수동2가)",
+       "addr2": "",
+       "zipcode": "04781",
+       "mapx": "127.0529991602",
+       "mapy": "37.5427317787",
+       "mlevel": "6",
+       "overview": "옹근달은 서울지하철 2호선 성수역 4번 출구 인근에 있다. 이곳은 루프탑을 포함해 3층으로 이루어진 건물로 1층 야외에는 연못이 있고 루프탑도 이용할 수 있다. 롱블랙은 에스프레소를 뜨거운 물 위에 부어 더 진한 맛을 내며, 아메리카노는 물 양이 많아 부드러운 편이다. 밀크티와 바닐라라떼는 달콤한 음료로 인기가 높다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

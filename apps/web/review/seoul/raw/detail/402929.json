@@ -1,0 +1,52 @@
+{
+ "contentid": "402929",
+ "modifiedtime": "20251212155233",
+ "fetchedAt": "2026-10-30T16:48:00.487Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "402929",
+       "contenttypeid": "39",
+       "title": "부다스벨리 이태원",
+       "createdtime": "20080120063312",
+       "modifiedtime": "20251212155233",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "21",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "170",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "서울특별시 용산구 녹사평대로40길 48",
+       "addr2": "(이태원동)",
+       "zipcode": "04345",
+       "mapx": "126.9884099171",
+       "mapy": "37.5343748281",
+       "mlevel": "6",
+       "overview": "이태원의 작은 타이 레스토랑인 부다스벨리는 작고 아담한 가게이다. 하지만 맛있다는 소문이 미식가들 사이에 퍼져 분점을 낼 정도로 유명한 곳이다. 대표 메뉴로는 타이를 대표하는 음식이자 세계 3대 수프 중 하나로 불리는 똠양꿍이 있으며, 해산물 샐러드와 쫄깃한 면발이 고소한 팟타이 등은 이미 맛있기로 정평이 나있다. 또한 타이식 파스타, 텃만꿍, 커리 등 다양한 종류의 음식을 맛볼 수 있다. 주문시 정통 타이식으로 요청하면 현지 음식에 가깝게 소스맛을 조절하여 준다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2876684",
+ "modifiedtime": "20260803161436",
+ "fetchedAt": "2026-10-30T16:50:15.892Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2876684",
+       "contenttypeid": "39",
+       "title": "방목",
+       "createdtime": "20221026172126",
+       "modifiedtime": "20260803161436",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "290",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 성북구 동소문로2길 21",
+       "addr2": "",
+       "zipcode": "02860",
+       "mapx": "127.0076652116",
+       "mapy": "37.5879226214",
+       "mlevel": "6",
+       "overview": "성북구에 위치한 방목은 한성대학교 인근의 유명한 고기 맛집이다. 대학가 근처 식당답게 저렴한 가격에 푸짐하고 질 좋은 고기와 식사류를 즐길 수 있다. 대표 메뉴로는 육즙 가득한 목살이며, 목살뿐만 아니라 삼겹살, 껍데기 등도 취급하고 있다. 직원이 직접 고기를 구워주는 시스템으로 편하게 식사를 즐길 수 있다. 또한 곁들여 먹는 새콤한 김치말이 국수도 인기다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}
