@@ -1,0 +1,423 @@
+{
+ "round": "03",
+ "city": "양양",
+ "criteria": "review/gangwon/criteria-03.md",
+ "sample": "audit-양양-03-sample.json (seed 20261101)",
+ "judgments": "audit-양양-03-judgments.json",
+ "facts": "audit-양양-03-facts.json",
+ "metrics": {
+  "n": 18,
+  "keepMood": {
+   "agree": 18,
+   "rate": 1,
+   "threshold": 0.9,
+   "pass": true
+  },
+  "keepOnly": {
+   "agree": 18,
+   "rate": 1,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 18,
+   "rate": 1,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 1,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 10,
+   "of": 11,
+   "note": "기록만"
+  }
+ },
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-130930",
+   "name": "오산리선사유적박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "8000년 전 신석기 유물을 전시하는 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "원문은 「약 8,000년 전」, 「약」이 빠졌으나 같은 사실"
+  },
+  {
+   "id": "nt-2929243",
+   "name": "P.E.I coffee",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "물치항 해변 앞 바다 전망 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710789",
+   "name": "[해파랑길] 42코스",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "죽도정에서 하조대해변까지 9.9km 걷는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128288",
+   "name": "명주사(양양)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "만월산에 있고 동종과 부도군이 남은 아담한 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125668",
+   "name": "설악산 오색주전골",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "기암이 솟은 계곡 옆으로 선녀탕과 용소폭포가 이어져요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 기암이 솟은 탐방로가 선녀탕을 거쳐 용소폭포에 이른다고 함, 「계곡 옆으로 이어져요」는 같은 경로를 바꿔 쓴 것으로 봄"
+  },
+  {
+   "id": "nt-2714607",
+   "name": "원포리해변",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "일직선 백사장과 송림에 화상암 바위가 있는 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777043",
+   "name": "김택준가옥",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "겹집 구조의 안채와 사랑채가 있는 200년 된 가옥이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 「약 200년 정도 되었다고 하며」, 「200년 된」은 단정했지만 같은 숫자"
+  },
+  {
+   "id": "nt-2710739",
+   "name": "진전사",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "삼층석탑과 도의선사탑이 남아 있는 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2465077",
+   "name": "양양 에너지팜",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "양수 발전 원리를 체험 전시물로 배우는 홍보관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129593",
+   "name": "휴휴암(강원)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "바닷가 바위에 관세음보살 형상이 있는 암자예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710823",
+   "name": "기사문해수욕장",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "서핑 파도로 알려져 서핑족이 주로 찾는 해변이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710813",
+   "name": "요트&수산어촌체험(양양)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "수산항에서 요트와 투명카누를 타는 바다 체험이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128414",
+   "name": "탁장사고을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "탁장사놀이를 접목한 어성전계곡가의 전통테마마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": false,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2778084",
+   "name": "인구항",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "방파제 낚시와 일몰 구경을 하는 작은 항구예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 방파제에서 낚시하는 사람들을 볼 수 있다고 함, 방파제 낚시를 하는 곳으로 바꿔 쓴 것으로 봄"
+  },
+  {
+   "id": "nt-2710737",
+   "name": "동해생명자원센터",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "연어 부화와 성장 과정을 소개하는 체험관이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3558855",
+   "name": "마음이동해",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "핸드드립 커피를 내고 바다 소품 클래스도 있는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": true,
+   "factNote": "「바다 소품 클래스」가 원문에 없음: 원문은 레진·매듭공예로 바다주얼리·소품을 만들어 판다고 하고, 클래스는 모루인형 만들기 등 「다양한 클래스」라고만 함"
+  },
+  {
+   "id": "nt-2788978",
+   "name": "38선휴게소",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "바다를 바라보는 언덕에서 쉬어 가는 38선 휴게소예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2773573",
+   "name": "오색 용소폭포",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "설악산 주전골에 있는 높이 10m쯤 되는 폭포예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}
