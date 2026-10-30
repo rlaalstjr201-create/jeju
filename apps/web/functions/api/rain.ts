@@ -1,6 +1,8 @@
 // GET /api/rain?area=<slug> (ADR-0076): 기상청 단기예보 → will it rain in this area within 3 hours.
-// GET /api/rain?grid=<nx>,<ny> (plans/nationwide-app.md 5): the same for one KMA grid cell — a 시군구 centre's, never a GPS point.
+// GET /api/rain?grid=<nx>,<ny> (plans/nationwide-app.md 5): the same for one KMA grid cell — a 시군구 centre's, never a GPS point;
+// any other cell is 400 (functions/_lib/grids.ts).
 // Only the area's name or the cell comes in; the service key stays here (env KMA_SERVICE_KEY, `wrangler pages secret put`).
+import { NATION_GRIDS } from '../_lib/grids';
 import { areaBySlug, baseTime, kmaGrid, maxPop } from '../_lib/kma';
 
 const ENDPOINT = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
@@ -37,12 +39,12 @@ function upstreamWhy(text: string): string {
 const edge = (): Cache | null =>
   typeof caches !== 'undefined' ? ((caches as unknown as { default?: Cache }).default ?? null) : null;
 
-/** `<nx>,<ny>` inside the agency's grid (1–149, 1–253), no leading zero; else null. */
+/** `<nx>,<ny>` inside the agency's grid (1–149, 1–253), no leading zero, and a 시군구 centre's cell (NATION_GRIDS); else null. */
 function gridOf(v: string | null): { nx: number; ny: number } | null {
   const m = /^([1-9]\d{0,2}),([1-9]\d{0,2})$/.exec(v ?? '');
   if (!m) return null;
   const nx = Number(m[1]), ny = Number(m[2]);
-  return nx <= 149 && ny <= 253 ? { nx, ny } : null;
+  return nx <= 149 && ny <= 253 && NATION_GRIDS.has(`${nx},${ny}`) ? { nx, ny } : null;
 }
 
 export async function onRequestGet(ctx: Ctx): Promise<Response> {

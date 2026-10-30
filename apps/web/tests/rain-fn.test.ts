@@ -1,7 +1,11 @@
 // 비 소식 함수 (ADR-0076, plans/home-refresh.md U4): grid, issuance time, POP window, and the handler's answers.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AREAS } from '../src/areas';
 import { BUSAN_AREAS } from '../src/busan';
+import { parseIndex } from '../src/nation';
+import { NATION_GRIDS } from '../functions/_lib/grids';
 import { areaBySlug, baseTime, kmaGrid, maxPop } from '../functions/_lib/kma';
 import { onRequestGet } from '../functions/api/rain';
 
@@ -220,23 +224,42 @@ describe('격자로 묻기 ?grid=', () => {
     return { keys, put };
   };
 
-  it('a cell inside the grid → 200 { grid, pop, rain, base, from }, asking for that cell, cached under g<nx>-<ny>', async () => {
+  it('a 시군구 centre\'s cell (강릉시 93,132) → 200 { grid, pop, rain, base, from }, asking for that cell, cached under g<nx>-<ny>', async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(at('2026-10-03T14:20'));
     const f = ok();
     vi.stubGlobal('fetch', f);
     const c = edgeCache();
-    const res = await onRequestGet({ request: req('?grid=92,131'), env: { KMA_SERVICE_KEY: 'k' } });
+    const res = await onRequestGet({ request: req('?grid=93,132'), env: { KMA_SERVICE_KEY: 'k' } });
     expect(res.status).toBe(200);
     expect(res.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=1800');
-    expect(await res.text()).toBe('{"grid":"92,131","pop":70,"rain":true,"base":"202610031400","from":"기상청"}');
+    expect(await res.text()).toBe('{"grid":"93,132","pop":70,"rain":true,"base":"202610031400","from":"기상청"}');
     const u = new URL(f.mock.calls[0][0]);
-    expect([u.searchParams.get('nx'), u.searchParams.get('ny')]).toEqual(['92', '131']);
-    expect(c.keys).toEqual(['https://rain.cache/g92-131/202610031400']);
-    expect(c.put.map(([k]) => k)).toEqual(['https://rain.cache/g92-131/202610031400']);
-    for (const q of ['?grid=1,1', '?grid=149,253']) {
-      expect((await onRequestGet({ request: req(q), env: { KMA_SERVICE_KEY: 'k' } })).status, q).toBe(200);
+    expect([u.searchParams.get('nx'), u.searchParams.get('ny')]).toEqual(['93', '132']);
+    expect(c.keys).toEqual(['https://rain.cache/g93-132/202610031400']);
+    expect(c.put.map(([k]) => k)).toEqual(['https://rain.cache/g93-132/202610031400']);
+  });
+
+  // predeploy review m-1: only the cells the app sends, its 시군구 centres' (functions/_lib/grids.ts); else 400 and no call
+  // on the agency's daily quota
+  it('every 시군구 centre\'s cell is asked for; a cell inside the grid that is none of theirs → 400, nothing fetched', async () => {
+    const ix = parseIndex(JSON.parse(readFileSync(resolve(__dirname, '../data/nation/index.json'), 'utf8')))!;
+    const cells = ix.sgg.map((s) => kmaGrid(s.lat, s.lng));
+    expect(cells.every((g) => NATION_GRIDS.has(`${g.nx},${g.ny}`))).toBe(true);
+    expect(NATION_GRIDS.size).toBeGreaterThan(150);
+    expect(NATION_GRIDS.size).toBeLessThanOrEqual(ix.sgg.length);
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(at('2026-10-03T14:20'));
+    const f = ok();
+    vi.stubGlobal('fetch', f);
+    for (const g of cells.slice(0, 5)) expect((await onRequestGet({ request: req(`?grid=${g.nx},${g.ny}`), env: { KMA_SERVICE_KEY: 'k' } })).status).toBe(200);
+    expect(f).toHaveBeenCalledTimes(5);
+    f.mockClear();
+    for (const q of ['?grid=1,1', '?grid=149,253', '?grid=53,38', '?grid=60,1']) {
+      expect(NATION_GRIDS.has(q.slice(6)), q).toBe(false);
+      expect((await onRequestGet({ request: req(q), env: { KMA_SERVICE_KEY: 'k' } })).status, q).toBe(400);
     }
+    expect(f).not.toHaveBeenCalled();
   });
 
   it('a cell outside the grid, a decimal, a negative, a leading zero or junk → 400, nothing fetched', async () => {
