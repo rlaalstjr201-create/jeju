@@ -1,0 +1,2658 @@
+{
+ "round": "04",
+ "city": "평창",
+ "criteria": "review/gangwon/criteria-04.md",
+ "sample": "audit-평창-04-sample.json (seed 20261102)",
+ "judgments": "audit-평창-04-judgments.json",
+ "facts": "audit-평창-04-facts.json",
+ "metrics": {
+  "n": 120,
+  "keepMood": {
+   "agree": 119,
+   "rate": 0.9917,
+   "threshold": 0.9,
+   "pass": true
+  },
+  "keepOnly": {
+   "agree": 120,
+   "rate": 1,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 116,
+   "rate": 0.9667,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 0,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 108,
+   "of": 108,
+   "note": "기록만"
+  }
+ },
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-2987914",
+   "name": "광천선굴어드벤처테마파크",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "석순과 종유석을 구경하는 850m 길이 동굴이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2793490",
+   "name": "진태원",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "양파와 배추, 부추를 올린 탕수육으로 알려진 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2772886",
+   "name": "평창자연휴양림",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "산책로와 태기산 등산로가 있는 휴양림이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129005",
+   "name": "신약수(가리골약수)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "오대산 국립공원 안 숲속에 있는 약수터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072029",
+   "name": "오대산먹거리마을",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한옥 산채식당 12채가 이어져 산채정식과 황태구이를 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-712505",
+   "name": "도암식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오삼불고기를 내고 남은 양념에 볶음밥을 해 먹는 집"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789921",
+   "name": "동원막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "물막국수와 비빔막국수, 수육을 내는 막국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784960",
+   "name": "초원식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "토종닭과 염소탕 보양식을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702108",
+   "name": "문화마을 둘레길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "이효석문학관과 푸른 집, 생가를 둘러보는 둘레길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2563078",
+   "name": "월정사 성보박물관(평창)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "월정사 경내에서 불교 성보와 국보를 전시하는 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2793909",
+   "name": "대관령 오삼불고기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "숯불오삼불고기와 고추장 더덕 삼겹살을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2605277",
+   "name": "웰컴투동막골촬영지",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "영화 촬영지로 동막 바람굴과 정자나무가 남아 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2685076",
+   "name": "오대산가마솥식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "월정사 입구에서 산채정식과 황태구이정식을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789048",
+   "name": "소도둑놈산촌생태마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "산적 체험과 천연 비누 만들기를 하는 산촌 생태마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2701896",
+   "name": "평창지동봉가옥",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "1941년에 세운 것으로 추정되는 일제 강점기 가옥이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782567",
+   "name": "무지개분식",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "떡볶이와 튀김, 김밥, 어묵을 파는 평창읍내 분식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 떡볶이에 튀김을 찍어 먹기 좋다고만 해 튀김을 판다는 말은 그 문장에서 읽어 낸 것, 오류로 보지 않음"
+  },
+  {
+   "id": "nt-2789894",
+   "name": "카페마커모얘",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "수제 샌드위치와 바스크 치즈케이크를 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2683800",
+   "name": "동이네막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "메밀막국수와 메밀전병, 메밀묵무침을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796050",
+   "name": "베트남 쌀국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "쌀국수와 분짜를 내는 베트남 음식점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125729",
+   "name": "방아다리약수터",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "전나무 숲길을 10분가량 걸어 만나는 약수터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789053",
+   "name": "카페921",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "류경갤러리와 같은 공간에 있는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-131792",
+   "name": "휘닉스 태기산CC",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "정규코스와 같은 양잔디를 깐 퍼블릭 골프장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788970",
+   "name": "선비촌",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황토로 지은 집에서 송어회를 내는 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2783076",
+   "name": "먹쇠루",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "울면이 유명하고 짬뽕과 잡채밥도 내는 대화면 중식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-130976",
+   "name": "이승복기념관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "이승복의 생애 유화와 실물 전투장비를 전시한 기념관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2793907",
+   "name": "창대식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감자옹심이칼국수가 대표인 칼국수 전문 한식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-135473",
+   "name": "대관령황태촌",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황탯국과 황태구이 정식을 내는 황태 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2790142",
+   "name": "미강",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "직접 손질한 한우 곱창을 구이와 전골로 내는 곱창집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777364",
+   "name": "산골이야기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "직접 채집한 약초로 요리하고 백숙을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2790171",
+   "name": "코지힐(COZY HILL)",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "해발 650 고지에서 백덕산과 대미산을 보며 쉬는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777845",
+   "name": "옥봉식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "수제 순대로 끓인 순대 국밥을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 수제 순대 전문점이고 순대 국밥이 유명하다고 함, 국밥을 수제 순대로 끓였다는 연결은 원문 두 문장을 이은 것이라 오류로 보지 않음"
+  },
+  {
+   "id": "nt-2788239",
+   "name": "머시기쪽갈비 생족발구이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "초벌한 쪽갈비와 생족발구이가 대표인 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2874473",
+   "name": "금천회관",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "물갈비가 메인인 향토음식점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2787146",
+   "name": "평창갈비",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "숯불에 생갈비를 굽는 갈비집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2787227",
+   "name": "강원수산횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "양식장에서 키운 송어를 회로 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2787382",
+   "name": "광명식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오삼불고기와 삼겹살이 대표인 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2783341",
+   "name": "오대산산채1번가",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "산채정식과 능이버섯 솥밥을 내는 오대산 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2770528",
+   "name": "기화리 코끼리바위",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "코끼리를 닮아 이름 붙은 석회암 바위예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782201",
+   "name": "돈감자탕",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감자탕이 대표 메뉴고 뼈해장국과 솥뚜껑 삼겹살도 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2790298",
+   "name": "봉평나들이부침",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "맷돌에 간 순메밀로 메밀부침과 메밀전병을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782678",
+   "name": "봉평차이나",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "메밀면을 쓰는 해물갈비짬뽕이 대표인 봉평 중식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782598",
+   "name": "코지화로구이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "삼겹살과 돼지갈비를 숯불에 구워 먹는 숯불 고기집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710649",
+   "name": "밀브릿지",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "전나무 숲에 산책로와 약수 체험장이 있는 쉼터예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2776376",
+   "name": "횡계유명통닭",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "가마솥 통닭으로 후라이드와 양념치킨을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2787294",
+   "name": "남우수산횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "송어회와 송어튀김이 대표인 송어요리집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2733486",
+   "name": "효석 달빛언덕",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "복원한 이효석 생가와 근대문학체험관 전시실이 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1333464",
+   "name": "백룡동굴 (강원고생대 국가지질공원)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "종유석과 석순이 있는 석회암 동굴이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2798360",
+   "name": "고랭지만두마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "대관령 고랭지에서 농촌 체험을 하는 체험마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784860",
+   "name": "송빈가든",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오리와 닭 요리를 파는 음식점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2710730",
+   "name": "효석문학의숲",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "나무 덱 산책로를 따라 소설 속 배경을 둘러보는 숲이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2022495",
+   "name": "하박국식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "가정식 한식뷔페를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777759",
+   "name": "굿후랜드",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "후라이드 치킨과 강정, 피자, 족발을 파는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2683975",
+   "name": "밥먹을시간",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "더덕오삼불고기와 물갈비, 두루치기를 내는 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789480",
+   "name": "자금성",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "해물쟁반짜장이 대표인 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2714723",
+   "name": "거문산",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "법당사 앞에서 2시간가량 오르면 정상이 나오는 산이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 법당사가 등산로 초입에 있고 법당사를 지나 약 2시간 산행하면 정상이라 함, 「법당사 앞에서」는 같은 뜻으로 봄"
+  },
+  {
+   "id": "nt-2801764",
+   "name": "스위스램",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "스위스램갈비가 대표인 양고기 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2801742",
+   "name": "대박식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "50년 전통 한우 등심 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782316",
+   "name": "늘봄카페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "맷돌에 갈아 먹는 커피를 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129394",
+   "name": "의야지 바람마을 하늘체험장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "치즈피자 만들기와 고카트를 체험하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2785000",
+   "name": "평창우리한우",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "진열대에서 고기를 골라 먹는 한우 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2685345",
+   "name": "이선생 중화요리",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "이선생해물짬뽕과 탕수육을 내는 중화요리 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2605276",
+   "name": "이효석 생가",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "복원한 이효석의 초가집 생가예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2773251",
+   "name": "대관령 한우실비식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "숯불에 구운 한우와 된장찌개, 냉면을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-131300",
+   "name": "휘닉스 스노우파크",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "21면 슬로프와 곤돌라를 갖춘 태기산 스키장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2774550",
+   "name": "알펜시아리조트 눈썰매장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "알펜시아 초급자 슬로프 옆에 있는 눈썰매장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-4109096",
+   "name": "휘닉스 평창 루지랜드",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "1.4㎞ 트랙을 따라 루지를 타는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784840",
+   "name": "강촌갈비",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돼지양념갈비와 된장찌개가 인기인 대관령면 고기집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-801627",
+   "name": "대관령 눈꽃마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "눈썰매와 레일 봅슬레이를 타는 산촌 체험마을이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796736",
+   "name": "진가네",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "부대찌개를 내는 평창읍 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782374",
+   "name": "시골밥상",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "백반과 보리밥, 제육볶음, 생선구이를 파는 한정식 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2790453",
+   "name": "김박사봉평막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "즉석반죽 생면으로 메밀 막국수와 전, 전병을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-135450",
+   "name": "묵사발",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "통메밀을 갈아 만든 메밀묵과 메밀막국수를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777869",
+   "name": "강변식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "주꾸미삼겹살이 대표인 2대째 백반집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127620",
+   "name": "이효석 가산공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "150년 넘은 돌배나무가 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788285",
+   "name": "아승순메밀막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "공이 막국수를 취향껏 비벼 먹는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 취향껏 조합해 간장·비빔·물막국수로 만들어 먹는다고 함, 「비벼 먹는」은 그중 하나로 좁힌 말이지만 원문에 있는 방식이라 오류로 보지 않음"
+  },
+  {
+   "id": "nt-2790062",
+   "name": "계방산장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "직접 로스팅한 원두로 커피를 내는 용평면 커피 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2783946",
+   "name": "카페너츠",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "장평 버스터미널 앞에서 갓 볶은 원두 커피와 마카롱을 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788198",
+   "name": "그린식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "가정식 백반과 닭볶음탕을 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796182",
+   "name": "대봉식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한식 뷔페 백반이 대표 메뉴인 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2994739",
+   "name": "휘닉스찜질방 힐링센터",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": true,
+    "reason": "온탕과 건식 찜질, 스파 찜질을 단계별로 하는 찜질방이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3072038",
+   "name": "용평공룡해양랜드",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "공룡과 해양생물, 곤충 조형물을 둘러보는 전시관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2820893",
+   "name": "평창사랑",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "산마늘과 사과 수확, 송어낚시 체험을 하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2781651",
+   "name": "봉평메밀꽃향기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "타타리 메밀국수와 수제묵을 내는 한옥 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796909",
+   "name": "대관령김치찌개집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "2년 묵은 묵은지로 끓인 김치찌개만 파는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-134298",
+   "name": "대관령숯불회관",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우고기와 명태, 도루묵 생선 요리를 내는 토속 음식점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2788398",
+   "name": "용골송어회",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "노동계곡 옆에서 송어회를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 노동계곡에 위치한다고 함, 「노동계곡 옆에서」는 위치 관계를 바꿔 말한 것이나 같은 뜻으로 봄"
+  },
+  {
+   "id": "nt-2874500",
+   "name": "대관령감자옹심이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감자옹심이와 옹심이 칼국수를 내는 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2683326",
+   "name": "교동짬뽕",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "매운 짬뽕과 순두부 짬뽕을 내는 짬뽕 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789984",
+   "name": "대관령한우",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우를 직접 구입해 자리에서 구워 먹는 한우 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782163",
+   "name": "푸우의 정원",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "스테이크와 감자 돈가스, 메밀 돈가스를 내는 양식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2792602",
+   "name": "충주집 (이효석문화관)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "소설 속 주막을 가산공원 안에 복원한 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2783486",
+   "name": "평창다솜방식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우를 내는 정육 식당이고 오리백숙과 닭백숙은 예약해요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-712490",
+   "name": "노다지",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오삼불고기와 곤드레 나물밥이 대표메뉴인 한식집"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784309",
+   "name": "평창송어횟집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "평창에서 키운 송어회를 돌판에 올려 내는 횟집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796621",
+   "name": "선자령 송어회",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "송어회와 송어튀김, 송어매운탕을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782807",
+   "name": "웬디의 주방",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "직접 재배한 허브로 맛을 낸 돈가스와 파스타를 파는 양식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782537",
+   "name": "가방속커피향기",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "봉평 재래시장 안에서 꽃차와 메밀커피를 파는 브런치 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796840",
+   "name": "정애식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "매운 양푼갈비찜이 인기인 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2783491",
+   "name": "한우명가",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "육갈탕과 갈비탕이 대표 메뉴인 한우요리 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1081744",
+   "name": "한국전통음식문화체험관(정강원)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "비빔밥과 김치 같은 전통음식을 직접 만들어 보는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-125591",
+   "name": "오대산국립공원",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "비로봉을 주봉으로 봉우리가 늘어선 국립공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789485",
+   "name": "마카 카페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "메밀꽃밭을 바라보며 커피 마시는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-132533",
+   "name": "진부전통시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "3일과 8일에 장이 서는 진부 5일장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2777329",
+   "name": "백천",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "쟁반에 닭이 담겨 나오는 삼계탕과 백숙을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2776574",
+   "name": "대관령한우국밥타운",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "국밥과 수육, 막국수를 내는 국밥집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2772532",
+   "name": "청성애원 우루루동물농장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "아기동물을 만나는 동물농장으로 물놀이장과 산책길도 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784866",
+   "name": "초원갈비",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "대관령 한우를 주 메뉴로 하는 갈비집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2796323",
+   "name": "흔들바위",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "나물을 100여 가지 조리법으로 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2684999",
+   "name": "삼성우렁촌",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "우렁쌀밥과 우렁초무침을 내는 우렁 요리집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2702596",
+   "name": "평창 오대산사고",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "조선왕조실록을 보관하던 사고를 다시 지은 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2780250",
+   "name": "금학칼국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "장칼국수와 장손칼국수를 내는 봉평 칼국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2799025",
+   "name": "강따라 방림 가는길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "대화천과 평창강 강변을 따라 걷는 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": "경계: 원문은 대화천과 금당계곡이 합류된 평창강을 따라 강변을 걷는 길, 「대화천과 평창강 강변」은 대화천 강변도 걷는다는 뜻으로 읽힐 수 있으나 원문 구간 설명에 대화천이 있어 오류로 보지 않음"
+  },
+  {
+   "id": "nt-2855585",
+   "name": "트리고",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "소금빵과 메밀 아이스크림 라테를 내는 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2680961",
+   "name": "산채랑황태랑",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "황태전골과 황태구이를 내는 황태요리 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782092",
+   "name": "별그리는 자작나무",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "크로플과 화덕피자, 수제청을 파는 브런치 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2782185",
+   "name": "미락",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "묵은지 김치찜과 오삼불고기를 내는 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2784953",
+   "name": "큰손감자탕",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "감자탕을 전문으로 하는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2799214",
+   "name": "월정사 팔각구층석탑",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "고려 전기 석탑을 대표하는 팔각 9층 석탑이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2789562",
+   "name": "프렘식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "닭다리살로 만든 닭떡볶이를 내는 분식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2794415",
+   "name": "평창무이예술관 갤러리카페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "작품을 보며 커피와 화덕피자를 즐기는 갤러리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}
