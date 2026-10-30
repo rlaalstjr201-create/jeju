@@ -1,0 +1,21 @@
+[
+{"id":"nt-3354835","name":"봉평전통시장 메밀카페 달꽃","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"메밀을 우려낸 물로 드립한 메밀커피를 내는 카페예요","basis":["봉평전통시장 입구에 위치한 카페이다","시그니처 메뉴인 메밀커피는 메밀을 우려낸 물로 커피를 드립 하여"],"confidence":"high"},
+{"id":"nt-3355185","name":"청춘카페&떡방","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"밤송편이 인기인 할머니들의 떡카페예요","basis":["커다란 밤이 그대로 들어간 밤송편이 인기이다","참여한 할머니들이 운영하는 곳이다"],"confidence":"high"},
+{"id":"nt-3356046","name":"꿈꾸는달카페","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"이효석문학관 옆 북카페로 책 읽으며 음료를 마셔요","basis":["이효석문학관 옆에 함께 있는 효석 달빛 언덕에 위치한","음료, 디저트와 함께 책을 읽을 수 있는"],"confidence":"high"},
+{"id":"nt-4116789","name":"감자창고","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"감자와 곤드레로 만든 라떼와 디저트를 내는 카페예요","basis":["강원도 특산물인 감자와 곤드레를 활용한 이색 메뉴가","곤드레 풍미가 커피와 어우러진 곤드레라떼"],"confidence":"high"},
+{"id":"nt-609846","name":"장수촌","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"토종닭 백숙과 송어회를 내는 전문 음식점이에요","basis":["토종닭, 송어회 전문음식점이다","토종닭으로 닭백숙을 끓여"],"confidence":"high"},
+{"id":"nt-609878","name":"남경식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"꿩만두로 만든 찐만두와 손만두국을 내는 식당","basis":["꿩만두로 만든 찐만두와 손만두국이 유명하다","메밀막국수와 수육을 함께 판매하고 있다"],"confidence":"high"},
+{"id":"nt-628649","name":"남촌막국수","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"봉평 장터 입구에서 메밀막국수를 내는 집이에요","basis":["봉평 재래장터 입구에 위치한","메밀 막국수, 메밀 비빔 막국수, 메밀 전병"],"confidence":"high"},
+{"id":"nt-628661","name":"동대산식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"오대산 월정사 입구에서 산채정식을 내는 식당이에요","basis":["오대산 국립공원 월정사 입구에 위치한","구수한 된장찌개가 함께 제공되는 특별한 산채정식을"],"confidence":"high"},
+{"id":"nt-628880","name":"부림식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"20여 가지 반찬이 나오는 산채정식 식당이에요","basis":["20여 가지 반찬의 산채정식 전문식당이다","직접 손질한 8가지 이상의 신선한 산나물"],"confidence":"high"},
+{"id":"nt-628920","name":"오대산서울식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"산채비빔밥과 산채정식, 감자전을 내는 산채요리 집","basis":["산채요리 전문 음식점이다","산채비빔밥과 산채정식으로 유명한 곳이다"],"confidence":"high"},
+{"id":"nt-628954","name":"유정식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"오대산산채백반거리에서 산채한정식을 내는 집이에요","basis":["오대산산채백반거리에 위치하였다","대표메뉴로는 황태정식, 산채정식, 산채비빔밥 등이 있다"],"confidence":"high"},
+{"id":"nt-712469","name":"납작식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"오삼불고기와 오징어불고기를 내는 식당이에요","basis":["오삼불고기와 오징어불고기 맛집이다","시원한 별미인 막국수와 황태구이 역시 인기 메뉴이다"],"confidence":"high"},
+{"id":"nt-712490","name":"노다지","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"오삼불고기와 곤드레 나물밥이 대표메뉴인 한식집","basis":["평창군 대관령면에 위치한 한식 전문점이다","오삼불고기와 강된장이 곁들여진 곤드레 나물밥이 대표메뉴이다"],"confidence":"high"},
+{"id":"nt-712505","name":"도암식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"오삼불고기를 내고 남은 양념에 볶음밥을 해 먹는 집","basis":["오삼불고기를 대표 메뉴로 선보이며","남은 양념에 밥을 볶아 먹는 셀프 볶음밥도 즐길 수 있다"],"confidence":"high"},
+{"id":"nt-712531","name":"황태덕장","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"대관령 황태로 구이와 해장국, 전골을 내는 식당","basis":["대관령의 특산물인 황태요리 전문점이다","황태구이, 황태해장국, 황태전골"],"confidence":"high"},
+{"id":"nt-712545","name":"황태회관","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"황태찜과 황태구이를 내는 황태요리 전문점이에요","basis":["평창군 대관령면에 위치한 황태요리 전문점이다","이 집의 주요리는 황태찜과 황태구이로"],"confidence":"high"},
+{"id":"nt-736113","name":"진미식당","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"입구에 물레방아가 있는 메밀막국수 전문점이에요","basis":["입구에 물레방아가 있는 운치 있는 식당으로 메밀막국수 전문점이다"],"confidence":"high"},
+{"id":"nt-736117","name":"풀내음","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"메밀국수와 메밀묵, 메밀부침개를 내는 식당이에요","basis":["메밀국수, 메밀묵, 메밀부침개를 전문으로 하는 식당이다","물레방아, 장승과 같은 소품들은"],"confidence":"high"},
+{"id":"nt-736118","name":"현대막국수","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"국내산 메밀로 만든 순메밀막국수를 내는 집이에요","basis":["100% 국내산 메밀로 만든 순메밀막국수가 대표 메뉴인 곳이다","메밀가루와 배추를 넣어 부친 메밀부침"],"confidence":"high"}
+]
