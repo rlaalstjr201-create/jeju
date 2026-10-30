@@ -2,20 +2,20 @@
  "criteria": "review/gangwon/kakao-criteria.md",
  "city": "양양",
  "source": "Kakao Local keyword search (id·place_url만 저장)",
- "callsAllCities": 1191,
+ "callsAllCities": 1192,
  "targets": 172,
  "done": 172,
  "status": {
-  "matched": 129,
-  "unmatched": 43,
+  "matched": 130,
+  "unmatched": 42,
   "closed": 0
  },
  "rule": {
-  "exact": 108,
+  "exact": 109,
   "contains": 21,
-  "none": 43
+  "none": 42
  },
- "matchedRate": 0.75,
+ "matchedRate": 0.7558139534883721,
  "pass": true,
  "rows": [
   {
@@ -747,14 +747,6 @@
    "placeUrl": "http://place.map.kakao.com/18845332"
   },
   {
-   "id": "nt-2714824",
-   "query": "낙산해안로",
-   "status": "unmatched",
-   "rule": "none",
-   "kakaoPlaceId": null,
-   "placeUrl": null
-  },
-  {
    "id": "nt-2715216",
    "query": "38평화마을",
    "status": "unmatched",
@@ -937,6 +929,14 @@
    "rule": "none",
    "kakaoPlaceId": null,
    "placeUrl": null
+  },
+  {
+   "id": "nt-2808938",
+   "query": "알로하웨이브",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "904887408",
+   "placeUrl": "http://place.map.kakao.com/904887408"
   },
   {
    "id": "nt-2837935",

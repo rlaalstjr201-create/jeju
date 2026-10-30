@@ -1,0 +1,43 @@
+{
+ "round": "01-add",
+ "city": "양양",
+ "criteria": "review/gangwon/pop-criteria.md",
+ "source": "Naver 검색광고 keywordstool, showDetail=1",
+ "places": 1,
+ "keywords": 1,
+ "calls": 1,
+ "failed": [],
+ "rows": [
+  {
+   "id": "nt-2808938",
+   "name": "알로하웨이브",
+   "keywords": [
+    {
+     "keyword": "알로하웨이브",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 220,
+     "volume": 240
+    }
+   ],
+   "volume": 240
+  }
+ ],
+ "callLog": [
+  {
+   "at": "2026-10-30T16:38:59.844Z",
+   "batch": [
+    "알로하웨이브"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "알로하웨이브",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 220
+    }
+   ]
+  }
+ ]
+}

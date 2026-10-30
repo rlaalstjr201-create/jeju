@@ -246,10 +246,14 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
       expect(every.pop.filter((r) => cityOf.get(r.id)?.city === city).every((r) => Number.isInteger(r.volume))).toBe(true);
     });
   }
-  it('양양은 01이 감사에서 떨어지고 02(criteria-02.md)가 통과해 02 판정으로 싣는다', () => {
+  it('양양은 01이 감사에서 떨어지고, 03(criteria-03.md, 01·02 표본 밖에서 감사)이 통과해 03 판정으로 싣는다', () => {
     expect(JSON.parse(readFileSync(resolve(dir, 'audit-양양-01.json'), 'utf8')).pass).toBe(false);
-    expect(JSON.parse(readFileSync(resolve(dir, 'audit-양양-02.json'), 'utf8')).pass).toBe(true);
-    expect(file.some((s) => s.area === '양양')).toBe(true);
+    const a3 = JSON.parse(readFileSync(resolve(dir, 'audit-양양-03.json'), 'utf8'));
+    expect(a3.pass).toBe(true);
+    const prior = new Set(['01', '02'].flatMap((r) => JSON.parse(readFileSync(resolve(dir, `audit-양양-${r}-sample.json`), 'utf8')).items.map((i: { id: string }) => i.id)));
+    expect(a3.rows.filter((r: { id: string }) => prior.has(r.id))).toEqual([]);
+    expect(file.filter((s) => s.area === '양양').every((s) => every.verdicts.get(s.id)?.keep === true)).toBe(true);
+    expect(file.some((s) => s.id === 'nt-2808938') && !file.some((s) => s.id === 'nt-2714824')).toBe(true);
   });
   it('양양을 더해도 강릉·속초·춘천 레코드는 양양 전 세 도시 빌드와 같다(같은 이름 규칙으로 바뀐 이름 1곳만 다름)', () => {
     const three = build(loadInputs('gangwon', ['강릉', '속초', '춘천'])).spots;
