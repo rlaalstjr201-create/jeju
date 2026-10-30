@@ -11,9 +11,9 @@ import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, install
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, startScreen } from './release';
 import { HOME, createNav } from './nav';
-import { REACHES, type Button, type Reach, type Tab } from './pick';
+import { REACHES, type Button, type Reach, type Spot, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
-import { DUSK_LEAD_MIN, sunPoint } from './home';
+import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './home';
 import { sunriseMinutes, sunsetMinutes } from './sun';
 import { PLACE, createRenderer, dateLabel, findEls } from './render';
 import { GPS_KEY, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
@@ -160,6 +160,14 @@ export function mountApp(doc: Document, deps: Deps): App {
     peek: () => sourceOf(state.dest, state.sgg).peek(),
     dispose: () => Object.values(sources).forEach((x) => x?.dispose()),
   };
+  /** The list in use asked for ahead of a tap. If it does not come (failed, or not within the wait) while it is still the
+   * one in use, the home stops holding places for it (listFailed); a copy that lands later is drawn as ever (onLoad). */
+  function warm() {
+    const key = keyOf(state.dest, state.sgg);
+    data.get().catch(() => {
+      if (keyOf(state.dest, state.sgg) === key && !data.peek()) dispatch({ type: 'listFailed' });
+    });
+  }
   const renderer = createRenderer(doc, els, { stageHome: !!deps.yieldToMain });
   const clockNow = () => deps.today?.() ?? new Date();
   const today0 = dayOf(clockNow());
@@ -271,6 +279,26 @@ export function mountApp(doc: Document, deps: Deps): App {
     countShown();
     askRain();
     duskTimer();
+    keepRow();
+  }
+
+  /** 오늘 판's row ahead (home.ts rowTimes, KEYS.row), for index.html's first script: worked out in a task of its own
+   * once the list is in, and again only when what it depends on changes. */
+  let rowSig = '';
+  let rowSpots: Spot[] | null = null;
+  let rowVisited: readonly string[] = [];
+  function keepRow() {
+    const s = state;
+    if (!BUSAN || !s.spots) return;
+    const origin = homeOrigin(s);
+    const sig = [s.dest, s.sgg, origin?.key, origin?.point.lat, origin?.point.lng, s.today, s.when, rainNow(s)].join('|');
+    if (sig === rowSig && s.spots === rowSpots && s.visited === rowVisited) return;
+    rowSig = sig;
+    rowSpots = s.spots;
+    rowVisited = s.visited;
+    later(0, () => {
+      if (state.spots) store.setRow(state.dest, rowTimes(state, state.spots, homeOrigin(state), clockNow().getTime()));
+    });
   }
   /** One tap, one draw: the actions `fn` dispatches are reduced at once and drawn together when it ends (render is
    * idempotent, so the screen is the one the last of them would draw). Only for steps that never read the DOM
@@ -352,8 +380,9 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (signal.aborted) return;
       const at = clockNow().getTime();
       rainAsked = { area, at, ok: rain !== null };
-      // a failed ask after an expired answer must not leave the old rain row up for hours
-      if (rain === null) return void (state.rain?.area === area && state.rain.rain && dispatch({ type: 'rain', area, rain: false }));
+      // a failed ask after an expired answer must not leave the old rain row up for hours; a first one settles the row
+      // as none (render.ts stops holding its place)
+      if (rain === null) return void (!(state.rain?.area === area && !state.rain.rain) && dispatch({ type: 'rain', area, rain: false }));
       store.writeRain({ v: 1, area, at, rain });
       dispatch({ type: 'rain', area, rain });
     });
@@ -1343,7 +1372,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (ready) dispatch({ type: 'spots', spots: ready });
     });
     if (opts.basis && opts.basis !== 'region') store.setBasis(opts.basis);
-    data.get().catch(() => undefined);
+    warm();
   }
   /** A 시군구 picked in the 자동 지역's 동네 index (another 시도's, plans/nationwide-app.md 4): its list from now on. */
   function toSgg(area: { name: string; group: string }) {
@@ -1454,7 +1483,7 @@ export function mountApp(doc: Document, deps: Deps): App {
         // 거절 뒤에 골랐다면 라벨은 지금처럼 지역 고르기 (spec 1.2)
         if (why === 'denied') dispatch({ type: 'permission', permission: 'denied' });
         if (how === 'gps' && point) dispatch({ type: 'homeFix', point });
-        data.get().catch(() => undefined);
+        warm();
         // the cover went with the button that had the focus: the first mood takes it
         doc.querySelector<HTMLElement>('[data-mood]')?.focus({ preventScroll: true });
       },
@@ -1470,7 +1499,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     // Warm the data so the first tap is fast (what it brings is handled by the source's onLoad above). Under the 시작
     // 화면 too: the Jeju home drawn under it is whole (what a crawler renders), and the worker precaches that list on
     // every device anyway (ADR-0093 Amendment 8, plan m3 (가)).
-    data.get().catch(() => undefined);
+    warm();
   };
   if (deps.yieldToMain) void deps.yieldToMain().then(firstDraw);
   else firstDraw();

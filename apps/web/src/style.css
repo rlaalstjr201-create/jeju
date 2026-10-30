@@ -169,6 +169,9 @@ main { flex: 1; display: flex; flex-direction: column; }
 .lang-suggest .x { flex: none; display: grid; place-items: center; width: 44px; min-height: 44px; align-self: stretch; color: var(--muted); }
 /* 오늘 판 (ADR-0088): one grey face, 16 round, the sun in a 32px 귤-tint cell on the left; the lines beside it */
 .today { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; column-gap: 12px; margin-top: 8px; padding: 12px 14px; border-radius: var(--r-card); background: var(--fill); }
+/* a one-line row's place, held from the first paint at the times the last visit said a row would be up (index.html
+   yc-row, app.ts keepRow; render.ts lets it go once the row is decided): the moods do not move when it comes */
+.yc-row .today { min-height: calc(1.5em + 56px); align-content: start; }
 .today-ic { grid-row: 1 / span 2; align-self: start; display: grid; place-items: center; width: 32px; aspect-ratio: 1; border-radius: var(--r-tag); background: var(--acc-tint); color: var(--accent); }
 .today-line { grid-column: 2; margin: 0; min-height: 1.5em; color: var(--muted); font-variant-numeric: tabular-nums; text-wrap: pretty; }
 #date { color: var(--text); font-weight: 600; }

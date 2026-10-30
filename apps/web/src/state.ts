@@ -118,6 +118,9 @@ export interface State {
   /** 뺀 곳 N곳 opened in the saved list (ADR-0087); closed each time the list opens. */
   visitedOpen: boolean;
   spots: Spot[] | null;
+  /** the home's list did not come (failed, or not within the wait): the home stops holding places for it. False again
+   * once it comes, or with another destination. */
+  listFailed: boolean;
   broken: string[];
   /** photos that failed while offline: tried again once the connection is back. */
   brokenOffline: string[];
@@ -196,6 +199,8 @@ export type Action =
   /** ADR-0081: the survey line was tapped (gone for good). */
   | { type: 'surveyTapped' }
   | { type: 'feedbackSent' }
+  /** the home's list did not come (app.ts warm) */
+  | { type: 'listFailed' }
   /** another destination (ADR-0094): its basis, region and 숙소; what was picked from the other one's places goes.
    * `note`: a GPS read moved it (specs/busan.md 1.3). */
   | { type: 'dest'; dest: Dest; basis: Basis; region: RegionName | null; stay: Stay | null; note?: boolean; sgg?: SggCode | null };
@@ -261,6 +266,7 @@ export function initialState(init: {
     visitNote: null,
     visitedOpen: false,
     spots: null,
+    listFailed: false,
     broken: [],
     brokenOffline: [],
     hintSeen: init.hintSeen,
@@ -596,7 +602,9 @@ function step(s: State, a: Action): State {
     case 'abort':
       return s.phase.k === 'pending' ? { ...s, phase: { k: 'idle' } } : s;
     case 'spots':
-      return s.spots === a.spots ? s : { ...s, spots: a.spots };
+      return s.spots === a.spots && !s.listFailed ? s : { ...s, spots: a.spots, listFailed: false };
+    case 'listFailed':
+      return s.spots || s.listFailed ? s : { ...s, listFailed: true };
     case 'openSaved': {
       const opened = enterView(s, 'saved');
       return a.restored ? { ...opened, savedFrom: null } : opened;
@@ -709,6 +717,7 @@ function step(s: State, a: Action): State {
         region: a.region,
         stay: a.stay,
         spots: null,
+        listFailed: false,
         cards: null,
         origin: null,
         originReach: null,

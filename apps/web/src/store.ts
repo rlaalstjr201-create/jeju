@@ -51,6 +51,9 @@ export const KEYS = {
   dest: 'jeju.dest',
   /** ADR-0097 Amendment 1: the last 시군구 of the 자동 지역 (its code), written there only. */
   sgg: 'jeju.sgg',
+  /** 오늘 판's row ahead `[dest, from, to, from, to, …]` (ms, home.ts rowTimes): read by index.html's first script only, to
+   * hold the row's place before the data. Missing = no row ahead. */
+  row: 'jeju.row',
 } as const;
 
 /** ADR-0097: the keys that belong to one destination — `jeju.basis`, `jeju.region`, `jeju.stay` stay Jeju's; Busan's
@@ -303,6 +306,8 @@ export interface Store {
   /** the 자동 지역's last 시군구 (`jeju.sgg`), or null. */
   sgg(): SggCode | null;
   setSgg(c: SggCode): void;
+  /** 오늘 판's row ahead for `dest` (KEYS.row); no times removes it. Written only when it changes. */
+  setRow(dest: Dest, times: readonly number[]): void;
   setBasis(b: Basis): void;
   setReach(r: Reach): void;
   /** for this session only (sessionStorage); off removes it. */
@@ -461,6 +466,11 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       return typeof v === 'string' && SGG_CODE.test(v) ? (v as SggCode) : null;
     },
     setSgg: (c) => void set(local, KEYS.sgg, c),
+    setRow(dest, times) {
+      const v = [dest, ...times];
+      if (!times.length) removeQuietly(local, KEYS.row);
+      else if (!same(get(local, KEYS.row), v)) set(local, KEYS.row, v);
+    },
     load(today) {
       const { basis, region, stay } = place();
       const rawReach = get(local, KEYS.reach);

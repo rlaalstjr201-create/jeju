@@ -1,11 +1,12 @@
 // 홈 A′ (ADR-0075, specs/home-refresh.md): what the first screen shows besides the moods. Pure, no DOM — render.ts draws it.
 import { AREAS, areaByName, nearestArea, type Area, type AreaName } from './areas';
-import type { Day } from './dates';
+import { addDays, type Day } from './dates';
 import { DEST, destOfId, type Dest } from './dest';
 import { marketDay } from './market';
 import { BUSAN, NATION, OPEN_AREAS, openAreasOf } from './release';
 import { byId, distanceKm, islandTop, listed, pickCards, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
-import { rainArea, whenDay, type State } from './state';
+import { pickSpots, rainArea, whenDay, type State } from './state';
+import { RAIN_TTL_MS } from './store';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
 
@@ -113,6 +114,37 @@ export function todayActs(markets: MarketRow[], rain = false, sunset: MarketRow[
 
 /** 비 소식 shows: it rains (pop ≥ 60) in the area the home speaks for now. */
 export const rainNow = (s: State): boolean => !!s.rain?.rain && s.rain.area === rainArea(s);
+
+/** How many days ahead rowTimes looks. */
+export const ROW_DAYS = 14;
+const DAY_MS = 86_400_000;
+/** 오늘 판's row ahead: when, from `now` through the next ROW_DAYS days, the home as it is set now (basis, the day viewed,
+ * 뺀 곳) draws a row to tap, as merged [from, to) ms pairs — a market's day whole, else 노을 볼 곳's window, and 비 소식 for
+ * the half hour its answer is kept. index.html's first script holds the row's place at those times, before the data. */
+export function rowTimes(s: State, spots: Spot[], origin: Origin | null, now: number): number[] {
+  const out: number[] = [];
+  const add = (from: number, until: number) => {
+    const a = Math.round(Math.max(from, now));
+    const to = Math.round(until);
+    if (to <= a) return;
+    if (out.length && out[out.length - 1] >= a) out[out.length - 1] = Math.max(out[out.length - 1], to);
+    else out.push(a, to);
+  };
+  if (rainNow(s)) add(now, now + RAIN_TTL_MS);
+  if (!origin) return out;
+  const list = pickSpots(spots, s.visited);
+  for (let i = 0; i < ROW_DAYS; i++) {
+    const d = addDays(s.today, i);
+    const view = s.when !== 'now' && s.when > d ? s.when : d;
+    const start = Date.parse(`${d}T00:00:00+09:00`);
+    if (openMarkets(list, origin, view).length) add(start, start + DAY_MS);
+    else if (view === d && sunsetSpots(list, origin, d).length >= SUNSET_MIN) {
+      const set = sunsetMinutes(origin.point, d);
+      add(start + (set - DUSK_LEAD_MIN) * 60_000, start + set * 60_000);
+    }
+  }
+  return out;
+}
 
 /** km along a meridian per degree of latitude (distanceKm's earth radius 6371) */
 const KM_PER_LAT_DEG = (6371 * Math.PI) / 180;

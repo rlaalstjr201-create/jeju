@@ -11,7 +11,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { CARD_COUNT, REACHES, TRAVEL_TEXT, historyKey, listed, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, rainArea, savedCount, savedDays, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
@@ -1263,16 +1263,17 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
     const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
     // 밤 (ADR-0091): 「예:」 put 야외 산길 and islands by boat after the others from the sunset to the sunrise
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest].join('|');
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed].join('|');
   }
 
   /** 지금 여기서 (ADR-0101, specs/home-v2.md 1): the one place the 아무거나 rule would show first, over the moods; not drawn
    * while no place with a photo can be shown. The card's name is not a link: its one tap is 길찾기. Until the data is in,
-   * the empty card keeps its place (.now:empty): the moods under it do not move when it comes. */
+   * the empty card keeps its place (.now:empty): the moods under it do not move when it comes. A list that did not come
+   * (s.listFailed) takes it away: no empty grey card is left up. */
   function renderNow(s: State, spots: Spot[] | null, origin: Origin | null) {
     const spot = spots ? nowSpot(s, spots, origin) : null;
     if (!spot) {
-      els.now.hidden = !!spots;
+      els.now.hidden = !!spots || s.listFailed;
       els.now.replaceChildren();
       setAttr(els.now, 'aria-label', null);
       return;
@@ -1304,6 +1305,10 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     setText(els.ask, hc.ask);
     setText(els.lede, hc.lede);
     const origin = homeOrigin(s);
+    // a row's place, held from the first paint when the last visit said a row would be up now (index.html yc-row, app.ts
+    // keepRow), until what decides the row is in — the list and 비 소식's answer — or the list did not come
+    const area = rainArea(s);
+    if (s.listFailed || (s.spots && (!area || s.rain?.area === area))) doc.documentElement.classList.remove('yc-row');
     const sig = homeSigOf(s, origin);
     if (sig === homeSig && s.spots === homeSpots && s.visited === homeVisited) return;
     homeSig = sig;
@@ -1326,8 +1331,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     els.today.querySelector(':scope > .act')?.remove();
     const first = acts[0];
     if (first) els.today.append(first.k === 'rain' ? rainRow(s.indoor) : first.k === 'sunset' ? sunsetRow(first.rows.length) : todayRow(first.row, dated));
-    // until the data is in (.wait marks it): no place held for a row to tap, which most first draws are without — the
-    // row, when there is one, comes with the data and the 지금 여기서 card below it
+    // until the data is in (.wait marks it); a row's place is held only at the times the last visit said one would be up
+    // (yc-row, above)
     els.today.classList.toggle('wait', !spots);
     renderNow(s, spots || null, origin);
 
