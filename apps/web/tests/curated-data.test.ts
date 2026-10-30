@@ -265,3 +265,26 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
     }
   });
 });
+
+describe('주인 덮어쓰기 (review/gangwon/owner-overrides.json)', () => {
+  const every = loadInputs('gangwon', CITIES);
+  const ids = ['nt-2383582', 'nt-125668'];
+  it('판정 파일은 rest 그대로이고, 덮어쓰기는 이 두 곳의 mood만 walk로 바꾼다', () => {
+    expect((every.overrides ?? []).map((o: { id: string }) => o.id).sort()).toEqual([...ids].sort());
+    for (const id of ids) expect(every.verdicts.get(id)?.mood).toBe('rest');
+    const plain = build({ ...every, overrides: [] }).spots;
+    const owned = build(every).spots;
+    expect(owned.length).toBe(plain.length);
+    const changed = owned.filter((s, i) => JSON.stringify(s) !== JSON.stringify(plain[i]));
+    expect(changed.map((s) => s.id).sort()).toEqual([...ids].sort());
+    for (const s of changed) {
+      expect(s.mood).toBe('walk');
+      expect('sub' in s).toBe(false);
+      expect({ ...s, mood: 'rest' }).toEqual(plain.find((p) => p.id === s.id));
+    }
+    expect(JSON.stringify(owned)).toBe(text);
+  });
+  it('before가 판정과 다르면 멈춘다', () => {
+    expect(() => build({ ...every, overrides: [{ id: ids[0], field: 'mood', before: 'food', after: 'walk' }] })).toThrow(/owner override/);
+  });
+});

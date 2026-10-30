@@ -6,6 +6,7 @@ export interface CuratedInputs {
   items: { id: string; title: string; addr1: string; city: string; contenttypeid: number; lat: number; lng: number; image: string; lclsSystm3: string }[];
   verdicts: Map<string, { id: string; keep: boolean; mood: string; sub?: string; indoor: boolean; reason: string; basis: string[] }>;
   fixes: { id: string; field: string; before: string; after: string }[];
+  overrides?: { id: string; name?: string; field: string; before: string; after: string; why?: string }[];
   kakao: { id: string; status: string; rule: string; kakaoPlaceId: string | null }[];
   pop: { id: string; volume: number | null }[];
 }

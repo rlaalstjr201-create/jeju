@@ -61,8 +61,10 @@ export function loadInputs(dest = 'gangwon', cities = ['강릉'], dir = resolve(
     // 판정 회차가 바뀌어 새로 잰 곳(measure.mjs --add)은 뒤에 붙여 같은 id의 앞 값을 덮는다
     if (existsSync(resolve(dir, `pop-${city}-01-add.json`))) pop.push(...readJson(resolve(dir, `pop-${city}-01-add.json`)).rows);
   }
+  // 주인 결정(review/<dest>/owner-overrides.json): 판정 파일은 그대로 두고 기분만 덮는다. 도시 목록에 든 곳만 쓴다
+  const overrides = existsSync(resolve(dir, 'owner-overrides.json')) ? readJson(resolve(dir, 'owner-overrides.json')) : [];
   const items = readJson(resolve(dir, 'scope.json')).items.filter((it) => cities.includes(it.city));
-  return { dest, cities, items, verdicts, fixes, kakao, pop };
+  return { dest, cities, items, verdicts, fixes, overrides, kakao, pop };
 }
 
 /** pop-criteria.md 8절(같은 이름): 이름이 같은 곳이 둘 이상이면 (a) 같은 기분이고 주소가 같거나 100m 안이면 같은 곳이라 id가 작은 하나만
@@ -109,7 +111,15 @@ export function townOf(item) {
 /** The shipped records (scope.json order) and the ids left out: { spots, closed, unknownPosition }. Throws on anything
  * missing or out of rule. Scores and 유명한 곳 are counted over the shipped places only. */
 export function build(inputs = loadInputs()) {
-  const { items, verdicts, fixes, kakao, pop } = inputs;
+  const { items, verdicts: judged, fixes, overrides = [], kakao, pop } = inputs;
+  // 주인 덮어쓰기: before가 판정과 다르면 멈춘다. 걷기·그 밖은 sub가 없다(SUBS) — 덮은 뒤 sub는 쓰지 않는다
+  const verdicts = new Map(judged);
+  const itemIds = new Set(items.map((it) => it.id));
+  for (const o of overrides.filter((o) => itemIds.has(o.id))) {
+    const v = judged.get(o.id);
+    if (!v || o.field !== 'mood' || v.mood !== o.before) throw new Error(`owner override ${o.id}: mood ${v?.mood} ≠ before ${o.before}`);
+    verdicts.set(o.id, { ...v, mood: o.after });
+  }
   const fixed = new Map(fixes.filter((f) => f.field === 'reason').map((f) => [f.id, f]));
   const volumeById = new Map(pop.map((r) => [r.id, r.volume]));
   const kakaoRow = new Map(kakao.map((r) => [r.id, r]));
