@@ -63,6 +63,15 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     expect($('#results > .landing').hidden).toBe(true);
   });
 
+  it('no reason line, so each row card keeps its own trip even when the two are the same (no 「둘 다」 on 아니면)', async () => {
+    mount({ dest: 'nation', sgg: '51150' });
+    await wait();
+    await tap('[data-mood="any"]');
+    await wait();
+    expect($('#cards .alt').textContent).toBe('아니면');
+    expect($$('#cards .card.row .meta .travel').map((t) => t.textContent)).toEqual(['차로 약 5분', '차로 약 5분']);
+  });
+
   it('기준 시트: 다른 곳 pressed; its index is the 시도 in use, 다른 시도 lists them, 전북 → 전주시 완산구 is the list from then on', async () => {
     const { asked } = mount({ dest: 'nation', sgg: '51150' });
     await wait();

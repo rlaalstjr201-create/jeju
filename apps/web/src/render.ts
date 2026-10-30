@@ -572,10 +572,11 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   const tripOf = (origin: Origin, c: Card) => travel(origin.point, origin.isPoint, c.spot);
   /** Results meta (§7): the first card always says where from and which map app a tap opens. The two row cards'
    * trip is said once on the `아니면` line when it is the same ("아니면 · 둘 다 차로 약 5분") and the rows then
-   * have no meta line; otherwise each row says its own trip, without the "from". */
-  function resultMetas(origin: Origin, list: Card[]): { metas: (string | null)[]; both: string | null } {
+   * have no meta line; otherwise each row says its own trip, without the "from". `own`: 자동 지역 (no reason line,
+   * plans/nationwide-app.md R7) — each row keeps its trip, so the row is not a name alone. */
+  function resultMetas(origin: Origin, list: Card[], own = false): { metas: (string | null)[]; both: string | null } {
     const trips = list.map((c) => travelText(tripOf(origin, c)));
-    const both = list.length === 3 && trips[1] === trips[2] ? trips[1] : null;
+    const both = !own && list.length === 3 && trips[1] === trips[2] ? trips[1] : null;
     const metas = list.map((c, i) => (i === 0 ? travelText(tripOf(origin, c), origin.from) : both ? null : trips[i]));
     return { metas, both };
   }
@@ -845,7 +846,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         break;
       case 'cards': {
         const { list, origin } = s.cards!;
-        const { metas, both } = resultMetas(origin, list);
+        const { metas, both } = resultMetas(origin, list, s.dest === 'nation');
         const nodes: HTMLElement[] = [];
         list.forEach((c, i) => {
           if (i === 1) {
