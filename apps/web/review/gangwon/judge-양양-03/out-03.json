@@ -1,0 +1,537 @@
+[
+ {
+  "id": "nt-2500865",
+  "name": "롱비치 서프스쿨",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "서핑을 처음부터 배우는 강습스쿨이에요",
+  "basis": [
+   "서핑 전문 강습스쿨이다",
+   "초보자들이 안전하게 부상 없이 서핑을 배울"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2501905",
+  "name": "서피비치",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "하조대해수욕장 북쪽에 있는 서핑 전용 해변이에요",
+  "basis": [
+   "하조대해수욕장 북쪽에 조성한 1㎞의 서핑 전용 해변으로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2702316",
+  "name": "인구항 배낚시",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "낚시객이 꾸준히 찾는 작은 어항이에요",
+  "basis": [
+   "인구항은 강원도 양양군 현남면에 위치한 작은 어항으로",
+   "삼치, 도다리, 열기, 대구, 가자미 등"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2702327",
+  "name": "구룡령 옛길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "양양과 홍천을 잇는 옛길을 걷는 곳이에요",
+  "basis": [
+   "구룡령 옛길은 양양과 홍천을 연결하는 옛길로",
+   "옛길 걷기의 흥미를 더해주고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702446",
+  "name": "수산항 낚시터",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "방파제 낚시로 알려진 국가어항이에요",
+  "basis": [
+   "수산항은 1991년 국가어항으로 지정된 곳으로",
+   "방파제 낚시, 바다낚시가 유명한데,"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2702452",
+  "name": "사이클경기장",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702507",
+  "name": "[해파랑길] 44코스",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "수산항에서 설악해맞이공원까지 12.3km 걷는 길이에요",
+  "basis": [
+   "양양 수산항에서 출발해 설악해맞이공원까지 이어진 12.3km",
+   "동해안을 감상하며 걷는 길로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2702630",
+  "name": "연어 자전거길",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "남대천을 따라 달리는 9km 자전거길이에요",
+  "basis": [
+   "연어 자전거길은 연어가 회귀하는 남대천을 따라",
+   "대부분 평지로 이루어져 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2710732",
+  "name": "하조대 둘레길",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "하조대 전망대에서 등대 쪽으로 해안을 따라 걷는 길이에요",
+  "basis": [
+   "하조대 전망대에서 하조대 등대 방향으로 해안을 따라 조성된 길이다",
+   "하조대 둘레길을 걸으며 하조대 전망대와 등대"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710789",
+  "name": "[해파랑길] 42코스",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "죽도정에서 하조대해변까지 9.9km 걷는 길이에요",
+  "basis": [
+   "죽도정 입구에서 출발해 하조대해변까지 이어진 9.9km",
+   "동해를 감상하며 남겨진 우리나라 분단 역사를"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710791",
+  "name": "[해파랑길] 43코스",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "하조대 해변에서 수산항까지 9.5km 걷는 길이에요",
+  "basis": [
+   "하조대 해변에서 출발해 수산항까지 이어진 9.5km",
+   "해안을 따라 난 길은 인적이 드물어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710808",
+  "name": "해담마을 수륙양용차",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "수륙양용차를 타고 미천골 계곡을 달리는 체험이에요",
+  "basis": [
+   "지상과 수상을 오가는 수륙양용차를 타고",
+   "A코스는 벼락바위를 돌아오는 왕복 3㎞ 코스이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710813",
+  "name": "요트&수산어촌체험(양양)",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "수산항에서 요트와 투명카누를 타는 바다 체험이에요",
+  "basis": [
+   "요트체험은 물론 투명카누, 스노클링, 배낚시 등의",
+   "수산어촌체험마을은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2733989",
+  "name": "갈천오토캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2734248",
+  "name": "지경국민여가캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2744430",
+  "name": "꿈꾸는계곡 펜션",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2744569",
+  "name": "양양포레스트캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2747672",
+  "name": "풀앤밸리야영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754429",
+  "name": "밸리캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754430",
+  "name": "골짜구니 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754433",
+  "name": "자연과우리캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754435",
+  "name": "그랑블루글램핑&펜션",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754446",
+  "name": "그루터기캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754473",
+  "name": "한별마을리조트",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754486",
+  "name": "오색솔밭야영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2754490",
+  "name": "수봉야영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2757177",
+  "name": "하늘빛계곡 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2757180",
+  "name": "해담구룡령 야영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2757181",
+  "name": "행복나드리 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2791432",
+  "name": "오색허브농원 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2792050",
+  "name": "양양오색 휴랜드 야영장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2792157",
+  "name": "우니메이카 양양점",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2792245",
+  "name": "하조대캠핑카",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2908152",
+  "name": "갈천힐링캠프",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2908194",
+  "name": "라라플레이스",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2908229",
+  "name": "양양 솔바다 캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2908264",
+  "name": "오색산새소리캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2912958",
+  "name": "우리들캠핑장",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2927441",
+  "name": "레포밸리",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "엎드려 타는 집라인으로 580미터를 활강하는 곳이에요",
+  "basis": [
+   "엎드린 자세로 타는 익스트림형 집라인",
+   "580미터를 40~50초간 활강하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2946583",
+  "name": "리버티",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "스케이트보드 콘크리트 파크와 보드 가게가 있는 곳이에요",
+  "basis": [
+   "보더들을 위한 멋진 볼 파크와 캐주얼한 보드 제품들로 가득한 내부",
+   "음료를 마시며 부담 없이 둘러보는 것도 가능하다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3038535",
+  "name": "남애스쿠버리조트",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "남애리 바다에서 초보부터 다이빙을 배우는 곳이에요",
+  "basis": [
+   "남애리에 위치한 다이빙 리조트로",
+   "초보자교육을 위한 7~10m 포인트부터"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072009",
+  "name": "빅웨이브",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "기사문해변에서 서핑 강습과 장비 렌털을 하는 곳이에요",
+  "basis": [
+   "기사문해변에 위치한 서핑리조트이다",
+   "입문 강습부터 레벨업 강습을 받을 수 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072010",
+  "name": "서프팩토리 양양설악점",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "설악해수욕장에서 서핑 강습을 받는 스쿨이에요",
+  "basis": [
+   "강원도 양양군 설악해수욕장에 위치한 서핑 스쿨이다",
+   "서핑 강습, 서핑보드 대여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072225",
+  "name": "모쿠서프",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "죽도해변에서 소수 인원으로 서핑을 가르치는 곳이에요",
+  "basis": [
+   "양양 서핑 메카인 죽도해변에 오픈한 모쿠서프는",
+   "4:1 소수 인원 강습을 진행하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072232",
+  "name": "인구서프",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "인구해변 가운데서 서핑 강습을 하는 서핑 숍이에요",
+  "basis": [
+   "서핑 숍으로 서핑 강습에서부터 관련 물품 쇼핑 및 대여",
+   "인구해변 중앙에 위치하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072233",
+  "name": "양파다이브",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "남애항에서 스킨스쿠버다이빙을 배우고 체험하는 곳이에요",
+  "basis": [
+   "양양 남애항에 있는 스킨스쿠버다이빙 리조트이다",
+   "오픈워터 자격증을 취득할 수 있는 프로그램도"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072234",
+  "name": "엉클서프양양",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "인구해변과 죽도해변 사이에서 서핑을 가르치는 곳이에요",
+  "basis": [
+   "서핑강습소와 서핑샾을 함께 운영하는 곳이다",
+   "인구해변과 죽도해변 가운데 위치하여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3082559",
+  "name": "서프월드",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "인구해변에서 서핑 강습과 보드 렌털을 하는 곳이에요",
+  "basis": [
+   "양양 인구해변에 위치하고 있으며",
+   "서핑 강습, 서핑 보드 렌털, 서핑 슈트 렌털 등의 서비스를"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131998",
+  "name": "양양전통시장 (4, 9일)",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "해안과 산간 특산물이 모이는 양양의 장터예요",
+  "basis": [
+   "토질과 기후 특성으로 인하여 특산물이 많다",
+   "해안지역과 산간지역이 각각 다른 상품이 생산됨으로써"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-133226",
+  "name": "영광정메밀국수",
+  "keep": true,
+  "mood": "food",
+  "sub": "meal",
+  "indoor": true,
+  "reason": "메밀만 쓰는 막국수에 살얼음 동치미를 곁들이는 집이에요",
+  "basis": [
+   "순지방 메밀만 사용하여",
+   "사시사철 살얼음이 뜨는 동치미는"
+  ],
+  "confidence": "high"
+ }
+]

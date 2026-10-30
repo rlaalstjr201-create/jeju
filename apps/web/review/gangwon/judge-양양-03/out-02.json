@@ -1,0 +1,646 @@
+[
+ {
+  "id": "nt-2710734",
+  "name": "하조대",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "기암괴석 해안 위 정자와 등대를 데크길로 걸어 만나요",
+  "basis": [
+   "기암괴석과 바위섬으로 이루어져 있고",
+   "데크길을 따라 올라가면 정자가 자리하고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710736",
+  "name": "남대천 생태관찰로",
+  "keep": true,
+  "mood": "walk",
+  "indoor": false,
+  "reason": "덱 탐방로를 따라 갈대숲을 걷는 곳이에요",
+  "basis": [
+   "길게 뻗은 덱 탐방로를 따라 금빛 갈대숲을 산책할 수 있고"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710737",
+  "name": "동해생명자원센터",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "연어 부화와 성장 과정을 소개하는 체험관이 있어요",
+  "basis": [
+   "연어생태체험관은 연어의 부화와 성장 과정, 회귀 경로 등",
+   "연어 사육동에서는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710739",
+  "name": "진전사",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "삼층석탑과 도의선사탑이 남아 있는 절이에요",
+  "basis": [
+   "양양 진전사지 삼층석탑(국보)",
+   "양양 진전사지 도의선사탑(보물)"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710820",
+  "name": "설악해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "수심이 얕고 백사장 모래가 고운 해수욕장이에요",
+  "basis": [
+   "여느 동해 해수욕장에 비해 수심이 얕고 조용하며",
+   "백사장 모래가 고와"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710821",
+  "name": "중광정해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "서핑 전용 해변인 서피 비치가 생긴 해수욕장이에요",
+  "basis": [
+   "우리나라 최초의 서핑 전용 해변인 서피 비치가 생기면서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710823",
+  "name": "기사문해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "서핑 파도로 알려져 서핑족이 주로 찾는 해변이에요",
+  "basis": [
+   "백사장이 아담해 해수욕객보다는 서핑족이 주로 찾는다",
+   "서핑하기 좋은 파도가 치는 것으로 유명하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710829",
+  "name": "잔교리해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "해송 숲 사이에 야영장이 있는 한적한 해수욕장이에요",
+  "basis": [
+   "해송 숲 사이에는 야영장이 있어 캠핑족을 반긴다",
+   "잘 알려지지 않아 매우 한적하게 바다를 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710838",
+  "name": "동산해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "서핑으로 알려졌고 바다 위로 죽도가 보이는 해변이에요",
+  "basis": [
+   "파도타기 좋은 환경 때문에",
+   "탁 트인 바다 위로 죽도가 보이는 전망이 일품이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710849",
+  "name": "동산포해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "수심이 무릎 높이 정도인 얕은 해변이에요",
+  "basis": [
+   "해변에서 바다로 약 15m까지 나가도 수심이 무릎 높이 정도여서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2712951",
+  "name": "명주사부도군",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "부도 12기와 비석 4개가 모여 있는 명주사 부도밭이에요",
+  "basis": [
+   "명주사에 마련된 이 부도밭에는",
+   "4개의 비석도 함께 남아있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2713095",
+  "name": "서림사지",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "삼층석탑과 석조비로자나불좌상이 서 있는 절터예요",
+  "basis": [
+   "양양서림사지삼층석탑과 서림사지석조비로자나불좌상이 전부다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2713784",
+  "name": "광진해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "물이 맑아 스노클링을 하는 사람이 많은 해수욕장이에요",
+  "basis": [
+   "스노클링으로 바닷속 절경을 즐기려는 사람들을 흔히 볼 수 있다",
+   "수질이 깨끗해 바다 밑이 훤히 들여다보일 정도다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714604",
+  "name": "잔교리해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "백사장이 작고 해송 사이에 야영장이 있는 해변이에요",
+  "basis": [
+   "백사장이 작고 깨끗하여",
+   "해송 사이로 야영장이 갖춰져 있어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714607",
+  "name": "원포리해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "일직선 백사장과 송림에 화상암 바위가 있는 해변이에요",
+  "basis": [
+   "일직선으로 뻗은 백사장과 얕고 깨끗한 바다",
+   "화상암이라는 바위가 있는데"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714611",
+  "name": "갯마을해변",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "모래를 파면 조개가 나오는 조용한 해수욕장이에요",
+  "basis": [
+   "모래바닥을 조금만 파헤쳐 보면 조개가 나오는데",
+   "수심이 깊지 않고 인파가 많이 몰리지 않아"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714661",
+  "name": "샘재골송이마을",
+  "keep": false,
+  "reject": "INSUFFICIENT_INFO",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2714816",
+  "name": "낙산항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "낙산사 옆 항구에서 바다를 보며 횟감을 맛보는 곳이에요",
+  "basis": [
+   "넓은 바다를 감상하며 싱싱한 횟감을 맛볼 수 있다는 것이",
+   "낙산항 바로 옆에는 해안 절벽에 자리 잡은 낙산사가"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714824",
+  "name": "낙산해안로",
+  "keep": false,
+  "reject": "OUT_OF_SCOPE",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2715216",
+  "name": "38평화마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "두릅 따기와 고사리 수확 체험을 하는 마을이에요",
+  "basis": [
+   "두릅 따기 체험, 표고버섯, 고사리 수확체험 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2717260",
+  "name": "금풀애마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "산촌 체험과 계곡물놀이를 하는 남대천 상류 마을이에요",
+  "basis": [
+   "계곡물놀이와 다양한 자연 속에서 즐거운 산촌 체험을 할 수 있다",
+   "금풀애체험관, 녹색체험관, 산림체험관 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2717271",
+  "name": "성국사",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "오색약수터를 지나 만나는 작은 사찰이에요",
+  "basis": [
+   "오색약수터를 지나면 만나게 되는 작은 사찰 성국사는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2717590",
+  "name": "김성래 가옥",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "안채와 사랑채, 솟을대문이 남은 전통 가옥이에요",
+  "basis": [
+   "안채와 사랑채로 구분되어 있는데",
+   "대문은 전형적인 솟을대문으로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2718844",
+  "name": "하광정항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "작은 어선이 들어오고 해맞이로 이름난 항구예요",
+  "basis": [
+   "작은 어선이 정박하는 작은 항구지만",
+   "이곳은 해맞이 명소로 이름난 만큼"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2752126",
+  "name": "동산항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "스킨스쿠버와 낚시를 하러 오는 조용한 항구예요",
+  "basis": [
+   "스킨스쿠버와 낚시를 취미로 갖는 사람들이",
+   "조용한 분위기를 자랑하는 항구이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2773573",
+  "name": "오색 용소폭포",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "설악산 주전골에 있는 높이 10m쯤 되는 폭포예요",
+  "basis": [
+   "설악산국립공원 남설악지구의 주전골에 위치한 폭포로",
+   "높이 약 10m, 소 깊이 약 7m 규모다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2773621",
+  "name": "기사문항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "배낚시와 방파제 낚시를 하는 작은 어항이에요",
+  "basis": [
+   "기사문항은 38선에 위치한 작은 규모의 어항이다",
+   "배낚시와 방파제에서 하는 바다낚시가 가능하며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2777043",
+  "name": "김택준가옥",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "겹집 구조의 안채와 사랑채가 있는 200년 된 가옥이에요",
+  "basis": [
+   "전체적으로 H자 모양을 하고 있는 전형적인 겹집으로",
+   "약 200년 정도 되었다고 하며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2777057",
+  "name": "이두형가옥",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "강원도 전형적인 겹집 구조로 200년쯤 된 가옥이에요",
+  "basis": [
+   "지은 지 200년 정도 되었으며",
+   "강원도의 전형적인 온돌 중심의 겹집 민가형에"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2777254",
+  "name": "양양 오색리 삼층석탑",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "오색석사 터로 보이는 곳에 선 높이 5m쯤 되는 석탑이에요",
+  "basis": [
+   "오색석사 터로 추정되는 곳에 위치한 석탑으로",
+   "높이는 약 5m이고 화강암으로 만들어졌다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2778084",
+  "name": "인구항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "방파제 낚시와 일몰 구경을 하는 작은 항구예요",
+  "basis": [
+   "인구항 방파제 여기저기에서 낚시하는 사람들도",
+   "동해안에서 일몰을 즐기는 명장소로도 유명하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2784323",
+  "name": "후진항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "빨간 등대와 방파제 낚시, 활어센터가 있는 항구예요",
+  "basis": [
+   "빨간 등대가 인상적인 쾌적한 항구로",
+   "항구의 활어센터에서는 싱싱한 제철 생선을"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2788875",
+  "name": "수산항",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "방파제와 등대, 요트가 정박한 일출 명소 항구예요",
+  "basis": [
+   "긴 방파제와 등대를 배경으로 한 양양의 일출 명소이며",
+   "크고 작은 각종 요트들이 정박할 수 있는"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2788978",
+  "name": "38선휴게소",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "바다를 바라보는 언덕에서 쉬어 가는 38선 휴게소예요",
+  "basis": [
+   "바다를 바라보는 언덕에 세워진 휴게소의 전망은",
+   "휴게소에선 휴식을 취하며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2788991",
+  "name": "남대천연어생태공원",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "갈대 사이 700m 데크 길과 전망대가 있는 공원이에요",
+  "basis": [
+   "길이 700m 정도의 데크가 뻗어 있고, 6개의 전망대도 있어",
+   "갈대와 물억새와 같은 남대천의 생태환경을"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2788996",
+  "name": "영혈사",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "원효대사가 세웠다고 전하는 절로 약수가 알려져 있어요",
+  "basis": [
+   "원효대사가 창건하였다",
+   "이 절에는 특히 약수가 유명해서"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2789002",
+  "name": "조규승가옥",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "약 300년 전에 지은 고택으로 앞에 북카페가 있어요",
+  "basis": [
+   "약 300년 전 지어진 것으로 추정된다",
+   "가옥 앞에는 북카페가 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2789008",
+  "name": "포매리 백로와 왜가리 번식지",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "소나무 숲에 백로와 왜가리가 둥지를 트는 천연기념물이에요",
+  "basis": [
+   "소나무가 약 500그루 되는 숲이 있으며",
+   "백로와 왜가리는 이곳에 둥지를 틀어 번식하고 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2915995",
+  "name": "양양송이조각공원",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "남대천 수변 잔디밭에 어린이 놀이시설이 있는 공원이에요",
+  "basis": [
+   "남대천 수변에 조성된 어린이놀이공원이다",
+   "미끄럼틀, 시소, 작은 집라인, 그물타기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2916001",
+  "name": "남애1리해수욕장",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "조용한 어촌 풍경에 여름엔 해당화가 피는 해변이에요",
+  "basis": [
+   "조용하고 작은 어촌의 풍경을 보여준다",
+   "여름에는 해당화가 해변 가득 피어"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3041749",
+  "name": "양리단길",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "서핑숍과 카페, 가게가 모인 인구해변 앞 거리예요",
+  "basis": [
+   "서핑숍 이외에도 카페, 가게, 게스트하우스 등이 모여 있는 거리로",
+   "앞에는 인구해변이 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3042140",
+  "name": "양양남대천체육공원",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "자전거 도로와 조깅 코스, 야생화 정원이 있는 공원이에요",
+  "basis": [
+   "자전거 도로와 조깅 코스가 시원하게 뻗어 있어",
+   "공원 일대에 아름답게 조성된 야생화 정원은"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072044",
+  "name": "더 스탠드",
+  "keep": true,
+  "mood": "food",
+  "sub": "cafe",
+  "indoor": false,
+  "reason": "하조대를 바라보는 오션뷰 카페와 루프탑 라운지예요",
+  "basis": [
+   "더 스탠드는 양양 하조대 오션뷰 카페 루프탑 라운지이다",
+   "2층 카페는 다양한 카페 메뉴를 접할 수 있으며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3082578",
+  "name": "쏠비치 양양 오션플레이",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": false,
+  "reason": "실내외 시설을 갖춘 워터파크로 사우나와 노천탕이 있어요",
+  "basis": [
+   "테마형 워터파크로 실내·외 시설을 갖추고 있어",
+   "동해안 청정 해수를 활용한 사우나와 노천탕을 운영해"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3454400",
+  "name": "양양새활용센터",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "버려진 병으로 허브 보틀과 풍경을 만드는 체험을 해요",
+  "basis": [
+   "버려지는 포도주 병을 활용한 허브 보틀 만들기 체험과",
+   "깨진 유리 조각을 가마에 1000도로 구워 풍경을 만드는 체험이 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-743036",
+  "name": "해담마을",
+  "keep": true,
+  "mood": "new",
+  "sub": "do",
+  "indoor": false,
+  "reason": "계곡 물놀이와 수륙양용차 체험을 하는 산골 마을이에요",
+  "basis": [
+   "수륙양용차 체험을 비롯한 다양한 체험 프로그램을 운영해",
+   "여름철에는 계곡 물놀이 명소로도 인기가 높다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-129883",
+  "name": "양양문화원",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-130930",
+  "name": "오산리선사유적박물관",
+  "keep": true,
+  "mood": "new",
+  "sub": "sight",
+  "indoor": true,
+  "reason": "8000년 전 신석기 유물을 전시하는 박물관이에요",
+  "basis": [
+   "양양 오산리 유적에서 출토된 유물을 보관·전시·연구한다",
+   "제1전시실은 어로, 채집, 토기 제작 등"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4054610",
+  "name": "양양 작은영화관",
+  "keep": false,
+  "reject": "NOT_DESTINATION",
+  "basis": [],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-131471",
+  "name": "어성전 산림교육관",
+  "keep": true,
+  "mood": "rest",
+  "indoor": false,
+  "reason": "계곡 물과 천연림 곁에 숲속휴양시설과 야영데크가 있어요",
+  "basis": [
+   "계곡의 맑은 물과 천연림이 함께 조화를 이루고 있으며",
+   "숲속휴양시설과 취사장, 야영데크 및 체육시설등이 설치되어있다"
+  ],
+  "confidence": "low"
+ }
+]
