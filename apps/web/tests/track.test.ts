@@ -2,7 +2,8 @@
 // 익명 사용 기록 (ADR-0061, specs/usage-events.md U1–U3): the tracker on its own (batching, offline, off), and
 // in the app with a fake sendBeacon (which events, once each, no position).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { FLUSH_AT, FLUSH_MS, ageOf, createTracker, type UsageEvent } from '../src/track';
+import { FLUSH_AT, FLUSH_MS, ageOf, contextOf, createTracker, type UsageEvent } from '../src/track';
+import { parseBatch } from '../events/validate';
 import { listed } from '../src/pick';
 import { BUSAN } from '../src/release';
 import { realSpots } from './fixtures';
@@ -563,5 +564,27 @@ describe('가 봤어요 (ADR-0087, specs/hide-visited.md S5)', () => {
     hide();
     expect(beacon).not.toHaveBeenCalled();
     expect(events()).toEqual([]);
+  });
+});
+
+describe('자동 지역 (plans/nationwide-app.md U15) — 시군구는 고른 것만', () => {
+  const base = { view: 'home', mood: null, sub: 'meal', newSub: 'mix', reach: 'drive30', when: 'now', today: '2026-10-30' } as const;
+  it('an area basis in the 자동 지역 says the chosen 시군구 (sgg), never as area; GPS and 숙소 say none', () => {
+    const area = contextOf({ ...base, basis: 'region', region: '51150', dest: 'nation' });
+    expect(area.sgg).toBe('51150');
+    expect(area.area).toBeUndefined();
+    for (const basis of ['gps', 'stay'] as const) {
+      const c = contextOf({ ...base, basis, region: '51150', dest: 'nation' });
+      expect(c.sgg).toBeUndefined();
+      expect(c.area).toBeUndefined();
+    }
+    const jeju = contextOf({ ...base, basis: 'region', region: '애월', dest: 'jeju' });
+    expect(jeju.sgg).toBeUndefined();
+    expect(jeju.area).toBe('애월');
+  });
+  it.runIf(BUSAN)('the collector takes it (dest nation, area basis)', () => {
+    const ev = { e: 'tap', mood: 'walk', ...contextOf({ ...base, basis: 'region', region: '51150', dest: 'nation' }) };
+    expect(ev.dest).toBe('nation');
+    expect(parseBatch(JSON.stringify([ev]), '2026-10-30').ok).toBe(true);
   });
 });

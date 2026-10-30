@@ -7,7 +7,7 @@
 // then 시작 화면 (specs/busan.md 7): seen, started (how · why · 여행지) and the rule set in advance for its 4th week.
 // Little or no data is said as such, never presented as a finding.
 import { execSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -34,7 +34,7 @@ const OPS = [['up', '위로'], ['down', '아래로'], ['move', '다른 날로'],
 const START = /^start:/;
 const HOW = { gps: '내 위치', pick: '직접 고름' };
 const WHY = { none: '', denied: '거절 뒤', unavailable: '못 찾은 뒤', outside: '밖 문구 뒤' };
-const DEST = { jeju: '제주', busan: '부산' };
+const DEST = { jeju: '제주', busan: '부산', nation: '다른 곳' };
 
 /** 시작 화면 for one window. The rule set in advance (plans/busan.md 결과 생성 표): 4 weeks after the release, with
  * start_view ≥ 100, start_done ÷ start_view < 70% reopens its form; under 100 it is 판단 보류. */
@@ -174,8 +174,10 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     process.exit(1);
   }
   const rows = parseWranglerJson(stdout);
-  // both destinations' places (부산's file where there is one, plans/busan.md)
-  const lists = ['public/spots.json', 'public/spots-busan.json'].map((f) => resolve(app, f)).filter((f) => existsSync(f));
+  // both destinations' places (부산's file where there is one, plans/busan.md) and the 자동 지역's (nt-, plans/nationwide-app.md U15)
+  const nation = resolve(app, 'data/nation');
+  const nationFiles = existsSync(nation) ? readdirSync(nation).filter((f) => /^\d+\.json$/.test(f)).map((f) => `data/nation/${f}`) : [];
+  const lists = ['public/spots.json', 'public/spots-busan.json', ...nationFiles].map((f) => resolve(app, f)).filter((f) => existsSync(f));
   const names = new Map(lists.flatMap((f) => JSON.parse(readFileSync(f, 'utf8')).map((s) => [s.id, s.name])));
   const dir = resolve(app, '../../docs/analytics');
   mkdirSync(dir, { recursive: true });

@@ -92,10 +92,12 @@ describe('privacy.html (ADR-0063 4)', () => {
     expect(html).toContain('좌표는 보내지 않아요');
     expect(html).toContain('Cloudflare 접속 기록에 남을 수 있어요');
     // 가 봤어요 (ADR-0087): kept on the device; its tap and undo are counted here (visited·unvisited), not in GA4
-    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 여행지(제주·부산), 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093, 고른 여행지: specs/busan.md 7
+    expect(html).toContain('저장한 곳과 날짜, ‘가 봤어요’로 뺀 곳, 숙소, 고른 여행지(제주·부산·다른 곳)와 다른 곳의 마지막 시군구, 고른 지역과 범위, 고른 언어는 이 기기의 브라우저 저장소에만 있어요'); // 고른 언어: ADR-0093, 고른 여행지: specs/busan.md 7, 시군구: plans/nationwide-app.md 7
+    // 자동 지역 (plans/nationwide-app.md 5): a 시군구 centre's grid, never the position
+    expect(html).toContain('그 시군구 가운데의 기상청 격자 번호(지금 위치가 아니에요) 하나를 보내요');
     // 시작 화면 (specs/busan.md 7): it asks for the position only on its big button; 부산's photos come from 한국관광공사
     expect(html).toContain('시작 화면에서 ‘내 위치로 시작하기’를 누르면 위치를 물어요');
-    expect(html).toContain('부산은 한국관광공사');
+    expect(html).toContain('부산과 다른 곳은 한국관광공사');
     expect(html).toContain('‘가 봤어요’ 누름과 되돌림');
     // 숙소 링크 (ADR-0089 4): the tag it came in by
     expect(html).toContain('숙소 링크로 들어왔다면 그 링크의 꼬리표');
@@ -155,8 +157,8 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
     for (const name of Object.values(GA_NAME)) expect(ga, name).toContain(said[name!]);
   });
 
-  it('GA4 fields: exactly these, each named in that paragraph (never the area, the day, 실내만 or a position)', () => {
-    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', dest: 'busan', how: 'pick', why: 'denied', d: '2026-10-15' };
+  it('GA4 fields: exactly these, each named in that paragraph (never the area, the 시군구, the day, 실내만 or a position)', () => {
+    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', dest: 'busan', how: 'pick', why: 'denied', sgg: '51150', d: '2026-10-15' };
     const keys = Object.keys(gaParams(every));
     expect(keys).toEqual(['place_id', 'mood', 'sub', 'range', 'basis', 'dated', 'season', 'from', 'age', 'past', 'live0', 'op', 'dest', 'how', 'why']);
     const said: Record<string, string> = {
@@ -172,7 +174,7 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
       past: '지난 날',
       live0: '오늘 이후 저장이 없었는지',
       op: '정리 종류',
-      dest: '지금 여행지(제주·부산)',
+      dest: '지금 여행지(제주·부산·다른 곳)',
       how: '위치로 시작했는지 직접 골랐는지',
       why: '그 전에 위치를 쓸 수 없었던 까닭',
     };
@@ -180,7 +182,7 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
   });
 
   it('our own record lists 세부 종류, 실내만 and 철 too; the page applies from 2026년 10월 20일 (specs/busan.md 7: 부산 출시)', () => {
-    for (const w of ['세부 종류', '실내만', '카드에 보인 철', '지금 여행지(제주·부산)', '시작 화면이 보였는지', '위치로 시작했는지 직접 골랐는지']) expect(own, w).toContain(w);
+    for (const w of ['세부 종류', '실내만', '카드에 보인 철', '지금 여행지(제주·부산·다른 곳)', '다른 곳에서는 고른 시군구', '시작 화면이 보였는지', '위치로 시작했는지 직접 골랐는지']) expect(own, w).toContain(w);
     expect(html).toContain('<p class="date">2026년 10월 20일부터 적용해요.</p>');
   });
 });

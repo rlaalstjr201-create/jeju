@@ -3,7 +3,7 @@
 // no time of day. Batched into navigator.sendBeacon (sent at once on a map or booking link, which may take the page
 // away); offline batches are dropped and nothing is retried. With
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
-import type { AreaName, RegionName } from './areas';
+import type { AreaName, RegionName, SggCode } from './areas';
 import type { Day } from './dates';
 import type { Dest } from './dest';
 import type { Button, NewSub, Reach, Sub } from './pick';
@@ -57,6 +57,8 @@ export interface UsageEvent {
   op?: ArrangeOp;
   /** 여행지 (specs/busan.md 7): the destination in use, with the switch on (src/release.ts); start_done: the one chosen. */
   dest?: Dest;
+  /** 자동 지역 (plans/nationwide-app.md 7) with an area basis only: the chosen 시군구's code, never a position. */
+  sgg?: SggCode;
   /** start_done only. */
   how?: StartHow;
   /** start_done only. */
@@ -101,8 +103,8 @@ export function contextOf(s: {
       : {}),
     range: RANGE[s.reach],
     basis,
-    // a 시군구 is not an area name (its own field comes with plans/nationwide-app.md U15)
-    ...(basis === 'area' && s.region && s.dest !== 'nation' ? { area: s.region as AreaName } : {}),
+    // a 시군구 is not an area name: its own field, the chosen one only (a GPS read's 시군구 never goes)
+    ...(basis === 'area' && s.region ? (s.dest === 'nation' ? { sgg: s.region as SggCode } : { area: s.region as AreaName }) : {}),
     dated: s.when !== 'now',
     ...(s.indoor ? { indoor: true } : {}),
     // the destination only with the switch on: a Jeju-only build sends what it always has

@@ -119,4 +119,8 @@ describe('analytics report — 시작 화면 (specs/busan.md 7)', () => {
     expect(s28).toContain('- 미리 정한 기준(출시 4주 뒤 한 번): 시작÷보임 70.0% — 70% 미만이면 시작 화면 꼴을 다시 열어요.');
     expect(before).not.toContain('start:');
   });
+  it('자동 지역 (plans/nationwide-app.md U15): started for 다른 곳 is named so', () => {
+    const md = renderReport([{ event: 'start_view', id: 'start:view', n7: 5, n28: 5 }, { event: 'start_done', id: 'start:pick:outside:nation', n7: 3, n28: 3 }], names, today);
+    expect(md).toContain('- 시작한 길: 직접 고름(밖 문구 뒤) → 다른 곳 3');
+  });
 });
