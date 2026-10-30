@@ -38,7 +38,7 @@ export interface NationIndex {
   /** 시도: code, name, short name */
   sido: { c: string; n: string; s: string }[];
   /** 시군구: code, name, its 시도's code, the median point of its records, the file its records are in, and the points a
-   * position is told by (ADR-0104: up to 4 k-means points of its records; shipped as `p`, 0.001° off the median point) */
+   * position is told by (ADR-0104: up to 8 k-means points of its records; shipped as `p`, 0.001° off the median point) */
   sgg: { c: string; n: string; s: string; lat: number; lng: number; f: string; a?: Point[] }[];
   /** file key → its version (`nation/<key>.json?v=<version>`) */
   files: Record<string, string>;
