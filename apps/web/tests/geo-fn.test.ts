@@ -1,7 +1,7 @@
 // 주소·숙소 검색 함수 (ADR-0103): the words in (a POST body, from this site only), Kakao's two answers out as at most 6 hits
 // inside Korea; no key, or one Kakao refuses → 503.
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cacheKeyOf, hitsOf, limited, onRequestPost, queryOf, sameSite } from '../functions/api/geo';
+import { hitsOf, limited, onRequestPost, queryOf, sameSite } from '../functions/api/geo';
 
 const ADDRESS = {
   documents: [
@@ -41,16 +41,6 @@ describe('sameSite', () => {
     expect(sameSite(at({ Referer: 'https://yeochana.com/?d=1' }))).toBe(true);
     expect(sameSite(at({ Referer: 'https://evil.example/' }))).toBe(false);
     expect(sameSite(at({}))).toBe(false);
-  });
-});
-
-describe('cacheKeyOf', () => {
-  it('the SHA-256 of the words, never the words', async () => {
-    const k = await cacheKeyOf('애월 해안로');
-    expect(k).toMatch(/^https:\/\/geo\.cache\/[0-9a-f]{64}$/);
-    expect(k).not.toContain(encodeURIComponent('애월'));
-    expect(await cacheKeyOf('애월 해안로')).toBe(k);
-    expect(await cacheKeyOf('애월')).not.toBe(k);
   });
 });
 
@@ -148,17 +138,15 @@ describe('onRequestPost', () => {
     expect(res.status).toBe(200);
     expect(((await res.json()) as { hits: { name: string }[] }).hits.map((h) => h.name)).toEqual(['애월 게스트하우스', '속초해수욕장']);
   });
-  it('kept at the edge a day under the words\' hash, only when both searches answered', async () => {
+  // 카카오 로컬은 실시간으로만 (데브톡 FAQ): the same words asked twice are asked of Kakao twice, nothing kept at the edge
+  it('never kept: the same words asked again go to Kakao again; no edge cache touched', async () => {
     const put = vi.fn(async () => undefined);
-    vi.stubGlobal('caches', { default: { match: async () => undefined, put } });
-    vi.stubGlobal('fetch', async (url: string) => (url.includes('address') ? new Response('', { status: 500 }) : new Response(JSON.stringify(KEYWORD))));
-    expect((await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(200);
-    expect(put).not.toHaveBeenCalled();
-    vi.stubGlobal('fetch', async (url: string) => new Response(JSON.stringify(url.includes('address') ? ADDRESS : KEYWORD)));
-    expect((await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(200);
-    expect(put).toHaveBeenCalledTimes(1);
-    const [key, res] = put.mock.calls[0] as unknown as [Request, Response];
-    expect(key.url).toBe(await cacheKeyOf('애월'));
-    expect(res.headers.get('Cache-Control')).toBe('public, max-age=86400');
+    const match = vi.fn(async () => undefined);
+    vi.stubGlobal('caches', { default: { match, put } });
+    const f = vi.fn(async (url: string) => new Response(JSON.stringify(url.includes('address') ? ADDRESS : KEYWORD)));
+    vi.stubGlobal('fetch', f);
+    for (let i = 0; i < 2; i++) expect((await onRequestPost({ request: req('애월'), env: { KAKAO_REST_API_KEY: 'k' } })).status).toBe(200);
+    expect(f).toHaveBeenCalledTimes(4);
+    expect([put, match].map((m) => m.mock.calls.length)).toEqual([0, 0]);
   });
 });

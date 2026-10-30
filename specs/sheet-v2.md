@@ -20,7 +20,7 @@
 
 ## 서버
 
-- `POST /api/geo`, 본문 `{"q": "…"}`(`application/json`, 1 KB까지; 검색어는 URL에 없다) (`functions/api/geo.ts`): 403 다른 사이트에서 옴(`Sec-Fetch-Site`가 `same-origin`이 아님, 없으면 `Origin`, 그것도 없으면 `Referer`가 이 사이트가 아님) · 400 잘못된 글 · 503 키 없음 또는 카카오가 키를 거절(401·403) · 429 1분 20회 넘음 · 502 카카오 둘 다 실패 · 200 `{ hits: [{ name, addr, lat, lng }] }`(많아야 6, 한국 안). 브라우저 `no-store`, 엣지 하루(캐시 열쇠는 검색어의 SHA-256, 두 검색이 다 답했을 때만 넣음). `X-Geo-Reason`은 ASCII로 거른다.
+- `POST /api/geo`, 본문 `{"q": "…"}`(`application/json`, 1 KB까지; 검색어는 URL에 없다) (`functions/api/geo.ts`): 403 다른 사이트에서 옴(`Sec-Fetch-Site`가 `same-origin`이 아님, 없으면 `Origin`, 그것도 없으면 `Referer`가 이 사이트가 아님) · 400 잘못된 글 · 503 키 없음 또는 카카오가 키를 거절(401·403) · 429 1분 20회 넘음 · 502 카카오 둘 다 실패 · 200 `{ hits: [{ name, addr, lat, lng }] }`(많아야 6, 한국 안). 브라우저 `no-store`, 엣지에도 두지 않는다(카카오 로컬은 실시간 호출만, ADR-0103 Amendment 2). `X-Geo-Reason`은 ASCII로 거른다.
 
 ## 검증
 

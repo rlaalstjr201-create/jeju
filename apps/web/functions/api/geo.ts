@@ -17,7 +17,6 @@ const WINDOW_MS = 60_000;
 interface Ctx {
   request: Request;
   env: { KAKAO_REST_API_KEY?: string };
-  waitUntil?(p: Promise<unknown>): void;
 }
 export interface Hit {
   name: string;
@@ -81,16 +80,6 @@ export function hitsOf(address: unknown, keyword: unknown): Hit[] {
   return out;
 }
 
-/** Cloudflare's edge cache (caches.default); absent outside the Workers runtime. */
-const edge = (): Cache | null =>
-  typeof caches !== 'undefined' ? ((caches as unknown as { default?: Cache }).default ?? null) : null;
-
-/** The edge cache's key for the words: their SHA-256, never the words themselves. */
-export async function cacheKeyOf(q: string): Promise<string> {
-  const d = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(q)));
-  return `https://geo.cache/${[...d].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
-}
-
 const counts = new Map<string, { n: number; since: number }>();
 /** true when this address has asked more than LIMIT times in the last minute (this isolate) */
 export function limited(ip: string, now: number): boolean {
@@ -135,15 +124,10 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   if (!key) return plain(503, '', 'no-key');
   if (limited(ctx.request.headers.get('CF-Connecting-IP') ?? '', Date.now())) return plain(429, '', 'limit');
 
-  const cache = edge();
-  const cacheKey = new Request(await cacheKeyOf(q));
-  const hit = await cache?.match(cacheKey).catch(() => undefined);
-  if (hit) return new Response(hit.body, { status: 200, headers: JSON_HEADERS });
-
+  // 카카오 로컬은 실시간 호출로만 쓸 수 있어 결과를 엣지에도 두지 않는다(데브톡 FAQ 「데이터의 저장 사용」).
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   let hits: Hit[];
-  let whole: boolean;
   try {
     const [address, keyword] = await Promise.allSettled([kakao(ADDRESS, q, key, ctl.signal), kakao(KEYWORD, q, key, ctl.signal)]);
     const failed = [address, keyword].flatMap((r) => (r.status === 'rejected' ? [r.reason as unknown] : []));
@@ -152,16 +136,8 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     if (refused) return plain(503, '', `bad-key ${refused.status}`);
     if (failed.length === 2) return plain(502, '', ctl.signal.aborted ? 'timeout' : String((failed[1] as Error)?.message ?? 'network'));
     hits = hitsOf(address.status === 'fulfilled' ? address.value : null, keyword.status === 'fulfilled' ? keyword.value : null);
-    whole = !failed.length;
   } finally {
     clearTimeout(timer);
   }
-  const body = JSON.stringify({ hits });
-  // a day at the edge (an address does not move), only when both searches answered — half an answer is not kept;
-  // the browser keeps nothing
-  if (cache && whole) {
-    const put = cache.put(cacheKey, new Response(body, { headers: { 'Content-Type': JSON_HEADERS['Content-Type'], 'Cache-Control': 'public, max-age=86400' } })).catch(() => undefined);
-    if (ctx.waitUntil) ctx.waitUntil(put);
-  }
-  return new Response(body, { status: 200, headers: JSON_HEADERS });
+  return new Response(JSON.stringify({ hits }), { status: 200, headers: JSON_HEADERS });
 }
