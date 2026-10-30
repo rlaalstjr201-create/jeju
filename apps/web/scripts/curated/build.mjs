@@ -31,6 +31,7 @@ export const BOXES = {
   속초: { lat: [38.1, 38.3], lng: [128.4, 128.7] },
   춘천: { lat: [37.6, 38.2], lng: [127.4, 128.1] },
   양양: { lat: [37.85, 38.2], lng: [128.35, 128.85] },
+  평창: { lat: [37.2, 37.9], lng: [128.2, 128.9] },
 };
 export const inBox = (city, p) => {
   const b = BOXES[city];
