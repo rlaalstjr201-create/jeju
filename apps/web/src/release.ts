@@ -82,13 +82,16 @@ interface NationPart {
 let nation: NationPart | null = null;
 /** the 자동 지역's 시군구 once its part is in */
 const NATION_OPEN: Area[] = [];
+/** 강원's (ADR-0102): the 시군구 it covers, from the same index — it has no part of its own, its 동네 and where a point is
+ * are the 자동 지역's */
+const GANGWON_OPEN: Area[] = [];
 const nationWaiting: (() => void)[] = [];
 
 /** Called by src/nation-part.ts once it has read the index. */
 export function installNation(p: NationPart): void {
   if (!NATION || nation) return;
   nation = p;
-  NATION_OPEN.push(...p.list);
+  for (const a of p.list) (a.group === 'gangwon' ? GANGWON_OPEN : NATION_OPEN).push(a);
   (OPEN_AREAS as Area[]).push(...p.list);
   for (const fn of nationWaiting.splice(0)) fn();
 }
@@ -117,12 +120,17 @@ export const sggShort = (sgg: string): string => nation?.short(sgg) ?? '';
 /** The places around a 시군구 (its file and its neighbours'), as the app's places. */
 export const nationSpots = (sgg: string): Promise<unknown> => (nation ? nation.spots(sgg) : Promise.reject(new Error('no part')));
 
-export const released = (d: Dest): boolean => (d === 'nation' ? NATION && !!nation : d === 'jeju' || (BUSAN && !!part));
+/** 강원 (ADR-0102) opens with the 자동 지역's part: its 동네 and where a point is come from that index. */
+export const released = (d: Dest): boolean => (d === 'nation' || d === 'gangwon' ? NATION && !!nation : d === 'jeju' || (BUSAN && !!part));
 
 /** The destination a point is in, if it is open to visitors in this build; else null (as outside them all). With the
- * switch off the boundary is never read (and, with it, never in the Jeju bundle: plans/busan.md budget). */
+ * switch off the boundary is never read (and, with it, never in the Jeju bundle: plans/busan.md budget). A 시군구 a
+ * 검수한 곳 covers (강릉, ADR-0102) is that destination's. */
 export function releasedDestOf(p: Point): Dest | null {
-  return inJeju(p) ? 'jeju' : BUSAN && part?.inside(p) ? 'busan' : NATION && sggOf(p) ? 'nation' : null;
+  if (inJeju(p)) return 'jeju';
+  if (BUSAN && part?.inside(p)) return 'busan';
+  const r = NATION ? nation?.region(p) : null;
+  return r?.k === 'auto' ? 'nation' : r?.k === 'dest' && r.dest !== 'busan' && released(r.dest) ? r.dest : null;
 }
 
 /** Where a position is when it is not usable for the destination in use (predeploy review M-1): the open destination it
@@ -133,7 +141,8 @@ export function outsideAt(p: Point): OutsideAt | undefined {
 }
 
 /** One destination's areas (Jeju's with the switch off). */
-export const openAreasOf = (d: Dest): readonly Area[] => (BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : AREAS);
+export const openAreasOf = (d: Dest): readonly Area[] =>
+  BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : NATION && d === 'gangwon' ? GANGWON_OPEN : AREAS;
 /** A point's 동네: the nearest centre of its destination's areas (Jeju's outside both, as before); in the 자동 지역, its
  * 시군구 (sggOf: an island's is not always the nearest centre). */
 export const areaOfPoint = (p: Point, d: Dest = releasedDestOf(p) ?? 'jeju'): Area =>

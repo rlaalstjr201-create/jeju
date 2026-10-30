@@ -103,8 +103,9 @@ export function contextOf(s: {
       : {}),
     range: RANGE[s.reach],
     basis,
-    // a 시군구 is not an area name: its own field, the chosen one only (a GPS read's 시군구 never goes)
-    ...(basis === 'area' && s.region ? (s.dest === 'nation' ? { sgg: s.region as SggCode } : { area: s.region as AreaName }) : {}),
+    // a 시군구 is not an area name: its own field, the chosen one only (a GPS read's 시군구 never goes); 강원's 동네 is a
+    // 시군구 too (ADR-0102)
+    ...(basis === 'area' && s.region ? (s.dest === 'nation' || s.dest === 'gangwon' ? { sgg: s.region as SggCode } : { area: s.region as AreaName }) : {}),
     dated: s.when !== 'now',
     ...(s.indoor ? { indoor: true } : {}),
     // the destination only with the switch on: a Jeju-only build sends what it always has

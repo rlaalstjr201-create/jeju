@@ -3,11 +3,11 @@
 // runs: the big button reads the position (the app's locate: inside an open destination or `outside`), the two
 // destination buttons choose, and with location already allowed it reads without asking (M4: the cover is there from
 // the first paint and only ever goes away). Used only with the switch on (app.ts).
-import { areaByName, type SggCode } from './areas';
+import { areaByName, destOfArea, type Area, type SggCode } from './areas';
 import { isDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
 import type { Point } from './pick';
-import { NATION, loadNation, nationPart, openAreasOf, outsideAt, releasedDestOf } from './release';
+import { NATION, OPEN_AREAS, loadNation, nationPart, outsideAt, releasedDestOf } from './release';
 import type { NoOrigin, OutsideAt } from './types';
 
 /** The start screen's words, in the order index.html's table keeps them per language (window.__ycT). */
@@ -49,7 +49,8 @@ const NATION_WORDS: Record<string, { outside: string; nodata: string; other: str
   'zh-Hans': { outside: '你现在不在韩国。请选择旅行地。', nodata: '这附近还没有地点资料。请选择旅行地。', other: '其他地方', back: '返回', failed: '列表没加载出来。检查一下网络再试。', popular: ['首尔', '江陵', '庆州', '全州', '丽水', '束草'] },
   ja: { outside: 'いまは韓国の外にいます。旅行先を選んでください。', nodata: 'このあたりの場所データはまだありません。旅行先を選んでください。', other: 'ほかの場所', back: '戻る', failed: 'リストを読み込めませんでした。接続を確認して、もう一度読み込んでください。', popular: ['ソウル', '江陵', '慶州', '全州', '麗水', '束草'] },
 };
-/** 인기 칸 (plans/nationwide-app.md 13 R14): name and 시군구 (서울: 서울시청's 중구, 전주: 한옥마을's 완산구) */
+/** 인기 칸 (plans/nationwide-app.md 13 R14): name and 시군구 (서울: 서울시청's 중구, 전주: 한옥마을's 완산구); one a 검수한 곳
+ * covers opens that destination (강릉 → 강원's, ADR-0102) */
 const POPULAR: readonly [string, SggCode][] = [
   ['서울', '11140'],
   ['강릉', '51150'],
@@ -157,13 +158,19 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
         out[out.length - 1].append(b);
         return out;
       }, []);
-    const nation = (sgg: SggCode) => {
+    // a 시군구 of the index: the 자동 지역's, or the 검수한 곳 that covers it (its group, ADR-0102)
+    const sggAreas = () => OPEN_AREAS.filter((x): x is Area & { name: SggCode } => x.group === 'nation' || x.group === 'gangwon');
+    const nation = (a: Area) => {
       if (done) return;
       const why = now === 'start' || now === 'locating' ? null : now;
       close();
-      deps.choose('nation', 'pick', why, undefined, sgg);
+      const d = destOfArea(a);
+      deps.choose(d, 'pick', why, undefined, d === 'nation' ? (a.name as SggCode) : undefined);
     };
-    const tiles = POPULAR.flatMap(([name, c], i) => (areaByName(c, openAreasOf('nation')) ? [button(N.popular?.[i] ?? name, () => nation(c), !N.popular)] : []));
+    const tiles = POPULAR.flatMap(([name, c], i) => {
+      const a = areaByName(c, sggAreas());
+      return a ? [button(N.popular?.[i] ?? name, () => nation(a), !N.popular)] : [];
+    });
     const popular = doc.createElement('div');
     popular.className = 'yc-pop';
     popular.append(...tiles);
@@ -181,8 +188,8 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
     };
     const showSgg = (c: string) => {
       const part = nationPart()!;
-      const list = openAreasOf('nation').filter((x) => part.sidoOf(x.name) === c);
-      panel.replaceChildren(back(showSido), ...rows(list.map((x) => button(x.label, () => nation(x.name as SggCode), true))));
+      const list = sggAreas().filter((x) => part.sidoOf(x.name) === c);
+      panel.replaceChildren(back(showSido), ...rows(list.map((x) => button(x.label, () => nation(x), true))));
       panel.querySelector('button')?.focus();
     };
     const showSido = () => {

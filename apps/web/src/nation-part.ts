@@ -63,7 +63,8 @@ export async function install(): Promise<boolean> {
     return p;
   };
   installNation({
-    list: ix.sgg.map((s) => ({ name: s.c as SggCode, slug: s.c as SggCode, label: s.n, landmark: sido.get(s.s) ?? '', lat: s.lat, lng: s.lng, group: 'nation' })),
+    // a 시군구 a 검수한 곳 covers is that destination's 동네 (ADR-0102: 강릉 → 강원's)
+    list: ix.sgg.map((s) => ({ name: s.c as SggCode, slug: s.c as SggCode, label: s.n, landmark: sido.get(s.s) ?? '', lat: s.lat, lng: s.lng, group: curated.gangwon?.includes(s.c) ? 'gangwon' : 'nation' })),
     region: (p) => regionOf(p, ix.sgg, destOf, curated),
     abroad: (p) => !inKorea(p),
     short: (c) => short[c] ?? '',

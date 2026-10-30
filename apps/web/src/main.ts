@@ -49,8 +49,8 @@ function storageOf(name: 'localStorage' | 'sessionStorage'): Storage | null {
 /** '/' (vite.config.ts): absolute, so a page served at any address finds its files (ADR-0063). */
 const BASE = import.meta.env.BASE_URL;
 /** Each destination's place list (plans/busan.md): Jeju's address and version as before; Busan's is fetched only on a
- * Busan visit. */
-const spotsUrl = (dest: Dest) => (BUSAN && dest !== 'jeju' ? `${BASE}${DEST[dest].file}?v=${__BUSAN_V__}` : `${BASE}spots.json?v=${__SPOTS_V__}`);
+ * Busan visit; 강원's on a 강원 visit (ADR-0102). */
+const spotsUrl = (dest: Dest) => (BUSAN && dest !== 'jeju' ? `${BASE}${DEST[dest].file}?v=${dest === 'gangwon' ? __GANGWON_V__ : __BUSAN_V__}` : `${BASE}spots.json?v=${__SPOTS_V__}`);
 
 /** Ask the browser to keep this site's storage (ADR-0063 2a): no prompt of ours; Chrome and Safari decide by
  * themselves, and a "no" changes nothing. */
@@ -208,9 +208,13 @@ const busanFirst = (): Promise<unknown> =>
     ? within(loadBusan(), 4000).catch(() => undefined)
     : Promise.resolve();
 /** The 자동 지역's part (and its index) before the mount where it may be in play from the start (plans/nationwide-app.md 9):
- * the 시작 화면 is up, the device chose it, or a link names it. A failure (offline, 4 s) mounts Jeju. */
+ * the 시작 화면 is up, the device chose it, or a link names it — or 강원, which opens with it (ADR-0102). A failure
+ * (offline, 4 s) mounts Jeju. */
 const nationFirst = (): Promise<unknown> =>
-  NATION && (document.documentElement.classList.contains('yc-start') || (window as { __dest?: unknown }).__dest === 'nation' || /[?&]dest=nation(?:[&#]|$)/.test(location.search))
+  NATION &&
+  (document.documentElement.classList.contains('yc-start') ||
+    ['nation', 'gangwon'].includes((window as { __dest?: string }).__dest ?? '') ||
+    /[?&]dest=(?:nation|gangwon)(?:[&#]|$)/.test(location.search))
     ? within(loadNation(), 4000).catch(() => undefined)
     : Promise.resolve();
 void (

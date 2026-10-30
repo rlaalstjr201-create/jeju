@@ -15,7 +15,7 @@ import { $, $$, cardIds, current, flush, render, reset, settle, tap } from './ha
 
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const raw = (f: string) => JSON.parse(file(f)) as unknown;
-const 강릉역 = { lat: 37.7643, lng: 128.8996 };
+const 동해역 = { lat: 37.4985, lng: 129.124 };
 const wait = async () => {
   for (let i = 0; i < 4; i++) await flush();
   await settle();
@@ -26,7 +26,7 @@ function mount(o: { dest?: string; sgg?: string; at?: Point } = {}) {
   const asked: string[] = [];
   render({
     loadSpots: (d, sgg) => (asked.push(sgg ? `${d}:${sgg}` : d), Promise.resolve(d === 'nation' ? normalizeNation(raw(sgg!.startsWith('52') ? '52' : '51'), [], sgg) : fileSpots)),
-    locate: () => Promise.resolve(o.at ?? 강릉역),
+    locate: () => Promise.resolve(o.at ?? 동해역),
   });
   return { asked };
 }
@@ -47,10 +47,10 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
   afterEach(() => reset());
 
   it('이름 줄 and title by 시군구; no 쉬기·유명한 데; a card without reason has no reason line; #how, credit, no 둘러보기', async () => {
-    mount({ dest: 'nation', sgg: '51150' });
+    mount({ dest: 'nation', sgg: '51170' });
     await wait();
-    expect($('.logo .rg').textContent).toBe(':강릉');
-    expect(document.title).toBe('여차나:강릉 · P를 위한 여행동반자');
+    expect($('.logo .rg').textContent).toBe(':동해');
+    expect(document.title).toBe('여차나:동해 · P를 위한 여행동반자');
     const hidden = (m: string) => $(`[data-mood="${m}"]`).closest('li')!.hidden;
     expect(['rest', 'famous'].map(hidden)).toEqual([true, true]);
     expect(['walk', 'new', 'food'].map(hidden)).toEqual([false, false, false]);
@@ -64,7 +64,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
   });
 
   it('no reason line, so each row card keeps its own trip even when the two are the same (no 「둘 다」 on 아니면)', async () => {
-    mount({ dest: 'nation', sgg: '51150' });
+    mount({ dest: 'nation', sgg: '51170' });
     await wait();
     await tap('[data-mood="any"]');
     await wait();
@@ -73,7 +73,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
   });
 
   it('기준 시트: 다른 곳 pressed; its index is the 시도 in use, 다른 시도 lists them, 전북 → 전주시 완산구 is the list from then on', async () => {
-    const { asked } = mount({ dest: 'nation', sgg: '51150' });
+    const { asked } = mount({ dest: 'nation', sgg: '51170' });
     await wait();
     await tap('#basis');
     expect($('#sheet [data-dest="nation"]').getAttribute('aria-pressed')).toBe('true');
@@ -88,7 +88,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     await wait();
     expect(current().state()).toMatchObject({ dest: 'nation', sgg: '52111', basis: 'region', region: '52111' });
     expect($('.logo .rg').textContent).toBe(':전주');
-    expect(asked).toEqual(['nation:51150', 'nation:52111']);
+    expect(asked).toEqual(['nation:51170', 'nation:52111']);
   });
 
   it('제주 device: the sheet offers 다른 곳, and pressing it opens 서울 (the 시군구 of 서울시청) to pick from', async () => {
@@ -104,7 +104,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
   // last: another language's words stay in the tables for the rest of this file
   it('in English: its words with its part, the 시도 named in English, a line that the 시군구 stay Korean', async () => {
     await apply('en', EN, document, Promise.resolve({}));
-    mount({ dest: 'nation', sgg: '51150' });
+    mount({ dest: 'nation', sgg: '51170' });
     await wait();
     await tap('#basis');
     expect($('#sheet [data-dest="nation"] .nm').textContent).toBe('Somewhere else');

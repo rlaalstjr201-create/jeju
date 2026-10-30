@@ -46,8 +46,8 @@ export const KEYS = {
   src: 'jeju.src',
   /** ADR-0087: 가 봤어요 — place ids left out of the picks on this device, oldest first. Not the data's `hide`. */
   visited: 'jeju.visited',
-  /** ADR-0097: the destination chosen on this device, 'jeju' | 'busan' | 'nation' (written by the switched-on build only;
-   * 'nation' read by the 자동 지역 build only, Amendment 1). */
+  /** ADR-0097: the destination chosen on this device, 'jeju' | 'busan' | 'gangwon' | 'nation' (written by the switched-on
+   * build only; 'nation' and 'gangwon' read by the 자동 지역 build only, Amendment 1, ADR-0102). */
   dest: 'jeju.dest',
   /** ADR-0097 Amendment 1: the last 시군구 of the 자동 지역 (its code), written there only. */
   sgg: 'jeju.sgg',
@@ -457,8 +457,9 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
     place,
     dest() {
       const v = get(local, KEYS.dest);
-      // 'nation' with the 자동 지역 switch only: a build without it opens Jeju and leaves the key as it is
-      return isDest(v) && (v !== 'nation' || NATION) ? v : null;
+      // 'nation' (and 'gangwon', which opens with it: ADR-0102) with the 자동 지역 switch only: a build without it opens
+      // Jeju and leaves the key as it is
+      return isDest(v) && ((v !== 'nation' && v !== 'gangwon') || NATION) ? v : null;
     },
     setDest: (d) => void set(local, KEYS.dest, d),
     sgg() {

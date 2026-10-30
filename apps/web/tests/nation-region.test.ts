@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { destOf } from '../src/busan';
+import { DEST } from '../src/dest';
 import { ISLANDS, SGG_MAX_KM, filesFor, inKorea, parseIndex, regionOf } from '../src/nation';
 import { NATION, loadNation, nationSpots, openAreasOf, released, releasedDestOf, sggOf, sggShort } from '../src/release';
 
@@ -24,6 +25,15 @@ describe('regionOf', () => {
   it('강릉역 → 강릉시, 울릉도 → 울릉군 (자동 지역)', () => {
     expect(at(37.7643, 128.8996)).toEqual({ k: 'auto', sgg: '51150' });
     expect(at(37.4844, 130.9057)).toEqual({ k: 'auto', sgg: '47940' });
+  });
+
+  // ADR-0102: a 시군구 a 검수한 곳 covers (DEST.gangwon.sgg) is that destination's; its neighbours stay 자동 지역
+  it('강원: 강릉역·정동진·주문진 → gangwon; 동해역·속초·진부(평창) → their own 시군구', () => {
+    const cur = { gangwon: DEST.gangwon.sgg };
+    for (const [lat, lng] of [[37.7643, 128.8996], [37.6907, 129.0344], [37.8925, 128.8256]]) expect(regionOf({ lat, lng }, ix.sgg, destOf, cur)).toEqual({ k: 'dest', dest: 'gangwon' });
+    expect(regionOf({ lat: 37.4985, lng: 129.124 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51170' });
+    expect(regionOf({ lat: 38.2047, lng: 128.5918 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51210' });
+    expect(regionOf({ lat: 37.6355, lng: 128.5636 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51760' });
   });
 
   it('한국 밖은 null: 쓰시마, 도쿄, a broken point', () => {
@@ -85,6 +95,7 @@ describe('regionOf', () => {
 
 describe('자동 지역 몫 (src/nation-part.ts)', () => {
   const 강릉역 = { lat: 37.7643, lng: 128.8996 };
+  const 동해역 = { lat: 37.4985, lng: 129.124 };
   afterEach(() => void vi.unstubAllGlobals());
 
   it.runIf(!NATION)('switch off: never asked for, never open', async () => {
@@ -104,15 +115,22 @@ describe('자동 지역 몫 (src/nation-part.ts)', () => {
     expect(released('nation')).toBe(false);
     expect(await loadNation()).toBe(true);
     expect(released('nation')).toBe(true);
-    expect(openAreasOf('nation')).toHaveLength(ix.sgg.length);
-    expect(releasedDestOf(강릉역)).toBe('nation');
-    expect(sggOf(강릉역)).toBe('51150');
+    // 강릉 is 강원's (ADR-0102): its 동네, not the 자동 지역's, and opened with the same part
+    expect(openAreasOf('nation')).toHaveLength(ix.sgg.length - 1);
+    expect(openAreasOf('gangwon').map((a) => [a.name, a.label, a.group])).toEqual([['51150', '강릉시', 'gangwon']]);
+    expect(released('gangwon')).toBe(true);
+    expect(releasedDestOf(강릉역)).toBe('gangwon');
+    expect(sggOf(강릉역)).toBeNull();
+    expect(releasedDestOf(동해역)).toBe('nation');
+    expect(sggOf(동해역)).toBe('51170');
     expect(releasedDestOf({ lat: 35.1587, lng: 129.1604 })).toBe('busan');
     expect(sggShort('51150')).toBe('강릉');
-    const a = (await nationSpots('51150')) as { id: string; sgg: string }[];
+    const a = (await nationSpots('51170')) as { id: string; sgg: string }[];
     await nationSpots('51210');
     expect(a.length).toBeGreaterThan(100);
     expect(a.every((x) => x.id.startsWith('nt-'))).toBe(true);
+    // 강릉's records in 51.json are left to 강원's own list
+    expect(a.some((x) => x.sgg === '51150')).toBe(false);
     expect(asked.filter((u) => u.startsWith('/nation/51.json'))).toHaveLength(1);
   });
 });

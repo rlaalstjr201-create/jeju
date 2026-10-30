@@ -28,11 +28,15 @@ const BUSAN_PLACES_V = spotsVersion(BUSAN_PLACES.map((f) => (existsSync(resolve(
 const NATION_DIR = resolve(root, 'data/nation');
 const NATION_INDEX = resolve(NATION_DIR, 'index.json');
 const NATION_V = existsSync(NATION_INDEX) ? spotsVersion(readFileSync(NATION_INDEX)) : '';
-/** the nation files a new worker carries over: the index and each file it names, at their `?v=` */
+/** 강원 (ADR-0102): its place list, shipped as spots-gangwon.json by the nation build only (it opens with the 자동 지역's
+ * part); `__GANGWON_V__` its version, '' while there is none. */
+const GANGWON_FILE = resolve(root, 'data/gangwon/spots-gangwon.json');
+const GANGWON_V = existsSync(GANGWON_FILE) ? spotsVersion(readFileSync(GANGWON_FILE)) : '';
+/** the nation files a new worker carries over: the index and each file it names, at their `?v=`, and 강원's list */
 function nationCarry(): string[] {
   if (!NATION_V) return [];
   const files = (JSON.parse(readFileSync(NATION_INDEX, 'utf8')) as { files?: Record<string, string> }).files ?? {};
-  return [`nation/index.json?v=${NATION_V}`, ...Object.entries(files).map(([f, v]) => `nation/${f}.json?v=${v}`)];
+  return [`nation/index.json?v=${NATION_V}`, ...Object.entries(files).map(([f, v]) => `nation/${f}.json?v=${v}`), ...(GANGWON_V ? [`spots-gangwon.json?v=${GANGWON_V}`] : [])];
 }
 /** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
 function appVersion(): string {
@@ -129,13 +133,21 @@ function nationFiles(nation: boolean): Plugin {
     configResolved: (c) => void (outDir = resolve(c.root, c.build.outDir)),
     closeBundle() {
       const out = resolve(outDir, 'nation');
+      const gangwon = resolve(outDir, 'spots-gangwon.json');
       rmSync(out, { recursive: true, force: true });
+      rmSync(gangwon, { force: true });
       if (!nation || !existsSync(NATION_DIR)) return;
       mkdirSync(out, { recursive: true });
       for (const f of readdirSync(NATION_DIR).filter((f) => f.endsWith('.json'))) cpSync(resolve(NATION_DIR, f), resolve(out, f));
+      // 강원 (ADR-0102): its list beside Busan's, asked for as spots-gangwon.json?v=<content hash>
+      if (GANGWON_V) cpSync(GANGWON_FILE, gangwon);
       // U16: always asked for as nation/<f>.json?v=<content hash> (nation-part) — immutable, like spots-busan.json
       const h = resolve(outDir, '_headers');
-      if (existsSync(h)) writeFileSync(h, readFileSync(h, 'utf8').replace('/i18n/*\n', '/nation/*\n  Cache-Control: public, max-age=31536000, immutable\n/i18n/*\n'));
+      if (existsSync(h))
+        writeFileSync(
+          h,
+          readFileSync(h, 'utf8').replace('/i18n/*\n', `/nation/*\n  Cache-Control: public, max-age=31536000, immutable\n${GANGWON_V ? '/spots-gangwon.json\n  Cache-Control: public, max-age=31536000, immutable\n' : ''}/i18n/*\n`),
+        );
     },
   };
 }
@@ -220,6 +232,7 @@ export default defineConfig(({ command, mode: given }) => {
     __BUSAN_PLACES_V__: JSON.stringify(BUSAN_PLACES_V),
     __NATION__: JSON.stringify(nation),
     __NATION_V__: JSON.stringify(nation ? NATION_V : ''),
+    __GANGWON_V__: JSON.stringify(nation ? GANGWON_V : ''),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [busanBlock(mode, nation), serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],

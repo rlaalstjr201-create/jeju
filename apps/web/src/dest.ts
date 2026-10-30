@@ -5,18 +5,20 @@
 
 import type { Kind, Mood } from './pick';
 
-/** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. */
-export type Curated = 'jeju' | 'busan';
+/** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. `gangwon` (ADR-0102): 강원's, named by
+ * 시군구 — 강릉 for now; the others stay 자동 지역 until theirs are checked. */
+export type Curated = 'jeju' | 'busan' | 'gangwon';
 /** `nation`: the 자동 지역 as a whole (plans/nationwide-app.md 1.2); which 시군구 is State.sgg. */
 export type Dest = Curated | 'nation';
 /** the 검수한 곳, in the order the 여행지 row lists them */
-export const DESTS: readonly Curated[] = ['jeju', 'busan'];
+export const DESTS: readonly Curated[] = ['jeju', 'busan', 'gangwon'];
 
 /** One destination's row (plans/nationwide-app.md 1.2): a new 검수한 곳 is one more row. */
 export interface DestRow {
   /** its place list under public/ */
   file: string;
-  /** its ids' prefix (specs/busan.md 3.1): Busan's are `bs-<contentid>`; '' = Jeju's UUIDs */
+  /** its ids' prefix (specs/busan.md 3.1): Busan's are `bs-<contentid>`; '' = Jeju's UUIDs. 강원's keep the 자동 지역's
+   * `nt-` (plans/nationwide-app.md 13 R11: a place saved there stays saved), so destOfId says 'nation' for both. */
   idPrefix: string;
   /** the sunset's place while the basis is not known yet */
   cityHall: { lat: number; lng: number };
@@ -44,6 +46,9 @@ export const DEST: Record<Dest, DestRow> = {
   // 자동 지역: its files are nation/<f>.json (src/nation-part.ts); 서울시청 until a 시군구 is known; a map search by the
   // name alone (plans/nationwide-app.md U13 scopes it)
   nation: { file: '', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '', said: /(?:)/, moods: ['walk', 'new', 'food'], any: ['walk', 'new'], label: 'sgg' },
+  // 강원 (ADR-0102): 강릉시청 (강릉대로 33); its 시군구, which the 자동 지역 leaves to it. 강릉 only for now, so the name line
+  // says 강릉
+  gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강릉', said: /강릉/, moods: ALL, any: ANY, label: 'name', sgg: ['51150'] },
 };
 
 export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';

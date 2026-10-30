@@ -37,7 +37,8 @@ const BUSAN_CHUNK = /^assets\/busan-part-\*\.js$/;
 /** 자동 지역 빌드(plans/nationwide-app.md 10, U19): what it adds on purpose is taken out the same way — dist/nation/ (the
  * 시도 files and their index), the /nation/* 캐시 줄 of _headers, and two chunks in the file and precache lists: nation-part
  * and busan (src/busan.ts, Busan's boundary, split out of busan-part only because nation-part's regionOf needs it too). A
- * Jeju device asks for none of them: the browser run below still counts its requests. */
+ * Jeju device asks for none of them: the browser run below still counts its requests. 강원's list (spots-gangwon.json and
+ * its 캐시 줄, ADR-0102) goes out with that build and is taken out the same way. */
 const NATION = existsSync(join(DIST, 'nation/index.json'));
 const NATION_CHUNK = /^assets\/(?:nation-part|busan)-\*\.js$/;
 const added = (n: string) => (SWITCHED && BUSAN_CHUNK.test(n)) || (NATION && NATION_CHUNK.test(n));
@@ -71,7 +72,7 @@ function normalized(rel: string, body: Buffer): Buffer | string {
   if (rel === 'jeju/index.html' && SWITCHED) return body.toString('utf8').replace('\n<p>다른 여행지: <a href="/busan/">여차나:부산</a></p>', '');
   if (rel === '_headers' && SWITCHED) {
     const h = body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
-    return NATION ? h.replace(/\/nation\/\*\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '') : h;
+    return NATION ? h.replace(/\/nation\/\*\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '').replace(/\/spots-gangwon\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '') : h;
   }
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
   if (rel === 'sitemap-core.xml')
@@ -87,7 +88,7 @@ function files() {
     if (rel.startsWith('assets/')) continue;
     // ADR-0099: Busan's static pages and their sitemap file, what a switched-on build adds for Busan on purpose
     if (SWITCHED && (rel.startsWith('busan/') || rel === 'sitemap-busan-core.xml')) continue;
-    if (NATION && rel.startsWith('nation/')) continue;
+    if (NATION && (rel.startsWith('nation/') || rel === 'spots-gangwon.json')) continue;
     const h = short(normalized(rel, readFileSync(p)));
     const m = /^jeju\/([^/]+)\/./.exec(rel);
     if (m) groups.set(`jeju/${m[1]}/`, [...(groups.get(`jeju/${m[1]}/`) ?? []), `${rel}\0${h}`]);

@@ -98,7 +98,7 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     mount({ dest: 'jeju', at: 동문시장 });
     await wait();
     await tap('#basis');
-    expect($$('#sheet [data-dest]:not([data-dest="nation"])').map((b) => [b.textContent, b.getAttribute('aria-pressed')])).toEqual([
+    expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"])').map((b) => [b.textContent, b.getAttribute('aria-pressed')])).toEqual([
       ['제주', 'true'],
       ['부산', 'false'],
     ]);

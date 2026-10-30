@@ -216,14 +216,15 @@ export const COPY = {
 /** 여행지 (ADR-0094, specs/busan.md 1.3·1.4·3.5·6·8): the switched-on build's words, apart from COPY so that a Jeju build,
  * where every use of them is behind the switch, carries none of them (another language's table: Lang.busan). */
 export const BUSAN_COPY = {
-  destName: { jeju: '제주', busan: '부산', nation: '다른 곳' } satisfies Record<Dest, string>,
+  destName: { jeju: '제주', busan: '부산', gangwon: '강릉', nation: '다른 곳' } satisfies Record<Dest, string>,
   destHead: '여행지',
-  title: '여차나:부산 · P를 위한 여행동반자',
-  examplePopular: (names: string[]) => `부산 인기: ${names.join(', ')}`,
+  /** a 검수한 곳 other than Jeju, by its name (부산, 강릉: ADR-0102) */
+  title: (name: string) => `여차나:${name} · P를 위한 여행동반자`,
+  examplePopular: (name: string, names: string[]) => `${name} 인기: ${names.join(', ')}`,
   homeCredit: '정보·사진: 한국관광공사',
-  outside: '지금은 부산 밖이에요.',
-  stayOutside: '지금은 부산 밖이에요. 아래에서 숙소 동네를 골라 주세요.',
-  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Dest, string>,
+  outside: (name: string) => `지금은 ${name} 밖이에요.`,
+  stayOutside: (name: string) => `지금은 ${name} 밖이에요. 아래에서 숙소 동네를 골라 주세요.`,
+  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', gangwon: '지금 계신 강릉으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Dest, string>,
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
   /** the name line's button (ADR-0094 Amendment 3): its words, e.g. 「여차나:제주」 */
   destAria: (name: string) => `${name}, 여행지 바꾸기`,
@@ -346,7 +347,10 @@ export function howOf(s: State): string {
   // the 자동 지역 (plans/nationwide-app.md 4): no reason was read, the nearest first
   if (NATION && s.dest === 'nation') return nationPart()!.copy.how;
   const inReach = c.list.every((x) => withinReach(c.reach, c.origin.point, x.spot));
-  return COPY.how(inReach ? COPY.howReach[c.reach] : null, c.indoor);
+  const how = COPY.how(inReach ? COPY.howReach[c.reach] : null, c.indoor);
+  // 강원 in another language (ADR-0102): its places are not translated yet — said once, as the 자동 지역's 동네 index does
+  const ko = NATION && DEST[s.dest].sgg ? nationPart()?.copy.koNames : '';
+  return ko ? `${how} ${ko}` : how;
 }
 
 export interface Els {
@@ -516,7 +520,7 @@ function nationOutside(s: State, at: OutsideAt | undefined, stay: boolean): stri
   if (!n) return null;
   if (at === 'abroad') return stay ? n.copy.stayOutside : n.copy.outside;
   if (s.dest !== 'nation') return null;
-  if (stay && (at === 'jeju' || at === 'busan')) return n.copy.stayIn(BUSAN_COPY.destName[at]);
+  if (stay && (at === 'jeju' || at === 'busan' || at === 'gangwon')) return n.copy.stayIn(BUSAN_COPY.destName[at]);
   return stay ? n.copy.stayNodata : n.copy.nodata;
 }
 
@@ -776,7 +780,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
 
   function areaGroups(parent: HTMLElement, where: 'inline' | 'basis' | 'stay', selected: RegionName | null, dest: Dest = 'jeju', sgg: string | null = null) {
     // the 자동 지역: its 시도's 시군구 and 다른 시도, drawn by its part (plans/nationwide-app.md 4)
-    if (NATION && dest === 'nation') return nationPart()?.areas(parent, where, selected, sgg, option);
+    // 강원 (ADR-0102): its 시도's 시군구, the same index as the 자동 지역's — another one picked there moves to it (app.ts toSgg)
+    if (NATION && (dest === 'nation' || DEST[dest].sgg)) return nationPart()?.areas(parent, where, selected, dest === 'nation' ? sgg : DEST[dest].sgg![0], option);
     if (BUSAN && dest === 'busan') {
       // specs/busan.md 2절: one group, no heading, west → east
       const id = `areas-${where}-busan`;
@@ -815,7 +820,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const box = el(doc, 'div', { class: 'notice' });
     const p = s.phase;
     let lines: readonly string[];
-    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [(p.why === 'outside' && nationOutside(s, p.at, false)) || (BUSAN && p.why === 'outside' && s.dest === 'busan' ? BUSAN_COPY.outside : COPY.noOrigin[p.why]), COPY.noOriginBody];
+    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [(p.why === 'outside' && nationOutside(s, p.at, false)) || (BUSAN && p.why === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.outside(BUSAN_COPY.destName[s.dest]) : COPY.noOrigin[p.why]), COPY.noOriginBody];
     else if (kind === 'loadError' && p.k === 'loadError') lines = p.offline ? COPY.loadErrorOffline : COPY.loadError;
     else lines = COPY.empty;
     box.append(el(doc, 'p', { class: 'notice-t' }, lines[0]), el(doc, 'p', { class: 'notice-b' }, lines[1]));
@@ -1003,10 +1008,11 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // 「부산에 저장한 곳 N곳」 (specs/busan.md 6): the other destination's saves, kept, one line under this one's
     if (BUSAN && b.k === 'list') {
       for (const d of DESTS) {
-        const n = d === s.dest ? 0 : s.saved.filter((e) => destOfId(e.id) === d).length;
+        // 강원's ids are the 자동 지역's nt- (ADR-0102): no line of their own, as the 자동 지역's
+        const n = d === s.dest || d === 'gangwon' ? 0 : s.saved.filter((e) => destOfId(e.id) === d).length;
         if (!n) continue;
         const line = el(doc, 'p', { class: 'other-dest' });
-        line.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-dest', 'data-dest': d }, BUSAN_COPY.otherSaved[d](n)));
+        line.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-dest', 'data-dest': d }, BUSAN_COPY.otherSaved[d as 'jeju' | 'busan'](n)));
         nodes.push(line);
       }
     }
@@ -1350,7 +1356,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         if (!ex.length) continue;
         // 「예:」 — an example, not a promise (ADR-0075 3); 「제주 인기:」 while the basis is not known (Amendment 1)
         const names = ex.map((x) => splitName(PLACE.name(x)).main);
-        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin || s.dest === 'nation' ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(names) : COPY.examplePopular(names)));
+        b.querySelector('.txt')!.append(el(doc, 'span', { class: 'ex sr' }, origin || s.dest === 'nation' ? COPY.example(names) : BUSAN && s.dest !== 'jeju' ? BUSAN_COPY.examplePopular(BUSAN_COPY.destName[s.dest], names) : COPY.examplePopular(names)));
         const pair = el(doc, 'span', { class: 'pair', 'aria-hidden': 'true' });
         // the second photo is not shown (.pair img + img): lazy, so it does not hold up the first ones on a slow line
         pair.append(...ex.map((x, i) => homePhoto(x, i > 0)));
@@ -1522,7 +1528,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       // 여행지 (specs/busan.md 1.4): the sheet's first row, with the switch on — the one in use pressed
       if (BUSAN) {
         // one compact line, like 언제
-        const row = optRow(...DESTS.map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
+        const row = optRow(...DESTS.filter((d) => NATION || !DEST[d].sgg).map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
         // the 자동 지역 (plans/nationwide-app.md 4): 다른 곳 (its part asked for when pressed: app.ts pickDest)
         if (NATION) row.append(option(BUSAN_COPY.destName.nation, null, { 'data-dest': 'nation', 'aria-pressed': String(s.dest === 'nation') }));
         row.classList.add('when-row');
@@ -1598,7 +1604,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const err = els.sheet.querySelector<HTMLElement>('.form-err');
     if (err) {
       // The button stays a button; the reason goes on its own line (S09).
-      setText(err, s.stayForm.error ? (s.stayForm.error === 'outside' && nationOutside(s, s.stayForm.at, true)) || (BUSAN && s.stayForm.error === 'outside' && s.dest === 'busan' ? BUSAN_COPY.stayOutside : COPY.stayError[s.stayForm.error]) : '');
+      setText(err, s.stayForm.error ? (s.stayForm.error === 'outside' && nationOutside(s, s.stayForm.at, true)) || (BUSAN && s.stayForm.error === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.stayOutside(BUSAN_COPY.destName[s.dest]) : COPY.stayError[s.stayForm.error]) : '');
       err.hidden = !s.stayForm.error;
     }
   }
@@ -1766,7 +1772,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     for (const rg of doc.querySelectorAll('.logo .rg')) setText(rg, `:${short || BUSAN_COPY.destName[s.dest]}`);
     const logo = doc.getElementById('logo');
     if (BUSAN && logo) setAttr(logo, 'aria-label', BUSAN_COPY.destAria(logo.textContent ?? ''));
-    doc.title = short ? nationPart()!.copy.title(short) : busan ? BUSAN_COPY.title : jejuTitle;
+    doc.title = short ? nationPart()!.copy.title(short) : busan ? BUSAN_COPY.title(BUSAN_COPY.destName[s.dest]) : jejuTitle;
     for (const c of credits) {
       if (tour) c.e.textContent = BUSAN_COPY.homeCredit;
       else c.e.innerHTML = c.html;
