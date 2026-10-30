@@ -37,8 +37,9 @@ export interface NationIndex {
   rules: { moods: NationMood[]; indoor: boolean };
   /** 시도: code, name, short name */
   sido: { c: string; n: string; s: string }[];
-  /** 시군구: code, name, its 시도's code, the median point of its records, the file its records are in */
-  sgg: { c: string; n: string; s: string; lat: number; lng: number; f: string }[];
+  /** 시군구: code, name, its 시도's code, the median point of its records, the file its records are in, and the points a
+   * position is told by (ADR-0104: up to 4 k-means points of its records; shipped as `p`, 0.001° off the median point) */
+  sgg: { c: string; n: string; s: string; lat: number; lng: number; f: string; a?: Point[] }[];
   /** file key → its version (`nation/<key>.json?v=<version>`) */
   files: Record<string, string>;
 }
@@ -51,6 +52,17 @@ export interface NationSpot extends Spot {
 
 const isNum = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 const isStr = (v: unknown): v is string => typeof v === 'string' && v.length > 0;
+
+/** A row's points (ADR-0104) from its `p`; its median point alone when it has none this app can read. */
+function anchorsOf(x: Record<string, unknown>): Point[] {
+  const lat = x.lat as number;
+  const lng = x.lng as number;
+  const p = x.p;
+  if (!Array.isArray(p) || !p.length || p.length % 2 || !p.every((d) => Number.isInteger(d) && Math.abs(d) <= 5000)) return [{ lat, lng }];
+  const out: Point[] = [];
+  for (let i = 0; i < p.length; i += 2) out.push({ lat: lat + (p[i] as number) / 1000, lng: lng + (p[i + 1] as number) / 1000 });
+  return out;
+}
 
 /** The index, or null when it is not one this app can read. Rows it cannot use (a bad code or point, a file not in
  * `files`) are left out; a mood it does not know is not offered. */
@@ -65,7 +77,7 @@ export function parseIndex(raw: unknown): NationIndex | null {
   const sido = (o.sido as Record<string, unknown>[]).filter((x) => x && /^\d{2,5}$/.test(String(x.c)) && isStr(x.c) && isStr(x.n) && isStr(x.s)).map((x) => ({ c: x.c as string, n: x.n as string, s: x.s as string }));
   const sgg = (o.sgg as Record<string, unknown>[])
     .filter((x) => x && isStr(x.c) && SGG_CODE.test(x.c) && isStr(x.n) && isStr(x.s) && isNum(x.lat) && isNum(x.lng) && isStr(x.f) && x.f in files)
-    .map((x) => ({ c: x.c as string, n: x.n as string, s: x.s as string, lat: x.lat as number, lng: x.lng as number, f: x.f as string }));
+    .map((x) => ({ c: x.c as string, n: x.n as string, s: x.s as string, lat: x.lat as number, lng: x.lng as number, f: x.f as string, a: anchorsOf(x) }));
   return { v: 1, rules: { moods: MOODS.filter((m) => (rules.moods as unknown[]).includes(m)), indoor: rules.indoor === true }, sido, sgg, files };
 }
 
@@ -107,10 +119,10 @@ export function normalizeNation(raw: unknown, curatedSgg: Iterable<string> = [],
   return out;
 }
 
-/** Where a point is (plans/nationwide-app.md 1.1). */
-export type Region = { k: 'dest'; dest: Dest } | { k: 'auto'; sgg: SggCode } | null;
+/** Where a point is (plans/nationwide-app.md 1.1); a 검수한 곳 named by 시군구 (강원) says which of them too. */
+export type Region = { k: 'dest'; dest: Dest; sgg?: SggCode } | { k: 'auto'; sgg: SggCode } | null;
 type SggRow = NationIndex['sgg'][number];
-/** a point farther than this from every 시군구 centre (and from every ISLANDS point) has no 시군구 */
+/** a point farther than this from every 시군구 point (and from every ISLANDS point) has no 시군구 */
 export const SGG_MAX_KM = 35;
 /** 부산·제주's 시군구 are their 검수한 곳's: never a centre for the 자동 지역 */
 const OWN = /^(26|50)/;
@@ -133,17 +145,19 @@ export const ISLANDS: readonly { n: string; c: string; lat: number; lng: number 
 ];
 export const ISLAND_KM = 25;
 
-/** A point's 시군구: the nearest centre (no boundary, like a 검수한 곳's 동네) within 35 km, Busan's and Jeju's left out;
- * else the 시군구 of an island (ISLANDS) within 25 km. */
+/** A point's 시군구: the one with the nearest of its points (ADR-0104: a few per 시군구, its median point when it has
+ * none; no boundary) within 35 km, Busan's and Jeju's left out; else the 시군구 of an island (ISLANDS) within 25 km. */
 export function nearestSgg(p: Point, sgg: readonly SggRow[]): SggRow | null {
   let best: SggRow | null = null;
   let bestKm = SGG_MAX_KM;
   for (const s of sgg) {
     if (OWN.test(s.c)) continue;
-    const km = distanceKm(p, s);
-    if (km <= bestKm) {
-      best = s;
-      bestKm = km;
+    for (const a of s.a ?? [s]) {
+      const km = distanceKm(p, a);
+      if (km <= bestKm) {
+        best = s;
+        bestKm = km;
+      }
     }
   }
   if (best) return best;
@@ -186,7 +200,7 @@ export function regionOf(p: Point, sgg: readonly SggRow[], inside: (p: Point) =>
   if (d) return { k: 'dest', dest: d };
   const near = nearestSgg(p, sgg);
   if (!near) return null;
-  for (const [dest, codes] of Object.entries(curated) as [Dest, readonly string[]][]) if (codes.includes(near.c)) return { k: 'dest', dest };
+  for (const [dest, codes] of Object.entries(curated) as [Dest, readonly string[]][]) if (codes.includes(near.c)) return { k: 'dest', dest, sgg: near.c as SggCode };
   return { k: 'auto', sgg: near.c as SggCode };
 }
 

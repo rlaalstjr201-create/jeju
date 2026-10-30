@@ -48,6 +48,46 @@ export function median(xs) {
 }
 const round = (x) => Math.round(x * 1e5) / 1e5;
 
+/** 시군구마다 판정 점 몇 개(ADR-0104): 이 수만큼 */
+export const ANCHORS = 8;
+const km = (a, b) => {
+  const rad = Math.PI / 180;
+  const h = Math.sin(((b.lat - a.lat) * rad) / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(((b.lng - a.lng) * rad) / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+};
+/** 곳들의 k-평균 점 `k`개(곳이 k개 이하면 곳 그대로). 첫 점은 가운데(중앙값), 다음은 이미 고른 점에서 가장 먼 곳, 그 뒤 30번
+ * 고쳐 앉힌다 — 난수가 없어 같은 입력이면 같은 점이다. */
+export function anchors(pts, k = ANCHORS) {
+  if (pts.length <= k) return pts.map((p) => ({ lat: p.lat, lng: p.lng }));
+  const cs = [{ lat: median(pts.map((p) => p.lat)), lng: median(pts.map((p) => p.lng)) }];
+  while (cs.length < k) {
+    let far = pts[0];
+    let farKm = -1;
+    for (const p of pts) {
+      const d = Math.min(...cs.map((c) => km(p, c)));
+      if (d > farKm) [far, farKm] = [p, d];
+    }
+    cs.push({ lat: far.lat, lng: far.lng });
+  }
+  let n = [];
+  for (let it = 0; it < 30; it++) {
+    const sum = cs.map(() => ({ lat: 0, lng: 0, n: 0 }));
+    for (const p of pts) {
+      let best = 0;
+      for (let i = 1; i < cs.length; i++) if (km(p, cs[i]) < km(p, cs[best])) best = i;
+      sum[best].lat += p.lat;
+      sum[best].lng += p.lng;
+      sum[best].n++;
+    }
+    cs.forEach((c, i) => sum[i].n && Object.assign(c, { lat: sum[i].lat / sum[i].n, lng: sum[i].lng / sum[i].n }));
+    n = sum.map((s) => s.n);
+  }
+  // 곳 하나뿐인 점은 버린다: 좌표가 틀린 레코드 하나가 바다 건너 남의 시군구에 점을 만들지 않게
+  return cs.filter((_, i) => n[i] >= 2);
+}
+/** 판정 점을 시군구 중심에서 떨어진 값(0.001° 단위 정수)으로: [위도 차, 경도 차, …] */
+export const anchorDeltas = (pts, centre) => anchors(pts).flatMap((a) => [Math.round((a.lat - centre.lat) * 1000), Math.round((a.lng - centre.lng) * 1000)]);
+
 /** addr1의 시군구 이름: 둘째 토큰, 「○○시 ○○구」면 구까지. 세종은 시군구가 없어 시 이름을 쓴다. */
 export function sggNameOf(addr1, sidoCode) {
   if (sidoCode === '36110') return '세종시';
@@ -115,7 +155,9 @@ export function build({ scopes, results, rules = { moods: ['walk', 'new', 'food'
     .map(([c, g]) => {
       const names = [...g.names.entries()].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1));
       if (names.length > 1) ambiguous.push({ c, names });
-      return { c, n: names[0][0], s: g.sido, lat: round(median(g.lats)), lng: round(median(g.lngs)), f: g.sido };
+      const centre = { lat: round(median(g.lats)), lng: round(median(g.lngs)) };
+      const p = anchorDeltas(g.lats.map((lat, i) => ({ lat, lng: g.lngs[i] })), centre);
+      return { c, n: names[0][0], s: g.sido, ...centre, f: g.sido, p };
     });
   const sido = SIDO_LIST.map(([c, n, s]) => ({ c, n, s }));
   return { files, sgg, sido, rules, ambiguous, dropped };

@@ -1,13 +1,13 @@
-// 자동 지역 지역 판정 (plans/nationwide-app.md 1.1, U6): a point goes to its 검수한 곳 by the boundary, else to the nearest
-// 시군구 centre within 35 km (부산·제주's left out), else an island's 시군구 within 25 km, else nowhere (한국 밖 only where
-// inKorea says so). The index is the shipped one.
+// 자동 지역 지역 판정 (plans/nationwide-app.md 1.1, U6): a point goes to its 검수한 곳 by the boundary, else to the 시군구
+// of the nearest of the 시군구 points (ADR-0104: a few k-means points of each 시군구's places) within 35 km (부산·제주's left
+// out), else an island's 시군구 within 25 km, else nowhere (한국 밖 only where inKorea says so). The index is the shipped one.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { destOf } from '../src/busan';
 import { DEST } from '../src/dest';
 import { ISLANDS, SGG_MAX_KM, filesFor, inKorea, parseIndex, regionOf } from '../src/nation';
-import { NATION, loadNation, nationSpots, openAreasOf, released, releasedDestOf, sggOf, sggShort } from '../src/release';
+import { NATION, areaOfPoint, loadNation, nationSpots, openAreasOf, released, releasedDestOf, sggOf, sggShort } from '../src/release';
 
 const ix = parseIndex(JSON.parse(readFileSync(resolve(__dirname, '../data/nation/index.json'), 'utf8')))!;
 const at = (lat: number, lng: number) => regionOf({ lat, lng }, ix.sgg, destOf);
@@ -27,12 +27,34 @@ describe('regionOf', () => {
     expect(at(37.4844, 130.9057)).toEqual({ k: 'auto', sgg: '47940' });
   });
 
-  // ADR-0102: a 시군구 a 검수한 곳 covers (DEST.gangwon.sgg) is that destination's; its neighbours stay 자동 지역
-  it('강원: 강릉역·정동진·주문진·속초·춘천역·양양·진부(평창) → gangwon; 동해역·홍천 → their own 시군구', () => {
+  // ADR-0102: a 시군구 a 검수한 곳 covers (DEST.gangwon.sgg) is that destination's, and which of them it is; its neighbours
+  // stay 자동 지역
+  it('강원: 강릉역·정동진·주문진·속초·춘천역·양양·진부(평창) → gangwon, each its 시군구; 동해역·홍천 → their own 시군구', () => {
     const cur = { gangwon: DEST.gangwon.sgg };
-    for (const [lat, lng] of [[37.7643, 128.8996], [37.6907, 129.0344], [37.8925, 128.8256], [38.2047, 128.5918], [37.8846, 127.7166], [38.0754, 128.6189], [37.6355, 128.5636]]) expect(regionOf({ lat, lng }, ix.sgg, destOf, cur)).toEqual({ k: 'dest', dest: 'gangwon' });
+    const pts = [[37.7643, 128.8996, '51150'], [37.6907, 129.0344, '51150'], [37.8925, 128.8256, '51150'], [38.2047, 128.5918, '51210'], [37.8846, 127.7166, '51110'], [38.0754, 128.6189, '51830'], [37.6355, 128.5636, '51760']] as const;
+    for (const [lat, lng, sgg] of pts) expect(regionOf({ lat, lng }, ix.sgg, destOf, cur)).toEqual({ k: 'dest', dest: 'gangwon', sgg });
     expect(regionOf({ lat: 37.4985, lng: 129.124 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51170' });
     expect(regionOf({ lat: 37.6971, lng: 127.8888 }, ix.sgg, destOf, cur)).toEqual({ k: 'auto', sgg: '51720' });
+  });
+
+  // ADR-0104 (predeploy review 4 m-1): with the median point alone, 평창's 대관령 went to 강릉 and 평창읍 to 영월
+  it('넓은 군: 대관령양떼목장·횡계·선자령·평창군청·진부·봉평·월정사 → 평창, 남이섬 → 춘천 (센터 하나일 때는 강릉·영월·가평)', () => {
+    const cur = { gangwon: DEST.gangwon.sgg };
+    const pts = { 대관령양떼목장: [37.6889, 128.7522], 횡계: [37.6727, 128.7098], 선자령: [37.6955, 128.7552], 평창군청: [37.3707, 128.3903], 진부: [37.6355, 128.5636], 봉평: [37.6134, 128.3609], 월정사: [37.7317, 128.5926] };
+    for (const [k, [lat, lng]] of Object.entries(pts)) expect(regionOf({ lat, lng }, ix.sgg, destOf, cur), k).toEqual({ k: 'dest', dest: 'gangwon', sgg: '51760' });
+    expect(regionOf({ lat: 37.7911, lng: 127.5254 }, ix.sgg, destOf, cur)).toEqual({ k: 'dest', dest: 'gangwon', sgg: '51110' });
+  });
+
+  it('다른 도의 경계 근처: 산정호수 → 포천시, 두물머리 → 양평군, 땅끝마을 → 해남군 (센터 하나일 때는 철원·하남·완도); 문경새재·도담삼봉·노고단·중산리·광한루는 그대로', () => {
+    const pts = { 산정호수: [38.0688, 127.3126, '포천시'], 두물머리: [37.5337, 127.3165, '양평군'], 땅끝마을: [34.2988, 126.5269, '해남군'], 문경새재: [36.7631, 128.0768, '문경시'], 도담삼봉: [36.9997, 128.3436, '단양군'], 노고단: [35.2955, 127.5309, '구례군'], 지리산중산리: [35.2829, 127.7336, '산청군'], 광한루: [35.4031, 127.3808, '남원시'] } as const;
+    for (const [k, [lat, lng, name]] of Object.entries(pts)) expect(nameOf(at(lat, lng)), k).toBe(name);
+  });
+
+  it('시군구 점(ADR-0104): 모든 행에 1~8개, 그 시군구 곳 가운데 자기 시군구로 나오는 몫이 90% 넘음', () => {
+    expect(ix.sgg.every((s) => s.a && s.a.length >= 1 && s.a.length <= 8)).toBe(true);
+    const places = Object.keys(ix.files).flatMap((f) => JSON.parse(readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8')) as { lat: number; lng: number; sgg: string }[]);
+    const own = places.filter((p) => { const r = at(p.lat, p.lng); return r?.k === 'auto' && r.sgg === p.sgg; }).length;
+    expect(own / places.length).toBeGreaterThan(0.9);
   });
 
   it('한국 밖은 null: 쓰시마, 도쿄, a broken point', () => {
@@ -85,10 +107,14 @@ describe('regionOf', () => {
     expect(regionOf(north(34.9), one, () => null)).toEqual({ k: 'auto', sgg: '51150' });
     expect(regionOf(north(35.1), one, () => null)).toBeNull();
     expect(regionOf(north(1), [{ ...one[0], c: '26110' }, { ...one[0], c: '50110' }], () => null)).toBeNull();
+    // with points (ADR-0104) the nearest point counts, not the median point
+    const two = [{ ...one[0], a: [{ lat: 37.0, lng: 128.0 }, north(30)] }, { ...one[0], c: '51760', n: '평창군', lat: north(50).lat, a: [north(50)] }];
+    expect(regionOf(north(39), two, () => null)).toEqual({ k: 'auto', sgg: '51150' });
+    expect(regionOf(north(46), two, () => null)).toEqual({ k: 'auto', sgg: '51760' });
   });
 
   it('a 시군구 a 검수한 곳 names (DEST[d].sgg, plans/nationwide-app.md 1.3) is that destination', () => {
-    expect(regionOf({ lat: 37.7643, lng: 128.8996 }, ix.sgg, destOf, { busan: ['51150'] })).toEqual({ k: 'dest', dest: 'busan' });
+    expect(regionOf({ lat: 37.7643, lng: 128.8996 }, ix.sgg, destOf, { busan: ['51150'] })).toEqual({ k: 'dest', dest: 'busan', sgg: '51150' });
   });
 });
 
@@ -130,6 +156,10 @@ describe('자동 지역 몫 (src/nation-part.ts)', () => {
     expect(releasedDestOf(동해역)).toBe('nation');
     expect(sggOf(동해역)).toBe('51170');
     expect(releasedDestOf({ lat: 35.1587, lng: 129.1604 })).toBe('busan');
+    // 강원's 동네 of a point is the 시군구 regionOf says (ADR-0104): 횡계 is 평창's though 강릉's centre is nearer
+    expect(areaOfPoint({ lat: 37.6727, lng: 128.7098 }, 'gangwon').name).toBe('51760');
+    expect(areaOfPoint({ lat: 37.3707, lng: 128.3903 }).name).toBe('51760');
+    expect(areaOfPoint(강릉역, 'gangwon').name).toBe('51150');
     expect(sggShort('51150')).toBe('강릉');
     const a = (await nationSpots('51170')) as { id: string; sgg: string }[];
     await nationSpots('51210');

@@ -23,7 +23,7 @@ export interface NationIndex {
   v: 1;
   rules: { moods: string[]; indoor: boolean };
   sido: { c: string; n: string; s: string }[];
-  sgg: { c: string; n: string; s: string; lat: number; lng: number; f: string }[];
+  sgg: { c: string; n: string; s: string; lat: number; lng: number; f: string; p: number[] }[];
   files: Record<string, string>;
 }
 export interface NationBuild {
@@ -40,6 +40,9 @@ export declare const SIDO_LIST: string[][];
 export declare const GZIP_LIMIT: number;
 export declare function cleanName(s: unknown): string;
 export declare function median(xs: number[]): number;
+export declare const ANCHORS: number;
+export declare function anchors(pts: { lat: number; lng: number }[], k?: number): { lat: number; lng: number }[];
+export declare function anchorDeltas(pts: { lat: number; lng: number }[], centre: { lat: number; lng: number }): number[];
 export declare function sggNameOf(addr1: string, sidoCode: string): string;
 export declare function shipRecord(r: NationScopeRecord, rule: NationRule | undefined): NationShipRecord | null;
 export declare function build(input: { scopes: Record<string, NationScopeRecord[]>; results: NationRule[]; rules?: NationIndex['rules'] }): NationBuild;

@@ -1,14 +1,14 @@
 // App state as data + a pure reducer. No DOM, no storage, no timers — the controller (app.ts) runs the
 // effects and feeds their results back in as actions tagged with a request id; results for an old id are
 // dropped here, so the last user intent always wins (S36–S38).
-import { areaByName, nearestArea, type RegionName, type SggCode } from './areas';
+import { areaByName, type RegionName, type SggCode } from './areas';
 import { type Day } from './dates';
 import { DEST, type Dest } from './dest';
 import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick';
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
-import { OPEN_AREAS, openAreasOf } from './release';
+import { OPEN_AREAS, areaOfPoint } from './release';
 import { nightNow } from './sun';
 import type { Basis, GeoError, GeoHit, GeoPermission, NoOrigin, Origin, OutsideAt, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
@@ -344,7 +344,7 @@ export function rainArea(s: State): string | null {
   if (!o) return null;
   if (s.dest === 'nation') return s.sgg;
   // the area of the destination being viewed (plans/busan.md S6: functions/_lib/kma.ts takes Busan's slugs too)
-  return nearestArea(o.point, openAreasOf(s.dest)).slug;
+  return areaOfPoint(o.point, s.dest).slug;
 }
 
 /** A mood the destination offers, else 아무거나 (the 자동 지역 has no 쉬기, no 유명한 데: ADR-0101 2). */

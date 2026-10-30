@@ -15,7 +15,16 @@ describe('index.json', () => {
     expect(ix.sido.map((s) => s.c)).toEqual(['11', '36110', '47', '51']);
     // 세종 as 3611036110 is not a 시군구 code (/^\d{4,8}$/); 종로구's file is not listed; 양양군 has no point
     expect(ix.sgg.map((s) => s.c)).toEqual(['51150', '51210', '47940']);
-    expect(ix.sgg[0]).toEqual({ c: '51150', n: '강릉시', s: '51', lat: 37.75, lng: 128.88, f: '51' });
+    // no `p` (ADR-0104): the median point alone tells a position
+    expect(ix.sgg[0]).toEqual({ c: '51150', n: '강릉시', s: '51', lat: 37.75, lng: 128.88, f: '51', a: [{ lat: 37.75, lng: 128.88 }] });
+  });
+
+  it('`p` (ADR-0104): pairs of 0.001° off the median point; one it cannot read is the median point alone', () => {
+    const base = fixture('index.json') as { sgg: Record<string, unknown>[] };
+    const withP = (p: unknown) => parseIndex({ ...base, sgg: [{ ...base.sgg[0], p }] })!.sgg[0].a!;
+    const a = withP([10, -20, -1500, 0]);
+    expect(a.map((x) => [+x.lat.toFixed(5), +x.lng.toFixed(5)])).toEqual([[37.76, 128.86], [36.25, 128.88]]);
+    for (const bad of [[], [1], [1.5, 2], ['1', '2'], [6000, 0], 'x']) expect(withP(bad), JSON.stringify(bad)).toEqual([{ lat: 37.75, lng: 128.88 }]);
   });
 
   it('indoor is offered only when the rules say true', () => {

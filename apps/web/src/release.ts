@@ -140,10 +140,17 @@ export function outsideAt(p: Point): OutsideAt | undefined {
   return releasedDestOf(p) ?? (nation ? (nation.abroad(p) ? 'abroad' : 'nodata') : undefined);
 }
 
+/** A point's 시군구 by the 자동 지역's index, a 검수한 곳 named by 시군구 (강원) included (ADR-0104); null before the part is in. */
+function sggAt(p: Point): SggCode | null {
+  const r = nation?.region(p);
+  return r?.sgg ?? null;
+}
+
 /** One destination's areas (Jeju's with the switch off). */
 export const openAreasOf = (d: Dest): readonly Area[] =>
   BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : NATION && d === 'gangwon' ? GANGWON_OPEN : AREAS;
 /** A point's 동네: the nearest centre of its destination's areas (Jeju's outside both, as before); in the 자동 지역, its
- * 시군구 (sggOf: an island's is not always the nearest centre). */
+ * 시군구 (sggOf: an island's is not always the nearest centre); in 강원, the 시군구 regionOf says when it is one of 강원's
+ * (ADR-0104: 횡계 is 평창's though 강릉's centre is nearer). */
 export const areaOfPoint = (p: Point, d: Dest = releasedDestOf(p) ?? 'jeju'): Area =>
-  (NATION && d === 'nation' && areaByName(sggOf(p), NATION_OPEN)) || nearestArea(p, openAreasOf(d));
+  (NATION && d === 'nation' && areaByName(sggOf(p), NATION_OPEN)) || (NATION && d === 'gangwon' && areaByName(sggAt(p), GANGWON_OPEN)) || nearestArea(p, openAreasOf(d));
