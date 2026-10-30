@@ -6,7 +6,7 @@ import { createSpotSource, normalizeSpots, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
 import { DEST, destOfId, isDest, type Dest } from './dest';
-import { LocateError, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
+import { LocateError, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
 import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './release';
@@ -955,6 +955,57 @@ export function mountApp(doc: Document, deps: Deps): App {
     });
   }
 
+  /** 「여행지 | 내 위치」 (ADR-0103). 여행지 shows its chips (nothing else changes until one is picked); 내 위치 is 지금 있는 곳
+   * (the destination follows the position), or, already on it, hides the chips again. */
+  function onSeg(seg: string) {
+    if (seg === 'pick') {
+      if (state.basis !== 'gps' || state.destPick) return;
+      dispatch({ type: 'destPick', on: true });
+      return els.sheet.querySelector<HTMLElement>('.chips [aria-pressed="true"]')?.focus({ preventScroll: true });
+    }
+    if (state.basis !== 'gps') return changeBasis({ basis: 'gps' });
+    if (!state.destPick) return closeOverlay();
+    dispatch({ type: 'destPick', on: false });
+    els.sheet.querySelector<HTMLElement>('[data-seg="gps"]')?.focus({ preventScroll: true });
+  }
+
+  /** 주소·숙소 검색 (ADR-0103): on 검색 or Enter only (never a keystroke at a time), the words to /api/geo. An answer for a
+   * sheet since closed or replaced is dropped (stayToken, as the 숙소 GPS read). */
+  function searchAddr() {
+    if (state.overlay !== 'basis' || state.geo.pending) return;
+    const input = els.sheet.querySelector<HTMLInputElement>('.addr-q');
+    const q = (input?.value ?? '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    if (!q) return input?.focus();
+    if (!deps.fetch) return dispatch({ type: 'geo', pending: false, hits: null, error: 'off' });
+    const token = ++stayToken;
+    dispatch({ type: 'geo', pending: true, hits: null });
+    void fetchGeo(q, deps.fetch).then((r) => {
+      if (token !== stayToken || signal.aborted || state.overlay !== 'basis') return;
+      if (!r.ok) dispatch({ type: 'geo', pending: false, hits: null, error: r.why });
+      else dispatch({ type: 'geo', pending: false, hits: r.hits, error: r.hits.length ? null : 'none' });
+    });
+  }
+  /** An answer picked: its point is the 숙소 (`addr`) and the basis, in the destination (and 시군구) it is in — another one
+   * is moved to, as a 시군구 picked in the 동네 index. Outside every open one: 「이 근처는 아직 장소 자료가 없어요.」 */
+  function pickHit(i: number) {
+    const hit = state.geo.hits?.[i];
+    if (state.overlay !== 'basis' || !hit) return;
+    const p = { lat: hit.lat, lng: hit.lng };
+    const token = ++stayToken;
+    const go = () => {
+      if (token !== stayToken || signal.aborted || state.overlay !== 'basis') return;
+      const d = releasedDestOf(p);
+      if (!d) return dispatch({ type: 'geo', pending: false, error: 'nodata' });
+      const area = areaOfPoint(p, d);
+      if (d !== state.dest && !DEST[d].sgg && d !== 'nation') switchDest(d);
+      toSgg(area);
+      changeBasis({ basis: 'stay', stay: { ...p, area: area.name, source: 'addr' } });
+    };
+    // where the point is (Busan's boundary, the 시군구) needs the 자동 지역's part, Busan's with it
+    if (inJeju(p)) go();
+    else void loadNation().then(go);
+  }
+
   /** `day`: a saved-list row's heart (that day); a card's heart is about the day chosen now (지금 = today). */
   function onHeart(id: string, day?: Day) {
     tick(); // past midnight with the timer asleep: the heart goes to the real today
@@ -1093,8 +1144,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'other-area') return guarded('other-area') ? undefined : toAreas();
     if (action === 'stay-here') return stayHere();
     if (action === 'feedback-send') return sendFeedback();
+    if (action === 'addr-go') return searchAddr();
+    if (b.dataset.hit) return guarded('hit') ? undefined : pickHit(Number(b.dataset.hit));
+    if (b.dataset.seg) return guarded(`seg:${b.dataset.seg}`) ? undefined : onSeg(b.dataset.seg);
     const dest = b.dataset.dest;
-    if (isDest(dest)) return guarded(`dest:${dest}`) ? undefined : pickDest(dest);
+    // 「여행지」's chip in use (ADR-0103): down to its 동네, as 다른 동네 고르기
+    if (isDest(dest)) return guarded(`dest:${dest}`) ? undefined : NATION && dest === state.dest ? toAreas() : pickDest(dest);
     const basis = b.dataset.basis;
     if (basis === 'gps') return basisIsCurrent(state, 'gps') ? closeOverlay() : changeBasis({ basis: 'gps' });
     if (basis === 'stay') {
@@ -1234,8 +1289,13 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!state.overlay && !guarded('basis')) openOverlay('basis');
   });
   // the name line 「여차나:제주 ▾」 (ADR-0094 Amendment 3): the same sheet, its 여행지 row first (render.ts focusSheet)
+  // (「여행지 | 내 위치」, ADR-0103: on 여행지, its chips shown)
   on(doc.getElementById('logo'), 'click', () => {
-    if (!state.overlay && !guarded('basis')) openOverlay('basis');
+    if (state.overlay || guarded('basis')) return;
+    batch(() => {
+      openOverlay('basis');
+      if (NATION) dispatch({ type: 'destPick', on: true });
+    });
   });
   on(els.saved, 'click', () => {
     if (state.overlay || guarded('saved')) return;
@@ -1261,6 +1321,12 @@ export function mountApp(doc: Document, deps: Deps): App {
   });
   on(els.sheet, 'keydown', (e) => {
     const t = e.target as HTMLInputElement;
+    // 주소·숙소 검색 (ADR-0103): Enter searches — not the Enter that ends an IME's composing
+    if ((e as KeyboardEvent).key === 'Enter' && t.classList?.contains('addr-q')) {
+      if ((e as KeyboardEvent).isComposing) return;
+      e.preventDefault();
+      return searchAddr();
+    }
     if ((e as KeyboardEvent).key !== 'Enter' || t.type !== 'date' || !t.classList.contains('date-in')) return;
     e.preventDefault();
     onDayPicked(t.value);

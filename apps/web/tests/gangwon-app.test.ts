@@ -18,7 +18,7 @@ import { rainArea } from '../src/state';
 import { KEYS, createStore, destKey } from '../src/store';
 import { contextOf } from '../src/track';
 import { fileSpots } from './fixtures';
-import { $, $$, cardIds, current, flush, render, reset, settle, tap } from './harness';
+import { $, $$, cardIds, current, flush, render, reset, settle, tap, destSide } from './harness';
 
 const nationFile = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const gangwonRaw = JSON.parse(readFileSync(resolve(__dirname, '../data/gangwon/spots-gangwon.json'), 'utf8')) as Record<string, unknown>[];
@@ -279,6 +279,7 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     const { asked } = mount({ dest: 'jeju', at: { lat: 33.5122, lng: 126.5272 } });
     await wait();
     await tap('#basis');
+    await destSide();
     expect($$('#sheet [data-dest]').map((b) => b.dataset.dest)).toEqual(['jeju', 'busan', 'gangwon', 'nation']);
     expect($('#sheet [data-dest="gangwon"] .nm').textContent).toBe('강원');
     await tap('#sheet [data-dest="gangwon"]');
@@ -425,6 +426,7 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     expect($('.logo .rg').textContent).toBe(':Sokcho');
     expect(document.title).toBe('Yeochana:Sokcho · Your no-plan travel buddy');
     await tap('#basis');
+    await destSide();
     expect($('#sheet [data-dest="gangwon"] .nm').textContent).toBe('Gangwon');
   });
 

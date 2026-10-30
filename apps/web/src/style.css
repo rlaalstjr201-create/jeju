@@ -297,7 +297,7 @@ main { flex: 1; display: flex; flex-direction: column; }
 .mapapp p, .langs p { margin: 0 4px 0 0; }
 /* narrower faces: the label and the three stay on one line at 320 */
 .mapapp .tbtn, .langs .tbtn { padding: 0 8px; font-weight: 400; text-decoration: none; }
-.mapapp .tbtn[aria-pressed="true"], .langs .tbtn[aria-current="true"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--main); }
+.mapapp .tbtn[aria-pressed="true"], .langs .tbtn[aria-current="true"], .chips .tbtn[aria-pressed="true"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--main); }
 .note:empty { display: none; }
 /* ADR-0093: the other languages, the home's last line (each opens the app in it) */
 .lang-line { margin: 20px 0 0; color: var(--muted); }
@@ -521,11 +521,21 @@ html:has(.more-bar.stuck) { scroll-padding-bottom: calc(72px + max(12px, env(saf
 .when-row .opt + .opt::before { content: "·"; content: "·" / ""; color: var(--muted); }
 /* 48px tall to the finger (design.md T2): 4px up into the heading's margin, not down onto the date field */
 .when-row .opt::after { content: ""; position: absolute; inset: -4px 0 0; }
-/* 여행지: 제주 · 부산 · 강릉 · 다른 곳 (ADR-0102) on one line at 320 — narrower sides; wrapped (large text), the next line's
-   4px reach stays off the one above */
-.dest-row { row-gap: 4px; }
-.dest-row .opt { padding-left: 8px; padding-right: 8px; }
-.dest-row .opt:first-child { padding-left: 14px; }
+/* 「여행지 | 내 위치」 (ADR-0103): two halves of one face, a hairline between; chosen = the check and 600, as every option */
+.seg-row { gap: 0; }
+/* side by side; at large text one under the other rather than wider than the sheet */
+.seg-row .opt { flex: 1 1 7em; }
+.seg-row .opt + .opt::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; border-left: 1px solid var(--fill-press); }
+/* its chips: one row that scrolls sideways inside itself, never wraps (room for more 여행지); 4px around for the focus ring */
+.chips { display: flex; gap: 8px; margin: 4px -4px 0; padding: 4px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chips .tbtn { flex: none; font-weight: 400; color: var(--muted); }
+/* 주소·숙소 검색 (ADR-0103): the words and 검색 on the row's second line, the edges on the names' line */
+.addr { flex: 1 1 100%; min-width: 0; display: flex; gap: 8px; margin: 0 14px 10px; }
+/* width 0: the field takes what 검색 leaves, never its own default width (wider than the sheet at large text) */
+.addr-q { width: 0; -webkit-appearance: none; appearance: none; }
+.addr .addr-go { justify-content: center; margin: 0; padding: 0 12px; }
+.addr-go:disabled { color: var(--muted); }
 /* 날짜 고르기 where the browser has no picker to open: the date field and 이 날로, on their own line */
 .date-fb { display: contents; }
 /* the hidden field keeps the page's font: Chrome draws a date field in monospace, and a font loaded for it alone

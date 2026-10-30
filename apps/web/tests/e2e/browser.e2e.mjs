@@ -159,6 +159,10 @@ const tapText = async (page, sel) => {
 const names = (page) => page.$$eval('#cards .card:not(.ghost) .name', (els) => els.map((e) => e.textContent));
 const hstate = (page) => page.evaluate(() => history.state);
 const visible = (page, sel) => page.locator(sel).first().isVisible().catch(() => false);
+/** 「여행지 | 내 위치」 (ADR-0103, the nation build): the 여행지 side, so its chips are there (a no-op where they are already) */
+const destSide = async (page) => {
+  if (await visible(page, '.sheet [data-seg="pick"][aria-pressed="false"]')) await tapText(page, '.sheet [data-seg="pick"]');
+};
 async function waitCards(page) {
   await page.waitForSelector('#cards .card:not(.ghost) .name', { timeout: 5000 });
 }
@@ -1192,7 +1196,7 @@ await check('3-22', 'area index: 15 cells in order with landmarks in the results
     // 언제 (specs/date-mode.md) above 어디; 얼마나 (ADR-0060) right under the 어디 rows, before the 동네 index
     // Changed on purpose (ADR-0090 6): the 동네 row's 「다른 동네는 아래에서 골라요」 became the button 다른 동네 고르기 beside it
     // the switched-on build's 여행지 row comes first (specs/busan.md 1.4)
-    assert(rows.join('/') === `${BUSAN ? (NATION ? '제주/부산/강원/다른 곳/' : '제주/부산/') : ''}지금/내일/날짜 고르기/지금 있는 곳/숙소성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
+    assert(rows.join('/') === `${BUSAN ? (NATION ? '여행지/내 위치/' : '제주/부산/') : ''}지금/내일/날짜 고르기/지금 있는 곳/${NATION ? '주소·숙소' : '숙소'}성산 숙소/애월 근처/걸어서/차로 30분/차로 1시간/비 와요(실내만)`, `sheet rows ${rows.join('/')}`);
     assert((await b.page.textContent('#sheet .optrow:has([data-action="close"][aria-pressed="true"]) [data-action="other-area"]')) === '다른 동네 고르기', 'no 다른 동네 고르기 on the 동네 row');
     await shot(b.page, `sheet-basis-320-${dark ? 'dark' : 'light'}`);
     await tapText(b.page, '#sheet [data-action="restay"]');
@@ -1578,7 +1582,7 @@ await check('R4-range', '얼마나 at 320·390: right under the 어디 rows in t
     const depth = (await hstate(page)).depth;
     await tapText(page, '#basis');
     const heads = await page.$$eval('#sheet .group-h > span:first-child', (els) => els.map((e) => e.textContent));
-    if (heads.join() !== `${BUSAN ? '여행지,' : ''}언제,어디,얼마나,날씨,제주시 쪽,서귀포 쪽`) problems.push(`${tag} groups ${heads}`);
+    if (heads.join() !== `${BUSAN && !NATION ? '여행지,' : ''}언제,어디,얼마나,날씨,제주시 쪽,서귀포 쪽`) problems.push(`${tag} groups ${heads}`);
     if (width === 390) {
       // right under 어디: all three range rows in view above the sticky 닫기 without scrolling the sheet
       const inView = await page.$eval('#sheet [data-reach="drive60"]', (b) => {
@@ -4272,6 +4276,7 @@ if (BUSAN) {
       o = await openAt('/', { storage: {}, width });
       await home(o.page, `${width} 제주 홈`);
       await tapText(o.page, '#basis');
+      await destSide(o.page);
       await o.page.click('.sheet [data-dest="busan"]');
       await o.page.waitForFunction(() => document.querySelector('.logo .rg')?.textContent === ':부산', null, { timeout: 5000 });
       await o.page.click('.sheet [data-dest="jeju"]');
@@ -4514,6 +4519,7 @@ if (NATION) {
     await startButton(page, '경주').click();
     await rgIs(page, ':경주');
     await tapText(page, '#basis');
+    await destSide(page);
     await page.click('.sheet [data-dest="busan"]');
     if (!(await rgIs(page, ':부산', 5000))) problems.push(`→ 부산 ${JSON.stringify(await said(page))}`);
     await page.click('.sheet [data-dest="nation"]');
@@ -4733,6 +4739,7 @@ if (NATION) {
     await startButton(page, '강릉').click();
     await rgIs(page, ':강릉');
     await tapText(page, '#basis');
+    await destSide(page);
     await page.waitForSelector('#sheet [data-area="51210"]');
     const row = await page.$$eval('#sheet [data-dest]', (els) => els.map((e) => `${e.textContent}${e.getAttribute('aria-pressed') === 'true' ? '*' : ''}`));
     if (row.join('/') !== '제주/부산/강원*/다른 곳') problems.push(`여행지 줄 ${row.join('/')}`);
@@ -4883,6 +4890,156 @@ if (NATION) {
     const r = await gwCards(page);
     await ctx.close();
     assert(ok && r.n === 3 && r.how.endsWith('Place names are shown in Korean.'), `rg ${ok} ${JSON.stringify(r)}`);
+  });
+}
+
+// --- 기준 시트 2판 (ADR-0103, specs/sheet-v2.md, SV-*): 「여행지 | 내 위치」 and 주소·숙소 검색 — the nation build only.
+// The screenshots (both toggle states, the search's answers, its 「검색을 쓸 수 없어요.」) go to design/qa/sheet-v2/.
+const SHEET_SHOTS = NATION ? join(appDir, 'design/qa/sheet-v2') : '';
+if (SHEET_SHOTS) mkdirSync(SHEET_SHOTS, { recursive: true });
+const 애월GH = { name: '애월 게스트하우스', addr: '제주특별자치도 제주시 애월읍 애월해안로 1', lat: 33.4631, lng: 126.3105 };
+const 해운대HS = { name: '해운대해수욕장', addr: '부산 해운대구 우동', lat: 35.1587, lng: 129.1604 };
+/** /api/geo answered here (no function under vite preview): `status` 200 with `hits`, or 503 (no key); the words asked kept */
+const geoRoute = (asked, status = 200, hits = [애월GH, 해운대HS]) => (c) =>
+  c.route('**/api/geo*', (r) => {
+    asked.push(r.request().url());
+    return status === 200 ? r.fulfill({ status, contentType: 'application/json', body: JSON.stringify({ hits }) }) : r.fulfill({ status, body: '' });
+  });
+/** the open sheet: sideways overflow of the page and of the sheet, tap boxes under 44, what is pressed */
+const SHEET_GEOM = () => {
+  const sheet = document.querySelector('.sheet');
+  const small = [...sheet.querySelectorAll('button, input')]
+    .filter((b) => b.offsetParent !== null && !b.classList.contains('sr'))
+    .map((b) => [b.dataset.seg ?? b.dataset.dest ?? b.dataset.hit ?? b.className, b.getBoundingClientRect()])
+    .filter(([, r]) => r.height < 44 - 0.5 || r.width < 44 - 0.5)
+    .map(([n, r]) => `${n} ${Math.round(r.width)}×${Math.round(r.height)}`);
+  const chips = sheet.querySelector('.chips');
+  const top = (sel) => Math.round(sheet.querySelector(sel)?.getBoundingClientRect().top ?? -1);
+  return {
+    over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    sheetOver: sheet.scrollWidth - sheet.clientWidth,
+    // what sticks out of the sheet's content box (a row inside .chips scrolls there, so it never counts)
+    wide: [...sheet.querySelectorAll('*')]
+      .filter((e) => !e.closest('.chips') && e.getBoundingClientRect().right > sheet.getBoundingClientRect().right - 16 + 1 && e.getBoundingClientRect().width > 0)
+      .map((e) => e.className || e.tagName)
+      .slice(0, 6),
+    small,
+    seg: [...sheet.querySelectorAll('[data-seg]')].map((b) => `${b.textContent}${b.getAttribute('aria-pressed') === 'true' ? '*' : ''}`).join('|'),
+    chips: chips ? [...chips.querySelectorAll('[data-dest]')].map((b) => `${b.textContent}${b.getAttribute('aria-pressed') === 'true' ? '*' : ''}`).join('/') : null,
+    chipStyle: chips ? `${getComputedStyle(chips).overflowX} ${getComputedStyle(chips).flexWrap}` : null,
+    chipScroll: chips ? chips.scrollWidth - chips.clientWidth : null,
+    vh: innerHeight,
+    segTop: top('[data-seg]'),
+    searchTop: top('.addr-q'),
+  };
+};
+
+if (NATION) {
+  await check('SV-1', '「여행지 | 내 위치」 at 375·320: 내 위치 on GPS (no chips); 여행지 → 제주*/부산/강원/다른 곳 in one row (overflow-x auto, nowrap); 내 위치 hides them; page and sheet overflow 0, every control ≥ 44; toggle and search box in view (shots)', async () => {
+    const problems = [];
+    for (const [w, h] of [[375, 812], [320, 568]]) {
+      const { ctx, page } = await fresh({ width: w, height: h, storage: {} });
+      await page.waitForSelector('#today:not(.wait)');
+      await tapText(page, '#basis');
+      await page.waitForSelector('.sheet [data-seg]');
+      let g = await page.evaluate(SHEET_GEOM);
+      if (g.seg !== '여행지|내 위치*' || g.chips !== null || g.over > 0 || g.sheetOver > 0 || g.small.length || g.segTop < 0 || g.segTop > g.vh - 56 || g.searchTop < 0 || g.searchTop > g.vh - 44) problems.push(`${w} gps ${JSON.stringify(g)}`);
+      if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `toggle-gps-${w}.png`) });
+      await tapText(page, '.sheet [data-seg="pick"]');
+      g = await page.evaluate(SHEET_GEOM);
+      if (g.seg !== '여행지*|내 위치' || g.chips !== '제주*/부산/강원/다른 곳' || g.chipStyle !== 'auto nowrap' || g.over > 0 || g.sheetOver > 0 || g.small.length) problems.push(`${w} pick ${JSON.stringify(g)}`);
+      if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `toggle-pick-${w}.png`) });
+      await tapText(page, '.sheet [data-seg="gps"]');
+      g = await page.evaluate(SHEET_GEOM);
+      if (g.seg !== '여행지|내 위치*' || g.chips !== null) problems.push(`${w} back ${JSON.stringify(g)}`);
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('SV-2', '칩 줄 at 320 with text 200%: it scrolls inside itself (page and sheet overflow 0); scrolled to its end, 다른 곳 is tapped → 다른 곳 (jeju.dest nation)', async () => {
+    const { ctx, page } = await fresh({ width: 320, height: 568, storage: {} });
+    await page.waitForSelector('#today:not(.wait)');
+    await page.addStyleTag({ content: 'html { font-size: 200% }' });
+    await tapText(page, '#basis');
+    await tapText(page, '.sheet [data-seg="pick"]');
+    const g = await page.evaluate(SHEET_GEOM);
+    const end = await page.evaluate(() => {
+      const c = document.querySelector('.sheet .chips');
+      c.scrollLeft = c.scrollWidth;
+      const r = c.querySelector('[data-dest="nation"]').getBoundingClientRect();
+      const box = c.getBoundingClientRect();
+      return { left: c.scrollLeft, inside: r.left >= box.left - 0.5 && r.right <= box.right + 0.5 };
+    });
+    await page.locator('.sheet [data-dest="nation"]').click();
+    const moved = await page.waitForFunction(() => localStorage.getItem('jeju.dest') === '"nation"', null, { timeout: 8000 }).then(() => true, () => false);
+    await ctx.close();
+    assert(g.chipScroll > 0 && g.over <= 0 && g.sheetOver <= 0 && end.left > 0 && end.inside && moved, `${JSON.stringify(g)} end ${JSON.stringify(end)} moved ${moved}`);
+  });
+
+  await check('SV-3', '주소·숙소 검색 at 375·320: Enter asks /api/geo with only q (words folded); answers as rows (≥ 44, overflow 0, shots); the first → 숙소 근처, jeju.stay source addr, sheet says 애월 숙소; 해운대 → 여차나:부산 with its 숙소', async () => {
+    const problems = [];
+    for (const [w, h] of [[375, 812], [320, 568]]) {
+      const asked = [];
+      const { ctx, page } = await fresh({ width: w, height: h, storage: {}, route: geoRoute(asked) });
+      await page.waitForSelector('#today:not(.wait)');
+      await tapText(page, '#basis');
+      const label = await page.textContent('.sheet [data-basis="stay"] .nm');
+      if (label !== '주소·숙소') problems.push(`${w} label ${label}`);
+      await page.locator('.sheet .addr-q').fill('  애월   게스트하우스 ');
+      await page.locator('.sheet .addr-q').press('Enter');
+      await page.waitForSelector('.sheet .hit-row', { timeout: 5000 });
+      const q = asked.map((u) => [...new URL(u).searchParams].map(([k, v]) => `${k}=${v}`).join('&'));
+      if (q.join() !== 'q=애월 게스트하우스') problems.push(`${w} asked ${q.join(' ')}`);
+      await page.locator('.sheet .hit-row').last().scrollIntoViewIfNeeded();
+      const g = await page.evaluate(SHEET_GEOM);
+      const rows = await page.$$eval('.sheet .hit-row .nm', (els) => els.map((e) => e.textContent));
+      if (rows.join('/') !== '애월 게스트하우스/해운대해수욕장' || g.over > 0 || g.sheetOver > 0 || g.small.length) problems.push(`${w} rows ${rows.join('/')} ${JSON.stringify(g)}`);
+      if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `search-results-${w}.png`) });
+      await tapText(page, '.sheet [data-hit="0"]');
+      await page.waitForFunction(() => document.querySelector('#basis > span')?.textContent === '숙소 근처', null, { timeout: 5000 }).catch(() => undefined);
+      const after = await page.evaluate(() => ({ basis: document.querySelector('#basis > span')?.textContent, stay: JSON.parse(localStorage.getItem('jeju.stay') || 'null'), sheet: !!document.querySelector('.sheet') }));
+      if (after.basis !== '숙소 근처' || after.stay?.source !== 'addr' || after.stay?.lat !== 애월GH.lat || after.sheet) problems.push(`${w} picked ${JSON.stringify(after)}`);
+      await tapText(page, '#basis');
+      const lm = await page.textContent('.sheet [data-basis="stay"] .lm');
+      if (lm !== '애월 숙소') problems.push(`${w} 다시 열기 ${lm}`);
+      if (w === 375) {
+        await page.locator('.sheet .addr-q').fill('해운대');
+        await tapText(page, '.sheet .addr-go');
+        await page.waitForSelector('.sheet [data-hit="1"]', { timeout: 5000 });
+        await tapText(page, '.sheet [data-hit="1"]');
+        if (!(await rgIs(page, ':부산', 8000))) problems.push(`해운대 ${JSON.stringify(await said(page))}`);
+        const busan = await page.evaluate(() => JSON.parse(localStorage.getItem('jeju.stay.busan') || 'null'));
+        if (busan?.source !== 'addr' || busan?.lat !== 해운대HS.lat) problems.push(`부산 숙소 ${JSON.stringify(busan)}`);
+      }
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
+  });
+
+  await check('SV-4', '검색을 쓸 수 없을 때(503, 키 없음) at 375·320: 「검색을 쓸 수 없어요.」 under 어디 (role alert, in view after the search), no rows, basis unchanged (shots)', async () => {
+    const problems = [];
+    for (const [w, h] of [[375, 812], [320, 568]]) {
+      const asked = [];
+      const { ctx, page } = await fresh({ width: w, height: h, storage: {}, route: geoRoute(asked, 503) });
+      await page.waitForSelector('#today:not(.wait)');
+      await tapText(page, '#basis');
+      await page.locator('.sheet .addr-q').fill('애월');
+      await tapText(page, '.sheet .addr-go');
+      await page.waitForSelector('.sheet .addr-err:not([hidden])', { timeout: 5000 }).catch(() => undefined);
+      await page.locator('.sheet .addr-err').scrollIntoViewIfNeeded().catch(() => undefined);
+      const s = await page.evaluate(() => ({
+        err: document.querySelector('.sheet .addr-err')?.textContent,
+        role: document.querySelector('.sheet .addr-err')?.getAttribute('role'),
+        rows: document.querySelectorAll('.sheet .hit-row').length,
+        basis: document.querySelector('#basis > span')?.textContent,
+        over: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      }));
+      if (s.err !== '검색을 쓸 수 없어요.' || s.role !== 'alert' || s.rows || s.basis !== '내 위치 근처' || s.over > 0 || asked.length !== 1) problems.push(`${w} ${JSON.stringify(s)} asked ${asked.length}`);
+      if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `search-off-${w}.png`) });
+      await ctx.close();
+    }
+    assert(!problems.length, problems.join(' | '));
   });
 }
 

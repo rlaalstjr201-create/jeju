@@ -10,7 +10,7 @@ import { DEFAULT_MAP_APP, type MapApp } from './links';
 import type { SessionRecord } from './store';
 import { OPEN_AREAS, openAreasOf } from './release';
 import { nightNow } from './sun';
-import type { Basis, GeoPermission, NoOrigin, Origin, OutsideAt, Overlay, Route, SavedEntry, Stay, View, When } from './types';
+import type { Basis, GeoError, GeoHit, GeoPermission, NoOrigin, Origin, OutsideAt, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';
 /** 가 봤어요 (ADR-0087): `name` left out / put back, or `n` put back at once (모두 다시 넣기). `id`: the place a
@@ -135,6 +135,10 @@ export interface State {
   /** the map app the cards open (ADR-0071). */
   mapApp: MapApp;
   stayForm: { pending: boolean; error: NoOrigin | null; at?: OutsideAt };
+  /** ADR-0103: the basis sheet's 여행지 side pressed while the basis is 내 위치 (its chips shown); for this sheet only. */
+  destPick: boolean;
+  /** ADR-0103: 주소·숙소 검색 in the basis sheet — asking, its answers, or why there are none; for this sheet only. */
+  geo: { pending: boolean; hits: GeoHit[] | null; error: GeoError | null };
   offline: boolean;
   keep: Keep;
   /** what the screen reader is told about new cards (render.ts words it); `seq` bumps per announcement. */
@@ -176,6 +180,8 @@ export type Action =
   | { type: 'reach'; reach: Reach }
   | { type: 'indoor'; on: boolean }
   | { type: 'stayForm'; pending: boolean; error: NoOrigin | null; at?: OutsideAt }
+  | { type: 'destPick'; on: boolean }
+  | { type: 'geo'; pending: boolean; hits?: GeoHit[] | null; error?: GeoError | null }
   /** the saved list as stored now; `removed`: a row taken out in the saved list (kept on screen). */
   | { type: 'saved'; entries: SavedEntry[]; removed?: SavedEntry | null }
   | { type: 'when'; when: When }
@@ -210,6 +216,7 @@ export type Action =
   | { type: 'dest'; dest: Dest; basis: Basis; region: RegionName | null; stay: Stay | null; note?: boolean; sgg?: SggCode | null };
 
 export const GPS_KEY = 'gps';
+const NO_GEO: State['geo'] = { pending: false, hits: null, error: null };
 /** Where a trip is measured from, in words (ADR-0093: another language's table replaces them). */
 export const FROM_TEXT = { here: '여기서', stay: '숙소에서', area: (label: string) => `${label}에서` };
 export const gpsOrigin = (point: Point): Origin => ({ key: GPS_KEY, point, isPoint: true, from: FROM_TEXT.here });
@@ -279,6 +286,8 @@ export function initialState(init: {
     tracking: init.tracking ?? true,
     mapApp: init.mapApp ?? DEFAULT_MAP_APP,
     stayForm: { pending: false, error: null },
+    destPick: false,
+    geo: NO_GEO,
     offline: init.offline,
     keep: { restore: null, inapp: null, inappNote: null, install: null, nudge: false, backup: null, ...init.keep },
     announce: { n: 0, more: false, seq: 0 },
@@ -628,8 +637,12 @@ function step(s: State, a: Action): State {
       // 다른 날로 belongs to a row of the saved list: without one (a forward after a reload) there is none.
       const overlay = a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved') ? null : a.overlay;
       if (overlay === s.overlay) return s;
-      return { ...s, overlay, stayForm: { pending: false, error: null }, feedbackSent: false };
+      return { ...s, overlay, stayForm: { pending: false, error: null }, feedbackSent: false, destPick: false, geo: NO_GEO };
     }
+    case 'destPick':
+      return a.on === s.destPick ? s : { ...s, destPick: a.on };
+    case 'geo':
+      return { ...s, geo: { pending: a.pending, hits: a.hits === undefined ? s.geo.hits : a.hits, error: a.error ?? null } };
     case 'basis':
       return {
         ...s,

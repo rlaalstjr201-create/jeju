@@ -198,6 +198,16 @@ export const ZH: Lang = {
     switchedTo: (name) => `你在${name}，已切换到${name}。`,
     otherSaved: { jeju: (n) => `在济州收藏的地方 ${n} 处`, busan: (n) => `在釜山收藏的地方 ${n} 处` },
     destAria: (name) => `${name}，更换旅行地`,
+    destGps: '我的位置',
+    addrOption: '地址·住处',
+    addrSearch: '搜索地址或住处名称',
+    addrGo: '搜索',
+    addrError: {
+      off: '暂时无法使用搜索。',
+      none: '没有找到。请换个名称再搜索。',
+      fail: '搜索失败。请检查网络后再试。',
+      nodata: '这附近还没有地点资料。',
+    },
   },
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in their Chinese names, 시군구 and places stay Korean */
   nation: {

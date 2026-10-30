@@ -6,11 +6,19 @@ import type { Point } from './pick';
 
 export type Basis = 'gps' | 'stay' | 'region';
 /** 숙소. `area` = the 동네 it belongs to (shown in the basis sheet); `source` = how it was set (`link`: a 숙소
- * 링크, ADR-0089). */
+ * 링크, ADR-0089; `addr`: a place found by 주소·숙소 검색, ADR-0103). */
 export interface Stay extends Point {
   area: RegionName;
-  source: 'gps' | 'area' | 'link';
+  source: 'gps' | 'area' | 'link' | 'addr';
 }
+/** 주소·숙소 검색 (ADR-0103): one answer of /api/geo — a name, its address, its point. */
+export interface GeoHit extends Point {
+  name: string;
+  addr: string;
+}
+/** Why a search shows no answers: no key on the server (`off`), none found, the request failed, or the point is where
+ * no destination is open (`nodata`). */
+export type GeoError = 'off' | 'none' | 'fail' | 'nodata';
 /** Permissions API answer for geolocation ('unknown' where the API is missing). */
 export type GeoPermission = 'granted' | 'denied' | 'prompt' | 'unknown';
 /** Why there is no usable position. */

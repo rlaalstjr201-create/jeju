@@ -177,7 +177,7 @@ export function parseStay(v: unknown, dest: Dest = 'jeju'): Stay | null {
   const own = areaByName(o.area, OPEN_AREAS);
   const area = own && openAreasOf(dest).includes(own) ? own.name : near.name;
   const atCentre = Math.abs(near.lat - p.lat) < 1e-6 && Math.abs(near.lng - p.lng) < 1e-6;
-  const source = o.source === 'gps' || o.source === 'area' || o.source === 'link' ? o.source : atCentre ? 'area' : 'gps';
+  const source = o.source === 'gps' || o.source === 'area' || o.source === 'link' || o.source === 'addr' ? o.source : atCentre ? 'area' : 'gps';
   return { ...p, area, source };
 }
 

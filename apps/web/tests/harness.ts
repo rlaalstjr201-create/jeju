@@ -71,6 +71,11 @@ export async function tap(sel: string | HTMLElement) {
   advance();
 }
 
+/** 「여행지 | 내 위치」 (ADR-0103, the nation build): the 여행지 side, so its chips are there (a no-op where they are already). */
+export async function destSide() {
+  if ($('#sheet [data-seg="pick"][aria-pressed="false"]')) await tap('#sheet [data-seg="pick"]');
+}
+
 /** Cards in the section on screen (results or saved list) — hidden sections don't count. */
 export const cardIds = () => $$('main > section:not([hidden]) .card:not(.ghost)').map((e) => e.getAttribute('data-id'));
 const nameById = new Map(realSpots.map((s) => [s.id, s.name] as const));

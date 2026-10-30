@@ -202,6 +202,16 @@ export const JA: Lang = {
     switchedTo: (name) => `${name}にいるので、${name}に切り替えました。`,
     otherSaved: { jeju: (n) => `済州で保存した場所 ${n}か所`, busan: (n) => `釜山で保存した場所 ${n}か所` },
     destAria: (name) => `${name}、旅行先を変更`,
+    destGps: '現在地',
+    addrOption: '住所・宿',
+    addrSearch: '住所や宿の名前で検索',
+    addrGo: '検索',
+    addrError: {
+      off: '検索を使えません。',
+      none: '見つかりませんでした。別の名前で検索してください。',
+      fail: '検索できませんでした。接続を確認してもう一度お試しください。',
+      nodata: 'このあたりの場所データはまだありません。',
+    },
   },
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in their Japanese names, 시군구 and places stay Korean */
   nation: {

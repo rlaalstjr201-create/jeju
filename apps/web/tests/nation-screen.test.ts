@@ -11,7 +11,7 @@ import type { Point } from '../src/pick';
 import { NATION, loadNation } from '../src/release';
 import { KEYS } from '../src/store';
 import { fileSpots } from './fixtures';
-import { $, $$, cardIds, current, flush, render, reset, settle, tap } from './harness';
+import { $, $$, cardIds, current, flush, render, reset, settle, tap, destSide } from './harness';
 
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const raw = (f: string) => JSON.parse(file(f)) as unknown;
@@ -76,6 +76,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     const { asked } = mount({ dest: 'nation', sgg: '51170' });
     await wait();
     await tap('#basis');
+    await destSide();
     expect($('#sheet [data-dest="nation"]').getAttribute('aria-pressed')).toBe('true');
     expect($('#sheet [data-dest="nation"] .nm').textContent).toBe('다른 곳');
     expect($('#areas-basis-nation').textContent).toBe('강원');
@@ -95,6 +96,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     mount({ dest: 'jeju' });
     await wait();
     await tap('#basis');
+    await destSide();
     await tap('#sheet [data-dest="nation"]');
     await wait();
     expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11140', basis: 'region' });
@@ -107,6 +109,7 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     mount({ dest: 'nation', sgg: '51170' });
     await wait();
     await tap('#basis');
+    await destSide();
     expect($('#sheet [data-dest="nation"] .nm').textContent).toBe('Somewhere else');
     expect($('#areas-basis-nation').textContent).toBe('GangwonPlace names are shown in Korean.');
     expect($$('#sheet [data-area] .nm').map((b) => b.textContent)).toContain('강릉시');

@@ -4,7 +4,7 @@ import type { RegionName } from './areas';
 import type { Point } from './pick';
 import { nationPart } from './release';
 import { gpsOrigin, staticOrigin } from './state';
-import type { Basis, GeoPermission, NoOrigin, Origin, OutsideAt, Stay } from './types';
+import type { Basis, GeoHit, GeoPermission, NoOrigin, Origin, OutsideAt, Stay } from './types';
 
 export type { GeoPermission };
 
@@ -57,6 +57,31 @@ export type Fetch = (url: string, init?: { signal?: AbortSignal }) => Promise<{ 
  * 자동 지역 시군구 (a code), the KMA grid of its centre (plans/nationwide-app.md 5: never the device's point).
  * null — nothing to show — for a 204 (no key, the agency failing), an error, a non-JSON answer (no function
  * here: the host's 404 page) or no answer within `timeoutMs`. */
+/** 주소·숙소 검색 (ADR-0103): the words typed, to /api/geo (Kakao Local behind it). `off`: no key on the server (503);
+ * `fail`: anything else that is not an answer (an error, a 429, no function here, no answer within `timeoutMs`). */
+export async function fetchGeo(q: string, get: Fetch, timeoutMs = 6000): Promise<{ ok: true; hits: GeoHit[] } | { ok: false; why: 'off' | 'fail' }> {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), timeoutMs);
+  try {
+    const res = await Promise.race([
+      get(`/api/geo?q=${encodeURIComponent(q)}`, { signal: ctl.signal }),
+      new Promise<never>((_, reject) => ctl.signal.addEventListener('abort', () => reject(new Error('timeout')))),
+    ]);
+    if (res.status === 503) return { ok: false, why: 'off' };
+    if (res.status !== 200) return { ok: false, why: 'fail' };
+    const body = (await res.json()) as { hits?: unknown } | null;
+    if (!Array.isArray(body?.hits)) return { ok: false, why: 'fail' };
+    const hits = body.hits.filter(
+      (h): h is GeoHit => !!h && typeof h.name === 'string' && typeof h.addr === 'string' && Number.isFinite(h.lat) && Number.isFinite(h.lng),
+    );
+    return { ok: true, hits: hits.slice(0, 6).map((h) => ({ name: h.name.slice(0, 60), addr: h.addr.slice(0, 80), lat: h.lat, lng: h.lng })) };
+  } catch {
+    return { ok: false, why: 'fail' };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function fetchRain(area: string, get: Fetch, timeoutMs = 5000): Promise<boolean | null> {
   const g = /^\d{4,8}$/.test(area) ? nationPart()?.grid(area) : undefined;
   if (g === null) return null;

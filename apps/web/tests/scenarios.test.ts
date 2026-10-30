@@ -5,7 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
 import { islandOf, pickCards, withinReach, type Point } from '../src/pick';
-import { BUSAN } from '../src/release';
+import { BUSAN, NATION } from '../src/release';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, painted, render, reset, settle, shownMood, tap, wait } from './harness';
 
@@ -1921,7 +1921,7 @@ describe('얼마나 — 만족도 순과 범위 (ADR-0060, specs/ranking.md R1�
     render();
     await tap('#basis');
     const heads = $$('#sheet .group-h').map((h) => h.firstElementChild!.textContent);
-    expect(heads).toEqual([...(BUSAN ? ['여행지'] : []), '언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']);
+    expect(heads).toEqual([...(BUSAN && !NATION ? ['여행지'] : []), '언제', '어디', '얼마나', '날씨', '제주시 쪽', '서귀포 쪽']);
     expect(reachRows().map((b) => b.querySelector('.nm')!.textContent)).toEqual(['걸어서', '차로 30분', '차로 1시간']);
     expect(pressedReach()).toEqual(['drive30']);
     // check-mark selection (SPEC 3판): each row carries the check, shown only on the chosen one by CSS

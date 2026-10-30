@@ -205,6 +205,16 @@ export const EN: Lang = {
     switchedTo: (name) => `You're in ${name}, so we switched to ${name}.`,
     otherSaved: { jeju: (n) => `Saved in Jeju (${n})`, busan: (n) => `Saved in Busan (${n})` },
     destAria: (name) => `${name}, change destination`,
+    destGps: 'My location',
+    addrOption: 'Address or stay',
+    addrSearch: 'Search an address or place',
+    addrGo: 'Search',
+    addrError: {
+      off: "Search isn't available.",
+      none: 'Nothing found. Try another name.',
+      fail: "Couldn't search. Check your connection and try again.",
+      nodata: "We don't have place data for around here yet.",
+    },
   },
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words; 시도 in Revised Romanization, 시군구 and places stay Korean */
   nation: {

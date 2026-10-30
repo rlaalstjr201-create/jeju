@@ -15,7 +15,7 @@ import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, rainArea, savedCount
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
-import type { NoOrigin, Origin, OutsideAt, Overlay, View } from './types';
+import type { GeoError, NoOrigin, Origin, OutsideAt, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
 export const COPY = {
@@ -233,6 +233,17 @@ export const BUSAN_COPY = {
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
   /** the name line's button (ADR-0094 Amendment 3): its words, e.g. 「여차나:제주」 */
   destAria: (name: string) => `${name}, 여행지 바꾸기`,
+  /** ADR-0103: the basis sheet's 「여행지 | 내 위치」 (its 여행지 side is destHead) and 주소·숙소 검색 */
+  destGps: '내 위치',
+  addrOption: '주소·숙소',
+  addrSearch: '주소나 숙소 이름 검색',
+  addrGo: '검색',
+  addrError: {
+    off: '검색을 쓸 수 없어요.',
+    none: '찾는 곳이 없어요. 다른 이름으로 검색해 주세요.',
+    fail: '검색하지 못했어요. 연결을 확인하고 다시 검색해 주세요.',
+    nodata: '이 근처는 아직 장소 자료가 없어요.',
+  } satisfies Record<GeoError, string>,
 } as const;
 
 /** The name (its main part, without the alias) and the particle its last syllable takes: 받침 → `withFinal`. */
@@ -269,6 +280,8 @@ const LANGS = [
 const HEART_PATH =
   'M12 20.3s-7.4-4.5-9.2-9.1C1.6 8 3.5 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.4 0 5.3 3.4 4.1 6.6-1.8 4.6-9.2 9.1-9.2 9.1z';
 const CHECK = '<svg class="i-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+/** 주소·숙소 검색's button (ADR-0103): a magnifier, no emoji (SPEC 14 #2) */
+const SEARCH = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>';
 /** the `아니면` line's shared trip; the row links point at it with aria-describedby. */
 const ALT_TRIP = 'alt-trip';
 const HEART_22 = `<svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${HEART_PATH}"/></svg>`;
@@ -1452,7 +1465,68 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // 의견 보내기 keeps what is typed: rebuilt only when it turns into 고마워요
     if (s.overlay === 'feedback') return `feedback|${s.feedbackSent}`;
     const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
-    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}|${s.dest}`;
+    return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}|${s.dest}|${s.destPick}`;
+  }
+
+  /** 「여행지 | 내 위치」 (ADR-0103): how the destination is decided — by the position (내 위치: the basis 지금 있는 곳, which
+   * follows the position into another destination) or picked (여행지: any other basis, or that side pressed in this sheet).
+   * Under 여행지 its chips, one row that scrolls sideways inside itself instead of wrapping. */
+  function destToggle(panel: HTMLElement, s: State) {
+    const pick = s.destPick || s.basis !== 'gps';
+    const seg = optRow(
+      option(BUSAN_COPY.destHead, null, { 'data-seg': 'pick', 'aria-pressed': String(pick) }),
+      option(BUSAN_COPY.destGps, null, { 'data-seg': 'gps', 'aria-pressed': String(!pick) }),
+    );
+    seg.classList.add('seg-row');
+    const box = el(doc, 'div', { class: 'opts seg', role: 'group', 'aria-label': BUSAN_COPY.destHead });
+    box.append(seg);
+    panel.append(box);
+    if (!pick) return;
+    const chips = el(doc, 'div', { class: 'chips', role: 'group', 'aria-label': BUSAN_COPY.destHead });
+    for (const d of [...DESTS, 'nation' as const]) {
+      const b = el(doc, 'button', { type: 'button', class: 'tbtn', 'data-dest': d, 'aria-pressed': String(s.dest === d) });
+      b.append(el(doc, 'span', { class: 'nm' }, BUSAN_COPY.destName[d]));
+      chips.append(b);
+    }
+    panel.append(chips);
+  }
+  /** 주소·숙소 검색 (ADR-0103) under its option: the words, then 검색 */
+  function addrBox(): HTMLElement {
+    const box = el(doc, 'div', { class: 'addr' });
+    const q = el(doc, 'input', { type: 'search', class: 'date-in addr-q', 'aria-label': BUSAN_COPY.addrSearch, placeholder: BUSAN_COPY.addrSearch, maxlength: '40', enterkeyhint: 'search', autocomplete: 'off' });
+    // what was typed survives a rebuild of the sheet (언제 picked meanwhile)
+    q.value = els.sheet.querySelector<HTMLInputElement>('.addr-q')?.value ?? '';
+    const go = el(doc, 'button', { type: 'button', class: 'tbtn addr-go', 'data-action': 'addr-go', 'aria-label': BUSAN_COPY.addrGo });
+    go.append(icon(SEARCH));
+    box.append(q, go);
+    return box;
+  }
+  /** The search's answers as option rows under 주소·숙소, and why there are none; patched, never a rebuild (the words typed stay). */
+  function patchAddr(s: State) {
+    const row = els.sheet.querySelector<HTMLElement>('.addr')?.closest<HTMLElement>('.optrow');
+    if (!row) return;
+    const go = row.querySelector<HTMLButtonElement>('.addr-go')!;
+    go.disabled = s.geo.pending;
+    if (s.geo.pending) go.setAttribute('aria-busy', 'true');
+    else go.removeAttribute('aria-busy');
+    const hits = s.geo.hits ?? [];
+    const sig = JSON.stringify(hits);
+    if (row.dataset.hits !== sig) {
+      row.dataset.hits = sig;
+      for (const r of els.sheet.querySelectorAll('.hit-row')) r.remove();
+      row.after(
+        ...hits.map((h, i) => {
+          const r = optRow(option(h.name, h.addr, { 'data-hit': String(i) }));
+          r.classList.add('hit-row');
+          return r;
+        }),
+      );
+    }
+    const err = els.sheet.querySelector<HTMLElement>('.addr-err');
+    if (err) {
+      setText(err, s.geo.error ? BUSAN_COPY.addrError[s.geo.error] : '');
+      err.hidden = !s.geo.error;
+    }
   }
 
   /** A thin-rule list of rows under its own group heading (the 언제 / 어디 / 얼마나 parts of the basis sheet). */
@@ -1534,14 +1608,12 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
       // 여행지 (specs/busan.md 1.4): the sheet's first row, with the switch on — the one in use pressed
-      if (BUSAN) {
-        // one compact line, like 언제
-        const row = optRow(...DESTS.filter((d) => NATION || !DEST[d].sgg).map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
-        // the 자동 지역 (plans/nationwide-app.md 4): 다른 곳 (its part asked for when pressed: app.ts pickDest)
-        if (NATION) row.append(option(BUSAN_COPY.destName.nation, null, { 'data-dest': 'nation', 'aria-pressed': String(s.dest === 'nation') }));
-        // the narrower sides are for the four (n-1): the `--mode busan` rollback's 제주 · 부산 keeps the usual ones
+      // the nation build (with 강원 and 다른 곳, its part asked for when pressed: app.ts pickDest): 「여행지 | 내 위치」 (ADR-0103)
+      if (NATION) destToggle(panel, s);
+      else if (BUSAN) {
+        // one compact line, like 언제 (the `--mode busan` rollback's 제주 · 부산)
+        const row = optRow(...DESTS.filter((d) => !DEST[d].sgg).map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
         row.classList.add('when-row');
-        if (NATION) row.classList.add('dest-row');
         optGroup(panel, 'dest-h', BUSAN_COPY.destHead, [row]);
       }
       // 언제 (specs/date-mode.md): 지금 · 내일 · 날짜 고르기 on one compact row, so 어디 comes sooner.
@@ -1557,8 +1629,10 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       optGroup(panel, 'when-h', COPY.whenHead, [when]);
       // 어디: a thin-rule list of two rows; 다시 정하기 sits at the end of the 숙소 row, beside its option (§6.10).
       // The 지금 있는 곳 row's "위치 권한이 꺼져 있어요" line comes and goes in patchSheet.
-      const stayRow = optRow(option(COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area, OPEN_AREAS)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
+      // the nation build: 주소·숙소, its search box on the row's own second line (ADR-0103)
+      const stayRow = optRow(option(NATION ? BUSAN_COPY.addrOption : COPY.stayOption, s.stay ? COPY.stayArea(areaLabel(s.stay.area, OPEN_AREAS)) : COPY.stayUnset, { 'data-basis': 'stay', 'aria-pressed': String(s.basis === 'stay') }));
       if (s.stay) stayRow.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'restay' }, COPY.restay));
+      if (NATION) stayRow.append(addrBox());
       // the 동네 in use shows here, checked, not only far down in the index (heuristic audit H6); under it, where its line
       // 「다른 동네는 아래에서 골라요」 was, 다른 동네 고르기 goes down to that index (ADR-0090 6, app.ts)
       const regionRow: HTMLElement[] = [];
@@ -1568,6 +1642,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         regionRow.push(row);
       }
       optGroup(panel, 'where-h', COPY.whereHead, [optRow(option(COPY.gpsOption, null, { 'data-basis': 'gps', 'aria-pressed': String(s.basis === 'gps') })), stayRow, ...regionRow]);
+      if (NATION) panel.append(el(doc, 'p', { class: 'form-err addr-err', role: 'alert', hidden: '' }));
       // 얼마나 (ADR-0060): right under the 어디 rows, before the 동네 index, so it is in view without scrolling.
       // The same thin-rule rows with a check. Choosing one closes the sheet.
       optGroup(panel, 'reach-h', COPY.reachHead, REACHES.map((r) => optRow(option(COPY.reach[r], null, { 'data-reach': r, 'aria-pressed': String(s.reach === r) }))));
@@ -1611,7 +1686,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       here.disabled = s.stayForm.pending;
       setText(here, s.stayForm.pending ? COPY.locating : COPY.stayHere);
     }
-    const err = els.sheet.querySelector<HTMLElement>('.form-err');
+    if (NATION) patchAddr(s);
+    const err = els.sheet.querySelector<HTMLElement>('.form-err:not(.addr-err)');
     if (err) {
       // The button stays a button; the reason goes on its own line (S09).
       setText(err, s.stayForm.error ? (s.stayForm.error === 'outside' && nationOutside(s, s.stayForm.at, true)) || (BUSAN && s.stayForm.error === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.stayOutside(destNameOf(s)) : COPY.stayError[s.stayForm.error]) : '');
@@ -1623,8 +1699,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // a day picked on a touch screen is the see-through field's value (pickDay), not a pressed option
     // (the 여행지 row is not where a choice is made each time: focus starts below it, as before it was there)
     // opened from the name line (ADR-0094 Amendment 3): on the 여행지 in use
-    const dest = atDest ? els.sheet.querySelector<HTMLElement>('.sheet [data-dest][aria-pressed="true"]') : null;
-    const pick = dest ?? els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"]:not([data-dest]), .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
+    // (「여행지 | 내 위치」 the same, ADR-0103: on its chip in use, else on its side pressed)
+    const dest = atDest ? els.sheet.querySelector<HTMLElement>('.sheet [data-dest][aria-pressed="true"]') ?? els.sheet.querySelector<HTMLElement>('.sheet [data-seg][aria-pressed="true"]') : null;
+    const pick = dest ?? els.sheet.querySelector<HTMLElement>('.sheet [aria-pressed="true"]:not([data-dest]):not([data-seg]), .sheet .date-tap[value]') ?? els.sheet.querySelector<HTMLElement>('#sheet-title');
     pick?.focus({ preventScroll: true });
   }
 

@@ -13,7 +13,7 @@ import { openMarkets } from '../src/home';
 import { KEYS, createStore, destKey, parseRegion, parseStay } from '../src/store';
 import type { UsageEvent } from '../src/track';
 import { fileSpots } from './fixtures';
-import { $, $$, cardIds, flush, html, render, reset, settle, tap } from './harness';
+import { $, $$, cardIds, flush, html, render, reset, settle, tap, destSide } from './harness';
 
 const busanRaw = JSON.parse(readFileSync(resolve(__dirname, '../public/spots-busan.json'), 'utf8')) as Spot[];
 const 해운대 = { lat: 35.1587, lng: 129.1604 };
@@ -98,6 +98,7 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     mount({ dest: 'jeju', at: 동문시장 });
     await wait();
     await tap('#basis');
+    await destSide();
     expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"])').map((b) => [b.textContent, b.getAttribute('aria-pressed')])).toEqual([
       ['제주', 'true'],
       ['부산', 'false'],
@@ -125,6 +126,7 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     await wait();
     expect($('[data-mood="rest"] .ex').textContent).toMatch(/^제주 인기: /);
     await tap('#basis');
+    await destSide();
     await tap('#sheet [data-dest="busan"]');
     await wait();
     expect($('[data-mood="rest"] .ex').textContent).toMatch(/^부산 인기: /);
@@ -158,6 +160,7 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     const id = cardIds()[0]!;
     await tap($$('#cards .heart')[0]);
     await tap('#basis');
+    await destSide();
     await tap('#sheet [data-dest="jeju"]');
     await wait();
     expect(localStorage.getItem(KEYS.savedV2)).toContain(id);

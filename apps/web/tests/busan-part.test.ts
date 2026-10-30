@@ -8,7 +8,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { Spot } from '../src/pick';
 import { BUSAN, released } from '../src/release';
 import { fileSpots } from './fixtures';
-import { $, $$, flush, render, reset, settle, tap } from './harness';
+import { $, $$, flush, render, reset, settle, tap, destSide } from './harness';
 
 const busanRaw = JSON.parse(readFileSync(resolve(__dirname, '../public/spots-busan.json'), 'utf8')) as Spot[];
 const wait = async () => {
@@ -32,6 +32,7 @@ describe.runIf(BUSAN)('부산 몫 (switch on)', () => {
     await wait();
     expect(released('busan')).toBe(false);
     await tap('#basis');
+    await destSide();
     expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"])').map((b) => b.textContent)).toEqual(['제주', '부산']);
     await tap('#sheet [data-dest="busan"]');
     await wait();
