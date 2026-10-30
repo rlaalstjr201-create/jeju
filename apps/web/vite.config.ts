@@ -222,7 +222,7 @@ export default defineConfig(({ command, mode: given }) => {
     __NATION_V__: JSON.stringify(nation ? NATION_V : ''),
   },
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
-  plugins: [busanBlock(mode, nation),serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
+  plugins: [busanBlock(mode, nation), serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the dynamic imports are the other languages' words, which a Korean visit never asks for,
   // and Busan's part (switched-on build only, src/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
   // switch on

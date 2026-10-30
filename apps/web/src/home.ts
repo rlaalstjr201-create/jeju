@@ -120,9 +120,12 @@ export const ROW_DAYS = 14;
 const DAY_MS = 86_400_000;
 /** 오늘 판's row ahead: when, from `now` through the next ROW_DAYS days, the home as it is set now (basis, the day viewed,
  * 뺀 곳) draws a row to tap, as merged [from, to) ms pairs — a market's day whole, else 노을 볼 곳's window, and 비 소식 for
- * the half hour its answer is kept. index.html's first script holds the row's place at those times, before the data. */
+ * the half hour its answer is kept. index.html's first script holds the row's place at those times, before the data.
+ * None with 내 위치: the position is read anew each visit, often after the list, so a place held for it would be let go
+ * and the row then come back (two moves instead of one). */
 export function rowTimes(s: State, spots: Spot[], origin: Origin | null, now: number): number[] {
   const out: number[] = [];
+  if (s.basis === 'gps') return out;
   const add = (from: number, until: number) => {
     const a = Math.round(Math.max(from, now));
     const to = Math.round(until);
