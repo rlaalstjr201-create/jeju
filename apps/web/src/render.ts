@@ -1531,7 +1531,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         const row = optRow(...DESTS.filter((d) => NATION || !DEST[d].sgg).map((d) => option(BUSAN_COPY.destName[d], null, { 'data-dest': d, 'aria-pressed': String(s.dest === d) })));
         // the 자동 지역 (plans/nationwide-app.md 4): 다른 곳 (its part asked for when pressed: app.ts pickDest)
         if (NATION) row.append(option(BUSAN_COPY.destName.nation, null, { 'data-dest': 'nation', 'aria-pressed': String(s.dest === 'nation') }));
-        row.classList.add('when-row', 'dest-row');
+        // the narrower sides are for the four (n-1): the `--mode busan` rollback's 제주 · 부산 keeps the usual ones
+        row.classList.add('when-row');
+        if (NATION) row.classList.add('dest-row');
         optGroup(panel, 'dest-h', BUSAN_COPY.destHead, [row]);
       }
       // 언제 (specs/date-mode.md): 지금 · 내일 · 날짜 고르기 on one compact row, so 어디 comes sooner.
