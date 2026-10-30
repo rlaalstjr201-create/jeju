@@ -116,3 +116,4 @@
 | 0098 | [0098-busan-part-chunk-and-terser.md](0098-busan-part-chunk-and-terser.md) | 부산 몫(동네 12·경계·시작 화면 모듈)은 부산이 쓰일 때만 받는 청크, 압축은 terser — 켠 빌드 한국어 진입 gzip ≤ 50KB | Accepted (2026-10-20) |  |
 | 0099 | [0099-busan-landing-phase-1.md](0099-busan-landing-phase-1.md) | 부산 랜딩 1단계 — 엔티티 문장은 여행지마다(「여차나:부산은 … 부산 무계획 여행 앱」), 허브 1 + 동네 12쪽만, 장소 쪽은 사전등록 조건 뒤 | Accepted (2026-10-24) | Amendment 1: 제주·부산 허브끼리 「다른 여행지」 한 줄로 잇는다 |
 | 0102 | [0102-gangwon-curated-gangneung.md](0102-gangwon-curated-gangneung.md) | 강원 검수한 곳 — 여행지 gangwon, 지금은 강릉(51150) 한 시군구, 판정·동네는 자동 지역 색인, 자기 청크 없이 spots-gangwon.json, 이유 줄·기분 다섯 | Accepted (2026-10-30) |  |
+| 0103 | [0103-basis-sheet-dest-toggle-address-search.md](0103-basis-sheet-dest-toggle-address-search.md) | 기준 시트 2판 — 「여행지 \| 내 위치」 토글(옆으로 밀리는 칩 줄), 숙소 → 「주소·숙소」 검색(카카오 로컬, `/api/geo` 서버 경유, 키 없으면 「검색을 쓸 수 없어요.」), 운영 빌드만 | Accepted (2026-10-30) |  |
