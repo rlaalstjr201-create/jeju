@@ -96,6 +96,19 @@ export function dedupe(kept) {
       live.forEach((k, i) => renamed.set(k.item.id, `${name} (${tags[i]})`));
     }
   }
+  // 8절 (a) 이름 꼴(2026-10-31, 배포 전 리뷰 4 m-3): 띄어쓰기를 빼고 같거나, 한 이름이 다른 이름(4자 이상)으로 끝나면(「알펜시아리조트」
+  // 같은 앞붙이) 같은 이름으로 본다. 같은 곳 조건((a))이 맞을 때 빼기만 하고, 이름을 바꾸지는 않는다
+  const bare = (k) => displayName(k.item.title, k.item.city).replace(/\s+/g, '');
+  const alike = (a, b) => a === b || (b.length >= 4 && a.endsWith(b)) || (a.length >= 4 && b.endsWith(a));
+  const live = [];
+  for (const k of [...kept].sort((a, b) => (a.item.id < b.item.id ? -1 : 1))) {
+    if (drop.has(k.item.id)) continue;
+    const twin = live.find((x) => x.v.mood === k.v.mood && alike(bare(x), bare(k)) && (x.item.addr1 === k.item.addr1 || haversine(x.item.lat, x.item.lng, k.item.lat, k.item.lng) <= 100));
+    if (twin) {
+      drop.add(k.item.id);
+      merged.push({ name: displayName(k.item.title, k.item.city), kept: twin.item.id, dropped: k.item.id });
+    } else live.push(k);
+  }
   return { rest: kept.filter((k) => !drop.has(k.item.id)), merged, renamed };
 }
 

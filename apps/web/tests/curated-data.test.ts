@@ -29,6 +29,8 @@ const CITIES = ['강릉', '속초', '춘천', '양양', '평창'];
 const RENAMED_BY_YANGYANG = new Map([['nt-125748', '남대천 (성산면)']]);
 const RENAMED_BY_PYEONGCHANG = new Map([['nt-623201', '대관령황태촌 (주문로)'], ['nt-2903398', '시골식당 (헌화로)'], ['nt-135934', '메밀촌 (동면)']]);
 const RENAMED_BY_OTHERS = new Map([...RENAMED_BY_YANGYANG, ...RENAMED_BY_PYEONGCHANG]);
+// 이름 꼴만 다른 중복 등록(8절 (a) 이름 꼴, 배포 전 리뷰 4 m-3): 효석달빛언덕, 알펜시아리조트대관령스키역사관
+const DUP_PYEONGCHANG = ['nt-3352979', 'nt-3448238'];
 const item = new Map(inputs.items.map((i) => [i.id, i]));
 const volume = new Map(inputs.pop.map((r) => [r.id, r.volume as number]));
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
@@ -194,6 +196,20 @@ describe('강릉 이름 겹침 (pop-criteria 8절)', () => {
     expect(same.rest.map((k) => k.item.id)).toEqual(['a']);
     expect(() => dedupe([mk('a', '강릉시 주문진읍 1', 37.8), mk('b', '강릉시 주문진읍 2', 37.85)])).toThrow(/same town/);
   });
+  it('이름 꼴(띄어쓰기, 4자 이상 이름 앞에 붙은 말)만 다른 같은 곳도 하나만 — 빠지는 곳은 다섯뿐(평창 2곳이 새로)', () => {
+    const mk = (id: string, title: string, lat: number, mood = 'new') => ({ item: { id, title, addr1: `평창군 ${id}`, city: '평창', lat, lng: 128.4 }, v: { mood } });
+    const ids = (ks: ReturnType<typeof mk>[]) => dedupe(ks).rest.map((k: { item: { id: string } }) => k.item.id);
+    expect(ids([mk('a', '효석 달빛언덕', 37.6), mk('b', '효석달빛언덕', 37.6001)])).toEqual(['a']);
+    expect(ids([mk('a', '대관령 스키 역사관', 37.6), mk('b', '알펜시아리조트대관령스키역사관', 37.6005)])).toEqual(['a']);
+    // 멀거나(100m 넘게), 기분이 다르거나, 3자 이하 이름으로 끝나거나, 뒤에 말이 붙으면 다른 곳
+    expect(ids([mk('a', '효석 달빛언덕', 37.6), mk('b', '효석달빛언덕', 37.602)])).toEqual(['a', 'b']);
+    expect(ids([mk('a', '효석 달빛언덕', 37.6), mk('b', '효석달빛언덕', 37.6001, 'walk')])).toEqual(['a', 'b']);
+    expect(ids([mk('a', '다래', 37.6, 'food'), mk('b', '평창한우다래', 37.6, 'food')])).toEqual(['a', 'b']);
+    expect(ids([mk('a', '구봉산', 37.6), mk('b', '구봉산 전망대', 37.6)])).toEqual(['a', 'b']);
+    expect(build(loadInputs('gangwon', CITIES)).merged.map((m: { dropped: string }) => m.dropped)).toEqual(['nt-3537624', 'nt-3434330', 'nt-3353336', ...DUP_PYEONGCHANG]);
+    expect(file.find((s) => s.id === 'nt-2733486')?.name).toBe('효석 달빛언덕');
+    expect(file.find((s) => s.id === 'nt-2772349')?.name).toBe('대관령 스키 역사관');
+  });
 });
 
 describe('강릉 멱등·크기', () => {
@@ -218,7 +234,7 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
     { city: '속초', keep: 196, out: ['nt-2549932'], famous: 12, broad: 11 },
     { city: '춘천', keep: 273, out: ['nt-3353336'], famous: 16, broad: 15 },
     { city: '양양', keep: 172, out: ['nt-3434330'], famous: 10, broad: 29 },
-    { city: '평창', keep: 466, out: [], famous: 28, broad: 21 },
+    { city: '평창', keep: 466, out: ['nt-3448238', 'nt-3352979'], famous: 28, broad: 21 },
   ];
   for (const { city, keep: n, out, famous, broad } of cases) {
     it(`${city}: keep ${n}곳 가운데 ${out.join('·')}만 빠지고, 상자 안·형식·도시 이름`, () => {
@@ -288,13 +304,16 @@ describe('평창 (criteria-04.md, pop-criteria 13절)', () => {
     const pc = file.filter((s) => s.area === '평창');
     const input = read('input') as { id: string; reason: string }[];
     const facts = read('facts') as { id: string; factError: boolean }[];
-    expect(input.map((x) => x.id)).toEqual(pc.map((s) => s.id));
-    expect(facts.map((x) => x.id)).toEqual(pc.map((s) => s.id));
+    // 확인은 466곳 그대로(이름 꼴 중복 2곳을 빼기 전, 배포 전 리뷰 4 m-3)
+    const shipped = new Set(pc.map((s) => s.id));
+    expect(input.filter((x) => !shipped.has(x.id)).map((x) => x.id).sort()).toEqual(DUP_PYEONGCHANG);
+    expect(input.filter((x) => shipped.has(x.id)).map((x) => x.id)).toEqual(pc.map((s) => s.id));
+    expect(facts.filter((x) => shipped.has(x.id)).map((x) => x.id)).toEqual(pc.map((s) => s.id));
     const every = loadInputs('gangwon', CITIES);
     const ours = every.fixes.filter((f) => (f as { source?: string }).source === 'factcheck-평창-04');
     expect(ours.map((f) => f.id).sort()).toEqual(facts.filter((x) => x.factError).map((x) => x.id).sort());
     const fixedIds = new Set(ours.map((f) => f.id));
-    expect(pc.filter((s) => !fixedIds.has(s.id)).map((s) => s.reason)).toEqual(input.filter((x) => !fixedIds.has(x.id)).map((x) => x.reason));
+    expect(pc.filter((s) => !fixedIds.has(s.id)).map((s) => s.reason)).toEqual(input.filter((x) => shipped.has(x.id) && !fixedIds.has(x.id)).map((x) => x.reason));
   });
 });
 
