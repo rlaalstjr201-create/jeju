@@ -7,7 +7,7 @@
  *   npx tsx scripts/curated/judge.mjs sample gangwon 강릉        keep 120곳 표본(씨앗 20261030) → audit-강릉-01-sample.json
  *   npx tsx scripts/curated/judge.mjs score  gangwon 강릉        → audit-강릉-01.json
  *
- * 회차(judge-<도시>-NN)와 씨앗은 rounds.mjs(양양 02, 그 밖 01).
+ * 회차(judge-<도시>-NN)·씨앗·표본에서 뺄 앞 회차 표본은 rounds.mjs.
  * 부산 judge.mjs는 import 때 argv로 명령을 실행해서 가져오지 않고 같은 규칙을 다시 적었다(부산 파일은 건드리지 않는다).
  * tsx로 돌린다(REASON_BANNED가 check-slop.ts에 있다).
  */
@@ -16,7 +16,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { REASON_BANNED } from '../check-slop.ts';
 import { reasonPunctuationProblem, shipReason } from '../reason.mjs';
-import { CRITERIA, SEEDS, judgeRound } from './rounds.mjs';
+import { CRITERIA, SAMPLE_EXCLUDE, SEEDS, judgeRound } from './rounds.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -53,7 +53,8 @@ export function paths(dest, city, root = webRoot, round = judgeRound(city)) {
     judgments: resolve(base, `audit-${city}-${round}-judgments.json`),
     facts: resolve(base, `audit-${city}-${round}-facts.json`),
     audit: resolve(base, `audit-${city}-${round}.json`),
-    criteria: `review/${dest}/${CRITERIA[round]}`,
+    criteria: CRITERIA[round].replace('<dest>', dest),
+    excludeSamples: (SAMPLE_EXCLUDE[city] ?? []).map((r) => resolve(base, `audit-${city}-${r}-sample.json`)),
   };
 }
 
@@ -206,11 +207,14 @@ export function drawSample(keepIds, seed = SEED, n = SAMPLE_N) {
 
 function sample(P) {
   if (existsSync(P.sample)) throw new Error(`${P.sample}이 이미 있다 — 표본은 한 번만 뽑는다`);
-  const keepIds = [...loadVerdicts(P).values()].filter((v) => v.keep).map((v) => v.id);
+  const excluded = new Set((P.excludeSamples ?? []).flatMap((f) => readJson(f).items.map((i) => i.id)));
+  const allKeep = [...loadVerdicts(P).values()].filter((v) => v.keep).map((v) => v.id);
+  const keepIds = allKeep.filter((id) => !excluded.has(id));
   const byId = new Map(loadInputs(P).map((i) => [i.id, i]));
   const ids = drawSample(keepIds, P.seed);
-  writeJson(P.sample, { seed: P.seed, n: ids.length, from: keepIds.length, items: ids.map((id) => byId.get(id)) });
-  console.log(`keep ${keepIds.length}곳에서 ${ids.length}곳`);
+  const head = excluded.size ? { keepAll: allKeep.length, excludedPriorSamples: allKeep.length - keepIds.length } : {};
+  writeJson(P.sample, { seed: P.seed, n: ids.length, from: keepIds.length, ...head, items: ids.map((id) => byId.get(id)) });
+  console.log(`keep ${allKeep.length}곳 − 앞 표본 ${allKeep.length - keepIds.length}곳 = ${keepIds.length}곳에서 ${ids.length}곳`);
 }
 
 /** 임계값은 표본 크기가 120보다 작아도 비율로 잰다(사실 오류만 개수 기준). */
