@@ -190,8 +190,8 @@ export const JA: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: '済州', busan: '釜山', gangwon: '江原', nation: 'ほかの場所' },
-    sggName: { '51150': '江陵', '51210': '束草', '51110': '春川', '51830': '襄陽', '51760': '平昌' },
+    destName: { jeju: '済州', busan: '釜山', gangwon: '江原', seoul: 'ソウル', nation: 'ほかの場所' },
+    sggName: { '51150': '江陵', '51210': '束草', '51110': '春川', '51830': '襄陽', '51760': '平昌', '11110': '鍾路区', '11140': '中区', '11170': '龍山区', '11200': '城東区', '11215': '広津区', '11230': '東大門区', '11260': '中浪区' },
     destHead: '旅行先',
     title: (name) => `Yeochana:${name} · ノープラン旅のおとも`,
     examplePopular: (name, names) => `${name}の人気：${names.join('、')}`,

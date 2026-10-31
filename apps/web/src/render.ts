@@ -2,7 +2,7 @@
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
-import { DEST, DESTS, destOfId, type Dest } from './dest';
+import { DEST, DESTS, destOfId, isSggDest, type Dest, type SggDest } from './dest';
 import { BUSAN, NATION, OPEN_AREAS, nationPart, openAreasOf, sggShort } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
@@ -217,9 +217,9 @@ export const COPY = {
  * where every use of them is behind the switch, carries none of them (another language's table: Lang.busan). */
 export const BUSAN_COPY = {
   /** the 여행지 row's words (강원: ADR-0102 Amendment 2 — its 시군구 are listed in its 동네 index) */
-  destName: { jeju: '제주', busan: '부산', gangwon: '강원', nation: '다른 곳' } satisfies Record<Dest, string>,
+  destName: { jeju: '제주', busan: '부산', gangwon: '강원', seoul: '서울', nation: '다른 곳' } satisfies Record<Dest, string>,
   /** 강원's 시군구 by code (DEST.gangwon.sgg): the name line, the title, 「○○ 인기:」 and 「○○ 밖이에요」 say the one in use */
-  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천', '51830': '양양', '51760': '평창' } as Record<string, string>,
+  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천', '51830': '양양', '51760': '평창', '11110': '종로', '11140': '서울 중구', '11170': '용산', '11200': '성동', '11215': '광진', '11230': '동대문', '11260': '중랑' } as Record<string, string>,
   destHead: '여행지',
   /** a 검수한 곳 other than Jeju, by its name (부산, 속초: ADR-0102) */
   title: (name: string) => `여차나:${name} · P를 위한 여행동반자`,
@@ -227,7 +227,7 @@ export const BUSAN_COPY = {
   homeCredit: '정보·사진: 한국관광공사',
   outside: (name: string) => `지금은 ${name} 밖이에요.`,
   stayOutside: (name: string) => `지금은 ${name} 밖이에요. 아래에서 숙소 동네를 골라 주세요.`,
-  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Exclude<Dest, 'gangwon'>, string>,
+  switched: { jeju: '지금 계신 제주로 바꿨어요.', busan: '지금 계신 부산으로 바꿨어요.', nation: '지금 계신 곳으로 바꿨어요.' } satisfies Record<Exclude<Dest, SggDest>, string>,
   /** 강원's, by its 시군구 */
   switchedTo: (name: string) => `지금 계신 ${josa(name, '으로', '로')} 바꿨어요.`,
   otherSaved: { jeju: (n: number) => `제주에 저장한 곳 ${n}곳`, busan: (n: number) => `부산에 저장한 곳 ${n}곳` },
@@ -352,7 +352,7 @@ export function statusOf(s: State): { text: string; chooseArea: boolean; undo: {
   if (p.k === 'pending' && p.step === 'locating' && p.slow) return { text: COPY.locating, chooseArea: p.long, undo: null };
   if (p.k === 'ready') {
     const parts: string[] = [];
-    if (BUSAN && s.destNote) parts.push(s.destNote === 'gangwon' ? BUSAN_COPY.switchedTo(destNameOf(s)) : BUSAN_COPY.switched[s.destNote]);
+    if (BUSAN && s.destNote) parts.push(isSggDest(s.destNote) ? BUSAN_COPY.switchedTo(destNameOf(s)) : BUSAN_COPY.switched[s.destNote]);
     if (s.cards?.wrapped) parts.push(COPY.wrapped);
     if (s.cards?.nightShifted) parts.push(COPY.nightShifted[s.cards.nightShifted]);
     if (s.offline) parts.push(COPY.offline);
@@ -544,7 +544,7 @@ function nationOutside(s: State, at: OutsideAt | undefined, stay: boolean): stri
   if (!n) return null;
   if (at === 'abroad') return stay ? n.copy.stayOutside : n.copy.outside;
   if (s.dest !== 'nation') return null;
-  if (stay && (at === 'jeju' || at === 'busan' || at === 'gangwon')) return n.copy.stayIn(BUSAN_COPY.destName[at]);
+  if (stay && (at === 'jeju' || at === 'busan' || isSggDest(at))) return n.copy.stayIn(BUSAN_COPY.destName[at]);
   return stay ? n.copy.stayNodata : n.copy.nodata;
 }
 
@@ -1035,7 +1035,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     if (BUSAN && b.k === 'list') {
       for (const d of DESTS) {
         // 강원's ids are the 자동 지역's nt- (ADR-0102): no line of their own, as the 자동 지역's
-        const n = d === s.dest || d === 'gangwon' ? 0 : s.saved.filter((e) => destOfId(e.id) === d).length;
+        const n = d === s.dest || isSggDest(d) ? 0 : s.saved.filter((e) => destOfId(e.id) === d).length;
         if (!n) continue;
         const line = el(doc, 'p', { class: 'other-dest' });
         line.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'other-dest', 'data-dest': d }, BUSAN_COPY.otherSaved[d as 'jeju' | 'busan'](n)));

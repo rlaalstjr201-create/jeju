@@ -39,6 +39,7 @@ git checkout -- data/landing/lastmod.json   # 빌드가 날짜만 바꾼 경우
 | 기준선 다시 쓰기 (2026-10-31, 6b397498) | `npm run check:jeju -- --write`(운영 빌드, yeochana.com에 올린 그 `dist/`) | 57,151 B (진입 예산 60,000, 켠 빌드 인라인 +1,914 B) | ADR-0105와 리뷰 정리를 배포한 뒤의 제주를 새 기준선으로. 허용 목록(옛 72개: 부산·ADR-0094 Am. 3·ADR-0105)은 비웠다 — 다음부터 제주 차이는 모두 걸린다. 다시 쓴 뒤 `check:jeju`가 허용 없이 통과 |
 | 자동 지역 규칙 v3 (2026-10-31, rules-criteria-03) | 통과(운영 빌드, 허용 1개) | 57,150 B (−1 B, 켠 빌드 인라인 +1,914 B) | reason-criteria-06 이유 문장은 감사 B 게이트 실패(7/9 = 77.8% < 80%)로 싣지 않아 그 31키 허용은 지웠다(spots·번역 파일은 248cc74b와 같은 바이트). 남은 제주 차이는 `files.sw.js` 하나뿐: 미리 받기 목록의 `nation/index.json`과 `nation/<지역>.json` 12개의 `?v=` 판 문자열(자동 지역 v3로 바뀐 data/nation 파일과 같은 13개, 정규화한 sw.js를 배포본과 견주면 다른 줄 13개가 모두 이것). 다음 `--write` 때 지운다
 | 기준선 다시 쓰기 (2026-10-31, 3b1a866e) | `npm run check:jeju -- --write`(운영 빌드, yeochana.com에 올린 그 `dist/`) | 57,151 B (진입 예산 60,000, 켠 빌드 인라인 +1,914 B) | reason-06 되돌림과 자동 지역 v3를 배포한 뒤의 제주를 새 기준선으로. 허용 목록(`files.sw.js`)은 비웠다. 다시 돌려 허용 없이 통과 |
+| 서울 7구 (2026-11-01, ADR-0106) | 통과(운영 빌드, 허용 5개) | 57,493 B (+342 B, 진입 예산 60,000, 켠 빌드 인라인 +1,914 B) | 서울을 검수한 곳으로 더함(종로·중구·용산·성동·광진·동대문·중랑). 의도한 차이만 정확한 키로 허용: `files.privacy.html`·`files.privacy-en.html`·`files.privacy-zh-Hans.html`·`files.privacy-ja.html`(개인정보 안내 네 언어가 여행지 목록·시군구·비 소식 격자·사진 출처에 서울(일곱 구)을 더함 — 제주 기기에도 같은 쪽이 보인다), `files.sw.js`(자동 지역 빌드의 새 워커가 이어받는 목록에 `spots-seoul.json?v=` 한 줄). `spots-seoul.json`과 그 캐시 줄은 `spots-gangwon.json`처럼 비교 전에 뺀다. 제주 데이터·화면·요청은 그대로 |
 
 ## 출시 뒤 측정 (예약, 미리 등록한 기준 그대로 한 번씩)
 

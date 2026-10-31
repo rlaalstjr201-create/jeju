@@ -93,7 +93,7 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
   const name = () => {
     for (const a of OPEN_AREAS) {
       // a 시군구 is named in Korean in every language (ADR-0094 Amendment 1 D4), 강원's too (ADR-0102): no row of `w.areas`
-      if (a.group === 'nation' || a.group === 'gangwon') continue;
+      if (a.group === 'nation' || a.group === 'gangwon' || a.group === 'seoul') continue;
       const area = a as { label: string; landmark: string };
       [area.label, area.landmark] = w.areas[a.name];
     }

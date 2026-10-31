@@ -99,7 +99,7 @@ describe.runIf(BUSAN)('부산 (switch on)', () => {
     await wait();
     await tap('#basis');
     await destSide();
-    expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"])').map((b) => [b.textContent, b.getAttribute('aria-pressed')])).toEqual([
+    expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"]):not([data-dest="seoul"])').map((b) => [b.textContent, b.getAttribute('aria-pressed')])).toEqual([
       ['제주', 'true'],
       ['부산', 'false'],
     ]);

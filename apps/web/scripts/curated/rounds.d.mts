@@ -1,0 +1,14 @@
+export declare const JUDGE_ROUND: Record<string, string>;
+export declare const NEW_CITY_ROUND: string;
+export declare const SEOUL_GU: Record<string, string>;
+export declare const SEOUL_ROUND: string;
+export declare function isSeoulGu(city: string): boolean;
+export declare function judgeRound(city: string): string;
+export declare const SEEDS: Record<string, number>;
+export declare const CRITERIA: Record<string, string>;
+export declare const WALKIN_ROUNDS: ReadonlySet<string>;
+export declare const SAMPLE_EXCLUDE: Record<string, string[]>;
+export declare function cityWord(city: string): string;
+export declare function cityHeads(city: string): string[];
+export declare function cityMark(city: string): string;
+export declare function areaOf(city: string): string;

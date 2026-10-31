@@ -25,7 +25,7 @@ export const FLOW_IDS: readonly string[] = [
  * way it was left. Not places (`start:` prefix). */
 export const START_IDS: readonly string[] = [
   'start:view',
-  ...['gps', 'pick'].flatMap((how) => ['denied', 'outside', 'unavailable', 'none'].flatMap((why) => ['jeju', 'busan', 'gangwon', 'nation'].map((dest) => `start:${how}:${why}:${dest}`))),
+  ...['gps', 'pick'].flatMap((how) => ['denied', 'outside', 'unavailable', 'none'].flatMap((why) => ['jeju', 'busan', 'gangwon', 'seoul', 'nation'].map((dest) => `start:${how}:${why}:${dest}`))),
 ];
 
 /** The counter ids an event goes up under (day and event stay its own). */

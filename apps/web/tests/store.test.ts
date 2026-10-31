@@ -467,7 +467,7 @@ describe('자동 지역 저장 키', () => {
     expect(st.dest()).toBe(NATION ? 'nation' : null);
     st.load(TODAY);
     expect(mem.getItem(KEYS.dest)).toBe('"nation"');
-    mem.setItem(KEYS.dest, '"seoul"');
+    mem.setItem(KEYS.dest, '"daegu"');
     expect(st.dest()).toBeNull();
   });
 

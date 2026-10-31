@@ -33,7 +33,7 @@ describe.runIf(BUSAN)('부산 몫 (switch on)', () => {
     expect(released('busan')).toBe(false);
     await tap('#basis');
     await destSide();
-    expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"])').map((b) => b.textContent)).toEqual(['제주', '부산']);
+    expect($$('#sheet [data-dest]:not([data-dest="nation"]):not([data-dest="gangwon"]):not([data-dest="seoul"])').map((b) => b.textContent)).toEqual(['제주', '부산']);
     await tap('#sheet [data-dest="busan"]');
     await wait();
     expect(released('busan')).toBe(true);

@@ -4,7 +4,7 @@
 import { LEGACY_REGION, areaByName, inJeju, nearestArea, type RegionName, type SggCode } from './areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
-import { isDest, type Dest } from './dest';
+import { SGG_DESTS, isDest, isSggDest, type Dest } from './dest';
 import { SGG_CODE } from './nation';
 import { BUSAN, NATION, OPEN_AREAS, openAreasOf, releasedDestOf } from './release';
 import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
@@ -437,16 +437,19 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
   // ADR-0097: whose basis, region and 숙소 the keys below are (only that destination's keys are read or repaired)
   let cur: Dest = 'jeju';
   function carry() {
-    const into = (key: typeof KEYS.region | typeof KEYS.stay, v: unknown) => {
-      const k = destKey(key, 'gangwon');
-      if (v && get(local, k) == null) return set(local, k, v);
-      return false;
-    };
-    const region = into(KEYS.region, parseRegion(get(local, destKey(KEYS.region, 'nation')), 'gangwon'));
-    const stay = into(KEYS.stay, parseStay(get(local, destKey(KEYS.stay, 'nation')), 'gangwon'));
-    const basis = get(local, destKey(KEYS.basis, 'nation'));
-    const bk = destKey(KEYS.basis, 'gangwon');
-    if (((basis === 'region' && region) || (basis === 'stay' && stay)) && get(local, bk) == null) set(local, bk, basis);
+    // 강원 (ADR-0102) and 서울 (ADR-0106): each takes what lies in its own 시군구
+    for (const d of SGG_DESTS) {
+      const into = (key: typeof KEYS.region | typeof KEYS.stay, v: unknown) => {
+        const k = destKey(key, d);
+        if (v && get(local, k) == null) return set(local, k, v);
+        return false;
+      };
+      const region = into(KEYS.region, parseRegion(get(local, destKey(KEYS.region, 'nation')), d));
+      const stay = into(KEYS.stay, parseStay(get(local, destKey(KEYS.stay, 'nation')), d));
+      const basis = get(local, destKey(KEYS.basis, 'nation'));
+      const bk = destKey(KEYS.basis, d);
+      if (((basis === 'region' && region) || (basis === 'stay' && stay)) && get(local, bk) == null) set(local, bk, basis);
+    }
   }
   function place() {
     // the 자동 지역's keys a 검수한 곳 took over are repaired away below: theirs first (m-1)
@@ -480,7 +483,7 @@ export function createStore(local: Storage | null, session: Storage | null): Sto
       const v = get(local, KEYS.dest);
       // 'nation' (and 'gangwon', which opens with it: ADR-0102) with the 자동 지역 switch only: a build without it opens
       // Jeju and leaves the key as it is
-      return isDest(v) && ((v !== 'nation' && v !== 'gangwon') || NATION) ? v : null;
+      return isDest(v) && ((v !== 'nation' && !isSggDest(v)) || NATION) ? v : null;
     },
     setDest: (d) => void set(local, KEYS.dest, d),
     sgg(d = 'nation') {

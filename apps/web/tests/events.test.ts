@@ -468,12 +468,12 @@ describe('M6 여행지·시작 화면 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(START_IDS).toContain(r.id);
-    expect(START_IDS).toHaveLength(1 + 2 * 4 * 4);
+    expect(START_IDS).toHaveLength(1 + 2 * 4 * 5);
     expect(aggregate(rows)).toEqual([]);
   });
 
   it.each([
-    ['an unknown destination', [{ e: 'tap', mood: 'walk', ...base, dest: 'seoul' }]],
+    ['an unknown destination', [{ e: 'tap', mood: 'walk', ...base, dest: 'daegu' }]],
     ['dest not a string', [{ e: 'map', id: ID, d, dest: 1 }]],
     ['how on another event', [{ e: 'tap', mood: 'walk', ...base, how: 'gps' }]],
     ['why on another event', [{ e: 'map', id: ID, d, why: 'denied' }]],

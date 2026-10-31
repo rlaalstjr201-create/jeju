@@ -7,11 +7,15 @@ import type { Kind, Mood } from './pick';
 
 /** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. `gangwon` (ADR-0102): 강원's, named by
  * 시군구 — 강릉·속초·춘천 (Amendment 2)·양양 (Amendment 3)·평창 (Amendment 4) now; the others stay 자동 지역 until theirs are checked. */
-export type Curated = 'jeju' | 'busan' | 'gangwon';
+export type Curated = 'jeju' | 'busan' | 'gangwon' | 'seoul';
 /** `nation`: the 자동 지역 as a whole (plans/nationwide-app.md 1.2); which 시군구 is State.sgg. */
 export type Dest = Curated | 'nation';
 /** the 검수한 곳, in the order the 여행지 row lists them */
-export const DESTS: readonly Curated[] = ['jeju', 'busan', 'gangwon'];
+export const DESTS: readonly Curated[] = ['jeju', 'busan', 'gangwon', 'seoul'];
+/** the 검수한 곳 named by 시군구 that open with the 자동 지역's part (강원 ADR-0102, 서울 ADR-0106) */
+export type SggDest = 'gangwon' | 'seoul';
+export const SGG_DESTS: readonly SggDest[] = ['gangwon', 'seoul'];
+export const isSggDest = (d: unknown): d is SggDest => SGG_DESTS.includes(d as SggDest);
 
 /** One destination's row (plans/nationwide-app.md 1.2): a new 검수한 곳 is one more row. */
 export interface DestRow {
@@ -53,6 +57,9 @@ export const DEST: Record<Dest, DestRow> = {
   // which the 자동 지역 leaves to it — the first is the one used when none is known. A map search is scoped by the place's
   // own 시군구 (links.ts); `word` only before the 자동 지역's part is in
   gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강원', said: /강원|강릉|속초|춘천|양양|평창/, moods: ALL, any: ANY, label: 'name', sgg: ['51150', '51210', '51110', '51830', '51760'] },
+  // 서울 (ADR-0106): 서울시청 (세종대로 110); its 구 whose places passed the checks (종로·중구·용산·성동·광진·동대문·중랑), which
+  // the 자동 지역 leaves to it — the others stay 자동 지역 until theirs pass
+  seoul: { file: 'spots-seoul.json', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '서울', said: /서울|종로|중구|용산|성동|광진|동대문|중랑/, moods: ALL, any: ANY, label: 'name', sgg: ['11110', '11140', '11170', '11200', '11215', '11230', '11260'] },
 };
 
 export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';

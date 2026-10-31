@@ -5,7 +5,7 @@
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
 import type { AreaName, RegionName, SggCode } from './areas';
 import type { Day } from './dates';
-import type { Dest } from './dest';
+import { isSggDest, type Dest } from './dest';
 import type { Button, NewSub, Reach, Sub } from './pick';
 import { BUSAN } from './release';
 import type { SeasonKind } from './season';
@@ -105,7 +105,7 @@ export function contextOf(s: {
     basis,
     // a 시군구 is not an area name: its own field, the chosen one only (a GPS read's 시군구 never goes); 강원's 동네 is a
     // 시군구 too (ADR-0102)
-    ...(basis === 'area' && s.region ? (s.dest === 'nation' || s.dest === 'gangwon' ? { sgg: s.region as SggCode } : { area: s.region as AreaName }) : {}),
+    ...(basis === 'area' && s.region ? (s.dest === 'nation' || isSggDest(s.dest) ? { sgg: s.region as SggCode } : { area: s.region as AreaName }) : {}),
     dated: s.when !== 'now',
     ...(s.indoor ? { indoor: true } : {}),
     // the destination only with the switch on: a Jeju-only build sends what it always has

@@ -4,7 +4,7 @@
 // destination buttons choose, and with location already allowed it reads without asking (M4: the cover is there from
 // the first paint and only ever goes away). Used only with the switch on (app.ts).
 import { areaByName, destOfArea, type Area, type SggCode } from './areas';
-import { isDest, type Dest } from './dest';
+import { isDest, isSggDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
 import type { Point } from './pick';
 import { NATION, OPEN_AREAS, loadNation, nationPart, outsideAt, releasedDestOf } from './release';
@@ -159,7 +159,7 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
         return out;
       }, []);
     // a 시군구 of the index: the 자동 지역's, or the 검수한 곳 that covers it (its group, ADR-0102)
-    const sggAreas = () => OPEN_AREAS.filter((x): x is Area & { name: SggCode } => x.group === 'nation' || x.group === 'gangwon');
+    const sggAreas = () => OPEN_AREAS.filter((x): x is Area & { name: SggCode } => x.group === 'nation' || isSggDest(x.group));
     const nation = (a: Area) => {
       if (done) return;
       const why = now === 'start' || now === 'locating' ? null : now;

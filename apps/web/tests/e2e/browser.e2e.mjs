@@ -4651,6 +4651,7 @@ const 속초해수욕장 = { mode: 'ok', lat: 38.1906, lng: 128.6014, delay: 30 
 const 춘천역 = { mode: 'ok', lat: 37.8846, lng: 127.7166, delay: 30 };
 const 양양시외버스터미널 = { mode: 'ok', lat: 38.0754, lng: 128.6189, delay: 30 };
 const 진부 = { mode: 'ok', lat: 37.6355, lng: 128.5636, delay: 30 }; // 평창
+const 경복궁 = { mode: 'ok', lat: 37.5796, lng: 126.977, delay: 30 }; // 서울 종로구 (ADR-0106)
 /** the results' cards: how many, their ids, and each one's reason line */
 const gwCards = (page) =>
   page.evaluate(() => {
@@ -4739,7 +4740,7 @@ if (NATION) {
     assert(!problems.length, problems.join(' | '));
   });
 
-  await check('GW-4', '기준 시트: 여행지 줄 제주·부산·강원·다른 곳(강원 눌림); 동네 칸 강원 시군구 — 속초시 → 여차나:속초(강원, 이유 줄), 양양군 → 여차나:양양(강원, 「예:」 없이 이유 줄), 평창군 → 여차나:평창(강원, 이유 줄), 홍천군 → 여차나:홍천(자동 지역), 강릉시 → 다시 여차나:강릉', async () => {
+  await check('GW-4', '기준 시트: 여행지 줄 제주·부산·강원·서울·다른 곳(강원 눌림); 동네 칸 강원 시군구 — 속초시 → 여차나:속초(강원, 이유 줄), 양양군 → 여차나:양양(강원, 「예:」 없이 이유 줄), 평창군 → 여차나:평창(강원, 이유 줄), 홍천군 → 여차나:홍천(자동 지역), 강릉시 → 다시 여차나:강릉', async () => {
     const problems = [];
     const { ctx, page } = await nationAt('/');
     await startButton(page, '강릉').click();
@@ -4748,7 +4749,7 @@ if (NATION) {
     await destSide(page);
     await page.waitForSelector('#sheet [data-area="51210"]');
     const row = await page.$$eval('#sheet [data-dest]', (els) => els.map((e) => `${e.textContent}${e.getAttribute('aria-pressed') === 'true' ? '*' : ''}`));
-    if (row.join('/') !== '제주/부산/강원*/다른 곳') problems.push(`여행지 줄 ${row.join('/')}`);
+    if (row.join('/') !== '제주/부산/강원*/서울/다른 곳') problems.push(`여행지 줄 ${row.join('/')}`);
     const areas = await page.$$eval('#sheet .areas [data-area]', (els) => els.map((e) => e.textContent));
     if (!['강릉시', '속초시', '춘천시', '양양군', '평창군', '홍천군'].every((a) => areas.includes(a))) problems.push(`동네 칸 ${areas.join(',')}`);
     await page.click('#sheet [data-area="51210"]');
@@ -4908,7 +4909,7 @@ if (NATION) {
   });
 
   /** GPS in a 강원 시군구 added later (양양 Amendment 3, 평창 Amendment 4): 검수한 곳 at it, its own places only */
-  const gpsGangwon = async (city, geo) => {
+  const gpsGangwon = async (city, geo, dest = 'gangwon') => {
     const problems = [];
     const { ctx, page, urls } = await nationAt('/', { geo });
     urls.length = 0;
@@ -4924,9 +4925,9 @@ if (NATION) {
     await waitCards(page);
     const r = await gwCards(page);
     if (r.n !== 3 || r.reasons.some((x) => !x) || /공공 데이터/.test(r.how) || !r.ids.every((id) => id?.startsWith('nt-'))) problems.push(`results ${JSON.stringify(r)}`);
-    const own = urls.filter((u) => /\/spots-gangwon\.json\?v=[0-9a-f]{10}$/.test(u));
+    const own = urls.filter((u) => new RegExp(`/spots-${dest}\\.json\\?v=[0-9a-f]{10}$`).test(u));
     const auto = urls.filter((u) => /\/nation\/\d+\.json/.test(u));
-    if (own.length !== 1 || auto.length) problems.push(`spots-gangwon ${own.length}, nation files ${auto.join(' ')}`);
+    if (own.length !== 1 || auto.length) problems.push(`spots-${dest} ${own.length}, nation files ${auto.join(' ')}`);
     // the cards' 시군구, from the same file (this fetch is the test's own, after the count above)
     const areas = await page.evaluate(async ([ids, url]) => {
       const all = await (await fetch(url)).json();
@@ -4940,6 +4941,8 @@ if (NATION) {
   };
   await check('GW-10', 'GPS 양양 → 여차나:양양(검수한 곳, Amendment 3): 기분 다섯, 유명한 데 3장 이유 줄·모두 양양 곳, spots-gangwon.json 1회·/nation/51.json 0회; 다시 열어도 여차나:양양', () => gpsGangwon('양양', 양양시외버스터미널));
   await check('GW-11', 'GPS 진부 → 여차나:평창(검수한 곳, Amendment 4): 기분 다섯, 유명한 데 3장 이유 줄·모두 평창 곳, spots-gangwon.json 1회·/nation/51.json 0회; 다시 열어도 여차나:평창', () => gpsGangwon('평창', 진부));
+  // 서울 (ADR-0106): 종로구 is a 검수한 곳, the same way as 강원's 시군구
+  await check('SE-1', 'GPS 경복궁 → 여차나:종로(서울 검수한 곳, ADR-0106): 기분 다섯, 유명한 데 3장 이유 줄·모두 종로 곳, spots-seoul.json 1회·/nation/11.json 0회; 다시 열어도 여차나:종로', () => gpsGangwon('종로', 경복궁, 'seoul'));
 
   await check('GW-6', '영어: 인기 칸 Gangneung → 여차나:Gangneung, 걷기 3장, #how 끝에 장소 이름은 한국어라는 한 줄', async () => {
     const { ctx, page } = await nationAt('/?lang=en', { geo: 강릉역 });
@@ -5008,7 +5011,7 @@ const SHEET_GEOM = () => {
 };
 
 if (NATION) {
-  await check('SV-1', '「여행지 | 내 위치」 at 375·320: 내 위치 on GPS (no chips); 여행지 → 제주*/부산/강원/다른 곳 in one row (overflow-x auto, nowrap); 내 위치 hides them; page and sheet overflow 0, every control ≥ 44; toggle and search box in view (shots)', async () => {
+  await check('SV-1', '「여행지 | 내 위치」 at 375·320: 내 위치 on GPS (no chips); 여행지 → 제주*/부산/강원/서울/다른 곳 in one row (overflow-x auto, nowrap); 내 위치 hides them; page and sheet overflow 0, every control ≥ 44; toggle and search box in view (shots)', async () => {
     const problems = [];
     for (const [w, h] of [[375, 812], [320, 568]]) {
       const { ctx, page } = await fresh({ width: w, height: h, storage: {} });
@@ -5020,7 +5023,7 @@ if (NATION) {
       if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `toggle-gps-${w}.png`) });
       await tapText(page, '.sheet [data-seg="pick"]');
       g = await page.evaluate(SHEET_GEOM);
-      if (g.seg !== '여행지*|내 위치' || g.chips !== '제주*/부산/강원/다른 곳' || g.chipStyle !== 'auto nowrap' || g.over > 0 || g.sheetOver > 0 || g.small.length) problems.push(`${w} pick ${JSON.stringify(g)}`);
+      if (g.seg !== '여행지*|내 위치' || g.chips !== '제주*/부산/강원/서울/다른 곳' || g.chipStyle !== 'auto nowrap' || g.over > 0 || g.sheetOver > 0 || g.small.length) problems.push(`${w} pick ${JSON.stringify(g)}`);
       if (SHEET_SHOTS) await page.screenshot({ path: join(SHEET_SHOTS, `toggle-pick-${w}.png`) });
       await tapText(page, '.sheet [data-seg="gps"]');
       g = await page.evaluate(SHEET_GEOM);

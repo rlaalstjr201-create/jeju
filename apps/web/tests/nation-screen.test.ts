@@ -92,14 +92,14 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     expect(asked).toEqual(['nation:51170', 'nation:52111']);
   });
 
-  it('제주 device: the sheet offers 다른 곳, and pressing it opens 서울 (the 시군구 of 서울시청) to pick from', async () => {
+  it('제주 device: the sheet offers 다른 곳, and pressing it opens 서울 (the 자동 지역 시군구 nearest 서울시청: 서대문구, since 중구 is 서울 검수한 곳, ADR-0106) to pick from', async () => {
     mount({ dest: 'jeju' });
     await wait();
     await tap('#basis');
     await destSide();
     await tap('#sheet [data-dest="nation"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11140', basis: 'region' });
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11410', basis: 'region' });
     expect($('#areas-basis-nation').textContent).toBe('서울');
   });
 

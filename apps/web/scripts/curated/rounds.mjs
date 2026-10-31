@@ -42,9 +42,9 @@ export const cityWord = (city) => {
 export const cityHeads = (city) => (isSeoulGu(city) ? [...new Set(['서울특별시', '서울시', '서울', SEOUL_GU[city], cityWord(city)])] : [`${city}시`, city]);
 /** 이름 끝 「(…)」 지역 표시(TourAPI가 다른 지역의 같은 이름과 가르려고 붙임). 강원: 도시 이름, 서울: 「서울」. */
 export const cityMark = (city) => (isSeoulGu(city) ? '서울' : city);
-/** 출하 레코드의 `area`(앱 `sggShorts`와 같은 짧은 이름, ADR-0106 2). 서울 중구·강서구는 다른 시도에도 있어 「서울 」을 붙인다. */
+/** 출하 레코드의 `area`(앱 `sggShorts`와 같은 짧은 이름, ADR-0106 2). 중구는 두 글자이고 다른 시도에도 있어 「서울 중구」(시험이 색인과 대조). */
 export const areaOf = (city) => {
   if (!isSeoulGu(city)) return city;
   const w = cityWord(city);
-  return ['중구', '강서'].includes(w) ? `서울 ${w}` : w;
+  return w === '중구' ? `서울 ${w}` : w;
 };

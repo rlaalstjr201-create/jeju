@@ -4,7 +4,7 @@
 // 시군구 (its file and its neighbours', each file asked for once).
 import type { SggCode } from './areas';
 import { destOf } from './busan';
-import { DEST, DESTS, type Dest } from './dest';
+import { DEST, DESTS, SGG_DESTS, type Dest } from './dest';
 import { filesFor, inKorea, normalizeNation, parseIndex, regionOf, sggShorts } from './nation';
 import { installNation } from './release';
 import { kmaGrid } from '../functions/_lib/kma';
@@ -64,7 +64,7 @@ export async function install(): Promise<boolean> {
   };
   installNation({
     // a 시군구 a 검수한 곳 covers is that destination's 동네 (ADR-0102: 강릉 → 강원's)
-    list: ix.sgg.map((s) => ({ name: s.c as SggCode, slug: s.c as SggCode, label: s.n, landmark: sido.get(s.s) ?? '', lat: s.lat, lng: s.lng, group: curated.gangwon?.includes(s.c) ? 'gangwon' : 'nation' })),
+    list: ix.sgg.map((s) => ({ name: s.c as SggCode, slug: s.c as SggCode, label: s.n, landmark: sido.get(s.s) ?? '', lat: s.lat, lng: s.lng, group: SGG_DESTS.find((d) => curated[d]?.includes(s.c)) ?? 'nation' })),
     region: (p) => regionOf(p, ix.sgg, destOf, curated),
     abroad: (p) => !inKorea(p),
     short: (c) => short[c] ?? '',

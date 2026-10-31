@@ -14,6 +14,8 @@ declare const __NATION__: boolean;
 declare const __NATION_V__: string;
 /** sha256 of data/gangwon/spots-gangwon.json (first 10 hex chars), '' outside the 자동 지역 build (ADR-0102); injected by vite.config.ts. */
 declare const __GANGWON_V__: string;
+/** sha256 of data/seoul/spots-seoul.json (first 10 hex chars), '' outside the 자동 지역 build (ADR-0106). */
+declare const __SEOUL_V__: string;
 /** sha256 of Busan's translated place files public/i18n/places-busan.*.json (first 10 hex chars), injected by vite.config.ts (ADR-0093 Amendment 9). */
 declare const __BUSAN_PLACES_V__: string;
 

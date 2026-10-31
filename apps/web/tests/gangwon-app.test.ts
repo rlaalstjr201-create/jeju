@@ -282,7 +282,7 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     await wait();
     await tap('#basis');
     await destSide();
-    expect($$('#sheet [data-dest]').map((b) => b.dataset.dest)).toEqual(['jeju', 'busan', 'gangwon', 'nation']);
+    expect($$('#sheet [data-dest]').map((b) => b.dataset.dest)).toEqual(['jeju', 'busan', 'gangwon', 'seoul', 'nation']);
     expect($('#sheet [data-dest="gangwon"] .nm').textContent).toBe('강원');
     await tap('#sheet [data-dest="gangwon"]');
     await wait();
@@ -532,6 +532,6 @@ describe.runIf(NATION)('강원 (switch on)', () => {
     const { BUSAN_COPY } = await import('../src/render');
     const { JA } = await import('../src/i18n/ja');
     const { ZH } = await import('../src/i18n/zh-Hans');
-    for (const t of [BUSAN_COPY, EN.busan, JA.busan, ZH.busan]) expect(Object.keys(t.sggName).sort()).toEqual([...DEST.gangwon.sgg!].sort());
+    for (const t of [BUSAN_COPY, EN.busan, JA.busan, ZH.busan]) expect(Object.keys(t.sggName).sort()).toEqual([...DEST.gangwon.sgg!, ...DEST.seoul.sgg!].sort());
   });
 });

@@ -102,7 +102,7 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect(document.activeElement?.getAttribute('data-when')).toBe('now');
     await tap('#sheet [data-seg="pick"]');
     expect(pressed('#sheet [data-seg]')).toEqual(['pick']);
-    expect($$('#sheet .chips [data-dest]').map((b) => b.textContent)).toEqual(['제주', '부산', '강원', '다른 곳']);
+    expect($$('#sheet .chips [data-dest]').map((b) => b.textContent)).toEqual(['제주', '부산', '강원', '서울', '다른 곳']);
     expect(pressed('#sheet .chips [data-dest]')).toEqual(['jeju']);
     expect(document.activeElement).toBe($('#sheet .chips [data-dest="jeju"]'));
     expect(current().state()).toMatchObject({ basis: 'gps', dest: 'jeju' }); // nothing changes until a chip is picked

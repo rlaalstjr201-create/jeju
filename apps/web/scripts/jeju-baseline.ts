@@ -72,7 +72,7 @@ function normalized(rel: string, body: Buffer): Buffer | string {
   if (rel === 'jeju/index.html' && SWITCHED) return body.toString('utf8').replace('\n<p>다른 여행지: <a href="/busan/">여차나:부산</a></p>', '');
   if (rel === '_headers' && SWITCHED) {
     const h = body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
-    return NATION ? h.replace(/\/nation\/\*\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '').replace(/\/spots-gangwon\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '') : h;
+    return NATION ? h.replace(/\/nation\/\*\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '').replace(/\/spots-gangwon\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '').replace(/\/spots-seoul\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '') : h;
   }
   if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
   if (rel === 'sitemap-core.xml')
@@ -88,7 +88,7 @@ function files() {
     if (rel.startsWith('assets/')) continue;
     // ADR-0099: Busan's static pages and their sitemap file, what a switched-on build adds for Busan on purpose
     if (SWITCHED && (rel.startsWith('busan/') || rel === 'sitemap-busan-core.xml')) continue;
-    if (NATION && (rel.startsWith('nation/') || rel === 'spots-gangwon.json')) continue;
+    if (NATION && (rel.startsWith('nation/') || rel === 'spots-gangwon.json' || rel === 'spots-seoul.json')) continue;
     const h = short(normalized(rel, readFileSync(p)));
     const m = /^jeju\/([^/]+)\/./.exec(rel);
     if (m) groups.set(`jeju/${m[1]}/`, [...(groups.get(`jeju/${m[1]}/`) ?? []), `${rel}\0${h}`]);

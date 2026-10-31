@@ -1,7 +1,7 @@
 import './style.css';
 import { createAnalytics, isLocalHost } from './analytics';
 import { LocateError, mountApp, type Deps } from './app';
-import { DEST, type Dest } from './dest';
+import { DEST, isSggDest, type Dest } from './dest';
 import type { GeoPermission } from './effects';
 import type { Point } from './pick';
 import { BUSAN, NATION, loadBusan, loadNation, nationSpots, outsideAt, releasedDestOf } from './release';
@@ -50,7 +50,7 @@ function storageOf(name: 'localStorage' | 'sessionStorage'): Storage | null {
 const BASE = import.meta.env.BASE_URL;
 /** Each destination's place list (plans/busan.md): Jeju's address and version as before; Busan's is fetched only on a
  * Busan visit; 강원's on a 강원 visit (ADR-0102). */
-const spotsUrl = (dest: Dest) => (BUSAN && dest !== 'jeju' ? `${BASE}${DEST[dest].file}?v=${dest === 'gangwon' ? __GANGWON_V__ : __BUSAN_V__}` : `${BASE}spots.json?v=${__SPOTS_V__}`);
+const spotsUrl = (dest: Dest) => (BUSAN && dest !== 'jeju' ? `${BASE}${DEST[dest].file}?v=${dest === 'gangwon' ? __GANGWON_V__ : dest === 'seoul' ? __SEOUL_V__ : __BUSAN_V__}` : `${BASE}spots.json?v=${__SPOTS_V__}`);
 
 /** Ask the browser to keep this site's storage (ADR-0063 2a): no prompt of ours; Chrome and Safari decide by
  * themselves, and a "no" changes nothing. */
@@ -160,7 +160,8 @@ function listOf(dest: Dest): Promise<unknown> {
       throw e;
     });
 }
-let gangwonList: Promise<unknown> | null = null;
+// 강원's and 서울's lists, each asked for once (one file of several 시군구)
+const sggLists: Partial<Record<Dest, Promise<unknown>>> = {};
 
 const deps: Deps = {
   loadSpots: (dest, sgg) => {
@@ -168,7 +169,7 @@ const deps: Deps = {
     if (NATION && dest === 'nation') return nationSpots(sgg ?? '').finally(listSettled);
     // 강원: one file for its 시군구, asked for once (again after a failure); the app takes each one's places from it
     // (ADR-0102 Amendment 2)
-    if (NATION && dest === 'gangwon') return (gangwonList ??= listOf(dest).catch((e: unknown) => ((gangwonList = null), Promise.reject(e))));
+    if (NATION && isSggDest(dest)) return (sggLists[dest] ??= listOf(dest).catch((e: unknown) => (delete sggLists[dest], Promise.reject(e))));
     return listOf(dest);
   },
   locate,
@@ -221,8 +222,8 @@ const busanFirst = (): Promise<unknown> =>
 const nationFirst = (): Promise<unknown> =>
   NATION &&
   (document.documentElement.classList.contains('yc-start') ||
-    ['nation', 'gangwon'].includes((window as { __dest?: string }).__dest ?? '') ||
-    /[?&]dest=(?:nation|gangwon)(?:[&#]|$)/.test(location.search))
+    ['nation', 'gangwon', 'seoul'].includes((window as { __dest?: string }).__dest ?? '') ||
+    /[?&]dest=(?:nation|gangwon|seoul)(?:[&#]|$)/.test(location.search))
     ? within(loadNation(), 4000).catch(() => undefined)
     : Promise.resolve();
 void (

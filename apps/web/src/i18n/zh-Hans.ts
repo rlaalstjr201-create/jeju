@@ -186,8 +186,8 @@ export const ZH: Lang = {
   },
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
-    destName: { jeju: '济州', busan: '釜山', gangwon: '江原', nation: '其他地方' },
-    sggName: { '51150': '江陵', '51210': '束草', '51110': '春川', '51830': '襄阳', '51760': '平昌' },
+    destName: { jeju: '济州', busan: '釜山', gangwon: '江原', seoul: '首尔', nation: '其他地方' },
+    sggName: { '51150': '江陵', '51210': '束草', '51110': '春川', '51830': '襄阳', '51760': '平昌', '11110': '钟路区', '11140': '中区', '11170': '龙山区', '11200': '城东区', '11215': '广津区', '11230': '东大门区', '11260': '中浪区' },
     destHead: '旅行地',
     title: (name) => `Yeochana:${name} · P人的旅行搭子`,
     examplePopular: (name, names) => `${name}人气：${names.join('、')}`,

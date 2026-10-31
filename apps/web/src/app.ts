@@ -5,7 +5,7 @@ import { AREAS, areaByName, destOfArea, inJeju, type Area, type RegionName, type
 import { createSpotSource, normalizeSpots, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
-import { DEST, destOfId, isDest, type Dest } from './dest';
+import { DEST, destOfId, isDest, isSggDest, type Dest } from './dest';
 import { LocateError, fetchAddr, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
@@ -145,7 +145,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   /** The 검수한 곳 that covers a 시군구 (강릉·속초·춘천·양양·평창 → 강원, ADR-0102), or null (a 자동 지역 one, or the part not in). */
   function coveredBy(sgg: string | null): Dest | null {
     const a = areaByName(sgg, OPEN_AREAS);
-    return a && a.group === 'gangwon' ? destOfArea(a) : null;
+    return a && isSggDest(a.group) ? destOfArea(a) : null;
   }
   /** 강원's 시군구 in use (ADR-0102 Amendment 2): the first of `want` that is one of its own, else the one its basis
    * stands on (the region, the 숙소's), else either, else its first. Null for a destination not named by 시군구. */
@@ -241,7 +241,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     // `dest=`: 브라우저로 열기 from an in-app browser (keep.ts handoffUrl) carries the 여행지 in use
     const named = /[?&]dest=([a-z]{2,10})(?:[&#]|$)/.exec(search)?.[1];
     const handed = isDest(named) ? named : undefined;
-    const sggLink = handed === 'nation' || handed === 'gangwon' ? /[?&]area=(\d{4,8})(?:[&#]|$)/.exec(search)?.[1] : undefined;
+    const sggLink = handed === 'nation' || isSggDest(handed) ? /[?&]area=(\d{4,8})(?:[&#]|$)/.exec(search)?.[1] : undefined;
     if (sggLink && areaByName(sggLink, OPEN_AREAS)) {
       if (handed === 'nation') sgg0 = sggLink as SggCode;
       else sggWant.push(sggLink);
@@ -1537,7 +1537,7 @@ export function mountApp(doc: Document, deps: Deps): App {
    * same index lists a 검수한 곳's 시군구 (강릉·속초·춘천·양양·평창, ADR-0102) and is drawn there too: one picked moves between the
    * two, or to another of 강원's (its list too, Amendment 2). */
   function toSgg(area: Area) {
-    if (!NATION || (area.group !== 'nation' && area.group !== 'gangwon')) return;
+    if (!NATION || (area.group !== 'nation' && !isSggDest(area.group))) return;
     const d = destOfArea(area);
     if (d !== state.dest || area.name !== state.sgg) switchDest(d, { basis: state.basis, sgg: area.name as SggCode });
   }
@@ -1559,11 +1559,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     // Busan's (the 자동 지역's) part first (src/release.ts): a Jeju visit has not downloaded it
     if (BUSAN && !released(d)) return void partOf(d).then((ok) => ok && !signal.aborted && pickDest(d));
     const fix = state.origin?.key === GPS_KEY ? state.origin.point : null;
-    // the 자동 지역 never chosen on this device: 서울시청's 시군구 until one is picked in its index
+    // the 자동 지역 never chosen on this device: 서울시청's 시군구 (the nearest 자동 지역 one now that 중구 is 서울's, ADR-0106) until one is picked in its index
     // (not one a 검수한 곳 has taken over since it was kept: 강릉, ADR-0102); 강원 at the position's 시군구 when it is in 강원,
     // else the one kept for it (switchDest)
     const here = fix && releasedDestOf(fix) === d;
-    const sgg = d === 'nation' ? ((fix && sggOf(fix)) ?? [state.sgg, store.sgg()].find((c) => c && !coveredBy(c)) ?? sggOf(DEST.nation.cityHall)) : fix && here && DEST[d].sgg ? (areaOfPoint(fix, d).name as SggCode) : undefined;
+    const sgg = d === 'nation' ? ((fix && sggOf(fix)) ?? [state.sgg, store.sgg()].find((c) => c && !coveredBy(c)) ?? (areaOfPoint(DEST.nation.cityHall, 'nation').name as SggCode)) : fix && here && DEST[d].sgg ? (areaOfPoint(fix, d).name as SggCode) : undefined;
     switchDest(d, { basis: here ? 'gps' : 'region', sgg });
     if (state.view !== 'home') request('show');
     later(0, toAreas);

@@ -6,7 +6,7 @@
 // Busan chosen in the sheet, a position outside Jeju — so a Jeju visit never downloads it (plans/busan.md budget: the
 // Korean entry ≤ 50 kB). Until it is in, Busan is not open: `released('busan')` is false and the app is Jeju's.
 import { AREAS, areaByName, inJeju, nearestArea, type Area, type SggArea, type SggCode } from './areas';
-import type { Dest } from './dest';
+import { isSggDest, type Dest } from './dest';
 import type { Region } from './nation';
 import type { NationCopy } from './nation-part';
 import type { Point } from './pick';
@@ -85,13 +85,15 @@ const NATION_OPEN: Area[] = [];
 /** 강원's (ADR-0102): the 시군구 it covers, from the same index — it has no part of its own, its 동네 and where a point is
  * are the 자동 지역's */
 const GANGWON_OPEN: Area[] = [];
+/** 서울 (ADR-0106): its 구, like 강원's 시군구 */
+const SEOUL_OPEN: Area[] = [];
 const nationWaiting: (() => void)[] = [];
 
 /** Called by src/nation-part.ts once it has read the index. */
 export function installNation(p: NationPart): void {
   if (!NATION || nation) return;
   nation = p;
-  for (const a of p.list) (a.group === 'gangwon' ? GANGWON_OPEN : NATION_OPEN).push(a);
+  for (const a of p.list) (a.group === 'gangwon' ? GANGWON_OPEN : a.group === 'seoul' ? SEOUL_OPEN : NATION_OPEN).push(a);
   (OPEN_AREAS as Area[]).push(...p.list);
   for (const fn of nationWaiting.splice(0)) fn();
 }
@@ -121,7 +123,7 @@ export const sggShort = (sgg: string): string => nation?.short(sgg) ?? '';
 export const nationSpots = (sgg: string): Promise<unknown> => (nation ? nation.spots(sgg) : Promise.reject(new Error('no part')));
 
 /** 강원 (ADR-0102) opens with the 자동 지역's part: its 동네 and where a point is come from that index. */
-export const released = (d: Dest): boolean => (d === 'nation' || d === 'gangwon' ? NATION && !!nation : d === 'jeju' || (BUSAN && !!part));
+export const released = (d: Dest): boolean => (d === 'nation' || isSggDest(d) ? NATION && !!nation : d === 'jeju' || (BUSAN && !!part));
 
 /** The destination a point is in, if it is open to visitors in this build; else null (as outside them all). With the
  * switch off the boundary is never read (and, with it, never in the Jeju bundle: plans/busan.md budget). A 시군구 a
@@ -148,9 +150,9 @@ function sggAt(p: Point): SggCode | null {
 
 /** One destination's areas (Jeju's with the switch off). */
 export const openAreasOf = (d: Dest): readonly Area[] =>
-  BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : NATION && d === 'gangwon' ? GANGWON_OPEN : AREAS;
+  BUSAN && d === 'busan' ? BUSAN_OPEN : NATION && d === 'nation' ? NATION_OPEN : NATION && d === 'gangwon' ? GANGWON_OPEN : NATION && d === 'seoul' ? SEOUL_OPEN : AREAS;
 /** A point's 동네: the nearest centre of its destination's areas (Jeju's outside both, as before); in the 자동 지역, its
  * 시군구 (sggOf: an island's is not always the nearest centre); in 강원, the 시군구 regionOf says when it is one of 강원's
  * (ADR-0104: 횡계 is 평창's though 강릉's centre is nearer). */
 export const areaOfPoint = (p: Point, d: Dest = releasedDestOf(p) ?? 'jeju'): Area =>
-  (NATION && d === 'nation' && areaByName(sggOf(p), NATION_OPEN)) || (NATION && d === 'gangwon' && areaByName(sggAt(p), GANGWON_OPEN)) || nearestArea(p, openAreasOf(d));
+  (NATION && d === 'nation' && areaByName(sggOf(p), NATION_OPEN)) || (NATION && isSggDest(d) && areaByName(sggAt(p), openAreasOf(d))) || nearestArea(p, openAreasOf(d));

@@ -24,7 +24,7 @@ const BASES = new Set(['here', 'stay', 'area']);
 const AREA_NAMES = new Set<string>(ALL_AREAS.map((a) => a.name));
 /** 여행지 (specs/busan.md 7): sent by an app with the switch on; an older app never sends it, and needs not.
  * 'nation': the 자동 지역 layer (plans/nationwide-app.md 7); 'gangwon': 강원's 검수한 곳 (ADR-0102) */
-const DESTS = new Set(['jeju', 'busan', 'gangwon', 'nation']);
+const DESTS = new Set(['jeju', 'busan', 'gangwon', 'seoul', 'nation']);
 /** 시군구 code (plans/nationwide-app.md 0): with dest nation or gangwon (its 동네 are 시군구, ADR-0102) and an area basis only */
 const SGG = /^\d{4,8}$/;
 const HOWS = new Set(['gps', 'pick']);
@@ -74,7 +74,7 @@ export function eventProblem(x: unknown, today?: Day): string | null {
   if (o.range !== undefined && !inSet(RANGES, o.range)) return 'range';
   if (o.basis !== undefined && !inSet(BASES, o.basis)) return 'basis';
   if (o.area !== undefined && (o.basis !== 'area' || !inSet(AREA_NAMES, o.area))) return 'area';
-  if (o.sgg !== undefined && !((o.dest === 'nation' || o.dest === 'gangwon') && o.basis === 'area' && typeof o.sgg === 'string' && SGG.test(o.sgg))) return 'sgg';
+  if (o.sgg !== undefined && !((o.dest === 'nation' || o.dest === 'gangwon' || o.dest === 'seoul') && o.basis === 'area' && typeof o.sgg === 'string' && SGG.test(o.sgg))) return 'sgg';
   if (o.dated !== undefined && typeof o.dated !== 'boolean') return 'dated';
   if (o.indoor !== undefined && typeof o.indoor !== 'boolean') return 'indoor';
   if (o.season !== undefined && !((o.e === 'shown' || o.e === 'map') && inSet(SEASONS, o.season))) return 'season';

@@ -46,7 +46,7 @@ export function readDeepLink(search: string, today: Day): DeepLink | null {
   else {
     // either destination's 동네, if it is open in this build (plans/busan.md: Busan's slugs only with the switch on)
     const a = OPEN_AREAS.find((x) => x.slug === slug) ?? areaByName(area, OPEN_AREAS);
-    if (a && a.group !== 'nation' && a.group !== 'gangwon') out.area = a.name;
+    if (a && a.group !== 'nation' && a.group !== 'gangwon' && a.group !== 'seoul') out.area = a.name;
   }
   const reach = get('reach').toLowerCase();
   if (REACHES.includes(reach as Reach)) out.reach = reach as Reach;

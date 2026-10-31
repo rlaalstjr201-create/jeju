@@ -1,6 +1,6 @@
 // 15 destination areas with fixed centres (ADR-0029, plans/tomorrow-picker.md "지역 15곳 중심 좌표").
 import type { BUSAN_AREAS } from './busan';
-import type { Dest } from './dest';
+import { isSggDest, type Dest, type SggDest } from './dest';
 import { distanceKm, islandOf, type Point } from './pick';
 
 // Listed west → east within each group (longitude order), so the grid reads like a map (design/SPEC.md §6.9).
@@ -30,7 +30,7 @@ export type SggCode = `${number}`;
 /** A 시군구 as the 자동 지역's 동네 (plans/nationwide-app.md 1.4): named by its code (`중구`, `고성군` are not one place each);
  * `label` its name (`강릉시`), `landmark` its 시도's short name. From the index, once the 자동 지역's part is in. A 시군구 a
  * 검수한 곳 covers (DEST[d].sgg, ADR-0102) is that destination's 동네: its group says which. */
-interface SggAreaOf<G extends 'nation' | 'gangwon'> {
+interface SggAreaOf<G extends 'nation' | SggDest> {
   name: SggCode;
   slug: SggCode;
   label: string;
@@ -39,7 +39,7 @@ interface SggAreaOf<G extends 'nation' | 'gangwon'> {
   lng: number;
   group: G;
 }
-export type SggArea = SggAreaOf<'nation'> | SggAreaOf<'gangwon'>;
+export type SggArea = SggAreaOf<'nation'> | SggAreaOf<'gangwon'> | SggAreaOf<'seoul'>;
 /** A destination's area: Jeju's 15 here, Busan's 12 in src/busan.ts (BUSAN_AREAS, ALL_AREAS) — a module of its own
  * that the app's entry never imports (plans/busan.md budget) — and the 자동 지역's 시군구. */
 export type Area = (typeof AREAS)[number] | (typeof BUSAN_AREAS)[number] | SggArea;
@@ -47,7 +47,7 @@ export type Area = (typeof AREAS)[number] | (typeof BUSAN_AREAS)[number] | SggAr
 export type AreaName = Exclude<Area, SggArea>['name'];
 /** a 동네 of any destination: a 검수한 곳's, or a 시군구 */
 export type RegionName = AreaName | SggCode;
-export const destOfArea = (a: Area): Dest => (a.group === 'busan' || a.group === 'nation' || a.group === 'gangwon' ? a.group : 'jeju');
+export const destOfArea = (a: Area): Dest => (a.group === 'busan' || a.group === 'nation' || isSggDest(a.group) ? a.group : 'jeju');
 
 export const AREA_GROUPS: readonly { group: (typeof AREAS)[number]['group']; heading: string }[] = [
   { group: 'jeju', heading: '제주시 쪽' },

@@ -1,7 +1,7 @@
 // Keeping saves without a login (ADR-0063 2): the backup link, in-app browser detection and the home-screen
 // nudge's kind. Pure functions, no DOM state; app.ts wires them up.
 import { addDays, isDay, type Day } from './dates';
-import type { Dest } from './dest';
+import { isSggDest, type Dest } from './dest';
 import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
 import { BUSAN } from './release';
 import { MAX_SAVED, normalizeEntries } from './store';
@@ -164,7 +164,7 @@ export function handoffUrl(home: string, s: { saved: readonly SavedEntry[]; indo
   const q = [
     ...(lang && lang !== 'ko' ? [`lang=${lang}`] : []),
     ...(BUSAN && s.dest ? [`dest=${s.dest}`] : []),
-    ...(BUSAN && (s.dest === 'nation' || s.dest === 'gangwon') && s.sgg ? [`area=${s.sgg}`] : []),
+    ...(BUSAN && (s.dest === 'nation' || isSggDest(s.dest)) && s.sgg ? [`area=${s.sgg}`] : []),
     ...(s.stay?.source === 'link' ? [`stay=${s.stay.lat}%2C${s.stay.lng}`] : []),
     ...(s.src ? [`src=${s.src}`, 'relay=1'] : []),
   ];
