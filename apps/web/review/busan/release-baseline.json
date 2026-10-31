@@ -1,9 +1,6 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "6b397498",
- "allowed": [
-  "files.sw.js"
- ],
+ "measuredAt": "3b1a866e",
  "data": {
   "public/spots.json": "420ec9586fe8b5f78a932986bcef616f8255ba336be9e28e3d5726561b72ee7b",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
@@ -62,7 +59,7 @@
   "sitemap.xml": "4a2a1f25fb583756",
   "spots-busan.json": "900cc69808660d2b",
   "spots.json": "420ec9586fe8b5f7",
-  "sw.js": "c88a41e1938a1a07",
+  "sw.js": "912f336be3f9072c",
   "jeju/aewol/": "220 files c77690c84cbd1ec9",
   "jeju/andeok/": "137 files 2e23e44ff039b6c8",
   "jeju/daejeong/": "138 files d0a7366fb2aed09a",
