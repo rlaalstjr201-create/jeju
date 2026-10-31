@@ -233,7 +233,8 @@ export function build(inputs = loadInputs()) {
     const group = (food) => new Map(inCity.filter((k) => (k.v.mood === 'food') === food).map((k) => [k.item.id, volumeById.get(k.item.id)]));
     for (const food of [true, false]) for (const [id, s] of quintileScores(group(food))) scoreById.set(id, s);
     const famous = famousIds(
-      inCity.filter((k) => candidateOf(inputs.dest)(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
+      // 주인 지정 곳은 규칙 후보에서 빼고 아래에서 더한다(기분을 덮어 후보가 된 대포항이 규칙 몫 자리를 밀어내지 않게)
+      inCity.filter((k) => !ownerFamous.some((o) => o.id === k.item.id) && candidateOf(inputs.dest)(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
       volumeById,
       famousCount(keepByCity.get(city)),
     );
