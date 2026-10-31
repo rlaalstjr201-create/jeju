@@ -20,6 +20,7 @@ export declare function famousCount(keep: number): number;
 export declare function inBox(city: string, p: { lat: number; lng: number }): boolean;
 export declare function displayName(title: string, city: string): string;
 export declare function bracketTag(name: string): string;
+export declare function adminTag(name: string): string;
 export declare function shownName(title: string, city: string): string;
 export declare function townOf(item: { addr1: string; city: string }): string;
 export declare function loadInputs(dest?: string, cities?: string[], dir?: string): CuratedInputs;

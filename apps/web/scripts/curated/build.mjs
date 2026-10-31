@@ -46,8 +46,10 @@ const SUBS = { food: new Set(['meal', 'cafe']), new: new Set(['sight', 'do']) };
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
 /** 카드 이름: 이름 끝의 「(도시)」 표시만 뗀다(부산 displayName과 같은 뜻). 서울 구는 「(서울)」(rounds.mjs cityMark). */
 export const displayName = (title, city) => cleanName(title).replace(new RegExp(`\\s*\\(${cityMark(city)}\\)$`), '');
-/** 카드에 싣는 이름: displayName에 대괄호 꼬리표 규칙을 더한다. 같은 곳 판정(dedupe)은 꼬리표 규칙 전 이름으로 하므로 어떤 곳이 실리는지는 그대로다. */
-export const shownName = (title, city) => bracketTag(displayName(title, city));
+/** 카드에 싣는 이름: displayName에 대괄호 꼬리표 규칙과 관리용 괄호 꼬리표 규칙을 더한다. 같은 곳 판정(dedupe)은 꼬리표 규칙 전 이름으로 하므로 어떤 곳이 실리는지는 그대로다. */
+export const shownName = (title, city) => bracketTag(adminTag(displayName(title, city)));
+/** 관리용 괄호 꼬리표: TourAPI가 붙인 끝의 「 (외국어사이트용)」만 뗀다. 코스·지점 같은 뜻 있는 괄호는 그대로 둔다. */
+export const adminTag = (name) => name.replace(/\s*\(외국어사이트용\)$/, '');
 /** 대괄호 꼬리표: 끝의 「 [유네스코 세계유산]」은 뗀다. 앞의 「[서울둘레길 19코스] 북한산 성북코스」는 「북한산 성북코스 (서울둘레길 19코스)」로 옮겨 코스 정보는 남긴다. 이름이 꼬리표뿐이면 그대로 둔다. */
 export const bracketTag = (name) => {
   const lead = /^\[([^\]]+)\]\s*(.+)$/.exec(name);
@@ -147,7 +149,7 @@ export function build(inputs = loadInputs()) {
   // 주인 덮어쓰기: before가 판정과 다르면 멈춘다. 걷기·그 밖은 sub가 없다(SUBS) — 덮은 뒤 sub는 쓰지 않는다
   const verdicts = new Map(judged);
   const itemIds = new Set(items.map((it) => it.id));
-  for (const o of overrides.filter((o) => o.type !== 'drop' && itemIds.has(o.id))) {
+  for (const o of overrides.filter((o) => !o.type && itemIds.has(o.id))) {
     const v = judged.get(o.id);
     if (!v || o.field !== 'mood' || v.mood !== o.before) throw new Error(`owner override ${o.id}: mood ${v?.mood} ≠ before ${o.before}`);
     verdicts.set(o.id, { ...v, mood: o.after });
@@ -217,6 +219,11 @@ export function build(inputs = loadInputs()) {
   kept.length = 0;
   kept.push(...rest.filter((k) => !ownerDrop.has(k.item.id)));
   const ids = new Set(kept.map((k) => k.item.id));
+  const ownerFamous = overrides.filter((o) => o.type === 'famous' && itemIds.has(o.id));
+  for (const o of ownerFamous) {
+    const k = kept.find((x) => x.item.id === o.id);
+    if (!k || k.v.mood === 'food') throw new Error(`owner famous ${o.id}: not shipped, or 먹기`);
+  }
   const kakaoById = kakaoIds(kakao, ids);
   // pop-criteria.md 10절: 만족도·유명한 곳(개수·pop)은 도시마다 따로 센다(도시 하나면 예전과 같다)
   const scoreById = new Map();
@@ -231,6 +238,9 @@ export function build(inputs = loadInputs()) {
       famousCount(keepByCity.get(city)),
     );
     for (const [id, p] of popScores(volumeById, famous)) pops.set(id, p);
+    // 주인 지정 유명한 곳(type famous, 부산 OWNER_FAMOUS·ADR-0094 Amendment 2와 같은 방식): 규칙 몫에 더하고(바꾸지 않음),
+    // pop은 그 도시 규칙 몫 마지막 곳의 값. 검색수는 다시 재지 않는다
+    for (const o of ownerFamous.filter((o) => inCity.some((k) => k.item.id === o.id))) if (!pops.has(o.id)) pops.set(o.id, pops.get(famous[famous.length - 1]));
   }
 
   const nameOf = (item) => renamed.get(item.id) ?? shownName(item.title, item.city);

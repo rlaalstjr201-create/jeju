@@ -9,7 +9,7 @@ import type { Spot } from '../src/pick';
 import { REASON_BANNED } from '../scripts/check-slop';
 import { positionProblems } from '../scripts/positions.mjs';
 import { reasonPunctuationProblem } from '../scripts/reason.mjs';
-import { bracketTag, build, dedupe, famousCount, famousIds, inBox, kakaoIds, loadInputs, quintileScores, townOf } from '../scripts/curated/build.mjs';
+import { adminTag, bracketTag, build, dedupe, famousCount, famousIds, inBox, kakaoIds, loadInputs, quintileScores, townOf } from '../scripts/curated/build.mjs';
 import { BROAD, keywordsOf, plan, targets as popTargets } from '../scripts/curated/measure.mjs';
 import { nameRule, pick, targets as kakaoTargets } from '../scripts/curated/kakao.mjs';
 import { JEJU_RECORD_BOX, recordProblems } from './spot-record';
@@ -33,6 +33,8 @@ const RENAMED_BY_OTHERS = new Map([...RENAMED_BY_YANGYANG, ...RENAMED_BY_PYEONGC
 const DUP_PYEONGCHANG = ['nt-3352979', 'nt-3448238'];
 // 주인 결정 drop(review/gangwon/owner-overrides.json): 규칙 밖 중복 쌍의 한쪽 — 다래(→평창한우다래), 노다지한우(→노다지)
 const OWNER_DROP = new Map([['nt-2680940', 'nt-2789764'], ['nt-2776515', 'nt-712490']]);
+// 주인 지정 유명한 곳(type famous, ADR-0102 Amendment 5): 규칙 몫에 더해진다 — 오죽헌(강릉)·월정사(평창)
+const OWNER_FAMOUS = new Set(['nt-129784', 'nt-125772']);
 const item = new Map(inputs.items.map((i) => [i.id, i]));
 const volume = new Map(inputs.pop.map((r) => [r.id, r.volume as number]));
 const DAY_WORDS = /월요일|화요일|수요일|목요일|금요일|토요일|일요일|매주|정기휴무/;
@@ -116,7 +118,7 @@ describe('강릉 만족도·유명한 곳 (pop-criteria 6·7절)', () => {
     const candidates = all
       .filter((s) => item.get(s.id)!.contenttypeid === 12 && s.mood !== 'food' && !/카페|커피|빵|베이커리|디저트/.test(s.name))
       .sort((a, b) => volume.get(b.id)! - volume.get(a.id)! || (a.id < b.id ? -1 : 1));
-    expect(all.filter((s) => s.famous === true).map((s) => s.id).sort()).toEqual(candidates.slice(0, 33).map((s) => s.id).sort());
+    expect(all.filter((s) => s.famous === true && !OWNER_FAMOUS.has(s.id)).map((s) => s.id).sort()).toEqual(candidates.slice(0, 33).map((s) => s.id).sort());
     expect(volume.get(candidates[32].id)).toBeGreaterThan(volume.get(candidates[33].id)!);
     const pops = all.filter((s) => s.famous).map((s) => s.pop!);
     expect(Math.max(...pops)).toBe(1);
@@ -228,12 +230,46 @@ describe('대괄호 꼬리표 (shownName)', () => {
     expect(bracketTag('경복궁')).toBe('경복궁');
     expect(bracketTag('[전부 꼬리표]')).toBe('[전부 꼬리표]');
   });
+  it('관리용 괄호 꼬리표 「(외국어사이트용)」만 떼고, 뜻 있는 괄호는 남긴다', () => {
+    expect(adminTag('부산식당 (외국어사이트용)')).toBe('부산식당');
+    expect(adminTag('북한산 성북코스 (서울둘레길 19코스)')).toBe('북한산 성북코스 (서울둘레길 19코스)');
+    expect(adminTag('대원군별장(석파정)')).toBe('대원군별장(석파정)');
+    for (const d of ['gangwon', 'seoul']) {
+      const spots = JSON.parse(readFileSync(resolve(__dirname, `../data/${d}/spots-${d}.json`), 'utf8')) as { name: string }[];
+      expect(spots.filter((s) => s.name.includes('외국어사이트용')).map((s) => s.name)).toEqual([]);
+    }
+  });
   it('출하 파일 이름에는 대괄호가 남지 않는다', () => {
     const dirs = ['gangwon', 'seoul'] as const;
     for (const d of dirs) {
       const spots = JSON.parse(readFileSync(resolve(__dirname, `../data/${d}/spots-${d}.json`), 'utf8')) as { name: string }[];
       expect(spots.filter((s) => /[[\]]/.test(s.name)).map((s) => s.name)).toEqual([]);
     }
+  });
+});
+
+describe('강원 주인 지정 유명한 곳 (ADR-0102 Amendment 5)', () => {
+  it('오죽헌·월정사 본 레코드는 출하 파일에서 유명한 곳이고 규칙 몫에 더해진다(강릉 33+1, 평창 28+1); 지정을 빼고 지으면 그 둘의 famous·pop만 다르다', () => {
+    for (const id of OWNER_FAMOUS) expect(file.find((s) => s.id === id)).toMatchObject({ famous: true, pop: expect.any(Number) });
+    const n = (a: string) => file.filter((s) => s.famous && s.area === a).length;
+    expect([n('강릉'), n('평창')]).toEqual([34, 29]);
+    const every = loadInputs('gangwon', CITIES);
+    const plain = build({ ...every, overrides: (every.overrides as unknown as { type?: string }[]).filter((o) => o.type !== 'famous') as never }).spots;
+    const changed = file.filter((s, i) => JSON.stringify(s) !== JSON.stringify(plain[i]));
+    expect(changed.map((s) => s.id).sort()).toEqual([...OWNER_FAMOUS].sort());
+    for (const s of changed) {
+      const { famous: _f, pop: _p, ...rest } = s as typeof s & { famous?: boolean; pop?: number };
+      expect(rest).toEqual(plain.find((x) => x.id === s.id));
+    }
+  });
+});
+
+describe('서울 주인 지정 유명한 곳 (ADR-0106 Amendment 3)', () => {
+  it('창덕궁과 후원·종묘·남산서울타워는 출하 파일에서 유명한 곳이고, 규칙 몫에 더해진다(종로 28+2, 용산 10+1)', () => {
+    const spots = JSON.parse(readFileSync(resolve(__dirname, '../data/seoul/spots-seoul.json'), 'utf8')) as { id: string; area: string; famous?: boolean; pop?: number }[];
+    for (const id of ['nt-127642', 'nt-126510', 'nt-126535']) expect(spots.find((s) => s.id === id)).toMatchObject({ famous: true, pop: expect.any(Number) });
+    const n = (a: string) => spots.filter((s) => s.famous && s.area === a).length;
+    expect([n('종로'), n('용산'), spots.filter((s) => s.famous).length]).toEqual([30, 11, 74]);
   });
 });
 
@@ -277,7 +313,7 @@ describe('속초·춘천 (pop-criteria 10절)', () => {
       const candidates = recs
         .filter((s) => cityOf.get(s.id)!.contenttypeid === 12 && s.mood !== 'food' && !/카페|커피|빵|베이커리|디저트/.test(s.name))
         .sort((a, b) => vol.get(b.id)! - vol.get(a.id)! || (a.id < b.id ? -1 : 1));
-      expect(recs.filter((s) => s.famous).map((s) => s.id).sort()).toEqual(candidates.slice(0, famous).map((s) => s.id).sort());
+      expect(recs.filter((s) => s.famous && !OWNER_FAMOUS.has(s.id)).map((s) => s.id).sort()).toEqual(candidates.slice(0, famous).map((s) => s.id).sort());
       for (const food of [true, false]) {
         const group = recs.filter((s) => (s.mood === 'food') === food);
         for (const s of group) expect(s.score, s.id).toBe(5 - Math.floor((5 * group.filter((x) => vol.get(x.id)! > vol.get(s.id)!).length) / group.length));
@@ -346,10 +382,10 @@ describe('주인 덮어쓰기 (review/gangwon/owner-overrides.json)', () => {
   const every = loadInputs('gangwon', CITIES);
   const ids = ['nt-2383582', 'nt-125668'];
   it('판정 파일은 rest 그대로이고, 덮어쓰기는 이 두 곳의 mood만 walk로 바꾼다', () => {
-    const moods = (every.overrides as unknown as { id: string; type?: string }[]).filter((o) => o.type !== 'drop');
+    const moods = (every.overrides as unknown as { id: string; type?: string }[]).filter((o) => !o.type);
     expect(moods.map((o) => o.id).sort()).toEqual([...ids].sort());
     for (const id of ids) expect(every.verdicts.get(id)?.mood).toBe('rest');
-    const plain = build({ ...every, overrides: (every.overrides as unknown as { type?: string }[]).filter((o) => o.type === 'drop') as never }).spots;
+    const plain = build({ ...every, overrides: (every.overrides as unknown as { type?: string }[]).filter((o) => !!o.type) as never }).spots;
     const owned = build(every).spots;
     expect(owned.length).toBe(plain.length);
     const changed = owned.filter((s, i) => JSON.stringify(s) !== JSON.stringify(plain[i]));
