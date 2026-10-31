@@ -11,16 +11,19 @@
    "state": {
     "sid": "55ggzhn2",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "view",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "view",
+    "final": "view",
+    "tab": "hill",
     "backs": 0,
-    "log": []
+    "log": [
+     "m1",
+     "t3"
+    ]
    }
   },
   {
@@ -31,16 +34,19 @@
    "state": {
     "sid": "oaq6eksw",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "view",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "view",
+    "final": "view",
+    "tab": "mix",
     "backs": 0,
-    "log": []
+    "log": [
+     "m1",
+     "t1"
+    ]
    }
   },
   {
@@ -51,16 +57,19 @@
    "state": {
     "sid": "0uxxqqk8",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "new",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "new",
+    "final": "new",
+    "tab": "do",
     "backs": 0,
-    "log": []
+    "log": [
+     "m2",
+     "t3"
+    ]
    }
   },
   {
@@ -71,16 +80,19 @@
    "state": {
     "sid": "jw41126q",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "new",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "new",
+    "final": "new",
+    "tab": "do",
     "backs": 0,
-    "log": []
+    "log": [
+     "m2",
+     "t3"
+    ]
    }
   },
   {
@@ -91,16 +103,19 @@
    "state": {
     "sid": "sd1o62o3",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "famous",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
+    "end": "pick",
+    "first": "famous",
+    "final": "famous",
     "tab": null,
     "backs": 0,
-    "log": []
+    "log": [
+     "m3",
+     "ok"
+    ]
    }
   },
   {
@@ -111,16 +126,19 @@
    "state": {
     "sid": "qwhy96in",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "food",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "food",
+    "final": "food",
+    "tab": "meal",
     "backs": 0,
-    "log": []
+    "log": [
+     "m4",
+     "t1"
+    ]
    }
   },
   {
@@ -131,16 +149,19 @@
    "state": {
     "sid": "m8zjs919",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "new",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "new",
+    "final": "new",
+    "tab": "do",
     "backs": 0,
-    "log": []
+    "log": [
+     "m2",
+     "t3"
+    ]
    }
   },
   {
@@ -152,15 +173,17 @@
     "sid": "72gxytpn",
     "arm": "k582",
     "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "mood": "any",
+    "taps": 1,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
+    "end": "pick",
+    "first": "any",
+    "final": "any",
     "tab": null,
     "backs": 0,
-    "log": []
+    "log": [
+     "m5"
+    ]
    }
   },
   {
@@ -171,16 +194,19 @@
    "state": {
     "sid": "7tr9w299",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "view",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "view",
+    "final": "view",
+    "tab": "water",
     "backs": 0,
-    "log": []
+    "log": [
+     "m1",
+     "t2"
+    ]
    }
   },
   {
@@ -191,16 +217,19 @@
    "state": {
     "sid": "w7w5den8",
     "arm": "k582",
-    "screen": "home",
-    "mood": null,
-    "taps": 0,
+    "screen": "result",
+    "mood": "new",
+    "taps": 2,
     "bad": 0,
-    "end": null,
-    "first": null,
-    "final": null,
-    "tab": null,
+    "end": "pick",
+    "first": "new",
+    "final": "new",
+    "tab": "do",
     "backs": 0,
-    "log": []
+    "log": [
+     "m2",
+     "t3"
+    ]
    }
   }
  ],

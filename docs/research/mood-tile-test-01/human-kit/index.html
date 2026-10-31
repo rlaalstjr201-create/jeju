@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기분 타일 시험</title>
+<!-- 기분 타일 첫 탭 시험 01 사람 키트 (docs/research/mood-tile-test-01/00-prereg.md 9절). 정적 한 쪽, 외부 파일·전송 없음.
+     index.html          → 보내는 사람(주인)용 안내와 세 판 한눈에
+     index.html#1 #2 #3  → 지인에게 보내는 쪽. 한 사람은 한 판만 본다. 판 이름은 안 보인다. -->
+<style>
+:root { --bg:#fbfaf7; --fg:#1f1f1c; --mute:#6b6a64; --line:#e3e1da; --tile:#ffffff; --pick:#1d6b57; --pickbg:#e6f2ee; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#171716; --fg:#ecebe6; --mute:#a3a29b; --line:#33322f; --tile:#22221f; --pick:#7cc8b0; --pickbg:#1f332d; } }
+:root[data-theme="dark"] { --bg:#171716; --fg:#ecebe6; --mute:#a3a29b; --line:#33322f; --tile:#22221f; --pick:#7cc8b0; --pickbg:#1f332d; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif; }
+main { max-width:420px; margin:0 auto; padding:20px 16px 64px; }
+h1 { font-size:20px; margin:0 0 8px; }
+h2 { font-size:16px; margin:28px 0 8px; }
+p, li { color:var(--fg); }
+.mute { color:var(--mute); font-size:14px; }
+.card { border-top:1px solid var(--line); padding:18px 0 6px; }
+.card .no { font-weight:700; color:var(--pick); font-size:14px; }
+.sit { margin:4px 0 12px; }
+.ask { font-weight:700; font-size:17px; margin:0 0 8px; }
+.tiles { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.tiles button { width:100%; min-height:52px; text-align:left; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:var(--tile); color:var(--fg); font:inherit; display:flex; gap:10px; align-items:center; cursor:pointer; }
+.tiles button .n { color:var(--mute); font-size:13px; min-width:1.2em; }
+.tiles button.any { justify-content:center; border-style:dashed; }
+.tiles button[aria-pressed="true"] { border-color:var(--pick); background:var(--pickbg); font-weight:700; }
+.none { margin-top:8px; background:none; border:0; color:var(--mute); text-decoration:underline; font:inherit; font-size:14px; padding:8px 0; cursor:pointer; }
+.none[aria-pressed="true"] { color:var(--pick); font-weight:700; }
+.answer { position:sticky; bottom:0; background:var(--bg); border-top:1px solid var(--line); padding:12px 0; margin-top:24px; }
+.answer textarea { width:100%; height:64px; font:14px/1.4 ui-monospace, monospace; padding:8px; border:1px solid var(--line); border-radius:8px; background:var(--tile); color:var(--fg); }
+.answer button { margin-top:6px; min-height:44px; padding:0 16px; border-radius:10px; border:0; background:var(--pick); color:var(--bg); font:inherit; font-weight:700; cursor:pointer; }
+table { border-collapse:collapse; width:100%; font-size:14px; }
+td, th { border:1px solid var(--line); padding:6px; vertical-align:top; text-align:left; }
+code { font-size:13px; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const DATA = {"cards":["제주 애월, 오후 2시. 둘이서 점심을 배부르게 먹고 커피도 방금 마셨다. 이제 바다 앞에 그냥 앉아서 한동안 멍하게 있고 싶다. 앱을 연다.","강원 평창, 8월 오후 1시, 33도. 초등학생 아이 둘과 넷이다. 아이들이 덥다고 난리라 계곡에 발 담그고 물장난할 데를 찾는다. 앱을 연다.","강원 평창 대관령 근처, 오전 10시. 친구 셋이다. 양 떼를 보고 건초도 주는 목장에 가 보자는 말이 나왔다. 앱을 연다.","부산 해운대, 비 오는 토요일 오후 2시. 6살·9살 아이와 넷이다. 숙소에만 있으니 아이들이 심심해서 몸을 비튼다. 비 안 맞고 아이들이 놀 만한 실내를 찾는다. 앱을 연다.","제주 구좌, 아침 8시. 혼자다. 날이 맑아서 오름 하나 올라가 위에서 내려다보고 싶다. 앱을 연다.","전남 순천, 오후 4시. 70대 부모님을 모시고 왔다. 저녁 먹기 전 한 시간쯤 비는데, 부모님이 오래 걷는 건 힘들어하신다. 차에서 내려 잠깐 앉아 경치 볼 데를 찾는다. 앱을 연다.","부산 기장, 오전 11시. 연인과 둘이다. 바다에서 낚시를 한번 해 보고 싶다는 얘기가 나왔다(장비는 없다). 앱을 연다.","경기 가평, 오후 2시. 친구 넷이다. 레일바이크나 짚라인처럼 몸 쓰고 소리 지를 만한 걸 하고 싶다. 앱을 연다.","제주 중문, 오후 3시. 제주가 처음인 친구와 둘이다. 제주 왔으면 다들 가는 데를 한 군데는 가 봐야 할 것 같다. 앱을 연다.","강원 강릉, 저녁 6시 반. 둘이서 하루 종일 돌아다녀 배가 고프다. 앱을 연다.","강원 속초, 오후 5시. 서울에서 세 시간 운전해 와서 몸이 뻐근하다. 온천이나 찜질방에서 몸을 풀고 싶다. 앱을 연다.","제주 서귀포, 둘째 날 오후 1시. 혼자다. 딱히 하고 싶은 게 없고 고르기도 귀찮다. 앱이 그냥 정해 줬으면 좋겠다. 앱을 연다."],"sets":{"cur":{"rows":["푹 쉬고 싶어","좀 걷고 싶어","새로운 거 해보고 싶어","유명한 데 가 보고 싶어","맛있는 거 먹고 싶어","아무거나 골라줘"],"tabs":{"새로운 거 해보고 싶어":["섞어서","구경","체험"],"맛있는 거 먹고 싶어":["식사","카페·디저트"]}},"A":{"rows":["푹 쉬고 싶어","좀 걷고 싶어","놀러 가고 싶어","유명한 데 가 보고 싶어","맛있는 거 먹고 싶어","아무거나 골라줘"],"tabs":{"놀러 가고 싶어":["섞어서","구경","놀거리"],"맛있는 거 먹고 싶어":["식사","카페·디저트"]}},"C":{"rows":["경치 보고 싶어","놀러 가고 싶어","유명한 데 가 보고 싶어","맛있는 거 먹고 싶어","아무거나 골라줘"],"tabs":{"경치 보고 싶어":["섞어서","물가","산·길"],"놀러 가고 싶어":["섞어서","구경","놀거리"],"맛있는 거 먹고 싶어":["식사","카페·디저트"]}}}};
+// 판 번호 → 판 (지인에겐 번호만 보인다)
+const VERSIONS = { '1': 'A', '2': 'C', '3': 'cur' };
+const NAMES = { cur: '지금', A: '안 A', C: '안 C' };
+const app = document.getElementById('app');
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function owner() {
+  app.innerHTML = `
+    <h1>기분 타일 시험 — 보내는 사람용</h1>
+    <p>지인 10명 남짓에게 아래 링크 셋을 <b>돌아가며 하나씩</b> 보냅니다(1번 사람 → 판 1, 2번 → 판 2, 3번 → 판 3, 4번 → 판 1 …). 한 사람은 한 판만 봐야 합니다. 판 이름은 지인 화면에 나오지 않습니다.</p>
+    <ul>${Object.keys(VERSIONS).map((v) => `<li><a href="#${v}">판 ${v}</a> <span class="mute">(이 쪽 주소 끝에 #${v})</span></li>`).join('')}</ul>
+    <p>지인은 카드 12장마다 처음 눌렀을 타일을 고르고, 맨 아래 「답 복사」로 나온 한 줄을 메시지로 보내 주면 됩니다. 형식은 <code>판2 · 1-3 2-1 3-2 … 12-0</code>(카드번호-타일번호, 0은 「모르겠다·맞는 게 없다」)입니다. 설치·로그인·설문 사이트는 없습니다. 이 쪽은 아무 데도 답을 보내지 않습니다.</p>
+    <p class="mute">페이지 파일을 메시지로 직접 보내기 어렵다면, 이 파일을 아무 정적 호스팅에 올리거나 화면 캡처 세 장을 보내고 「카드번호-타일번호」로 답을 받아도 됩니다.</p>
+    <h2>채점</h2>
+    <p class="mute">받은 답을 <code>docs/research/mood-tile-test-01/human-kit/answers.txt</code>에 한 줄씩 붙이고, 사전등록 4절 열쇠(<code>lab/cards.mjs</code>)로 셉니다. 판 1 = 안 A, 판 2 = 안 C, 판 3 = 지금. 가상 여행자 결과(<code>10-results.md</code>)와 나란히 봅니다. 한 판에 3~4명이라 숫자는 방향만 봅니다.</p>
+    <h2>세 판 한눈에 (위→아래, 375px 첫 화면 순서)</h2>
+    <table><tr><th>번호</th>${Object.entries(VERSIONS).map(([v, a]) => `<th>판 ${v} (${NAMES[a]})</th>`).join('')}</tr>
+    ${[0, 1, 2, 3, 4, 5].map((i) => `<tr><td>${i + 1}</td>${Object.values(VERSIONS).map((a) => { const t = DATA.sets[a].rows[i]; return `<td>${t ? esc(t) + (DATA.sets[a].tabs[t] ? `<br><span class="mute">탭: ${DATA.sets[a].tabs[t].map(esc).join(' · ')}</span>` : '') : '—'}</td>`; }).join('')}</tr>`).join('')}
+    </table>
+    <h2>상황 카드 12장</h2>
+    <ol>${DATA.cards.map((c) => `<li>${esc(c)}</li>`).join('')}</ol>`;
+}
+
+function participant(v) {
+  const set = DATA.sets[VERSIONS[v]];
+  const picks = Array(DATA.cards.length).fill(null);
+  app.innerHTML = `
+    <h1>여행 앱 첫 화면 고르기</h1>
+    <p>상황 12개를 하나씩 읽고, <b>그 상황의 내가 이 앱 첫 화면에서 맨 처음 누를 버튼</b> 하나를 눌러 주세요. 오래 고민하지 말고 폰에서 하듯이 바로 고르면 됩니다. 맞는 게 없으면 「모르겠다」를 누르세요.</p>
+    <p class="mute">버튼을 누르면 근처에서 갈 만한 곳 3곳이 나오는 앱이라고 생각해 주세요. 정답은 없습니다. 끝나면 맨 아래 「답 복사」를 눌러 보내 주세요. 답은 이 쪽 밖으로 저절로 나가지 않습니다.</p>
+    ${DATA.cards.map((c, i) => `
+      <section class="card" data-i="${i}">
+        <div class="no">상황 ${i + 1}</div>
+        <p class="sit">${esc(c)}</p>
+        <p class="ask">지금 뭐 하고 싶어요?</p>
+        <ul class="tiles">${set.rows.map((t, j) => `<li><button type="button" aria-pressed="false" data-t="${j + 1}" class="${j === set.rows.length - 1 ? 'any' : ''}"><span class="n">${j + 1}</span>${esc(t)}</button></li>`).join('')}</ul>
+        <button type="button" class="none" aria-pressed="false" data-t="0">모르겠다 · 맞는 게 없다</button>
+      </section>`).join('')}
+    <div class="answer">
+      <textarea id="out" readonly aria-label="보낼 답"></textarea>
+      <button type="button" id="copy">답 복사</button> <span id="msg" class="mute" role="status"></span>
+    </div>`;
+  const out = document.getElementById('out');
+  const draw = () => { out.value = `판${v} · ` + picks.map((p, i) => `${i + 1}-${p ?? '?'}`).join(' '); };
+  app.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-t]');
+    if (!b) return;
+    const sec = b.closest('.card');
+    sec.querySelectorAll('button[data-t]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    picks[Number(sec.dataset.i)] = b.dataset.t;
+    draw();
+  });
+  document.getElementById('copy').addEventListener('click', async () => {
+    const left = picks.filter((p) => p == null).length;
+    try { await navigator.clipboard.writeText(out.value); document.getElementById('msg').textContent = left ? `복사했어요(안 고른 상황 ${left}개는 ?로 갑니다)` : '복사했어요'; }
+    catch { out.select(); document.getElementById('msg').textContent = '길게 눌러 복사해 주세요'; }
+  });
+  draw();
+}
+
+const route = () => { const v = location.hash.slice(1); if (VERSIONS[v]) participant(v); else owner(); window.scrollTo(0, 0); };
+addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
