@@ -176,7 +176,14 @@ describe('부산 회차 01 (plans/busan.md S6, review/busan/night/criteria.md)',
   const busan = read('public/spots-busan.json') as S[];
   const loaded = { calls: read('review/busan/night/trail-01.json'), pass: read('review/busan/night/audit-01.json').agreement.pass };
   it('the candidates are what the pre-registered words give (name + TourAPI overview, and every 걷기)', () => {
-    const shipped = busan.map(({ market: _m, trail: _t, ...s }: S & { market?: unknown }) => s);
+    // 회차 01은 기분 다시 나누기 v5(ADR-0105) 전의 출하 파일에서 후보를 뽑았다: 그때의 기분으로 되돌려 견준다
+    const before = new Map((read('review/remap/busan.json') as { id: string; before: { mood: string; sub?: string } }[]).map((r) => [r.id, r.before]));
+    const shipped = busan.map(({ market: _m, trail: _t, walkin: _w, ...s }: S & { market?: unknown; walkin?: boolean }) => {
+      const b = before.get(s.id);
+      if (!b) return s;
+      const { sub: _s, ...rest } = s as S & { sub?: string };
+      return { ...rest, mood: b.mood, ...(b.sub ? { sub: b.sub } : {}) } as S;
+    });
     expect(candidates(shipped, nightInputs(shipped), BUSAN_TRAIL_WORDS)).toEqual(read('review/busan/night/candidates.json'));
     expect(roundProblems(loaded.calls, read('review/busan/night/candidates.json').map((c: { id: string }) => c.id), nightInputs(busan))).toEqual([]);
   });

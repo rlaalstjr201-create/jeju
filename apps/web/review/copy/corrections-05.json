@@ -1,0 +1,125 @@
+[
+ {
+  "id": "739d5ea0-16e0-4f66-8d45-d38bf4a1a693",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "남원큰엉해변: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"walk\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "12200d5b-208f-4f28-8498-422856abd3f3",
+  "action": "set",
+  "fields": {
+   "mood": "new",
+   "sub": "do"
+  },
+  "reason": "렛츠런팜제주: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"sight\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 제주 렛츠런팜은 국내 경주마를 육성하고 관리하는 목장이다. / 테마공원, 아이, 꽃, 어린이, 해바라기"
+ },
+ {
+  "id": "d461afde-6e18-4908-9d96-8be028cfd4a4",
+  "action": "set",
+  "fields": {
+   "mood": "new",
+   "sub": "sight"
+  },
+  "reason": "성읍목장: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"sight\"}",
+  "evidence": "원문: 4계절 내내 탁 트인 경관을 자랑해 사진 촬영 포인트로 유명한 성읍목장"
+ },
+ {
+  "id": "670bfe80-c577-4dcc-a838-8ad75e1f593b",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "한담해변: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"walk\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "f708ddb9-03d4-43e0-add8-db1cac0b6f94",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "행원해변: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"new\",\"sub\":\"sight\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "bbe05d22-c126-4b6d-ae59-ecd666372484",
+  "action": "set",
+  "fields": {
+   "mood": "new",
+   "sub": "do"
+  },
+  "reason": "김경숙해바라기농장: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"walk\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 노란 물결의 해바라기가 펼쳐진 해바라기 농장"
+ },
+ {
+  "id": "21df27c7-6e8a-4715-afd8-1e89086f9672",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "검멀레해변: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"new\",\"sub\":\"sight\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+  "action": "set",
+  "fields": {
+   "mood": "new",
+   "sub": "do"
+  },
+  "reason": "렛츠런팜 양귀비꽃: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"walk\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 렛츠런 팜의 양귀비꽃 핀 모습. / 테마공원"
+ },
+ {
+  "id": "a521dab6-c3de-4bc9-b3a9-9ac16aeb229b",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "함덕해수욕장: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"walk\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "407fa5fe-e4a3-4330-a8f4-f0d69ded2b7a",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "중문색달해변: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"new\",\"sub\":\"sight\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "282b91cf-ae0b-49d2-87d5-76a67ce78a94",
+  "action": "set",
+  "fields": {
+   "mood": "new",
+   "sub": "do"
+  },
+  "reason": "개떼목장: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 댕댕이들이 마음껏 뛰어 놀수 있는 넓은 운동장과 카페"
+ },
+ {
+  "id": "5cb97216-e1bd-442a-b8a7-7c55fd18d148",
+  "action": "set",
+  "fields": {
+   "mood": "rest"
+  },
+  "reason": "김녕세기알해변: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D1): {\"mood\":\"new\",\"sub\":\"sight\"} → {\"mood\":\"rest\"}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+  "action": "set",
+  "fields": {
+   "mood": "new",
+   "sub": "do"
+  },
+  "reason": "아침미소목장: ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 넓은 초원에 소들을 방목해 키우며 / 아침미소목장"
+ }
+]

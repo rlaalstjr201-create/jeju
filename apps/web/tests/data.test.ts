@@ -71,14 +71,14 @@ describe("S1' 레코드 형식", () => {
     expect(fileSpots.some((s) => s.sub === 'cafe')).toBe(true);
   });
 
-  it('N1 (ADR-0064): all 517 새로운 거 spots have sub sight|do — experience → do, sightseeing·cultural_space·shopping(오일장, ADR-0066) → sight, cafe·restaurant as review/copy/new-sub.json', () => {
+  it('N1 (ADR-0064): all 518 놀러(new) spots have sub sight|do — experience → do, sightseeing·cultural_space·shopping(오일장, ADR-0066) → sight, cafe·restaurant as review/copy/new-sub.json', () => {
     const news = fileSpots.filter((s) => s.mood === 'new');
-    expect(news).toHaveLength(517);
+    expect(news).toHaveLength(518);
     expect(news.filter((s) => s.sub !== 'sight' && s.sub !== 'do').map((s) => s.id)).toEqual([]);
     const categories = loadCategories();
     const calls = loadNewSubCalls();
-    // 46 cafe·restaurant calls + 9 experience places with no operator moved to 구경 (ADR-0074)
-    expect(calls.size).toBe(55);
+    // 46 cafe·restaurant calls + 9 experience places with no operator moved to 구경 (ADR-0074) + 3 관광지 farms moved to 놀거리 (ADR-0105)
+    expect(calls.size).toBe(58);
     const expected = (id: string) => {
       const c = categories.get(id);
       return calls.get(id) ?? (c === 'experience' ? 'do' : c === 'sightseeing' || c === 'cultural_space' || c === 'shopping' ? 'sight' : undefined);
@@ -90,7 +90,9 @@ describe("S1' 레코드 형식", () => {
     const moved = [...calls.keys()].filter((id) => categories.get(id) === 'experience');
     expect(moved).toHaveLength(9);
     expect(moved.every((id) => calls.get(id) === 'sight')).toBe(true);
-    expect(handCalled.length + moved.length).toBe(calls.size);
+    const farms = [...calls.keys()].filter((id) => categories.get(id) === 'sightseeing');
+    expect(farms.every((id) => calls.get(id) === 'do')).toBe(true);
+    expect(handCalled.length + moved.length + farms.length).toBe(calls.size);
     const raw = JSON.parse(readFileSync(resolve(root, 'review/copy/new-sub.json'), 'utf8')) as { basis: string }[];
     expect(raw.filter((v) => !v.basis?.trim())).toEqual([]);
     expect(news.some((s) => s.sub === 'sight') && news.some((s) => s.sub === 'do')).toBe(true);
@@ -382,7 +384,9 @@ describe('팩트체크 수정 (ADR-0063 5, review/copy/corrections-NN.json, revi
       if (c.action === 'remove') expect(byId.has(c.id), c.id).toBe(false);
       else expect(byId.get(c.id), c.id).toMatchObject(c.fields);
       expect(c.reason.length, c.id).toBeGreaterThan(0);
-      expect(c.evidence, c.id).toMatch(/^https:\/\//);
+      // 기분 다시 나누기 v5(ADR-0105, corrections-05)의 근거는 원문 조각이나 결정적 규칙이다. 그 밖(팩트체크)은 출처 주소
+      if ('mood' in (c.fields ?? {})) expect(c.evidence, c.id).toMatch(/^(원문: |review\/remap\/)/);
+      else expect(c.evidence, c.id).toMatch(/^https:\/\//);
     }
   });
 

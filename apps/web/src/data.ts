@@ -84,9 +84,11 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     const badTrail = 'trail' in r && r.trail !== true;
     // 유명한 곳 (ADR-0092): the same — only `true` counts.
     const badFamous = 'famous' in r && r.famous !== true;
+    // 예약 없이 가는 곳 (ADR-0074 Amendment 1): only `true` counts — anything else is dropped (the 체험 then needs a route).
+    const badWalkin = 'walkin' in r && r.walkin !== true;
     // 인기 (ADR-0092 Amendment 2): a number 0–1, or it is dropped (the place ranks as the least looked for).
     const badPop = 'pop' in r && !(typeof r.pop === 'number' && r.pop >= 0 && r.pop <= 1);
-    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail && !badFamous && !badPop) {
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail && !badFamous && !badPop && !badWalkin) {
       out.push(spot);
       continue;
     }
@@ -98,6 +100,7 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     if (badSea) delete fixed.sunsetSea;
     if (badTrail) delete fixed.trail;
     if (badFamous) delete fixed.famous;
+    if (badWalkin) delete fixed.walkin;
     if (badPop) delete fixed.pop;
     out.push(fixed);
   }

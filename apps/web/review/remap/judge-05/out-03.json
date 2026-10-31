@@ -1,0 +1,490 @@
+[
+ {
+  "id": "nt-4062234",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "참여형 프로그램으로 운영되며",
+   "ICT 스포츠 체험관"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-4062752",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "방문객 누구나 편안하게 머물며",
+   "전통뱃놀이 체험시설"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-407225",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "인공암벽등반장, 하늘날다람쥐(퀵점프), 숲 속날기(집라인)",
+   "산림 복합 체험센터를 운영한다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "0110f371-2406-4ff0-835e-2dcbea79be12",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "18홀 미니골프 코스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "02e4e6c6-96eb-4b77-99d9-183669fe7db0",
+  "mood": "walk",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "한라산 둘레길에 자리한 단풍명소",
+   "숲길, 걷기/등산"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "03b7a834-4ad8-4387-ad1b-b97f3b459f10",
+  "mood": "same",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "말 먹이주기 체험이 가능한 목장카페"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "렛츠런 팜의 양귀비꽃 핀 모습.",
+   "테마공원"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "12200d5b-208f-4f28-8498-422856abd3f3",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "제주 렛츠런팜은 국내 경주마를 육성하고 관리하는 목장이다.",
+   "테마공원, 아이, 꽃, 어린이, 해바라기"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "137bced8-ddb2-4eb8-8d1f-4a9955327127",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "전통 감물염색체험을 통해",
+   "천연염색체험장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "1c45fbbf-fd9a-4f11-8335-0071f9dfdf17",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "넓은 노지 감귤 따기 체험 농장",
+   "귤따기체험"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "2600bbac-9781-4737-be36-12cc8ed768d3",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "딸기체험장",
+   "제주시 한경면 저지리에 위치한 딸기체험장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "282b91cf-ae0b-49d2-87d5-76a67ce78a94",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "댕댕이들이 마음껏 뛰어 놀수 있는 넓은 운동장과 카페"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "2e716dfc-7bb8-4470-b5dd-da0622b27526",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "원데이 쿠킹클래스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "308897ae-d263-42a2-bc0e-dee2aa249a9a",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "동물 먹이주기와 승마, 카트, 이색 자전거 체험까지",
+   "카페와 체험장이 한 공간에 있어"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "3a0c66ef-eacd-4472-bc76-2c0e49a21b3b",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "살아있는 제주농촌을 체험할 수 있는 농장",
+   "체험관광"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "3b5159c2-8259-4f59-acde-869433ddba4e",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "체험형 감귤농장입니다",
+   "해품은체험농장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "454eb337-9254-41d0-855e-b45dfbb3c312",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "다양한 체험 프로그램이 가득한 제주 감귤밭 농장",
+   "귤따기체험"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "568ffbf0-1d1e-468e-b15a-cd741fe83a92",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "우도 승마장중 규모가 꽤 큰 승마장",
+   "승마"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "5c71a373-c385-42f0-802c-4724034d49b1",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "자연 속에서 DIY 체험이 가능한 쉼터"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "618e8a8d-d8f5-4b3f-958d-9091bfba46c7",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "감귤농장, 체험농장",
+   "제주햇살농원"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "6821d659-b8c0-4fb5-84da-b3c03f312c32",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "감귤 따기 체험부터 감귤 청 만들기까지",
+   "아이들과 체험활동을 하며"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "6a39b3dd-423d-40d0-9d46-2ed37f87edc4",
+  "mood": "walk",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "중문관광단지에 위치한 산책하기 좋은 계곡",
+   "올레"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "6aad382d-c1fc-4acd-a3bb-35617d5ab602",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "하우스재배하고 있는 체험 농장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "714af3a2-0de6-41a7-9abe-d425ad569485",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "동물이 뛰어노는 이국적인 체험형 카페",
+   "먹이주기체험"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "720325b6-6cac-4d58-9d29-5fdde8a1e2d0",
+  "mood": "same",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "백년초농장박물관",
+   "박물관"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "74936a26-c883-4289-8e01-becb98ddd87a",
+  "mood": "same",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "감귤농장을 탈바꿈한 갤러리",
+   "갤러리2 중선농원"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "7cda87d9-f1a6-4e91-9969-17676e4709bd",
+  "mood": "walk",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "제주의 아름다운 계곡 중 하나로 꼽히는 신비한 안덕계곡",
+   "산책로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "8ba8e1df-ab20-4e2c-b080-35aff062137c",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "술빚기체험",
+   "양조장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "8f19c2d1-916a-40a9-b0cb-c640bdbe7a1e",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "조랑말과 돼지, 토끼를 만날 수 있으며 먹이주기 체험도 가능하다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "90365401-616c-435a-a4bf-955275a7bbb4",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "셀프 쿠킹 체험과 커피를 즐길 수 있는 체험 공간"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "98f67cea-5c97-4eee-9034-c66435a3dc8f",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "카페와 감귤체험을 같이 운영하는 곳",
+   "감귤체험"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "넓은 초원에 소들을 방목해 키우며",
+   "아침미소목장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "b2d873eb-c97e-4443-b3bc-8d5a09f60f88",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "천연꽃 화장품, 향수, 디퓨저를 직접 만들어 볼 수 있는 카페"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bb546de3-0ae5-491b-b8dc-194a0f327e8b",
+  "mood": "walk",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "어리목탐방로에 위치한 계곡이다",
+   "한라산 속의 신비로운 계곡"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bbe05d22-c126-4b6d-ae59-ecd666372484",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "노란 물결의 해바라기가 펼쳐진 해바라기 농장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "c5028947-2389-4290-bfa9-5276407489c2",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "알파카, 말, 당나귀, 염소, 양들과 만날 수 있는 목장이다",
+   "동물농장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "c6ab62fe-a1e8-47bd-9838-36ef8a65687e",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "떡 원데이클래스 어떠세요...?"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "d354be50-497b-41f9-a6f4-4d4b80ca4768",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "낙서를 할 수 있는 이색체험 카페"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "d3aebae9-b070-4651-bf09-e1638b6260f8",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "제주에서 즐기는 이색적인 열대과일농장체험",
+   "어린이동물농장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "d461afde-6e18-4908-9d96-8be028cfd4a4",
+  "mood": "new",
+  "sub": "sight",
+  "walkin": null,
+  "basis": [
+   "4계절 내내 탁 트인 경관을 자랑해 사진 촬영 포인트로 유명한 성읍목장"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "d6389b17-63ae-4d83-a7df-c0af73d66110",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "아름다운 경치와 함께하는 승마 체험&커피"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "e3ebb7ae-a8ec-4f96-bac8-0660f29d23ed",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "푸른 초원을 달리는 짜릿한 ATV 체험"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "eaeccd4a-ed24-45fd-a8f7-1190b104f574",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "푸른 초원을 거닐며 즐기는 승마체험"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "ed9eb435-2269-4312-bf20-b50fe9cf4e74",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "제주의 초원과 동물들이 반기는 체험 가득한 목장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "f19e4935-798a-4973-aa85-d5dc54757185",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "숲정원, 롤러스케이트, 카페가 공존하는 공간"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "fa4a1a20-c67a-4725-91e2-3b380d2c29ab",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "10월부터 귤체험 5월부터블루베리체험 합니다",
+   "체험농장"
+  ],
+  "confidence": "low"
+ }
+]

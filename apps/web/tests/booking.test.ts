@@ -17,20 +17,23 @@ describe('B1 데이터: 체험마다 확인된 경로 하나, 아니면 기록�
   const routes = loadBookRoutes();
   const calls = loadBookingCalls();
 
-  it('313 체험: 270 with book (naver 124 · mrt 9 · visitjeju 1 · homepage 22 · phone 114), 26 closed, 17 without a route', () => {
-    expect(doo).toHaveLength(313);
+  // ADR-0105 다시 나누기 v5: 목장·농장 5곳이 놀거리로 들어와(아침미소목장은 홈페이지 경로), 경로 없는 21곳 중 11곳은 예약 없이 가는 곳(walkin)
+  it('318 체험: 271 with book (naver 124 · mrt 9 · visitjeju 1 · homepage 23 · phone 114), 26 closed, 11 walkin, 10 without a route', () => {
+    expect(doo).toHaveLength(318);
     const kinds: Record<string, number> = {};
     for (const s of doo) if (s.book) kinds[s.book.k] = (kinds[s.book.k] ?? 0) + 1;
-    expect(kinds).toEqual({ naver: 124, mrt: 9, visitjeju: 1, homepage: 22, phone: 114 });
+    expect(kinds).toEqual({ naver: 124, mrt: 9, visitjeju: 1, homepage: 23, phone: 114 });
     expect(doo.filter((s) => s.hide === 'closed')).toHaveLength(26);
-    expect(doo.filter((s) => !s.book && !s.hide)).toHaveLength(17);
+    expect(doo.filter((s) => !s.book && !s.hide && s.walkin)).toHaveLength(11);
+    expect(doo.filter((s) => !s.book && !s.hide && !s.walkin)).toHaveLength(10);
+    expect(fileSpots.filter((s) => s.walkin).every((s) => s.mood === 'new' && s.sub === 'do' && !s.book)).toBe(true);
     expect(fileSpots.filter((s) => s.book || s.hide).every((s) => s.mood === 'new' && s.sub === 'do')).toBe(true);
   });
 
   it("each book is the routes.json best, accepted; each 체험 without one has a recorded call with reason and evidence", () => {
     for (const s of doo) {
       if (s.book) expect(s.book, s.name).toEqual(routes.get(s.id));
-      else expect(calls.get(s.id), s.name).toBe(s.hide === 'closed' ? 'closed' : 'noroute');
+      else expect(calls.get(s.id), s.name).toBe(s.hide === 'closed' ? 'closed' : s.walkin ? 'walkin' : 'noroute');
     }
     const raw = JSON.parse(readFileSync(resolve(root, 'review/booking/routes.json'), 'utf8')).spots as Record<string, { best: string | null; routes: { kind: string; url: string; verdict: string }[] }>;
     for (const [id, b] of routes) expect(raw[id].routes.some((r) => r.kind === b.k && r.url === b.u && r.verdict === 'accepted')).toBe(true);
@@ -63,7 +66,7 @@ describe('B2 앱: 보이는 체험 카드는 모두 경로가 있다', () => {
       for (const reach of REACHES) {
         const doTab = pickCards(fileSpots, a, 'new', {}, 'do', reach).cards;
         expect(doTab, `${a.name} ${reach}`).toHaveLength(3);
-        expect(doTab.every((c) => c.spot.book && bookLink(c.spot)), `${a.name} ${reach}`).toBe(true);
+        expect(doTab.every((c) => (c.spot.book && bookLink(c.spot)) || (c.spot.walkin && !c.spot.book && !bookLink(c.spot))), `${a.name} ${reach}`).toBe(true);
         let h = {};
         for (let i = 0; i < 4; i++) {
           for (const [b, tab] of [['new', 'mix'], ['any', undefined]] as const) {
@@ -76,12 +79,13 @@ describe('B2 앱: 보이는 체험 카드는 모두 경로가 있다', () => {
     }
   });
 
-  it('within reach: 차로 30분 ≥ 28 체험 in every area, 차로 1시간 ≥ 94 (우도 lowest); 걸어서 uses the nearest-3 rule', () => {
+  it('within reach: 차로 30분 ≥ 28 체험 in every area, 차로 1시간 ≥ 97 (우도 lowest); 걸어서 uses the nearest-3 rule', () => {
     const shown = doo.filter(listed);
-    expect(shown).toHaveLength(270);
+    // 271 with a route + 11 예약 없이 가는 곳 (ADR-0074 Amendment 1)
+    expect(shown).toHaveLength(282);
     const min = (reach: (typeof REACHES)[number]) => Math.min(...AREAS.map((a) => shown.filter((s) => withinReach(reach, a, s)).length));
     expect(min('drive30')).toBe(28);
-    expect(min('drive60')).toBe(94);
+    expect(min('drive60')).toBe(97);
   });
 
   it('honest words per kind; 비짓제주 said by where it leads', () => {

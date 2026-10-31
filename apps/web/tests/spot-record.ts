@@ -28,6 +28,8 @@ export function recordProblems(spots: readonly Spot[], inside: (p: Point) => boo
         ...(s.famous === true ? ['famous', 'pop'] : []),
         ...('book' in s ? ['book'] : []),
         ...('hide' in s ? ['hide'] : []),
+        // 예약 없이 가는 체험 (ADR-0074 Amendment 1): 경로가 없는 new·do에만
+        ...(s.walkin === true && s.mood === 'new' && s.sub === 'do' && !('book' in s) ? ['walkin'] : []),
       ];
       return (
         Object.keys(s).sort().join() !== [...expectedFields].sort().join() ||

@@ -17,7 +17,7 @@ import { fileURLToPath } from 'node:url';
 import { loadInputs } from './sunset.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const BOOKING_KEYS = new Set(['book', 'hide']);
+const BOOKING_KEYS = new Set(['book', 'hide', 'walkin']);
 const NOT_SIGHTS = new Set(['restaurant', 'cafe', 'shopping']);
 const CAFE_WORDS = /카페|커피|빵|베이커리|디저트/;
 const PUBLIC_TAGS = new Set(['공영관광지', '공영관광지인증']);

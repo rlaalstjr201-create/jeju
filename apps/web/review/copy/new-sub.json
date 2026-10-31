@@ -392,5 +392,29 @@
     "sub": "sight",
     "basis": "비짓제주 요약 「비양도를 바라보며 즐기는 바다낚시」, 태그 해변·포구·자연경관. 포구라 예약할 운영자가 없다",
     "evidence": "docs/research/booking-links-02.md §3 장소형(예약 경로 없음, 비짓제주 목록에는 있음), ADR-0074"
+  },
+  {
+    "id": "12200d5b-208f-4f28-8498-422856abd3f3",
+    "name": "렛츠런팜제주",
+    "category": "sightseeing",
+    "sub": "do",
+    "basis": "입장하는 목장·농장은 놀거리(criteria-05 0절, ADR-0105 2). 원문: 제주 렛츠런팜은 국내 경주마를 육성하고 관리하는 목장이다. / 테마공원, 아이, 꽃, 어린이, 해바라기",
+    "evidence": "review/remap/changes-05.json, review/gangwon/criteria-05.md 3절 판정"
+  },
+  {
+    "id": "bbe05d22-c126-4b6d-ae59-ecd666372484",
+    "name": "김경숙해바라기농장",
+    "category": "sightseeing",
+    "sub": "do",
+    "basis": "입장하는 목장·농장은 놀거리(criteria-05 0절, ADR-0105 2). 원문: 노란 물결의 해바라기가 펼쳐진 해바라기 농장",
+    "evidence": "review/remap/changes-05.json, review/gangwon/criteria-05.md 3절 판정"
+  },
+  {
+    "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+    "name": "렛츠런팜 양귀비꽃",
+    "category": "sightseeing",
+    "sub": "do",
+    "basis": "입장하는 목장·농장은 놀거리(criteria-05 0절, ADR-0105 2). 원문: 렛츠런 팜의 양귀비꽃 핀 모습. / 테마공원",
+    "evidence": "review/remap/changes-05.json, review/gangwon/criteria-05.md 3절 판정"
   }
 ]

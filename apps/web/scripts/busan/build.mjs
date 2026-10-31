@@ -14,6 +14,7 @@ import { popScores } from '../famous.mjs';
 import { applyMarketDays, loadMarketDays } from '../markets.mjs';
 import { applyNight, basisProblems as nightBasisProblems, loadNightCalls } from '../night.mjs';
 import { reasonPunctuationProblem, shipReason } from '../reason.mjs';
+import { applyRemap, loadRemap } from '../remap.mjs';
 import { nightInputs } from './night.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -64,6 +65,8 @@ export function loadInputs(dir = busanDir) {
     // S6: 밤 산길(review/busan/night, criteria.md)과 장날(market-days.json, ADR-0066) — 제주 경로가 아닌 부산 경로
     night: loadNightCalls(resolve(dir, 'night')),
     marketDays: loadMarketDays(resolve(dir, 'market-days.json')),
+    // 기분 다시 나누기 v5(ADR-0105, review/gangwon/criteria-05.md): 판정 위에 덮는 기분·sub·walkin
+    remap: loadRemap('busan'),
   };
 }
 
@@ -120,7 +123,9 @@ export function reasonProblem(reason) {
 /** The shipped Busan records, in scope.json order, and the keep ids left out for an unknown position. Throws on anything
  * missing or out of rule. Scores and 유명한 곳 are counted over the shipped places only. */
 export function build(inputs = loadInputs()) {
-  const { items, verdicts, fixes, kakao, pop, booking } = inputs;
+  const { items, fixes, kakao, pop, booking } = inputs;
+  // ADR-0105: before가 판정과 다르면 멈춘다. walkin: 예약 없이 가는 체험(ADR-0074 Amendment 1)
+  const { verdicts, walkin } = applyRemap(inputs.verdicts, inputs.remap ?? []);
   // 「장소형」 체험 (booking/place-type.json, ADR-0074 2): 구경, no booking link
   const placeType = new Set(inputs.placeType ?? []);
   const fixed = new Map(fixes.filter((f) => f.field === 'reason').map((f) => [f.id, f]));
@@ -148,7 +153,9 @@ export function build(inputs = loadInputs()) {
     if (item.image && !item.image.startsWith('https://')) problems.push(`${item.id}: image not https`);
     if (placeType.has(item.id) && !(v.mood === 'new' && v.sub === 'do')) problems.push(`${item.id}: place-type.json names a place that is no 체험`);
     const place = placeType.has(item.id);
-    const bk = v.mood === 'new' && v.sub === 'do' && !place ? bookingOf(item.id, booking[item.id]) : { fields: {} };
+    const doNow = v.mood === 'new' && v.sub === 'do' && !place;
+    const bk = doNow ? (walkin.has(item.id) && !booking[item.id] ? { fields: {} } : bookingOf(item.id, booking[item.id])) : { fields: {} };
+    if (doNow && walkin.has(item.id) && !bk.fields?.book && !bk.fields?.hide) bk.fields = { ...bk.fields, walkin: true };
     if (bk.problem) problems.push(bk.problem);
     kept.push({ item, v: place ? { ...v, sub: 'sight' } : v, reason, bookFields: bk.fields ?? {} });
   }

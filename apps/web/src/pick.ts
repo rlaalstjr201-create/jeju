@@ -10,9 +10,9 @@ export type Button = Mood | 'famous' | 'any';
 export type Kind = Exclude<Button, 'any'>;
 /** food-only sub-type: 식사 | 카페·디저트 (ADR-0028 update). */
 export type Sub = 'meal' | 'cafe';
-/** new-only kind (ADR-0064): 구경 | 체험. */
+/** new-only kind (ADR-0064): 구경 | 놀거리 (ADR-0105). */
 export type NewKind = 'sight' | 'do';
-/** 새로운 거 tab: 섞어서 (every kind) | 구경 | 체험. */
+/** 놀러 tab: 섞어서 (every kind) | 구경 | 놀거리. */
 export type NewSub = 'mix' | NewKind;
 export const NEW_SUBS: readonly NewSub[] = ['mix', 'sight', 'do'];
 /** The tab a button's cards are picked under: the food sub, the 새로운 거 tab, or none. */
@@ -57,6 +57,8 @@ export interface Spot {
   book?: Book;
   /** 'closed' (ADR-0074): gone from the source, 폐업·이전 의심 — left out everywhere. */
   hide?: string;
+  /** 예약 없이 가는 곳 (ADR-0074 Amendment 1): a 체험 with tickets on site or free entry — shown without a route. */
+  walkin?: true;
 }
 
 export type BookKind = 'naver' | 'mrt' | 'visitjeju' | 'homepage' | 'phone';
@@ -66,8 +68,8 @@ export interface Book {
 }
 
 /** ADR-0074: a place the picks may show — not hidden, and a 체험 only with a verified booking route (a 체험 card
- * that cannot lead to a reservation is no use). */
-export const listed = (s: Spot): boolean => !s.hide && !(s.mood === 'new' && s.sub === 'do' && !s.book);
+ * that cannot lead to a reservation is no use) or one that needs none (Amendment 1: `walkin`, on-site tickets). */
+export const listed = (s: Spot): boolean => !s.hide && !(s.mood === 'new' && s.sub === 'do' && !s.book && !s.walkin);
 
 export interface Point {
   lat: number;

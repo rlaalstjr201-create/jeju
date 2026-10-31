@@ -132,11 +132,13 @@ describe('S4b 체험 예약 경로 (ADR-0074, review/busan/booking/criteria.md)'
   const doSpots = spots.filter((s) => s.mood === 'new' && s.sub === 'do');
   // 「장소형」 5곳은 구경으로 옮겼다(review/busan/booking/place-type.json, ADR-0074 2와 같은 처리, S5)
   const placeType = inputs.placeType ?? [];
-  it('체험 47곳은 모두 book이거나 hide: closed이거나 routes.json에 noroute 판정이 있다', () => {
-    expect(doSpots).toHaveLength(47);
-    const bad = doSpots.filter((s) => !s.book && s.hide !== 'closed' && routes[s.id]?.call !== 'noroute');
+  // ADR-0105 다시 나누기 v5(review/remap/busan.json): 계곡·낚시 3곳이 놀거리로 들어오고, 예약 없이 가는 곳은 walkin
+  it('체험 50곳은 모두 book이거나 hide: closed이거나 walkin이거나 routes.json에 noroute 판정이 있다', () => {
+    expect(doSpots).toHaveLength(50);
+    const bad = doSpots.filter((s) => !s.book && s.hide !== 'closed' && !s.walkin && routes[s.id]?.call !== 'noroute');
     expect(bad.map((s) => s.id)).toEqual([]);
-    expect(Object.keys(routes).sort()).toEqual([...doSpots.map((s) => s.id), ...placeType].sort());
+    const judged = doSpots.filter((s) => routes[s.id] || !s.walkin);
+    expect(Object.keys(routes).sort()).toEqual([...judged.map((s) => s.id), ...placeType].sort());
   });
   it('「장소형」 5곳은 구경이고 예약 링크가 없다', () => {
     expect(placeType).toHaveLength(5);
@@ -154,10 +156,11 @@ describe('S4b 체험 예약 경로 (ADR-0074, review/busan/booking/criteria.md)'
       const r = routes[s.id];
       expect(s.book, s.id).toEqual({ k: r.best, u: r.routes.find((x) => x.kind === r.best && x.verdict === 'accepted')!.url });
     }
-    expect(spots.filter((s) => !(s.mood === 'new' && s.sub === 'do') && ('book' in s || 'hide' in s))).toEqual([]);
+    expect(spots.filter((s) => !(s.mood === 'new' && s.sub === 'do') && ('book' in s || 'hide' in s || 'walkin' in s))).toEqual([]);
     const kinds: Record<string, number> = {};
-    for (const s of doSpots) kinds[s.book?.k ?? s.hide ?? 'noroute'] = (kinds[s.book?.k ?? s.hide ?? 'noroute'] ?? 0) + 1;
-    expect(kinds).toEqual({ naver: 14, homepage: 9, phone: 22, noroute: 2 });
+    const kindOf = (s: (typeof doSpots)[number]) => s.book?.k ?? s.hide ?? (s.walkin ? 'walkin' : 'noroute');
+    for (const s of doSpots) kinds[kindOf(s)] = (kinds[kindOf(s)] ?? 0) + 1;
+    expect(kinds).toEqual({ naver: 14, homepage: 9, phone: 22, walkin: 4, noroute: 1 });
   });
   it('판정 없는 체험·accepted 없는 best는 빌드를 멈춘다', () => {
     expect(bookingOf('x', undefined).problem).toMatch(/without a booking call/);

@@ -1,0 +1,417 @@
+[
+ {
+  "id": "nt-801627",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "산촌 체험마을이다",
+   "프로그램을 운영한다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-125694",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "바다를 관망하기 좋다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "407fa5fe-e4a3-4330-a8f4-f0d69ded2b7a",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "다이나믹한 해수욕을 즐기려는 사람들"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-126098",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "기장군에 위치한 해수욕장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128727",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "넓은 백사장과 소나무 숲이 아름다운 자연경관"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2725128",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "모든 프로그램은 예약제로 운영된다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-126078",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "여유로운 휴식과 미식을 함께 즐기기에 좋다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131840",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "사계절 놀이동산이다",
+   "눈썰매장에서 썰매를 탈 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2553644",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "실내빙상장은 저렴한 요금으로 시민들이 이용할 수 있는 곳",
+   "스케이트 장비 대여"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2710821",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "작고 한산한 해변",
+   "물이 유독 맑고 깨끗한 게 특징"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-1009525",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "어드벤처 체험시설",
+   "집라인, 바다하늘자전거를 체험할 수 있다"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2680234",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "흑염소 목장",
+   "방목된 흑염소와 함께 여유로운 시간"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2704383",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "간이해수욕장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-4139029",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "템플스테이를 상시 진행한다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-128370",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "농촌 체험행사와 숙박 시설을 운영",
+   "예약 신청이 이루어지며"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2714611",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "조용한 해수욕장을 찾는 사람들에게 인기다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2680226",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "왕복 7.4㎞의 케이블카"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125667",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "여름철 피서지로 인기를 끌고 있지만"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-131725",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "다채로운 골프 코스를 즐길 수 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-125697",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "해수욕장으로서의 조건을 잘 갖추고 있다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3072026",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "초보와 입문자 강습",
+   "수상레저 전문업체"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3041720",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "파도가 잔잔하고 호젓한 분위기"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2774561",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "사륜바이크, 카트 라이더 같은 육상 레포츠",
+   "개별 이용만이 아니라 패키지로"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "6a39b3dd-423d-40d0-9d46-2ed37f87edc4",
+  "mood": "walk",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "산책하기 좋은 계곡"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-131272",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "두 방파제 모두에서 낚시가 가능하지만"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2946583",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "부담 없이 둘러보는 것도 가능하다",
+   "콘크리트 파크"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "17c6822d-7871-4b89-b81d-f5ae33774b31",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "하얀 모래와 부서지는 파도가 아름다운 해수욕장"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-3007677",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "스케이트는 대여 가능하다",
+   "일반인에게 공개되었다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "8ba8e1df-ab20-4e2c-b080-35aff062137c",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "술빚기체험"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-2706717",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "네 가지 대표 코스로 운영되며",
+   "가이드가 동승해"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-127770",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "허브를 보며 휴식할 수 있는 관광농원",
+   "10여 개의 테마정원"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-3069527",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "서핑 강습, 게스트하우스 숙박, 바비큐 파티를 패키지로"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-2781963",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "대형 유람선이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "03b7a834-4ad8-4387-ad1b-b97f3b459f10",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "말 먹이주기 체험이 가능한 목장카페"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "e64bf3c3-cb3f-41de-b43c-10ff4f7b798a",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "해양스포츠에 이어 차박-캠핑까지"
+  ],
+  "confidence": "low"
+ },
+ {
+  "id": "nt-126657",
+  "mood": "new",
+  "sub": "do",
+  "walkin": true,
+  "basis": [
+   "아이들이 안전하게 물놀이를 즐길 수 있는",
+   "피서객들의 방문이 끊이지 않는 곳"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-585615",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "가족 단위로 많이 찾는 조용한 해변"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "2e716dfc-7bb8-4470-b5dd-da0622b27526",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "원데이 쿠킹클래스"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "bs-126122",
+  "mood": "rest",
+  "sub": null,
+  "walkin": null,
+  "basis": [
+   "조용한 바다정경이 장관인 곳이다"
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "nt-1744974",
+  "mood": "new",
+  "sub": "do",
+  "walkin": false,
+  "basis": [
+   "카누투어를 진행한다",
+   "약 10분간 안전교육을 진행하고"
+  ],
+  "confidence": "low"
+ }
+]

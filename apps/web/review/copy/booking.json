@@ -9,9 +9,9 @@
  {
   "id": "6821d659-b8c0-4fb5-84da-b3c03f312c32",
   "name": "제주에인감귤밭",
-  "call": "noroute",
-  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
-  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 감귤 따기 체험부터 감귤 청 만들기까지 / 아이들과 체험활동을 하며"
  },
  {
   "id": "90365401-616c-435a-a4bf-955275a7bbb4",
@@ -44,9 +44,9 @@
  {
   "id": "8f19c2d1-916a-40a9-b0cb-c640bdbe7a1e",
   "name": "미스틱3도",
-  "call": "noroute",
-  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
-  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 조랑말과 돼지, 토끼를 만날 수 있으며 먹이주기 체험도 가능하다"
  },
  {
   "id": "2e716dfc-7bb8-4470-b5dd-da0622b27526",
@@ -65,30 +65,30 @@
  {
   "id": "0110f371-2406-4ff0-835e-2dcbea79be12",
   "name": "마로니에 미니골프카페",
-  "call": "noroute",
-  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
-  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 18홀 미니골프 코스"
  },
  {
   "id": "d354be50-497b-41f9-a6f4-4d4b80ca4768",
   "name": "애월전분공장",
-  "call": "noroute",
-  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
-  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 낙서를 할 수 있는 이색체험 카페"
  },
  {
   "id": "714af3a2-0de6-41a7-9abe-d425ad569485",
   "name": "어린왕자감귤밭",
-  "call": "noroute",
-  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
-  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 동물이 뛰어노는 이국적인 체험형 카페 / 먹이주기체험"
  },
  {
   "id": "f19e4935-798a-4973-aa85-d5dc54757185",
   "name": "피커스 제주",
-  "call": "noroute",
-  "reason": "예약 경로 검수 범위 밖(비짓제주 분류가 카페·식당이라 bookable false). 확인된 예약 경로가 없어 체험·섞어서에서 뺀다. 경로를 확인하면 routes.json에 넣고 다시 적용한다",
-  "evidence": "docs/research/booking-links-02.md §1(sub: do 322곳 중 14곳은 범위 밖)"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 숲정원, 롤러스케이트, 카페가 공존하는 공간"
  },
  {
   "id": "d6389b17-63ae-4d83-a7df-c0af73d66110",
@@ -184,9 +184,9 @@
  {
   "id": "2600bbac-9781-4737-be36-12cc8ed768d3",
   "name": "동산농원 딸기체험장",
-  "call": "noroute",
-  "reason": "비짓제주에는 있지만 확인된 예약 경로(네이버·마이리얼트립·비짓제주·홈페이지·전화)가 없다. 체험·섞어서에서 뺀다(다른 화면에는 원래 나오지 않는다)",
-  "evidence": "routes.json: homepage rejected-sns"
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 딸기체험장 / 제주시 한경면 저지리에 위치한 딸기체험장"
  },
  {
   "id": "2b389b50-8f11-4fac-8bb3-966f729d6bc4",
@@ -299,5 +299,40 @@
   "call": "closed",
   "reason": "확인된 예약 경로가 없고, 비짓제주 목록에서 내려갔으며 네이버 지도 300m 안에서도 찾지 못했다. 폐업·이전 의심이라 모든 화면·랜딩에서 뺀다",
   "evidence": "api.visitjeju.net/api/contents/list cate0000000002~0006 전 페이지(인기순·이름순 2회)와 대조 (2026-10-01); routes.json best 없음"
+ },
+ {
+  "id": "12200d5b-208f-4f28-8498-422856abd3f3",
+  "name": "렛츠런팜제주",
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"sight\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 제주 렛츠런팜은 국내 경주마를 육성하고 관리하는 목장이다. / 테마공원, 아이, 꽃, 어린이, 해바라기"
+ },
+ {
+  "id": "bbe05d22-c126-4b6d-ae59-ecd666372484",
+  "name": "김경숙해바라기농장",
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"walk\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 노란 물결의 해바라기가 펼쳐진 해바라기 농장"
+ },
+ {
+  "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+  "name": "렛츠런팜 양귀비꽃",
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"walk\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 렛츠런 팜의 양귀비꽃 핀 모습. / 테마공원"
+ },
+ {
+  "id": "282b91cf-ae0b-49d2-87d5-76a67ce78a94",
+  "name": "개떼목장",
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 댕댕이들이 마음껏 뛰어 놀수 있는 넓은 운동장과 카페"
+ },
+ {
+  "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+  "name": "아침미소목장",
+  "call": "walkin",
+  "reason": "예약 없이 가는 곳(ADR-0074 Amendment 1). ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 넓은 초원에 소들을 방목해 키우며 / 아침미소목장"
  }
 ]

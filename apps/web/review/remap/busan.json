@@ -1,0 +1,63 @@
+[
+ {
+  "id": "bs-127891",
+  "name": "대천천",
+  "before": {
+   "mood": "walk"
+  },
+  "after": {
+   "mood": "new",
+   "sub": "do",
+   "walkin": true
+  },
+  "by": "judge",
+  "why": "ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"walk\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 도심 유원지로 많이 알려져 / 여름철 관광객과 부산 시민이 즐겨 찾는 명소"
+ },
+ {
+  "id": "bs-2758489",
+  "name": "장안사계곡",
+  "before": {
+   "mood": "rest"
+  },
+  "after": {
+   "mood": "new",
+   "sub": "do",
+   "walkin": true
+  },
+  "by": "D2",
+  "why": "ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 2절 D2): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "review/remap/scope-05.json(결정적 규칙)"
+ },
+ {
+  "id": "bs-3015456",
+  "name": "온정방파제",
+  "before": {
+   "mood": "rest"
+  },
+  "after": {
+   "mood": "new",
+   "sub": "do",
+   "walkin": true
+  },
+  "by": "judge",
+  "why": "ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"rest\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 방파제에서 낚시를 즐기는 강태공들이 많이 방문하는 곳"
+ },
+ {
+  "id": "bs-131087",
+  "name": "용호동일대 바다낚시",
+  "before": {
+   "mood": "new",
+   "sub": "do"
+  },
+  "after": {
+   "mood": "new",
+   "sub": "do",
+   "walkin": true
+  },
+  "by": "judge",
+  "why": "ADR-0105 기분 다시 나누기 v5(review/gangwon/criteria-05.md 3절 판정): {\"mood\":\"new\",\"sub\":\"do\"} → {\"mood\":\"new\",\"sub\":\"do\",\"walkin\":true}",
+  "evidence": "원문: 갯바위 외줄낚시 / 낚시터 범위가 넓어서 인기가 높은 곳"
+ }
+]
