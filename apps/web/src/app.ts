@@ -154,8 +154,9 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!own) return null;
     return [...want, p.basis === 'stay' ? p.stay?.area : p.basis === 'region' ? p.region : null, p.region, p.stay?.area, own[0]].find((c): c is SggCode => !!c && own.includes(c))!;
   }
-  /** one 시군구's places of a list that has several (their `area`, its short name) */
-  function ofSgg(raw: unknown, sgg: SggCode | null): unknown {
+  /** one 시군구's places of a list that has several (their `area`, its short name); 서울's all of them (DEST allSgg) */
+  function ofSgg(raw: unknown, d: Dest, sgg: SggCode | null): unknown {
+    if (DEST[d].allSgg) return raw;
     const word = sggShort(sgg ?? '');
     return Array.isArray(raw) ? raw.filter((r) => (r as { area?: unknown } | null)?.area === word) : raw;
   }
@@ -165,6 +166,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function poolOf(d: Dest, sgg: SggCode | null, spots: Spot[]): Spot[] | undefined {
     const raw = files[d];
     if (!raw) return undefined;
+    if (DEST[d].allSgg) return spots;
     let pool = pools.get(spots);
     if (!pool) pools.set(spots, (pool = [...spots, ...normalizeSpots(raw.filter((r) => (r as { area?: unknown } | null)?.area !== sggShort(sgg ?? '')))]));
     return pool;
@@ -178,7 +180,7 @@ export function mountApp(doc: Document, deps: Deps): App {
           : DEST[d].sgg
             ? loadSpots(d, sgg ?? '').then((raw) => {
                 if (Array.isArray(raw)) files[d] = raw;
-                return ofSgg(raw, sgg);
+                return ofSgg(raw, d, sgg);
               })
             : loadSpots(d),
       delays.dataTimeout,

@@ -9,7 +9,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vite
 import { normalizeSpots } from '../src/data';
 import { DEST } from '../src/dest';
 import { normalizeNation, sggShorts } from '../src/nation';
-import type { Point, Spot } from '../src/pick';
+import { pool, type Point, type Spot } from '../src/pick';
 import { NATION, loadNation } from '../src/release';
 import { KEYS } from '../src/store';
 import { fileSpots } from './fixtures';
@@ -20,6 +20,7 @@ const nationFile = (f: string) => readFileSync(resolve(__dirname, `../data/natio
 const seoulRaw = JSON.parse(readFileSync(resolve(__dirname, '../data/seoul/spots-seoul.json'), 'utf8')) as Record<string, unknown>[];
 const 경복궁 = { lat: 37.5796, lng: 126.977 };
 const 성북구청 = { lat: 37.5894, lng: 127.0167 }; // 성북구: still the 자동 지역 (its collection not done)
+const 광화문광장 = { lat: 37.5725, lng: 126.9769 }; // the 자동 지역 index names 서울 중구 here, 경복궁 (종로) 600 m north
 const wait = async () => {
   for (let i = 0; i < 4; i++) await flush();
   await settle();
@@ -64,9 +65,22 @@ describe.runIf(NATION)('서울 (switch on)', () => {
     expect(localStorage.getItem(KEYS.dest)).toBe('"seoul"');
     expect(asked).toEqual(['jeju', 'seoul:11110']);
     expect(cardIds()).toHaveLength(3);
-    expect(cardIds().every((id) => byId(id)?.area === '종로' && byId(id)?.famous)).toBe(true);
+    expect(cardIds().every((id) => byId(id)?.famous)).toBe(true);
     const hidden = (m: string) => $(`[data-mood="${m}"]`).closest('li')!.hidden;
     expect(['rest', 'walk', 'new', 'famous', 'food'].map(hidden)).toEqual([false, false, false, false, false]);
+  });
+
+  it('a GPS read at 광화문광장 opens 서울 중구 by name, its list every checked 구 by reach: 경복궁 (종로) is a candidate (Amendment 2)', async () => {
+    const { asked } = mount({ dest: 'seoul', at: 광화문광장 });
+    await wait();
+    await tap('[data-mood="new"]');
+    await wait();
+    expect(current().state()).toMatchObject({ dest: 'seoul', sgg: '11140', basis: 'gps' });
+    expect($('.logo .rg').textContent).toBe(':서울 중구');
+    expect(asked.at(-1)).toBe('seoul:11140');
+    const spots = current().state().spots!;
+    expect(new Set(spots.map((s) => (s as Spot & { area?: string }).area)).size).toBe(DEST.seoul.sgg!.length);
+    expect(pool(spots, 광화문광장, 'new').some((c) => c.spot.id === 'nt-126508')).toBe(true);
   });
 
   it('a device that had 종로 as the 자동 지역 (jeju.dest nation, jeju.sgg 11110): opens 서울, and keeps it', async () => {

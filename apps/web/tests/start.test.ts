@@ -257,6 +257,10 @@ describe('start.ts', () => {
     const u = started({});
     ([...u.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === '속초') as HTMLElement).click();
     expect(u.chosen).toEqual([['gangwon', 'pick', null, undefined, '51210']]);
+    // 서울 (중구 11140) opens 서울 at 중구 (ADR-0106 8)
+    const s = started({});
+    ([...s.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === '서울') as HTMLElement).click();
+    expect(s.chosen).toEqual([['seoul', 'pick', null, undefined, '11140']]);
     expect(t.doc.getElementById('ycStart')).toBeNull();
     const o = started({});
     const press = (w: string) => ([...o.doc.querySelectorAll('#ycStart button')].find((b) => b.textContent === w && !b.closest('[hidden]')) as HTMLElement).click();

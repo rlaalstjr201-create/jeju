@@ -41,6 +41,9 @@ export interface DestRow {
   /** a 검수한 곳 named by 시군구 (plans/nationwide-app.md 1.3): its codes, which the 자동 지역 then leaves to it; one is in
    * use at a time (State.sgg) and its list is that 시군구's places (their `area`, the 시군구's short name) */
   sgg?: readonly string[];
+  /** its list is every one of its 시군구's places, by reach from the basis, not only the one in use (서울 ADR-0106
+   * Amendment 2: its 구 are small and a GPS read near a border names the next one); the 시군구 still names the 동네 */
+  allSgg?: true;
 }
 
 const ALL: readonly Kind[] = ['rest', 'walk', 'new', 'famous', 'food'];
@@ -59,7 +62,7 @@ export const DEST: Record<Dest, DestRow> = {
   gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강원', said: /강원|강릉|속초|춘천|양양|평창/, moods: ALL, any: ANY, label: 'name', sgg: ['51150', '51210', '51110', '51830', '51760'] },
   // 서울 (ADR-0106): 서울시청 (세종대로 110); its 구 whose places passed the checks (종로·중구·용산·성동·광진·동대문·중랑), which
   // the 자동 지역 leaves to it — the others stay 자동 지역 until theirs pass
-  seoul: { file: 'spots-seoul.json', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '서울', said: /서울|종로|중구|용산|성동|광진|동대문|중랑/, moods: ALL, any: ANY, label: 'name', sgg: ['11110', '11140', '11170', '11200', '11215', '11230', '11260'] },
+  seoul: { file: 'spots-seoul.json', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '서울', said: /서울|종로|중구|용산|성동|광진|동대문|중랑/, moods: ALL, any: ANY, label: 'name', sgg: ['11110', '11140', '11170', '11200', '11215', '11230', '11260'], allSgg: true },
 };
 
 export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';

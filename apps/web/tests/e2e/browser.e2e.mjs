@@ -4909,7 +4909,7 @@ if (NATION) {
   });
 
   /** GPS in a 강원 시군구 added later (양양 Amendment 3, 평창 Amendment 4): 검수한 곳 at it, its own places only */
-  const gpsGangwon = async (city, geo, dest = 'gangwon') => {
+  const gpsGangwon = async (city, geo, dest = 'gangwon', areasOk = [city]) => {
     const problems = [];
     const { ctx, page, urls } = await nationAt('/', { geo });
     urls.length = 0;
@@ -4933,7 +4933,7 @@ if (NATION) {
       const all = await (await fetch(url)).json();
       return ids.map((id) => all.find((x) => x.id === id)?.area);
     }, [r.ids, own[0]]);
-    if (!areas.every((a) => a === city)) problems.push(`areas ${areas.join(',')}`);
+    if (!areas.every((a) => areasOk.includes(a))) problems.push(`areas ${areas.join(',')}`);
     await page.reload();
     if (!(await rgIs(page, `:${city}`)) || (await said(page)).start) problems.push(`reload ${JSON.stringify(await said(page))}`);
     await ctx.close();
@@ -4941,8 +4941,9 @@ if (NATION) {
   };
   await check('GW-10', 'GPS 양양 → 여차나:양양(검수한 곳, Amendment 3): 기분 다섯, 유명한 데 3장 이유 줄·모두 양양 곳, spots-gangwon.json 1회·/nation/51.json 0회; 다시 열어도 여차나:양양', () => gpsGangwon('양양', 양양시외버스터미널));
   await check('GW-11', 'GPS 진부 → 여차나:평창(검수한 곳, Amendment 4): 기분 다섯, 유명한 데 3장 이유 줄·모두 평창 곳, spots-gangwon.json 1회·/nation/51.json 0회; 다시 열어도 여차나:평창', () => gpsGangwon('평창', 진부));
-  // 서울 (ADR-0106): 종로구 is a 검수한 곳, the same way as 강원's 시군구
-  await check('SE-1', 'GPS 경복궁 → 여차나:종로(서울 검수한 곳, ADR-0106): 기분 다섯, 유명한 데 3장 이유 줄·모두 종로 곳, spots-seoul.json 1회·/nation/11.json 0회; 다시 열어도 여차나:종로', () => gpsGangwon('종로', 경복궁, 'seoul'));
+  // 서울 (ADR-0106): 종로구 is a 검수한 곳, the same way as 강원's 시군구; its list is every checked 구 by reach (Amendment 2)
+  await check('SE-1', 'GPS 경복궁 → 여차나:종로(서울 검수한 곳, ADR-0106): 기분 다섯, 유명한 데 3장 이유 줄·모두 서울 검수한 구 곳(Amendment 2), spots-seoul.json 1회·/nation/11.json 0회; 다시 열어도 여차나:종로', () =>
+    gpsGangwon('종로', 경복궁, 'seoul', ['종로', '서울 중구', '용산', '성동', '광진', '동대문', '중랑']));
 
   await check('GW-6', '영어: 인기 칸 Gangneung → 여차나:Gangneung, 걷기 3장, #how 끝에 장소 이름은 한국어라는 한 줄', async () => {
     const { ctx, page } = await nationAt('/?lang=en', { geo: 강릉역 });
@@ -5051,6 +5052,25 @@ if (NATION) {
     const moved = await page.waitForFunction(() => localStorage.getItem('jeju.dest') === '"nation"', null, { timeout: 8000 }).then(() => true, () => false);
     await ctx.close();
     assert(g.chipScroll > 0 && g.over <= 0 && g.sheetOver <= 0 && end.left > 0 && end.inside && moved, `${JSON.stringify(g)} end ${JSON.stringify(end)} moved ${moved}`);
+  });
+
+  await check('SV-2b', '칩 줄 at 320 default text, five 여행지: it overflows, and the chip at its right edge is cut there (a sign there is more); scrolled to its end, 다른 곳 is whole inside it', async () => {
+    const { ctx, page } = await fresh({ width: 320, height: 568, storage: {} });
+    await page.waitForSelector('#today:not(.wait)');
+    await tapText(page, '#basis');
+    await tapText(page, '.sheet [data-seg="pick"]');
+    const g = await page.evaluate(() => {
+      const c = document.querySelector('.sheet .chips');
+      const box = c.getBoundingClientRect();
+      const rects = () => [...c.querySelectorAll('[data-dest]')].map((b) => b.getBoundingClientRect());
+      // a chip cut by the row's right edge with at least 12px of it shown and 12px hidden
+      const cut = rects().some((r) => r.left < box.right - 12 && r.right > box.right + 12);
+      c.scrollLeft = c.scrollWidth;
+      const r = c.querySelector('[data-dest="nation"]').getBoundingClientRect();
+      return { scroll: c.scrollWidth - c.clientWidth, cut, endInside: r.left >= box.left - 0.5 && r.right <= box.right + 0.5, box: [Math.round(box.left), Math.round(box.right)], at0: rects().map((x) => Math.round(x.right)) };
+    });
+    await ctx.close();
+    assert(g.scroll > 0 && g.cut && g.endInside, JSON.stringify(g));
   });
 
   await check('SV-3', '주소·숙소 검색 at 375·320: Enter asks /api/geo with only q in a POST body (words folded, nothing in the URL); answers as rows (≥ 44, overflow 0, shots); the first → 숙소 근처, jeju.stay source addr, sheet says 애월 숙소; 해운대 → 여차나:부산 with its 숙소', async () => {
