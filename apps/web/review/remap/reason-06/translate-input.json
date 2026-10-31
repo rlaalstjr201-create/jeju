@@ -1,0 +1,172 @@
+[
+ {
+  "id": "739d5ea0-16e0-4f66-8d45-d38bf4a1a693",
+  "dest": "jeju",
+  "name": "남원큰엉해변",
+  "names": {
+   "en": "Namwon Keuneong Coast",
+   "zh-Hans": "南元大岩海滩",
+   "ja": "南元クンオン海岸"
+  },
+  "ko": "기암절벽이 펼쳐진 해안을 바라보며 쉬어요",
+  "currentTranslationOfOldSentence": {
+   "en": "Walk a coast lined with dramatic rock cliffs",
+   "zh-Hans": "沿着奇岩峭壁铺开的海岸走",
+   "ja": "奇岩や断崖が続く海岸沿いを歩く"
+  },
+  "oldKo": "기암절벽이 펼쳐진 해안을 따라 걸어요"
+ },
+ {
+  "id": "670bfe80-c577-4dcc-a838-8ad75e1f593b",
+  "dest": "jeju",
+  "name": "한담해변",
+  "names": {
+   "en": "Handam Beach",
+   "zh-Hans": "汉潭海滩",
+   "ja": "漢潭（ハンダム）ビーチ"
+  },
+  "ko": "해안길에서 바닷바람을 맞으며 노을을 바라봐요",
+  "currentTranslationOfOldSentence": {
+   "en": "Walk the coastal path for sea breezes and sunsets",
+   "zh-Hans": "沿海岸小路走，吹海风看日落",
+   "ja": "海沿いの道を歩きながら海風と夕日を感じる"
+  },
+  "oldKo": "해안길을 걸으며 바닷바람과 노을을 느껴요"
+ },
+ {
+  "id": "f708ddb9-03d4-43e0-add8-db1cac0b6f94",
+  "dest": "jeju",
+  "name": "행원해변",
+  "names": {
+   "en": "Haengwon Beach",
+   "zh-Hans": "杏源海滩",
+   "ja": "杏源（ヘンウォン）ビーチ"
+  },
+  "ko": "현무암 지형과 투명한 바다를 바라봐요",
+  "currentTranslationOfOldSentence": {
+   "en": "Snorkel over basalt rock in crystal-clear water",
+   "zh-Hans": "玄武岩地形加清澈海水，适合浮潜",
+   "ja": "玄武岩の地形と透明な海でシュノーケリング"
+  },
+  "oldKo": "현무암 지형과 투명한 바다에서 스노클링해요"
+ },
+ {
+  "id": "21df27c7-6e8a-4715-afd8-1e89086f9672",
+  "dest": "jeju",
+  "name": "검멀레해변",
+  "names": {
+   "en": "Geommeolle Beach",
+   "zh-Hans": "黑沙海滩",
+   "ja": "コムモルレビーチ"
+  },
+  "ko": "검은 모래가 매력적인 우도의 해변이에요",
+  "currentTranslationOfOldSentence": {
+   "en": "Take a boat tour into sea caves from a black-sand beach",
+   "zh-Hans": "黑沙海滩上坐船游海蚀洞",
+   "ja": "黒い砂浜で洞窟ボートツアーが楽しめる"
+  },
+  "oldKo": "검은 모래 해변에서 동굴 보트 투어를 즐겨요"
+ },
+ {
+  "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+  "dest": "jeju",
+  "name": "렛츠런팜 양귀비꽃",
+  "names": {
+   "en": "Let's Run Farm Poppies",
+   "zh-Hans": "LetsRun Farm虞美人花",
+   "ja": "レッツランファーム ヒナゲシ"
+  },
+  "ko": "렛츠런팜에 양귀비꽃이 핀 곳이에요",
+  "currentTranslationOfOldSentence": {
+   "en": "See the poppies in bloom at Let's Run Farm",
+   "zh-Hans": "在赛马牧场看盛开的虞美人",
+   "ja": "レッツランファームで咲き誇るヒナゲシを眺める"
+  },
+  "oldKo": "렛츠런팜에서 양귀비꽃 핀 모습을 봐요"
+ },
+ {
+  "id": "a521dab6-c3de-4bc9-b3a9-9ac16aeb229b",
+  "dest": "jeju",
+  "name": "함덕해수욕장",
+  "names": {
+   "en": "Hamdeok Beach",
+   "zh-Hans": "咸德海水浴场",
+   "ja": "咸徳海水浴場"
+  },
+  "ko": "에메랄드빛 바다와 유채꽃을 바라봐요",
+  "currentTranslationOfOldSentence": {
+   "en": "Walk the seaside path past emerald water and canola flowers",
+   "zh-Hans": "沿着步道走，看翡翠色大海和油菜花",
+   "ja": "エメラルド色の海と菜の花を眺めながら遊歩道を散策"
+  },
+  "oldKo": "에메랄드빛 바다와 유채꽃을 보며 산책로를 걸어요"
+ },
+ {
+  "id": "407fa5fe-e4a3-4330-a8f4-f0d69ded2b7a",
+  "dest": "jeju",
+  "name": "중문색달해변",
+  "names": {
+   "en": "Jungmun Saekdal Beach",
+   "zh-Hans": "中文色达海滩",
+   "ja": "中文穡達（セクタル）ビーチ"
+  },
+  "ko": "파도가 높아 서퍼들이 즐겨 찾는 해변이에요",
+  "currentTranslationOfOldSentence": {
+   "en": "Big waves draw surfers, and you can try fresh seafood caught by haenyeo (women divers)",
+   "zh-Hans": "浪大，冲浪客爱来，还能尝海女捞的新鲜海鲜",
+   "ja": "波が高くサーファーに人気、海女がとった新鮮な海の幸も味わえる"
+  },
+  "oldKo": "파도 높아 서퍼들이 즐겨 찾고, 해녀가 잡은 싱싱한 해산물도 맛봐요"
+ },
+ {
+  "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+  "dest": "jeju",
+  "name": "아침미소목장",
+  "names": {
+   "en": "Achim Miso Ranch",
+   "zh-Hans": "清晨微笑牧场",
+   "ja": "アチムミソ牧場"
+  },
+  "ko": "한라산이 보이는 초원에 젖소를 방목하는 친환경 목장이에요",
+  "currentTranslationOfOldSentence": {
+   "en": "Relax at a ranch café with views of Hallasan",
+   "zh-Hans": "能看汉拿山的牧场咖啡馆，慢慢歇",
+   "ja": "漢拏山（ハルラサン）が見える牧場カフェでのんびり"
+  },
+  "oldKo": "한라산이 보이는 목장 카페에서 느긋하게 쉬어요"
+ },
+ {
+  "id": "bs-127891",
+  "dest": "busan",
+  "name": "대천천",
+  "names": {
+   "en": "Daecheoncheon Stream",
+   "zh-Hans": "大川川",
+   "ja": "大川川"
+  },
+  "ko": "애기소 폭포와 계곡이 있는 도심 유원지예요",
+  "currentTranslationOfOldSentence": {
+   "en": "Paths on both banks lead to Aegiso Falls and the valley",
+   "zh-Hans": "沿溪两侧的步道走，遇见艾基沼瀑布和溪谷",
+   "ja": "川の両岸の散歩道をたどれば、エギソの滝と渓谷に出会える"
+  },
+  "oldKo": "하천 양옆 산책길을 따라 애기소 폭포와 계곡을 만나요"
+ },
+ {
+  "id": "bs-2758489",
+  "dest": "busan",
+  "name": "장안사계곡",
+  "names": {
+   "en": "Jangansa Valley",
+   "zh-Hans": "长安寺溪谷",
+   "ja": "長安寺渓谷"
+  },
+  "ko": "장안사 아래에 반딧불이가 서식하는 계곡이에요",
+  "currentTranslationOfOldSentence": {
+   "en": "Spread out a mat and rest under the trees in the valley below Jangansa Temple",
+   "zh-Hans": "长安寺下面的溪谷，铺张席子在树下歇着",
+   "ja": "長安寺（チャンアンサ）の下の渓谷で、ござを敷いて木陰でひと休み"
+  },
+  "oldKo": "장안사 아래 계곡에서 돗자리 깔고 나무 아래 쉬어요"
+ }
+]

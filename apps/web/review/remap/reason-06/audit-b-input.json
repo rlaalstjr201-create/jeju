@@ -1,0 +1,198 @@
+[
+ {
+  "id": "739d5ea0-16e0-4f66-8d45-d38bf4a1a693",
+  "dest": "jeju",
+  "name": "남원큰엉해변",
+  "mood": "푹 쉬고 싶어 (쉬기)",
+  "text": {
+   "category": "sightseeing",
+   "tags": "해변, 경관/포토, 맑음, 여름, 자연경관, 포토스팟, 공영관광지",
+   "intro": "",
+   "summary": "때묻지 않은 기암절벽이 아름다운 해양경승지"
+  },
+  "oldReason": "기암절벽이 펼쳐진 해안을 따라 걸어요",
+  "newReason": "기암절벽이 펼쳐진 해안을 바라보며 쉬어요",
+  "translations": {
+   "en": "Rest while gazing at a coast lined with dramatic rock cliffs",
+   "zh-Hans": "望着奇岩峭壁铺开的海岸，歇一歇",
+   "ja": "奇岩や断崖が続く海岸を眺めながらひと休み"
+  }
+ },
+ {
+  "id": "670bfe80-c577-4dcc-a838-8ad75e1f593b",
+  "dest": "jeju",
+  "name": "한담해변",
+  "mood": "푹 쉬고 싶어 (쉬기)",
+  "text": {
+   "category": "sightseeing",
+   "tags": "해변, 경관/포토, 커플, 맑음, 여름, 자연경관, 포토스팟, 봄꽃, 유채꽃",
+   "intro": "",
+   "summary": "해안길을 따라 산책할 수 있는 제주의 숨은 비경"
+  },
+  "oldReason": "해안길을 걸으며 바닷바람과 노을을 느껴요",
+  "newReason": "해안길에서 바닷바람을 맞으며 노을을 바라봐요",
+  "translations": {
+   "en": "Feel the sea breeze on the coastal path and watch the sunset",
+   "zh-Hans": "在海岸小路吹着海风，看日落",
+   "ja": "海沿いの道で海風を受けながら夕日を眺める"
+  }
+ },
+ {
+  "id": "f708ddb9-03d4-43e0-add8-db1cac0b6f94",
+  "dest": "jeju",
+  "name": "행원해변",
+  "mood": "푹 쉬고 싶어 (쉬기)",
+  "text": {
+   "category": "sightseeing",
+   "tags": "제주도, 제주여행, 제주해수욕장, 제주동쪽가볼만한곳, 제주바다, 제주스노쿨링, 제주동쪽스노쿨링",
+   "intro": "",
+   "summary": "에메랄드빛 가득 머금은 행원해변(코난해변)... “스노쿨링도 즐겨요”"
+  },
+  "oldReason": "현무암 지형과 투명한 바다에서 스노클링해요",
+  "newReason": "현무암 지형과 투명한 바다를 바라봐요",
+  "translations": {
+   "en": "Gaze at basalt terrain and crystal-clear water",
+   "zh-Hans": "欣赏玄武岩地形和清澈的海水",
+   "ja": "玄武岩の地形と透明な海を眺める"
+  }
+ },
+ {
+  "id": "21df27c7-6e8a-4715-afd8-1e89086f9672",
+  "dest": "jeju",
+  "name": "검멀레해변",
+  "mood": "푹 쉬고 싶어 (쉬기)",
+  "text": {
+   "category": "sightseeing",
+   "tags": "해변, 경관/포토, 커플, 맑음, 여름, 자연경관, 포토스팟, k-drama",
+   "intro": "",
+   "summary": "검은모래가 매력적인 우도에서 빠질 수 없는 명소"
+  },
+  "oldReason": "검은 모래 해변에서 동굴 보트 투어를 즐겨요",
+  "newReason": "검은 모래가 매력적인 우도의 해변이에요",
+  "translations": {
+   "en": "A beach on Udo with charming black sand",
+   "zh-Hans": "牛岛上黑沙迷人的海滩",
+   "ja": "黒い砂が魅力的な牛島（ウド）のビーチ"
+  }
+ },
+ {
+  "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+  "dest": "jeju",
+  "name": "렛츠런팜 양귀비꽃",
+  "mood": "놀러 가고 싶어 (놀러)",
+  "tab": "놀거리",
+  "text": {
+   "category": "sightseeing",
+   "tags": "테마공원, 아이, 맑음, 봄, 어린이, 어트랙션",
+   "intro": "",
+   "summary": "렛츠런 팜의 양귀비꽃 핀 모습."
+  },
+  "oldReason": "렛츠런팜에서 양귀비꽃 핀 모습을 봐요",
+  "newReason": "렛츠런팜에 양귀비꽃이 핀 곳이에요",
+  "translations": {
+   "en": "A spot where poppies bloom at Let's Run Farm",
+   "zh-Hans": "赛马牧场里虞美人花盛开的地方",
+   "ja": "レッツランファームでヒナゲシが咲く場所"
+  }
+ },
+ {
+  "id": "a521dab6-c3de-4bc9-b3a9-9ac16aeb229b",
+  "dest": "jeju",
+  "name": "함덕해수욕장",
+  "mood": "푹 쉬고 싶어 (쉬기)",
+  "text": {
+   "category": "sightseeing",
+   "tags": "제주여행, 제주해수욕장, 제주바다, 물놀이, 모래사장, 제주여름, 함덕해변, 제주동쪽, 반려동물, 반려동물동반입장, 혼저옵서개, 반려동물동반_자연",
+   "intro": "",
+   "summary": "에매랄드처럼 빛나는 '한국의 몰디브'"
+  },
+  "oldReason": "에메랄드빛 바다와 유채꽃을 보며 산책로를 걸어요",
+  "newReason": "에메랄드빛 바다와 유채꽃을 바라봐요",
+  "translations": {
+   "en": "Gaze at emerald water and canola flowers",
+   "zh-Hans": "欣赏翡翠色大海和油菜花",
+   "ja": "エメラルド色の海と菜の花を眺める"
+  }
+ },
+ {
+  "id": "407fa5fe-e4a3-4330-a8f4-f0d69ded2b7a",
+  "dest": "jeju",
+  "name": "중문색달해변",
+  "mood": "푹 쉬고 싶어 (쉬기)",
+  "text": {
+   "category": "sightseeing",
+   "tags": "부모, 커플, 혼자, 친구, 아이, 경관/포토, 휴식/힐링, 사계절, 청년, 중/장년, 휴식/치유, 자연경관, 포토스팟, 어린이",
+   "intro": "",
+   "summary": "서퍼들의 천국이라 불릴 만큼 파도가 높아 여름에는 다이나믹한 해수욕을 즐기려는 사람들로 인산인해를 이루는 중문색달해변."
+  },
+  "oldReason": "파도 높아 서퍼들이 즐겨 찾고, 해녀가 잡은 싱싱한 해산물도 맛봐요",
+  "newReason": "파도가 높아 서퍼들이 즐겨 찾는 해변이에요",
+  "translations": {
+   "en": "A beach with big waves that surfers love to visit",
+   "zh-Hans": "浪大，冲浪客爱来的海滩",
+   "ja": "波が高くサーファーがよく訪れるビーチ"
+  }
+ },
+ {
+  "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+  "dest": "jeju",
+  "name": "아침미소목장",
+  "mood": "놀러 가고 싶어 (놀러)",
+  "tab": "놀거리",
+  "text": {
+   "category": "experience",
+   "tags": "반려동물, 반려동물동반입장, 혼저옵서개, 반려동물동반_관광지, 체험관광, 아이, 맑음, 봄, 체험, 어린이, 어트랙션, 사진명소, 테마공원, 포토존",
+   "intro": "",
+   "summary": "제주시 근교에 자리한 아침미소목장은 건강한 젖소들이 자라는 친환경 목장이다. 넓은 초원에 소들을 방목해 키우며 들판 너머 한라산이 보이는 풍경이 평화롭다. 목장 안에 경치 좋은 카페가 있어 목가적인 분위기를 즐기며 느긋하게 쉬어가기도 좋다. 이곳에서 직접 짠 우유와 요구르트, 치즈 제품들을 맛볼 수 있다."
+  },
+  "oldReason": "한라산이 보이는 목장 카페에서 느긋하게 쉬어요",
+  "newReason": "한라산이 보이는 초원에 젖소를 방목하는 친환경 목장이에요",
+  "translations": {
+   "en": "An eco-friendly ranch where dairy cows graze on grassland with views of Hallasan",
+   "zh-Hans": "能看到汉拿山的草原上放牧奶牛的环保牧场",
+   "ja": "漢拏山（ハルラサン）が見える草原で乳牛を放牧する、環境にやさしい牧場"
+  }
+ },
+ {
+  "id": "bs-127891",
+  "dest": "busan",
+  "name": "대천천",
+  "mood": "놀러 가고 싶어 (놀러)",
+  "tab": "놀거리",
+  "text": {
+   "type": "관광지",
+   "lclsSystm3": "NA010400",
+   "lclsName": "계곡",
+   "addr": "부산광역시 북구 화명동",
+   "overview": "대천천은 금정산 파리봉과 대륙봉의 중간 지점의 계곡에서 발원해 금정산성 서문으로 흘러 내려와 화명운동장을 지나 낙동강에 유입하는 하천이다. 대천천 중간에는 4m 폭포가 떨어지면서 생긴 애기소(沼)라는 움푹 파인 큰 물웅덩이가 있으며, 대천천에는 금정산 서문, 화명수목원, 금정산둘레길, 애기소 폭포와 아름다운 계곡, 우거진 숲들이 많아 도심 유원지로 많이 알려져, 여름철 관광객과 부산 시민이 즐겨 찾는 명소이다. 대천천 하천 양옆으로 산책길과 자전거도로가 잘 정비되어 있다."
+  },
+  "oldReason": "하천 양옆 산책길을 따라 애기소 폭포와 계곡을 만나요",
+  "newReason": "애기소 폭포와 계곡이 있는 도심 유원지예요",
+  "translations": {
+   "en": "An urban recreation area with Aegiso Falls and a valley",
+   "zh-Hans": "有艾基沼瀑布和溪谷的市区游乐地",
+   "ja": "エギソの滝と渓谷がある都心の遊園地"
+  }
+ },
+ {
+  "id": "bs-2758489",
+  "dest": "busan",
+  "name": "장안사계곡",
+  "mood": "놀러 가고 싶어 (놀러)",
+  "tab": "놀거리",
+  "text": {
+   "type": "관광지",
+   "lclsSystm3": "NA010400",
+   "lclsName": "계곡",
+   "addr": "부산광역시 기장군 장안읍 장안로 482",
+   "overview": "부산 기장군 장안사 계곡은 신라 673년 원효대사가 창건한 천년 고찰 장안사 아래 있다. 이곳은 청정지역에서만 볼 수 있다는 반딧불이가 서식하고 있어 매년 7월 말까지는 가로등을 소등한다. 장안사 주차장 인근에 계곡이 있다는 장점에 많은 관광객이 찾는다. 장안사 계곡에서는 더욱 쾌적한 환경 유지를 위하여 야영이나 취사는 금지되어 있으니 간단하게 돗자리 깔고 나무 아래서 쉬기에 좋은 곳이다. 불광산 자락의 울창한 숲에서 전해지는 맑은 공기를 만끽하며 조용히 산책도 즐길 수 있다."
+  },
+  "oldReason": "장안사 아래 계곡에서 돗자리 깔고 나무 아래 쉬어요",
+  "newReason": "장안사 아래에 반딧불이가 서식하는 계곡이에요",
+  "translations": {
+   "en": "A valley below Jangansa Temple where fireflies live",
+   "zh-Hans": "长安寺下面萤火虫栖息的溪谷",
+   "ja": "長安寺（チャンアンサ）の下にホタルが生息する渓谷"
+  }
+ }
+]

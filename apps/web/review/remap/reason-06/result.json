@@ -1,0 +1,94 @@
+{
+ "criteria": "review/remap/reason-criteria-06.md",
+ "targets": 37,
+ "judgeMismatch": 10,
+ "auditA": {
+  "same": 35,
+  "of": 37,
+  "rate": 0.9459459459459459,
+  "pass": true,
+  "disagree": [
+   "한담해변",
+   "렛츠런팜 양귀비꽃"
+  ]
+ },
+ "machineFail": 0,
+ "auditB": {
+  "pass": 8,
+  "of": 10,
+  "rate": 0.8,
+  "gatePass": true
+ },
+ "applied": [
+  {
+   "dest": "jeju",
+   "id": "739d5ea0-16e0-4f66-8d45-d38bf4a1a693",
+   "name": "남원큰엉해변",
+   "before": "기암절벽이 펼쳐진 해안을 따라 걸어요",
+   "after": "기암절벽이 펼쳐진 해안을 바라보며 쉬어요"
+  },
+  {
+   "dest": "jeju",
+   "id": "670bfe80-c577-4dcc-a838-8ad75e1f593b",
+   "name": "한담해변",
+   "before": "해안길을 걸으며 바닷바람과 노을을 느껴요",
+   "after": "해안길에서 바닷바람을 맞으며 노을을 바라봐요"
+  },
+  {
+   "dest": "jeju",
+   "id": "f708ddb9-03d4-43e0-add8-db1cac0b6f94",
+   "name": "행원해변",
+   "before": "현무암 지형과 투명한 바다에서 스노클링해요",
+   "after": "현무암 지형과 투명한 바다를 바라봐요"
+  },
+  {
+   "dest": "jeju",
+   "id": "21df27c7-6e8a-4715-afd8-1e89086f9672",
+   "name": "검멀레해변",
+   "before": "검은 모래 해변에서 동굴 보트 투어를 즐겨요",
+   "after": "검은 모래가 매력적인 우도의 해변이에요"
+  },
+  {
+   "dest": "jeju",
+   "id": "a521dab6-c3de-4bc9-b3a9-9ac16aeb229b",
+   "name": "함덕해수욕장",
+   "before": "에메랄드빛 바다와 유채꽃을 보며 산책로를 걸어요",
+   "after": "에메랄드빛 바다와 유채꽃을 바라봐요"
+  },
+  {
+   "dest": "jeju",
+   "id": "407fa5fe-e4a3-4330-a8f4-f0d69ded2b7a",
+   "name": "중문색달해변",
+   "before": "파도 높아 서퍼들이 즐겨 찾고, 해녀가 잡은 싱싱한 해산물도 맛봐요",
+   "after": "파도가 높아 서퍼들이 즐겨 찾는 해변이에요"
+  },
+  {
+   "dest": "jeju",
+   "id": "b2af302e-85fe-4e95-b570-dc06615f2bb7",
+   "name": "아침미소목장",
+   "before": "한라산이 보이는 목장 카페에서 느긋하게 쉬어요",
+   "after": "한라산이 보이는 초원에 젖소를 방목하는 친환경 목장이에요"
+  },
+  {
+   "dest": "busan",
+   "id": "bs-2758489",
+   "name": "장안사계곡",
+   "before": "장안사 아래 계곡에서 돗자리 깔고 나무 아래 쉬어요",
+   "after": "장안사 아래에 반딧불이가 서식하는 계곡이에요"
+  }
+ ],
+ "notApplied": [
+  {
+   "dest": "jeju",
+   "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
+   "name": "렛츠런팜 양귀비꽃",
+   "why": "Check 3: zh-Hans replaces the name 렛츠런팜 with the generic 赛马牧场 ('horse-racing ranch'), which drops the place name and adds a meaning that is not in the source"
+  },
+  {
+   "dest": "busan",
+   "id": "bs-127891",
+   "name": "대천천",
+   "why": "Check 3: ja 遊園地 means an amusement park with rides, a mistranslation of 유원지 (recreation area); zh 游乐地 leans the same way"
+  }
+ ]
+}
