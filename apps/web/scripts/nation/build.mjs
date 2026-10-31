@@ -1,9 +1,10 @@
 /**
  * 자동 지역 출하 파일 N3 (plans/nationwide.md N3, plans/nationwide-app.md 0절).
  *
- *   node scripts/nation/build.mjs     review/nation/scope-*.json + rules-02.json → data/nation/
+ *   node scripts/nation/build.mjs     review/nation/scope-*.json + rules-03.json → data/nation/
  *
  * rules-02(ADR-0105, rules-criteria-02.md, audit-02 통과): 쉬기가 생기고, 예약 없이 가는 체험은 `sub: 'do'`·`walkin: true`로 싣는다.
+ * rules-03(rules-criteria-03.md, audit-03): v2 위에 예약해야만 하는 무리(이름·요트·먹거리 산업관광·체험농장)를 뺀다.
  *
  * 입력은 파일뿐이고 같은 입력이면 같은 바이트를 쓴다. public/이 아니라 data/nation/에 쓴다
  * (앱 단위가 스위치가 켜진 빌드에서만 dist로 옮긴다).
@@ -192,7 +193,7 @@ export function loadInputs(dir = IN_DIR) {
     const m = /^scope-(\d+)\.json$/.exec(f);
     if (m) scopes[m[1]] = JSON.parse(readFileSync(resolve(dir, f), 'utf8')).items;
   }
-  const results = JSON.parse(readFileSync(resolve(dir, 'rules-02.json'), 'utf8')).results;
+  const results = JSON.parse(readFileSync(resolve(dir, 'rules-03.json'), 'utf8')).results;
   return { scopes, results, rules: RULES_02 };
 }
 

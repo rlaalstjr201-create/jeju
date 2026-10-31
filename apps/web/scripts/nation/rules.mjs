@@ -137,6 +137,34 @@ export function score2(results, out) {
   };
 }
 
+/** v3 2절(rules-criteria-03.md): v2가 예약 없이 가는 놀거리로 둔 곳 가운데 예약해야만 하는 무리. 순서가 규칙이다. */
+const SCHOOLS = /대학교|초등학교|중학교|고등학교/g;
+const BREW = /양조|주조|도가|공장|브루어리|체험장|체험관|체험촌/;
+const FARM_OPEN = /정원|가든|테마파크|생태나라|단지|동물농장|아기동물|곤충|허브팜/;
+export const V3_GROUPS = ['N', 'Y', 'R', 'H', 'W', 'B', 'F'];
+/** 한 곳이 드는 v3 무리(없으면 null)와 그 무리의 결과(true: 예약해야만 함). */
+export function group3(code, title) {
+  const t = String(title ?? '').replace(/\s+/g, '');
+  if (/학교|아카데미|투어|체험마을/.test(t.replace(SCHOOLS, ''))) return { g: 'N', booking: true };
+  const byCode = { LS020300: 'Y', LS020800: 'R', LS010700: 'H', LS020100: 'W' }[code];
+  if (byCode) return { g: byCode, booking: true };
+  if (code === 'EX060800') return { g: 'B', booking: BREW.test(t) };
+  if (code === 'EX030300') return { g: 'F', booking: !FARM_OPEN.test(t) };
+  return null;
+}
+/** 감사(audit-03)를 넘어 싣는 무리. 결과를 보고 rules-criteria-03.md 5절대로 정한다. */
+export const V3_SHIPPED = ['N', 'Y', 'B', 'F'];
+export const SEED3 = 20261105;
+
+/** v3 한 곳의 규칙 결과: v2 위에 `groups`의 줄을 얹는다(계곡은 v2 그대로). */
+export function judge3(item, groups = V3_SHIPPED) {
+  const r = judge2(item);
+  if (!r.keep || r.mood !== 'new' || r.sub !== 'do' || r.rule === 'NA010400') return r;
+  const hit = group3(r.rule, item.title);
+  if (hit?.booking && groups.includes(hit.g)) return { id: item.id, keep: false, reject: 'BOOKING' };
+  return r;
+}
+
 const EXCLUDED = ['AC', 'FD040', 'HS010900', 'HS020100', 'HS020200', 'HS020400', 'NA010500', 'NA020300', 'NA020600', 'VE010500', 'VE010600', 'VE030300', 'VE050200', 'VE060200', 'VE070400', 'VE090100', 'VE090200', 'VE090300', 'VE090600', 'VE100', 'VE110', 'VE120200', 'LS010400', 'LS010500', 'LS010600', 'LS020500', 'EX050700', 'EX050800'];
 export const isExcluded = (code) => EXCLUDED.some((p) => code.startsWith(p));
 
@@ -282,7 +310,76 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     writeJson(resolve(dir, 'audit-02.json'), s);
     const { misses, ...head } = s;
     console.log(JSON.stringify(head, null, 1), `\n틀린 곳 ${misses.length}`);
+  } else if (cmd === 'sample3') {
+    const out = resolve(dir, 'audit-03-input.json');
+    if (existsSync(out)) throw new Error('audit-03-input.json이 이미 있다 — 표본은 한 번만 뽑는다');
+    const v2 = new Map(readJson(resolve(dir, 'rules-02.json')).results.map((r) => [r.id, r]));
+    const kinds = readJson(resolve(dir, 'categories.json')).lclsSystm3;
+    const byGroup = Object.fromEntries(V3_GROUPS.map((g) => [g, []]));
+    for (const i of scopes.flatMap((s) => s.items)) {
+      const r = v2.get(i.id);
+      if (!r?.keep || r.mood !== 'new' || r.sub !== 'do' || r.rule === 'NA010400') continue;
+      const hit = group3(r.rule, i.title);
+      if (hit) byGroup[hit.g].push(i);
+    }
+    const picked = [];
+    const counts = {};
+    for (const g of V3_GROUPS) {
+      const list = [...byGroup[g]].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+      const take = shuffle(list, SEED3).slice(0, g === 'F' ? 40 : 25);
+      counts[g] = { population: list.length, sample: take.length };
+      picked.push(...take);
+    }
+    const strip = (i) => ({ id: i.id, title: i.title, addr1: i.addr1, type: TYPE_NAME[i.contenttypeid] ?? String(i.contenttypeid), kind: kinds[i.lclsSystm3]?.name ?? '' });
+    const input = shuffle(picked, SEED3 + 1).map(strip);
+    writeJson(out, input);
+    console.log(`표본 ${input.length}곳`, JSON.stringify(counts));
+  } else if (cmd === 'score3') {
+    const v2 = new Map(readJson(resolve(dir, 'rules-02.json')).results.map((r) => [r.id, r]));
+    const items = new Map(scopes.flatMap((s) => s.items).map((i) => [i.id, i]));
+    const groups = Object.fromEntries(V3_GROUPS.map((g) => [g, { n: 0, v3: 0, v2: 0, unsure: 0 }]));
+    const misses = [];
+    for (const o of readJson(resolve(dir, 'audit-03-out.json'))) {
+      const i = items.get(o.id);
+      const hit = group3(v2.get(o.id).rule, i.title);
+      const s = groups[hit.g];
+      if (o.unsure || typeof o.walkin !== 'boolean') {
+        s.unsure++;
+        continue;
+      }
+      s.n++;
+      const v3Walkin = !hit.booking;
+      if (o.walkin === v3Walkin) s.v3++;
+      else misses.push({ id: o.id, title: i.title, group: hit.g, rule: v3Walkin, judge: o.walkin });
+      if (o.walkin === true) s.v2++;
+    }
+    const rate = (a, b) => (b ? a / b : 0);
+    for (const s of Object.values(groups)) {
+      s.v3Rate = rate(s.v3, s.n);
+      s.v2Rate = rate(s.v2, s.n);
+      s.pass = s.n >= 10 && s.v3Rate >= 0.85 && s.v3Rate > s.v2Rate;
+    }
+    const all = Object.values(groups).reduce((a, s) => ({ n: a.n + s.n, v3: a.v3 + s.v3, v2: a.v2 + s.v2 }), { n: 0, v3: 0, v2: 0 });
+    const result = { criteria: 'review/nation/rules-criteria-03.md', groups, all: { ...all, v3Rate: rate(all.v3, all.n), v2Rate: rate(all.v2, all.n) }, misses };
+    writeJson(resolve(dir, 'audit-03.json'), result);
+    const { misses: m, ...head } = result;
+    console.log(JSON.stringify(head, null, 1), `\n틀린 곳 ${m.length}`);
+  } else if (cmd === 'apply3') {
+    const results = scopes.flatMap((s) => s.items.map((i) => judge3(i)));
+    const count = (f) => results.filter(f).length;
+    const summary = {
+      criteria: 'review/nation/rules-criteria-03.md',
+      groups: V3_SHIPPED,
+      total: results.length,
+      keep: count((r) => r.keep),
+      byMood: Object.fromEntries(['food', 'rest', 'walk', 'new'].map((m) => [m, count((r) => r.keep && r.mood === m)])),
+      newDo: count((r) => r.keep && r.mood === 'new' && r.sub === 'do'),
+      indoor: count((r) => r.keep && r.indoor),
+      reject: Object.fromEntries(['CHAIN', 'EXCLUDED', 'UNMAPPED', 'BOOKING'].map((k) => [k, count((r) => r.reject === k)])),
+    };
+    writeJson(resolve(dir, 'rules-03.json'), { ...summary, results });
+    console.log(JSON.stringify(summary, null, 1));
   } else {
-    console.log('apply | sample | score | apply2 | sample2 | score2');
+    console.log('apply | sample | score | apply2 | sample2 | score2 | sample3 | score3 | apply3');
   }
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error -- plain .mjs script, no types
-import { judge, judge2, sample, score, shuffle } from '../scripts/nation/rules.mjs';
+import { judge, judge2, judge3, sample, score, shuffle } from '../scripts/nation/rules.mjs';
 
 const item = (id: string, lclsSystm3: string, contenttypeid = 12, title = '어느 곳') => ({ id, title, addr1: '서울 어딘가', contenttypeid, lclsSystm3 });
 
@@ -67,5 +67,19 @@ describe('자동 지역 규칙 v2 (review/nation/rules-criteria-02.md, ADR-0105)
     expect(judge2(item('i', 'LS011900', 28, '레일바이크'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
     expect(judge2(item('j', 'VE070100', 14))).toMatchObject({ mood: 'new', sub: 'sight' });
     expect(judge2(item('j', 'VE070100', 14))).not.toHaveProperty('walkin');
+  });
+});
+
+describe('자동 지역 규칙 v3 (review/nation/rules-criteria-03.md, audit-03)', () => {
+  it('통과한 무리(이름·요트·먹거리 산업관광·체험농장)만 예약해야만 함, 래프팅·승마·수상레저는 v2 그대로', () => {
+    expect(judge3(item('a', 'LS011900', 28, '충주조정체험학교'))).toMatchObject({ keep: false, reject: 'BOOKING' });
+    expect(judge3(item('b', 'LS010900', 28, '광운대학교 아이스링크'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    expect(judge3(item('c', 'LS020300', 28, '블루요트'))).toMatchObject({ keep: false, reject: 'BOOKING' });
+    expect(judge3(item('d', 'EX060800', 12, '금풍양조장'))).toMatchObject({ keep: false, reject: 'BOOKING' });
+    expect(judge3(item('e', 'EX060800', 12, '전통술 박물관 산사원'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    expect(judge3(item('f', 'EX030300', 12, '별마을딸기체험농장'))).toMatchObject({ keep: false, reject: 'BOOKING' });
+    expect(judge3(item('g', 'EX030300', 12, '모네정원'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    for (const code of ['LS020800', 'LS010700', 'LS020100']) expect(judge3(item('h', code, 28, '어느 레저'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    expect(judge3(item('i', 'NA010400', 12, '어느 투어 계곡'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
   });
 });
