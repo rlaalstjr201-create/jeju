@@ -1,0 +1,52 @@
+{
+ "contentid": "2667611",
+ "modifiedtime": "20261020142812",
+ "fetchedAt": "2026-10-31T16:13:03.703Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2667611",
+       "contenttypeid": "12",
+       "title": "이대거리",
+       "createdtime": "20200818233748",
+       "modifiedtime": "20261020142812",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.sdm.go.kr/culture/index.do",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/29/3467629_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/29/3467629_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서대문구 대현동",
+       "addr2": "",
+       "zipcode": "03767",
+       "mapx": "126.9424446549",
+       "mapy": "37.5578778840",
+       "mlevel": "6",
+       "overview": "이화여대 정문에서 신촌 기차역까지 사이사이 이어지는 골목거리이다. 패션산업 부진으로 한때 공실이 많았으나 2017년 청년창업가 중심의 감각 있는 점포가 입점하기 시작하면서 되살아난 골목이다. 테이크아웃 가능한 카페 및 작은 음식점이 골목골목 이어져 있고 패션의 메카답게 의류, 미용실, 화장품, 구두, 액세서리, 네일숍 등 특색 있는 점포들로 볼거리가 풍부하다. \n\n(출처 : 서대문구청 홈페이지)"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

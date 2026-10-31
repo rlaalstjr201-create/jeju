@@ -1,0 +1,52 @@
+{
+ "contentid": "130067",
+ "modifiedtime": "20260323105032",
+ "fetchedAt": "2026-10-31T16:15:42.921Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130067",
+       "contenttypeid": "14",
+       "title": "숭실대학교 한국기독교박물관",
+       "createdtime": "20071106104045",
+       "modifiedtime": "20260323105032",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://museum.ssu.ac.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/77/3526877_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/77/3526877_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "590",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동작구 상도로 369 (상도동)",
+       "addr2": "",
+       "zipcode": "06978",
+       "mapx": "126.956999",
+       "mapy": "37.495636",
+       "mlevel": "6",
+       "overview": "숭실대학교 한국기독교박물관은 한국기독교의 역사와 문화를 전시하는 전문 박물관으로, 평양 숭실 출신 김양선 교수 가족의 기증으로 설립되었다. 1967년 기증받은 박물관은 1976년 숭실대 교내에 단독 건물을 마련하여 정식 개관하였다. 전시 공간은 한국기독교역사실, 근대화와 민족운동사실, 고고미술실, 숭실역사실로 구성되어 있다. 영상 스크린과 정보검색 장치 등을 통해 학생과 시민들의 흥미와 이해를 돕고 있다. 또한 약 7,000여 점의 유물을 소장하고 있어 교육적 가치가 높다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

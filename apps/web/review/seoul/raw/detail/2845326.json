@@ -1,0 +1,52 @@
+{
+ "contentid": "2845326",
+ "modifiedtime": "20261028192045",
+ "fetchedAt": "2026-10-31T16:13:53.610Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2845326",
+       "contenttypeid": "39",
+       "title": "어글리베이커리",
+       "createdtime": "20220829170118",
+       "modifiedtime": "20261028192045",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/40/4129540_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/40/4129540_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 월드컵로13길 73",
+       "addr2": "",
+       "zipcode": "04014",
+       "mapx": "126.9060593975",
+       "mapy": "37.5550331304",
+       "mlevel": "6",
+       "overview": "어글리베이커리는 이영자 맛집 리스트에 당당히 이름을 올린 서울 빵지순례지로, 주력 메뉴는 압도적인 크기와 푸짐한 내용물의 맘모스 빵이다. \n그 중엔 옥수수 덕후의 취향을 저격하는 감동의 옥수수 맘모스도 있다. 두툼한 소보로 사이 달콤한 옥수수 크림을 듬뿍 넣어, 크림치즈와 가나슈의 새콤달콤한 맛과 톡톡 터지는 옥수수 알의 식감이 그야말로 감동의 맛이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

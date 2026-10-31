@@ -1,0 +1,52 @@
+{
+ "contentid": "3441464",
+ "modifiedtime": "20250731102114",
+ "fetchedAt": "2026-10-31T16:14:30.862Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3441464",
+       "contenttypeid": "14",
+       "title": "국립항공박물관 항공도서관",
+       "createdtime": "20241210173834",
+       "modifiedtime": "20250731102114",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://library.aviation.or.kr/",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/3441671_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/3441671_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "4",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060900",
+       "addr1": "서울특별시 강서구 하늘길 177 (공항동)",
+       "addr2": "",
+       "zipcode": "07505",
+       "mapx": "126.8088867586",
+       "mapy": "37.5569217768",
+       "mlevel": "6",
+       "overview": "국립항공박물관 항공도서관은 항공역사, 항공산업, 항공 전문 정보의 국내외 전문도서, 학술지 및 디지털 매체 등을 수집, 정리하여 제공한다. 또한 박물관학, 고고학, 도서관학 관련 자료를 제공하고 있다. 항공 전문 정보를 필요로 하는 모든 이용자들이 자유롭게 이용할 수 있는 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

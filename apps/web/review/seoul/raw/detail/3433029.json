@@ -1,0 +1,52 @@
+{
+ "contentid": "3433029",
+ "modifiedtime": "20241227101929",
+ "fetchedAt": "2026-10-31T16:13:25.941Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3433029",
+       "contenttypeid": "12",
+       "title": "어깨동무스토리움",
+       "createdtime": "20241202164437",
+       "modifiedtime": "20241227101929",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://ekdmstoryum.org/index.php",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX07",
+       "lclsSystm3": "EX070200",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030400",
+       "addr1": "서울특별시 마포구 월드컵로 386 (상암동)",
+       "addr2": "상암동, 박정희 대통령 기념도서관",
+       "zipcode": "03906",
+       "mapx": "126.8863069637",
+       "mapy": "37.5750349409",
+       "mlevel": "6",
+       "overview": "어깨동무스토리움은 서울 마포구 상암동에 위치한 무료 실내 놀이터이자 어린이 체험 공간이다. 이곳은 블록 놀이, 미끄럼틀, 볼풀장, 미니 기차 마을 같은 다양한 놀이 시설과 유아 전용 도서관을 제공하며, 만 36개월 이하 어린이를 포함한 가족들이 즐기기 좋은 환경을 갖추고 있다. 예약이 필수이며, 주차와 입장도 무료로 운영된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

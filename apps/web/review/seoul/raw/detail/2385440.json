@@ -1,0 +1,52 @@
+{
+ "contentid": "2385440",
+ "modifiedtime": "20260212174017",
+ "fetchedAt": "2026-10-31T16:15:49.311Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2385440",
+       "contenttypeid": "39",
+       "title": "진남회집",
+       "createdtime": "20160527181918",
+       "modifiedtime": "20260212174017",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/29/2385429_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/29/2385429_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "590",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동작구 노들로 674",
+       "addr2": "",
+       "zipcode": "06900",
+       "mapx": "126.936804763349",
+       "mapy": "37.51479970069",
+       "mlevel": "6",
+       "overview": "신선한 회와 다양한 곁들이찬의 세계를 맛볼 수 있는 노량진수산물도매시장을 대표하는 간판 식당이다. 1층 소매점에서 회를 구매해 가져오면 매운탕과 식사도 가능하다. 단체(회식), 가족과 오붓한 시간을 보낼 수 있는 룸도 완비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

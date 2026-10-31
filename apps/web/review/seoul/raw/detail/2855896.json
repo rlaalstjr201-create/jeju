@@ -1,0 +1,52 @@
+{
+ "contentid": "2855896",
+ "modifiedtime": "20250919102822",
+ "fetchedAt": "2026-10-31T16:16:38.099Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2855896",
+       "contenttypeid": "39",
+       "title": "브루스리",
+       "createdtime": "20220920110110",
+       "modifiedtime": "20250919102822",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/85/2855885_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/85/2855885_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 서초구 양재천로 147-1 (양재동)",
+       "addr2": "",
+       "zipcode": "06746",
+       "mapx": "127.0428787231",
+       "mapy": "37.4798265841",
+       "mlevel": "6",
+       "overview": "브루스리는 서울 양재천 인근에 위치한 중식당이다. 딤섬, 완탕, 면요리 등 중국 음식 전문점으로 양재천 리틀 홍콩이라 불릴 만큼 이국적인 외관과 실내디자인을 한 매장이다. 1층 단층 건물인 식당에는 단체석이 마련되어 있어 가족 회식 및 다양한 모임을 할 수 있다. 우육면과 돼지고기부추무침, 완탕, 쇼마이, 쇼롱뽀우 등 다양한 음식을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

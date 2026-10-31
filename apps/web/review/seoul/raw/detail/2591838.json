@@ -1,0 +1,52 @@
+{
+ "contentid": "2591838",
+ "modifiedtime": "20250319193308",
+ "fetchedAt": "2026-10-31T16:14:51.562Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2591838",
+       "contenttypeid": "12",
+       "title": "천왕근린공원",
+       "createdtime": "20190314000448",
+       "modifiedtime": "20250319193308",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/16/3393016_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/16/3393016_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "7",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030400",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 구로구 천왕동",
+       "addr2": "878",
+       "zipcode": "08366",
+       "mapx": "126.8418082369",
+       "mapy": "37.4764678238",
+       "mlevel": "6",
+       "overview": "천왕근린공원은 서울시 구로구 천왕동에 위치해 있다. 공원 내에는 연못이 있는데, 연꽃이 피는 시기가 되면 아름다운 경관을 보여준다. 여름철이 되면 무료로 물놀이장을 개장하여 아이들과 방문하기 좋다. 또한 공원의 녹지공간을 활용하여 캠핑 사이트를 조성하여 돗자리나 텐트를 가져와 캠핑을 즐길 수 있도록 만든 공간도 있다. 다만, 취사나 야영은 불가능하며, 캠핑장의 자세한 이용사항은 구청 홈페이지를 확인하면 된다. 온 가족이 함께 다양한 방법으로 휴식하기 좋은 도심 속 힐링 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

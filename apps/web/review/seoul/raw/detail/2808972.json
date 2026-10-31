@@ -1,0 +1,52 @@
+{
+ "contentid": "2808972",
+ "modifiedtime": "20260226172330",
+ "fetchedAt": "2026-10-31T16:12:56.468Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2808972",
+       "contenttypeid": "39",
+       "title": "커피생각",
+       "createdtime": "20220302163907",
+       "modifiedtime": "20260226172330",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 은평구 불광천길 420",
+       "addr2": "",
+       "zipcode": "03457",
+       "mapx": "126.914974124644",
+       "mapy": "37.592617595677",
+       "mlevel": "6",
+       "overview": "커피생각은 불광천 바로 앞에 위치한 카페로 편안하고 예쁜 인테리어로 꾸며져 있다. 핸드드립 커피와 맛있는 스콘의 조화가 매우 조화롭다. 날씨 좋은 날엔 불광천이 보이는 야외 테라스에 앉아 커피를 즐길 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "1290945",
+ "modifiedtime": "20260122163000",
+ "fetchedAt": "2026-10-31T16:18:11.349Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1290945",
+       "contenttypeid": "39",
+       "title": "정식당",
+       "createdtime": "20110530224611",
+       "modifiedtime": "20260122163000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 선릉로158길 11",
+       "addr2": "",
+       "zipcode": "06014",
+       "mapx": "127.041291490875",
+       "mapy": "37.5256058272056",
+       "mlevel": "6",
+       "overview": "정식당은 서울과 뉴욕을 기반으로 현대적이고 독창적인 새로운 한식을 선보이고 있다. 임정식 셰프는 전통한식의 친숙한 한식재료를 이용하여 획기적으로 재탄생시킨 뉴코리안(New Korean)이라는 새로운 장르를 만들었다. 뉴코리안 파인다이닝(New Korean Fine Dining)은 한국과 더불어 파인다이닝 업계의 메카인 뉴욕에서도 사랑받는 새로운 음식 문화이다. 메뉴는 런치와 디너 코스요리로 나뉘어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

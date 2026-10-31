@@ -1,0 +1,52 @@
+{
+ "contentid": "3452874",
+ "modifiedtime": "20241219174835",
+ "fetchedAt": "2026-10-31T16:13:08.906Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3452874",
+       "contenttypeid": "14",
+       "title": "폭포책방 아름인도서관",
+       "createdtime": "20241219152216",
+       "modifiedtime": "20241219174835",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/3452674_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/74/3452674_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "14",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060900",
+       "addr1": "서울특별시 서대문구 연희로 262-24 (홍은동)",
+       "addr2": "",
+       "zipcode": "03653",
+       "mapx": "126.9370354929",
+       "mapy": "37.5813490039",
+       "mlevel": "6",
+       "overview": "자연과 책을 사랑하는 사람들에게 특별한 경험을 선사하는 곳이며 시원하게 쏟아지는 폭포 소리를 배경 삼아 책을 읽으며 여유로운 시간을 보낼 수 있는 도서관이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2611730",
+ "modifiedtime": "20260520160934",
+ "fetchedAt": "2026-10-31T16:14:11.241Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2611730",
+       "contenttypeid": "12",
+       "title": "양천도시농업공원",
+       "createdtime": "20190718200512",
+       "modifiedtime": "20260520160934",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.yangcheon.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/73/4066473_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/73/4066473_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 신월동",
+       "addr2": "산174-1",
+       "zipcode": "08051",
+       "mapx": "126.826226719966",
+       "mapy": "37.5127562952625",
+       "mlevel": "6",
+       "overview": "2019년 4월에 개장한 도시농업공원인 양천도시농업공원은 신월동 산 일대에 위치하고 있다. 양천도시농업공원은 기존 공원과 다르게 도시 농업 교육센터, 텃밭 가꾸기 등 다양한 활동을 할 수 있다. 또한 아이들과 함께 참여할 수 있는 프로그램들도 마련되어 있어 구민들이 언제든 아이와 함께 간접적으로 농업활동 체험을 할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

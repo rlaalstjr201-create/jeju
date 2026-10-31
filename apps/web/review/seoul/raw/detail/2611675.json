@@ -1,0 +1,52 @@
+{
+ "contentid": "2611675",
+ "modifiedtime": "20261006172718",
+ "fetchedAt": "2026-10-31T16:14:14.839Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2611675",
+       "contenttypeid": "14",
+       "title": "신월음악도서관",
+       "createdtime": "20190718015832",
+       "modifiedtime": "20261006172718",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://lib.yangcheon.or.kr/libsin",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/72/3568172_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/72/3568172_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 오목로5길 34 (신월동)",
+       "addr2": "",
+       "zipcode": "07929",
+       "mapx": "126.8400905011",
+       "mapy": "37.5247181211",
+       "mlevel": "6",
+       "overview": "신월음악도서관은 2006년 2월 지역 주민들에게 독서문화 및 지식 정보제공을 위해 신월 4동 복합청사에 설립된 양천구 구립 도서관이다. 양천구 지역 주민들을 위한 독서 및 문화 나눔터를 지향하며, 주민들의 다양한 관심사를 반영한 장서와 독서 및 문화 프로그램을 제공하면서 올바른 도서관 문화 형성에 기여하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

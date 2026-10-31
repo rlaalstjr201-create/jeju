@@ -1,0 +1,52 @@
+{
+ "contentid": "135708",
+ "modifiedtime": "20251118112641",
+ "fetchedAt": "2026-10-31T16:18:15.995Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "135708",
+       "contenttypeid": "39",
+       "title": "청수횟집",
+       "createdtime": "20070419090000",
+       "modifiedtime": "20251118112641",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://www.청수횟집.kr\" target=\"_blank\" title=\"새창 : 청수횟집 홈페이지로 이동\">http://www.청수횟집.kr</a>",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강남구 테헤란로25길 9",
+       "addr2": "",
+       "zipcode": "06131",
+       "mapx": "127.0349566149",
+       "mapy": "37.5012822843",
+       "mlevel": "6",
+       "overview": "20여 년간 자연산 회만을 고집하는 청수 횟집에서는 자연산 회를 포함하여 식사 요리와 조림 요리, 게 요리 등을 맛볼 수 있다.\n제철 해산물을 이용한 요리들도 준비되어 있어 계절을 즐기기에도 좋다.\n동해안 청정해역에서 매일 직송되는 자연산 해산물로 손님 상에 올리고 있으며, 각종 모임을 갖기에도 좋은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

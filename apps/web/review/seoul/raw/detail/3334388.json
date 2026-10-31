@@ -1,0 +1,52 @@
+{
+ "contentid": "3334388",
+ "modifiedtime": "20260618105816",
+ "fetchedAt": "2026-10-31T16:19:06.216Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3334388",
+       "contenttypeid": "39",
+       "title": "하우스서울",
+       "createdtime": "20240717163340",
+       "modifiedtime": "20260618105816",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 송파구 백제고분로9길 5 (잠실동)",
+       "addr2": "",
+       "zipcode": "05561",
+       "mapx": "127.0796742374",
+       "mapy": "37.5094025588",
+       "mlevel": "6",
+       "overview": "하우스서울은 갤러리와 카페가 어우러진 복합문화공간으로, 9호선 종합운동장역 9번 출구에서 도보 약 5분 거리에 위치해 있다. 총 4개 층으로 구성되어 있으며 각 층마다 고유한 콘셉트를 갖추고 있어 색다른 경험을 선사한다. 지하 1층은 ‘영감의 공간’으로 갤러리와 서점이 함께 운영되어 다양한 아티스트의 전시를 감상하거나 책을 읽으며 여유를 즐길 수 있다. 1층은 ‘열정의 공간’으로 카페가 자리하고 있어 음료와 함께 편안한 휴식을 취할 수 있으며, 그 밖의 층들도 각각의 테마에 맞춰 특별한 분위기를 제공한다. 문화와 예술, 휴식이 조화를 이루는 공간으로 도심 속에서 색다른 시간을 보내기 좋은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

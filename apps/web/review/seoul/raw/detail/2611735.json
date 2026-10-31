@@ -1,0 +1,52 @@
+{
+ "contentid": "2611735",
+ "modifiedtime": "20250305171815",
+ "fetchedAt": "2026-10-31T16:14:12.267Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2611735",
+       "contenttypeid": "12",
+       "title": "오목공원",
+       "createdtime": "20190718201237",
+       "modifiedtime": "20250305171815",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/78/3384678_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/78/3384678_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "19",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 양천구 목동서로 159-2 (목동)",
+       "addr2": "",
+       "zipcode": "07996",
+       "mapx": "126.8736427870",
+       "mapy": "37.5276541111",
+       "mlevel": "6",
+       "overview": "오목공원은 양천구청 목동에 위치한 근린공원으로, 1989년에 개원하였다. 공원 이름은 ‘오목하게 골이 파인 하천’이라는 뜻을 가진 ‘오목내’로부터 유래했다. 주변에 방송국을 비롯해 고층 오피스빌딩, 아파트들이 자리 잡고 있어 점심시간을 이용해 산책과 휴식을 취하는 이들이 많다. 공원 내에 오목한 미술관이 있어 가볍게 둘러보기 좋으며, 이외에도 놀이터, 농구장, 분수대, 쉼터 등이 설치되어 있다. 도심 속 개방형 생태공원으로 그 의미가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

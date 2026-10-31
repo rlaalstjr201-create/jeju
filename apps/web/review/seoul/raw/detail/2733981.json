@@ -1,0 +1,52 @@
+{
+ "contentid": "2733981",
+ "modifiedtime": "20250610101223",
+ "fetchedAt": "2026-10-31T16:14:47.927Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2733981",
+       "contenttypeid": "12",
+       "title": "구로리어린이공원",
+       "createdtime": "20210817191529",
+       "modifiedtime": "20250610101223",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/3468043_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/3468043_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "7",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 구로구 구로중앙로 13 (구로동)",
+       "addr2": "",
+       "zipcode": "08312",
+       "mapx": "126.8918449243",
+       "mapy": "37.4914308667",
+       "mlevel": "6",
+       "overview": "구로리공원은 서울시 구로구 구로동에 위치한 어린이 공원이다. 기존의 단조롭고 노후된 어린이 공원을 창의력을 키울 수 있는 공원으로 새롭게 단장하여 조성되었다. 어린이가 이용할 수 있는 다양한 시설과 조경을 갖추고 있다. 어린이전용 공원으로 운영되고 있어, 어린이 및 보호자 외 출입을 금지한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

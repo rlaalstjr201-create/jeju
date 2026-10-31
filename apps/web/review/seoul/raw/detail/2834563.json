@@ -1,0 +1,52 @@
+{
+ "contentid": "2834563",
+ "modifiedtime": "20250901144209",
+ "fetchedAt": "2026-10-31T16:18:45.959Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2834563",
+       "contenttypeid": "39",
+       "title": "골목떡볶이",
+       "createdtime": "20220809140100",
+       "modifiedtime": "20250901144209",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/59/2834559_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/59/2834559_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "18",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 송파구 문정로1길 33",
+       "addr2": "",
+       "zipcode": "05805",
+       "mapx": "127.1234850164",
+       "mapy": "37.4891019577",
+       "mlevel": "6",
+       "overview": "골목떡볶이는 서울 3대 떡볶이 맛집이다. 추억의 국물 떡볶이 전문점으로 가게는 송파구 문정역 1번 출구 로데오거리 골목에 있다. 메뉴는 단출하게 떡볶이, 순대, 만두다. 직접 쟁반과 수저 포크를 들고 배식하듯이 주문을 하면 그릇에 담아준다. 양은 많은 편이고 순대와 당면만 있는 만두도 별미로 SBS <백종원의 삼대천왕> 등 많은 방송프로그램에서 소개했다. 인근에 서울스카이, 롯데뮤지엄 등이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2933798",
+ "modifiedtime": "20260318101005",
+ "fetchedAt": "2026-10-31T16:16:03.929Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2933798",
+       "contenttypeid": "39",
+       "title": "돈덩어리",
+       "createdtime": "20221216151049",
+       "modifiedtime": "20260318101005",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 봉천로 237-8 (봉천동)",
+       "addr2": "1층",
+       "zipcode": "08722",
+       "mapx": "126.92838165262563",
+       "mapy": "37.48984610715855",
+       "mlevel": "6",
+       "overview": "관악구에 위치한 삼겹살 전문 돈덩어리 식당이다. 직접 만든 김치에서부터 삼겹살까지 직접 구워주셔서 고기를 아주 맛있게 먹을 수 있는 곳이다. 생삼겹살은 겉은 바삭하고 속은 촉촉하게 알맞게 잘 구워지고 나면 명이나물, 무 쌈 등 밑반찬을 같이 먹으면 더욱 맛있다. 고기를 다 먹고 나면 후식으로 먹을 수 있는 소면과 된장찌개도 준비되어 있으며 마무리 김치볶음밥은 이 집에서 빼놓을 수 없는 별미이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

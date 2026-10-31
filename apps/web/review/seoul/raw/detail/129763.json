@@ -1,0 +1,52 @@
+{
+ "contentid": "129763",
+ "modifiedtime": "20260313134336",
+ "fetchedAt": "2026-10-31T16:16:24.688Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129763",
+       "contenttypeid": "14",
+       "title": "한원미술관",
+       "createdtime": "20071106102858",
+       "modifiedtime": "20260313134336",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.hanwon.org",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/55/3527455_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/55/3527455_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 남부순환로 2423 (서초동)",
+       "addr2": "",
+       "zipcode": "06719",
+       "mapx": "127.0154405333206",
+       "mapy": "37.48177914045834",
+       "mlevel": "6",
+       "overview": "1993년 고(故) 하동환 명예회장의 사재로 개관한 제1종 전문 미술관이다. 2010년부터 화가전을 통해 역량 있는 차세대 한국화 작가를 발굴하고 육성하며, 동시대 한국화의 새로운 가능성을 제시하고 있다. 또한 예비 중견 작가들이 활동의 전환점에서 도약하도록 전시를 지원한다. 박서보, 박노수, 김창열 등 한국 현대미술 대표 작가들의 작품을 소장하고 있으며, 한국화의 대중화와 현대화를 동시에 모색하는 열린 미술관이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2842693",
+ "modifiedtime": "20260129133904",
+ "fetchedAt": "2026-10-31T16:16:11.048Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2842693",
+       "contenttypeid": "39",
+       "title": "파고",
+       "createdtime": "20220824105608",
+       "modifiedtime": "20260129133904",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 행운1길 40 신화로즈빌",
+       "addr2": "1층 105호",
+       "zipcode": "08740",
+       "mapx": "126.957387059576",
+       "mapy": "37.480651455145",
+       "mlevel": "6",
+       "overview": "파고는 서울대입구역 근처에 위치한 이탈리안 비스트로이다. 피자와 파스타, 플레터 등의 메뉴와 다양한 품종의 와인을 즐길 수 있다. 모든 메뉴가 맛있지만 특히 뇨끼가 식감이 부드럽고 크림이 맛있어 뇨끼 맛집으로도 불린다. 원목과 초록색의 인테리어는 빈티지하면서도 따뜻한 분위기이고 실내를 곳곳에 놓인 감성적인 소품들이 이국적인 느낌을 준다. 분위기 있게 저녁과 와인을 즐기고 싶다면 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

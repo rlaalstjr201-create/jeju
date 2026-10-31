@@ -1,0 +1,52 @@
+{
+ "contentid": "2758118",
+ "modifiedtime": "20260312113801",
+ "fetchedAt": "2026-10-31T16:18:52.340Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2758118",
+       "contenttypeid": "39",
+       "title": "본가설렁탕",
+       "createdtime": "20211018222427",
+       "modifiedtime": "20260312113801",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 송파구 석촌호수로 204",
+       "addr2": "(석촌동)",
+       "zipcode": "05611",
+       "mapx": "127.099952993066",
+       "mapy": "37.5063147967944",
+       "mlevel": "6",
+       "overview": "잠실동 석촌호수(동호) 길에 대형 건물과 주차장을 보유한 가마솥 설렁탕집이다. 2층 단독 건물로 식당 입구에 있는 커다란 가마솥에서 진한 소고기 육수를 고아내는 장면을 볼 수 있다. 대표메뉴는 가마솥에서 끓여낸 설렁탕이지만, 소고기 내장이 들어가는 본가탕과 선지가 들어가는 해장국, 돌냄비에 나오는 수육도 인기 메뉴다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

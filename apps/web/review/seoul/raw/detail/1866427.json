@@ -1,0 +1,52 @@
+{
+ "contentid": "1866427",
+ "modifiedtime": "20260921153617",
+ "fetchedAt": "2026-10-31T16:12:31.293Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1866427",
+       "contenttypeid": "14",
+       "title": "서울시립 북서울미술관",
+       "createdtime": "20131203222646",
+       "modifiedtime": "20260921153617",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://sema.seoul.go.kr/kr/visit/bukseoul",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/37/4109337_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/37/4109337_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 동일로 1238 (중계동)",
+       "addr2": "",
+       "zipcode": "01783",
+       "mapx": "127.0668557565",
+       "mapy": "37.6406568403",
+       "mlevel": "6",
+       "overview": "북서울미술관은 지역 공동체와 상생하는 미술관이다. 갈대 언덕에서 비롯한 지명을 살린 노원구에 위치한 북서울미술관은 공원 산책로와 미술관 출입구를 연결한 개방형 건물이다. 야외 조각 전시를 비롯해 미로형으로 설계된 전시실, 아트라이브러리, 카페, 다목적 홀에서 이곳을 주로 찾는 가족 단위 관람객이 즐길 수 있는 다양한 프로그램을 운영하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

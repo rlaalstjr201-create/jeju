@@ -1,0 +1,52 @@
+{
+ "contentid": "2807934",
+ "modifiedtime": "20260227112833",
+ "fetchedAt": "2026-10-31T16:12:53.630Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2807934",
+       "contenttypeid": "39",
+       "title": "손수메밀",
+       "createdtime": "20220222150924",
+       "modifiedtime": "20260227112833",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 은평구 연서로 5-2",
+       "addr2": "",
+       "zipcode": "03421",
+       "mapx": "126.91550720162",
+       "mapy": "37.5997889525992",
+       "mlevel": "6",
+       "overview": "70년 전통 만두 전문점에서 주방장 25년 경력으로 자부심을 갖고 손수 만드는 메밀국수와 손수 빚는 만두로 없던 입맛까지 살려내는 맛집이다. 만두는 감자피와 밀가루 피 둘 중 하나로 선택할 수 있으며 육개장 칼국수는 간이 세지 않아 자극적이지 않고 깔끔하게 먹을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

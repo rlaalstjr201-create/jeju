@@ -1,0 +1,52 @@
+{
+ "contentid": "2870024",
+ "modifiedtime": "20250707120033",
+ "fetchedAt": "2026-10-31T16:17:32.663Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2870024",
+       "contenttypeid": "39",
+       "title": "더원 레스토랑",
+       "createdtime": "20221019101902",
+       "modifiedtime": "20250707120033",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/2870007_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/07/2870007_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 강남구 영동대로 648 (삼성동)",
+       "addr2": "",
+       "zipcode": "06078",
+       "mapx": "127.0576901262",
+       "mapy": "37.5200388484",
+       "mlevel": "6",
+       "overview": "더원 레스토랑은 지하철 7호선 청담역 1번 출구 부근에 있다. 매장이 있는 상가건물에 자체 주차장(발레주차 서비스 가능)이 있어 방문 시 자동차로 이용하기 편리하다. 매장 내부는 고급스러운 분위기이고 넓은 홀에 인원별 다양한 테이블 구성과 개별 룸까지 있어 단체 행사, 비즈니스 모임, 가족 모임에도 적당하다. 대표 메뉴로는 다양한 코스요리가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

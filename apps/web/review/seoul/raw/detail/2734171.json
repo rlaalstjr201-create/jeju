@@ -1,0 +1,52 @@
+{
+ "contentid": "2734171",
+ "modifiedtime": "20260907152826",
+ "fetchedAt": "2026-10-31T16:12:34.371Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2734171",
+       "contenttypeid": "28",
+       "title": "초안산캠핑장",
+       "createdtime": "20210818001119",
+       "modifiedtime": "20260907152826",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://nowonsc.moonhwain.kr:447",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/81/4108481_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/81/4108481_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "AC",
+       "lclsSystm2": "AC05",
+       "lclsSystm3": "AC050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 마들로5가길 66-107",
+       "addr2": "(월계동)",
+       "zipcode": "01866",
+       "mapx": "127.0499733962",
+       "mapy": "37.6428777965",
+       "mlevel": "6",
+       "overview": "초안산캠핑장은 도심에서 쉽게 접근할 수 있는 곳이다. 울창한 숲과 맑은 공기가 어우러져 도심에서도 자연을 만끽할 수 있는 공간이다. 아이들을 위한 놀이터와 잔디광장이 마련되어 있으며, 오토캠핑존, 힐링캠핑존, 캐빈하우스 등 다양한 캠핑존으로 구성되어 있다. 편의시설도 잘 마련되어 있어 캠핑 초보자도 부담 없이 이용할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

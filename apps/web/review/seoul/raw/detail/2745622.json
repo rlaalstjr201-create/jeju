@@ -1,0 +1,52 @@
+{
+ "contentid": "2745622",
+ "modifiedtime": "20260804155557",
+ "fetchedAt": "2026-10-31T16:12:50.656Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2745622",
+       "contenttypeid": "38",
+       "title": "연서시장",
+       "createdtime": "20210916000908",
+       "modifiedtime": "20260804155557",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/36/4095936_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/36/4095936_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 은평구 통일로 850 (불광동)",
+       "addr2": "",
+       "zipcode": "03345",
+       "mapx": "126.9213755946",
+       "mapy": "37.6191605751",
+       "mlevel": "6",
+       "overview": "연서시장은 연신내역 인근에 위치한 전통시장으로 미로처럼 얽힌 골목을 구경하는 재미가 있는 곳이다. 신선한 농산물, 수산물, 정육, 반찬 등 다양한 품목을 합리적인 가격에 제공하여 장보기의 편리함을 더한다. 특히, 시장 먹자골목 내 모든 가게는 바 형태로 구성되어 있으며, 각종 메뉴와 제철 음식들을 판매하고 있다. 지역 주민과 북한산 등산객 모두가 애용하고 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

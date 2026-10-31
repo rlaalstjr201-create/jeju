@@ -1,0 +1,52 @@
+{
+ "contentid": "3080558",
+ "modifiedtime": "20260803144926",
+ "fetchedAt": "2026-10-31T16:17:19.279Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3080558",
+       "contenttypeid": "14",
+       "title": "kia360",
+       "createdtime": "20231210181845",
+       "modifiedtime": "20260803144926",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.kia.com/kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/51/3080551_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/51/3080551_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 압구정로 417 (압구정동)",
+       "addr2": "",
+       "zipcode": "06009",
+       "mapx": "127.0428868560",
+       "mapy": "37.5275585956",
+       "mlevel": "6",
+       "overview": "Kia360은 360도로 펼쳐진 트랙을 따라 기아의 브랜드와 디자인 철학을 이해하고 새로운 생각과 영감을 얻을 수 있도록 조성된 체험관이다. 다양한 체험들을 통해 기아자동차 브랜드에 대해 자세히 알고 차량을 시승해 보는 등의 경험을 할 수 있다. 3개의 부분으로 나누어져 있다. 브랜드와 디자인을 알아볼 수 있는 Brand & Design Zone, EV 전기 자동차를 체험해 볼 수 있는 EV Life Zone 그리고 기아자동차 브랜드의 역사와 옛 모습들을 디지털로 복원하여 볼 수 있는 Kia User & Heritage Zone이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

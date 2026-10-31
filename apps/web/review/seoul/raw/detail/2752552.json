@@ -1,0 +1,52 @@
+{
+ "contentid": "2752552",
+ "modifiedtime": "20260820170844",
+ "fetchedAt": "2026-10-31T16:16:55.675Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2752552",
+       "contenttypeid": "12",
+       "title": "신사공원",
+       "createdtime": "20211001231443",
+       "modifiedtime": "20260820170844",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/26/3397426_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/26/3397426_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 압구정동",
+       "addr2": "422",
+       "zipcode": "06000",
+       "mapx": "127.0214833948",
+       "mapy": "37.5267837847",
+       "mlevel": "6",
+       "overview": "신사공원은 서울 강남구 압구정동에 위치해 있는 근린공원이다. 가로수길과 한강시민공원 잠원지구 사이에 위치해 있어 공원을 찾는 이들이 많다. 신사공원은 1977년 7월 9일에 공원으로 지정되었다. 다양한 수목과 휴게 시설·운동 시설을 갖춘 공원으로 1985년 5월 5일에 개장하였으며, 2007년에 공원 리모델링 공사를 실시하였다. 공원 규모가 크지는 않지만 공원 양끝에 두 개의 넓은 광장 사이로 산책로가 조성되어 있으며, 운동기구와 음수대, 정자, 벤치가 있어 운동과 더불어 휴식하기 좋은 공원이다. 특히 마사토 포장을 한 게이트볼장이 설치되어 있어 어르신들의 이용이 활발하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

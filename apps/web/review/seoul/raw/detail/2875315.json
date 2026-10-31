@@ -1,0 +1,52 @@
+{
+ "contentid": "2875315",
+ "modifiedtime": "20250919171258",
+ "fetchedAt": "2026-10-31T16:12:36.175Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2875315",
+       "contenttypeid": "39",
+       "title": "경복식당",
+       "createdtime": "20221026095229",
+       "modifiedtime": "20250919171258",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/04/2875304_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/04/2875304_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "9",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 노원구 공릉로39길 10 (공릉동, 대아아파트)",
+       "addr2": "",
+       "zipcode": "01836",
+       "mapx": "127.0788741361",
+       "mapy": "37.6237632891",
+       "mlevel": "6",
+       "overview": "경복식당은 지하철 7호선 공릉역 2번 출구 공릉동 도깨비시장 부근에 있다. 이곳의 대표 메뉴는 백반에 제육볶음 추가로 단출하지만, 가성비가 좋다. 깔끔한 집밥 스타일의 반찬과 푸짐한 구성이 특징이다. 밑반찬이 12개 정도 나온다. 주변에 태릉, 강릉, 동구릉 등 세계문화유산이 있어 연계 관광을 할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

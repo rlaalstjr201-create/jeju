@@ -1,0 +1,52 @@
+{
+ "contentid": "2753931",
+ "modifiedtime": "20260317101258",
+ "fetchedAt": "2026-10-31T16:16:00.534Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2753931",
+       "contenttypeid": "38",
+       "title": "봉일시장",
+       "createdtime": "20211006224625",
+       "modifiedtime": "20260317101258",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3521411_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3521411_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 은천로 28 (봉천동)",
+       "addr2": "",
+       "zipcode": "08749",
+       "mapx": "126.938389949449",
+       "mapy": "37.4859081000629",
+       "mlevel": "6",
+       "overview": "서울시 관악구 은천동에 있는 재래시장으로 2개 동으로 이루어진 건물형 시장이다. 1971년에 처음 개설되어 지금까지 운영되고 있으며 마트, 옷가게, 옷수선집, 음식점, 정육점, 빵가게 등 약 36여 개의 점포로 구성된 소형시장으로 질 좋은 상품을 저렴한 가격으로 판매하며 맛집으로 소문난 음식점들이 즐비하다. 매장별로 차이가 있지만 대부분 오전 8시에 개점하여 오후 10시에 폐점한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

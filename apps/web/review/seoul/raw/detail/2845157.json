@@ -1,0 +1,52 @@
+{
+ "contentid": "2845157",
+ "modifiedtime": "20250917112810",
+ "fetchedAt": "2026-10-31T16:14:03.319Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2845157",
+       "contenttypeid": "39",
+       "title": "파롤앤랑그",
+       "createdtime": "20220829154023",
+       "modifiedtime": "20250917112810",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/02/2844902_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/02/2844902_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 마포구 성미산로29안길 8 (연남동)",
+       "addr2": "",
+       "zipcode": "03980",
+       "mapx": "126.9228705788",
+       "mapy": "37.5650367567",
+       "mlevel": "6",
+       "overview": "연남동에 위치한 파롤앤랑그는 직사각형 파이로 유명한 디저트 카페이다. 바삭한 시트에 밤, 딸기, 홍시, 바질토마토, 초코바나나 등 다양한 토핑이 올라가는 것이 특징인이다. 맛과 비주얼이 훌륭하다. 칼로 깔끔하게 잘려 먹기도 편하다. 옥수수 파이는 한 번 맛보면 잊을 수 없는 맛으로, 크림과 파이의 밸런스가 훌륭하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

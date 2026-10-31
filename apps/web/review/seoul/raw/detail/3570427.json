@@ -1,0 +1,52 @@
+{
+ "contentid": "3570427",
+ "modifiedtime": "20260427170144",
+ "fetchedAt": "2026-10-31T16:19:04.418Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3570427",
+       "contenttypeid": "39",
+       "title": "캐롤스 본점",
+       "createdtime": "20251120132814",
+       "modifiedtime": "20260427170144",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/88/3570388_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/88/3570388_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 송파구 올림픽로 300 (신천동)",
+       "addr2": "롯데월드몰 3층 캐롤스",
+       "zipcode": "05551",
+       "mapx": "127.10406050706861",
+       "mapy": "37.514113873232",
+       "mlevel": "6",
+       "overview": "송파구에 위치한 캐롤스는 미국 전통의 맛을 재연한 아메리칸 패밀리 레스토랑이다. 옛 세대에게는 어린 시절, 부모님과 함께 방문하였을 때 느낄 수 있었던 정통 미국의 맛과 패밀리 레스토랑 특유의 편안함을 제공한다. 또한  젊은 세대에게는 여태 느껴보지 못했던 레트로 무드의 패밀리 레스토랑 경험을 제공한다. 패밀리 레스토랑 하면 떠오르는 베이비 백 립, 몬테크리스토, 스파게티, 버거, 스테이크, 후식으로는 달콤한 파르페 등과 아이들을 위한 키즈밀 메뉴까지 있어 모두 즐겁게 식사할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "407703",
+ "modifiedtime": "20260224153438",
+ "fetchedAt": "2026-10-31T16:16:10.021Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "407703",
+       "contenttypeid": "39",
+       "title": "우묵배미",
+       "createdtime": "20080117224112",
+       "modifiedtime": "20260224153438",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 남부순환로 1540",
+       "addr2": "",
+       "zipcode": "08773",
+       "mapx": "126.921751582841",
+       "mapy": "37.4828199935106",
+       "mlevel": "6",
+       "overview": "우묵배미 신림점은 돼지볶음과 돼지고기가 듬뿍 들어간 찌개로 유명한 식당이다. 식당 이름인 우묵배미의 배미는 논의 사투리로, ‘우묵한 논’이라는 뜻이며 난곡의 옛 지명이라고 한다. 대표 메뉴는 돼지볶음과 돼지 두부찌개이며 이 밖에도 낙지 숙회, 훈제오리구이, 돼지 낙지전골 등을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

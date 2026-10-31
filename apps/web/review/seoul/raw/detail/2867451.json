@@ -1,0 +1,52 @@
+{
+ "contentid": "2867451",
+ "modifiedtime": "20250502150215",
+ "fetchedAt": "2026-10-31T16:18:10.836Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2867451",
+       "contenttypeid": "39",
+       "title": "잡어향기",
+       "createdtime": "20221014140444",
+       "modifiedtime": "20250502150215",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/39/2867439_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/39/2867439_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강남구 압구정로79길 73-4 (청담동)",
+       "addr2": "",
+       "zipcode": "06013",
+       "mapx": "127.0531014785",
+       "mapy": "37.5262408234",
+       "mlevel": "6",
+       "overview": "잡어향기는 서울시 강남구 영동대교 남단에 위치한 해산물 요리 전문점으로, 싱싱하고 다양한 자연산 잡어를 취급하는 곳이다. 식당 입구에 수족관이 넓게 자리해 있어 각종 신선한 어류들을 확인할 수 있다. 이곳은 국내산 제철 해산물과 대게, 물회 등으로 손님들에게 대접하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "130951",
+ "modifiedtime": "20261016152404",
+ "fetchedAt": "2026-10-31T16:16:23.926Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130951",
+       "contenttypeid": "14",
+       "title": "전기박물관",
+       "createdtime": "20070806090000",
+       "modifiedtime": "20261016152404",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.kepco.co.kr/art",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3540611_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3540611_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 효령로72길 60 (서초동)",
+       "addr2": "",
+       "zipcode": "06732",
+       "mapx": "127.0280730687",
+       "mapy": "37.4855903837",
+       "mlevel": "6",
+       "overview": "한국전력은 1887년 경복궁에 처음으로 전기불이 켜진 이후 일제의 강점과 남북 분단, 그리고 한국전쟁이라는 민족상잔의 아픔을 국민들과 함께 이겨내면서 오늘날 우리 사회의 중추적인 기간산업으로 자리하게 되었다. 20세기 격변하는 역사의 소용돌이 속에서도 꾸준히 성장을 거듭하여 국가 경제 발전의 원동력이 되어온 한국전력은 국가경제와 고객에 대한 무한 책임과 전력 문화 창달을 위하여 끊임없이 노력하고 있다.\n한국전력은 지난 세기의 전기 역사를 체계적으로 정리하여 보존하고 사람들에게 전기의 소중함과 근대 과학의 발전 과정을 알려주기 위해 전기박물관을 건립했다. 전기박물관은 전력인의 혼이 담긴 소중한 전력문화유산을 후손에게 물려주고자 하는 전력인의 바람이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2869928",
+ "modifiedtime": "20261029140637",
+ "fetchedAt": "2026-10-31T16:17:37.027Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2869928",
+       "contenttypeid": "39",
+       "title": "마초쉐프 강남본점",
+       "createdtime": "20221019095021",
+       "modifiedtime": "20261029140637",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/13/2869913_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/13/2869913_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 강남대로106길 29 (역삼동)",
+       "addr2": "",
+       "zipcode": "06124",
+       "mapx": "127.0278419277",
+       "mapy": "37.5034979062",
+       "mlevel": "6",
+       "overview": "마초쉐프 강남본점은 TV 프로그램에 저렴하고 푸짐한 양의 마초 삼겹 스테이크 맛집으로 소개되었다. 강남역 맛집으로 이곳은 차별화된 인테리어, 고급 진 소품, 트렌디한 음악, 저렴하고 푸짐한 양을 자랑한다. 맛있는 화덕피자와 불타는 삼겹살 스테이크, 풍미가 가득한 파스타 등 다양한 이탈리안 음식을 맛볼 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

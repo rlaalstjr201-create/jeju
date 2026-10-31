@@ -1,0 +1,52 @@
+{
+ "contentid": "3453040",
+ "modifiedtime": "20241226163300",
+ "fetchedAt": "2026-10-31T16:12:43.147Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3453040",
+       "contenttypeid": "12",
+       "title": "녹번서공원",
+       "createdtime": "20241219161800",
+       "modifiedtime": "20241226163300",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/96/3452496_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/96/3452496_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "22",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA05",
+       "lclsSystm3": "NA050100",
+       "cat1": "A01",
+       "cat2": "A0101",
+       "cat3": "A01010500",
+       "addr1": "서울특별시 은평구 서오릉로 52 (녹번동)",
+       "addr2": "",
+       "zipcode": "03379",
+       "mapx": "126.9239887769",
+       "mapy": "37.6055181816",
+       "mlevel": "6",
+       "overview": "녹번서공원은 서울 은평구 녹번동에 위치한 자연친화적인 공원으로, 다양한 식물과 나무들이 자생하는 공간입니다. 특히 봄과 가을에는 꽃과 단풍을 감상할 수 있으며, 자연학습장, 운동기구, 도서관 등 다양한 시설이 마련되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

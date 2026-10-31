@@ -1,0 +1,52 @@
+{
+ "contentid": "1113537",
+ "modifiedtime": "20261012104140",
+ "fetchedAt": "2026-10-31T16:14:16.369Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1113537",
+       "contenttypeid": "14",
+       "title": "양천문화회관",
+       "createdtime": "20101019202240",
+       "modifiedtime": "20261012104140",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://yfac.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/54/3432554_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/54/3432554_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 목동서로 367",
+       "addr2": "",
+       "zipcode": "08094",
+       "mapx": "126.8633007768",
+       "mapy": "37.5164037381",
+       "mlevel": "6",
+       "overview": "양천문화재단에서 운영하고 있는 양천문화회관은 지역 주민들을 위한 문화예술 공간으로, 양천구 문화의 중심지로 자리매김해 왔다. 다양한 공연과 전시, 문화 프로그램을 통해 주민들에게 예술적 영감을 주고 있다. 현대적인 시설과 우수한 음향, 조명 장비를 갖추고 있어 다양한 장르의 공연을 소화할 수 있다. 수준 높은 공연, 축제, 전시를 개발하여 양천구 문화의 새로운 가능성을 발견하고, 지역문화진흥과 구민문화 향유의 구심점이 되고자 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

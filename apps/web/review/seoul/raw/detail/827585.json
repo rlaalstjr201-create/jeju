@@ -1,0 +1,52 @@
+{
+ "contentid": "827585",
+ "modifiedtime": "20260227101205",
+ "fetchedAt": "2026-10-31T16:16:16.448Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "827585",
+       "contenttypeid": "12",
+       "title": "양재천 근린공원",
+       "createdtime": "20091027015344",
+       "modifiedtime": "20260227101205",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/88/3540688_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/88/3540688_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA04",
+       "lclsSystm3": "NA040500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 양재동",
+       "addr2": "261-23",
+       "zipcode": "06777",
+       "mapx": "127.0417",
+       "mapy": "37.4765",
+       "mlevel": "6",
+       "overview": "양재천 근린공원은 양재시민의숲역 근처에 자리한 도심 속 자연공원이다. 꽃과 나무들이 어우러져 자연친화적인 환경을 제공한다. 양재천을 따라 길게 조성된 산책로는 가볍게 걷거나 자전거를 타기 좋다. 보행자길과 자전거길이 나뉘어 이어 안전하게 이용할 수 있다. 일상 속에서 편안하게 휴식하고 활력을 얻을 수 있는 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

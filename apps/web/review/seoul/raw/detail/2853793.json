@@ -1,0 +1,52 @@
+{
+ "contentid": "2853793",
+ "modifiedtime": "20250918113419",
+ "fetchedAt": "2026-10-31T16:13:56.923Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2853793",
+       "contenttypeid": "39",
+       "title": "우리바다수산",
+       "createdtime": "20220915131602",
+       "modifiedtime": "20250918113419",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/85/2853785_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/85/2853785_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 마포구 월드컵로 102 (성산동)",
+       "addr2": "",
+       "zipcode": "03996",
+       "mapx": "126.9089081657",
+       "mapy": "37.5578290117",
+       "mlevel": "6",
+       "overview": "우리바다수산은 망원역 인근 횟집이다. 이곳은 광어회를 비롯하여 농어회, 연어회, 도미회, 대방어 등 다양한 회를 맛볼 수 있다. 도톰한 광어회, 쫄깃한 산오징어, 기름진 대방어 등 계절별 인기 메뉴가 준비되어 있다. 매운탕에 라면이나 수제비 사리를 추가해 먹는 것을 추천드리며, 광어와 우럭을 함께 즐기는 모듬회도 인기다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

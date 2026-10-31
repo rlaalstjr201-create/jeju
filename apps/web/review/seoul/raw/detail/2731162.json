@@ -1,0 +1,52 @@
+{
+ "contentid": "2731162",
+ "modifiedtime": "20251124164652",
+ "fetchedAt": "2026-10-31T16:17:34.985Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2731162",
+       "contenttypeid": "39",
+       "title": "루비떡볶이",
+       "createdtime": "20210805014528",
+       "modifiedtime": "20251124164652",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강남구 선릉로153길 21",
+       "addr2": "1층",
+       "zipcode": "06019",
+       "mapx": "127.0376640392",
+       "mapy": "37.5246851709",
+       "mlevel": "",
+       "overview": "루비떡볶이는 압구정로데오역 근처에 위치한 분식 전문점이다. 수요미식회 등 다양한 프로그램에서 소개가 될 정도로 인기 있는 떡볶이 맛집이다. 대표메뉴인 새우깡떡볶이는 튀긴 작은 새우를 떡볶이 위에 토핑으로 올라가는데 바삭한 새우깡과 쫄깃한 떡, 매콤한 소스의 조합이 아주 잘 어울린다. 색다른 맛의 떡볶이를 찾는다면 강력 추천한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

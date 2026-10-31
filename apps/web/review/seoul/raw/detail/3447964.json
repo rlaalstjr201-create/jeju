@@ -1,0 +1,52 @@
+{
+ "contentid": "3447964",
+ "modifiedtime": "20250731112145",
+ "fetchedAt": "2026-10-31T16:14:47.157Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3447964",
+       "contenttypeid": "12",
+       "title": "구로거리공원",
+       "createdtime": "20241217231958",
+       "modifiedtime": "20250731112145",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.guro.go.kr/www/index.do",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/36/3455136_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/36/3455136_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "7",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA05",
+       "lclsSystm3": "NA050100",
+       "cat1": "A01",
+       "cat2": "A0101",
+       "cat3": "A01010500",
+       "addr1": "서울특별시 구로구 공원로 73-1 (구로동)",
+       "addr2": "",
+       "zipcode": "08290",
+       "mapx": "126.8883643588",
+       "mapy": "37.5030794513",
+       "mlevel": "6",
+       "overview": "지역 주민들의 휴식과 여가를 위한 공간이며, 구로구의 도시적 특성과 자연을 조화롭게 담아낸 공간이다. 공원에서는 종종 지역 축제, 공연, 전시 등 다양한 문화 행사가 열린다. 문화 행사로 지역 사회의 유대감을 강화시킨다는 장점이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

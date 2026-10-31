@@ -1,0 +1,52 @@
+{
+ "contentid": "2383448",
+ "modifiedtime": "20250317133312",
+ "fetchedAt": "2026-10-31T16:15:47.022Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2383448",
+       "contenttypeid": "39",
+       "title": "미자식당",
+       "createdtime": "20160512184003",
+       "modifiedtime": "20250317133312",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "12",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "590",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 동작구 노들로 674",
+       "addr2": "노량진수산물도매시장 2층 8호",
+       "zipcode": "06900",
+       "mapx": "126.9368568295",
+       "mapy": "37.5149233858",
+       "mlevel": "6",
+       "overview": "노량진수산시장과 40년을 동고동락한 대표 터줏대감이다. 1층 소매점에서 수산물을 구매해 오면 조리해 주는 회양념집으로 매운탕, 백반 등 기본적인 식사도 가능하다. 주방장이 조리해 주는 아귀탕, 홍어애탕 등은 특히 일품으로 정치인과 연예인들이 그 맛에 반해 찾는 명소로도 유명하다. 매장 내부는 입식 좌석으로 구성되어 있으며 룸도 존재하여 프라이빗한 식사가 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

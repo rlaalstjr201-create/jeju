@@ -1,0 +1,52 @@
+{
+ "contentid": "2760228",
+ "modifiedtime": "20261019145634",
+ "fetchedAt": "2026-10-31T16:14:19.959Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2760228",
+       "contenttypeid": "38",
+       "title": "신곡종합시장",
+       "createdtime": "20211021005447",
+       "modifiedtime": "20261019145634",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.yangcheon.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/57/3568157_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/57/3568157_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 남부순환로79길 37 (신월동)",
+       "addr2": "",
+       "zipcode": "08064",
+       "mapx": "126.8431970520",
+       "mapy": "37.5183688970",
+       "mlevel": "6",
+       "overview": "서울시 양천구 신월동에 위치한 소규모의 재래시장으로 1976년에 개장한 이래 현재 30개의 점포가 남아 운영되고 있다. 옛 시장의 모습을 많이 유지하고 있어 따뜻하고 정겨운 분위기의 느낄 수 있는 시장으로 농수산물, 과일, 반찬 등 다양한 먹거리와 생필품을 판매하고 있다. 인근 주민들에게는 사랑방처럼 따뜻한 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

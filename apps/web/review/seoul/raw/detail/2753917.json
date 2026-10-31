@@ -1,0 +1,52 @@
+{
+ "contentid": "2753917",
+ "modifiedtime": "20261019161728",
+ "fetchedAt": "2026-10-31T16:14:35.312Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2753917",
+       "contenttypeid": "38",
+       "title": "화곡본동시장",
+       "createdtime": "20211006223517",
+       "modifiedtime": "20261019161728",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/82/3566882_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/82/3566882_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강서구 까치산로 35 (화곡동)",
+       "addr2": "",
+       "zipcode": "07721",
+       "mapx": "126.8441294123",
+       "mapy": "37.5428848640",
+       "mlevel": "6",
+       "overview": "1969년에 개설되어 2004년 1월 강서구 전통시장으로 인정받고, 2018년 특성화 첫걸음 시장, 2019년 문화 관광형 시장으로 선정된 전통시장이다. 농수산물 등 주로 1차 상품을 판매하고 있으며, 약 55개 점포가 운영되고 있는 소규모 골목형 시장이다. 최근에는 온라인 장보기 서비스를 이용할 수 있도록 하여 서울시, 고양시 지역에 한하여 배달 주문이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

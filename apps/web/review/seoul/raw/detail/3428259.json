@@ -1,0 +1,52 @@
+{
+ "contentid": "3428259",
+ "modifiedtime": "20250731131103",
+ "fetchedAt": "2026-10-31T16:15:50.851Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3428259",
+       "contenttypeid": "12",
+       "title": "관악도시농업공원",
+       "createdtime": "20241128135419",
+       "modifiedtime": "20250731131103",
+       "tel": "",
+       "telname": "",
+       "homepage": "cityfarmer.seoul.go.kr/",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/77/3428277_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/77/3428277_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "5",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA05",
+       "lclsSystm3": "NA050100",
+       "cat1": "A01",
+       "cat2": "A0101",
+       "cat3": "A01010500",
+       "addr1": "서울특별시 관악구 광신길 142 (신림동)",
+       "addr2": "",
+       "zipcode": "08848",
+       "mapx": "126.9271202346",
+       "mapy": "37.4649234640",
+       "mlevel": "6",
+       "overview": "서울특별시 관악구에 있는 도시농원업으로, 도시민들에게 농업 체험의 기회를 제공하고 자연과 교감을 느끼면서 보호적인 삶의 방식을 체험할 수 있는 공간이다. 이 곳은 도시안에서도 농업 활동을 체험할 수 있도록 다양한 시설과 프로그램을 공원에 있도록 하기 위해 나만의 링과 교육의 장으로 자리 잡고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

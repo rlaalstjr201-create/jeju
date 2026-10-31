@@ -1,0 +1,52 @@
+{
+ "contentid": "2638474",
+ "modifiedtime": "20261019173735",
+ "fetchedAt": "2026-10-31T16:12:25.842Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2638474",
+       "contenttypeid": "12",
+       "title": "서울생활사박물관",
+       "createdtime": "20191125183358",
+       "modifiedtime": "20261019173735",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://museum.seoul.go.kr/sulm",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/84/3540384_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/84/3540384_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 동일로174길 27 (공릉동)",
+       "addr2": "",
+       "zipcode": "01849",
+       "mapx": "127.0769624268",
+       "mapy": "37.6190810675",
+       "mlevel": "6",
+       "overview": "2019년 9월에 개관한 서울생활사박물관은 해방 이후부터 현재까지 서울 시민들의 생활사를 보여주는 근현대 박물관이다. 2010년 서울북부지방법원과 서울북부지방검찰청이 있던 북부법조단지가 이전하면서 유휴지로 남았고, 법원, 검찰청 건물을 서울시민들을 위한 문화시설로 탈바꿈하였다. 사람들의 기억과 감성을 담은 서울생활사박물관은 다양한 주제의 전시와 교육프로그램을 시민들에게 제공함으로써 소통과 교감을 이루는 동북부 문화공간의 중심이 되고자 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

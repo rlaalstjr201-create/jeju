@@ -1,0 +1,52 @@
+{
+ "contentid": "2665070",
+ "modifiedtime": "20250421140053",
+ "fetchedAt": "2026-10-31T16:17:46.205Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2665070",
+       "contenttypeid": "39",
+       "title": "보보식당",
+       "createdtime": "20200724224508",
+       "modifiedtime": "20250421140053",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/75/2665075_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/75/2665075_image2_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 강남구 언주로174길 30 (신사동)",
+       "addr2": "1층 103호",
+       "zipcode": "06017",
+       "mapx": "127.0363057386",
+       "mapy": "37.5279014396",
+       "mlevel": "6",
+       "overview": "보보식당은 장보원 셰프의 특별한 중식을 경험할 수 있는 모던차이니즈 레스토랑이다. 광주에서의 영업을 마치고 많은 준비 끝에 압구정으로 이전 오픈을 했다. 기존의 결을 살리며, 각종 제철 식재료를 이용한 정기적인 시즌 메뉴와 다양한 요리들을 선보이고 있다. \n보보식당의 메뉴로는 진한 불향을 입힌 홍콩식 참숯 그릴 차슈, 상큼한 오이 샐러드, 산동비장의 닭고기 냉채인 산동 샤오찌, 동파육 등 다양하고 특색 있는 중식을 맛볼 수 있다. 편리한 이용을 위해선 사전 예약 후 방문하는 것이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

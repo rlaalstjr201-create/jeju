@@ -1,0 +1,52 @@
+{
+ "contentid": "814255",
+ "modifiedtime": "20250610101729",
+ "fetchedAt": "2026-10-31T16:14:50.490Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "814255",
+       "contenttypeid": "12",
+       "title": "온수공원",
+       "createdtime": "20091006234818",
+       "modifiedtime": "20250610101729",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/95/3467295_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/95/3467295_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "7",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 구로구 고척로21나길 103 (개봉동)",
+       "addr2": "",
+       "zipcode": "08250",
+       "mapx": "126.8397382631",
+       "mapy": "37.5020481486",
+       "mlevel": "6",
+       "overview": "서울시 구로구에 위치한 온수공원은 1971년 도시 자연공원으로 지정되었다. 임상이 양호하며 식생이 다양하고 수목 등 식생이 잘 보존된 전형적인 자연상태의 공원이다. 등산로 주변에 약수터와 배드민턴장, 체력단련장, 의자 등 휴게시설과 철봉, 허리 돌리기 등 운동기구가 등산로 곳곳에 설치되어 많은 시민들이 방문하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

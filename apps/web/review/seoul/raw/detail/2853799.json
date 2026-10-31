@@ -1,0 +1,52 @@
+{
+ "contentid": "2853799",
+ "modifiedtime": "20250918113704",
+ "fetchedAt": "2026-10-31T16:13:52.078Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2853799",
+       "contenttypeid": "39",
+       "title": "소이연남",
+       "createdtime": "20220915132119",
+       "modifiedtime": "20250918113704",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/94/2853794_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/94/2853794_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020700",
+       "addr1": "서울특별시 마포구 동교로 267 (연남동)",
+       "addr2": "",
+       "zipcode": "03983",
+       "mapx": "126.9253926121",
+       "mapy": "37.5635841930",
+       "mlevel": "6",
+       "overview": "홍대입구역에서 도보 10분 이내 거리에 있는 유명한 태국 쌀국수 전문점이다. 매장 인테리어에서부터 현지의 분위기를 물씬 느낄 수 있다. 5시간 동안 끓인 진한 국물과 부드러운 수육이 들어간 소고기 쌀국수가 인기메뉴이다. 그 외에도 똠얌 쌀국수, 소이뼈국수, 쏨땀, 소이뼈 찜 등 다양한 태국 요리를 맛볼 수 있다. 전용 주차장이 없어 매장 옆에 있는 노상 공용주차장을 이용해야 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

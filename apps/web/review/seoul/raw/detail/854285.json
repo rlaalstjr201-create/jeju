@@ -1,0 +1,52 @@
+{
+ "contentid": "854285",
+ "modifiedtime": "20250307174953",
+ "fetchedAt": "2026-10-31T16:12:56.723Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "854285",
+       "contenttypeid": "39",
+       "title": "코스모스분식",
+       "createdtime": "20091104053311",
+       "modifiedtime": "20250307174953",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "22",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 은평구 연서로15길 2 (구산동)",
+       "addr2": "",
+       "zipcode": "03412",
+       "mapx": "126.9165893078",
+       "mapy": "37.6105980136",
+       "mlevel": "6",
+       "overview": "코스모스분식은 정겨운 분위기 속에서 옛날 분식의 맛을 그대로 재현하는 곳이다. 대표 메뉴로는 떡볶이, 라면, 만두, 순대 등의 분식류가 있으며, 합리적인 가격과 푸짐한 양으로 사랑받고 있다. 학생 시절부터 다녔던 단골 손님들이 많으며, 추억의 맛을 잊지 못하고 재방문하는 손님들도 많다. 한 끼 식사로도 좋고 간식으로도 부담 없이 즐길 수 있어 남녀노소 모두에게 인기다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

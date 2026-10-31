@@ -1,0 +1,52 @@
+{
+ "contentid": "2745504",
+ "modifiedtime": "20260312113138",
+ "fetchedAt": "2026-10-31T16:16:43.501Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2745504",
+       "contenttypeid": "39",
+       "title": "예촌 본관",
+       "createdtime": "20210915223001",
+       "modifiedtime": "20260312113138",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 서운로 11 (서초동)",
+       "addr2": "서초대우디오빌 1층 106호",
+       "zipcode": "06733",
+       "mapx": "127.02909863867083",
+       "mapy": "37.484984905404836",
+       "mlevel": "6",
+       "overview": "예촌은 일명 신가예촌으로 불리는 한정식집이다. 내곡동 소재 예촌 텃밭에서 직접 재배한 유기농 야채를 사용하고, 보리굴비 역시 영광 법성포 소재에 있는 ‘예촌건조장’ 조기를 구입한 후 ‘신한소금’으로 정성껏 간질 하여, 자연 해풍에 3~4개월 위생적인 건조장에서 직접 말려 만든 음식을 제공하는 위생과 청결을 중점을 두는 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

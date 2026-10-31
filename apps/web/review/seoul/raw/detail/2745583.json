@@ -1,0 +1,52 @@
+{
+ "contentid": "2745583",
+ "modifiedtime": "20261001163450",
+ "fetchedAt": "2026-10-31T16:16:24.181Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2745583",
+       "contenttypeid": "14",
+       "title": "플로팅아일랜드",
+       "createdtime": "20210915233259",
+       "modifiedtime": "20261001163450",
+       "tel": "",
+       "telname": "",
+       "homepage": "www.ficonvention.com",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/50/3386650_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/50/3386650_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE12",
+       "lclsSystm3": "VE120300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 올림픽대로 2085-14 (반포동)",
+       "addr2": "",
+       "zipcode": "06500",
+       "mapx": "126.9965617419",
+       "mapy": "37.5122506146",
+       "mlevel": "6",
+       "overview": "한강의 랜드마크인 세빛섬에 자리 잡은플로팅아일랜드는 2014년부터 다양한 국제 행사와 기업연회 등을 유치해 왔다. 정상회담, 문화축제, 국제 전시와 패션쇼까지 아름다운 섬들과 어우러져 다양한 행사 유치가 가능한 서울시의 상징적인 장소로 자리 잡았다. 단순한 연회장이 아닌 창의성과 문화적 풍부함의 조화를 느끼실 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2733858",
+ "modifiedtime": "20261028191350",
+ "fetchedAt": "2026-10-31T16:13:45.725Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2733858",
+       "contenttypeid": "39",
+       "title": "램랜드",
+       "createdtime": "20210813220818",
+       "modifiedtime": "20261028191350",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/19/4129519_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/19/4129519_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 토정로 255",
+       "addr2": "(용강동)",
+       "zipcode": "04159",
+       "mapx": "126.9388759696",
+       "mapy": "37.5434351362",
+       "mlevel": "6",
+       "overview": "램랜드는 양고기전문점으로 신선한 양고기 등심을 갈비뼈를 따라 하나하나 잘라낸 삼각갈비는 소고기보다 육질이 연하고 지방이 적어 담백하고 고소한 맛이다. 2년 미만의 새끼 양을 사용하여 특유의 냄새를 없앴다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

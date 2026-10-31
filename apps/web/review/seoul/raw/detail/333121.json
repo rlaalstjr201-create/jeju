@@ -1,0 +1,52 @@
+{
+ "contentid": "333121",
+ "modifiedtime": "20250708142538",
+ "fetchedAt": "2026-10-31T16:17:07.636Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "333121",
+       "contenttypeid": "14",
+       "title": "백암아트홀",
+       "createdtime": "20070130190257",
+       "modifiedtime": "20250708142538",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://www.baekamhall.com/\" target=\"_blank\" title=\"새창 : 백암아트홀 홈페이지로 이동\">http://www.baekamhall.com</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/32/3503232_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/32/3503232_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060600",
+       "addr1": "서울특별시 강남구 테헤란로113길 7",
+       "addr2": "(삼성동)",
+       "zipcode": "06173",
+       "mapx": "127.0660313070",
+       "mapy": "37.5103790088",
+       "mlevel": "6",
+       "overview": "강남구 테헤란로 강남소방서 맞은편에 2004년 개관한 백암아트홀은 극장으로 다양한 공연이 가능한 가변무대가 갖춰져 있어 연극, 뮤지컬, 콘서트, 무용 등 여러 장르의 공연이 가능하다. 백암아트홀에는 다양한 공연지원시설이 있는데, 개인 분장실과 단체 분장실이 있으며, 디지털 피아노와 연습용 거울을 갖춘 리허설룸이 있다. 복층구조로 된 공연장 1층에는 장애인석을 포함한 객석이 있으며, 2층에도 객석이 있다. 특히, 젊은이들이 많이 찾는 강남의 삼성동에 위치해 있어 20대와 30대를 위한 공연을 많이 한다. 백암아트홀은 주차 시설이 협소하여 가급적 대중교통을 이용하는 것이 편리하며, 서울 지하철을 이용할 경우 2호선을 이용하면 된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "131453",
+ "modifiedtime": "20261007160107",
+ "fetchedAt": "2026-10-31T16:15:59.755Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "131453",
+       "contenttypeid": "28",
+       "title": "관악청소년센터",
+       "createdtime": "20040227090000",
+       "modifiedtime": "20261007160107",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://booking.gwanakgongdan.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/65/3589365_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/65/3589365_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 신림로23길 17 (신림동)",
+       "addr2": "",
+       "zipcode": "08813",
+       "mapx": "126.9350042201",
+       "mapy": "37.4701631240",
+       "mlevel": "6",
+       "overview": "관악청소년센터는 관악구민들에게 생활체육과 화강좌 프로그램을 제공하는 공간이다. 올바른 청소년상을 구현하기 위해 각종 청소년 프로그램과 문화공간을 제공한다. 센터에는 실내수영장과 소극장, 동아리실, 문화교실, 헬스장, 피아노교실 등 다양한 문화공간이 구비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

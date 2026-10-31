@@ -1,0 +1,52 @@
+{
+ "contentid": "2671202",
+ "modifiedtime": "20261019181500",
+ "fetchedAt": "2026-10-31T16:15:23.177Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2671202",
+       "contenttypeid": "39",
+       "title": "금룡",
+       "createdtime": "20200908014404",
+       "modifiedtime": "20261019181500",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/4126411_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/4126411_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 국회대로70길 19 (여의도동)",
+       "addr2": "",
+       "zipcode": "07238",
+       "mapx": "126.9208369590",
+       "mapy": "37.5292198226",
+       "mlevel": "6",
+       "overview": "금룡은 여러 종류의 짬뽕이 있으며 그 중 차돌 짬뽕이 유명하다. 그 외에도 제육볶음, 깐풍기, 탕수육, 양장피, 깐쇼새우 등이 준비되어 있으며 가족 외식은 물론 각종 단체모임에 손색없는 넓은 규모의 매장을 갖추고 있어 방문이 편리하다. 요리류, 코스 메뉴에 이르기까지 정성스럽게 음식을 조리하며 음식 퀄리티에 비해 가격대도 합리적이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "131315",
+ "modifiedtime": "20261007150142",
+ "fetchedAt": "2026-10-31T16:16:27.741Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "131315",
+       "contenttypeid": "28",
+       "title": "한강시민공원 잠원수영장(실외)",
+       "createdtime": "20020718090000",
+       "modifiedtime": "20261007150142",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://hangang.seoul.go.kr",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "LS",
+       "lclsSystm2": "LS02",
+       "lclsSystm3": "LS020700",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 잠원로 221-124",
+       "addr2": "",
+       "zipcode": "06513",
+       "mapx": "127.0122805684",
+       "mapy": "37.5207475608",
+       "mlevel": "6",
+       "overview": "한강공원에는 여의도 한강공원 등 6개 공원에 수영장이 있다. 매년 여름에는 수영장을, 겨울에는 눈썰매장으로 운영하고 있다. 수영장은 일반 야외수영장 이용요금의 절반 수준으로 가격이 저렴할 뿐 아니라 철저한 수질관리로 안심하고 이용할 수 있다. 이용시민의 편의를 도모하기 위하여 수영용품과 간단한 음료 등을 판매하는 매점 등의 부대시설을 갖추고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

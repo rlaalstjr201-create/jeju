@@ -1,0 +1,52 @@
+{
+ "contentid": "3458629",
+ "modifiedtime": "20250730101351",
+ "fetchedAt": "2026-10-31T16:12:09.595Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3458629",
+       "contenttypeid": "39",
+       "title": "리코",
+       "createdtime": "20241223173311",
+       "modifiedtime": "20250730101351",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/00/3458600_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/00/3458600_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "3",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "305",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 강북구 도봉로68길 36 (미아동)",
+       "addr2": "",
+       "zipcode": "01132",
+       "mapx": "127.0264453642",
+       "mapy": "37.6313947898",
+       "mlevel": "6",
+       "overview": "성신여대 운정캠퍼스 근처에 위치한 리코는 특히 달콤 뉴욕 치즈 파스타로 유명한 아담하고 따뜻한 분위기의 양식 전문점이다. 달콤 뉴욕 치즈 파스타는 리코의 시그니처 메뉴로, 달콤하면서도 느끼한 맛이 중독성이 강하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

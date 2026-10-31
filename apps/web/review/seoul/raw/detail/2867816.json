@@ -1,0 +1,52 @@
+{
+ "contentid": "2867816",
+ "modifiedtime": "20250507105331",
+ "fetchedAt": "2026-10-31T16:18:04.617Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2867816",
+       "contenttypeid": "39",
+       "title": "우앤",
+       "createdtime": "20221014161041",
+       "modifiedtime": "20250507105331",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/05/2867805_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/05/2867805_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강남구 언주로151길 4-1",
+       "addr2": "1층",
+       "zipcode": "06026",
+       "mapx": "127.0328728710",
+       "mapy": "37.5224936728",
+       "mlevel": "6",
+       "overview": "우앤은 서울 강남구 신사동에 위치한 한우 요리 전문점이다. 티본 스테이크부터 생갈비, 새우등심, 꽃등심, 채끝등심, 안심, 안창살, 토시살 등 다양한 한우 부위를 즐길 수 있다. 또한, 점심시간에는 설렁탕, 육회비빔밥 등 든든하고 맛있는 특선 메뉴가 인기이다. 프라이빗한 룸과 편안한 단체석이 준비되어 있어 모임 하기에도 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

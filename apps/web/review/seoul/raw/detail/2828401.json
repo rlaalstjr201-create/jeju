@@ -1,0 +1,52 @@
+{
+ "contentid": "2828401",
+ "modifiedtime": "20260211101150",
+ "fetchedAt": "2026-10-31T16:13:14.027Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2828401",
+       "contenttypeid": "39",
+       "title": "소바연구소",
+       "createdtime": "20220720152733",
+       "modifiedtime": "20260211101150",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서대문구 명물길 50-9",
+       "addr2": "",
+       "zipcode": "03777",
+       "mapx": "126.939453254545",
+       "mapy": "37.5587749428272",
+       "mlevel": "6",
+       "overview": "신촌에 위치하였으며, 직접 뽑은 수제메밀이라 독특하며 맛있는 맛을 자부한다. 소바에 고등어가 올라가는 재치 있는 메뉴도 있어 도전해볼만 하다. 또한 와사비가 구비되어 있지 않으며 대신 고추장아찌가 준비되어 있어 색다른 맛을 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

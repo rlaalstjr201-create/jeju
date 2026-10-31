@@ -1,0 +1,52 @@
+{
+ "contentid": "129798",
+ "modifiedtime": "20260319094959",
+ "fetchedAt": "2026-10-31T16:15:18.269Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "129798",
+       "contenttypeid": "14",
+       "title": "한국잡지박물관",
+       "createdtime": "20071106103048",
+       "modifiedtime": "20260319094959",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://archive.magazine.or.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/47/3498847_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/47/3498847_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 여의대방로67길 11 (여의도동)",
+       "addr2": "",
+       "zipcode": "07333",
+       "mapx": "126.93024200228307",
+       "mapy": "37.51976557074535",
+       "mlevel": "6",
+       "overview": "한국잡지박물관은 국내에서 발행되고 있는 모든 잡지를 한곳에서 볼 수 있는 공간이다. 한국잡지협회가 한국잡지 100년을 기념해서 우리 민족의 발자취와 세대의 흐름을 잡지 속에서 찾고자 1992년 12월 1일 개관했다.\n박물관은 3개의 전시실로 구성되어 있으며, 한국 잡지 100년사를 한눈에 볼 수 있는 곳으로 잡지 초창기 시대부터 전문화, 자유화 시기까지 9개의 시기로 나누어 역사적 가치가 높은 잡지를 전시하고 있다. 전시관에서는 현재 발행 중인 3,000여종의 잡지 열람이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

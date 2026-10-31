@@ -1,0 +1,52 @@
+{
+ "contentid": "3450146",
+ "modifiedtime": "20250731115405",
+ "fetchedAt": "2026-10-31T16:15:55.893Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3450146",
+       "contenttypeid": "12",
+       "title": "안국사",
+       "createdtime": "20241218164019",
+       "modifiedtime": "20250731115405",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/35/3450135_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/35/3450135_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "5",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS04",
+       "lclsSystm3": "HS040400",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02011000",
+       "addr1": "서울특별시 관악구 낙성대로 77 (봉천동)",
+       "addr2": "",
+       "zipcode": "08799",
+       "mapx": "126.9587338341",
+       "mapy": "37.4716399155",
+       "mlevel": "6",
+       "overview": "고려시대 명장인 강감찬 장군의 영정을 모시고 있다. 낙성대는 강감찬 장군의 출생지로 알려져 있으며, 그의 호인 '안국(安國)'을 따서 사당의 이름을 '안국사'라 명명하였다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

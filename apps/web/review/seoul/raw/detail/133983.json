@@ -1,0 +1,52 @@
+{
+ "contentid": "133983",
+ "modifiedtime": "20260205110236",
+ "fetchedAt": "2026-10-31T16:15:07.504Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "133983",
+       "contenttypeid": "39",
+       "title": "춘천옥",
+       "createdtime": "20031229090000",
+       "modifiedtime": "20260205110236",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "545",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 금천구 디지털로12길 19 (가산동)",
+       "addr2": "춘천옥빌딩 1, 2층",
+       "zipcode": "08515",
+       "mapx": "126.88968712282008",
+       "mapy": "37.477915314314004",
+       "mlevel": "6",
+       "overview": "춘천옥은 가산디지털단지에 자리한 보쌈과 막국수 맛집이다. 메뉴는 막국수와 보쌈 그리고 국밥이 전부이지만 서울시 선정 한국의 맛집, 한국관광공사 선정 깨끗한 음식점 등을 수상한 곳이다. 일반적인 막국수와 달리 비빔막국수가 주력 메뉴이며, 비빔막국수지만 자박하게 부어진 육수 덕에 뻑뻑하지 않고 촉촉하다. 메밀 함량이 적은 편이라 까슬대는 질감은 부족하지만 매끄러운 면발이 미끄러지듯 넘어간다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

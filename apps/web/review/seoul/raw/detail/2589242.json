@@ -1,0 +1,52 @@
+{
+ "contentid": "2589242",
+ "modifiedtime": "20260915103801",
+ "fetchedAt": "2026-10-31T16:19:23.948Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2589242",
+       "contenttypeid": "39",
+       "title": "추남",
+       "createdtime": "20190122232413",
+       "modifiedtime": "20260915103801",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강동구 양재대로 1622-4",
+       "addr2": "",
+       "zipcode": "05292",
+       "mapx": "127.1443224118",
+       "mapy": "37.5502352528",
+       "mlevel": "6",
+       "overview": "추남은 강동구에 위치한 경양식 전문점이다. 가볍게 흉내 낼 수 없는 이색음식으로 보는 재미와 먹는 즐거움을 다 같이 느낄 수 음식점이다. 대표 메뉴는 드레스 오므라이스와 독특한 풍미의 수제 멘치가스이다. 그리고 호불호 없는 등심 가스와 새우튀김도 준비되어 있다. 드레스 오므라이스는 추남 특제 소스로 볶아낸 밥 위에 부드러운 계란 옷이 드레스처럼 감싸져 있다. 또한, 등심 가스와 딸기잼을 같이 즐겨 먹는 오스트리아식 요리도 인기가 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

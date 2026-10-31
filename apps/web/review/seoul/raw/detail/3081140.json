@@ -1,0 +1,52 @@
+{
+ "contentid": "3081140",
+ "modifiedtime": "20261022145120",
+ "fetchedAt": "2026-10-31T16:15:52.991Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3081140",
+       "contenttypeid": "12",
+       "title": "관악산자연공원",
+       "createdtime": "20231204140303",
+       "modifiedtime": "20261022145120",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://parks.seoul.go.kr/park",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/38/3081138_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/38/3081138_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA04",
+       "lclsSystm3": "NA040500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 신림동 산27-1",
+       "addr2": "",
+       "zipcode": "08706",
+       "mapx": "126.9464688565",
+       "mapy": "37.4669629934",
+       "mlevel": "6",
+       "overview": "관악산 자연공원은 서울특별시 관악구에 위치한 관악산에 조성된 공원이다. 1968년 도시자연공원으로 지정되었으며 수많은 서울 시민들이 즐겨 찾는 서울의 명소이다. 관악산 자연공원은 정자, 분수 등이 설치되어 있는 휴식공간인 호수 공원, 어린이 도서뿐만 아니라 환경도서도 보유하고 있는 숲속 도서관, 우리 고유의 전통문화를 재현해 선보이는 전통 야외 소극장, 무장애 숲길, 전망대 등으로 구성되어 있다. 식재된 주요 식물로는 소사나무, 산 구절초, 산개나리, 할미밀빵 등이 있으며 천연기념물로는 회나무, 노거수 굴참나무 등이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

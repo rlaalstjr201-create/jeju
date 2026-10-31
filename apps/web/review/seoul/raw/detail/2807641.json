@@ -1,0 +1,52 @@
+{
+ "contentid": "2807641",
+ "modifiedtime": "20260122163000",
+ "fetchedAt": "2026-10-31T16:12:54.411Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2807641",
+       "contenttypeid": "39",
+       "title": "연천갈비",
+       "createdtime": "20220218154334",
+       "modifiedtime": "20260122163000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 은평구 서오릉로15길 5-5",
+       "addr2": "",
+       "zipcode": "03426",
+       "mapx": "126.910296201864",
+       "mapy": "37.6137371566803",
+       "mlevel": "6",
+       "overview": "연천갈비는 소갈비와 돼지목살구이를 푸짐하고 저렴하게 즐길 수 있는 식당이다. 열무국수와 묵사발도 이곳에서 맛볼 수 있는 별미이다. 10년 넘게 사랑받은 은평구 식당이며 고기의 육즙과 부드러운 식감이 일품이다. 인근 공영주차장에 주차 가능하며 골목길에 숨은 맛집이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

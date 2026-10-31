@@ -1,0 +1,52 @@
+{
+ "contentid": "2741608",
+ "modifiedtime": "20260317101258",
+ "fetchedAt": "2026-10-31T16:16:01.816Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2741608",
+       "contenttypeid": "38",
+       "title": "인헌시장",
+       "createdtime": "20210908224945",
+       "modifiedtime": "20260317101258",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/56/3519956_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/56/3519956_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 봉천동",
+       "addr2": "",
+       "zipcode": "08793",
+       "mapx": "126.9656",
+       "mapy": "37.4748",
+       "mlevel": "6",
+       "overview": "인헌시장은 서울 관악구 인헌동에 위치한 전통 재래시장으로 38년의 역사를 자랑한다. 현대화 사업을 통해 더욱 정돈된 모습으로 주민들에게 사랑받고 있는 곳이다. 큰 규모의 시장은 아니지만 다양한 품목의 식재료와 먹거리, 잡화 등을 알차게 판매하고 있어 부족함이 없는 곳이다. 시장 특유의 정겨움도 느낄 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

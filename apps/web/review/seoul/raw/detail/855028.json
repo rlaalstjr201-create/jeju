@@ -1,0 +1,52 @@
+{
+ "contentid": "855028",
+ "modifiedtime": "20260914155925",
+ "fetchedAt": "2026-10-31T16:19:24.716Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "855028",
+       "contenttypeid": "39",
+       "title": "해안반점",
+       "createdtime": "20091104055108",
+       "modifiedtime": "20260914155925",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강동구 고덕로10길 48",
+       "addr2": "",
+       "zipcode": "05251",
+       "mapx": "127.1294821209",
+       "mapy": "37.5526819067",
+       "mlevel": "6",
+       "overview": "해안반점은 서울 강동구 암사동에 있는 정통 중국요리 음식점이다. 다양한 중국요리를 맛볼 수 있으며 요일별 메뉴, 알뜰세트메뉴 등 저렴한 가격에 다양하고 특색 있는 음식을 즐길 수 있다. 내부가 넓어 단체 방문객도 편안한 분위기에서 식사가 가능하며 가족 단위 방문객과 직장인들에게도 인기 있는 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

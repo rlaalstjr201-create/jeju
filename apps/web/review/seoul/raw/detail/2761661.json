@@ -1,0 +1,52 @@
+{
+ "contentid": "2761661",
+ "modifiedtime": "20261019153426",
+ "fetchedAt": "2026-10-31T16:19:09.310Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2761661",
+       "contenttypeid": "12",
+       "title": "구강사",
+       "createdtime": "20211025223112",
+       "modifiedtime": "20261019153426",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://sgugangsa.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/83/3463583_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/83/3463583_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강동구 천중로 64 (천호동)",
+       "addr2": "",
+       "zipcode": "05324",
+       "mapx": "127.1288316302",
+       "mapy": "37.5448560947",
+       "mlevel": "6",
+       "overview": "서울 강동구 천호동에 있는 구강사는 서울 동부지역 천태법음 요람이자 포교도량으로 대한불교천태종 소속 사찰이다. 5층 단독 건물로 5층에 법당이 있으며, 3층에는 교육시설인 금강유치원이 있다. 정기법회는 매월 넷째 주 일요일 오전 11시에 열리고 있으며, 불교대학도 운영되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

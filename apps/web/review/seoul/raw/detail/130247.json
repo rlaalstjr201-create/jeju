@@ -1,0 +1,52 @@
+{
+ "contentid": "130247",
+ "modifiedtime": "20260420093007",
+ "fetchedAt": "2026-10-31T16:15:41.896Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130247",
+       "contenttypeid": "14",
+       "title": "동작문화원",
+       "createdtime": "20071106104844",
+       "modifiedtime": "20260420093007",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.dongjaktv.net",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/41/3476941_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/41/3476941_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "590",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동작구 장승배기로10길 42 (상도동)",
+       "addr2": "",
+       "zipcode": "06963",
+       "mapx": "126.94108835244103",
+       "mapy": "37.504445479855946",
+       "mlevel": "6",
+       "overview": "1998년 설립한 동작문화원은 지난 시간 동안 지역사회와 가장 가까운 데에서 지역문화 의식 고취를 위해 노력해 왔다. 시민강좌, 기획공연, 학술세미나 등 다양한 문화사업을 기획하고, 동작구의 문화적 환경조성과 더불어 삶을 향상시키고자 주민 누구에게나 열려있는 문화예술활동을 지원하고 있다. 문화강좌는 국악, 댄스스포츠, 필라테스, 라인댄스, 방송댄스, 미술&서예, 생활문화, 어학, 음악&악기 등 다양한 강좌가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2914806",
+ "modifiedtime": "20260414144005",
+ "fetchedAt": "2026-10-31T16:13:49.028Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2914806",
+       "contenttypeid": "39",
+       "title": "부영각",
+       "createdtime": "20221122112441",
+       "modifiedtime": "20260414144005",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/99/2914799_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/99/2914799_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 토정로 268 (용강동)",
+       "addr2": "",
+       "zipcode": "04162",
+       "mapx": "126.93950722262664",
+       "mapy": "37.542516920943356",
+       "mlevel": "6",
+       "overview": "마포역 1번 출구에서 도보로 약 10분 정도 거리에 있는 중식당이다. 삼선짬뽕은 채수와 해물로만 끓인 맑은 국물이 특징으로, 개운한 맛이 일품이다. 간짜장과 볶음밥도 인기 메뉴로, 특히 볶음밥은 새우와 오징어가 풍부하게 들어가 만족도가 높다. 룸이 마련되어 있어서 모임이나 회식하기 좋다. 도보 10분 이내에 디저트 전문점과 카페가 많아 식사 후 방문하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

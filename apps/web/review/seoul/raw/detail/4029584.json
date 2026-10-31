@@ -1,0 +1,52 @@
+{
+ "contentid": "4029584",
+ "modifiedtime": "20260305095851",
+ "fetchedAt": "2026-10-31T16:18:17.012Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4029584",
+       "contenttypeid": "39",
+       "title": "칙바이칙 선릉역점",
+       "createdtime": "20260304101803",
+       "modifiedtime": "20260305095851",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/77/4029577_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/77/4029577_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 선릉로 523 (역삼동)",
+       "addr2": "유림빌딩 1층",
+       "zipcode": "06149",
+       "mapx": "127.047796643158",
+       "mapy": "37.5062009307086",
+       "mlevel": "",
+       "overview": "서울 강남구에 위치한 칙바이칙 선릉역점은 수제버거를 취급하는 곳이다. 대표 메뉴로는 직화그릴드 치킨으로 만든 치킨버거와 치킨라이스볼, 스페셜티치킨 등의 음식을 맛볼 수 있다. 이뿐만 아니라 프렌치 프라이 같은 사이드 메뉴도 곁들여 먹으면 좋다. 직장인들의 바쁜 점심을 빠르게 해결해 주는 곳이기도 하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

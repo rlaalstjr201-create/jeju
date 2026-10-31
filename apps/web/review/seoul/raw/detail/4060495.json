@@ -1,0 +1,52 @@
+{
+ "contentid": "4060495",
+ "modifiedtime": "20260427132134",
+ "fetchedAt": "2026-10-31T16:12:38.744Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4060495",
+       "contenttypeid": "39",
+       "title": "온고을닭갈비",
+       "createdtime": "20260427132131",
+       "modifiedtime": "20260427132134",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/91/4060491_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/91/4060491_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 동일로 1065 (공릉동)",
+       "addr2": "한빌딩1층 일부",
+       "zipcode": "01857",
+       "mapx": "127.072834103078",
+       "mapy": "37.6251975399262",
+       "mlevel": "",
+       "overview": "노원구에 위치한 온고을닭갈비는 1인분 250g의 푸짐한 닭갈비를 맛볼 수 있는 곳이다. 오랫동안 같은 자리에서 양도, 맛도 그대로 유지해왔다. 냉동이 아닌 생닭만 사용한며 맵기 조절도 가능하다. 기본 닭갈비뿐만 아니라 콩나물, 짜장 등 메뉴도 다양하다. 닭갈비를 다 먹은 후 사리를 추가하고 볶음밥까지 먹으면 식사를 마무리하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

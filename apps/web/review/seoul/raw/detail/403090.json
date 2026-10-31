@@ -1,0 +1,52 @@
+{
+ "contentid": "403090",
+ "modifiedtime": "20260209162859",
+ "fetchedAt": "2026-10-31T16:12:37.460Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "403090",
+       "contenttypeid": "39",
+       "title": "동해복집",
+       "createdtime": "20080120063918",
+       "modifiedtime": "20260209162859",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/68/399468_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/68/399468_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 동일로217가길 23",
+       "addr2": "",
+       "zipcode": "01762",
+       "mapx": "127.059088874072",
+       "mapy": "37.6532766934176",
+       "mlevel": "6",
+       "overview": "전문 조리사만이 다룰 수 있는 복어는 상당히 조리하기 까다로운 어류이지만 반대로 그 맛이 담백하고 고소한 고급 어종이다. 복어를 듬뿍 넣어 폭폭 끓여 먹는 복 맑은탕은 그 국물이 개운하고 맛이 좋아 해장을 하기에는 그만이다. 노원구에 위치한 동해복집은 식당 내부가 좌식 테이블로 구성되어 있는데 별도의 모임을 가질 수 있도록 룸도 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

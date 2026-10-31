@@ -1,0 +1,52 @@
+{
+ "contentid": "2773291",
+ "modifiedtime": "20260312090840",
+ "fetchedAt": "2026-10-31T16:16:57.988Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2773291",
+       "contenttypeid": "12",
+       "title": "일원에코파크",
+       "createdtime": "20211111185548",
+       "modifiedtime": "20260312090840",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/66/3507966_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/66/3507966_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 일원동 641-3",
+       "addr2": "",
+       "zipcode": "06339",
+       "mapx": "127.0873",
+       "mapy": "37.4951",
+       "mlevel": "6",
+       "overview": "서울 강남구 일원동에 있는 일원에코파크는 탄천물재생센터를 변신시켜 2017년에 새롭게 개장한 근린공원이다. 다양한 친환경 페스티벌이 개최되며 주민들의 참여로 쾌적한 환경 장점인 공원이다. 일원에코파크는 주민 모두가 만족하고 이용할 수 있도록 쉼터와 식물원, 초화원 및 운동공간이 조성되어 있다. 공원 내부에는 인공 호수나 작은 정원들이 있어 자연과 가까운 분위기 속에서 산책을 즐기기에 좋은 장소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

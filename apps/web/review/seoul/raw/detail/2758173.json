@@ -1,0 +1,52 @@
+{
+ "contentid": "2758173",
+ "modifiedtime": "20261019140732",
+ "fetchedAt": "2026-10-31T16:18:42.907Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2758173",
+       "contenttypeid": "28",
+       "title": "잠실야구장",
+       "createdtime": "20211018230526",
+       "modifiedtime": "20261019140732",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://stadium.seoul.go.kr/about/jsbpark",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/39/2788139_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/39/2788139_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE10",
+       "lclsSystm3": "VE100100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 송파구 올림픽로 19-2 (잠실동)",
+       "addr2": "",
+       "zipcode": "05500",
+       "mapx": "127.0728634163",
+       "mapy": "37.5112526275",
+       "mlevel": "6",
+       "overview": "1982년 개장한 잠실야구장은 수용 인원이 5만 명으로, 야구 경기가 열리는 시즌에는 하루 평균 2만여 명의 관람객이 입장하는 한국의 대표 야구장이다. 현재 LG 트윈스와 두산 베어스의 홈구장이다. 한국시리즈 5,6,7차전이 열리기도 한다. 프로야구 시즌 기간에는 잠실야구경기장의 야간 조명이 한강변과 올림픽대로를 환하게 밝혀 야간 경기를 관람하는 관람객들에게 색다른 즐거움을 선사한다. 2호선 종합운동장역 5, 6번 출구에 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

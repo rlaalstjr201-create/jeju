@@ -1,0 +1,52 @@
+{
+ "contentid": "970342",
+ "modifiedtime": "20260318101005",
+ "fetchedAt": "2026-10-31T16:16:17.473Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "970342",
+       "contenttypeid": "12",
+       "title": "잠원한강공원",
+       "createdtime": "20100310181515",
+       "modifiedtime": "20260318101005",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://hangang.seoul.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/29/3515029_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/29/3515029_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 잠원로 221-124 (잠원동)",
+       "addr2": "",
+       "zipcode": "06513",
+       "mapx": "127.01227464007395",
+       "mapy": "37.52075383481676",
+       "mlevel": "6",
+       "overview": "잠원한강공원은 영동대교에서 동호대교와 한남대교를 지나 반포대교 사이 강변 남단에 위치하고 있다. 길이는 5.4㎞로 강남 제일의 번화가인 압구정동, 신사동, 잠원동이 있는 강남구와 서초구에 인접해 있다. 공원 둔치에는 육상경기장, 축구장, 배구장, 수영장, 테니스장, 체력단련장 등 체육시설이 고루 갖추어져 있다. 특히 강변을 따라 자전거도로가 나 있어 한강경관을 즐기면서 자전거 타기에 좋다. 이 외에도 누에체험학습장과 꽃과 나비가 있는 아름다운 자연생태학습장이 마련되어 있고, 여름에는 도심 속 야외수영장과 윈드서핑, 모터보트 등 낭만적인 수상스포츠를 즐기는 사람들이 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

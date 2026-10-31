@@ -1,0 +1,52 @@
+{
+ "contentid": "2754725",
+ "modifiedtime": "20260414095427",
+ "fetchedAt": "2026-10-31T16:17:58.038Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2754725",
+       "contenttypeid": "39",
+       "title": "애란궁",
+       "createdtime": "20211007234058",
+       "modifiedtime": "20260414095427",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 광평로 220-12",
+       "addr2": "",
+       "zipcode": "06362",
+       "mapx": "127.097831591261",
+       "mapy": "37.4848423734918",
+       "mlevel": "6",
+       "overview": "애란궁은 오리요리와 샤브샤브를 전문으로 하는 한식당이다. 신선한 재료로 만든 요리와 정갈한 반찬 구성이 조화를 이루며, 전체적으로 안정감 있는 한 상을 제공한다. 넓고 쾌적한 공간과 편안한 분위기를 갖추고 있어 가족 모임이나 회식 장소로 이용하기 적합하다. 특히 오리 통바베큐는 담백하고 부드러운 식감이 특징으로 인기가 많다. 주차 시설이 잘 갖춰져 있어 차량 이용 시 접근성도 좋은 편이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

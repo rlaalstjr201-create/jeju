@@ -1,0 +1,52 @@
+{
+ "contentid": "1567395",
+ "modifiedtime": "20260220172713",
+ "fetchedAt": "2026-10-31T16:15:30.115Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1567395",
+       "contenttypeid": "39",
+       "title": "슈치쿠",
+       "createdtime": "20120314200546",
+       "modifiedtime": "20260220172713",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 63로 50",
+       "addr2": "58층",
+       "zipcode": "07345",
+       "mapx": "126.939904325039",
+       "mapy": "37.519588061808",
+       "mlevel": "6",
+       "overview": "슈치쿠는 장인 정신과 현대적 감각이 만난 웰빙 하이엔드 일식당이다. 일본어로 ‘붉은 대나무’를 의미하는 슈치쿠는 신선한 식재료를 기본으로 교토 가이세키와 도쿄 에도마에 스시의 전통 조리 기법에 한국적 정서를 가미하여 슈치쿠만의 현대적 해석을 추가한 요리를 제공한다. 서울 시내가 한눈에 펼쳐지는 8개의 맞춤 공간과 스카이 스시바는 비즈니스와 사교를 위한 좋은 공간이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

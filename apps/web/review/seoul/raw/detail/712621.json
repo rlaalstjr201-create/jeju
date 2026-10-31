@@ -1,0 +1,52 @@
+{
+ "contentid": "712621",
+ "modifiedtime": "20261021120958",
+ "fetchedAt": "2026-10-31T16:12:53.902Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "712621",
+       "contenttypeid": "39",
+       "title": "시골감자국",
+       "createdtime": "20090327204333",
+       "modifiedtime": "20261021120958",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/87/712787_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/87/712787_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 은평구 응암로 174",
+       "addr2": "",
+       "zipcode": "03478",
+       "mapx": "126.9167602096",
+       "mapy": "37.5874127073",
+       "mlevel": "6",
+       "overview": "시골감자국은 감자탕 전문점이다. 40년 전통을 유지한 응암동 감잣국거리의 대표 맛집으로써 최고의 맛과 서비스를 제공하고자 노력한다. 매일 엄선된 국내산 최고급 돼지등뼈를 4시간 이상 우려내어 깔끔하고 부드러운 맛을 낸다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2751876",
+ "modifiedtime": "20260205152855",
+ "fetchedAt": "2026-10-31T16:18:01.398Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2751876",
+       "contenttypeid": "39",
+       "title": "영동장어",
+       "createdtime": "20210930192355",
+       "modifiedtime": "20260205152855",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/2790311_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/2790311_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 언주로148길 8",
+       "addr2": "(논현동)",
+       "zipcode": "06057",
+       "mapx": "127.035331111823",
+       "mapy": "37.5203119199034",
+       "mlevel": "6",
+       "overview": "영동장어는 삼겹살 가게(금돼지식당)와 안심 가게(뜨락시장) 사장의 콜라보로 탄생한 장어구이 전문 식당으로, 강화 갯벌 장어를 사용한다. 주문하면 매장 안의 수족관에서 직접 신선한 장어를 잡아 보여주며, 바로 손질하여 고객의 식탁 위로 전달한다. 레트로 느낌의 인테리어로 테이블 간의 간격이 넓고 다양한 크기의 룸도 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

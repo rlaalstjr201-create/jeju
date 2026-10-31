@@ -1,0 +1,52 @@
+{
+ "contentid": "130371",
+ "modifiedtime": "20261014093633",
+ "fetchedAt": "2026-10-31T16:12:30.500Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130371",
+       "contenttypeid": "14",
+       "title": "노원문화원",
+       "createdtime": "20071106105444",
+       "modifiedtime": "20261014093633",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.nwcc.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/97/3533997_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/97/3533997_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 동일로197길 24",
+       "addr2": "",
+       "zipcode": "01851",
+       "mapx": "127.0697774247",
+       "mapy": "37.6287521020",
+       "mlevel": "6",
+       "overview": "1997년 10월 22일 설립된 노원문화원은 문화 예술 활동과 향토사 조사연구 사업을 통해 지역 구민들이 더욱 풍요로운 문화적 삶을 누릴 수 있도록 노력하는 비영리 특수 법인 단체이다. 문화로 삶의 가치를 실현한다는 비전 아래 지역 네트워크를 통해 지역의 문화 정체성 및 역량을 강화하고 공유하기 위한 다양한 문화 강좌들을 운영하고 있다. 문화 예술 교육의 일상 속 생활 문화를 실현하기 위해 강좌 운영과 함께 공간 대관 서비스도 한다. 노원구의 문화 관광 자원을 탐방객들에게 쉽고 재미있게 설명해 주기 위해 문화 관광 해설사도 운영한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

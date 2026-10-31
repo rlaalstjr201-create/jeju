@@ -1,0 +1,52 @@
+{
+ "contentid": "836567",
+ "modifiedtime": "20260225150027",
+ "fetchedAt": "2026-10-31T16:15:28.831Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "836567",
+       "contenttypeid": "39",
+       "title": "서글렁탕",
+       "createdtime": "20091028024945",
+       "modifiedtime": "20260225150027",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 여의대방로 394",
+       "addr2": "",
+       "zipcode": "07343",
+       "mapx": "126.9327383646",
+       "mapy": "37.5193296308116",
+       "mlevel": "6",
+       "overview": "서울 영등포구 여의도동에 있는 서글렁탕은 양념장에 재워 먹는 색다른 삼겹살 전문점이다. 양념에 계핏가루가 들어가기 때문에 그 맛과 향이 돼지고기 잡내와 느끼함을 잡아준다. 삼겹살 외에도 소갈비살, 콩팥, 선지해장국이 있다. 담백한 선지해장국 맛이 고기를 먹은 뒤 식사하기에 부담이 없다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

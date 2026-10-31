@@ -1,0 +1,52 @@
+{
+ "contentid": "2849527",
+ "modifiedtime": "20261013173408",
+ "fetchedAt": "2026-10-31T16:14:44.814Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2849527",
+       "contenttypeid": "39",
+       "title": "태문네",
+       "createdtime": "20220906105528",
+       "modifiedtime": "20261013173408",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강서구 양천로28길 40 (마곡동)",
+       "addr2": "",
+       "zipcode": "07597",
+       "mapx": "126.8205906805",
+       "mapy": "37.5713879589",
+       "mlevel": "6",
+       "overview": "태문네는 일반 주택을 개조해서 만든 식당이다. 좁은 골목을 지나면 2층 건물에 빨간색 벽돌집이 나온다. 매장 안으로 들어가면 마룻바닥에 좌식 테이블 여러 개가 놓여있다. 1층은 식당이고 2층은 가정집이다. 오래된 노포라 단골손님들이 많아서 식사 시간대는 웨이팅이 길어진다. 대표 메뉴는 갈매기살 마늘 양념, 갈매기살 소금구이가 있다. 추가 메뉴로 된장찌개가 있다. 주변에 개화산, 치현산, 궁산이 있어 등산 코스와 연계하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

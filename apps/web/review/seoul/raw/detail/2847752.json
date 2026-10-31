@@ -1,0 +1,52 @@
+{
+ "contentid": "2847752",
+ "modifiedtime": "20250918093214",
+ "fetchedAt": "2026-10-31T16:13:48.013Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2847752",
+       "contenttypeid": "39",
+       "title": "바다회사랑",
+       "createdtime": "20220901171839",
+       "modifiedtime": "20250918093214",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/41/2847741_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/41/2847741_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 마포구 동교로27길 60 (연남동)",
+       "addr2": "",
+       "zipcode": "03990",
+       "mapx": "126.9210764267",
+       "mapy": "37.5604678115",
+       "mlevel": "6",
+       "overview": "바다회사랑 본점은 홍대입구역 2번 출구에서 도보 2분 거리에 있는 횟집이다. 줄전갱이, 참돔, 연어 등 다양한 회와 함께 붕장어구이, 산낙지, 해물라면 등 다양한 메뉴를 제공한다. 내부는 아담하면서도 깔끔하고 고급스러운 분위기를 갖추고 있으며, 기본으로 제공되는 산낙지는 고소하고 신선하여 인기가 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

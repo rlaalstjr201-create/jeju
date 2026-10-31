@@ -1,0 +1,52 @@
+{
+ "contentid": "2810109",
+ "modifiedtime": "20260123164136",
+ "fetchedAt": "2026-10-31T16:16:02.873Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2810109",
+       "contenttypeid": "39",
+       "title": "낙타날다",
+       "createdtime": "20220310170501",
+       "modifiedtime": "20260123164136",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 승방4길 32 위즈엘타워(Wiz-L Tower)",
+       "addr2": "",
+       "zipcode": "08807",
+       "mapx": "126.980704386221",
+       "mapy": "37.4752080943484",
+       "mlevel": "6",
+       "overview": "낙타날다는 사당역에 위치한 디저트 카페이다. 브라운 치즈가 쌓여있는 아이스크림 크로플이 유명하며 풍부한 크림과 진한 커피 맛이 일품인 아인슈페너가 인기이다. 매장이 넓고 편안한 분위기라 방문객들에게 보다 쾌적한 환경을 제공해주며 사당역 인근에 위치하여 접근성도 뛰어나 아늑하고 분위기 좋은 데이트 명소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

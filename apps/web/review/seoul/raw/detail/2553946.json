@@ -1,0 +1,52 @@
+{
+ "contentid": "2553946",
+ "modifiedtime": "20261021091041",
+ "fetchedAt": "2026-10-31T16:15:01.608Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2553946",
+       "contenttypeid": "12",
+       "title": "금천예술공장",
+       "createdtime": "20180717202828",
+       "modifiedtime": "20261021091041",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.sfac.or.kr/artspace",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/77/3400277_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/77/3400277_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "545",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX06",
+       "lclsSystm3": "EX061000",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 금천구 범안로15길 57",
+       "addr2": "",
+       "zipcode": "08583",
+       "mapx": "126.8919576613",
+       "mapy": "37.4688294958",
+       "mlevel": "6",
+       "overview": "금천예술공장은 2009년 인쇄공장을 리모델링한 시각예술 전문 국제 창작 레지던시이다. 국내‧외 예술가에게 24시간 사용 가능한 창작스튜디오를 제공하며, 오픈스튜디오, 다빈치 크리에이티브 페스티벌 등의 프로그램을 통하여 시민과 예술가의 접점을 만들어가고 있다. 예술가들을 위한 창작스튜디오 19실과 대형 작업을 위한 창고동, 전시실(PS333) 및 워크숍룸 등을 갖추고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

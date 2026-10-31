@@ -1,0 +1,52 @@
+{
+ "contentid": "2753926",
+ "modifiedtime": "20260313141936",
+ "fetchedAt": "2026-10-31T16:16:00.791Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2753926",
+       "contenttypeid": "38",
+       "title": "봉천중앙시장",
+       "createdtime": "20211006224211",
+       "modifiedtime": "20260313141936",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/07/3521407_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/07/3521407_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 관악로 211",
+       "addr2": "(봉천동)",
+       "zipcode": "08744",
+       "mapx": "126.954328923729",
+       "mapy": "37.4841954126887",
+       "mlevel": "6",
+       "overview": "봉천중앙시장은 1969년 관악구 봉천동에 문을 연 소형 건물형 시장으로, 약 40여 개 점포가 밀집해 있다. 서울대입구역 인근에 위치해 접근성이 좋고, 순댓국집 등 인기 맛집이 골목 분위기와 어우러져 있다. 규모는 작지만 일상 장보기와 식사를 한 번에 즐길 수 있는 알찬 시장이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

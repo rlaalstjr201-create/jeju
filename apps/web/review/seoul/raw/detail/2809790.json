@@ -1,0 +1,52 @@
+{
+ "contentid": "2809790",
+ "modifiedtime": "20251127095308",
+ "fetchedAt": "2026-10-31T16:19:20.586Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2809790",
+       "contenttypeid": "39",
+       "title": "송월냉면",
+       "createdtime": "20220308112829",
+       "modifiedtime": "20251127095308",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "2",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강동구 천중로18길 57 (천호동)",
+       "addr2": "1층",
+       "zipcode": "05326",
+       "mapx": "127.1295912789",
+       "mapy": "37.5424292105",
+       "mlevel": "6",
+       "overview": "송월냉면은 30년이 넘은 서울에서 오래된 가게 중 하나로 메뉴는 오직 냉면이다. 1988년부터 2대째 운영해오고 있으며 사골 육수를 우려내어 냉면을 만든다. 가게의 내부는 수수하면서도 정감 있다. 열무냉면, 물냉면, 비빔냉면 세 가지 메뉴만 판매하고 있다. 깔끔하고 시원한 국물 맛이 일품이며 면은 쫄깃하다. 저렴한 가격에 맛과 양 모두 챙긴 천호동 냉면 맛집으로 유명하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

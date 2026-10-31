@@ -1,0 +1,52 @@
+{
+ "contentid": "2869531",
+ "modifiedtime": "20250707095633",
+ "fetchedAt": "2026-10-31T16:17:52.603Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2869531",
+       "contenttypeid": "39",
+       "title": "스시코우지",
+       "createdtime": "20221018161510",
+       "modifiedtime": "20250707095633",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/28/2869528_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/28/2869528_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 강남구 도산대로 318 (논현동)",
+       "addr2": "",
+       "zipcode": "06054",
+       "mapx": "127.0366558764",
+       "mapy": "37.5219132526",
+       "mlevel": "6",
+       "overview": "스시코우지는 수인분당 압구정로데오역 5번 출구와 강남구청역 3번 출구 도산공원 인근에 있다. 주차는 건물 지하에 하면 된다. 매장은 2층에 카운터석과 룸으로 나누어져 있다. 일본인 셰프가 운영하는 오마카세 전문점이다. 식당 인근에 도산공원, 압구정 카페골목, 청담동 명품거리 등이 있어 들러보기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

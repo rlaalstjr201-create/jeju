@@ -1,0 +1,52 @@
+{
+ "contentid": "3082034",
+ "modifiedtime": "20260728093850",
+ "fetchedAt": "2026-10-31T16:15:57.688Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3082034",
+       "contenttypeid": "14",
+       "title": "삼모아트센터",
+       "createdtime": "20231211170346",
+       "modifiedtime": "20260728093850",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://sammoart.info",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/30/3082030_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/30/3082030_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 신원로 35 (신림동)",
+       "addr2": "",
+       "zipcode": "08776",
+       "mapx": "126.9290234053",
+       "mapy": "37.4823122223",
+       "mlevel": "6",
+       "overview": "삼모아트센터는 클래식 음악을 중심으로 문화 향유 기회의 확대를 목표로 삼고 있다. 공연장인 라비니아홀은 100여명을 수용할 수 있는 규모의 공간으로 초청 음악회나 청소년 음악회 등이 주로 열린다. 세미나실과 강의실로 활용되는 라벤나홀은 30석 규모로 삼모아트센터에서 진행하는 음악, 문화예술, 인문학 강의가 진행되기도 하며 기업세미나나 직원 교육 등을 위해 대관할 수도 있다. 공연 전후 만남의 장소로 활용될 수 있는 카페 인터미션 또한 부대시설로 소재하고 있다. 삼모아트센터는 수도권 지하철 신림역 3번 출구에서 200m 정도 떨어져 있으며 삼모아트센터가 소재한 삼모타워에 주차장이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

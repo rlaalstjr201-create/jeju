@@ -1,0 +1,52 @@
+{
+ "contentid": "2989541",
+ "modifiedtime": "20260804093502",
+ "fetchedAt": "2026-10-31T16:12:31.550Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2989541",
+       "contenttypeid": "14",
+       "title": "서울시립과학관",
+       "createdtime": "20230525180710",
+       "modifiedtime": "20260804093502",
+       "tel": "",
+       "telname": "",
+       "homepage": "science.seoul.go.kr",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 한글비석로 160 서울시립과학관",
+       "addr2": "",
+       "zipcode": "01792",
+       "mapx": "127.0765980193",
+       "mapy": "37.6418171848",
+       "mlevel": "6",
+       "overview": "서울시립과학관은 전시물을 직접 작동하고 실험하며 과학 원리를 이해하는 체험형 과학관이다. 과학전시물과 과학실험 프로그램, 과학자 강연 등을 통해 어렵게 느껴지는 과학을 쉽고 흥미롭게 접할 수 있다. 단순히 전시물을 체험하는 데 그치지 않고 관찰하고 생각하며 과학적 이해를 넓히는 공간이다.\n다양한 체험형 전시를 통해 어린이와 가족이 함께 과학적 호기심을 키울 수 있으며 무인발권기에서 별도 체험 티켓을 구매할 수 있다. 직접 보고 만지고 생각하며 자신만의 과학 경험을 만들어 가기에 좋은 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

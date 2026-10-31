@@ -1,0 +1,52 @@
+{
+ "contentid": "232249",
+ "modifiedtime": "20260409172654",
+ "fetchedAt": "2026-10-31T16:14:20.471Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "232249",
+       "contenttypeid": "39",
+       "title": "광양불고기",
+       "createdtime": "20071005090000",
+       "modifiedtime": "20260409172654",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 남부순환로 531",
+       "addr2": "",
+       "zipcode": "07928",
+       "mapx": "126.837936448734",
+       "mapy": "37.5212304720458",
+       "mlevel": "6",
+       "overview": "‘광양불고기’는 서울 양천구에 위치한 식당이다. 이곳의 대표메뉴는 광양불고기이며 이외에 꽃등심, 생갈빗살, 육회 등 다양한 메뉴가 준비되어 있다. 불고기는 생고기 같아 보이지만 양념이 발라져 있는 상태이며 숯불에 구워 먹는 방식이다. 음식 주문은 테이블마다 설치된 키오스크로 가능하며 밑반찬은 샐러드, 김치, 동그랑땡, 홍어 등 다양하게 준비가 된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

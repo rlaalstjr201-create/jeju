@@ -1,0 +1,52 @@
+{
+ "contentid": "250252",
+ "modifiedtime": "20260824160605",
+ "fetchedAt": "2026-10-31T16:19:08.541Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "250252",
+       "contenttypeid": "12",
+       "title": "광나루한강공원",
+       "createdtime": "20070921090000",
+       "modifiedtime": "20260824160605",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://hangang.seoul.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3393811_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3393811_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강동구 선사로 83-106 (암사동)",
+       "addr2": "83-106",
+       "zipcode": "05249",
+       "mapx": "127.1222485645",
+       "mapy": "37.5499660244",
+       "mlevel": "6",
+       "overview": "강동대교에서 잠실철교 사이에 있는 광나루 한강공원은 한강 상류로부터 유입된 토사가 퇴적되어 자연스럽게 형성된 모래톱과 대규모 갈대군락지로 자연 그대로의 한강의 모습을 가장 잘 유지하고 있는 공원이다. 서울시의 유일한 상수원보호구역으로 뱃놀이와 각종 수상 및 레저활동이 금지되어 있어 물이 맑고 깨끗하며, 북쪽 아차산 수목의 푸르름과 2㎞에 이르는 한강둔치의 갈대밭이 잘 조화되어 아름다운 경관을 자랑한다. 또한 광나루 한강공원은 철새들의 서식처이기도 하다. 근처에는 암사선사주거지 등 많은 문화유적지가 곳곳에 산재해 있어 자연과 문화가 잘 조화를 이루는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

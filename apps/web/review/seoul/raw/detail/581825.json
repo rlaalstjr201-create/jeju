@@ -1,0 +1,52 @@
+{
+ "contentid": "581825",
+ "modifiedtime": "20251215154107",
+ "fetchedAt": "2026-10-31T16:16:30.075Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "581825",
+       "contenttypeid": "39",
+       "title": "노랑저고리",
+       "createdtime": "20080702000248",
+       "modifiedtime": "20251215154107",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 서초구 서초대로73길 9 (서초동)",
+       "addr2": "5층",
+       "zipcode": "06616",
+       "mapx": "127.0252436924",
+       "mapy": "37.4983602268",
+       "mlevel": "6",
+       "overview": "복잡한 도심 속 전통 한옥의 고풍스러운 분위기가 그윽한 노랑저고리 한정식은 귀한 손님 대접을 제대로 받는 느낌이 든다. 전통 한옥의 풍경 너른 앞마당과 뒤뜰, 그리고 사랑채에서 정겨운 식사를 즐길 수 있다. 종갓집 새댁의 마음으로 정성스럽게 차려내는 10여 가지의 요리와 갖가지 토속반찬이 맛깔스럽다. 사랑채와 이층 누각 위 공간은 고풍스럽고 품격 있는 인테리어로 상견례 장소와 비즈니스 미팅장소로 애용되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

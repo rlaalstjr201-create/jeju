@@ -1,0 +1,52 @@
+{
+ "contentid": "2852962",
+ "modifiedtime": "20261021101547",
+ "fetchedAt": "2026-10-31T16:14:59.285Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2852962",
+       "contenttypeid": "39",
+       "title": "실크로드",
+       "createdtime": "20220914102149",
+       "modifiedtime": "20261021101547",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/31/4126231_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/31/4126231_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 구로구 경인로 398 (고척동)",
+       "addr2": "",
+       "zipcode": "08275",
+       "mapx": "126.8643399806",
+       "mapy": "37.4972156376",
+       "mlevel": "6",
+       "overview": "실크로드는 1호선 구일역 2번 출구 구로소방서와 경인고등학교 인근에 있다. 이곳은 프리미엄 코스요리 중식당이다. 대표 메뉴는 당코스, 전복누룽지탕, 실크정탁 등 다양하게 구성되어 있다. 매장 안은 크고 다양한 객실이 준비되어 있어 크고 작은 모임 및 행사, 상견례 등을 하기 좋다. 인근 고척스카이돔, 노들소공원이 있어 식사 후에 간단한 산책이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

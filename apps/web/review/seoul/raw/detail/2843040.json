@@ -1,0 +1,52 @@
+{
+ "contentid": "2843040",
+ "modifiedtime": "20250917101134",
+ "fetchedAt": "2026-10-31T16:15:48.798Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2843040",
+       "contenttypeid": "39",
+       "title": "전주전집",
+       "createdtime": "20220824134819",
+       "modifiedtime": "20250917101134",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/16/2843016_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/16/2843016_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "12",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "590",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 동작구 동작대로7길 19 (사당동)",
+       "addr2": "",
+       "zipcode": "07015",
+       "mapx": "126.9806538337",
+       "mapy": "37.4797254798",
+       "mlevel": "6",
+       "overview": "전주전집은 지하철 2호선 4호선 사당역 10번 출구 부근에 있다. 대표 메뉴는 모듬전, 소고기육전, 통통새우전, 홍어 무침 등이 있다. 김치찌개, 해물파전, 두부김치도 함께 먹기 좋다. 깻잎전, 감자전, 호박전 등 기본 메뉴는 물론 소고기육전과 해물파전 등 특수 메뉴까지 다양하게 즐길 수 있다. 주변에 이수동산과 삼일공원이 있어 식사 전후에 둘러보기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

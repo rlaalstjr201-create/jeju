@@ -1,0 +1,52 @@
+{
+ "contentid": "2855762",
+ "modifiedtime": "20261021114603",
+ "fetchedAt": "2026-10-31T16:16:51.297Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2855762",
+       "contenttypeid": "39",
+       "title": "3대삼계장인",
+       "createdtime": "20220920100424",
+       "modifiedtime": "20261021114603",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/51/2855751_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/51/2855751_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 반포대로28길 56-3 (서초동)",
+       "addr2": "",
+       "zipcode": "06646",
+       "mapx": "127.0115913506",
+       "mapy": "37.4913028384",
+       "mlevel": "6",
+       "overview": "3대삼계장인은 서울지하철 2호선, 3호선 교대역 14번 출구 인근에 있다. 건강한 재료를 사용한 삼계탕과 닭볶음탕으로 유명한 맛집이다. 잣삼계탕의 진한 국물 맛과 수비드 닭볶음탕의 부드러운 고기 질감이 인상적이며, 전체 음식의 간은 함초소금을 사용한다. 식당 인근에 서리풀공원, 몽마르뜨공원, 장안어린이공원 등이 있어 식사 후 산책하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

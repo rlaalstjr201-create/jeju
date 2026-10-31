@@ -1,0 +1,52 @@
+{
+ "contentid": "2756120",
+ "modifiedtime": "20260312090840",
+ "fetchedAt": "2026-10-31T16:15:00.821Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2756120",
+       "contenttypeid": "12",
+       "title": "금빛공원",
+       "createdtime": "20211013190746",
+       "modifiedtime": "20260312090840",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/43/3509843_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/43/3509843_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "545",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 금천구 금하로 668 (시흥동)",
+       "addr2": "",
+       "zipcode": "08629",
+       "mapx": "126.90442205722839",
+       "mapy": "37.45268442910125",
+       "mlevel": "6",
+       "overview": "이 공원은 서울특별시 금천구 시흥1동 주민센터 옆에 조성된 넓은 도심형 공원이다. 휴식을 취하거나 문화예술 공연을 관람할 수 있으며, KBS 전국노래자랑과 금천구 주부가요제 등 다양한 문화행사가 개최된다. 숲 사이로 조성된 조깅 코스는 주민들에게 인기 있는 운동 공간이다. 공원 내 피트니스센터에서는 헬스, GX, 골프 등 다양한 프로그램이 운영된다. 여가, 문화, 운동이 어우러진 복합 커뮤니티 공간으로 활용되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

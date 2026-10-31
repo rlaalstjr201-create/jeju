@@ -1,0 +1,52 @@
+{
+ "contentid": "2918770",
+ "modifiedtime": "20260205163229",
+ "fetchedAt": "2026-10-31T16:14:58.273Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2918770",
+       "contenttypeid": "39",
+       "title": "바른쌀국수",
+       "createdtime": "20221124175736",
+       "modifiedtime": "20260205163229",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 구로구 디지털로33길 48 (구로동)",
+       "addr2": "지하 111호",
+       "zipcode": "08377",
+       "mapx": "126.89450505067941",
+       "mapy": "37.487257906412374",
+       "mlevel": "6",
+       "overview": "독산동에 위치한 베트남 식당이다. 가게 내부는 아담하지만 깔끔한 인테리어를 갖추고 있다. 내부 곳곳에 베트남 분위기가 느껴진다. 혼밥을 하기에도 좋다. 메뉴는 쌀국수와 볶음밥, 분짜, 반미 등이 있다. 쌀국수는 다른 곳과 달리 일반 쌀국수와 숯불고기 쌀국수, 매운쌀국수가 있는 것이 특징이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

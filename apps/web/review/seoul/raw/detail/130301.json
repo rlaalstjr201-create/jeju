@@ -1,0 +1,52 @@
+{
+ "contentid": "130301",
+ "modifiedtime": "20251205154848",
+ "fetchedAt": "2026-10-31T16:16:24.943Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130301",
+       "contenttypeid": "14",
+       "title": "한전갤러리",
+       "createdtime": "20071106105106",
+       "modifiedtime": "20251205154848",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"https://www.kepco.co.kr/art/space/gallery.do\" target=\"_blank\" title=\"새창 : 한전아트센터 홈페이지로 이동\">https://www.kepco.co.kr/art</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/24/682224_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/24/682224_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060500",
+       "addr1": "서울특별시 서초구 효령로72길 60",
+       "addr2": "",
+       "zipcode": "06732",
+       "mapx": "127.0280576979",
+       "mapy": "37.4851840297",
+       "mlevel": "6",
+       "overview": "한전갤러리는 예술을 통해 사람과 지역을 연결하는 복합 문화 공간이다. 다양한 전시를 통해 현대와 전통을 넘나드는 예술적 가치를 공유하며, 누구나 편안히 즐길 수 있는 공간에서 예술의 깊이와 즐거움을 경험할 수 있다. 총 1,110㎡ 규모의 3개의 전시실을 통해 문화예술계 발전에 기여하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

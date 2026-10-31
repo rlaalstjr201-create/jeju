@@ -1,0 +1,52 @@
+{
+ "contentid": "2839950",
+ "modifiedtime": "20250923183057",
+ "fetchedAt": "2026-10-31T16:18:49.781Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2839950",
+       "contenttypeid": "39",
+       "title": "명인밥상",
+       "createdtime": "20220819150106",
+       "modifiedtime": "20250923183057",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/48/2839948_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/48/2839948_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "18",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 송파구 송이로 155 (가락동)",
+       "addr2": "",
+       "zipcode": "05827",
+       "mapx": "127.1250514194",
+       "mapy": "37.4933681573",
+       "mlevel": "6",
+       "overview": "명인밥상은 3호선 경찰병원역 4번 출구 팔각정어린이공원 인근에 있다. 간장게장, 보리굴비, 더덕구이 등 다양한 메뉴와 함께 고등어구이, 전복갈비찜 등 메인 요리가 인기다. 특히 전복갈비찜은 신선한 전복과 부드러운 갈비 조합으로 보양식으로 좋으며, 모든 메뉴가 정성스럽게 준비되어 있어 만족도가 높다. 인근에 석촌호수, 유명테마놀이공원, 대형마트와 공원이 있어 연계 관광을 할 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

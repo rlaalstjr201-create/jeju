@@ -1,0 +1,52 @@
+{
+ "contentid": "3443159",
+ "modifiedtime": "20241212135910",
+ "fetchedAt": "2026-10-31T16:13:44.188Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3443159",
+       "contenttypeid": "39",
+       "title": "도락",
+       "createdtime": "20241212135847",
+       "modifiedtime": "20241212135910",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://dorak.co.kr",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/3442861_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/61/3442861_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 마포구 월드컵북로54길 17 (상암동)",
+       "addr2": "지하 1층 B-132A 도락",
+       "zipcode": "03924",
+       "mapx": "126.8885621347",
+       "mapy": "37.5813786875",
+       "mlevel": "6",
+       "overview": "도락은 서울 마포구 상암동에 위치한 해장국 전문 식당으로, 깔끔하고 깊은 국물 맛이 특징입니다. \n다양한 종류의 해장국 메뉴와 정성이 담긴 조리법으로 유명하며, 든든하고 따뜻한 한 끼를 원하는 방문객들에게\n인기가 많습니다. 현지 주민과 직장인들 사이에서 사랑받는 도락은 식사 공간의 쾌적함과 \n친절한 서비스로도 잘 알려져 있습니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

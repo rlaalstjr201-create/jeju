@@ -1,0 +1,52 @@
+{
+ "contentid": "2907181",
+ "modifiedtime": "20260409175711",
+ "fetchedAt": "2026-10-31T16:16:29.820Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2907181",
+       "contenttypeid": "39",
+       "title": "남미플랜트랩",
+       "createdtime": "20221114103342",
+       "modifiedtime": "20260409175711",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/73/4056973_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/73/4056973_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 방배천로4안길 55 일신빌딩",
+       "addr2": "",
+       "zipcode": "06677",
+       "mapx": "126.983234541912",
+       "mapy": "37.4806047048253",
+       "mlevel": "6",
+       "overview": "사당역 주변에 위치한 비건 식당인 남미플랜트랩은 비건을 즐겨 하지 않은 일반인도 맛있게 먹을 수 있는 식당이다. 다양한 비건 메뉴가 있지만 야채가 듬뿍 올라간 야채 피자와 웨지감자, 뇨끼 등 이 집만의 인기 메뉴이다. 비건 음식을 처음 접하기에 쉬운 식당이며 깔끔한 인테리어와 넓은 공간 덕분에 모임 장소로도 적합하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

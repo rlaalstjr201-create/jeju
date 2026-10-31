@@ -1,0 +1,52 @@
+{
+ "contentid": "3342991",
+ "modifiedtime": "20261027095233",
+ "fetchedAt": "2026-10-31T16:16:54.911Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3342991",
+       "contenttypeid": "12",
+       "title": "삼성해맞이공원",
+       "createdtime": "20240805141018",
+       "modifiedtime": "20261027095233",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://visitgangnam.net",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource_photo/80/3538380_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource_photo/80/3538380_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA04",
+       "lclsSystm3": "NA040100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 영동대로128길 39 (삼성동)",
+       "addr2": "",
+       "zipcode": "06079",
+       "mapx": "127.0619970000",
+       "mapy": "37.5197530000",
+       "mlevel": "6",
+       "overview": "삼성해맞이공원은 서울특별시 강남구 삼성동에 위치한 공원이다. 원래 상수원을 공급하기 위한 시설이었던 곳으로, 폐쇄 예정이던 배수지 상부를 공원으로 조성해 2022년도 사람들에게 개방했다. 매해 1월 1일 새해 해맞이 축제를 개최하고 있다. 한강변 언덕에 위치한 삼성해맞이공원에서는 한강의 다채로운 모습과 롯데타워, 잠실종합운동장, 올림픽대로, 청담대교 등 서울의 랜드마크를 한눈에 조망할 수 있으며, 일출 명소로도 유명하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

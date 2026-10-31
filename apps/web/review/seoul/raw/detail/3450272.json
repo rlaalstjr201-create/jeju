@@ -1,0 +1,52 @@
+{
+ "contentid": "3450272",
+ "modifiedtime": "20250729115900",
+ "fetchedAt": "2026-10-31T16:12:55.949Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3450272",
+       "contenttypeid": "39",
+       "title": "차이몬스터",
+       "createdtime": "20241218165822",
+       "modifiedtime": "20250729115900",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/68/3449868_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/68/3449868_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "22",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 은평구 불광천길 334 (응암동)",
+       "addr2": "1층",
+       "zipcode": "03484",
+       "mapx": "126.9140818131",
+       "mapy": "37.5890282549",
+       "mlevel": "6",
+       "overview": "서울 은평구에 위치한 차이몬스터는 주택을 개조한 듯한 아늑하고 편안한 분위기를 갖추고 있으며, 곳곳에는 중국풍 소품들이 배치되어 있어 이국적인 분위기를 더해준다. 오너 셰프가 직접 요리하여 더욱 신선하고 맛있는 중식을 맛볼 수 있다는 매력이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

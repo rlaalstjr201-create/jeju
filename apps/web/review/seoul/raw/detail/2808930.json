@@ -1,0 +1,52 @@
+{
+ "contentid": "2808930",
+ "modifiedtime": "20260205150054",
+ "fetchedAt": "2026-10-31T16:15:37.536Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2808930",
+       "contenttypeid": "39",
+       "title": "훈카츠",
+       "createdtime": "20220228172031",
+       "modifiedtime": "20260205150054",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 선유로9길 10 문래 SK V1 center",
+       "addr2": "",
+       "zipcode": "07281",
+       "mapx": "126.887151186264",
+       "mapy": "37.5178650997687",
+       "mlevel": "6",
+       "overview": "훈카츠는 정성스러운 조리와 기본에 충실한 맛을 추구하는 돈카츠 전문점이다. 신선한 재료를 사용해 두툼하게 손질한 고기를 바삭하게 튀겨내어 겉은 고소하고 속은 촉촉한 식감을 완성한다. 과하지 않은 간과 균형 잡힌 소스로 돈카츠 본연의 풍미를 살리는 것이 특징이다. 차분하고 깔끔한 분위기의 공간에서 편안하게 식사를 즐길 수 있는 곳이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

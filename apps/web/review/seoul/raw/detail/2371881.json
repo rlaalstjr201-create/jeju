@@ -1,0 +1,52 @@
+{
+ "contentid": "2371881",
+ "modifiedtime": "20250319183445",
+ "fetchedAt": "2026-10-31T16:14:36.070Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2371881",
+       "contenttypeid": "39",
+       "title": "고성막국수",
+       "createdtime": "20160304184642",
+       "modifiedtime": "20250319183445",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "4",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강서구 방화대로49길 6-7",
+       "addr2": "",
+       "zipcode": "07512",
+       "mapx": "126.8161299653",
+       "mapy": "37.5774278543",
+       "mlevel": "6",
+       "overview": "서울특별시 강서구 방화동에 위치한 막국수집으로, 강원도의 메밀국수를 맛볼 수 있는 곳이다. 순 메밀 함량 100%의 동치미막국수와 부드러운 편육이 대표 메뉴이다. 이외에 비빔막국수, 들기름막국수가 준비되어 있어 기호에 맞게 메뉴선택이 가능하다. 매장 내부는 입식과 좌식테이블 모두 준비되어 있고, 테이블이 많아 단체로 이용이 가능하여 모임이나 회식장소로도 좋은 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

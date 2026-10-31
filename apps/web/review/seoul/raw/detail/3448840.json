@@ -1,0 +1,52 @@
+{
+ "contentid": "3448840",
+ "modifiedtime": "20241218140035",
+ "fetchedAt": "2026-10-31T16:12:06.004Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3448840",
+       "contenttypeid": "14",
+       "title": "성신여자대학교 운정그린캠퍼스",
+       "createdtime": "20241218140024",
+       "modifiedtime": "20241218140035",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.sungshin.ac.kr/sites/main_kor/main.jsp",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/54/3448754_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/54/3448754_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "3",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "305",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090600",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02061400",
+       "addr1": "서울특별시 강북구 도봉로76가길 55 (미아동)",
+       "addr2": "",
+       "zipcode": "01133",
+       "mapx": "127.0274174771",
+       "mapy": "37.6321225012",
+       "mlevel": "6",
+       "overview": "성신여대의 제2캠퍼스로, 자연과학, 공학, 생활과학 계열 학문을 중심으로 한 미래지향적 캠퍼스이다. 이 캠퍼스는 친환경적이고 최첨단 학습 환경을 제공하며, 실험과 연구에 중점을 둔 교육을 통해 융합적 사고를 갖춘 인재를 양성하고 있다. 실험실, 강의실, 도서관 등 학생 편의 시설이 쾌적하게 조성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "1105871",
+ "modifiedtime": "20261012151234",
+ "fetchedAt": "2026-10-31T16:15:03.282Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1105871",
+       "contenttypeid": "14",
+       "title": "금나래아트홀",
+       "createdtime": "20101011192041",
+       "modifiedtime": "20261012151234",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://gcfac.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/45/3563345_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/45/3563345_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "545",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 금천구 시흥대로73길 70 금천구청종합청사",
+       "addr2": "",
+       "zipcode": "08611",
+       "mapx": "126.8955048880",
+       "mapy": "37.4564394023",
+       "mlevel": "6",
+       "overview": "금나래아트홀은 클래식, 연극, 뮤지컬 등 다양한 장르의 공연을 소화할 수 있는 다목적 공연장이다. 최신의 음향장비를 설비하여 객석 구석구석까지 소리가 잘 전달되는 탁월한 음향 수준을 구현했으며, 무대전환의 속도가 빨라 역동적인 무대를 연출할 수 있다. \n이 밖에도 미술전, 사진전, 체험전, 공예작품을 위한 전시공간인 갤러리가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

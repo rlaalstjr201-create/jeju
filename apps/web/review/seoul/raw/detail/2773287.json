@@ -1,0 +1,52 @@
+{
+ "contentid": "2773287",
+ "modifiedtime": "20251029163143",
+ "fetchedAt": "2026-10-31T16:14:49.458Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2773287",
+       "contenttypeid": "12",
+       "title": "삼각어린이공원",
+       "createdtime": "20211111185218",
+       "modifiedtime": "20251029163143",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/3558637_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/37/3558637_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "7",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "A02",
+       "cat2": "A0202",
+       "cat3": "A02020700",
+       "addr1": "서울특별시 구로구 구로동",
+       "addr2": "47",
+       "zipcode": "08297",
+       "mapx": "126.8920140718",
+       "mapy": "37.5014519273",
+       "mlevel": "6",
+       "overview": "서울 구로구 구로동에 위치한 삼각어린이공원은 지역 내 아이들이 넓고 쾌적한 공간에서 안심하고 마음껏 뛰어놀 수 있도록 만들어졌다. 공원은 지구 주위에 있는 태양, 달, 혜성 등의 놀이 행성으로 모험을 떠나는 주제로 꾸며졌다. 공원 내에는 아이들이 좋아하는 마운딩놀이대, 유아조합놀이대, 그물조합놀이대, 트램펄린, 육각그네, 흔들놀이대, 짚라인 등 역동적이고 창의적인 놀이기구가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

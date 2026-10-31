@@ -1,0 +1,52 @@
+{
+ "contentid": "4060676",
+ "modifiedtime": "20260428094648",
+ "fetchedAt": "2026-10-31T16:12:17.556Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4060676",
+       "contenttypeid": "14",
+       "title": "서울로봇인공지능과학관",
+       "createdtime": "20260427173203",
+       "modifiedtime": "20260428094648",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://science.seoul.go.kr/RAIM/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/50/4060650_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/50/4060650_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "320",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 도봉구 마들로13길 56 (창동)",
+       "addr2": "",
+       "zipcode": "01411",
+       "mapx": "127.049506212905",
+       "mapy": "37.6555838047766",
+       "mlevel": "",
+       "overview": "서울로봇인공지능과학관은 서울특별시 도봉구 창동에 위치한 로봇·인공지능 분야 특화 과학문화시설이다. 국내 최초로 로봇과 인공지능을 주제로 한 전문 과학관으로 2024년 8월 개관하였다. 과학관은 지하 2층, 지상 4층 규모로 조성되었으며 상설전시실, 기획전시실, 교육·체험 공간을 포함한다. 다양한 전시와 프로그램을 통해 로봇, 인공지능, 가상·증강현실 등 최신 과학기술을 직접 체험할 수 있도록 구성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "838590",
+ "modifiedtime": "20251118093520",
+ "fetchedAt": "2026-10-31T16:16:08.615Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "838590",
+       "contenttypeid": "39",
+       "title": "아리차이",
+       "createdtime": "20091028185815",
+       "modifiedtime": "20251118093520",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://www.arichai.com\" target=\"_blank\" title=\"새창 : 아리차이 홈페이지로 이동\">http://www.arichai.com</a>",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "5",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 관악구 신림동길 4",
+       "addr2": "",
+       "zipcode": "08707",
+       "mapx": "126.9282972653",
+       "mapy": "37.4876902853",
+       "mlevel": "6",
+       "overview": "아리차이는 서울 시 관악구 신림동에 위치한 중식당이다. 이곳은 약식동원 (약도 음식이고, 음식도 곧 약이다)’라는 마음으로 천연 조미료를 직접 개발하여 한국 사람 미각에 맞춰 조리를 하는 것을 기본으로 한다. 저렴한 가격대의 코스요리부터 고품격의 코스요리까지 다양한 가격대의 코스 메뉴 10여 종 및 단품 메뉴와 함께 일반 식사 등을 고루 준비하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

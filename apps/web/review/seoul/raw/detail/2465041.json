@@ -1,0 +1,52 @@
+{
+ "contentid": "2465041",
+ "modifiedtime": "20261007134947",
+ "fetchedAt": "2026-10-31T16:18:16.250Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2465041",
+       "contenttypeid": "39",
+       "title": "최수사 대게마을",
+       "createdtime": "20161220183549",
+       "modifiedtime": "20261007134947",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 논현로 429",
+       "addr2": "3층",
+       "zipcode": "06237",
+       "mapx": "127.0374065153",
+       "mapy": "37.4990756560",
+       "mlevel": "6",
+       "overview": "정통일식 최수사 대게마을은 고급스럽고 풍미를 느낄 수 있는 대게를 분위기 있게 먹을 수 있는 곳이다. 신선한 재료와 깔끔한 인테리어가 특징이며  대게뿐만 아니라, 사시미, 초밥, 활어회를 싱싱하게 먹을 수 있다. 지역 특성상 비즈니스 모임, 미팅이 가능한 룸이 완비가 되어 있어 단체 모임과 연말 모임이 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

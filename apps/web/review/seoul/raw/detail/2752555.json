@@ -1,0 +1,52 @@
+{
+ "contentid": "2752555",
+ "modifiedtime": "20261015165200",
+ "fetchedAt": "2026-10-31T16:17:21.078Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2752555",
+       "contenttypeid": "38",
+       "title": "신사상가",
+       "createdtime": "20211001232359",
+       "modifiedtime": "20261015165200",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/59/4126059_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/59/4126059_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 압구정로29길 72-1",
+       "addr2": "(압구정동)",
+       "zipcode": "06004",
+       "mapx": "127.0284008900",
+       "mapy": "37.5322853353",
+       "mlevel": "6",
+       "overview": "압구정역 1번 출구에서 압구정 현대아파트 방향으로 걸어가다 보면 만날 수 있는 시장으로 약 80여 개 점포가 있다. 1976년에 준공되었으나 이후로 재건축이나 리모델링을 하지 않아서 본래 모습을 거의 변함없이 유지하고 있는 전형적인 재래시장의 모습이다. 시장 뒤쪽 출입구에 있는 40년 전통의 떡볶이집이 유명하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2849506",
+ "modifiedtime": "20250918102813",
+ "fetchedAt": "2026-10-31T16:14:44.555Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2849506",
+       "contenttypeid": "39",
+       "title": "칼스토랑",
+       "createdtime": "20220906105101",
+       "modifiedtime": "20250918102813",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/02/2849502_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/02/2849502_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "4",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강서구 방화대로6라길 2",
+       "addr2": "",
+       "zipcode": "07645",
+       "mapx": "126.8185775898",
+       "mapy": "37.5551777076",
+       "mlevel": "6",
+       "overview": "칼스토랑은 서울특별시 강서구 공항동에 있는 칼국수 식당이다. 지하철 5호선 마곡역 7번 출구 부근에 있다. 대표 메뉴는 고기 칼국수, 장칼국수, 짬뽕칼국수가 있고 수육국밥 생등심돈가스도 별미다. 칼국수는 주문과 동시에 조리하므로 면발이 살아있고 맛이 좋다. 주변에 수명산, 우장산, 검덕산이 있어 등산 코스와 연계하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

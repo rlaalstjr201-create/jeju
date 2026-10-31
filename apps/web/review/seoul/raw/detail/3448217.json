@@ -1,0 +1,52 @@
+{
+ "contentid": "3448217",
+ "modifiedtime": "20250730111351",
+ "fetchedAt": "2026-10-31T16:14:48.952Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3448217",
+       "contenttypeid": "12",
+       "title": "디큐브시티 해바라기 공원",
+       "createdtime": "20241218100820",
+       "modifiedtime": "20250730111351",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/42/3452942_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/42/3452942_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "7",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA05",
+       "lclsSystm3": "NA050100",
+       "cat1": "A01",
+       "cat2": "A0101",
+       "cat3": "A01010500",
+       "addr1": "서울특별시 구로구 경인로 624 (신도림동)",
+       "addr2": "",
+       "zipcode": "08213",
+       "mapx": "126.8854062045",
+       "mapy": "37.5062901367",
+       "mlevel": "6",
+       "overview": "신도림역과 직접 연결되어 있어 접근성이 우수하며, 도심 속에서 자연과 휴식을 즐길 수 있는 공간이다. 약 6,000평 규모로, 해바라기 광장, 야생화 계곡, 장미터널, 770석 규모의 야외극장 등 다양한 시설을 갖추고 있다. 특히 밤에는 화려한 조명과 분수가 어우러져 가족, 친구, 연인들에게 인기 있는 장소이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

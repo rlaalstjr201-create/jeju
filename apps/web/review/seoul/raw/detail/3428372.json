@@ -1,0 +1,52 @@
+{
+ "contentid": "3428372",
+ "modifiedtime": "20261001133332",
+ "fetchedAt": "2026-10-31T16:14:08.429Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3428372",
+       "contenttypeid": "12",
+       "title": "계남근린공원",
+       "createdtime": "20241128154957",
+       "modifiedtime": "20261001133332",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/03/3432303_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/03/3432303_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030400",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 중앙로17길 21 (신정동)",
+       "addr2": "",
+       "zipcode": "08106",
+       "mapx": "126.8550905317",
+       "mapy": "37.5098751207",
+       "mlevel": "6",
+       "overview": "계남근린공원은 서울 구로구 고척동과 양천구 신정동에 걸쳐 있는 공원으로, 산책로, 인조잔디 축구장, 다목적 운동장, 숲 체험 공간 등 다양한 시설을 갖춘 근린공원이다. 자연 속에서 산책과 여가를 즐길 수 있도록 접근성이 좋은 나무 데크와 울창한 숲이 조성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

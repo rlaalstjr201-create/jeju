@@ -1,0 +1,52 @@
+{
+ "contentid": "2675098",
+ "modifiedtime": "20261019131017",
+ "fetchedAt": "2026-10-31T16:14:51.814Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2675098",
+       "contenttypeid": "12",
+       "title": "푸른수목원",
+       "createdtime": "20201007055358",
+       "modifiedtime": "20261019131017",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://botanicpark.seoul.go.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/46/3545146_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/46/3545146_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "NA",
+       "lclsSystm2": "NA04",
+       "lclsSystm3": "NA040700",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 구로구 연동로 240 (항동)",
+       "addr2": "",
+       "zipcode": "08361",
+       "mapx": "126.8236694754",
+       "mapy": "37.4819684352",
+       "mlevel": "6",
+       "overview": "푸른수목원은 인적 없던 공터를 친환경 공간으로 탈바꿈시켜 조성된 서울시 최초의 시립 수목원이다. 2018년 서울시 제1호 공립수목원으로 지정되었으며, 다양한 식물유전자원을 수집·증식·보존하고 있다. 항동저수지 인근에 위치한 수목원에는 오색정원, 야생화원, 어린이정원 등 20개의 주제정원이 조성되어 있다. 안내센터와 숲교육센터 등에서 운영되는 생태교육 및 가드닝 프로그램을 통해 자연 속 배움의 장으로 활용되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

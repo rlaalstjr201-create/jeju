@@ -1,0 +1,52 @@
+{
+ "contentid": "130823",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-31T16:18:38.328Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130823",
+       "contenttypeid": "14",
+       "title": "소마미술관",
+       "createdtime": "20060504090000",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://soma.kspo.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/99/3500499_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/99/3500499_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070600",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 송파구 올림픽로 424 (방이동)",
+       "addr2": "",
+       "zipcode": "05540",
+       "mapx": "127.11505157122546",
+       "mapy": "37.520555375396896",
+       "mlevel": "6",
+       "overview": "소마미술관은 서울 올림픽의 성과를 예술로 승화하는 기념공간이자 휴식공간이다. 세계의 조각 작품들과 조경이 조화를 이룬 조각 공원 안에 자리 잡고 있다. 미술관에서 나와 자연스럽게 연결되는 조각 공원의 황톳길을 따라 걷다 보면 조각 작품들과 자연을 동시에 감상할 수 있다. 창밖으로 조각 공원의 전경이 펼쳐지는 개방적이고 확장된 공간이 되는 실내 전시공간을 갖춘 1관, 그리고 지하철 9호선과 연결된 2관 등 소마미술관은 자연과 인간, 예술과 건축이 어우러진 색다른 풍경을 만들어 자연과 공존하는 소통의 공간구조를 더욱 실감하게 한다. 이처럼 소마미술관은 평화의 광장, 몽촌토성 등 주변의 문화공간을 이어주는 중심으로서 주변의 자연적인 요소들을 시설에 연결하고 서로 다른 풍경을 맺어주는 산책로가 되도록 만들어졌다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

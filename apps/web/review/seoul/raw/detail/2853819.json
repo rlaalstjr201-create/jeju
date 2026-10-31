@@ -1,0 +1,52 @@
+{
+ "contentid": "2853819",
+ "modifiedtime": "20250918113923",
+ "fetchedAt": "2026-10-31T16:13:45.213Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2853819",
+       "contenttypeid": "39",
+       "title": "라멘트럭 상수본점",
+       "createdtime": "20220915132604",
+       "modifiedtime": "20250918113923",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/04/2853804_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/04/2853804_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 마포구 독막로14길 31 (상수동)",
+       "addr2": "",
+       "zipcode": "04074",
+       "mapx": "126.9226183177",
+       "mapy": "37.5475526741",
+       "mlevel": "6",
+       "overview": "상수역 4번 출구에서 도보 1분 거리에 있는 라멘전문점이다. 강변북로 방향으로 돌아내려 오면 있는 첫 번째 골목에 있다. 라멘이 대표 메뉴이다. 그 외에도 신라멘, 수제교자, 미니차슈동 등 다양한 메뉴를 즐길 수 있다. 근처 카페가 많고 방탈출카페, 노래방, 보드게임카페, 만화카페 등 놀거리가 많아 데이트하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

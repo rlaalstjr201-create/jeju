@@ -1,0 +1,52 @@
+{
+ "contentid": "2860975",
+ "modifiedtime": "20260225164605",
+ "fetchedAt": "2026-10-31T16:14:36.329Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2860975",
+       "contenttypeid": "39",
+       "title": "고양이똥",
+       "createdtime": "20220927144808",
+       "modifiedtime": "20260225164605",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강서구 공항대로59가길 13",
+       "addr2": "",
+       "zipcode": "07563",
+       "mapx": "126.864638525396",
+       "mapy": "37.5520410832278",
+       "mlevel": "6",
+       "overview": "고양이똥은 9호선 등촌역 2번 출구 인근에 있다. 매장은 오래된 주택을 개조해 1층, 2층으로 되어 있고 1층은 테이블 석과 예쁜 커피잔이 진열된 곳, 주방, 계산대가 있고 2층은 사방이 투명창에 식물로 인테리어 되어 있고 테라스를 확장해 공간이 커 보인다. 야외 테라스도 있다. 주메뉴는 브런치류로 샌드위치, 샐러드, 파스타가 있고 음료 메뉴도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

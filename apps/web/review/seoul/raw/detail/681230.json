@@ -1,0 +1,52 @@
+{
+ "contentid": "681230",
+ "modifiedtime": "20260623090737",
+ "fetchedAt": "2026-10-31T16:14:06.398Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "681230",
+       "contenttypeid": "39",
+       "title": "홍원",
+       "createdtime": "20090119191248",
+       "modifiedtime": "20260623090737",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/89/3569489_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/89/3569489_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 백범로 23",
+       "addr2": "터틀프라자 지하1층 E호",
+       "zipcode": "04108",
+       "mapx": "126.9354287499",
+       "mapy": "37.5551669768",
+       "mlevel": "6",
+       "overview": "홍원은 서강대 정문에서 신촌 로터리 방향으로 이동하면 위치한 중국음식점이다. 플라자상가(거구장 건물) 지하 1층에 자리하고 있으며 접근성이 좋고 엘리베이터가 있어 방문이 편리하다. 매장은 테이블 간격이 넓고 내부가 깔끔해 쾌적한 식사 환경을 제공하며, 인근 대학생과 일반 고객 모두에게 인기가 있다.음식은 전반적으로 일반 중화요리보다 맛과 향이 강한 편이며, 대표 메뉴로는 달콤하지만 느끼하지 않은 탕수육과 매콤한 고추 쟁반짜장이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

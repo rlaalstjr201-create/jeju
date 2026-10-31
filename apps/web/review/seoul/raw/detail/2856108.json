@@ -1,0 +1,52 @@
+{
+ "contentid": "2856108",
+ "modifiedtime": "20250919105310",
+ "fetchedAt": "2026-10-31T16:16:42.445Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2856108",
+       "contenttypeid": "39",
+       "title": "양재해장국",
+       "createdtime": "20220920131744",
+       "modifiedtime": "20250919105310",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/03/2856103_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/03/2856103_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 서초구 강남대로10길 11 (양재동)",
+       "addr2": "",
+       "zipcode": "06787",
+       "mapx": "127.0409847794",
+       "mapy": "37.4682084547",
+       "mlevel": "6",
+       "overview": "양재해장국은 지하철 신분당선 양재시민의숲역 3번 출구 양재꽃시장 인근에 있다. 매장 안은 넓고 단체석이 준비되어 있어 행사 진행에도 적합하다. 뼈다귀 감자탕과 마라 뼈감자탕은 국물이 진하고 고기가 푸짐해 만족도가 높다. 특히 볶음밥은 국물과 함께 먹기 좋아 마무리 메뉴로 인기가 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

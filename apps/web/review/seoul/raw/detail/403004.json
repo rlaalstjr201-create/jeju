@@ -1,0 +1,52 @@
+{
+ "contentid": "403004",
+ "modifiedtime": "20250315131404",
+ "fetchedAt": "2026-10-31T16:12:10.870Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "403004",
+       "contenttypeid": "39",
+       "title": "서당골 수유본점",
+       "createdtime": "20080120063544",
+       "modifiedtime": "20250315131404",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "1",
+       "sigungucode": "3",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "305",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강북구 한천로 1153 (수유동)",
+       "addr2": "",
+       "zipcode": "01038",
+       "mapx": "127.0169568987",
+       "mapy": "37.6469289235",
+       "mlevel": "6",
+       "overview": "서울시 강북구 수유동에 위치한 서당골 수유본점은 그때 그 시절의 맛을 느낄 수 있는 한식집이다. 이른 아침에 각 지역에서 나물이 들어오면 하나씩 사람의 손으로 깔끔하게 다듬어 찬물에 깨끗하게 씻어내고 뜨거운 물에 삶거나 데쳐서 나물 고유의 향과 맛을 살리기 위해 노력한다. 모든 음식을 손수 만들어 정성이 담긴 온기 가득한 밥상을 손님 상에 올리고 있다. \n서당골의 대표메뉴는 시래기 코다리가 어우러진 매콤한 맛의 코다리정식이다. 2,000원 추가할 경우 밥을 가마솥밥으로 변경할 수 있다. 또한 남녀노소 누구나 즐길 수 있는 달콤한 간장베이스의 불백정식과 제주흑돼지와 묵은지로만든 김치찜도 인기가 많다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

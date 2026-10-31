@@ -1,0 +1,52 @@
+{
+ "contentid": "2487831",
+ "modifiedtime": "20260211081009",
+ "fetchedAt": "2026-10-31T16:17:45.700Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2487831",
+       "contenttypeid": "39",
+       "title": "베네베네2010(Benebene2010)",
+       "createdtime": "20170329013442",
+       "modifiedtime": "20260211081009",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 선릉로148길 52",
+       "addr2": "",
+       "zipcode": "06064",
+       "mapx": "127.043782994565",
+       "mapy": "37.5228089909217",
+       "mlevel": "6",
+       "overview": "이탈리아 출신 소믈리에 셰프님의 특별한 레스토랑이다. 화학조미료를 쓰지 않고 모든 재료를 손수 직접 만든다. 와인과 이탈리안 요리의 조화를 이루어 최상의 맛을 선사하는 음식점이다. 제철 재료를 활용해 재료 본연의 맛을 살리는 음식을 만드는 특징이 있어 방문객들에게 인기가 많은 레스토랑이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

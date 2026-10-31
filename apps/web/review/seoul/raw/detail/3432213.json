@@ -1,0 +1,52 @@
+{
+ "contentid": "3432213",
+ "modifiedtime": "20241202114121",
+ "fetchedAt": "2026-10-31T16:17:06.098Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3432213",
+       "contenttypeid": "14",
+       "title": "논현문화마루도서관",
+       "createdtime": "20241202114057",
+       "modifiedtime": "20241202114121",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://nhlib.gangnam.go.kr/nmmlib/index.do",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/56/3431756_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/56/3431756_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060900",
+       "addr1": "서울특별시 강남구 논현로131길 40 (논현동)",
+       "addr2": "",
+       "zipcode": "06045",
+       "mapx": "127.0271208603",
+       "mapy": "37.5139001229",
+       "mlevel": "6",
+       "overview": "논현문화마루도서관은 서울 강남구에 위치한 전국 최초의 예술 특화 도서관으로, 지역 주민들에게 책과 예술을 융합한 독창적 경험을 제공한다. 자연광이 가득한 현대적 건축과 아늑한 독서 공간, 어린이부터 성인까지 즐길 수 있는 다양한 프로그램을 자랑한다. 예술 관련 자료와 전시 공간이 특히 주목받고 있으며, 주민들이 문화와 창의성을 나눌 수 있는 커뮤니티 허브로 자리 잡고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "130211",
+ "modifiedtime": "20260312132715",
+ "fetchedAt": "2026-10-31T16:12:16.779Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130211",
+       "contenttypeid": "14",
+       "title": "도봉문화원",
+       "createdtime": "20071106104704",
+       "modifiedtime": "20260312132715",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.dobong.or.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/68/3508368_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/68/3508368_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "320",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 도봉구 도봉로 552 (창동)",
+       "addr2": "",
+       "zipcode": "01427",
+       "mapx": "127.03834368982126",
+       "mapy": "37.65417091022051",
+       "mlevel": "6",
+       "overview": "도봉문화원은 1994년에 설립되어 도봉 지역의 역사와 다양한 문화 정보를 지역주민들에게 제공한다. 분기 별로 문화학교 프로그램을 진행하고 있으며, 구민 문화향유의 기회를 확대하고자 도봉시네마도 운영하고 있다. 독립영화, 흘러간 명화 등 다양한 장르의 영화를 상영함으로써 많은 사람이 즐길 수 있는 영화관을 운영하고 있다. 영화관 상영은 매주 월요일과 매월 마지막 주 수요일 오후 3시이다. 도봉문화원 1층에 위치한 편지문학관은 2022년 개관하여 편지와 문학의 감성을 바탕으로 운영하고 있다. 사람의 마음을 전달하는 가장 오래된 소통의 수단이자 아날로그 감성을 상징하는 편지는 오늘날 현대사회에서 인문학적 가치를 다시 조명받고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

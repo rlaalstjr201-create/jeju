@@ -1,0 +1,52 @@
+{
+ "contentid": "2783104",
+ "modifiedtime": "20250728144741",
+ "fetchedAt": "2026-10-31T16:15:27.298Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2783104",
+       "contenttypeid": "39",
+       "title": "매일낙지",
+       "createdtime": "20211130005022",
+       "modifiedtime": "20250728144741",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/2782612_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/12/2782612_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "20",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 영등포구 경인로78길 3-16",
+       "addr2": "",
+       "zipcode": "07371",
+       "mapx": "126.8953829154",
+       "mapy": "37.5119118844",
+       "mlevel": "6",
+       "overview": "매일낙지는 문래동에 위치한 40년 전통의 낙지 전문점이다. 고기 불판에 낙지를 올려먹는 불낙지가 대표메뉴이다. 시원한 육수를 붓고 대파와 쑥갓 등 야채를 올려 산낙지와 함께 익혀먹는다. 깻잎장아찌와 젓갈을 곁들여 초장과 찍어먹는다. 마무리로 볶음밥을 해 먹을 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

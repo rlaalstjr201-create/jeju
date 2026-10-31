@@ -1,0 +1,52 @@
+{
+ "contentid": "2875276",
+ "modifiedtime": "20250919170312",
+ "fetchedAt": "2026-10-31T16:12:51.274Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2875276",
+       "contenttypeid": "39",
+       "title": "갈현동할머니떡볶이",
+       "createdtime": "20221026094410",
+       "modifiedtime": "20250919170312",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/67/2875267_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/67/2875267_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "22",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD03",
+       "lclsSystm3": "FD030400",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 은평구 통일로87길 8-1 (갈현동)",
+       "addr2": "",
+       "zipcode": "03328",
+       "mapx": "126.9187804084",
+       "mapy": "37.6235354372",
+       "mlevel": "6",
+       "overview": "갈현동할머니떡볶이는 지하철 3호선, 6호선 연신내역 7번 출구 갈현1동 행정복지센터 부근 갈현시장 입구에 있다. 이곳은 오래된 노포이자 떡볶이 맛집으로 유명하다. 매장 안은 그리 넓지 않은 분식집 분위기고 노랑 테이블이 눈에 띈다. 대표 메뉴는 떡볶이, 순대, 사이드 메뉴로 군만두, 김말이, 고기만두가 인가가 높다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2563220",
+ "modifiedtime": "20261021082835",
+ "fetchedAt": "2026-10-31T16:12:51.824Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2563220",
+       "contenttypeid": "39",
+       "title": "만석장",
+       "createdtime": "20181016023740",
+       "modifiedtime": "20261021082835",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/63/2563263_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/63/2563263_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "380",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 은평구 대서문길 43-10",
+       "addr2": "",
+       "zipcode": "03307",
+       "mapx": "126.9495328341",
+       "mapy": "37.6558077310",
+       "mlevel": "6",
+       "overview": "쌈 채소가 무한 제공되는 쌈밥과 파주 장단 콩으로 정성스럽게 만드는 수제 두부를 만나볼 수 있는 곳이다. 쌈밥에 제공되는 고기는 특허받은 황토가마로 초벌구이하여 육류의 풍미를 높인다. 특유의 단단함과 고소함이 느껴지는 생두부도 인기메뉴이다. 날이 좋을 때 이용가능한 야외 테라스도 운영되고 있다.\n\n(출처 : 소상공인협회)"
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

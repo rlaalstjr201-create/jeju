@@ -1,0 +1,52 @@
+{
+ "contentid": "2756134",
+ "modifiedtime": "20260323153540",
+ "fetchedAt": "2026-10-31T16:15:01.340Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2756134",
+       "contenttypeid": "12",
+       "title": "금천 폭포공원",
+       "createdtime": "20211013191335",
+       "modifiedtime": "20260323153540",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://www.geumcheon.go.kr/",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/14/3467814_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/14/3467814_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "545",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 금천구 시흥대로38길 61 (시흥동)",
+       "addr2": "",
+       "zipcode": "08650",
+       "mapx": "126.90446575396714",
+       "mapy": "37.446401152616225",
+       "mlevel": "6",
+       "overview": "금천 폭포공원은 서울시 서남부에 있는 총 4,835㎡ 규모의 공원이다. 경기도에서 서울 도심으로 진입하는 관문 성격의 교통 요충지로 박미 고갯길의 자연 지형을 이용하여 경사면에 인공폭포를 조성했으며 상부는 문화회관과 공원시설을, 하부는 연못 형태의 수조가 있는 공원이다. 인공폭포의 3개 물줄기는 금천구의 가산동, 독산동, 시흥동 3개 동을 상징한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

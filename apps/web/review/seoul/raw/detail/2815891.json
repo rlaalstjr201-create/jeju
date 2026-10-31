@@ -1,0 +1,52 @@
+{
+ "contentid": "2815891",
+ "modifiedtime": "20260724085343",
+ "fetchedAt": "2026-10-31T16:13:49.280Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2815891",
+       "contenttypeid": "39",
+       "title": "브래디스커피",
+       "createdtime": "20220413110851",
+       "modifiedtime": "20260724085343",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 성미산로23안길 23",
+       "addr2": "",
+       "zipcode": "03979",
+       "mapx": "126.9209826242",
+       "mapy": "37.5661764848",
+       "mlevel": "6",
+       "overview": "브래디스커피는 연남동 끝자락에 위치한 아담한 카페이다. 작은 공간이 두 층으로 이어져있다. 1층은 바, 2층은 카페이며 3층 공간까지 있다. 빈티지한 인테리어로 마치 외국에 와있는 듯한 느낌을 준다. 각 좌석에는 햇빛이 많이 들어 아무렇게나 찍어도 감성 샷을 건지기 쉽다. 또한 가게 내 사용하고 있는 모든 일회용품은 친환경 소재로 제작되어 자연도 지키는 소비를 할 수 있다. 메뉴는 아인슈페너와 같은 커피류와 에이드 등이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

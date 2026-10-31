@@ -1,0 +1,52 @@
+{
+ "contentid": "2856713",
+ "modifiedtime": "20250919154352",
+ "fetchedAt": "2026-10-31T16:16:44.786Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2856713",
+       "contenttypeid": "39",
+       "title": "일식 신태평양",
+       "createdtime": "20220921095424",
+       "modifiedtime": "20250919154352",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/10/2856710_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/10/2856710_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 서초구 서초대로 307 (서초동)",
+       "addr2": "",
+       "zipcode": "06606",
+       "mapx": "127.0151530549",
+       "mapy": "37.4944604988",
+       "mlevel": "6",
+       "overview": "일식 신태평양은 교대역 4번 출구 바로 앞에 위치해 있다. 이곳은 오랜 시간 운영되고 있는 전통 일식집이다. 고급스러운 일본풍의 인테리어에 단체석과 개별 룸도 완비되어 있어 각종 모임 식사 자리에도 적합하다. 다양한 종류의 사시미와 정식, 요리, 식시류가 준비되어 있으며, 계절에 따라 구성이 조금씩 변경될 수도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

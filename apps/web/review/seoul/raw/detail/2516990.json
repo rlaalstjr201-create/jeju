@@ -1,0 +1,52 @@
+{
+ "contentid": "2516990",
+ "modifiedtime": "20260409111843",
+ "fetchedAt": "2026-10-31T16:13:57.931Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2516990",
+       "contenttypeid": "39",
+       "title": "잇텐고",
+       "createdtime": "20171122185535",
+       "modifiedtime": "20260409111843",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 포은로 11",
+       "addr2": "",
+       "zipcode": "04020",
+       "mapx": "126.909228699137",
+       "mapy": "37.5491755684829",
+       "mlevel": "6",
+       "overview": "합정동에 위치한 잇텐고는 일본식 라멘 전문점이다. 이곳의 대표 메뉴는 바질 라멘(미도리 카메)이다. 일본식 라멘에 이탈리안 콘셉트를 적용하여 탄생한 것이다. 스파게티에 많이 사용하는 바질 페스토를 라멘에 넣어 독특한 초록색 국물을 완성하였다. 처음 접하는 사람들은 망설임이 생길 수 있지만 한번 맛을 보면 그 걸쭉하고 바질의 풍미가 가득한 국물 맛을 잊을 수 없어 다시 찾게 된다고 한다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

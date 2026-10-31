@@ -1,0 +1,52 @@
+{
+ "contentid": "130378",
+ "modifiedtime": "20260929134542",
+ "fetchedAt": "2026-10-31T16:15:17.250Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "130378",
+       "contenttypeid": "14",
+       "title": "영등포문화원",
+       "createdtime": "20071106105457",
+       "modifiedtime": "20260929134542",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.ydpcc.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/31/3399431_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/31/3399431_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 신길로 275 (영등포동)",
+       "addr2": "",
+       "zipcode": "07307",
+       "mapx": "126.9122697711",
+       "mapy": "37.5161546269",
+       "mlevel": "6",
+       "overview": "1999년 8월 7일 개원한 영등포문화원은 영등포 지역의 향토문화 자원을 발굴 보존하고 영등포 지역의 특색 있는 문화를 보존하고 계승하는 곳이다. 문화행사와 더불어 평생학습의 장으로 108개의 강좌와 75명의 강사로 문화학교를 운영하고 있다. 지역주민들의 문화향수 충족과 정서함양을 위한 다양한 프로그램을 운영함으로써 향토문화와 평생교육의 정착을 위하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

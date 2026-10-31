@@ -1,0 +1,52 @@
+{
+ "contentid": "3443228",
+ "modifiedtime": "20241212141618",
+ "fetchedAt": "2026-10-31T16:14:40.696Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3443228",
+       "contenttypeid": "39",
+       "title": "벤의 서재",
+       "createdtime": "20241212141559",
+       "modifiedtime": "20241212141618",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/92/3442892_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/92/3442892_image3_1.JPG",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "4",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "500",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020900",
+       "addr1": "서울특별시 강서구 공항대로 219 (마곡동)",
+       "addr2": "3층 301호",
+       "zipcode": "07802",
+       "mapx": "126.8320234586",
+       "mapy": "37.5596885340",
+       "mlevel": "6",
+       "overview": "벤의 서재는 북카페와 독립서점을 겸한 공간으로, 독서와 글쓰기에 집중할 수 있는 조용하고 편안한 환경을 제공합니다. \n책과 삶을 연결하는 특별한 공간으로 독서 애호가들에게 인기를 얻고 있습니다.\n대화 없는 공간으로 운영되며, 평일에는 예약제로 운영하고, 주말에는 제한된 시간에만 예약을 받습니다. 예약과 워크인 모두 가능하며, \n방문 전에는 네이버톡톡이나 인스타그램을 통해 문의하실 수 있습니다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

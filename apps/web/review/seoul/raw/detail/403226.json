@@ -1,0 +1,52 @@
+{
+ "contentid": "403226",
+ "modifiedtime": "20260929092312",
+ "fetchedAt": "2026-10-31T16:12:39.003Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "403226",
+       "contenttypeid": "39",
+       "title": "우정낙지",
+       "createdtime": "20080120064458",
+       "modifiedtime": "20260929092312",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/32/399832_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/32/399832_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 노원구 동일로217가길 23",
+       "addr2": "(상계동)",
+       "zipcode": "01762",
+       "mapx": "127.0590888741",
+       "mapy": "37.6532766934",
+       "mlevel": "6",
+       "overview": "우정낙지는 노원구 상계동에 위치한 낙지전문점으로 매운맛을 선호하는 사람들이 찾는다. 매운 음식을 싫어하는 사람들에게도 우정낙지의 맛에 빠져들면, 그 맛에 헤어 나오지 못할 정도로 그 맛이 일품이다. 이곳 우정낙지에서는 매운 낙지볶음만 먹어도 좋고, 콩나물에 밥을 넣어 낙지와 비빈 비빔밥을 먹어도 매콤한 것이 좋다. 일반 낙지보다 크기도 크며 질기지도 않아 치아가 약한 사람들도 먹기에 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

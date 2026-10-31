@@ -1,0 +1,52 @@
+{
+ "contentid": "2856044",
+ "modifiedtime": "20250919104422",
+ "fetchedAt": "2026-10-31T16:16:41.933Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2856044",
+       "contenttypeid": "39",
+       "title": "스시고",
+       "createdtime": "20220920130107",
+       "modifiedtime": "20250919104422",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/2856034_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/34/2856034_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 서초구 사평대로22길 15 (반포동)",
+       "addr2": "",
+       "zipcode": "06576",
+       "mapx": "126.9978989421",
+       "mapy": "37.4989874418",
+       "mlevel": "6",
+       "overview": "스시고는 지하철 9호선 신반포역 4번 출구 부근에 있다. 이곳은 전문 초밥 코스요리를 즐길 수 있는 곳이다. 가게는 크지 않아 아늑한 분위기에서 식사할 수 있다. 코스요리에는 여러 가지의 초밥과 제철 회, 생선튀김 등 다양한 해산물 요리가 포함되어 있다. 대표 메뉴는 디너코스, 런치코스가 있고 모두 가성비가 좋아 인기가 많다. 주변에 잠원한강공원이 가까워 식사 전후에 산책하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

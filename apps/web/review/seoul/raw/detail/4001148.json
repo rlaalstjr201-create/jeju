@@ -1,0 +1,52 @@
+{
+ "contentid": "4001148",
+ "modifiedtime": "20260514082738",
+ "fetchedAt": "2026-10-31T16:16:17.984Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "4001148",
+       "contenttypeid": "12",
+       "title": "피카소 벽화",
+       "createdtime": "20260114133851",
+       "modifiedtime": "20260514082738",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/72/4061272_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/72/4061272_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE01",
+       "lclsSystm3": "VE010900",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 반포대로 333 (반포동, 래미안 원베일리)",
+       "addr2": "지하공공보행통로",
+       "zipcode": "06506",
+       "mapx": "126.999451",
+       "mapy": "37.507509",
+       "mlevel": "",
+       "overview": "고속터미널역에서 반포한강공원을 이어주는 공간인 지하공공보행통로는 서울을 사랑하는 모든 시민들과 나누고자 스트리트 갤러리로 기획되었다. 특히 스페인 관광청, 말라가 관광청과 서초구의 협업으로 만들어진 피카소 벽화는 피카소의 시선을 통해 건축, 음식, 전통, 일상생활 등 스페인 말라가와 서울의 다양한 측면을 보여주는 65m의 벽화다. 이 벽화를 그린 작가는 유로피안 어반 아트 챔피언 대회 우승자이자 라론(Lalone)으로 활동 중인 세계적인 그래피티 아티스트 '에두아르도 루케'이며, 라론이 피카소 벽화를 그리는 과정이 벽화 옆 카페형 휴식공간에서 재생되고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

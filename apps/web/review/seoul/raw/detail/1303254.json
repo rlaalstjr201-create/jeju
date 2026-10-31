@@ -1,0 +1,52 @@
+{
+ "contentid": "1303254",
+ "modifiedtime": "20260220172836",
+ "fetchedAt": "2026-10-31T16:18:21.901Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1303254",
+       "contenttypeid": "39",
+       "title": "품 서울",
+       "createdtime": "20110609181610",
+       "modifiedtime": "20260220172836",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 삼성로126길 6",
+       "addr2": "",
+       "zipcode": "06084",
+       "mapx": "127.051662933242",
+       "mapy": "37.5175181116919",
+       "mlevel": "6",
+       "overview": "품 서울은 최상의 제철재료를 사용하고 생산자 표시와 등급 표시로 계절음식과 안전한 먹거리를 우선으로 하며, 반가음식에 기본을 두고 현대적으로 새롭게 해석한 모던 한식을 선보인다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

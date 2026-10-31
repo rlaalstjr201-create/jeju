@@ -1,0 +1,52 @@
+{
+ "contentid": "2847089",
+ "modifiedtime": "20250918091332",
+ "fetchedAt": "2026-10-31T16:19:01.058Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2847089",
+       "contenttypeid": "39",
+       "title": "정목누룽지백숙",
+       "createdtime": "20220831151558",
+       "modifiedtime": "20250918091332",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/2847080_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/2847080_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "18",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "710",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 송파구 위례성대로12길 11 (방이동)",
+       "addr2": "",
+       "zipcode": "05637",
+       "mapx": "127.1225872076",
+       "mapy": "37.5126380986",
+       "mlevel": "6",
+       "overview": "정목누룽지백숙은 서울 방이동 방이역 4번 출구 인근에 위치한 삼계탕 전문점이다. 높은 천장과 갤러리풍의 인테리어로 답답하지 않고 쾌적하다. 대표메뉴는 정목 누룽지 백숙으로, 조리가 된 채로 나오기 때문에 여름에도 덥지 않게 먹을 수 있다. 부드러운 닭살을 먹은 후에 고소한 누룽지죽까지 먹으면 든든한 한 끼가 된다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

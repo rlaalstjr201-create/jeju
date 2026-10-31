@@ -1,0 +1,52 @@
+{
+ "contentid": "3060934",
+ "modifiedtime": "20260330141242",
+ "fetchedAt": "2026-10-31T16:15:08.271Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3060934",
+       "contenttypeid": "12",
+       "title": "당산공원",
+       "createdtime": "20231130142850",
+       "modifiedtime": "20260330141242",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/87/3054287_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/87/3054287_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 당산동3가",
+       "addr2": "",
+       "zipcode": "07260",
+       "mapx": "126.8957",
+       "mapy": "37.5256",
+       "mlevel": "6",
+       "overview": "당산공원은 영등포구청역 바로 앞에 자리한 공원이다. 기억생생길과 지압보도, 야외서가, 무장애 놀이터를 갖추고 있어 남녀노소 누구나 이용할 수 있다. 기억생생길은 치매인식개선 및 치매 친화적 환경 조성을 위해 만들어진 산책로이다. 치매예방수칙과 치매 조기검진의 중요성 등 치매와 관련된 정보가 담긴 안내판을 산책로 곳곳에 담아 놓아서 산책을 하면서 정보도 볼 수 있다. 지압보도는 자연친화적인 형태로 발 지압을 하며 산책할 수 있다. 야외서가는 누구나 자유롭게 책을 읽을 수 있다. 무장애 놀이터는 바닥면에 턱이 없어 휠체어를 탄 아이도 이용할 수 있도록 만들었다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

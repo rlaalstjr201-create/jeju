@@ -1,0 +1,52 @@
+{
+ "contentid": "2842851",
+ "modifiedtime": "20250917095432",
+ "fetchedAt": "2026-10-31T16:13:47.257Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2842851",
+       "contenttypeid": "39",
+       "title": "망원동즉석우동 본점",
+       "createdtime": "20220824130816",
+       "modifiedtime": "20250917095432",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/47/2842847_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/47/2842847_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 마포구 동교로 83 (망원동)",
+       "addr2": "",
+       "zipcode": "04018",
+       "mapx": "126.9111663928",
+       "mapy": "37.5543072392",
+       "mlevel": "6",
+       "overview": "성산초등학교 건너편에 있는 망원동즉석우동은 얼큰한 우동이 인기인 우동 전문점이다. 망원 즉석우동의 특징으로는 태양초 고춧가루와 매운 청양고추로 양념이 되어 있어서 아주 맵다는 점이지만, 매운맛을 못 먹는 사람들은 덜맵게 주문할 수 있다. 이 외 메뉴로는 돈까스와 어묵, 어묵우동 등이 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

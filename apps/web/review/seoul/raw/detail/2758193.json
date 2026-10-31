@@ -1,0 +1,52 @@
+{
+ "contentid": "2758193",
+ "modifiedtime": "20261019160314",
+ "fetchedAt": "2026-10-31T16:14:56.968Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2758193",
+       "contenttypeid": "38",
+       "title": "개봉중앙시장",
+       "createdtime": "20211018231655",
+       "modifiedtime": "20261019160314",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/61/3558661_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/61/3558661_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "530",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 구로구 개봉로17길 34 (개봉동)",
+       "addr2": "",
+       "zipcode": "08337",
+       "mapx": "126.8538711535",
+       "mapy": "37.4915821464",
+       "mlevel": "6",
+       "overview": "서울 구로구 개봉동에 위치한 개봉중앙시장은 1976년 시장 부지로 구획되어 조성되었다. 1980년대 후반에서 1990년대 초까지 전성기를 누렸다. 주로 생활용품과 잡화 등을 판매하고 있다.\n개봉중앙시장에서 매년 맥주 축제를 열고 있으며, 이외에도 설맞이 경품행사 등 다양한 이벤트를 진행하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

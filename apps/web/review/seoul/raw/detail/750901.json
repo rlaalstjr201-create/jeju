@@ -1,0 +1,52 @@
+{
+ "contentid": "750901",
+ "modifiedtime": "20251127102151",
+ "fetchedAt": "2026-10-31T16:12:26.108Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "750901",
+       "contenttypeid": "12",
+       "title": "송암사",
+       "createdtime": "20090610193703",
+       "modifiedtime": "20251127102151",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/3571745_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/45/3571745_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "9",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030100",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02010800",
+       "addr1": "서울특별시 노원구 덕릉로145길 97 (상계동)",
+       "addr2": "",
+       "zipcode": "01633",
+       "mapx": "127.0850912761",
+       "mapy": "37.6845868836",
+       "mlevel": "6",
+       "overview": "송암사는 수락산 내에 위치한 한국불교태고종 소속 사찰이다. 사찰 건물로는 대웅전이 있고, 대웅전 좌측으로 석불과 포대화상, 앞쪽에는 석탑이, 뒤쪽에는 석벽에 새겨진 불상이 있다. 도안사, 수암사 등과 함께 수락산 등산로를 따라 둘러볼 수 있는 사찰 중 하나이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

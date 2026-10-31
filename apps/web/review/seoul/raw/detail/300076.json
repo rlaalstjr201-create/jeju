@@ -1,0 +1,52 @@
+{
+ "contentid": "300076",
+ "modifiedtime": "20250918100119",
+ "fetchedAt": "2026-10-31T16:16:12.338Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "300076",
+       "contenttypeid": "12",
+       "title": "대성사(서울)",
+       "createdtime": "20071128223420",
+       "modifiedtime": "20250918100119",
+       "tel": "",
+       "telname": "",
+       "homepage": "<a href=\"http://www.daeseongsa.org/\" target=\"_blank\" title=\"새창: 대성사 홈페이지로 이동\">http://www.daeseongsa.org</a>",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/09/3540509_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/09/3540509_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030100",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02010800",
+       "addr1": "서울특별시 서초구 남부순환로328길 49 (서초동)",
+       "addr2": "",
+       "zipcode": "06757",
+       "mapx": "127.0134731649",
+       "mapy": "37.4763181306",
+       "mlevel": "6",
+       "overview": "기록상 마라난타가 백제로 오는 동안 풍토병으로 고생을 하였는데, 우면산 물을 마시고 완쾌하였다고 한다. 이에 우면산에 대성초당을 짓게 되는데 이것이 바로 대성사의 전신이라 전해진다. 또한 3.1독립운동 민족대표 33명 중 한분이신 백용성 스님께서 주석하시며 불교 대표로 참가하시어 대승적 독립운동을 전개하셨다. 현재 대성사에는 백용성 스님이 조성하신 목불좌상(서울특별시 유형문화유산)이 모셔져 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

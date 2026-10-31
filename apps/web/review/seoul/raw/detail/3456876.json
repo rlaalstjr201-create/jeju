@@ -1,0 +1,52 @@
+{
+ "contentid": "3456876",
+ "modifiedtime": "20250312144356",
+ "fetchedAt": "2026-10-31T16:12:32.828Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3456876",
+       "contenttypeid": "14",
+       "title": "화랑대역사 전시관",
+       "createdtime": "20241222230044",
+       "modifiedtime": "20250312144356",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/62/3456862_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/62/3456862_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "1",
+       "sigungucode": "9",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "350",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE07",
+       "lclsSystm3": "VE070300",
+       "cat1": "A02",
+       "cat2": "A0206",
+       "cat3": "A02060300",
+       "addr1": "서울특별시 노원구 화랑로 610 (공릉동)",
+       "addr2": "",
+       "zipcode": "01805",
+       "mapx": "127.0932978062",
+       "mapy": "37.6243079306",
+       "mlevel": "6",
+       "overview": "화랑대역사 전시관은 서울 노원구 공릉동에 위치한 역사와 추억이 가득한 공간이다. 과거 경춘선의 마지막 간이역이었던 화랑대역을 리모델링하여 조성되었으며, 경춘선의 역사와 함께 다양한 철도 관련 자료들을 전시하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2553923",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-31T16:13:29.796Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2553923",
+       "contenttypeid": "12",
+       "title": "YTN",
+       "createdtime": "20180717193317",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://tour.ytn.co.kr",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/97/3501197_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/97/3501197_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "EX",
+       "lclsSystm2": "EX06",
+       "lclsSystm3": "EX061000",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 상암산로 76 (상암동)",
+       "addr2": "",
+       "zipcode": "03926",
+       "mapx": "126.89231456267802",
+       "mapy": "37.57919436456512",
+       "mlevel": "6",
+       "overview": "YTN은 국내 최초 24시간 뉴스전문채널로서, 시시각각 들어오는 뉴스를 보고 듣고 느끼는 견학코스를 제공하고 있다. 하나의 뉴스가 만들어지기까지의 과정과 뉴스전문채널 YTN의 역사를 이해할 수 있다. 또한 생방송 장면을 직접 볼 수 있고 방송시설을 체험할 수 있어 생동감 넘치는 견학이 될 것이다. 24시간 뉴스채널의 생생한 모습을 체험 가능한 YTN 견학은 뉴스와 방송에 관심 있는 학생, 일반인들에게 좋은 경험이 될 것이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

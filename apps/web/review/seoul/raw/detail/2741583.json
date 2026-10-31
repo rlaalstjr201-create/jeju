@@ -1,0 +1,52 @@
+{
+ "contentid": "2741583",
+ "modifiedtime": "20250106090231",
+ "fetchedAt": "2026-10-31T16:16:10.532Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2741583",
+       "contenttypeid": "39",
+       "title": "정담은보쌈",
+       "createdtime": "20210908202349",
+       "modifiedtime": "20250106090231",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/50/2779650_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/50/2779650_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "5",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 관악구 남부순환로 1661 (봉천동)",
+       "addr2": "2, 3, 4층",
+       "zipcode": "08756",
+       "mapx": "126.9353605828",
+       "mapy": "37.4851212652",
+       "mlevel": "6",
+       "overview": "단일 메뉴를 최고의 맛으로 제공하기 위해 보쌈 한 가지를 판매하고 있다. 맛있고 따뜻한 보쌈 제공을 위해 하루 6번 고기를 삶고 있으며, 고기 삶아 나오는 시간을 안내해 주고 있다. 건물 한 동 전체를 사용하고 있어 내부와 주차시설이 넓고 편리하다. 식당 외부 전경이 아름다워 인스타그래머들의 인기를 얻고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

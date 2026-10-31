@@ -1,0 +1,52 @@
+{
+ "contentid": "678522",
+ "modifiedtime": "20260623093000",
+ "fetchedAt": "2026-10-31T16:19:17.776Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "678522",
+       "contenttypeid": "39",
+       "title": "남원황토추어탕",
+       "createdtime": "20090113202500",
+       "modifiedtime": "20260623093000",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/35/3474635_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/35/3474635_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강동구 성안로 7-12",
+       "addr2": "",
+       "zipcode": "05402",
+       "mapx": "127.1285968903",
+       "mapy": "37.5249935975",
+       "mlevel": "6",
+       "overview": "서울 강동구 성내동에 위치한 추어탕 전문점으로 다양한 종류의 추어탕과 추어 요리를 맛볼 수 있는 곳이다. 자연송이추어탕, 전복추어탕, 우렁추어탕 등 특색 있는 추어탕 메뉴를 비롯해 추어튀김과 추어돈가스 등 다양한 메뉴를 갖추고 있다. 오전 7시부터 영업해 아침 식사를 즐기기 좋으며, 추어탕은 전국 택배 주문도 가능하다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

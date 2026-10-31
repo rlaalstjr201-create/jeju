@@ -1,0 +1,52 @@
+{
+ "contentid": "2855984",
+ "modifiedtime": "20250919103722",
+ "fetchedAt": "2026-10-31T16:16:40.400Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2855984",
+       "contenttypeid": "39",
+       "title": "설눈",
+       "createdtime": "20220920113850",
+       "modifiedtime": "20250919103722",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/81/2855981_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/81/2855981_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "15",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 서초구 서초대로46길 20-7 (서초동)",
+       "addr2": "",
+       "zipcode": "06647",
+       "mapx": "127.0097841885",
+       "mapy": "37.4912829935",
+       "mlevel": "6",
+       "overview": "설눈은 지하철 2호선 서초역 1번 출구 부근에 있다. 이곳은 이북에서부터 3대째 운영하는 전통 평양냉면 전문점이다. 매장 안은 비교적 넓은 편이다. 대표 메뉴로는 고려 물냉면, 평양온반, 평양육개장, 고려 비빔냉면이 있다. 이외 메뉴로 한우 소고기 수육, 돼지고기 편육, 녹두전, 왕만두가 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

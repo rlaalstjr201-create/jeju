@@ -1,0 +1,52 @@
+{
+ "contentid": "2761662",
+ "modifiedtime": "20250328142944",
+ "fetchedAt": "2026-10-31T16:15:53.822Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2761662",
+       "contenttypeid": "12",
+       "title": "명락사",
+       "createdtime": "20211025223619",
+       "modifiedtime": "20250328142944",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/83/2790183_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/83/2790183_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "5",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030100",
+       "cat1": "A02",
+       "cat2": "A0201",
+       "cat3": "A02010800",
+       "addr1": "서울특별시 관악구 청룡1길 11",
+       "addr2": "",
+       "zipcode": "08786",
+       "mapx": "126.9470207355",
+       "mapy": "37.4814635656",
+       "mlevel": "6",
+       "overview": "서울 관악구 청룡동에 있는 명락사는 관악산 줄기의 끝자락 도심 상업지역에 있다. 40여 년 넘게 서울 서남권의 포교 활동과 다문화가정을 위한 포교에 관심을 기울이고 있는 사찰이다. 청년회가 활성화되어 있으며, 토요일 저녁 8시 30분부터 정기 법회를 갖는다. 2호선 봉천역과 서울대입구역 중간지점에 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

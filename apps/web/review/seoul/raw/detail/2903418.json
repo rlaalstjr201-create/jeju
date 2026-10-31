@@ -1,0 +1,52 @@
+{
+ "contentid": "2903418",
+ "modifiedtime": "20260707135531",
+ "fetchedAt": "2026-10-31T16:18:19.851Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2903418",
+       "contenttypeid": "39",
+       "title": "톡톡",
+       "createdtime": "20221109160449",
+       "modifiedtime": "20260707135531",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 학동로97길 41 (청담동)",
+       "addr2": "",
+       "zipcode": "06072",
+       "mapx": "127.0543118898",
+       "mapy": "37.5224153227",
+       "mlevel": "6",
+       "overview": "톡톡은 7호선 청담역 12번 출구 청담파출소 인근에 있다. 디너 코스와 런치 코스, 메인 요리와 파스타 등 다양한 메뉴를 제공하는 레스토랑이다. 트러플 파스타, 랍스터 리소토, 새우 오일 파스타 등 메뉴 하나하나가 깊은 인상을 남기며, 깔끔한 내부 인테리어와 편안한 분위기로 기념일이나 특별한 날, 기분 전환을 위한 식사 장소로 적합하다. 인근에 청담동 명품거리, 압구정로데오거리, 청담카페골목 등이 있어 관광과 쇼핑을 함께 즐기기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

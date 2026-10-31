@@ -1,0 +1,52 @@
+{
+ "contentid": "2500214",
+ "modifiedtime": "20251223093929",
+ "fetchedAt": "2026-10-31T16:13:21.806Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2500214",
+       "contenttypeid": "12",
+       "title": "로렌스길",
+       "createdtime": "20170718202405",
+       "modifiedtime": "20251223093929",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/3464837_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/37/3464837_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE04",
+       "lclsSystm3": "VE040100",
+       "cat1": "A02",
+       "cat2": "A0203",
+       "cat3": "A02030600",
+       "addr1": "서울특별시 마포구 상수동",
+       "addr2": "",
+       "zipcode": "04049",
+       "mapx": "126.9214545083",
+       "mapy": "37.5484886553",
+       "mlevel": "6",
+       "overview": "서울시 마포구 상수역 1번 출구로 나와 쭉 내려오면 만날 수 있는 로렌스 길은 한국에서 가장 오래된 시계 회사인 로렌스 뒤쪽으로, 개성 있는 식당과 카페들이 위치한 골목이다. 시계 회사 로렌스 옆 쪽 벽에 아기자기한 로렌스 길 지도가 벽화처럼 그려져 있어, 로렌스 길을 찾는 관광객들이 원하는 곳을 쉽게 찾아갈 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "1265735",
+ "modifiedtime": "20260414175446",
+ "fetchedAt": "2026-10-31T16:14:09.195Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "1265735",
+       "contenttypeid": "12",
+       "title": "서서울호수공원",
+       "createdtime": "20110428003448",
+       "modifiedtime": "20260414175446",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://parks.seoul.go.kr/lakepark",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/87/4002487_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/87/4002487_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "470",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE03",
+       "lclsSystm3": "VE030500",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 양천구 남부순환로64길 20 (신월동)",
+       "addr2": "",
+       "zipcode": "07916",
+       "mapx": "126.83008689499809",
+       "mapy": "37.52743189796755",
+       "mlevel": "6",
+       "overview": "2009년 10월에 개장한 서서울호수공원은 양천구의 옛 신월정수장에 ‘물’과 ‘재생’을 테마로 조성된 친환경 공원이다. 1959년 김포정수장으로 시작된 서서울호수공원은 50년 만에 열린 친환경 호수공원이자 도심 속 푸르른 시민들의 쉼터, 과거와 현재 문화가 공존하는 물과 재생의 공원으로 새 단장하여 개방되었다. 부천시와 경계를 이루는 능골산의 숲과 등산로를 정비하면서 총 217,946㎡의 서남권 최대 규모 공원으로 새롭게 태어났다. 공원은 열린 풀밭, 100인의 식탁, 재생정원, 문화데크광장, 몬드리안정원, 중앙호수, 소리분수, 옥상정원으로 구성되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

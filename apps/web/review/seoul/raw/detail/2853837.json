@@ -1,0 +1,52 @@
+{
+ "contentid": "2853837",
+ "modifiedtime": "20250918114355",
+ "fetchedAt": "2026-10-31T16:13:42.905Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2853837",
+       "contenttypeid": "39",
+       "title": "남해바다",
+       "createdtime": "20220915133110",
+       "modifiedtime": "20250918114355",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/27/2853827_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/27/2853827_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 마포구 토정로37길 46 (도화동, 정우맨션)",
+       "addr2": "",
+       "zipcode": "04157",
+       "mapx": "126.9471967812",
+       "mapy": "37.5423120561",
+       "mlevel": "6",
+       "overview": "마포역 2번 출구에서 도보로 5분 정도 거리에 있는 횟집이다. 정우맨션 건물 1층에 있다. 대표 메뉴는 삼치 선어회이다. 그 외에도 매운탕, 장어탕, 참돔, 그리고 서울에서는 쉽게 먹을 수 없는 민어, 돛 병어, 삼치 등을 즐길 수 있다. 봄에는 도다리, 가을에는 전어 등 제철 메뉴도 맛볼 수 있다. 도보 5분 이내 거리에 경의선 광장이 있어서 식사 후 산책하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

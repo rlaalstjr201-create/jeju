@@ -1,0 +1,52 @@
+{
+ "contentid": "2869276",
+ "modifiedtime": "20260804102327",
+ "fetchedAt": "2026-10-31T16:17:58.309Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2869276",
+       "contenttypeid": "39",
+       "title": "앤헤이븐",
+       "createdtime": "20221018145240",
+       "modifiedtime": "20260804102327",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/64/2869264_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/64/2869264_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 영동대로129길 22",
+       "addr2": "",
+       "zipcode": "06085",
+       "mapx": "127.0556486322",
+       "mapy": "37.5183486383",
+       "mlevel": "6",
+       "overview": "가구 쇼룸이자 브런치 카페로 유명한 앤헤이븐은 앤더슨씨 청담에서 만든 브런치 카페로 마치 갤러리 같은 매력을 지니고 있다. 컬러풀한 가구들이 배치되어 있으며 한쪽 벽면에는 대형 스크린과 예술작품들이 있다.\n메뉴는 수제 김말이와 야채튀김, 오징어튀김 등으로 구성된 헤이븐 떡볶이 플레이터와 브리오슈와 계절 과일, 고메 버터 등이 어우러져 나오는 시그니처 프렌치토스트, 감자와 양파, 크림, 그라나파다노, 체더치즈가 부드럽게 어우러진 프렌치 감자 수프 등 다양한 브런치 메뉴가 준비되어 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

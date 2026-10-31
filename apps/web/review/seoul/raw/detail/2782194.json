@@ -1,0 +1,52 @@
+{
+ "contentid": "2782194",
+ "modifiedtime": "20261019135151",
+ "fetchedAt": "2026-10-31T16:17:20.819Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782194",
+       "contenttypeid": "38",
+       "title": "도곡시장",
+       "createdtime": "20211126233656",
+       "modifiedtime": "20261019135151",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/08/3571708_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/08/3571708_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 역삼동",
+       "addr2": "805-36",
+       "zipcode": "06138",
+       "mapx": "127.0518000000",
+       "mapy": "37.4974000000",
+       "mlevel": "6",
+       "overview": "도곡시장은 서울시 강남구 역삼동에 위치한 재래시장이다. 1970년대에 상인들이 하나둘씩 자연발생적으로 장사를 시작하면서 생겨난 시장이다. 도심 속 도로 쪽에서 아파트까지 이어지는 골목 양쪽 길을 따라 상점들이 배치된 골목형 시장으로 아파트 상가도 함께 맞물려 있어서 이용객이 많다. 주변에 아파트 단지가 들어서면서 한때 수 백 명의 상인들이 장사를 할 정도로 시장의 규모가 커졌다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

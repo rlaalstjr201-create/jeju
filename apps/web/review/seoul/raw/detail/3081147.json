@@ -1,0 +1,52 @@
+{
+ "contentid": "3081147",
+ "modifiedtime": "20260728094350",
+ "fetchedAt": "2026-10-31T16:15:57.426Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "3081147",
+       "contenttypeid": "14",
+       "title": "관악아트홀",
+       "createdtime": "20231211170622",
+       "modifiedtime": "20260728094350",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://gfac.or.kr/site/main/content/artHall",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/42/3081142_image2_1.JPG",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/42/3081142_image3_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE06",
+       "lclsSystm3": "VE060100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 신림로3길 35 (신림동)",
+       "addr2": "",
+       "zipcode": "08825",
+       "mapx": "126.9448708804",
+       "mapy": "37.4675976561",
+       "mlevel": "6",
+       "overview": "관악아트홀은 관악문화재단에서 운영하는 복합문화공간으로 700명을 수용할 수 있는 규모의 공연장과 갤러리가 소재해 있다. 지하 1층에는 무대제작실과 강좌실이 있으며, 1층에는 60평 규모의 전시실이 있다. 2층과 3층에는 복층구조로 이루어진 큰 규모의 공연장이 있으며 콘서트, 뮤지컬 등 수준 높은 공연을 선보일 수 있는 전문 공연장이다. 관악아트홀은 관악산 등산로 광장 부근에 있으며 수도권 지하철 관악산역 1번 출구에서 약 300m 떨어진 곳에 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

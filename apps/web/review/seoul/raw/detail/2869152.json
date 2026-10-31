@@ -1,0 +1,52 @@
+{
+ "contentid": "2869152",
+ "modifiedtime": "20250508103129",
+ "fetchedAt": "2026-10-31T16:18:01.144Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2869152",
+       "contenttypeid": "39",
+       "title": "영동올뱅이집",
+       "createdtime": "20221018141429",
+       "modifiedtime": "20250508103129",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/40/2869140_image2_1.JPG",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/40/2869140_image2_1.JPG",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "1",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 강남구 개포로22길 16 (개포동)",
+       "addr2": "",
+       "zipcode": "06307",
+       "mapx": "127.0481060830",
+       "mapy": "37.4777852487",
+       "mlevel": "6",
+       "overview": "다슬기는 골뱅이, 올뱅이, 올갱이 등 지방마다 여러 가지 이름으로 불린다. 이중 올뱅이는 충청도에서 불리는 이름이다. \n영동올뱅이집에서는 다슬기를 이용하여 만든 다양한 요리를 맛볼 수 있다. 올뱅이국밥, 덮밥, 수제비, 칼국수, 무침 등 다슬기 요리를 전문으로 한다. 올뱅이국밥은 해장용으로 딱이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

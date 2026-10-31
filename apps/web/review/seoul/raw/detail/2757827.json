@@ -1,0 +1,52 @@
+{
+ "contentid": "2757827",
+ "modifiedtime": "20260312113556",
+ "fetchedAt": "2026-10-31T16:16:40.912Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2757827",
+       "contenttypeid": "39",
+       "title": "소나무집",
+       "createdtime": "20211016002616",
+       "modifiedtime": "20260312113556",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "650",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서초구 식유촌길 71",
+       "addr2": "(우면동)",
+       "zipcode": "06766",
+       "mapx": "127.011571300818",
+       "mapy": "37.4584106974505",
+       "mlevel": "6",
+       "overview": "서초구 우면동에서 1977년 개업해 40년 간 운영해 온 이 식당은 청국 닭볶음탕이 주 메뉴다. 진하고 걸쭉한 국물 한입이면 밥 한 공기는 순식간이다. 닭볶음탕을 다 먹고 난 후, 남은 국물에 볶음밥을 만들어 먹어도 좋다. 대중교통으로는 이용하기 어렵고 양재동에서 과천 가는 길에 천주교 우면동 성당 뒤편 가정집이다. 주차가 가능하며 방문 1시간 전 예약은 필수다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

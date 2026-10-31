@@ -1,0 +1,52 @@
+{
+ "contentid": "2871395",
+ "modifiedtime": "20250919160224",
+ "fetchedAt": "2026-10-31T16:14:05.374Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2871395",
+       "contenttypeid": "39",
+       "title": "합정옥",
+       "createdtime": "20221020104756",
+       "modifiedtime": "20250919160224",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/82/2871382_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/82/2871382_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020100",
+       "addr1": "서울특별시 마포구 양화로1길 21 (합정동)",
+       "addr2": "",
+       "zipcode": "04026",
+       "mapx": "126.9104721432",
+       "mapy": "37.5496466571",
+       "mlevel": "6",
+       "overview": "합정옥은 곰탕으로 유명한 곳이다. 모든 식자재는 국내산만을 사용하고, 국내산 암소의 양지와 사골로 국물을 낸다. 대표메뉴인 곰탕은 진한 국물에 육향이 가득하고, 토렴해 나오는 밥과 소고기가 푸짐하게 나온다. 또한 구수한 된장국에 달큰한 배추속대를 넣어 끓인 속댓국의 시원한 맛도 일품이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

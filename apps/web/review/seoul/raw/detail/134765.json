@@ -1,0 +1,52 @@
+{
+ "contentid": "134765",
+ "modifiedtime": "20260313171742",
+ "fetchedAt": "2026-10-31T16:17:49.538Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "134765",
+       "contenttypeid": "39",
+       "title": "삼정복집",
+       "createdtime": "20060630090000",
+       "modifiedtime": "20260313171742",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "680",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강남구 봉은사로 626",
+       "addr2": "(삼성동)",
+       "zipcode": "06170",
+       "mapx": "127.063942374721",
+       "mapy": "37.5146297972541",
+       "mlevel": "6",
+       "overview": "국내 최초 복 코스 요리 정착화에 성공한 소문난 복집이다. ‘복’이라는 한 가지 테마를 식사 개념에서 종합 요리로 승화시켰으며 일본 현지의 유명 업소와의 메뉴 개발과 연구 활동도 활발하다. 특히 살아 있는 복어를 5분 안에 제독 처리하여 그 자리에서 바로 맛볼 수 있는 즐거움을 선사한다. 복지리와 복찜, 복불고기 등 다채로운 복어요리를 즐길 수 있는 식당이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

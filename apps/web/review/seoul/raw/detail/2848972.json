@@ -1,0 +1,52 @@
+{
+ "contentid": "2848972",
+ "modifiedtime": "20250918100829",
+ "fetchedAt": "2026-10-31T16:13:55.137Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2848972",
+       "contenttypeid": "39",
+       "title": "오레노라멘 본점",
+       "createdtime": "20220905094652",
+       "modifiedtime": "20250918100829",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/59/2848559_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/59/2848559_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "13",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020200",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020300",
+       "addr1": "서울특별시 마포구 독막로6길 14",
+       "addr2": "",
+       "zipcode": "04072",
+       "mapx": "126.9173521314",
+       "mapy": "37.5475303597",
+       "mlevel": "6",
+       "overview": "오레노 라멘본점은 합정역 7번 출구에서 걸어서 10분 거리에 있는 라멘 전문점이다. 매장이 깔끔하고 잔잔한 시티팝 음악과 함께 라멘을 즐길 수 있다. 닭 육수를 사용하는 토리빠이탄 라멘이 대표메뉴다. 그 외에 카라빠이탄 라멘, 소유 라멘, 시오라멘 등의 다양한 메뉴가 있다. 걸어서 5분 정도 거리에 홍대솔내길이 있어 다양한 문화 체험을 할 수 있고, 마포새빛 문화숲은 걸어서 10분이면 닿는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

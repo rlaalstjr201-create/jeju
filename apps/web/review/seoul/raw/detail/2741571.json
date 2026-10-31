@@ -1,0 +1,52 @@
+{
+ "contentid": "2741571",
+ "modifiedtime": "20261019171346",
+ "fetchedAt": "2026-10-31T16:19:15.225Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2741571",
+       "contenttypeid": "38",
+       "title": "고분다리전통시장",
+       "createdtime": "20210908201156",
+       "modifiedtime": "20261019171346",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://blog.naver.com/millkyk0",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/31/3571731_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/31/3571731_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "740",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 강동구 구천면로34길 8 (천호동)",
+       "addr2": "",
+       "zipcode": "05334",
+       "mapx": "127.1316408751",
+       "mapy": "37.5423560470",
+       "mlevel": "6",
+       "overview": "고분다리전통시장은 천호시장과 암사시장 사이에 위치한 재래시장이다. ‘고분다리’는 옛 천호동의 지명인 곡교리(曲橋里)를 고유어로 풀이한 것이다. 시장 한가운데 위치한 강동형 복합문화공간 다독다독은 주민들의 쉼터 공간으로 이용되고 있으며, 사진 찍기 좋은 벽화 포토존도 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "2751441",
+ "modifiedtime": "20260819153837",
+ "fetchedAt": "2026-10-31T16:13:10.190Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2751441",
+       "contenttypeid": "38",
+       "title": "포방터시장",
+       "createdtime": "20210930002217",
+       "modifiedtime": "20260819153837",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://blog.naver.com/pobangq",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/23/4101123_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/23/4101123_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서대문구 포방터2길 11 (홍은동)",
+       "addr2": "",
+       "zipcode": "03607",
+       "mapx": "126.9497172483",
+       "mapy": "37.5987727707",
+       "mlevel": "6",
+       "overview": "포방터시장은 임진왜란 이후 도성을 지키기 위해 설치한 포 훈련을 했던 곳이자 한국전쟁 당시 서울을 방어했던 곳인 포방터에 형성되어 오늘날 포방터장으로 불리게 됐다. 북한산과 인왕산으로 둘러싸여 있으며, 90여 개의 가게가 입점해 있는 작은 시장이다. 영화와 드라마 촬영지로 이용되고 있으며, 시장 내 음식점이 TV 프로그램 으로 소개되면서부터 시장을 찾는 사람들도 꾸준히 증가하고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

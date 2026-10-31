@@ -1,0 +1,52 @@
+{
+ "contentid": "2633907",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-31T16:13:22.826Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2633907",
+       "contenttypeid": "12",
+       "title": "마포중앙도서관",
+       "createdtime": "20191107223610",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://mplib.mapo.go.kr/mcl",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "VE",
+       "lclsSystm2": "VE09",
+       "lclsSystm3": "VE090300",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 성산로 128 (성산동)",
+       "addr2": "",
+       "zipcode": "03965",
+       "mapx": "126.90811223840495",
+       "mapy": "37.5638804077566",
+       "mlevel": "6",
+       "overview": "마포중앙도서관은 구민 누구나 편안한 휴식과 함께 이웃과 즐거운 소통과 정보를 나누는 지역사회의 거실이자, 빠른 사회변화에 대응할 수 있는 서비스 제공으로 구민의 미래역량과 삶의 질 향상에 도움을 주고자 한다. \n이용자 요구를 반영한 양질의 장서 개발, 디지털과 인문 역량 향상을 위한 프로그램 운영, 독서 저변 확대를 위한 상호대차와 스마트도서관 운영, 지식정보 취약계층을 위한 서비스 제공에 최선을 다하고 있다. \n아울러 지역사회의 다양한 기관(단체)과 협력하여 더 새롭고 깊이 있는 서비스 제공에 노력함은 물론, 장애와 비장애, 성별, 나이 등으로 차별받지 않는 모두가 행복한 도서관을 만들어가고 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

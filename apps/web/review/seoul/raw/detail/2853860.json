@@ -1,0 +1,52 @@
+{
+ "contentid": "2853860",
+ "modifiedtime": "20261028190623",
+ "fetchedAt": "2026-10-31T16:13:40.835Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2853860",
+       "contenttypeid": "39",
+       "title": "각시보쌈",
+       "createdtime": "20220915133638",
+       "modifiedtime": "20261028190623",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/92/4129492_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/92/4129492_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "440",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 마포구 성지길 25 보광빌딩",
+       "addr2": "",
+       "zipcode": "04071",
+       "mapx": "126.9134616661",
+       "mapy": "37.5475314008",
+       "mlevel": "6",
+       "overview": "각시보쌈은 족발 및 보쌈 전문점으로 대표 메뉴는 각시 정식이다. 김치보쌈, 배추보쌈, 반반보쌈, 굴보쌈, 각시삼합(홍어보쌈) 등 다양한 보쌈의 메뉴가 있다. 홍어삼합과 삭힌 홍어는 적당한 삭힘으로 부담 없이 즐길 수 있으며, 쟁반국수는 새콤달콤한 양념과 신선한 채소가 어우러져 맛있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

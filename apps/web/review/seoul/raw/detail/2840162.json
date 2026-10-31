@@ -1,0 +1,52 @@
+{
+ "contentid": "2840162",
+ "modifiedtime": "20250916094006",
+ "fetchedAt": "2026-10-31T16:12:09.847Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2840162",
+       "contenttypeid": "39",
+       "title": "메이린",
+       "createdtime": "20220819170819",
+       "modifiedtime": "20250916094006",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "http://tong.visitkorea.or.kr/cms/resource/58/2840158_image2_1.jpg",
+       "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/58/2840158_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "1",
+       "sigungucode": "3",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "305",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD02",
+       "lclsSystm3": "FD020100",
+       "cat1": "A05",
+       "cat2": "A0502",
+       "cat3": "A05020400",
+       "addr1": "서울특별시 강북구 월계로 173 (번동)",
+       "addr2": "",
+       "zipcode": "01228",
+       "mapx": "127.0445440464",
+       "mapy": "37.6197242510",
+       "mlevel": "6",
+       "overview": "메이린은 서울특별시 강북구 번동 북서울 꿈의 숲 안에 있는 중국음식점이다. 전망대로 올라가는 길에 있어 전망이 좋다. 매장 내부는 원통형으로 되어 있고, 대부분의 좌석이 창가에 위치하고 하고 북서울 꿈의 숲을 마음껏 바라보며 식사할 수 있다. 안쪽으로 룸 형태의 좌석이 있으며, 단체 모임을 위한 좌석도 마련되어 있다. 식사 전후로 북 서울 꿈의 숲 전망대와 공원을 둘러보면서 산책하기 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

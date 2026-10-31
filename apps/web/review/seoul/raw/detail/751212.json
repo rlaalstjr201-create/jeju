@@ -1,0 +1,52 @@
+{
+ "contentid": "751212",
+ "modifiedtime": "20261007170055",
+ "fetchedAt": "2026-10-31T16:16:03.147Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "751212",
+       "contenttypeid": "39",
+       "title": "남원집",
+       "createdtime": "20090610231146",
+       "modifiedtime": "20261007170055",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "620",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 관악구 신림로59길 14",
+       "addr2": "3층 312호",
+       "zipcode": "08776",
+       "mapx": "126.9287397789",
+       "mapy": "37.4832284029",
+       "mlevel": "6",
+       "overview": "신림동 순대타운에서는 순대와 각종 야채, 떡살 등이 어울린 맛을 볼 수 있다. 양념의 매콤한 맛과 야채의 신선함, 떡과 면의 쫄깃한 맛이 한데 어울려 있다. 특히 고소한 백순대의 맛은 일품이다.\n남원집은 순대타운 3층 312호에 위치하고 있으며, 한 층에 낮은 칸막이로 식당을 구분하고 있어 공간이 넓어 보인다. 긴 의자에 옹기종기 앉아 연인과 친구, 가족과 함께 음식을 즐길 수 있다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "contentid": "486685",
+ "modifiedtime": "20260311100340",
+ "fetchedAt": "2026-10-31T16:15:02.997Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "486685",
+       "contenttypeid": "12",
+       "title": "호압사(서울)",
+       "createdtime": "20080225221311",
+       "modifiedtime": "20260311100340",
+       "tel": "",
+       "telname": "",
+       "homepage": "http://www.hoapsa.org",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/42/3495042_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/42/3495042_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "545",
+       "lclsSystm1": "HS",
+       "lclsSystm2": "HS03",
+       "lclsSystm3": "HS030100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 금천구 호암로 278 (시흥동)",
+       "addr2": "",
+       "zipcode": "08655",
+       "mapx": "126.92534627117986",
+       "mapy": "37.45250238121594",
+       "mlevel": "6",
+       "overview": "서울시 금천구의 전통사찰인 호압사는 1393년 무학대사가 창건하였다. 무학대사는 호랑이 기세를 누르기 위해 호암산에 호압사를 창건하게 되었다. 호압사에서는 현재 서울특별시 문화유산자료로 지정된 호압사 석불좌상이 모셔져 있고, 도량 내에 있는 500년 수량을 지닌 두 그루의 보호수는 호압사의 역사를 입증하는 자료이다. 호압사를 찾는 모든 이들에게 편안한 쉼터를 마련해 주는 안식처로 오랜 세월을 품고 있는 전통사찰이다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

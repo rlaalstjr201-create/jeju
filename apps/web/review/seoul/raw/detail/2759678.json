@@ -1,0 +1,52 @@
+{
+ "contentid": "2759678",
+ "modifiedtime": "20260317101258",
+ "fetchedAt": "2026-10-31T16:15:45.479Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2759678",
+       "contenttypeid": "38",
+       "title": "성대시장",
+       "createdtime": "20211020193958",
+       "modifiedtime": "20260317101258",
+       "tel": "",
+       "telname": "",
+       "homepage": "https://blog.naver.com/seongdaetm",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/03/3526803_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/03/3526803_image3_1.jpg",
+       "cpyrhtDivCd": "Type1",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "590",
+       "lclsSystm1": "SH",
+       "lclsSystm2": "SH06",
+       "lclsSystm3": "SH060200",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 동작구 성대로2길 7 (상도동)",
+       "addr2": "",
+       "zipcode": "07042",
+       "mapx": "126.931709717703",
+       "mapy": "37.4993656537497",
+       "mlevel": "6",
+       "overview": "성대시장은 서울 동작구 상도동 골목에 밀집한 상인들이 운영하는 골목형 전통시장이다. ‘상도동 성대전통시장’으로 불리는 이 지역은 2016년 전통 상업 보존지구로 지정되어 대형마트 입점이 제한되어 있다. 시장 내에는 한방 왕갈비, 칼국수, 물닭갈비 등으로 유명한 맛집이 있으며 7호선 신대방삼거리역과 장승배기역 사이에 있어 접근성이 좋다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

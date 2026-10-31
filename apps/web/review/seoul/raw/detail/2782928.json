@@ -1,0 +1,52 @@
+{
+ "contentid": "2782928",
+ "modifiedtime": "20261008134838",
+ "fetchedAt": "2026-10-31T16:15:29.595Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2782928",
+       "contenttypeid": "39",
+       "title": "소문난식당",
+       "createdtime": "20211129235230",
+       "modifiedtime": "20261008134838",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "https://tong.visitkorea.or.kr/cms/resource/69/2782769_image2_1.jpg",
+       "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/69/2782769_image3_1.jpg",
+       "cpyrhtDivCd": "Type3",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "560",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD01",
+       "lclsSystm3": "FD010100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 영등포구 도림로141가길 32-1 (문래동4가)",
+       "addr2": "",
+       "zipcode": "07288",
+       "mapx": "126.8898897918",
+       "mapy": "37.5162144217",
+       "mlevel": "6",
+       "overview": "소문난식당은 김치 고등어 조림 단일 메뉴만 취급하고 있다. 묵은지의 깊은 맛이 일품이며, 양념이 자극적이지 않아 부담 없이 먹을 수 있다. 이곳은 노포 맛집으로 단일 메뉴여도 인기가 많아 식사하러 발걸음이 끊이질 않는다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

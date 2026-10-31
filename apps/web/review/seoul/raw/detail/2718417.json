@@ -1,0 +1,52 @@
+{
+ "contentid": "2718417",
+ "modifiedtime": "20260312103259",
+ "fetchedAt": "2026-10-31T16:13:12.997Z",
+ "body": {
+  "response": {
+   "header": {
+    "resultCode": "0000",
+    "resultMsg": "OK"
+   },
+   "body": {
+    "items": {
+     "item": [
+      {
+       "contentid": "2718417",
+       "contenttypeid": "39",
+       "title": "보틀라운지",
+       "createdtime": "20210526225936",
+       "modifiedtime": "20260312103259",
+       "tel": "",
+       "telname": "",
+       "homepage": "",
+       "firstimage": "",
+       "firstimage2": "",
+       "cpyrhtDivCd": "",
+       "areacode": "",
+       "sigungucode": "",
+       "lDongRegnCd": "11",
+       "lDongSignguCd": "410",
+       "lclsSystm1": "FD",
+       "lclsSystm2": "FD05",
+       "lclsSystm3": "FD050100",
+       "cat1": "",
+       "cat2": "",
+       "cat3": "",
+       "addr1": "서울특별시 서대문구 홍연길 26",
+       "addr2": "(연희동)",
+       "zipcode": "03695",
+       "mapx": "126.928492745891",
+       "mapy": "37.5751838550368",
+       "mlevel": "6",
+       "overview": "보틀라운지 카페는 보틀팩토리의 첫번째 프로젝트로 만들어진 카페이다. 보틀 팩토리는 많은 플라스틱 테이크아웃 컵들이 정말 재활용되고 있는지에 대한 궁금증을 가지고 연구를 시작했고 결국엔 대부분의 컵들이 재활용 되지 않는다는 점을 알아냈다. 그래서 이 문제를 해결하는 방법은 재활용률을 높이는 것이 아니라 발생 자체를 줄여야 한다고 생각했고 '일회용품 없는 카페'를 시도했다. 일회용 컵 대신 보증금과 함께 유리병에 음료를 담아 판매하기 시작했고 결과는 이 프로젝트에 공감하는 손님들이 있는 것을 보며 정착되었다."
+      }
+     ]
+    },
+    "numOfRows": 1,
+    "pageNo": 1,
+    "totalCount": 1
+   }
+  }
+ }
+}

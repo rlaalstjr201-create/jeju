@@ -1,8 +1,8 @@
 {
- "updatedAt": "2026-10-30T16:50:25.519Z",
- "kstDay": "2026-10-31",
- "callsThisRun": 900,
- "callsToday": 900,
+ "updatedAt": "2026-10-31T16:19:25.895Z",
+ "kstDay": "2026-11-01",
+ "callsThisRun": 826,
+ "callsToday": 826,
  "dests": {
   "gangwon": {
    "lDongRegnCd": 51,
@@ -40,8 +40,8 @@
   "seoul": {
    "lDongRegnCd": 11,
    "inScope": 3171,
-   "detailed": 1445,
-   "remaining": 1726,
+   "detailed": 3171,
+   "remaining": 0,
    "cities": {
     "110 110": {
      "inScope": 510,
@@ -80,93 +80,93 @@
     },
     "290 290": {
      "inScope": 110,
-     "detailed": 108,
-     "remaining": 2
+     "detailed": 110,
+     "remaining": 0
     },
     "305 305": {
      "inScope": 53,
-     "detailed": 0,
-     "remaining": 53
+     "detailed": 53,
+     "remaining": 0
     },
     "320 320": {
      "inScope": 40,
-     "detailed": 0,
-     "remaining": 40
+     "detailed": 40,
+     "remaining": 0
     },
     "350 350": {
      "inScope": 75,
-     "detailed": 0,
-     "remaining": 75
+     "detailed": 75,
+     "remaining": 0
     },
     "380 380": {
      "inScope": 60,
-     "detailed": 0,
-     "remaining": 60
+     "detailed": 60,
+     "remaining": 0
     },
     "410 410": {
      "inScope": 83,
-     "detailed": 0,
-     "remaining": 83
+     "detailed": 83,
+     "remaining": 0
     },
     "440 440": {
      "inScope": 186,
-     "detailed": 0,
-     "remaining": 186
+     "detailed": 186,
+     "remaining": 0
     },
     "470 470": {
      "inScope": 59,
-     "detailed": 0,
-     "remaining": 59
+     "detailed": 59,
+     "remaining": 0
     },
     "500 500": {
      "inScope": 89,
-     "detailed": 0,
-     "remaining": 89
+     "detailed": 89,
+     "remaining": 0
     },
     "530 530": {
      "inScope": 56,
-     "detailed": 0,
-     "remaining": 56
+     "detailed": 56,
+     "remaining": 0
     },
     "545 545": {
      "inScope": 27,
-     "detailed": 0,
-     "remaining": 27
+     "detailed": 27,
+     "remaining": 0
     },
     "560 560": {
      "inScope": 118,
-     "detailed": 0,
-     "remaining": 118
+     "detailed": 118,
+     "remaining": 0
     },
     "590 590": {
      "inScope": 50,
-     "detailed": 0,
-     "remaining": 50
+     "detailed": 50,
+     "remaining": 0
     },
     "620 620": {
      "inScope": 76,
-     "detailed": 0,
-     "remaining": 76
+     "detailed": 76,
+     "remaining": 0
     },
     "650 650": {
      "inScope": 156,
-     "detailed": 0,
-     "remaining": 156
+     "detailed": 156,
+     "remaining": 0
     },
     "680 680": {
      "inScope": 374,
-     "detailed": 0,
-     "remaining": 374
+     "detailed": 374,
+     "remaining": 0
     },
     "710 710": {
      "inScope": 154,
-     "detailed": 0,
-     "remaining": 154
+     "detailed": 154,
+     "remaining": 0
     },
     "740 740": {
      "inScope": 68,
-     "detailed": 0,
-     "remaining": 68
+     "detailed": 68,
+     "remaining": 0
     }
    }
   }
