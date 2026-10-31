@@ -46,14 +46,14 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
   });
   afterEach(() => reset());
 
-  it('이름 줄 and title by 시군구; no 쉬기·유명한 데; a card without reason has no reason line; #how, credit, no 둘러보기', async () => {
+  it('이름 줄 and title by 시군구; 쉬기 (rules v2, ADR-0105) but no 유명한 데; a card without reason has no reason line; #how, credit, no 둘러보기', async () => {
     mount({ dest: 'nation', sgg: '51170' });
     await wait();
     expect($('.logo .rg').textContent).toBe(':동해');
     expect(document.title).toBe('여차나:동해 · P를 위한 여행동반자');
     const hidden = (m: string) => $(`[data-mood="${m}"]`).closest('li')!.hidden;
-    expect(['rest', 'famous'].map(hidden)).toEqual([true, true]);
-    expect(['walk', 'new', 'food'].map(hidden)).toEqual([false, false, false]);
+    expect(hidden('famous')).toBe(true);
+    expect(['rest', 'walk', 'new', 'food'].map(hidden)).toEqual([false, false, false, false]);
     await tap('[data-mood="walk"]');
     await wait();
     expect(cardIds()).toHaveLength(3);

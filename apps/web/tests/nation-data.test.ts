@@ -10,7 +10,7 @@ const fixture = (f: string): unknown => JSON.parse(readFileSync(resolve(__dirnam
 describe('index.json', () => {
   it('keeps the rows it can use: known moods, coded 시도, 시군구 with a point and a listed file', () => {
     const ix = parseIndex(fixture('index.json'))!;
-    expect(ix.rules).toEqual({ moods: ['walk', 'new', 'food'], indoor: true });
+    expect(ix.rules).toEqual({ moods: ['rest', 'walk', 'new', 'food'], indoor: true });
     expect(ix.files).toEqual({ '51': 'a1b2c3d4e5', '47': '0123456789', '36110': 'fedcba9876' });
     expect(ix.sido.map((s) => s.c)).toEqual(['11', '36110', '47', '51']);
     // 세종 as 3611036110 is not a 시군구 code (/^\d{4,8}$/); 종로구's file is not listed; 양양군 has no point
@@ -77,9 +77,10 @@ describe('normalizeNation', () => {
     expect(byId('nt-900007')).toMatchObject({ mood: 'walk', moods: ['walk', 'new'] });
   });
 
-  it('leaves out a 먹기 without meal / cafe, rest / famous only, no point, a bad 시군구 code, another id, a non-record', () => {
-    for (const id of ['nt-900002', 'nt-900003', 'nt-900004', 'nt-900005', 'bs-126081']) expect(byId(id), id).toBeUndefined();
-    expect(spots.map((s) => s.id)).toEqual(['nt-125417', 'nt-127951', 'nt-133494', 'nt-2609150', 'nt-125756', 'nt-900001', 'nt-900006', 'nt-900007']);
+  it('leaves out a 먹기 without meal / cafe, no point, a bad 시군구 code, another id, a non-record; 쉬기 stays (rules v2, ADR-0105), 유명한 데 does not', () => {
+    for (const id of ['nt-900002', 'nt-900004', 'nt-900005', 'bs-126081']) expect(byId(id), id).toBeUndefined();
+    expect(byId('nt-900003')).toMatchObject({ mood: 'rest', moods: ['rest'] });
+    expect(spots.map((s) => s.id)).toEqual(['nt-125417', 'nt-127951', 'nt-133494', 'nt-2609150', 'nt-125756', 'nt-900001', 'nt-900003', 'nt-900006', 'nt-900007']);
   });
 
   it('leaves out the 시군구 a 검수한 곳 covers', () => {

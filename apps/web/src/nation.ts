@@ -6,9 +6,9 @@ import { cleanName } from './data';
 import type { Dest } from './dest';
 import { distanceKm, type Mood, type Point, type Spot } from './pick';
 
-/** The moods a 자동 지역 record may carry: no 쉬기, no 유명한 데 (ADR-0101 2). */
-export type NationMood = Extract<Mood, 'walk' | 'new' | 'food'>;
-const MOODS: readonly NationMood[] = ['walk', 'new', 'food'];
+/** The moods a 자동 지역 record may carry: no 유명한 데 (ADR-0101 2); 쉬기 since rules v2 (ADR-0105 4). */
+export type NationMood = Extract<Mood, 'rest' | 'walk' | 'new' | 'food'>;
+const MOODS: readonly NationMood[] = ['rest', 'walk', 'new', 'food'];
 /** 시군구 code (lDongRegnCd + lDongSignguCd) */
 export const SGG_CODE = /^\d{4,8}$/;
 /** 섬 군 (plans/nationwide-app.md 13 R9): 울릉군, 옹진군 — their places only when the start is in that 군 */
@@ -25,9 +25,11 @@ export interface NationRecord {
   cat: string[];
   image: string;
   moods: NationMood[];
-  /** 먹기: meal | cafe; 새로운 것: sight (plans/nationwide-app.md header) */
-  sub?: 'meal' | 'cafe' | 'sight';
+  /** 먹기: meal | cafe; 놀러: sight, or do with walkin (rules v2, ADR-0074 Amendment 1) */
+  sub?: 'meal' | 'cafe' | 'sight' | 'do';
   indoor?: true;
+  /** 예약 없이 가는 놀거리 (rules v2): set with sub do only */
+  walkin?: true;
 }
 
 /** `nation/index.json` */
@@ -83,8 +85,9 @@ export function parseIndex(raw: unknown): NationIndex | null {
 
 /** One file's records as the app's places (plans/nationwide-app.md 2): reason '', `mood` the first of `moods`, score 3,
  * no 카카오 id, photos over https. Left out: what the app cannot render, a 먹기 without meal / cafe, the records of a
- * 시군구 a 검수한 곳 covers (`curatedSgg`), and an island 군's unless the start (`from`) is that 군. A 새로운 것 is 구경
- * (`sight`): 체험 needs a verified booking route (ADR-0074), which the 자동 지역 has none of. */
+ * 시군구 a 검수한 곳 covers (`curatedSgg`), and an island 군's unless the start (`from`) is that 군. A 놀러 place is 구경
+ * (`sight`) unless the file says 놀거리 (`do`) that needs no booking (`walkin`, ADR-0074 Amendment 1): a 체험 that needs
+ * a booking has no route here, so the rules leave it out and an old file's `do` without `walkin` reads as 구경. */
 export function normalizeNation(raw: unknown, curatedSgg: Iterable<string> = [], from: string | null = null): NationSpot[] {
   if (!Array.isArray(raw)) throw new Error('nation file is not an array');
   const curated = new Set(curatedSgg);
@@ -110,7 +113,7 @@ export function normalizeNation(raw: unknown, curatedSgg: Iterable<string> = [],
       image: typeof image === 'string' ? image.replace(/^http:\/\//, 'https://') : '',
       kakaoPlaceId: null,
       bookable: false,
-      ...(mood === 'food' ? { sub: r.sub as 'meal' | 'cafe' } : mood === 'new' ? { sub: 'sight' as const } : {}),
+      ...(mood === 'food' ? { sub: r.sub as 'meal' | 'cafe' } : mood === 'new' ? (r.sub === 'do' && r.walkin === true ? { sub: 'do' as const, walkin: true as const } : { sub: 'sight' as const }) : {}),
       score: 3,
       ...(r.indoor === true ? { indoor: true } : {}),
       sgg,

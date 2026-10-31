@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error -- plain .mjs script, no types
-import { judge, sample, score, shuffle } from '../scripts/nation/rules.mjs';
+import { judge, judge2, sample, score, shuffle } from '../scripts/nation/rules.mjs';
 
 const item = (id: string, lclsSystm3: string, contenttypeid = 12, title = '어느 곳') => ({ id, title, addr1: '서울 어딘가', contenttypeid, lclsSystm3 });
 
@@ -49,5 +49,23 @@ describe('자동 지역 규칙 (review/nation/rules-criteria.md)', () => {
     expect(s.mood.rate).toBe(1);
     expect(s.indoor.rate).toBe(0.5);
     expect(s.wetMiss).toMatchObject({ count: 1, of: 1 });
+  });
+});
+
+describe('자동 지역 규칙 v2 (review/nation/rules-criteria-02.md, ADR-0105)', () => {
+  it('쉬기 코드(해변·공원·전망대 밖, 온천·찜질방 실내), 계곡은 예약 없이 가는 놀거리', () => {
+    expect(judge2(item('a', 'NA020900'))).toMatchObject({ keep: true, mood: 'rest', indoor: false });
+    expect(judge2(item('b', 'VE030100'))).toMatchObject({ mood: 'rest', indoor: false });
+    expect(judge2(item('c', 'EX050100'))).toMatchObject({ mood: 'rest', indoor: true });
+    expect(judge2(item('d', 'NA010400'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    expect(judge2(item('e', 'NA010100'))).toMatchObject({ mood: 'walk' });
+  });
+  it('예약해야만 하는 코드·이름은 뺀다(BOOKING), 그 밖의 놀거리는 walkin', () => {
+    expect(judge2(item('f', 'EX030100'))).toMatchObject({ keep: false, reject: 'BOOKING' });
+    expect(judge2(item('g', 'LS020100', 28, '양양 서프스쿨'))).toMatchObject({ keep: false, reject: 'BOOKING' });
+    expect(judge2(item('h', 'EX030200'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    expect(judge2(item('i', 'LS011900', 28, '레일바이크'))).toMatchObject({ mood: 'new', sub: 'do', walkin: true });
+    expect(judge2(item('j', 'VE070100', 14))).toMatchObject({ mood: 'new', sub: 'sight' });
+    expect(judge2(item('j', 'VE070100', 14))).not.toHaveProperty('walkin');
   });
 });

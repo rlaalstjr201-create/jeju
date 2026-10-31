@@ -1,7 +1,9 @@
 /**
  * 자동 지역 출하 파일 N3 (plans/nationwide.md N3, plans/nationwide-app.md 0절).
  *
- *   node scripts/nation/build.mjs     review/nation/scope-*.json + rules-01.json → data/nation/
+ *   node scripts/nation/build.mjs     review/nation/scope-*.json + rules-02.json → data/nation/
+ *
+ * rules-02(ADR-0105, rules-criteria-02.md, audit-02 통과): 쉬기가 생기고, 예약 없이 가는 체험은 `sub: 'do'`·`walkin: true`로 싣는다.
  *
  * 입력은 파일뿐이고 같은 입력이면 같은 바이트를 쓴다. public/이 아니라 data/nation/에 쓴다
  * (앱 단위가 스위치가 켜진 빌드에서만 dist로 옮긴다).
@@ -100,12 +102,12 @@ export function sggNameOf(addr1, sidoCode) {
 export function shipRecord(r, rule) {
   if (!rule || !rule.keep || !validPoint(r)) return null;
   const mood = rule.mood;
-  if (mood !== 'walk' && mood !== 'new' && mood !== 'food') return null;
+  if (mood !== 'rest' && mood !== 'walk' && mood !== 'new' && mood !== 'food') return null;
   let sub;
   if (mood === 'food') {
     if (rule.sub !== 'meal' && rule.sub !== 'cafe') return null;
     sub = rule.sub;
-  } else if (mood === 'new') sub = 'sight';
+  } else if (mood === 'new') sub = rule.sub === 'do' && rule.walkin === true ? 'do' : 'sight';
   // 시군구 코드가 없는 곳(다른 시도 주소가 섞인 레코드)은 뺀다. 세종은 시도 코드 하나가 곧 시군구다.
   if (!r.lDongSignguCd) return null;
   const sgg = r.lDongRegnCd === r.lDongSignguCd ? String(r.lDongSignguCd) : `${r.lDongRegnCd}${r.lDongSignguCd}`;
@@ -121,10 +123,14 @@ export function shipRecord(r, rule) {
   };
   if (sub) out.sub = sub;
   if (rule.indoor === true) out.indoor = true;
+  if (sub === 'do') out.walkin = true;
   return out;
 }
 
 /** scopes: { [sidoCode]: record[] }, results: rules-01 results[] → { files, sgg, sido, rules, ambiguous, dropped } */
+/** audit-02가 넘긴 기분과 실내(rules-criteria-02 4·5절) */
+export const RULES_02 = { moods: ['rest', 'walk', 'new', 'food'], indoor: true };
+
 export function build({ scopes, results, rules = { moods: ['walk', 'new', 'food'], indoor: true } }) {
   const ruleById = new Map(results.map((x) => [x.id, x]));
   const files = {};
@@ -186,8 +192,8 @@ export function loadInputs(dir = IN_DIR) {
     const m = /^scope-(\d+)\.json$/.exec(f);
     if (m) scopes[m[1]] = JSON.parse(readFileSync(resolve(dir, f), 'utf8')).items;
   }
-  const results = JSON.parse(readFileSync(resolve(dir, 'rules-01.json'), 'utf8')).results;
-  return { scopes, results };
+  const results = JSON.parse(readFileSync(resolve(dir, 'rules-02.json'), 'utf8')).results;
+  return { scopes, results, rules: RULES_02 };
 }
 
 const kb = (n) => (n / 1024).toFixed(1);

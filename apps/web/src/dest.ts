@@ -27,7 +27,8 @@ export interface DestRow {
   /** a map search is scoped by `word` unless the name already says where it is (`said`, plans/busan.md M7) */
   word: string;
   said: RegExp;
-  /** the moods it offers (ADR-0101 2: no 쉬기, no 유명한 데 in the 자동 지역), and the ones 아무거나 takes a card from */
+  /** the moods it offers (ADR-0101 2: no 유명한 데 in the 자동 지역; 쉬기 there since rules v2, ADR-0105 4), and the ones
+   * 아무거나 takes a card from */
   moods: readonly Kind[];
   any: readonly Mood[];
   /** what the 이름 줄 says after the colon: the destination's name (a 검수한 곳 with `sgg`: its 시군구 in use, named in
@@ -47,7 +48,7 @@ export const DEST: Record<Dest, DestRow> = {
   busan: { file: 'spots-busan.json', idPrefix: 'bs-', cityHall: { lat: 35.1797, lng: 129.0751 }, credit: 'tour', word: '부산', said: /부산/, moods: ALL, any: ANY, label: 'name' },
   // 자동 지역: its files are nation/<f>.json (src/nation-part.ts); 서울시청 until a 시군구 is known; a map search by the
   // name alone (plans/nationwide-app.md U13 scopes it)
-  nation: { file: '', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '', said: /(?:)/, moods: ['walk', 'new', 'food'], any: ['walk', 'new'], label: 'sgg' },
+  nation: { file: '', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '', said: /(?:)/, moods: ['rest', 'walk', 'new', 'food'], any: ANY, label: 'sgg' },
   // 강원 (ADR-0102): 강릉시청 (강릉대로 33); its 시군구 강릉·속초·춘천 (Amendment 2)·양양 (Amendment 3)·평창 (Amendment 4),
   // which the 자동 지역 leaves to it — the first is the one used when none is known. A map search is scoped by the place's
   // own 시군구 (links.ts); `word` only before the 자동 지역's part is in

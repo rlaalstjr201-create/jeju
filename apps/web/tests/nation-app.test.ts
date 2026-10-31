@@ -60,7 +60,7 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
     delete (window as { __destBy?: unknown }).__destBy;
   });
 
-  it('a device that chose it: its 시군구 (jeju.sgg) list only; 아무거나 → 3 of its places, no 먹기; 쉬기 is 아무거나', async () => {
+  it('a device that chose it: its 시군구 (jeju.sgg) list only; 아무거나 → 3 of its places, no 먹기; 쉬기 is its own (rules v2, ADR-0105)', async () => {
     const { asked } = mount({ dest: 'nation', sgg: '51170' });
     await wait();
     expect(current().state()).toMatchObject({ dest: 'nation', sgg: '51170' });
@@ -72,7 +72,8 @@ describe.runIf(NATION)('자동 지역 (switch on)', () => {
     expect(cardIds().map((id) => spots.find((s) => s.id === id)!.mood)).not.toContain('food');
     await tap('[data-mood="rest"]');
     await wait();
-    expect(current().state().mood).toBe('any');
+    expect(current().state().mood).toBe('rest');
+    expect(cardIds().map((id) => current().state().spots!.find((s) => s.id === id)!.mood)).toEqual(['rest', 'rest', 'rest']);
     expect(asked).toEqual(['nation:51170']);
   });
 

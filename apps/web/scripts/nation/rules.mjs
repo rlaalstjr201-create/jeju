@@ -4,10 +4,16 @@
  *   node scripts/nation/rules.mjs apply    scope-*.json → review/nation/rules-01.json(곳마다 keep·기분·실내)
  *   node scripts/nation/rules.mjs sample   keep 200곳 + 뺀 곳 60곳 → review/nation/audit-01-input.json(코드·규칙 결과 없음)
  *   node scripts/nation/rules.mjs score    audit-01-out.json → review/nation/audit-01.json(일치율·통과)
+ *
+ * v2 (ADR-0105, 사전등록 review/nation/rules-criteria-02.md): 쉬기·계곡 놀거리·예약 없이 가는지
+ *   node scripts/nation/rules.mjs apply2   → review/nation/rules-02.json
+ *   node scripts/nation/rules.mjs sample2  keep 200 + 뺀 곳 60(씨앗 20261103) → audit-02-input.json
+ *   node scripts/nation/rules.mjs score2   audit-02-out.json → audit-02.json
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { walkinByRule } from '../walkin.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const dir = resolve(webRoot, 'review/nation');
@@ -74,6 +80,61 @@ export function judge(item) {
   }
   if (!hit) return { id: item.id, keep: false, reject: code && isExcluded(code) ? 'EXCLUDED' : 'UNMAPPED' };
   return { id: item.id, keep: true, mood: hit.mood, sub: hit.sub, indoor: hit.indoor, rule: code };
+}
+
+/** v2 2절: 쉬기(실내 아님) */
+export const REST_CODES = new Set(['NA010300', 'NA020100', 'NA020200', 'NA020400', 'NA020500', 'NA020700', 'NA020800', 'NA020900', 'NA030300', 'VE010200', 'VE010800', 'VE030100', 'VE030200', 'VE030400', 'VE030500']);
+/** v2 2절: 쉬기(실내) — 온천·사우나·스파, 찜질방 */
+export const REST_INDOOR_CODES = new Set(['EX050100', 'EX050200']);
+export const SEED2 = 20261103;
+export const THRESHOLDS2 = { mood: 0.85, indoor: 0.9, walkin: 0.85 };
+
+/** v2 한 곳의 규칙 결과: v1 위에 2절(쉬기·계곡)과 3절(예약)을 얹는다. */
+export function judge2(item) {
+  const r = judge(item);
+  if (!r.keep) return r;
+  if (REST_CODES.has(r.rule)) return { ...r, mood: 'rest', sub: '', indoor: false };
+  if (REST_INDOOR_CODES.has(r.rule)) return { ...r, mood: 'rest', sub: '', indoor: true };
+  if (r.rule === 'NA010400') return { ...r, mood: 'new', sub: 'do', indoor: false, walkin: true };
+  if (r.mood === 'new' && r.sub === 'do') {
+    if (walkinByRule(r.rule, item.title) === false) return { id: item.id, keep: false, reject: 'BOOKING' };
+    return { ...r, walkin: true };
+  }
+  return r;
+}
+
+/** v2 4절: v1 지표 + 예약 일치(규칙 do = true, BOOKING = false; 판정자가 walkin을 적은 곳) */
+export function score2(results, out) {
+  const s = score(results, out);
+  const rule = new Map(results.map((r) => [r.id, r]));
+  let wN = 0;
+  let wSame = 0;
+  let restN = 0;
+  let restSame = 0;
+  const misses = [...s.misses];
+  for (const o of out) {
+    const r = rule.get(o.id);
+    if (!r) continue;
+    const mine = r.keep && r.mood === 'new' && r.sub === 'do' ? true : r.reject === 'BOOKING' ? false : null;
+    if (mine !== null && typeof o.walkin === 'boolean' && !o.unsure) {
+      wN++;
+      if (o.walkin === mine) wSame++;
+      else misses.push({ id: o.id, what: 'walkin', rule: mine, judge: o.walkin, code: r.rule });
+    }
+    if (r.keep && r.mood === 'rest' && o.keep && !o.unsure) {
+      restN++;
+      if (o.mood === 'rest') restSame++;
+    }
+  }
+  const rate = (a, b) => (b ? a / b : 0);
+  return {
+    ...s,
+    mood: { ...s.mood, pass: s.mood.rate >= THRESHOLDS2.mood },
+    indoor: { ...s.indoor, pass: s.indoor.rate >= THRESHOLDS2.indoor },
+    walkin: { same: wSame, of: wN, rate: rate(wSame, wN), pass: rate(wSame, wN) >= THRESHOLDS2.walkin },
+    rest: { same: restSame, of: restN, rate: rate(restSame, restN) },
+    misses,
+  };
 }
 
 const EXCLUDED = ['AC', 'FD040', 'HS010900', 'HS020100', 'HS020200', 'HS020400', 'NA010500', 'NA020300', 'NA020600', 'VE010500', 'VE010600', 'VE030300', 'VE050200', 'VE060200', 'VE070400', 'VE090100', 'VE090200', 'VE090300', 'VE090600', 'VE100', 'VE110', 'VE120200', 'LS010400', 'LS010500', 'LS010600', 'LS020500', 'EX050700', 'EX050800'];
@@ -194,7 +255,34 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     writeJson(resolve(dir, 'audit-01.json'), s);
     const { misses, ...head } = s;
     console.log(JSON.stringify(head, null, 1), `\n틀린 곳 ${misses.length}`);
+  } else if (cmd === 'apply2') {
+    const results = scopes.flatMap((s) => s.items.map(judge2));
+    const count = (f) => results.filter(f).length;
+    const summary = {
+      criteria: 'review/nation/rules-criteria-02.md',
+      total: results.length,
+      keep: count((r) => r.keep),
+      byMood: Object.fromEntries(['food', 'rest', 'walk', 'new'].map((m) => [m, count((r) => r.keep && r.mood === m)])),
+      newDo: count((r) => r.keep && r.mood === 'new' && r.sub === 'do'),
+      indoor: count((r) => r.keep && r.indoor),
+      reject: Object.fromEntries(['CHAIN', 'EXCLUDED', 'UNMAPPED', 'BOOKING'].map((k) => [k, count((r) => r.reject === k)])),
+    };
+    writeJson(resolve(dir, 'rules-02.json'), { ...summary, results });
+    console.log(JSON.stringify(summary, null, 1));
+  } else if (cmd === 'sample2') {
+    const out = resolve(dir, 'audit-02-input.json');
+    if (existsSync(out)) throw new Error('audit-02-input.json이 이미 있다 — 표본은 한 번만 뽑는다');
+    const { results } = readJson(resolve(dir, 'rules-02.json'));
+    const input = sample(scopes, results, SEED2);
+    writeJson(out, input);
+    console.log(`표본 ${input.length}곳`);
+  } else if (cmd === 'score2') {
+    const { results } = readJson(resolve(dir, 'rules-02.json'));
+    const s = score2(results, readJson(resolve(dir, 'audit-02-out.json')));
+    writeJson(resolve(dir, 'audit-02.json'), s);
+    const { misses, ...head } = s;
+    console.log(JSON.stringify(head, null, 1), `\n틀린 곳 ${misses.length}`);
   } else {
-    console.log('apply | sample | score');
+    console.log('apply | sample | score | apply2 | sample2 | score2');
   }
 }

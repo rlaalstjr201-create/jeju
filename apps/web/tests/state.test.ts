@@ -394,8 +394,8 @@ describe('비 와요(실내만) (ADR-0065) — 토글은 범위 변경과 같은
 describe('자동 지역 상태', () => {
   const toNation = (sgg: '51150' | '51210' = '51150'): Action => ({ type: 'dest', dest: 'nation', basis: 'gps', region: null, stay: null, sgg });
 
-  it('switching there: 쉬기·유명한 데 become 아무거나; a mood it has stays; the 시군구 is kept', () => {
-    expect(run(s0({ mood: 'rest' }), toNation())).toMatchObject({ dest: 'nation', mood: 'any', sgg: '51150' });
+  it('switching there: 유명한 데 becomes 아무거나; a mood it has (쉬기 since rules v2, ADR-0105) stays; the 시군구 is kept', () => {
+    expect(run(s0({ mood: 'rest' }), toNation())).toMatchObject({ dest: 'nation', mood: 'rest', sgg: '51150' });
     expect(run(s0({ mood: 'famous' }), toNation()).mood).toBe('any');
     expect(run(s0({ mood: 'walk' }), toNation()).mood).toBe('walk');
     expect(run(s0({ mood: null }), toNation()).mood).toBeNull();
@@ -407,12 +407,12 @@ describe('자동 지역 상태', () => {
 
   it('a mood it does not offer, tapped or restored, is 아무거나', () => {
     const s = run(s0(), toNation());
-    expect(run(s, { type: 'mood', button: 'rest' }).mood).toBe('any');
+    expect(run(s, { type: 'mood', button: 'rest' }).mood).toBe('rest');
     expect(run(s, { type: 'mood', button: 'famous' }).mood).toBe('any');
     expect(run(s, { type: 'mood', button: 'food' }).mood).toBe('food');
-    const rec = { v: 1 as const, mood: 'rest' as const, sub: 'meal' as const, origin: null, shown: {}, histories: {} };
+    const rec = { v: 1 as const, mood: 'famous' as const, sub: 'meal' as const, origin: null, shown: {}, histories: {} };
     expect(run(s, { type: 'restore', rec }).mood).toBe('any');
-    expect(run(s0(), { type: 'restore', rec }).mood).toBe('rest');
+    expect(run(s0(), { type: 'restore', rec }).mood).toBe('famous');
   });
 
   it('another 시군구: what was picked and shown so far goes', () => {
