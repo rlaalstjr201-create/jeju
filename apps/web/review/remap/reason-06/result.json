@@ -12,7 +12,7 @@
    "렛츠런팜 양귀비꽃"
   ]
  },
- "machineFail": 0,
+ "machineFail": 1,
  "auditB": {
   "pass": 8,
   "of": 10,
@@ -40,13 +40,6 @@
    "name": "행원해변",
    "before": "현무암 지형과 투명한 바다에서 스노클링해요",
    "after": "현무암 지형과 투명한 바다를 바라봐요"
-  },
-  {
-   "dest": "jeju",
-   "id": "21df27c7-6e8a-4715-afd8-1e89086f9672",
-   "name": "검멀레해변",
-   "before": "검은 모래 해변에서 동굴 보트 투어를 즐겨요",
-   "after": "검은 모래가 매력적인 우도의 해변이에요"
   },
   {
    "dest": "jeju",
@@ -80,6 +73,12 @@
  "notApplied": [
   {
    "dest": "jeju",
+   "id": "21df27c7-6e8a-4715-afd8-1e89086f9672",
+   "name": "검멀레해변",
+   "why": "기계 검사(check:slop 매력적인) 실패 — 감사 B는 통과"
+  },
+  {
+   "dest": "jeju",
    "id": "05c2fae3-e644-4d1e-aaee-f2917bbebc74",
    "name": "렛츠런팜 양귀비꽃",
    "why": "Check 3: zh-Hans replaces the name 렛츠런팜 with the generic 赛马牧场 ('horse-racing ranch'), which drops the place name and adds a meaning that is not in the source"
@@ -90,5 +89,6 @@
    "name": "대천천",
    "why": "Check 3: ja 遊園地 means an amusement park with rides, a mistranslation of 유원지 (recreation area); zh 游乐地 leans the same way"
   }
- ]
+ ],
+ "machineFailNote": "검멀레해변 새 문장 「검은 모래가 매력적인 우도의 해변이에요」의 「매력적인」이 check:slop #17 금지어. 사전등록 4절은 check:slop을 기계 검사에 넣었는데 감사 B 전에 돌린 검사가 이 낱말을 빠뜨렸다. 게이트(vitest·check:slop)에서 잡혀 4절대로 싣지 않았다(옛 문장 그대로). 감사 B 수치 8/10은 그대로 기록"
 }
