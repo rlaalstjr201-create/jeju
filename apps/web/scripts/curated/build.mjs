@@ -129,7 +129,7 @@ export function build(inputs = loadInputs()) {
   // 주인 덮어쓰기: before가 판정과 다르면 멈춘다. 걷기·그 밖은 sub가 없다(SUBS) — 덮은 뒤 sub는 쓰지 않는다
   const verdicts = new Map(judged);
   const itemIds = new Set(items.map((it) => it.id));
-  for (const o of overrides.filter((o) => itemIds.has(o.id))) {
+  for (const o of overrides.filter((o) => o.type !== 'drop' && itemIds.has(o.id))) {
     const v = judged.get(o.id);
     if (!v || o.field !== 'mood' || v.mood !== o.before) throw new Error(`owner override ${o.id}: mood ${v?.mood} ≠ before ${o.before}`);
     verdicts.set(o.id, { ...v, mood: o.after });
@@ -177,8 +177,17 @@ export function build(inputs = loadInputs()) {
   if (problems.length) throw new Error(`spots-${inputs.dest}.json: ${problems.length} problem(s)\n  ${problems.slice(0, 20).join('\n  ')}`);
 
   const { rest, merged, renamed } = dedupe(kept);
+  // 주인 결정 「drop」(id·keep·reason): 규칙 밖 중복 쌍에서 한쪽을 뺀다. 남는 쪽(keep)이 출하에 없으면 멈춘다
+  const restIds = new Set(rest.map((k) => k.item.id));
+  const owned = overrides.filter((o) => o.type === 'drop' && restIds.has(o.id));
+  for (const o of owned) {
+    if (!o.keep || !o.reason || o.keep === o.id || !restIds.has(o.keep)) throw new Error(`owner drop ${o.id}: keep ${o.keep} is not a shipped place`);
+    const it = items.find((x) => x.id === o.id);
+    merged.push({ name: displayName(it.title, it.city), kept: o.keep, dropped: o.id, owner: true });
+  }
+  const ownerDrop = new Set(owned.map((o) => o.id));
   kept.length = 0;
-  kept.push(...rest);
+  kept.push(...rest.filter((k) => !ownerDrop.has(k.item.id)));
   const ids = new Set(kept.map((k) => k.item.id));
   const kakaoById = kakaoIds(kakao, ids);
   // pop-criteria.md 10절: 만족도·유명한 곳(개수·pop)은 도시마다 따로 센다(도시 하나면 예전과 같다)
