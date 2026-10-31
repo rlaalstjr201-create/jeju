@@ -17,3 +17,7 @@ Status: Accepted (2026-10-01)
 ## Consequences
 
 - 상세는 `specs/new-sub.md`. 사용 기록의 `sub` 필드에 `sight`/`do`/`mix`가 들어간다.
+
+## Amendment 1 (2026-10-31, ADR-0105)
+
+- 기분 이름이 「놀러 가고 싶어」가 되고 탭은 `섞어서 · 구경 · 놀거리`다. id `mix`·`sight`·`do`와 동작은 그대로다.

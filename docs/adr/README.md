@@ -91,7 +91,7 @@
 | 0071 | [0071-map-app-naver-default.md](0071-map-app-naver-default.md) | 지도 앱은 네이버지도가 기본 · 카카오맵 · TMAP은 설정에서 고른다 | Accepted (2026-10-01) |  |
 | 0072 | [0072-static-landing-and-place-pages.md](0072-static-landing-and-place-pages.md) | 정적 랜딩과 장소 페이지 — 허브·지역 15·조합(target만)·장소마다 한 쪽, 사진은 핫링크(끄는 스위치 있음) | Accepted (2026-10-01) |  |
 | 0073 | [0073-booking-links-paused.md](0073-booking-links-paused.md) | 예약 링크(마이리얼트립 검색) 중단 — 장소별로 확인된 경로가 생길 때까지 | Accepted (2026-10-01) | 계획 부분: 0074 |
-| 0074 | [0074-verified-booking-routes-for-experiences.md](0074-verified-booking-routes-for-experiences.md) | 체험 카드는 장소별로 확인된 예약 경로 하나를 단다 — 경로 없는 체험은 체험 탭에서 뺀다 | Accepted (2026-10-01) |  |
+| 0074 | [0074-verified-booking-routes-for-experiences.md](0074-verified-booking-routes-for-experiences.md) | 체험 카드는 장소별로 확인된 예약 경로 하나를 단다 — 경로 없는 체험은 체험 탭에서 뺀다 | Accepted (2026-10-01) | Amendment 1: 예약 없이 가는 곳(`walkin`)은 경로 없이도 보인다 (ADR-0105) |
 | 0075 | [0075-home-refresh-today-and-photos.md](0075-home-refresh-today-and-photos.md) | 홈 개편 A′ — 오늘 판, 기분 줄 사진, 아래 두 묶음. 결과 화면 작은 고침 | Accepted (2026-10-03) | 일부(기분 5개): 0092 |
 | 0076 | [0076-rain-prompt-via-pages-function.md](0076-rain-prompt-via-pages-function.md) | 비 소식은 기상청 단기예보를 Pages Function 하나로 받는다 — 동네 이름만 보낸다 | Accepted (2026-10-03) |  |
 | 0077 | [0077-rename-yeohaenggwi.md](0077-rename-yeohaenggwi.md) | 이름 「여행귀:제주」, 주소 yeogwi.pages.dev (ADR-0068 1·2·4·5 대체) | Superseded by ADR-0082 |  |
@@ -118,3 +118,4 @@
 | 0102 | [0102-gangwon-curated-gangneung.md](0102-gangwon-curated-gangneung.md) | 강원 검수한 곳 — 여행지 gangwon, 시군구 다섯(강릉 51150·속초 51210·춘천 51110·양양 51830·평창 51760, 그 밖은 자동 지역), 판정·동네는 자동 지역 색인, 자기 청크 없이 spots-gangwon.json, 이유 줄·기분 다섯 | Accepted (2026-10-30) | Amendment 2: 속초·춘천, 한 번에 한 시군구. Amendment 3: 양양, 주인 덮어쓰기(owner-overrides.json). Amendment 4: 평창 |
 | 0103 | [0103-basis-sheet-dest-toggle-address-search.md](0103-basis-sheet-dest-toggle-address-search.md) | 기준 시트 2판 — 「여행지 \| 내 위치」 토글(옆으로 밀리는 칩 줄), 숙소 → 「주소·숙소」 검색(카카오 로컬, `/api/geo` 서버 경유, 키 없으면 「검색을 쓸 수 없어요.」), 운영 빌드만 | Accepted (2026-10-30) |  |
 | 0104 | [0104-sgg-anchor-points.md](0104-sgg-anchor-points.md) | 한 점의 시군구는 시군구마다 둔 점(곳 좌표의 k-평균 최대 8개, 색인 `p`) 가운데 가장 가까운 점으로 — 자동 지역 곳 82.1% → 94.8%, 평창 64.4% → 98.3%, 색인 gzip 4,780 → 10,937 B, 강원 동네·비 소식도 그 시군구 (ADR-0101 1.1·R3, ADR-0102 2 개정) | Accepted (2026-10-31) |  |
+| 0105 | [0105-play-mood-and-walkin.md](0105-play-mood-and-walkin.md) | 「새로운 거 해보고 싶어」 → 「놀러 가고 싶어」(id `new` 그대로), 탭 섞어서·구경·놀거리, 계곡·낚시·목장은 놀러·해변은 쉬기, 예약 없이 가는 곳은 보임, 자동 지역에도 쉬기 (ADR-0064·0074·0101·0102 개정) | Accepted (2026-10-31) |  |
