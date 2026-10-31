@@ -24,6 +24,7 @@ SITE=https://yeochana.com bash scripts/smoke.sh                                 
 - `apps/web/wrangler.toml`이 프로젝트 이름·`pages_build_output_dir`·D1 바인딩(`EVENTS_DB` → `yeogwi-events`)을 정한다. 비밀은 넣지 않는다.
 
 - `apps/web/functions/`(비 소식 `/api/rain`, ADR-0076)는 이 명령을 돌린 디렉터리 기준으로 찾아 같이 올라간다. 그래서 반드시 `apps/web`에서 돌린다. 함수는 앱 번들과 별개라 50KB 예산에 들어가지 않는다.
+- **수집기와 앱의 순서(서울, ADR-0106 Amendment 2의 4)**: 앱이 `dest=seoul`(지역 기준이면 `sgg`)을 보내기 시작한다. 이것을 받는 검사(`events/validate.ts`)는 따로 올리는 워커가 아니라 `functions/api/events`가 불러 쓰는 코드라, 위 `wrangler pages deploy` 한 번에 앱과 함께 바뀐다. 그러니 앱보다 늦게 올라가는 수집기는 없다. 다만 `dist/`만 다른 디렉터리에서 올리거나 함수 없이 올리면 새 앱이 옛 수집기에 붙어 서울 기록이 400으로 버려진다. 반드시 `apps/web`에서 위 명령으로 올리고, 배포 뒤 `POST /api/events`에 `[{"e":"start_done","d":"<오늘>","how":"pick","why":"none","dest":"seoul"}]`류의 유효한 배열이 204인지 본다(확인용 1건이 기록에 더해진다).
 - 기상청 키(data.go.kr 「기상청_단기예보 조회서비스」, **디코딩 키**)는 비밀로 한 번 넣는다: `npx wrangler pages secret put KMA_SERVICE_KEY --project-name yeochana`. 키가 없으면 함수가 204를 돌려주고 앱은 비 줄을 숨긴다(다른 기능은 그대로).
 - 로컬에서 함수까지 보기: `npx wrangler d1 migrations apply yeogwi-events --local` 뒤 `npx wrangler pages dev dist --port 8788`(D1은 `wrangler.toml` 바인딩의 로컬 사본, `apps/web/.wrangler/`) → `/api/rain?area=aewol`이 키 없이 204, `?area=nope`이 400, `POST /api/events`(유효한 배열)가 204, `/api/events/health`가 `{"last24h":n}`. 끝나면 `.wrangler/`를 지운다.
 
