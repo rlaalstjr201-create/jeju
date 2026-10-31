@@ -140,7 +140,7 @@ describe('페이지', () => {
     const aewol = s.pages.find((p) => p.path === '/jeju/aewol/')!.html;
     const rain = aewol.match(/<section aria-labelledby="rain">([\s\S]*?)<\/section>/)![1];
     expect(rain).toContain('<h2 id="rain">비 오는 날, 애월 실내</h2>');
-    expect(rain).toContain('애월 근처 실내 쉬기·구경·체험 11곳 중');
+    expect(rain).toContain('애월 근처 실내 쉬기·구경·놀거리 11곳 중');
     expect(rain.match(/href="\/jeju\/aewol\/[a-z0-9-]+\/"/g)).toHaveLength(5);
     expect(rain).toContain('<a class="tbtn" href="/?area=aewol&indoor=1">앱에서 애월 실내 3곳 보기</a>');
     expect(rain).not.toContain('애월 카페'); // food stays out even when indoor
@@ -317,7 +317,7 @@ describe('부산 1단계 (/busan/**)', () => {
   it('「비 오는 날, {동네} 실내」 only where 10 or more indoor 쉬기·새로운 거', () => {
     const rain = page('/busan/haeundae/').match(/<section aria-labelledby="rain">([\s\S]*?)<\/section>/)![1];
     expect(rain).toContain('<h2 id="rain">비 오는 날, 해운대 실내</h2>');
-    expect(rain).toContain('해운대 실내 놀거리(쉬기·구경·체험) 10곳 중');
+    expect(rain).toContain('해운대 실내에서 쉬거나 구경하거나 놀 곳 10곳 중');
     expect(rain).toContain('<a class="tbtn" href="/?area=haeundae&indoor=1">앱에서 해운대 실내 3곳 보기</a>');
     expect(page('/busan/dadaepo/')).not.toContain('aria-labelledby="rain"');
     const nine = busanPages({ spots: BS.slice(1), site: '', photos: false, dataDate: null }).pages.find((p) => p.path === '/busan/haeundae/')!.html;

@@ -306,7 +306,7 @@ export const JA: Lang = {
     '#foodSub@aria-label': '食べるものの種類',
     '[data-sub="meal"]': '食事',
     '[data-sub="cafe"]': 'カフェ・スイーツ',
-    '#newSub@aria-label': '新しいことの種類',
+    '#newSub@aria-label': '遊びの種類',
     '[data-sub="mix"]': 'ミックス',
     '[data-sub="sight"]': '見る',
     '[data-sub="do"]': '遊び',

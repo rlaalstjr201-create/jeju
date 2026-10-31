@@ -350,7 +350,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
         <div id="newSub" class="tabs" role="group" aria-label="놀러 갈 곳 종류" hidden>   <!-- ADR-0064, ADR-0105 -->
           <button class="tab" type="button" data-sub="mix" aria-pressed="true">섞어서</button>
           <button class="tab" type="button" data-sub="sight" aria-pressed="false">구경</button>
-          <button class="tab" type="button" data-sub="do" aria-pressed="false">체험</button>
+          <button class="tab" type="button" data-sub="do" aria-pressed="false">놀거리</button>
         </div>
         <p id="how" class="how" hidden></p>                       <!-- ADR-0075, live 아님 -->
         <p id="status" class="status" role="status"></p>
@@ -434,7 +434,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **바꾸기 없음**(ADR-0090): 머리 오른쪽의 알약 `바꾸기`는 없앴다. 첫 화면으로 가는 길은 위 줄 왼쪽 뒤로(6.2)이고 하는 일은 같다.
 - 머리 줄: `display: flex; align-items: center; justify-content: space-between`, 높이는 고른 기분 한 줄(ADR-0090 전에는 알약이 정한 44), 상단 줄 아래 4, `scroll-margin-top: var(--top-h)`.
 - **식사 \| 카페·디저트**(맛있는 거 먹고 싶어일 때만): 머리 아래 8. 글자 탭 두 개, 왼쪽 정렬, 탭 사이 24, 탭 높이 44, 15/600. 선택 탭은 `--text` + 아래 3px `--main` 밑줄(글자 폭, ADR-0070), 다른 탭은 `--muted`. 탭 줄 아래 1px `--line`. 탭 누름 영역은 `::before { inset: -2px -8px }`로 좌우 8, 위아래 2씩 넓혀 48 이상(`식사`가 44px보다 좁다, 4절). 면·알약 없음. `aria-pressed`로 상태.
-- **섞어서 · 구경 · 놀거리**(놀러 가고 싶어일 때만, ADR-0064, ADR-0105 — 탭 이름 `체험` → `놀거리`, id `do` 그대로, `specs/new-sub.md`): 식사 탭과 같은 부품(`div#newSub.tabs`, `role="group"`, aria `놀러 갈 곳 종류`)·자리(머리 아래 8)·모양·누름 영역(`.tab::before`, 48 이상)·`aria-pressed`. 탭 세 개 `섞어서`·`구경`·`체험`, 기본 `섞어서`. `섞어서` = 종류 무관 새로운 거 전체(탭 전과 같은 3장), `구경` = `sub: sight`만, `체험` = `sub: do`만. 정렬·범위·넓히기(빈손 없음)·로테이션 규칙은 같고, 로테이션 기록은 탭마다 따로(`new:mix`·`new:sight`·`new:do`). 고른 탭은 다음 새로운 거까지 기억하고(식사 탭과 따로), 새로고침 복원에서도 같은 탭. `아무거나`는 탭과 관계없이 섞어서 풀에서 한 장. 첫 화면 버튼 수와 첫 탭 흐름은 그대로.
+- **섞어서 · 구경 · 놀거리**(놀러 가고 싶어일 때만, ADR-0064, ADR-0105 — 탭 이름 `체험` → `놀거리`, id `do` 그대로, `specs/new-sub.md`): 식사 탭과 같은 부품(`div#newSub.tabs`, `role="group"`, aria `놀러 갈 곳 종류`)·자리(머리 아래 8)·모양·누름 영역(`.tab::before`, 48 이상)·`aria-pressed`. 탭 세 개 `섞어서`·`구경`·`놀거리`, 기본 `섞어서`. `섞어서` = 종류 무관 새로운 거 전체(탭 전과 같은 3장), `구경` = `sub: sight`만, `놀거리` = `sub: do`만. 정렬·범위·넓히기(빈손 없음)·로테이션 규칙은 같고, 로테이션 기록은 탭마다 따로(`new:mix`·`new:sight`·`new:do`). 고른 탭은 다음 새로운 거까지 기억하고(식사 탭과 따로), 새로고침 복원에서도 같은 탭. `아무거나`는 탭과 관계없이 섞어서 풀에서 한 장. 첫 화면 버튼 수와 첫 탭 흐름은 그대로.
 - **고르는 방식**(`p#how.how`, ADR-0075): `#status` 바로 앞, live 아님. 15/400 `--muted`, 위 12(뒤에 상태 줄이 오면 그 줄은 위 4). 결과 카드가 보이는 동안(`ready`)만 보이고 저장한 곳·첫 화면·회색 틀에서는 숨는다. `{차로 30분|걸어서 15분|차로 1시간} 안에서, 소개글로 볼 때 가 볼 만한 곳부터 골랐어요.` 실내만이면 `{범위} 안의 실내 중에서, …`. 카드 중 하나라도 범위 밖이면(섬 전체 가까운 3곳으로 넓힘) 범위 구절을 뺀다(`소개글로 볼 때 …`, 실내만이면 `실내 중에서, …`).
 - **기준 단추의 실내만**: 비 와요(실내만)가 켜져 있으면 `#basis`가 `{곳} · 실내만`(`내일 · 애월 근처 · 실내만`). `·` 앞 낱말과 `·`는 `.nw`로 묶어 `·`로 시작하는 줄이 없다.
 - **상태 줄**(`#status`, `role="status"`): 15/400 `--muted`, 위 12. 비어 있으면 `display: none`. flex-wrap, 항목 사이 12. `지역으로 고르기`는 이 줄 안의 `.tbtn`. 들어가는 문구는 9절. 문장은 한 줄로 이어 붙인다: 한 바퀴 → 밤(ADR-0091) → 오프라인 → 가 봤어요(바로 뒤 `되돌리기`).

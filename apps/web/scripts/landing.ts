@@ -432,7 +432,7 @@ function areaPage(ctx: Ctx, a: Area): string {
     indoor.length >= RAIN_MIN
       ? `\n<section aria-labelledby="rain">
 <h2 id="rain">비 오는 날, ${esc(a.label)} 실내</h2>
-<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. ${esc(a.label)} 근처 실내 쉬기·구경·체험 ${indoor.length}곳 중 먼저 갈 만한 곳이에요.</p>
+<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. ${esc(a.label)} 근처 실내 쉬기·구경·놀거리 ${indoor.length}곳 중 먼저 갈 만한 곳이에요.</p>
 <ol class="list">${indoor.slice(0, PER_MOOD).map((p) => placeRow(ctx, p, from)).join('')}</ol>
 <p><a class="tbtn" href="${appLink(a)}&indoor=1">앱에서 ${esc(a.label)} 실내 3곳 보기</a></p>
 </section>`
@@ -641,7 +641,7 @@ function busanHubPage(ctx: BusanCtx): string {
 <p>동네를 고르면 그 근처에서 기분마다 먼저 나오는 곳을 볼 수 있어요. 모두 ${total.toLocaleString('ko-KR')}곳이에요.</p>
 <ul class="areas">${BUSAN_AREAS.map((a) => `<li><a href="${busanAreaPath(a)}">${esc(busanAreaTitle(a))}</a> <span class="meta">${ctx.busan.get(a.slug)!.length}곳</span></li>`).join('')}</ul>
 <h2>비 오는 날</h2>
-<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. 실내에서 쉬거나 구경·체험할 곳이 ${floor}곳 이상인 동네는 동네 쪽에 따로 모았어요.</p>
+<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. 실내에서 쉬거나 구경하거나 놀 곳이 ${floor}곳 이상인 동네는 동네 쪽에 따로 모았어요.</p>
 <ul class="areas">${wet.map(({ a, n }) => `<li><a href="${busanAreaPath(a)}#rain">${esc(a.label)} 실내</a> <span class="meta">${n}곳</span></li>`).join('')}</ul>
 <p>다른 여행지: <a href="${HUB}">여차나:제주</a></p>`;
   return layout(ctx, {
@@ -718,7 +718,7 @@ function busanAreaPage(ctx: BusanCtx, a: BusanArea): string {
     indoor.length >= RAIN_MIN
       ? `\n<section aria-labelledby="rain">
 <h2 id="rain">비 오는 날, ${esc(a.label)} 실내</h2>
-<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. ${esc(a.label)} 실내 놀거리(쉬기·구경·체험) ${indoor.length}곳 중 먼저 갈 만한 곳이에요.</p>
+<p>비가 오면 앱에서 「비 와요(실내만)」를 켜 보세요. ${esc(a.label)} 실내에서 쉬거나 구경하거나 놀 곳 ${indoor.length}곳 중 먼저 갈 만한 곳이에요.</p>
 <ol class="list">${indoor.slice(0, PER_MOOD).map((p) => busanRow(ctx, p, from)).join('')}</ol>
 <p><a class="tbtn" href="/?area=${a.slug}&indoor=1">앱에서 ${esc(a.label)} 실내 3곳 보기</a></p>
 </section>`

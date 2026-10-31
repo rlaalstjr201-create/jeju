@@ -301,7 +301,7 @@ export const ZH: Lang = {
     '#foodSub@aria-label': '吃的种类',
     '[data-sub="meal"]': '正餐',
     '[data-sub="cafe"]': '咖啡·甜品',
-    '#newSub@aria-label': '新鲜事的种类',
+    '#newSub@aria-label': '玩乐类型',
     '[data-sub="mix"]': '都看看',
     '[data-sub="sight"]': '逛逛',
     '[data-sub="do"]': '玩乐',
