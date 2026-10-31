@@ -158,7 +158,8 @@ describe('U1 수집 주소가 없으면 보내지 않는다', () => {
 
 describe('U2 탭·노출·하트·지도·예약 — 정확히 한 번씩, 좌표 없음', () => {
   it('each event once, with mood / range / basis / dated / day and nothing about a position', async () => {
-    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp) });
+    // a day outside any season (ADR-0080), so cards carry no season whatever the real date is
+    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp), today: () => new Date('2026-10-10T12:00:00+09:00') });
     const mood = exp.mood;
     await tap(`[data-mood="${mood}"]`);
     const ids = cardIds() as string[];
