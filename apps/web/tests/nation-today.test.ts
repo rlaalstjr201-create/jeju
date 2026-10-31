@@ -12,7 +12,7 @@ import type { Spot } from '../src/pick';
 import { NATION, loadNation } from '../src/release';
 
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
-const 강릉시 = { lat: 37.77063, lng: 128.89669 }; // the index's centre of 51150
+const 강릉시 = { lat: 37.77063, lng: 128.89712 }; // the index's centre of 51150
 const spot = (name: string, sgg: string, p = 강릉시) => ({ id: 'nt-1', name, reason: '', mood: 'walk', lat: p.lat, lng: p.lng, sgg }) as unknown as Spot;
 
 describe.runIf(NATION)('자동 지역: 오늘 판 and map links (switch on)', () => {
