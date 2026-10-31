@@ -9,7 +9,7 @@ import type { Spot } from '../src/pick';
 import { REASON_BANNED } from '../scripts/check-slop';
 import { positionProblems } from '../scripts/positions.mjs';
 import { reasonPunctuationProblem } from '../scripts/reason.mjs';
-import { build, dedupe, famousCount, famousIds, inBox, kakaoIds, loadInputs, quintileScores, townOf } from '../scripts/curated/build.mjs';
+import { bracketTag, build, dedupe, famousCount, famousIds, inBox, kakaoIds, loadInputs, quintileScores, townOf } from '../scripts/curated/build.mjs';
 import { BROAD, keywordsOf, plan, targets as popTargets } from '../scripts/curated/measure.mjs';
 import { nameRule, pick, targets as kakaoTargets } from '../scripts/curated/kakao.mjs';
 import { JEJU_RECORD_BOX, recordProblems } from './spot-record';
@@ -217,6 +217,23 @@ describe('강릉 이름 겹침 (pop-criteria 8절)', () => {
     expect(file.find((x) => x.id === 'nt-712490')?.kakaoPlaceId).toBe('1292233561');
     expect(file.find((s) => s.id === 'nt-2733486')?.name).toBe('효석 달빛언덕');
     expect(file.find((s) => s.id === 'nt-2772349')?.name).toBe('대관령 스키 역사관');
+  });
+});
+
+describe('대괄호 꼬리표 (shownName)', () => {
+  it('끝의 꼬리표는 떼고, 앞의 코스 꼬리표는 뒤로 옮겨 코스 정보를 남긴다', () => {
+    expect(bracketTag('종묘 [유네스코 세계유산]')).toBe('종묘');
+    expect(bracketTag('[서울둘레길 19코스] 북한산 성북코스')).toBe('북한산 성북코스 (서울둘레길 19코스)');
+    expect(bracketTag('[해파랑길] 35코스(바우길 9구간)')).toBe('35코스(바우길 9구간) (해파랑길)');
+    expect(bracketTag('경복궁')).toBe('경복궁');
+    expect(bracketTag('[전부 꼬리표]')).toBe('[전부 꼬리표]');
+  });
+  it('출하 파일 이름에는 대괄호가 남지 않는다', () => {
+    const dirs = ['gangwon', 'seoul'] as const;
+    for (const d of dirs) {
+      const spots = JSON.parse(readFileSync(resolve(__dirname, `../data/${d}/spots-${d}.json`), 'utf8')) as { name: string }[];
+      expect(spots.filter((s) => /[[\]]/.test(s.name)).map((s) => s.name)).toEqual([]);
+    }
   });
 });
 

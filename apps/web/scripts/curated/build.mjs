@@ -46,6 +46,15 @@ const SUBS = { food: new Set(['meal', 'cafe']), new: new Set(['sight', 'do']) };
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
 /** 카드 이름: 이름 끝의 「(도시)」 표시만 뗀다(부산 displayName과 같은 뜻). 서울 구는 「(서울)」(rounds.mjs cityMark). */
 export const displayName = (title, city) => cleanName(title).replace(new RegExp(`\\s*\\(${cityMark(city)}\\)$`), '');
+/** 카드에 싣는 이름: displayName에 대괄호 꼬리표 규칙을 더한다. 같은 곳 판정(dedupe)은 꼬리표 규칙 전 이름으로 하므로 어떤 곳이 실리는지는 그대로다. */
+export const shownName = (title, city) => bracketTag(displayName(title, city));
+/** 대괄호 꼬리표: 끝의 「 [유네스코 세계유산]」은 뗀다. 앞의 「[서울둘레길 19코스] 북한산 성북코스」는 「북한산 성북코스 (서울둘레길 19코스)」로 옮겨 코스 정보는 남긴다. 이름이 꼬리표뿐이면 그대로 둔다. */
+export const bracketTag = (name) => {
+  const lead = /^\[([^\]]+)\]\s*(.+)$/.exec(name);
+  if (lead) return `${lead[2]} (${lead[1]})`;
+  const tail = /^(.+?)\s*\[[^\]]+\]$/.exec(name);
+  return tail ? tail[1] : name;
+};
 /** 유명한 곳 후보: 서울(ADR-0106 6, review/seoul/pop-criteria.md 7절)은 관광지와 문화시설, 그 밖은 관광지만(부산 famousCandidate). */
 export const CULTURE_TYPE = 14;
 export const candidateOf = (dest) =>
@@ -224,7 +233,7 @@ export function build(inputs = loadInputs()) {
     for (const [id, p] of popScores(volumeById, famous)) pops.set(id, p);
   }
 
-  const nameOf = (item) => renamed.get(item.id) ?? displayName(item.title, item.city);
+  const nameOf = (item) => renamed.get(item.id) ?? shownName(item.title, item.city);
   const names = kept.map(({ item }) => nameOf(item));
   const twice = names.filter((n, i) => names.indexOf(n) !== i);
   if (twice.length) throw new Error(`spots-${inputs.dest}.json: display names shared by two places: ${[...new Set(twice)].join(', ')}`);
