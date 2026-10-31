@@ -1,0 +1,12 @@
+[
+ {"id":"nt-686363","name":"디마떼오","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"정통 나폴리 피자를 내는 대학로 피자집이에요","basis":["정통 나폴리 피자 만들기","대학로점은 1층과 1.5층이 있는데"],"confidence":"high"},
+ {"id":"nt-697191","name":"옛날집낙원아구찜","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"아귀찜을 처음 만든 낙원동 아귀찜 전문점이에요","basis":["서울에서 아귀찜을 처음으로 만든 식당이다","낙원동 골목에서 30여 년을 지킨 아귀찜 전문점이다"],"confidence":"high"},
+ {"id":"nt-704382","name":"진원조 닭한마리","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"한방재료 육수로 끓여 내는 닭한마리집이에요","basis":["각종 한방재료와 야채와 양념들로 육수를 만들어","끓여 나오는 육수가 진하고 구수하면서도 시원하다"],"confidence":"high"},
+ {"id":"nt-723976","name":"이강순실비집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"낙지볶음이 대표 메뉴인 오랜 전통의 집이에요","basis":["1968년에 문을 연 오랜 전통의 낙지볶음 집이다","신선한 재료로 조리한 낙지볶음이 대표 메뉴이다"],"confidence":"high"},
+ {"id":"nt-834631","name":"삼해집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"굴보쌈과 아귀찜, 감자탕을 내는 집이에요","basis":["굴보쌈, 아귀찜, 감자탕을 전문으로 판매하는 음식점이다"],"confidence":"high"},
+ {"id":"nt-834646","name":"함흥곰보냉면","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"고구마 전분 면발의 함흥냉면과 왕만두를 내는 집이에요","basis":["고구마 전분으로 만든 쫄깃한 면발의 함흥냉면집","왕만두도 있다"],"confidence":"high"},
+ {"id":"nt-834669","name":"자하손만두","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"손으로 빚은 만두와 만둣국을 내는 부암동 만두집이에요","basis":["종로구 부암동을 지켜온 만두 전문점으로","직접 담근 조선간장으로 맛을 낸 삼삼한 국물"],"confidence":"high"},
+ {"id":"nt-834706","name":"평안도만두집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"평안도식 만두전골과 만둣국을 내는 집이에요","basis":["이곳은 평안도 지역의 특색 있는 만두를 선보인다","대표메뉴인 만두전골과 만둣국의 국물은"],"confidence":"high"},
+ {"id":"nt-834750","name":"커피친구","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"직접 볶은 원두로 핸드드립 커피를 내리는 카페예요","basis":["핸드드립 전문 카페이다","매일 직접 볶은 원두로 내린 핸드드립 커피"],"confidence":"high"},
+ {"id":"nt-837020","name":"황생가칼국수","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"사골 국물 칼국수와 왕만두를 내는 북촌 칼국수집이에요","basis":["사골 국물의 칼국수와 함께","한우 사골을 푹 고아 낸 국물에 직접 뽑은"],"confidence":"high"}
+]
