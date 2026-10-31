@@ -12,19 +12,22 @@ const [cmd, file, arg] = process.argv.slice(2);
 if (!cmd || !file) { console.error('사용법: node step.mjs brief|show|act|check <call.json> ["s1=코드; s2=코드"]'); process.exit(2); }
 const call = JSON.parse(readFileSync(file, 'utf8'));
 // 1단계부터 흐름 엔진(flow.mjs). engine 칸이 없으면 0단계 엔진
-const { act, attachRand, render } = await import(call.engine === 'flow' ? './flow.mjs' : './screen.mjs');
+// engine 'tile'은 기분 타일 첫 탭 시험(docs/research/mood-tile-test-01)
+const TILE = call.engine === 'tile';
+const { act, attachRand, render } = await import(TILE ? '../../mood-tile-test-01/lab/tile.mjs' : call.engine === 'flow' ? './flow.mjs' : './screen.mjs');
 // 팔 코드 → 엔진 팔 이름(묶음 폴더 옆 key.json). 상태 파일엔 코드로만 남긴다.
 const KEY = JSON.parse(readFileSync(resolve(dirname(file), '..', 'key.json'), 'utf8'));
 call.sessions.forEach((s, i) => { s.key = `s${i + 1}`; s.code = s.state.arm; s.state.arm = KEY[s.code] ?? s.code; attachRand(s.state); });
 const en = call.lang === 'en';
 const save = () => { for (const s of call.sessions) s.state.arm = s.code; writeFileSync(file, JSON.stringify(call, (k, v) => (k === 'key' || k === 'code' ? undefined : v), 1)); for (const s of call.sessions) s.state.arm = KEY[s.code] ?? s.code; };
 
-const ENDED = { go: en ? 'ended: route opened' : '끝: 길찾기 열림', quit: en ? 'ended: closed the app' : '끝: 앱 닫음', cap: en ? 'ended: too many taps' : '끝: 너무 오래 걸려 그만둠', stuck: en ? 'ended: stuck' : '끝: 막힘' };
+const ENDED = { go: en ? 'ended: route opened' : '끝: 길찾기 열림', quit: en ? 'ended: closed the app' : '끝: 앱 닫음', cap: en ? 'ended: too many taps' : '끝: 너무 오래 걸려 그만둠', stuck: en ? 'ended: stuck' : '끝: 막힘', pick: '끝: 골랐음' };
 const screenOf = (s) => (s.state.end ? `### ${s.key} — ${ENDED[s.state.end]}` : `### ${s.key} (${s.state.taps}${en ? ' taps' : '번 누름'})\n${render(s.state)}`);
 
 if (cmd === 'brief') {
   // 0c부터: 지시문·사람·첫 화면을 한 번에 — 하위 작업의 왕복을 줄인다(토큰 대부분이 왕복마다 다시 읽는 고정 맥락)
-  console.log(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'prompts', `agent-${call.engine === 'flow' ? 'flow-' : ''}${en ? 'en' : 'ko'}.md`), 'utf8'), '\n---\n');
+  const here = dirname(fileURLToPath(import.meta.url));
+  console.log(readFileSync(TILE ? resolve(here, '../../mood-tile-test-01/lab/agent-tile-ko.md') : resolve(here, '..', 'prompts', `agent-${call.engine === 'flow' ? 'flow-' : ''}${en ? 'en' : 'ko'}.md`), 'utf8'), '\n---\n');
   for (const s of call.sessions) {
     const p = call.persons[s.pid];
     const attrs = Object.entries(p.attrs).map(([k, v]) => `${k} ${v}`).join(' · ');
