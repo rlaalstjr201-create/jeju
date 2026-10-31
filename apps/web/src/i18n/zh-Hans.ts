@@ -227,7 +227,7 @@ export const ZH: Lang = {
   mood: {
     rest: '想好好歇一歇',
     walk: '想随便走走',
-    new: '想试点新鲜的',
+    new: '想出去玩',
     famous: '想去热门打卡地',
     food: '想吃点好吃的',
     any: '随便帮我挑',
@@ -304,7 +304,7 @@ export const ZH: Lang = {
     '#newSub@aria-label': '新鲜事的种类',
     '[data-sub="mix"]': '都看看',
     '[data-sub="sight"]': '逛逛',
-    '[data-sub="do"]': '体验',
+    '[data-sub="do"]': '玩乐',
     '#results > .credit': `${CREDIT} · `,
     '.landing a': '按区域浏览（韩语）',
     '#results .settings': '设置 · 地图App · 反馈',

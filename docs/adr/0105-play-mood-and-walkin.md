@@ -15,7 +15,7 @@ Status: Accepted (2026-10-31, 주인 지시 「안 A를 끝까지」). 근거: `
 3. **예약 없이 가는 곳은 보인다**(ADR-0074 Amendment 1). `new`·`do`인 곳 가운데 예약 경로가 없어도 갈 수 있는 곳에 `walkin: true`를 단다. 앱은 `book`도 `walkin`도 없는 `new`·`do`만 뺀다(`pick.ts` `listed`). 선과 정하는 법은 ADR-0074 Amendment 1.
 4. **자동 지역 쉬기**(ADR-0101 2·7 개정): 자동 지역 규칙 v2(`apps/web/review/nation/rules-criteria-02.md`)가 해변·해안절경·항구·섬·호수·강·연못·폭포·기암괴석·전망대·등대·공원·온천·찜질방을 `rest`로, 계곡을 `new`·`do`로 보낸다. 측정(audit-02)을 넘으면 자동 지역에도 쉬기 줄이 생기고, 아무거나·「지금 여기서」는 검수한 곳처럼 쉬기·걷기·놀러에서 한 장씩 고른다. 넘지 못하면 rules-criteria-02 4절대로 한다. 유명한 곳은 여전히 검수한 곳에서만이다.
 5. **옮기는 길**: 결정적 규칙 먼저, 애매한 곳만 새 Sonnet 판정, 표본은 새 Opus가 한 번 감사(criteria-05 3~5절). 적용은 여행지마다 정해진 파이프라인으로만 한다.
-   - 제주: `review/copy/corrections-04.json`(기분·`sub`, `apply-corrections.mjs`가 받는 칸에 `mood`·`sub`를 더함)과 `review/copy/booking.json`의 새 판정 `walkin`(`booking.mjs`). `build:spots`는 출하 파일에 돌리지 않는다. 같은 입력으로 `SPOTS_OUT`에 다시 지어 바이트가 같은지 본다.
+   - 제주: `review/copy/corrections-05.json`(기분·`sub`, `apply-corrections.mjs`가 받는 칸에 `mood`·`sub`를 더함. 사전등록 글의 `corrections-04`는 이미 예약 검수 기록이 쓰던 이름이라 05에 실었다)과 관광지 분류 농장의 `review/copy/new-sub.json` 판정과 `review/copy/booking.json`의 새 판정 `walkin`(`booking.mjs`). `build:spots`는 출하 파일에 돌리지 않는다. 같은 입력으로 `SPOTS_OUT`에 다시 지어 바이트가 같은지 본다.
    - 부산: `scripts/busan/build.mjs`가 `review/remap/busan.json`을 판정 위에 덮는다.
    - 강원: `scripts/curated/build.mjs`가 `review/remap/gangwon.json`을 판정 위에 덮는다(주인 덮어쓰기 다음).
    - 자동 지역: `scripts/nation/rules.mjs` v2 → `scripts/nation/build.mjs`.
@@ -29,3 +29,8 @@ Status: Accepted (2026-10-31, 주인 지시 「안 A를 끝까지」). 근거: `
 - 쉬기와 걷기의 경계 문제는 남는다(안 C가 풀려던 것). 사람 시험 키트(`docs/research/mood-tile-test-01/human-kit/`) 결과가 6·11번에서 다르면 다시 연다.
 - 4주 뒤 `mood_tap`에서 `new` 비율을 본다. 탭이 100회 미만이면 「판단 보류」(분류 문서 4절 3).
 - 자동 지역 코드 규칙은 원문 없이 분류만 본다. 계곡 코드 안의 등산 코스도 놀러로 간다(알고 있는 한계).
+
+## 결과 (2026-10-31)
+
+- 검수한 곳(criteria-05): 대상 323곳(제주 73·부산 15·강원 235), 결정적 규칙 177·Sonnet 판정 146, Opus 감사 120곳 기분 93.3%·예약 94.0%(기준 90%) 통과. 바뀐 곳 제주 20·부산 4·강원 91. 숨은 놀거리 제주 17 → 10, 부산 2 → 1, 강원 154 → 86(유명한 곳 12곳이 보이게 됨: 대관령 하늘목장·삼양라운드힐 등. 인구항 배낚시는 새로 숨음). 결과 파일 `apps/web/review/remap/`(scope-05·judge-05·audit-05·changes-05).
+- 자동 지역(rules-criteria-02): audit-02 기분 96.7%·실내 100%·예약 3/3 통과(예약을 비교한 곳은 3곳뿐이라 약한 증거). 쉬기 2,796곳, 예약해야만 해 뺀 곳 705곳.

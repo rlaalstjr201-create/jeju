@@ -232,7 +232,7 @@ export const JA: Lang = {
   mood: {
     rest: 'のんびりしたい',
     walk: 'ちょっと歩きたい',
-    new: '新しいことをしてみたい',
+    new: '遊びに行きたい',
     famous: '定番スポットに行きたい',
     food: 'おいしいものが食べたい',
     any: 'おまかせ',
@@ -309,7 +309,7 @@ export const JA: Lang = {
     '#newSub@aria-label': '新しいことの種類',
     '[data-sub="mix"]': 'ミックス',
     '[data-sub="sight"]': '見る',
-    '[data-sub="do"]': '体験',
+    '[data-sub="do"]': '遊び',
     '#results > .credit': `${CREDIT}・`,
     '.landing a': 'エリア別に見る（韓国語）',
     '#results .settings': '設定・地図アプリ・ご意見',

@@ -263,7 +263,7 @@ export const destNameOf = (s: { dest: Dest; sgg: string | null }): string => (DE
 export const MOOD_LABEL: Record<Button, string> = {
   rest: '푹 쉬고 싶어',
   walk: '좀 걷고 싶어',
-  new: '새로운 거 해보고 싶어',
+  new: '놀러 가고 싶어',
   famous: '유명한 데 가 보고 싶어',
   food: '맛있는 거 먹고 싶어',
   any: '아무거나 골라줘',

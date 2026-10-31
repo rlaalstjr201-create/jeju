@@ -2046,8 +2046,8 @@ describe('새로운 거 섞어서 · 구경 · 체험', () => {
     expect($('#newSub').hidden).toBe(false);
     expect($('#foodSub').hidden).toBe(true);
     expect($('#newSub').getAttribute('role')).toBe('group');
-    expect($('#newSub').getAttribute('aria-label')).toBe('새로운 거 종류');
-    expect(newTabs().map((b) => b.textContent)).toEqual(['섞어서', '구경', '체험']);
+    expect($('#newSub').getAttribute('aria-label')).toBe('놀러 갈 곳 종류');
+    expect(newTabs().map((b) => b.textContent)).toEqual(['섞어서', '구경', '놀거리']);
     expect(newTabs().every((b) => b.classList.contains('tab') && b.getAttribute('type') === 'button')).toBe(true);
     expect(pressedTab()).toEqual(['mix']);
     expect(cardNames()).toEqual(expectedNames(ORIGINS.제주시, 'new'));
@@ -2178,7 +2178,7 @@ describe('새로운 거 섞어서 · 구경 · 체험', () => {
   it('N4 the tabs use the 먹기 tab rule: 44px tall, a 48px hit area (::before inset -2px -8px)', () => {
     expect(cssRule('.tab')).toMatch(/min-height:\s*44px/);
     expect(cssRule('.tab::before')).toMatch(/inset:\s*-2px -8px/);
-    expect(html).toMatch(/<div id="newSub" class="tabs" role="group" aria-label="새로운 거 종류" hidden>/);
+    expect(html).toMatch(/<div id="newSub" class="tabs" role="group" aria-label="놀러 갈 곳 종류" hidden>/);
   });
 });
 

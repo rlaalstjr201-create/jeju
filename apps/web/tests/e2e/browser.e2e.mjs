@@ -915,7 +915,7 @@ await check('QA-reload-history', 'reload on a results entry that never loaded (G
   await page.evaluate(() => localStorage.setItem('__geo', JSON.stringify({ mode: 'ok', lat: 33.5122, lng: 126.5272, delay: 30 })));
   await page.reload();
   await waitCards(page);
-  assert((await page.textContent('#crumb')) === '새로운 거 해보고 싶어', `title after reload: ${await page.textContent('#crumb')}`);
+  assert((await page.textContent('#crumb')) === '놀러 가고 싶어', `title after reload: ${await page.textContent('#crumb')}`);
   await back(page);
   assert((await names(page)).length === 0 && (await hstate(page))?.depth === 0, `first back: ${JSON.stringify(await hstate(page))}`);
   await back(page);
@@ -2278,10 +2278,11 @@ await check('T2-hit', 'at 320·390: card heart, 길찾기, 바꾸기·돌아가�
 });
 
 // 3-18 sits here: it measures hit areas with hitMeasure (defined above).
-await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every 체험 card has one, one line, drawn 44 with a ≥ 48×48 area no other control covers, named, noopener; no 마이리얼트립 search; no sideways scroll', async () => {
+await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every 놀거리 card with a route has one (a 예약 없이 가는 곳 has none, Amendment 1), one line, drawn 44 with a ≥ 48×48 area no other control covers, named, noopener; no 마이리얼트립 search; no sideways scroll', async () => {
   const problems = [];
   const KIND_TEXT = ['네이버로 예약하기', '마이리얼트립에서 예약', '홈페이지에서 예약 확인', '전화로 예약'];
   const seenText = new Set();
+  const walkinIds = new Set(JSON.parse(readFileSync(join(appDir, 'public/spots.json'), 'utf8')).filter((x) => x.walkin).map((x) => x.id));
   for (const [width, height] of [[320, 568], [390, 844]]) {
     for (const [area] of AREA_ORDER) {
       const { ctx, page } = await fresh({ width, height, storage: { 'jeju.region': area.replace(' ', ''), 'jeju.basis': 'region', 'jeju.hintSeen': true } });
@@ -2294,7 +2295,7 @@ await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every
         return [...document.querySelectorAll('#cards .card:not(.ghost)')].map((c) => {
           const a = c.querySelectorAll('a.book');
           const b = a[0];
-          if (!b) return { n: 0 };
+          if (!b) return { n: 0, id: c.getAttribute('data-id') };
           range.selectNodeContents(b);
           const name = c.querySelector('.name').textContent.trim();
           return {
@@ -2311,6 +2312,7 @@ await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every
         });
       });
       for (const b of r) {
+        if (b.n === 0 && walkinIds.has(b.id)) continue;
         if (b.n !== 1) { problems.push(`${width} ${area}: ${b.n} booking links on a 체험 card`); continue; }
         seenText.add(b.text);
         if (b.lines !== 1 || b.h !== 44 || !b.inCard) problems.push(`${width} ${area}: ${b.text} lines ${b.lines} h ${b.h} inCard ${b.inCard}`);
@@ -2319,7 +2321,8 @@ await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every
         if (/myrealtrip\.com\/search/.test(b.href)) problems.push(`${width} ${area}: search link ${b.href}`);
       }
       const hit = await page.evaluate(hitMeasure, '#cards .card .heart, #cards .card .go, #cards .card .book');
-      if (hit.n !== 9) problems.push(`${width} ${area}: ${hit.n} targets`);
+      // heart·go on 3 cards, and a booking link on each card that has a route (a walkin card has none, ADR-0074 Amendment 1)
+      if (hit.n !== 6 + r.filter((b) => b.n === 1).length) problems.push(`${width} ${area}: ${hit.n} targets`);
       for (const k of ['small', 'overlap', 'blocked']) if (hit[k].length) problems.push(`${width} ${area} ${k}: ${hit[k].join(', ')}`);
       if (hit.over > 0) problems.push(`${width} ${area} overflows ${hit.over}`);
       if (width === 320 && area === '애월') await shot(page, 'book-320');
@@ -2331,14 +2334,14 @@ await check('3-18', '체험 booking link (ADR-0074) at 320·390, 15 areas: every
 });
 
 // --- ADR-0064, specs/new-sub.md N4: 새로운 거 섞어서 · 구경 · 체험 ---
-await check('N4-new-tabs', '새로운 거 at 320·390: 섞어서 · 구경 · 체험 under the head (섞어서 pressed), each tab a ≥ 48×48 area no other control overlaps, drawn 44; each tab shows 3 cards of its kind, no sideways scroll; the tab survives a reload; history unchanged by a tab', async () => {
+await check('N4-new-tabs', '놀러 at 320·390: 섞어서 · 구경 · 놀거리 under the head (섞어서 pressed), each tab a ≥ 48×48 area no other control overlaps, drawn 44; each tab shows 3 cards of its kind, no sideways scroll; the tab survives a reload; history unchanged by a tab', async () => {
   const problems = [];
   for (const [width, height] of [[320, 568], [390, 844]]) {
     const { ctx, page } = await fresh({ width, height });
     await tapText(page, '[data-mood="new"]');
     await waitCards(page);
     const labels = await page.$$eval('#newSub .tab', (els) => els.map((e) => `${e.textContent}:${e.getAttribute('aria-pressed')}`));
-    if (labels.join() !== '섞어서:true,구경:false,체험:false') problems.push(`${width} tabs ${labels}`);
+    if (labels.join() !== '섞어서:true,구경:false,놀거리:false') problems.push(`${width} tabs ${labels}`);
     if (await visible(page, '#foodSub')) problems.push(`${width} food tabs shown`);
     const r = await page.evaluate(hitMeasure, '#newSub .tab');
     if (r.n !== 3) problems.push(`${width}: ${r.n} tab targets`);
@@ -4387,7 +4390,7 @@ const rgIs = (page, rg, timeout = 8000) =>
 const NATION_DEVICE = { 'jeju.dest': 'nation', 'jeju.sgg': '51170' };
 
 if (NATION) {
-  await check('NT-1', 'GPS 동해 → 여차나:동해, 쉬기·유명한 데 없음; 아무거나 3장, .reason 없음, #how 공공 데이터 줄, 출처 한국관광공사; /nation/51.json 1회', async () => {
+  await check('NT-1', 'GPS 동해 → 여차나:동해, 쉬기 있음(ADR-0105)·유명한 데 없음; 아무거나 3장, .reason 없음, #how 공공 데이터 줄, 출처 한국관광공사; /nation/51.json 1회', async () => {
     const problems = [];
     const { ctx, page, urls } = await nationAt('/', { geo: 동해역 });
     urls.length = 0;
@@ -4398,7 +4401,8 @@ if (NATION) {
       title: document.title,
       shown: ['rest', 'walk', 'new', 'famous', 'food', 'any'].filter((m) => document.querySelector(`[data-mood="${m}"]`)?.offsetParent),
     }));
-    if (!home.title.startsWith('여차나:동해') || home.shown.includes('rest') || home.shown.includes('famous') || !home.shown.includes('any')) problems.push(`home ${JSON.stringify(home)}`);
+    // 쉬기 since rules v2 (ADR-0105 4); 유명한 데 still only in a 검수한 곳
+    if (!home.title.startsWith('여차나:동해') || !home.shown.includes('rest') || home.shown.includes('famous') || !home.shown.includes('any')) problems.push(`home ${JSON.stringify(home)}`);
     await tapText(page, '[data-mood="any"]');
     await waitCards(page);
     const r = await page.evaluate(() => ({
@@ -4884,7 +4888,7 @@ if (NATION) {
     assert(!problems.length, problems.join(' | '));
   });
 
-  await check('GW-9', '홍천은 자동 지역: GPS 홍천 → 여차나:홍천, 쉬기 없음, #how 공공 데이터 줄, spots-gangwon.json 요청 0', async () => {
+  await check('GW-9', '홍천은 자동 지역: GPS 홍천 → 여차나:홍천, 쉬기 있음(ADR-0105), #how 공공 데이터 줄, spots-gangwon.json 요청 0', async () => {
     const problems = [];
     for (const [name, lat, lng] of [['홍천', 37.6971, 127.8888]]) {
       const { ctx, page, urls } = await nationAt('/', { geo: { mode: 'ok', lat, lng, delay: 30 } });
@@ -4898,7 +4902,7 @@ if (NATION) {
       const r = await gwCards(page);
       const own = urls.filter((u) => /spots-gangwon\.json/.test(u));
       await ctx.close();
-      if (!(ok && !rest && r.n === 3 && r.how === '공공 데이터로 가까운 순으로 골랐어요.' && !own.length)) problems.push(`${name}: rg ${ok} rest ${rest} ${JSON.stringify(r)} gangwon ${own.length}`);
+      if (!(ok && rest && r.n === 3 && r.how === '공공 데이터로 가까운 순으로 골랐어요.' && !own.length)) problems.push(`${name}: rg ${ok} rest ${rest} ${JSON.stringify(r)} gangwon ${own.length}`);
     }
     assert(!problems.length, problems.join(' | '));
   });

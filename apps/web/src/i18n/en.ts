@@ -234,7 +234,7 @@ export const EN: Lang = {
   mood: {
     rest: 'Just relax',
     walk: 'Go for a walk',
-    new: 'Try something new',
+    new: 'Somewhere fun',
     famous: 'See the famous spots',
     food: 'Eat something good',
     any: 'Surprise me',
@@ -311,7 +311,7 @@ export const EN: Lang = {
     '#newSub@aria-label': 'Type of activity',
     '[data-sub="mix"]': 'Mix',
     '[data-sub="sight"]': 'Sights',
-    '[data-sub="do"]': 'Activities',
+    '[data-sub="do"]': 'Things to do',
     '#results > .credit': 'Info & photos: Visit Jeju (Jeju Tourism Organization) · ',
     '.landing a': 'Browse by area (in Korean)',
     '#results .settings': 'Settings · Map app · Feedback',

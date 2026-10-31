@@ -92,7 +92,7 @@ describe('S3 첫 화면', () => {
     expect(moods.map((b) => b.querySelector('.label, span')!.textContent)).toEqual([
       '푹 쉬고 싶어',
       '좀 걷고 싶어',
-      '새로운 거 해보고 싶어',
+      '놀러 가고 싶어',
       '유명한 데 가 보고 싶어',
       '맛있는 거 먹고 싶어',
       '아무거나 골라줘',
@@ -228,7 +228,7 @@ describe('S3 카드', () => {
       for (const li of $$('.card')) {
         const spot = realSpots.find((s) => s.id === li.getAttribute('data-id'))!;
         const book = li.querySelectorAll<HTMLAnchorElement>('a.book');
-        if (spot.mood === 'new' && spot.sub === 'do') expect(spot.book, spot.name).toBeTruthy();
+        if (spot.mood === 'new' && spot.sub === 'do') expect(spot.book || spot.walkin, spot.name).toBeTruthy(); // walkin: 예약 없이 가는 곳, 링크 없음 (ADR-0074 Amendment 1)
         if (!spot.book) {
           expect(book).toHaveLength(0);
           continue;

@@ -34,7 +34,7 @@ const MOODS: readonly Mood[] = ['rest', 'walk', 'new', 'food'];
 export const MOOD_NAME: Record<Mood | 'famous' | 'any', string> = {
   rest: '푹 쉬고 싶어',
   walk: '좀 걷고 싶어',
-  new: '새로운 거 해보고 싶어',
+  new: '놀러 가고 싶어',
   famous: '유명한 데 가 보고 싶어',
   food: '맛있는 거 먹고 싶어',
   any: '아무거나 골라줘',
@@ -42,10 +42,10 @@ export const MOOD_NAME: Record<Mood | 'famous' | 'any', string> = {
 const MOOD_GLOSS: Record<Mood | 'famous' | 'any', string> = {
   rest: '쉬어 갈 곳',
   walk: '산책길, 오름, 올레길처럼 걸을 곳',
-  new: '구경하거나 체험할 곳',
-  famous: '쉬기·걷기·새로운 거를 가리지 않고 이름난 경관·명소',
+  new: '구경하거나 놀 거리가 있는 곳',
+  famous: '쉬기·걷기·놀러를 가리지 않고 이름난 경관·명소',
   food: '식사, 카페·디저트',
-  any: '쉬기·걷기·새로운 거에서 한 곳씩',
+  any: '쉬기·걷기·놀러에서 한 곳씩',
 };
 /** One sentence per area, written for these pages (never VisitJeju text, specs/seo-landing.md). */
 export const AREA_LINE: Record<Area['slug'], string> = {
@@ -186,7 +186,7 @@ const rainy = (p: { spot: Spot }) => p.spot.indoor && (p.spot.mood === 'rest' ||
 /** What the place is, in the app's words: the food and 새로운 거 tabs (ADR-0028, ADR-0064). */
 export function kindOf(s: Spot): string {
   if (s.mood === 'food') return s.sub === 'cafe' ? '카페·디저트' : '식사';
-  if (s.mood === 'new') return s.sub === 'do' ? '체험' : s.sub === 'sight' ? '구경' : '새로운 곳';
+  if (s.mood === 'new') return s.sub === 'do' ? '놀거리' : s.sub === 'sight' ? '구경' : '놀러 갈 곳';
   return s.mood === 'walk' ? '걸을 곳' : '쉬어 갈 곳';
 }
 const schemaType = (s: Spot) => (s.mood === 'food' ? (s.sub === 'cafe' ? 'CafeOrCoffeeShop' : 'Restaurant') : 'TouristAttraction');
@@ -452,7 +452,7 @@ ${index}
   return layout(ctx, {
     path: areaPath(a),
     title: `${areaTitle(a)} 근처, 지금 갈 만한 곳 · ${BRAND}`,
-    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·새로운 거·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
+    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·놀러·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
     crumbs: [...rootCrumbs(ctx), { name: a.label, path: areaPath(a) }],
     graph: [
       {
@@ -476,7 +476,7 @@ function comboPage(ctx: Ctx, c: Combo): string {
     .filter((p) => p.spot.mood === c.mood && (!c.sub || p.spot.sub === c.sub))
     .slice(0, PER_COMBO);
   const body = `<h1>${esc(c.query)}</h1>
-<p class="lead">${esc(AREA_LINE[a.slug])} ${esc(a.label)} 근처에서 「${MOOD_NAME[c.mood]}」${c.sub ? `의 ${c.sub === 'do' ? '체험' : '구경'} 탭을` : '를'} 누르면 먼저 나오는 곳 ${top.length}곳이에요.</p>
+<p class="lead">${esc(AREA_LINE[a.slug])} ${esc(a.label)} 근처에서 「${MOOD_NAME[c.mood]}」${c.sub ? `의 ${c.sub === 'do' ? '놀거리' : '구경'} 탭을` : '를'} 누르면 먼저 나오는 곳 ${top.length}곳이에요.</p>
 <p class="meta">거리는 ${esc(a.label)} 중심에서 잰 거예요. 앱에서는 ${esc(a.label)} 근처 3곳을 지금 다시 골라요.</p>
 <p><a class="go" href="${appLink(a, c.mood)}">앱에서 지금 3곳 보기</a></p>
 <ol class="list">${top.map((p) => placeRow(ctx, p, `${a.label} 중심에서`)).join('')}</ol>
@@ -740,7 +740,7 @@ ${index}
   return layout(ctx, {
     path: busanAreaPath(a),
     title: `${BUSAN_TITLE[a.slug] ?? `${busanAreaTitle(a)} 근처, 지금 갈 만한 곳`} · ${BUSAN_BRAND}`,
-    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·새로운 거·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
+    description: `${a.label} 근처에서 기분 하나만 고르세요. 쉬기·걷기·놀러·먹기마다${rain ? ', 비 오는 날 실내까지' : ''} 먼저 갈 만한 곳을 모았어요.`,
     crumbs: [...rootCrumbs(ctx), { name: a.label, path: busanAreaPath(a) }],
     graph: [
       {
