@@ -6,6 +6,7 @@
  *   npx tsx scripts/curated/judge.mjs check  gangwon 강릉 [NN]   기계 검사 → judge-강릉-01/check.json (NN이면 그 묶음만)
  *   npx tsx scripts/curated/judge.mjs sample gangwon 강릉        keep 120곳 표본(씨앗 20261030) → audit-강릉-01-sample.json
  *   npx tsx scripts/curated/judge.mjs score  gangwon 강릉        → audit-강릉-01.json
+ *   npx tsx scripts/curated/judge.mjs r2     seoul 110          표본의 원문과 이유 문장만 → audit-110-06-r2-input.json (사실 확인 R2 입력)
  *
  * 회차(judge-<도시>-NN)·씨앗·표본에서 뺄 앞 회차 표본은 rounds.mjs.
  * 부산 judge.mjs는 import 때 argv로 명령을 실행해서 가져오지 않고 같은 규칙을 다시 적었다(부산 파일은 건드리지 않는다).
@@ -16,14 +17,16 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { REASON_BANNED } from '../check-slop.ts';
 import { reasonPunctuationProblem, shipReason } from '../reason.mjs';
-import { CRITERIA, SAMPLE_EXCLUDE, SEEDS, judgeRound } from './rounds.mjs';
+import { CRITERIA, SAMPLE_EXCLUDE, SEEDS, WALKIN_ROUNDS, judgeRound } from './rounds.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 
 export const BATCH_SIZE = 50;
 export const SEED = 20261030;
 export const SAMPLE_N = 120;
-export const THRESHOLDS = { keepMood: 0.9, indoor: 0.95, factErrorsMax: 3 };
+export const THRESHOLDS = { keepMood: 0.9, indoor: 0.95, factErrorsMax: 3, walkin: 0.9 };
+/** criteria-06.md 5.2: walkin 일치를 기준으로 재는 최소 쌍 수(그보다 적으면 기록만). */
+export const WALKIN_MIN_PAIRS = 10;
 export const REJECT_CODES = new Set(['NOT_DESTINATION', 'INSUFFICIENT_INFO', 'CHAIN_GENERIC', 'CLOSED_OR_TEMP', 'OUT_OF_SCOPE', 'INAPPROPRIATE']);
 const MOODS = new Set(['rest', 'walk', 'new', 'food']);
 const TYPE_NAME = { 12: '관광지', 14: '문화시설', 28: '레포츠', 38: '쇼핑(전통시장)', 39: '음식점' };
@@ -53,6 +56,7 @@ export function paths(dest, city, root = webRoot, round = judgeRound(city)) {
     judgments: resolve(base, `audit-${city}-${round}-judgments.json`),
     facts: resolve(base, `audit-${city}-${round}-facts.json`),
     audit: resolve(base, `audit-${city}-${round}.json`),
+    r2: resolve(base, `audit-${city}-${round}-r2-input.json`),
     criteria: CRITERIA[round].replace('<dest>', dest),
     excludeSamples: (SAMPLE_EXCLUDE[city] ?? []).map((r) => resolve(base, `audit-${city}-${r}-sample.json`)),
   };
@@ -111,8 +115,8 @@ export function prep(P, city) {
   return batches.length;
 }
 
-/** 한 곳의 기계 검사 문제 목록(criteria.md 4절). */
-export function problems(item, v) {
+/** 한 곳의 기계 검사 문제 목록(criteria.md 4절). `walkin` 회차(rounds.mjs WALKIN_ROUNDS)는 `new`·`do`에 참·거짓이 있어야 하고 그 밖에는 없어야 한다. */
+export function problems(item, v, round) {
   const p = [];
   if (!v) return ['판정 없음'];
   if (v.name !== item.name) p.push('name이 입력과 다름');
@@ -136,6 +140,10 @@ export function problems(item, v) {
   if (v.mood === 'new' && !['sight', 'do'].includes(v.sub)) p.push(`new sub: ${v.sub}`);
   if ((v.mood === 'rest' || v.mood === 'walk') && v.sub !== undefined) p.push('rest·walk에 sub');
   if ((v.basis ?? []).length < 1 || (v.basis ?? []).length > 3) p.push('keep은 근거 조각 1~3개');
+  if (WALKIN_ROUNDS.has(round)) {
+    if (v.mood === 'new' && v.sub === 'do' && typeof v.walkin !== 'boolean') p.push('new·do에 walkin 없음');
+    if (!(v.mood === 'new' && v.sub === 'do') && v.walkin !== undefined) p.push('new·do 아닌 곳에 walkin');
+  }
   const r = String(v.reason ?? '');
   if (shipReason(r) !== r) p.push('이유 문장 공백·끝 마침표·돈까스');
   if (len(r) < 15 || len(r) > 70) p.push(`이유 문장 길이 ${len(r)}`);
@@ -151,7 +159,7 @@ function check(P, batch) {
     const inputs = readJson(resolve(P.judgeDir, `input-${batch}.json`));
     const out = resolve(P.judgeDir, `out-${batch}.json`);
     const verdicts = new Map(existsSync(out) ? readJson(out).map((v) => [v.id, v]) : []);
-    const bad = inputs.map((i) => ({ i, p: problems(i, verdicts.get(i.id)) })).filter((r) => r.p.length);
+    const bad = inputs.map((i) => ({ i, p: problems(i, verdicts.get(i.id), P.round) })).filter((r) => r.p.length);
     for (const { i, p } of bad) console.log(i.id, i.name, p.join(' / '));
     console.log(`묶음 ${batch}: ${inputs.length}곳, 문제 ${bad.length}곳, 남는 id ${[...verdicts.keys()].filter((id) => !inputs.some((i) => i.id === id)).length}`);
     if (bad.length) process.exitCode = 1;
@@ -162,7 +170,7 @@ function check(P, batch) {
   const ids = new Set(inputs.map((i) => i.id));
   const rows = [];
   for (const item of inputs) {
-    const p = problems(item, verdicts.get(item.id));
+    const p = problems(item, verdicts.get(item.id), P.round);
     if (p.length) rows.push({ id: item.id, name: item.name, problems: p });
   }
   const extra = [...verdicts.keys()].filter((id) => !ids.has(id));
@@ -217,6 +225,15 @@ function sample(P) {
   console.log(`keep ${allKeep.length}곳 − 앞 표본 ${allKeep.length - keepIds.length}곳 = ${keepIds.length}곳에서 ${ids.length}곳`);
 }
 
+/** 사실 확인(R2) 입력: 표본 곳마다 원문(name·type·cat3·lclsSystm3·addr·overview)과 이유 문장만. keep·기분·실내·근거 조각은 싣지 않는다. */
+function r2(P) {
+  if (existsSync(P.r2)) throw new Error(`${P.r2}이 이미 있다`);
+  const verdicts = loadVerdicts(P);
+  const items = readJson(P.sample).items.map(({ id, name, type, cat3, lclsSystm3, addr, overview }) => ({ id, name, type, cat3, lclsSystm3, addr, overview, reason: verdicts.get(id).reason }));
+  writeJson(P.r2, items);
+  console.log(`${items.length}곳 → ${P.r2}`);
+}
+
 /** 임계값은 표본 크기가 120보다 작아도 비율로 잰다(사실 오류만 개수 기준). */
 function score(P, city) {
   const sampleFile = readJson(P.sample);
@@ -231,11 +248,12 @@ function score(P, city) {
     return {
       id: item.id,
       name: item.name,
-      first: { keep: a.keep, mood: a.mood, sub: a.sub, indoor: a.indoor, reason: a.reason },
-      audit: { keep: b.keep, reject: b.reject, mood: b.mood, sub: b.sub, indoor: b.indoor },
+      first: { keep: a.keep, mood: a.mood, sub: a.sub, indoor: a.indoor, reason: a.reason, ...(a.walkin !== undefined ? { walkin: a.walkin } : {}) },
+      audit: { keep: b.keep, reject: b.reject, mood: b.mood, sub: b.sub, indoor: b.indoor, ...(b.walkin !== undefined ? { walkin: b.walkin } : {}) },
       keepMoodAgree: b.keep === true && b.mood === a.mood,
       subAgree: b.keep === true && b.mood === a.mood ? b.sub === a.sub : null,
       indoorAgree: b.indoor === a.indoor,
+      walkinAgree: b.keep === true && a.mood === 'new' && a.sub === 'do' && b.mood === 'new' && b.sub === 'do' ? b.walkin === a.walkin : null,
       factError: f.factError === true,
       factNote: f.note ?? '',
     };
@@ -254,7 +272,14 @@ function score(P, city) {
     factErrors: { count: factErrors, max: THRESHOLDS.factErrorsMax, pass: factErrors <= THRESHOLDS.factErrorsMax },
     sub: { agree: subRows.filter((r) => r.subAgree).length, of: subRows.length, note: '기록만' },
   };
-  const pass = metrics.keepMood.pass && metrics.indoor.pass && metrics.factErrors.pass;
+  // walkin 회차(criteria-06.md 5.2): 둘 다 new·do인 곳에서 walkin 일치 ≥ 90%. 그런 곳이 WALKIN_MIN_PAIRS 미만이면 기록만(약한 증거)
+  if (WALKIN_ROUNDS.has(P.round)) {
+    const pairs = rows.filter((r) => r.walkinAgree !== null);
+    const agree = pairs.filter((r) => r.walkinAgree).length;
+    const gated = pairs.length >= WALKIN_MIN_PAIRS;
+    metrics.walkin = { agree, of: pairs.length, rate: pairs.length ? +(agree / pairs.length).toFixed(4) : null, threshold: THRESHOLDS.walkin, minPairs: WALKIN_MIN_PAIRS, gated, pass: gated ? agree / pairs.length >= THRESHOLDS.walkin : true };
+  }
+  const pass = metrics.keepMood.pass && metrics.indoor.pass && metrics.factErrors.pass && (metrics.walkin?.pass ?? true);
   writeJson(P.audit, {
     round: P.round,
     city,
@@ -271,8 +296,8 @@ function score(P, city) {
 
 function main() {
   const [cmd, dest, city, arg] = process.argv.slice(2);
-  if (!['prep', 'check', 'sample', 'score'].includes(cmd) || !dest || !city) {
-    console.error('쓰는 법: judge.mjs prep|check|sample|score <dest> <도시> [NN]');
+  if (!['prep', 'check', 'sample', 'score', 'r2'].includes(cmd) || !dest || !city) {
+    console.error('쓰는 법: judge.mjs prep|check|sample|score|r2 <dest> <도시> [NN]');
     process.exitCode = 2;
     return;
   }
@@ -280,6 +305,7 @@ function main() {
   if (cmd === 'prep') prep(P, city);
   else if (cmd === 'check') check(P, arg);
   else if (cmd === 'sample') sample(P);
+  else if (cmd === 'r2') r2(P);
   else score(P, city);
 }
 

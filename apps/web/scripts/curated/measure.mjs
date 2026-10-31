@@ -13,11 +13,11 @@
  *                                                          pop-<도시>-01.json과 다른 곳만 한 번 잰다 → pop-<도시>-01-add.json(있으면 멈춘다)
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { env, keywordstool, volume03 } from '../famous-measure.mjs';
 import { BATCH, FOOD_TYPE, GAP_MS, SUFFIX, callWithRetry, mainOf, placeVolume, squash } from '../busan/measure.mjs';
-import { judgeRound } from './rounds.mjs';
+import { cityHeads, cityMark, cityWord, judgeRound } from './rounds.mjs';
 
 export { BATCH, GAP_MS, placeVolume, callWithRetry };
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -59,18 +59,29 @@ export const BROAD = {
     // 흔한 낱말·다른 도시에도 있는 이름
     '7일', '강원고생대국가지질공원', '한국자생', '국립한국자생', '바위공원', '평화길', '남산둘레길', '라벤다팜',
   ]),
+  // review/seoul/pop-criteria.md 3절 (2026-10-31, 서울 판정 전 고정 — 구 코드가 도시 칸이다)
+  110: new Set(['외국어사이트용', '선암', '수성동', '어린이과학관', '낙지볶음골목']),
+  140: new Set(['중앙시장', '평화시장', '일본군위안부', '남산자락', 'THEROOF']),
+  170: new Set(['남산야외', 'GONGI']),
+  200: new Set(['서울숲곤충']),
+  215: new Set(['실외', '워커힐', '중국음식문화거리', '긴고랑']),
+  230: new Set(['이진', '산림과학원', '약령시장']),
+  260: new Set([]),
 };
 
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
 const len = (s) => [...s].length;
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-/** pop-criteria.md 2절 K1: 카드 이름. 이름 끝 「(도시)」, 세 글자 이하 음식점은 「도시」 + 이름. */
+/** pop-criteria.md 2절 K1: 카드 이름. 이름 끝 「(도시)」, 세 글자 이하 음식점은 「도시」 + 이름. 서울 구(rounds.mjs)는 표시가 「(서울)」 →
+ * 「서울」 + 이름, 짧은 음식점은 구 낱말(「종로」) + 이름(review/seoul/pop-criteria.md 2절). 강원은 둘 다 도시 이름이라 그대로다. */
 export function keyword1(place, city) {
   const name = cleanName(place.title);
   const main = squash(mainOf(name));
-  if (new RegExp(`\\(${esc(city)}\\)\\s*$`).test(name)) return { k: `${city}${main}`, why: `이름 끝 「(${city})」: 다른 지역에 같은 이름이 있음 → ${city} + 이름` };
-  if (place.contenttypeid === FOOD_TYPE && len(main) <= 3) return { k: `${city}${main}`, why: `세 글자 이하 음식점 이름(흔한 가게 이름) → ${city} + 이름` };
+  const mark = cityMark(city);
+  const word = cityWord(city);
+  if (new RegExp(`\\(${esc(mark)}\\)\\s*$`).test(name)) return { k: `${mark}${main}`, why: `이름 끝 「(${mark})」: 다른 지역에 같은 이름이 있음 → ${mark} + 이름` };
+  if (place.contenttypeid === FOOD_TYPE && len(main) <= 3) return { k: `${word}${main}`, why: `세 글자 이하 음식점 이름(흔한 가게 이름) → ${word} + 이름` };
   return { k: main, why: '카드 이름' };
 }
 
@@ -85,22 +96,23 @@ export function keywordsOf(place, city, otherK1 = new Set()) {
     const k = squash(raw);
     if (len(k) >= 2 && !broad.has(k) && !otherK1.has(k) && !out.some((x) => x.k === k)) out.push({ k, why });
   };
-  const head = new RegExp(`^(${esc(city)}시|${esc(city)})\\s+`);
+  const word = cityWord(city);
+  const head = new RegExp(`^(${cityHeads(city).map(esc).join('|')})\\s+`);
   let p = main;
   for (;;) {
     const next = p.replace(head, '').replace(/^국립/, '');
     if (next === p || len(squash(next)) < 3) break;
     p = next;
-    add(p, `앞의 「${city}」·「국립」을 뗀 이름`);
+    add(p, `앞의 「${word}」·「국립」을 뗀 이름`);
   }
   const paren = /\(([^)]*)\)\s*$/.exec(name)?.[1];
-  if (paren && !new RegExp(`${esc(city)}|~`).test(paren)) for (const a of paren.split(',')) add(a, '이름 괄호 안의 다른 이름');
+  if (paren && !new RegExp(`${[...new Set([city, cityMark(city), word])].map(esc).join('|')}|~`).test(paren)) for (const a of paren.split(',')) add(a, '이름 괄호 안의 다른 이름');
   if (place.contenttypeid === FOOD_TYPE) {
     const words = main.split(' ');
     const base = words.length > 1 && words.at(-1).endsWith('본점') ? words.slice(0, -1).join(' ') : main.endsWith('본점') ? main.slice(0, -2) : null;
     if (base !== null && len(squash(base)) >= 2) {
       const b = squash(base);
-      if (len(b) <= 3) add(`${city}${b}`, `「본점」을 뗀 이름(세 글자 이하 → ${city} + 이름)`);
+      if (len(b) <= 3) add(`${word}${b}`, `「본점」을 뗀 이름(세 글자 이하 → ${word} + 이름)`);
       else add(b, '「본점」을 뗀 이름');
     }
   }
@@ -134,7 +146,7 @@ export function plan(list, city) {
 }
 
 async function measure(dir, city, resume) {
-  const criteria = 'review/gangwon/pop-criteria.md';
+  const criteria = `review/${basename(dir)}/pop-criteria.md`;
   const out = resolve(dir, `pop-${city}-01.json`);
   const partial = resolve(dir, `pop-${city}-01.partial.json`);
   if (existsSync(out)) throw new Error(`${out} exists — the measurement runs once (re-running needs the owner's approval)`);
@@ -225,7 +237,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   if (process.argv.includes('--plan')) {
     const rows = plan(targets(dir, city), city);
     const n = new Set(rows.flatMap((r) => r.keywords.map((x) => x.keyword))).size;
-    writeFileSync(resolve(dir, `pop-${city}-01-plan.json`), `${JSON.stringify({ criteria: 'review/gangwon/pop-criteria.md', city, places: rows.length, keywords: n, calls: Math.ceil(n / BATCH), rows }, null, 1)}\n`);
+    writeFileSync(resolve(dir, `pop-${city}-01-plan.json`), `${JSON.stringify({ criteria: `review/${basename(dir)}/pop-criteria.md`, city, places: rows.length, keywords: n, calls: Math.ceil(n / BATCH), rows }, null, 1)}\n`);
     console.log(`pop-${city}-01-plan.json: ${rows.length} places, ${n} keywords, ${Math.ceil(n / BATCH)} calls`);
   } else if (process.argv.includes('--add')) await measureAdd(dir, city);
   else await measure(dir, city, process.argv.includes('--resume'));

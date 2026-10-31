@@ -10,11 +10,11 @@
  * 출력·로그·파일 어디에도 남기지 않는다. 부산 파일은 고치지 않고, 부산에서 내보낸 값(queryOf·normName·haversine·radiusOf·상수)을 쓴다.
  */
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { callsOn, kstDay } from '../busan/collect.mjs';
 import { DAY_LIMIT, FOOD_TYPE, PASS_RATE, haversine, kakaoLocal, normName, queryOf, radiusOf } from '../busan/kakao.mjs';
-import { judgeRound } from './rounds.mjs';
+import { cityHeads, judgeRound } from './rounds.mjs';
 
 export { DAY_LIMIT, PASS_RATE, queryOf, kakaoLocal };
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -25,9 +25,10 @@ const FOOD_CODES = new Set(['FD6', 'CE7']);
 const FACILITY_TAIL = /(주차장|화장실|매표소|정류장|정류소|승강장|입구|출구|관리사무소|관리소|안내소|매점|편의점|정문|후문|역)(\d+번출구|\d+)?$/;
 const CLOSED = /폐업|폐점|휴업|영업종료/;
 
+// 머리말(rounds.mjs cityHeads): 강원은 「도시시」·「도시」, 서울 구는 「서울특별시」·「서울시」·「서울」·구 이름(review/seoul/kakao-criteria.md 3절)
 const variants = (s, city) => {
   const n = normName(s);
-  const cut = n.replace(new RegExp(`^(${city}시|${city})`), '');
+  const cut = n.replace(new RegExp(`^(${cityHeads(city).map(normName).join('|')})`), '');
   return cut && cut !== n ? [n, cut] : [n];
 };
 
@@ -108,7 +109,7 @@ export function summarize(rows, total) {
 class StopError extends Error {}
 
 /** 한 번 돌린다(부산 run과 같은 흐름). search(query, {x, y, radius}) → { status, body? }. */
-export async function run({ dir, city, search, now = () => new Date(), limit = DAY_LIMIT, sleep = (ms) => new Promise((r) => setTimeout(r, ms)), pause = 100 }) {
+export async function run({ dir, city, search, now = () => new Date(), limit = DAY_LIMIT, sleep = (ms) => new Promise((r) => setTimeout(r, ms)), pause = 100, otherLogs = [] }) {
   const outPath = resolve(dir, `kakao-${city}-01.json`);
   const logPath = resolve(dir, 'kakao-calls.log');
   const list = targets(dir, city);
@@ -122,12 +123,13 @@ export async function run({ dir, city, search, now = () => new Date(), limit = D
   const save = () => {
     const rows = list.filter((p) => byId.has(p.id)).map((p) => byId.get(p.id));
     const callsTotal = existsSync(logPath) ? readFileSync(logPath, 'utf8').split(/\r?\n/).filter(Boolean).length : 0;
-    writeJson(outPath, { criteria: 'review/gangwon/kakao-criteria.md', city, source: 'Kakao Local keyword search (id·place_url만 저장)', callsAllCities: callsTotal, ...summarize(rows, list.length), rows });
+    writeJson(outPath, { criteria: `review/${basename(dir)}/kakao-criteria.md`, city, source: 'Kakao Local keyword search (id·place_url만 저장)', callsAllCities: callsTotal, ...summarize(rows, list.length), rows });
   };
 
   async function call(place) {
     const day = kstDay(now());
-    const used = existsSync(logPath) ? callsOn(readFileSync(logPath, 'utf8'), day) : 0;
+    // 하루 한도는 같은 키를 쓰는 다른 목적지 로그와 합쳐 센다(review/seoul/kakao-criteria.md 2절)
+    const used = [logPath, ...otherLogs].reduce((n, f) => n + (existsSync(f) ? callsOn(readFileSync(f, 'utf8'), day) : 0), 0);
     if (used >= limit) throw new StopError('limit');
     let res;
     try {
@@ -188,7 +190,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   } else {
     const key = env('KAKAO_REST_API_KEY');
     if (!key) throw new Error('KAKAO_REST_API_KEY missing in the repo-root .env');
-    const r = await run({ dir, city, search: kakaoLocal(key) });
+    const otherLogs = ['gangwon', 'seoul'].filter((d) => d !== dest).map((d) => resolve(webRoot, 'review', d, 'kakao-calls.log'));
+    const r = await run({ dir, city, search: kakaoLocal(key), otherLogs });
     const { rows, ...head } = r.summary;
     console.log(JSON.stringify({ callsThisRun: r.calls, stopped: r.stopped, failed: r.failed, ...head }, null, 1));
     if (r.stopped !== 'done') process.exitCode = 1;

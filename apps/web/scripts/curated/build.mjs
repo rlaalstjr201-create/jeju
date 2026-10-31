@@ -15,7 +15,7 @@ import { popScores } from '../famous.mjs';
 import { shipReason } from '../reason.mjs';
 import { haversine } from '../busan/kakao.mjs';
 import { CAFE_WORDS, FAMOUS_TYPE, LEPORTS_TYPE, famousCandidate, famousIds, kakaoIds, quintileScores, reasonProblem } from '../busan/build.mjs';
-import { judgeRound } from './rounds.mjs';
+import { areaOf, cityMark, isSeoulGu, judgeRound } from './rounds.mjs';
 import { applyRemap, loadRemap } from '../remap.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -34,16 +34,22 @@ export const BOXES = {
   양양: { lat: [37.85, 38.2], lng: [128.35, 128.85] },
   평창: { lat: [37.2, 37.9], lng: [128.2, 128.9] },
 };
+/** 서울 구(review/seoul/pop-criteria.md 8절): 구마다 상자를 두지 않고 서울 전체 상자 하나(좌표 오류만 거른다). */
+export const SEOUL_BOX = { lat: [37.41, 37.72], lng: [126.76, 127.19] };
 export const inBox = (city, p) => {
-  const b = BOXES[city];
+  const b = BOXES[city] ?? (isSeoulGu(city) ? SEOUL_BOX : undefined);
   return Boolean(b) && p.lat >= b.lat[0] && p.lat <= b.lat[1] && p.lng >= b.lng[0] && p.lng <= b.lng[1];
 };
 
 const MOODS = new Set(['rest', 'walk', 'new', 'food']);
 const SUBS = { food: new Set(['meal', 'cafe']), new: new Set(['sight', 'do']) };
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
-/** 카드 이름: 이름 끝의 「(도시)」 표시만 뗀다(부산 displayName과 같은 뜻). */
-export const displayName = (title, city) => cleanName(title).replace(new RegExp(`\\s*\\(${city}\\)$`), '');
+/** 카드 이름: 이름 끝의 「(도시)」 표시만 뗀다(부산 displayName과 같은 뜻). 서울 구는 「(서울)」(rounds.mjs cityMark). */
+export const displayName = (title, city) => cleanName(title).replace(new RegExp(`\\s*\\(${cityMark(city)}\\)$`), '');
+/** 유명한 곳 후보: 서울(ADR-0106 6, review/seoul/pop-criteria.md 7절)은 관광지와 문화시설, 그 밖은 관광지만(부산 famousCandidate). */
+export const CULTURE_TYPE = 14;
+export const candidateOf = (dest) =>
+  dest === 'seoul' ? (item, spot) => (item.contenttypeid === FAMOUS_TYPE || item.contenttypeid === CULTURE_TYPE) && spot.mood !== 'food' && !CAFE_WORDS.test(spot.name) : famousCandidate;
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
 export const OUT = (dest) => resolve(webRoot, `data/${dest}/spots-${dest}.json`);
@@ -141,7 +147,13 @@ export function build(inputs = loadInputs()) {
   const remapped = applyRemap(verdicts, remap, itemIds);
   for (const [id, v] of remapped.verdicts) verdicts.set(id, v);
   const walkin = remapped.walkin;
-  const fixed = new Map(fixes.filter((f) => f.field === 'reason').map((f) => [f.id, f]));
+  // 고침은 차례로(감사 R2, 그다음 전수 사실 확인): 같은 곳을 다시 고친 줄은 앞 줄의 after가 before여야 한다(review/seoul/pop-criteria.md 8절)
+  const fixed = new Map();
+  for (const f of fixes.filter((f) => f.field === 'reason')) {
+    const prev = fixed.get(f.id);
+    if (prev && prev.after !== f.before) throw new Error(`${f.id}: fixes chain — before ≠ the earlier fix's after`);
+    fixed.set(f.id, prev ? { ...f, before: prev.before } : f);
+  }
   const volumeById = new Map(pop.map((r) => [r.id, r.volume]));
   const kakaoRow = new Map(kakao.map((r) => [r.id, r]));
   const problems = [];
@@ -205,7 +217,7 @@ export function build(inputs = loadInputs()) {
     const group = (food) => new Map(inCity.filter((k) => (k.v.mood === 'food') === food).map((k) => [k.item.id, volumeById.get(k.item.id)]));
     for (const food of [true, false]) for (const [id, s] of quintileScores(group(food))) scoreById.set(id, s);
     const famous = famousIds(
-      inCity.filter((k) => famousCandidate(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
+      inCity.filter((k) => candidateOf(inputs.dest)(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
       volumeById,
       famousCount(keepByCity.get(city)),
     );
@@ -231,9 +243,9 @@ export function build(inputs = loadInputs()) {
     ...(SUBS[v.mood] ? { sub: v.sub } : {}),
     score: scoreById.get(item.id),
     ...(pops.has(item.id) ? { famous: true, pop: pops.get(item.id) } : {}),
-    area: item.city,
-    // ADR-0074 Amendment 1: 예약 없이 가는 체험(강원에는 예약 경로 자료가 없다)
-    ...(walkin.has(item.id) && v.mood === 'new' && v.sub === 'do' ? { walkin: true } : {}),
+    area: areaOf(item.city),
+    // ADR-0074 Amendment 1: 예약 없이 가는 체험(강원에는 예약 경로 자료가 없다). 서울(criteria-06)은 판정이 walkin을 적는다
+    ...((walkin.has(item.id) || v.walkin === true) && v.mood === 'new' && v.sub === 'do' ? { walkin: true } : {}),
   }));
   return { spots, closed, unknownPosition, keepTotal, merged, renamed: [...renamed] };
 }
