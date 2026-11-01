@@ -1,0 +1,8 @@
+[
+ {"id":"nt-3551135","name":"도정육관","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"당일 도정한 쌀 솥밥과 숙성 고기를 내는 한식 고깃집이에요","basis":["당일 도정한 쌀로 만든 솥밥을 기본으로 한다","한식 고깃집이다"],"confidence":"high"},
+ {"id":"nt-3551926","name":"고깃집열","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"숙성한 돼지 목살과 가브리살을 참숯에 굽는 집이에요","basis":["대표 메뉴는 육즙 목살과 가브리살로","336시간 숙성한 돼지고기와 참숯의 깊은 풍미를 자랑한다"],"confidence":"high"},
+ {"id":"nt-3566919","name":"디오디아(DIODIA)","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"엘타워에 있는 뷔페로 매월 메뉴 콘셉트가 바뀌어요","basis":["엘타워의 프리미엄 뷔페 디오디아(DIODIA)","매월 새로운 콘셉트의 메뉴를 선보이고 있으며"],"confidence":"low"},
+ {"id":"nt-403534","name":"톰볼라","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"치즈 그라탕을 많이 찾는 이탈리아 가정식 집이에요","basis":["훌륭한 이탈리아 가정식의 맛을 볼 수 있는 곳이다","손님들이 많이 찾는 음식은 치즈가 듬뿍 들어간 그라탕이다"],"confidence":"high"},
+ {"id":"nt-581154","name":"상락원","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"시래기 돌솥밥과 보리굴비 정식을 내는 한정식집이에요","basis":["도심 속 한정식 전문점이다","시래기 돌솥밥, 민어 정식, 보리굴비 정식 등의"],"confidence":"high"},
+ {"id":"nt-581825","name":"노랑저고리","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"전통 한옥 앞마당과 사랑채에서 먹는 한정식집이에요","basis":["전통 한옥의 풍경 너른 앞마당과 뒤뜰, 그리고 사랑채에서","노랑저고리 한정식은"],"confidence":"high"}
+]

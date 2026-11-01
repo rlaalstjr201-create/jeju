@@ -1,0 +1,12 @@
+[
+ {"id":"nt-3443357","name":"필즈커피 FILLZ COFFEE","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"핸드드립 커피를 전문으로 하고 파운드케이크와 머핀을 내는 카페예요","basis":["주로 핸드드립 커피를 전문으로 하며","파운드케이크, 머핀 , 쿠키 등 간단한 디저트를 제공한다"],"confidence":"high"},
+ {"id":"nt-3444371","name":"이얼싼","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"은평구 모범음식점으로 선정된 정통 중식당이에요","basis":["정통 중식당이다","은평구 모범음식점으로 선정되어 있으며"],"confidence":"low"},
+ {"id":"nt-3446122","name":"팥동동","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"팥죽을 중심으로 팥칼국수와 눈꽃 팥빙수를 내는 팥죽 전문점이에요","basis":["팥죽 전문점이다","팥죽을 중심으로 팥칼국수, 서리태 콩국수"],"confidence":"high"},
+ {"id":"nt-3450272","name":"차이몬스터","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"주택을 개조한 듯한 분위기에서 오너 셰프가 요리하는 중식집이에요","basis":["주택을 개조한 듯한 아늑하고 편안한 분위기","오너 셰프가 직접 요리하여"],"confidence":"high"},
+ {"id":"nt-3450526","name":"카페우리","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"은평구립 우리장애인복지관 안에서 장애인 바리스타가 커피를 만드는 카페예요","basis":["은평구립 우리장애인복지관 내에 위치한","바리스타들은 대부분 장애인들로"],"confidence":"low"},
+ {"id":"nt-712590","name":"불맛감자국","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"감잣국 골목에서 우거지 감자탕을 내는 집이에요","basis":["응암동 감잣국 골목에서도 가장 나중에 생긴 곳이다","대표메뉴는 전통 우거지 감자탕"],"confidence":"high"},
+ {"id":"nt-712621","name":"시골감자국","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"감잣국거리에서 40년 전통을 이어 온 감자탕 전문점이에요","basis":["감자탕 전문점이다","40년 전통을 유지한 응암동 감잣국거리의 대표 맛집"],"confidence":"high"},
+ {"id":"nt-712633","name":"이화감자국","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"감잣국 골목에서 고기를 무한리필로 내는 집이에요","basis":["감잣국 골목에서 유명한 편에 속하는 이화감자국","고기가 무한리필이다"],"confidence":"high"},
+ {"id":"nt-712673","name":"태조대림감자국","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"감자국거리에서 감자탕과 양념 뼈 구이를 내는 집이에요","basis":["응암동 감자국거리에서 가장 오래된 전통을 자랑한다","감자탕과 양념 뼈 구이를 취급한다"],"confidence":"high"},
+ {"id":"nt-854285","name":"코스모스분식","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"떡볶이와 만두, 순대를 내는 옛날 분식집이에요","basis":["옛날 분식의 맛을 그대로 재현하는 곳이다","떡볶이, 라면, 만두, 순대 등의 분식류"],"confidence":"high"}
+]

@@ -1,0 +1,20 @@
+[
+ {"id":"nt-2855118","name":"노조미일식","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"모둠초밥과 정식메뉴가 대표인 일식집이에요","basis":["대표 메뉴로는 모둠초밥과 정식메뉴가 있다"],"confidence":"high"},
+ {"id":"nt-2855151","name":"민속돌솥설렁탕","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"도가니와 갈비를 넣고 끓인 탕에 돌솥밥을 내는 집이에요","basis":["도가니와 갈비, 고사리, 버섯 등을 넣고 얼큰하게 끓인 탕"],"confidence":"high"},
+ {"id":"nt-2855178","name":"서궁","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"오향장육과 탕수육을 내는 산둥성 요리 전문점이에요","basis":["중국 산둥성 요리 전문점","대표 메뉴로는 오향장육, 소고기군만두, 삼선볶음밥, 탕수육이 있다"],"confidence":"high"},
+ {"id":"nt-2855190","name":"육영토종한우 본점","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"한우모듬구이를 내는 정육점 겸 식당이에요","basis":["정육점을 겸한 정육 식당이다","한우모듬구이"],"confidence":"high"},
+ {"id":"nt-2855203","name":"화담","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"화담정식과 생선회 코스를 내는 집이에요","basis":["대표 메뉴로는 화담정식(점심), 생선회 B코스가 있다"],"confidence":"high"},
+ {"id":"nt-2866398","name":"대여죽집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"전복죽과 버섯굴죽을 내는 여의도 죽 전문점이에요","basis":["여의도 대표 죽 전문점이다","전복죽, 버섯굴죽, 새우죽, 야채죽, 소두부죽"],"confidence":"high"},
+ {"id":"nt-2907174","name":"퍼스트플러스에이드","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"두부 면 파스타와 현미 떡볶이를 내는 식당이에요","basis":["두부 면으로 만든 파스타 튀긴 두부, 현미로 만든 떡볶이"],"confidence":"high"},
+ {"id":"nt-2987589","name":"청기와타운 영등포본점","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"수원왕갈비와 LA갈비가 대표인 한국식 바베큐집이에요","basis":["한국식 바베큐 전문점이다","대표 메뉴는 수원왕갈비와 LA갈비다"],"confidence":"high"},
+ {"id":"nt-3458259","name":"영등포구 카페진정성","keep":true,"mood":"food","sub":"cafe","indoor":true,"reason":"밀크티와 차 종류로 알려진 한강공원 근처 카페예요","basis":["밀크티와 다양한 차 종류로 유명한 카페","영등포 한강공원 근처에 위치하여"],"confidence":"high"},
+ {"id":"nt-403995","name":"진주집","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"콩국수가 대표인 여의도백화점 지하상가 식당이에요","basis":["여의도백화점 지하상가에 위치한 진주집","진주집의 대표메뉴는 콩국수로"],"confidence":"high"},
+ {"id":"nt-684280","name":"백리향","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"63빌딩 57층에서 중식 요리를 내는 중식당이에요","basis":["여의도 63빌딩 57층에 위치한","중국 광둥 지방과 사천 지방의 전통 조리법을"],"confidence":"high"},
+ {"id":"nt-713839","name":"성민촌","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"샤브샤브를 내는 여의도 전문점이에요","basis":["여의도동에 위치한 샤브샤브 전문점이다","모든 해물은 여수에서 매일 직송하고 있으며"],"confidence":"high"},
+ {"id":"nt-738665","name":"뚱보네홍어","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"홍어삼합과 홍어무침 홍어찜을 내는 집이에요","basis":["뚱보네홍어는 서울특별시 영등포구에 위치한 홍어요리 전문점이다","대표 메뉴로 홍어삼합, 홍어무침, 홍어찜 등이 있는데"],"confidence":"high"},
+ {"id":"nt-738667","name":"원조홍어 본점","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"신길동 홍어거리에서 홍어 요리를 내는 집이에요","basis":["신길동 홍어거리 내에 위치한 홍어 요리 전문점으로"],"confidence":"high"},
+ {"id":"nt-738748","name":"홍어명가","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"숙성한 홍어를 내는 신길동 홍어 전문점이에요","basis":["오랜 숙성과 정직한 손질을 통해","홍어 전문점이다"],"confidence":"high"},
+ {"id":"nt-836567","name":"서글렁탕","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"양념장에 재운 삼겹살과 선지해장국을 내는 집이에요","basis":["양념장에 재워 먹는 색다른 삼겹살 전문점이다","소갈비살, 콩팥, 선지해장국이 있다"],"confidence":"high"},
+ {"id":"nt-836855","name":"운산","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"코스 메뉴와 궁중 요리를 내는 한국 전통음식점이에요","basis":["한국 전통음식 전문점 운산","코스 메뉴와 다양한 궁중 요리를 선보인다"],"confidence":"high"},
+ {"id":"nt-871834","name":"대방골","keep":true,"mood":"food","sub":"meal","indoor":true,"reason":"굴비 한정식을 내는 남도 음식점이에요","basis":["남도의 음식인 굴비 한정식을 제공한다"],"confidence":"high"}
+]
