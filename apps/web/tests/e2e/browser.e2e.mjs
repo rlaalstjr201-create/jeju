@@ -4943,7 +4943,7 @@ if (NATION) {
   await check('GW-11', 'GPS 진부 → 여차나:평창(검수한 곳, Amendment 4): 기분 다섯, 유명한 데 3장 이유 줄·모두 평창 곳, spots-gangwon.json 1회·/nation/51.json 0회; 다시 열어도 여차나:평창', () => gpsGangwon('평창', 진부));
   // 서울 (ADR-0106): 종로구 is a 검수한 곳, the same way as 강원's 시군구; its list is every checked 구 by reach (Amendment 2)
   await check('SE-1', 'GPS 경복궁 → 여차나:종로(서울 검수한 곳, ADR-0106): 기분 다섯, 유명한 데 3장 이유 줄·모두 서울 검수한 구 곳(Amendment 2), spots-seoul.json 1회·/nation/11.json 0회; 다시 열어도 여차나:종로', () =>
-    gpsGangwon('종로', 경복궁, 'seoul', ['종로', '서울 중구', '용산', '성동', '광진', '동대문', '중랑']));
+    gpsGangwon('종로', 경복궁, 'seoul', ['종로', '서울 중구', '용산', '성동', '광진', '동대문', '중랑', '성북', '강북', '도봉', '노원', '은평', '서대문', '마포', '양천']));
 
   await check('GW-6', '영어: 인기 칸 Gangneung → 여차나:Gangneung, 걷기 3장, #how 끝에 장소 이름은 한국어라는 한 줄', async () => {
     const { ctx, page } = await nationAt('/?lang=en', { geo: 강릉역 });

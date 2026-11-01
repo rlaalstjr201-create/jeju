@@ -219,7 +219,7 @@ export const BUSAN_COPY = {
   /** the 여행지 row's words (강원: ADR-0102 Amendment 2 — its 시군구 are listed in its 동네 index) */
   destName: { jeju: '제주', busan: '부산', gangwon: '강원', seoul: '서울', nation: '다른 곳' } satisfies Record<Dest, string>,
   /** 강원's 시군구 by code (DEST.gangwon.sgg): the name line, the title, 「○○ 인기:」 and 「○○ 밖이에요」 say the one in use */
-  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천', '51830': '양양', '51760': '평창', '11110': '종로', '11140': '서울 중구', '11170': '용산', '11200': '성동', '11215': '광진', '11230': '동대문', '11260': '중랑' } as Record<string, string>,
+  sggName: { '51150': '강릉', '51210': '속초', '51110': '춘천', '51830': '양양', '51760': '평창', '11110': '종로', '11140': '서울 중구', '11170': '용산', '11200': '성동', '11215': '광진', '11230': '동대문', '11260': '중랑', '11290': '성북', '11305': '강북', '11320': '도봉', '11350': '노원', '11380': '은평', '11410': '서대문', '11440': '마포', '11470': '양천' } as Record<string, string>,
   destHead: '여행지',
   /** a 검수한 곳 other than Jeju, by its name (부산, 속초: ADR-0102) */
   title: (name: string) => `여차나:${name} · P를 위한 여행동반자`,
