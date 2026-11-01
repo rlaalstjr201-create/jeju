@@ -220,6 +220,9 @@ export function build(inputs = loadInputs()) {
   kept.push(...rest.filter((k) => !ownerDrop.has(k.item.id)));
   const ids = new Set(kept.map((k) => k.item.id));
   const ownerFamous = overrides.filter((o) => o.type === 'famous' && itemIds.has(o.id));
+  // 주인 결정 「unfamous」(id·why): 이름이 흔해 다른 검색이 섞인 값 — 규칙 후보에서 빼고, 몫은 다음 곳이 채운다
+  const ownerUnfamous = new Set(overrides.filter((o) => o.type === 'unfamous').map((o) => o.id));
+  for (const id of ownerUnfamous) if (!ids.has(id)) throw new Error(`owner unfamous ${id}: not shipped`);
   for (const o of ownerFamous) {
     const k = kept.find((x) => x.item.id === o.id);
     if (!k || k.v.mood === 'food') throw new Error(`owner famous ${o.id}: not shipped, or 먹기`);
@@ -234,7 +237,7 @@ export function build(inputs = loadInputs()) {
     for (const food of [true, false]) for (const [id, s] of quintileScores(group(food))) scoreById.set(id, s);
     const famous = famousIds(
       // 주인 지정 곳은 규칙 후보에서 빼고 아래에서 더한다(기분을 덮어 후보가 된 대포항이 규칙 몫 자리를 밀어내지 않게)
-      inCity.filter((k) => !ownerFamous.some((o) => o.id === k.item.id) && candidateOf(inputs.dest)(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
+      inCity.filter((k) => !ownerFamous.some((o) => o.id === k.item.id) && !ownerUnfamous.has(k.item.id) && candidateOf(inputs.dest)(k.item, { mood: k.v.mood, name: cleanName(k.item.title) })).map((k) => k.item.id),
       volumeById,
       famousCount(keepByCity.get(city)),
     );

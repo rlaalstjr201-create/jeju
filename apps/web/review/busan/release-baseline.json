@@ -224,5 +224,8 @@
    "assets/index-*.css": 6118
   },
   "koreanEntryGzipTotal": 57668
- }
+ },
+ "allowed": [
+  "files.sw.js"
+ ]
 }

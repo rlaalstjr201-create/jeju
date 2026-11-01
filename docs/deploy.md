@@ -90,6 +90,7 @@ HTTPS는 Pages 기본. 커스텀 도메인을 붙이면 대시보드에서 "Alwa
 ## 2. 배포 전
 
 - [ ] `apps/web`에서 `npx tsc --noEmit`, `npx vitest run`, `npm run build`(기본·`LANDING_PHOTOS=0` 둘 다), `npm run check:slop`, e2e(`npm run e2e`), `SITE_URL=… npm run seo:crawl`(감사 0건) 모두 통과. 최근 결과는 `docs/predeploy-review.md` 0절.
+- [ ] e2e는 `SITE_URL` 없는 시험 빌드로만 돈다(운영 빌드는 분석·이벤트 POST가 켜져 U1-no-events가 떨어진다). `SITE_URL`은 `export`하지 말고 운영 빌드 한 줄 앞에만 붙인다. dist/가 운영 빌드면 e2e가 처음에 그 이유를 대고 멈춘다(2026-11-02).
 - [ ] `privacy.html`의 문의처가 맞는지(운영자 메일 `studiofilm.app@gmail.com`(2026-10-15 주인 결정) + 답장 없는 의견은 앱의 ‘의견 보내기’. 저장소가 비공개라 GitHub 이슈 링크는 쓰지 않는다).
 - [x] 제주관광공사 사진 이용 가능 확인(2026-10-01, 회신 사용자 보관).
 - [ ] 빌드 환경 변수: `SITE_URL`, `VITE_GA4_ID=G-P8DN26LKBC`, `VITE_NAVER_WA`(네이버 ID), `VITE_EVENTS_URL=/api/events`(생략 시 기본). `LANDING_PHOTOS`는 넣지 않는다(사진 켬, 공사 확인 완료).

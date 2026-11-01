@@ -13,6 +13,17 @@ const appDir = resolve(here, '../..');
 const PORT = Number(process.env.E2E_PORT ?? 4179);
 const BASE = `http://localhost:${PORT}/`;
 const SHOTS = process.env.E2E_SHOTS ?? '';
+// e2e checks a test build (no SITE_URL, so no analytics or event POSTs, ADR-0078). A production build left in dist/
+// (SITE_URL exported, or the deploy build) fails U1-no-events later with a confusing message; stop here and say why.
+{
+  const ogUrl = /og:url" content="([^"]*)"/.exec(readFileSync(join(appDir, 'dist/index.html'), 'utf8'))?.[1] ?? '';
+  if (process.env.SITE_URL?.trim() || /^https?:/.test(ogUrl)) {
+    console.error(`e2e needs a test build, but dist/ is a production build (SITE_URL=${process.env.SITE_URL ?? ''}, og:url ${ogUrl}).
+` +
+      'Unset SITE_URL and rebuild: PowerShell  Remove-Item Env:SITE_URL; npm run e2e   ·   bash  unset SITE_URL; npm run e2e (docs/deploy.md)');
+    process.exit(1);
+  }
+}
 if (SHOTS) mkdirSync(SHOTS, { recursive: true });
 // Spot photos come from an external host; a local image stands in so the layout never depends on reaching it.
 const PHOTO = readFileSync(join(appDir, 'public/icons/icon-512.png'));
