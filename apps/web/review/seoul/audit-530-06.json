@@ -1,0 +1,900 @@
+{
+ "round": "06",
+ "city": "530",
+ "criteria": "review/seoul/criteria-06.md",
+ "sample": "audit-530-06-sample.json (seed 20261107)",
+ "judgments": "audit-530-06-judgments.json",
+ "facts": "audit-530-06-facts.json",
+ "metrics": {
+  "n": 38,
+  "keepMood": {
+   "agree": 37,
+   "rate": 0.9737,
+   "threshold": 0.9,
+   "pass": true
+  },
+  "keepOnly": {
+   "agree": 37,
+   "rate": 0.9737,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 38,
+   "rate": 1,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 0,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 23,
+   "of": 24,
+   "note": "기록만"
+  },
+  "walkin": {
+   "agree": 1,
+   "of": 1,
+   "rate": 1,
+   "threshold": 0.9,
+   "minPairs": 10,
+   "gated": false,
+   "pass": true
+  }
+ },
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-3457039",
+   "name": "9로평상",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "수목원과 가까이 있는 대형 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591870",
+   "name": "안양천 물놀이장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "어린이부터 성인까지 노는 여름 물놀이장이에요",
+    "walkin": true
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "walkin": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-814255",
+   "name": "온수공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "등산로 주변에 약수터와 운동기구가 있는 자연공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591797",
+   "name": "고척근린공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "넓은 잔디밭과 산책로, 어린이 놀이시설이 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2675098",
+   "name": "푸른수목원",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "20개 주제정원이 있는 서울시 첫 시립 수목원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591805",
+   "name": "국제음식문화거리(INTERNATIONAL FOOD STREET)",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "여러 나라 음식을 파는 음식 거리예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591833",
+   "name": "정선옹주 묘역",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "선조의 딸 정선옹주가 출가한 안동권씨 묘역이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591755",
+   "name": "남구로시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "농산물과 중국 식품을 파는 전통시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3457554",
+   "name": "비마이피스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "타르트와 디저트를 내는 구일역 근처 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591792",
+   "name": "개봉유수지 생태공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "생태습지와 맨발산책로, 잔디광장이 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2792594",
+   "name": "천왕산 가족캠핑장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "천왕산 중턱에 데크 사이트 34개를 갖춘 캠핑장이에요",
+    "walkin": false
+   },
+   "audit": {
+    "keep": false,
+    "reject": "OUT_OF_SCOPE",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-323408",
+   "name": "송림가",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우 꽃등심 양념과 정식에 나오는 술빵으로 알려진 한식당"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591824",
+   "name": "온수도시자연공원(잣절공원)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "등산로 주변에 약수터와 연못, 데크가 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": "경계: 연못·데크는 원문에서 잣절공원 안에 있다고 하고 등산로 주변이라고 하진 않지만, 등산로가 공원 곳곳에 있어 어긋난다고 보지 않음"
+  },
+  {
+   "id": "nt-2591862",
+   "name": "구로올레길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "하천형과 도심형, 산림형 세 코스로 나뉜 산책로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3483675",
+   "name": "넷마블게임박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "고전 아케이드와 콘솔 게임을 직접 해 보는 게임박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591799",
+   "name": "고척동 고인돌",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "구로구에서 유일한 청동기시대 고인돌이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591873",
+   "name": "고척 스카이돔",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "키움 히어로즈의 홈구장인 국내 첫 돔 야구장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3060967",
+   "name": "서울아트책보고",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "아트북 1만 9천여 권을 갖춘 아트북 복합문화시설이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3351658",
+   "name": "천왕산 북카페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "숲을 바라보며 독서하는 북카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2873321",
+   "name": "최우영스시",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "회전초밥에 참치, 연어, 광어 사시미를 더하는 초밥집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591813",
+   "name": "류순정·류홍 부자 묘역",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "서울에서 유일한 부자 2대 공신묘역이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2592394",
+   "name": "구로시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "한복집과 포목점이 모인 전통시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591829",
+   "name": "구로근린공원(이씨레물리노공원)",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "대공연장과 야외무대, 분수대가 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3448217",
+   "name": "디큐브시티 해바라기 공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "해바라기 광장과 장미터널, 야외극장이 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2852962",
+   "name": "실크로드",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "당코스와 전복누룽지탕이 대표 메뉴인 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2733966",
+   "name": "거리공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "산책로와 운동기구, 어린이 놀이시설이 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591826",
+   "name": "음식문화특화거리(깔깔거리)",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "구로구 우수음식점이 모여 있는 음식 거리예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3526342",
+   "name": "[서울둘레길 14코스] 안양천 하류코스",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "안양천 옛 추억길이라는 테마를 가진 둘레길 코스예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2834475",
+   "name": "월래순교자관",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "소룡포와 군만두가 대표 메뉴인 중국집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591838",
+   "name": "천왕근린공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "연못과 물놀이장, 캠핑 사이트가 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2591809",
+   "name": "궁동저수지 생태공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "생태연못과 산책로, 정자가 있는 저수지 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-968389",
+   "name": "구로아트밸리 예술극장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "579석 규모의 다목적 공연장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2918770",
+   "name": "바른쌀국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "쌀국수와 볶음밥, 분짜, 반미를 내는 베트남 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2833368",
+   "name": "메이비카페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "꽃무늬 벽화와 빈티지 소품이 있는 브런치 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": false,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2940433",
+   "name": "여기가전집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "녹두파전과 김치전, 고추전을 부치는 전 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3039497",
+   "name": "디큐브 링크아트센터",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "1,242석 규모의 뮤지컬 전용극장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3576903",
+   "name": "구로피크닉가든",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "안양천 수변에서 피크닉과 캠핑을 하는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2836621",
+   "name": "신도림전주관",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "18종류의 비빔밥을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}

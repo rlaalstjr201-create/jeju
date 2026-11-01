@@ -1,0 +1,2308 @@
+{
+ "round": "06",
+ "city": "290",
+ "criteria": "review/seoul/criteria-06.md",
+ "sample": "audit-290-06-sample.json (seed 20261107)",
+ "judgments": "audit-290-06-judgments.json",
+ "facts": "audit-290-06-facts.json",
+ "metrics": {
+  "n": 99,
+  "keepMood": {
+   "agree": 98,
+   "rate": 0.9899,
+   "threshold": 0.9,
+   "pass": true
+  },
+  "keepOnly": {
+   "agree": 99,
+   "rate": 1,
+   "note": "기록만"
+  },
+  "indoor": {
+   "agree": 95,
+   "rate": 0.9596,
+   "threshold": 0.95,
+   "pass": true
+  },
+  "factErrors": {
+   "count": 1,
+   "max": 3,
+   "pass": true
+  },
+  "sub": {
+   "agree": 88,
+   "of": 88,
+   "note": "기록만"
+  },
+  "walkin": {
+   "agree": 1,
+   "of": 1,
+   "rate": 1,
+   "threshold": 0.9,
+   "minPairs": 10,
+   "gated": false,
+   "pass": true
+  }
+ },
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-2839212",
+   "name": "오박사네왕돈까스 본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "치즈돈가스와 오박사정식을 내는 돈가스집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839112",
+   "name": "동우설렁탕 본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "설렁탕과 수육 두 가지만 내는 설렁탕 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3043900",
+   "name": "성북동고택북촌산책길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "길상사와 심우장, 수연산방이 있는 고택 길이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2758180",
+   "name": "정릉시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "벽화가 그려진 정릉천과 산책로를 낀 골목형 전통시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-250396",
+   "name": "서울 의릉(경종·선의왕후) [유네스코 세계유산]",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "경종과 선의왕후의 무덤이 앞뒤로 놓인 왕릉이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839337",
+   "name": "큰대문집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "전통 한옥을 고쳐 생등심과 생갈비를 내는 고깃집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3044120",
+   "name": "성북로",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "베이커리에서 디저트를 직접 만드는 성북동 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839266",
+   "name": "장위기사식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돼지불백이 대표 메뉴인 기사식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3449734",
+   "name": "오롯이",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "1인 매장에서 초밥을 내는 일식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2807120",
+   "name": "파스타얼론",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "대추토마토와 생크림으로 만든 파스타를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": "경계: 원문은 대추토마토·생크림 등 재료로 요리한다고만 하고 파스타와 직접 잇지 않음(파스타를 내는 집이라 같은 뜻으로 봄)"
+  },
+  {
+   "id": "nt-3461606",
+   "name": "서울 본크레페",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "프랑스식 전통 크레페를 내는 크레페 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2779456",
+   "name": "길음시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "길음순대마을과 국산 콩 두부가게가 유명한 전통시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2469474",
+   "name": "하단",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "이북 음식으로 만둣국과 만두전골을 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3044252",
+   "name": "반하당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "한옥을 개조해 차와 수제청 음료를 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495467",
+   "name": "비타포",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "비타쌀국수와 양지차돌쌀국수를 내는 쌀국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3458178",
+   "name": "샤브옥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "샤브샤브 요리를 전문으로 하는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1288970",
+   "name": "성북동돼지갈비",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돼지갈비백반과 돼지불고기백반을 내는 성북동 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495922",
+   "name": "손가네곰국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "사골 국물 곰국수가 대표 메뉴인 성북동 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1037020",
+   "name": "[북악하늘길 2산책로] 하늘교~성북천발원지",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "하늘교에서 성북천 발원지까지 걷는 산책로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839074",
+   "name": "공푸",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "차돌박이짬뽕이 대표 메뉴인 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3043911",
+   "name": "성북선잠박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "선잠단 역사와 양잠 도구를 볼 수 있는 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127220",
+   "name": "북한산국립공원(서울)",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "도심 속 자연공원으로 인수봉과 사모바위가 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-126501",
+   "name": "개운사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "안암산 자락에 자리한 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495232",
+   "name": "누브티스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "레스토랑과 갤러리를 함께 운영하는 이탈리안 퓨전 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839306",
+   "name": "청수장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돼지갈비와 냉면이 대표 메뉴인 정릉 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1395270",
+   "name": "최순우 옛집",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "최순우 선생이 살던 근대 한옥을 전시 공간으로 연 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1196886",
+   "name": "[북한산 둘레길 5구간] 명상길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "북한산 자락을 완만하게 걸을 수 있는 둘레길 구간이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3043977",
+   "name": "방우산장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "시인 조지훈을 기리는 건축 조형물이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-403989",
+   "name": "안동할매청국장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "토종 콩으로 끓인 청국장이 유명한 한식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839130",
+   "name": "문화식당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "오므라이스와 삼합이 대표 메뉴인 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2661492",
+   "name": "북정마을",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "성곽 옆에 남은 사대문 안 마지막 달동네예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": false,
+   "subAgree": null,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": true,
+   "factNote": "원문은 「사대문 안에 마지막으로 남아 있는 … 달동네로 꼽히는 마을 중 하나」인데 이유 문장은 「마지막 달동네」로 하나뿐인 것처럼 말함"
+  },
+  {
+   "id": "nt-403283",
+   "name": "국화정원",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한옥을 개조해 한정식 코스와 간장게장 정식을 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129822",
+   "name": "성신여자대학교박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "우리 문화유산을 모아 전시하는 대학 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2876684",
+   "name": "방목",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "목살과 삼겹살을 직원이 구워 주는 고깃집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-129831",
+   "name": "고려대학교 박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "혼천시계와 동궐도 같은 국보를 전시한 대학 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2834536",
+   "name": "성북동빵공장",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "빵과 케이크, 커피를 내는 성북동 베이커리 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2758176",
+   "name": "정릉아리랑시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "청국장 식당과 지짐이집이 있는 정릉의 골목 시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-316295",
+   "name": "봉국사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "정릉 북쪽에 자리한 조계사의 말사예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-252527",
+   "name": "서울 고려대학교 본관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "고딕 양식으로 지은 대학 본관 건물이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1037031",
+   "name": "[북악하늘길 스카이웨이] 하늘한마당~하늘마루",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "하늘한마당에서 하늘마루까지 이어지는 산책 코스예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-479778",
+   "name": "정법사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "조선시대 관세음보살상과 산신탱화가 남은 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495463",
+   "name": "모짜(MOZZA)",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "생면 파스타와 장작 화덕 피자를 내는 이탈리안 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2773408",
+   "name": "밤나무골시장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "보도 아래 반지하 골목에 점포가 이어진 시장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3060927",
+   "name": "돈암동아리랑고개",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "나운규가 영화를 찍어 이름 붙은 아리랑 고개예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2496493",
+   "name": "옛날중국집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "짜장면과 짬뽕, 탕수육을 내는 오래된 중국집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2873293",
+   "name": "성북동면옥집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "왕갈비찜과 냉면이 대표 메뉴인 성북동 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3043967",
+   "name": "이종석별장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "새우젓 장사로 갑부가 된 이종석이 지은 별장이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2733963",
+   "name": "성북동성당",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "마당에 아기 예수 대신 성경책을 안은 성모상이 서 있어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-126506",
+   "name": "흥천사",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "신덕왕후의 명복을 빌기 위해 세운 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1395466",
+   "name": "만해 한용운 심우장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "만해 한용운 선생이 살았던 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1196871",
+   "name": "[북한산 둘레길 4구간] 솔샘길",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "북한산 자락을 완만하게 걷는 둘레길 구간이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839181",
+   "name": "서울왕돈까스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "왕돈가스와 생선까스, 서울정식을 내는 돈가스집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3076682",
+   "name": "성북구립 최만린미술관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "조각가 최만린이 살던 집을 미술관으로 꾸민 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839284",
+   "name": "조셉의커피나무",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "핸드드립 커피와 케이크를 내는 성북동 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-128866",
+   "name": "길상사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "삼각산 자락에 있는 조계종 사찰이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2039547",
+   "name": "금왕돈까스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "돈가스와 치킨까스, 함박스테이크가 나오는 금왕정식이 대표 메뉴예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-316104",
+   "name": "보문사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "고려 때 세워져 비구니 스님들이 머무는 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2496495",
+   "name": "우리밀국시",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한우 육수로 끓인 경상도식 칼국수를 내는 식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2496274",
+   "name": "손국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "직접 뽑은 면의 칼국수로 유명한 국숫집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2372228",
+   "name": "우리옛돌박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "문인석과 동자석 같은 석조 유물을 모은 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2609645",
+   "name": "선동보리밥",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "보리밥과 영양솥밥, 낙지볶음을 내는 한식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839061",
+   "name": "고른햇살",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "흑미밥으로 만든 참치김밥과 치즈 라볶이가 인기인 분식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2935186",
+   "name": "뿡어당",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": false,
+    "reason": "앙버터와 꿀고구마 붕어빵을 파는 가게예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3058449",
+   "name": "성북구립미술관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "자치구 최초의 공립미술관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3013386",
+   "name": "한상수자수박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "한국 자수 작품을 전시하는 전문 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3385777",
+   "name": "서울 의릉 역사문화관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "의릉의 역사와 석물을 영상과 축소모형으로 보는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2836651",
+   "name": "갈비명가이상 돈암본관",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "눈꽃 생갈비와 양념갈비가 대표 메뉴인 갈비집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-479649",
+   "name": "적조사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "경산스님의 사리탑과 비석이 있는 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1037027",
+   "name": "[북악하늘길 3산책로] 북카페~숲속다리",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "북카페에서 동마루, 숲속다리로 이어지는 산책로예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-130511",
+   "name": "간송미술관(서울 보화각)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "우리나라 최초의 사립미술관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-127616",
+   "name": "서울 정릉(신덕황후) [유네스코 세계유산]",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "태조의 두 번째 왕비 신덕황후의 능이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3027054",
+   "name": "리홀뮤직갤러리",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "레코드판과 빈티지 스피커로 음악을 듣는 감상 전용 가게예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": "경계: 원문 「음악 감상 전용공간」을 「가게」로 바꿈"
+  },
+  {
+   "id": "nt-3043878",
+   "name": "장수마을",
+   "first": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false,
+    "reason": "벽화가 곳곳에 있는 옛 산동네 골목을 걸어요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "walk",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2757730",
+   "name": "르한스",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": false,
+    "reason": "넓은 야외 정원이 있는 레스토랑 겸 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2907139",
+   "name": "야마토텐동",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "규텐동과 아나고텐동이 인기 메뉴인 일식 텐동집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495918",
+   "name": "성북동집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "손칼국수와 만두가 유명한 성북동 한식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1664105",
+   "name": "수연산방",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "이태준 가옥에서 전통차를 마시는 찻집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2900426",
+   "name": "스담",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "셰프가 바로 올려 주는 오마카세 스타일 초밥집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3085031",
+   "name": "명원박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "차 문화와 전통 다구를 전시하는 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2833824",
+   "name": "TINC",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "옛 교회 예배당에서 전시와 공연이 열리는 곳이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495458",
+   "name": "명문막국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "메밀막국수와 메밀 들깨칼국수를 내는 막국수집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495465",
+   "name": "봉파레트",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "한옥을 리모델링한 곳에서 수프와 피자, 파스타를 내요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-309299",
+   "name": "미타사(성북)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "탑골승방이라 불린 여승들의 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2554064",
+   "name": "한국가구박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "조선 후기 전통 목가구를 방 구조 전시장에 모은 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2000790",
+   "name": "성북동 구포국수",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "남해 멸치와 완도 다시마로 끓인 육수의 국수를 내는 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3043953",
+   "name": "성북역사문화공원",
+   "first": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false,
+    "reason": "한양도성을 바라보며 쉬는 쉼터가 있는 공원이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "rest",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839255",
+   "name": "이공김밥 안암본점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "참치폭탄김밥과 돈가스김밥이 대표 메뉴인 김밥집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2495915",
+   "name": "성북동누룽지백숙",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "누룽지 백숙과 메밀 들깨수제비를 내는 백숙집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3060926",
+   "name": "롤퀸롤러장",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": false,
+    "reason": "성신여대역 근처에서 롤러스케이트를 타는 롤러장이에요",
+    "walkin": true
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "do",
+    "indoor": true,
+    "walkin": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": false,
+   "walkinAgree": true,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2869851",
+   "name": "토라카츠",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "제주 흑돼지 돈가스와 카레를 내는 전문점이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-250470",
+   "name": "서울 고려대학교 중앙도서관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "화강암 고딕 양식의 5층 건물로 지은 옛 도서관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-1628531",
+   "name": "동덕여자대학교 박물관",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true,
+    "reason": "조선 후기 여성 장신구와 학교 역사를 보는 박물관이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839324",
+   "name": "그레도제빵사",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "국산팥 앙버터와 치즈 소라빵을 직접 굽는 베이커리예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-403337",
+   "name": "국시집",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "사골 국물 칼국수 한 가지가 대표인 집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839196",
+   "name": "안동반점",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "탕수육과 잡채밥이 대표 메뉴인 오래된 중식당이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-294505",
+   "name": "경국사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "자정율사가 창건한 오래된 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-298341",
+   "name": "내원사(서울)",
+   "first": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false,
+    "reason": "정릉 골짜기를 지나 올라가면 닿는 절이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "new",
+    "sub": "sight",
+    "indoor": false
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-3458183",
+   "name": "쵸이양식",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true,
+    "reason": "포테이토 피자와 파스타가 인기인 양식집이에요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "meal",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  },
+  {
+   "id": "nt-2839237",
+   "name": "오버스토리",
+   "first": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true,
+    "reason": "식물이 많은 갤러리 분위기에 바닐라 라테를 내는 카페예요"
+   },
+   "audit": {
+    "keep": true,
+    "mood": "food",
+    "sub": "cafe",
+    "indoor": true
+   },
+   "keepMoodAgree": true,
+   "subAgree": true,
+   "indoorAgree": true,
+   "walkinAgree": null,
+   "factError": false,
+   "factNote": ""
+  }
+ ]
+}

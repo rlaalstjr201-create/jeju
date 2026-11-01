@@ -1,0 +1,20 @@
+[
+ { "id": "nt-2630324", "keep": true, "mood": "food", "sub": "meal", "indoor": true },
+ { "id": "nt-2756134", "keep": true, "mood": "rest", "indoor": false },
+ { "id": "nt-3572470", "keep": true, "mood": "new", "sub": "sight", "indoor": true },
+ { "id": "nt-1105871", "keep": true, "mood": "new", "sub": "sight", "indoor": true },
+ { "id": "nt-2553960", "keep": true, "mood": "new", "sub": "do", "indoor": true, "walkin": true },
+ { "id": "nt-2854103", "keep": true, "mood": "food", "sub": "meal", "indoor": true },
+ { "id": "nt-133983", "keep": true, "mood": "food", "sub": "meal", "indoor": true },
+ { "id": "nt-4080444", "keep": true, "mood": "new", "sub": "sight", "indoor": true },
+ { "id": "nt-2756098", "keep": true, "mood": "new", "sub": "sight", "indoor": false },
+ { "id": "nt-2553946", "keep": true, "mood": "new", "sub": "sight", "indoor": true },
+ { "id": "nt-1116022", "keep": true, "mood": "new", "sub": "sight", "indoor": false },
+ { "id": "nt-2940414", "keep": true, "mood": "food", "sub": "meal", "indoor": true },
+ { "id": "nt-2756150", "keep": true, "mood": "rest", "indoor": false },
+ { "id": "nt-2756120", "keep": false, "reject": "NOT_DESTINATION", "indoor": false },
+ { "id": "nt-679654", "keep": true, "mood": "food", "sub": "meal", "indoor": true },
+ { "id": "nt-2836634", "keep": true, "mood": "food", "sub": "meal", "indoor": true },
+ { "id": "nt-486685", "keep": true, "mood": "new", "sub": "sight", "indoor": false },
+ { "id": "nt-2836567", "keep": true, "mood": "food", "sub": "meal", "indoor": true }
+]
