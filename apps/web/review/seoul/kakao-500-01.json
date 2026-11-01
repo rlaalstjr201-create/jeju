@@ -1,0 +1,54 @@
+{
+ "criteria": "review/seoul/kakao-criteria.md",
+ "city": "500",
+ "source": "Kakao Local keyword search (id·place_url만 저장)",
+ "callsAllCities": 1761,
+ "targets": 76,
+ "done": 4,
+ "status": {
+  "matched": 4,
+  "unmatched": 0,
+  "closed": 0
+ },
+ "rule": {
+  "exact": 4,
+  "contains": 0,
+  "none": 0
+ },
+ "matchedRate": 0.05263157894736842,
+ "pass": null,
+ "rows": [
+  {
+   "id": "nt-126824",
+   "query": "허준근린공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18215699",
+   "placeUrl": "http://place.map.kakao.com/18215699"
+  },
+  {
+   "id": "nt-127215",
+   "query": "양천향교",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11100510",
+   "placeUrl": "http://place.map.kakao.com/11100510"
+  },
+  {
+   "id": "nt-127216",
+   "query": "서울 양천고성지",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8429014",
+   "placeUrl": "http://place.map.kakao.com/8429014"
+  },
+  {
+   "id": "nt-130289",
+   "query": "LG아트센터 서울",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "992535148",
+   "placeUrl": "http://place.map.kakao.com/992535148"
+  }
+ ]
+}

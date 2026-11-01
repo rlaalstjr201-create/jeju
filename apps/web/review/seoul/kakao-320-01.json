@@ -1,0 +1,278 @@
+{
+ "criteria": "review/seoul/kakao-criteria.md",
+ "city": "320",
+ "source": "Kakao Local keyword search (id·place_url만 저장)",
+ "callsAllCities": 1362,
+ "targets": 32,
+ "done": 32,
+ "status": {
+  "matched": 29,
+  "unmatched": 3,
+  "closed": 0
+ },
+ "rule": {
+  "exact": 27,
+  "contains": 2,
+  "none": 3
+ },
+ "matchedRate": 0.90625,
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-126481",
+   "query": "도봉산",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8259558",
+   "placeUrl": "http://place.map.kakao.com/8259558"
+  },
+  {
+   "id": "nt-130182",
+   "query": "국립공원 산악박물관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "15299008",
+   "placeUrl": "http://place.map.kakao.com/15299008"
+  },
+  {
+   "id": "nt-1578248",
+   "query": "아재왔소",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "16056520",
+   "placeUrl": "http://place.map.kakao.com/16056520"
+  },
+  {
+   "id": "nt-1955511",
+   "query": "도봉서원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "245667170",
+   "placeUrl": "http://place.map.kakao.com/245667170"
+  },
+  {
+   "id": "nt-1964911",
+   "query": "수락산코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2009928",
+   "query": "산도토리임자탕",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "16906484",
+   "placeUrl": "http://place.map.kakao.com/16906484"
+  },
+  {
+   "id": "nt-2033802",
+   "query": "둘리뮤지엄",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25132367",
+   "placeUrl": "http://place.map.kakao.com/25132367"
+  },
+  {
+   "id": "nt-232241",
+   "query": "대문한정식",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "11003958",
+   "placeUrl": "http://place.map.kakao.com/11003958"
+  },
+  {
+   "id": "nt-232242",
+   "query": "태림산채정식",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8109725",
+   "placeUrl": "http://place.map.kakao.com/8109725"
+  },
+  {
+   "id": "nt-2648051",
+   "query": "평화문화진지",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1113074324",
+   "placeUrl": "http://place.map.kakao.com/1113074324"
+  },
+  {
+   "id": "nt-2675091",
+   "query": "원당샘공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25478302",
+   "placeUrl": "http://place.map.kakao.com/25478302"
+  },
+  {
+   "id": "nt-2759649",
+   "query": "무수골계곡",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27143980",
+   "placeUrl": "http://place.map.kakao.com/27143980"
+  },
+  {
+   "id": "nt-2763818",
+   "query": "헬로애니멀",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27048279",
+   "placeUrl": "http://place.map.kakao.com/27048279"
+  },
+  {
+   "id": "nt-2781508",
+   "query": "무수아취",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2809291",
+   "query": "썬스마일",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1547992456",
+   "placeUrl": "http://place.map.kakao.com/1547992456"
+  },
+  {
+   "id": "nt-2832791",
+   "query": "도봉산양고기",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "16534078",
+   "placeUrl": "http://place.map.kakao.com/16534078"
+  },
+  {
+   "id": "nt-2832803",
+   "query": "무수옥",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "13091152",
+   "placeUrl": "http://place.map.kakao.com/13091152"
+  },
+  {
+   "id": "nt-2832820",
+   "query": "황금정원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1990379019",
+   "placeUrl": "http://place.map.kakao.com/1990379019"
+  },
+  {
+   "id": "nt-2834844",
+   "query": "사이코우스시 쌍문점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "20555997",
+   "placeUrl": "http://place.map.kakao.com/20555997"
+  },
+  {
+   "id": "nt-2842634",
+   "query": "동적깡통구이 쌍문본점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19453370",
+   "placeUrl": "http://place.map.kakao.com/19453370"
+  },
+  {
+   "id": "nt-2842665",
+   "query": "홍가네풍천장어",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26585121",
+   "placeUrl": "http://place.map.kakao.com/26585121"
+  },
+  {
+   "id": "nt-3057803",
+   "query": "서울 연산군묘",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8501306",
+   "placeUrl": "http://place.map.kakao.com/8501306"
+  },
+  {
+   "id": "nt-3057862",
+   "query": "김수영문학관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "22454382",
+   "placeUrl": "http://place.map.kakao.com/22454382"
+  },
+  {
+   "id": "nt-346995",
+   "query": "원통사",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8028876",
+   "placeUrl": "http://place.map.kakao.com/8028876"
+  },
+  {
+   "id": "nt-3483083",
+   "query": "간송옛집",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3483980",
+   "query": "함석헌기념관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "26617442",
+   "placeUrl": "http://place.map.kakao.com/26617442"
+  },
+  {
+   "id": "nt-3499568",
+   "query": "서울시립 사진미술관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1061613834",
+   "placeUrl": "http://place.map.kakao.com/1061613834"
+  },
+  {
+   "id": "nt-403194",
+   "query": "갯마을풍천장어",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24892245",
+   "placeUrl": "http://place.map.kakao.com/24892245"
+  },
+  {
+   "id": "nt-4054882",
+   "query": "초안산가드닝센터",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1349169371",
+   "placeUrl": "http://place.map.kakao.com/1349169371"
+  },
+  {
+   "id": "nt-4060676",
+   "query": "서울로봇인공지능과학관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1258334839",
+   "placeUrl": "http://place.map.kakao.com/1258334839"
+  },
+  {
+   "id": "nt-482112",
+   "query": "천축사",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8093673",
+   "placeUrl": "http://place.map.kakao.com/8093673"
+  },
+  {
+   "id": "nt-749216",
+   "query": "서울창포원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11434852",
+   "placeUrl": "http://place.map.kakao.com/11434852"
+  }
+ ]
+}

@@ -1,0 +1,342 @@
+{
+ "criteria": "review/seoul/kakao-criteria.md",
+ "city": "470",
+ "source": "Kakao Local keyword search (id·place_url만 저장)",
+ "callsAllCities": 1757,
+ "targets": 40,
+ "done": 40,
+ "status": {
+  "matched": 34,
+  "unmatched": 6,
+  "closed": 0
+ },
+ "rule": {
+  "exact": 29,
+  "contains": 5,
+  "none": 6
+ },
+ "matchedRate": 0.85,
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-1113537",
+   "query": "양천문화회관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11108826",
+   "placeUrl": "http://place.map.kakao.com/11108826"
+  },
+  {
+   "id": "nt-1114020",
+   "query": "파리공원",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "1122202534",
+   "placeUrl": "http://place.map.kakao.com/1122202534"
+  },
+  {
+   "id": "nt-1116758",
+   "query": "용왕정",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8019963",
+   "placeUrl": "http://place.map.kakao.com/8019963"
+  },
+  {
+   "id": "nt-1116877",
+   "query": "용왕산근린공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "25043745",
+   "placeUrl": "http://place.map.kakao.com/25043745"
+  },
+  {
+   "id": "nt-1116925",
+   "query": "갈산공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27294493",
+   "placeUrl": "http://place.map.kakao.com/27294493"
+  },
+  {
+   "id": "nt-1265735",
+   "query": "서서울호수공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18164705",
+   "placeUrl": "http://place.map.kakao.com/18164705"
+  },
+  {
+   "id": "nt-130978",
+   "query": "목동아이스링크",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "8341805",
+   "placeUrl": "http://place.map.kakao.com/8341805"
+  },
+  {
+   "id": "nt-131434",
+   "query": "목동사격장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19950804",
+   "placeUrl": "http://place.map.kakao.com/19950804"
+  },
+  {
+   "id": "nt-1710166",
+   "query": "국제선센터",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "26077786",
+   "placeUrl": "http://place.map.kakao.com/26077786"
+  },
+  {
+   "id": "nt-232249",
+   "query": "광양불고기",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8192976",
+   "placeUrl": "http://place.map.kakao.com/8192976"
+  },
+  {
+   "id": "nt-2611280",
+   "query": "목동깨비시장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18526239",
+   "placeUrl": "http://place.map.kakao.com/18526239"
+  },
+  {
+   "id": "nt-2611287",
+   "query": "목사랑시장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "18524702",
+   "placeUrl": "http://place.map.kakao.com/18524702"
+  },
+  {
+   "id": "nt-2611568",
+   "query": "계남근린공원",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2611601",
+   "query": "장수공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8050822",
+   "placeUrl": "http://place.map.kakao.com/8050822"
+  },
+  {
+   "id": "nt-2611679",
+   "query": "연의근린공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "448668296",
+   "placeUrl": "http://place.map.kakao.com/448668296"
+  },
+  {
+   "id": "nt-2611730",
+   "query": "양천도시농업공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1533515602",
+   "placeUrl": "http://place.map.kakao.com/1533515602"
+  },
+  {
+   "id": "nt-2611735",
+   "query": "오목공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8454662",
+   "placeUrl": "http://place.map.kakao.com/8454662"
+  },
+  {
+   "id": "nt-2611887",
+   "query": "신트리공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7988779",
+   "placeUrl": "http://place.map.kakao.com/7988779"
+  },
+  {
+   "id": "nt-2612095",
+   "query": "안양천 사계절 테마원",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2612107",
+   "query": "양천구 로데오거리",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2612119",
+   "query": "도심형코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2612154",
+   "query": "하천형코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2612170",
+   "query": "산림형코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2612198",
+   "query": "지양산",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "246267505",
+   "placeUrl": "http://place.map.kakao.com/246267505"
+  },
+  {
+   "id": "nt-2612214",
+   "query": "양천공원",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "17558064",
+   "placeUrl": "http://place.map.kakao.com/17558064"
+  },
+  {
+   "id": "nt-2751294",
+   "query": "법안정사",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12821099",
+   "placeUrl": "http://place.map.kakao.com/12821099"
+  },
+  {
+   "id": "nt-2760301",
+   "query": "한생연 생명과학박물관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10744685",
+   "placeUrl": "http://place.map.kakao.com/10744685"
+  },
+  {
+   "id": "nt-2850949",
+   "query": "원두막",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10690118",
+   "placeUrl": "http://place.map.kakao.com/10690118"
+  },
+  {
+   "id": "nt-2850964",
+   "query": "양천뼈다귀본점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10578508",
+   "placeUrl": "http://place.map.kakao.com/10578508"
+  },
+  {
+   "id": "nt-2852774",
+   "query": "히노야마",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "23584882",
+   "placeUrl": "http://place.map.kakao.com/23584882"
+  },
+  {
+   "id": "nt-2852797",
+   "query": "황금오리농장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "16419138",
+   "placeUrl": "http://place.map.kakao.com/16419138"
+  },
+  {
+   "id": "nt-2852826",
+   "query": "억조1978",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "1191772813",
+   "placeUrl": "http://place.map.kakao.com/1191772813"
+  },
+  {
+   "id": "nt-2852850",
+   "query": "양천옥설렁탕",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "488167110",
+   "placeUrl": "http://place.map.kakao.com/488167110"
+  },
+  {
+   "id": "nt-2852902",
+   "query": "살구나무집 칼국수",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8344070",
+   "placeUrl": "http://place.map.kakao.com/8344070"
+  },
+  {
+   "id": "nt-3056724",
+   "query": "안양천가족정원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "578678096",
+   "placeUrl": "http://place.map.kakao.com/578678096"
+  },
+  {
+   "id": "nt-3083523",
+   "query": "대한민국예술인센터",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "20083465",
+   "placeUrl": "http://place.map.kakao.com/20083465"
+  },
+  {
+   "id": "nt-3388482",
+   "query": "부빔",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "104569758",
+   "placeUrl": "http://place.map.kakao.com/104569758"
+  },
+  {
+   "id": "nt-3428372",
+   "query": "계남근린공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1804103984",
+   "placeUrl": "http://place.map.kakao.com/1804103984"
+  },
+  {
+   "id": "nt-3488525",
+   "query": "에코스페이스 연의",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "41308901",
+   "placeUrl": "http://place.map.kakao.com/41308901"
+  },
+  {
+   "id": "nt-3546434",
+   "query": "순백회관 목동본점",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1199092795",
+   "placeUrl": "http://place.map.kakao.com/1199092795"
+  }
+ ]
+}
