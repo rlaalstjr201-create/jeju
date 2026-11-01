@@ -1,0 +1,1692 @@
+{
+ "round": "01",
+ "city": "410",
+ "criteria": "review/seoul/pop-criteria.md",
+ "source": "Naver 검색광고 keywordstool, showDetail=1",
+ "places": 72,
+ "keywords": 79,
+ "calls": 16,
+ "tries": 16,
+ "failed": [],
+ "missingKeywords": [],
+ "failedCalls": [],
+ "rows": [
+  {
+   "id": "nt-1019327",
+   "name": "긱 라이브하우스",
+   "keywords": [
+    {
+     "keyword": "긱라이브하우스",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 120,
+     "volume": 160
+    }
+   ],
+   "volume": 160
+  },
+  {
+   "id": "nt-126503",
+   "name": "봉원사(서울)",
+   "keywords": [
+    {
+     "keyword": "서울봉원사",
+     "why": "이름 끝 「(서울)」: 다른 지역에 같은 이름이 있음 → 서울 + 이름",
+     "pc": 80,
+     "mobile": 1000,
+     "volume": 1080
+    }
+   ],
+   "volume": 1080
+  },
+  {
+   "id": "nt-126531",
+   "name": "무악산 동봉수대 터",
+   "keywords": [
+    {
+     "keyword": "무악산동봉수대터",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-127425",
+   "name": "독립문",
+   "keywords": [
+    {
+     "keyword": "독립문",
+     "why": "카드 이름",
+     "pc": 1660,
+     "mobile": 6590,
+     "volume": 8250
+    }
+   ],
+   "volume": 8250
+  },
+  {
+   "id": "nt-128028",
+   "name": "백련사(서대문)",
+   "keywords": [
+    {
+     "keyword": "백련사",
+     "why": "카드 이름",
+     "pc": 1270,
+     "mobile": 10400,
+     "volume": 11670
+    }
+   ],
+   "volume": 11670
+  },
+  {
+   "id": "nt-128622",
+   "name": "서대문독립공원",
+   "keywords": [
+    {
+     "keyword": "서대문독립공원",
+     "why": "카드 이름",
+     "pc": 160,
+     "mobile": 540,
+     "volume": 700
+    }
+   ],
+   "volume": 700
+  },
+  {
+   "id": "nt-1292674",
+   "name": "춘천집닭갈비막국수",
+   "keywords": [
+    {
+     "keyword": "춘천집닭갈비막국수",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 180,
+     "volume": 190
+    }
+   ],
+   "volume": 190
+  },
+  {
+   "id": "nt-129815",
+   "name": "이화여자대학교 박물관",
+   "keywords": [
+    {
+     "keyword": "이화여자대학교박물관",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 70,
+     "volume": 160
+    }
+   ],
+   "volume": 160
+  },
+  {
+   "id": "nt-130152",
+   "name": "서대문형무소역사관",
+   "keywords": [
+    {
+     "keyword": "서대문형무소역사관",
+     "why": "카드 이름",
+     "pc": 1120,
+     "mobile": 2910,
+     "volume": 4030
+    }
+   ],
+   "volume": 4030
+  },
+  {
+   "id": "nt-130448",
+   "name": "서대문자연사박물관",
+   "keywords": [
+    {
+     "keyword": "서대문자연사박물관",
+     "why": "카드 이름",
+     "pc": 2160,
+     "mobile": 11200,
+     "volume": 13360
+    }
+   ],
+   "volume": 13360
+  },
+  {
+   "id": "nt-130949",
+   "name": "이화여대 자연사박물관",
+   "keywords": [
+    {
+     "keyword": "이화여대자연사박물관",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 150,
+     "volume": 190
+    }
+   ],
+   "volume": 190
+  },
+  {
+   "id": "nt-132901",
+   "name": "신촌형제갈비",
+   "keywords": [
+    {
+     "keyword": "신촌형제갈비",
+     "why": "카드 이름",
+     "pc": 370,
+     "mobile": 2660,
+     "volume": 3030
+    }
+   ],
+   "volume": 3030
+  },
+  {
+   "id": "nt-132903",
+   "name": "청송본관함흥냉면",
+   "keywords": [
+    {
+     "keyword": "청송본관함흥냉면",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-133225",
+   "name": "삼호복집 신촌",
+   "keywords": [
+    {
+     "keyword": "삼호복집신촌",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 10,
+     "volume": 20
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-134686",
+   "name": "사조참치",
+   "keywords": [
+    {
+     "keyword": "사조참치",
+     "why": "카드 이름",
+     "pc": 1540,
+     "mobile": 8610,
+     "volume": 10150
+    }
+   ],
+   "volume": 10150
+  },
+  {
+   "id": "nt-134708",
+   "name": "완차이",
+   "keywords": [
+    {
+     "keyword": "서대문완차이",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-1825057",
+   "name": "3.1독립선언기념탑",
+   "keywords": [
+    {
+     "keyword": "31독립선언기념탑",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-1828571",
+   "name": "독립관",
+   "keywords": [
+    {
+     "keyword": "독립관",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 60,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-1829735",
+   "name": "순국선열추념탑",
+   "keywords": [
+    {
+     "keyword": "순국선열추념탑",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  },
+  {
+   "id": "nt-1908250",
+   "name": "호밀밭",
+   "keywords": [
+    {
+     "keyword": "서대문호밀밭",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2044896",
+   "name": "유어마인드",
+   "keywords": [
+    {
+     "keyword": "유어마인드",
+     "why": "카드 이름",
+     "pc": 930,
+     "mobile": 2900,
+     "volume": 3830
+    }
+   ],
+   "volume": 3830
+  },
+  {
+   "id": "nt-2365676",
+   "name": "유닭스토리 닭한마리 신촌점",
+   "keywords": [
+    {
+     "keyword": "유닭스토리닭한마리신촌점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2406564",
+   "name": "북한산 자락길",
+   "keywords": [
+    {
+     "keyword": "북한산자락길",
+     "why": "카드 이름",
+     "pc": 180,
+     "mobile": 770,
+     "volume": 950
+    }
+   ],
+   "volume": 950
+  },
+  {
+   "id": "nt-2453179",
+   "name": "고촌이종근기념관",
+   "keywords": [
+    {
+     "keyword": "고촌이종근기념관",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-252532",
+   "name": "서울 연세대학교 스팀슨관",
+   "keywords": [
+    {
+     "keyword": "서울연세대학교스팀슨관",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "연세대학교스팀슨관",
+     "why": "앞의 「서대문」·「국립」을 뗀 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-252533",
+   "name": "서울 연세대학교 언더우드관",
+   "keywords": [
+    {
+     "keyword": "서울연세대학교언더우드관",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "연세대학교언더우드관",
+     "why": "앞의 「서대문」·「국립」을 뗀 이름",
+     "pc": 20,
+     "mobile": 70,
+     "volume": 90
+    }
+   ],
+   "volume": 100
+  },
+  {
+   "id": "nt-2553390",
+   "name": "우석뮤지엄",
+   "keywords": [
+    {
+     "keyword": "우석뮤지엄",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-264375",
+   "name": "연세로",
+   "keywords": [
+    {
+     "keyword": "연세로",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 150,
+     "volume": 180
+    }
+   ],
+   "volume": 180
+  },
+  {
+   "id": "nt-2661502",
+   "name": "서대문 안산(안산자락길)",
+   "keywords": [
+    {
+     "keyword": "서대문안산",
+     "why": "카드 이름",
+     "pc": 200,
+     "mobile": 690,
+     "volume": 890
+    },
+    {
+     "keyword": "안산자락길",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": 1050,
+     "mobile": 4430,
+     "volume": 5480
+    }
+   ],
+   "volume": 6370
+  },
+  {
+   "id": "nt-2667611",
+   "name": "이대거리",
+   "keywords": [
+    {
+     "keyword": "이대거리",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 60,
+     "volume": 65
+    }
+   ],
+   "volume": 65
+  },
+  {
+   "id": "nt-2718417",
+   "name": "보틀라운지",
+   "keywords": [
+    {
+     "keyword": "보틀라운지",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 160,
+     "volume": 200
+    }
+   ],
+   "volume": 200
+  },
+  {
+   "id": "nt-2751441",
+   "name": "포방터시장",
+   "keywords": [
+    {
+     "keyword": "포방터시장",
+     "why": "카드 이름",
+     "pc": 330,
+     "mobile": 1970,
+     "volume": 2300
+    }
+   ],
+   "volume": 2300
+  },
+  {
+   "id": "nt-2773278",
+   "name": "모래내시장 먹자골목",
+   "keywords": [
+    {
+     "keyword": "모래내시장먹자골목",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  },
+  {
+   "id": "nt-2783698",
+   "name": "홍제폭포",
+   "keywords": [
+    {
+     "keyword": "홍제폭포",
+     "why": "카드 이름",
+     "pc": 1380,
+     "mobile": 8710,
+     "volume": 10090
+    }
+   ],
+   "volume": 10090
+  },
+  {
+   "id": "nt-2789102",
+   "name": "독립문영천시장",
+   "keywords": [
+    {
+     "keyword": "독립문영천시장",
+     "why": "카드 이름",
+     "pc": 590,
+     "mobile": 6020,
+     "volume": 6610
+    }
+   ],
+   "volume": 6610
+  },
+  {
+   "id": "nt-2807816",
+   "name": "청화원",
+   "keywords": [
+    {
+     "keyword": "서대문청화원",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2813170",
+   "name": "국립대한민국임시정부기념관",
+   "keywords": [
+    {
+     "keyword": "국립대한민국임시정부기념관",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "대한민국임시정부기념관",
+     "why": "앞의 「서대문」·「국립」을 뗀 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-2828401",
+   "name": "소바연구소",
+   "keywords": [
+    {
+     "keyword": "소바연구소",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 570,
+     "volume": 650
+    }
+   ],
+   "volume": 650
+  },
+  {
+   "id": "nt-2839885",
+   "name": "목란",
+   "keywords": [
+    {
+     "keyword": "서대문목란",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2839897",
+   "name": "피터팬1978",
+   "keywords": [
+    {
+     "keyword": "피터팬1978",
+     "why": "카드 이름",
+     "pc": 350,
+     "mobile": 2850,
+     "volume": 3200
+    }
+   ],
+   "volume": 3200
+  },
+  {
+   "id": "nt-2842966",
+   "name": "연희동칼국수 본점",
+   "keywords": [
+    {
+     "keyword": "연희동칼국수본점",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 280,
+     "volume": 300
+    },
+    {
+     "keyword": "연희동칼국수",
+     "why": "「본점」을 뗀 이름",
+     "pc": 310,
+     "mobile": 3280,
+     "volume": 3590
+    }
+   ],
+   "volume": 3890
+  },
+  {
+   "id": "nt-2843010",
+   "name": "월순철판동태찜",
+   "keywords": [
+    {
+     "keyword": "월순철판동태찜",
+     "why": "카드 이름",
+     "pc": 410,
+     "mobile": 4270,
+     "volume": 4680
+    }
+   ],
+   "volume": 4680
+  },
+  {
+   "id": "nt-2851231",
+   "name": "시도 플레이스",
+   "keywords": [
+    {
+     "keyword": "시도플레이스",
+     "why": "카드 이름",
+     "pc": 310,
+     "mobile": 850,
+     "volume": 1160
+    }
+   ],
+   "volume": 1160
+  },
+  {
+   "id": "nt-2851700",
+   "name": "꼬숑돈까스",
+   "keywords": [
+    {
+     "keyword": "꼬숑돈까스",
+     "why": "카드 이름",
+     "pc": 230,
+     "mobile": 1830,
+     "volume": 2060
+    }
+   ],
+   "volume": 2060
+  },
+  {
+   "id": "nt-2853867",
+   "name": "엄마손떡볶이",
+   "keywords": [
+    {
+     "keyword": "엄마손떡볶이",
+     "why": "카드 이름",
+     "pc": 200,
+     "mobile": 3900,
+     "volume": 4100
+    }
+   ],
+   "volume": 4100
+  },
+  {
+   "id": "nt-2853889",
+   "name": "연희김밥 본점",
+   "keywords": [
+    {
+     "keyword": "연희김밥본점",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 930,
+     "volume": 1000
+    },
+    {
+     "keyword": "연희김밥",
+     "why": "「본점」을 뗀 이름",
+     "pc": 1100,
+     "mobile": 14100,
+     "volume": 15200
+    }
+   ],
+   "volume": 16200
+  },
+  {
+   "id": "nt-2871430",
+   "name": "오계절 남원추어탕",
+   "keywords": [
+    {
+     "keyword": "오계절남원추어탕",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 70,
+     "volume": 100
+    }
+   ],
+   "volume": 100
+  },
+  {
+   "id": "nt-2873449",
+   "name": "닭내장집",
+   "keywords": [
+    {
+     "keyword": "닭내장집",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 160,
+     "volume": 180
+    }
+   ],
+   "volume": 180
+  },
+  {
+   "id": "nt-2900221",
+   "name": "카덴",
+   "keywords": [
+    {
+     "keyword": "서대문카덴",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-2900286",
+   "name": "녹원쌈밥 연희점",
+   "keywords": [
+    {
+     "keyword": "녹원쌈밥연희점",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 100,
+     "volume": 110
+    }
+   ],
+   "volume": 110
+  },
+  {
+   "id": "nt-2900309",
+   "name": "고미정",
+   "keywords": [
+    {
+     "keyword": "서대문고미정",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-2900328",
+   "name": "강수사",
+   "keywords": [
+    {
+     "keyword": "서대문강수사",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2900401",
+   "name": "모래내곱창",
+   "keywords": [
+    {
+     "keyword": "모래내곱창",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 850,
+     "volume": 920
+    }
+   ],
+   "volume": 920
+  },
+  {
+   "id": "nt-2914233",
+   "name": "복성각",
+   "keywords": [
+    {
+     "keyword": "서대문복성각",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": 70,
+     "mobile": 290,
+     "volume": 360
+    }
+   ],
+   "volume": 360
+  },
+  {
+   "id": "nt-2914252",
+   "name": "락희안 가좌본점",
+   "keywords": [
+    {
+     "keyword": "락희안가좌본점",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 760,
+     "volume": 850
+    },
+    {
+     "keyword": "서대문락희안",
+     "why": "「본점」을 뗀 이름(세 글자 이하 → 서대문 + 이름)",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 865
+  },
+  {
+   "id": "nt-2914737",
+   "name": "연남장",
+   "keywords": [
+    {
+     "keyword": "서대문연남장",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2918764",
+   "name": "신촌수제비",
+   "keywords": [
+    {
+     "keyword": "신촌수제비",
+     "why": "카드 이름",
+     "pc": 240,
+     "mobile": 2780,
+     "volume": 3020
+    }
+   ],
+   "volume": 3020
+  },
+  {
+   "id": "nt-2918773",
+   "name": "김삼보김치찌개",
+   "keywords": [
+    {
+     "keyword": "김삼보김치찌개",
+     "why": "카드 이름",
+     "pc": 200,
+     "mobile": 1950,
+     "volume": 2150
+    }
+   ],
+   "volume": 2150
+  },
+  {
+   "id": "nt-2938584",
+   "name": "에버그린",
+   "keywords": [
+    {
+     "keyword": "에버그린",
+     "why": "카드 이름",
+     "pc": 3060,
+     "mobile": 13400,
+     "volume": 16460
+    }
+   ],
+   "volume": 16460
+  },
+  {
+   "id": "nt-2939587",
+   "name": "라임",
+   "keywords": [
+    {
+     "keyword": "서대문라임",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2940410",
+   "name": "진돈부리",
+   "keywords": [
+    {
+     "keyword": "진돈부리",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 830,
+     "volume": 910
+    }
+   ],
+   "volume": 910
+  },
+  {
+   "id": "nt-2996477",
+   "name": "카페 폭포",
+   "keywords": [
+    {
+     "keyword": "카페폭포",
+     "why": "카드 이름",
+     "pc": 620,
+     "mobile": 5920,
+     "volume": 6540
+    }
+   ],
+   "volume": 6540
+  },
+  {
+   "id": "nt-3076677",
+   "name": "라이카시네마",
+   "keywords": [
+    {
+     "keyword": "라이카시네마",
+     "why": "카드 이름",
+     "pc": 4670,
+     "mobile": 22400,
+     "volume": 27070
+    }
+   ],
+   "volume": 27070
+  },
+  {
+   "id": "nt-3078407",
+   "name": "금호아트홀 연세",
+   "keywords": [
+    {
+     "keyword": "금호아트홀연세",
+     "why": "카드 이름",
+     "pc": 580,
+     "mobile": 3560,
+     "volume": 4140
+    }
+   ],
+   "volume": 4140
+  },
+  {
+   "id": "nt-3082166",
+   "name": "신촌그래피티벽화터널",
+   "keywords": [
+    {
+     "keyword": "신촌그래피티벽화터널",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-3082176",
+   "name": "모두예술극장",
+   "keywords": [
+    {
+     "keyword": "모두예술극장",
+     "why": "카드 이름",
+     "pc": 870,
+     "mobile": 1740,
+     "volume": 2610
+    }
+   ],
+   "volume": 2610
+  },
+  {
+   "id": "nt-337557",
+   "name": "옥천암(서울)",
+   "keywords": [
+    {
+     "keyword": "서울옥천암",
+     "why": "이름 끝 「(서울)」: 다른 지역에 같은 이름이 있음 → 서울 + 이름",
+     "pc": 60,
+     "mobile": 610,
+     "volume": 670
+    }
+   ],
+   "volume": 670
+  },
+  {
+   "id": "nt-3452906",
+   "name": "홍제천인공폭포",
+   "keywords": [
+    {
+     "keyword": "홍제천인공폭포",
+     "why": "카드 이름",
+     "pc": 240,
+     "mobile": 1940,
+     "volume": 2180
+    }
+   ],
+   "volume": 2180
+  },
+  {
+   "id": "nt-3544787",
+   "name": "연희숲속쉼터",
+   "keywords": [
+    {
+     "keyword": "연희숲속쉼터",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 420,
+     "volume": 510
+    }
+   ],
+   "volume": 510
+  },
+  {
+   "id": "nt-4092567",
+   "name": "코코리컬러 연희본점",
+   "keywords": [
+    {
+     "keyword": "코코리컬러연희본점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-842887",
+   "name": "신촌고기창고",
+   "keywords": [
+    {
+     "keyword": "신촌고기창고",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 280,
+     "volume": 350
+    }
+   ],
+   "volume": 350
+  },
+  {
+   "id": "nt-845319",
+   "name": "수빈",
+   "keywords": [
+    {
+     "keyword": "서대문수빈",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서대문 + 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  }
+ ],
+ "callLog": [
+  {
+   "at": "2026-11-01T06:36:03.136Z",
+   "batch": [
+    "31독립선언기념탑",
+    "고촌이종근기념관",
+    "국립대한민국임시정부기념관",
+    "금호아트홀연세",
+    "긱라이브하우스"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "31독립선언기념탑",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "고촌이종근기념관",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "국립대한민국임시정부기념관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "금호아트홀연세",
+     "monthlyPcQcCnt": 580,
+     "monthlyMobileQcCnt": 3560
+    },
+    {
+     "relKeyword": "긱라이브하우스",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 120
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:03.754Z",
+   "batch": [
+    "김삼보김치찌개",
+    "꼬숑돈까스",
+    "녹원쌈밥연희점",
+    "닭내장집",
+    "대한민국임시정부기념관"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "김삼보김치찌개",
+     "monthlyPcQcCnt": 200,
+     "monthlyMobileQcCnt": 1950
+    },
+    {
+     "relKeyword": "꼬숑돈까스",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 1830
+    },
+    {
+     "relKeyword": "녹원쌈밥연희점",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "닭내장집",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 160
+    },
+    {
+     "relKeyword": "대한민국임시정부기념관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:04.358Z",
+   "batch": [
+    "독립관",
+    "독립문",
+    "독립문영천시장",
+    "라이카시네마",
+    "락희안가좌본점"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "독립관",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "독립문",
+     "monthlyPcQcCnt": 1660,
+     "monthlyMobileQcCnt": 6590
+    },
+    {
+     "relKeyword": "독립문영천시장",
+     "monthlyPcQcCnt": 590,
+     "monthlyMobileQcCnt": 6020
+    },
+    {
+     "relKeyword": "라이카시네마",
+     "monthlyPcQcCnt": 4670,
+     "monthlyMobileQcCnt": 22400
+    },
+    {
+     "relKeyword": "락희안가좌본점",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 760
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:04.971Z",
+   "batch": [
+    "모두예술극장",
+    "모래내곱창",
+    "모래내시장먹자골목",
+    "무악산동봉수대터",
+    "백련사"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "모두예술극장",
+     "monthlyPcQcCnt": 870,
+     "monthlyMobileQcCnt": 1740
+    },
+    {
+     "relKeyword": "모래내곱창",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 850
+    },
+    {
+     "relKeyword": "모래내시장먹자골목",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "무악산동봉수대터",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "백련사",
+     "monthlyPcQcCnt": 1270,
+     "monthlyMobileQcCnt": 10400
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:05.669Z",
+   "batch": [
+    "보틀라운지",
+    "북한산자락길",
+    "사조참치",
+    "삼호복집신촌",
+    "서대문강수사"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "보틀라운지",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 160
+    },
+    {
+     "relKeyword": "북한산자락길",
+     "monthlyPcQcCnt": 180,
+     "monthlyMobileQcCnt": 770
+    },
+    {
+     "relKeyword": "사조참치",
+     "monthlyPcQcCnt": 1540,
+     "monthlyMobileQcCnt": 8610
+    },
+    {
+     "relKeyword": "삼호복집신촌",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서대문강수사",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:06.297Z",
+   "batch": [
+    "서대문고미정",
+    "서대문독립공원",
+    "서대문라임",
+    "서대문락희안",
+    "서대문목란"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서대문고미정",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서대문독립공원",
+     "monthlyPcQcCnt": 160,
+     "monthlyMobileQcCnt": 540
+    },
+    {
+     "relKeyword": "서대문라임",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서대문락희안",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서대문목란",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:06.928Z",
+   "batch": [
+    "서대문복성각",
+    "서대문수빈",
+    "서대문안산",
+    "서대문연남장",
+    "서대문완차이"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서대문복성각",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 290
+    },
+    {
+     "relKeyword": "서대문수빈",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "서대문안산",
+     "monthlyPcQcCnt": 200,
+     "monthlyMobileQcCnt": 690
+    },
+    {
+     "relKeyword": "서대문연남장",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서대문완차이",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:07.552Z",
+   "batch": [
+    "서대문자연사박물관",
+    "서대문청화원",
+    "서대문카덴",
+    "서대문형무소역사관",
+    "서대문호밀밭"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서대문자연사박물관",
+     "monthlyPcQcCnt": 2160,
+     "monthlyMobileQcCnt": 11200
+    },
+    {
+     "relKeyword": "서대문청화원",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서대문카덴",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서대문형무소역사관",
+     "monthlyPcQcCnt": 1120,
+     "monthlyMobileQcCnt": 2910
+    },
+    {
+     "relKeyword": "서대문호밀밭",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:08.160Z",
+   "batch": [
+    "서울봉원사",
+    "서울연세대학교스팀슨관",
+    "서울연세대학교언더우드관",
+    "서울옥천암",
+    "소바연구소"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서울봉원사",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 1000
+    },
+    {
+     "relKeyword": "서울연세대학교스팀슨관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서울연세대학교언더우드관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서울옥천암",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 610
+    },
+    {
+     "relKeyword": "소바연구소",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 570
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:08.783Z",
+   "batch": [
+    "순국선열추념탑",
+    "시도플레이스",
+    "신촌고기창고",
+    "신촌그래피티벽화터널",
+    "신촌수제비"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "순국선열추념탑",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "시도플레이스",
+     "monthlyPcQcCnt": 310,
+     "monthlyMobileQcCnt": 850
+    },
+    {
+     "relKeyword": "신촌고기창고",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 280
+    },
+    {
+     "relKeyword": "신촌그래피티벽화터널",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "신촌수제비",
+     "monthlyPcQcCnt": 240,
+     "monthlyMobileQcCnt": 2780
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:09.410Z",
+   "batch": [
+    "신촌형제갈비",
+    "안산자락길",
+    "엄마손떡볶이",
+    "에버그린",
+    "연세대학교스팀슨관"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "신촌형제갈비",
+     "monthlyPcQcCnt": 370,
+     "monthlyMobileQcCnt": 2660
+    },
+    {
+     "relKeyword": "안산자락길",
+     "monthlyPcQcCnt": 1050,
+     "monthlyMobileQcCnt": 4430
+    },
+    {
+     "relKeyword": "엄마손떡볶이",
+     "monthlyPcQcCnt": 200,
+     "monthlyMobileQcCnt": 3900
+    },
+    {
+     "relKeyword": "에버그린",
+     "monthlyPcQcCnt": 3060,
+     "monthlyMobileQcCnt": 13400
+    },
+    {
+     "relKeyword": "연세대학교스팀슨관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:10.033Z",
+   "batch": [
+    "연세대학교언더우드관",
+    "연세로",
+    "연희김밥",
+    "연희김밥본점",
+    "연희동칼국수"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "연세대학교언더우드관",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "연세로",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 150
+    },
+    {
+     "relKeyword": "연희김밥",
+     "monthlyPcQcCnt": 1100,
+     "monthlyMobileQcCnt": 14100
+    },
+    {
+     "relKeyword": "연희김밥본점",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 930
+    },
+    {
+     "relKeyword": "연희동칼국수",
+     "monthlyPcQcCnt": 310,
+     "monthlyMobileQcCnt": 3280
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:10.635Z",
+   "batch": [
+    "연희동칼국수본점",
+    "연희숲속쉼터",
+    "오계절남원추어탕",
+    "우석뮤지엄",
+    "월순철판동태찜"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "연희동칼국수본점",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 280
+    },
+    {
+     "relKeyword": "연희숲속쉼터",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 420
+    },
+    {
+     "relKeyword": "오계절남원추어탕",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "우석뮤지엄",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "월순철판동태찜",
+     "monthlyPcQcCnt": 410,
+     "monthlyMobileQcCnt": 4270
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:11.272Z",
+   "batch": [
+    "유닭스토리닭한마리신촌점",
+    "유어마인드",
+    "이대거리",
+    "이화여대자연사박물관",
+    "이화여자대학교박물관"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "유닭스토리닭한마리신촌점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "유어마인드",
+     "monthlyPcQcCnt": 930,
+     "monthlyMobileQcCnt": 2900
+    },
+    {
+     "relKeyword": "이대거리",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "이화여대자연사박물관",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 150
+    },
+    {
+     "relKeyword": "이화여자대학교박물관",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 70
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:11.893Z",
+   "batch": [
+    "진돈부리",
+    "청송본관함흥냉면",
+    "춘천집닭갈비막국수",
+    "카페폭포",
+    "코코리컬러연희본점"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "진돈부리",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 830
+    },
+    {
+     "relKeyword": "청송본관함흥냉면",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "춘천집닭갈비막국수",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 180
+    },
+    {
+     "relKeyword": "카페폭포",
+     "monthlyPcQcCnt": 620,
+     "monthlyMobileQcCnt": 5920
+    },
+    {
+     "relKeyword": "코코리컬러연희본점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T06:36:12.492Z",
+   "batch": [
+    "포방터시장",
+    "피터팬1978",
+    "홍제천인공폭포",
+    "홍제폭포"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "포방터시장",
+     "monthlyPcQcCnt": 330,
+     "monthlyMobileQcCnt": 1970
+    },
+    {
+     "relKeyword": "피터팬1978",
+     "monthlyPcQcCnt": 350,
+     "monthlyMobileQcCnt": 2850
+    },
+    {
+     "relKeyword": "홍제천인공폭포",
+     "monthlyPcQcCnt": 240,
+     "monthlyMobileQcCnt": 1940
+    },
+    {
+     "relKeyword": "홍제폭포",
+     "monthlyPcQcCnt": 1380,
+     "monthlyMobileQcCnt": 8710
+    }
+   ]
+  }
+ ]
+}
