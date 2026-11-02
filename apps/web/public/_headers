@@ -3,9 +3,16 @@
 # Cache-Control).
 
 # Every response: never inside another site's frame; no camera, microphone or payment (geolocation stays).
+# HSTS: once seen, this host is HTTPS-only for a year (the site and its subdomains are already HTTPS on Pages).
+# CSP (hardening only, ADR 보안점검 2026-11-02): base-uri·object·frame-ancestors locked, http subresources upgraded.
+# It does NOT restrict script/img/connect — the page runs on inline bootstrap scripts and GTM/GA/네이버 분석 inject
+# more at runtime, so a script-src would need per-build hashes (not done here); this closes base-tag, plugin and
+# clickjacking vectors without breaking anything.
 /*
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
 # Content-hashed build files: a new build is a new name.
 /assets/*
