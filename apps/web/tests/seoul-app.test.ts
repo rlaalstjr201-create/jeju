@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
-// 서울 (ADR-0106): 종로·중구·용산·성동·광진·동대문·중랑·성북·강북·도봉·노원·은평·서대문·마포·양천 are a 검수한 곳 now — a GPS read there and a device that had one as
-// the 자동 지역 open `seoul` at that 구, with its own list (reasons, all five moods) and name, while the other 구 (강남 …) stay
+// 서울 (ADR-0106): 종로·중구·용산·성동·광진·동대문·중랑·성북·강북·도봉·노원·은평·서대문·마포·양천·강서·구로·금천·영등포·동작·관악·서초·강남·송파·강동 (all 25 구) are a 검수한 곳 now — a GPS read there and a device that had one as
+// the 자동 지역 open `seoul` at that 구, with its own list (reasons, all five moods) and name, while a 시군구 outside 서울 (수원 …) stays
 // 자동 지역. The build's
 // `area` is the app's short name of each 구. With the switch on only (npm run test:nation), but for the last block.
 import { readFileSync } from 'node:fs';
@@ -19,7 +19,7 @@ import { SEOUL_GU, areaOf } from '../scripts/curated/rounds.mjs';
 const nationFile = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const seoulRaw = JSON.parse(readFileSync(resolve(__dirname, '../data/seoul/spots-seoul.json'), 'utf8')) as Record<string, unknown>[];
 const 경복궁 = { lat: 37.5796, lng: 126.977 };
-const 강남구청 = { lat: 37.5172, lng: 127.0473 }; // 강남구: still the 자동 지역 (its Kakao match not done)
+const 수원팔달구 = { lat: 37.27813, lng: 127.01729 }; // 수원시 팔달구: not 서울, stays the 자동 지역
 const 광화문광장 = { lat: 37.5725, lng: 126.9769 }; // the 자동 지역 index names 서울 중구 here, 경복궁 (종로) 600 m north
 const wait = async () => {
   for (let i = 0; i < 4; i++) await flush();
@@ -91,12 +91,12 @@ describe.runIf(NATION)('서울 (switch on)', () => {
     expect(asked).toEqual(['seoul:11110']);
   });
 
-  it('a GPS read at 강남구청 (강남구, not checked yet) stays 자동 지역', async () => {
-    mount({ dest: 'nation', at: 강남구청 });
+  it('a GPS read in 수원시 팔달구 (not a 서울 구) stays 자동 지역', async () => {
+    mount({ dest: 'nation', at: 수원팔달구 });
     await wait();
     await tap('[data-mood="walk"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11680' });
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '41115' });
   });
 });
 

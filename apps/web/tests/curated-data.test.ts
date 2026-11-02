@@ -272,11 +272,11 @@ describe('강원 주인 지정 유명한 곳 (ADR-0102 Amendment 5)', () => {
 });
 
 describe('서울 주인 지정 유명한 곳 (ADR-0106 Amendment 3)', () => {
-  it('창덕궁과 후원·종묘·남산서울타워는 출하 파일에서 유명한 곳이고, 규칙 몫에 더해진다(종로 28+2, 용산 10+1; 서울 전체 규칙 몫 105 + 주인 지정 5, Amendment 5)', () => {
+  it('창덕궁과 후원·종묘·남산서울타워는 출하 파일에서 유명한 곳이고, 규칙 몫에 더해진다(종로 28+2, 용산 10+1; 서울 전체 규칙 몫 165 + 주인 지정 7, Amendment 5·6)', () => {
     const spots = JSON.parse(readFileSync(resolve(__dirname, '../data/seoul/spots-seoul.json'), 'utf8')) as { id: string; area: string; famous?: boolean; pop?: number }[];
     for (const id of ['nt-127642', 'nt-126510', 'nt-126535']) expect(spots.find((s) => s.id === id)).toMatchObject({ famous: true, pop: expect.any(Number) });
     const n = (a: string) => spots.filter((s) => s.famous && s.area === a).length;
-    expect([n('종로'), n('용산'), spots.filter((s) => s.famous).length]).toEqual([30, 11, 110]);
+    expect([n('종로'), n('용산'), spots.filter((s) => s.famous).length]).toEqual([30, 11, 172]);
   });
 });
 

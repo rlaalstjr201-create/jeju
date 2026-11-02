@@ -194,7 +194,7 @@ export const EN: Lang = {
   /** 여행지 (ADR-0094), with the switch on (render.ts BUSAN_COPY) */
   busan: {
     destName: { jeju: 'Jeju', busan: 'Busan', gangwon: 'Gangwon', seoul: 'Seoul', nation: 'Somewhere else' },
-    sggName: { '51150': 'Gangneung', '51210': 'Sokcho', '51110': 'Chuncheon', '51830': 'Yangyang', '51760': 'Pyeongchang', '11110': 'Jongno-gu', '11140': 'Jung-gu', '11170': 'Yongsan-gu', '11200': 'Seongdong-gu', '11215': 'Gwangjin-gu', '11230': 'Dongdaemun-gu', '11260': 'Jungnang-gu', '11290': 'Seongbuk-gu', '11305': 'Gangbuk-gu', '11320': 'Dobong-gu', '11350': 'Nowon-gu', '11380': 'Eunpyeong-gu', '11410': 'Seodaemun-gu', '11440': 'Mapo-gu', '11470': 'Yangcheon-gu' },
+    sggName: { '51150': 'Gangneung', '51210': 'Sokcho', '51110': 'Chuncheon', '51830': 'Yangyang', '51760': 'Pyeongchang', '11110': 'Jongno-gu', '11140': 'Jung-gu', '11170': 'Yongsan-gu', '11200': 'Seongdong-gu', '11215': 'Gwangjin-gu', '11230': 'Dongdaemun-gu', '11260': 'Jungnang-gu', '11290': 'Seongbuk-gu', '11305': 'Gangbuk-gu', '11320': 'Dobong-gu', '11350': 'Nowon-gu', '11380': 'Eunpyeong-gu', '11410': 'Seodaemun-gu', '11440': 'Mapo-gu', '11470': 'Yangcheon-gu', '11500': 'Gangseo-gu', '11530': 'Guro-gu', '11545': 'Geumcheon-gu', '11560': 'Yeongdeungpo-gu', '11590': 'Dongjak-gu', '11620': 'Gwanak-gu', '11650': 'Seocho-gu', '11680': 'Gangnam-gu', '11710': 'Songpa-gu', '11740': 'Gangdong-gu' },
     destHead: 'Destination',
     title: (name) => `Yeochana:${name} · Your no-plan travel buddy`,
     examplePopular: (name, names) => `${name} favorites: ${names.join(', ')}`,

@@ -92,15 +92,15 @@ describe.runIf(NATION)('자동 지역 on screen (switch on)', () => {
     expect(asked).toEqual(['nation:51170', 'nation:52111']);
   });
 
-  it('제주 device: the sheet offers 다른 곳, and pressing it opens 서울 (the 자동 지역 시군구 nearest 서울시청: 동작구, since 중구·서대문구 are 서울 검수한 곳, ADR-0106) to pick from', async () => {
+  it('제주 device: the sheet offers 다른 곳, and pressing it opens the 자동 지역 (the 시군구 nearest 서울시청: 고양시 덕양구, since all 25 서울 구 are 서울 검수한 곳, ADR-0106) to pick from', async () => {
     mount({ dest: 'jeju' });
     await wait();
     await tap('#basis');
     await destSide();
     await tap('#sheet [data-dest="nation"]');
     await wait();
-    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '11590', basis: 'region' });
-    expect($('#areas-basis-nation').textContent).toBe('서울');
+    expect(current().state()).toMatchObject({ dest: 'nation', sgg: '41281', basis: 'region' });
+    expect($('#areas-basis-nation').textContent).toBe('경기');
   });
 
   // last: another language's words stay in the tables for the rest of this file

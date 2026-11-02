@@ -1,0 +1,3341 @@
+{
+ "round": "01",
+ "city": "650",
+ "criteria": "review/seoul/pop-criteria.md",
+ "source": "Naver 검색광고 keywordstool, showDetail=1",
+ "places": 144,
+ "keywords": 156,
+ "calls": 32,
+ "tries": 32,
+ "failed": [],
+ "missingKeywords": [],
+ "failedCalls": [],
+ "rows": [
+  {
+   "id": "nt-1021339",
+   "name": "서래마을",
+   "keywords": [
+    {
+     "keyword": "서래마을",
+     "why": "카드 이름",
+     "pc": 2350,
+     "mobile": 11300,
+     "volume": 13650
+    }
+   ],
+   "volume": 13650
+  },
+  {
+   "id": "nt-1131275",
+   "name": "매헌시민의 숲",
+   "keywords": [
+    {
+     "keyword": "매헌시민의숲",
+     "why": "카드 이름",
+     "pc": 2460,
+     "mobile": 22000,
+     "volume": 24460
+    }
+   ],
+   "volume": 24460
+  },
+  {
+   "id": "nt-125452",
+   "name": "청계산",
+   "keywords": [
+    {
+     "keyword": "청계산",
+     "why": "카드 이름",
+     "pc": 6160,
+     "mobile": 26300,
+     "volume": 32460
+    }
+   ],
+   "volume": 32460
+  },
+  {
+   "id": "nt-126530",
+   "name": "서울 헌릉(태종·원경왕후)과 인릉(순조·순원황후) [유네스코 세계유산]",
+   "keywords": [
+    {
+     "keyword": "서울헌릉태종원경왕후과인릉순조순원황후유네스코세계유산",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "헌릉태종원경왕후과인릉순조순원황후유네스코세계유산",
+     "why": "앞의 「서초」·「국립」을 뗀 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-129747",
+   "name": "예술의전당",
+   "keywords": [
+    {
+     "keyword": "예술의전당",
+     "why": "카드 이름",
+     "pc": 31500,
+     "mobile": 126600,
+     "volume": 158100
+    }
+   ],
+   "volume": 158100
+  },
+  {
+   "id": "nt-129763",
+   "name": "한원미술관",
+   "keywords": [
+    {
+     "keyword": "한원미술관",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 110,
+     "volume": 170
+    }
+   ],
+   "volume": 170
+  },
+  {
+   "id": "nt-130124",
+   "name": "국립국악원",
+   "keywords": [
+    {
+     "keyword": "국립국악원",
+     "why": "카드 이름",
+     "pc": 5880,
+     "mobile": 16700,
+     "volume": 22580
+    }
+   ],
+   "volume": 22580
+  },
+  {
+   "id": "nt-130125",
+   "name": "국립국악박물관",
+   "keywords": [
+    {
+     "keyword": "국립국악박물관",
+     "why": "카드 이름",
+     "pc": 130,
+     "mobile": 820,
+     "volume": 950
+    },
+    {
+     "keyword": "국악박물관",
+     "why": "앞의 「서초」·「국립」을 뗀 이름",
+     "pc": 330,
+     "mobile": 1430,
+     "volume": 1760
+    }
+   ],
+   "volume": 2710
+  },
+  {
+   "id": "nt-130156",
+   "name": "외교사료관",
+   "keywords": [
+    {
+     "keyword": "외교사료관",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 220,
+     "volume": 390
+    }
+   ],
+   "volume": 390
+  },
+  {
+   "id": "nt-130179",
+   "name": "분재박물관",
+   "keywords": [
+    {
+     "keyword": "분재박물관",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 110,
+     "volume": 130
+    }
+   ],
+   "volume": 130
+  },
+  {
+   "id": "nt-130301",
+   "name": "한전갤러리",
+   "keywords": [
+    {
+     "keyword": "한전갤러리",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 240,
+     "volume": 300
+    }
+   ],
+   "volume": 300
+  },
+  {
+   "id": "nt-130315",
+   "name": "한전아트센터 공연장",
+   "keywords": [
+    {
+     "keyword": "한전아트센터공연장",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 60,
+     "volume": 65
+    }
+   ],
+   "volume": 65
+  },
+  {
+   "id": "nt-130503",
+   "name": "모차르트 콘서트홀",
+   "keywords": [
+    {
+     "keyword": "모차르트콘서트홀",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-130951",
+   "name": "전기박물관",
+   "keywords": [
+    {
+     "keyword": "전기박물관",
+     "why": "카드 이름",
+     "pc": 140,
+     "mobile": 480,
+     "volume": 620
+    }
+   ],
+   "volume": 620
+  },
+  {
+   "id": "nt-131315",
+   "name": "한강시민공원 잠원수영장(실외)",
+   "keywords": [
+    {
+     "keyword": "한강시민공원잠원수영장",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-133267",
+   "name": "삼학도",
+   "keywords": [
+    {
+     "keyword": "서초삼학도",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-133785",
+   "name": "서석대",
+   "keywords": [
+    {
+     "keyword": "서초서석대",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": 30,
+     "volume": 35
+    }
+   ],
+   "volume": 35
+  },
+  {
+   "id": "nt-134732",
+   "name": "자인뭉티기",
+   "keywords": [
+    {
+     "keyword": "자인뭉티기",
+     "why": "카드 이름",
+     "pc": 350,
+     "mobile": 720,
+     "volume": 1070
+    }
+   ],
+   "volume": 1070
+  },
+  {
+   "id": "nt-134733",
+   "name": "카나디안 랍스터",
+   "keywords": [
+    {
+     "keyword": "카나디안랍스터",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 210,
+     "volume": 240
+    }
+   ],
+   "volume": 240
+  },
+  {
+   "id": "nt-134760",
+   "name": "생선구이대풍",
+   "keywords": [
+    {
+     "keyword": "생선구이대풍",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 60,
+     "volume": 70
+    }
+   ],
+   "volume": 70
+  },
+  {
+   "id": "nt-134771",
+   "name": "부일갈비",
+   "keywords": [
+    {
+     "keyword": "부일갈비",
+     "why": "카드 이름",
+     "pc": 990,
+     "mobile": 5170,
+     "volume": 6160
+    }
+   ],
+   "volume": 6160
+  },
+  {
+   "id": "nt-134807",
+   "name": "영광밥상",
+   "keywords": [
+    {
+     "keyword": "영광밥상",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 330,
+     "volume": 380
+    }
+   ],
+   "volume": 380
+  },
+  {
+   "id": "nt-1985744",
+   "name": "통나무집",
+   "keywords": [
+    {
+     "keyword": "통나무집",
+     "why": "카드 이름",
+     "pc": 770,
+     "mobile": 6880,
+     "volume": 7650
+    }
+   ],
+   "volume": 7650
+  },
+  {
+   "id": "nt-2049449",
+   "name": "텍사스 데 브라질 센트럴시티점",
+   "keywords": [
+    {
+     "keyword": "텍사스데브라질센트럴시티점",
+     "why": "카드 이름",
+     "pc": 100,
+     "mobile": 60,
+     "volume": 160
+    }
+   ],
+   "volume": 160
+  },
+  {
+   "id": "nt-2049609",
+   "name": "모던눌랑 센트럴시티점",
+   "keywords": [
+    {
+     "keyword": "모던눌랑센트럴시티점",
+     "why": "카드 이름",
+     "pc": 100,
+     "mobile": 110,
+     "volume": 210
+    }
+   ],
+   "volume": 210
+  },
+  {
+   "id": "nt-232215",
+   "name": "바바인디아 강남역점",
+   "keywords": [
+    {
+     "keyword": "바바인디아강남역점",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 20,
+     "volume": 40
+    }
+   ],
+   "volume": 40
+  },
+  {
+   "id": "nt-232261",
+   "name": "버드나무집 본점",
+   "keywords": [
+    {
+     "keyword": "버드나무집본점",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 60,
+     "volume": 70
+    },
+    {
+     "keyword": "버드나무집",
+     "why": "「본점」을 뗀 이름",
+     "pc": 1440,
+     "mobile": 15000,
+     "volume": 16440
+    }
+   ],
+   "volume": 16510
+  },
+  {
+   "id": "nt-2357761",
+   "name": "구룡산(서울)",
+   "keywords": [
+    {
+     "keyword": "서울구룡산",
+     "why": "이름 끝 「(서울)」: 다른 지역에 같은 이름이 있음 → 서울 + 이름",
+     "pc": 10,
+     "mobile": 20,
+     "volume": 30
+    }
+   ],
+   "volume": 30
+  },
+  {
+   "id": "nt-2391348",
+   "name": "여의천",
+   "keywords": [
+    {
+     "keyword": "여의천",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 110,
+     "volume": 150
+    }
+   ],
+   "volume": 150
+  },
+  {
+   "id": "nt-2501597",
+   "name": "흰물결아트센터",
+   "keywords": [
+    {
+     "keyword": "흰물결아트센터",
+     "why": "카드 이름",
+     "pc": 520,
+     "mobile": 2700,
+     "volume": 3220
+    }
+   ],
+   "volume": 3220
+  },
+  {
+   "id": "nt-2535556",
+   "name": "린스시",
+   "keywords": [
+    {
+     "keyword": "서초린스시",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2535558",
+   "name": "홍루몽",
+   "keywords": [
+    {
+     "keyword": "서초홍루몽",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 10,
+     "volume": 20
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-2603070",
+   "name": "설마중",
+   "keywords": [
+    {
+     "keyword": "서초설마중",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2604812",
+   "name": "언구비육회",
+   "keywords": [
+    {
+     "keyword": "언구비육회",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 120,
+     "volume": 170
+    }
+   ],
+   "volume": 170
+  },
+  {
+   "id": "nt-2623617",
+   "name": "로리스 더 프라임 립",
+   "keywords": [
+    {
+     "keyword": "로리스더프라임립",
+     "why": "카드 이름",
+     "pc": 1200,
+     "mobile": 7490,
+     "volume": 8690
+    }
+   ],
+   "volume": 8690
+  },
+  {
+   "id": "nt-2647687",
+   "name": "골든블루마리나",
+   "keywords": [
+    {
+     "keyword": "골든블루마리나",
+     "why": "카드 이름",
+     "pc": 290,
+     "mobile": 1120,
+     "volume": 1410
+    }
+   ],
+   "volume": 1410
+  },
+  {
+   "id": "nt-2718257",
+   "name": "서울웨이브아트센터",
+   "keywords": [
+    {
+     "keyword": "서울웨이브아트센터",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 340,
+     "volume": 430
+    }
+   ],
+   "volume": 430
+  },
+  {
+   "id": "nt-2733856",
+   "name": "백년옥",
+   "keywords": [
+    {
+     "keyword": "서초백년옥",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 30,
+     "mobile": 290,
+     "volume": 320
+    }
+   ],
+   "volume": 320
+  },
+  {
+   "id": "nt-2733859",
+   "name": "대나무골",
+   "keywords": [
+    {
+     "keyword": "대나무골",
+     "why": "카드 이름",
+     "pc": 110,
+     "mobile": 740,
+     "volume": 850
+    }
+   ],
+   "volume": 850
+  },
+  {
+   "id": "nt-2745504",
+   "name": "예촌 본관",
+   "keywords": [
+    {
+     "keyword": "예촌본관",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2745526",
+   "name": "우참판",
+   "keywords": [
+    {
+     "keyword": "서초우참판",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": "< 10",
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-2745569",
+   "name": "서래본갈비",
+   "keywords": [
+    {
+     "keyword": "서래본갈비",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 960,
+     "volume": 1080
+    }
+   ],
+   "volume": 1080
+  },
+  {
+   "id": "nt-2745572",
+   "name": "서관면옥",
+   "keywords": [
+    {
+     "keyword": "서관면옥",
+     "why": "카드 이름",
+     "pc": 840,
+     "mobile": 5250,
+     "volume": 6090
+    }
+   ],
+   "volume": 6090
+  },
+  {
+   "id": "nt-2745580",
+   "name": "배나무골오리집 양재본점",
+   "keywords": [
+    {
+     "keyword": "배나무골오리집양재본점",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": "< 10",
+     "volume": 15
+    },
+    {
+     "keyword": "배나무골오리집",
+     "why": "「본점」을 뗀 이름",
+     "pc": 70,
+     "mobile": 340,
+     "volume": 410
+    }
+   ],
+   "volume": 425
+  },
+  {
+   "id": "nt-2757738",
+   "name": "한국순대(서초구)",
+   "keywords": [
+    {
+     "keyword": "한국순대",
+     "why": "카드 이름",
+     "pc": 140,
+     "mobile": 820,
+     "volume": 960
+    }
+   ],
+   "volume": 960
+  },
+  {
+   "id": "nt-2757826",
+   "name": "영동설렁탕",
+   "keywords": [
+    {
+     "keyword": "영동설렁탕",
+     "why": "카드 이름",
+     "pc": 740,
+     "mobile": 7150,
+     "volume": 7890
+    }
+   ],
+   "volume": 7890
+  },
+  {
+   "id": "nt-2757827",
+   "name": "소나무집",
+   "keywords": [
+    {
+     "keyword": "소나무집",
+     "why": "카드 이름",
+     "pc": 660,
+     "mobile": 8040,
+     "volume": 8700
+    }
+   ],
+   "volume": 8700
+  },
+  {
+   "id": "nt-2757828",
+   "name": "소백산 양재별관",
+   "keywords": [
+    {
+     "keyword": "소백산양재별관",
+     "why": "카드 이름",
+     "pc": 150,
+     "mobile": 480,
+     "volume": 630
+    }
+   ],
+   "volume": 630
+  },
+  {
+   "id": "nt-2757829",
+   "name": "장꼬방김치찌개전문",
+   "keywords": [
+    {
+     "keyword": "장꼬방김치찌개전문",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2757830",
+   "name": "오선채",
+   "keywords": [
+    {
+     "keyword": "서초오선채",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2757831",
+   "name": "우면산자연생태공원",
+   "keywords": [
+    {
+     "keyword": "우면산자연생태공원",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 90,
+     "volume": 110
+    }
+   ],
+   "volume": 110
+  },
+  {
+   "id": "nt-2763742",
+   "name": "미우야",
+   "keywords": [
+    {
+     "keyword": "서초미우야",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2763749",
+   "name": "밴건디스테이크하우스",
+   "keywords": [
+    {
+     "keyword": "밴건디스테이크하우스",
+     "why": "카드 이름",
+     "pc": 90,
+     "mobile": 290,
+     "volume": 380
+    }
+   ],
+   "volume": 380
+  },
+  {
+   "id": "nt-2763875",
+   "name": "반포한강공원 달빛광장",
+   "keywords": [
+    {
+     "keyword": "반포한강공원달빛광장",
+     "why": "카드 이름",
+     "pc": 160,
+     "mobile": 470,
+     "volume": 630
+    }
+   ],
+   "volume": 630
+  },
+  {
+   "id": "nt-2773271",
+   "name": "양재근린공원",
+   "keywords": [
+    {
+     "keyword": "양재근린공원",
+     "why": "카드 이름",
+     "pc": 110,
+     "mobile": 370,
+     "volume": 480
+    }
+   ],
+   "volume": 480
+  },
+  {
+   "id": "nt-2773409",
+   "name": "서리풀공원",
+   "keywords": [
+    {
+     "keyword": "서리풀공원",
+     "why": "카드 이름",
+     "pc": 350,
+     "mobile": 1620,
+     "volume": 1970
+    }
+   ],
+   "volume": 1970
+  },
+  {
+   "id": "nt-2773417",
+   "name": "다이브라이프",
+   "keywords": [
+    {
+     "keyword": "다이브라이프",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 70,
+     "volume": 90
+    }
+   ],
+   "volume": 90
+  },
+  {
+   "id": "nt-2779508",
+   "name": "우면산 소망탑",
+   "keywords": [
+    {
+     "keyword": "우면산소망탑",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 190,
+     "volume": 220
+    }
+   ],
+   "volume": 220
+  },
+  {
+   "id": "nt-2783567",
+   "name": "흰물결갤러리",
+   "keywords": [
+    {
+     "keyword": "흰물결갤러리",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 160,
+     "volume": 190
+    }
+   ],
+   "volume": 190
+  },
+  {
+   "id": "nt-2784052",
+   "name": "양재꽃시장",
+   "keywords": [
+    {
+     "keyword": "양재꽃시장",
+     "why": "카드 이름",
+     "pc": 2270,
+     "mobile": 17500,
+     "volume": 19770
+    }
+   ],
+   "volume": 19770
+  },
+  {
+   "id": "nt-2784696",
+   "name": "동작구름카페",
+   "keywords": [
+    {
+     "keyword": "동작구름카페",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 460,
+     "volume": 500
+    }
+   ],
+   "volume": 500
+  },
+  {
+   "id": "nt-2810010",
+   "name": "마얘(MAILLET)",
+   "keywords": [
+    {
+     "keyword": "서초마얘",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2847224",
+   "name": "태양커피",
+   "keywords": [
+    {
+     "keyword": "태양커피",
+     "why": "카드 이름",
+     "pc": 370,
+     "mobile": 4480,
+     "volume": 4850
+    }
+   ],
+   "volume": 4850
+  },
+  {
+   "id": "nt-2847260",
+   "name": "프리퍼",
+   "keywords": [
+    {
+     "keyword": "서초프리퍼",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": 70,
+     "volume": 75
+    }
+   ],
+   "volume": 75
+  },
+  {
+   "id": "nt-2854224",
+   "name": "옛골토성 청계산점",
+   "keywords": [
+    {
+     "keyword": "옛골토성청계산점",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 330,
+     "volume": 500
+    }
+   ],
+   "volume": 500
+  },
+  {
+   "id": "nt-2854248",
+   "name": "카페 토다",
+   "keywords": [
+    {
+     "keyword": "카페토다",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 110,
+     "volume": 120
+    }
+   ],
+   "volume": 120
+  },
+  {
+   "id": "nt-2854987",
+   "name": "한국회관",
+   "keywords": [
+    {
+     "keyword": "한국회관",
+     "why": "카드 이름",
+     "pc": 110,
+     "mobile": 720,
+     "volume": 830
+    }
+   ],
+   "volume": 830
+  },
+  {
+   "id": "nt-2855008",
+   "name": "한성돈까스",
+   "keywords": [
+    {
+     "keyword": "한성돈까스",
+     "why": "카드 이름",
+     "pc": 330,
+     "mobile": 2370,
+     "volume": 2700
+    }
+   ],
+   "volume": 2700
+  },
+  {
+   "id": "nt-2855086",
+   "name": "혜장국",
+   "keywords": [
+    {
+     "keyword": "서초혜장국",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-2855762",
+   "name": "3대삼계장인",
+   "keywords": [
+    {
+     "keyword": "3대삼계장인",
+     "why": "카드 이름",
+     "pc": 360,
+     "mobile": 2720,
+     "volume": 3080
+    }
+   ],
+   "volume": 3080
+  },
+  {
+   "id": "nt-2855797",
+   "name": "무한쌈밥집",
+   "keywords": [
+    {
+     "keyword": "무한쌈밥집",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 740,
+     "volume": 800
+    }
+   ],
+   "volume": 800
+  },
+  {
+   "id": "nt-2855835",
+   "name": "바다축제 서초점",
+   "keywords": [
+    {
+     "keyword": "바다축제서초점",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 170,
+     "volume": 200
+    }
+   ],
+   "volume": 200
+  },
+  {
+   "id": "nt-2855865",
+   "name": "바른고기 정육점 서래마을본점",
+   "keywords": [
+    {
+     "keyword": "바른고기정육점서래마을본점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    },
+    {
+     "keyword": "바른고기정육점",
+     "why": "「본점」을 뗀 이름",
+     "pc": 350,
+     "mobile": 1970,
+     "volume": 2320
+    }
+   ],
+   "volume": 2330
+  },
+  {
+   "id": "nt-2855877",
+   "name": "볼라레",
+   "keywords": [
+    {
+     "keyword": "서초볼라레",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2855896",
+   "name": "브루스리",
+   "keywords": [
+    {
+     "keyword": "브루스리",
+     "why": "카드 이름",
+     "pc": 250,
+     "mobile": 2160,
+     "volume": 2410
+    }
+   ],
+   "volume": 2410
+  },
+  {
+   "id": "nt-2855918",
+   "name": "비스트로누",
+   "keywords": [
+    {
+     "keyword": "비스트로누",
+     "why": "카드 이름",
+     "pc": 240,
+     "mobile": 980,
+     "volume": 1220
+    }
+   ],
+   "volume": 1220
+  },
+  {
+   "id": "nt-2855972",
+   "name": "서래향",
+   "keywords": [
+    {
+     "keyword": "서초서래향",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2855984",
+   "name": "설눈",
+   "keywords": [
+    {
+     "keyword": "서초설눈",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 20,
+     "mobile": 260,
+     "volume": 280
+    }
+   ],
+   "volume": 280
+  },
+  {
+   "id": "nt-2856008",
+   "name": "송강",
+   "keywords": [
+    {
+     "keyword": "서초송강",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-2856026",
+   "name": "송화유수",
+   "keywords": [
+    {
+     "keyword": "송화유수",
+     "why": "카드 이름",
+     "pc": 230,
+     "mobile": 560,
+     "volume": 790
+    }
+   ],
+   "volume": 790
+  },
+  {
+   "id": "nt-2856044",
+   "name": "스시고",
+   "keywords": [
+    {
+     "keyword": "서초스시고",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2856068",
+   "name": "스시타노",
+   "keywords": [
+    {
+     "keyword": "스시타노",
+     "why": "카드 이름",
+     "pc": 180,
+     "mobile": 910,
+     "volume": 1090
+    }
+   ],
+   "volume": 1090
+  },
+  {
+   "id": "nt-2856108",
+   "name": "양재해장국",
+   "keywords": [
+    {
+     "keyword": "양재해장국",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 710,
+     "volume": 790
+    }
+   ],
+   "volume": 790
+  },
+  {
+   "id": "nt-2856174",
+   "name": "채미가",
+   "keywords": [
+    {
+     "keyword": "서초채미가",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 10,
+     "volume": 20
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-2856199",
+   "name": "보아즈",
+   "keywords": [
+    {
+     "keyword": "서초보아즈",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2856564",
+   "name": "다 피타(Da Pitta)",
+   "keywords": [
+    {
+     "keyword": "서초다피타",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 60,
+     "volume": 70
+    },
+    {
+     "keyword": "DAPITTA",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": 20,
+     "mobile": 160,
+     "volume": 180
+    }
+   ],
+   "volume": 250
+  },
+  {
+   "id": "nt-2856579",
+   "name": "댓짱돈까스 본점",
+   "keywords": [
+    {
+     "keyword": "댓짱돈까스본점",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 110,
+     "volume": 120
+    },
+    {
+     "keyword": "댓짱돈까스",
+     "why": "「본점」을 뗀 이름",
+     "pc": 300,
+     "mobile": 3040,
+     "volume": 3340
+    }
+   ],
+   "volume": 3460
+  },
+  {
+   "id": "nt-2856611",
+   "name": "동달식당 강남본점",
+   "keywords": [
+    {
+     "keyword": "동달식당강남본점",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 60,
+     "volume": 80
+    },
+    {
+     "keyword": "동달식당",
+     "why": "「본점」을 뗀 이름",
+     "pc": 220,
+     "mobile": 890,
+     "volume": 1110
+    }
+   ],
+   "volume": 1190
+  },
+  {
+   "id": "nt-2856638",
+   "name": "디토",
+   "keywords": [
+    {
+     "keyword": "서초디토",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 80,
+     "mobile": 200,
+     "volume": 280
+    }
+   ],
+   "volume": 280
+  },
+  {
+   "id": "nt-2856645",
+   "name": "로얄맨션",
+   "keywords": [
+    {
+     "keyword": "로얄맨션",
+     "why": "카드 이름",
+     "pc": 150,
+     "mobile": 840,
+     "volume": 990
+    }
+   ],
+   "volume": 990
+  },
+  {
+   "id": "nt-2856652",
+   "name": "르지우",
+   "keywords": [
+    {
+     "keyword": "서초르지우",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2856695",
+   "name": "만다린",
+   "keywords": [
+    {
+     "keyword": "서초만다린",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  },
+  {
+   "id": "nt-2856707",
+   "name": "이솔라 레스토랑",
+   "keywords": [
+    {
+     "keyword": "이솔라레스토랑",
+     "why": "카드 이름",
+     "pc": 390,
+     "mobile": 2670,
+     "volume": 3060
+    }
+   ],
+   "volume": 3060
+  },
+  {
+   "id": "nt-2856713",
+   "name": "일식 신태평양",
+   "keywords": [
+    {
+     "keyword": "일식신태평양",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 20,
+     "volume": 30
+    }
+   ],
+   "volume": 30
+  },
+  {
+   "id": "nt-2856741",
+   "name": "조양관한정식",
+   "keywords": [
+    {
+     "keyword": "조양관한정식",
+     "why": "카드 이름",
+     "pc": 620,
+     "mobile": 2770,
+     "volume": 3390
+    }
+   ],
+   "volume": 3390
+  },
+  {
+   "id": "nt-2856747",
+   "name": "줄라이",
+   "keywords": [
+    {
+     "keyword": "서초줄라이",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 30,
+     "volume": 40
+    }
+   ],
+   "volume": 40
+  },
+  {
+   "id": "nt-2856763",
+   "name": "해우담 본점",
+   "keywords": [
+    {
+     "keyword": "해우담본점",
+     "why": "카드 이름",
+     "pc": 70,
+     "mobile": 310,
+     "volume": 380
+    },
+    {
+     "keyword": "서초해우담",
+     "why": "「본점」을 뗀 이름(세 글자 이하 → 서초 + 이름)",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 390
+  },
+  {
+   "id": "nt-2857428",
+   "name": "까르니브라질그릴",
+   "keywords": [
+    {
+     "keyword": "까르니브라질그릴",
+     "why": "카드 이름",
+     "pc": 230,
+     "mobile": 1150,
+     "volume": 1380
+    }
+   ],
+   "volume": 1380
+  },
+  {
+   "id": "nt-2860128",
+   "name": "장수원",
+   "keywords": [
+    {
+     "keyword": "서초장수원",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2860349",
+   "name": "하오차이",
+   "keywords": [
+    {
+     "keyword": "하오차이",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 1780,
+     "volume": 1950
+    }
+   ],
+   "volume": 1950
+  },
+  {
+   "id": "nt-2860770",
+   "name": "갈비사랑",
+   "keywords": [
+    {
+     "keyword": "갈비사랑",
+     "why": "카드 이름",
+     "pc": 450,
+     "mobile": 1340,
+     "volume": 1790
+    }
+   ],
+   "volume": 1790
+  },
+  {
+   "id": "nt-2860811",
+   "name": "Merci",
+   "keywords": [
+    {
+     "keyword": "MERCI",
+     "why": "카드 이름",
+     "pc": 560,
+     "mobile": 4430,
+     "volume": 4990
+    }
+   ],
+   "volume": 4990
+  },
+  {
+   "id": "nt-2860963",
+   "name": "탐라도야지 본점",
+   "keywords": [
+    {
+     "keyword": "탐라도야지본점",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    },
+    {
+     "keyword": "탐라도야지",
+     "why": "「본점」을 뗀 이름",
+     "pc": 210,
+     "mobile": 1000,
+     "volume": 1210
+    }
+   ],
+   "volume": 1235
+  },
+  {
+   "id": "nt-2864321",
+   "name": "미나미",
+   "keywords": [
+    {
+     "keyword": "서초미나미",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 50,
+     "volume": 60
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-2864341",
+   "name": "메종조",
+   "keywords": [
+    {
+     "keyword": "서초메종조",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-2903776",
+   "name": "낙원타코 강남역점",
+   "keywords": [
+    {
+     "keyword": "낙원타코강남역점",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 10,
+     "volume": 20
+    }
+   ],
+   "volume": 20
+  },
+  {
+   "id": "nt-2905321",
+   "name": "메종엠오",
+   "keywords": [
+    {
+     "keyword": "메종엠오",
+     "why": "카드 이름",
+     "pc": 820,
+     "mobile": 3840,
+     "volume": 4660
+    }
+   ],
+   "volume": 4660
+  },
+  {
+   "id": "nt-2907181",
+   "name": "남미플랜트랩",
+   "keywords": [
+    {
+     "keyword": "남미플랜트랩",
+     "why": "카드 이름",
+     "pc": 120,
+     "mobile": 580,
+     "volume": 700
+    }
+   ],
+   "volume": 700
+  },
+  {
+   "id": "nt-2927020",
+   "name": "진도울돌목가는길",
+   "keywords": [
+    {
+     "keyword": "진도울돌목가는길",
+     "why": "카드 이름",
+     "pc": 210,
+     "mobile": 1450,
+     "volume": 1660
+    }
+   ],
+   "volume": 1660
+  },
+  {
+   "id": "nt-2946113",
+   "name": "길상도예",
+   "keywords": [
+    {
+     "keyword": "길상도예",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 130,
+     "volume": 180
+    }
+   ],
+   "volume": 180
+  },
+  {
+   "id": "nt-300076",
+   "name": "대성사(서울)",
+   "keywords": [
+    {
+     "keyword": "서울대성사",
+     "why": "이름 끝 「(서울)」: 다른 지역에 같은 이름이 있음 → 서울 + 이름",
+     "pc": 10,
+     "mobile": 30,
+     "volume": 40
+    }
+   ],
+   "volume": 40
+  },
+  {
+   "id": "nt-3058180",
+   "name": "서울서예박물관",
+   "keywords": [
+    {
+     "keyword": "서울서예박물관",
+     "why": "카드 이름",
+     "pc": 160,
+     "mobile": 820,
+     "volume": 980
+    }
+   ],
+   "volume": 980
+  },
+  {
+   "id": "nt-3071613",
+   "name": "현대요트 서울지점",
+   "keywords": [
+    {
+     "keyword": "현대요트서울지점",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": "< 10",
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-3080864",
+   "name": "국립국악원 예악당",
+   "keywords": [
+    {
+     "keyword": "국립국악원예악당",
+     "why": "카드 이름",
+     "pc": 140,
+     "mobile": 590,
+     "volume": 730
+    },
+    {
+     "keyword": "국악원예악당",
+     "why": "앞의 「서초」·「국립」을 뗀 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 745
+  },
+  {
+   "id": "nt-3080870",
+   "name": "SCC홀",
+   "keywords": [
+    {
+     "keyword": "SCC홀",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 630,
+     "volume": 710
+    }
+   ],
+   "volume": 710
+  },
+  {
+   "id": "nt-3080901",
+   "name": "영산양재홀",
+   "keywords": [
+    {
+     "keyword": "영산양재홀",
+     "why": "카드 이름",
+     "pc": 130,
+     "mobile": 670,
+     "volume": 800
+    }
+   ],
+   "volume": 800
+  },
+  {
+   "id": "nt-3351700",
+   "name": "서초문화예술공원",
+   "keywords": [
+    {
+     "keyword": "서초문화예술공원",
+     "why": "카드 이름",
+     "pc": 470,
+     "mobile": 2000,
+     "volume": 2470
+    }
+   ],
+   "volume": 2470
+  },
+  {
+   "id": "nt-3384166",
+   "name": "서울아트나우 갤러리",
+   "keywords": [
+    {
+     "keyword": "서울아트나우갤러리",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-3410603",
+   "name": "채빛퀴진",
+   "keywords": [
+    {
+     "keyword": "채빛퀴진",
+     "why": "카드 이름",
+     "pc": 1740,
+     "mobile": 9190,
+     "volume": 10930
+    }
+   ],
+   "volume": 10930
+  },
+  {
+   "id": "nt-3410623",
+   "name": "카페 돌체",
+   "keywords": [
+    {
+     "keyword": "카페돌체",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 260,
+     "volume": 300
+    }
+   ],
+   "volume": 300
+  },
+  {
+   "id": "nt-3525664",
+   "name": "하이디하우스",
+   "keywords": [
+    {
+     "keyword": "하이디하우스",
+     "why": "카드 이름",
+     "pc": 520,
+     "mobile": 2840,
+     "volume": 3360
+    }
+   ],
+   "volume": 3360
+  },
+  {
+   "id": "nt-3526332",
+   "name": "[서울둘레길 10코스] 우면산코스",
+   "keywords": [
+    {
+     "keyword": "서울둘레길10코스우면산코스",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-3551135",
+   "name": "도정육관",
+   "keywords": [
+    {
+     "keyword": "도정육관",
+     "why": "카드 이름",
+     "pc": 510,
+     "mobile": 910,
+     "volume": 1420
+    }
+   ],
+   "volume": 1420
+  },
+  {
+   "id": "nt-3551926",
+   "name": "고깃집열",
+   "keywords": [
+    {
+     "keyword": "고깃집열",
+     "why": "카드 이름",
+     "pc": 290,
+     "mobile": 790,
+     "volume": 1080
+    }
+   ],
+   "volume": 1080
+  },
+  {
+   "id": "nt-3566919",
+   "name": "디오디아(DIODIA)",
+   "keywords": [
+    {
+     "keyword": "디오디아",
+     "why": "카드 이름",
+     "pc": 2400,
+     "mobile": 11900,
+     "volume": 14300
+    },
+    {
+     "keyword": "DIODIA",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": "< 10",
+     "mobile": 60,
+     "volume": 65
+    }
+   ],
+   "volume": 14365
+  },
+  {
+   "id": "nt-3575096",
+   "name": "한강 해치카",
+   "keywords": [
+    {
+     "keyword": "한강해치카",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 1010,
+     "volume": 1070
+    }
+   ],
+   "volume": 1070
+  },
+  {
+   "id": "nt-4001148",
+   "name": "피카소 벽화",
+   "keywords": [
+    {
+     "keyword": "피카소벽화",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-403534",
+   "name": "톰볼라",
+   "keywords": [
+    {
+     "keyword": "서초톰볼라",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-4060617",
+   "name": "세빛섬 튜브스터",
+   "keywords": [
+    {
+     "keyword": "세빛섬튜브스터",
+     "why": "카드 이름",
+     "pc": 100,
+     "mobile": 840,
+     "volume": 940
+    }
+   ],
+   "volume": 940
+  },
+  {
+   "id": "nt-581154",
+   "name": "상락원",
+   "keywords": [
+    {
+     "keyword": "서초상락원",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 서초 + 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-581825",
+   "name": "노랑저고리",
+   "keywords": [
+    {
+     "keyword": "노랑저고리",
+     "why": "카드 이름",
+     "pc": 240,
+     "mobile": 950,
+     "volume": 1190
+    }
+   ],
+   "volume": 1190
+  },
+  {
+   "id": "nt-584698",
+   "name": "스파레이",
+   "keywords": [
+    {
+     "keyword": "스파레이",
+     "why": "카드 이름",
+     "pc": 710,
+     "mobile": 8980,
+     "volume": 9690
+    }
+   ],
+   "volume": 9690
+  },
+  {
+   "id": "nt-729167",
+   "name": "반포대교 달빛무지개분수",
+   "keywords": [
+    {
+     "keyword": "반포대교달빛무지개분수",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-736807",
+   "name": "샘터화랑",
+   "keywords": [
+    {
+     "keyword": "샘터화랑",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    }
+   ],
+   "volume": 50
+  },
+  {
+   "id": "nt-753972",
+   "name": "매헌윤봉길의사기념관",
+   "keywords": [
+    {
+     "keyword": "매헌윤봉길의사기념관",
+     "why": "카드 이름",
+     "pc": 260,
+     "mobile": 1010,
+     "volume": 1270
+    }
+   ],
+   "volume": 1270
+  },
+  {
+   "id": "nt-753981",
+   "name": "몽마르뜨공원",
+   "keywords": [
+    {
+     "keyword": "몽마르뜨공원",
+     "why": "카드 이름",
+     "pc": 240,
+     "mobile": 1180,
+     "volume": 1420
+    }
+   ],
+   "volume": 1420
+  },
+  {
+   "id": "nt-753983",
+   "name": "반포 서래섬",
+   "keywords": [
+    {
+     "keyword": "반포서래섬",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 470,
+     "volume": 500
+    }
+   ],
+   "volume": 500
+  },
+  {
+   "id": "nt-753986",
+   "name": "효령대군 이보 묘역",
+   "keywords": [
+    {
+     "keyword": "효령대군이보묘역",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    }
+   ],
+   "volume": 25
+  },
+  {
+   "id": "nt-776082",
+   "name": "관문사(서울)",
+   "keywords": [
+    {
+     "keyword": "서울관문사",
+     "why": "이름 끝 「(서울)」: 다른 지역에 같은 이름이 있음 → 서울 + 이름",
+     "pc": 40,
+     "mobile": 350,
+     "volume": 390
+    }
+   ],
+   "volume": 390
+  },
+  {
+   "id": "nt-827585",
+   "name": "양재천 근린공원",
+   "keywords": [
+    {
+     "keyword": "양재천근린공원",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 170,
+     "volume": 190
+    }
+   ],
+   "volume": 190
+  },
+  {
+   "id": "nt-827642",
+   "name": "헌인릉 생태경관보전지역(오리나무림)",
+   "keywords": [
+    {
+     "keyword": "헌인릉생태경관보전지역",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-970052",
+   "name": "세빛섬",
+   "keywords": [
+    {
+     "keyword": "세빛섬",
+     "why": "카드 이름",
+     "pc": 1130,
+     "mobile": 4890,
+     "volume": 6020
+    }
+   ],
+   "volume": 6020
+  },
+  {
+   "id": "nt-970138",
+   "name": "반포한강공원",
+   "keywords": [
+    {
+     "keyword": "반포한강공원",
+     "why": "카드 이름",
+     "pc": 3790,
+     "mobile": 38900,
+     "volume": 42690
+    }
+   ],
+   "volume": 42690
+  },
+  {
+   "id": "nt-970342",
+   "name": "잠원한강공원",
+   "keywords": [
+    {
+     "keyword": "잠원한강공원",
+     "why": "카드 이름",
+     "pc": 1550,
+     "mobile": 11100,
+     "volume": 12650
+    }
+   ],
+   "volume": 12650
+  }
+ ],
+ "callLog": [
+  {
+   "at": "2026-11-02T05:30:54.127Z",
+   "batch": [
+    "3대삼계장인",
+    "DAPITTA",
+    "DIODIA",
+    "MERCI",
+    "SCC홀"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "3대삼계장인",
+     "monthlyPcQcCnt": 360,
+     "monthlyMobileQcCnt": 2720
+    },
+    {
+     "relKeyword": "DAPITTA",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 160
+    },
+    {
+     "relKeyword": "DIODIA",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "MERCI",
+     "monthlyPcQcCnt": 560,
+     "monthlyMobileQcCnt": 4430
+    },
+    {
+     "relKeyword": "SCC홀",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 630
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:54.751Z",
+   "batch": [
+    "갈비사랑",
+    "고깃집열",
+    "골든블루마리나",
+    "국립국악박물관",
+    "국립국악원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "갈비사랑",
+     "monthlyPcQcCnt": 450,
+     "monthlyMobileQcCnt": 1340
+    },
+    {
+     "relKeyword": "고깃집열",
+     "monthlyPcQcCnt": 290,
+     "monthlyMobileQcCnt": 790
+    },
+    {
+     "relKeyword": "골든블루마리나",
+     "monthlyPcQcCnt": 290,
+     "monthlyMobileQcCnt": 1120
+    },
+    {
+     "relKeyword": "국립국악박물관",
+     "monthlyPcQcCnt": 130,
+     "monthlyMobileQcCnt": 820
+    },
+    {
+     "relKeyword": "국립국악원",
+     "monthlyPcQcCnt": 5880,
+     "monthlyMobileQcCnt": 16700
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:55.357Z",
+   "batch": [
+    "국립국악원예악당",
+    "국악박물관",
+    "국악원예악당",
+    "길상도예",
+    "까르니브라질그릴"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "국립국악원예악당",
+     "monthlyPcQcCnt": 140,
+     "monthlyMobileQcCnt": 590
+    },
+    {
+     "relKeyword": "국악박물관",
+     "monthlyPcQcCnt": 330,
+     "monthlyMobileQcCnt": 1430
+    },
+    {
+     "relKeyword": "국악원예악당",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "길상도예",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 130
+    },
+    {
+     "relKeyword": "까르니브라질그릴",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 1150
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:55.954Z",
+   "batch": [
+    "낙원타코강남역점",
+    "남미플랜트랩",
+    "노랑저고리",
+    "다이브라이프",
+    "대나무골"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "낙원타코강남역점",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "남미플랜트랩",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 580
+    },
+    {
+     "relKeyword": "노랑저고리",
+     "monthlyPcQcCnt": 240,
+     "monthlyMobileQcCnt": 950
+    },
+    {
+     "relKeyword": "다이브라이프",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "대나무골",
+     "monthlyPcQcCnt": 110,
+     "monthlyMobileQcCnt": 740
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:56.578Z",
+   "batch": [
+    "댓짱돈까스",
+    "댓짱돈까스본점",
+    "도정육관",
+    "동달식당",
+    "동달식당강남본점"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "댓짱돈까스",
+     "monthlyPcQcCnt": 300,
+     "monthlyMobileQcCnt": 3040
+    },
+    {
+     "relKeyword": "댓짱돈까스본점",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "도정육관",
+     "monthlyPcQcCnt": 510,
+     "monthlyMobileQcCnt": 910
+    },
+    {
+     "relKeyword": "동달식당",
+     "monthlyPcQcCnt": 220,
+     "monthlyMobileQcCnt": 890
+    },
+    {
+     "relKeyword": "동달식당강남본점",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 60
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:57.193Z",
+   "batch": [
+    "동작구름카페",
+    "디오디아",
+    "로리스더프라임립",
+    "로얄맨션",
+    "매헌시민의숲"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "동작구름카페",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 460
+    },
+    {
+     "relKeyword": "디오디아",
+     "monthlyPcQcCnt": 2400,
+     "monthlyMobileQcCnt": 11900
+    },
+    {
+     "relKeyword": "로리스더프라임립",
+     "monthlyPcQcCnt": 1200,
+     "monthlyMobileQcCnt": 7490
+    },
+    {
+     "relKeyword": "로얄맨션",
+     "monthlyPcQcCnt": 150,
+     "monthlyMobileQcCnt": 840
+    },
+    {
+     "relKeyword": "매헌시민의숲",
+     "monthlyPcQcCnt": 2460,
+     "monthlyMobileQcCnt": 22000
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:57.819Z",
+   "batch": [
+    "매헌윤봉길의사기념관",
+    "메종엠오",
+    "모던눌랑센트럴시티점",
+    "모차르트콘서트홀",
+    "몽마르뜨공원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "매헌윤봉길의사기념관",
+     "monthlyPcQcCnt": 260,
+     "monthlyMobileQcCnt": 1010
+    },
+    {
+     "relKeyword": "메종엠오",
+     "monthlyPcQcCnt": 820,
+     "monthlyMobileQcCnt": 3840
+    },
+    {
+     "relKeyword": "모던눌랑센트럴시티점",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "모차르트콘서트홀",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "몽마르뜨공원",
+     "monthlyPcQcCnt": 240,
+     "monthlyMobileQcCnt": 1180
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:58.421Z",
+   "batch": [
+    "무한쌈밥집",
+    "바다축제서초점",
+    "바른고기정육점",
+    "바른고기정육점서래마을본점",
+    "바바인디아강남역점"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "무한쌈밥집",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 740
+    },
+    {
+     "relKeyword": "바다축제서초점",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 170
+    },
+    {
+     "relKeyword": "바른고기정육점",
+     "monthlyPcQcCnt": 350,
+     "monthlyMobileQcCnt": 1970
+    },
+    {
+     "relKeyword": "바른고기정육점서래마을본점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "바바인디아강남역점",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 20
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:59.043Z",
+   "batch": [
+    "반포대교달빛무지개분수",
+    "반포서래섬",
+    "반포한강공원",
+    "반포한강공원달빛광장",
+    "배나무골오리집"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "반포대교달빛무지개분수",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "반포서래섬",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 470
+    },
+    {
+     "relKeyword": "반포한강공원",
+     "monthlyPcQcCnt": 3790,
+     "monthlyMobileQcCnt": 38900
+    },
+    {
+     "relKeyword": "반포한강공원달빛광장",
+     "monthlyPcQcCnt": 160,
+     "monthlyMobileQcCnt": 470
+    },
+    {
+     "relKeyword": "배나무골오리집",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 340
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:59.686Z",
+   "batch": [
+    "배나무골오리집양재본점",
+    "밴건디스테이크하우스",
+    "버드나무집",
+    "버드나무집본점",
+    "부일갈비"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "배나무골오리집양재본점",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "밴건디스테이크하우스",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 290
+    },
+    {
+     "relKeyword": "버드나무집",
+     "monthlyPcQcCnt": 1440,
+     "monthlyMobileQcCnt": 15000
+    },
+    {
+     "relKeyword": "버드나무집본점",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "부일갈비",
+     "monthlyPcQcCnt": 990,
+     "monthlyMobileQcCnt": 5170
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:00.294Z",
+   "batch": [
+    "분재박물관",
+    "브루스리",
+    "비스트로누",
+    "샘터화랑",
+    "생선구이대풍"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "분재박물관",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "브루스리",
+     "monthlyPcQcCnt": 250,
+     "monthlyMobileQcCnt": 2160
+    },
+    {
+     "relKeyword": "비스트로누",
+     "monthlyPcQcCnt": 240,
+     "monthlyMobileQcCnt": 980
+    },
+    {
+     "relKeyword": "샘터화랑",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "생선구이대풍",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 60
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:00.960Z",
+   "batch": [
+    "서관면옥",
+    "서래마을",
+    "서래본갈비",
+    "서리풀공원",
+    "서울관문사"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서관면옥",
+     "monthlyPcQcCnt": 840,
+     "monthlyMobileQcCnt": 5250
+    },
+    {
+     "relKeyword": "서래마을",
+     "monthlyPcQcCnt": 2350,
+     "monthlyMobileQcCnt": 11300
+    },
+    {
+     "relKeyword": "서래본갈비",
+     "monthlyPcQcCnt": 120,
+     "monthlyMobileQcCnt": 960
+    },
+    {
+     "relKeyword": "서리풀공원",
+     "monthlyPcQcCnt": 350,
+     "monthlyMobileQcCnt": 1620
+    },
+    {
+     "relKeyword": "서울관문사",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 350
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:01.560Z",
+   "batch": [
+    "서울구룡산",
+    "서울대성사",
+    "서울둘레길10코스우면산코스",
+    "서울서예박물관",
+    "서울아트나우갤러리"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서울구룡산",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "서울대성사",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "서울둘레길10코스우면산코스",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서울서예박물관",
+     "monthlyPcQcCnt": 160,
+     "monthlyMobileQcCnt": 820
+    },
+    {
+     "relKeyword": "서울아트나우갤러리",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:02.169Z",
+   "batch": [
+    "서울웨이브아트센터",
+    "서울헌릉태종원경왕후과인릉순조순원황후유네스코세계유산",
+    "서초다피타",
+    "서초디토",
+    "서초르지우"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서울웨이브아트센터",
+     "monthlyPcQcCnt": 90,
+     "monthlyMobileQcCnt": 340
+    },
+    {
+     "relKeyword": "서울헌릉태종원경왕후과인릉순조순원황후유네스코세계유산",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초다피타",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "서초디토",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 200
+    },
+    {
+     "relKeyword": "서초르지우",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:02.779Z",
+   "batch": [
+    "서초린스시",
+    "서초마얘",
+    "서초만다린",
+    "서초메종조",
+    "서초문화예술공원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서초린스시",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초마얘",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초만다린",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "서초메종조",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "서초문화예술공원",
+     "monthlyPcQcCnt": 470,
+     "monthlyMobileQcCnt": 2000
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:03.393Z",
+   "batch": [
+    "서초미나미",
+    "서초미우야",
+    "서초백년옥",
+    "서초보아즈",
+    "서초볼라레"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서초미나미",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 50
+    },
+    {
+     "relKeyword": "서초미우야",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초백년옥",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 290
+    },
+    {
+     "relKeyword": "서초보아즈",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초볼라레",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:04.001Z",
+   "batch": [
+    "서초삼학도",
+    "서초상락원",
+    "서초서래향",
+    "서초서석대",
+    "서초설눈"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서초삼학도",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서초상락원",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초서래향",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초서석대",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "서초설눈",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 260
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:04.614Z",
+   "batch": [
+    "서초설마중",
+    "서초송강",
+    "서초스시고",
+    "서초오선채",
+    "서초우참판"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서초설마중",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초송강",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "서초스시고",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초오선채",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초우참판",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:05.212Z",
+   "batch": [
+    "서초장수원",
+    "서초줄라이",
+    "서초채미가",
+    "서초톰볼라",
+    "서초프리퍼"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서초장수원",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초줄라이",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 30
+    },
+    {
+     "relKeyword": "서초채미가",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서초톰볼라",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초프리퍼",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 70
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:05.816Z",
+   "batch": [
+    "서초해우담",
+    "서초혜장국",
+    "서초홍루몽",
+    "세빛섬",
+    "세빛섬튜브스터"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "서초해우담",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서초혜장국",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "서초홍루몽",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "세빛섬",
+     "monthlyPcQcCnt": 1130,
+     "monthlyMobileQcCnt": 4890
+    },
+    {
+     "relKeyword": "세빛섬튜브스터",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 840
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:06.430Z",
+   "batch": [
+    "소나무집",
+    "소백산양재별관",
+    "송화유수",
+    "스시타노",
+    "스파레이"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "소나무집",
+     "monthlyPcQcCnt": 660,
+     "monthlyMobileQcCnt": 8040
+    },
+    {
+     "relKeyword": "소백산양재별관",
+     "monthlyPcQcCnt": 150,
+     "monthlyMobileQcCnt": 480
+    },
+    {
+     "relKeyword": "송화유수",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 560
+    },
+    {
+     "relKeyword": "스시타노",
+     "monthlyPcQcCnt": 180,
+     "monthlyMobileQcCnt": 910
+    },
+    {
+     "relKeyword": "스파레이",
+     "monthlyPcQcCnt": 710,
+     "monthlyMobileQcCnt": 8980
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:07.085Z",
+   "batch": [
+    "양재근린공원",
+    "양재꽃시장",
+    "양재천근린공원",
+    "양재해장국",
+    "언구비육회"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "양재근린공원",
+     "monthlyPcQcCnt": 110,
+     "monthlyMobileQcCnt": 370
+    },
+    {
+     "relKeyword": "양재꽃시장",
+     "monthlyPcQcCnt": 2270,
+     "monthlyMobileQcCnt": 17500
+    },
+    {
+     "relKeyword": "양재천근린공원",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 170
+    },
+    {
+     "relKeyword": "양재해장국",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 710
+    },
+    {
+     "relKeyword": "언구비육회",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 120
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:07.695Z",
+   "batch": [
+    "여의천",
+    "영광밥상",
+    "영동설렁탕",
+    "영산양재홀",
+    "예술의전당"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "여의천",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "영광밥상",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 330
+    },
+    {
+     "relKeyword": "영동설렁탕",
+     "monthlyPcQcCnt": 740,
+     "monthlyMobileQcCnt": 7150
+    },
+    {
+     "relKeyword": "영산양재홀",
+     "monthlyPcQcCnt": 130,
+     "monthlyMobileQcCnt": 670
+    },
+    {
+     "relKeyword": "예술의전당",
+     "monthlyPcQcCnt": 31500,
+     "monthlyMobileQcCnt": 126600
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:08.312Z",
+   "batch": [
+    "예촌본관",
+    "옛골토성청계산점",
+    "외교사료관",
+    "우면산소망탑",
+    "우면산자연생태공원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "예촌본관",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "옛골토성청계산점",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 330
+    },
+    {
+     "relKeyword": "외교사료관",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 220
+    },
+    {
+     "relKeyword": "우면산소망탑",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 190
+    },
+    {
+     "relKeyword": "우면산자연생태공원",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 90
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:08.929Z",
+   "batch": [
+    "이솔라레스토랑",
+    "일식신태평양",
+    "자인뭉티기",
+    "잠원한강공원",
+    "장꼬방김치찌개전문"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "이솔라레스토랑",
+     "monthlyPcQcCnt": 390,
+     "monthlyMobileQcCnt": 2670
+    },
+    {
+     "relKeyword": "일식신태평양",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "자인뭉티기",
+     "monthlyPcQcCnt": 350,
+     "monthlyMobileQcCnt": 720
+    },
+    {
+     "relKeyword": "잠원한강공원",
+     "monthlyPcQcCnt": 1550,
+     "monthlyMobileQcCnt": 11100
+    },
+    {
+     "relKeyword": "장꼬방김치찌개전문",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:09.617Z",
+   "batch": [
+    "전기박물관",
+    "조양관한정식",
+    "진도울돌목가는길",
+    "채빛퀴진",
+    "청계산"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "전기박물관",
+     "monthlyPcQcCnt": 140,
+     "monthlyMobileQcCnt": 480
+    },
+    {
+     "relKeyword": "조양관한정식",
+     "monthlyPcQcCnt": 620,
+     "monthlyMobileQcCnt": 2770
+    },
+    {
+     "relKeyword": "진도울돌목가는길",
+     "monthlyPcQcCnt": 210,
+     "monthlyMobileQcCnt": 1450
+    },
+    {
+     "relKeyword": "채빛퀴진",
+     "monthlyPcQcCnt": 1740,
+     "monthlyMobileQcCnt": 9190
+    },
+    {
+     "relKeyword": "청계산",
+     "monthlyPcQcCnt": 6160,
+     "monthlyMobileQcCnt": 26300
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:10.230Z",
+   "batch": [
+    "카나디안랍스터",
+    "카페돌체",
+    "카페토다",
+    "탐라도야지",
+    "탐라도야지본점"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "카나디안랍스터",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 210
+    },
+    {
+     "relKeyword": "카페돌체",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 260
+    },
+    {
+     "relKeyword": "카페토다",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "탐라도야지",
+     "monthlyPcQcCnt": 210,
+     "monthlyMobileQcCnt": 1000
+    },
+    {
+     "relKeyword": "탐라도야지본점",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:10.847Z",
+   "batch": [
+    "태양커피",
+    "텍사스데브라질센트럴시티점",
+    "통나무집",
+    "피카소벽화",
+    "하오차이"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "태양커피",
+     "monthlyPcQcCnt": 370,
+     "monthlyMobileQcCnt": 4480
+    },
+    {
+     "relKeyword": "텍사스데브라질센트럴시티점",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "통나무집",
+     "monthlyPcQcCnt": 770,
+     "monthlyMobileQcCnt": 6880
+    },
+    {
+     "relKeyword": "피카소벽화",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    },
+    {
+     "relKeyword": "하오차이",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 1780
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:11.564Z",
+   "batch": [
+    "하이디하우스",
+    "한강시민공원잠원수영장",
+    "한강해치카",
+    "한국순대",
+    "한국회관"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "하이디하우스",
+     "monthlyPcQcCnt": 520,
+     "monthlyMobileQcCnt": 2840
+    },
+    {
+     "relKeyword": "한강시민공원잠원수영장",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "한강해치카",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 1010
+    },
+    {
+     "relKeyword": "한국순대",
+     "monthlyPcQcCnt": 140,
+     "monthlyMobileQcCnt": 820
+    },
+    {
+     "relKeyword": "한국회관",
+     "monthlyPcQcCnt": 110,
+     "monthlyMobileQcCnt": 720
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:12.160Z",
+   "batch": [
+    "한성돈까스",
+    "한원미술관",
+    "한전갤러리",
+    "한전아트센터공연장",
+    "해우담본점"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "한성돈까스",
+     "monthlyPcQcCnt": 330,
+     "monthlyMobileQcCnt": 2370
+    },
+    {
+     "relKeyword": "한원미술관",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 110
+    },
+    {
+     "relKeyword": "한전갤러리",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 240
+    },
+    {
+     "relKeyword": "한전아트센터공연장",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "해우담본점",
+     "monthlyPcQcCnt": 70,
+     "monthlyMobileQcCnt": 310
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:12.800Z",
+   "batch": [
+    "헌릉태종원경왕후과인릉순조순원황후유네스코세계유산",
+    "헌인릉생태경관보전지역",
+    "현대요트서울지점",
+    "효령대군이보묘역",
+    "흰물결갤러리"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "헌릉태종원경왕후과인릉순조순원황후유네스코세계유산",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "헌인릉생태경관보전지역",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "현대요트서울지점",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "효령대군이보묘역",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "흰물결갤러리",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 160
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:31:13.423Z",
+   "batch": [
+    "흰물결아트센터"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "흰물결아트센터",
+     "monthlyPcQcCnt": 520,
+     "monthlyMobileQcCnt": 2700
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,897 @@
+{
+ "round": "01",
+ "city": "530",
+ "criteria": "review/seoul/pop-criteria.md",
+ "source": "Naver 검색광고 keywordstool, showDetail=1",
+ "places": 38,
+ "keywords": 41,
+ "calls": 9,
+ "tries": 9,
+ "failed": [],
+ "missingKeywords": [],
+ "failedCalls": [],
+ "rows": [
+  {
+   "id": "nt-2591755",
+   "name": "남구로시장",
+   "keywords": [
+    {
+     "keyword": "남구로시장",
+     "why": "카드 이름",
+     "pc": 160,
+     "mobile": 1020,
+     "volume": 1180
+    }
+   ],
+   "volume": 1180
+  },
+  {
+   "id": "nt-2591792",
+   "name": "개봉유수지 생태공원",
+   "keywords": [
+    {
+     "keyword": "개봉유수지생태공원",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 170,
+     "volume": 230
+    }
+   ],
+   "volume": 230
+  },
+  {
+   "id": "nt-2591797",
+   "name": "고척근린공원",
+   "keywords": [
+    {
+     "keyword": "고척근린공원",
+     "why": "카드 이름",
+     "pc": 290,
+     "mobile": 1450,
+     "volume": 1740
+    }
+   ],
+   "volume": 1740
+  },
+  {
+   "id": "nt-2591799",
+   "name": "고척동 고인돌",
+   "keywords": [
+    {
+     "keyword": "고척동고인돌",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 10,
+     "volume": 15
+    }
+   ],
+   "volume": 15
+  },
+  {
+   "id": "nt-2591805",
+   "name": "국제음식문화거리(INTERNATIONAL FOOD STREET)",
+   "keywords": [
+    {
+     "keyword": "국제음식문화거리",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 100,
+     "volume": 120
+    }
+   ],
+   "volume": 120
+  },
+  {
+   "id": "nt-2591809",
+   "name": "궁동저수지 생태공원",
+   "keywords": [
+    {
+     "keyword": "궁동저수지생태공원",
+     "why": "카드 이름",
+     "pc": 20,
+     "mobile": 40,
+     "volume": 60
+    }
+   ],
+   "volume": 60
+  },
+  {
+   "id": "nt-2591813",
+   "name": "류순정·류홍 부자 묘역",
+   "keywords": [
+    {
+     "keyword": "류순정류홍부자묘역",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2591824",
+   "name": "온수도시자연공원(잣절공원)",
+   "keywords": [
+    {
+     "keyword": "온수도시자연공원",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 40,
+     "volume": 50
+    },
+    {
+     "keyword": "잣절공원",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": 110,
+     "mobile": 390,
+     "volume": 500
+    }
+   ],
+   "volume": 550
+  },
+  {
+   "id": "nt-2591826",
+   "name": "음식문화특화거리(깔깔거리)",
+   "keywords": [
+    {
+     "keyword": "음식문화특화거리",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 20,
+     "volume": 25
+    },
+    {
+     "keyword": "깔깔거리",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": 100,
+     "mobile": 330,
+     "volume": 430
+    }
+   ],
+   "volume": 455
+  },
+  {
+   "id": "nt-2591829",
+   "name": "구로근린공원(이씨레물리노공원)",
+   "keywords": [
+    {
+     "keyword": "구로근린공원",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 80,
+     "volume": 120
+    },
+    {
+     "keyword": "이씨레물리노공원",
+     "why": "이름 괄호 안의 다른 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 130
+  },
+  {
+   "id": "nt-2591833",
+   "name": "정선옹주 묘역",
+   "keywords": [
+    {
+     "keyword": "정선옹주묘역",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-2591838",
+   "name": "천왕근린공원",
+   "keywords": [
+    {
+     "keyword": "천왕근린공원",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 200,
+     "volume": 250
+    }
+   ],
+   "volume": 250
+  },
+  {
+   "id": "nt-2591862",
+   "name": "구로올레길",
+   "keywords": [
+    {
+     "keyword": "구로올레길",
+     "why": "카드 이름",
+     "pc": 60,
+     "mobile": 170,
+     "volume": 230
+    }
+   ],
+   "volume": 230
+  },
+  {
+   "id": "nt-2591870",
+   "name": "안양천 물놀이장",
+   "keywords": [
+    {
+     "keyword": "안양천물놀이장",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 70,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-2591873",
+   "name": "고척 스카이돔",
+   "keywords": [
+    {
+     "keyword": "고척스카이돔",
+     "why": "카드 이름",
+     "pc": 5630,
+     "mobile": 38900,
+     "volume": 44530
+    }
+   ],
+   "volume": 44530
+  },
+  {
+   "id": "nt-2592394",
+   "name": "구로시장",
+   "keywords": [
+    {
+     "keyword": "구로시장",
+     "why": "카드 이름",
+     "pc": 270,
+     "mobile": 1760,
+     "volume": 2030
+    }
+   ],
+   "volume": 2030
+  },
+  {
+   "id": "nt-2675098",
+   "name": "푸른수목원",
+   "keywords": [
+    {
+     "keyword": "푸른수목원",
+     "why": "카드 이름",
+     "pc": 970,
+     "mobile": 5940,
+     "volume": 6910
+    }
+   ],
+   "volume": 6910
+  },
+  {
+   "id": "nt-2733966",
+   "name": "거리공원",
+   "keywords": [
+    {
+     "keyword": "거리공원",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 100,
+     "volume": 130
+    }
+   ],
+   "volume": 130
+  },
+  {
+   "id": "nt-2792594",
+   "name": "천왕산 가족캠핑장",
+   "keywords": [
+    {
+     "keyword": "천왕산가족캠핑장",
+     "why": "카드 이름",
+     "pc": 970,
+     "mobile": 4110,
+     "volume": 5080
+    }
+   ],
+   "volume": 5080
+  },
+  {
+   "id": "nt-2833368",
+   "name": "메이비카페",
+   "keywords": [
+    {
+     "keyword": "메이비카페",
+     "why": "카드 이름",
+     "pc": 80,
+     "mobile": 540,
+     "volume": 620
+    }
+   ],
+   "volume": 620
+  },
+  {
+   "id": "nt-2834475",
+   "name": "월래순교자관",
+   "keywords": [
+    {
+     "keyword": "월래순교자관",
+     "why": "카드 이름",
+     "pc": 1400,
+     "mobile": 5420,
+     "volume": 6820
+    }
+   ],
+   "volume": 6820
+  },
+  {
+   "id": "nt-2836621",
+   "name": "신도림전주관",
+   "keywords": [
+    {
+     "keyword": "신도림전주관",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 60,
+     "volume": 70
+    }
+   ],
+   "volume": 70
+  },
+  {
+   "id": "nt-2852962",
+   "name": "실크로드",
+   "keywords": [
+    {
+     "keyword": "실크로드",
+     "why": "카드 이름",
+     "pc": 1520,
+     "mobile": 6260,
+     "volume": 7780
+    }
+   ],
+   "volume": 7780
+  },
+  {
+   "id": "nt-2873321",
+   "name": "최우영스시",
+   "keywords": [
+    {
+     "keyword": "최우영스시",
+     "why": "카드 이름",
+     "pc": 550,
+     "mobile": 3810,
+     "volume": 4360
+    }
+   ],
+   "volume": 4360
+  },
+  {
+   "id": "nt-2918770",
+   "name": "바른쌀국수",
+   "keywords": [
+    {
+     "keyword": "바른쌀국수",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": 60,
+     "volume": 65
+    }
+   ],
+   "volume": 65
+  },
+  {
+   "id": "nt-2940433",
+   "name": "여기가전집",
+   "keywords": [
+    {
+     "keyword": "여기가전집",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 90,
+     "volume": 120
+    }
+   ],
+   "volume": 120
+  },
+  {
+   "id": "nt-3039497",
+   "name": "디큐브 링크아트센터",
+   "keywords": [
+    {
+     "keyword": "디큐브링크아트센터",
+     "why": "카드 이름",
+     "pc": 6450,
+     "mobile": 28300,
+     "volume": 34750
+    }
+   ],
+   "volume": 34750
+  },
+  {
+   "id": "nt-3060967",
+   "name": "서울아트책보고",
+   "keywords": [
+    {
+     "keyword": "서울아트책보고",
+     "why": "카드 이름",
+     "pc": 530,
+     "mobile": 1600,
+     "volume": 2130
+    }
+   ],
+   "volume": 2130
+  },
+  {
+   "id": "nt-323408",
+   "name": "송림가",
+   "keywords": [
+    {
+     "keyword": "구로송림가",
+     "why": "세 글자 이하 음식점 이름(흔한 가게 이름) → 구로 + 이름",
+     "pc": 40,
+     "mobile": 530,
+     "volume": 570
+    }
+   ],
+   "volume": 570
+  },
+  {
+   "id": "nt-3351658",
+   "name": "천왕산 북카페",
+   "keywords": [
+    {
+     "keyword": "천왕산북카페",
+     "why": "카드 이름",
+     "pc": 40,
+     "mobile": 350,
+     "volume": 390
+    }
+   ],
+   "volume": 390
+  },
+  {
+   "id": "nt-3448217",
+   "name": "디큐브시티 해바라기 공원",
+   "keywords": [
+    {
+     "keyword": "디큐브시티해바라기공원",
+     "why": "카드 이름",
+     "pc": 10,
+     "mobile": 70,
+     "volume": 80
+    }
+   ],
+   "volume": 80
+  },
+  {
+   "id": "nt-3457039",
+   "name": "9로평상",
+   "keywords": [
+    {
+     "keyword": "9로평상",
+     "why": "카드 이름",
+     "pc": 230,
+     "mobile": 2700,
+     "volume": 2930
+    }
+   ],
+   "volume": 2930
+  },
+  {
+   "id": "nt-3457554",
+   "name": "비마이피스",
+   "keywords": [
+    {
+     "keyword": "비마이피스",
+     "why": "카드 이름",
+     "pc": 50,
+     "mobile": 310,
+     "volume": 360
+    }
+   ],
+   "volume": 360
+  },
+  {
+   "id": "nt-3483675",
+   "name": "넷마블게임박물관",
+   "keywords": [
+    {
+     "keyword": "넷마블게임박물관",
+     "why": "카드 이름",
+     "pc": 450,
+     "mobile": 1930,
+     "volume": 2380
+    }
+   ],
+   "volume": 2380
+  },
+  {
+   "id": "nt-3526342",
+   "name": "[서울둘레길 14코스] 안양천 하류코스",
+   "keywords": [
+    {
+     "keyword": "서울둘레길14코스안양천하류코스",
+     "why": "카드 이름",
+     "pc": "< 10",
+     "mobile": "< 10",
+     "volume": 10
+    }
+   ],
+   "volume": 10
+  },
+  {
+   "id": "nt-3576903",
+   "name": "구로피크닉가든",
+   "keywords": [
+    {
+     "keyword": "구로피크닉가든",
+     "why": "카드 이름",
+     "pc": 240,
+     "mobile": 930,
+     "volume": 1170
+    }
+   ],
+   "volume": 1170
+  },
+  {
+   "id": "nt-814255",
+   "name": "온수공원",
+   "keywords": [
+    {
+     "keyword": "온수공원",
+     "why": "카드 이름",
+     "pc": 30,
+     "mobile": 70,
+     "volume": 100
+    }
+   ],
+   "volume": 100
+  },
+  {
+   "id": "nt-968389",
+   "name": "구로아트밸리 예술극장",
+   "keywords": [
+    {
+     "keyword": "구로아트밸리예술극장",
+     "why": "카드 이름",
+     "pc": 170,
+     "mobile": 600,
+     "volume": 770
+    }
+   ],
+   "volume": 770
+  }
+ ],
+ "callLog": [
+  {
+   "at": "2026-11-02T05:30:17.339Z",
+   "batch": [
+    "9로평상",
+    "개봉유수지생태공원",
+    "거리공원",
+    "고척근린공원",
+    "고척동고인돌"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "9로평상",
+     "monthlyPcQcCnt": 230,
+     "monthlyMobileQcCnt": 2700
+    },
+    {
+     "relKeyword": "개봉유수지생태공원",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 170
+    },
+    {
+     "relKeyword": "거리공원",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "고척근린공원",
+     "monthlyPcQcCnt": 290,
+     "monthlyMobileQcCnt": 1450
+    },
+    {
+     "relKeyword": "고척동고인돌",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 10
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:17.949Z",
+   "batch": [
+    "고척스카이돔",
+    "구로근린공원",
+    "구로송림가",
+    "구로시장",
+    "구로아트밸리예술극장"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "고척스카이돔",
+     "monthlyPcQcCnt": 5630,
+     "monthlyMobileQcCnt": 38900
+    },
+    {
+     "relKeyword": "구로근린공원",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 80
+    },
+    {
+     "relKeyword": "구로송림가",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 530
+    },
+    {
+     "relKeyword": "구로시장",
+     "monthlyPcQcCnt": 270,
+     "monthlyMobileQcCnt": 1760
+    },
+    {
+     "relKeyword": "구로아트밸리예술극장",
+     "monthlyPcQcCnt": 170,
+     "monthlyMobileQcCnt": 600
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:18.556Z",
+   "batch": [
+    "구로올레길",
+    "구로피크닉가든",
+    "국제음식문화거리",
+    "궁동저수지생태공원",
+    "깔깔거리"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "구로올레길",
+     "monthlyPcQcCnt": 60,
+     "monthlyMobileQcCnt": 170
+    },
+    {
+     "relKeyword": "구로피크닉가든",
+     "monthlyPcQcCnt": 240,
+     "monthlyMobileQcCnt": 930
+    },
+    {
+     "relKeyword": "국제음식문화거리",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 100
+    },
+    {
+     "relKeyword": "궁동저수지생태공원",
+     "monthlyPcQcCnt": 20,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "깔깔거리",
+     "monthlyPcQcCnt": 100,
+     "monthlyMobileQcCnt": 330
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:19.177Z",
+   "batch": [
+    "남구로시장",
+    "넷마블게임박물관",
+    "디큐브링크아트센터",
+    "디큐브시티해바라기공원",
+    "류순정류홍부자묘역"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "남구로시장",
+     "monthlyPcQcCnt": 160,
+     "monthlyMobileQcCnt": 1020
+    },
+    {
+     "relKeyword": "넷마블게임박물관",
+     "monthlyPcQcCnt": 450,
+     "monthlyMobileQcCnt": 1930
+    },
+    {
+     "relKeyword": "디큐브링크아트센터",
+     "monthlyPcQcCnt": 6450,
+     "monthlyMobileQcCnt": 28300
+    },
+    {
+     "relKeyword": "디큐브시티해바라기공원",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "류순정류홍부자묘역",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:19.801Z",
+   "batch": [
+    "메이비카페",
+    "바른쌀국수",
+    "비마이피스",
+    "서울둘레길14코스안양천하류코스",
+    "서울아트책보고"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "메이비카페",
+     "monthlyPcQcCnt": 80,
+     "monthlyMobileQcCnt": 540
+    },
+    {
+     "relKeyword": "바른쌀국수",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "비마이피스",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 310
+    },
+    {
+     "relKeyword": "서울둘레길14코스안양천하류코스",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "서울아트책보고",
+     "monthlyPcQcCnt": 530,
+     "monthlyMobileQcCnt": 1600
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:20.612Z",
+   "batch": [
+    "신도림전주관",
+    "실크로드",
+    "안양천물놀이장",
+    "여기가전집",
+    "온수공원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "신도림전주관",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 60
+    },
+    {
+     "relKeyword": "실크로드",
+     "monthlyPcQcCnt": 1520,
+     "monthlyMobileQcCnt": 6260
+    },
+    {
+     "relKeyword": "안양천물놀이장",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 70
+    },
+    {
+     "relKeyword": "여기가전집",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 90
+    },
+    {
+     "relKeyword": "온수공원",
+     "monthlyPcQcCnt": 30,
+     "monthlyMobileQcCnt": 70
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:21.238Z",
+   "batch": [
+    "온수도시자연공원",
+    "월래순교자관",
+    "음식문화특화거리",
+    "이씨레물리노공원",
+    "잣절공원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "온수도시자연공원",
+     "monthlyPcQcCnt": 10,
+     "monthlyMobileQcCnt": 40
+    },
+    {
+     "relKeyword": "월래순교자관",
+     "monthlyPcQcCnt": 1400,
+     "monthlyMobileQcCnt": 5420
+    },
+    {
+     "relKeyword": "음식문화특화거리",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": 20
+    },
+    {
+     "relKeyword": "이씨레물리노공원",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "잣절공원",
+     "monthlyPcQcCnt": 110,
+     "monthlyMobileQcCnt": 390
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:21.857Z",
+   "batch": [
+    "정선옹주묘역",
+    "천왕근린공원",
+    "천왕산가족캠핑장",
+    "천왕산북카페",
+    "최우영스시"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "정선옹주묘역",
+     "monthlyPcQcCnt": "< 10",
+     "monthlyMobileQcCnt": "< 10"
+    },
+    {
+     "relKeyword": "천왕근린공원",
+     "monthlyPcQcCnt": 50,
+     "monthlyMobileQcCnt": 200
+    },
+    {
+     "relKeyword": "천왕산가족캠핑장",
+     "monthlyPcQcCnt": 970,
+     "monthlyMobileQcCnt": 4110
+    },
+    {
+     "relKeyword": "천왕산북카페",
+     "monthlyPcQcCnt": 40,
+     "monthlyMobileQcCnt": 350
+    },
+    {
+     "relKeyword": "최우영스시",
+     "monthlyPcQcCnt": 550,
+     "monthlyMobileQcCnt": 3810
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T05:30:22.490Z",
+   "batch": [
+    "푸른수목원"
+   ],
+   "status": 200,
+   "tries": 1,
+   "raw": [
+    {
+     "relKeyword": "푸른수목원",
+     "monthlyPcQcCnt": 970,
+     "monthlyMobileQcCnt": 5940
+    }
+   ]
+  }
+ ]
+}

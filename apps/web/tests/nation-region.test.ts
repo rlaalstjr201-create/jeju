@@ -142,7 +142,7 @@ describe('자동 지역 몫 (src/nation-part.ts)', () => {
     expect(released('nation')).toBe(true);
     // 강릉·속초·춘천·양양·평창 are 강원's (ADR-0102 Amendment 2·3·4): its 동네, not the 자동 지역's, and opened with the same
     // part
-    expect(openAreasOf('nation')).toHaveLength(ix.sgg.length - 5 - 15); // and 서울's 15 구 (ADR-0106)
+    expect(openAreasOf('nation')).toHaveLength(ix.sgg.length - 5 - 25); // and 서울's 25 구 (ADR-0106)
     expect(openAreasOf('gangwon').map((a) => [a.name, a.label, a.group])).toEqual([
       ['51110', '춘천시', 'gangwon'],
       ['51150', '강릉시', 'gangwon'],

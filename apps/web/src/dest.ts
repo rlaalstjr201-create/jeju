@@ -60,9 +60,9 @@ export const DEST: Record<Dest, DestRow> = {
   // which the 자동 지역 leaves to it — the first is the one used when none is known. A map search is scoped by the place's
   // own 시군구 (links.ts); `word` only before the 자동 지역's part is in
   gangwon: { file: 'spots-gangwon.json', idPrefix: 'nt-', cityHall: { lat: 37.7519, lng: 128.8761 }, credit: 'tour', word: '강원', said: /강원|강릉|속초|춘천|양양|평창/, moods: ALL, any: ANY, label: 'name', sgg: ['51150', '51210', '51110', '51830', '51760'] },
-  // 서울 (ADR-0106): 서울시청 (세종대로 110); its 구 whose places passed the checks (종로·중구·용산·성동·광진·동대문·중랑·성북·강북·도봉·노원·은평·서대문·마포·양천), which
+  // 서울 (ADR-0106): 서울시청 (세종대로 110); its 구 whose places passed the checks (종로·중구·용산·성동·광진·동대문·중랑·성북·강북·도봉·노원·은평·서대문·마포·양천·강서·구로·금천·영등포·동작·관악·서초·강남·송파·강동), which
   // the 자동 지역 leaves to it — the others stay 자동 지역 until theirs pass
-  seoul: { file: 'spots-seoul.json', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '서울', said: /서울|종로|중구|용산|성동|광진|동대문|중랑|성북|강북|도봉|노원|은평|서대문|마포|양천/, moods: ALL, any: ANY, label: 'name', sgg: ['11110', '11140', '11170', '11200', '11215', '11230', '11260', '11290', '11305', '11320', '11350', '11380', '11410', '11440', '11470'], allSgg: true },
+  seoul: { file: 'spots-seoul.json', idPrefix: 'nt-', cityHall: { lat: 37.5663, lng: 126.9779 }, credit: 'tour', word: '서울', said: /서울|종로|중구|용산|성동|광진|동대문|중랑|성북|강북|도봉|노원|은평|서대문|마포|양천|강서|구로|금천|영등포|동작|관악|서초|강남|송파|강동/, moods: ALL, any: ANY, label: 'name', sgg: ['11110', '11140', '11170', '11200', '11215', '11230', '11260', '11290', '11305', '11320', '11350', '11380', '11410', '11440', '11470', '11500', '11530', '11545', '11560', '11590', '11620', '11650', '11680', '11710', '11740'], allSgg: true },
 };
 
 export const isDest = (v: unknown): v is Dest => DESTS.includes(v as Curated) || v === 'nation';

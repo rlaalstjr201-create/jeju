@@ -1,0 +1,326 @@
+{
+ "criteria": "review/seoul/kakao-criteria.md",
+ "city": "590",
+ "source": "Kakao Local keyword search (id·place_url만 저장)",
+ "callsAllCities": 2026,
+ "targets": 38,
+ "done": 38,
+ "status": {
+  "matched": 31,
+  "unmatched": 7,
+  "closed": 0
+ },
+ "rule": {
+  "exact": 28,
+  "contains": 3,
+  "none": 7
+ },
+ "matchedRate": 0.8157894736842105,
+ "pass": true,
+ "rows": [
+  {
+   "id": "nt-1091608",
+   "query": "보라매안전체험관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12246781",
+   "placeUrl": "http://place.map.kakao.com/12246781"
+  },
+  {
+   "id": "nt-1250301",
+   "query": "CTS아트홀",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "7991264",
+   "placeUrl": "http://place.map.kakao.com/7991264"
+  },
+  {
+   "id": "nt-126521",
+   "query": "국립서울현충원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8829033",
+   "placeUrl": "http://place.map.kakao.com/8829033"
+  },
+  {
+   "id": "nt-126523",
+   "query": "사육신공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24040434",
+   "placeUrl": "http://place.map.kakao.com/24040434"
+  },
+  {
+   "id": "nt-127940",
+   "query": "보라매공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11338178",
+   "placeUrl": "http://place.map.kakao.com/11338178"
+  },
+  {
+   "id": "nt-130067",
+   "query": "숭실대학교 한국기독교박물관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8457278",
+   "placeUrl": "http://place.map.kakao.com/8457278"
+  },
+  {
+   "id": "nt-132216",
+   "query": "노량진수산물도매시장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8205369",
+   "placeUrl": "http://place.map.kakao.com/8205369"
+  },
+  {
+   "id": "nt-133984",
+   "query": "희래등",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8173274",
+   "placeUrl": "http://place.map.kakao.com/8173274"
+  },
+  {
+   "id": "nt-134058",
+   "query": "충남식당",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "10836096",
+   "placeUrl": "http://place.map.kakao.com/10836096"
+  },
+  {
+   "id": "nt-2383448",
+   "query": "미자식당",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2384136",
+   "query": "또순이",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "1213364735",
+   "placeUrl": "http://place.map.kakao.com/1213364735"
+  },
+  {
+   "id": "nt-2384192",
+   "query": "용궁횟집",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2384200",
+   "query": "청해진",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2385440",
+   "query": "진남회집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1656056657",
+   "placeUrl": "http://place.map.kakao.com/1656056657"
+  },
+  {
+   "id": "nt-2553942",
+   "query": "조선일보 뉴지엄",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19265033",
+   "placeUrl": "http://place.map.kakao.com/19265033"
+  },
+  {
+   "id": "nt-2650018",
+   "query": "신대방 닭갈비구이",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "832840994",
+   "placeUrl": "http://place.map.kakao.com/832840994"
+  },
+  {
+   "id": "nt-2674964",
+   "query": "고구동산길",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-2689454",
+   "query": "터방내",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "16593550",
+   "placeUrl": "http://place.map.kakao.com/16593550"
+  },
+  {
+   "id": "nt-2714856",
+   "query": "용양봉저정공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12527129",
+   "placeUrl": "http://place.map.kakao.com/12527129"
+  },
+  {
+   "id": "nt-2759678",
+   "query": "성대시장",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "770170801",
+   "placeUrl": "http://place.map.kakao.com/770170801"
+  },
+  {
+   "id": "nt-2763685",
+   "query": "노들나루공원",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "24894850",
+   "placeUrl": "http://place.map.kakao.com/24894850"
+  },
+  {
+   "id": "nt-2763751",
+   "query": "동작노을카페",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "19135161",
+   "placeUrl": "http://place.map.kakao.com/19135161"
+  },
+  {
+   "id": "nt-2764169",
+   "query": "서일순대국",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "499990754",
+   "placeUrl": "http://place.map.kakao.com/499990754"
+  },
+  {
+   "id": "nt-2764171",
+   "query": "등나무집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "11891906",
+   "placeUrl": "http://place.map.kakao.com/11891906"
+  },
+  {
+   "id": "nt-2782724",
+   "query": "순천집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1482528637",
+   "placeUrl": "http://place.map.kakao.com/1482528637"
+  },
+  {
+   "id": "nt-2807637",
+   "query": "윤공",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "1221356082",
+   "placeUrl": "http://place.map.kakao.com/1221356082"
+  },
+  {
+   "id": "nt-2834955",
+   "query": "더한강",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "2021405780",
+   "placeUrl": "http://place.map.kakao.com/2021405780"
+  },
+  {
+   "id": "nt-2843040",
+   "query": "전주전집",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8078768",
+   "placeUrl": "http://place.map.kakao.com/8078768"
+  },
+  {
+   "id": "nt-2946512",
+   "query": "스카이피자",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-299978",
+   "query": "달마사",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "12898191",
+   "placeUrl": "http://place.map.kakao.com/12898191"
+  },
+  {
+   "id": "nt-3067187",
+   "query": "노량진컵밥거리",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27418138",
+   "placeUrl": "http://place.map.kakao.com/27418138"
+  },
+  {
+   "id": "nt-3442973",
+   "query": "김영삼 도서관",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "27286712",
+   "placeUrl": "http://place.map.kakao.com/27286712"
+  },
+  {
+   "id": "nt-3526339",
+   "query": "관악산코스",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-3570371",
+   "query": "더플라잉팬 부강탕",
+   "status": "matched",
+   "rule": "contains",
+   "kakaoPlaceId": "314590089",
+   "placeUrl": "http://place.map.kakao.com/314590089"
+  },
+  {
+   "id": "nt-4078486",
+   "query": "노량진 지하 배수로",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "499181803",
+   "placeUrl": "http://place.map.kakao.com/499181803"
+  },
+  {
+   "id": "nt-4088591",
+   "query": "윌로우하우스",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "205376613",
+   "placeUrl": "http://place.map.kakao.com/205376613"
+  },
+  {
+   "id": "nt-486625",
+   "query": "호국지장사",
+   "status": "unmatched",
+   "rule": "none",
+   "kakaoPlaceId": null,
+   "placeUrl": null
+  },
+  {
+   "id": "nt-736737",
+   "query": "효사정",
+   "status": "matched",
+   "rule": "exact",
+   "kakaoPlaceId": "8163283",
+   "placeUrl": "http://place.map.kakao.com/8163283"
+  }
+ ]
+}
