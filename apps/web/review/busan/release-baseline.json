@@ -1,12 +1,12 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "fef8a725",
+ "measuredAt": "20e8d3df",
  "data": {
-  "public/spots.json": "420ec9586fe8b5f78a932986bcef616f8255ba336be9e28e3d5726561b72ee7b",
+  "public/spots.json": "4b96af2597c17f490387648704e6fb63738e2e1ed108e3c24004e1507a2f173c",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
   "public/i18n/places.zh-Hans.json": "2d3e315211abc914fbd45736c0ab3dbcc092b8b8c5cdaba7bb774873a8b724a2",
   "public/i18n/places.ja.json": "79915136be887bf23d9000aaf35355315bff3b2e61a72439575220781dec75b2",
-  "__SPOTS_V__": "420ec9586f",
+  "__SPOTS_V__": "4b96af2597",
   "__PLACES_V__": "149ead819a"
  },
  "indexHtml": {
@@ -30,7 +30,7 @@
   "icons/icon-512.png": "29e7f77a887bb18f",
   "icons/icon-maskable-512.png": "5147ac3b22acf105",
   "index.html": "8fc8ea2d77d857f2",
-  "jeju/index.html": "1b4f9efa0aa2b379",
+  "jeju/index.html": "6340709d4864178d",
   "jeju/landing.css": "8ed2ff79670ead0d",
   "llms.txt": "a61c0a33797bd2ce",
   "manifest.webmanifest": "6e3d7b6ee8790d00",
@@ -58,29 +58,29 @@
   "sitemap-udo.xml": "89a403b3d5d93e43",
   "sitemap.xml": "99e4facfec0c15f4",
   "spots-busan.json": "900cc69808660d2b",
-  "spots.json": "420ec9586fe8b5f7",
-  "sw.js": "26e6f3cac25e1196",
-  "jeju/aewol/": "220 files c77690c84cbd1ec9",
-  "jeju/andeok/": "137 files 2e23e44ff039b6c8",
-  "jeju/daejeong/": "138 files d0a7366fb2aed09a",
-  "jeju/gujeju/": "454 files 9a67db0742320428",
-  "jeju/gujwa/": "179 files 00da34795ee3fa60",
-  "jeju/hallim/": "155 files bd7767347acba45e",
-  "jeju/hangyeong/": "118 files 9b15be83daac9b69",
-  "jeju/jocheon/": "234 files 3ba5ded53fc078f8",
-  "jeju/jungmun/": "169 files 5a7e987ac78e387e",
-  "jeju/namwon/": "107 files 38e6b758a385d0a5",
-  "jeju/pyoseon/": "123 files 102ba7641869d03f",
-  "jeju/seogwipo/": "297 files 024ed785a7c3584e",
-  "jeju/seongsan/": "151 files e680da9a3b3e1afb",
-  "jeju/sinjeju/": "369 files a3b306169bbf2519",
-  "jeju/udo/": "93 files 73d8a55723d90769"
+  "spots.json": "4b96af2597c17f49",
+  "sw.js": "fd34edc0d24af924",
+  "jeju/aewol/": "220 files f16469b49964a5b2",
+  "jeju/andeok/": "137 files 491d3732faf77dd8",
+  "jeju/daejeong/": "138 files 4965f42b47fca520",
+  "jeju/gujeju/": "454 files 574e90450e66e0a9",
+  "jeju/gujwa/": "179 files b3aff7545fcc56bc",
+  "jeju/hallim/": "155 files 86482101bdcfe6d5",
+  "jeju/hangyeong/": "118 files 387fbaf370b9e46a",
+  "jeju/jocheon/": "234 files c28cc31425406ccc",
+  "jeju/jungmun/": "169 files bb13e48aed745b96",
+  "jeju/namwon/": "107 files 372c47b679a9e8c4",
+  "jeju/pyoseon/": "123 files bc9953bb3fa02eb3",
+  "jeju/seogwipo/": "297 files b6958e72d2f79394",
+  "jeju/seongsan/": "151 files 5ba3e169b4ad36a6",
+  "jeju/sinjeju/": "369 files 5ffabdc1ca8e052e",
+  "jeju/udo/": "93 files ae383233c44e2095"
  },
  "precache": [
   "./",
   "assets/index-*.css",
   "assets/index-*.js",
-  "spots.json?v=420ec9586f",
+  "spots.json?v=4b96af2597",
   "manifest.webmanifest",
   "icons/icon-192.png",
   "icons/icon-512.png"
@@ -123,7 +123,7 @@
     "html": "013ae45e5c860d91"
    },
    "home": {
-    "body": "e2de9da9fc628fa6",
+    "body": "4080c19df8e7496f",
     "styles": "258 elements 2a4118b93f4734aa",
     "htmlClass": "",
     "local": {
@@ -136,7 +136,7 @@
      "/assets/index-*.css": 1,
      "/assets/index-*.js": 1,
      "/icons/icon-192.png": 1,
-     "/spots.json?v=420ec9586f": 1,
+     "/spots.json?v=4b96af2597": 1,
      "api.cdn.visitjeju.net/…": 25
     }
    },
@@ -166,7 +166,7 @@
     "html": "013ae45e5c860d91"
    },
    "home": {
-    "body": "e60bc20f7cdcfde0",
+    "body": "9905f574f8628ac6",
     "styles": "258 elements 539a2a563b28cac1",
     "htmlClass": "",
     "local": {
@@ -180,7 +180,7 @@
      "/assets/index-*.css": 1,
      "/assets/index-*.js": 1,
      "/icons/icon-192.png": 1,
-     "/spots.json?v=420ec9586f": 1,
+     "/spots.json?v=4b96af2597": 1,
      "api.cdn.visitjeju.net/…": 25
     }
    },
@@ -220,9 +220,9 @@
    "assets/zh-Hans-*.js"
   ],
   "koreanEntryGzip": {
-   "assets/index-*.js": 52203,
+   "assets/index-*.js": 52679,
    "assets/index-*.css": 6118
   },
-  "koreanEntryGzipTotal": 58321
+  "koreanEntryGzipTotal": 58797
  }
 }
