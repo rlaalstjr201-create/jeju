@@ -88,6 +88,23 @@ describe('홈 A′ (ADR-0075)', () => {
     expect(example('rest')).toMatch(/^예: /);
   });
 
+  it('ADR-0110 Amendment 1: 「지금 있는 곳」 tapped and the read fails: the home says why, until the next intent', async () => {
+    const { LocateError } = await import('../src/effects');
+    render({ today: at('2026-10-03'), locate: () => Promise.reject(new LocateError('denied')) });
+    await flush();
+    expect($('#homeNote').hidden).toBe(true);
+    $('#basis')!.click();
+    await flush();
+    $('#sheet [data-basis="gps"]')!.click();
+    await flush();
+    await flush();
+    expect($('#homeNote').hidden).toBe(false);
+    expect($$('#homeNote p').map((p) => p.textContent)).toEqual(['위치 권한이 꺼져 있어요.', '위치를 쓰려면 브라우저 설정에서 위치 권한을 켜 주세요.']);
+    expect($('#basis').textContent).toBe('지역 고르기');
+    await tap('#basis');
+    expect($('#homeNote').hidden).toBe(true);
+  });
+
   it('permission not granted (prompt / denied / no Permissions API): the home never reads or asks', async () => {
     for (const geoPermission of [async () => 'prompt' as const, async () => 'denied' as const, undefined]) {
       reset();
@@ -108,6 +125,7 @@ describe('홈 A′ (ADR-0075)', () => {
     await flush();
     expect($('#basis').textContent).toBe('내 위치 근처');
     expect(example('rest')).toMatch(/^제주 인기: /);
+    expect($('#homeNote').hidden).toBe(true);
   });
 
   it('region origin: the 「예:」 and photos are pool\'s first 2 from the area centre (range, the day)', async () => {

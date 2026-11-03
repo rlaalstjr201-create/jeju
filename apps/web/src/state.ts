@@ -91,6 +91,9 @@ export interface State {
   src: string | null;
   /** last GPS failure; cleared by the next GPS success. Drives the "지역 고르기" label and sheet hint. */
   lastFail: NoOrigin | null;
+  /** ADR-0110 Amendment 1: a read asked for on the home (지금 있는 곳 / 내 위치 tapped) that failed — the home says so;
+   * gone with the next intent or fix. */
+  homeFail: { why: NoOrigin; at?: OutsideAt } | null;
   phase: Phase;
   /** the origin `histories`/`shown` belong to. */
   origin: Origin | null;
@@ -201,6 +204,7 @@ export type Action =
   | { type: 'permission'; permission: GeoPermission }
   /** a position read on the home without asking: permission was already granted (ADR-0075 Amendment 1) */
   | { type: 'homeFix'; point: Point }
+  | { type: 'homeFail'; why: NoOrigin; at?: OutsideAt }
   | { type: 'restore'; rec: SessionRecord }
   /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
   | { type: 'rain'; area: string; rain: boolean }
@@ -261,6 +265,7 @@ export function initialState(init: {
     stay: init.stay,
     src: init.src ?? null,
     lastFail: null,
+    homeFail: null,
     phase: { k: 'idle' },
     origin: null,
     originReach: null,
@@ -576,9 +581,10 @@ const CLEARS_HINT: ReadonlySet<Action['type']> = new Set(['mood', 'sub', 'reques
 
 export function reduce(s: State, a: Action): State {
   const next = step(s, a);
-  if (!CLEARS_HINT.has(a.type) || (!next.hintFor && !next.visitNote && !next.destNote)) return next;
-  // the 가 봤어요 status line goes the same way (ADR-0087), and so does 「지금 계신 부산으로 바꿨어요.」
-  return { ...next, hintFor: null, visitNote: null, destNote: null };
+  if (!CLEARS_HINT.has(a.type) || (!next.hintFor && !next.visitNote && !next.destNote && !next.homeFail)) return next;
+  // the 가 봤어요 status line goes the same way (ADR-0087), and so does 「지금 계신 부산으로 바꿨어요.」 (and the home's
+  // 「위치를 확인하지 못했어요.」, ADR-0110 Amendment 1)
+  return { ...next, hintFor: null, visitNote: null, destNote: null, homeFail: null };
 }
 
 function step(s: State, a: Action): State {
@@ -709,14 +715,17 @@ function step(s: State, a: Action): State {
     case 'permission':
       // A known "denied" says so before any tap (label 지역 고르기); turned back on in settings → 내 주변.
       if (a.permission === 'denied') return s.lastFail ? s : { ...s, lastFail: 'denied' };
-      if ((a.permission === 'granted' || a.permission === 'prompt') && s.lastFail === 'denied') return { ...s, lastFail: null };
+      // (the home's 「위치 권한이 꺼져 있어요.」 goes with it, ADR-0110 Amendment 1)
+      if ((a.permission === 'granted' || a.permission === 'prompt') && s.lastFail === 'denied') return { ...s, lastFail: null, homeFail: null };
       return s;
+    case 'homeFail':
+      return { ...s, lastFail: a.why, homeFail: { why: a.why, ...(a.at ? { at: a.at } : {}) } };
     case 'homeFix': {
-      if (s.basis !== 'gps' || knownOrigin(s)) return s;
+      if (s.basis !== 'gps' || knownOrigin(s)) return { ...s, homeFail: null };
       const fix = gpsOrigin(a.point);
-      if (sameOrigin(s.origin, fix)) return { ...s, lastFail: null };
+      if (sameOrigin(s.origin, fix)) return { ...s, lastFail: null, homeFail: null };
       // the rotation so far belongs to another point (as resolveCards would decide)
-      return { ...s, lastFail: null, origin: fix, originReach: s.reach, originIndoor: s.indoor, histories: {}, shown: {} };
+      return { ...s, lastFail: null, homeFail: null, origin: fix, originReach: s.reach, originIndoor: s.indoor, histories: {}, shown: {} };
     }
     case 'clock':
       return a.clock === s.clock ? s : { ...s, clock: a.clock };

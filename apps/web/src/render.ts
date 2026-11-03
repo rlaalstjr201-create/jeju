@@ -842,11 +842,15 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     return b;
   }
 
+  /** why there is no position, in words (the results' notice and the home's, ADR-0110 Amendment 1) */
+  const noOriginText = (s: State, why: NoOrigin, at?: OutsideAt) =>
+    (why === 'outside' && nationOutside(s, at, false)) || (BUSAN && why === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.outside(destNameOf(s)) : COPY.noOrigin[why]);
+
   function notice(s: State, kind: 'noOrigin' | 'loadError' | 'empty'): HTMLElement {
     const box = el(doc, 'div', { class: 'notice' });
     const p = s.phase;
     let lines: readonly string[];
-    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [(p.why === 'outside' && nationOutside(s, p.at, false)) || (BUSAN && p.why === 'outside' && s.dest !== 'jeju' && s.dest !== 'nation' ? BUSAN_COPY.outside(destNameOf(s)) : COPY.noOrigin[p.why]), COPY.noOriginBody];
+    if (kind === 'noOrigin' && p.k === 'noOrigin') lines = [noOriginText(s, p.why, p.at), COPY.noOriginBody];
     else if (kind === 'loadError' && p.k === 'loadError') lines = p.offline ? COPY.loadErrorOffline : COPY.loadError;
     else lines = COPY.empty;
     box.append(el(doc, 'p', { class: 'notice-t' }, lines[0]), el(doc, 'p', { class: 'notice-b' }, lines[1]));
@@ -1144,7 +1148,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const r = k.restore;
     // a backup link's places that this data knows (all of them until the data is in)
     const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
-    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}|${r.left}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : '';
+    const f = s.homeFail;
+    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}|${r.left}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : f ? `fail|${f.why}|${s.dest}` : '';
     // 합치기's answer; past MAX_SAVED, how many found no room (with nothing added, that line alone)
     const done = r?.k === 'done' ? [...(r.added || !r.left ? [COPY.restoreDone(r.added)] : []), ...(r.left ? [COPY.restoreLeft(r.left)] : [])] : [];
     if (sig !== noteSig) {
@@ -1161,9 +1166,11 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         // KakaoTalk has its own way out to the phone's browser; elsewhere the link is copied
         const open = k.inapp === 'kakaotalk' ? el(doc, 'a', { class: 'tbtn', 'data-action': 'inapp-open', href: '#' }, COPY.inappOpen) : act('inapp-copy', COPY.inappOpen);
         fill(els.homeNote, lines, [open, act('inapp-close', COPY.close)]);
-      } else els.homeNote.replaceChildren();
+      } else if (f) fill(els.homeNote, [noOriginText(s, f.why, f.at), f.why === 'denied' ? COPY.deniedHow : COPY.noOriginBody], []);
+      else els.homeNote.replaceChildren();
       els.homeNote.hidden = !sig;
       if (r?.k === 'done' && els.announce) els.announce.textContent = done.join(' ');
+      else if (sig.startsWith('fail|') && els.announce) els.announce.textContent = [...els.homeNote.querySelectorAll('p')].map((p) => p.textContent).join(' ');
       // the button tapped is gone: the answer (or, with nothing left, the first mood) takes the focus
       if (focusIn) (els.homeNote.querySelector<HTMLElement>('p') ?? els.moods[0])?.focus({ preventScroll: true });
     }

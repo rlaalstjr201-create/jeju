@@ -920,7 +920,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (state.view === 'home') {
       abortRequest();
       // 내 위치 picked on the home (ADR-0110): its position read now, the prompt (if any) answering this tap
-      if (keep && next.basis === 'gps') locateHome();
+      if (keep && next.basis === 'gps') locateHome(true);
     } else request('show');
   }
 
@@ -976,7 +976,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!state.destPick) {
       closeOverlay();
       // 내 위치 picked again on the home with no position yet (ADR-0110): read it now, asking if need be
-      return locateHome();
+      return locateHome(true);
     }
     dispatch({ type: 'destPick', on: false });
     els.sheet.querySelector<HTMLElement>('[data-seg="gps"]')?.focus({ preventScroll: true });
@@ -1181,7 +1181,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       if (!basisIsCurrent(state, 'gps')) return changeBasis({ basis: 'gps' });
       closeOverlay();
       // 내 위치 picked again on the home with no position yet (ADR-0110): read it now, asking if need be
-      return locateHome();
+      return locateHome(true);
     }
     if (basis === 'stay') {
       if (!state.stay) return openOverlay('stay');
@@ -1505,16 +1505,18 @@ export function mountApp(doc: Document, deps: Deps): App {
 
   /** ADR-0075 Amendment 1: location already allowed, so the home reads it without a prompt — its examples, market
    * row and 비 소식 are then about where the user is. Never asked here: the first prompt stays at a mood tap. A
-   * failure says nothing (the label is not changed by a read nobody asked for). */
+   * failure says nothing (the label is not changed by a read nobody asked for) — unless `asked`: 지금 있는 곳 / 내 위치
+   * tapped, it says why on the home (ADR-0110 Amendment 1). */
   let homeLocating = false;
-  function locateHome() {
+  function locateHome(asked = false) {
     // (the 자동 지역's weak start is no position: it is read all the same)
     if (homeLocating || state.view !== 'home' || state.basis !== 'gps' || knownOrigin(state)) return;
     homeLocating = true;
     void locateGps(deps).then((r) => {
       homeLocating = false;
       // a prompt answered after the user went on to the results or the saved list: not moved under them (ADR-0110)
-      if (!r.ok || signal.aborted || state.view !== 'home') return;
+      if (signal.aborted || state.view !== 'home') return;
+      if (!r.ok) return asked && state.basis === 'gps' ? dispatch({ type: 'homeFail', why: r.why, ...(r.at ? { at: r.at } : {}) }) : undefined;
       followGps(r.point);
       dispatch({ type: 'homeFix', point: r.point });
     });
@@ -1687,7 +1689,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   else firstDraw();
   // the cover went without its module (fellBack): 「내 위치로 시작하기」 pressed on it is a position read now (a Busan one
   // asks for the part again, main.ts locate, and moves there); 「부산」 pressed asks for the part again
-  if (pressedGps) later(0, locateHome);
+  if (pressedGps) later(0, () => locateHome(true));
   if (pressedDest) void loadBusan().then((ok) => ok && !signal.aborted && switchDest(pressedDest, { basis: 'gps' }));
 
   return {
