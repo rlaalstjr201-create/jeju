@@ -1,6 +1,6 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "da283f5d",
+ "measuredAt": "fef8a725",
  "data": {
   "public/spots.json": "420ec9586fe8b5f78a932986bcef616f8255ba336be9e28e3d5726561b72ee7b",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
@@ -220,9 +220,9 @@
    "assets/zh-Hans-*.js"
   ],
   "koreanEntryGzip": {
-   "assets/index-*.js": 51941,
+   "assets/index-*.js": 52203,
    "assets/index-*.css": 6118
   },
-  "koreanEntryGzipTotal": 58059
+  "koreanEntryGzipTotal": 58321
  }
 }
