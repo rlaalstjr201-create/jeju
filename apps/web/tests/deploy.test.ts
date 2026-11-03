@@ -49,8 +49,14 @@ describe('_headers (Cloudflare Pages)', () => {
   });
 
   // 출시 전 점검 F14 (idempotency-security.md S7): not framed by another site; no camera, microphone or payment
-  it('F14 (S7) /*: X-Frame-Options DENY and Permissions-Policy only; no other rule sets either (no joined values)', () => {
-    expect(h['/*']).toEqual({ 'X-Frame-Options': 'DENY', 'Permissions-Policy': 'camera=(), microphone=(), payment=()' });
+  // ADR-0107: /* also sets HSTS and a hardening-only CSP
+  it('F14 (S7) /*: X-Frame-Options, Permissions-Policy, Strict-Transport-Security and Content-Security-Policy only; no other rule sets any of them (no joined values)', () => {
+    expect(h['/*']).toEqual({
+      'X-Frame-Options': 'DENY',
+      'Permissions-Policy': 'camera=(), microphone=(), payment=()',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'Content-Security-Policy': "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests",
+    });
     for (const [p, set] of Object.entries(h)) if (p !== '/*') expect(Object.keys(set), p).toEqual(['Cache-Control']);
   });
 
