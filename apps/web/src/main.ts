@@ -8,7 +8,7 @@ import { BUSAN, NATION, loadBusan, loadNation, nationSpots, outsideAt, releasedD
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 
-function locate(): Promise<Point> {
+function locate(fresh = false): Promise<Point> {
   return new Promise((resolve, reject) => {
     if (!('geolocation' in navigator)) return reject(new LocateError('unavailable'));
     navigator.geolocation.getCurrentPosition(
@@ -23,7 +23,8 @@ function locate(): Promise<Point> {
         else reject(new LocateError('outside'));
       },
       (err) => reject(new LocateError(err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable')),
-      { enableHighAccuracy: false, timeout: 8000, maximumAge: 10 * 60 * 1000 },
+      // a position kept up to 10 minutes, except when the user asked where they are now (ADR-0110 Amendment 2)
+      { enableHighAccuracy: false, timeout: fresh ? 12000 : 8000, maximumAge: fresh ? 0 : 10 * 60 * 1000 },
     );
   });
 }

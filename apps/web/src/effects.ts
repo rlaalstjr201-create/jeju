@@ -19,8 +19,9 @@ export class LocateError extends Error {
 }
 
 export interface GeoDeps {
-  /** Current position inside Jeju; rejects with LocateError. */
-  locate(): Promise<Point>;
+  /** Current position inside Jeju; rejects with LocateError. `fresh`: not one the browser kept from minutes ago (a tap on
+   * 지금 있는 곳 / 내 위치 asks where the user is now, ADR-0110 Amendment 2). */
+  locate(fresh?: boolean): Promise<Point>;
   /** Permissions API state, when the browser has it. */
   geoPermission?(): Promise<GeoPermission>;
 }
@@ -28,14 +29,14 @@ export interface GeoDeps {
 export type OriginResult = { ok: true; origin: Origin } | { ok: false; why: NoOrigin; at?: OutsideAt };
 
 /** GPS position, skipping the prompt when the Permissions API already says denied (S07). */
-export async function locateGps(deps: GeoDeps): Promise<{ ok: true; point: Point } | { ok: false; why: NoOrigin; at?: OutsideAt }> {
+export async function locateGps(deps: GeoDeps, fresh = false): Promise<{ ok: true; point: Point } | { ok: false; why: NoOrigin; at?: OutsideAt }> {
   try {
     if (deps.geoPermission && (await deps.geoPermission()) === 'denied') return { ok: false, why: 'denied' };
   } catch {
     /* no Permissions API — just ask */
   }
   try {
-    const p = await deps.locate();
+    const p = await (fresh ? deps.locate(true) : deps.locate());
     return { ok: true, point: { lat: p.lat, lng: p.lng } };
   } catch (e) {
     return e instanceof LocateError ? { ok: false, why: e.reason, ...(e.at ? { at: e.at } : {}) } : { ok: false, why: 'unavailable' };

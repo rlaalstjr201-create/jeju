@@ -1550,7 +1550,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!asked && knownOrigin(state)) return;
     homeLocating = true;
     if (asked) ask();
-    void locateGps(deps).then((r) => {
+    void locateGps(deps, asked).then((r) => {
       stopHomeTimer();
       homeLocating = false;
       const told = homeAsked;

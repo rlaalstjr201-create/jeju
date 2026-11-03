@@ -103,6 +103,8 @@ describe('홈 A′ (ADR-0075)', () => {
     await tap('#basis');
     await tap('#sheet [data-basis="gps"]');
     expect(locate).toHaveBeenCalledTimes(2);
+    // not the position the browser kept from minutes ago: where the user is now
+    expect(locate.mock.calls).toEqual([[], [true]]);
     expect($$('#homeNote p').map((p) => p.textContent)).toEqual(['위치 확인 중…']);
     answer!();
     await flush();
