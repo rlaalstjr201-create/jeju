@@ -16,7 +16,7 @@ import { seasonOn, type SeasonKind } from './season';
 import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './home';
 import { sunriseMinutes, sunsetMinutes } from './sun';
 import { PLACE, createRenderer, dateLabel, findEls } from './render';
-import { GPS_KEY, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
 import { feedbackBody, surveyDue } from './survey';
@@ -1095,6 +1095,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (when === state.when) return;
     dispatch({ type: 'when', when });
     store.setWhen(when);
+    // back to 지금: the clock read again, and the half-hour timer set (ADR-0111 7)
+    if (when === 'now') tick();
   }
 
   /** 날짜 고르기: the browser's own picker; where it cannot be opened, the date field itself is shown with
@@ -1469,6 +1471,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   /** A new day in Jeju (the midnight timer, or back in the foreground): the date line, and a chosen day
    * that has now come or gone goes back to 지금 (D5); saves of days gone by move to 지난 날. */
   let midnight: ReturnType<typeof setTimeout> | null = null;
+  /** 지금 닫힌 곳 (ADR-0111): the home's 「예:」 and 지금 여기서 read the clock again every half hour, so a place that
+   * opened or shut since is not left up there (the results read it at each pick) */
+  let halfHour: ReturnType<typeof setTimeout> | null = null;
   function tick() {
     const now = clockNow();
     const day = dayOf(now);
@@ -1481,13 +1486,19 @@ export function mountApp(doc: Document, deps: Deps): App {
     // the time of day for 노을 볼 곳 (ADR-0083), and its timer from this moment
     // (a dispatch only when that moves it across an edge of the window — nothing else redraws)
     duskKey = '';
-    if (duskPhase(minuteOf(now)) !== duskPhase(state.clock)) dispatch({ type: 'clock', clock: minuteOf(now) });
+    if (duskPhase(minuteOf(now)) !== duskPhase(state.clock) || openPhase(state, minuteOf(now)) !== openPhase(state, state.clock)) dispatch({ type: 'clock', clock: minuteOf(now) });
     else duskTimer();
     if (midnight) {
       clearTimeout(midnight);
       timers.delete(midnight);
     }
     midnight = later(msToNextDay(now) + 1000, tick);
+    if (halfHour) {
+      clearTimeout(halfHour);
+      timers.delete(halfHour);
+      halfHour = null;
+    }
+    if (openPhase(state, minuteOf(now)) !== null) halfHour = later((OPEN_STEP - (minuteOf(now) % OPEN_STEP)) * 60_000 + 1000, tick);
   }
   function checkPermission() {
     if (!deps.geoPermission || state.basis !== 'gps') return;
@@ -1589,6 +1600,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       // nothing else would bring it back and the home stayed without 「예:」, photos or 장날 (owner report 2026-10-24)
       const ready = data.peek();
       if (ready) dispatch({ type: 'spots', spots: ready, savedPool: poolOf(d, sgg, ready) });
+      // into Jeju (or out): the clock read again, the half-hour timer set or let go (ADR-0111 7)
+      tick();
     });
     if (opts.basis && opts.basis !== 'region') store.setBasis(opts.basis);
     warm();

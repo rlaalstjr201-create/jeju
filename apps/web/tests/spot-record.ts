@@ -13,7 +13,7 @@ export const BUSAN_RECORD_BOX = (p: Point) => p.lat >= 34.85 && p.lat <= 35.45 &
 
 /** The ids of records that break the format: exactly the 11 fields (food, new: +sub; 오일장: +market; 체험: +book or
  * +hide, ADR-0074; 철: +season, ADR-0080; 노을: +sunsetView, +sunsetSea on filled ones, ADR-0083; 야외 산길: +trail true,
- * ADR-0091; 유명한 곳: +famous true +pop, ADR-0092), coords `inside`, https image, mood ∈ {rest,walk,new,food}.
+ * ADR-0091; 유명한 곳: +famous true +pop, ADR-0092; 영업시간: +hours, specs/open-now.md), coords `inside`, https image, mood ∈ {rest,walk,new,food}.
  * `noPhoto`: an empty image is allowed too (Busan, specs/busan.md 3.1: a TourAPI place with no photo ships `''`). */
 export function recordProblems(spots: readonly Spot[], inside: (p: Point) => boolean, { noPhoto = false } = {}): string[] {
   return spots
@@ -28,6 +28,8 @@ export function recordProblems(spots: readonly Spot[], inside: (p: Point) => boo
         ...(s.famous === true ? ['famous', 'pop'] : []),
         ...('book' in s ? ['book'] : []),
         ...('hide' in s ? ['hide'] : []),
+        // 영업시간 (specs/open-now.md 2): where TourAPI says so for sure
+        ...('hours' in s ? ['hours'] : []),
         // 예약 없이 가는 체험 (ADR-0074 Amendment 1): 경로가 없는 new·do에만
         ...(s.walkin === true && s.mood === 'new' && s.sub === 'do' && !('book' in s) ? ['walkin'] : []),
       ];

@@ -11,7 +11,7 @@ import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from 
 import { marketText } from './market';
 import { seasonOn, seasonText } from './season';
 import { CARD_COUNT, REACHES, TRAVEL_TEXT, historyKey, listed, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
-import { cardsValid, hasSaved, heldDay, isSaved, pickSpots, rainArea, savedCount, savedDays, savedIndex, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
+import { cardsValid, hasSaved, heldDay, isSaved, openPhase, pickSpots, rainArea, savedCount, savedDays, savedIndex, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
 import { sunsetText } from './sun';
 import { PAINS, TEXT_MAX, WENT } from './survey';
@@ -1303,7 +1303,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const at = origin ? `${origin.key}@${origin.point.lat.toFixed(3)},${origin.point.lng.toFixed(3)}` : '';
     const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
     // 밤 (ADR-0091): 「예:」 put 야외 산길 and islands by boat after the others from the sunset to the sunrise
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed].join('|');
+    // 지금 닫힌 곳 (ADR-0111): the half hour, where it decides what is shut
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed, openPhase(s, s.clock)].join('|');
   }
 
   /** 지금 여기서 (ADR-0101, specs/home-v2.md 1): the one place the 아무거나 rule would show first, over the moods; not drawn

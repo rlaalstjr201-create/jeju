@@ -26,6 +26,17 @@ const validSunset = (v: unknown): boolean => Array.isArray(v) && v.length > 0 &&
 /** 노을 (Amendment 1): the calculation's own azimuths, maybe none. */
 const validSea = (v: unknown): boolean => Array.isArray(v) && v.every((a) => a === 242 || a === 264 || a === 298);
 
+/** 영업시간 (specs/open-now.md 2): weekdays 0–6 (not all seven) and/or a span of minutes, start before end, start in the
+ * day, end within the next. */
+function validHours(h: unknown): boolean {
+  if (!h || typeof h !== 'object') return false;
+  const { c, o } = h as Record<string, unknown>;
+  if (c === undefined && o === undefined) return false;
+  if (c !== undefined && !(Array.isArray(c) && c.length > 0 && c.length < 7 && c.every((d) => Number.isInteger(d) && d >= 0 && d <= 6))) return false;
+  if (o !== undefined && !(Array.isArray(o) && o.length === 2 && o.every((m) => Number.isInteger(m)) && o[0] >= 0 && o[0] < 1440 && o[1] > o[0] && o[1] <= 2880)) return false;
+  return true;
+}
+
 /** A booking route the card can link to (ADR-0074): a known kind and an https/http page, or tel: for phone. */
 function validBook(b: unknown): boolean {
   if (!b || typeof b !== 'object') return false;
@@ -88,7 +99,9 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     const badWalkin = 'walkin' in r && r.walkin !== true;
     // 인기 (ADR-0092 Amendment 2): a number 0–1, or it is dropped (the place ranks as the least looked for).
     const badPop = 'pop' in r && !(typeof r.pop === 'number' && r.pop >= 0 && r.pop <= 1);
-    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail && !badFamous && !badPop && !badWalkin) {
+    // 영업시간 (specs/open-now.md): hours the app cannot read are dropped — the place stays, its hours unknown.
+    const badHours = 'hours' in r && !validHours(r.hours);
+    if (clean === name && why === reason && score === r.score && !badMarket && !badBook && !badSeason && !badSunset && !badSea && !badTrail && !badFamous && !badPop && !badWalkin && !badHours) {
       out.push(spot);
       continue;
     }
@@ -102,6 +115,7 @@ function normalizeInto(out: Spot[], raw: unknown[], from: number, to: number) {
     if (badFamous) delete fixed.famous;
     if (badWalkin) delete fixed.walkin;
     if (badPop) delete fixed.pop;
+    if (badHours) delete fixed.hours;
     out.push(fixed);
   }
 }

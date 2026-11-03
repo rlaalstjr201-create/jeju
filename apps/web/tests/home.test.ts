@@ -193,6 +193,25 @@ describe('홈 A′ (ADR-0075)', () => {
     }
   });
 
+  it('ADR-0111 7: the 「예:」 read the clock again at the half hour — a 먹기 place shut at 22:00 leaves them', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      region('구제주');
+      let now = new Date('2026-10-03T21:50:00+09:00');
+      render({ today: () => now });
+      await vi.advanceTimersByTimeAsync(0);
+      const o = areaByName('구제주')!;
+      const at = (min: number) => pool(fileSpots, o, 'food', 'meal', 'drive30', false, '2026-10-03', true, min).map((c) => c.spot);
+      expect(example('food')).toBe(want(withPhoto(at(21 * 60 + 50))));
+      now = new Date('2026-10-03T22:00:30+09:00');
+      await vi.advanceTimersByTimeAsync(11 * 60_000);
+      expect(example('food')).toBe(want(withPhoto(at(22 * 60))));
+      expect(example('food')).not.toBe(want(withPhoto(at(21 * 60 + 50))));
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('오늘 장 서는 곳: hidden when no market is open within 차로 30분; nearest first with the trip when one is', async () => {
     region('구제주'); // 10월 3일 only 중문 opens: an hour away
     render({ today: at('2026-10-03') });

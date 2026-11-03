@@ -5,7 +5,7 @@ import { DEST, destOfId, type Dest } from './dest';
 import { marketDay } from './market';
 import { BUSAN, NATION, OPEN_AREAS, openAreasOf } from './release';
 import { byId, distanceKm, islandTop, listed, pickCards, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
-import { pickSpots, rainArea, whenDay, type State } from './state';
+import { minuteNow, pickSpots, rainArea, whenDay, type State } from './state';
 import { RAIN_TTL_MS } from './store';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
 import type { Origin } from './types';
@@ -32,7 +32,7 @@ export function moodExamples(s: State, spots: Spot[], origin: Origin | null, moo
   const tab = tabOf(mood, s.sub, s.newSub);
   const day = whenDay(s);
   const night = nightHome(s, origin);
-  const list = origin ? pool(spots, origin.point, mood, tab, s.reach, s.indoor, day, night).map((c) => c.spot) : islandTop(spots, mood, tab, s.indoor, day, night);
+  const list = origin ? pool(spots, origin.point, mood, tab, s.reach, s.indoor, day, night, minuteNow(s)).map((c) => c.spot) : islandTop(spots, mood, tab, s.indoor, day, night, minuteNow(s));
   const shown = list.filter((x) => x.image && !s.broken.includes(x.id));
   if (mood !== 'famous') return shown.slice(0, 2);
   const skip = new Set(taken ?? ABOVE_FAMOUS.flatMap((m) => moodExamples(s, spots, origin, m).map((x) => x.id)));
@@ -47,7 +47,7 @@ export function moodExamples(s: State, spots: Spot[], origin: Origin | null, moo
 export function nowSpot(s: State, spots: Spot[], origin: Origin | null): Spot | null {
   const shown = (x: Spot) => !!x.image && !s.broken.includes(x.id);
   if (origin) {
-    return pickCards(spots, origin.point, 'any', {}, undefined, s.reach, s.indoor, whenDay(s), nightHome(s, origin), DEST[s.dest].any).cards.map((c) => c.spot).find(shown) ?? null;
+    return pickCards(spots, origin.point, 'any', {}, undefined, s.reach, s.indoor, whenDay(s), nightHome(s, origin), DEST[s.dest].any, minuteNow(s)).cards.map((c) => c.spot).find(shown) ?? null;
   }
   const tops = DEST[s.dest].any.flatMap((m) => moodExamples(s, spots, origin, m).slice(0, 1));
   return tops.sort((a, b) => b.score - a.score || byId(a.id, b.id))[0] ?? null;

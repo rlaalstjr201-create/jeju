@@ -1,5 +1,6 @@
 // Card selection (plan OQ 1·2·4). Pure functions, no DOM.
 import type { Day } from './dates';
+import { shutAt, type Hours } from './hours';
 import { marketDay, type Market } from './market';
 import { seasonOn, type Season } from './season';
 
@@ -38,6 +39,8 @@ export interface Spot {
   indoor?: boolean;
   /** 오일장 장날 (ADR-0066): set on the five-day markets only. */
   market?: Market;
+  /** 영업시간·쉬는 날 (specs/open-now.md 2): where the source says so for sure. */
+  hours?: Hours;
   /** 철 (ADR-0080): the months the source names, or this year's observed window. Never on a market or 먹기. */
   season?: Season[];
   /** 노을 볼 곳 (ADR-0083): the sunset azimuths (242·264·298) the place was confirmed to see the sun go down at. */
@@ -236,28 +239,29 @@ const byScore = (a: Ranked, b: Ranked) =>
 const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || nearBand(a.km) - nearBand(b.km) || byScore(a, b);
 
 /** The places one mood (or the 유명한 곳, ADR-0092) may show, wherever they are: `pool`'s filters (tab, 비 와요, a market
- * closed on `day`). */
-function candidates(spots: Spot[], mood: Kind, tab: Tab | undefined, indoor: boolean, day: Day | undefined): Spot[] {
+ * closed on `day`, one shut on `day` or at `minute`, specs/open-now.md). */
+function candidates(spots: Spot[], mood: Kind, tab: Tab | undefined, indoor: boolean, day: Day | undefined, minute: number | null = null): Spot[] {
   const want = mood === 'food' ? foodSub(tab) : mood === 'new' ? newSub(tab) : 'mix';
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
   // 유명한 곳 (ADR-0092, Amendment 2): indoors and out on any day; 비 와요 keeps the indoor ones (below), never 구경 added in
   const kind = mood === 'famous' ? (s: Spot) => s.famous === true && s.mood !== 'food' : (s: Spot) => s.mood === mood || !!s.moods?.includes(mood);
-  let list = spots.filter((s) => listed(s) && kind(s) && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed');
+  const open = (s: Spot) => !day || !shutAt(s, day, minute);
+  let list = spots.filter((s) => listed(s) && kind(s) && (want === 'mix' || s.sub === want) && (!indoor || s.indoor === true) && status(s) !== 'closed' && open(s));
   // 비 와요 (ADR-0065 4): a list with fewer than 3 indoor places on the whole island (걷기) also takes indoor
   // 구경 — places walked round inside.
   if (indoor && list.length < CARD_COUNT && !(mood === 'new' && want === 'sight') && mood !== 'famous') {
-    list = [...list, ...spots.filter((s) => listed(s) && s.mood === 'new' && s.sub === 'sight' && s.indoor === true)];
+    list = [...list, ...spots.filter((s) => listed(s) && s.mood === 'new' && s.sub === 'sight' && s.indoor === true && open(s))];
   }
   return list;
 }
 
 /** No origin yet (ADR-0075 3, the home's 「예:」 before GPS has answered): the whole island, score then id — at
  * `night` (ADR-0091) a 야외 산길 or a small island after the others (no origin: taken as the main island, as 길찾기 does). */
-export function islandTop(spots: Spot[], mood: Kind, tab?: Tab, indoor = false, day?: Day, night = false): Spot[] {
+export function islandTop(spots: Spot[], mood: Kind, tab?: Tab, indoor = false, day?: Day, night = false, minute: number | null = null): Spot[] {
   const late = (s: Spot) => Number(night && (s.trail === true || islandOf(s) !== null));
   // 유명한 데 (ADR-0092 Amendment 2): no basis, no 가까움 — 인기 alone first
   const pop = (s: Spot) => (mood === 'famous' ? s.pop ?? 0 : 0);
-  return candidates(spots, mood, tab, indoor, day).sort((a, b) => late(a) - late(b) || pop(b) - pop(a) || b.score - a.score || byId(a.id, b.id));
+  return candidates(spots, mood, tab, indoor, day, minute).sort((a, b) => late(a) - late(b) || pop(b) - pop(a) || b.score - a.score || byId(a.id, b.id));
 }
 
 /** 유명한 데's order (ADR-0092 Amendment 2, docs/research/famous-popularity/criteria.md §5): half 인기 (`pop`, 0–1), half
@@ -273,10 +277,10 @@ export function famousMix(pop: number, trip: number, reach: Reach): number {
  * (ADR-0091): a 야외 산길, or a small island the origin is not on (Amendment 1: no boat at night), goes after every
  * other candidate (still in, never left out).
  */
-export function pool(spots: Spot[], origin: Point, mood: Kind, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day, night = false): Ranked[] {
+export function pool(spots: Spot[], origin: Point, mood: Kind, tab?: Tab, reach: Reach = DEFAULT_REACH, indoor = false, day?: Day, night = false, minute: number | null = null): Ranked[] {
   const status = (s: Spot) => (day && s.market ? marketDay(s.market, day) : 'off');
   const home = night ? islandOf(origin) : null;
-  const all = candidates(spots, mood, tab, indoor, day)
+  const all = candidates(spots, mood, tab, indoor, day, minute)
     .map((spot) => {
       const km = distanceKm(origin, spot);
       const island = night ? islandOf(spot) : null;
@@ -361,6 +365,7 @@ export function pickCards(
   day?: Day,
   night = false,
   anyMoods: readonly Mood[] = ANY_MOODS,
+  minute: number | null = null,
 ): { cards: Card[]; histories: Histories; wrapped: boolean; nightShifted: NightShift } {
   const key = historyKey(button, tab);
   const h = histories[key];
@@ -369,7 +374,7 @@ export function pickCards(
   const moved = { trail: false, island: false };
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
-    const pools = anyMoods.map((m) => pool(spots, origin, m, undefined, reach, indoor, day, night));
+    const pools = anyMoods.map((m) => pool(spots, origin, m, undefined, reach, indoor, day, night, minute));
     // one card per mood, never the same place twice (걷기 may have widened to 구경 indoors)
     picked = [];
     for (const p of pools) {
@@ -386,7 +391,7 @@ export function pickCards(
     }
     poolIds = pools.flat().map((c) => c.spot.id);
   } else {
-    const p = pool(spots, origin, button, tab, reach, indoor, day, night);
+    const p = pool(spots, origin, button, tab, reach, indoor, day, night, minute);
     const order = rotate(p, h);
     picked = order.slice(0, CARD_COUNT);
     if (night) nightMoved(order, h, moved);

@@ -27,8 +27,9 @@ const plain = fileSpots.map(({ trail: _t, ...s }) => s as Spot);
 const trails = new Set(fileSpots.filter((s) => s.trail).map((s) => s.id));
 const islandIds = new Set(fileSpots.filter((s) => islandOf(s)).map((s) => s.id));
 const status = () => $('#status > span')?.textContent ?? '';
-const expected = (name: AreaName, night: boolean, day = DAY) =>
-  pickCards(fileSpots, areaByName(name)!, 'walk', {}, undefined, 'drive30', false, day, night).cards.map((c) => c.spot.id);
+/** `min`: the time of the tap (지금) — what is shut then is not picked (specs/open-now.md); none, another day */
+const expected = (name: AreaName, night: boolean, day = DAY, min: number | null = null) =>
+  pickCards(fileSpots, areaByName(name)!, 'walk', {}, undefined, 'drive30', false, day, night, undefined, min === null ? null : Math.floor(min)).cards.map((c) => c.spot.id);
 
 async function walkAt(name: AreaName, min: number, spots: Spot[] = fileSpots, day = DAY) {
   region(name);
@@ -45,7 +46,7 @@ afterEach(() => {
 describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
   it.each(['22:00', '00:25', '05:00'])('%s at 애월: the others first (no trail, no 비양도 on screen), and the status line says both', async (t) => {
     await walkAt('애월', hm(t));
-    expect(cardIds()).toEqual(expected('애월', true));
+    expect(cardIds()).toEqual(expected('애월', true, DAY, hm(t)));
     expect(cardIds().some((id) => trails.has(id!) || islandIds.has(id!))).toBe(false);
     expect(expected('애월', false).some((id) => trails.has(id))).toBe(true); // by day two of the three are trails
     expect(status()).toBe(LINE.both);
@@ -53,14 +54,14 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
 
   it.each([['성산', '22:00', 'both'], ['서귀포시내', '00:25', 'trail']] as [AreaName, string, keyof typeof LINE][])('%s at %s: what pickCards gives at night, the line for %s', async (name, t, kind) => {
     await walkAt(name, hm(t));
-    expect(cardIds()).toEqual(expected(name, true));
+    expect(cardIds()).toEqual(expected(name, true, DAY, hm(t)));
     expect(cardIds().some((id) => islandIds.has(id!))).toBe(false); // 성산: no 우도 place
     expect(status()).toBe(LINE[kind]);
   });
 
   it('우도 at 23:00: a person on the island keeps its places — the 우도 card first as by day; only 산길 moved', async () => {
     await walkAt('우도', hm('23:00'));
-    expect(cardIds()).toEqual(expected('우도', true));
+    expect(cardIds()).toEqual(expected('우도', true, DAY, hm('23:00')));
     expect(cardIds()[0]).toBe(expected('우도', false)[0]);
     expect(islandIds.has(cardIds()[0]!)).toBe(true);
     expect(status()).toBe(LINE.trail);
@@ -74,7 +75,7 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     const home = $('#home').innerHTML;
     await tap('[data-mood="walk"]');
     const results = $('#results').innerHTML;
-    expect(cardIds()).toEqual(expected('애월', false));
+    expect(cardIds()).toEqual(expected('애월', false, DAY, hm('12:00')));
     expect(status()).toBe('');
     reset();
     region('애월');
@@ -93,7 +94,7 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     for (const [min, night] of [[set - 0.5, false], [set + 0.5, true], [rise - 0.5, true], [rise + 0.5, false]] as [number, boolean][]) {
       reset();
       await walkAt('애월', min);
-      expect(cardIds(), `${min}`).toEqual(expected('애월', night));
+      expect(cardIds(), `${min}`).toEqual(expected('애월', night, DAY, min));
       expect(status(), `${min}`).toBe(night ? LINE.both : '');
     }
   });
@@ -111,7 +112,8 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     const first = cardIds();
     await tap('#cards .more');
     const aewol = areaByName('애월')!;
-    const want = pickCards(fileSpots, aewol, 'walk', pickCards(fileSpots, aewol, 'walk', {}, undefined, 'drive30', false, DAY, true).histories, undefined, 'drive30', false, DAY, true);
+    const at = hm('23:00');
+    const want = pickCards(fileSpots, aewol, 'walk', pickCards(fileSpots, aewol, 'walk', {}, undefined, 'drive30', false, DAY, true, undefined, at).histories, undefined, 'drive30', false, DAY, true, undefined, at);
     expect(cardIds()).toEqual(want.cards.map((c) => c.spot.id));
     expect(cardIds().some((id) => first.includes(id))).toBe(false);
     expect(cardIds().some((id) => trails.has(id!) || islandIds.has(id!))).toBe(false);
@@ -133,7 +135,7 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     await tap('[data-mood="rest"]');
     await tap('#back');
     await tap('[data-mood="walk"]'); // 보던 3곳 (S43): brought back, not picked
-    expect(cardIds()).toEqual(expected('애월', true));
+    expect(cardIds()).toEqual(expected('애월', true, DAY, hm('23:00')));
     expect(status()).toBe('');
   });
 
@@ -155,7 +157,7 @@ describe('S2 결과 카드: 22:00 · 00:25 · 05:00 vs 12:00', () => {
     $('[data-mood="walk"]').click();
     await vi.advanceTimersByTimeAsync(0);
     await vi.advanceTimersByTimeAsync(0);
-    const want = pickCards(fileSpots, hangyeong, 'walk', {}, undefined, 'drive30', false, DAY, true);
+    const want = pickCards(fileSpots, hangyeong, 'walk', {}, undefined, 'drive30', false, DAY, true, undefined, hm('21:00'));
     expect(cardIds()).toEqual(want.cards.map((c) => c.spot.id));
     expect(want.nightShifted).not.toBeNull();
     expect(status()).toBe(LINE[want.nightShifted!]);

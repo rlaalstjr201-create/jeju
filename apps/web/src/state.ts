@@ -426,6 +426,14 @@ export function visitedSpots(s: State): Spot[] {
 
 /** The day a heart goes to now. */
 export const whenDay = (s: State): Day => (s.when === 'now' ? s.today : s.when);
+/** 지금's minute in Jeju (specs/open-now.md): what is shut now is not picked; another day, its closed days only. Jeju
+ * only for now (ADR-0111 6): elsewhere no place has its hours, and the unknown-hours rule would empty 놀러 every evening. */
+export const minuteNow = (s: State): number | null => (s.when === 'now' && s.dest === 'jeju' ? s.clock : null);
+/** How often the home looks at the clock again for what is shut (ADR-0111): every half hour. */
+export const OPEN_STEP = 30;
+/** The half hour `clock` is in, where the time decides what is shut (지금, Jeju); null elsewhere. */
+export const openPhase = (s: State, clock: number | null): number | null =>
+  clock === null || s.when !== 'now' || s.dest !== 'jeju' ? null : Math.floor(clock / OPEN_STEP);
 
 /** Saved on `day` (the current day by default): what a card's heart shows. */
 export function isSaved(s: State, id: string, day: Day = whenDay(s)): boolean {
@@ -543,7 +551,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 and islands by boat
   // (Amendment 1) go after the rest.
   const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
-  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any);
+  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any, minuteNow(s));
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;

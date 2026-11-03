@@ -14,6 +14,7 @@ import { dropDuplicates, unresolvedTwins } from './duplicates.mjs';
 import { applyBooking, loadBookingCalls, loadBookRoutes } from './booking.mjs';
 import { applyIndoor, loadIndoorCalls } from './indoor.mjs';
 import { applyMarketDays, loadMarketDays, loadMarketVerdicts } from './markets.mjs';
+import { applyHours } from './hours/parse.mjs';
 import { applySeason, loadSeasonCalls } from './season.mjs';
 import { applySunset, basisProblems, loadSunsetCalls } from './sunset.mjs';
 import { applyNight, basisProblems as nightBasisProblems, loadNightCalls } from './night.mjs';
@@ -341,6 +342,8 @@ kept = applyIndoor(kept, new Map(inputItems.map((i) => [i.id, i.category])), loa
 
 // 장날 (ADR-0066, review/copy/market-days.json): last, on the markets that ship. A market with no rule stops the build.
 kept = applyMarketDays(kept, loadMarketDays(resolve(copyDir, 'market-days.json')), new Map(inputItems.map((i) => [i.id, i.category])));
+// 영업시간·쉬는 날 (specs/open-now.md 2): review/hours/hours.json, where the source says so for sure
+kept = applyHours(kept);
 
 // 철 (ADR-0080, review/season/): after the market days (never on a market). A judgment for a place that does not ship stops the build.
 kept = applySeason(kept, loadSeasonCalls(resolve(root, 'review/season')));

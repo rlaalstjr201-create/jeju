@@ -416,7 +416,9 @@ describe('F4 ageOf — 담은 날부터 오늘까지', () => {
   });
 
   it('a heart at 00:30 in Jeju (still the day before in UTC) is saved on the Jeju day, kept on this device only', async () => {
-    render({ eventsUrl: URL_, beacon, loadSpots: spots, locate: () => Promise.resolve(exp), today: kst(TODAY, '00:30') });
+    // (open all night here: at 00:30 a 체험 whose hours are not known is not picked, specs/open-now.md 3)
+    const allNight = () => Promise.resolve([{ ...exp, hours: { o: [0, 1440] as [number, number] } }, ...others]);
+    render({ eventsUrl: URL_, beacon, loadSpots: allNight, locate: () => Promise.resolve(exp), today: kst(TODAY, '00:30') });
     await tap(`[data-mood="${exp.mood}"]`);
     await tap($$('#cards .heart')[0]);
     const stored = JSON.parse(window.localStorage.getItem('jeju.saved.v2')!) as Record<string, unknown>[];

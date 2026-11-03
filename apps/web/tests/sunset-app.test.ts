@@ -106,16 +106,19 @@ describe('오늘 판 노을 줄 (real spots.json)', () => {
   });
 
   it('3 hours before: the time only — the home is byte for byte what it is with no sunsetView at all', async () => {
-    await home('한림', setAt('한림') - 180);
+    // (영업시간 off: a place closing between the two times would change the 「예:」 — specs/open-now.md)
+    const steady = fileSpots.map(({ hours: _h, ...s }) => s as Spot);
+    const steadyPlain = plain.map(({ hours: _h, ...s }) => s as Spot);
+    await home('한림', setAt('한림') - 180, steady);
     const withData = homeHtml();
     expect($('#today .act')).toBeNull();
     expect($('#sunset')).toBeNull();
     reset();
-    await home('한림', setAt('한림') - 180, plain);
+    await home('한림', setAt('한림') - 180, steadyPlain);
     expect(homeHtml()).toBe(withData);
     reset();
     // and in the window, without the data, the same as before too
-    await home('한림', setAt('한림') - 60, plain);
+    await home('한림', setAt('한림') - 60, steadyPlain);
     expect(homeHtml()).toBe(withData);
   });
 

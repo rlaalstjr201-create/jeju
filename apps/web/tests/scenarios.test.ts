@@ -2414,7 +2414,8 @@ describe('오일장 「오늘 열려요」 (ADR-0066, specs/market-days.md M4)',
   });
 
   it('midnight: the words follow the new today', async () => {
-    at('2026-10-01T23:59:00+09:00');
+    // picked in the day (a market is not picked when it is shut: specs/open-now.md)
+    at('2026-10-01T12:00:00+09:00');
     open();
     await tap('[data-mood="new"]');
     await tap('[data-sub="sight"]');
@@ -2447,7 +2448,8 @@ describe('철 (ADR-0080, specs/seasonal-spots.md S4)', () => {
   /** the rest places, each with 유채꽃 in March and a fixed 벚꽃 window */
   const seasoned = fileSpots
     .filter((s) => s.mood === 'rest')
-    .map((s) => ({ ...s, season: [{ kind: 'cherry' as const, from: '2026-04-08', to: '2026-04-12' }, { kind: 'rapeseed' as const, months: [3] }] }));
+    // (영업시간 off: 3월 10일은 화요일이라, 화요일에 쉬는 곳이 빠지면 이 철 장면이 달라진다 — specs/open-now.md)
+    .map(({ hours: _h, ...s }) => ({ ...s, season: [{ kind: 'cherry' as const, from: '2026-04-08', to: '2026-04-12' }, { kind: 'rapeseed' as const, months: [3] }] }));
   const fake = () => ({ event: vi.fn(), setEnabled: vi.fn() });
   const open = (analytics = fake()) => (render({ today: () => wall, loadSpots: () => Promise.resolve(seasoned), analytics }), analytics);
   const words = () => $$('#cards .card').map((c) => c.querySelector('.meta .season')?.textContent ?? null);
