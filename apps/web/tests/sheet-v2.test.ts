@@ -91,7 +91,7 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
   });
   afterEach(reset);
 
-  it('여행지 | 내 위치: 내 위치 on GPS (no chips); 여행지 shows the chips 제주·부산·강원·다른 곳 (제주 pressed), 내 위치 hides them again', async () => {
+  it('여행지 | 내 위치: 내 위치 on GPS (no chips); 여행지 shows the chips 제주·부산·강원·다른 곳 (제주 pressed), 내 위치 then closes the sheet on the home', async () => {
     mount({ dest: 'jeju' });
     await wait();
     await tap('#basis');
@@ -106,10 +106,10 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect(pressed('#sheet .chips [data-dest]')).toEqual(['jeju']);
     expect(document.activeElement).toBe($('#sheet .chips [data-dest="jeju"]'));
     expect(current().state()).toMatchObject({ basis: 'gps', dest: 'jeju' }); // nothing changes until a chip is picked
+    // on the home, 내 위치 then is 내 위치 picked (ADR-0110 Amendment 2): the chips and the sheet go, the position is read
     await tap('#sheet [data-seg="gps"]');
     expect($('#sheet .chips')).toBeNull();
-    expect(pressed('#sheet [data-seg]')).toEqual(['gps']);
-    expect(current().state().overlay).toBe('basis');
+    expect(current().state()).toMatchObject({ destPick: false, overlay: null });
   });
 
   it('a chip picked: that 여행지 (부산, 지역 고르기 and its 동네); 내 위치 then is 지금 있는 곳 — the basis GPS, the sheet closed', async () => {
@@ -135,6 +135,17 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     await tap('#sheet [data-seg="gps"]');
     await wait();
     expect(current().state()).toMatchObject({ basis: 'gps', overlay: null, origin: { key: 'gps' } });
+  });
+
+  it('ADR-0110 Amendment 2: 여행지 opened first and then 내 위치, on the home: the position is read all the same', async () => {
+    mount({ dest: 'jeju' });
+    await wait();
+    await tap('#basis');
+    await tap('#sheet [data-seg="pick"]');
+    expect(current().state()).toMatchObject({ destPick: true, overlay: 'basis' });
+    await tap('#sheet [data-seg="gps"]');
+    await wait();
+    expect(current().state()).toMatchObject({ basis: 'gps', destPick: false, overlay: null, origin: { key: 'gps' } });
   });
 
   it('a 지역 basis opens on 여행지 with its chips; the chip in use goes down to its 동네', async () => {

@@ -1149,7 +1149,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // a backup link's places that this data knows (all of them until the data is in)
     const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
     const f = s.homeFail;
-    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}|${r.left}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : f ? `fail|${f.why}|${s.dest}` : '';
+    const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}|${r.left}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : f ? `fail|${f.why}|${s.dest}` : s.homeReading ? 'reading' : '';
     // 합치기's answer; past MAX_SAVED, how many found no room (with nothing added, that line alone)
     const done = r?.k === 'done' ? [...(r.added || !r.left ? [COPY.restoreDone(r.added)] : []), ...(r.left ? [COPY.restoreLeft(r.left)] : [])] : [];
     if (sig !== noteSig) {
@@ -1167,6 +1167,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         const open = k.inapp === 'kakaotalk' ? el(doc, 'a', { class: 'tbtn', 'data-action': 'inapp-open', href: '#' }, COPY.inappOpen) : act('inapp-copy', COPY.inappOpen);
         fill(els.homeNote, lines, [open, act('inapp-close', COPY.close)]);
       } else if (f) fill(els.homeNote, [noOriginText(s, f.why, f.at), f.why === 'denied' ? COPY.deniedHow : COPY.noOriginBody], []);
+      else if (s.homeReading) fill(els.homeNote, [COPY.locating], []);
       else els.homeNote.replaceChildren();
       els.homeNote.hidden = !sig;
       if (r?.k === 'done' && els.announce) els.announce.textContent = done.join(' ');

@@ -38,8 +38,10 @@ export interface Delays {
   /** after a tap changes the screen, the 2nd tap of a double tap is swallowed (it would land on a card link). */
   quiet: number;
   dataTimeout: number;
+  /** a position read asked for on the home (ADR-0110 Amendment 2): no answer by then is 「위치를 확인하지 못했어요」. */
+  locate: number;
 }
-export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 10000 };
+export const DELAYS: Delays = { slow: 300, long: 3000, guard: 400, settle: 1000, quiet: 300, dataTimeout: 10000, locate: 15000 };
 
 export interface Deps extends GeoDeps {
   /** a destination's place list (plans/busan.md); the app asks for Jeju's only until Busan opens (S5). The 자동 지역's is
@@ -973,9 +975,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       return els.sheet.querySelector<HTMLElement>('.chips [aria-pressed="true"]')?.focus({ preventScroll: true });
     }
     if (state.basis !== 'gps') return changeBasis({ basis: 'gps' });
-    if (!state.destPick) {
+    if (!state.destPick || state.view === 'home') {
+      // 「여행지」's chips open first and then 내 위치: on the home that is 내 위치 picked again too (ADR-0110 Amendment 2)
+      if (state.destPick) dispatch({ type: 'destPick', on: false });
       closeOverlay();
-      // 내 위치 picked again on the home with no position yet (ADR-0110): read it now, asking if need be
+      // 내 위치 picked again on the home (ADR-0110): read it now, asking if need be
       return locateHome(true);
     }
     dispatch({ type: 'destPick', on: false });
@@ -1506,19 +1510,58 @@ export function mountApp(doc: Document, deps: Deps): App {
   /** ADR-0075 Amendment 1: location already allowed, so the home reads it without a prompt — its examples, market
    * row and 비 소식 are then about where the user is. Never asked here: the first prompt stays at a mood tap. A
    * failure says nothing (the label is not changed by a read nobody asked for) — unless `asked`: 지금 있는 곳 / 내 위치
-   * tapped, it says why on the home (ADR-0110 Amendment 1). */
+   * tapped, it says why on the home (ADR-0110 Amendment 1), and it is read even with a position known: one kept from
+   * earlier in this visit may be somewhere else now (owner report 2026-11-04, ADR-0110 Amendment 2). */
   let homeLocating = false;
+  /** a tap is waiting on the read under way: it is told how it went */
+  let homeAsked = false;
+  /** the read under way was asked for: what it brings replaces a position already known */
+  let homeFresh = false;
+  let homeTimer: ReturnType<typeof setTimeout> | undefined;
+  const stopHomeTimer = () => {
+    if (homeTimer === undefined) return;
+    clearTimeout(homeTimer);
+    timers.delete(homeTimer);
+    homeTimer = undefined;
+  };
+  /** a tapped read with no answer by `delays.locate` (a browser that never answers, a prompt left open) is said to have
+   * failed (ADR-0110 Amendment 2); a position that still comes later is used all the same (the prompt answered late) */
+  const ask = () => {
+    homeAsked = true;
+    homeFresh = true;
+    homeTimer = later(delays.locate, () => {
+      homeTimer = undefined;
+      homeAsked = false;
+      if (state.homeReading) dispatch({ type: 'homeReading', on: false });
+      if (state.view === 'home' && state.basis === 'gps') dispatch({ type: 'homeFail', why: 'unavailable' });
+    });
+    dispatch({ type: 'homeReading', on: true });
+  };
   function locateHome(asked = false) {
+    if (state.view !== 'home' || state.basis !== 'gps') return;
+    // a read already under way (the silent one on opening, or one past its time): this tap waits for it
+    if (homeLocating) {
+      if (asked && !homeAsked) ask();
+      // (a tap already waiting, its line gone with another basis picked meanwhile: back with 내 위치)
+      else if (asked && !state.homeReading) dispatch({ type: 'homeReading', on: true });
+      return;
+    }
     // (the 자동 지역's weak start is no position: it is read all the same)
-    if (homeLocating || state.view !== 'home' || state.basis !== 'gps' || knownOrigin(state)) return;
+    if (!asked && knownOrigin(state)) return;
     homeLocating = true;
+    if (asked) ask();
     void locateGps(deps).then((r) => {
+      stopHomeTimer();
       homeLocating = false;
+      const told = homeAsked;
+      const fresh = homeFresh;
+      homeAsked = homeFresh = false;
+      if (state.homeReading) dispatch({ type: 'homeReading', on: false });
       // a prompt answered after the user went on to the results or the saved list: not moved under them (ADR-0110)
       if (signal.aborted || state.view !== 'home') return;
-      if (!r.ok) return asked && state.basis === 'gps' ? dispatch({ type: 'homeFail', why: r.why, ...(r.at ? { at: r.at } : {}) }) : undefined;
+      if (!r.ok) return told && state.basis === 'gps' ? dispatch({ type: 'homeFail', why: r.why, ...(r.at ? { at: r.at } : {}) }) : undefined;
       followGps(r.point);
-      dispatch({ type: 'homeFix', point: r.point });
+      dispatch({ type: 'homeFix', point: r.point, fresh });
     });
   }
 

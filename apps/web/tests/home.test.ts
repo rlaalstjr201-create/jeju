@@ -11,6 +11,7 @@ import { $, $$, flush, render, reset, tap } from './harness';
 const MOODS: Mood[] = ['rest', 'walk', 'new', 'food'];
 /** 10월 3일: only 중문 (3·8일) has its market day; 10월 2일: 제주 and 표선 (2·7일). */
 const at = (day: string) => () => new Date(`${day}T10:00:00+09:00`);
+const at0 = at('2026-10-03');
 const region = (name: AreaName) => {
   window.localStorage.setItem('jeju.basis', JSON.stringify('region'));
   window.localStorage.setItem('jeju.region', JSON.stringify(name));
@@ -88,7 +89,56 @@ describe('홈 A′ (ADR-0075)', () => {
     expect(example('rest')).toMatch(/^예: /);
   });
 
-  it('ADR-0110 Amendment 1: 「지금 있는 곳」 tapped and the read fails: the home says why, until the next intent', async () => {
+  it('ADR-0110 Amendment 2: 「지금 있는 곳」 tapped with a position already known reads it again, 「위치 확인 중…」 meanwhile', async () => {
+    let at = areaByName('중문')!;
+    let answer: (() => void) | null = null;
+    const locate = vi.fn(() => new Promise<{ lat: number; lng: number }>((resolve) => (answer = () => resolve({ lat: at.lat, lng: at.lng }))));
+    render({ today: at0, locate, geoPermission: async () => 'granted' });
+    await flush();
+    answer!();
+    await flush();
+    await flush();
+    expect(locate).toHaveBeenCalledTimes(1);
+    at = areaByName('애월')!;
+    await tap('#basis');
+    await tap('#sheet [data-basis="gps"]');
+    expect(locate).toHaveBeenCalledTimes(2);
+    expect($$('#homeNote p').map((p) => p.textContent)).toEqual(['위치 확인 중…']);
+    answer!();
+    await flush();
+    await flush();
+    expect($('#homeNote').hidden).toBe(true);
+    const first = pool(fileSpots, at, 'rest', undefined, 'drive30', false, '2026-10-03').map((c) => c.spot);
+    expect(example('rest')).toBe(want(withPhoto(first)));
+  });
+
+  it('ADR-0110 Amendment 2: a tapped read with no answer ends as 「위치를 확인하지 못했어요.」', async () => {
+    render({ today: at0, locate: () => new Promise(() => undefined), delays: { slow: 0, long: 10_000, settle: 300, locate: 50 } });
+    await flush();
+    await tap('#basis');
+    await tap('#sheet [data-basis="gps"]');
+    expect($$('#homeNote p').map((p) => p.textContent)).toEqual(['위치 확인 중…']);
+    await vi.waitFor(() => expect($('#homeNote p')!.textContent).toBe('위치를 확인하지 못했어요.'), { timeout: 3000 });
+  });
+
+  it('ADR-0110 Amendment 2: a position that comes after the time a tap waits (a prompt answered late) is still used', async () => {
+    let answer: (() => void) | null = null;
+    const aewol = areaByName('애월')!;
+    render({ today: at0, locate: () => new Promise((resolve) => (answer = () => resolve({ lat: aewol.lat, lng: aewol.lng }))), delays: { slow: 0, long: 10_000, settle: 300, locate: 50 } });
+    await flush();
+    await tap('#basis');
+    await tap('#sheet [data-basis="gps"]');
+    await vi.waitFor(() => expect($('#homeNote p')!.textContent).toBe('위치를 확인하지 못했어요.'), { timeout: 3000 });
+    answer!();
+    await flush();
+    await flush();
+    expect($('#homeNote').hidden).toBe(true);
+    expect($('#basis').textContent).toBe('내 위치 근처');
+    const first = pool(fileSpots, aewol, 'rest', undefined, 'drive30', false, '2026-10-03').map((c) => c.spot);
+    expect(example('rest')).toBe(want(withPhoto(first)));
+  });
+
+  it('ADR-0110 Amendment 1:「지금 있는 곳」 tapped and the read fails: the home says why, until the next intent', async () => {
     const { LocateError } = await import('../src/effects');
     render({ today: at('2026-10-03'), locate: () => Promise.reject(new LocateError('denied')) });
     await flush();
