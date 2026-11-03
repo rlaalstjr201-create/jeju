@@ -127,6 +127,16 @@ describe.runIf(NATION)('기준 시트 2판 (ADR-0103)', () => {
     expect(current().state()).toMatchObject({ basis: 'gps', overlay: null });
   });
 
+  it('ADR-0110: 내 위치 picked again on the home with no position yet reads it then (the sheet closed, the position known)', async () => {
+    mount({ dest: 'jeju' });
+    await wait();
+    expect(current().state().origin).toBeNull();
+    await tap('#basis');
+    await tap('#sheet [data-seg="gps"]');
+    await wait();
+    expect(current().state()).toMatchObject({ basis: 'gps', overlay: null, origin: { key: 'gps' } });
+  });
+
   it('a 지역 basis opens on 여행지 with its chips; the chip in use goes down to its 동네', async () => {
     mount({ dest: 'jeju' });
     await wait();

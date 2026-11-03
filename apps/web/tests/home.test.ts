@@ -74,6 +74,20 @@ describe('홈 A′ (ADR-0075)', () => {
     expect(locate).toHaveBeenCalledTimes(1);
   });
 
+  it('ADR-0110: 「지금 있는 곳」 picked again in the sheet with no position yet reads it then', async () => {
+    const locate = vi.fn(() => Promise.resolve(areaByName('중문')!));
+    render({ today: at('2026-10-03'), locate });
+    await flush();
+    expect(locate).not.toHaveBeenCalled();
+    $('#basis')!.click();
+    await flush();
+    $('#sheet [data-basis="gps"]')!.click();
+    await flush();
+    await flush();
+    expect(locate).toHaveBeenCalledTimes(1);
+    expect(example('rest')).toMatch(/^예: /);
+  });
+
   it('permission not granted (prompt / denied / no Permissions API): the home never reads or asks', async () => {
     for (const geoPermission of [async () => 'prompt' as const, async () => 'denied' as const, undefined]) {
       reset();

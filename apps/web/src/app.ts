@@ -917,8 +917,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       closeOverlay();
     }
     // A new request also abandons any GPS request still in flight (S37·S38).
-    if (state.view === 'home') abortRequest();
-    else request('show');
+    if (state.view === 'home') {
+      abortRequest();
+      // 내 위치 picked on the home (ADR-0110): its position read now, the prompt (if any) answering this tap
+      if (keep && next.basis === 'gps') locateHome();
+    } else request('show');
   }
 
   /** 얼마나 (ADR-0060): like another basis — saved, the sheet closes, the results are picked again (new request
@@ -970,7 +973,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       return els.sheet.querySelector<HTMLElement>('.chips [aria-pressed="true"]')?.focus({ preventScroll: true });
     }
     if (state.basis !== 'gps') return changeBasis({ basis: 'gps' });
-    if (!state.destPick) return closeOverlay();
+    if (!state.destPick) {
+      closeOverlay();
+      // 내 위치 picked again on the home with no position yet (ADR-0110): read it now, asking if need be
+      return locateHome();
+    }
     dispatch({ type: 'destPick', on: false });
     els.sheet.querySelector<HTMLElement>('[data-seg="gps"]')?.focus({ preventScroll: true });
   }
@@ -1170,7 +1177,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     // 「여행지」's chip in use (ADR-0103): down to its 동네, as 다른 동네 고르기
     if (isDest(dest)) return guarded(`dest:${dest}`) ? undefined : NATION && dest === state.dest ? toAreas() : pickDest(dest);
     const basis = b.dataset.basis;
-    if (basis === 'gps') return basisIsCurrent(state, 'gps') ? closeOverlay() : changeBasis({ basis: 'gps' });
+    if (basis === 'gps') {
+      if (!basisIsCurrent(state, 'gps')) return changeBasis({ basis: 'gps' });
+      closeOverlay();
+      // 내 위치 picked again on the home with no position yet (ADR-0110): read it now, asking if need be
+      return locateHome();
+    }
     if (basis === 'stay') {
       if (!state.stay) return openOverlay('stay');
       if (basisIsCurrent(state, 'stay')) return closeOverlay();
@@ -1501,7 +1513,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     homeLocating = true;
     void locateGps(deps).then((r) => {
       homeLocating = false;
-      if (!r.ok || signal.aborted) return;
+      // a prompt answered after the user went on to the results or the saved list: not moved under them (ADR-0110)
+      if (!r.ok || signal.aborted || state.view !== 'home') return;
       followGps(r.point);
       dispatch({ type: 'homeFix', point: r.point });
     });
