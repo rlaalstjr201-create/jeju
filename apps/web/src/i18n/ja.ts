@@ -20,7 +20,7 @@ const PRIVACY = '個人情報の取り扱い';
 const marketDigits = (label: string) => (label.match(/\d+/g) ?? []).map((d) => String(Number(d) % 10));
 
 export const JA: Lang = {
-  title: 'Yeochana:済州 · ノープラン旅のおとも',
+  title: 'Yeochana · ノープラン旅のおとも',
   copy: {
     basisGps: '現在地の近く',
     basisStay: '宿の近く',
@@ -41,7 +41,7 @@ export const JA: Lang = {
     offline: 'オフラインのため、写真は表示されません。',
     how: (reach, indoor) =>
       reach
-        ? `${reach}の${indoor ? '屋内スポット' : 'スポット'}から、紹介文を見て行く価値の高い順に選びました。`
+        ? `${reach}の${indoor ? '屋内スポット' : 'スポット'}から、近い順に選びました。`
         : `範囲内に合うスポットが少ないので、いちばん近い${indoor ? '屋内' : ''}スポットを選びました。`,
     howReach: { walk: '徒歩15分圏内', drive30: '車で30分圏内', drive60: '車で1時間圏内' },
     or: 'または',

@@ -22,7 +22,7 @@ const onDay = (day: string) => (day === 'Tomorrow' ? 'tomorrow' : `on ${day}`);
 const marketDigits = (label: string) => (label.match(/\d+/g) ?? []).map((d) => String(Number(d) % 10));
 
 export const EN: Lang = {
-  title: 'Yeochana:Jeju · Your no-plan travel buddy',
+  title: 'Yeochana · Your no-plan travel buddy',
   copy: {
     basisGps: 'Near me',
     basisStay: 'Near my stay',
@@ -43,7 +43,7 @@ export const EN: Lang = {
     offline: "You're offline, so photos won't load.",
     how: (reach, indoor) =>
       reach
-        ? `${indoor ? 'Indoor places' : 'Places'} within ${reach}, best first going by their descriptions.`
+        ? `${indoor ? 'Indoor places' : 'Places'} within ${reach}, nearest first.`
         : `Not much in range, so here are the closest ${indoor ? 'indoor ' : ''}places.`,
     howReach: { walk: 'a 15-min walk', drive30: 'a 30-min drive', drive60: "an hour's drive" },
     or: 'Or',

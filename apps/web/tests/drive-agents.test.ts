@@ -238,7 +238,7 @@ describe('D6 what agents read: llms.txt and the home JSON-LD', () => {
 
   it('llms.txt: brand first, every deep-link value the app reads, source, what we do not do', () => {
     const t = read('public/llms.txt');
-    expect(t.startsWith('# 여차나:제주\n')).toBe(true);
+    expect(t.startsWith('# 여차나\n')).toBe(true);
     for (const a of AREAS) expect(t, a.slug).toContain(`${a.slug}(`);
     // 부산 (plans/busan.md S7): its 12 slugs on one line of their own
     for (const a of BUSAN_AREAS) expect(t, a.slug).toContain(`${a.slug}(`);
@@ -259,7 +259,7 @@ describe('D6 what agents read: llms.txt and the home JSON-LD', () => {
     const graph = blocks[0]['@graph'] as Record<string, unknown>[];
     expect(graph.map((g) => g['@type'])).toEqual(['WebSite', 'WebApplication']);
     const app = graph[1] as { name: string; potentialAction: { '@type': string; target: { urlTemplate: string } } };
-    expect(app.name).toBe('여차나:제주');
+    expect(app.name).toBe('여차나');
     expect(app.potentialAction['@type']).toBe('SearchAction');
     const tpl = app.potentialAction.target.urlTemplate;
     expect(tpl).toBe('__SITE__/?mood={mood}&area={area}&reach={reach}&date={date}&indoor={indoor}');
@@ -361,17 +361,18 @@ describe('D10 the app: 걸어서 cards walk, island cards go to the pier', () =>
     expect($$('#cards a.go').some((a) => a.getAttribute('href')!.endsWith('/walk'))).toBe(true);
   });
 
-  it('the 차귀도 card seen from 한경 → 「배 타는 곳까지 길찾기」 to 자구내포구; a 우도 card seen from 우도 → the place itself', async () => {
-    // the one main-island area whose results hold an island place (한경 · 새로운 거 · 차로 30분)
-    expect(pickCards(realSpots, areaByName('한경')!, 'new', {}, undefined, 'drive30', false, TODAY).cards.some((c) => islandOf(c.spot) === '차귀도')).toBe(true);
-    open('?mood=new&area=hangyeong&reach=drive30');
+  it('the 비양도 card seen from 한림 → 「배 타는 곳까지 길찾기」 to the pier; a 우도 card seen from 우도 → the place itself', async () => {
+    // the one main-island area whose results hold an island place (한림 · 유명한 데 · 차로 30분); nearest first (ADR-0108)
+    // keeps every other island place out of a main-island area's 3
+    expect(pickCards(realSpots, areaByName('한림')!, 'famous', {}, undefined, 'drive30', false, TODAY).cards.some((c) => islandOf(c.spot) === '비양도')).toBe(true);
+    open('?mood=famous&area=hallim&reach=drive30');
     await until(() => $$('#cards .card:not(.ghost)').length === 3);
-    const isle = $$('#cards .card').find((c) => islandOf(realSpots.find((x) => x.id === c.dataset.id)!) === '차귀도')!;
+    const isle = $$('#cards .card').find((c) => islandOf(realSpots.find((x) => x.id === c.dataset.id)!) === '비양도')!;
     const go = isle.querySelector<HTMLAnchorElement>('a.go')!;
-    const t = TERMINALS.차귀도;
+    const t = TERMINALS.비양도;
     expect(go.textContent).toBe('배 타는 곳까지 길찾기');
     expect(go.getAttribute('href')).toBe(`https://map.naver.com/p/directions/-/${t.lng},${t.lat},${encodeURIComponent(t.name)},,/-/car`);
-    expect(go.getAttribute('aria-label')).toBe(`차귀도, 배 타는 곳 ${t.name}까지 네이버지도 자동차 길찾기`);
+    expect(go.getAttribute('aria-label')).toBe(`비양도, 배 타는 곳 ${t.name}까지 네이버지도 자동차 길찾기`);
     for (const c of $$('#cards .card').filter((x) => x !== isle)) expect(c.querySelector('a.go')!.textContent).toBe('길찾기');
 
     reset();

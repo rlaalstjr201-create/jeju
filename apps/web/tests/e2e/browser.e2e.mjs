@@ -4011,7 +4011,7 @@ await check('I18N-crawler', 'Amendment 7: a crawler-like browser (no languages a
     await page.goto(BASE);
     await page.waitForSelector('#today:not(.wait)');
     const s = await page.evaluate(() => ({ lang: document.documentElement.lang, title: document.title, ask: document.querySelector('#ask').textContent }));
-    if (s.lang !== 'ko' || s.title !== '여차나:제주 · P를 위한 여행동반자' || s.ask !== '지금 뭐 하고 싶어요?' || asked.length) problems.push(`${tag} ${JSON.stringify({ ...s, asked })}`);
+    if (s.lang !== 'ko' || s.title !== '여차나 · P를 위한 여행동반자' || s.ask !== '지금 뭐 하고 싶어요?' || asked.length) problems.push(`${tag} ${JSON.stringify({ ...s, asked })}`);
     await ctx.close();
   }
   assert(!problems.length, problems.join(' | '));

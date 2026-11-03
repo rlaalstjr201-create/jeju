@@ -24,10 +24,11 @@ const plain = fileSpots.map(({ famous: _f, ...s }) => s as Spot);
 
 describe('by day (F1·F2)', () => {
   // Changed on purpose (ADR-0092 Amendment 2·4): 인기(검색량)·가까움 합 순 — was 광치기해변 · 섭지코지 · 성산일출봉 by score
-  // then trip, then 섭지코지 · 성산일출봉 · 광치기해변 by blog/cafe posts
-  it('성산: 성산일출봉 · 섭지코지 · 빛의 벙커 — no 먹기, no cafe', () => {
+  // then trip, then 섭지코지 · 성산일출봉 · 광치기해변 by blog/cafe posts. Changed on purpose (ADR-0108): the nearer 거리 칸 first —
+  // 빛의 벙커 (걸어서 칸), then 섭지코지 · 광치기해변 (차로 5분); 성산일출봉 (차로 10분) is in the next 칸
+  it('성산: 빛의 벙커 · 섭지코지 · 광치기해변 — no 먹기, no cafe', () => {
     const r = pick('성산');
-    expect(names(r.cards)).toEqual(['성산일출봉', '섭지코지', '빛의 벙커']);
+    expect(names(r.cards)).toEqual(['빛의 벙커', '섭지코지', '광치기해변']);
     expect(r.cards.every((c) => c.spot.mood !== 'food' && inputs.get(c.spot.id)!.category !== 'cafe')).toBe(true);
   });
   it('서귀포 시내: 천지연폭포 and 정방폭포 are among the first 3', () => {
@@ -58,8 +59,9 @@ describe('인기·가까움 합 (Amendment 2, criteria §6 pre-registered checks
     expect(famousMix(0.4, 45, 'drive30')).toBeCloseTo(0.2);
     expect(famousMix(0.4, 15, 'walk')).toBeCloseTo(0.2);
   });
-  it('C1: a much more looked-for place 15분 away beats an obscure one 5분 away', () => {
-    expect(order([at('b', 0.3, 5), at('a', 0.8, 15)])).toEqual(['a', 'b']);
+  // C1 retired by ADR-0108 (was: a much more looked-for place 15분 away beats an obscure one 5분 away)
+  it('C1 (ADR-0108): an obscure place 5분 away comes before a much more looked-for one 15분 away — the nearer 칸 first', () => {
+    expect(order([at('b', 0.3, 5), at('a', 0.8, 15)])).toEqual(['b', 'a']);
   });
   it('C2: a slightly more looked-for place 25분 away does not beat one 5분 away', () => {
     expect(order([at('a', 0.55, 25), at('b', 0.45, 5)])).toEqual(['b', 'a']);
@@ -176,7 +178,7 @@ describe('the app (first screen and results)', () => {
     expect(rows.map((b) => b.dataset.mood)).toEqual(['rest', 'walk', 'new', 'famous', 'food']);
     await tap('[data-mood="famous"]');
     expect($('#crumb').textContent).toBe('유명한 데 가 보고 싶어');
-    expect(cardNames()).toContain('성산일출봉');
+    expect(cardNames()).toContain('빛의 벙커');
     expect($('#foodSub').hidden && $('#newSub').hidden).toBe(true);
     await tap('#back');
     expect($('[data-mood="famous"] .ex')?.textContent).toMatch(/^예: /);

@@ -2321,14 +2321,14 @@ describe('결과 화면 (ADR-0075, plans/home-refresh.md U1)', () => {
     expect(how().hidden).toBe(true);
     await tap('[data-mood="rest"]');
     expect(how().hidden).toBe(false);
-    expect(how().textContent).toBe('차로 30분 안에서, 소개글로 볼 때 가 볼 만한 곳부터 골랐어요.');
+    expect(how().textContent).toBe('차로 30분 안에서, 가까운 곳부터 골랐어요.');
     expect(how().getAttribute('role')).toBeNull();
     expect(how().getAttribute('aria-live')).toBeNull();
     expect(how().nextElementSibling).toBe($('#status'));
     await tap('#basis');
     await tap('#sheet [data-indoor]');
     await settle();
-    expect(how().textContent).toBe('차로 30분 안의 실내 중에서, 소개글로 볼 때 가 볼 만한 곳부터 골랐어요.');
+    expect(how().textContent).toBe('차로 30분 안의 실내 중에서, 가까운 곳부터 골랐어요.');
     await tap('.card .heart');
     await tap('#saved');
     expect(how().textContent).toBe('');
@@ -2349,7 +2349,7 @@ describe('결과 화면 (ADR-0075, plans/home-refresh.md U1)', () => {
     render();
     await tap('[data-mood="food"]');
     expect(state().cards!.list.every((c) => withinReach(reach, ORIGINS.제주시, c.spot))).toBe(true);
-    expect(how().textContent).toBe(`${words}소개글로 볼 때 가 볼 만한 곳부터 골랐어요.`);
+    expect(how().textContent).toBe(`${words}가까운 곳부터 골랐어요.`);
   });
 
   it('widened to the nearest 3 on the island (a card past the range): says it took the nearest, not a range it did not keep', async () => {

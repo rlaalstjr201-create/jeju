@@ -188,19 +188,19 @@ describe('S3 상태 줄', () => {
 describe('홈 「예:」 (the same order)', () => {
   const walkEx = () => $('[data-mood="walk"] .ex')?.textContent ?? '';
 
-  it('23:00 at 애월: the walk row\'s 「예:」 has no trail and no 비양도 (next in line once the trails go back); 12:00 has 새별오름', async () => {
+  it('23:00 at 애월: the walk row\'s 「예:」 has no trail and no 비양도 (next in line once the trails go back); 12:00 has 물메 (a trail, the nearest)', async () => {
     region('애월');
     render({ today: () => kst(DAY, hm('12:00')) });
     await flush();
     await flush();
-    expect(walkEx()).toContain('새별오름');
+    expect(walkEx()).toContain('물메');
     reset();
     region('애월');
     render({ today: () => kst(DAY, hm('23:00')) });
     await flush();
     await flush();
     expect(walkEx()).toMatch(/^예: /);
-    expect(walkEx()).not.toContain('새별오름');
+    expect(walkEx()).not.toContain('물메');
     expect(walkEx()).not.toContain('비양도');
   });
 
@@ -214,14 +214,14 @@ describe('홈 「예:」 (the same order)', () => {
     render({ today: () => now });
     await vi.advanceTimersByTimeAsync(0);
     const night = walkEx();
-    expect(night).not.toContain('새별오름');
+    expect(night).not.toContain('물메');
     now = kst(DAY, rise + 0.1);
     await vi.advanceTimersByTimeAsync(2.1 * 60_000);
-    expect(walkEx()).toContain('새별오름');
+    expect(walkEx()).toContain('물메');
     // the day's next moments are 노을 볼 곳 opening and the sunset: after the sunset the night order again
     now = kst(DAY, set - 150 + 0.1);
     await vi.advanceTimersByTimeAsync((set - 150 - rise) * 60_000);
-    expect(walkEx()).toContain('새별오름');
+    expect(walkEx()).toContain('물메');
     now = kst(DAY, set + 0.1);
     await vi.advanceTimersByTimeAsync(150 * 60_000);
     expect(walkEx()).toBe(night);

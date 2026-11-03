@@ -1,13 +1,14 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
 import { AREAS } from '../src/areas';
-import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, listed, pickCards, reachMinutes, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick';
+import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, listed, nearBand, pickCards, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick';
 import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
 
-/** specs/ranking.md 정렬 키: 점수 내림차순 → 이동 시간 오름차순 → id. */
-const byRank = (origin: Point, reach: Reach) => (a: { spot: Spot }, b: { spot: Spot }) =>
+/** specs/ranking.md 정렬 키 (ADR-0108): 거리 칸 오름차순 → 점수 내림차순 → 실제 거리 오름차순 → id. */
+const byRank = (origin: Point) => (a: { spot: Spot }, b: { spot: Spot }) =>
+  nearBand(distanceKm(origin, a.spot)) - nearBand(distanceKm(origin, b.spot)) ||
   b.spot.score - a.spot.score ||
-  reachMinutes(reach, distanceKm(origin, a.spot)) - reachMinutes(reach, distanceKm(origin, b.spot)) ||
+  distanceKm(origin, a.spot) - distanceKm(origin, b.spot) ||
   a.spot.id.localeCompare(b.spot.id);
 
 const combos = Object.entries(ORIGINS).flatMap(([name, origin]) => BUTTONS.map((button) => ({ name, origin, button })));
@@ -55,18 +56,18 @@ describe('S2 real data: 4 origins × 6 buttons', () => {
     expect(second.cards.filter((c) => before.has(c.spot.id))).toEqual([]);
   });
 
-  // Changed on purpose (ADR-0060): no longer nearest first — score first, then the trip, then id.
-  it.each(combos)('$name / $button → the best-scored spots in range, best first', ({ origin, button }) => {
+  // Changed on purpose (ADR-0108): nearest 거리 칸 first; score only within a 칸, then the trip, then id.
+  it.each(combos)('$name / $button → the nearest-band spots in range, nearest first', ({ origin, button }) => {
     const { cards } = pickCards(realSpots, origin, button);
     // 유명한 데 (ADR-0092 Amendment 2): its own order, tested in famous-pick.test.ts
     if (button === 'famous') return;
-    expect(cards.map((c) => c.spot.id)).toEqual([...cards].sort(byRank(origin, DEFAULT_REACH)).map((c) => c.spot.id));
+    expect(cards.map((c) => c.spot.id)).toEqual([...cards].sort(byRank(origin)).map((c) => c.spot.id));
     if (button === 'any') return;
     // 'food' with no sub given defaults to 'meal' (S2/S3 toggle default).
     const best = realSpots
       .filter((s) => listed(s) && s.mood === button && (button !== 'food' || s.sub === 'meal') && withinReach(DEFAULT_REACH, origin, s))
       .map((spot) => ({ spot }))
-      .sort(byRank(origin, DEFAULT_REACH))
+      .sort(byRank(origin))
       .slice(0, 3)
       .map((c) => c.spot.id);
     expect(cards.map((c) => c.spot.id)).toEqual(best);
@@ -219,15 +220,15 @@ describe('S2 rotation on a synthetic set', () => {
     }
   });
 
-  // Changed on purpose (ADR-0060): the first tap is the best-scored 3, not the nearest 3; the rotation then
+  // Changed on purpose (ADR-0108): the nearer 거리 칸 comes first, score only within a 칸; the rotation then
   // moves down the same ranking.
-  it('first tap shows the best-scored first; second tap moves to the next in rank', () => {
-    // s0..s5 lie ~90m apart (all "차로 약 5분"); s5 and s3 score highest.
+  it('first tap shows the nearest band first, best-scored within it; second tap moves to the next in rank', () => {
+    // s0..s5 lie ~90m apart: s0..s4 are the 걸어서 5분 칸, s5 (~460m) the 10분 칸 — so s5, the best score, comes last.
     const spots = [at(5, 'walk', 5), at(1, 'walk', 3), at(4, 'walk', 2), at(0, 'walk', 3), at(3, 'walk', 4), at(2, 'walk', 3)];
     const a = pickCards(spots, origin, 'walk');
-    expect(a.cards.map((c) => c.spot.id)).toEqual(['s5', 's3', 's0']);
+    expect(a.cards.map((c) => c.spot.id)).toEqual(['s3', 's0', 's1']);
     const b = pickCards(spots, origin, 'walk', a.histories);
-    expect(b.cards.map((c) => c.spot.id)).toEqual(['s1', 's2', 's4']);
+    expect(b.cards.map((c) => c.spot.id)).toEqual(['s2', 's4', 's5']);
   });
 
   it('any: re-tap changes all three and keeps 3 different moods', () => {
@@ -450,14 +451,15 @@ describe('오일장 장날 (ADR-0066, specs/market-days.md M3)', () => {
   const ids = (spots: Spot[], day?: string) => pickCards(spots, o, 'new', {}, 'sight', 'drive30', false, day).cards.map((c) => c.spot.id);
 
   it('on a market day the market leads the cards with the same score; its score is not raised', () => {
-    const spots = [mk('a', 1, 4), mk('b', 2, 4), mk('m', 5, 4, JEJU), mk('top', 9, 5)];
+    // all in one 거리 칸 (차로 5분), so the 칸 does not decide (ADR-0108)
+    const spots = [mk('a', 1.5, 4), mk('b', 2, 4), mk('m', 3, 4, JEJU), mk('top', 3.5, 5)];
     expect(ids(spots, '2026-10-02')).toEqual(['top', 'm', 'a']);
-    // not a market day: the usual order (score → trip → id), the far market falls out of the 3
+    // not a market day: the usual order (score → trip → id), the market falls out of the 3
     expect(ids(spots, '2026-10-03')).toEqual(['top', 'a', 'b']);
     // no day given: as before
     expect(ids(spots)).toEqual(['top', 'a', 'b']);
     // a lower score never jumps ahead
-    expect(ids([mk('a', 1, 4), mk('b', 2, 4), mk('c', 3, 4), mk('m', 1, 3, JEJU)], '2026-10-02')).toEqual(['a', 'b', 'c']);
+    expect(ids([mk('a', 1.5, 4), mk('b', 2, 4), mk('c', 3, 4), mk('m', 1.5, 3, JEJU)], '2026-10-02')).toEqual(['a', 'b', 'c']);
     expect(pickCards(spots, o, 'new', {}, 'sight', 'drive30', false, '2026-10-02').cards.find((c) => c.spot.id === 'm')!.spot.score).toBe(4);
   });
 
@@ -535,13 +537,24 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
     expect(checked).toBe(15 * 8 * 3);
   });
 
-  it('R3 within one range the first card scores at least as high as the cards after it (every area, button, range)', () => {
+  /** R3 (ADR-0108): each card's 거리 칸 is ≤ the cards after it; in the same 칸 its score is ≥ theirs. */
+  const expectNearFirst = (o: Point, cards: { spot: Spot }[], why: string) => {
+    for (let i = 0; i < cards.length; i++) {
+      for (let j = i + 1; j < cards.length; j++) {
+        const bi = nearBand(distanceKm(o, cards[i].spot));
+        const bj = nearBand(distanceKm(o, cards[j].spot));
+        expect(bi, why).toBeLessThanOrEqual(bj);
+        if (bi === bj) expect(cards[i].spot.score, why).toBeGreaterThanOrEqual(cards[j].spot.score);
+      }
+    }
+  };
+
+  it('R3 within one range the first card is in the nearest 거리 칸, and scores at least as high as the cards after it in that 칸 (every area, button, range)', () => {
     for (const area of AREAS) {
       for (const [b, sub] of SIX) {
         for (const reach of REACHES) {
           const { cards } = pickCards(realSpots, area, b, {}, sub, reach);
-          const scores = cards.map((c) => c.spot.score);
-          expect(scores[0], label(area.name, b, sub, reach)).toBe(Math.max(...scores));
+          expectNearFirst(area, cards, label(area.name, b, sub, reach));
         }
       }
     }
@@ -554,8 +567,7 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
         const seen = new Set<string>();
         for (let tap = 0; tap < 4; tap++) {
           const r = pickCards(realSpots, origin, b, h, sub);
-          const scores = r.cards.map((c) => c.spot.score);
-          expect(scores[0], `${name} / ${b} / tap ${tap}`).toBe(Math.max(...scores));
+          expectNearFirst(origin, r.cards, `${name} / ${b} / tap ${tap}`);
           if (!r.wrapped) for (const c of r.cards) expect(seen.has(c.spot.id), `${name} / ${b} / tap ${tap}`).toBe(false);
           for (const c of r.cards) seen.add(c.spot.id);
           h = r.histories;
@@ -564,19 +576,20 @@ describe('만족도 점수와 범위 (ADR-0060, specs/ranking.md R2·R3)', () =>
     }
   });
 
-  it('a better-scored place further away comes before a nearer one, but never one beyond the range', () => {
+  it('a nearer place comes before a better-scored one further away (score only within a 거리 칸), and never one beyond the range', () => {
     const mk = (id: string, km: number, score: number): Spot => ({
       id, name: id, lat: 33.5, lng: 126.5 + km / (111.32 * Math.cos((33.5 * Math.PI) / 180)), mood: 'rest',
       reason: '테스트용 이유 문장입니다 열여덟 글자 이상', image: 'https://example.com/x.jpg', kakaoPlaceId: null, bookable: false, score,
     });
-    const spots = [mk('near3', 1, 3), mk('near3b', 2, 3), mk('mid5', 10, 5), mk('mid4', 12, 4), mk('far5', 25, 5)];
+    // near3·near3b·near5 are all 차로 5분; mid5 is 20분, mid4 25분, far5 50분
+    const spots = [mk('near3', 1.5, 3), mk('near3b', 2, 3), mk('near5', 3, 5), mk('mid5', 10, 5), mk('mid4', 12, 4), mk('far5', 25, 5)];
     const o = { lat: 33.5, lng: 126.5 };
-    // 차로 30분: far5 (차로 약 50분) is out; the 5 comes first, the 3s last, ties by trip then id
-    expect(pickCards(spots, o, 'rest', {}, undefined, 'drive30').cards.map((c) => c.spot.id)).toEqual(['mid5', 'mid4', 'near3']);
-    // 차로 1시간: far5 is in, and outranks the nearer 4
-    expect(pickCards(spots, o, 'rest', {}, undefined, 'drive60').cards.map((c) => c.spot.id)).toEqual(['mid5', 'far5', 'mid4']);
-    // 걸어서: only near3 is within 15 minutes on foot → widened to the nearest 3, still best first
-    expect(pickCards(spots, o, 'rest', {}, undefined, 'walk').cards.map((c) => c.spot.id)).toEqual(['mid5', 'near3', 'near3b']);
+    // 차로 30분: far5 (차로 약 50분) is out; the nearest 칸 first, the 5 first within it, ties by trip then id
+    expect(pickCards(spots, o, 'rest', {}, undefined, 'drive30').cards.map((c) => c.spot.id)).toEqual(['near5', 'near3', 'near3b']);
+    // 차로 1시간: far5 is in the range, but a further 칸 never outranks a nearer one
+    expect(pickCards(spots, o, 'rest', {}, undefined, 'drive60').cards.map((c) => c.spot.id)).toEqual(['near5', 'near3', 'near3b']);
+    // 걸어서: none is within 15 minutes on foot → widened to the nearest 3, still nearest 칸 first
+    expect(pickCards(spots, o, 'rest', {}, undefined, 'walk').cards.map((c) => c.spot.id)).toEqual(['near5', 'near3', 'near3b']);
   });
 });
 
@@ -591,14 +604,15 @@ describe('철 (ADR-0080, specs/seasonal-spots.md S3)', () => {
   const ids = (spots: Spot[], day?: string) => pickCards(spots, o, 'new', {}, 'sight', 'drive30', false, day).cards.map((c) => c.spot.id);
 
   it('same score: the market on its day, then the place in season, then the rest; never ahead of a higher score', () => {
-    const spots = [mk('a', 1, 4), mk('s', 6, 4, { season: MARCH }), mk('m', 8, 4, { market: JEJU }), mk('top', 9, 5)];
+    // all in one 거리 칸 (차로 5분), so the 칸 does not decide (ADR-0108)
+    const spots = [mk('a', 1.5, 4), mk('s', 2, 4, { season: MARCH }), mk('m', 3, 4, { market: JEJU }), mk('top', 3.5, 5)];
     expect(ids(spots, '2026-03-02')).toEqual(['top', 'm', 's']);
     expect(ids(spots, '2026-03-03')).toEqual(['top', 's', 'a']);
     // out of season and with no day: the usual order (score → trip → id)
     expect(ids(spots, '2026-04-03')).toEqual(['top', 'a', 's']);
     expect(ids(spots)).toEqual(['top', 'a', 's']);
     // a lower score never jumps ahead
-    expect(ids([mk('a', 1, 4), mk('b', 2, 4), mk('c', 3, 4), mk('s', 1, 3, { season: MARCH })], '2026-03-10')).toEqual(['a', 'b', 'c']);
+    expect(ids([mk('a', 1.5, 4), mk('b', 2, 4), mk('c', 3, 4), mk('s', 1.5, 3, { season: MARCH })], '2026-03-10')).toEqual(['a', 'b', 'c']);
   });
 
   it('real data: out of season the order is what it was with no 철; in season 15 areas × 3 ranges × every list still give 3 distinct cards', () => {

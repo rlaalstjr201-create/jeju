@@ -203,6 +203,8 @@ export function travelText(t: Travel, from?: string): string {
 interface Ranked extends Card {
   /** the trip in the range's terms (sort key only) */
   trip: number;
+  /** straight-line km from the origin: its 거리 칸 is the first key (ADR-0108; sort key only) */
+  km: number;
   /** a market on its market day (ADR-0066): first among the same score (sort key only) */
   open: boolean;
   /** in season that day (ADR-0080): next among the same score (sort key only) */
@@ -220,13 +222,18 @@ export type NightShift = 'trail' | 'island' | 'both' | null;
 /** Spot ids by code unit: the order localeCompare gave for our lowercase-UUID ids, without its collation cost
  * (Lighthouse: these sorts over every spot were the home's longest script task). */
 export const byId = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
-/** specs/ranking.md: score high to low, then a market on its day (ADR-0066), then a place in season (ADR-0080),
- * then the shorter trip, then id. 유명한 데 (ADR-0092 Amendment 2): its 인기·가까움 합 before all of them. */
+/** 거리 칸 (ADR-0108 1): the card's own time steps — on foot within 1km (5·10·15분), by car beyond (5분 steps) — every
+ * walk step before every drive step. */
+export function nearBand(km: number): number {
+  return km < 1 ? walkMinutes(km) / 100 : driveMinutes(km);
+}
+/** specs/ranking.md: within one 거리 칸 (ADR-0108), score high to low, then a market on its day (ADR-0066), then a place
+ * in season (ADR-0080), then the shorter way, then id. 유명한 데 (ADR-0092 Amendment 2): its 인기·가까움 합 first in the 칸. */
 const byScore = (a: Ranked, b: Ranked) =>
   b.lead - a.lead ||
-  b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || Number(b.inSeason) - Number(a.inSeason) || a.trip - b.trip || byId(a.spot.id, b.spot.id);
-/** At night a 야외 산길 goes after every other place (ADR-0091), each side in byScore order; by day it is byScore. */
-const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || byScore(a, b);
+  b.spot.score - a.spot.score || Number(b.open) - Number(a.open) || Number(b.inSeason) - Number(a.inSeason) || a.km - b.km || byId(a.spot.id, b.spot.id);
+/** At night a 야외 산길 goes after every other place (ADR-0091); then the nearer 거리 칸 (ADR-0108); then byScore. */
+const byRank = (a: Ranked, b: Ranked) => Number(a.late) - Number(b.late) || nearBand(a.km) - nearBand(b.km) || byScore(a, b);
 
 /** The places one mood (or the 유명한 곳, ADR-0092) may show, wherever they are: `pool`'s filters (tab, 비 와요, a market
  * closed on `day`). */
@@ -280,7 +287,7 @@ export function pool(spots: Spot[], origin: Point, mood: Kind, tab?: Tab, reach:
     });
   let near = all.filter((c) => c.trip <= REACH_MAX[reach]);
   if (near.length < CARD_COUNT) near = [...all].sort((a, b) => a.km - b.km || byId(a.spot.id, b.spot.id)).slice(0, CARD_COUNT);
-  return near.map(({ spot, minutes, trip, open, inSeason, late, ferry, lead }) => ({ spot, minutes, trip, open, inSeason, late, ferry, lead })).sort(byRank);
+  return near.map(({ spot, km, minutes, trip, open, inSeason, late, ferry, lead }) => ({ spot, km, minutes, trip, open, inSeason, late, ferry, lead })).sort(byRank);
 }
 
 /** The rotation's tiers: unseen 0, seen 1, the cards shown last time 2. */
@@ -308,7 +315,7 @@ function nightMoved(order: Ranked[], h: History | undefined, moved: { trail: boo
   for (const c of order) if (!c.late) last.set(tier(c), c);
   for (const c of order) {
     const other = c.late ? last.get(tier(c)) : undefined;
-    if (!other || byScore(c, other) > 0) continue;
+    if (!other || (nearBand(c.km) - nearBand(other.km) || byScore(c, other)) > 0) continue;
     if (c.spot.trail === true) moved.trail = true;
     if (c.ferry) moved.island = true;
   }
@@ -385,7 +392,7 @@ export function pickCards(
     if (night) nightMoved(order, h, moved);
     poolIds = p.map((c) => c.spot.id);
   }
-  // The rotation decides which 3; they are shown best first (R3), the score itself never.
+  // The rotation decides which 3; they are shown nearest first (ADR-0108, R3), the score itself never.
   const cards: Card[] = picked.sort(byRank).map(({ spot, minutes }) => ({ spot, minutes }));
   const wrapped = !!h && (!!h.restarted || cards.some((c) => h.seen.includes(c.spot.id)));
   const nightShifted: NightShift = moved.trail ? (moved.island ? 'both' : 'trail') : moved.island ? 'island' : null;

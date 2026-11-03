@@ -18,7 +18,7 @@ const CREDIT = '信息·图片：VISIT JEJU（济州观光公社）';
 const PRIVACY = '个人信息处理说明';
 
 export const ZH: Lang = {
-  title: 'Yeochana:济州 · P人的旅行搭子',
+  title: 'Yeochana · P人的旅行搭子',
   copy: {
     basisGps: '我附近',
     basisStay: '住处附近',
@@ -38,7 +38,7 @@ export const ZH: Lang = {
     },
     offline: '现在离线，图片显示不了。',
     how: (reach, indoor) =>
-      reach ? `只看${reach}内的${indoor ? '室内' : ''}地方，最值得去的排前面。` : `范围内合适的不多，挑了离你最近的${indoor ? '室内' : ''}地方。`,
+      reach ? `只看${reach}内的${indoor ? '室内' : ''}地方，近的排前面。` : `范围内合适的不多，挑了离你最近的${indoor ? '室内' : ''}地方。`,
     howReach: { walk: '步行15分钟', drive30: '开车30分钟', drive60: '开车1小时' },
     or: '或者',
     more: '换一批',

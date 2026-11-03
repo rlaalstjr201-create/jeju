@@ -43,7 +43,7 @@ export const COPY = {
    * (빈손 없음, pick.ts pool), so the line says that instead of a range it did not keep. */
   how: (reach: string | null, indoor: boolean) =>
     reach
-      ? `${indoor ? `${reach} 안의 실내 중에서, ` : `${reach} 안에서, `}소개글로 볼 때 가 볼 만한 곳부터 골랐어요.`
+      ? `${indoor ? `${reach} 안의 실내 중에서, ` : `${reach} 안에서, `}가까운 곳부터 골랐어요.`
       : `범위 안에 맞는 곳이 적어서 가장 가까운 ${indoor ? '실내 ' : ''}곳으로 골랐어요.`,
   howReach: { walk: '걸어서 15분', drive30: '차로 30분', drive60: '차로 1시간' } satisfies Record<Reach, string>,
   or: '아니면',
