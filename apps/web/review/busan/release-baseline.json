@@ -1,6 +1,6 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "09103906",
+ "measuredAt": "4f8b6dbc",
  "data": {
   "public/spots.json": "420ec9586fe8b5f78a932986bcef616f8255ba336be9e28e3d5726561b72ee7b",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
@@ -10,10 +10,10 @@
   "__PLACES_V__": "149ead819a"
  },
  "indexHtml": {
-  "bytes": 24086,
-  "gzip": 7984
+  "bytes": 23950,
+  "gzip": 7963
  },
- "busanInlineGzip": 1914,
+ "busanInlineGzip": 1912,
  "files": {
   "404.html": "56e004b58d8dc04e",
   "58c37a8603f7ad4d1d7d86505f8ed5f2.txt": "083b18dc7fa6be7e",
@@ -29,11 +29,11 @@
   "icons/icon-192.png": "962b5f3da29910d4",
   "icons/icon-512.png": "29e7f77a887bb18f",
   "icons/icon-maskable-512.png": "5147ac3b22acf105",
-  "index.html": "9f6cbf0425c7965d",
+  "index.html": "8fc8ea2d77d857f2",
   "jeju/index.html": "1b4f9efa0aa2b379",
   "jeju/landing.css": "8ed2ff79670ead0d",
-  "llms.txt": "b3ade25ca536e1fc",
-  "manifest.webmanifest": "5ed6dec50ae04bfc",
+  "llms.txt": "a61c0a33797bd2ce",
+  "manifest.webmanifest": "6e3d7b6ee8790d00",
   "og.png": "d407fccd1da64109",
   "privacy-en.html": "fc372f7d6d4db4ca",
   "privacy-ja.html": "3e27abd308972042",
@@ -59,7 +59,7 @@
   "sitemap.xml": "99e4facfec0c15f4",
   "spots-busan.json": "900cc69808660d2b",
   "spots.json": "420ec9586fe8b5f7",
-  "sw.js": "26e6f3cac25e1196",
+  "sw.js": "d668056279e3b9a3",
   "jeju/aewol/": "220 files c77690c84cbd1ec9",
   "jeju/andeok/": "137 files 2e23e44ff039b6c8",
   "jeju/daejeong/": "138 files d0a7366fb2aed09a",
@@ -120,10 +120,10 @@
  "browser": {
   "empty": {
    "firstPaint": {
-    "html": "dba55d9b49ab9a72"
+    "html": "013ae45e5c860d91"
    },
    "home": {
-    "body": "6036b6da89a4fda1",
+    "body": "e2de9da9fc628fa6",
     "styles": "258 elements 2a4118b93f4734aa",
     "htmlClass": "",
     "local": {
@@ -142,17 +142,17 @@
    },
    "walk": {
     "cards": [
-     "방선문",
-     "어승생 (어승생악)",
-     "사려니숲길"
+     "제주중앙성당",
+     "산지천",
+     "오현단"
     ],
-    "body": "4c028c0450b3f924",
-    "styles": "300 elements 53bba118d8850b3c",
+    "body": "4e86695be6d2f51a",
+    "styles": "298 elements adb05a6dd87d193e",
     "local": {
      "jeju.dest": "\"jeju\""
     },
     "session": {
-     "jeju.session": "{\"v\":1,\"mood\":\"walk\",\"sub\":\"meal\",\"newSub\":\"mix\",\"origin\":{\"key\":\"gps\",\"point\":{\"lat\":33.5122,\"lng\":126.5272},\"isPoint\":true,\"from\":\"여기서\"},\"indoor\":false,\"shown\":{\"walk\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]},\"histories\":{\"walk\":{\"seen\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"],\"last\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]}},\"reach\":\"drive30\"}"
+     "jeju.session": "{\"v\":1,\"mood\":\"walk\",\"sub\":\"meal\",\"newSub\":\"mix\",\"origin\":{\"key\":\"gps\",\"point\":{\"lat\":33.5122,\"lng\":126.5272},\"isPoint\":true,\"from\":\"여기서\"},\"indoor\":false,\"shown\":{\"walk\":[\"ffc71a8d-c724-4e07-b8a6-d80d1b268ed4\",\"d5dca69f-de6e-4ba3-b73c-a9b9c68a7f35\",\"34e20050-0af3-4408-bb7c-e53f30d62f4c\"]},\"histories\":{\"walk\":{\"seen\":[\"ffc71a8d-c724-4e07-b8a6-d80d1b268ed4\",\"d5dca69f-de6e-4ba3-b73c-a9b9c68a7f35\",\"34e20050-0af3-4408-bb7c-e53f30d62f4c\"],\"last\":[\"ffc71a8d-c724-4e07-b8a6-d80d1b268ed4\",\"d5dca69f-de6e-4ba3-b73c-a9b9c68a7f35\",\"34e20050-0af3-4408-bb7c-e53f30d62f4c\"]}},\"reach\":\"drive30\"}"
     },
     "geoCalls": 1,
     "requests": {
@@ -163,10 +163,10 @@
   },
   "saved.v2 only": {
    "firstPaint": {
-    "html": "dba55d9b49ab9a72"
+    "html": "013ae45e5c860d91"
    },
    "home": {
-    "body": "b3ae517337b404a9",
+    "body": "e60bc20f7cdcfde0",
     "styles": "258 elements 539a2a563b28cac1",
     "htmlClass": "",
     "local": {
@@ -186,18 +186,18 @@
    },
    "walk": {
     "cards": [
-     "방선문",
-     "어승생 (어승생악)",
-     "사려니숲길"
+     "제주중앙성당",
+     "산지천",
+     "오현단"
     ],
-    "body": "8f7214f5e71e829b",
-    "styles": "300 elements 1d7c8dfcfc3609e6",
+    "body": "5cc1437f64e9ec05",
+    "styles": "298 elements 7f3d0a952ac54936",
     "local": {
      "jeju.dest": "\"jeju\"",
      "jeju.saved.v2": "[{\"id\":\"e654312a-2a40-45cd-9464-a83756bac0fa\",\"date\":\"2026-10-17\",\"order\":0}]"
     },
     "session": {
-     "jeju.session": "{\"v\":1,\"mood\":\"walk\",\"sub\":\"meal\",\"newSub\":\"mix\",\"origin\":{\"key\":\"gps\",\"point\":{\"lat\":33.5122,\"lng\":126.5272},\"isPoint\":true,\"from\":\"여기서\"},\"indoor\":false,\"shown\":{\"walk\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]},\"histories\":{\"walk\":{\"seen\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"],\"last\":[\"e7bbe83e-6d03-4d14-bf93-c449e0bc6b78\",\"2534e8cb-535a-4b87-a7a0-6c8962c6c985\",\"8a5c2190-3416-4a8c-abc9-7908df6dd520\"]}},\"reach\":\"drive30\"}"
+     "jeju.session": "{\"v\":1,\"mood\":\"walk\",\"sub\":\"meal\",\"newSub\":\"mix\",\"origin\":{\"key\":\"gps\",\"point\":{\"lat\":33.5122,\"lng\":126.5272},\"isPoint\":true,\"from\":\"여기서\"},\"indoor\":false,\"shown\":{\"walk\":[\"ffc71a8d-c724-4e07-b8a6-d80d1b268ed4\",\"d5dca69f-de6e-4ba3-b73c-a9b9c68a7f35\",\"34e20050-0af3-4408-bb7c-e53f30d62f4c\"]},\"histories\":{\"walk\":{\"seen\":[\"ffc71a8d-c724-4e07-b8a6-d80d1b268ed4\",\"d5dca69f-de6e-4ba3-b73c-a9b9c68a7f35\",\"34e20050-0af3-4408-bb7c-e53f30d62f4c\"],\"last\":[\"ffc71a8d-c724-4e07-b8a6-d80d1b268ed4\",\"d5dca69f-de6e-4ba3-b73c-a9b9c68a7f35\",\"34e20050-0af3-4408-bb7c-e53f30d62f4c\"]}},\"reach\":\"drive30\"}"
     },
     "geoCalls": 1,
     "requests": {
@@ -220,9 +220,9 @@
    "assets/zh-Hans-*.js"
   ],
   "koreanEntryGzip": {
-   "assets/index-*.js": 51738,
+   "assets/index-*.js": 51756,
    "assets/index-*.css": 6118
   },
-  "koreanEntryGzipTotal": 57856
+  "koreanEntryGzipTotal": 57874
  }
 }
