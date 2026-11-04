@@ -24,7 +24,9 @@ const km = (a, b) => {
 const out = [];
 const seen = new Set();
 /** 판정 08의 keep(G4 빼고, criteria-09.md 0절) + --g4면 판정 09의 keep(감사 09 통과 뒤) */
-const sources = [['judge-08', 21, (j) => j.g !== 'G4'], ...(process.argv.includes('--g4') ? [['judge-09', 7, () => true]] : [])];
+// --g4: 판정 09의 keep 가운데 서점·LP·레코드샵만(옷 편집숍·빈티지·팝업 빼고; 주인 결정 2026-11-05, ADR-0115 Amendment 4)
+const BOOKS_LP = (j) => !/편집|빈티지|팝업/.test(cand.get(j.id).word) && !/^패션/.test(cand.get(j.id).category);
+const sources = [['judge-08', 21, (j) => j.g !== 'G4'], ...(process.argv.includes('--g4') ? [['judge-09', 7, BOOKS_LP]] : [])];
 for (const [folder, n, take] of sources) {
   for (let i = 1; i <= n; i++) {
     for (const j of read(`${folder}/out-${String(i).padStart(2, '0')}.json`)) {
