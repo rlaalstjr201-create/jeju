@@ -1,6 +1,6 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "d6bab4f5",
+ "measuredAt": "239c1c5a",
  "data": {
   "public/spots.json": "4b96af2597c17f490387648704e6fb63738e2e1ed108e3c24004e1507a2f173c",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
@@ -35,10 +35,10 @@
   "llms.txt": "a61c0a33797bd2ce",
   "manifest.webmanifest": "6e3d7b6ee8790d00",
   "og.png": "d407fccd1da64109",
-  "privacy-en.html": "551411e490a2d608",
-  "privacy-ja.html": "0b400a46474dcdc7",
-  "privacy-zh-Hans.html": "4de687e8f5302e44",
-  "privacy.html": "041477c4c0ba0ed7",
+  "privacy-en.html": "95206123d81936ec",
+  "privacy-ja.html": "8fbaedf0a349b0b2",
+  "privacy-zh-Hans.html": "e42873c969e20b76",
+  "privacy.html": "a73355675699370a",
   "robots.txt": "6025d5cfb5c6237a",
   "sitemap-aewol.xml": "5f294733b5de1c53",
   "sitemap-andeok.xml": "fadce3fc580b07b3",
@@ -59,7 +59,7 @@
   "sitemap.xml": "99e4facfec0c15f4",
   "spots-busan.json": "900cc69808660d2b",
   "spots.json": "4b96af2597c17f49",
-  "sw.js": "f835fc422bce109b",
+  "sw.js": "f0c7ce092b5dc9bc",
   "jeju/aewol/": "220 files f16469b49964a5b2",
   "jeju/andeok/": "137 files 491d3732faf77dd8",
   "jeju/daejeong/": "138 files 4965f42b47fca520",
@@ -80,6 +80,7 @@
   "./",
   "assets/index-*.css",
   "assets/index-*.js",
+  "assets/culture-view-*.css",
   "spots.json?v=4b96af2597",
   "manifest.webmanifest",
   "icons/icon-192.png",
@@ -210,6 +211,7 @@
  "assets": {
   "names": [
    "assets/apply-*.js",
+   "assets/culture-view-*.css",
    "assets/en-*.css",
    "assets/en-*.js",
    "assets/index-*.css",
@@ -220,9 +222,9 @@
    "assets/zh-Hans-*.js"
   ],
   "koreanEntryGzip": {
-   "assets/index-*.js": 53244,
+   "assets/index-*.js": 53836,
    "assets/index-*.css": 6152
   },
-  "koreanEntryGzipTotal": 59396
+  "koreanEntryGzipTotal": 59988
  }
 }
