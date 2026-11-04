@@ -109,6 +109,7 @@ describe('KOPIS XML (real answers, 2026-11-04, no key in them)', () => {
     expect(kopisTime(shows[2].dt)).not.toMatch(/HOL/);
     expect(parseShow('<dbs></dbs>')).toBeNull();
     expect(parseShow('<dbs><db><mt20id>PF1</mt20id><fcltynm>아스트라홀 (아스트라홀)</fcltynm></db></dbs>')!.place).toBe('아스트라홀');
+    expect(parseShow('<dbs><db><mt20id>PF1</mt20id><fcltynm>세종문화회관 (세종대극장)</fcltynm></db></dbs>')!.place).toBe('세종문화회관 세종대극장');
     expect(shows[1].place).toBe('극장 PLOT');
   });
 });

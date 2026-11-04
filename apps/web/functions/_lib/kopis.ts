@@ -43,8 +43,9 @@ export function parseShow(xml: string): KopisShow | null {
     from: ymd(xmlTag(r, 'prfpdfrom')),
     to: ymd(xmlTag(r, 'prfpdto')),
     venue: xmlTag(r, 'mt10id'),
-    // 「극장 (홀)」; a hall named as its venue once: 「아스트라홀 (아스트라홀)」 → 「아스트라홀」
-    place: xmlTag(r, 'fcltynm').replace(/^(.+?)\s*\(\s*\1\s*\)$/, '$1'),
+    // 「극장 (홀)」; a hall named as its venue once: 「아스트라홀 (아스트라홀)」 → 「아스트라홀」; otherwise as the Seoul list writes
+    // it, 「세종문화회관 (세종대극장)」 → 「세종문화회관 세종대극장」, so one hall is one place in the picks (품질 04: 라보엠 twice)
+    place: xmlTag(r, 'fcltynm').replace(/^(.+?)\s*\(\s*\1\s*\)$/, '$1').replace(/\s*\(\s*([^()]+?)\s*\)\s*$/, ' $1').trim(),
     cast: xmlTag(r, 'prfcast'),
     genre: xmlTag(r, 'genrenm'),
     child: xmlTag(r, 'child') === 'Y',
