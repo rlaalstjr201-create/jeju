@@ -92,11 +92,13 @@ export function todayTimes(it: CultureItem, now: Now): string {
  * yeochana.com's, so a preview or localhost shows the same pictures. */
 export const RESIZE = 'https://yeochana.com/cdn-cgi/image/width=256,quality=75,format=auto/';
 /** A picture's address: https only (an http one is asked for over https; anything else is no picture), resized (RESIZE).
- * KOPIS's www. address only redirects to kopis.or.kr: asked for there at once. */
+ * KOPIS's www. address only redirects to kopis.or.kr: asked for there at once. The Seoul events site never answers
+ * Cloudflare's fetch (9504 after about 7.5 s, measured 2026-11-05): its pictures are the text card at once. */
 export function imageUrl(u: string | undefined): string | null {
   const s = String(u ?? '').trim().replace(/^http:\/\//i, 'https://').replace(/^https:\/\/www\.kopis\.or\.kr\//i, 'https://kopis.or.kr/');
   try {
-    return new URL(s).protocol === 'https:' ? RESIZE + s : null;
+    const url = new URL(s);
+    return url.protocol === 'https:' && url.hostname !== 'culture.seoul.go.kr' ? RESIZE + s : null;
   } catch {
     return null;
   }

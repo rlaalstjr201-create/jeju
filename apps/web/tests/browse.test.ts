@@ -133,7 +133,8 @@ describe('the card sheet and the addresses (ADR-0114 4·5)', () => {
     expect(RESIZE).toBe('https://yeochana.com/cdn-cgi/image/width=256,quality=75,format=auto/');
     expect(imageUrl('http://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg')).toBe(`${RESIZE}https://kopis.or.kr/upload/pfmPoster/PF_1.jpg`);
     expect(imageUrl('https://kopis.or.kr/upload/a.png')).toBe(`${RESIZE}https://kopis.or.kr/upload/a.png`);
-    expect(imageUrl('https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y')).toBe(`${RESIZE}https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y`);
+    // the Seoul events site never answers Cloudflare's fetch: the text card at once
+    expect(imageUrl('https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y')).toBeNull();
     for (const bad of ['', 'javascript:alert(1)', 'data:image/png;base64,AAAA', '//x.kr/a.jpg', 'ftp://x.kr/a.jpg', undefined]) expect(imageUrl(bad), String(bad)).toBeNull();
   });
 
