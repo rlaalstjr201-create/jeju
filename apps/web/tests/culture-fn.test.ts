@@ -2,10 +2,10 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { kstDay, onRequestGet } from '../functions/api/culture';
+import { kstDay, onRequestGet, showsSig } from '../functions/api/culture';
 import rows from './fixtures/seoul-culture-20261104.json';
 
-const req = (q: string) => ({ request: new Request(`https://yeochana.com/api/culture${q}`), env: { SEOUL_OPEN_API_KEY: 'k' } });
+const req = (q: string, init?: RequestInit) => ({ request: new Request(`https://yeochana.com/api/culture${q}`, init), env: { SEOUL_OPEN_API_KEY: 'k' } });
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -82,15 +82,17 @@ describe('/api/culture with KOPIS shows (ADR-0113 5)', () => {
   const list = readFileSync(resolve(dir, 'list.xml'), 'utf8');
   const details = Object.fromEntries(readdirSync(dir).filter((f) => /^(PF|FC)\d+\.xml$/.test(f)).map((f) => [f.slice(0, -4), readFileSync(resolve(dir, f), 'utf8')]));
   const shows = Object.keys(details).filter((id) => id.startsWith('PF'));
-  const kreq = (q: string) => ({ request: new Request(`https://yeochana.com/api/culture${q}`), env: { SEOUL_OPEN_API_KEY: 'k', KOPIS_API_KEY: 'kk' } });
+  const kreq = (q: string, init?: RequestInit) => ({ request: new Request(`https://yeochana.com/api/culture${q}`, init), env: { SEOUL_OPEN_API_KEY: 'k', KOPIS_API_KEY: 'kk' } });
+  /** A shows ask as the function signs its own (review M1). */
+  const signed = async (shows: string, day = '2026-11-04') => kreq(`?city=seoul&shows=${shows}&day=${day}`, { headers: { 'X-Culture-Sig': await showsSig('kk', day, shows) } });
   const BLOCKED = '<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD><BODY><H1>Request Blocked</H1></BODY></HTML>';
   const xml = (body: string) => new Response(body, { status: 200 });
   const ok = (path: string) => (path === 'pblprfr' ? xml(list) : details[path.split('/')[1]] ? xml(details[path.split('/')[1]]) : xml('<?xml version="1.0"?><dbs></dbs>'));
   /** fetch: this function's own calls back to it, the Seoul list (one page), KOPIS (`kopis` answers its paths) */
   const stub = (kopis: (path: string) => Response) => {
     const asked: string[] = [];
-    vi.stubGlobal('fetch', async (url: string) => {
-      if (url.startsWith('https://yeochana.com/')) return onRequestGet(kreq(url.slice('https://yeochana.com/api/culture'.length)));
+    vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
+      if (url.startsWith('https://yeochana.com/')) return onRequestGet(kreq(url.slice('https://yeochana.com/api/culture'.length), init));
       if (url.startsWith('http://www.kopis.or.kr/')) {
         const path = new URL(url).pathname.replace('/openApi/restful/', '');
         asked.push(path);
@@ -161,10 +163,13 @@ describe('/api/culture with KOPIS shows (ADR-0113 5)', () => {
     expect((await onRequestGet(kreq('?city=seoul&shows=../prfplc&day=2026-11-04'))).status).toBe(400);
     expect((await onRequestGet(kreq('?city=seoul&shows=&day=2026-11-04'))).status).toBe(400);
     expect((await onRequestGet({ ...kreq('?city=seoul&shows=list&day=2026-11-04'), env: {} })).status).toBe(204);
-    const l = await onRequestGet(kreq('?city=seoul&shows=list&day=2026-11-04'));
+    // not signed as the function signs its own: refused before any KOPIS call
+    expect((await onRequestGet(kreq('?city=seoul&shows=list&day=2026-11-04'))).status).toBe(400);
+    expect((await onRequestGet(kreq('?city=seoul&shows=list&day=2026-11-04', { headers: { 'X-Culture-Sig': 'x' } }))).status).toBe(400);
+    const l = await onRequestGet(await signed('list'));
     expect(l.status).toBe(200);
     expect(((await l.json()) as { ids: string[] }).ids.length).toBeGreaterThan(2);
-    const c = await onRequestGet(kreq(`?city=seoul&shows=${shows.join(',')}&day=2026-11-04`));
+    const c = await onRequestGet(await signed(shows.join(',')));
     expect(c.status).toBe(200);
     const cb = (await c.json()) as { items: { id: string }[]; failed: number };
     expect(cb.failed).toBe(0);

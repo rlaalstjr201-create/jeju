@@ -98,6 +98,7 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
       return new Response('bad shows', { status: 400, headers: { 'Cache-Control': 'no-store' } });
     }
     if (!kopisKey) return none('no-key');
+    if (ctx.request.headers.get(SIG) !== (await showsSig(kopisKey, day, v))) return new Response('bad shows', { status: 400, headers: { 'Cache-Control': 'no-store' } });
     if (v === 'list') return cached(ctx, `https://culture.cache/kopis/${day}/list`, () => kopisList(kopisKey, day));
     return kopisChunk(ctx, kopisKey, ids, day);
   }
@@ -110,7 +111,7 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     if (q.get('day') !== day || !Number.isInteger(n) || n < 1 || n > MAX_PAGES) return new Response('bad page', { status: 400, headers: { 'Cache-Control': 'no-store' } });
     return cached(ctx, `https://culture.cache/seoul/${day}/p${n}`, () => onePage(key, n, day));
   }
-  return cached(ctx, `https://culture.cache/seoul/${day}`, () => wholeDay(ctx.request.url, day, !!kopisKey), 300);
+  return cached(ctx, `https://culture.cache/seoul/${day}`, () => wholeDay(ctx.request.url, day, kopisKey || null), 300);
 }
 
 /** Page `n` of the city's list (1,000 rows), only the rows on `day`, and the list's total. */
@@ -133,6 +134,15 @@ async function onePage(key: string, n: number, day: string): Promise<Response> {
   }
 }
 
+/** The shows asks are this function's own (review M1): signed with the KOPIS key and the day, so nobody else can make
+ * it call KOPIS (the key's calls are few before KOPIS blocks them). */
+export async function showsSig(key: string, day: string, shows: string): Promise<string> {
+  const k = await crypto.subtle.importKey('raw', new TextEncoder().encode(key), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = new Uint8Array(await crypto.subtle.sign('HMAC', k, new TextEncoder().encode(`${day}|${shows}`)));
+  return [...mac].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+const SIG = 'X-Culture-Sig';
+
 const selfUrl = (self: string, search: string) => {
   const u = new URL(self);
   u.search = search;
@@ -141,10 +151,10 @@ const selfUrl = (self: string, search: string) => {
 
 /** Every page through this same function (one invocation each), merged and filtered. The first tells how many there are.
  * `shows`: KOPIS's too (ADR-0113), alongside. */
-async function wholeDay(self: string, day: string, shows: boolean): Promise<Response> {
+async function wholeDay(self: string, day: string, shows: string | null): Promise<Response> {
   let told: (calls: number) => void = () => undefined;
   const seoulCalls = new Promise<number>((r) => (told = r));
-  const kopis = shows ? kopisDay(self, day, seoulCalls) : null;
+  const kopis = shows ? kopisDay(self, day, seoulCalls, shows) : null;
   const pageOf = async (n: number) => {
     const res = await fetch(selfUrl(self, `?city=seoul&page=${n}&day=${day}`));
     if (res.status !== 200) throw new Error(res.headers.get('X-Culture-Reason') || `page ${n}: ${res.status}`);
@@ -179,9 +189,9 @@ async function wholeDay(self: string, day: string, shows: boolean): Promise<Resp
 
 /** The day's show items through this same function: the list, then the details a chunk at a time, KOPIS_RUNS at once.
  * `seoulCalls`: the Seoul pages' subrequests, told once page 1 is in (the chunks fit in what is left). Never throws. */
-async function kopisDay(self: string, day: string, seoulCalls: Promise<number>): Promise<{ items: CultureItem[]; ok: boolean }> {
+async function kopisDay(self: string, day: string, seoulCalls: Promise<number>, key: string): Promise<{ items: CultureItem[]; ok: boolean }> {
   const ask = async (shows: string) => {
-    const res = await fetch(selfUrl(self, `?city=seoul&shows=${shows}&day=${day}`));
+    const res = await fetch(selfUrl(self, `?city=seoul&shows=${shows}&day=${day}`), { headers: { [SIG]: await showsSig(key, day, shows) } });
     if (res.status !== 200) throw new Error(`shows: ${res.status}`);
     return res.json() as Promise<unknown>;
   };
@@ -258,6 +268,8 @@ async function kopisList(key: string, day: string): Promise<Response> {
     ids.push(...listIds(xml));
     if (xmlRecords(xml).length < 100) break;
   }
+  // none at all in Seoul on a day is KOPIS not answering properly, not a day without shows: not kept for the day
+  if (!ids.length) return none('kopis list empty');
   return json({ ids: [...new Set(ids)] }, 60);
 }
 
