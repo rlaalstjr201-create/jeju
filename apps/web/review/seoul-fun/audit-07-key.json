@@ -1,0 +1,902 @@
+[
+ {
+  "id": "kk-1003410765",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1044599831",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1045036053",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-10610128",
+  "keep": true,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-1063918306",
+  "keep": false,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-10790384",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-10914589",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1114719734",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1127230605",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1136727366",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1162949964",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-11731415",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-117992836",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-12027406",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1219470316",
+  "keep": false,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1221214894",
+  "keep": true,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-123590618",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1244045579",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-1269936251",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1281087196",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1298482671",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1330370659",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-133237535",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1346626180",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1372686668",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1382710293",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-138332755",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1385019910",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1390982986",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1398571605",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1399503137",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1405850551",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1416962709",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-142368162",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1427828053",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1434973455",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1444854771",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-1478483341",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-1488142904",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1513353724",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-151482452",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1520191663",
+  "keep": false,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-1522557202",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1528582359",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-15351383",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1546094958",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1548712469",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-1568834821",
+  "keep": true,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-1580134402",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1585098708",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-16077001",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1623876839",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-16268955",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1644038519",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1675809011",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1676105623",
+  "keep": true,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1682203426",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-1693222394",
+  "keep": true,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1695013806",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-17165962",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1734202756",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-17344023",
+  "keep": true,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-1737279611",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-17552499",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-17558238",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1771072641",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-1772440780",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-17811821",
+  "keep": false,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1789984655",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1811685585",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1827043506",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1831188739",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1841732402",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1851049470",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1858456588",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1871729451",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1874686740",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1875457428",
+  "keep": false,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-1889582026",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-18959687",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-19149316",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-19182758",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-1925742552",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-1946712494",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1954978371",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-1958929930",
+  "keep": true,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-1965599390",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-1966251358",
+  "keep": true,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-2024064695",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-2035051836",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-2081221522",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-20919778",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-2115601133",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-21233052",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-226789176",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-237128336",
+  "keep": false,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-24690509",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-25039257",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-260184665",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-26094867",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-26235257",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-26562481",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-26596743",
+  "keep": false,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-26892635",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-27258808",
+  "keep": false,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-27302182",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-27383851",
+  "keep": true,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-276835515",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-285776869",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-315548029",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-336819977",
+  "keep": true,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-37123777",
+  "keep": false,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-410275084",
+  "keep": false,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-418405990",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-436025860",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-449373815",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-469176466",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-572289250",
+  "keep": false,
+  "g": "G7",
+  "walkin": true
+ },
+ {
+  "id": "kk-626959203",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-627492949",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-643292270",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-648392033",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-649539673",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-727862437",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-745525153",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-760043078",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-764977601",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-77702190",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-778272784",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-79612633",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-8046574",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-8080638",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-8126938",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-8272010",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-828614190",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-8430119",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-8465458",
+  "keep": false,
+  "g": "G2",
+  "walkin": true
+ },
+ {
+  "id": "kk-8625698",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-8631818",
+  "keep": true,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-878747106",
+  "keep": false,
+  "g": "G1",
+  "walkin": true
+ },
+ {
+  "id": "kk-887435039",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-913470127",
+  "keep": true,
+  "g": "G7",
+  "walkin": false
+ },
+ {
+  "id": "kk-930872929",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-949587061",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-958971411",
+  "keep": true,
+  "g": "G5",
+  "walkin": true
+ },
+ {
+  "id": "kk-978862315",
+  "keep": false,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-979822323",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-98681541",
+  "keep": true,
+  "g": "G4",
+  "walkin": true
+ },
+ {
+  "id": "kk-987374256",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ },
+ {
+  "id": "kk-987755487",
+  "keep": true,
+  "g": "G5",
+  "walkin": false
+ }
+]
