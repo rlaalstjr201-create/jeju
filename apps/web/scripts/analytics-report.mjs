@@ -39,7 +39,7 @@ const DEST = { jeju: '제주', busan: '부산', gangwon: '강릉', nation: '다�
 /** 오늘 서울 둘러보기 counters (events/handler.ts BROWSE_IDS): not places */
 const BROWSE = /^browse:/;
 
-/** 오늘 서울 둘러보기 for one window. The rule set in advance (ADR-0114 7, Amendment 1), read once on 2026-11-18: with
+/** 오늘 서울 둘러보기 for one window. The rule set in advance (ADR-0114 7, Amendment 1), read once on 2026-11-19 (ADR-0115 7): with
  * 30 or more left screens (browse_done), the bin holding the median stay is 45 s or more (bins are 5 s, floored) and
  * (cards 1 + cards 2) ÷ left is 30% or more → 넓히기; under 30 it is 판단 보류. */
 export function browseLines(rows, key) {
@@ -64,7 +64,7 @@ export function browseLines(rows, key) {
     ...(rowsLine ? [`- 가로로 넘긴 줄 수: ${rowsLine}`] : []),
     `- 카드 시트 ${n('browse:card')}회 → 길찾기 ${n('browse:go')}, 자세히 ${n('browse:more')}`,
     done >= 30
-      ? `- 미리 정한 기준(2026-11-18 한 번): 중앙값 칸 45초 이상 그리고 카드 누름 30% 이상 → ${pass ? '넓히기' : '못 미침(원인을 적고 접거나 고침)'}`
+      ? `- 미리 정한 기준(2026-11-19 한 번): 중앙값 칸 45초 이상 그리고 카드 누름 30% 이상 → ${pass ? '넓히기' : '못 미침(원인을 적고 접거나 고침)'}`
       : `- 나감 기록이 ${done}회라 30회 전에는 판단 보류예요.`,
   ];
 }
@@ -179,7 +179,7 @@ export function renderReport(allRows, names, today) {
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...srcLines(allRows, key), '');
   out.push('## 시작 화면', '', 'specs/busan.md 7. 1초 넘게 보인 덮개만 「보임」, 그 뒤에 시작한 것만 「시작」으로 세요(자동화 브라우저는 빼요). 판정은 이 수치로 하고 GA4는 보조예요.', '');
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...startLines(allRows, key), '');
-  out.push('## 오늘 서울 둘러보기', '', 'ADR-0114 7·Amendment 1. 머문 시간은 5초 칸(내림)으로만 와요. 자동화 브라우저는 빼요. 판정은 2026-11-18에 한 번, 지난 28일 값으로 해요.', '');
+  out.push('## 오늘 서울 둘러보기', '', 'ADR-0114 7·Amendment 1. 머문 시간은 5초 칸(내림)으로만 와요. 자동화 브라우저는 빼요. 판정은 2026-11-19에 한 번(ADR-0115 7), 지난 28일 값으로 해요.', '');
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...browseLines(allRows, key), '');
   return `${out.join('\n').trimEnd()}\n`;
 }
