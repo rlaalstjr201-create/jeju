@@ -1321,7 +1321,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       return;
     }
     const photo = el(doc, 'div', { class: 'now-photo' });
-    photo.append(el(doc, 'img', { src: spot.image, alt: '', fetchpriority: 'high', decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': spot.id }));
+    // under the 시작 화면 held back like the mood photos (homePhoto, ADR-0116)
+    photo.append(el(doc, 'img', { [doc.documentElement.classList.contains('yc-start') ? 'data-later' : 'src']: spot.image!, alt: '', fetchpriority: 'high', decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': spot.id }));
     const head = el(doc, 'div');
     // the word over the name and, with a basis, how far, on its line (the first screen is short of height)
     const kick = el(doc, 'p', { class: 'now-kick' }, COPY.nowKicker);
