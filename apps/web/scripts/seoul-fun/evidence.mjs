@@ -1,5 +1,6 @@
 /**
  * 서울 즐길 거리 판정 근거 (criteria-08.md 1절). 네이버 검색 API 블로그, 곳마다 한 번(최신순 5개: 날짜·제목만).
+ *   node scripts/seoul-fun/evidence.mjs g4  → evidence-02.json (G4만, 관련도순 20개, criteria-09.md)
  *   node scripts/seoul-fun/evidence.mjs   → review/seoul-fun/evidence-01.json (있으면 멈춘다: 한 번만; 끊기면 .part에서 이어 감)
  * 키는 .env의 NAVER_CLIENT_ID·NAVER_CLIENT_SECRET이고 출력·파일 어디에도 남기지 않는다.
  */
@@ -9,13 +10,24 @@ import { fileURLToPath } from 'node:url';
 import { env } from '../famous-measure.mjs';
 
 const dir = resolve(dirname(fileURLToPath(import.meta.url)), '../../review/seoul-fun');
-const out = resolve(dir, 'evidence-01.json');
+// g4(criteria-09.md 1절): G4 대상만, 관련도순 20개 → evidence-02.json
+const g4 = process.argv.includes('g4');
+const out = resolve(dir, g4 ? 'evidence-02.json' : 'evidence-01.json');
 const part = `${out}.part`;
-if (existsSync(out)) throw new Error('evidence-01.json exists (one run only)');
+if (existsSync(out)) throw new Error(`${out} exists (one run only)`);
 const id = env('NAVER_CLIENT_ID');
 const secret = env('NAVER_CLIENT_SECRET');
 if (!id || !secret) throw new Error('NAVER_CLIENT_* missing');
-const places = JSON.parse(readFileSync(resolve(dir, 'judge-input-01.json'), 'utf8')).places;
+const all = JSON.parse(readFileSync(resolve(dir, 'judge-input-01.json'), 'utf8')).places;
+const g4ids = new Set();
+if (g4)
+  for (let i = 1; i <= 21; i++) {
+    const n = String(i).padStart(2, '0');
+    const a = JSON.parse(readFileSync(resolve(dir, `judge-08/in-${n}.json`), 'utf8'));
+    const b = JSON.parse(readFileSync(resolve(dir, `judge-08/out-${n}.json`), 'utf8'));
+    a.forEach((x, j) => (x.g.startsWith('G4') || b[j].g === 'G4') && g4ids.add(x.id));
+  }
+const places = g4 ? all.filter((p) => g4ids.has(p.id)) : all;
 const ev = existsSync(part) ? JSON.parse(readFileSync(part, 'utf8')) : {};
 const strip = (s) => String(s).replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#39;/g, "'");
 export const queryOf = (p) => `${p.name} ${String(p.address).split(' ')[1]?.replace(/구$/, '') ?? ''}`.trim();
@@ -25,7 +37,7 @@ for (const p of places) {
   const q = queryOf(p);
   let body = null;
   for (let t = 0; t < 3 && !body; t++) {
-    const res = await fetch(`https://openapi.naver.com/v1/search/blog.json?${new URLSearchParams({ query: q, display: '5', sort: 'date' })}`, { headers: { 'X-Naver-Client-Id': id, 'X-Naver-Client-Secret': secret } }).catch(() => null);
+    const res = await fetch(`https://openapi.naver.com/v1/search/blog.json?${new URLSearchParams({ query: q, display: g4 ? '20' : '5', sort: g4 ? 'sim' : 'date' })}`, { headers: { 'X-Naver-Client-Id': id, 'X-Naver-Client-Secret': secret } }).catch(() => null);
     calls++;
     if (res?.status === 200) body = await res.json();
     else {
