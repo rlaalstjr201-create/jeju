@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { aggregate } from '../events/aggregate';
 import { BROWSE_IDS, FLOW_IDS, START_IDS, handleEvents } from '../events/handler';
 import { memoryStore, type CounterStore } from '../events/store';
-import { MAX_EVENTS, parseBatch } from '../events/validate';
+import { MAX_EVENTS, eventProblem, parseBatch } from '../events/validate';
 import { addDays } from '../src/dates';
 import { BUSAN } from '../src/release';
 import { contextOf, type UsageEvent } from '../src/track';
@@ -592,6 +592,11 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
     for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
     expect(BROWSE_IDS).toHaveLength(4 + 121 + 11 + 3);
     expect(aggregate(rows)).toEqual([]);
+  });
+
+  it('rows 0 to 10 (up to ten shelves, browse.ts SHELVES): all taken', () => {
+    for (let rows = 0; rows <= 10; rows++) expect(eventProblem({ e: 'browse_done', secs: 45, rows, cards: 1, d })).toBeNull();
+    expect(BROWSE_IDS).toContain('browse:rows:10');
   });
 
   it.each([

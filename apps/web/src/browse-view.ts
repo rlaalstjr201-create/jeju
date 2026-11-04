@@ -195,7 +195,7 @@ function hoodSheet(doc: Document, hood: CultureItem, items: readonly CultureItem
     list.append(li);
   }
   // only the sources of what is listed: 카카오맵 for a curated place, the city's for an event, KOPIS for a show
-  const used = (s: HTMLElement) => inside.some((x) => (s.dataset.src === 'kakao' ? isFun(x.item) : s.dataset.src === 'kopis' ? x.item.id.startsWith('kp-') : !isFun(x.item)));
+  const used = (s: HTMLElement) => inside.some((x) => (s.dataset.src === 'kakao' ? isFun(x.item) : s.dataset.src === 'kopis' ? x.item.id.startsWith('kp-') : !isFun(x.item) && !x.item.id.startsWith('kp-')));
   sheet.append(list, ...sources.filter(used), el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
   layer.append(el(doc, 'div', { class: 'scrim', 'data-action': 'close' }), sheet);
   return layer;

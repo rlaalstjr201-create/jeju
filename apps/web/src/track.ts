@@ -66,9 +66,9 @@ export interface UsageEvent {
   how?: StartHow;
   /** start_done only. */
   why?: StartWhy;
-  /** browse_done only: seconds open, in tens (dwellBucket); 600 = ten minutes or more. */
+  /** browse_done only: seconds open, in fives (dwellBucket); 600 = ten minutes or more. */
   secs?: number;
-  /** browse_done only: shelves scrolled sideways, 0–7. */
+  /** browse_done only: shelves scrolled sideways, 0–10. */
   rows?: number;
   /** browse_done only: cards pressed, 0, 1, or 2 = two or more. */
   cards?: 0 | 1 | 2;
