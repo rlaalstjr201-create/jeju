@@ -82,7 +82,9 @@ export function dropReason(r: SeoulRow, day: string): string | null {
   if (ONLINE.test(`${time} ${decode(r.PLACE)}`)) return 'online';
   if (KIDS_ONLY.test(trgt) && !FOR_ALL.test(trgt)) return 'kids-only';
   // 대상 칸이 비었거나 「누구나」여도, 제목이 아이 행사(어린이열람실·어린이박물관 체험 등)면 여행자 대상이 아니다
-  if (/어린이|키즈|유아|아동|그림책|동화/.test(title)) return 'kids-only';
+  if (/어린이|키즈|유아|아동|그림책|동화|맘껏|놀이터|가족\s*놀이/.test(title)) return 'kids-only';
+  // 안내문·모집 글·강좌는 어느 종류로 올라와도 지금 갈 행사가 아니다 (품질 01 원인 5)
+  if (/프로그램\s*안내|안내\s*$|모집|강좌|교실|수강/.test(title)) return 'class';
   if (kind.startsWith('교육') && (SERIES.test(`${title} ${time}`) || !DROP_IN.test(`${title} ${time}`))) return 'class';
   return null;
 }
