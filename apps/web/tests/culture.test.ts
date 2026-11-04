@@ -49,6 +49,8 @@ describe('거르기 (ADR-0112 3)', () => {
   });
   it('HTML entities are undone', () => {
     expect(decode('A &amp; B &lt;전시&gt; &#39;봄&#39;')).toBe("A & B <전시> '봄'");
+    // one out of range stays as written (it must not throw: the whole day's list would fail)
+    expect(decode('가 &#99999999; 나')).toBe('가 &#99999999; 나');
   });
 });
 

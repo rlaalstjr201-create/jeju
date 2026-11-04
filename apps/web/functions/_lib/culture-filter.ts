@@ -43,10 +43,12 @@ export interface CultureItem {
 }
 
 const ENTITY: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", '#39': "'", nbsp: ' ', middot: '·' };
+/** A numeric entity's character; one out of range stays as written. */
+const point = (n: number, m: string) => (Number.isInteger(n) && n >= 0 && n <= 0x10ffff ? String.fromCodePoint(n) : m);
 export const decode = (s: string | undefined) =>
   String(s ?? '')
     .replace(/&(#\d+|#x[0-9a-f]+|\w+);/gi, (m, e: string) =>
-      ENTITY[e.toLowerCase()] ?? (e[0] === '#' ? String.fromCodePoint(e[1] === 'x' || e[1] === 'X' ? parseInt(e.slice(2), 16) : Number(e.slice(1))) : m),
+      ENTITY[e.toLowerCase()] ?? (e[0] === '#' ? point(e[1] === 'x' || e[1] === 'X' ? parseInt(e.slice(2), 16) : Number(e.slice(1)), m) : m),
     )
     .replace(/\s+/g, ' ')
     .trim();
@@ -94,6 +96,8 @@ export function cultureItems(rows: SeoulRow[], day: string): CultureItem[] {
   const seen = new Set<string>();
   const out: CultureItem[] = [];
   for (const r of rows) {
+    // most of the ~20,000 rows are past: the cheap date look first
+    if (!(day10(r.STRTDATE) <= day && day <= day10(r.END_DATE))) continue;
     if (dropReason(r, day)) continue;
     const title = decode(r.TITLE);
     const key = normTitle(title);

@@ -458,19 +458,32 @@ export function mountApp(doc: Document, deps: Deps): App {
 
   // --- 오늘 근처에서 하는 것 (ADR-0112): 서울's home, 지금, with a basis — the list asked for once a KST day (no position goes
   // with it), with its view (a chunk of its own, release.ts loadCulture); nothing is shown after a failure or for another
-  // day. The minute its picks are read at moves on with the draws (5 minutes at a time). ---
-  let cultureDay = '';
+  // day, and a failed ask is tried again 5 minutes on (as 비 소식). The minute its picks are read at moves on with the draws
+  // and, while the home is up, a 5-minute timer. ---
+  let cultureAsked: { day: string; at: number } | null = null;
+  let cultureBusy = false;
+  let cultureTimer: ReturnType<typeof setTimeout> | null = null;
   function askCulture() {
     const s = state;
+    if (cultureTimer) {
+      clearTimeout(cultureTimer);
+      timers.delete(cultureTimer);
+      cultureTimer = null;
+    }
     if (!NATION || !deps.fetch || s.dest !== 'seoul' || s.view !== 'home' || s.when !== 'now' || !homeOrigin(s)) return;
+    cultureTimer = later(RAIN_RETRY_MS, askCulture);
     const minute = minuteOf(clockNow());
     if (s.culture?.day === s.today) return void (Math.abs(minute - s.culture.minute) >= 5 && dispatch({ type: 'culture', culture: { ...s.culture, minute } }));
-    if (cultureDay === s.today) return;
-    const day = (cultureDay = s.today);
+    const at = clockNow().getTime();
+    if (cultureBusy || (cultureAsked?.day === s.today && at - cultureAsked.at < RAIN_RETRY_MS)) return;
+    const day = s.today;
+    cultureAsked = { day, at };
+    cultureBusy = true;
     const get = deps.fetch;
     void loadCulture()
       .then((ok) => (ok ? culturePart()!.fetchCulture(get) : null))
       .then((c) => {
+        cultureBusy = false;
         if (!signal.aborted && c?.day === day && state.today === day) dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
       });
   }

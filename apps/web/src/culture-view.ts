@@ -29,7 +29,7 @@ const okItem = (x: unknown): x is CultureItem => {
 
 /** 서울's list for today, or null — nothing to show — for a 204 (no key, the city's API failing), an error, a non-JSON
  * answer or no answer within `timeoutMs`. */
-export async function fetchCulture(get: Fetch, timeoutMs = 8000): Promise<{ day: string; items: CultureItem[] } | null> {
+export async function fetchCulture(get: Fetch, timeoutMs = 15000): Promise<{ day: string; items: CultureItem[] } | null> {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), timeoutMs);
   try {

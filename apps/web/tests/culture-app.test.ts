@@ -117,6 +117,40 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     expect(block()).toBeNull();
   });
 
+  it('a 204, then 5 minutes on: asked again, and the block comes', async () => {
+    let status = 204;
+    let clock = at1400().getTime();
+    const urls: string[] = [];
+    const f: Fetch = async (url) => {
+      urls.push(url);
+      if (!url.startsWith('/api/culture') || status !== 200) return { ok: false, status: 204, json: async () => null };
+      return { ok: true, status: 200, json: async () => JSON.parse(JSON.stringify({ day: DAY, items })) };
+    };
+    localStorage.setItem(KEYS.dest, JSON.stringify('seoul'));
+    render({
+      loadSpots: (d, sgg) => Promise.resolve(d === 'nation' ? normalizeNation(JSON.parse(nationFile('11')), [...DEST.gangwon.sgg!, ...DEST.seoul.sgg!], sgg) : d === 'seoul' ? seoulRaw : fileSpots),
+      locate: () => Promise.resolve(경복궁),
+      geoPermission: async () => 'granted',
+      today: () => new Date(clock),
+      fetch: f,
+    });
+    await wait();
+    const asked = () => urls.filter((u) => u.startsWith('/api/culture')).length;
+    expect(asked()).toBe(1);
+    expect(block()).toBeNull();
+    // back in front a minute on: not yet
+    clock += 60_000;
+    document.dispatchEvent(new Event('visibilitychange'));
+    await wait();
+    expect(asked()).toBe(1);
+    status = 200;
+    clock += 5 * 60_000;
+    document.dispatchEvent(new Event('visibilitychange'));
+    await wait();
+    expect(asked()).toBe(2);
+    expect(block()).not.toBeNull();
+  });
+
   it('a 204: no block', async () => {
     const c = cultureFetch(204);
     mount(c.f);

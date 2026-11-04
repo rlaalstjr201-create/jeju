@@ -1690,7 +1690,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       else feedbackForm(panel);
     } else if (overlay === 'culture') {
       const origin = homeOrigin(s);
-      if (origin && s.culture) culturePart()?.sheetBody(doc, panel, s, origin);
+      if (origin && s.dest === 'seoul' && s.culture?.day === s.today) culturePart()?.sheetBody(doc, panel, s, origin);
     } else {
       panel.append(
         el(doc, 'p', { class: 'note' }, COPY.stayNote),

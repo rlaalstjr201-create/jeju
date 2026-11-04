@@ -22,6 +22,8 @@ describe('/api/culture', () => {
     const urls: string[] = [];
     // three pages: the fixture's 208 rows padded to a total of 2,500
     vi.stubGlobal('fetch', async (url: string) => {
+      // a page's ask goes back through this same function (its own invocation, ADR-0112 Amendment 1)
+      if (url.startsWith('https://yeochana.com/')) return onRequestGet(req(url.slice('https://yeochana.com/api/culture'.length)));
       urls.push(url);
       const from = Number(url.split('/').slice(-3)[0]);
       const page = from === 1 ? rows : [];
@@ -37,11 +39,27 @@ describe('/api/culture', () => {
     expect(body.items.length).toBeGreaterThan(80);
     expect(body.items.length).toBeLessThan(130);
     expect(body.from).toMatch(/서울 열린데이터광장/);
-    expect(res.headers.get('Cache-Control')).toBe('public, max-age=3600');
+    expect(res.headers.get('Cache-Control')).toMatch(/^public, max-age=300, s-maxage=\d+$/);
+  });
+
+  it('a page is asked only for today and a page there can be', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-04T05:00:00Z'));
+    vi.stubGlobal('fetch', async () => new Response(JSON.stringify({ culturalEventInfo: { list_total_count: 1, row: rows } }), { status: 200 }));
+    expect((await onRequestGet(req('?city=seoul&page=1&day=2026-11-03'))).status).toBe(400);
+    expect((await onRequestGet(req('?city=seoul&page=0&day=2026-11-04'))).status).toBe(400);
+    expect((await onRequestGet(req('?city=seoul&page=99&day=2026-11-04'))).status).toBe(400);
+    const one = await onRequestGet(req('?city=seoul&page=1&day=2026-11-04'));
+    expect(one.status).toBe(200);
+    const b = (await one.json()) as { total: number; rows: { END_DATE: string }[] };
+    expect(b.total).toBe(1);
+    expect(b.rows.length).toBeGreaterThan(0);
+    expect(b.rows.length).toBeLessThanOrEqual(rows.length);
   });
 
   it('an API error or a network failure is 204, never a stale list', async () => {
-    vi.stubGlobal('fetch', async () => new Response(JSON.stringify({ RESULT: { CODE: 'INFO-100' } }), { status: 200 }));
+    const self = async (url: string) => (url.startsWith('https://yeochana.com/') ? onRequestGet(req(url.slice('https://yeochana.com/api/culture'.length))) : null);
+    vi.stubGlobal('fetch', async (url: string) => (await self(url)) ?? new Response(JSON.stringify({ RESULT: { CODE: 'INFO-100' } }), { status: 200 }));
     const a = await onRequestGet(req('?city=seoul'));
     expect(a.status).toBe(204);
     expect(a.headers.get('X-Culture-Reason')).toMatch(/INFO-100/);
