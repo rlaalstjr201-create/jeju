@@ -155,6 +155,8 @@ export interface State {
   /** 오늘 근처에서 하는 것 (ADR-0112): 서울's list for `day` (KST) and the minute it is read at (app.ts askCulture); null until
    * one has come. */
   culture: { day: Day; items: readonly CultureItem[]; minute: number } | null;
+  /** 오늘 서울 둘러보기 (ADR-0114): the item whose card sheet is (or was last) open; kept so a back onto it finds it again. */
+  browseId: string | null;
   /** 노을 줄 (ADR-0083), 밤 (ADR-0091): the time of day in Jeju, minutes after midnight KST, as the app last read it
    * (opening, back in front, midnight, the moments 노을 볼 곳 opens and closes, the sunrise, and each answer to a
    * request); null before it is read. */
@@ -217,6 +219,8 @@ export type Action =
   /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
   | { type: 'rain'; area: string; rain: boolean }
   | { type: 'culture'; culture: NonNullable<State['culture']> }
+  /** 오늘 서울 둘러보기: a card pressed (its sheet over the screen) */
+  | { type: 'browseCard'; id: string }
   /** the time of day was read (ADR-0083). */
   | { type: 'clock'; clock: number }
   /** ADR-0081: the survey line was tapped (gone for good). */
@@ -308,6 +312,7 @@ export function initialState(init: {
     announce: { n: 0, more: false, seq: 0 },
     rain: null,
     culture: null,
+    browseId: null,
     clock: init.clock ?? null,
     surveyLine: init.surveyLine ?? false,
     feedbackSent: false,
@@ -662,8 +667,9 @@ function step(s: State, a: Action): State {
     }
     case 'overlay': {
       // 다른 날로 belongs to a row of the saved list: without one (a forward after a reload) there is none.
-      // 오늘 근처에서 하는 것's list, the same: none without the day's list
-      const overlay = (a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved')) || (a.overlay === 'culture' && s.culture?.day !== s.today) ? null : a.overlay;
+      // 오늘 근처에서 하는 것's list and 오늘 서울 둘러보기, the same: none without the day's list (a card's sheet: without its card)
+      const cult = a.overlay === 'culture' || a.overlay === 'browse' || a.overlay === 'browse-card';
+      const overlay = (a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved')) || (cult && s.culture?.day !== s.today) || (a.overlay === 'browse-card' && !s.browseId) ? null : a.overlay;
       if (overlay === s.overlay) return s;
       return { ...s, overlay, stayForm: { pending: false, error: null }, feedbackSent: false, destPick: false, geo: NO_GEO };
     }
@@ -757,6 +763,10 @@ function step(s: State, a: Action): State {
       return a.area === rainArea(s) ? { ...s, rain: { area: a.area, rain: a.rain } } : s;
     case 'culture':
       return { ...s, culture: a.culture };
+    case 'browseCard': {
+      const opened = reduce({ ...s, browseId: a.id }, { type: 'overlay', overlay: 'browse-card' });
+      return opened.overlay === 'browse-card' ? opened : s;
+    }
     case 'surveyTapped':
       return s.surveyLine ? { ...s, surveyLine: false } : s;
     case 'feedbackSent':

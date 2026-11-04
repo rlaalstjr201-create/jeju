@@ -40,8 +40,10 @@ export interface Origin {
   from: string;
 }
 export type View = 'home' | 'cards' | 'saved';
-/** 'move': the 다른 날로 sheet of a saved row. 'feedback': 의견 보내기 (ADR-0081). 'culture': 오늘 근처에서 하는 것's list (ADR-0112). */
-export type Overlay = null | 'basis' | 'stay' | 'move' | 'feedback' | 'culture';
+/** 'move': the 다른 날로 sheet of a saved row. 'feedback': 의견 보내기 (ADR-0081). 'culture': 오늘 근처에서 하는 것's list (ADR-0112).
+ * 'browse': 오늘 서울 둘러보기 (ADR-0114), the whole screen; 'browse-card': a card's sheet over it (an entry of its own, so back
+ * closes the card first). */
+export type Overlay = null | 'basis' | 'stay' | 'move' | 'feedback' | 'culture' | 'browse' | 'browse-card';
 /** The day hearts go to: 'now' = today (the default), or a later day (specs/date-mode.md). */
 export type When = 'now' | Day;
 /** A saved place on a day. `order` = its place in that day's list (0, 1, 2, …). `at` = the day it was saved

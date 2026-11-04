@@ -1,0 +1,63 @@
+/* 오늘 서울 둘러보기 (ADR-0114): with the culture chunk (browse-view.ts), never in the entry (ADR-0100). The tokens are
+   style.css's. Shelves scroll sideways inside themselves (snapping a card at a time), edge to edge, and never widen the
+   page; the next card peeks in at the right so the row says it scrolls. Cards are posters (KOPIS's are portrait, 5:7). */
+
+/* the way in on 서울's home: one wide grey face under the picks, like 다른 3곳 보기 */
+.browse-in {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 52px; margin-top: 12px;
+  padding: 0 16px; border-radius: var(--r-wide); background: var(--fill); font-weight: 600;
+}
+.browse-in::after { content: "›"; color: var(--muted); font-size: 1.25rem; line-height: 1; }
+.browse-in:active { background: var(--fill-press); }
+
+/* the whole screen: the page's own ground, 닫기 at the bottom where the thumb is */
+.browse {
+  position: fixed; inset: 0; max-width: 480px; margin: 0 auto; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--bg); padding: calc(20px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+}
+.browse h2 { margin: 0 0 4px; font-size: 1.25rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em; }
+.browse .note { margin: 0; color: var(--muted); }
+.browse .cult-src { margin-top: 24px; }
+.browse .cult-src + .cult-src { margin-top: 4px; }
+.browse > .sheet-close { background: var(--bg); }
+.shelf { margin-top: 28px; }
+.shelf h3 { margin: 0 0 10px; font-size: 1.0625rem; line-height: 1.35; font-weight: 700; }
+.shelf-row {
+  display: flex; gap: 12px; list-style: none; margin: 0 -16px; padding: 0 16px 4px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none;
+}
+.shelf-row::-webkit-scrollbar { display: none; }
+.shelf-row > li { flex: none; width: 128px; scroll-snap-align: start; }
+.bcard { display: block; width: 100%; border-radius: var(--r-thumb); }
+.bcard:focus-visible { outline-offset: 2px; }
+.bcard .nm {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  margin-top: 8px; font-weight: 600; line-height: 1.35;
+}
+/* why now may run to two lines (「일요일까지 · 지금 열림 · 18:00까지」: the time is what matters); how far is one */
+.bcard .meta { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--muted); }
+
+/* the picture box: grey while it loads; with no picture (or a broken one) a text card saying the kind */
+.bpic { position: relative; display: block; aspect-ratio: 5 / 7; overflow: hidden; border-radius: var(--r-thumb); background: var(--fill); }
+.bpic img { display: block; width: 100%; aspect-ratio: 5 / 7; object-fit: cover; filter: var(--photo); }
+.balt { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 8px; font-weight: 600; visibility: hidden; }
+.bpic.noimg { background: var(--main-tint); }
+.noimg .balt { visibility: visible; color: var(--tag-ink); }
+
+/* a card's sheet over the screen (the app's bottom sheet, later in #sheet so it is on top) */
+.bc-top { display: flex; align-items: flex-start; gap: 16px; }
+.bc-top .bpic { flex: none; width: 104px; }
+.bc-txt { min-width: 0; }
+.bc h2 { margin: 0 0 4px; }
+.bc-place { margin: 0; color: var(--muted); }
+.bc-facts { list-style: none; margin: 16px 0 0; padding: 0; }
+.bc-facts li + li { margin-top: 2px; }
+.bc-acts { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.bc-acts .primary { justify-content: center; background: var(--main); color: var(--on-main); }
+.bc-acts .primary:active { background: var(--main-press); }
+.bc-acts .tbtn { justify-content: center; min-height: 48px; white-space: normal; }
+.bc .cult-src { margin-top: 16px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .browse { animation: fade 160ms ease-out; }
+}

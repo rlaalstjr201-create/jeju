@@ -239,6 +239,14 @@ export const ZH: Lang = {
       starts: (t) => `${t}开始`,
       free: '免费',
     },
+    browse: {
+      open: '逛逛今天的首尔',
+      note: '只收录今天有、现在还能去的活动。',
+      shelf: { near: '就在附近', today: '仅限今天·今天结束', week: '本周结束', stage: '话剧·音乐剧', live: '现场·独立音乐', exhibit: '展览', free: '免费' },
+      none: '现在没有可逛的活动。',
+      today: (times) => `今天 ${times}`,
+      more: '详情（订票·介绍）',
+    },
   },
   mood: {
     rest: '想好好歇一歇',

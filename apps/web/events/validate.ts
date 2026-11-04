@@ -11,7 +11,8 @@ export const MAX_EVENTS = 50;
 
 // visited / unvisited (ADR-0087): a place id and the usual context, like save / unsave
 // start_view / start_done: the 시작 화면 (specs/busan.md 7) — no place, the day and (done) how / why / dest only
-const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange', 'visited', 'unvisited', 'start_view', 'start_done']);
+// browse_*: 오늘 서울 둘러보기 (ADR-0114 7) — no place, no item, the day and their own fields only
+const EVENTS = new Set(['tap', 'shown', 'save', 'unsave', 'map', 'book', 'open', 'arrange', 'visited', 'unvisited', 'start_view', 'start_done', 'browse_open', 'browse_done', 'browse_card', 'browse_link']);
 /** events about the saved list, not a place (ADR-0085): no id, like tap. */
 const NO_PLACE = new Set(['tap', 'open', 'arrange']);
 const OPS = new Set(['up', 'down', 'move', 'past']);
@@ -31,8 +32,13 @@ const HOWS = new Set(['gps', 'pick']);
 const WHYS = new Set(['denied', 'outside', 'unavailable', 'none']);
 /** the only fields of each 시작 화면 event */
 const START_FIELDS: Record<string, readonly string[]> = { start_view: ['e', 'd'], start_done: ['e', 'd', 'how', 'why', 'dest'] };
+/** the only fields of each 둘러보기 event: how long it was open (seconds in tens, 600 = ten minutes or more), shelves
+ * scrolled sideways (0–7), cards pressed (0, 1, 2 = two or more); which link */
+const BROWSE_FIELDS: Record<string, readonly string[]> = { browse_open: ['e', 'd'], browse_card: ['e', 'd'], browse_link: ['e', 'd', 'link'], browse_done: ['e', 'd', 'secs', 'rows', 'cards'] };
+const LINKS = new Set(['go', 'more']);
 const SEASONS = new Set<string>(SEASON_KINDS);
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'sgg', 'd']);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'sgg', 'secs', 'rows', 'cards', 'link', 'd']);
+const whole = (v: unknown, max: number, step = 1) => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v <= max && v % step === 0;
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 /** 숙소 링크 (ADR-0089): `src:<tag>` on tap / open / map, with nothing but the day. */
@@ -63,6 +69,15 @@ export function eventProblem(x: unknown, today?: Day): string | null {
     if (o.e === 'start_done' && !(inSet(HOWS, o.how) && inSet(WHYS, o.why) && inSet(DESTS, o.dest))) return 'start_done';
     return null;
   }
+  const browse = BROWSE_FIELDS[o.e as string];
+  if (browse) {
+    const more = Object.keys(o).find((k) => !browse.includes(k));
+    if (more) return `${more} on ${o.e}`;
+    if (o.e === 'browse_link' && !inSet(LINKS, o.link)) return 'link';
+    if (o.e === 'browse_done' && !(whole(o.secs, 600, 10) && whole(o.rows, 7) && whole(o.cards, 2))) return 'browse_done';
+    return null;
+  }
+  if (o.secs !== undefined || o.rows !== undefined || o.cards !== undefined || o.link !== undefined) return `browse fields on ${o.e}`;
   if (o.how !== undefined || o.why !== undefined) return `how / why on ${o.e}`;
   if (o.dest !== undefined && !inSet(DESTS, o.dest)) return 'dest';
   if (NO_PLACE.has(o.e as string)) {

@@ -1481,6 +1481,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // denial — is patched in place (patchSheet): a rebuild under the finger would reset its scroll and focus.
     // 의견 보내기 keeps what is typed: rebuilt only when it turns into 고마워요
     if (s.overlay === 'feedback') return `feedback|${s.feedbackSent}`;
+    // 오늘 서울 둘러보기: the screen is built once per list and point — a card's sheet opening over it, or the minute read
+    // again, never resets how far its shelves were scrolled (patchSheet puts the card's sheet on and takes it off)
+    if (s.overlay === 'browse' || s.overlay === 'browse-card') return `browse|${s.culture?.day}|${homeOrigin(s)?.key ?? ''}|${s.mapApp}`;
     const move = s.overlay === 'move' && s.moveTarget ? `${s.moveTarget.id}|${s.moveTarget.date}` : '';
     return `${s.overlay}|${s.basis}|${s.region}|${s.stay?.area ?? ''}|${s.stay?.source ?? ''}|${s.reach}|${s.indoor}|${s.when}|${s.today}|${move}|${s.dest}|${s.destPick}`;
   }
@@ -1627,6 +1630,12 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
 
   function buildSheet(s: State) {
     const overlay = s.overlay!;
+    if (overlay === 'browse' || overlay === 'browse-card') {
+      // a whole screen of its own, no scrim (culture-view.ts browseBody); its card sheet comes in patchSheet
+      const screen = s.culture?.day === s.today ? culturePart()?.browseBody(doc, s, homeOrigin(s)) : null;
+      els.sheet.replaceChildren(...(screen ? [screen] : []));
+      return;
+    }
     const scrim = el(doc, 'div', { class: 'scrim', 'data-action': 'close' });
     const panel = el(doc, 'section', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
     const title =
@@ -1704,6 +1713,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   }
 
   function patchSheet(s: State) {
+    // 오늘 서울 둘러보기's card sheet on or off over the screen (culture-view.ts)
+    if (s.overlay === 'browse' || s.overlay === 'browse-card') return void culturePart()?.patchBrowse(doc, els.sheet, s, homeOrigin(s));
     const gps = els.sheet.querySelector<HTMLButtonElement>('[data-basis="gps"]');
     if (gps) {
       const sub = gps.querySelector('.lm');

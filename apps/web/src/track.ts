@@ -12,9 +12,12 @@ import type { SeasonKind } from './season';
 import type { Basis, View, When } from './types';
 
 /** visited / unvisited: 가 봤어요 and its undo (ADR-0087) — this collector only, never GA4·네이버, never in the popularity. */
-export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange' | 'visited' | 'unvisited' | StartEvent;
+export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange' | 'visited' | 'unvisited' | StartEvent | BrowseEvent;
 /** 시작 화면 (specs/busan.md 7): it was seen (up a second or more), and how it was left — no place, no position. */
 export type StartEvent = 'start_view' | 'start_done';
+/** 오늘 서울 둘러보기 (ADR-0114 7): opened; left (how long, how many shelves scrolled sideways, cards pressed); a card pressed;
+ * 길찾기 or 자세히 pressed on a card. This collector only, never GA4·네이버; no item, no position. */
+export type BrowseEvent = 'browse_open' | 'browse_done' | 'browse_card' | 'browse_link';
 /** start_done: by the position, or a destination button. */
 export type StartHow = 'gps' | 'pick';
 /** start_done: what the position said before a button was pressed ('none': nothing, or it was not tried). */
@@ -63,6 +66,14 @@ export interface UsageEvent {
   how?: StartHow;
   /** start_done only. */
   why?: StartWhy;
+  /** browse_done only: seconds open, in tens (dwellBucket); 600 = ten minutes or more. */
+  secs?: number;
+  /** browse_done only: shelves scrolled sideways, 0–7. */
+  rows?: number;
+  /** browse_done only: cards pressed, 0, 1, or 2 = two or more. */
+  cards?: 0 | 1 | 2;
+  /** browse_link only: 길찾기 or 자세히. */
+  link?: 'go' | 'more';
   /** Jeju calendar day, no time. */
   d: Day;
 }
@@ -75,6 +86,9 @@ export function ageOf(at: Day | undefined, today: Day): Age | undefined {
   if (!Number.isFinite(n)) return undefined;
   return n <= 0 ? 0 : n === 1 ? 1 : 2;
 }
+
+/** 머문 시간 (ADR-0114 7): milliseconds as seconds in tens, 600 meaning ten minutes or more. */
+export const dwellBucket = (ms: number): number => Math.min(600, Math.max(0, Math.floor(ms / 10_000) * 10));
 
 export const FLUSH_MS = 10_000;
 export const FLUSH_AT = 20;

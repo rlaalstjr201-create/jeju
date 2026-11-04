@@ -246,6 +246,14 @@ export const EN: Lang = {
       starts: (t) => `Starts ${t}`,
       free: 'Free',
     },
+    browse: {
+      open: 'Browse Seoul today',
+      note: "Only what's on today and still open to go to now.",
+      shelf: { near: 'Near you now', today: 'Today only · ends today', week: 'Ends this week', stage: 'Plays · musicals', live: 'Live · indie', exhibit: 'Exhibitions', free: 'Free' },
+      none: 'Nothing to browse right now.',
+      today: (times) => `Today ${times}`,
+      more: 'Details (tickets · info)',
+    },
   },
   mood: {
     rest: 'Just relax',

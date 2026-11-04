@@ -1,7 +1,9 @@
 // 오늘 근처에서 하는 것 (ADR-0112 8, plans/now-culture.md §3): the home's block (홈 2) and the list sheet (목록 6), a chunk of
 // its own (release.ts loadCulture) so the entry stays in its budget (ADR-0100). The list is asked for here too: 서울 목록
 // 전체, no position in the request (ADR-0112 6); the app filters by distance (culture.ts pickCulture).
-import { WHY_TEXT, pickCulture, type CultureItem, type Pick } from './culture';
+import { BROWSE_COPY, browseCardSheet, browseScreen } from './browse-view';
+export { scrolledRows } from './browse-view';
+import { WHY_TEXT, pickCulture, type CultureItem, type Now, type Pick } from './culture';
 import type { Fetch } from './effects';
 import { goLink, type MapApp } from './links';
 import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
@@ -19,11 +21,13 @@ export const CULTURE_COPY = {
   /** 출연 (ADR-0113 4), after the why line: 「김상우·이원우 출연」 */
   cast: (names: string) => `${names} 출연`,
 };
-export type CultureWords = typeof CULTURE_COPY & { why: typeof WHY_TEXT };
+/** with 오늘 서울 둘러보기's (browse-view.ts BROWSE_COPY) */
+export type CultureWords = typeof CULTURE_COPY & { why: typeof WHY_TEXT; browse: typeof BROWSE_COPY };
 export function words(w: CultureWords): void {
-  const { why, ...rest } = w;
+  const { why, browse, ...rest } = w;
   Object.assign(CULTURE_COPY, rest);
   Object.assign(WHY_TEXT, why);
+  Object.assign(BROWSE_COPY, browse);
 }
 
 const okItem = (x: unknown): x is CultureItem => {
@@ -96,7 +100,7 @@ function rows(doc: Document, picks: Pick[], app: MapApp): HTMLElement {
 }
 
 /** The source lines: the Seoul list's, and KOPIS's when a show is among `picks` (ADR-0113 6). */
-const sources = (doc: Document, picks: Pick[]) => [
+const sources = (doc: Document, picks: readonly { item: CultureItem }[]) => [
   el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.from),
   ...(picks.some((p) => p.item.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.fromShows)] : []),
 ];
@@ -108,6 +112,8 @@ export function homeBlock(doc: Document, s: State, origin: Origin): HTMLElement 
   const sec = el(doc, 'section', { id: 'culture', class: 'more-sec', 'aria-labelledby': 'culture-h' });
   sec.append(el(doc, 'h2', { id: 'culture-h' }, CULTURE_COPY.head), rows(doc, home, s.mapApp));
   if (list.length > home.length) sec.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'culture-more' }, CULTURE_COPY.more));
+  // 오늘 서울 둘러보기 (ADR-0114 1): the one way in, under the picks
+  sec.append(el(doc, 'button', { type: 'button', class: 'browse-in', 'data-action': 'browse' }, BROWSE_COPY.open));
   sec.append(...sources(doc, home));
   return sec;
 }
@@ -116,4 +122,41 @@ export function homeBlock(doc: Document, s: State, origin: Origin): HTMLElement 
 export function sheetBody(doc: Document, panel: HTMLElement, s: State, origin: Origin): void {
   const { list } = picksOf(s.culture!, origin);
   panel.append(rows(doc, list, s.mapApp), ...sources(doc, list));
+}
+
+/** The day's list as of the minute it was read (KST). */
+const nowOf = (c: NonNullable<State['culture']>): Now => ({ day: c.day, weekday: new Date(`${c.day}T00:00:00Z`).getUTCDay(), minute: c.minute });
+/** every item shown is from today's list: the KOPIS line whenever a show is in it */
+const allItems = (c: NonNullable<State['culture']>) => c.items.map((item) => ({ item }));
+
+/** 오늘 서울 둘러보기 (ADR-0114): the whole screen, distances from the home's point when there is one. */
+export function browseBody(doc: Document, s: State, origin: Origin | null): HTMLElement {
+  const c = s.culture!;
+  return browseScreen(doc, c.items, nowOf(c), origin?.point ?? null, sources(doc, allItems(c)));
+}
+/** A card's sheet over it; null when the item is not in today's list. */
+function browseCard(doc: Document, s: State, origin: Origin | null, id: string): HTMLElement | null {
+  const c = s.culture!;
+  const it = c.items.find((x) => x.id === id);
+  return browseCardSheet(doc, c.items, id, nowOf(c), origin?.point ?? null, s.mapApp, CULTURE_COPY.cast, sources(doc, it ? [{ item: it }] : []));
+}
+
+/** The card's sheet on over the screen (which goes inert, focus to the card's title) or off again (focus back to the card
+ * pressed), as `s` says; render.ts patchSheet, in this chunk so the entry stays in its budget (ADR-0100). */
+export function patchBrowse(doc: Document, box: HTMLElement, s: State, origin: Origin | null): void {
+  const screen = box.querySelector<HTMLElement>('.browse');
+  const layer = box.querySelector<HTMLElement>('.bc-layer');
+  const want = s.overlay === 'browse-card' ? s.browseId : null;
+  if (layer && layer.dataset.id === want) return;
+  layer?.remove();
+  const card = want && s.culture?.day === s.today ? browseCard(doc, s, origin, want) : null;
+  if (card) {
+    card.dataset.id = want!;
+    box.append(card);
+    screen?.setAttribute('inert', '');
+    card.querySelector<HTMLElement>('#bc-title')?.focus({ preventScroll: true });
+  } else if (layer) {
+    screen?.removeAttribute('inert');
+    [...(screen?.querySelectorAll<HTMLElement>('[data-action="browse-card"]') ?? [])].find((b) => b.dataset.id === s.browseId)?.focus({ preventScroll: true });
+  }
 }

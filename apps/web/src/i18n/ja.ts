@@ -244,6 +244,14 @@ export const JA: Lang = {
       starts: (t) => `${t}開始`,
       free: '無料',
     },
+    browse: {
+      open: '今日のソウルを見て回る',
+      note: '今日やっていて、今から行けるものだけ集めました。',
+      shelf: { near: 'いま近くで', today: '今日のみ・今日まで', week: '今週で終わる', stage: '演劇・ミュージカル', live: 'ライブ・インディー', exhibit: '展示', free: '無料' },
+      none: 'いま見て回れるものがありません。',
+      today: (times) => `今日 ${times}`,
+      more: '詳しく（予約・案内）',
+    },
   },
   mood: {
     rest: 'のんびりしたい',

@@ -28,11 +28,28 @@ export const START_IDS: readonly string[] = [
   ...['gps', 'pick'].flatMap((how) => ['denied', 'outside', 'unavailable', 'none'].flatMap((why) => ['jeju', 'busan', 'gangwon', 'seoul', 'nation'].map((dest) => `start:${how}:${why}:${dest}`))),
 ];
 
+/** 오늘 서울 둘러보기 (ADR-0114 7): the counter ids of its events — `browse:open`, `browse:card`, `browse:go` / `browse:more`, and
+ * for each time it was left one under each of `browse:secs:<0…600>`, `browse:rows:<0…7>`, `browse:cards:<0…2>` (so the
+ * median stay and the share of openings with a card pressed can be read). Not places (`browse:` prefix). */
+export const BROWSE_IDS: readonly string[] = [
+  'browse:open',
+  'browse:card',
+  'browse:go',
+  'browse:more',
+  ...Array.from({ length: 61 }, (_, i) => `browse:secs:${i * 10}`),
+  ...Array.from({ length: 8 }, (_, i) => `browse:rows:${i}`),
+  ...[0, 1, 2].map((n) => `browse:cards:${n}`),
+];
+
 /** The counter ids an event goes up under (day and event stay its own). */
 function idsOf(ev: UsageEvent): string[] {
   if (ev.id?.startsWith('src:')) return [ev.id]; // 숙소 링크 (ADR-0089)
   if (ev.e === 'start_view') return ['start:view'];
   if (ev.e === 'start_done') return [`start:${ev.how}:${ev.why}:${ev.dest}`];
+  if (ev.e === 'browse_open') return ['browse:open'];
+  if (ev.e === 'browse_card') return ['browse:card'];
+  if (ev.e === 'browse_link') return [`browse:${ev.link}`];
+  if (ev.e === 'browse_done') return [`browse:secs:${ev.secs}`, `browse:rows:${ev.rows}`, `browse:cards:${ev.cards}`];
   if (ev.e === 'tap') return [`mood:${ev.mood}`];
   if (ev.e === 'open') return [`open${ev.live0 ? ':live0' : ''}${ev.past ? ':past' : ''}`];
   if (ev.e === 'arrange') return [`arrange:${ev.op}`];

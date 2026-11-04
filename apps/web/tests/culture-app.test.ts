@@ -9,11 +9,11 @@ import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
 import { DEST } from '../src/dest';
 import type { Fetch } from '../src/effects';
 import { normalizeNation } from '../src/nation';
-import { NATION, loadNation } from '../src/release';
+import { NATION, loadCulture, loadNation } from '../src/release';
 import { KEYS } from '../src/store';
 import rows from './fixtures/seoul-culture-20261104.json';
 import { fileSpots } from './fixtures';
-import { $, $$, current, flush, render, reset, settle, tap } from './harness';
+import { $, $$, advance, current, flush, render, reset, settle, tap } from './harness';
 
 const DAY = '2026-11-04';
 const items = cultureItems(rows as SeoulRow[], DAY);
@@ -59,6 +59,8 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
       return Promise.resolve(m ? { ok: true, json: () => Promise.resolve(JSON.parse(nationFile(m[1]))) } : { ok: false, status: 404 });
     });
     expect(await loadNation()).toBe(true);
+    // the culture chunk (now with 둘러보기's view and stylesheet) in before the first test: its first import can outlast `wait` on a busy run
+    expect(await loadCulture()).toBe(true);
     vi.unstubAllGlobals();
   });
   beforeEach(() => {
@@ -203,5 +205,149 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     await wait();
     expect(current().state().when).toBe('2026-11-05');
     expect(block()).toBeNull();
+  });
+});
+
+// 오늘 서울 둘러보기 (ADR-0114): the way in under the block, the whole screen (back closes it), a card's sheet over it (back
+// closes the card first), links http(s) only in a new tab, and the counts it sends (no item, no position).
+describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
+  beforeAll(async () => {
+    vi.stubGlobal('fetch', (url: string) => {
+      const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
+      return Promise.resolve(m ? { ok: true, json: () => Promise.resolve(JSON.parse(nationFile(m[1]))) } : { ok: false, status: 404 });
+    });
+    expect(await loadNation()).toBe(true);
+    vi.unstubAllGlobals();
+  });
+  beforeEach(() => {
+    reset();
+    Element.prototype.scrollIntoView ??= () => undefined;
+  });
+  afterEach(() => reset());
+
+  const show = { id: 'kp-PF1', title: '연극 오늘 한 번', kind: '연극', place: '경복궁 앞 소극장', gu: '', lat: 경복궁.lat, lng: 경복궁.lng, start: DAY, end: DAY, time: '수요일 19:00', free: false, forAll: true, link: 'javascript:alert(1)', image: 'http://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg', cast: '김상우·이원우' };
+  function mountSent() {
+    const sent: Record<string, unknown>[] = [];
+    localStorage.setItem(KEYS.dest, JSON.stringify('seoul'));
+    render({
+      loadSpots: (d, sgg) => Promise.resolve(d === 'nation' ? normalizeNation(JSON.parse(nationFile('11')), [...DEST.gangwon.sgg!, ...DEST.seoul.sgg!], sgg) : d === 'seoul' ? seoulRaw : fileSpots),
+      locate: () => Promise.resolve(경복궁),
+      geoPermission: async () => 'granted',
+      today: at1400,
+      fetch: cultureFetch({ day: DAY, items: [show, ...items] }).f,
+      eventsUrl: '/api/events',
+      beacon: (_, body) => (sent.push(...(JSON.parse(body) as Record<string, unknown>[])), true),
+    });
+    return sent;
+  }
+  const browse = (sent: Record<string, unknown>[]) => sent.filter((e) => String(e.e).startsWith('browse_'));
+
+  it('opens from the block; shelves of cards, each item once; a card sheet over it; back closes the card, then the screen', async () => {
+    const sent = mountSent();
+    await wait();
+    const way = $('#culture [data-action="browse"]');
+    expect(way.textContent).toBe('오늘 서울 둘러보기');
+    await tap(way);
+    expect(current().state().overlay).toBe('browse');
+    const screen = $('#sheet .browse');
+    expect(screen.querySelector('h2')!.textContent).toBe('오늘 서울 둘러보기');
+    const shelves = [...screen.querySelectorAll<HTMLElement>('.shelf-row')];
+    expect(shelves.length).toBeGreaterThan(1);
+    expect(shelves.length).toBeLessThanOrEqual(7);
+    expect(shelves[0].dataset.shelf).toBe('near');
+    const cards = [...screen.querySelectorAll<HTMLElement>('.bcard')];
+    for (const s of shelves) expect(s.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);
+    expect(new Set(cards.map((c) => c.dataset.id)).size).toBe(cards.length);
+    // the show: its poster over https, lazily, no referrer; a picture that fails becomes the text card
+    const poster = screen.querySelector<HTMLElement>(`[data-id="${show.id}"] img`)!;
+    expect(poster.getAttribute('src')).toBe('https://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg');
+    expect(poster.getAttribute('loading')).toBe('lazy');
+    expect(poster.getAttribute('referrerpolicy')).toBe('no-referrer');
+    poster.dispatchEvent(new Event('error'));
+    expect(screen.querySelector(`[data-id="${show.id}"] .bpic`)!.classList.contains('noimg')).toBe(true);
+    expect(screen.querySelector(`[data-id="${show.id}"] img`)).toBeNull();
+    // a shelf scrolled sideways (twice: one shelf)
+    shelves[1].dispatchEvent(new Event('scroll'));
+    shelves[1].dispatchEvent(new Event('scroll'));
+
+    await tap(screen.querySelector<HTMLElement>(`[data-id="${show.id}"]`)!);
+    expect(current().state()).toMatchObject({ overlay: 'browse-card', browseId: show.id });
+    const card = $('#sheet .bc');
+    expect(card.querySelector('h2')!.textContent).toBe(show.title);
+    expect(card.querySelector('.bc-place')!.textContent).toBe(show.place);
+    expect([...card.querySelectorAll('.bc-facts li')].map((l) => l.textContent)).toEqual(['오늘만 · 19:00 시작', '김상우·이원우 출연', '걸어서 약 5분']);
+    const go = card.querySelector<HTMLAnchorElement>('a[data-blink="go"]')!;
+    expect(go.getAttribute('href')).toMatch(/^https:\/\/map\.naver\.com\/p\/directions\/-\//);
+    expect([go.target, go.rel]).toEqual(['_blank', 'noopener']);
+    // javascript: is no link
+    expect(card.querySelector('a[data-blink="more"]')).toBeNull();
+    expect(screen.hasAttribute('inert')).toBe(true);
+    go.addEventListener('click', (e) => e.preventDefault(), { once: true });
+    go.click();
+    // the shelf's scroll is kept: the screen is not built again under the card
+    expect($('#sheet .browse')).toBe(screen);
+
+    window.history.back();
+    await wait();
+    expect(current().state().overlay).toBe('browse');
+    expect($('#sheet .bc')).toBeNull();
+    expect($('#sheet .browse')).toBe(screen);
+    expect(screen.hasAttribute('inert')).toBe(false);
+    expect(document.activeElement?.getAttribute('data-id')).toBe(show.id);
+
+    advance(52_000);
+    window.history.back();
+    await wait();
+    expect(current().state().overlay).toBeNull();
+    // what was sent: no item, no position, nothing but these fields
+    expect(browse(sent)).toEqual([
+      { e: 'browse_open', d: DAY },
+      { e: 'browse_card', d: DAY },
+      { e: 'browse_link', link: 'go', d: DAY },
+      { e: 'browse_done', secs: 50, rows: 1, cards: 1, d: DAY },
+    ]);
+  });
+
+  it('a card sheet: 자세히 when the link is http(s), in a new tab; 닫기 back to the screen; Esc closes the screen', async () => {
+    const sent = mountSent();
+    await wait();
+    await tap('#culture [data-action="browse"]');
+    const withLink = items.find((i) => /^https?:/.test(i.link) && $(`#sheet .bcard[data-id="${i.id}"]`))!;
+    expect(withLink).toBeTruthy();
+    await tap(`#sheet .bcard[data-id="${withLink.id}"]`);
+    const more = $('#sheet .bc a[data-blink="more"]') as HTMLAnchorElement;
+    expect(more.getAttribute('href')).toBe(withLink.link.trim());
+    expect([more.target, more.rel]).toEqual(['_blank', 'noopener']);
+    await tap('#sheet .bc .sheet-close');
+    await wait();
+    expect(current().state().overlay).toBe('browse');
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await wait();
+    expect(current().state().overlay).toBeNull();
+    expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_card', 'browse_done']);
+    expect(browse(sent)[2]).toMatchObject({ rows: 0, cards: 1 });
+  });
+
+  it('the page hidden while it is open: left then, once (a map app may never bring it back)', async () => {
+    const sent = mountSent();
+    await wait();
+    await tap('#culture [data-action="browse"]');
+    Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true });
+    document.dispatchEvent(new Event('visibilitychange'));
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true });
+    await tap('#sheet .browse > .sheet-close');
+    await wait();
+    expect(current().state().overlay).toBeNull();
+    expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_done']);
+  });
+
+  it('기록 끄기: nothing sent', async () => {
+    localStorage.setItem(KEYS.track, JSON.stringify(false));
+    const sent = mountSent();
+    await wait();
+    await tap('#culture [data-action="browse"]');
+    await tap('#sheet .browse > .sheet-close');
+    await wait();
+    expect(sent).toEqual([]);
   });
 });

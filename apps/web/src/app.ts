@@ -20,7 +20,7 @@ import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, i
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './analytics';
 import { feedbackBody, surveyDue } from './survey';
-import { ageOf, contextOf, createTracker, type ArrangeOp, type EventName, type UsageEvent } from './track';
+import { ageOf, contextOf, createTracker, dwellBucket, type ArrangeOp, type EventName, type UsageEvent } from './track';
 import type { Basis, Route, Stay, When } from './types';
 
 export { AREAS, LocateError, inJeju, kakaoUrl };
@@ -346,6 +346,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     countShown();
     askRain();
     askCulture();
+    if (browsing && state.overlay !== 'browse' && state.overlay !== 'browse-card') endBrowse();
     duskTimer();
     keepRow();
   }
@@ -721,7 +722,8 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
     dispatch({ type: 'route', route: r });
     // Forward onto a 다른 날로 entry whose row is gone (a reload): step back off it, like a stale results entry.
-    if (r.overlay === 'move' && state.overlay !== 'move') nav.back({ view: state.view, overlay: null });
+    // 오늘 서울 둘러보기's the same, without the day's list or the card
+    if ((r.overlay === 'move' || r.overlay === 'browse' || r.overlay === 'browse-card') && state.overlay !== r.overlay) nav.back({ view: state.view, overlay: null });
     if (state.view !== prev.view) enteredView();
     // Forward onto the results after 바꾸기 (which cleared the record): a reload here must come back to them.
     remember();
@@ -924,7 +926,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function hush() {
     quietUntil = Math.max(quietUntil, now() + delays.quiet);
   }
-  function openOverlay(kind: 'basis' | 'stay' | 'move' | 'feedback' | 'culture') {
+  function openOverlay(kind: 'basis' | 'stay' | 'move' | 'feedback' | 'culture' | 'browse') {
     if (state.overlay === kind) return;
     const was = state.overlay;
     stayToken++;
@@ -938,8 +940,37 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!state.overlay) return;
     stayToken++; // a 숙소 GPS request still in flight is now void (S10)
     hush(); // the 2nd tap of a double tap must not land on the page under the sheet
-    dispatch({ type: 'overlay', overlay: null });
+    // a card's sheet goes back to 오늘 서울 둘러보기 under it
+    dispatch({ type: 'overlay', overlay: state.overlay === 'browse-card' ? 'browse' : null });
     nav.back();
+  }
+
+  // --- 오늘 서울 둘러보기 (ADR-0114 7): our own collector only (never GA4·네이버), no item, no position ---
+  let browsing: { at: number; cards: number } | null = null;
+  function openBrowse() {
+    if (state.overlay || state.view !== 'home' || guarded('browse')) return;
+    openOverlay('browse');
+    if (state.overlay !== 'browse') return;
+    browsing = { at: now(), cards: 0 };
+    tracker.track({ e: 'browse_open', d: state.today });
+  }
+  /** Left (closed, or the page hidden: a map app opened from it may never bring it back), once per opening. */
+  function endBrowse() {
+    const b = browsing;
+    if (!b) return;
+    browsing = null;
+    tracker.track({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: culturePart()?.scrolledRows() ?? 0, cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
+    tracker.flush();
+  }
+  /** A card's sheet over the screen: an entry of its own (back closes the card, then the screen). */
+  function openBrowseCard(id: string | undefined) {
+    if (state.overlay !== 'browse' || !id || guarded('browse-card')) return;
+    hush();
+    dispatch({ type: 'browseCard', id });
+    if (state.overlay === 'browse') return; // not taken (no list for today)
+    nav.push({ view: state.view, overlay: 'browse-card' });
+    if (browsing) browsing.cards++;
+    tracker.track({ e: 'browse_card', d: state.today });
   }
 
   /** `keep` false (주소·숙소 with no public address, ADR-0103 Amendment 2): for this visit only — nothing saved, the sheet
@@ -1209,6 +1240,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'restay') return openOverlay('stay');
     if (action === 'other-area') return guarded('other-area') ? undefined : toAreas();
     if (action === 'stay-here') return stayHere();
+    if (action === 'browse-card') return openBrowseCard(b.dataset.id);
     if (action === 'feedback-send') return sendFeedback();
     if (action === 'addr-go') return searchAddr();
     if (b.dataset.hit) return guarded('hit') ? undefined : pickHit(Number(b.dataset.hit));
@@ -1313,6 +1345,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
     if (action === 'feedback') return guarded('feedback') ? undefined : openOverlay('feedback');
     if (action === 'culture-more') return guarded('culture-more') ? undefined : openOverlay('culture');
+    if (action === 'browse') return openBrowse();
     if (action === 'map-app') {
       const app = b.dataset.app as MapApp;
       if (MAP_APPS.includes(app) && !guarded(`map-app:${app}`)) setMapApp(app);
@@ -1380,6 +1413,13 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (state.view === 'cards') onChange();
     else if (state.view === 'saved' && !guarded('close-saved')) closeSaved();
   });
+  // 오늘 서울 둘러보기: 길찾기 or 자세히 on a card (sent now: the map app may take the page away)
+  on(els.sheet, 'click', (e) => {
+    const link = (e.target as Element | null)?.closest?.<HTMLElement>('a[data-blink]')?.dataset.blink;
+    if (link !== 'go' && link !== 'more') return;
+    tracker.track({ e: 'browse_link', link, d: state.today });
+    tracker.flush();
+  });
   on(els.sheet, 'click', (e) => {
     const t = e.target as HTMLElement;
     if (t.dataset?.action === 'close') return closeOverlay(); // scrim
@@ -1443,7 +1483,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       closeOverlay();
     } else if (k.key === 'Tab') {
       // Focus stays inside the sheet (inert covers modern browsers; this covers the rest, S58).
-      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"]), textarea')];
+      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"]), textarea')].filter((x) => !x.closest('[inert]'));
       if (!f.length) return;
       const i = f.indexOf(doc.activeElement as HTMLElement);
       if (k.shiftKey && i <= 0) {
@@ -1497,7 +1537,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   // Back in the foreground (maybe the next morning, maybe from the settings app): refresh the date line and
   // what the browser says about location permission.
   on(doc, 'visibilitychange', () => {
-    if (doc.visibilityState !== 'visible') return;
+    if (doc.visibilityState !== 'visible') return endBrowse();
     tick();
     checkPermission();
     askRain(); // an answer may have grown old while the app was in the background

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { aggregate } from '../events/aggregate';
-import { FLOW_IDS, START_IDS, handleEvents } from '../events/handler';
+import { BROWSE_IDS, FLOW_IDS, START_IDS, handleEvents } from '../events/handler';
 import { memoryStore, type CounterStore } from '../events/store';
 import { MAX_EVENTS, parseBatch } from '../events/validate';
 import { addDays } from '../src/dates';
@@ -551,6 +551,68 @@ describe('C3 강원 — 받는 쪽', () => {
     ['a 시군구 code as area', [{ e: 'shown', id: NT, range: '30', basis: 'area', area: '51150', dated: false, dest: 'gangwon', d }]],
     ['dest gangneung', [{ e: 'tap', mood: 'walk', ...base, dest: 'gangneung' }]],
   ])('refuses %s', async (_, body) => {
+    const store = memoryStore();
+    expect((await handle(post(body), store)).status).toBe(400);
+    expect(await store.dump()).toEqual([]);
+  });
+});
+
+// 오늘 서울 둘러보기 (ADR-0114 7): opened, left (seconds in tens, shelves scrolled, cards pressed), a card, a link. No place,
+// no item, no position: each event its own fields only.
+describe('오늘 서울 둘러보기 — 받는 쪽', () => {
+  const sorted = (rows: unknown[]) => [...rows].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  it('counts under browse:*, the ids a fixed list, none a place', async () => {
+    const batch: UsageEvent[] = [
+      { e: 'browse_open', d },
+      { e: 'browse_open', d },
+      { e: 'browse_card', d },
+      { e: 'browse_link', link: 'go', d },
+      { e: 'browse_link', link: 'more', d },
+      { e: 'browse_done', secs: 40, rows: 2, cards: 1, d },
+      { e: 'browse_done', secs: 600, rows: 0, cards: 0, d },
+    ];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+    const store = memoryStore();
+    expect((await handle(post(batch), store)).status).toBe(204);
+    const rows = await store.dump();
+    expect(sorted(rows)).toEqual(
+      sorted([
+        { d, id: 'browse:open', e: 'browse_open', n: 2 },
+        { d, id: 'browse:card', e: 'browse_card', n: 1 },
+        { d, id: 'browse:go', e: 'browse_link', n: 1 },
+        { d, id: 'browse:more', e: 'browse_link', n: 1 },
+        { d, id: 'browse:secs:40', e: 'browse_done', n: 1 },
+        { d, id: 'browse:rows:2', e: 'browse_done', n: 1 },
+        { d, id: 'browse:cards:1', e: 'browse_done', n: 1 },
+        { d, id: 'browse:secs:600', e: 'browse_done', n: 1 },
+        { d, id: 'browse:rows:0', e: 'browse_done', n: 1 },
+        { d, id: 'browse:cards:0', e: 'browse_done', n: 1 },
+      ]),
+    );
+    for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
+    expect(BROWSE_IDS).toHaveLength(4 + 61 + 8 + 3);
+    expect(aggregate(rows)).toEqual([]);
+  });
+
+  it.each([
+    ['an item id on browse_card', [{ e: 'browse_card', id: ID, d }]],
+    ['a src tag on browse_open', [{ e: 'browse_open', id: 'src:hotel-a', d }]],
+    ['context on browse_open', [{ e: 'browse_open', range: '30', d }]],
+    ['dest on browse_open', [{ e: 'browse_open', dest: 'seoul', d }]],
+    ['a position on browse_card', [{ e: 'browse_card', d, lat: 37.57 }]],
+    ['a shelf position on browse_card', [{ e: 'browse_card', d, pos: 3 }]],
+    ['browse_link without a link', [{ e: 'browse_link', d }]],
+    ['browse_link to an unknown link', [{ e: 'browse_link', link: 'book', d }]],
+    ['browse_done without secs', [{ e: 'browse_done', rows: 1, cards: 0, d }]],
+    ['secs not in tens', [{ e: 'browse_done', secs: 45, rows: 1, cards: 0, d }]],
+    ['secs past 600', [{ e: 'browse_done', secs: 610, rows: 1, cards: 0, d }]],
+    ['rows past 7', [{ e: 'browse_done', secs: 40, rows: 8, cards: 0, d }]],
+    ['cards past 2', [{ e: 'browse_done', secs: 40, rows: 1, cards: 3, d }]],
+    ['a fraction of rows', [{ e: 'browse_done', secs: 40, rows: 1.5, cards: 0, d }]],
+    ['secs as a string', [{ e: 'browse_done', secs: '40', rows: 1, cards: 0, d }]],
+    ['secs on another event', [{ e: 'tap', mood: 'walk', ...base, secs: 40 }]],
+    ['link on a map count', [{ e: 'map', id: ID, ...base, link: 'go' }]],
+  ])('refuses %s, and counts nothing', async (_, body) => {
     const store = memoryStore();
     expect((await handle(post(body), store)).status).toBe(400);
     expect(await store.dump()).toEqual([]);
