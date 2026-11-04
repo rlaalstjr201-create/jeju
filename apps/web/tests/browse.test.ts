@@ -1,17 +1,24 @@
-// 오늘 서울 둘러보기 (ADR-0114 2·3): the shelves from the day's list — one shelf per item (the earlier wins), at most 7 × 12,
-// none empty, nothing shut now; the picture and link addresses; 머문 시간 in tens.
+// 오늘 서울 둘러보기 (ADR-0114, ADR-0115): the shelves from the day's list and the curated places — one shelf per item, at
+// most 12, none empty, nothing shut now, the hour's shelves first, 동네 cards; the picture and link addresses; 머문 시간 in fives.
 import { describe, expect, it } from 'vitest';
 import { cultureItems, type CultureItem, type SeoulRow } from '../functions/_lib/culture-filter';
-import { NEAR_KM, PER_SHELF, SHELVES, browseCard, buildShelves, imageUrl, linkUrl, RESIZE, todayTimes } from '../src/browse';
+import { HOOD_MIN, ORDER, PER_SHELF, browseCard, buildShelves, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
 import { openNow, type Now } from '../src/culture';
+import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/fun';
 import { distanceKm } from '../src/pick';
+import { sunsetMinutes } from '../src/sun';
 import { dwellBucket } from '../src/track';
 import rows from './fixtures/seoul-culture-20261104.json';
 
 const DAY = '2026-11-04'; // a Wednesday
 const at = (h: number, m = 0): Now => ({ day: DAY, weekday: 3, minute: h * 60 + m });
-const items = cultureItems(rows as SeoulRow[], DAY);
+const events = cultureItems(rows as SeoulRow[], DAY);
+const fun = funItems(DAY);
+const items = [...events, ...fun];
 const 경복궁 = { lat: 37.5796, lng: 126.977 };
+const 망원 = { lat: 37.5563, lng: 126.9056 };
+const 성수 = { lat: 37.5446, lng: 127.0559 };
+const SUNSET = sunsetMinutes(경복궁, DAY); // about 17:25
 const item = (over: Partial<CultureItem>): CultureItem => ({
   id: 'sc-x',
   title: '전시',
@@ -29,89 +36,135 @@ const item = (over: Partial<CultureItem>): CultureItem => ({
   image: '',
   ...over,
 });
+const place = (over: Partial<FunItem> & { g: FunItem['fun']['g']; word: string; walkin?: boolean }): FunItem => {
+  const { g, word, walkin = true, ...rest } = over;
+  return { ...item({ id: 'kk-1', title: '곳', kind: word, place: `${word} · 망원`, time: '', start: DAY, end: DAY, ...rest }), fun: { g, word, walkin } } as FunItem;
+};
 const ids = (s: ReturnType<typeof buildShelves>) => s.flatMap((x) => x.cards.map((c) => c.item.id));
+// a museum, a memorial, a palace, a historic site (「○○ 터」) — not 씨어터·센터·챕터
+const MUSEUM = /박물관|기념관|역사관|고궁|사적|[^어센챕]터$/;
 
-describe('buildShelves (ADR-0114 2·3)', () => {
-  it('the 11-04 list at 14:00 from 경복궁: shelves in their order, none empty, ≤ 7 × 12, each item once', () => {
-    const shelves = buildShelves(items, at(14), 경복궁);
-    expect(shelves.length).toBeGreaterThan(1);
-    expect(shelves.length).toBeLessThanOrEqual(7);
+describe('the curated places (ADR-0115)', () => {
+  it('ride along with the day: places and 동네, the day\'s own list without them', () => {
+    expect(fun.filter((f) => f.fun.g === 'hood').length).toBe(20);
+    expect(fun.filter((f) => f.fun.g !== 'hood').length).toBeGreaterThan(150);
+    for (const f of fun) expect(isFun(f)).toBe(true);
+    expect(realItems(items)).toEqual(events);
+    for (const f of fun) if (f.fun.g !== 'hood') expect(f.link).toMatch(/^https:\/\/place\.map\.kakao\.com\/\d+$/);
+  });
+  it("a kind's usual hours: a bar in the evening, a market in the day, 찜질방 all night, 야구 in its season", () => {
+    expect(hoursOf('LP바')).toEqual([18 * 60, 26 * 60]);
+    expect(likelyOpen(place({ g: 'G2', word: '포차거리' }), 10 * 60, 0, 11)).toBe(false);
+    expect(likelyOpen(place({ g: 'G2', word: '포차거리' }), 22 * 60, 0, 11)).toBe(true);
+    // past midnight, before its 2:00 close less half an hour
+    expect(likelyOpen(place({ g: 'G2', word: '포차거리' }), 60, 0, 11)).toBe(true);
+    expect(likelyOpen(place({ g: 'G2', word: '전통시장' }), 21 * 60, 0, 11)).toBe(false);
+    expect(likelyOpen(place({ g: 'G5', word: '찜질방' }), 3 * 60, 0, 11)).toBe(true);
+    expect(likelyOpen(place({ g: 'G6', word: '야구장' }), 18 * 60, 0, 11)).toBe(false);
+    expect(likelyOpen(place({ g: 'G6', word: '야구장' }), 18 * 60, 0, 7)).toBe(true);
+    // the time to get there counts
+    expect(likelyOpen(place({ g: 'G5', word: '방탈출' }), 22 * 60, 40, 11)).toBe(false);
+  });
+  it('the hour: late, morning, day, dusk around the sunset, night', () => {
+    expect(bandOf(3 * 60, 1045)).toBe('late');
+    expect(bandOf(9 * 60, 1045)).toBe('morning');
+    expect(bandOf(14 * 60, 1045)).toBe('day');
+    expect(bandOf(1045 - 30, 1045)).toBe('dusk');
+    expect(bandOf(1045 + 30, 1045)).toBe('dusk');
+    expect(bandOf(21 * 60, 1045)).toBe('night');
+  });
+});
+
+describe('buildShelves (ADR-0114 2·3, ADR-0115 6)', () => {
+  it.each([
+    [14, 경복궁],
+    [14, 망원],
+    [14, 성수],
+    [19, 경복궁],
+    [19, 망원],
+    [19, 성수],
+    [22, 경복궁],
+    [22, 망원],
+    [22, 성수],
+  ])('the 11-04 list at %i:00: the hour\'s order, none empty, ≤ 12, each item once, nothing shut, no museum in the first three', (h, o) => {
+    const shelves = buildShelves(items, at(h), o, SUNSET);
     const keys = shelves.map((s) => s.key);
-    expect(keys).toEqual(SHELVES.filter((k) => keys.includes(k)));
+    const rank = ORDER[bandOf(h * 60, SUNSET)];
+    expect(keys).toEqual([...keys].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)));
     for (const s of shelves) {
       expect(s.cards.length).toBeGreaterThan(0);
       expect(s.cards.length).toBeLessThanOrEqual(PER_SHELF);
     }
     const all = ids(shelves);
     expect(new Set(all).size).toBe(all.length);
-    // nothing shut now
-    for (const s of shelves) for (const c of s.cards) expect(openNow(c.item, at(14), undefined, c.trip?.minutes ?? 0)).not.toBe('shut');
+    for (const s of shelves)
+      for (const c of s.cards) {
+        if (isFun(c.item)) {
+          if (c.item.fun.g !== 'hood') expect(likelyOpen(c.item, h * 60, c.trip?.minutes ?? 0, 11)).toBe(true);
+        } else expect(openNow(c.item, at(h), undefined, c.trip?.minutes ?? 0)).not.toBe('shut');
+      }
+    // ADR-0115 성공 기준: four shelves or more besides 전시·박물관; no museum in the first three
+    expect(keys.filter((k) => k !== 'exhibit').length).toBeGreaterThanOrEqual(4);
+    for (const s of shelves.slice(0, 3)) {
+      expect(s.key).not.toBe('exhibit');
+      for (const c of s.cards) expect(c.item.title).not.toMatch(MUSEUM);
+    }
   });
 
-  it('지금 근처: within 3 km, nearest first, with how far; the others each say why now', () => {
-    const near = buildShelves(items, at(14), 경복궁).find((s) => s.key === 'near')!;
-    expect(near).toBeTruthy();
-    const km = near.cards.map((c) => distanceKm(경복궁, c.item));
+  it('the curated shelves: nearest first, with how far; 6 cards or more at 14:00 near the busy 동네', () => {
+    const shelves = buildShelves(items, at(14), 망원, SUNSET);
+    for (const key of ['g4', 'g5', 'g7'] as ShelfKey[]) {
+      const s = shelves.find((x) => x.key === key);
+      if (!s) continue;
+      const km = s.cards.map((c) => distanceKm(망원, c.item));
+      expect(km).toEqual([...km].sort((a, b) => a - b));
+      for (const c of s.cards) expect(c.trip).not.toBeNull();
+    }
+    expect(shelves.find((x) => x.key === 'g7')!.cards.length).toBeGreaterThanOrEqual(6);
+  });
+
+  it('동네: those with ≥ 2 things in them now, nearest first, each with its count', () => {
+    const hoods = buildShelves(items, at(14), 망원, SUNSET).find((s) => s.key === 'hood')!;
+    expect(hoods.cards.length).toBeGreaterThan(0);
+    const km = hoods.cards.map((c) => distanceKm(망원, c.item));
     expect(km).toEqual([...km].sort((a, b) => a - b));
-    for (const k of km) expect(k).toBeLessThanOrEqual(NEAR_KM);
-    for (const c of near.cards) expect(c.trip).not.toBeNull();
+    for (const c of hoods.cards) {
+      expect(c.count).toBeGreaterThanOrEqual(HOOD_MIN);
+      expect(c.count).toBe(inHood(c.item, items, at(14), 망원).length);
+    }
   });
 
-  it('no basis: no 지금 근처 and no distance', () => {
-    const shelves = buildShelves(items, at(14), null);
-    expect(shelves.map((s) => s.key)).not.toContain('near');
-    for (const s of shelves) for (const c of s.cards) expect(c.trip).toBeNull();
+  it('an item takes its own kind\'s shelf; the day\'s list: 무대, 오늘만·이번 주까지, 전시 in that order of taking', () => {
+    const a = item({ id: 'a', kind: '연극', end: DAY, time: '수요일 19:00', lat: 37.5, lng: 127.1 });
+    const b = item({ id: 'b', kind: '전시/미술', end: '2026-11-07', lat: 37.5, lng: 127.1 });
+    const c = item({ id: 'c', kind: '전시/미술', lat: 37.5, lng: 127.1 });
+    const d = place({ id: 'kk-d', g: 'G7', word: '소극장', lat: 37.5, lng: 127.1 });
+    const shelves = buildShelves([c, b, a, d], at(14), 경복궁, SUNSET);
+    expect(Object.fromEntries(shelves.map((s) => [s.key, s.cards.map((x) => x.item.id)]))).toEqual({ g7: ['kk-d'], stage: ['a'], today: ['b'], exhibit: ['c'] });
+    // a curated place's card line is its why
+    expect(shelves.find((s) => s.key === 'g7')!.cards[0].why).toBe('소극장 · 망원');
   });
 
-  it('an item takes the first shelf it fits; a later shelf never shows it again', () => {
-    // a free play ending today, near: 지금 근처 only
-    const a = item({ id: 'a', kind: '연극', end: DAY, free: true, time: '수요일 19:00' });
-    // far, ends today, a free play: 오늘만·오늘까지 only
-    const b = item({ id: 'b', kind: '연극', end: DAY, free: true, time: '수요일 19:00', lat: 37.5, lng: 127.1 });
-    // far, ends Saturday: 이번 주에 끝나요
-    const c = item({ id: 'c', kind: '전시/미술', end: '2026-11-07', lat: 37.5, lng: 127.1 });
-    // far, a month on: 연극·뮤지컬, 라이브·인디, 전시, 무료
-    const d = item({ id: 'd', kind: '뮤지컬/오페라', time: '수요일 19:30', lat: 37.5, lng: 127.1 });
-    const e = item({ id: 'e', kind: '콘서트', time: '수요일 20:00', lat: 37.5, lng: 127.1 });
-    const f = item({ id: 'f', kind: '국악', place: '인디 라이브 클럽', time: '수요일 20:00', lat: 37.5, lng: 127.1 });
-    const g = item({ id: 'g', kind: '전시/미술', lat: 37.5, lng: 127.1 });
-    const h = item({ id: 'h', kind: '클래식', free: true, time: '수요일 19:00', lat: 37.5, lng: 127.1 });
-    // fits no shelf: left out
-    const x = item({ id: 'x', kind: '클래식', time: '수요일 19:00', lat: 37.5, lng: 127.1 });
-    const shelves = buildShelves([x, h, g, f, e, d, c, b, a], at(14), 경복궁);
-    expect(shelves.map((s) => [s.key, s.cards.map((c) => c.item.id)])).toEqual([
-      ['near', ['a']],
-      ['today', ['b']],
-      ['week', ['c']],
-      ['stage', ['d']],
-      ['live', ['f', 'e']], // equal standing and distance: as the list has them
-      ['exhibit', ['g']],
-      ['free', ['h']],
-    ]);
-  });
-
-  it('a show that has started, and a place shut for the day, are left out (openNow shut)', () => {
+  it('a show that has started, a place shut for the day, a bar in the morning: left out', () => {
     const started = item({ id: 's', kind: '연극', time: '수요일 13:00' });
     const closed = item({ id: 'c', time: '10:00~13:00' });
     const later = item({ id: 'l', kind: '연극', time: '수요일 19:30' });
-    const shelves = buildShelves([started, closed, later], at(14), 경복궁);
+    const bar = place({ id: 'kk-b', g: 'G4', word: 'LP바' });
+    const shelves = buildShelves([started, closed, later, bar], at(14), 경복궁, SUNSET);
     expect(ids(shelves)).toEqual(['l']);
     expect(shelves[0].cards[0].why).toBe('19:30 시작');
   });
 
-  it('at most 12 a shelf; one cut by the 12 can still be on a later shelf', () => {
-    const many = Array.from({ length: 15 }, (_, i) => item({ id: `m${i}`, end: DAY, free: true, lat: 37.5, lng: 127.1 }));
-    const shelves = buildShelves(many, at(14), 경복궁);
-    expect(shelves.map((s) => [s.key, s.cards.length])).toEqual([
-      ['today', 12],
-      ['exhibit', 3],
-    ]);
-    expect(new Set(ids(shelves)).size).toBe(15);
+  it('no basis: no distance; 동네 by how much is in them', () => {
+    const shelves = buildShelves(items, at(14), null, SUNSET);
+    for (const s of shelves) for (const c of s.cards) expect(c.trip).toBeNull();
+    const counts = shelves.find((s) => s.key === 'hood')!.cards.map((c) => c.count!);
+    expect(counts).toEqual([...counts].sort((a, b) => b - a));
   });
 
   it('nothing open: no shelves at all', () => {
-    expect(buildShelves([item({ time: '10:00~13:00' })], at(14), 경복궁)).toEqual([]);
-    expect(buildShelves([], at(14), 경복궁)).toEqual([]);
+    expect(buildShelves([item({ time: '10:00~13:00' })], at(14), 경복궁, SUNSET)).toEqual([]);
+    expect(buildShelves([], at(14), 경복궁, SUNSET)).toEqual([]);
   });
 
   it("browseCard: the shelf's why and distance; null when shut", () => {

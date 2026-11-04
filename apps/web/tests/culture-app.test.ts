@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
+import { SHELVES } from '../src/browse';
 import { DEST } from '../src/dest';
 import type { Fetch } from '../src/effects';
 import { normalizeNation } from '../src/nation';
@@ -189,11 +190,12 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     expect(block()!.querySelector('h2')).toBeNull();
   });
 
-  it('an empty list today: no block', async () => {
+  it('an empty list today: the way in alone (the curated places ride along, ADR-0115)', async () => {
     const c = cultureFetch({ day: DAY, items: [] });
     mount(c.f);
     await wait();
-    expect(block()).toBeNull();
+    expect(picks(block()!)).toEqual([]);
+    expect([...block()!.querySelectorAll('button')].map((b) => b.dataset.action)).toEqual(['browse']);
   });
 
   it("another day's list: no block", async () => {
@@ -271,8 +273,9 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
     expect(screen.querySelector('h2')!.textContent).toBe('오늘 서울 둘러보기');
     const shelves = [...screen.querySelectorAll<HTMLElement>('.shelf-row')];
     expect(shelves.length).toBeGreaterThan(1);
-    expect(shelves.length).toBeLessThanOrEqual(7);
-    expect(shelves[0].dataset.shelf).toBe('near');
+    expect(shelves.length).toBeLessThanOrEqual(SHELVES.length);
+    // 14:00 is 낮: 걸어 볼 동네 first (browse.ts ORDER)
+    expect(shelves[0].dataset.shelf).toBe('hood');
     const cards = [...screen.querySelectorAll<HTMLElement>('.bcard')];
     for (const s of shelves) expect(s.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);
     expect(new Set(cards.map((c) => c.dataset.id)).size).toBe(cards.length);

@@ -1,23 +1,34 @@
-// 오늘 서울 둘러보기 (ADR-0114 2·3): the day's list (/api/culture?city=seoul) as themed shelves, each scrolled sideways. Pure:
-// the view (browse-view.ts) and the tests share it. What is shut now (openNow) is left out; an item is in one shelf only,
-// the first that takes it (the same thing on every shelf is what made the cards dull); at most 7 shelves × 12, an empty
-// one not there at all.
+// 오늘 서울 둘러보기 (ADR-0114, ADR-0115): the day's list (/api/culture?city=seoul) and the curated places (fun.ts) as themed
+// shelves, each scrolled sideways, the shelves that suit the hour first (ADR-0115 6). Pure: the view (browse-view.ts) and
+// the tests share it. What is shut now is left out (a show: openNow; a curated place: its kind's usual hours); an item is
+// in one shelf only; at most 12 a shelf, an empty one not there at all.
 import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from './culture';
+import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
 import { distanceKm, type Point } from './pick';
 
-/** The shelves, in the order they are filled and shown (ADR-0114 2). */
-export const SHELVES = ['near', 'today', 'week', 'stage', 'live', 'exhibit', 'free'] as const;
+/** The shelves (ADR-0115 1·6): 동네, the five curated kinds, then the day's own list (무대, 오늘만·이번 주까지, 전시). */
+export const SHELVES = ['hood', 'g1', 'g2', 'g4', 'g5', 'g6', 'g7', 'stage', 'today', 'exhibit'] as const;
 export type ShelfKey = (typeof SHELVES)[number];
+/** Which shelves come first at each hour: what the hour is for leads, the day's exhibitions (교과서 서울) never in the first three. */
+export const ORDER: Record<Band, readonly ShelfKey[]> = {
+  morning: ['g2', 'g1', 'hood', 'g5', 'g4', 'today', 'g7', 'stage', 'g6', 'exhibit'],
+  day: ['hood', 'g4', 'g5', 'g7', 'g1', 'today', 'stage', 'g2', 'g6', 'exhibit'],
+  dusk: ['g1', 'hood', 'stage', 'g7', 'g2', 'g4', 'g5', 'g6', 'today', 'exhibit'],
+  night: ['stage', 'g7', 'g2', 'g1', 'g5', 'hood', 'g4', 'g6', 'today', 'exhibit'],
+  late: ['g5', 'g2', 'g1', 'g7', 'hood', 'stage', 'g4', 'g6', 'today', 'exhibit'],
+};
 export const PER_SHELF = 12;
-/** 지금 근처: as far as the home's own picks reach (culture.ts pickCulture, 홈은 3km 안). */
-export const NEAR_KM = 3;
+/** A 동네 is shown with at least this many things in it now. */
+export const HOOD_MIN = 2;
 
 export interface BrowseCard {
   item: CultureItem;
-  /** why now (culture.ts whyNow): 「19:30 시작」「지금 열림 · 18:00까지」 */
+  /** why now (culture.ts whyNow, 「19:30 시작」); a curated place's card line (「LP바 · 망원」); '' for a 동네 */
   why: string;
   /** with a basis only */
   trip: { walk: boolean; minutes: number } | null;
+  /** a 동네's: what is in it now */
+  count?: number;
 }
 export interface Shelf {
   key: ShelfKey;
@@ -28,17 +39,17 @@ interface Cand extends BrowseCard {
   km: number | null;
 }
 
-const STAGE = /연극|뮤지컬/;
-/** 라이브·인디: a concert, or a show in a small live venue (a club, a live hall) */
-const LIVE_KIND = /콘서트/;
-const LIVE_PLACE = /라이브|클럽|인디|live/i;
 const SHOW = /연극|뮤지컬|콘서트|클래식|국악|무용|오페라|공연/;
+const month = (day: string) => Number(day.slice(5, 7));
 
-/** An item as a card for `now`: why now, and how far with a basis; null when it is shut now (openNow, with the time to get
- * there). */
+/** An item as a card for `now`, or null when it is shut now (with the time to get there). */
 function candOf(item: CultureItem, now: Now, origin: Point | null): Cand | null {
   const km = origin ? distanceKm(origin, item) : null;
   const trip = km === null ? null : seoulMinutes(km);
+  if (isFun(item)) {
+    if (item.fun.g === 'hood') return { item, km, trip, why: '' };
+    return likelyOpen(item, now.minute, trip?.minutes ?? 0, month(now.day)) ? { item, km, trip, why: item.place } : null;
+  }
   const t = parseCultureTime(item.time);
   const state = openNow(item, now, t, trip?.minutes ?? 0);
   return state === 'shut' ? null : { item, km, trip, why: whyNow(item, now, t, state) };
@@ -48,35 +59,52 @@ export function browseCard(item: CultureItem, now: Now, origin: Point | null): B
   const c = candOf(item, now, origin);
   return c && { item, why: c.why, trip: c.trip };
 }
+/** What is in a 동네 now: the curated places likely open and the day's items not shut, within HOOD_KM of its middle. */
+export function inHood(hood: CultureItem, items: readonly CultureItem[], now: Now, origin: Point | null): BrowseCard[] {
+  return items
+    .filter((i) => !(isFun(i) && i.fun.g === 'hood') && distanceKm(hood, i) <= HOOD_KM)
+    .map((i) => candOf(i, now, origin))
+    .filter((c): c is Cand => !!c)
+    .sort((a, b) => distanceKm(hood, a.item) - distanceKm(hood, b.item))
+    .map(({ item, why, trip }) => ({ item, why, trip }));
+}
 
-/** The shelves for `now`, nearest first where there is a basis (`origin`); without one there is no 지금 근처 and no distance. */
-export function buildShelves(items: readonly CultureItem[], now: Now, origin: Point | null): Shelf[] {
+/** The shelves for `now` (`sunset`: minutes after midnight KST, sun.ts), nearest first where there is a basis (`origin`). */
+export function buildShelves(items: readonly CultureItem[], now: Now, origin: Point | null, sunset: number): Shelf[] {
   const cands = items.map((item) => candOf(item, now, origin)).filter((c): c is Cand => !!c);
+  const g = (k: string) => (c: Cand) => isFun(c.item) && c.item.fun.g === k;
   const takes: Record<ShelfKey, (c: Cand) => boolean> = {
-    near: (c) => c.km !== null && c.km <= NEAR_KM,
-    // 오늘만·오늘까지 / 이번 주에 끝나요: nowness 0 / 1 (culture.ts)
-    today: (c) => nowness(c.item, now.day) === 0,
-    week: (c) => nowness(c.item, now.day) === 1,
-    stage: (c) => STAGE.test(c.item.kind),
-    live: (c) => LIVE_KIND.test(c.item.kind) || (SHOW.test(c.item.kind) && LIVE_PLACE.test(c.item.place)),
-    exhibit: (c) => c.item.kind.startsWith('전시'),
-    free: (c) => c.item.free,
+    hood: g('hood'),
+    g1: g('G1'),
+    g2: g('G2'),
+    g4: g('G4'),
+    g5: g('G5'),
+    g6: g('G6'),
+    g7: g('G7'),
+    stage: (c) => !isFun(c.item) && SHOW.test(c.item.kind),
+    today: (c) => !isFun(c.item) && nowness(c.item, now.day) <= 1,
+    exhibit: (c) => !isFun(c.item),
   };
-  // 지금 근처 by distance; the others the clear ones (museums, big stages) first, then the nearer
   const far = (c: Cand) => c.km ?? 0;
-  const order = (key: ShelfKey) => (a: Cand, b: Cand) => (key === 'near' ? far(a) - far(b) : prominence(a.item) - prominence(b.item) || far(a) - far(b));
+  // the day's own: the clear ones (big stages, museums) first, then the nearer; a curated place or a 동네: the nearer first
+  const order = (a: Cand, b: Cand) => (isFun(a.item) ? 0 : prominence(a.item) - prominence(b.item)) || far(a) - far(b) || (a.item.title < b.item.title ? -1 : 1);
   const shown = new Set<string>();
   const out: Shelf[] = [];
+  // filled in SHELVES order (an item takes its own kind's shelf first), shown in the hour's ORDER
   for (const key of SHELVES) {
-    const cards = cands
-      .filter((c) => !shown.has(c.item.id) && takes[key](c))
-      .sort(order(key))
-      .slice(0, PER_SHELF);
-    // only what a shelf shows is taken: one cut by the 12 may still be on a later shelf
+    let cards = cands.filter((c) => !shown.has(c.item.id) && takes[key](c)).sort(order);
+    if (key === 'hood') {
+      cards = cards
+        .map((c) => ({ ...c, count: inHood(c.item, items, now, origin).length }))
+        .filter((c) => c.count >= HOOD_MIN)
+        .sort((a, b) => (origin ? far(a) - far(b) : b.count - a.count));
+    }
+    cards = cards.slice(0, PER_SHELF);
     for (const c of cards) shown.add(c.item.id);
-    if (cards.length) out.push({ key, cards: cards.map(({ item, why, trip }) => ({ item, why, trip })) });
+    if (cards.length) out.push({ key, cards: cards.map(({ item, why, trip, count }) => ({ item, why, trip, ...(count !== undefined ? { count } : {}) })) });
   }
-  return out;
+  const rank = ORDER[bandOf(now.minute, sunset)];
+  return out.sort((a, b) => rank.indexOf(a.key) - rank.indexOf(b.key));
 }
 
 const hhmm = (m: number) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;

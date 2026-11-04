@@ -3,8 +3,13 @@
 // the pictures load from the event and show sites themselves (5), lazily, over https, and a picture that fails becomes a
 // text card. Titles, places, kinds and time words stay as the list gives them (Korean).
 import './browse.css';
-import { browseCard, buildShelves, imageUrl, linkUrl, todayTimes, type BrowseCard, type ShelfKey } from './browse';
+import { browseCard, buildShelves, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type ShelfKey } from './browse';
 import type { CultureItem, Now } from './culture';
+import { isFun } from './fun';
+import { sunsetMinutes } from './sun';
+import type { Day } from './dates';
+
+const CITY_HALL = { lat: 37.5663, lng: 126.9779 };
 import { GO_TEXT, goLink, type MapApp } from './links';
 import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
 import { COPY } from './render';
@@ -13,8 +18,18 @@ import { COPY } from './render';
 export const BROWSE_COPY = {
   /** the way in on 서울's home, and the screen's title */
   open: '오늘 서울 둘러보기',
-  note: '오늘 하는 것만, 지금 갈 수 있는 것만 모았어요.',
-  shelf: { near: '지금 근처', today: '오늘만·오늘까지', week: '이번 주에 끝나요', stage: '연극·뮤지컬', live: '라이브·인디', exhibit: '전시', free: '무료' } satisfies Record<ShelfKey, string>,
+  note: '지금 갈 수 있는 것만, 지금 시간에 맞는 것부터 모았어요.',
+  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·편집숍·LP', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
+  /** a 동네 card: what is in it now */
+  hoodCount: (n: number) => `지금 갈 곳 ${n}`,
+  /** a curated place's sheet: no reservation known */
+  booking: '예약이 필요할 수 있어요',
+  /** a curated place's sheet: hours are not in our data */
+  hours: '영업시간은 카카오맵에서 확인해 주세요',
+  kakao: '카카오맵에서 보기',
+  fromKakao: '장소 정보: 카카오맵',
+  /** the 동네 sheet's heading over its list */
+  inHood: '지금 이 동네에서',
   none: '지금 둘러볼 것이 없어요.',
   /** 오늘 시간 on the card sheet: 「오늘 11:00~18:00」 */
   today: (times: string) => `오늘 ${times}`,
@@ -34,6 +49,12 @@ const tripText = (c: BrowseCard) => (c.trip ? (c.trip.walk ? TRAVEL_TEXT.walk : 
  * kind as a text card. With `later` its address is set only once the box is in view (the screen's watcher): the browser's
  * own lazy loading still asks for dozens of a shelf's hidden cards at once. */
 function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTMLElement {
+  // a curated place or a 동네 has no picture: a short tile in its kind's colour, the name large on it (ADR-0115)
+  if (isFun(it)) {
+    const tile = el(doc, 'span', { class: `btile t-${it.fun.g.toLowerCase()}`, 'aria-hidden': 'true' });
+    tile.append(el(doc, 'span', { class: 'bk' }, it.fun.g === 'hood' ? it.kind : it.place.split(' · ')[0]), el(doc, 'span', { class: 'bt' }, it.title));
+    return tile;
+  }
   const box = el(doc, 'span', { class: 'bpic' });
   const src = imageUrl(it.image);
   box.append(el(doc, 'span', { class: 'balt', 'aria-hidden': 'true' }, it.kind.replace(/\//g, '·')));
@@ -61,7 +82,8 @@ export const scrolledRows = (): number => scrolled.size;
 export function browseScreen(doc: Document, items: readonly CultureItem[], now: Now, origin: { lat: number; lng: number } | null, sources: HTMLElement[]): HTMLElement {
   const box = el(doc, 'section', { class: 'browse', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
   box.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, BROWSE_COPY.open), el(doc, 'p', { class: 'note' }, BROWSE_COPY.note));
-  const shelves = buildShelves(items, now, origin);
+  // the hour's shelves first (ADR-0115 6): the sunset where the basis is, else 서울시청's
+  const shelves = buildShelves(items, now, origin, sunsetMinutes(origin ?? CITY_HALL, now.day as Day));
   // 가로로 넘긴 줄 수 (ADR-0114 7): the shelves scrolled sideways since this screen was built
   scrolled.clear();
   box.addEventListener(
@@ -95,8 +117,10 @@ export function browseScreen(doc: Document, items: readonly CultureItem[], now: 
     const row = el(doc, 'ul', { class: 'shelf-row', 'data-shelf': sh.key });
     for (const c of sh.cards) {
       const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id });
-      b.append(pic(doc, c.item, later), el(doc, 'span', { class: 'nm' }, c.item.title));
-      if (c.why) b.append(el(doc, 'span', { class: 'meta' }, c.why));
+      b.append(pic(doc, c.item, later), el(doc, 'span', { class: isFun(c.item) ? 'nm sr' : 'nm' }, c.item.title));
+      // a curated place's tile says its kind already: under it, the rest of its line (where, or how many shows)
+      const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ').slice(1).join(' · ') || c.why : c.why;
+      if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
       const trip = tripText(c);
       if (trip) b.append(el(doc, 'span', { class: 'meta' }, trip));
       const li = el(doc, 'li');
@@ -115,6 +139,7 @@ export function browseScreen(doc: Document, items: readonly CultureItem[], now: 
 export function browseCardSheet(doc: Document, items: readonly CultureItem[], id: string, now: Now, origin: { lat: number; lng: number } | null, app: MapApp, cast: (names: string) => string, sources: HTMLElement[]): HTMLElement | null {
   const it = items.find((x) => x.id === id);
   if (!it) return null;
+  if (isFun(it) && it.fun.g === 'hood') return hoodSheet(doc, it, items, now, origin, app, sources);
   const layer = el(doc, 'div', { class: 'bc-layer' });
   const sheet = el(doc, 'section', { class: 'sheet bc', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'bc-title' });
   const top = el(doc, 'div', { class: 'bc-top' });
@@ -125,19 +150,51 @@ export function browseCardSheet(doc: Document, items: readonly CultureItem[], id
   // the same card the shelf shows: why now and how far, worked out the same way
   const c = browseCard(it, now, origin);
   const facts = el(doc, 'ul', { class: 'bc-facts' });
-  const times = todayTimes(it, now);
+  const fun = isFun(it) ? it.fun : null;
+  const times = fun ? '' : todayTimes(it, now);
   // 오늘 시간 only when the why line does not already say it (「19:30 시작」 and 「오늘 19:30」 would be the same thing twice)
-  const when = times ? (c?.why.includes(times) ? '' : BROWSE_COPY.today(times)) : it.time;
-  for (const line of [c?.why ?? '', when, it.cast ? cast(it.cast) : '', c ? tripText(c) : '']) if (line) facts.append(el(doc, 'li', {}, line));
+  const when = fun ? '' : times ? (c?.why.includes(times) ? '' : BROWSE_COPY.today(times)) : it.time;
+  // a curated place: its line is under the title already; no hours in our data (fun.ts), so they are pointed to, never said
+  const lines = fun ? [c ? tripText(c) : '', fun.walkin ? '' : BROWSE_COPY.booking, BROWSE_COPY.hours] : [c?.why ?? '', when, it.cast ? cast(it.cast) : '', c ? tripText(c) : ''];
+  for (const line of lines) if (line) facts.append(el(doc, 'li', {}, line));
   sheet.append(facts);
   const acts = el(doc, 'div', { class: 'bc-acts' });
-  const to = { id: it.id, name: it.place || it.title, lat: it.lat, lng: it.lng } as Spot;
+  acts.append(goA(doc, it, c, app, 'primary'));
+  const more = linkUrl(it.link);
+  if (more) acts.append(el(doc, 'a', { class: 'tbtn', href: more, target: '_blank', rel: 'noopener', 'data-blink': 'more' }, fun ? BROWSE_COPY.kakao : BROWSE_COPY.more));
+  sheet.append(acts, ...sources, el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
+  layer.append(el(doc, 'div', { class: 'scrim', 'data-action': 'close' }), sheet);
+  return layer;
+}
+
+/** 길찾기 to an item (on foot when the trip says 걸어서): a curated place by its name, an event by its place. */
+function goA(doc: Document, it: CultureItem, c: BrowseCard | null, app: MapApp, cls: string, label?: string): HTMLElement {
+  const to = { id: it.id, name: isFun(it) ? it.title : it.place || it.title, lat: it.lat, lng: it.lng } as Spot;
   const walk = !!c?.trip?.walk;
   const g = goLink(to, walk ? to : null, walk, false, app);
-  acts.append(el(doc, 'a', { class: 'primary', href: g.href, target: '_blank', rel: 'noopener', 'data-blink': 'go', 'aria-label': COPY.goAria(to.name, g.mode === 'foot', g.app) }, GO_TEXT.go));
-  const more = linkUrl(it.link);
-  if (more) acts.append(el(doc, 'a', { class: 'tbtn', href: more, target: '_blank', rel: 'noopener', 'data-blink': 'more' }, BROWSE_COPY.more));
-  sheet.append(acts, ...sources, el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
+  return el(doc, 'a', { class: cls, href: g.href, target: '_blank', rel: 'noopener', 'data-blink': 'go', 'aria-label': COPY.goAria(to.name, g.mode === 'foot', g.app) }, label ?? GO_TEXT.go);
+}
+
+/** A 동네's sheet (ADR-0115 5): what is in it now, nearest its middle first, each row 길찾기 to that place. */
+function hoodSheet(doc: Document, hood: CultureItem, items: readonly CultureItem[], now: Now, origin: { lat: number; lng: number } | null, app: MapApp, sources: HTMLElement[]): HTMLElement {
+  const layer = el(doc, 'div', { class: 'bc-layer' });
+  const sheet = el(doc, 'section', { class: 'sheet bc', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'bc-title' });
+  const c = browseCard(hood, now, origin);
+  sheet.append(el(doc, 'h2', { id: 'bc-title', tabindex: '-1' }, hood.title));
+  const trip = c ? tripText(c) : '';
+  if (trip) sheet.append(el(doc, 'p', { class: 'bc-place' }, trip));
+  sheet.append(el(doc, 'h3', { class: 'bc-sub' }, BROWSE_COPY.inHood));
+  const list = el(doc, 'ul', { class: 'bc-hood' });
+  const inside = inHood(hood, items, now, origin);
+  for (const x of inside) {
+    const li = el(doc, 'li');
+    const a = goA(doc, x.item, x, app, 'bc-row', '');
+    a.append(el(doc, 'span', { class: 'nm' }, x.item.title));
+    if (x.why) a.append(el(doc, 'span', { class: 'meta' }, x.why));
+    li.append(a);
+    list.append(li);
+  }
+  sheet.append(list, ...sources, el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
   layer.append(el(doc, 'div', { class: 'scrim', 'data-action': 'close' }), sheet);
   return layer;
 }

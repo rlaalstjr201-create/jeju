@@ -1,6 +1,6 @@
 /**
  * 서울 즐길 거리 출하 (criteria-07.md 5·7절). 판정 keep(감사를 통과한 갈래만) → data/seoul/fun-seoul.json. 호출 없음.
- *   node scripts/seoul-fun/ship.mjs [--skip G2,G6]   감사에서 떨어진 갈래는 --skip으로 뺀다
+ *   node scripts/seoul-fun/ship.mjs [--g4] [--skip G2,G6]   판정 08(G4 빼고) + --g4면 판정 09의 G4; 떨어진 갈래는 --skip
  * 카드 문장은 틀로만 만든다: 「<카카오 카테고리 끝 말> · <동네 또는 구>」, KOPIS 공연장은 「라이브 공연장 · 최근 반년 공연 n회」.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -22,15 +22,22 @@ const km = (a, b) => {
   return 6371 * Math.hypot(x, y);
 };
 const out = [];
-for (let i = 1; i <= 21; i++) {
-  for (const j of read(`judge-01/out-${String(i).padStart(2, '0')}.json`)) {
-    if (!j.keep || skip.has(j.g) || j.g === 'G3') continue;
-    const p = cand.get(j.id);
-    const hood = hoods.map((h) => ({ h, d: km(h, p) })).sort((a, b) => a.d - b.d)[0];
-    const where = hood.d * 1000 <= HOOD_M ? hood.h.name : (String(p.address).split(' ')[1] ?? '');
-    const kind = String(p.category).split('>').pop();
-    const line = p.word === 'KOPIS 대중음악' ? `라이브 공연장 · 최근 반년 공연 ${p.shows}회` : `${kind} · ${where}`;
-    out.push({ id: p.id, name: p.name, g: j.g, word: p.word, lat: Math.round(p.lat * 1e5) / 1e5, lng: Math.round(p.lng * 1e5) / 1e5, line, walkin: j.walkin, url: String(p.url).replace(/^http:/, 'https:'), ...(hood.d * 1000 <= HOOD_M ? { hood: hood.h.name } : {}) });
+const seen = new Set();
+/** 판정 08의 keep(G4 빼고, criteria-09.md 0절) + --g4면 판정 09의 keep(감사 09 통과 뒤) */
+const sources = [['judge-08', 21, (j) => j.g !== 'G4'], ...(process.argv.includes('--g4') ? [['judge-09', 7, () => true]] : [])];
+for (const [folder, n, take] of sources) {
+  for (let i = 1; i <= n; i++) {
+    for (const j of read(`${folder}/out-${String(i).padStart(2, '0')}.json`)) {
+      if (!j.keep || !take(j) || skip.has(j.g) || j.g === 'G3' || seen.has(j.id)) continue;
+      seen.add(j.id);
+      const p = cand.get(j.id);
+      const hood = hoods.map((h) => ({ h, d: km(h, p) })).sort((a, b) => a.d - b.d)[0];
+      const near = hood.d * 1000 <= HOOD_M;
+      const where = near ? hood.h.name : (String(p.address).split(' ')[1] ?? '');
+      const kind = String(p.category).split('>').pop().replace(/,/g, '·');
+      const line = p.word === 'KOPIS 대중음악' ? `라이브 공연장 · 최근 반년 공연 ${p.shows}회` : `${kind} · ${where}`;
+      out.push({ id: p.id, name: p.name, g: j.g, word: p.word, lat: Math.round(p.lat * 1e5) / 1e5, lng: Math.round(p.lng * 1e5) / 1e5, line, walkin: j.walkin, url: String(p.url).replace(/^http:/, 'https:'), ...(near ? { hood: hood.h.name } : {}) });
+    }
   }
 }
 out.sort((a, b) => (a.id < b.id ? -1 : 1));

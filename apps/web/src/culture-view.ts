@@ -5,6 +5,7 @@ import { BROWSE_COPY, browseCardSheet, browseScreen } from './browse-view';
 export { scrolledRows } from './browse-view';
 import { WHY_TEXT, pickCulture, type CultureItem, type Now, type Pick } from './culture';
 import type { Fetch } from './effects';
+import { funItems, isFun, realItems } from './fun';
 import { goLink, type MapApp } from './links';
 import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
 import { COPY } from './render';
@@ -48,7 +49,8 @@ export async function fetchCulture(get: Fetch, timeoutMs = 15000): Promise<{ day
     if (res.status !== 200) return null;
     const b = (await res.json()) as { day?: unknown; items?: unknown } | null;
     if (typeof b?.day !== 'string' || !Array.isArray(b.items)) return null;
-    return { day: b.day, items: b.items.filter(okItem) };
+    // the curated places and 동네 (ADR-0115) ride along as the day's items: the card sheet finds them by id like the rest
+    return { day: b.day, items: [...b.items.filter(okItem), ...funItems(b.day)] };
   } catch {
     return null;
   } finally {
@@ -62,7 +64,8 @@ export function picksOf(c: NonNullable<State['culture']>, origin: Origin): { hom
   const key = `${c.day}|${c.minute}|${origin.point.lat},${origin.point.lng}`;
   if (memo?.key === key && memo.items === c.items) return memo.picks;
   const weekday = new Date(`${c.day}T00:00:00Z`).getUTCDay();
-  const picks = pickCulture([...c.items], origin.point, { day: c.day, weekday, minute: c.minute });
+  // the home's picks are the day's own list only (ADR-0112 2), never the curated places
+  const picks = pickCulture(realItems(c.items), origin.point, { day: c.day, weekday, minute: c.minute });
   memo = { key, items: c.items, picks };
   return picks;
 }
@@ -133,18 +136,21 @@ export function sheetBody(doc: Document, panel: HTMLElement, s: State, origin: O
 /** The day's list as of the minute it was read (KST). */
 const nowOf = (c: NonNullable<State['culture']>): Now => ({ day: c.day, weekday: new Date(`${c.day}T00:00:00Z`).getUTCDay(), minute: c.minute });
 /** every item shown is from today's list: the KOPIS line whenever a show is in it */
-const allItems = (c: NonNullable<State['culture']>) => c.items.map((item) => ({ item }));
+const allItems = (c: NonNullable<State['culture']>) => realItems(c.items).map((item) => ({ item }));
 
 /** 오늘 서울 둘러보기 (ADR-0114): the whole screen, distances from the home's point when there is one. */
 export function browseBody(doc: Document, s: State, origin: Origin | null): HTMLElement {
   const c = s.culture!;
-  return browseScreen(doc, c.items, nowOf(c), origin?.point ?? null, sources(doc, allItems(c)));
+  return browseScreen(doc, c.items, nowOf(c), origin?.point ?? null, [...sources(doc, allItems(c)), el(doc, 'p', { class: 'cult-src' }, BROWSE_COPY.fromKakao)]);
 }
 /** A card's sheet over it; null when the item is not in today's list. */
 function browseCard(doc: Document, s: State, origin: Origin | null, id: string): HTMLElement | null {
   const c = s.culture!;
   const it = c.items.find((x) => x.id === id);
-  return browseCardSheet(doc, c.items, id, nowOf(c), origin?.point ?? null, s.mapApp, CULTURE_COPY.cast, sources(doc, it ? [{ item: it }] : []));
+  // the source lines: a curated place's is 카카오맵; a 동네 can hold both
+  const kakao = el(doc, 'p', { class: 'cult-src' }, BROWSE_COPY.fromKakao);
+  const src = !it ? [] : !isFun(it) ? sources(doc, [{ item: it }]) : it.fun.g === 'hood' ? [kakao, ...sources(doc, allItems(c))] : [kakao];
+  return browseCardSheet(doc, c.items, id, nowOf(c), origin?.point ?? null, s.mapApp, CULTURE_COPY.cast, src);
 }
 
 /** The card's sheet on over the screen (which goes inert, focus to the card's title) or off again (focus back to the card
