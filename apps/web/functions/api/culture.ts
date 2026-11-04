@@ -111,7 +111,8 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     if (q.get('day') !== day || !Number.isInteger(n) || n < 1 || n > MAX_PAGES) return new Response('bad page', { status: 400, headers: { 'Cache-Control': 'no-store' } });
     return cached(ctx, `https://culture.cache/seoul/${day}/p${n}`, () => onePage(key, n, day));
   }
-  return cached(ctx, `https://culture.cache/seoul/${day}`, () => wholeDay(ctx.request.url, day, kopisKey || null), 300);
+  // with KOPIS the list is another one (a Seoul-only copy kept from before must not stand in for it until midnight)
+  return cached(ctx, `https://culture.cache/seoul/${day}${kopisKey ? '/shows' : ''}`, () => wholeDay(ctx.request.url, day, kopisKey || null), 300);
 }
 
 /** Page `n` of the city's list (1,000 rows), only the rows on `day`, and the list's total. */
