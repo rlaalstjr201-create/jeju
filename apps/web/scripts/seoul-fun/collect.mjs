@@ -4,6 +4,7 @@
  *
  *   node scripts/seoul-fun/collect.mjs          모자란 검색어만 묻는다(멱등, 끊겨도 같은 명령으로 이어 간다)
  *   node scripts/seoul-fun/collect.mjs --count  받은 수만 센다(호출 없음)
+ *   node scripts/seoul-fun/collect.mjs 02       2차 검색어(queries-02 → kakao-02)
  *
  * 결과: review/seoul-fun/kakao-01/<구>.json (검색어마다 받은 장소: id·이름·카테고리·주소·좌표·place_url만). 호출은 KST 날짜별로
  * review/seoul-fun/kakao-calls.log에 한 줄씩(키·응답 없이) 남기고, 강원·서울 카카오 로그와 합산해 하루 1,200회에서 멈춘다.
@@ -17,8 +18,10 @@ import { env } from '../famous-measure.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const dir = resolve(webRoot, 'review/seoul-fun');
-const outDir = resolve(dir, 'kakao-01');
-const LIMIT = 1200;
+// 회차: 01(queries-01 → kakao-01), 02(queries-02 → kakao-02). 하루 한도는 ADR-0115 Amendment 1(3,000, 강원·서울 로그와 합산)
+const round = process.argv.find((a) => /^0\d$/.test(a)) ?? '01';
+const outDir = resolve(dir, `kakao-${round}`);
+const LIMIT = round === '01' ? 1200 : 3000;
 const PAGES = 3;
 const logPath = resolve(dir, 'kakao-calls.log');
 const otherLogs = ['gangwon', 'seoul'].map((d) => resolve(webRoot, 'review', d, 'kakao-calls.log'));
@@ -26,7 +29,7 @@ const otherLogs = ['gangwon', 'seoul'].map((d) => resolve(webRoot, 'review', d, 
 const read = (p, d) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : d);
 const keep = (d) => ({ id: d.id, name: d.place_name, category: d.category_name, group: d.category_group_code, address: d.road_address_name || d.address_name, lat: Number(d.y), lng: Number(d.x), url: d.place_url });
 
-const Q = read(resolve(dir, 'queries-01.json'));
+const Q = read(resolve(dir, `queries-${round}.json`));
 const jobs = [];
 for (const gu of Q.gu) for (const [g, words] of Object.entries(Q.perGu)) for (const w of words) jobs.push({ file: gu, g, query: `${gu} ${w}` });
 for (const [g, words] of Object.entries(Q.citywide)) for (const w of words) jobs.push({ file: '서울', g, query: `서울 ${w}` });
