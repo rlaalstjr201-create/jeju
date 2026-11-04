@@ -471,7 +471,8 @@ export function mountApp(doc: Document, deps: Deps): App {
       cultureTimer = null;
     }
     if (!NATION || !deps.fetch || s.dest !== 'seoul' || s.view !== 'home' || s.when !== 'now' || !homeOrigin(s)) return;
-    cultureTimer = later(RAIN_RETRY_MS, askCulture);
+    // a second over the retry wait: the timer's ask is not turned away by the wait it was set for
+    cultureTimer = later(RAIN_RETRY_MS + 1000, askCulture);
     const minute = minuteOf(clockNow());
     if (s.culture?.day === s.today) return void (Math.abs(minute - s.culture.minute) >= 5 && dispatch({ type: 'culture', culture: { ...s.culture, minute } }));
     const at = clockNow().getTime();

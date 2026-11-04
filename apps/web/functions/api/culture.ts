@@ -37,14 +37,21 @@ const json = (body: unknown, browserSeconds: number) =>
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${browserSeconds}, s-maxage=${toMidnight(Date.now())}` },
   });
 
-/** The edge copy under `key`, else `make()`'s answer, kept there when it is a 200 (even if the asker has gone, waitUntil). */
-async function cached(ctx: Ctx, key: string, make: () => Promise<Response>): Promise<Response> {
+/** The edge copy under `key`, else `make()`'s answer, kept there when it is a 200 (even if the asker has gone, waitUntil).
+ * `failFor`: a failure is kept that many seconds too (the list's: every app asking again would ask every page again). */
+async function cached(ctx: Ctx, key: string, make: () => Promise<Response>, failFor = 0): Promise<Response> {
   const cache = edge();
   const cacheKey = new Request(key);
   const hit = await cache?.match(cacheKey).catch(() => undefined);
   if (hit) return hit;
   const build = make();
-  const keep = build.then((r) => (r.ok && cache ? cache.put(cacheKey, r.clone()).catch(() => undefined) : undefined));
+  const keep = build.then((r) => {
+    if (!cache) return undefined;
+    if (r.status === 200) return cache.put(cacheKey, r.clone()).catch(() => undefined);
+    if (!failFor) return undefined;
+    const fail = new Response(null, { status: 204, headers: { 'Cache-Control': `max-age=0, s-maxage=${failFor}`, 'X-Culture-Reason': r.headers.get('X-Culture-Reason') ?? '' } });
+    return cache.put(cacheKey, fail).catch(() => undefined);
+  });
   if (ctx.waitUntil) ctx.waitUntil(keep);
   const out = await build;
   if (!ctx.waitUntil) await keep;
@@ -64,7 +71,7 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     if (q.get('day') !== day || !Number.isInteger(n) || n < 1 || n > MAX_PAGES) return new Response('bad page', { status: 400, headers: { 'Cache-Control': 'no-store' } });
     return cached(ctx, `https://culture.cache/seoul/${day}/p${n}`, () => onePage(key, n, day));
   }
-  return cached(ctx, `https://culture.cache/seoul/${day}`, () => wholeDay(ctx.request.url, day));
+  return cached(ctx, `https://culture.cache/seoul/${day}`, () => wholeDay(ctx.request.url, day), 300);
 }
 
 /** Page `n` of the city's list (1,000 rows), only the rows on `day`, and the list's total. */
