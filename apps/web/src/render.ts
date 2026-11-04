@@ -1,6 +1,7 @@
 // render(state) is idempotent: every aria-pressed/aria-current, label, count, card and sheet is derived from
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
+import { showPhotos } from './later';
 import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
 import { DEST, DESTS, destOfId, isSggDest, type Dest, type SggDest } from './dest';
 import { BUSAN, NATION, OPEN_AREAS, culturePart, nationPart, openAreasOf, sggShort } from './release';
@@ -1445,6 +1446,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
         },
         () => {
           els.homeMore.querySelector('.tiles')?.append(...late);
+          // the 시작 화면 may have gone while these tiles were out of the page (start.ts showPhotos missed them)
+          if (!doc.documentElement.classList.contains('yc-start')) showPhotos(doc);
           els.homeMore.append(...tail());
           homeFilled = true;
         },
