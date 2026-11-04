@@ -12,7 +12,8 @@ import { callWithRetry } from '../busan/measure.mjs';
 
 const dir = resolve(dirname(fileURLToPath(import.meta.url)), '../../review/seoul-fun');
 export const K = { 루프탑: 60, 포장마차: 40, 전통시장: 50, LP바: 60, 찜질방: 40, 보드게임카페: 30, 재즈바: 40, 편집샵: 60, 빈티지샵: 40, 레코드샵: 40, 방탈출: 60, 볼링장: 30, 클라이밍: 40, 소극장: 80 };
-export const kw = (name) => String(name).replace(/\s+/g, '').toUpperCase();
+// 한글·영문·숫자만(괄호·기호가 섞이면 keywordstool이 묶음 전체를 거절한다)
+export const kw = (name) => String(name).replace(/[^0-9A-Za-z가-힣]/g, '').toUpperCase();
 const cand = JSON.parse(readFileSync(resolve(dir, 'candidates-01.json'), 'utf8')).places;
 const popPath = resolve(dir, 'pop-01.json');
 
