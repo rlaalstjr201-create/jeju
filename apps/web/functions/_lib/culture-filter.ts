@@ -40,6 +40,8 @@ export interface CultureItem {
   forAll: boolean;
   link: string;
   image: string;
+  /** 출연, the first two names (KOPIS shows only, ADR-0113 4) */
+  cast?: string;
 }
 
 const ENTITY: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", '#39': "'", nbsp: ' ', middot: '·' };
@@ -54,7 +56,7 @@ export const decode = (s: string | undefined) =>
     .trim();
 
 /** 서울 안(넉넉한 상자): 위도·경도가 뒤바뀌었거나 0이면 밖이다. */
-const inSeoul = (lat: number, lng: number) => lat >= 37.41 && lat <= 37.72 && lng >= 126.76 && lng <= 127.19;
+export const inSeoul = (lat: number, lng: number) => lat >= 37.41 && lat <= 37.72 && lng >= 126.76 && lng <= 127.19;
 
 /** 교육/체험: 신청·회차로 들어가는 강좌는 여행자가 지금 갈 수 없다. 야간·투어·현장 체험만 남긴다. */
 const SERIES = /강좌|강의|강연|수업|교실|모집|접수|회차|학급|단체|인문학|아카데미|워크숍|클래스|\d+\s*기|기수|과정|특강|세미나|독서|토론|북클럽|스터디|프로그램 안내|문화프로그램|정기|심화|입문/;
@@ -65,7 +67,7 @@ const FOR_ALL = /누구나|전체|제한\s*없|시민/;
 const ONLINE = /온라인|비대면|zoom|유튜브\s*라이브/i;
 
 export const day10 = (s: string | undefined) => String(s ?? '').slice(0, 10);
-const normTitle = (t: string) => t.replace(/[\s[\]()「」『』<>《》〈〉【】·,.:'"!?~\-]/g, '').toLowerCase();
+export const normTitle = (t: string) => t.replace(/[\s[\]()「」『』<>《》〈〉【】·,.:'"!?~\-]/g, '').toLowerCase();
 
 /** Why a row is left out, or null to keep it. */
 export function dropReason(r: SeoulRow, day: string): string | null {

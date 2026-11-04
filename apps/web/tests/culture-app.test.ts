@@ -108,6 +108,22 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     expect(c.asked()).toHaveLength(1);
   });
 
+  it('a KOPIS show among the picks: its cast after the why line, and the KOPIS source line', async () => {
+    const show = { id: 'kp-PF1', title: '연극 오늘 한 번', kind: '연극', place: '경복궁 앞 소극장', gu: '', lat: 경복궁.lat, lng: 경복궁.lng, start: DAY, end: DAY, time: '수요일 19:00', free: false, forAll: true, link: '', image: '', cast: '김상우·이원우' };
+    mount(cultureFetch({ day: DAY, items: [show, ...items] }).f);
+    await wait();
+    const a = picks(block()).find((x) => x.querySelector('.nm')!.textContent === show.title)!;
+    expect(a).toBeTruthy();
+    expect(a.querySelector('.meta')!.textContent).toBe('오늘만 · 19:00 시작 · 김상우·이원우 출연');
+    expect([...block().querySelectorAll('.cult-src')].map((p) => p.textContent)).toEqual(['정보: 서울시 문화행사(서울 열린데이터광장)', '출처: (재)예술경영지원센터 공연예술통합전산망(KOPIS)']);
+  });
+
+  it('no KOPIS show among the picks: the Seoul source line alone', async () => {
+    mount(cultureFetch({ day: DAY, items }).f);
+    await wait();
+    expect(block().querySelectorAll('.cult-src')).toHaveLength(1);
+  });
+
   it('not 서울 (제주): never asked, no block', async () => {
     const c = cultureFetch({ day: DAY, items });
     mount(c.f, { dest: 'jeju', at: 제주시 });

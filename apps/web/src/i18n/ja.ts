@@ -234,6 +234,8 @@ export const JA: Lang = {
     head: '今日近くでやっていること',
     more: '近くでやっていることをもっと見る',
     from: '情報：ソウル市文化行事（ソウル開かれたデータ広場）',
+    fromShows: '出典：（財）芸術経営支援センター 公演芸術統合電算網（KOPIS）',
+    cast: (names) => `出演：${names}`,
     why: {
       only: '今日のみ',
       today: '今日まで',

@@ -1,4 +1,6 @@
 // /api/culture (ADR-0112 6): the whole Seoul list read a page at a time, kept rows only, a failure is 204.
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { kstDay, onRequestGet } from '../functions/api/culture';
 import rows from './fixtures/seoul-culture-20261104.json';
@@ -72,5 +74,100 @@ describe('/api/culture', () => {
   it('the KST day turns at 15:00 UTC', () => {
     expect(kstDay(Date.parse('2026-11-04T14:59:00Z'))).toBe('2026-11-04');
     expect(kstDay(Date.parse('2026-11-04T15:00:00Z'))).toBe('2026-11-05');
+  });
+});
+
+describe('/api/culture with KOPIS shows (ADR-0113 5)', () => {
+  const dir = resolve(__dirname, 'fixtures/kopis');
+  const list = readFileSync(resolve(dir, 'list.xml'), 'utf8');
+  const details = Object.fromEntries(readdirSync(dir).filter((f) => /^(PF|FC)\d+\.xml$/.test(f)).map((f) => [f.slice(0, -4), readFileSync(resolve(dir, f), 'utf8')]));
+  const shows = Object.keys(details).filter((id) => id.startsWith('PF'));
+  const kreq = (q: string) => ({ request: new Request(`https://yeochana.com/api/culture${q}`), env: { SEOUL_OPEN_API_KEY: 'k', KOPIS_API_KEY: 'kk' } });
+  const BLOCKED = '<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD><BODY><H1>Request Blocked</H1></BODY></HTML>';
+  const xml = (body: string) => new Response(body, { status: 200 });
+  const ok = (path: string) => (path === 'pblprfr' ? xml(list) : details[path.split('/')[1]] ? xml(details[path.split('/')[1]]) : xml('<?xml version="1.0"?><dbs></dbs>'));
+  /** fetch: this function's own calls back to it, the Seoul list (one page), KOPIS (`kopis` answers its paths) */
+  const stub = (kopis: (path: string) => Response) => {
+    const asked: string[] = [];
+    vi.stubGlobal('fetch', async (url: string) => {
+      if (url.startsWith('https://yeochana.com/')) return onRequestGet(kreq(url.slice('https://yeochana.com/api/culture'.length)));
+      if (url.startsWith('http://www.kopis.or.kr/')) {
+        const path = new URL(url).pathname.replace('/openApi/restful/', '');
+        asked.push(path);
+        return kopis(path);
+      }
+      return new Response(JSON.stringify({ culturalEventInfo: { list_total_count: rows.length, row: rows } }), { status: 200 });
+    });
+    return asked;
+  };
+  const at14 = () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-04T05:00:00Z'));
+  };
+
+  it('the Seoul list and the shows merged: KOPIS asked for the list and each detail only, kept until midnight', async () => {
+    at14();
+    const asked = stub(ok);
+    const res = await onRequestGet(kreq('?city=seoul'));
+    expect(res.status).toBe(200);
+    const b = (await res.json()) as { items: { id: string }[]; fromShows?: string };
+    expect(b.items.filter((i) => i.id.startsWith('kp-')).length).toBeGreaterThan(0);
+    expect(b.items.filter((i) => i.id.startsWith('sc-')).length).toBeGreaterThan(80);
+    expect(b.fromShows).toBe('(재)예술경영지원센터 공연예술통합전산망(KOPIS)');
+    expect(asked[0]).toBe('pblprfr');
+    // a venue missing from the table (functions/_lib/kopis-venues.json) is asked too; nothing else
+    expect(asked.slice(1).every((p) => /^(pblprfr\/PF|prfplc\/FC)\d+$/.test(p))).toBe(true);
+    expect(asked.filter((p) => p.startsWith('pblprfr/'))).toHaveLength(shows.length);
+    expect(res.headers.get('Cache-Control')).toMatch(/^public, max-age=300, s-maxage=\d{4,}$/);
+  });
+
+  it('KOPIS failing: the Seoul list alone, kept at the edge 10 minutes only', async () => {
+    at14();
+    stub(() => new Response(BLOCKED, { status: 400 }));
+    const res = await onRequestGet(kreq('?city=seoul'));
+    expect(res.status).toBe(200);
+    const b = (await res.json()) as { items: { id: string }[]; fromShows?: string };
+    expect(b.items.length).toBeGreaterThan(80);
+    expect(b.items.every((i) => i.id.startsWith('sc-'))).toBe(true);
+    expect(b.fromShows).toBeUndefined();
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+  });
+
+  it('a detail blocked part way: what came, kept 10 minutes', async () => {
+    at14();
+    let n = 0;
+    stub((path) => (path === 'pblprfr' || n++ < 1 ? ok(path) : new Response(BLOCKED, { status: 400 })));
+    const res = await onRequestGet(kreq('?city=seoul'));
+    expect(res.status).toBe(200);
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+  });
+
+  it('no KOPIS key: the Seoul list as before, until midnight', async () => {
+    at14();
+    const asked = stub(ok);
+    const res = await onRequestGet(req('?city=seoul'));
+    expect(asked).toEqual([]);
+    expect(res.headers.get('Cache-Control')).toMatch(/s-maxage=\d{4,}$/);
+  });
+
+  it('shows are asked only for today, the list or a few well-formed ids', async () => {
+    at14();
+    stub(ok);
+    const ids = (n: number) => Array.from({ length: n }, (_, i) => `PF${300000 + i}`).join(',');
+    expect((await onRequestGet(kreq('?city=seoul&shows=list&day=2026-11-03'))).status).toBe(400);
+    expect((await onRequestGet(kreq('?city=seoul&shows=list'))).status).toBe(400);
+    expect((await onRequestGet(kreq(`?city=seoul&shows=${ids(16)}&day=2026-11-04`))).status).toBe(400);
+    expect((await onRequestGet(kreq('?city=seoul&shows=PF305348,PF305348&day=2026-11-04'))).status).toBe(400);
+    expect((await onRequestGet(kreq('?city=seoul&shows=../prfplc&day=2026-11-04'))).status).toBe(400);
+    expect((await onRequestGet(kreq('?city=seoul&shows=&day=2026-11-04'))).status).toBe(400);
+    expect((await onRequestGet({ ...kreq('?city=seoul&shows=list&day=2026-11-04'), env: {} })).status).toBe(204);
+    const l = await onRequestGet(kreq('?city=seoul&shows=list&day=2026-11-04'));
+    expect(l.status).toBe(200);
+    expect(((await l.json()) as { ids: string[] }).ids.length).toBeGreaterThan(2);
+    const c = await onRequestGet(kreq(`?city=seoul&shows=${shows.join(',')}&day=2026-11-04`));
+    expect(c.status).toBe(200);
+    const cb = (await c.json()) as { items: { id: string }[]; failed: number };
+    expect(cb.failed).toBe(0);
+    expect(cb.items.length).toBe(shows.length);
   });
 });

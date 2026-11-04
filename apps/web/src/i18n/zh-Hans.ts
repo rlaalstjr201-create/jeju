@@ -229,6 +229,8 @@ export const ZH: Lang = {
     head: '今天附近的活动',
     more: '查看更多附近的活动',
     from: '信息：首尔市文化活动（首尔开放数据广场）',
+    fromShows: '来源：（财）艺术经营支援中心 演出艺术综合电算网（KOPIS）',
+    cast: (names) => `出演：${names}`,
     why: {
       only: '仅限今天',
       today: '今天结束',

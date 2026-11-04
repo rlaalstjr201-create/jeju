@@ -236,6 +236,8 @@ export const EN: Lang = {
     head: 'Happening nearby today',
     more: 'More happening nearby',
     from: 'Info: Seoul cultural events (Seoul Open Data Plaza)',
+    fromShows: 'Source: Korea Arts Management Service, Korea Performing Arts Box Office Information System (KOPIS)',
+    cast: (names) => `With ${names}`,
     why: {
       only: 'Today only',
       today: 'Ends today',

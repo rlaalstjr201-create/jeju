@@ -14,6 +14,10 @@ export const CULTURE_COPY = {
   head: '오늘 근처에서 하는 것',
   more: '근처에서 하는 것 더 보기',
   from: '정보: 서울시 문화행사(서울 열린데이터광장)',
+  /** KOPIS 이용 조건 (ADR-0113 6): shown when a show is among the picks */
+  fromShows: '출처: (재)예술경영지원센터 공연예술통합전산망(KOPIS)',
+  /** 출연 (ADR-0113 4), after the why line: 「김상우·이원우 출연」 */
+  cast: (names: string) => `${names} 출연`,
 };
 export type CultureWords = typeof CULTURE_COPY & { why: typeof WHY_TEXT };
 export function words(w: CultureWords): void {
@@ -77,10 +81,11 @@ function rows(doc: Document, picks: Pick[], app: MapApp): HTMLElement {
     // (`from` only picks the link, it is never put in it)
     const g = goLink(to, p.walk ? to : null, p.walk, false, app);
     const trip = (p.walk ? TRAVEL_TEXT.walk : TRAVEL_TEXT.drive)(undefined, formatMinutes(p.minutes));
-    const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': [it.title, p.why, trip, COPY.goAria(to.name, g.mode === 'foot', g.app)].filter(Boolean).join(', ') });
+    const why = [p.why, it.cast ? CULTURE_COPY.cast(it.cast) : ''].filter(Boolean).join(' · ');
+    const a = el(doc, 'a', { class: 'mk', href: g.href, target: '_blank', rel: 'noopener', 'aria-label': [it.title, why, trip, COPY.goAria(to.name, g.mode === 'foot', g.app)].filter(Boolean).join(', ') });
     const txt = el(doc, 'span', { class: 'txt' });
     txt.append(el(doc, 'span', { class: 'nm' }, it.title));
-    if (p.why) txt.append(el(doc, 'span', { class: 'meta' }, p.why));
+    if (why) txt.append(el(doc, 'span', { class: 'meta' }, why));
     txt.append(el(doc, 'span', { class: 'meta' }, trip));
     a.append(txt);
     const li = el(doc, 'li');
@@ -90,6 +95,12 @@ function rows(doc: Document, picks: Pick[], app: MapApp): HTMLElement {
   return list;
 }
 
+/** The source lines: the Seoul list's, and KOPIS's when a show is among `picks` (ADR-0113 6). */
+const sources = (doc: Document, picks: Pick[]) => [
+  el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.from),
+  ...(picks.some((p) => p.item.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.fromShows)] : []),
+];
+
 /** The home's block: at most 2, 더 보기 when the list has more, and the source. null: nothing near to show. */
 export function homeBlock(doc: Document, s: State, origin: Origin): HTMLElement | null {
   const { home, list } = picksOf(s.culture!, origin);
@@ -97,11 +108,12 @@ export function homeBlock(doc: Document, s: State, origin: Origin): HTMLElement 
   const sec = el(doc, 'section', { id: 'culture', class: 'more-sec', 'aria-labelledby': 'culture-h' });
   sec.append(el(doc, 'h2', { id: 'culture-h' }, CULTURE_COPY.head), rows(doc, home, s.mapApp));
   if (list.length > home.length) sec.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'culture-more' }, CULTURE_COPY.more));
-  sec.append(el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.from));
+  sec.append(...sources(doc, home));
   return sec;
 }
 
 /** The list sheet's body: up to 6, the same rows, and the source. */
 export function sheetBody(doc: Document, panel: HTMLElement, s: State, origin: Origin): void {
-  panel.append(rows(doc, picksOf(s.culture!, origin).list, s.mapApp), el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.from));
+  const { list } = picksOf(s.culture!, origin);
+  panel.append(rows(doc, list, s.mapApp), ...sources(doc, list));
 }
