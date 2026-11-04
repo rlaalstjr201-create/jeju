@@ -124,7 +124,7 @@ describe('지금 열림 (ADR-0112 4, 품질 01 원인 2)', () => {
 
 describe('고르기 (ADR-0112 2·5)', () => {
   const PLACES = { 대학로: { lat: 37.5822, lng: 127.0019 }, 광화문: { lat: 37.5759, lng: 126.9768 }, 성수: { lat: 37.5446, lng: 127.056 } };
-  it('at most 2 for the home and 6 for the list; 같은 종류 둘, 같은 장소 하나; nothing shut', () => {
+  it('at most 2 for the home and 6 for the list; 같은 종류 둘(전시 셋), 같은 장소 하나; nothing shut', () => {
     for (const o of Object.values(PLACES)) {
       for (const now of [at(14), at(19, 30), at(22)]) {
         const { home, list } = pickCulture(items, o, now);
@@ -132,7 +132,7 @@ describe('고르기 (ADR-0112 2·5)', () => {
         expect(list.length).toBeLessThanOrEqual(6);
         const kinds: Record<string, number> = {};
         for (const p of list) kinds[p.item.kind] = (kinds[p.item.kind] ?? 0) + 1;
-        expect(Math.max(0, ...Object.values(kinds))).toBeLessThanOrEqual(2);
+        for (const [k, v] of Object.entries(kinds)) expect(v, k).toBeLessThanOrEqual(k.startsWith('전시') ? 3 : 2);
         expect(new Set(list.map((p) => p.item.place.replace(/\s+/g, ''))).size).toBe(list.length);
         for (const p of list) expect(openNow(p.item, now)).not.toBe('shut');
         for (const p of home) expect(list).toContain(p);

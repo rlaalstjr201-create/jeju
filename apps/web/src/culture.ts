@@ -193,7 +193,8 @@ export interface Pick {
 }
 
 /** 홈 2, 목록 6 (ADR-0112 2·5): open now or later today with time to get there; 3km 안 > 5km 안 (그 밖은 뺌);
- * then 이름난 곳과 지금성, then read time, then 누구나·무료, then distance; 같은 종류 둘·같은 장소 하나. 홈은 3km 안만. */
+ * then 이름난 곳과 지금성(오늘·이번 주 끝남은 더 앞으로), then read time, then 누구나·무료, then distance; 같은 종류 둘(전시 셋)·같은 장소 하나.
+ * 홈은 3km 안만. */
 export function pickCulture(items: CultureItem[], origin: Point, now: Now): { home: Pick[]; list: Pick[] } {
   const ranked = items
     .map((item) => {
@@ -201,7 +202,7 @@ export function pickCulture(items: CultureItem[], origin: Point, now: Now): { ho
       const { walk, minutes } = seoulMinutes(km);
       const t = parseCultureTime(item.time);
       const state = openNow(item, now, t, minutes);
-      return { item, t, state, km, walk, minutes, band: km <= 3 ? 0 : km <= 5 ? 1 : 3, weight: nowness(item, now.day) + 2 * prominence(item) };
+      return { item, t, state, km, walk, minutes, band: km <= 3 ? 0 : km <= 5 ? 1 : 3, weight: nowness(item, now.day) + 2 * prominence(item) - (nowness(item, now.day) <= 1 ? 2 : 0) };
     })
     .filter((c) => c.state !== 'shut' && c.band <= 2)
     .sort(
@@ -218,7 +219,8 @@ export function pickCulture(items: CultureItem[], origin: Point, now: Now): { ho
   for (const c of ranked) {
     if (list.length >= 6) break;
     const place = c.item.place.replace(/\s+/g, '');
-    if ((kinds.get(c.item.kind) ?? 0) >= 2 || places.has(place)) continue;
+    // 같은 종류 둘까지 — 전시는 셋(볼 만한 전시가 몰린 동네에서 잘리지 않게, 품질 02)
+    if ((kinds.get(c.item.kind) ?? 0) >= (c.item.kind.startsWith('전시') ? 3 : 2) || places.has(place)) continue;
     kinds.set(c.item.kind, (kinds.get(c.item.kind) ?? 0) + 1);
     places.add(place);
     list.push({ item: c.item, minutes: c.minutes, walk: c.walk, why: whyNow(c.item, now, c.t, c.state) });
