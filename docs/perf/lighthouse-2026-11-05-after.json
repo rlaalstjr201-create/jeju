@@ -1,0 +1,117 @@
+{
+  "measuredAt": "2026-11-04T23:59:09.965Z",
+  "tool": "npx lighthouse (기본 모바일), 쪽마다 3번, 중앙값",
+  "base": "https://yeochana.com",
+  "rawDir": "C:\\Users\\rlaal\\AppData\\Local\\Temp\\lh-raw-txuMTl",
+  "pages": {
+    "/": {
+      "url": "https://yeochana.com/",
+      "median": {
+        "scores": {
+          "performance": 96,
+          "accessibility": 100,
+          "best-practices": 77,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 1297,
+          "CLS": 0,
+          "TBT": 216,
+          "FCP": 1092,
+          "SI": 1503
+        }
+      },
+      "runs": [
+        {
+          "scores": {
+            "performance": 96,
+            "accessibility": 100,
+            "best-practices": 77,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1147.281,
+            "CLS": 0,
+            "TBT": 215.60899999999992,
+            "FCP": 1105.4415,
+            "SI": 2105.8488020875466
+          }
+        },
+        {
+          "scores": {
+            "performance": 92,
+            "accessibility": 100,
+            "best-practices": 77,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1296.8600000000004,
+            "CLS": 0,
+            "TBT": 343.02400000000034,
+            "FCP": 1085.3360000000002,
+            "SI": 1502.8391760611767
+          }
+        },
+        {
+          "scores": {
+            "performance": 97,
+            "accessibility": 100,
+            "best-practices": 77,
+            "seo": 100
+          },
+          "metrics": {
+            "LCP": 1307.5439999999999,
+            "CLS": 0,
+            "TBT": 199.53500000000008,
+            "FCP": 1091.579,
+            "SI": 1091.579
+          }
+        }
+      ],
+      "topFailing": [
+        {
+          "category": "performance",
+          "id": "total-blocking-time",
+          "score": 0.74,
+          "displayValue": "340 ms"
+        },
+        {
+          "category": "best-practices",
+          "id": "third-party-cookies",
+          "score": 0,
+          "displayValue": "2 cookies found"
+        },
+        {
+          "category": "best-practices",
+          "id": "inspector-issues",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "category": "performance",
+          "id": "render-blocking-insight",
+          "score": 0,
+          "displayValue": "Est savings of 70 ms"
+        },
+        {
+          "category": "performance",
+          "id": "cache-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 17 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "legacy-javascript-insight",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "category": "performance",
+          "id": "unused-javascript",
+          "score": 0.5,
+          "displayValue": "Est savings of 98 KiB"
+        }
+      ]
+    }
+  }
+}
