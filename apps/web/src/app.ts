@@ -9,7 +9,7 @@ import { DEST, destOfId, isDest, isSggDest, type Dest } from './dest';
 import { LocateError, fetchAddr, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, loadBusan, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './release';
+import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, culturePart, loadBusan, loadCulture, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './release';
 import { HOME, createNav } from './nav';
 import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick';
 import { seasonOn, type SeasonKind } from './season';
@@ -345,6 +345,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     countSurvey();
     countShown();
     askRain();
+    askCulture();
     duskTimer();
     keepRow();
   }
@@ -453,6 +454,25 @@ export function mountApp(doc: Document, deps: Deps): App {
       store.writeRain({ v: 1, area, at, rain });
       dispatch({ type: 'rain', area, rain });
     });
+  }
+
+  // --- 오늘 근처에서 하는 것 (ADR-0112): 서울's home, 지금, with a basis — the list asked for once a KST day (no position goes
+  // with it), with its view (a chunk of its own, release.ts loadCulture); nothing is shown after a failure or for another
+  // day. The minute its picks are read at moves on with the draws (5 minutes at a time). ---
+  let cultureDay = '';
+  function askCulture() {
+    const s = state;
+    if (!NATION || !deps.fetch || s.dest !== 'seoul' || s.view !== 'home' || s.when !== 'now' || !homeOrigin(s)) return;
+    const minute = minuteOf(clockNow());
+    if (s.culture?.day === s.today) return void (Math.abs(minute - s.culture.minute) >= 5 && dispatch({ type: 'culture', culture: { ...s.culture, minute } }));
+    if (cultureDay === s.today) return;
+    const day = (cultureDay = s.today);
+    const get = deps.fetch;
+    void loadCulture()
+      .then((ok) => (ok ? culturePart()!.fetchCulture(get) : null))
+      .then((c) => {
+        if (!signal.aborted && c?.day === day && state.today === day) dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
+      });
   }
 
   // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
@@ -890,7 +910,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function hush() {
     quietUntil = Math.max(quietUntil, now() + delays.quiet);
   }
-  function openOverlay(kind: 'basis' | 'stay' | 'move' | 'feedback') {
+  function openOverlay(kind: 'basis' | 'stay' | 'move' | 'feedback' | 'culture') {
     if (state.overlay === kind) return;
     const was = state.overlay;
     stayToken++;
@@ -1278,6 +1298,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       return;
     }
     if (action === 'feedback') return guarded('feedback') ? undefined : openOverlay('feedback');
+    if (action === 'culture-more') return guarded('culture-more') ? undefined : openOverlay('culture');
     if (action === 'map-app') {
       const app = b.dataset.app as MapApp;
       if (MAP_APPS.includes(app) && !guarded(`map-app:${app}`)) setMapApp(app);
@@ -1466,6 +1487,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     tick();
     checkPermission();
     askRain(); // an answer may have grown old while the app was in the background
+    askCulture();
   });
 
   /** A new day in Jeju (the midnight timer, or back in the foreground): the date line, and a chosen day

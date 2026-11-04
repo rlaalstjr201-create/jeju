@@ -250,6 +250,10 @@ main { flex: 1; display: flex; flex-direction: column; }
 .tile { display: block; min-height: 44px; border-radius: var(--r-thumb); }
 .tile img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; margin-bottom: 6px; border-radius: var(--r-thumb); filter: var(--photo); }
 .home-more .credit { margin-top: 40px; }
+/* 오늘 근처에서 하는 것 (ADR-0112): a title on one line; the source under the rows (and 더 보기) */
+.cult .nm { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.cult-src { margin: 8px 0 0; color: var(--muted); }
+#culture .tbtn { white-space: normal; }
 
 /* results / saved list heading */
 .head { display: flex; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 4px; scroll-margin-top: var(--top-h); }

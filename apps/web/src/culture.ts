@@ -168,20 +168,31 @@ export function seoulMinutes(km: number): { walk: boolean; minutes: number } {
   return { walk: false, minutes: Math.round((10 + km * 3) / 5) * 5 };
 }
 
+/** The why line's words (ADR-0093: another language's table replaces them, culture-view.ts words). `until`: the weekday it
+ * ends (0 = Sun); times as 19:30. */
+export const WHY_TEXT = {
+  only: '오늘만',
+  today: '오늘까지',
+  until: (weekday: number) => `${DAY_NAMES[weekday]}요일까지`,
+  openTill: (time: string) => `지금 열림 · ${time}까지`,
+  starts: (time: string) => `${time} 시작`,
+  free: '무료',
+};
+
 /** The one line: why now. */
 export function whyNow(it: CultureItem, now: Now, t: CultureTime | null, state: string): string {
   const parts: string[] = [];
   const left = daysBetween(now.day, it.end);
-  if (it.start === it.end) parts.push('오늘만');
-  else if (left <= 0) parts.push('오늘까지');
-  else if (left <= 6) parts.push(`${DAY_NAMES[(now.weekday + left) % 7]}요일까지`);
+  if (it.start === it.end) parts.push(WHY_TEXT.only);
+  else if (left <= 0) parts.push(WHY_TEXT.today);
+  else if (left <= 6) parts.push(WHY_TEXT.until((now.weekday + left) % 7));
   const today = t?.[now.weekday];
   const show = SHOW.test(it.kind);
   const closes = today?.spans.find(([a, b]) => now.minute >= a && now.minute < b)?.[1];
   const next = [...(today?.starts ?? []), ...(show ? (today?.spans ?? []).map(([a]) => a) : [])].filter((s) => s > now.minute).sort((a, b) => a - b)[0] ?? today?.spans.find(([a]) => a > now.minute)?.[0];
-  if (state === 'open' && closes !== undefined) parts.push(`지금 열림 · ${hhmm(closes)}까지`);
-  else if (state === 'later' && next !== undefined) parts.push(`${hhmm(next)} 시작`);
-  if (it.free) parts.push('무료');
+  if (state === 'open' && closes !== undefined) parts.push(WHY_TEXT.openTill(hhmm(closes)));
+  else if (state === 'later' && next !== undefined) parts.push(WHY_TEXT.starts(hhmm(next)));
+  if (it.free) parts.push(WHY_TEXT.free);
   return parts.join(' · ');
 }
 

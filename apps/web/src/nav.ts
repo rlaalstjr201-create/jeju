@@ -19,7 +19,7 @@ interface Entry extends Route {
   depth: number;
 }
 const VIEWS: readonly View[] = ['home', 'cards', 'saved'];
-const OVERLAYS: readonly Overlay[] = [null, 'basis', 'stay', 'move', 'feedback'];
+const OVERLAYS: readonly Overlay[] = [null, 'basis', 'stay', 'move', 'feedback', 'culture'];
 export const HOME: Route = { view: 'home', overlay: null };
 
 export function readEntry(state: unknown): Entry | null {

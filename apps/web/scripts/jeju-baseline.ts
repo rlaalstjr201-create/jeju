@@ -40,7 +40,8 @@ const BUSAN_CHUNK = /^assets\/busan-part-\*\.js$/;
  * Jeju device asks for none of them: the browser run below still counts its requests. 강원's list (spots-gangwon.json and
  * its 캐시 줄, ADR-0102) goes out with that build and is taken out the same way. */
 const NATION = existsSync(join(DIST, 'nation/index.json'));
-const NATION_CHUNK = /^assets\/(?:nation-part|busan)-\*\.js$/;
+// 오늘 근처에서 하는 것's view (culture-view, ADR-0112 8): its own chunk, for 서울's home only, taken out the same way
+const NATION_CHUNK = /^assets\/(?:nation-part|busan|culture-view)-\*\.js$/;
 const added = (n: string) => (SWITCHED && BUSAN_CHUNK.test(n)) || (NATION && NATION_CHUNK.test(n));
 /** index.html's `<!--nation-->…<!--/nation-->` contents, kept by the 자동 지역 build only (vite.config.ts busanBlock) */
 const NATION_BLOCKS = NATION ? [...readFileSync(join(APP, 'index.html'), 'utf8').matchAll(/<!--nation-->([\s\S]*?)<!--\/nation-->/g)].map((m) => m[1]) : [];

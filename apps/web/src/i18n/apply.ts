@@ -6,8 +6,9 @@ import { DAY_TEXT, type Day } from '../dates';
 import { BOOK_TEXT, GO_TEXT, MAP_APP_NAME, type MapApp } from '../links';
 import { MARKET_TEXT } from '../market';
 import { TRAVEL_TEXT, type Button, type Spot } from '../pick';
+import type { CultureWords } from '../culture-view';
 import type { NationCopy } from '../nation-part';
-import { BUSAN, NATION, OPEN_AREAS, nationPart, whenBusan, whenNation } from '../release';
+import { BUSAN, NATION, OPEN_AREAS, nationPart, whenBusan, whenCulture, whenNation } from '../release';
 import { BUSAN_COPY, COPY, MOOD_LABEL, PLACE } from '../render';
 import { SEASON_TEXT, type SeasonKind } from '../season';
 import { FROM_TEXT } from '../state';
@@ -23,6 +24,8 @@ export interface Lang {
   busan: Words<typeof BUSAN_COPY>;
   /** 자동 지역 (plans/nationwide-app.md 8): its part's words (nation-part.ts NATION_COPY), the 시도 named in this language */
   nation: Words<NationCopy>;
+  /** 오늘 근처에서 하는 것 (ADR-0112): its part's words (culture-view.ts CULTURE_COPY) and the why line's (culture.ts WHY_TEXT) */
+  culture: Words<CultureWords>;
   mood: Record<Button, string>;
   travel: typeof TRAVEL_TEXT;
   day: typeof DAY_TEXT;
@@ -103,6 +106,8 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
   if (BUSAN) whenBusan(name);
   // the 자동 지역's words come with its part (src/release.ts); its 시군구 and places stay Korean, said once (koNames)
   if (NATION) whenNation(() => Object.assign(nationPart()!.copy, w.nation));
+  // 오늘 근처에서 하는 것's come with its part; the titles and places stay Korean
+  if (NATION) whenCulture((p) => p.words(w.culture));
   for (const g of AREA_GROUPS) (g as { heading: string }).heading = w.areaGroups[g.group];
 
   doc.documentElement.lang = lang;

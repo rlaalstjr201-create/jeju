@@ -3,7 +3,7 @@
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
 import { DEST, DESTS, destOfId, isSggDest, type Dest, type SggDest } from './dest';
-import { BUSAN, NATION, OPEN_AREAS, nationPart, openAreasOf, sggShort } from './release';
+import { BUSAN, NATION, OPEN_AREAS, culturePart, nationPart, openAreasOf, sggShort } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
 import { duskNow, homeOrigin, moodExamples, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
@@ -1304,7 +1304,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
     // 밤 (ADR-0091): 「예:」 put 야외 산길 and islands by boat after the others from the sunset to the sunrise
     // 지금 닫힌 곳 (ADR-0111): the half hour, where it decides what is shut
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed, openPhase(s, s.clock)].join('|');
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed, openPhase(s, s.clock)].join('|') + (s.culture ? `|${s.culture.day}|${s.culture.minute}` : '');
   }
 
   /** 지금 여기서 (ADR-0101, specs/home-v2.md 1): the one place the 아무거나 rule would show first, over the moods; not drawn
@@ -1401,6 +1401,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // the sections under 아무거나: 노을 볼 곳 and 오늘 장 서는 곳, then 다른 동네, the credit and 설정
     const sections = (): HTMLElement[] => {
       const nodes: HTMLElement[] = [];
+      // 오늘 근처에서 하는 것 (ADR-0112): 서울, 지금, with a basis, today's list in — first under 아무거나
+      const cult = NATION && s.dest === 'seoul' && !dated && origin && s.culture?.day === s.today ? culturePart()?.homeBlock(doc, s, origin) : null;
+      if (cult) nodes.push(cult);
       if (sunsetOn && origin) nodes.push(sunsetSection(s, sunset, origin));
       if (markets.length) nodes.push(marketSection(s, markets, origin, dated));
       return nodes;
@@ -1627,7 +1630,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const scrim = el(doc, 'div', { class: 'scrim', 'data-action': 'close' });
     const panel = el(doc, 'section', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
     const title =
-      overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : overlay === 'feedback' ? (s.feedbackSent ? COPY.thanks : COPY.feedbackSheet) : COPY.staySheet;
+      overlay === 'basis' ? COPY.basisSheet : overlay === 'move' ? COPY.moveSheet : overlay === 'feedback' ? (s.feedbackSent ? COPY.thanks : COPY.feedbackSheet) : overlay === 'culture' ? (culturePart()?.CULTURE_COPY.head ?? '') : COPY.staySheet;
     panel.append(el(doc, 'h2', { id: 'sheet-title', tabindex: '-1' }, title));
     if (overlay === 'basis') {
       // 여행지 (specs/busan.md 1.4): the sheet's first row, with the switch on — the one in use pressed
@@ -1685,6 +1688,9 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     } else if (overlay === 'feedback') {
       if (s.feedbackSent) panel.append(el(doc, 'p', { class: 'note' }, COPY.thanksNote));
       else feedbackForm(panel);
+    } else if (overlay === 'culture') {
+      const origin = homeOrigin(s);
+      if (origin && s.culture) culturePart()?.sheetBody(doc, panel, s, origin);
     } else {
       panel.append(
         el(doc, 'p', { class: 'note' }, COPY.stayNote),

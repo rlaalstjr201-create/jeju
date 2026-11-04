@@ -231,6 +231,20 @@ export const EN: Lang = {
     sido: { '11': 'Seoul', '27': 'Daegu', '28': 'Incheon', '30': 'Daejeon', '31': 'Ulsan', '36110': 'Sejong', '41': 'Gyeonggi', '43': 'Chungbuk', '44': 'Chungnam', '47': 'Gyeongbuk', '48': 'Gyeongnam', '51': 'Gangwon', '52': 'Jeonbuk', '12': 'Jeonnam·Gwangju' },
     koNames: 'Place names are shown in Korean.',
   },
+  /** 오늘 근처에서 하는 것 (ADR-0112): titles and places stay Korean */
+  culture: {
+    head: 'Happening nearby today',
+    more: 'More happening nearby',
+    from: 'Info: Seoul cultural events (Seoul Open Data Plaza)',
+    why: {
+      only: 'Today only',
+      today: 'Ends today',
+      until: (d) => `Until ${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d]}`,
+      openTill: (t) => `Open now · until ${t}`,
+      starts: (t) => `Starts ${t}`,
+      free: 'Free',
+    },
+  },
   mood: {
     rest: 'Just relax',
     walk: 'Go for a walk',

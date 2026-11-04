@@ -122,6 +122,31 @@ export const sggShort = (sgg: string): string => nation?.short(sgg) ?? '';
 /** The places around a 시군구 (its file and its neighbours'), as the app's places. */
 export const nationSpots = (sgg: string): Promise<unknown> => (nation ? nation.spots(sgg) : Promise.reject(new Error('no part')));
 
+/** 오늘 근처에서 하는 것 (ADR-0112 8): its view and the list's ask, a chunk of its own (ADR-0100), asked for only on 서울's home
+ * (app.ts askCulture), once (again after a failure); false with the switch off or when it could not be loaded. */
+type CulturePart = typeof import('./culture-view');
+let culture: CulturePart | null = null;
+let cultureLoading: Promise<boolean> | null = null;
+const cultureWaiting: ((p: CulturePart) => void)[] = [];
+export function loadCulture(): Promise<boolean> {
+  if (!NATION) return Promise.resolve(false);
+  return (cultureLoading ??= import('./culture-view').then(
+    (m) => {
+      culture = m;
+      for (const fn of cultureWaiting.splice(0)) fn(m);
+      return true;
+    },
+    () => ((cultureLoading = null), false),
+  ));
+}
+/** The culture part once it is in, else null. */
+export const culturePart = () => culture;
+/** `fn` now if the culture part is in, else once it is (another language's words, i18n/apply.ts). */
+export function whenCulture(fn: (p: CulturePart) => void): void {
+  if (culture) fn(culture);
+  else cultureWaiting.push(fn);
+}
+
 /** 강원 (ADR-0102) opens with the 자동 지역's part: its 동네 and where a point is come from that index. */
 export const released = (d: Dest): boolean => (d === 'nation' || isSggDest(d) ? NATION && !!nation : d === 'jeju' || (BUSAN && !!part));
 
