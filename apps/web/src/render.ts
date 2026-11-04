@@ -1204,9 +1204,10 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   let todayText = '';
   let homeDated = false;
   const ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
-  /** `data-id`: a photo that fails is remembered like a card's (app.ts) and the next draw skips it. */
+  /** `data-id`: a photo that fails is remembered like a card's (app.ts) and the next draw skips it. Under the 시작 화면
+   * (.yc-start) nothing of the home shows: its photos are asked for only once it goes (start.ts showPhotos, ADR-0116). */
   const homePhoto = (spot: Spot, lazy: boolean) =>
-    el(doc, 'img', { src: spot.image, alt: '', ...(lazy ? { loading: 'lazy' } : {}), decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': spot.id });
+    el(doc, 'img', { [doc.documentElement.classList.contains('yc-start') ? 'data-later' : 'src']: spot.image!, alt: '', ...(lazy ? { loading: 'lazy' } : {}), decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': spot.id });
 
   function todayRow(row: MarketRow, dated: boolean): HTMLElement {
     // a jump to 오늘 장 서는 곳 below (app.ts scrolls; the address and history stay as they are)

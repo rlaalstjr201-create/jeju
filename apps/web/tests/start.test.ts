@@ -167,6 +167,20 @@ describe('start.ts', () => {
     expect(t.doc.getElementById('ycStart')).toBeNull();
     expect(t.doc.documentElement.classList.contains('yc-start')).toBe(false);
   });
+  it("the home's photos held back under the cover are asked for once it goes (ADR-0116)", async () => {
+    const t = started({ at: 성산, hold: true });
+    const held = t.doc.createElement('img');
+    held.setAttribute('data-later', 'https://example.test/a.jpg');
+    t.doc.body.append(held);
+    expect(held.getAttribute('src')).toBeNull();
+    (t.doc.getElementById('ycGps') as HTMLElement).click();
+    await tick();
+    t.release();
+    await tick();
+    expect(t.doc.documentElement.classList.contains('yc-start')).toBe(false);
+    expect(held.getAttribute('src')).toBe('https://example.test/a.jpg');
+    expect(held.hasAttribute('data-later')).toBe(false);
+  });
   it('M4 granted: read without a press, the cover up all the while; inside → chosen, a failure → the first state, outside → its words', async () => {
     const ok = started({ perm: 'granted', at: 성산, hold: true });
     await tick();

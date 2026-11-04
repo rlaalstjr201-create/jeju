@@ -1,6 +1,7 @@
 // One screen: 5 mood buttons (static HTML, ADR-0028) + basis toggle → 3 cards (spec, plan OQ3·5; design/SPEC.md).
 // Controller only: user intents → reduce(state) → render(state); effects (GPS, data, storage, history)
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
+import { showPhotos } from './later';
 import { AREAS, areaByName, destOfArea, inJeju, type Area, type RegionName, type SggCode } from './areas';
 import { createSpotSource, normalizeSpots, type SpotSource } from './data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
@@ -231,6 +232,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   if (BUSAN && !starting) {
     doc.documentElement.classList.remove('yc-start');
     doc.getElementById('ycStart')?.remove();
+    showPhotos(doc);
   }
   let dest0: Dest = 'jeju';
   // 자동 지역 (plans/nationwide-app.md 1.2): its 시군구 — a link's (`dest=nation&area=<code>`), else the one kept

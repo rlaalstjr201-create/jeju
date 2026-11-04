@@ -6,6 +6,7 @@
 import { areaByName, destOfArea, type Area, type SggCode } from './areas';
 import { isDest, isSggDest, type Dest } from './dest';
 import { locateGps, type GeoDeps } from './effects';
+import { showPhotos } from './later';
 import type { Point } from './pick';
 import { NATION, OPEN_AREAS, loadNation, nationPart, outsideAt, releasedDestOf } from './release';
 import type { NoOrigin, OutsideAt } from './types';
@@ -100,6 +101,7 @@ export function mountStart(doc: Document, deps: StartDeps): StartScreen | null {
     done = true;
     doc.documentElement.classList.remove('yc-start');
     box!.remove();
+    showPhotos(doc);
   }
   function show(next: 'start' | 'locating' | NoOrigin) {
     now = next;
