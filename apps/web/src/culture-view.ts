@@ -104,8 +104,8 @@ function rows(doc: Document, picks: Pick[], app: MapApp): HTMLElement {
 
 /** The source lines: the Seoul list's, and KOPIS's when a show is among `picks` (ADR-0113 6). */
 const sources = (doc: Document, picks: readonly { item: CultureItem }[]) => [
-  el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.from),
-  ...(picks.some((p) => p.item.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.fromShows)] : []),
+  el(doc, 'p', { class: 'cult-src', 'data-src': 'seoul' }, CULTURE_COPY.from),
+  ...(picks.some((p) => p.item.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kopis' }, CULTURE_COPY.fromShows)] : []),
 ];
 
 /** The home's block: at most 2, 더 보기 when the list has more, and the source. With nothing near, 오늘 서울 둘러보기's way in
@@ -148,7 +148,7 @@ function browseCard(doc: Document, s: State, origin: Origin | null, id: string):
   const c = s.culture!;
   const it = c.items.find((x) => x.id === id);
   // the source lines: a curated place's is 카카오맵; a 동네 can hold both
-  const kakao = el(doc, 'p', { class: 'cult-src' }, BROWSE_COPY.fromKakao);
+  const kakao = el(doc, 'p', { class: 'cult-src', 'data-src': 'kakao' }, BROWSE_COPY.fromKakao);
   const src = !it ? [] : !isFun(it) ? sources(doc, [{ item: it }]) : it.fun.g === 'hood' ? [kakao, ...sources(doc, allItems(c))] : [kakao];
   return browseCardSheet(doc, c.items, id, nowOf(c), origin?.point ?? null, s.mapApp, CULTURE_COPY.cast, src);
 }

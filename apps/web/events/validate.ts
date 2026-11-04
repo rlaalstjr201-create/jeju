@@ -74,7 +74,7 @@ export function eventProblem(x: unknown, today?: Day): string | null {
     const more = Object.keys(o).find((k) => !browse.includes(k));
     if (more) return `${more} on ${o.e}`;
     if (o.e === 'browse_link' && !inSet(LINKS, o.link)) return 'link';
-    if (o.e === 'browse_done' && !(whole(o.secs, 600, 5) && whole(o.rows, 7) && whole(o.cards, 2))) return 'browse_done';
+    if (o.e === 'browse_done' && !(whole(o.secs, 600, 5) && whole(o.rows, 10) && whole(o.cards, 2))) return 'browse_done';
     return null;
   }
   if (o.secs !== undefined || o.rows !== undefined || o.cards !== undefined || o.link !== undefined) return `browse fields on ${o.e}`;

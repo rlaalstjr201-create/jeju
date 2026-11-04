@@ -56,7 +56,7 @@ export function browseLines(rows, key) {
     if (median === null && x && seen * 2 >= done) median = s;
   }
   const carded = n('browse:cards:1') + n('browse:cards:2');
-  const rowsLine = Array.from({ length: 8 }, (_, i) => [i, n(`browse:rows:${i}`)]).filter(([, x]) => x).map(([i, x]) => `${i}줄 ${x}`).join(', ');
+  const rowsLine = Array.from({ length: 11 }, (_, i) => [i, n(`browse:rows:${i}`)]).filter(([, x]) => x).map(([i, x]) => `${i}줄 ${x}`).join(', ');
   const pass = done >= 30 && median >= 45 && carded * 10 >= done * 3;
   return [
     `- 열기 ${open}회, 나감 기록 ${done}회`,

@@ -18,6 +18,8 @@ export const ORDER: Record<Band, readonly ShelfKey[]> = {
   late: ['g5', 'g2', 'g1', 'g7', 'hood', 'stage', 'g4', 'g6', 'today', 'exhibit'],
 };
 export const PER_SHELF = 12;
+/** A shelf with fewer cards goes after the full ones (ADR-0115 성공 기준: 줄마다 6장 이상 at the top). */
+export const FULL = 6;
 /** A 동네 is shown with at least this many things in it now. */
 export const HOOD_MIN = 2;
 
@@ -83,7 +85,7 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
     g7: g('G7'),
     stage: (c) => !isFun(c.item) && SHOW.test(c.item.kind),
     today: (c) => !isFun(c.item) && nowness(c.item, now.day) <= 1,
-    exhibit: (c) => !isFun(c.item),
+    exhibit: (c) => !isFun(c.item) && c.item.kind.startsWith('전시'),
   };
   const far = (c: Cand) => c.km ?? 0;
   // the day's own: the clear ones (big stages, museums) first, then the nearer; a curated place or a 동네: the nearer first
@@ -104,7 +106,8 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
     if (cards.length) out.push({ key, cards: cards.map(({ item, why, trip, count }) => ({ item, why, trip, ...(count !== undefined ? { count } : {}) })) });
   }
   const rank = ORDER[bandOf(now.minute, sunset)];
-  return out.sort((a, b) => rank.indexOf(a.key) - rank.indexOf(b.key));
+  const short = (s: Shelf) => (s.cards.length < FULL ? 1 : 0);
+  return out.sort((a, b) => short(a) - short(b) || rank.indexOf(a.key) - rank.indexOf(b.key));
 }
 
 const hhmm = (m: number) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;

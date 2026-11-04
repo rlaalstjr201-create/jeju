@@ -2,7 +2,7 @@
 // most 12, none empty, nothing shut now, the hour's shelves first, 동네 cards; the picture and link addresses; 머문 시간 in fives.
 import { describe, expect, it } from 'vitest';
 import { cultureItems, type CultureItem, type SeoulRow } from '../functions/_lib/culture-filter';
-import { HOOD_MIN, ORDER, PER_SHELF, browseCard, buildShelves, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
+import { FULL, HOOD_MIN, ORDER, PER_SHELF, browseCard, buildShelves, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
 import { openNow, type Now } from '../src/culture';
 import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/fun';
 import { distanceKm } from '../src/pick';
@@ -89,8 +89,15 @@ describe('buildShelves (ADR-0114 2·3, ADR-0115 6)', () => {
   ])('the 11-04 list at %i:00: the hour\'s order, none empty, ≤ 12, each item once, nothing shut, no museum in the first three', (h, o) => {
     const shelves = buildShelves(items, at(h), o, SUNSET);
     const keys = shelves.map((s) => s.key);
+    // full shelves (≥ FULL cards) first, each part in the hour's order
     const rank = ORDER[bandOf(h * 60, SUNSET)];
-    expect(keys).toEqual([...keys].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)));
+    const full = shelves.filter((s) => s.cards.length >= FULL).map((s) => s.key);
+    const short = shelves.filter((s) => s.cards.length < FULL).map((s) => s.key);
+    expect(keys).toEqual([...full, ...short]);
+    expect(full).toEqual([...full].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)));
+    expect(short).toEqual([...short].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)));
+    // ADR-0115 성공 기준 (Amendment 3): four full shelves or more besides 전시·박물관, and they lead
+    expect(full.filter((k) => k !== 'exhibit').length).toBeGreaterThanOrEqual(4);
     for (const s of shelves) {
       expect(s.cards.length).toBeGreaterThan(0);
       expect(s.cards.length).toBeLessThanOrEqual(PER_SHELF);
@@ -103,12 +110,32 @@ describe('buildShelves (ADR-0114 2·3, ADR-0115 6)', () => {
           if (c.item.fun.g !== 'hood') expect(likelyOpen(c.item, h * 60, c.trip?.minutes ?? 0, 11)).toBe(true);
         } else expect(openNow(c.item, at(h), undefined, c.trip?.minutes ?? 0)).not.toBe('shut');
       }
-    // ADR-0115 성공 기준: four shelves or more besides 전시·박물관; no museum in the first three
-    expect(keys.filter((k) => k !== 'exhibit').length).toBeGreaterThanOrEqual(4);
     for (const s of shelves.slice(0, 3)) {
       expect(s.key).not.toBe('exhibit');
       for (const c of s.cards) expect(c.item.title).not.toMatch(MUSEUM);
     }
+  });
+
+  it("the hour's order itself: with every shelf full, the shelves come exactly as ORDER says", () => {
+    const many = (k: string, n: number, over: (i: number) => Partial<CultureItem>) => Array.from({ length: n }, (_, i) => item({ id: `${k}${i}`, lat: 37.58, lng: 126.98, ...over(i) }));
+    const kinds: [FunItem['fun']['g'], string][] = [['G1', '한강공원'], ['G2', '포차거리'], ['G5', '찜질방'], ['G7', '소극장']];
+    const set = [
+      ...kinds.flatMap(([g, word]) => Array.from({ length: 6 }, (_, i) => place({ id: `kk-${g}${i}`, g, word, lat: 37.58, lng: 126.98 }))),
+      ...many('s', 6, () => ({ kind: '연극', time: '수요일 23:00' })),
+      ...many('t', 6, () => ({ kind: '전시/미술', end: DAY, time: '10:00~23:30' })),
+    ];
+    // 22:00 is night: 무대, 라이브, 포차, 한강, 놀거리 … 오늘만 (no 동네·전시 here)
+    expect(buildShelves(set, at(22), null, SUNSET).map((s) => s.key)).toEqual(ORDER.night.filter((k) => ['stage', 'g7', 'g2', 'g1', 'g5', 'today'].includes(k)));
+    expect(ORDER.night.slice(0, 3)).toEqual(['stage', 'g7', 'g2']);
+    expect(ORDER.dusk[0]).toBe('g1');
+    expect(ORDER.late[0]).toBe('g5');
+    for (const band of Object.values(ORDER)) expect(band.indexOf('exhibit')).toBe(band.length - 1);
+  });
+
+  it('찜질방 all night; a bar open past midnight', () => {
+    expect(likelyOpen(place({ g: 'G5', word: '찜질방' }), 23 * 60 + 45, 20, 11)).toBe(true);
+    expect(likelyOpen(place({ g: 'G2', word: '포차거리' }), 23 * 60 + 50, 30, 11)).toBe(true);
+    expect(likelyOpen(place({ g: 'G2', word: '포차거리' }), 60 + 40, 0, 11)).toBe(false);
   });
 
   it('the curated shelves: nearest first, with how far; 6 cards or more at 14:00 near the busy 동네', () => {

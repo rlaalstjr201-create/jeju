@@ -64,8 +64,11 @@ export function hoursOf(word: string): readonly [number, number] {
 export function likelyOpen(it: FunItem, minute: number, travel: number, month: number): boolean {
   if (it.fun.g === 'G6' && (month < 3 || month > 10)) return false;
   const [open, close] = hoursOf(it.fun.word);
+  if (open === 0 && close >= 1440) return true; // all day and night (찜질방)
+  const fits = (t: number) => t >= open && t <= close - 30;
   const at = minute + travel;
-  return (at >= open && at <= close - 30) || (close > 1440 && at + 1440 <= close - 30);
+  // past midnight: the same minute read as late in the evening before (a bar open to 02:00), or as early on the next day
+  return fits(at) || fits(at + 1440) || (at >= 1440 && fits(at - 1440));
 }
 
 /** 지금 시간대 (ADR-0115 6): the sunset ± its hour decides 노을; night after it, late past midnight. */

@@ -590,7 +590,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
-    expect(BROWSE_IDS).toHaveLength(4 + 121 + 8 + 3);
+    expect(BROWSE_IDS).toHaveLength(4 + 121 + 11 + 3);
     expect(aggregate(rows)).toEqual([]);
   });
 
@@ -606,7 +606,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
     ['browse_done without secs', [{ e: 'browse_done', rows: 1, cards: 0, d }]],
     ['secs not in fives', [{ e: 'browse_done', secs: 47, rows: 1, cards: 0, d }]],
     ['secs past 600', [{ e: 'browse_done', secs: 610, rows: 1, cards: 0, d }]],
-    ['rows past 7', [{ e: 'browse_done', secs: 40, rows: 8, cards: 0, d }]],
+    ['rows past 10 (the shelves there are, browse.ts SHELVES)', [{ e: 'browse_done', secs: 40, rows: 11, cards: 0, d }]],
     ['cards past 2', [{ e: 'browse_done', secs: 40, rows: 1, cards: 3, d }]],
     ['a fraction of rows', [{ e: 'browse_done', secs: 40, rows: 1.5, cards: 0, d }]],
     ['secs as a string', [{ e: 'browse_done', secs: '40', rows: 1, cards: 0, d }]],
