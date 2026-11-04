@@ -77,6 +77,8 @@ self.addEventListener('fetch', (event) => {
   if (/^\/jeju(\/|$)/.test(new URL(req.url).pathname)) return;
   // The functions (/api/**: rain ADR-0076, events ADR-0078): network only — a stale forecast must never come from the cache.
   if (new URL(req.url).pathname.startsWith('/api/')) return;
+  // Cloudflare's resized pictures (/cdn-cgi/image/, ADR-0114 Amendment 1): the edge caches them; never kept in the shell cache
+  if (new URL(req.url).pathname.startsWith('/cdn-cgi/')) return;
 
   // Pages: network first so a new deploy shows up; cached shell when offline, failing, or slow.
   if (req.mode === 'navigate') {

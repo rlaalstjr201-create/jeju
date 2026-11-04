@@ -486,7 +486,11 @@ export function mountApp(doc: Document, deps: Deps): App {
       .then((ok) => (ok ? culturePart()!.fetchCulture(get) : null))
       .then((c) => {
         cultureBusy = false;
-        if (!signal.aborted && c?.day === day && state.today === day) dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
+        if (!signal.aborted && c?.day === day && state.today === day) {
+          dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
+          // a card's sheet whose item is not in the new list: back to the screen under it
+          if (state.overlay === 'browse-card' && !c.items.some((i) => i.id === state.browseId)) closeOverlay();
+        }
       });
   }
 
@@ -947,19 +951,21 @@ export function mountApp(doc: Document, deps: Deps): App {
 
   // --- 오늘 서울 둘러보기 (ADR-0114 7): our own collector only (never GA4·네이버), no item, no position ---
   let browsing: { at: number; cards: number } | null = null;
+  /** never under a webdriver, like the first screen's (QA runs must not move the verdict) */
+  const countBrowse = (ev: UsageEvent) => void (nav0?.webdriver || tracker.track(ev));
   function openBrowse() {
     if (state.overlay || state.view !== 'home' || guarded('browse')) return;
     openOverlay('browse');
     if (state.overlay !== 'browse') return;
     browsing = { at: now(), cards: 0 };
-    tracker.track({ e: 'browse_open', d: state.today });
+    countBrowse({ e: 'browse_open', d: state.today });
   }
   /** Left (closed, or the page hidden: a map app opened from it may never bring it back), once per opening. */
   function endBrowse() {
     const b = browsing;
     if (!b) return;
     browsing = null;
-    tracker.track({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: culturePart()?.scrolledRows() ?? 0, cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
+    countBrowse({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: culturePart()?.scrolledRows() ?? 0, cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
     tracker.flush();
   }
   /** A card's sheet over the screen: an entry of its own (back closes the card, then the screen). */
@@ -970,7 +976,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (state.overlay === 'browse') return; // not taken (no list for today)
     nav.push({ view: state.view, overlay: 'browse-card' });
     if (browsing) browsing.cards++;
-    tracker.track({ e: 'browse_card', d: state.today });
+    countBrowse({ e: 'browse_card', d: state.today });
   }
 
   /** `keep` false (주소·숙소 with no public address, ADR-0103 Amendment 2): for this visit only — nothing saved, the sheet
@@ -1417,7 +1423,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   on(els.sheet, 'click', (e) => {
     const link = (e.target as Element | null)?.closest?.<HTMLElement>('a[data-blink]')?.dataset.blink;
     if (link !== 'go' && link !== 'more') return;
-    tracker.track({ e: 'browse_link', link, d: state.today });
+    countBrowse({ e: 'browse_link', link, d: state.today });
     tracker.flush();
   });
   on(els.sheet, 'click', (e) => {
@@ -1483,7 +1489,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       closeOverlay();
     } else if (k.key === 'Tab') {
       // Focus stays inside the sheet (inert covers modern browsers; this covers the rest, S58).
-      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"]), textarea')].filter((x) => !x.closest('[inert]'));
+      const f = [...els.sheet.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"]), textarea, a[href]')].filter((x) => !x.closest('[inert]'));
       if (!f.length) return;
       const i = f.indexOf(doc.activeElement as HTMLElement);
       if (k.shiftKey && i <= 0) {
@@ -1536,6 +1542,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   on(win, 'offline', () => dispatch({ type: 'offline', offline: true }));
   // Back in the foreground (maybe the next morning, maybe from the settings app): refresh the date line and
   // what the browser says about location permission.
+  // an in-app WebView may close with pagehide only (track.ts): the dwell is still sent
+  on(win, 'pagehide', endBrowse);
   on(doc, 'visibilitychange', () => {
     if (doc.visibilityState !== 'visible') return endBrowse();
     tick();

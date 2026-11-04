@@ -178,6 +178,24 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     expect($$('.cult')).toEqual([]);
   });
 
+  it('nothing near now, but a list today: 오늘 서울 둘러보기 alone (Amendment 1)', async () => {
+    const far = { ...items[0], id: 'sc-far', lat: 37.6542, lng: 127.0568, time: '' };
+    const c = cultureFetch({ day: DAY, items: [far] });
+    mount(c.f);
+    await wait();
+    expect(block()).not.toBeNull();
+    expect(picks(block()!)).toEqual([]);
+    expect([...block()!.querySelectorAll('button')].map((b) => b.dataset.action)).toEqual(['browse']);
+    expect(block()!.querySelector('h2')).toBeNull();
+  });
+
+  it('an empty list today: no block', async () => {
+    const c = cultureFetch({ day: DAY, items: [] });
+    mount(c.f);
+    await wait();
+    expect(block()).toBeNull();
+  });
+
   it("another day's list: no block", async () => {
     const c = cultureFetch({ day: '2026-11-03', items });
     mount(c.f);
@@ -260,7 +278,7 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
     expect(new Set(cards.map((c) => c.dataset.id)).size).toBe(cards.length);
     // the show: its poster over https, lazily, no referrer; a picture that fails becomes the text card
     const poster = screen.querySelector<HTMLElement>(`[data-id="${show.id}"] img`)!;
-    expect(poster.getAttribute('src')).toBe('https://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg');
+    expect(poster.getAttribute('src')).toBe('https://yeochana.com/cdn-cgi/image/width=256,quality=75,format=auto/https://kopis.or.kr/upload/pfmPoster/PF_1.jpg');
     expect(poster.getAttribute('loading')).toBe('lazy');
     expect(poster.getAttribute('referrerpolicy')).toBe('no-referrer');
     poster.dispatchEvent(new Event('error'));
@@ -304,8 +322,13 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
       { e: 'browse_open', d: DAY },
       { e: 'browse_card', d: DAY },
       { e: 'browse_link', link: 'go', d: DAY },
-      { e: 'browse_done', secs: 50, rows: 1, cards: 1, d: DAY },
+      { e: 'browse_done', secs: expect.any(Number), rows: 1, cards: 1, d: DAY },
     ]);
+    // 52 s on the clock plus the harness's own settling: in 5-second bins, floored
+    const secs = browse(sent)[3].secs as number;
+    expect(secs % 5).toBe(0);
+    expect(secs).toBeGreaterThanOrEqual(50);
+    expect(secs).toBeLessThanOrEqual(60);
   });
 
   it('a card sheet: 자세히 when the link is http(s), in a new tab; 닫기 back to the screen; Esc closes the screen', async () => {
@@ -339,6 +362,43 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
     await wait();
     expect(current().state().overlay).toBeNull();
     expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_done']);
+  });
+
+  it('pagehide without hidden (an in-app WebView closing): left then, once', async () => {
+    const sent = mountSent();
+    await wait();
+    await tap('#culture [data-action="browse"]');
+    window.dispatchEvent(new Event('pagehide'));
+    await tap('#sheet .browse > .sheet-close');
+    await wait();
+    expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_done']);
+  });
+
+  it('under a webdriver: nothing of it sent (QA runs must not move the verdict)', async () => {
+    Object.defineProperty(navigator, 'webdriver', { value: true, configurable: true });
+    try {
+      const sent = mountSent();
+      await wait();
+      await tap('#culture [data-action="browse"]');
+      await tap('#sheet .bcard');
+      await tap('#sheet .bc .sheet-close');
+      await tap('#sheet .browse > .sheet-close');
+      await wait();
+      expect(browse(sent)).toEqual([]);
+    } finally {
+      Object.defineProperty(navigator, 'webdriver', { value: false, configurable: true });
+    }
+  });
+
+  it('a card sheet: its links are in the Tab loop', async () => {
+    mountSent();
+    await wait();
+    await tap('#culture [data-action="browse"]');
+    await tap(`#sheet .bcard[data-id="${show.id}"]`);
+    // from 닫기 (the last), Tab comes round to 길찾기, not to 닫기 again
+    ($('#sheet .bc .sheet-close') as HTMLElement).focus();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', cancelable: true }));
+    expect(document.activeElement?.getAttribute('data-blink')).toBe('go');
   });
 
   it('기록 끄기: nothing sent', async () => {

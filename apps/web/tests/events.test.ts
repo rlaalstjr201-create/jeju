@@ -568,7 +568,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
       { e: 'browse_card', d },
       { e: 'browse_link', link: 'go', d },
       { e: 'browse_link', link: 'more', d },
-      { e: 'browse_done', secs: 40, rows: 2, cards: 1, d },
+      { e: 'browse_done', secs: 45, rows: 2, cards: 1, d },
       { e: 'browse_done', secs: 600, rows: 0, cards: 0, d },
     ];
     expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
@@ -581,7 +581,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
         { d, id: 'browse:card', e: 'browse_card', n: 1 },
         { d, id: 'browse:go', e: 'browse_link', n: 1 },
         { d, id: 'browse:more', e: 'browse_link', n: 1 },
-        { d, id: 'browse:secs:40', e: 'browse_done', n: 1 },
+        { d, id: 'browse:secs:45', e: 'browse_done', n: 1 },
         { d, id: 'browse:rows:2', e: 'browse_done', n: 1 },
         { d, id: 'browse:cards:1', e: 'browse_done', n: 1 },
         { d, id: 'browse:secs:600', e: 'browse_done', n: 1 },
@@ -590,7 +590,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
-    expect(BROWSE_IDS).toHaveLength(4 + 61 + 8 + 3);
+    expect(BROWSE_IDS).toHaveLength(4 + 121 + 8 + 3);
     expect(aggregate(rows)).toEqual([]);
   });
 
@@ -604,7 +604,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
     ['browse_link without a link', [{ e: 'browse_link', d }]],
     ['browse_link to an unknown link', [{ e: 'browse_link', link: 'book', d }]],
     ['browse_done without secs', [{ e: 'browse_done', rows: 1, cards: 0, d }]],
-    ['secs not in tens', [{ e: 'browse_done', secs: 45, rows: 1, cards: 0, d }]],
+    ['secs not in fives', [{ e: 'browse_done', secs: 47, rows: 1, cards: 0, d }]],
     ['secs past 600', [{ e: 'browse_done', secs: 610, rows: 1, cards: 0, d }]],
     ['rows past 7', [{ e: 'browse_done', secs: 40, rows: 8, cards: 0, d }]],
     ['cards past 2', [{ e: 'browse_done', secs: 40, rows: 1, cards: 3, d }]],

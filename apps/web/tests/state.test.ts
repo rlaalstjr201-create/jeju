@@ -447,3 +447,14 @@ describe('자동 지역 상태', () => {
     expect(homeOrigin(run(s, { type: 'dest', dest: 'jeju', basis: 'gps', region: null, stay: null }))).toBeNull();
   });
 });
+
+describe("오늘 서울 둘러보기's card sheet (ADR-0114 4, review m7)", () => {
+  const day = initialState({ dest: 'seoul', basis: 'gps', today: TODAY, region: null, stay: null, saved: [], hintSeen: false, offline: false }).today;
+  const item = { id: 'sc-a', title: 't', kind: '전시', place: 'p', gu: '', lat: 37.57, lng: 126.98, start: day, end: day, time: '', free: true, forAll: true, link: '', image: '' };
+  const on = (): State => ({ ...initialState({ dest: 'seoul', basis: 'gps', today: TODAY, region: null, stay: null, saved: [], hintSeen: false, offline: false }), culture: { day, items: [item], minute: 600 }, overlay: 'browse' });
+  it('opens only for an item in today\'s list (a forward into a card of an older list is not taken)', () => {
+    expect(reduce(on(), { type: 'browseCard', id: 'sc-a' })).toMatchObject({ overlay: 'browse-card', browseId: 'sc-a' });
+    expect(reduce(on(), { type: 'browseCard', id: 'sc-gone' }).overlay).toBe('browse');
+    expect(reduce({ ...on(), browseId: 'sc-gone' }, { type: 'overlay', overlay: 'browse-card' }).overlay).not.toBe('browse-card');
+  });
+});

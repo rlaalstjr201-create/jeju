@@ -30,9 +30,9 @@ function el(doc: Document, tag: string, attrs: Record<string, string> = {}, text
 
 const tripText = (c: BrowseCard) => (c.trip ? (c.trip.walk ? TRAVEL_TEXT.walk : TRAVEL_TEXT.drive)(undefined, formatMinutes(c.trip.minutes)) : '');
 
-/** The picture box: the poster, or (none, or one that fails) the kind as a text card. With `later` its address is set only once
- * the box is in view (the screen's watcher): KOPIS posters are full size, often 1–2 MB each, and the browser's own lazy
- * loading still asks for dozens of a shelf's hidden cards at once. */
+/** The picture box: the poster resized (browse.ts imageUrl), or (none, or one that fails: never the full-size original) the
+ * kind as a text card. With `later` its address is set only once the box is in view (the screen's watcher): the browser's
+ * own lazy loading still asks for dozens of a shelf's hidden cards at once. */
 function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTMLElement {
   const box = el(doc, 'span', { class: 'bpic' });
   const src = imageUrl(it.image);
@@ -51,6 +51,7 @@ function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTML
   return box;
 }
 
+let watching: IntersectionObserver | undefined;
 const scrolled = new Set<string>();
 /** How many shelves of the screen on show were scrolled sideways (app.ts, when it is left). */
 export const scrolledRows = (): number => scrolled.size;
@@ -84,6 +85,9 @@ export function browseScreen(doc: Document, items: readonly CultureItem[], now: 
           }
         })
       : undefined;
+  // the last screen's watcher lets go of the pictures it never saw: at most one is ever kept
+  watching?.disconnect();
+  watching = later;
   if (!shelves.length) box.append(el(doc, 'p', { class: 'note' }, BROWSE_COPY.none));
   for (const sh of shelves) {
     const sec = el(doc, 'section', { class: 'shelf', 'aria-labelledby': `shelf-${sh.key}` });

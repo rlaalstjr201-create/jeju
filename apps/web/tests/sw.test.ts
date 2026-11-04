@@ -378,6 +378,18 @@ describe('비 소식 (ADR-0076) — 서비스워커는 /api/**를 건드리지 �
   });
 });
 
+describe('오늘 서울 둘러보기 그림 (ADR-0114 Amendment 1) — /cdn-cgi/**는 건드리지 않는다', () => {
+  it('resized pictures go to the network (the edge caches them), never into the shell cache', async () => {
+    const c = fakeCaches();
+    const { source } = buildServiceWorker(base());
+    const res = { ok: true, clone: () => res };
+    const sw = runSw(source, async () => res, c);
+    await sw.install();
+    expect(sw.handles('https://app.test/cdn-cgi/image/width=256,quality=75,format=auto/https://kopis.or.kr/upload/a.jpg')).toBe(false);
+    expect(sw.handles('https://app.test/cdn-cgi-notes.png')).toBe(true);
+  });
+});
+
 describe('PWA 상주 앱 갱신', () => {
   it('main.ts checks for a new deploy when the app comes back to the foreground', () => {
     const main = readFileSync(resolve(root, 'src/main.ts'), 'utf8');

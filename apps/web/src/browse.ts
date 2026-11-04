@@ -87,11 +87,16 @@ export function todayTimes(it: CultureItem, now: Now): string {
   return [...day.spans.map(([a, b]) => `${hhmm(a)}~${hhmm(b)}`), ...day.starts.map(hhmm)].join(', ');
 }
 
-/** A picture's address: https only (an http one is asked for over https; anything else is no picture). */
+/** Cloudflare image resizing on this site's own zone (ADR-0114 Amendment 1): a card is 128px wide, so 256 for a 2× screen. The
+ * originals run to 10 MB (KOPIS posters 2480×3508), far too much for a phone; the resized ones are tens of KB. Always
+ * yeochana.com's, so a preview or localhost shows the same pictures. */
+export const RESIZE = 'https://yeochana.com/cdn-cgi/image/width=256,quality=75,format=auto/';
+/** A picture's address: https only (an http one is asked for over https; anything else is no picture), resized (RESIZE).
+ * KOPIS's www. address only redirects to kopis.or.kr: asked for there at once. */
 export function imageUrl(u: string | undefined): string | null {
-  const s = String(u ?? '').trim().replace(/^http:\/\//i, 'https://');
+  const s = String(u ?? '').trim().replace(/^http:\/\//i, 'https://').replace(/^https:\/\/www\.kopis\.or\.kr\//i, 'https://kopis.or.kr/');
   try {
-    return new URL(s).protocol === 'https:' ? s : null;
+    return new URL(s).protocol === 'https:' ? RESIZE + s : null;
   } catch {
     return null;
   }

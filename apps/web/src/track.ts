@@ -87,8 +87,9 @@ export function ageOf(at: Day | undefined, today: Day): Age | undefined {
   return n <= 0 ? 0 : n === 1 ? 1 : 2;
 }
 
-/** 머문 시간 (ADR-0114 7): milliseconds as seconds in tens, 600 meaning ten minutes or more. */
-export const dwellBucket = (ms: number): number => Math.min(600, Math.max(0, Math.floor(ms / 10_000) * 10));
+/** 머문 시간 (ADR-0114 7, Amendment 1): milliseconds as seconds in fives (the 45-second line falls on a bin's edge), 600
+ * meaning ten minutes or more. */
+export const dwellBucket = (ms: number): number => Math.min(600, Math.max(0, Math.floor(ms / 5_000) * 5));
 
 export const FLUSH_MS = 10_000;
 export const FLUSH_AT = 20;

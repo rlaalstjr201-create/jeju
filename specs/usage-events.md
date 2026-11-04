@@ -15,6 +15,7 @@
 - 좌표·숙소·지역 이름 이외의 위치·식별자 없음. 지역 기준일 때만 `area` 이름 허용(제주 15곳과 부산 12곳).
 - `dest`(`jeju`|`busan`, specs/busan.md 7): 지금 여행지. 출시 스위치를 켠 앱만 맥락(`contextOf`)에 넣는다. 숙소 링크 꼬리표 기록에는 없다. 받는 쪽은 `dest` 없는 옛 앱과 있는 새 앱을 모두 받고, 모르는 값이면 묶음을 통째로 거절한다. D1 카운터 키는 그대로다(장소 id 머리말 `bs-`가 여행지를 말한다). GA4에는 `dest` 매개변수로 간다.
 - 시작 화면(specs/busan.md 7, plans/busan.md 결과 생성 표): `{ e: 'start_view', d }`는 덮개가 1초 넘게 보였을 때 한 번, `{ e: 'start_done', how, why, dest, d }`는 덮개를 떠날 때 `start_view`를 보낸 뒤에만(`how`: `gps`|`pick`, `why`: `denied`|`outside`|`unavailable`|`none`, `dest`: 고른 여행지). 자동화 브라우저(`navigator.webdriver`)는 보내지 않는다. 다른 필드는 받지 않는다. D1 카운터 id는 `start:view`와 `start:<how>:<why>:<dest>`(`events/handler.ts` `START_IDS`, 장소 아님). GA4에는 같은 이름 이벤트로 보조로 간다. 보고서(`analytics:report`) 「시작 화면」 절.
+- 오늘 서울 둘러보기(ADR-0114 7·Amendment 1): `{ e: 'browse_open', d }`는 화면을 열 때, `{ e: 'browse_card', d }`는 카드를 눌러 시트를 열 때, `{ e: 'browse_link', link, d }`는 시트의 길찾기(`go`)·자세히(`more`)를 누를 때, `{ e: 'browse_done', secs, rows, cards, d }`는 화면을 떠날 때(닫기·숨김·pagehide, 연 번마다 한 번) 보낸다. `secs`는 머문 초를 5초 칸으로 내린 값(0–600), `rows`는 가로로 넘긴 줄 수(0–7), `cards`는 누른 카드 수(0–2, 2는 둘 이상). 항목 id·위치·제목은 보내지 않는다. 자동화 브라우저(`navigator.webdriver`)는 보내지 않는다. GA4·네이버로 가지 않는다. D1 카운터 id는 `browse:open`·`browse:card`·`browse:go`|`more`·`browse:secs:<n>`·`browse:rows:<n>`·`browse:cards:<n>`(`events/handler.ts` `BROWSE_IDS`, 장소 아님). 보고서(`analytics:report`) 「오늘 서울 둘러보기」 절.
 
 ## 클라이언트
 

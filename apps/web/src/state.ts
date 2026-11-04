@@ -669,7 +669,7 @@ function step(s: State, a: Action): State {
       // 다른 날로 belongs to a row of the saved list: without one (a forward after a reload) there is none.
       // 오늘 근처에서 하는 것's list and 오늘 서울 둘러보기, the same: none without the day's list (a card's sheet: without its card)
       const cult = a.overlay === 'culture' || a.overlay === 'browse' || a.overlay === 'browse-card';
-      const overlay = (a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved')) || (cult && s.culture?.day !== s.today) || (a.overlay === 'browse-card' && !s.browseId) ? null : a.overlay;
+      const overlay = (a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved')) || (cult && s.culture?.day !== s.today) || (a.overlay === 'browse-card' && !s.culture?.items.some((i) => i.id === s.browseId)) ? null : a.overlay;
       if (overlay === s.overlay) return s;
       return { ...s, overlay, stayForm: { pending: false, error: null }, feedbackSent: false, destPick: false, geo: NO_GEO };
     }

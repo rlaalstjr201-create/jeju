@@ -87,6 +87,21 @@ describe('nav: mount', () => {
     expect(fake.left).toBe(true);
   });
 
+  it("reloaded on 둘러보기's card sheet: both entries over home are consumed, so the next back leaves", () => {
+    const { nav, onRoute } = setup([
+      { jeju: 1, view: 'home', overlay: null, depth: 0 },
+      { jeju: 1, view: 'home', overlay: 'browse', depth: 1 },
+      { jeju: 1, view: 'home', overlay: 'browse-card', depth: 2 },
+    ]);
+    expect(nav.initial).toEqual(HOME);
+    fake.deliverAll();
+    expect(fake.route).toEqual({ ...HOME, depth: 0 });
+    expect(onRoute).not.toHaveBeenCalled();
+    fake.history.back();
+    fake.deliver();
+    expect(fake.left).toBe(true);
+  });
+
   it('a reloaded view entry is kept as it is', () => {
     const { nav } = setup([
       { jeju: 1, view: 'home', overlay: null, depth: 0 },

@@ -105,16 +105,22 @@ const sources = (doc: Document, picks: readonly { item: CultureItem }[]) => [
   ...(picks.some((p) => p.item.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src' }, CULTURE_COPY.fromShows)] : []),
 ];
 
-/** The home's block: at most 2, 더 보기 when the list has more, and the source. null: nothing near to show. */
+/** The home's block: at most 2, 더 보기 when the list has more, and the source. With nothing near, 오늘 서울 둘러보기's way in
+ * alone (ADR-0114 Amendment 1); null when today's list is empty. */
 export function homeBlock(doc: Document, s: State, origin: Origin): HTMLElement | null {
   const { home, list } = picksOf(s.culture!, origin);
-  if (!home.length) return null;
+  const way = el(doc, 'button', { type: 'button', class: 'browse-in', 'data-action': 'browse' }, BROWSE_COPY.open);
+  if (!home.length) {
+    if (!s.culture!.items.length) return null;
+    const alone = el(doc, 'section', { id: 'culture', class: 'more-sec', 'aria-label': BROWSE_COPY.open });
+    alone.append(way);
+    return alone;
+  }
   const sec = el(doc, 'section', { id: 'culture', class: 'more-sec', 'aria-labelledby': 'culture-h' });
   sec.append(el(doc, 'h2', { id: 'culture-h' }, CULTURE_COPY.head), rows(doc, home, s.mapApp));
   if (list.length > home.length) sec.append(el(doc, 'button', { type: 'button', class: 'tbtn', 'data-action': 'culture-more' }, CULTURE_COPY.more));
   // 오늘 서울 둘러보기 (ADR-0114 1): the one way in, under the picks
-  sec.append(el(doc, 'button', { type: 'button', class: 'browse-in', 'data-action': 'browse' }, BROWSE_COPY.open));
-  sec.append(...sources(doc, home));
+  sec.append(way, ...sources(doc, home));
   return sec;
 }
 

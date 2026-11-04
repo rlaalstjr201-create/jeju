@@ -2,7 +2,7 @@
 // none empty, nothing shut now; the picture and link addresses; 머문 시간 in tens.
 import { describe, expect, it } from 'vitest';
 import { cultureItems, type CultureItem, type SeoulRow } from '../functions/_lib/culture-filter';
-import { NEAR_KM, PER_SHELF, SHELVES, browseCard, buildShelves, imageUrl, linkUrl, todayTimes } from '../src/browse';
+import { NEAR_KM, PER_SHELF, SHELVES, browseCard, buildShelves, imageUrl, linkUrl, RESIZE, todayTimes } from '../src/browse';
 import { openNow, type Now } from '../src/culture';
 import { distanceKm } from '../src/pick';
 import { dwellBucket } from '../src/track';
@@ -129,8 +129,11 @@ describe('the card sheet and the addresses (ADR-0114 4·5)', () => {
   });
 
   it('pictures: https only, http asked for over https', () => {
-    expect(imageUrl('http://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg')).toBe('https://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg');
-    expect(imageUrl('https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y')).toBe('https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y');
+    // resized on this site's zone (Amendment 1), KOPIS's www. dropped (it only redirects)
+    expect(RESIZE).toBe('https://yeochana.com/cdn-cgi/image/width=256,quality=75,format=auto/');
+    expect(imageUrl('http://www.kopis.or.kr/upload/pfmPoster/PF_1.jpg')).toBe(`${RESIZE}https://kopis.or.kr/upload/pfmPoster/PF_1.jpg`);
+    expect(imageUrl('https://kopis.or.kr/upload/a.png')).toBe(`${RESIZE}https://kopis.or.kr/upload/a.png`);
+    expect(imageUrl('https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y')).toBe(`${RESIZE}https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=1&thumb=Y`);
     for (const bad of ['', 'javascript:alert(1)', 'data:image/png;base64,AAAA', '//x.kr/a.jpg', 'ftp://x.kr/a.jpg', undefined]) expect(imageUrl(bad), String(bad)).toBeNull();
   });
 
@@ -142,7 +145,8 @@ describe('the card sheet and the addresses (ADR-0114 4·5)', () => {
 });
 
 describe('머문 시간 (ADR-0114 7)', () => {
-  it('in tens of seconds, 600 for ten minutes or more', () => {
-    expect([0, 9_999, 10_000, 44_999, 45_000, 599_999, 600_000, 3_600_000, -5].map(dwellBucket)).toEqual([0, 0, 10, 40, 40, 590, 600, 600, 0]);
+  it('in fives of seconds, 600 for ten minutes or more', () => {
+    // fives (Amendment 1): 45 s is a bin's edge, so the verdict's 45-second line is read exactly
+    expect([0, 4_999, 5_000, 44_999, 45_000, 49_999, 599_999, 600_000, 3_600_000, -5].map(dwellBucket)).toEqual([0, 0, 5, 40, 45, 45, 595, 600, 600, 0]);
   });
 });

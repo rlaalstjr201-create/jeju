@@ -194,6 +194,8 @@ export function createNav(win: Window | null, opts: NavOptions): Nav {
       // Reloaded with a sheet open: consume its entry so the first back isn't a dead press (S18).
       initial = { view: e.view, overlay: null };
       back();
+      // a card's sheet sits on 오늘 서울 둘러보기's own entry: that one too
+      if (e.overlay === 'browse-card') back();
     }
   }
 
