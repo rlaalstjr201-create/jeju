@@ -60,7 +60,7 @@ export function browseLines(rows, key) {
   const pass = done >= 30 && median >= 45 && carded * 10 >= done * 3;
   return [
     `- 열기 ${open}회, 나감 기록 ${done}회`,
-    ...(done ? [`- 머문 시간 중앙값이 든 칸: ${median}~${median === 600 ? '' : median + 4}초`, `- 카드 누름이 있는 나감: ${carded}회 (${pct(carded, done)})`] : []),
+    ...(done ? [`- 머문 시간 중앙값이 든 칸: ${median === 600 ? '600초 이상' : `${median}~${median + 4}초`}`, `- 카드 누름이 있는 나감: ${carded}회 (${pct(carded, done)})`] : []),
     ...(rowsLine ? [`- 가로로 넘긴 줄 수: ${rowsLine}`] : []),
     `- 카드 시트 ${n('browse:card')}회 → 길찾기 ${n('browse:go')}, 자세히 ${n('browse:more')}`,
     done >= 30
