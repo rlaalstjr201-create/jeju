@@ -135,9 +135,10 @@ async function evidence() {
     for (let t = 0; t < 3 && !body; t++) {
       const res = await fetch(`https://openapi.naver.com/v1/search/blog.json?${new URLSearchParams({ query: q, display: '10', sort: 'date' })}`, { headers: { 'X-Naver-Client-Id': id, 'X-Naver-Client-Secret': secret } }).catch(() => null);
       calls++;
-      if (res?.status === 200) body = await res.json();
+      const b = res?.status === 200 ? await res.json().catch(() => null) : null;
+      if (Array.isArray(b?.items)) body = b; // 200 without items (seen once): counts as a failed try (4절)
       else {
-        await res?.body?.cancel();
+        await res?.body?.cancel().catch(() => {});
         await new Promise((s) => setTimeout(s, 1500));
       }
     }
