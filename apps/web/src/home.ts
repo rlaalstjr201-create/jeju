@@ -27,10 +27,10 @@ const ABOVE_FAMOUS: readonly Kind[] = ['rest', 'walk', 'new'];
 /** What the mood's cards would show now, in their order (pool — range, 실내, the day, 밤; the whole island by score without an
  * origin), those with a photo that has not failed: 「예:」's, and 서울 홈's mood shelves (ADR-0117, browse.ts homeShelves). */
 export function moodShelf(s: State, all: Spot[], origin: Origin | null, mood: Kind): Spot[] {
-  const spots = openSpots(s, all);
+  const night = nightHome(s, origin);
+  const spots = openSpots(s, all, night);
   const tab = tabOf(mood, s.sub, s.newSub);
   const day = whenDay(s);
-  const night = nightHome(s, origin);
   const list = origin ? pool(spots, origin.point, mood, tab, s.reach, s.indoor, day, night, minuteNow(s)).map((c) => c.spot) : islandTop(spots, mood, tab, s.indoor, day, night, minuteNow(s));
   return list.filter((x) => x.image && !s.broken.includes(x.id));
 }
@@ -54,7 +54,7 @@ export function moodExamples(s: State, spots: Spot[], origin: Origin | null, moo
 export function nowSpot(s: State, spots: Spot[], origin: Origin | null): Spot | null {
   const shown = (x: Spot) => !!x.image && !s.broken.includes(x.id);
   if (origin) {
-    return pickCards(openSpots(s, spots), origin.point, 'any', {}, undefined, s.reach, s.indoor, whenDay(s), nightHome(s, origin), DEST[s.dest].any, minuteNow(s)).cards.map((c) => c.spot).find(shown) ?? null;
+    return pickCards(openSpots(s, spots, nightHome(s, origin)), origin.point, 'any', {}, undefined, s.reach, s.indoor, whenDay(s), nightHome(s, origin), DEST[s.dest].any, minuteNow(s)).cards.map((c) => c.spot).find(shown) ?? null;
   }
   const tops = DEST[s.dest].any.flatMap((m) => moodExamples(s, spots, origin, m).slice(0, 1));
   return tops.sort((a, b) => b.score - a.score || byId(a.id, b.id))[0] ?? null;

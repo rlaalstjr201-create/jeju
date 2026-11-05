@@ -473,17 +473,19 @@ export function viewingShut(x: Spot, minute: number): boolean {
   }
   return x.mood !== 'food' && (minute < VIEW_HOURS[0] || minute >= VIEW_HOURS[1] - 30);
 }
-const viewCache = new WeakMap<Spot[], { minute: number; list: Spot[] }>();
-/** `spots` without what is shut now by viewingShut: 서울, 지금, the time read; as it is elsewhere. The same list (the same
- * array) while what is shut stays the same. */
-export function openSpots(s: State, spots: Spot[]): Spot[] {
+const viewCache = new WeakMap<Spot[], { at: string; list: Spot[] }>();
+/** `spots` without what is shut now by viewingShut: 서울, 지금, the time read; as it is elsewhere. At `night` (after the sunset at
+ * the basis, before the sunrise: ADR-0091) 서울's 야외 산행지 (Spot.trail, Amendment 9) are out too, not put after the rest.
+ * The same list (the same array) while what is out stays the same. */
+export function openSpots(s: State, spots: Spot[], night: boolean): Spot[] {
   const m = s.clock;
   if (s.dest !== 'seoul' || s.when !== 'now' || m === null) return spots;
+  const at = `${m}|${night}`;
   const hit = viewCache.get(spots);
-  if (hit?.minute === m) return hit.list;
-  const fresh = spots.filter((x) => !viewingShut(x, m));
+  if (hit?.at === at) return hit.list;
+  const fresh = spots.filter((x) => !viewingShut(x, m) && !(night && x.trail));
   const list = hit && hit.list.length === fresh.length && hit.list.every((x, i) => x === fresh[i]) ? hit.list : fresh;
-  viewCache.set(spots, { minute: m, list });
+  viewCache.set(spots, { at, list });
   return list;
 }
 
@@ -572,8 +574,11 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   const seq = s.seq + 1;
   const ids = shown[key];
   // 뺀 곳 (ADR-0087) are out from this pick on: three brought back with one of them in are picked anew
-  // 서울's viewing places outside their usual hours (Amendment 4) are out too
-  const from = openSpots(s, pickSpots(spots, s.visited));
+  // 서울's viewing places outside their usual hours (Amendment 4) are out too, and its 산행지 at night (Amendment 9)
+  // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 and islands by boat
+  // (Amendment 1) go after the rest.
+  const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
+  const from = openSpots(s, pickSpots(spots, s.visited), night);
   const restored = intent === 'show' && ids && !s.pin ? cardsFor(from, ids, origin.point) : null;
   if (restored) {
     // Exactly what is already on screen (same 3, same point): keep it as is, so nothing is rebuilt.
@@ -601,9 +606,6 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
     };
   }
   // 오일장 (ADR-0066): the day being viewed (지금 = today) decides which markets open and which are closed.
-  // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 and islands by boat
-  // (Amendment 1) go after the rest.
-  const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
   const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any, minuteNow(s));
   // a shelf card pressed (ADR-0117 Amendment 1): that place first, then the picks' others; one the pin put out is not seen
   const pinned = s.pin ? cardsFor(from, [s.pin], origin.point) : null;

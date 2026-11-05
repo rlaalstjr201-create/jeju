@@ -5,6 +5,8 @@
  *   node scripts/seoul-hours/hours.mjs sample   review/seoul-hours/out/batch-NN.json → audit-01-input.json(라벨 없음) + audit-01-key.json
  *   node scripts/seoul-hours/hours.mjs apply    review/seoul-hours/out/batch-NN.json → data/seoul/spots-seoul.json 각 곳의 `opening`
  *                                               (§8, ADR-0117 Amendment 7 — 서울 목록을 다시 만들면 다시 돌린다)
+ *   node scripts/seoul-hours/hours.mjs trail    data/seoul/spots-seoul.json의 야외 산행지 → review/seoul-hours/trail-01.json + 각 곳의 `trail`
+ *                                               (ADR-0117 Amendment 9 — 이름 규칙, 서울 목록을 다시 만들면 다시 돌린다)
  */
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -153,11 +155,37 @@ function apply() {
   console.log(`서울 ${all.length}곳 중 ${n}곳에 영업 유형`);
 }
 
+/** 야외 산행지 (ADR-0117 Amendment 9): 먹기 아닌 곳 가운데 이름에 산·봉우리·봉수대·계곡이 있거나 산을 지나는 둘레길 코스인 곳.
+ * 공원·정원·폭포·성지·캠핑장·전시관, 도심 산책로인 남산(목멱산)·낙산·○○동산, 강·공원을 지나는 서울둘레길 코스(8·14·15)는 아니다. */
+export const TRAIL = /[가-힣]+산(?:$|[\s(]|성|코스)|봉$|봉수대|백운대|계곡|서울둘레길|북한산 둘레길|북악하늘길|산림형코스/;
+export const NOT_TRAIL = /공원|정원$|폭포|성지|캠핑장|전시관|^남산|목멱산|낙산|동산|장지·탄천코스|안양천 하류코스|노을·하늘공원코스/;
+export const isTrail = (x) => x.mood !== 'food' && TRAIL.test(x.name) && !NOT_TRAIL.test(x.name);
+
+function trail() {
+  const all = JSON.parse(readFileSync(SRC, 'utf8'));
+  const items = [];
+  for (const x of all) {
+    delete x.trail;
+    if (!isTrail(x)) continue;
+    x.trail = true;
+    items.push({ id: x.id, name: x.name, area: x.area, mood: x.mood });
+  }
+  writeJson(resolve(dir, 'trail-01.json'), {
+    adr: 'docs/adr/0117-seoul-home-shelves.md Amendment 9',
+    rule: { trail: TRAIL.source, notTrail: NOT_TRAIL.source, food: 'never' },
+    n: items.length,
+    items,
+  });
+  writeFileSync(SRC, JSON.stringify(all));
+  console.log(`서울 ${all.length}곳 중 야외 산행지 ${items.length}곳`);
+}
+
 const cmd = process.argv[2];
 if (cmd === 'prep') prep();
 else if (cmd === 'sample') sample();
 else if (cmd === 'apply') apply();
+else if (cmd === 'trail') trail();
 else {
-  console.error('prep | sample | apply');
+  console.error('prep | sample | apply | trail');
   process.exit(1);
 }

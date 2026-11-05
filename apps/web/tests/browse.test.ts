@@ -333,7 +333,7 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     expect(viewingShut(aqua, 19 * 60)).toBe(false);
     expect(viewingShut(aqua, 20 * 60 + 30)).toBe(true);
     const s19 = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: 19 * 60 });
-    expect(openSpots(s19, seoul)).toContain(aqua);
+    expect(openSpots(s19, seoul, true)).toContain(aqua);
     // the evening places at 19:00: all those open by 18:30 and closing from 20:00 on
     for (const x of seoul.filter((x) => Array.isArray(x.opening))) {
       const [o, c] = x.opening as [number, number];
@@ -348,8 +348,9 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     const always = seoul.filter((x) => x.opening === 'always');
     for (const x of always) expect(viewingShut(x, 3 * 60), x.name).toBe(false);
     const s3 = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: 3 * 60 });
-    const open3 = new Set(openSpots(s3, seoul));
-    for (const x of always) expect(open3.has(x)).toBe(true);
+    // (a 산행지 is out at night, Amendment 9)
+    const open3 = new Set(openSpots(s3, seoul, true));
+    for (const x of always) expect(open3.has(x), x.name).toBe(!x.trail);
     // 궁 open at 9:30, the 관람형 not yet; both out from 17:30
     for (const x of seoul.filter((x) => x.opening === 'palace')) expect([viewingShut(x, 9 * 60 + 30), viewingShut(x, 17 * 60 + 30), viewingShut(x, 8 * 60 + 59)], x.name).toEqual([false, true, true]);
     for (const x of seoul.filter((x) => x.opening === 'day-viewing')) expect([viewingShut(x, 9 * 60 + 30), viewingShut(x, 14 * 60), viewingShut(x, 17 * 60 + 30)], x.name).toEqual([true, false, true]);
@@ -378,6 +379,31 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
         expect(viewingShut(x, h * 60), x.name).toBe(false);
       }
     }
+  });
+
+  // Amendment 9: 서울's 산행지 (trail-01.json) out from the sunset to the sunrise, there by day
+  const 관악 = { lat: 37.4812, lng: 126.9527 };
+  const 은평 = { lat: 37.619, lng: 126.921 };
+  it.each([
+    ['노원', 22, HERE.노원],
+    ['노원', 2, HERE.노원],
+    ['관악', 22, 관악],
+    ['관악', 2, 관악],
+    ['은평', 22, 은평],
+    ['은평', 2, 은평],
+  ] as const)('%s at %i:00: no 산행지 on 지금 여기서 or a mood shelf (Amendment 9)', (_, h, p) => {
+    for (const indoor of [false, true]) {
+      const { now, shelves } = seoulAt(p, h, indoor);
+      for (const x of [...(now ? [now] : []), ...shelves]) expect(x.trail, x.name).toBeUndefined();
+    }
+  });
+  it('산행지 (Amendment 9): 73 places from the rule, none 먹기; at 14:00 on the shelves of 노원·관악·은평', () => {
+    const trails = seoul.filter((x) => x.trail);
+    expect(trails.length).toBe(73);
+    expect(trails.some((x) => x.mood === 'food')).toBe(false);
+    for (const n of ['불암산', '관악산', '북한산 족두리봉', '우이동계곡', '흰구름길 (북한산 둘레길 3구간)']) expect(seoul.find((x) => x.name === n)?.trail, n).toBe(true);
+    for (const n of ['남산공원', '서울숲', '경의선숲길', '여의도 둘레길(여의도 자전거도로)', '관악산 낙성대공원', '노을·하늘공원코스 (서울둘레길 15코스)', '낙산 코스 (종로둘레길 3코스)']) expect(seoul.find((x) => x.name === n)?.trail, n).toBeUndefined();
+    for (const p of [HERE.노원, 관악, 은평]) expect(seoulAt(p, 14).shelves.some((x) => x.trail)).toBe(true);
   });
 
   it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf keeps its place; a short one goes to the back', () => {
