@@ -96,7 +96,7 @@ describe('the curation rules (criteria-01.md)', () => {
 describe('the shipped 카페·디저트 places (data/seoul/fun-seoul.json)', () => {
   const g8 = FILE.places.filter((p) => p.g === 'G8');
   it('each a known kind with its card line, a 카카오맵 link, no mass franchise, no id twice', () => {
-    expect(g8.length).toBe(78); // criteria-01: keep 84, one already a G4 place (ㅎㄷ카페), five second branches (Amendment 1)
+    expect(g8.length).toBe(77); // criteria-01: keep 84, one already a G4 place (ㅎㄷ카페), six second branches (Amendment 1)
     for (const id of Object.keys(OWNER_DROP)) expect(g8.some((p) => p.id === id), id).toBe(false);
     for (const p of g8) {
       expect(Object.keys({ 베이커리: 1, 도넛: 1, 카페: 1, 로스터리: 1, 케이크: 1, 디저트: 1, 찻집: 1, 젤라또: 1, 아이스크림: 1 })).toContain(p.word);
