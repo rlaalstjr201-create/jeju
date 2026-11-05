@@ -57,8 +57,16 @@ jobs:
 
       - name: Entry budget (ADR-0116)
         working-directory: apps/web
-        # check:jeju's own pass/fail compares against a baseline written on a Windows build (sw.js line order differs), so only its entry size is used here
-        run: (npm run check:jeju 2>&1 || true) | awk '/Korean entry JS\+CSS gzip:/ { n=1; print; if ($5+0 > 70000) bad=1 } END { exit (!n || bad) }'
+        # the same measure as scripts/jeju-baseline.ts assets(): index-*.js/css named in dist/index.html, gzipped (check:jeju itself needs a local browser)
+        run: |
+          node -e "
+          const fs=require('fs'),z=require('zlib');
+          const html=fs.readFileSync('dist/index.html','utf8');
+          const files=[...html.matchAll(/(?:src|href)=\"\/(assets\/index-[A-Za-z0-9_-]{8}\.(?:js|css))\"/g)].map(m=>m[1]);
+          if(!files.length){console.error('no entry files found');process.exit(1)}
+          const total=files.reduce((s,f)=>s+z.gzipSync(fs.readFileSync('dist/'+f)).length,0);
+          console.log('Korean entry JS+CSS gzip:',total,'B (budget 70000 B)',files.join(' '));
+          if(total>70000)process.exit(1);"
 
       - name: Deploy
         working-directory: apps/web
