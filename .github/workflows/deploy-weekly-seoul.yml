@@ -8,6 +8,8 @@ on:
     branches: [master]
     paths:
       - apps/web/data/seoul/weekly-seoul.json
+  # by hand from the Actions tab (a dry run of this pipeline on master as it is)
+  workflow_dispatch:
 
 concurrency:
   group: deploy-weekly-seoul
@@ -26,6 +28,7 @@ jobs:
           fetch-depth: 0
 
       - name: Only weekly data in this push
+        if: github.event_name == 'push'
         run: |
           base="${{ github.event.before }}"
           if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then echo "no base commit"; exit 1; fi
