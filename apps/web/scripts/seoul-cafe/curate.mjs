@@ -235,6 +235,15 @@ export function kindOf(category, name, words) {
   if (words.length === 1 && words[0].includes('티하우스')) return '찻집';
   return '카페';
 }
+/** 감사 뒤 리뷰가 찾은 기준 C 위반(ADR-0120 Amendment 1, predeploy-review.md m1·m2): 같은 브랜드 keep 두 지점 가운데 한 곳만.
+ * 이름에 본점·1호점이 있으면 그곳, 아니면 상호 검색량 높은 쪽(같으면 블로그 total 높은 쪽). 여기 적힌 쪽은 싣지 않는다. */
+export const OWNER_DROP = {
+  'kk-1314678355': '타르틴베이커리 이태원점 — 한남점과 검색량 같고 블로그 적음(19,893 < 22,601)',
+  'kk-921034789': '피터팬1978 사러가점 — 이름에 본점인 「피터팬1978 본점」을 남김',
+  'kk-795337625': '스코프 서촌2호점 — 서촌점과 검색량 같고 블로그 적음(2,050 < 2,470)',
+  'kk-745214463': '테일러커피 서촌경복궁점 — 이름에 1호점인 「테일러커피 연남1호점」을 남김(감사도 drop)',
+  'kk-434507199': '젠제로 압구정점 — 「젠제로」와 검색량 같고 블로그 적음(919 < 4,471)',
+};
 function ship() {
   const res = read('audit-01-result.json');
   if (!res?.pass) throw new Error('감사 게이트 미통과 — 싣지 않는다 (criteria-01.md 8절)');
@@ -247,8 +256,10 @@ function ship() {
   const taken = new Set(others.map((p) => p.id));
   const add = [];
   let clash = 0;
+  let owner = 0;
   for (const j of v.filter((x) => x.label === 'keep')) {
     if (taken.has(j.id)) { clash++; continue; }
+    if (OWNER_DROP[j.id]) { owner++; continue; }
     const p = cand.get(j.id);
     const i = inputs.get(j.id);
     const hood = hoods.map((h) => ({ h, d: km(h, p) })).sort((a, b) => a.d - b.d)[0];
@@ -266,7 +277,7 @@ function ship() {
     const w = p.line.split(' · ')[1];
     byWhere[w] = (byWhere[w] ?? 0) + 1;
   }
-  console.log(JSON.stringify({ shipped: add.length, clash, byWord, byWhere }));
+  console.log(JSON.stringify({ shipped: add.length, clash, owner, byWord, byWhere }));
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

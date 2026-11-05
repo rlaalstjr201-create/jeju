@@ -15,3 +15,4 @@ export declare function passes(volume: number | null, ev: Evidence | undefined):
 export declare function mulberry32(a: number): () => number;
 export declare function drawSample(verdicts: { id: string; label: string }[], seed?: number, per?: number): string[];
 export declare function kindOf(category: string, name: string, words: string[]): string;
+export declare const OWNER_DROP: Record<string, string>;
