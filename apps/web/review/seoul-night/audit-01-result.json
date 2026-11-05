@@ -1,0 +1,53 @@
+{
+ "counts": {
+  "keep": 34,
+  "drop": 585
+ },
+ "by": {
+  "keep": {
+   "n": 34,
+   "agree": 30
+  },
+  "drop": {
+   "n": 40,
+   "agree": 38
+  }
+ },
+ "rate": {
+  "keep": 0.8823529411764706,
+  "drop": 0.95
+ },
+ "pass": false,
+ "mismatch": [
+  {
+   "id": "kk-13495334",
+   "judge": "keep",
+   "audit": "drop"
+  },
+  {
+   "id": "kk-1600490814",
+   "judge": "keep",
+   "audit": "drop"
+  },
+  {
+   "id": "kk-17375556",
+   "judge": "keep",
+   "audit": "drop"
+  },
+  {
+   "id": "kk-1428159199",
+   "judge": "keep",
+   "audit": "drop"
+  },
+  {
+   "id": "kk-572289250",
+   "judge": "drop",
+   "audit": "keep"
+  },
+  {
+   "id": "kk-10842704",
+   "judge": "drop",
+   "audit": "keep"
+  }
+ ]
+}
