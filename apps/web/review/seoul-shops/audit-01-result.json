@@ -1,0 +1,38 @@
+{
+ "counts": {
+  "keep": 16,
+  "drop": 616
+ },
+ "by": {
+  "keep": {
+   "n": 16,
+   "agree": 13
+  },
+  "drop": {
+   "n": 40,
+   "agree": 40
+  }
+ },
+ "rate": {
+  "keep": 0.8125,
+  "drop": 1
+ },
+ "pass": false,
+ "mismatch": [
+  {
+   "id": "kk-982128916",
+   "judge": "keep",
+   "audit": "drop"
+  },
+  {
+   "id": "kk-1129689811",
+   "judge": "keep",
+   "audit": "drop"
+  },
+  {
+   "id": "kk-1771847437",
+   "judge": "keep",
+   "audit": "drop"
+  }
+ ]
+}
