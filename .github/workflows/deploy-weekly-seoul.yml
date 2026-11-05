@@ -1,0 +1,71 @@
+# 「이번 주 서울」 매주 회차(ADR-0118)가 push한 자료만 운영에 내보낸다.
+# 클라우드 루틴은 수집·판정·감사·push까지만 하고(토큰 없음), 배포는 여기서 한다.
+# 이 push에 이번 주 자료 밖의 파일이 섞여 있으면 배포하지 않는다(코드 배포는 지금처럼 사람이 확인한 뒤 손으로).
+name: deploy weekly Seoul
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - apps/web/data/seoul/weekly-seoul.json
+
+concurrency:
+  group: deploy-weekly-seoul
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Only weekly data in this push
+        run: |
+          base="${{ github.event.before }}"
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then echo "no base commit"; exit 1; fi
+          others=$(git diff --name-only "$base" "${{ github.sha }}" | grep -vE '^apps/web/(data/seoul/weekly-seoul\.json|review/seoul-weekly/)' || true)
+          if [ -n "$others" ]; then echo "other files changed, not deploying:"; echo "$others"; exit 1; fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Type check and tests
+        working-directory: apps/web
+        run: |
+          npx tsc --noEmit
+          npx vitest run
+          npx vitest run --mode nation
+
+      - name: Build
+        working-directory: apps/web
+        env:
+          SITE_URL: https://yeochana.com
+        run: npm run build
+
+      - name: Entry budget (ADR-0116)
+        working-directory: apps/web
+        # check:jeju's own pass/fail compares against a baseline written on a Windows build (sw.js line order differs), so only its entry size is used here
+        run: (npm run check:jeju 2>&1 || true) | awk '/Korean entry JS\+CSS gzip:/ { n=1; print; if ($5+0 > 70000) bad=1 } END { exit (!n || bad) }'
+
+      - name: Deploy
+        working-directory: apps/web
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler@4.158.0 pages deploy dist --project-name yeochana --branch master --commit-dirty=true
+
+      - name: Smoke
+        working-directory: apps/web
+        env:
+          SITE: https://yeochana.com
+        run: bash scripts/smoke.sh
