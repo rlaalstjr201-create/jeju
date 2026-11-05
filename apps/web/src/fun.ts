@@ -4,6 +4,7 @@
 // morning and a market off the night, and nothing on a card says 「열림」.
 import FILE from '../data/seoul/fun-seoul.json';
 import type { CultureItem } from './culture';
+import { isWeek } from './weekly';
 
 export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7';
 interface FunRow {
@@ -21,8 +22,8 @@ interface FunRow {
 /** A curated place or a 동네 among the day's items: `fun` says which. */
 export type FunItem = CultureItem & { fun: { g: FunG | 'hood'; word: string; walkin: boolean; hood?: string } };
 export const isFun = (i: CultureItem): i is FunItem => 'fun' in i;
-/** The day's own list (events, shows) without the curated places. */
-export const realItems = (items: readonly CultureItem[]): CultureItem[] => items.filter((i) => !isFun(i));
+/** The day's own list (events, shows) without the curated places and the week's (ADR-0118). */
+export const realItems = (items: readonly CultureItem[]): CultureItem[] => items.filter((i) => !isFun(i) && !isWeek(i));
 
 /** 동네 반경: a place within this of a 동네's middle is in it (scripts/seoul-fun/ship.mjs HOOD_M) */
 export const HOOD_KM = 0.7;

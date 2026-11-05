@@ -4,18 +4,20 @@
 // in one shelf only; at most 12 a shelf, an empty one not there at all.
 import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from './culture';
 import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
+import { isWeek } from './weekly';
 import { distanceKm, type Kind, type Point, type Spot } from './pick';
 
-/** The shelves (ADR-0115 1·6): 동네, the five curated kinds, then the day's own list (무대, 오늘만·이번 주까지, 전시). */
-export const SHELVES = ['hood', 'g1', 'g2', 'g4', 'g5', 'g6', 'g7', 'stage', 'today', 'exhibit'] as const;
+/** The shelves (ADR-0115 1·6): 동네, the five curated kinds, 이번 주 서울 (ADR-0118), then the day's own list (무대, 오늘만·이번 주까지,
+ * 전시). Filled in this order: the week's items are taken before the day's shelves could. */
+export const SHELVES = ['hood', 'g1', 'g2', 'g4', 'g5', 'g6', 'g7', 'week', 'stage', 'today', 'exhibit'] as const;
 export type ShelfKey = (typeof SHELVES)[number];
 /** Which shelves come first at each hour: what the hour is for leads, the day's exhibitions (교과서 서울) never in the first three. */
 export const ORDER: Record<Band, readonly ShelfKey[]> = {
-  morning: ['g2', 'g1', 'hood', 'g5', 'g4', 'today', 'g7', 'stage', 'g6', 'exhibit'],
-  day: ['hood', 'g4', 'g5', 'g7', 'g1', 'today', 'stage', 'g2', 'g6', 'exhibit'],
-  dusk: ['g1', 'hood', 'stage', 'g7', 'g2', 'g4', 'g5', 'g6', 'today', 'exhibit'],
-  night: ['stage', 'g7', 'g2', 'g1', 'g5', 'hood', 'g4', 'g6', 'today', 'exhibit'],
-  late: ['g5', 'g2', 'g1', 'g7', 'hood', 'stage', 'g4', 'g6', 'today', 'exhibit'],
+  morning: ['g2', 'g1', 'week', 'hood', 'g5', 'g4', 'today', 'g7', 'stage', 'g6', 'exhibit'],
+  day: ['week', 'hood', 'g4', 'g5', 'g7', 'g1', 'today', 'stage', 'g2', 'g6', 'exhibit'],
+  dusk: ['g1', 'hood', 'week', 'stage', 'g7', 'g2', 'g4', 'g5', 'g6', 'today', 'exhibit'],
+  night: ['stage', 'g7', 'g2', 'week', 'g1', 'g5', 'hood', 'g4', 'g6', 'today', 'exhibit'],
+  late: ['g5', 'g2', 'g1', 'g7', 'hood', 'stage', 'week', 'g4', 'g6', 'today', 'exhibit'],
 };
 export const PER_SHELF = 12;
 /** A shelf with fewer cards goes after the full ones (ADR-0115 성공 기준: 줄마다 6장 이상 at the top). */
@@ -64,7 +66,8 @@ export function browseCard(item: CultureItem, now: Now, origin: Point | null): B
 /** What is in a 동네 now: the curated places likely open and the day's items not shut, within HOOD_KM of its middle. */
 export function inHood(hood: CultureItem, items: readonly CultureItem[], now: Now, origin: Point | null): BrowseCard[] {
   return items
-    .filter((i) => !(isFun(i) && i.fun.g === 'hood') && distanceKm(hood, i) <= HOOD_KM)
+    // the week's (ADR-0118) stay on their own shelf: the 동네 sheet's source lines are the city's, KOPIS's and 카카오맵's
+    .filter((i) => !(isFun(i) && i.fun.g === 'hood') && !isWeek(i) && distanceKm(hood, i) <= HOOD_KM)
     .map((i) => candOf(i, now, origin))
     .filter((c): c is Cand => !!c)
     .sort((a, b) => distanceKm(hood, a.item) - distanceKm(hood, b.item))
@@ -75,6 +78,8 @@ export function inHood(hood: CultureItem, items: readonly CultureItem[], now: No
 export function buildShelves(items: readonly CultureItem[], now: Now, origin: Point | null, sunset: number): Shelf[] {
   const cands = items.map((item) => candOf(item, now, origin)).filter((c): c is Cand => !!c);
   const g = (k: string) => (c: Cand) => isFun(c.item) && c.item.fun.g === k;
+  /** the day's own list (서울시·KOPIS): neither a curated place nor the week's */
+  const own = (c: Cand) => !isFun(c.item) && !isWeek(c.item);
   const takes: Record<ShelfKey, (c: Cand) => boolean> = {
     hood: g('hood'),
     g1: g('G1'),
@@ -83,13 +88,15 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
     g5: g('G5'),
     g6: g('G6'),
     g7: g('G7'),
-    stage: (c) => !isFun(c.item) && SHOW.test(c.item.kind),
-    today: (c) => !isFun(c.item) && nowness(c.item, now.day) <= 1,
-    exhibit: (c) => !isFun(c.item) && c.item.kind.startsWith('전시'),
+    week: (c) => isWeek(c.item),
+    stage: (c) => own(c) && SHOW.test(c.item.kind),
+    today: (c) => own(c) && nowness(c.item, now.day) <= 1,
+    exhibit: (c) => own(c) && c.item.kind.startsWith('전시'),
   };
   const far = (c: Cand) => c.km ?? 0;
-  // the day's own: the clear ones (big stages, museums) first, then the nearer; a curated place or a 동네: the nearer first
-  const order = (a: Cand, b: Cand) => (isFun(a.item) ? 0 : prominence(a.item) - prominence(b.item)) || far(a) - far(b) || (a.item.title < b.item.title ? -1 : 1);
+  // the day's own: the clear ones (big stages, museums) first, then the nearer; a curated place, a 동네 or the week's (내 위치
+  // 먼저): the nearer first
+  const order = (a: Cand, b: Cand) => (isFun(a.item) || isWeek(a.item) ? 0 : prominence(a.item) - prominence(b.item)) || far(a) - far(b) || (a.item.title < b.item.title ? -1 : 1);
   const shown = new Set<string>();
   const out: Shelf[] = [];
   // filled in SHELVES order (an item takes its own kind's shelf first), shown in the hour's ORDER

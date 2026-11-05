@@ -242,7 +242,7 @@ export const ZH: Lang = {
     browse: {
       open: '逛逛今天的首尔',
       note: '只收录现在能去的地方，先放适合这个时间的。',
-      shelf: { hood: '值得逛的街区', g1: '汉江·晚霞·夜景', g2: '市场·路边摊', g4: '书店·黑胶·唱片', g5: '动起来玩', g6: '棒球观赛', g7: '现场·独立音乐', stage: '今天的舞台', today: '仅限今天·本周', exhibit: '展览·博物馆' },
+      shelf: { hood: '值得逛的街区', g1: '汉江·晚霞·夜景', g2: '市场·路边摊', g4: '书店·黑胶·唱片', g5: '动起来玩', g6: '棒球观赛', g7: '现场·独立音乐', week: '本周首尔', stage: '今天的舞台', today: '仅限今天·本周', exhibit: '展览·博物馆' },
       hoodCount: (n) => `现在能去 ${n} 处`,
       booking: '可能需要预约',
       hours: '营业时间请在Kakao地图确认',
@@ -254,6 +254,10 @@ export const ZH: Lang = {
       none: '现在没有可逛的活动。',
       today: (times) => `今天 ${times}`,
       more: '详情（订票·介绍）',
+      period: (from, to) => `${from}–${to}`,
+      onsite: '现场可能需要排队',
+      post: '查看来源文章',
+      fromWeek: '信息：NAVER博客·新闻·地点信息：Kakao地图',
     },
   },
   mood: {

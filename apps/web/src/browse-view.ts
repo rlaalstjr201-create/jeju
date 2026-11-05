@@ -6,6 +6,7 @@ import './browse.css';
 import { browseCard, buildShelves, homeShown, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
 import type { CultureItem, Now } from './culture';
 import { isFun } from './fun';
+import { isWeek } from './weekly';
 import { sunsetMinutes } from './sun';
 import type { Day } from './dates';
 
@@ -19,7 +20,7 @@ export const BROWSE_COPY = {
   /** the way in on 서울's home, and the screen's title */
   open: '오늘 서울 둘러보기',
   note: '지금 갈 수 있는 것만, 지금 시간에 맞는 것부터 모았어요.',
-  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·LP·레코드', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
+  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·LP·레코드', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', week: '이번 주 서울', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
   /** a 동네 card: what is in it now */
   hoodCount: (n: number) => `지금 갈 곳 ${n}`,
   /** a curated place's sheet: no reservation known */
@@ -38,6 +39,11 @@ export const BROWSE_COPY = {
   /** 오늘 시간 on the card sheet: 「오늘 11:00~18:00」 */
   today: (times: string) => `오늘 ${times}`,
   more: '자세히(예매·안내)',
+  /** 이번 주 서울 (ADR-0118): the card sheet's dates 「11.1~11.16」, a queue that may be there, its source post, the source line */
+  period: (from: string, to: string) => `${from}~${to}`,
+  onsite: '현장 대기가 있을 수 있어요',
+  post: '출처 글 보기',
+  fromWeek: '정보: 네이버 블로그·뉴스 · 장소: 카카오맵',
 };
 
 function el(doc: Document, tag: string, attrs: Record<string, string> = {}, text?: string): HTMLElement {
@@ -136,7 +142,7 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
   const shown = homeShown(shelves);
   for (const [i, sh] of shelves.entries()) {
     // its line (browse.css): a mood's places, the day's own events, or things to do
-    const line = sh.key in labels ? 'place' : sh.key === 'stage' || sh.key === 'today' || sh.key === 'exhibit' ? 'day' : 'fun';
+    const line = sh.key in labels ? 'place' : sh.key === 'stage' || sh.key === 'today' || sh.key === 'exhibit' || sh.key === 'week' ? 'day' : 'fun';
     const sec = el(doc, 'section', { class: 'shelf', 'aria-labelledby': `shelf-${sh.key}`, 'data-line': line });
     const row = el(doc, 'ul', { class: 'shelf-row', 'data-shelf': sh.key });
     if (sh.key in labels) {
@@ -245,13 +251,16 @@ export function browseCardSheet(doc: Document, items: readonly CultureItem[], id
   // 오늘 시간 only when the why line does not already say it (「19:30 시작」 and 「오늘 19:30」 would be the same thing twice)
   const when = fun ? '' : times ? (c?.why.includes(times) ? '' : BROWSE_COPY.today(times)) : it.time;
   // a curated place: its line is under the title already; no hours in our data (fun.ts), so they are pointed to, never said
-  const lines = fun ? [c ? tripText(c) : '', fun.walkin ? '' : BROWSE_COPY.booking, BROWSE_COPY.hours] : [c?.why ?? '', when, it.cast ? cast(it.cast) : '', c ? tripText(c) : ''];
+  // the week's (ADR-0118): its dates, and a queue when the posts said so
+  const md = (d: string) => `${Number(d.slice(5, 7))}.${Number(d.slice(8, 10))}`;
+  const week = isWeek(it) ? [BROWSE_COPY.period(md(it.start), md(it.end)), it.week.reserve === 'onsite' ? BROWSE_COPY.onsite : ''] : [];
+  const lines = fun ? [c ? tripText(c) : '', fun.walkin ? '' : BROWSE_COPY.booking, BROWSE_COPY.hours] : [c?.why ?? '', ...week, when, it.cast ? cast(it.cast) : '', c ? tripText(c) : ''];
   for (const line of lines) if (line) facts.append(el(doc, 'li', {}, line));
   sheet.append(facts);
   const acts = el(doc, 'div', { class: 'bc-acts' });
   acts.append(goA(doc, it, c, app, 'primary'));
   const more = linkUrl(it.link);
-  if (more) acts.append(el(doc, 'a', { class: 'tbtn', href: more, target: '_blank', rel: 'noopener', 'data-blink': 'more' }, fun ? BROWSE_COPY.kakao : BROWSE_COPY.more));
+  if (more) acts.append(el(doc, 'a', { class: 'tbtn', href: more, target: '_blank', rel: 'noopener', 'data-blink': 'more' }, fun ? BROWSE_COPY.kakao : isWeek(it) ? BROWSE_COPY.post : BROWSE_COPY.more));
   sheet.append(acts, ...sources, el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
   layer.append(el(doc, 'div', { class: 'scrim', 'data-action': 'close' }), sheet);
   return layer;

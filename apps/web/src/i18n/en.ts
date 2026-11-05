@@ -249,7 +249,7 @@ export const EN: Lang = {
     browse: {
       open: 'Browse Seoul today',
       note: 'Only places you can go to now, what suits the hour first.',
-      shelf: { hood: 'Neighbourhoods to wander', g1: 'Han River · sunset · night views', g2: 'Markets · pocha', g4: 'Bookshops · LP · records', g5: 'Play', g6: 'Baseball', g7: 'Live · indie', stage: "Tonight's stages", today: 'Today · this week only', exhibit: 'Exhibitions · museums' },
+      shelf: { hood: 'Neighbourhoods to wander', g1: 'Han River · sunset · night views', g2: 'Markets · pocha', g4: 'Bookshops · LP · records', g5: 'Play', g6: 'Baseball', g7: 'Live · indie', week: 'Seoul this week', stage: "Tonight's stages", today: 'Today · this week only', exhibit: 'Exhibitions · museums' },
       hoodCount: (n) => `${n} to go to now`,
       booking: 'May need a booking',
       hours: 'Please check opening hours on Kakao Map',
@@ -261,6 +261,10 @@ export const EN: Lang = {
       none: 'Nothing to browse right now.',
       today: (times) => `Today ${times}`,
       more: 'Details (tickets · info)',
+      period: (from, to) => `${from}–${to}`,
+      onsite: 'There may be an on-site queue',
+      post: 'See the source post',
+      fromWeek: 'Info: Naver blogs · news · Place info: Kakao Map',
     },
   },
   mood: {

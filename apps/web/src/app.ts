@@ -985,7 +985,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     const b = browsing;
     if (!b) return;
     browsing = null;
-    countBrowse({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: culturePart()?.scrolledRows() ?? 0, cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
+    countBrowse({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: Math.min(10, culturePart()?.scrolledRows() ?? 0), cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
     tracker.flush();
   }
   /** A card's sheet over 서울 홈 (ADR-0117 5): an entry of its own (back closes it). */

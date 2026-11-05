@@ -7,6 +7,7 @@ export { scrolledRows } from './browse-view';
 import { WHY_TEXT, pickCulture, type CultureItem, type Now, type Pick } from './culture';
 import type { Fetch } from './effects';
 import { funItems, isFun, realItems } from './fun';
+import { isWeek, weeklyItems } from './weekly';
 import { goLink, type MapApp } from './links';
 import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
 import { COPY } from './render';
@@ -53,7 +54,9 @@ export async function fetchCulture(get: Fetch, timeoutMs = 15000): Promise<{ day
     const b = (await res.json()) as { day?: unknown; items?: unknown } | null;
     if (typeof b?.day !== 'string' || !Array.isArray(b.items)) return null;
     // the curated places and 동네 (ADR-0115) ride along as the day's items: the card sheet finds them by id like the rest
-    return { day: b.day, items: [...b.items.filter(okItem), ...funItems(b.day)] };
+    // and the week's (ADR-0118): those not ended, those the day's list has by name left to it
+    const own = b.items.filter(okItem);
+    return { day: b.day, items: [...own, ...funItems(b.day), ...weeklyItems(b.day, own)] };
   } catch {
     return null;
   } finally {
@@ -136,6 +139,9 @@ export function sheetBody(doc: Document, panel: HTMLElement, s: State, origin: O
   panel.append(rows(doc, list, s.mapApp), ...sources(doc, list));
 }
 
+/** 이번 주 서울's source line (ADR-0118) */
+const weekSrc = (doc: Document) => el(doc, 'p', { class: 'cult-src', 'data-src': 'week' }, BROWSE_COPY.fromWeek);
+
 /** The day's list as of the minute it was read (KST). */
 const nowOf = (c: NonNullable<State['culture']>): Now => ({ day: c.day, weekday: new Date(`${c.day}T00:00:00Z`).getUTCDay(), minute: c.minute });
 /** every item shown is from today's list: the KOPIS line whenever a show is in it */
@@ -165,9 +171,10 @@ export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Par
   const shown = list.flatMap((sh) => ('cards' in sh ? sh.cards.map((x) => x.item) : []));
   // only the sources of what is shown: the city's for an event, KOPIS for a show, 카카오맵 for a curated place
   const src = [
-    ...(shown.some((i) => !isFun(i) && !i.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'seoul' }, CULTURE_COPY.from)] : []),
+    ...(shown.some((i) => !isFun(i) && !isWeek(i) && !i.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'seoul' }, CULTURE_COPY.from)] : []),
     ...(shown.some((i) => i.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kopis' }, CULTURE_COPY.fromShows)] : []),
     ...(shown.some(isFun) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kakao' }, BROWSE_COPY.fromKakao)] : []),
+    ...(shown.some(isWeek) ? [weekSrc(doc)] : []),
   ];
   const box = homeShelvesView(doc, rows, labels, src);
   last = { sig, box };
@@ -180,7 +187,7 @@ function browseCard(doc: Document, s: State, origin: Origin | null, id: string):
   const it = c.items.find((x) => x.id === id);
   // the source lines: a curated place's is 카카오맵; a 동네 can hold both
   const kakao = el(doc, 'p', { class: 'cult-src', 'data-src': 'kakao' }, BROWSE_COPY.fromKakao);
-  const src = !it ? [] : !isFun(it) ? sources(doc, [{ item: it }]) : it.fun.g === 'hood' ? [kakao, ...sources(doc, allItems(c))] : [kakao];
+  const src = !it ? [] : isWeek(it) ? [weekSrc(doc)] : !isFun(it) ? sources(doc, [{ item: it }]) : it.fun.g === 'hood' ? [kakao, ...sources(doc, allItems(c))] : [kakao];
   return browseCardSheet(doc, c.items, id, nowOf(c), origin?.point ?? null, s.mapApp, CULTURE_COPY.cast, src);
 }
 
