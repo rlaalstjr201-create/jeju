@@ -3,7 +3,7 @@
 // the pictures load from the event and show sites themselves (5), lazily, over https, and a picture that fails becomes a
 // text card. Titles, places, kinds and time words stay as the list gives them (Korean).
 import './browse.css';
-import { browseCard, buildShelves, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
+import { browseCard, buildShelves, homeShown, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
 import type { CultureItem, Now } from './culture';
 import { isFun } from './fun';
 import { sunsetMinutes } from './sun';
@@ -98,8 +98,6 @@ export interface MoodCard {
 export type HomeRow = Shelf | { key: MoodShelf; cards: MoodCard[] };
 
 let homeWatch: IntersectionObserver | undefined;
-/** 서울 홈 draws this many shelves (the order's first), the rest behind 선반 더 보기 (ADR-0117 Amendment 3) */
-export const HOME_SHELVES = 8;
 /** 선반 더 보기 pressed: open for the rest of the visit (a redraw, the list's minute moving on, keeps it open) */
 let allShelves = false;
 /** 서울 홈의 선반 (ADR-0117, specs/seoul-home-shelves.md): each shelf a heading — a mood's is its button (the same as the mood
@@ -125,9 +123,15 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
   const more = el(doc, 'button', { type: 'button', class: 'tbtn shelves-more' }, BROWSE_COPY.moreShelves);
   more.addEventListener('click', () => {
     allShelves = true;
-    for (const sec of box.querySelectorAll<HTMLElement>('.shelf[hidden]')) sec.hidden = false;
+    const opened = [...box.querySelectorAll<HTMLElement>('.shelf[hidden]')];
+    for (const sec of opened) sec.hidden = false;
+    // the focus is not left on the button going away: on the first shelf it opened
+    const h = opened[0]?.querySelector<HTMLElement>('h2');
+    h?.setAttribute('tabindex', '-1');
     more.remove();
+    h?.focus({ preventScroll: true });
   });
+  const shown = homeShown(shelves);
   for (const [i, sh] of shelves.entries()) {
     // its line (browse.css): a mood's places, the day's own events, or things to do
     const line = sh.key in labels ? 'place' : sh.key === 'stage' || sh.key === 'today' || sh.key === 'exhibit' ? 'day' : 'fun';
@@ -158,10 +162,10 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
       row.append(...(sh as Shelf).cards.map((c) => cardLi(doc, c, later)));
     }
     sec.append(row);
-    if (i >= HOME_SHELVES && !allShelves) sec.hidden = true;
+    if (!shown[i] && !allShelves) sec.hidden = true;
     box.append(sec);
   }
-  if (shelves.length > HOME_SHELVES && !allShelves) box.append(more);
+  if (shown.includes(false) && !allShelves) box.append(more);
   box.append(...sources);
   return box;
 }

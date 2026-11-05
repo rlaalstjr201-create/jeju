@@ -4,10 +4,10 @@ import { describe, expect, it } from 'vitest';
 import { cultureItems, type CultureItem, type SeoulRow } from '../functions/_lib/culture-filter';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { FULL, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
+import { FULL, HOME_ROWS, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, homeShown, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
 import { normalizeSpots } from '../src/data';
 import { moodShelf } from '../src/home';
-import { initialState } from '../src/state';
+import { initialState, viewingShut } from '../src/state';
 import type { Spot } from '../src/pick';
 import { openNow, type Now } from '../src/culture';
 import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/fun';
@@ -222,14 +222,21 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
 
   it.each(Object.entries(HERE).flatMap(([name, p]) => [14, 19, 22].map((h) => [name, h, p] as const)))('%s at %i:00: ≥ 4 shelves of ≥ 6, ≤ 12 each, none shut, each place once, the order table', (_, h, p) => {
     const list = home(p, h);
-    // within the 8 drawn before 선반 더 보기 (Amendment 3)
-    expect(list.slice(0, 8).filter((sh) => size(sh) >= FULL).length).toBeGreaterThanOrEqual(4);
+    // within those shown before 선반 더 보기 (Amendment 4): at most HOME_ROWS, the five moods' always among them
+    const shown = homeShown(list);
+    const seen = list.filter((_, i) => shown[i]);
+    expect(seen.length).toBeLessThanOrEqual(HOME_ROWS);
+    expect(seen.filter((sh) => size(sh) >= FULL).length).toBeGreaterThanOrEqual(4);
+    for (const m of MOOD_SHELVES) expect(seen.map((sh) => sh.key)).toContain(m);
     for (const sh of list) {
       expect(size(sh)).toBeGreaterThan(0);
       expect(size(sh)).toBeLessThanOrEqual(PER_SHELF);
     }
-    // nothing shut now: the day's list and the curated places by their hours; a mood's places have none outside 제주 (ADR-0111 6)
+    // nothing shut now: the day's list and the curated places by their hours; a mood's places by 서울's usual viewing hours
+    // (Amendment 4: no 박물관·미술관 at 22:00)
     for (const sh of list) if ('cards' in sh) for (const c of sh.cards) expect(browseCard(c.item, at(h), p)).not.toBeNull();
+    for (const sh of list) if ('spots' in sh) for (const x of sh.spots) expect(viewingShut(x, h * 60)).toBe(false);
+    if (h === 22) for (const sh of list) if ('spots' in sh) for (const x of sh.spots) expect(x.name).not.toMatch(/박물관|미술관/);
     // each place once: by name, and a curated place that is a mood's place too (the same 카카오 id) once
     const names = list.flatMap((sh) => ('spots' in sh ? sh.spots.map((x) => x.name) : sh.cards.map((c) => c.item.title)));
     expect(new Set(names).size).toBe(names.length);
@@ -244,6 +251,32 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     expect(keys).toEqual([...full, ...want.filter((k) => !full.includes(k))]);
     // all five moods have a shelf of their own here
     for (const m of MOOD_SHELVES) expect(keys).toContain(m);
+  });
+
+  it('shown before 선반 더 보기: the five moods always, the others in order up to HOME_ROWS (Amendment 4)', () => {
+    const keys = ['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'g1', 'today', 'stage', 'g2', 'exhibit', 'food', 'rest', 'walk'] as const;
+    const shown = homeShown(keys.map((key) => ({ key })));
+    expect(keys.filter((_, i) => shown[i])).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'food', 'rest', 'walk']);
+    expect(homeShown([{ key: 'famous' }, { key: 'rest' }]).every(Boolean)).toBe(true);
+  });
+
+  it('지금 여기서\'s place is on no shelf again (a curated place of the same name or 카카오 id too)', () => {
+    const here = { id: 'h', name: '시장0', kakaoPlaceId: '102' } as Spot;
+    const cards = Array.from({ length: 6 }, (_, i) => ({ item: place({ id: `kk-${i}`, g: 'G2', word: '전통시장', title: `시장${i}`, link: `https://place.map.kakao.com/${100 + i}` }), why: '', trip: null }));
+    const out = homeShelves([{ key: 'g2', cards }], { famous: [here, { id: 'x', name: '궁', kakaoPlaceId: null } as Spot] }, 15 * 60, SUNSET, here);
+    const g2 = out.find((sh) => sh.key === 'g2')!;
+    expect('cards' in g2 && g2.cards.map((c) => c.item.title)).toEqual(['시장1', '시장3', '시장4', '시장5']);
+    expect(out.flatMap((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual(['x']);
+  });
+
+  it("서울's viewing places keep 10:00–18:00 (Amendment 4): out from 17:30 and before 10:00; food and the rest never", () => {
+    const sp = (name: string, mood = 'new') => ({ id: name, name, mood }) as Spot;
+    expect(viewingShut(sp('국립중앙박물관'), 14 * 60)).toBe(false);
+    expect(viewingShut(sp('국립중앙박물관'), 17 * 60 + 30)).toBe(true);
+    expect(viewingShut(sp('리움미술관'), 9 * 60)).toBe(true);
+    expect(viewingShut(sp('경복궁'), 22 * 60)).toBe(true);
+    expect(viewingShut(sp('궁중족발', 'food'), 22 * 60)).toBe(false);
+    expect(viewingShut(sp('남산 야외식물원', 'walk'), 22 * 60)).toBe(false);
   });
 
   it("the order table: 먹기 second at 밥때 (else after the hour's), 유명한 데 third, 놀러 fifth, 쉬기·걷기 last", () => {

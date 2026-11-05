@@ -447,7 +447,23 @@ export const minuteNow = (s: State): number | null => (s.when === 'now' && s.des
 export const OPEN_STEP = 30;
 /** The half hour `clock` is in, where the time decides what is shut (지금, Jeju); null elsewhere. */
 export const openPhase = (s: State, clock: number | null): number | null =>
-  clock === null || s.when !== 'now' || s.dest !== 'jeju' ? null : Math.floor(clock / OPEN_STEP);
+  clock === null || s.when !== 'now' || (s.dest !== 'jeju' && s.dest !== 'seoul') ? null : Math.floor(clock / OPEN_STEP);
+
+/** 서울 (ADR-0117 Amendment 4): no place has its hours, and 지금 갈 수 없는 곳은 추천하지 않는다 — a place one goes in to look
+ * round (박물관·미술관·궁 …, by its name: the data has no kind) keeps the usual 10:00–18:00 and is left out from half an hour
+ * before it closes. Both edges fall on OPEN_STEP, so the home is drawn again at them. */
+const VIEWING = /박물관|미술관|기념관|전시관|전시실|역사관|과학관|문학관|기록관|뮤지엄|갤러리|화랑|아트센터|아트스페이스|사랑채|종묘|퐁피두|리움|궁(?:$|[\s(])/;
+export const VIEW_HOURS: readonly [number, number] = [10 * 60, 18 * 60];
+export const viewingShut = (x: Spot, minute: number): boolean => x.mood !== 'food' && VIEWING.test(x.name) && (minute < VIEW_HOURS[0] || minute >= VIEW_HOURS[1] - 30);
+const viewCache = new WeakMap<Spot[], Spot[]>();
+/** `spots` without what is shut now by viewingShut: 서울, 지금, the time read; as it is elsewhere and in the open hours. */
+export function openSpots(s: State, spots: Spot[]): Spot[] {
+  const m = s.clock;
+  if (s.dest !== 'seoul' || s.when !== 'now' || m === null || (m >= VIEW_HOURS[0] && m < VIEW_HOURS[1] - 30)) return spots;
+  let list = viewCache.get(spots);
+  if (!list) viewCache.set(spots, (list = spots.filter((x) => !viewingShut(x, m))));
+  return list;
+}
 
 /** Saved on `day` (the current day by default): what a card's heart shows. */
 export function isSaved(s: State, id: string, day: Day = whenDay(s)): boolean {
@@ -534,7 +550,8 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   const seq = s.seq + 1;
   const ids = shown[key];
   // 뺀 곳 (ADR-0087) are out from this pick on: three brought back with one of them in are picked anew
-  const from = pickSpots(spots, s.visited);
+  // 서울's viewing places outside their usual hours (Amendment 4) are out too
+  const from = openSpots(s, pickSpots(spots, s.visited));
   const restored = intent === 'show' && ids && !s.pin ? cardsFor(from, ids, origin.point) : null;
   if (restored) {
     // Exactly what is already on screen (same 3, same point): keep it as is, so nothing is rebuilt.

@@ -149,14 +149,19 @@ export function browseBody(doc: Document, s: State, origin: Origin | null): HTML
 /** 서울 홈의 선반 (ADR-0117): today's list's shelves (when it is in) and the moods' (`moods`, home.ts moodShelf, nearest first),
  * in the hour's order (browse.ts homeShelves), and at the end the source lines of what they show. `card`: a mood place's name
  * and how far, as the home words them. Null with no shelf at all. */
-export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Partial<Record<MoodShelf, Spot[]>>, labels: Record<MoodShelf, string>, card: (spot: Spot) => MoodCard): HTMLElement | null {
+let last: { sig: string; box: HTMLElement } | null = null;
+export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Partial<Record<MoodShelf, Spot[]>>, labels: Record<MoodShelf, string>, card: (spot: Spot) => MoodCard, here: Spot | null = null): HTMLElement | null {
   const c = s.culture?.day === s.today ? s.culture : null;
   const day = (c?.day ?? s.today) as Day;
   const sunset = sunsetMinutes(origin.point, day);
   const minute = c?.minute ?? s.clock ?? 12 * 60;
-  const list = homeShelves(c ? buildShelves(c.items, nowOf(c), origin.point, sunset) : [], moods, minute, sunset);
+  const list = homeShelves(c ? buildShelves(c.items, nowOf(c), origin.point, sunset) : [], moods, minute, sunset, here);
   if (!list.length) return null;
   const rows = list.map((sh) => ('spots' in sh ? { key: sh.key, cards: sh.spots.map(card) } : sh));
+  // the same shelves as drawn (the list's minute moved on, nothing it shows did): the same block, so its scroll, focus and
+  // pictures stay as they are (ADR-0117 Amendment 4)
+  const sig = JSON.stringify([labels, rows.map((r) => [r.key, r.cards.map((x) => ('item' in x ? [x.item.id, x.why, x.trip, x.count] : [x.id, x.image, x.trip, x.name]))])]);
+  if (last?.sig === sig && last.box.isConnected) return last.box;
   const shown = list.flatMap((sh) => ('cards' in sh ? sh.cards.map((x) => x.item) : []));
   // only the sources of what is shown: the city's for an event, KOPIS for a show, 카카오맵 for a curated place
   const src = [
@@ -164,7 +169,9 @@ export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Par
     ...(shown.some((i) => i.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kopis' }, CULTURE_COPY.fromShows)] : []),
     ...(shown.some(isFun) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kakao' }, BROWSE_COPY.fromKakao)] : []),
   ];
-  return homeShelvesView(doc, rows, labels, src);
+  const box = homeShelvesView(doc, rows, labels, src);
+  last = { sig, box };
+  return box;
 }
 
 /** A card's sheet over it; null when the item is not in today's list. */

@@ -133,10 +133,13 @@ const kakaoOf = (link: string) => /place\.map\.kakao\.com\/(\d+)/.exec(link)?.[1
 /** The home's shelves: `shelves` (buildShelves) and each mood's places (home.ts moodShelf, nearest first) in homeOrder, each
  * place once — a place another shelf before it took (by id, 카카오 id or name: a curated place may be a mood's too) is passed
  * over — at most PER_SHELF a shelf, an empty one not there, then those under FULL at the back (ADR-0115 Amendment 3). */
-export function homeShelves(shelves: readonly Shelf[], moods: Partial<Record<MoodShelf, readonly Spot[]>>, minute: number, sunset: number): HomeShelf[] {
+export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShelf, readonly Spot[]>>, minute: number, sunset: number, here: Spot | null = null): HomeShelf[] {
   const rank = ORDER[bandOf(minute, sunset)];
+  // 지금 여기서's place (`here`) is on the home already: not on a shelf again
+  const own = (c: BrowseCard) => !!here && (c.item.title === here.name || (!!here.kakaoPlaceId && kakaoOf(c.item.link) === here.kakaoPlaceId));
+  const shelves = all.map((s) => ({ ...s, cards: s.cards.filter((c) => !own(c)) })).filter((s) => s.cards.length);
   const fun = new Map(shelves.map((s) => [s.key, s]));
-  const taken = new Set<string>(shelves.flatMap((s) => s.cards.flatMap((c) => [c.item.title, kakaoOf(c.item.link) ?? ''])).filter(Boolean));
+  const taken = new Set<string>([...shelves.flatMap((s) => s.cards.flatMap((c) => [c.item.title, kakaoOf(c.item.link) ?? ''])), ...(here ? [here.id, here.name, here.kakaoPlaceId ?? ''] : [])].filter(Boolean));
   const out: HomeShelf[] = [];
   for (const key of homeOrder([...fun.keys()].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)), minute)) {
     const f = fun.get(key as ShelfKey);
@@ -155,6 +158,16 @@ export function homeShelves(shelves: readonly Shelf[], moods: Partial<Record<Moo
   }
   const size = (s: HomeShelf) => ('spots' in s ? s.spots : s.cards).length;
   return out.sort((a, b) => Number(size(a) < FULL) - Number(size(b) < FULL));
+}
+
+/** 서울 홈 shows this many shelves before 선반 더 보기 (ADR-0117 Amendment 3·4). */
+export const HOME_ROWS = 9;
+/** Which shelves are shown before 선반 더 보기 (Amendment 4): the five moods' always (their headings are the mood buttons), the
+ * rest of HOME_ROWS the others in the order they come; the order itself is kept. */
+export function homeShown(list: readonly { key: HomeKey }[]): boolean[] {
+  const moods = list.filter((s) => (MOOD_SHELVES as readonly string[]).includes(s.key)).length;
+  let room = Math.max(0, HOME_ROWS - moods);
+  return list.map((s) => (MOOD_SHELVES as readonly string[]).includes(s.key) || room-- > 0);
 }
 
 const hhmm = (m: number) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;

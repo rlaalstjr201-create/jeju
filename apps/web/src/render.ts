@@ -1387,13 +1387,21 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     els.today.classList.toggle('wait', !spots);
     const here = renderNow(s, spots || null, origin);
     // 서울 홈 (ADR-0117): the shelves where the moods were (their buttons hidden, 아무거나 under them; 지금 여기서's place not
-    // again on them); a shelf's sideways
-    // scroll is kept across a redraw (the list's minute moves on under the thumb)
-    const shelves = NATION && s.dest === 'seoul' && !dated && origin && spots ? culturePart()?.shelvesBlock(doc, s, origin, Object.fromEntries(MOOD_KEYS.map((m) => [m, moodShelf(s, spots, origin, m).filter((x) => x.id !== here?.id)])), shelfLabels(), (x) => ({ id: x.id, name: splitName(PLACE.name(x)).main, image: x.image!, trip: travelText(travel(origin.point, origin.isPoint, x)) })) : null;
+    // again on them). A redraw that changes nothing keeps the block; one that does keeps each shelf's sideways scroll and
+    // the focused card (Amendment 4)
+    const shelves = NATION && s.dest === 'seoul' && !dated && origin && spots ? culturePart()?.shelvesBlock(doc, s, origin, Object.fromEntries(MOOD_KEYS.map((m) => [m, moodShelf(s, spots, origin, m)])), shelfLabels(), (x) => ({ id: x.id, name: splitName(PLACE.name(x)).main, image: x.image!, trip: travelText(travel(origin.point, origin.isPoint, x)) }), here) : null;
     const old = doc.getElementById('shelves');
-    if (shelves && old) for (const r of old.querySelectorAll<HTMLElement>('[data-shelf]')) shelves.querySelector<HTMLElement>(`[data-shelf="${r.dataset.shelf}"]`)?.scrollTo?.({ left: r.scrollLeft });
-    old?.remove();
-    if (shelves) els.lede.after(shelves);
+    if (shelves !== old) {
+      // read before it goes; put back once the new block is in the page (a box out of it has no scroll)
+      const left = new Map([...(old?.querySelectorAll<HTMLElement>('[data-shelf]') ?? [])].map((r) => [r.dataset.shelf, r.scrollLeft]));
+      const focused = old?.contains(doc.activeElement) ? (doc.activeElement as HTMLElement) : null;
+      if (shelves && old) old.replaceWith(shelves);
+      else if (shelves) els.lede.after(shelves);
+      else old?.remove();
+      for (const r of shelves?.querySelectorAll<HTMLElement>('[data-shelf]') ?? []) if (left.get(r.dataset.shelf)) r.scrollLeft = left.get(r.dataset.shelf)!;
+      const same = focused && shelves ? [...shelves.querySelectorAll<HTMLElement>('button')].find((b) => b.dataset.id === focused.dataset.id && b.dataset.pin === focused.dataset.pin && b.dataset.mood === focused.dataset.mood && b.className === focused.className) : null;
+      same?.focus({ preventScroll: true });
+    }
     els.lede.hidden = !!shelves;
     const moodList = els.moods[0]?.closest('ul');
     if (moodList) moodList.hidden = !!shelves;
@@ -1863,9 +1871,15 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
       /* no layout */
     }
   };
+  /** the home's: the mood in use, or the first; 서울 홈's shelves (its buttons hidden): that mood's shelf heading (Amendment 4) */
+  const homeFocus = (): HTMLElement | undefined => {
+    const cur = els.moods.find((b) => b.getAttribute('aria-current') === 'true') ?? els.moods[0];
+    if (!cur?.closest('ul')?.hidden) return cur;
+    return doc.querySelector<HTMLElement>(`#shelves .shelf-go[data-mood="${cur.dataset.mood}"]`) ?? doc.querySelector<HTMLElement>('#shelves .shelf-go') ?? cur;
+  };
   function focusView(view: View) {
     const target =
-      view === 'cards' ? els.crumb : view === 'saved' ? els.savedTitle : (els.moods.find((b) => b.getAttribute('aria-current') === 'true') ?? els.moods[0]);
+      view === 'cards' ? els.crumb : view === 'saved' ? els.savedTitle : homeFocus();
     target?.focus({ preventScroll: true });
   }
   /** Screens change instantly and start at the top; closing the saved list goes back to where you were. */

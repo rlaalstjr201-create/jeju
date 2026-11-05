@@ -93,14 +93,23 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     expect(shelves().compareDocumentPosition(any) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(shelfRows().length).toBeGreaterThanOrEqual(4);
     expect(shelfRows().length).toBeLessThanOrEqual(SHELVES.length + MOODS.length);
-    // 8 drawn, the rest behind 선반 더 보기 (Amendment 3); pressed, all of them
-    const shown = () => $$('#shelves .shelf:not([hidden])').length;
-    expect(shown()).toBe(Math.min(8, shelfRows().length));
-    if (shelfRows().length > 8) {
+    // at most 9 shown, the five moods' among them, the rest behind 선반 더 보기 (Amendment 4); pressed, all of them, the focus on
+    // the first it opened
+    const shown = () => $$('#shelves .shelf:not([hidden])');
+    expect(shown().length).toBe(Math.min(9, shelfRows().length));
+    for (const m of MOODS) expect(shown().map((x) => x.querySelector<HTMLElement>('.shelf-row')!.dataset.shelf)).toContain(m);
+    if (shelfRows().length > 9) {
+      const first = $('#shelves .shelf[hidden] h2');
       await tap('#shelves .shelves-more');
-      expect(shown()).toBe(shelfRows().length);
+      expect(shown()).toHaveLength(shelfRows().length);
       expect($('#shelves .shelves-more')).toBeNull();
+      expect(document.activeElement).toBe(first);
     }
+    // a redraw that changes nothing keeps the block itself (its scroll and focus)
+    const block = shelves();
+    document.dispatchEvent(new Event('visibilitychange'));
+    await wait();
+    expect(shelves()).toBe(block);
     for (const r of shelfRows()) {
       expect(r.querySelectorAll('.bcard').length).toBeGreaterThan(0);
       expect(r.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);
@@ -135,6 +144,11 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     await tap('#shelves .shelf-go[data-mood="famous"]');
     await wait();
     expect(current().state()).toMatchObject({ view: 'cards', mood: 'famous' });
+    // back: the focus on that mood's shelf heading (its button in the hidden list cannot take it)
+    await tap('#back');
+    await wait();
+    expect(current().state().view).toBe('home');
+    expect(document.activeElement).toBe($('#shelves .shelf-go[data-mood="famous"]'));
   });
 
   it("a mood card: its mood's results, that place first (Amendment 1)", async () => {
