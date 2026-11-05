@@ -221,6 +221,39 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     expect(shelfRows().some((r) => !MOODS.includes(r.dataset.shelf!))).toBe(true);
   });
 
+  it("an ask that timed out (the day's first at an edge, Amendment 6): asked again in half a minute, and the list's shelves come", async () => {
+    let clock = Date.parse('2026-11-04T18:45:00+09:00');
+    const urls: string[] = [];
+    const f: Fetch = async (url) => {
+      urls.push(url);
+      if (!url.startsWith('/api/culture')) return { ok: false, status: 204, json: async () => null };
+      // the first: no answer within fetchCulture's 15 s (as it gives up: nothing)
+      if (urls.filter((u) => u.startsWith('/api/culture')).length === 1) {
+        clock += 16_000;
+        return { ok: false, status: 204, json: async () => null };
+      }
+      return { ok: true, status: 200, json: async () => JSON.parse(JSON.stringify({ day: DAY, items })) };
+    };
+    localStorage.setItem(KEYS.dest, JSON.stringify('seoul'));
+    render({
+      loadSpots: (d, sgg) => Promise.resolve(d === 'nation' ? normalizeNation(JSON.parse(nationFile('11')), [...DEST.gangwon.sgg!, ...DEST.seoul.sgg!], sgg) : d === 'seoul' ? seoulRaw : fileSpots),
+      locate: () => Promise.resolve(경복궁),
+      geoPermission: async () => 'granted',
+      today: () => new Date(clock),
+      fetch: f,
+    });
+    await wait();
+    const asked = () => urls.filter((u) => u.startsWith('/api/culture')).length;
+    expect(asked()).toBe(1);
+    expect(shelfRows().map((r) => r.dataset.shelf).sort()).toEqual([...MOODS].sort());
+    clock += 31_000;
+    document.dispatchEvent(new Event('visibilitychange'));
+    await wait();
+    expect(asked()).toBe(2);
+    expect(shelfRows().some((r) => !MOODS.includes(r.dataset.shelf!))).toBe(true);
+    expect($$('#shelves .cult-src').length).toBeGreaterThan(0);
+  });
+
   it("another day's list: the moods' shelves alone", async () => {
     const c = cultureFetch({ day: '2026-11-03', items });
     mount(c.f);

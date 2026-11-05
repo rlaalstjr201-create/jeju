@@ -464,6 +464,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   // day, and a failed ask is tried again 5 minutes on (as 비 소식). The minute its picks are read at moves on with the draws
   // and, while the home is up, a 5-minute timer. ---
   let cultureAsked: { day: string; at: number } | null = null;
+  /** an ask unanswered this long timed out (fetchCulture waits 15 s); asked again this soon after (Amendment 6) */
+  const CULTURE_SLOW_MS = 14_000;
+  const CULTURE_QUICK_MS = 30_000;
   let cultureBusy = false;
   let cultureTimer: ReturnType<typeof setTimeout> | null = null;
   function askCulture() {
@@ -484,10 +487,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     cultureAsked = { day, at };
     cultureBusy = true;
     const get = deps.fetch;
+    let sent = at;
     void loadCulture()
       .then((ok) => {
         // 서울 홈의 기분 선반 at once (ADR-0117); the day's own when the list comes
         if (ok && !signal.aborted) void (batching || held ? (unrendered = true) : renderer.render(state));
+        sent = clockNow().getTime();
         return ok ? culturePart()!.fetchCulture(get) : null;
       })
       .then((c) => {
@@ -496,6 +501,15 @@ export function mountApp(doc: Document, deps: Deps): App {
           dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
           // a card's sheet whose item is not in the new list: closed
           if (state.overlay === 'browse-card' && !c.items.some((i) => i.id === state.browseId)) closeOverlay();
+        } else if (!signal.aborted && !c && clockNow().getTime() - sent >= CULTURE_SLOW_MS) {
+          // no answer in time (the day's first ask at an edge builds the list for longer than fetchCulture waits): the edge
+          // goes on and keeps it (waitUntil), so it is asked again in half a minute, not in five (ADR-0117 Amendment 6)
+          cultureAsked = { day, at: clockNow().getTime() - RAIN_RETRY_MS + CULTURE_QUICK_MS };
+          if (cultureTimer) {
+            clearTimeout(cultureTimer);
+            timers.delete(cultureTimer);
+          }
+          cultureTimer = later(CULTURE_QUICK_MS + 1000, askCulture);
         }
       });
   }
