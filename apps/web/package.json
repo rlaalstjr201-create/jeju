@@ -11,6 +11,7 @@
     "test": "vitest run",
     "test:busan": "vitest run --mode busan",
     "test:nation": "vitest run --mode nation",
+    "test:mutation": "stryker run",
     "e2e": "npm run build && node tests/e2e/browser.e2e.mjs",
     "e2e:busan": "vite build --mode busan && tsx scripts/build-landing.mjs && node tests/e2e/browser.e2e.mjs",
     "e2e:nation": "vite build --mode nation && tsx scripts/build-landing.mjs && node tests/e2e/browser.e2e.mjs",
@@ -35,6 +36,8 @@
     "seo:forecast": "node scripts/seo/forecast.mjs"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "~8.7.1",
+    "@stryker-mutator/vitest-runner": "~8.7.1",
     "@types/node": "^20.19.41",
     "@types/pg": "^8.11.0",
     "dotenv": "^16.4.5",
