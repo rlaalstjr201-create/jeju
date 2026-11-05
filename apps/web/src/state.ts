@@ -452,29 +452,38 @@ export const openPhase = (s: State, clock: number | null): number | null =>
 /** 서울 (ADR-0117 Amendment 4·5): no place has its hours, and 지금 갈 수 없는 곳은 추천하지 않는다 — a place one goes in to look
  * round (박물관·미술관·갤러리·궁 …, by its name: the data has no kind) keeps the usual hours, a palace 9:00–18:00 and the rest
  * 10:00–18:00, and is left out from half an hour before it closes. A name can not catch them all: the kinds themselves are
- * S1.5's (Amendment 5). Not one of them: a 걷기·쉬기 place (a 돌담길 is walked at night), 아쿠아리움, a stage (아트센터,
- * 극장), a street, a park or a station. The edges fall on OPEN_STEP, so the home is drawn again at them. */
+ * S1.5's (Amendment 5): a place with its 영업 유형 (Spot.opening, Amendment 7) is read by that, the names only without one.
+ * Not one of them by name: a 걷기·쉬기 place (a 돌담길 is walked at night), 아쿠아리움, a stage (아트센터, 극장), a street, a
+ * park or a station. The edges fall on OPEN_STEP, so the home is drawn again at them. */
 const PALACE = /궁(?:과|$|[\s(])|종묘/;
 const VIEWING = /박물관|미술관|기념관|전시관|전시실|역사관|과학관|문학관|기록관|뮤지엄|갤러리|화랑(?!대)|아트스페이스|스페이스K|사랑채|퐁피두|리움|학고재|바라캇|화이트큐브|푸투라|^송은$|^피크닉$/;
 const NOT_VIEWING = /아쿠아리움|아트센터|극장|길$|거리$|공원|역$/;
 export const VIEW_HOURS: readonly [number, number] = [10 * 60, 18 * 60];
 const PALACE_OPEN = 9 * 60;
 export function viewingShut(x: Spot, minute: number): boolean {
+  // S1.5 (Amendment 7): a place with its 영업 유형 by that, from half an hour before it closes, the way to it not counted
+  const o = x.opening;
+  if (o === 'always') return false;
+  if (o === 'day-viewing' || o === 'palace' || (Array.isArray(o) && o.length === 2)) {
+    const [open, close] = o === 'day-viewing' ? VIEW_HOURS : o === 'palace' ? [PALACE_OPEN, VIEW_HOURS[1]] : o;
+    const fits = (t: number) => t >= open && t < close - 30;
+    return !fits(minute) && !fits(minute + 1440);
+  }
   if (x.mood === 'food' || x.mood === 'walk' || x.mood === 'rest' || NOT_VIEWING.test(x.name)) return false;
   const open = PALACE.test(x.name) ? PALACE_OPEN : VIEWING.test(x.name) ? VIEW_HOURS[0] : null;
   return open !== null && (minute < open || minute >= VIEW_HOURS[1] - 30);
 }
-const viewCache = new WeakMap<Spot[], { at: string; list: Spot[] }>();
-/** `spots` without what is shut now by viewingShut: 서울, 지금, the time read; as it is elsewhere and in the open hours. */
+const viewCache = new WeakMap<Spot[], { minute: number; list: Spot[] }>();
+/** `spots` without what is shut now by viewingShut: 서울, 지금, the time read; as it is elsewhere. The same list (the same
+ * array) while what is shut stays the same. */
 export function openSpots(s: State, spots: Spot[]): Spot[] {
   const m = s.clock;
-  if (s.dest !== 'seoul' || s.when !== 'now' || m === null || (m >= VIEW_HOURS[0] && m < VIEW_HOURS[1] - 30)) return spots;
-  // the same list before 9:00 and from 17:30; between 9 and 10 the palaces are open
-  const at = m >= PALACE_OPEN && m < VIEW_HOURS[0] ? 'palace' : 'shut';
+  if (s.dest !== 'seoul' || s.when !== 'now' || m === null) return spots;
   const hit = viewCache.get(spots);
-  if (hit?.at === at) return hit.list;
-  const list = spots.filter((x) => !viewingShut(x, m));
-  viewCache.set(spots, { at, list });
+  if (hit?.minute === m) return hit.list;
+  const fresh = spots.filter((x) => !viewingShut(x, m));
+  const list = hit && hit.list.length === fresh.length && hit.list.every((x, i) => x === fresh[i]) ? hit.list : fresh;
+  viewCache.set(spots, { minute: m, list });
   return list;
 }
 

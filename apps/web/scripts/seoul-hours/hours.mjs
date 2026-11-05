@@ -3,6 +3,8 @@
  *
  *   node scripts/seoul-hours/hours.mjs prep     data/seoul/spots-seoul.json → review/seoul-hours/input/batch-NN.json (먹기 뺀 곳, 묶음 20개)
  *   node scripts/seoul-hours/hours.mjs sample   review/seoul-hours/out/batch-NN.json → audit-01-input.json(라벨 없음) + audit-01-key.json
+ *   node scripts/seoul-hours/hours.mjs apply    review/seoul-hours/out/batch-NN.json → data/seoul/spots-seoul.json 각 곳의 `opening`
+ *                                               (§8, ADR-0117 Amendment 7 — 서울 목록을 다시 만들면 다시 돌린다)
  */
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -112,10 +114,50 @@ function sample() {
   console.log(`판정 ${verdicts.length}곳 ${JSON.stringify(counts)} → 감사 표본 ${ids.length}곳`);
 }
 
+/** `HH:MM` → 분. */
+const minutes = (t) => {
+  const m = /^(\d{2}):(\d{2})$/.exec(t ?? '');
+  if (!m) throw new Error(`시각을 읽지 못함: ${t}`);
+  return +m[1] * 60 + +m[2];
+};
+
+/** 감사를 통과한 라벨(audit-01-result.md: 네 라벨 모두)을 장소에 싣는다: day-viewing·palace·always는 그 이름, evening은
+ * [여는 분, 닫는 분](닫는 시각이 여는 시각보다 이르면 자정 넘김, +1440). unknown은 싣지 않는다(앱은 이름 규칙). 다른 칸·순서·
+ * 직렬화는 그대로다. */
+function apply() {
+  const verdicts = readdirSync(resolve(dir, 'out'))
+    .filter((f) => /^batch-\d+\.json$/.test(f))
+    .sort()
+    .flatMap((f) => readJson(resolve(dir, 'out', f)).items);
+  const byId = new Map(verdicts.map((v) => [v.id, v]));
+  const all = JSON.parse(readFileSync(SRC, 'utf8'));
+  let n = 0;
+  for (const x of all) {
+    delete x.opening;
+    const v = byId.get(x.id);
+    if (!v || v.label === 'unknown') continue;
+    if (v.label === 'evening') {
+      const open = minutes(v.open);
+      let close = minutes(v.close);
+      if (close <= open) close += 1440;
+      x.opening = [open, close];
+    } else x.opening = v.label;
+    n++;
+  }
+  const missing = verdicts.filter((v) => !all.some((x) => x.id === v.id)).length;
+  if (missing) {
+    console.error(`판정한 곳 ${missing}곳이 서울 목록에 없음`);
+    process.exit(1);
+  }
+  writeFileSync(SRC, JSON.stringify(all));
+  console.log(`서울 ${all.length}곳 중 ${n}곳에 영업 유형`);
+}
+
 const cmd = process.argv[2];
 if (cmd === 'prep') prep();
 else if (cmd === 'sample') sample();
+else if (cmd === 'apply') apply();
 else {
-  console.error('prep | sample');
+  console.error('prep | sample | apply');
   process.exit(1);
 }

@@ -98,3 +98,11 @@ ADR-0088과 다른 점 (서울 홈 선반 안에서만):
 
 - 미리보기 실기(18:45 KST, 용산·노원)에서 `/api/culture`는 200으로 왔지만 서울 홈에는 기분 선반만 있었다. 로컬에서 응답을 16초 늦추면(Playwright route) 똑같이 재현된다. 원인: 그날 그 엣지의 첫 요청은 목록을 만드느라 앱이 기다리는 15초(`fetchCulture`)를 넘기고, 앱은 빈손으로 끝낸 뒤 5분 뒤에야 다시 묻는다. 엣지는 그사이에도 목록을 끝까지 만들어 둔다(waitUntil).
 - 고침: 묻고 14초 넘게 답이 없었으면 5분이 아니라 30초 뒤에 다시 묻는다(`app.ts askCulture`). 실제 Chrome에서 첫 응답을 16초 늦춰도 55초 안에 즐길 거리·행사 선반과 출처 줄이 보인다. 테스트: `culture-app.test.ts` 「an ask that timed out」.
+
+## Amendment 7 (2026-11-05) — S1.5 영업 유형 반영 (`apps/web/review/seoul-hours/criteria-01.md` §8)
+
+- **무엇을**: 감사를 통과한 네 라벨(`audit-01-result.md`: 일치 73/75 = 97.3%, 라벨마다 90% 이상)을 서울 장소 821곳에 싣는다 — day-viewing 338·palace 15·always 358·evening 110. 모름 333곳과 먹기는 싣지 않는다. 앱(`state.ts viewingShut`)은 라벨이 있으면 라벨 시간으로 본다: day-viewing 10:00–18:00, palace 09:00–18:00, always 늘 열림, evening 판정의 여는·닫는 시각(닫는 시각이 이르면 자정 넘김). 마감 30분 전부터 뺀다(`fun.ts likelyOpen`과 같은 30분). 가는 시간은 세지 않는다 — Amendment 4의 기분 규칙과 같다. 라벨이 없거나 모름이면 Amendment 4·5의 이름 규칙 그대로다. 라벨이 이름 규칙보다 먼저다(걷기·쉬기 곳도 관람형 라벨이면 뺀다). 쓰는 곳은 그대로(서울·지금의 기분 결과·「지금 여기서」·아무거나·기분 선반, `openSpots`). evening의 여닫는 시각은 모두 30분 단위라 홈을 다시 그리는 경계(`openPhase`)에 떨어진다(테스트).
+- **자료를 어디에**: 서울 목록 파일 `data/seoul/spots-seoul.json`의 각 곳에 `opening` 칸(`'day-viewing' | 'palace' | 'always' | [여는 분, 닫는 분]`)으로 싣는다(`scripts/seoul-hours/hours.mjs apply`, 다른 칸·순서·직렬화는 그대로). 고른 까닭: 서울 장소를 받을 때 같이 오고 서울에서만 받는 파일이라 진입 번들에 자료가 들어가지 않는다(진입에는 읽는 코드만). 따로 파일이나 청크를 두면 받는 시점이 어긋날 수 있고(라벨 없이 그린 화면), 서비스 워커·`_headers`·`check:jeju` 목록에 새 항목이 생긴다. 대가: 파일 내용이 바뀌어 `__SEOUL_V__`가 바뀌고 서울 방문자는 목록을 한 번 새로 받는다. 서울 목록을 다시 만들면(`scripts/curated/build.mjs`) `opening`이 빠지므로 `hours.mjs apply`를 다시 돌린다 — 빠지면 `browse.test.ts`(821곳)가 떨어진다. `npm run build:spots`(제주)와는 무관하다.
+- **판정 모델이 기준과 달랐다**: 기준 §6은 판정을 새 Opus로 적었으나 실제 판정은 Sonnet 하위 에이전트가 했다(진행자 지시 실수). 블라인드 감사(새 Opus)가 게이트를 넘었으므로 결과를 쓴다(`audit-01-result.md`).
+- 테스트(`browse.test.ts`): 22시 용산·삼청·노원(실내만 켬·끔)의 기분 선반·「지금 여기서」에 day-viewing·palace 라벨 곳 0, 19시 evening 곳(롯데월드 아쿠아리움 10:00–21:00) 남음·20:30부터 빠짐, always는 3시에도 남음, 궁은 9:30에 열림, 모름(청와대칠궁·코엑스 아쿠아리움)은 이름 규칙 그대로. 진입 gzip 61,252 B(기준선 61,168 B, +84 B, 예산 70,000 B), 서울 목록 gzip +2.1 KB. 22시 용산 화면: `apps/web/design/qa/seoul-shelves/22h/home-375-light-s15.png`(기분 선반에 관람형·궁 라벨 곳 없음).
+- 남은 것: 모름 333곳은 여전히 이름 규칙이라 밤에 남을 수 있다(22시 용산에서 용산어린이정원·국립서울현충원·현대카드 뮤직 라이브러리·노량진 지하 배수로·팝콘D스퀘어 등).

@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { FULL, HOME_ROWS, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, homeShown, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
 import { normalizeSpots } from '../src/data';
 import { moodShelf, nowSpot } from '../src/home';
-import { initialState, viewingShut } from '../src/state';
+import { initialState, openSpots, viewingShut } from '../src/state';
 import type { Spot } from '../src/pick';
 import { openNow, type Now } from '../src/culture';
 import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/fun';
@@ -314,6 +314,64 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     const now = nowSpot(s, seoul, origin);
     expect(now?.name ?? '').not.toMatch(NAMED);
     for (const m of MOOD_SHELVES) for (const x of moodShelf(s, seoul, origin, m).slice(0, PER_SHELF * 2)) expect(x.name).not.toMatch(NAMED);
+  });
+
+  // S1.5 (Amendment 7): 서울's places by their 영업 유형 (review/seoul-hours, Spot.opening); 모름 or none by the names
+  const seoulAt = (p: { lat: number; lng: number }, h: number, indoor = false) => {
+    const s = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: h * 60, indoor });
+    const origin = { key: 'gps', point: p, isPoint: true, from: '' };
+    return { now: nowSpot(s, seoul, origin), shelves: MOOD_SHELVES.flatMap((m) => moodShelf(s, seoul, origin, m)) };
+  };
+  it.each([
+    ['용산', HERE.용산],
+    ['삼청', 삼청],
+    ['노원', HERE.노원],
+  ] as const)('22:00 %s: no 관람형 or 궁 by its 영업 유형 on 지금 여기서 or a mood shelf (Amendment 7)', (_, p) => {
+    for (const indoor of [false, true]) {
+      const { now, shelves } = seoulAt(p, 22, indoor);
+      for (const x of [...(now ? [now] : []), ...shelves]) expect(x.opening === 'day-viewing' || x.opening === 'palace', x.name).toBe(false);
+      if (!indoor) expect(now).not.toBeNull();
+      expect(shelves.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('by its 영업 유형 (Amendment 7): evening to its close, 늘 at dawn, 궁 at 9:30, 모름 by the names', () => {
+    const byId = (id: string) => seoul.find((x) => x.id === id)!;
+    expect(seoul.filter((x) => x.opening).length).toBe(821);
+    // an evening place (롯데월드 아쿠아리움, 10:00–21:00) stays at 19:00, out from 20:30
+    const aqua = byId('nt-2476731');
+    expect(aqua.opening).toEqual([600, 1260]);
+    expect(viewingShut(aqua, 19 * 60)).toBe(false);
+    expect(viewingShut(aqua, 20 * 60 + 30)).toBe(true);
+    const s19 = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: 19 * 60 });
+    expect(openSpots(s19, seoul)).toContain(aqua);
+    // the evening places at 19:00: all those open by 18:30 and closing from 20:00 on
+    for (const x of seoul.filter((x) => Array.isArray(x.opening))) {
+      const [o, c] = x.opening as [number, number];
+      if (o <= 18 * 60 + 30 && c >= 20 * 60) expect(viewingShut(x, 19 * 60), x.name).toBe(false);
+      // the edges fall on the half hour (OPEN_STEP), where the home is drawn again
+      expect([o % 30, c % 30]).toEqual([0, 0]);
+    }
+    // past midnight: 18:00–02:00 is open at 01:00, out from 01:30
+    const late = { id: 'l', name: '바', mood: 'new', opening: [18 * 60, 26 * 60] } as Spot;
+    expect([viewingShut(late, 60), viewingShut(late, 90), viewingShut(late, 23 * 60)]).toEqual([false, true, false]);
+    // 늘 열림: at 3:00 too
+    const always = seoul.filter((x) => x.opening === 'always');
+    for (const x of always) expect(viewingShut(x, 3 * 60), x.name).toBe(false);
+    const s3 = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: 3 * 60 });
+    const open3 = new Set(openSpots(s3, seoul));
+    for (const x of always) expect(open3.has(x)).toBe(true);
+    // 궁 open at 9:30, the 관람형 not yet; both out from 17:30
+    for (const x of seoul.filter((x) => x.opening === 'palace')) expect([viewingShut(x, 9 * 60 + 30), viewingShut(x, 17 * 60 + 30), viewingShut(x, 8 * 60 + 59)], x.name).toEqual([false, true, true]);
+    for (const x of seoul.filter((x) => x.opening === 'day-viewing')) expect([viewingShut(x, 9 * 60 + 30), viewingShut(x, 14 * 60), viewingShut(x, 17 * 60 + 30)], x.name).toEqual([true, false, true]);
+    // 모름 or not judged: the names, as before (청와대칠궁 and 코엑스 아쿠아리움 are 모름)
+    expect(byId('nt-3056238').opening).toBeUndefined();
+    expect([viewingShut(byId('nt-3056238'), 9 * 60 + 30), viewingShut(byId('nt-3056238'), 22 * 60)]).toEqual([false, true]);
+    expect(byId('nt-130284').opening).toBeUndefined();
+    expect(viewingShut(byId('nt-130284'), 22 * 60)).toBe(false);
+    // the label before the names: a 걷기 place labeled 관람형 is out at 22:00, a 박물관 labeled 늘 is in
+    expect(viewingShut({ id: 'w', name: '식물원', mood: 'walk', opening: 'day-viewing' } as Spot, 22 * 60)).toBe(true);
+    expect(viewingShut({ id: 'm', name: '야외박물관', mood: 'new', opening: 'always' } as Spot, 22 * 60)).toBe(false);
   });
 
   it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf keeps its place; a short one goes to the back', () => {

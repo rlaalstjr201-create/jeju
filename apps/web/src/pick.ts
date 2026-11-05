@@ -62,6 +62,9 @@ export interface Spot {
   hide?: string;
   /** 예약 없이 가는 곳 (ADR-0074 Amendment 1): a 체험 with tickets on site or free entry — shown without a route. */
   walkin?: true;
+  /** 서울's 영업 유형 (ADR-0117 Amendment 7, review/seoul-hours): 관람형 10–18, 궁 9–18, 늘 열림, or an evening place's
+   * [open, close] in minutes (close past 1440 past midnight). Unset: not judged, or 모름 (state.ts viewingShut's names). */
+  opening?: 'day-viewing' | 'palace' | 'always' | [number, number];
 }
 
 export type BookKind = 'naver' | 'mrt' | 'visitjeju' | 'homepage' | 'phone';
