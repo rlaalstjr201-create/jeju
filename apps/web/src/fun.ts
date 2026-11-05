@@ -68,14 +68,22 @@ const VENUE = H(13, 23);
 export function hoursOf(word: string): readonly [number, number] {
   return HOURS.find(([re]) => re.test(word))?.[1] ?? (/KOPIS|소극장|라이브|인디|버스킹/.test(word) ? VENUE : ALL_DAY);
 }
-/** Likely open at `minute` (KST) with `travel` minutes to get there, at least half an hour before its usual close. 직관 only in
- * the season (March to October). */
-export function likelyOpen(it: FunItem, minute: number, travel: number, month: number): boolean {
+/** 클럽 (ADR-0122 Amendment 1): Friday and Saturday nights only (22:00 that day to 05:00 the next) — Seoul's clubs mostly open
+ * at the weekend, and a place one cannot go to now is never shown */
+const WEEKEND_NIGHT = /^클럽$/;
+/** Likely open at `minute` (KST) on `weekday` (0 = Sunday) with `travel` minutes to get there, at least half an hour before its
+ * usual close. 직관 only in the season (March to October); a club only on a Friday or Saturday night (no `weekday`: not open). */
+export function likelyOpen(it: FunItem, minute: number, travel: number, month: number, weekday?: number): boolean {
   if (it.fun.g === 'G6' && (month < 3 || month > 10)) return false;
   const [open, close] = hoursOf(it.fun.word);
   if (open === 0 && close >= 1440) return true; // all day and night (찜질방)
   const fits = (t: number) => t >= open && t <= close - 30;
   const at = minute + travel;
+  if (WEEKEND_NIGHT.test(it.fun.word)) {
+    // the night the arrival belongs to: before noon it is the evening before's
+    const eve = weekday === undefined ? -1 : at < 12 * 60 ? (weekday + 6) % 7 : weekday;
+    if (eve !== 5 && eve !== 6) return false;
+  }
   // past midnight: the same minute read as late in the evening before (a bar open to 02:00), or as early on the next day
   return fits(at) || fits(at + 1440) || (at >= 1440 && fits(at - 1440));
 }

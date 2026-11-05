@@ -52,7 +52,7 @@ function candOf(item: CultureItem, now: Now, origin: Point | null): Cand | null 
   const trip = km === null ? null : seoulMinutes(km);
   if (isFun(item)) {
     if (item.fun.g === 'hood') return { item, km, trip, why: '' };
-    return likelyOpen(item, now.minute, trip?.minutes ?? 0, month(now.day)) ? { item, km, trip, why: item.place } : null;
+    return likelyOpen(item, now.minute, trip?.minutes ?? 0, month(now.day), now.weekday) ? { item, km, trip, why: item.place } : null;
   }
   const t = parseCultureTime(item.time);
   if (isWeek(item)) {

@@ -1,12 +1,12 @@
 // 서울 밤 놀거리 (ADR-0122): the G10 shelf among the curated places — bars 19~02, clubs 22~05, its place in the hour's order
-// (fourth at night after 무대·라이브·포차, second past midnight), and the pre-registered rules (review/seoul-night/criteria-03.md)
+// (fourth at night after 무대·라이브·포차, second past midnight), clubs on Friday and Saturday nights only (Amendment 1), and the pre-registered rules (review/seoul-night/criteria-03.md)
 // the curation script keeps.
 import { describe, expect, it } from 'vitest';
 import FILE from '../data/seoul/fun-seoul.json';
 import { ORDER, SHELVES, buildShelves } from '../src/browse';
 import type { CultureItem, Now } from '../src/culture';
 import { hoursOf, likelyOpen, type FunItem } from '../src/fun';
-import { ADULT, CUT, KINDS, LP_JAZZ, brandOf, isMass, kindOf, okCategory, oneEach, passes, r6Out } from '../scripts/seoul-night/curate-03.mjs';
+import { ADULT, CUT, KINDS, LP_JAZZ, OWNER_DROP, brandOf, isMass, kindOf, okCategory, oneEach, passes, r6Out } from '../scripts/seoul-night/curate-03.mjs';
 
 const DAY = '2026-11-04';
 const at = (h: number, m = 0): Now => ({ day: DAY, weekday: 3, minute: h * 60 + m });
@@ -20,14 +20,28 @@ describe('밤 놀거리 hours (ADR-0122 7)', () => {
     expect(hoursOf('클럽')).toEqual([1320, 1740]);
     expect(hoursOf('루프탑')).toEqual([720, 1440]);
   });
-  it('a bar at 19:00 and past midnight to 01:30, not at 15:00; a club at 23:00 and 04:00, not at 20:00', () => {
-    expect(likelyOpen(bar('1', '칵테일바'), 19 * 60, 0, 11)).toBe(true);
-    expect(likelyOpen(bar('1', '칵테일바'), 60 + 30, 0, 11)).toBe(true);
-    expect(likelyOpen(bar('1', '칵테일바'), 60 + 31, 0, 11)).toBe(false);
-    expect(likelyOpen(bar('1', '칵테일바'), 15 * 60, 0, 11)).toBe(false);
-    expect(likelyOpen(bar('2', '클럽'), 23 * 60, 0, 11)).toBe(true);
-    expect(likelyOpen(bar('2', '클럽'), 4 * 60, 0, 11)).toBe(true);
-    expect(likelyOpen(bar('2', '클럽'), 20 * 60, 0, 11)).toBe(false);
+  it('a bar at 19:00 and past midnight to 01:30, not at 15:00, any day', () => {
+    expect(likelyOpen(bar('1', '칵테일바'), 19 * 60, 0, 11, 2)).toBe(true);
+    expect(likelyOpen(bar('1', '칵테일바'), 60 + 30, 0, 11, 2)).toBe(true);
+    expect(likelyOpen(bar('1', '칵테일바'), 60 + 31, 0, 11, 2)).toBe(false);
+    expect(likelyOpen(bar('1', '칵테일바'), 15 * 60, 0, 11, 2)).toBe(false);
+  });
+  it('a club on Friday and Saturday nights only, 22:00 to 04:30 the next morning (Amendment 1)', () => {
+    const club = bar('2', '클럽');
+    // Friday 23:00, Saturday 23:00 open; Wednesday and Sunday 23:00 shut
+    expect(likelyOpen(club, 23 * 60, 0, 11, 5)).toBe(true);
+    expect(likelyOpen(club, 23 * 60, 0, 11, 6)).toBe(true);
+    expect(likelyOpen(club, 23 * 60, 0, 11, 3)).toBe(false);
+    expect(likelyOpen(club, 23 * 60, 0, 11, 0)).toBe(false);
+    // past midnight it is the evening before's: Saturday 04:00 (Friday night) and Sunday 04:00 (Saturday night) open, Friday 04:00 not
+    expect(likelyOpen(club, 4 * 60, 0, 11, 6)).toBe(true);
+    expect(likelyOpen(club, 4 * 60, 0, 11, 0)).toBe(true);
+    expect(likelyOpen(club, 4 * 60, 0, 11, 5)).toBe(false);
+    // Friday 23:50 with 30 minutes to go: arriving 00:20, still Friday night
+    expect(likelyOpen(club, 23 * 60 + 50, 30, 11, 5)).toBe(true);
+    expect(likelyOpen(club, 20 * 60, 0, 11, 5)).toBe(false);
+    // no weekday known: not shown
+    expect(likelyOpen(club, 23 * 60, 0, 11)).toBe(false);
   });
 });
 
@@ -38,6 +52,11 @@ describe('the 밤 놀거리 shelf (ADR-0122 1·8)', () => {
     expect(ORDER.night.slice(0, 4)).toEqual(['stage', 'g7', 'g2', 'g10']);
     expect(ORDER.late.slice(0, 2)).toEqual(['g5', 'g10']);
     expect(ORDER.day.indexOf('g10')).toBeGreaterThan(5);
+  });
+  it('a club on its shelf on a Friday night, not on a Wednesday', () => {
+    const clubs: CultureItem[] = Array.from({ length: 6 }, (_, i) => bar(String(i), '클럽'));
+    expect(buildShelves(clubs, { day: '2026-11-06', weekday: 5, minute: 23 * 60 }, null, SUNSET).map((s) => s.key)).toEqual(['g10']);
+    expect(buildShelves(clubs, at(23), null, SUNSET)).toEqual([]);
   });
   it('holds the G10 places open now with the card line 「칵테일바 · 한남」; none in the afternoon', () => {
     const list: CultureItem[] = Array.from({ length: 6 }, (_, i) => bar(String(i), i % 2 ? '와인바' : '칵테일바'));
@@ -116,7 +135,8 @@ describe('the curation rules (criteria-03.md)', () => {
 describe('the shipped 밤 놀거리 places (data/seoul/fun-seoul.json)', () => {
   const g10 = FILE.places.filter((p) => p.g === 'G10');
   it('each a known kind with its card line, a 카카오맵 link, no 유흥 name, no franchise, no LP·재즈, one place once', () => {
-    expect(g10.length).toBe(28); // criteria-03: keep 28, none already a curated place, no brand twice
+    expect(g10.length).toBe(23); // criteria-03: keep 28, none already a curated place, no brand twice; 5 OWNER_DROP (Amendment 1)
+    for (const id of Object.keys(OWNER_DROP)) expect(g10.some((p) => p.id === id), id).toBe(false);
     for (const p of g10) {
       expect(KINDS).toContain(p.word);
       expect(p.line.startsWith(`${p.word} · `)).toBe(true);
