@@ -111,7 +111,7 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     await wait();
     expect(shelves()).toBe(block);
     for (const r of shelfRows()) {
-      expect(r.querySelectorAll('.bcard').length).toBeGreaterThan(0);
+      if (!MOODS.includes(r.dataset.shelf!)) expect(r.querySelectorAll('.bcard').length).toBeGreaterThan(0);
       expect(r.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);
     }
     // the five moods' headings are their buttons, in the mood buttons' words

@@ -255,6 +255,7 @@ export const JA: Lang = {
       fromKakao: '場所の情報：カカオマップ',
       inHood: '今この街で',
       moreShelves: 'ほかの列も見る',
+      noneNear: '今行ける範囲にはありません',
       none: 'いま見て回れるものがありません。',
       today: (times) => `今日 ${times}`,
       more: '詳しく（予約・案内）',

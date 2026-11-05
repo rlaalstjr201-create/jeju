@@ -257,6 +257,7 @@ export const EN: Lang = {
       fromKakao: 'Place info: Kakao Map',
       inHood: 'In this neighbourhood now',
       moreShelves: 'More rows',
+      noneNear: 'Nothing within reach right now',
       none: 'Nothing to browse right now.',
       today: (times) => `Today ${times}`,
       more: 'Details (tickets · info)',

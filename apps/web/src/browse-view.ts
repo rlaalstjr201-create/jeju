@@ -32,6 +32,8 @@ export const BROWSE_COPY = {
   inHood: '지금 이 동네에서',
   /** 서울 홈 (ADR-0117 Amendment 3): the shelves past the first HOME_SHELVES */
   moreShelves: '선반 더 보기',
+  /** a mood's shelf with no place in reach now (Amendment 5): its heading still goes to the results */
+  noneNear: '지금 닿는 곳에 없어요',
   none: '지금 둘러볼 것이 없어요.',
   /** 오늘 시간 on the card sheet: 「오늘 11:00~18:00」 */
   today: (times: string) => `오늘 ${times}`,
@@ -162,6 +164,7 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
       row.append(...(sh as Shelf).cards.map((c) => cardLi(doc, c, later)));
     }
     sec.append(row);
+    if (!sh.cards.length) sec.append(el(doc, 'p', { class: 'note shelf-none' }, BROWSE_COPY.noneNear));
     if (!shown[i] && !allShelves) sec.hidden = true;
     box.append(sec);
   }

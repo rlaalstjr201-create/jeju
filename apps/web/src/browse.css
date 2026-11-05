@@ -115,6 +115,9 @@
 .shelves .btile .bk { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .shelves .btile .bt { -webkit-line-clamp: 2; }
 .shelves-more { margin-top: 20px; }
+/* a mood's shelf with nothing in reach: the heading and one line (Amendment 5) */
+.shelf-row:empty { display: none; }
+.shelf-none { margin: 0; color: var(--muted); }
 /* the lines under a card close-set, so a photo shelf starts on the first screen at 375 (Amendment 3) */
 .shelves .bcard .meta { margin-top: 2px; line-height: 1.4; }
 .shelves .bcard .nm { margin-top: 6px; }

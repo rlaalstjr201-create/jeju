@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { FULL, HOME_ROWS, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, homeShown, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
 import { normalizeSpots } from '../src/data';
-import { moodShelf } from '../src/home';
+import { moodShelf, nowSpot } from '../src/home';
 import { initialState, viewingShut } from '../src/state';
 import type { Spot } from '../src/pick';
 import { openNow, type Now } from '../src/culture';
@@ -229,14 +229,15 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     expect(seen.filter((sh) => size(sh) >= FULL).length).toBeGreaterThanOrEqual(4);
     for (const m of MOOD_SHELVES) expect(seen.map((sh) => sh.key)).toContain(m);
     for (const sh of list) {
-      expect(size(sh)).toBeGreaterThan(0);
+      // a mood's shelf may be empty (its heading stays, Amendment 5); the others are not there empty
+      if (!('spots' in sh)) expect(size(sh)).toBeGreaterThan(0);
       expect(size(sh)).toBeLessThanOrEqual(PER_SHELF);
     }
     // nothing shut now: the day's list and the curated places by their hours; a mood's places by 서울's usual viewing hours
     // (Amendment 4: no 박물관·미술관 at 22:00)
     for (const sh of list) if ('cards' in sh) for (const c of sh.cards) expect(browseCard(c.item, at(h), p)).not.toBeNull();
     for (const sh of list) if ('spots' in sh) for (const x of sh.spots) expect(viewingShut(x, h * 60)).toBe(false);
-    if (h === 22) for (const sh of list) if ('spots' in sh) for (const x of sh.spots) expect(x.name).not.toMatch(/박물관|미술관/);
+    if (h === 22) for (const sh of list) if ('spots' in sh) for (const x of sh.spots) expect(x.name).not.toMatch(/(박물관|미술관)$/);
     // each place once: by name, and a curated place that is a mood's place too (the same 카카오 id) once
     const names = list.flatMap((sh) => ('spots' in sh ? sh.spots.map((x) => x.name) : sh.cards.map((c) => c.item.title)));
     expect(new Set(names).size).toBe(names.length);
@@ -277,6 +278,15 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     expect(viewingShut(sp('경복궁'), 22 * 60)).toBe(true);
     expect(viewingShut(sp('궁중족발', 'food'), 22 * 60)).toBe(false);
     expect(viewingShut(sp('남산 야외식물원', 'walk'), 22 * 60)).toBe(false);
+    // Amendment 5: 「궁과」, the galleries the review named, a palace from 9:00; not 아쿠아리움, a stage, a 돌담길, 화랑대
+    expect(viewingShut(sp('창덕궁과 후원'), 22 * 60)).toBe(true);
+    expect(viewingShut(sp('창덕궁과 후원'), 9 * 60 + 30)).toBe(false);
+    expect(viewingShut(sp('리움미술관'), 9 * 60 + 30)).toBe(true);
+    for (const n of ['푸투라서울', '학고재', '바라캇 서울', '송은', '화이트큐브 서울', '스페이스K 서울', '피크닉']) expect(viewingShut(sp(n), 22 * 60)).toBe(true);
+    for (const n of ['코엑스 아쿠아리움', '롯데월드 아쿠아리움']) expect(viewingShut(sp(n), 19 * 60)).toBe(false);
+    for (const n of ['LG아트센터 서울', '창덕궁 소극장', '화랑대역']) expect(viewingShut(sp(n), 20 * 60)).toBe(false);
+    expect(viewingShut(sp('덕수궁 돌담길', 'walk'), 22 * 60)).toBe(false);
+    expect(viewingShut(sp('화랑대 철도공원', 'rest'), 22 * 60)).toBe(false);
   });
 
   it("the order table: 먹기 second at 밥때 (else after the hour's), 유명한 데 third, 놀러 fifth, 쉬기·걷기 last", () => {
@@ -290,16 +300,32 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     expect(homeOrder([], 12 * 60)).toEqual(['food', 'famous', 'new', 'rest', 'walk']);
   });
 
-  it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf is not there; a short one goes to the back', () => {
+  // 재검토 R1·r2 (Amendment 5): the places the review named at 22:00 — on 「지금 여기서」 and the mood shelves, none
+  const NAMED = /푸투라서울|학고재|창덕궁과 후원|바라캇 서울|^송은$|화이트큐브 서울|스페이스K 서울|^피크닉$|국립중앙박물관$|리움미술관$/;
+  const 삼청 = { lat: 37.5847, lng: 126.982 };
+  it.each([
+    ['용산', HERE.용산, false],
+    ['용산', HERE.용산, true],
+    ['삼청', 삼청, false],
+    ['삼청', 삼청, true],
+  ] as const)('22:00 %s (case %#): none the review named, on 지금 여기서 or a mood shelf', (_, p, indoor) => {
+    const s = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: 22 * 60, indoor });
+    const origin = { key: 'gps', point: p, isPoint: true, from: '' };
+    const now = nowSpot(s, seoul, origin);
+    expect(now?.name ?? '').not.toMatch(NAMED);
+    for (const m of MOOD_SHELVES) for (const x of moodShelf(s, seoul, origin, m).slice(0, PER_SHELF * 2)) expect(x.name).not.toMatch(NAMED);
+  });
+
+  it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf keeps its place; a short one goes to the back', () => {
     const sp = (id: string, name: string, kakao: string | null = null) => ({ id, name, kakaoPlaceId: kakao }) as Spot;
     const cards = Array.from({ length: 6 }, (_, i) => ({ item: place({ id: `kk-${i}`, g: 'G2', word: '전통시장', title: `시장${i}`, link: `https://place.map.kakao.com/${100 + i}` }), why: '', trip: null }));
     const out = homeShelves([{ key: 'g2', cards }], { food: [sp('a', '시장0'), sp('b', '딴집', '101'), sp('c', '국밥'), sp('e', '냉면')], famous: [sp('c', '국밥'), sp('d', '궁')], rest: [sp('a', '시장0')] }, 15 * 60, SUNSET);
-    // 15:00: g2, 유명한 데, 먹기 (after the hour's), 쉬기 empty
-    expect(out.map((sh) => sh.key)).toEqual(['g2', 'famous', 'food']);
-    expect(out.slice(1).map((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual([['c', 'd'], ['e']]);
+    // 15:00: g2, 유명한 데, 놀러, 먹기 (after the hour's), 쉬기·걷기 — the moods with no place in reach stay, empty
+    expect(out.map((sh) => sh.key)).toEqual(['g2', 'famous', 'new', 'food', 'rest', 'walk']);
+    expect(out.slice(1).map((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual([['c', 'd'], [], ['e'], [], []]);
     // a full mood shelf before a short curated one
     const many = Array.from({ length: 7 }, (_, i) => sp(`f${i}`, `곳${i}`));
-    expect(homeShelves([{ key: 'g2', cards: cards.slice(0, 2) }], { famous: many }, 15 * 60, SUNSET).map((sh) => sh.key)).toEqual(['famous', 'g2']);
+    expect(homeShelves([{ key: 'g2', cards: cards.slice(0, 2) }], { famous: many }, 15 * 60, SUNSET).map((sh) => sh.key).slice(0, 2)).toEqual(['famous', 'g2']);
   });
 });
 

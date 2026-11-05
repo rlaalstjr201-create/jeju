@@ -132,7 +132,8 @@ export type HomeShelf = Shelf | { key: MoodShelf; spots: Spot[] };
 const kakaoOf = (link: string) => /place\.map\.kakao\.com\/(\d+)/.exec(link)?.[1];
 /** The home's shelves: `shelves` (buildShelves) and each mood's places (home.ts moodShelf, nearest first) in homeOrder, each
  * place once — a place another shelf before it took (by id, 카카오 id or name: a curated place may be a mood's too) is passed
- * over — at most PER_SHELF a shelf, an empty one not there, then those under FULL at the back (ADR-0115 Amendment 3). */
+ * over — at most PER_SHELF a shelf, then those under FULL at the back (ADR-0115 Amendment 3). A mood's shelf is there with
+ * no place in it too (ADR-0117 Amendment 5): its heading is the way to that mood. */
 export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShelf, readonly Spot[]>>, minute: number, sunset: number, here: Spot | null = null): HomeShelf[] {
   const rank = ORDER[bandOf(minute, sunset)];
   // 지금 여기서's place (`here`) is on the home already: not on a shelf again
@@ -154,7 +155,8 @@ export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShe
       spots.push(x);
       for (const k of [x.id, x.name, x.kakaoPlaceId]) if (k) taken.add(k);
     }
-    if (spots.length) out.push({ key: key as MoodShelf, spots });
+    // a mood's shelf stays with no place in it (its heading is the mood button, Amendment 5); the others only with cards
+    out.push({ key: key as MoodShelf, spots });
   }
   const size = (s: HomeShelf) => ('spots' in s ? s.spots : s.cards).length;
   return out.sort((a, b) => Number(size(a) < FULL) - Number(size(b) < FULL));
