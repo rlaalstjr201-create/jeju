@@ -93,6 +93,14 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     expect(shelves().compareDocumentPosition(any) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(shelfRows().length).toBeGreaterThanOrEqual(4);
     expect(shelfRows().length).toBeLessThanOrEqual(SHELVES.length + MOODS.length);
+    // 8 drawn, the rest behind 선반 더 보기 (Amendment 3); pressed, all of them
+    const shown = () => $$('#shelves .shelf:not([hidden])').length;
+    expect(shown()).toBe(Math.min(8, shelfRows().length));
+    if (shelfRows().length > 8) {
+      await tap('#shelves .shelves-more');
+      expect(shown()).toBe(shelfRows().length);
+      expect($('#shelves .shelves-more')).toBeNull();
+    }
     for (const r of shelfRows()) {
       expect(r.querySelectorAll('.bcard').length).toBeGreaterThan(0);
       expect(r.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);

@@ -249,6 +249,7 @@ export const ZH: Lang = {
       kakao: '在Kakao地图查看',
       fromKakao: '地点信息：Kakao地图',
       inHood: '现在在这个街区',
+      moreShelves: '查看更多',
       none: '现在没有可逛的活动。',
       today: (times) => `今天 ${times}`,
       more: '详情（订票·介绍）',

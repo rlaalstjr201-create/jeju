@@ -254,6 +254,7 @@ export const JA: Lang = {
       kakao: 'カカオマップで見る',
       fromKakao: '場所の情報：カカオマップ',
       inHood: '今この街で',
+      moreShelves: 'ほかの列も見る',
       none: 'いま見て回れるものがありません。',
       today: (times) => `今日 ${times}`,
       more: '詳しく（予約・案内）',

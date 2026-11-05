@@ -222,7 +222,8 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
 
   it.each(Object.entries(HERE).flatMap(([name, p]) => [14, 19, 22].map((h) => [name, h, p] as const)))('%s at %i:00: ≥ 4 shelves of ≥ 6, ≤ 12 each, none shut, each place once, the order table', (_, h, p) => {
     const list = home(p, h);
-    expect(list.filter((sh) => size(sh) >= FULL).length).toBeGreaterThanOrEqual(4);
+    // within the 8 drawn before 선반 더 보기 (Amendment 3)
+    expect(list.slice(0, 8).filter((sh) => size(sh) >= FULL).length).toBeGreaterThanOrEqual(4);
     for (const sh of list) {
       expect(size(sh)).toBeGreaterThan(0);
       expect(size(sh)).toBeLessThanOrEqual(PER_SHELF);

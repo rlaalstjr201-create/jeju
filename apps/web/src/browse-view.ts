@@ -30,6 +30,8 @@ export const BROWSE_COPY = {
   fromKakao: '장소 정보: 카카오맵',
   /** the 동네 sheet's heading over its list */
   inHood: '지금 이 동네에서',
+  /** 서울 홈 (ADR-0117 Amendment 3): the shelves past the first HOME_SHELVES */
+  moreShelves: '선반 더 보기',
   none: '지금 둘러볼 것이 없어요.',
   /** 오늘 시간 on the card sheet: 「오늘 11:00~18:00」 */
   today: (times: string) => `오늘 ${times}`,
@@ -96,6 +98,10 @@ export interface MoodCard {
 export type HomeRow = Shelf | { key: MoodShelf; cards: MoodCard[] };
 
 let homeWatch: IntersectionObserver | undefined;
+/** 서울 홈 draws this many shelves (the order's first), the rest behind 선반 더 보기 (ADR-0117 Amendment 3) */
+export const HOME_SHELVES = 8;
+/** 선반 더 보기 pressed: open for the rest of the visit (a redraw, the list's minute moving on, keeps it open) */
+let allShelves = false;
 /** 서울 홈의 선반 (ADR-0117, specs/seoul-home-shelves.md): each shelf a heading — a mood's is its button (the same as the mood
  * button: its results) — and its cards side by side. A mood card is that mood's results with the place first (Amendment 1).
  * The pictures are asked for once in view, and while the 시작 화면 covers the home held back for it (later.ts, ADR-0116). */
@@ -116,7 +122,13 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
       : undefined;
   homeWatch?.disconnect();
   homeWatch = later;
-  for (const sh of shelves) {
+  const more = el(doc, 'button', { type: 'button', class: 'tbtn shelves-more' }, BROWSE_COPY.moreShelves);
+  more.addEventListener('click', () => {
+    allShelves = true;
+    for (const sec of box.querySelectorAll<HTMLElement>('.shelf[hidden]')) sec.hidden = false;
+    more.remove();
+  });
+  for (const [i, sh] of shelves.entries()) {
     // its line (browse.css): a mood's places, the day's own events, or things to do
     const line = sh.key in labels ? 'place' : sh.key === 'stage' || sh.key === 'today' || sh.key === 'exhibit' ? 'day' : 'fun';
     const sec = el(doc, 'section', { class: 'shelf', 'aria-labelledby': `shelf-${sh.key}`, 'data-line': line });
@@ -146,8 +158,10 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
       row.append(...(sh as Shelf).cards.map((c) => cardLi(doc, c, later)));
     }
     sec.append(row);
+    if (i >= HOME_SHELVES && !allShelves) sec.hidden = true;
     box.append(sec);
   }
+  if (shelves.length > HOME_SHELVES && !allShelves) box.append(more);
   box.append(...sources);
   return box;
 }
