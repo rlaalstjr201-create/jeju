@@ -50,7 +50,7 @@ export function browseLines(rows, key) {
   for (let s = 0; s <= 600; s += 5) bins.push([s, n(`browse:secs:${s}`)]);
   const done = bins.reduce((s, [, x]) => s + x, 0);
   const verdict = '- 판정(ADR-0117 6, 배포일 + 14일에 한 번): 서울 홈을 연 날 가운데 선반 카드·선반 머리를 누른 날 30% 이상(날 30개 이상일 때만). 날 수는 GA4·자체 기록으로 봐요.';
-  if (!open && !done) return n('browse:card') ? [`- 카드 시트 ${n('browse:card')}회 → 길찾기 ${n('browse:go')}, 자세히 ${n('browse:more')}`, verdict] : ['데이터 없음.', verdict];
+  if (!open && !done) return n('browse:card') ? [`- 카드 시트 ${n('browse:card')}회 → 길찾기 ${n('browse:go')}, 자세히 ${n('browse:more')}, 출처 글 ${n('browse:post')}`, verdict] : ['데이터 없음.', verdict];
   let seen = 0;
   let median = null;
   for (const [s, x] of bins) {

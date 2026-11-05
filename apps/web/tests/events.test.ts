@@ -568,6 +568,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
       { e: 'browse_card', d },
       { e: 'browse_link', link: 'go', d },
       { e: 'browse_link', link: 'more', d },
+      { e: 'browse_link', link: 'post', d },
       { e: 'browse_done', secs: 45, rows: 2, cards: 1, d },
       { e: 'browse_done', secs: 600, rows: 0, cards: 0, d },
     ];
@@ -581,6 +582,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
         { d, id: 'browse:card', e: 'browse_card', n: 1 },
         { d, id: 'browse:go', e: 'browse_link', n: 1 },
         { d, id: 'browse:more', e: 'browse_link', n: 1 },
+        { d, id: 'browse:post', e: 'browse_link', n: 1 },
         { d, id: 'browse:secs:45', e: 'browse_done', n: 1 },
         { d, id: 'browse:rows:2', e: 'browse_done', n: 1 },
         { d, id: 'browse:cards:1', e: 'browse_done', n: 1 },
@@ -590,7 +592,7 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
-    expect(BROWSE_IDS).toHaveLength(4 + 121 + 11 + 3);
+    expect(BROWSE_IDS).toHaveLength(5 + 121 + 11 + 3);
     expect(aggregate(rows)).toEqual([]);
   });
 

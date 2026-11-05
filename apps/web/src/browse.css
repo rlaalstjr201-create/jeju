@@ -71,6 +71,7 @@
 .t-g6 { background: var(--t-g6); color: var(--t-g6-ink); }
 .t-g7 { background: var(--t-g7); color: var(--t-g7-ink); }
 .t-hood { background: var(--t-hood); color: var(--t-hood-ink); }
+.t-week { background: var(--t-g7); color: var(--t-g7-ink); }
 .btile + .sr + .meta { margin-top: 8px; }
 .bc-top .btile { flex: none; width: 104px; }
 

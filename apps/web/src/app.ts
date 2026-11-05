@@ -1444,7 +1444,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   // 오늘 서울 둘러보기: 길찾기 or 자세히 on a card (sent now: the map app may take the page away)
   on(els.sheet, 'click', (e) => {
     const link = (e.target as Element | null)?.closest?.<HTMLElement>('a[data-blink]')?.dataset.blink;
-    if (link !== 'go' && link !== 'more') return;
+    if (link !== 'go' && link !== 'more' && link !== 'post') return;
     countBrowse({ e: 'browse_link', link, d: state.today });
     tracker.flush();
   });

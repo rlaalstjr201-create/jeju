@@ -55,6 +55,12 @@ function candOf(item: CultureItem, now: Now, origin: Point | null): Cand | null 
     return likelyOpen(item, now.minute, trip?.minutes ?? 0, month(now.day)) ? { item, km, trip, why: item.place } : null;
   }
   const t = parseCultureTime(item.time);
+  if (isWeek(item)) {
+    // the week's (ADR-0118 Amendment 1): open when one gets there, half an hour before it closes (fun.ts likelyOpen's rule) —
+    // never 「later today」; the card says its dates only (「토요일까지」)
+    const open = openNow(item, { ...now, minute: now.minute + (trip?.minutes ?? 0) }, t, 30) === 'open';
+    return open ? { item, km, trip, why: whyNow(item, now, null, 'unknown') } : null;
+  }
   const state = openNow(item, now, t, trip?.minutes ?? 0);
   return state === 'shut' ? null : { item, km, trip, why: whyNow(item, now, t, state) };
 }

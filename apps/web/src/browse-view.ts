@@ -59,10 +59,11 @@ const tripText = (c: BrowseCard) => (c.trip ? (c.trip.walk ? TRAVEL_TEXT.walk : 
  * kind as a text card. With `later` its address is set only once the box is in view (the screen's watcher): the browser's
  * own lazy loading still asks for dozens of a shelf's hidden cards at once. */
 function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTMLElement {
-  // a curated place or a 동네 has no picture: a short tile in its kind's colour, the name large on it (ADR-0115)
-  if (isFun(it)) {
-    const tile = el(doc, 'span', { class: `btile t-${it.fun.g.toLowerCase()}`, 'aria-hidden': 'true' });
-    tile.append(el(doc, 'span', { class: 'bk' }, it.fun.g === 'hood' ? it.kind : it.place.split(' · ')[0]), el(doc, 'span', { class: 'bt' }, it.title));
+  // a curated place or a 동네 has no picture: a short tile in its kind's colour, the name large on it (ADR-0115); the week's
+  // too, its kind over its name (ADR-0118 Amendment 1)
+  if (isFun(it) || isWeek(it)) {
+    const tile = el(doc, 'span', { class: `btile t-${isFun(it) ? it.fun.g.toLowerCase() : 'week'}`, 'aria-hidden': 'true' });
+    tile.append(el(doc, 'span', { class: 'bk' }, !isFun(it) || it.fun.g === 'hood' ? it.kind : it.place.split(' · ')[0]), el(doc, 'span', { class: 'bt' }, it.title));
     return tile;
   }
   const box = el(doc, 'span', { class: 'bpic' });
@@ -85,12 +86,19 @@ function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTML
 /** A shelf's card: the picture or tile, the title, why now, how far; pressed, its sheet. */
 function cardLi(doc: Document, c: BrowseCard, later?: IntersectionObserver): HTMLElement {
   const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id });
-  b.append(pic(doc, c.item, later), el(doc, 'span', { class: isFun(c.item) ? 'nm sr' : 'nm' }, c.item.title));
+  const tile = isFun(c.item) || isWeek(c.item);
+  b.append(pic(doc, c.item, later), el(doc, 'span', { class: tile ? 'nm sr' : 'nm' }, c.item.title));
   // a curated place's tile says its kind already: under it, the rest of its line (where, or how many shows)
   const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ').slice(1).join(' · ') || c.why : c.why;
-  if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
   const trip = tripText(c);
-  if (trip) b.append(el(doc, 'span', { class: 'meta' }, trip));
+  // the week's: one short line, 「토요일까지 · 걸어서 약 20분」
+  if (isWeek(c.item)) {
+    const line = [why, trip].filter(Boolean).join(' · ');
+    if (line) b.append(el(doc, 'span', { class: 'meta' }, line));
+  } else {
+    if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
+    if (trip) b.append(el(doc, 'span', { class: 'meta' }, trip));
+  }
   const li = el(doc, 'li');
   li.append(b);
   return li;
@@ -260,7 +268,8 @@ export function browseCardSheet(doc: Document, items: readonly CultureItem[], id
   const acts = el(doc, 'div', { class: 'bc-acts' });
   acts.append(goA(doc, it, c, app, 'primary'));
   const more = linkUrl(it.link);
-  if (more) acts.append(el(doc, 'a', { class: 'tbtn', href: more, target: '_blank', rel: 'noopener', 'data-blink': 'more' }, fun ? BROWSE_COPY.kakao : isWeek(it) ? BROWSE_COPY.post : BROWSE_COPY.more));
+  // 출처 글 보기 counted apart from 자세히 (browse_link 'post')
+  if (more) acts.append(el(doc, 'a', { class: 'tbtn', href: more, target: '_blank', rel: 'noopener', 'data-blink': isWeek(it) ? 'post' : 'more' }, fun ? BROWSE_COPY.kakao : isWeek(it) ? BROWSE_COPY.post : BROWSE_COPY.more));
   sheet.append(acts, ...sources, el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));
   layer.append(el(doc, 'div', { class: 'scrim', 'data-action': 'close' }), sheet);
   return layer;

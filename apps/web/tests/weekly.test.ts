@@ -7,7 +7,7 @@ import { ORDER, SHELVES, buildShelves, inHood } from '../src/browse';
 import { BROWSE_COPY, browseCardSheet } from '../src/browse-view';
 import { openNow, type CultureItem, type Now } from '../src/culture';
 import { funItems, realItems } from '../src/fun';
-import { isWeek, weeklyItems, type WeekRow } from '../src/weekly';
+import { isWeek, usualTime, weeklyItems, type WeekRow } from '../src/weekly';
 
 const ROWS = FILE.items as WeekRow[];
 const now = (day: string, h: number, m = 0): Now => ({ day, weekday: new Date(`${day}T00:00:00Z`).getUTCDay(), minute: h * 60 + m });
@@ -15,8 +15,9 @@ const row = (over: Partial<WeekRow>): WeekRow => ({ id: 'wk-1-20261101', name: '
 const 성수 = { lat: 37.5446, lng: 127.0559 };
 
 describe('the shipped file (review/seoul-weekly, criteria-01)', () => {
-  it('17 things, each with a kind, dates, a Seoul place, https links and a reservation value', () => {
-    expect(ROWS.length).toBe(17);
+  it('16 things (17 kept, 더마비 left out by hand, Amendment 1), each with a kind, dates, a Seoul place, https links and a reservation value', () => {
+    expect(ROWS.length).toBe(16);
+    expect(ROWS.some((r) => /더마비/.test(r.name))).toBe(false);
     const ids = new Set<string>();
     for (const r of ROWS) {
       expect(ids.has(r.id)).toBe(false);
@@ -42,9 +43,9 @@ describe('the shipped file (review/seoul-weekly, criteria-01)', () => {
 describe('weeklyItems', () => {
   it('ended ones are not made (the day after the last end, none at all)', () => {
     const last = ROWS.map((r) => r.end).sort().at(-1)!;
-    expect(weeklyItems('2026-11-05').length).toBe(17);
+    expect(weeklyItems('2026-11-05').length).toBe(16);
     expect(weeklyItems('2026-11-09').every((i) => i.end >= '2026-11-09')).toBe(true);
-    expect(weeklyItems('2026-11-09').length).toBeLessThan(17);
+    expect(weeklyItems('2026-11-09').length).toBeLessThan(16);
     const after = new Date(Date.parse(`${last}T00:00:00Z`) + 864e5).toISOString().slice(0, 10);
     expect(weeklyItems(last).length).toBeGreaterThan(0);
     expect(weeklyItems(after)).toEqual([]);
@@ -73,7 +74,8 @@ describe("the 'week' shelf", () => {
     expect(s.map((x) => x.key)).toEqual(['week']);
     // 전시 goes to 'week', not to 전시·박물관; one not begun yet is shut
     expect(s[0].cards.map((c) => c.item.title).sort()).toEqual(['어느 팝업', '전시 하나']);
-    expect(s[0].cards[0].why).toMatch(/일요일까지/);
+    // the card says its dates only (Amendment 1)
+    expect(s[0].cards[0].why).toBe('일요일까지');
     // after its hours, and on the day after it ends: no shelf
     expect(buildShelves(items(rows, '2026-11-05'), now('2026-11-05', 20), 성수, 17 * 60 + 25)).toEqual([]);
     expect(buildShelves(items(rows, '2026-11-09'), now('2026-11-09', 14), 성수, 17 * 60 + 25).flatMap((x) => x.cards.map((c) => c.item.title))).toEqual([]);
@@ -113,6 +115,53 @@ describe("the 'week' shelf", () => {
   });
 });
 
+describe('a kind\'s usual hours where the posts gave none (Amendment 1, review m1)', () => {
+  const shelf = (day: string, h: number, m = 0) => buildShelves(weeklyItems(day), now(day, h, m), 성수, 17 * 60 + 25).flatMap((x) => x.cards.map((c) => c.item.title));
+  it('the table: a pop-up in a store by its hours, else 12–20; an exhibition 11–18 shut on Mondays; the rest 11–20', () => {
+    expect(usualTime({ kind: '팝업', place: '더현대 서울' })).toBe('10:30~20:00');
+    expect(usualTime({ kind: '팝업', place: '피앤알 성수' })).toBe('12:00~20:00');
+    expect(usualTime({ kind: '전시', place: '리만머핀' })).toBe('화-일 11:00~18:00');
+    expect(usualTime({ kind: '축제', place: 'aT센터' })).toBe('11:00~20:00');
+    expect(usualTime({ kind: '마켓', place: '면목역광장' })).toBe('11:00~20:00');
+    // a time the posts gave is kept
+    expect(weeklyItems('2026-11-05').find((i) => i.title.startsWith('코치'))!.time).toMatch(/^월~목/);
+  });
+  it('리만머핀 not on Monday 11-09 (9:00, 14:00), there on Tuesday 14:00', () => {
+    expect(shelf('2026-11-09', 9).some((t) => t.includes('리만머핀'))).toBe(false);
+    expect(shelf('2026-11-09', 14).some((t) => t.includes('리만머핀'))).toBe(false);
+    expect(shelf('2026-11-10', 14).some((t) => t.includes('리만머핀'))).toBe(true);
+  });
+  it('더현대 not at 9:00, there at 11:00; nothing that opens later today, nothing within half an hour of its close', () => {
+    expect(shelf('2026-11-05', 9).some((t) => t.includes('더현대'))).toBe(false);
+    expect(shelf('2026-11-05', 9)).toEqual([]);
+    expect(shelf('2026-11-05', 11).some((t) => t.includes('더현대'))).toBe(true);
+    // 커튼콜 가든 opens 17:00: not at 14:00, there at 18:00
+    expect(shelf('2026-11-05', 14).some((t) => t.includes('커튼콜'))).toBe(false);
+    expect(shelf('2026-11-05', 18).some((t) => t.includes('커튼콜'))).toBe(true);
+  });
+  it('a festival with no time (아이온2) by the table: there on 11-08 at 14:00', () => {
+    expect(shelf('2026-11-08', 14).some((t) => t.includes('아이온2'))).toBe(true);
+    expect(shelf('2026-11-08', 20).some((t) => t.includes('아이온2'))).toBe(false);
+  });
+});
+
+describe('the card (Amendment 1): a short text tile, its kind over its name, one line under it', () => {
+  it('no poster box; 「토요일까지 · 걸어서 약 …분」', async () => {
+    const { homeShelvesView } = await import('../src/browse-view');
+    const doc = new JSDOM('<!doctype html><body></body>').window.document;
+    const s = buildShelves(weeklyItems('2026-11-05', [], [row({ end: '2026-11-07' })]), now('2026-11-05', 14), 성수, 17 * 60 + 25);
+    const box = homeShelvesView(doc, s, { rest: '', walk: '', new: '', famous: '', food: '' }, []);
+    const card = box.querySelector('[data-shelf="week"] .bcard')!;
+    expect(card.querySelector('.bpic')).toBeNull();
+    expect(card.querySelector('.btile.t-week .bk')!.textContent).toBe('팝업');
+    expect(card.querySelector('.btile .bt')!.textContent).toBe('어느 팝업');
+    expect(card.querySelector('.nm')!.className).toBe('nm sr');
+    const metas = [...card.querySelectorAll('.meta')].map((m) => m.textContent);
+    expect(metas.length).toBe(1);
+    expect(metas[0]).toMatch(/^토요일까지 · 걸어서 약 \d+분$/);
+  });
+});
+
 describe('the card sheet', () => {
   it('its dates, a queue when there may be one, 출처 글 보기 to the post', () => {
     const doc = new JSDOM('<!doctype html><body></body>').window.document;
@@ -121,8 +170,9 @@ describe('the card sheet', () => {
     const text = sheet.textContent ?? '';
     expect(text).toContain('11.1~11.8');
     expect(text).toContain(BROWSE_COPY.onsite);
-    const more = [...sheet.querySelectorAll('a')].find((a) => a.dataset.blink === 'more')!;
+    const more = [...sheet.querySelectorAll('a')].find((a) => a.textContent === BROWSE_COPY.post)!;
     expect(more.textContent).toBe(BROWSE_COPY.post);
+    expect(more.dataset.blink).toBe('post');
     expect(more.getAttribute('href')).toBe('https://blog.naver.com/x/1');
   });
 });

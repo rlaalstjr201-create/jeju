@@ -28,7 +28,7 @@ export const START_IDS: readonly string[] = [
   ...['gps', 'pick'].flatMap((how) => ['denied', 'outside', 'unavailable', 'none'].flatMap((why) => ['jeju', 'busan', 'gangwon', 'seoul', 'nation'].map((dest) => `start:${how}:${why}:${dest}`))),
 ];
 
-/** 오늘 서울 둘러보기 (ADR-0114 7): the counter ids of its events — `browse:open`, `browse:card`, `browse:go` / `browse:more`, and
+/** 오늘 서울 둘러보기 (ADR-0114 7): the counter ids of its events — `browse:open`, `browse:card`, `browse:go` / `browse:more` / `browse:post` (ADR-0118), and
  * for each time it was left one under each of `browse:secs:<0…600 in fives>`, `browse:rows:<0…10>`, `browse:cards:<0…2>` (so the
  * median stay and the share of openings with a card pressed can be read). Not places (`browse:` prefix). */
 export const BROWSE_IDS: readonly string[] = [
@@ -36,6 +36,7 @@ export const BROWSE_IDS: readonly string[] = [
   'browse:card',
   'browse:go',
   'browse:more',
+  'browse:post',
   ...Array.from({ length: 121 }, (_, i) => `browse:secs:${i * 5}`),
   ...Array.from({ length: 11 }, (_, i) => `browse:rows:${i}`),
   ...[0, 1, 2].map((n) => `browse:cards:${n}`),

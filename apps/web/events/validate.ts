@@ -35,7 +35,7 @@ const START_FIELDS: Record<string, readonly string[]> = { start_view: ['e', 'd']
 /** the only fields of each 둘러보기 event: how long it was open (seconds in tens, 600 = ten minutes or more), shelves
  * scrolled sideways (0–7), cards pressed (0, 1, 2 = two or more); which link */
 const BROWSE_FIELDS: Record<string, readonly string[]> = { browse_open: ['e', 'd'], browse_card: ['e', 'd'], browse_link: ['e', 'd', 'link'], browse_done: ['e', 'd', 'secs', 'rows', 'cards'] };
-const LINKS = new Set(['go', 'more']);
+const LINKS = new Set(['go', 'more', 'post']);
 const SEASONS = new Set<string>(SEASON_KINDS);
 const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'sgg', 'secs', 'rows', 'cards', 'link', 'd']);
 const whole = (v: unknown, max: number, step = 1) => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v <= max && v % step === 0;

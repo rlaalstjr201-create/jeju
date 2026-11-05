@@ -72,8 +72,8 @@ export interface UsageEvent {
   rows?: number;
   /** browse_done only: cards pressed, 0, 1, or 2 = two or more. */
   cards?: 0 | 1 | 2;
-  /** browse_link only: 길찾기 or 자세히. */
-  link?: 'go' | 'more';
+  /** browse_link only: 길찾기, 자세히, or 이번 주 서울's 출처 글 보기 (ADR-0118 Amendment 1). */
+  link?: 'go' | 'more' | 'post';
   /** Jeju calendar day, no time. */
   d: Day;
 }

@@ -19,11 +19,13 @@ const judged = readdirSync(resolve(dir, 'judge'))
   .sort()
   .flatMap((f) => read(`judge/${f}`));
 const KINDS = ['팝업', '새로 연 곳', '전시', '마켓', '축제'];
+/** 감사 뒤 리뷰(predeploy-review.md m2)가 찾은 기준 D 위반, 손으로 뺀 것 (ADR-0118 Amendment 1): cid → 까닭 */
+const EXCLUDE = { '01': { c090: '더마비 버터베어 팝업: 올리브영 홍대타운점 매장 안 신제품 판촉(구매 사은품·샘플), 기준 D 판매 매대' } }[round] ?? {};
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const items = [];
 const seen = new Set();
 for (const j of judged) {
-  if (!j.keep) continue;
+  if (!j.keep || EXCLUDE[j.cid]) continue;
   const r = rows.get(j.cid);
   const k = r.kakao;
   if (!k || !KINDS.includes(j.kind) || !DATE.test(j.start) || !DATE.test(j.end) || j.start > j.end || !['none', 'onsite'].includes(j.reserve) || !/^https:\/\//.test(j.src)) throw new Error(`bad keep ${j.cid}`);
@@ -37,4 +39,4 @@ const file = { note: `ADR-0118 이번 주 서울 ${round}회. scripts/seoul-week
 writeFileSync(resolve(webRoot, 'data/seoul/weekly-seoul.json'), JSON.stringify(file, null, 1) + '\n');
 const byKind = {};
 for (const i of items) byKind[i.kind] = (byKind[i.kind] ?? 0) + 1;
-console.log(JSON.stringify({ shipped: items.length, byKind }));
+console.log(JSON.stringify({ shipped: items.length, excluded: Object.keys(EXCLUDE), byKind }));
