@@ -6,7 +6,7 @@ import FILE from '../data/seoul/fun-seoul.json';
 import type { CultureItem } from './culture';
 import { isWeek } from './weekly';
 
-export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7';
+export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7' | 'G8';
 interface FunRow {
   id: string;
   name: string;
@@ -53,6 +53,11 @@ const HOURS: [RegExp, readonly [number, number]][] = [
   [/대안공간/, H(12, 19)],
   [/서점|편집|빈티지|레코드샵|팝업/, H(12, 20)],
   [/야구장/, H(13, 22)],
+  // 카페·디저트 (ADR-0120 5): the kind on the card (scripts/seoul-cafe/curate.mjs kindOf)
+  [/^(베이커리|도넛)$/, H(8, 20)],
+  [/^(카페|로스터리)$/, H(10, 22)],
+  [/^(케이크|디저트|찻집)$/, H(11, 21)],
+  [/^(젤라또|아이스크림)$/, H(12, 22)],
 ];
 const ALL_DAY = H(0, 24);
 /** Live venues and small theatres: evenings and weekend afternoons (KOPIS, 소극장, 라이브클럽) */

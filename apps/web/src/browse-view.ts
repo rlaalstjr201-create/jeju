@@ -20,7 +20,7 @@ export const BROWSE_COPY = {
   /** the way in on 서울's home, and the screen's title */
   open: '오늘 서울 둘러보기',
   note: '지금 갈 수 있는 것만, 지금 시간에 맞는 것부터 모았어요.',
-  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·LP·레코드', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', week: '이번 주 서울', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
+  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·LP·레코드', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', g8: '카페·디저트', week: '이번 주 서울', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
   /** a 동네 card: what is in it now */
   hoodCount: (n: number) => `지금 갈 곳 ${n}`,
   /** a curated place's sheet: no reservation known */
