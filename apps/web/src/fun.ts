@@ -6,7 +6,7 @@ import FILE from '../data/seoul/fun-seoul.json';
 import type { CultureItem } from './culture';
 import { isWeek } from './weekly';
 
-export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7' | 'G8';
+export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7' | 'G8' | 'G10';
 interface FunRow {
   id: string;
   name: string;
@@ -40,6 +40,9 @@ export function funItems(day: string): FunItem[] {
 /** A kind's usual hours, minutes after midnight KST (close past 24:00 runs into the night): no hours are in the data. */
 const H = (open: number, close: number) => [open * 60, close * 60] as const;
 const HOURS: [RegExp, readonly [number, number]][] = [
+  // 밤 놀거리 (ADR-0122 7): the kind on the card (scripts/seoul-night/curate.mjs kindOf), before the daytime 루프탑 below
+  [/^클럽$/, H(22, 29)],
+  [/^(칵테일바|와인바|하이볼바|루프탑바|음악바|바)$/, H(19, 26)],
   [/LP바|재즈바|재즈클럽|라이브바|포장마차|포차거리|노가리골목|야장/, H(18, 26)],
   [/야시장/, H(18, 23)],
   [/전통시장/, H(9, 19)],

@@ -48,13 +48,13 @@
 :root {
   --t-g1: #e3f0fc; --t-g1-ink: #0b4f99; --t-g2: #fdeee2; --t-g2-ink: #9a3f06; --t-g5: #e5f5ea; --t-g5-ink: #1d6b3a;
   --t-g6: #fde8e8; --t-g6-ink: #a12222; --t-g7: #f0e9fb; --t-g7-ink: #5b2aa6; --t-hood: #e4f4f3; --t-hood-ink: #11635d; --t-g4: #f6f0e4; --t-g4-ink: #7a5212;
-  --t-g8: #f8ebe6; --t-g8-ink: #7c3216;
+  --t-g8: #f8ebe6; --t-g8-ink: #7c3216; --t-g10: #e8e9f8; --t-g10-ink: #2e3488;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --t-g1: #16283d; --t-g1-ink: #8cc4ff; --t-g2: #3a2416; --t-g2-ink: #ffb983; --t-g5: #17301f; --t-g5-ink: #8fdcaa;
     --t-g6: #3a1a1a; --t-g6-ink: #ff9e9e; --t-g7: #2a1f3d; --t-g7-ink: #c9adff; --t-hood: #15302e; --t-hood-ink: #85dcd4; --t-g4: #332a1a; --t-g4-ink: #e8c88a;
-    --t-g8: #36211a; --t-g8-ink: #f3b597;
+    --t-g8: #36211a; --t-g8-ink: #f3b597; --t-g10: #1d1f3d; --t-g10-ink: #b4b9ff;
   }
 }
 .btile {
@@ -73,6 +73,7 @@
 .t-g6 { background: var(--t-g6); color: var(--t-g6-ink); }
 .t-g7 { background: var(--t-g7); color: var(--t-g7-ink); }
 .t-g8 { background: var(--t-g8); color: var(--t-g8-ink); }
+.t-g10 { background: var(--t-g10); color: var(--t-g10-ink); }
 .t-hood { background: var(--t-hood); color: var(--t-hood-ink); }
 .t-week { background: var(--t-g7); color: var(--t-g7-ink); }
 .btile + .sr + .meta { margin-top: 8px; }
