@@ -6,7 +6,7 @@ import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
 import { DEST, DESTS, destOfId, isSggDest, type Dest, type SggDest } from './dest';
 import { BUSAN, NATION, OPEN_AREAS, culturePart, nationPart, openAreasOf, sggShort } from './release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
-import { duskNow, homeOrigin, moodExamples, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
+import { duskNow, homeOrigin, moodExamples, moodShelf, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
 import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
 import { marketText } from './market';
@@ -1306,20 +1306,21 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const dusk = !!origin && s.when === 'now' && duskNow(s.clock, origin.point, whenDay(s));
     // 밤 (ADR-0091): 「예:」 put 야외 산길 and islands by boat after the others from the sunset to the sunrise
     // 지금 닫힌 곳 (ADR-0111): the half hour, where it decides what is shut
-    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed, openPhase(s, s.clock)].join('|') + (s.culture ? `|${s.culture.day}|${s.culture.minute}` : '');
+    // 서울 홈의 선반 (ADR-0117): drawn once the culture chunk is in
+    return [at, s.reach, s.indoor, whenDay(s), s.when === 'now', s.sub, s.newSub, s.mapApp, s.broken.length, rainNow(s), dusk, nightHome(s, origin), s.dest, s.listFailed, openPhase(s, s.clock), !!culturePart()].join('|') + (s.culture ? `|${s.culture.day}|${s.culture.minute}` : '');
   }
 
   /** 지금 여기서 (ADR-0101, specs/home-v2.md 1): the one place the 아무거나 rule would show first, over the moods; not drawn
    * while no place with a photo can be shown. The card's name is not a link: its one tap is 길찾기. Until the data is in,
    * the empty card keeps its place (.now:empty): the moods under it do not move when it comes. A list that did not come
    * (s.listFailed) takes it away: no empty grey card is left up. */
-  function renderNow(s: State, spots: Spot[] | null, origin: Origin | null) {
+  function renderNow(s: State, spots: Spot[] | null, origin: Origin | null): Spot | null {
     const spot = spots ? nowSpot(s, spots, origin) : null;
     if (!spot) {
       els.now.hidden = !!spots || s.listFailed;
       els.now.replaceChildren();
       setAttr(els.now, 'aria-label', null);
-      return;
+      return null;
     }
     const photo = el(doc, 'div', { class: 'now-photo' });
     // under the 시작 화면 held back like the mood photos (homePhoto, ADR-0116)
@@ -1338,7 +1339,13 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     els.now.replaceChildren(photo, body);
     setAttr(els.now, 'aria-label', COPY.nowKicker);
     els.now.hidden = false;
+    return spot;
   }
+
+  /** 서울 홈's mood shelves (ADR-0117; browse.ts MOOD_SHELVES, not imported: the entry stays out of the culture chunk's modules) */
+  const MOOD_KEYS = ['rest', 'walk', 'new', 'famous', 'food'] as const;
+  /** the mood buttons' own words (another language's, i18n/apply.ts): the shelves' headings */
+  const shelfLabels = () => Object.fromEntries(MOOD_KEYS.map((m) => [m, els.moods.find((b) => b.dataset.mood === m)?.querySelector('.label')?.textContent ?? m])) as Record<(typeof MOOD_KEYS)[number], string>;
 
   function renderHome(s: State) {
     const dated = s.when !== 'now';
@@ -1378,12 +1385,24 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // until the data is in (.wait marks it); a row's place is held only at the times the last visit said one would be up
     // (yc-row, above)
     els.today.classList.toggle('wait', !spots);
-    renderNow(s, spots || null, origin);
+    const here = renderNow(s, spots || null, origin);
+    // 서울 홈 (ADR-0117): the shelves where the moods were (their buttons hidden, 아무거나 under them; 지금 여기서's place not
+    // again on them); a shelf's sideways
+    // scroll is kept across a redraw (the list's minute moves on under the thumb)
+    const shelves = NATION && s.dest === 'seoul' && !dated && origin && spots ? culturePart()?.shelvesBlock(doc, s, origin, Object.fromEntries(MOOD_KEYS.map((m) => [m, moodShelf(s, spots, origin, m).filter((x) => x.id !== here?.id)])), shelfLabels(), (x) => ({ id: x.id, name: splitName(PLACE.name(x)).main, image: x.image!, trip: travelText(travel(origin.point, origin.isPoint, x)) })) : null;
+    const old = doc.getElementById('shelves');
+    if (shelves && old) for (const r of old.querySelectorAll<HTMLElement>('[data-shelf]')) shelves.querySelector<HTMLElement>(`[data-shelf="${r.dataset.shelf}"]`)?.scrollTo?.({ left: r.scrollLeft });
+    old?.remove();
+    if (shelves) els.lede.after(shelves);
+    els.lede.hidden = !!shelves;
+    const moodList = els.moods[0]?.closest('ul');
+    if (moodList) moodList.hidden = !!shelves;
 
     /** what the rows drawn so far in this draw show (top down): 유명한 데's 「예:」 passes over them (ADR-0092 7) */
     const drawn: string[] = [];
     /** `only`: the mood rows to draw (all five when missing) */
     const examples = (only?: readonly Button[]) => {
+      if (shelves) return;
       for (const b of els.moods) {
         const mood = b.dataset.mood;
         if (!mood || mood === 'any' || (only && !only.includes(mood as Button))) continue;
@@ -1404,9 +1423,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     // the sections under 아무거나: 노을 볼 곳 and 오늘 장 서는 곳, then 다른 동네, the credit and 설정
     const sections = (): HTMLElement[] => {
       const nodes: HTMLElement[] = [];
-      // 오늘 근처에서 하는 것 (ADR-0112): 서울, 지금, with a basis, today's list in — first under 아무거나
-      const cult = NATION && s.dest === 'seoul' && !dated && origin && s.culture?.day === s.today ? culturePart()?.homeBlock(doc, s, origin) : null;
-      if (cult) nodes.push(cult);
+      // 오늘 근처에서 하는 것 (ADR-0112) is not on 서울 홈 any more: its shelves are (ADR-0117 5)
       if (sunsetOn && origin) nodes.push(sunsetSection(s, sunset, origin));
       if (markets.length) nodes.push(marketSection(s, markets, origin, dated));
       return nodes;
@@ -1636,9 +1653,8 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
   function buildSheet(s: State) {
     const overlay = s.overlay!;
     if (overlay === 'browse' || overlay === 'browse-card') {
-      // a whole screen of its own, no scrim (culture-view.ts browseBody); its card sheet comes in patchSheet
-      const screen = s.culture?.day === s.today ? culturePart()?.browseBody(doc, s, homeOrigin(s)) : null;
-      els.sheet.replaceChildren(...(screen ? [screen] : []));
+      // a card's sheet over 서울 홈 (ADR-0117 5: no screen under it any more): it comes in patchSheet (culture-view.ts patchBrowse)
+      els.sheet.replaceChildren();
       return;
     }
     const scrim = el(doc, 'div', { class: 'scrim', 'data-action': 'close' });

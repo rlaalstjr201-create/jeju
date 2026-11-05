@@ -3,7 +3,7 @@
 // the pictures load from the event and show sites themselves (5), lazily, over https, and a picture that fails becomes a
 // text card. Titles, places, kinds and time words stay as the list gives them (Korean).
 import './browse.css';
-import { browseCard, buildShelves, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type ShelfKey } from './browse';
+import { browseCard, buildShelves, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
 import type { CultureItem, Now } from './culture';
 import { isFun } from './fun';
 import { sunsetMinutes } from './sun';
@@ -72,6 +72,86 @@ function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTML
   return box;
 }
 
+/** A shelf's card: the picture or tile, the title, why now, how far; pressed, its sheet. */
+function cardLi(doc: Document, c: BrowseCard, later?: IntersectionObserver): HTMLElement {
+  const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id });
+  b.append(pic(doc, c.item, later), el(doc, 'span', { class: isFun(c.item) ? 'nm sr' : 'nm' }, c.item.title));
+  // a curated place's tile says its kind already: under it, the rest of its line (where, or how many shows)
+  const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ').slice(1).join(' · ') || c.why : c.why;
+  if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
+  const trip = tripText(c);
+  if (trip) b.append(el(doc, 'span', { class: 'meta' }, trip));
+  const li = el(doc, 'li');
+  li.append(b);
+  return li;
+}
+
+/** A mood shelf's place (서울 홈, ADR-0117): its photo, name and how far. */
+export interface MoodCard {
+  id: string;
+  name: string;
+  image: string;
+  trip: string;
+}
+export type HomeRow = Shelf | { key: MoodShelf; cards: MoodCard[] };
+
+let homeWatch: IntersectionObserver | undefined;
+/** 서울 홈의 선반 (ADR-0117, specs/seoul-home-shelves.md): each shelf a heading — a mood's is its button (the same as the mood
+ * button: its results) — and its cards side by side. A mood card is that mood's results with the place first (Amendment 1).
+ * The pictures are asked for once in view, and while the 시작 화면 covers the home held back for it (later.ts, ADR-0116). */
+export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labels: Record<MoodShelf, string>, sources: HTMLElement[]): HTMLElement {
+  const box = el(doc, 'div', { id: 'shelves', class: 'shelves' });
+  const view = doc.defaultView;
+  const start = () => doc.documentElement.classList.contains('yc-start');
+  const later =
+    view && 'IntersectionObserver' in view
+      ? new view.IntersectionObserver((seen, obs) => {
+          for (const e of seen) {
+            if (!e.isIntersecting) continue;
+            const img = e.target as HTMLImageElement;
+            obs.unobserve(img);
+            if (img.dataset.src) img.setAttribute(start() ? 'data-later' : 'src', img.dataset.src);
+          }
+        })
+      : undefined;
+  homeWatch?.disconnect();
+  homeWatch = later;
+  for (const sh of shelves) {
+    // its line (browse.css): a mood's places, the day's own events, or things to do
+    const line = sh.key in labels ? 'place' : sh.key === 'stage' || sh.key === 'today' || sh.key === 'exhibit' ? 'day' : 'fun';
+    const sec = el(doc, 'section', { class: 'shelf', 'aria-labelledby': `shelf-${sh.key}`, 'data-line': line });
+    const row = el(doc, 'ul', { class: 'shelf-row', 'data-shelf': sh.key });
+    if (sh.key in labels) {
+      const mood = sh.key as MoodShelf;
+      const h = el(doc, 'h2');
+      h.append(el(doc, 'button', { type: 'button', class: 'shelf-go', id: `shelf-${mood}`, 'data-mood': mood }, labels[mood]));
+      sec.append(h);
+      for (const c of sh.cards as MoodCard[]) {
+        const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-mood': mood, 'data-pin': c.id });
+        const frame = el(doc, 'span', { class: 'bpic sq' });
+        const img = el(doc, 'img', { alt: '', loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer', 'data-id': c.id });
+        if (later) {
+          img.dataset.src = c.image;
+          later.observe(img);
+        } else img.setAttribute(start() ? 'data-later' : 'src', c.image);
+        frame.append(img);
+        b.append(frame, el(doc, 'span', { class: 'nm' }, c.name));
+        if (c.trip) b.append(el(doc, 'span', { class: 'meta' }, c.trip));
+        const li = el(doc, 'li');
+        li.append(b);
+        row.append(li);
+      }
+    } else {
+      sec.append(el(doc, 'h2', { id: `shelf-${sh.key}` }, BROWSE_COPY.shelf[sh.key as ShelfKey]));
+      row.append(...(sh as Shelf).cards.map((c) => cardLi(doc, c, later)));
+    }
+    sec.append(row);
+    box.append(sec);
+  }
+  box.append(...sources);
+  return box;
+}
+
 let watching: IntersectionObserver | undefined;
 const scrolled = new Set<string>();
 /** How many shelves of the screen on show were scrolled sideways (app.ts, when it is left). */
@@ -115,18 +195,7 @@ export function browseScreen(doc: Document, items: readonly CultureItem[], now: 
     const sec = el(doc, 'section', { class: 'shelf', 'aria-labelledby': `shelf-${sh.key}` });
     sec.append(el(doc, 'h3', { id: `shelf-${sh.key}` }, BROWSE_COPY.shelf[sh.key]));
     const row = el(doc, 'ul', { class: 'shelf-row', 'data-shelf': sh.key });
-    for (const c of sh.cards) {
-      const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id });
-      b.append(pic(doc, c.item, later), el(doc, 'span', { class: isFun(c.item) ? 'nm sr' : 'nm' }, c.item.title));
-      // a curated place's tile says its kind already: under it, the rest of its line (where, or how many shows)
-      const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ').slice(1).join(' · ') || c.why : c.why;
-      if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
-      const trip = tripText(c);
-      if (trip) b.append(el(doc, 'span', { class: 'meta' }, trip));
-      const li = el(doc, 'li');
-      li.append(b);
-      row.append(li);
-    }
+    row.append(...sh.cards.map((c) => cardLi(doc, c, later)));
     sec.append(row);
     box.append(sec);
   }

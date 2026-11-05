@@ -157,6 +157,8 @@ export interface State {
   culture: { day: Day; items: readonly CultureItem[]; minute: number } | null;
   /** 오늘 서울 둘러보기 (ADR-0114): the item whose card sheet is (or was last) open; kept so a back onto it finds it again. */
   browseId: string | null;
+  /** 서울 홈 선반의 기분 카드 (ADR-0117 Amendment 1): the place pressed, the first of the cards its mood shows next; null after. */
+  pin: string | null;
   /** 노을 줄 (ADR-0083), 밤 (ADR-0091): the time of day in Jeju, minutes after midnight KST, as the app last read it
    * (opening, back in front, midnight, the moments 노을 볼 곳 opens and closes, the sunrise, and each answer to a
    * request); null before it is read. */
@@ -169,7 +171,7 @@ export interface State {
 }
 
 export type Action =
-  | { type: 'mood'; button: Button }
+  | { type: 'mood'; button: Button; pin?: string }
   | { type: 'sub'; sub: Tab }
   | { type: 'request'; req: number; intent: Intent; step: 'locating' | 'loading' }
   | { type: 'slow'; req: number }
@@ -313,6 +315,7 @@ export function initialState(init: {
     rain: null,
     culture: null,
     browseId: null,
+    pin: null,
     clock: init.clock ?? null,
     surveyLine: init.surveyLine ?? false,
     feedbackSent: false,
@@ -532,7 +535,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   const ids = shown[key];
   // 뺀 곳 (ADR-0087) are out from this pick on: three brought back with one of them in are picked anew
   const from = pickSpots(spots, s.visited);
-  const restored = intent === 'show' && ids ? cardsFor(from, ids, origin.point) : null;
+  const restored = intent === 'show' && ids && !s.pin ? cardsFor(from, ids, origin.point) : null;
   if (restored) {
     // Exactly what is already on screen (same 3, same point): keep it as is, so nothing is rebuilt.
     const c = s.cards;
@@ -563,6 +566,15 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   // (Amendment 1) go after the rest.
   const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
   const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any, minuteNow(s));
+  // a shelf card pressed (ADR-0117 Amendment 1): that place first, then the picks' others; one the pin put out is not seen
+  const pinned = s.pin ? cardsFor(from, [s.pin], origin.point) : null;
+  if (pinned) {
+    const cards = [...pinned, ...r.cards.filter((c) => c.spot.id !== s.pin)].slice(0, r.cards.length || 1);
+    const out = r.cards.filter((c) => !cards.includes(c) && !histories[key]?.seen.includes(c.spot.id)).map((c) => c.spot.id);
+    const h = r.histories[key]!;
+    r.cards = cards;
+    r.histories = { ...r.histories, [key]: { ...h, seen: [...new Set([...h.seen.filter((id) => !out.includes(id)), s.pin!])], last: cards.map((c) => c.spot.id) } };
+  }
   if (!r.cards.length) return { ...s, spots, origin: base, originReach: s.reach, originIndoor: s.indoor, histories, shown, phase: { k: 'empty' }, cards: null, seq };
   const how = intent === 'more' ? 'more' : 'new';
   const n = r.cards.length;
@@ -617,7 +629,7 @@ function step(s: State, a: Action): State {
   switch (a.type) {
     case 'mood':
       // Set the mood first: whether the cards on hand still apply depends on it.
-      return enterView({ ...s, mood: offered(s.dest, a.button) }, 'cards');
+      return enterView({ ...s, mood: offered(s.dest, a.button), pin: a.pin ?? null }, 'cards');
     case 'sub':
       return a.sub === 'meal' || a.sub === 'cafe' ? { ...s, sub: a.sub } : { ...s, newSub: a.sub };
     case 'request':
@@ -643,7 +655,7 @@ function step(s: State, a: Action): State {
       const timed = a.clock === undefined ? s : { ...s, clock: a.clock };
       const withGeo = a.origin?.key === GPS_KEY ? { ...timed, lastFail: null } : timed;
       if (s.view === 'saved') return resolveSaved(withGeo, a.origin, a.spots);
-      if (s.view === 'cards' && s.mood && a.origin) return resolveCards(withGeo, a.origin, a.spots, intent);
+      if (s.view === 'cards' && s.mood && a.origin) return { ...resolveCards(withGeo, a.origin, a.spots, intent), pin: null };
       return { ...withGeo, spots: a.spots, phase: { k: 'idle' } };
     }
     case 'loadError':
@@ -669,7 +681,8 @@ function step(s: State, a: Action): State {
       // 다른 날로 belongs to a row of the saved list: without one (a forward after a reload) there is none.
       // 오늘 근처에서 하는 것's list and 오늘 서울 둘러보기, the same: none without the day's list (a card's sheet: without its card)
       const cult = a.overlay === 'culture' || a.overlay === 'browse' || a.overlay === 'browse-card';
-      const overlay = (a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved')) || (cult && s.culture?.day !== s.today) || (a.overlay === 'browse-card' && !s.culture?.items.some((i) => i.id === s.browseId)) ? null : a.overlay;
+      // 오늘 서울 둘러보기's screen is gone (ADR-0117 5): an entry of it (a back, a forward) finds none
+      const overlay = a.overlay === 'browse' || (a.overlay === 'move' && (!s.moveTarget || s.view !== 'saved')) || (cult && s.culture?.day !== s.today) || (a.overlay === 'browse-card' && !s.culture?.items.some((i) => i.id === s.browseId)) ? null : a.overlay;
       if (overlay === s.overlay) return s;
       return { ...s, overlay, stayForm: { pending: false, error: null }, feedbackSent: false, destPick: false, geo: NO_GEO };
     }

@@ -2,7 +2,13 @@
 // most 12, none empty, nothing shut now, the hour's shelves first, 동네 cards; the picture and link addresses; 머문 시간 in fives.
 import { describe, expect, it } from 'vitest';
 import { cultureItems, type CultureItem, type SeoulRow } from '../functions/_lib/culture-filter';
-import { FULL, HOOD_MIN, ORDER, PER_SHELF, browseCard, buildShelves, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { FULL, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
+import { normalizeSpots } from '../src/data';
+import { moodShelf } from '../src/home';
+import { initialState } from '../src/state';
+import type { Spot } from '../src/pick';
 import { openNow, type Now } from '../src/culture';
 import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/fun';
 import { distanceKm } from '../src/pick';
@@ -198,6 +204,68 @@ describe('buildShelves (ADR-0114 2·3, ADR-0115 6)', () => {
     const it0 = item({ id: 'a', end: DAY, time: '10:00~18:00' });
     expect(browseCard(it0, at(14), 경복궁)).toMatchObject({ why: '오늘까지 · 지금 열림 · 18:00까지', trip: { walk: true } });
     expect(browseCard(it0, at(19), 경복궁)).toBeNull();
+  });
+});
+
+// 서울 홈의 선반 (ADR-0117 성공 기준, specs/seoul-home-shelves.md 테스트): the four 기준점 × 14·19·22시 on the 11-04 list
+describe('서울 홈의 선반 (ADR-0117)', () => {
+  const seoul = normalizeSpots(JSON.parse(readFileSync(resolve(__dirname, '../data/seoul/spots-seoul.json'), 'utf8')));
+  const HERE = { 용산: { lat: 37.5299, lng: 126.9648 }, 노원: { lat: 37.6551, lng: 127.0613 }, 망원, 역삼: { lat: 37.5006, lng: 127.0364 } };
+  const home = (p: { lat: number; lng: number }, h: number) => {
+    const s = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: h * 60 });
+    const origin = { key: 'gps', point: p, isPoint: true, from: '' };
+    const sunset = sunsetMinutes(p, DAY);
+    const moods = Object.fromEntries(MOOD_SHELVES.map((m) => [m, moodShelf(s, seoul, origin, m)]));
+    return homeShelves(buildShelves(items, at(h), p, sunset), moods, h * 60, sunset);
+  };
+  const size = (sh: ReturnType<typeof home>[number]) => ('spots' in sh ? sh.spots : sh.cards).length;
+
+  it.each(Object.entries(HERE).flatMap(([name, p]) => [14, 19, 22].map((h) => [name, h, p] as const)))('%s at %i:00: ≥ 4 shelves of ≥ 6, ≤ 12 each, none shut, each place once, the order table', (_, h, p) => {
+    const list = home(p, h);
+    expect(list.filter((sh) => size(sh) >= FULL).length).toBeGreaterThanOrEqual(4);
+    for (const sh of list) {
+      expect(size(sh)).toBeGreaterThan(0);
+      expect(size(sh)).toBeLessThanOrEqual(PER_SHELF);
+    }
+    // nothing shut now: the day's list and the curated places by their hours; a mood's places have none outside 제주 (ADR-0111 6)
+    for (const sh of list) if ('cards' in sh) for (const c of sh.cards) expect(browseCard(c.item, at(h), p)).not.toBeNull();
+    // each place once: by name, and a curated place that is a mood's place too (the same 카카오 id) once
+    const names = list.flatMap((sh) => ('spots' in sh ? sh.spots.map((x) => x.name) : sh.cards.map((c) => c.item.title)));
+    expect(new Set(names).size).toBe(names.length);
+    const kakao = list.flatMap((sh) => ('spots' in sh ? sh.spots.map((x) => x.kakaoPlaceId) : sh.cards.map((c) => /kakao\.com\/(\d+)/.exec(c.item.link)?.[1]))).filter(Boolean);
+    expect(new Set(kakao).size).toBe(kakao.length);
+    // the order: the full ones first, each part in homeOrder of the hour's shelves
+    const rank = ORDER[bandOf(h * 60, sunsetMinutes(p, DAY))];
+    const funKeys = buildShelves(items, at(h), p, sunsetMinutes(p, DAY)).map((sh) => sh.key).sort((a, b) => rank.indexOf(a) - rank.indexOf(b));
+    const keys = list.map((sh) => sh.key);
+    const want = homeOrder(funKeys, h * 60).filter((k) => keys.includes(k));
+    const full = want.filter((k) => size(list.find((sh) => sh.key === k)!) >= FULL);
+    expect(keys).toEqual([...full, ...want.filter((k) => !full.includes(k))]);
+    // all five moods have a shelf of their own here
+    for (const m of MOOD_SHELVES) expect(keys).toContain(m);
+  });
+
+  it("the order table: 먹기 second at 밥때 (else after the hour's), 유명한 데 third, 놀러 fifth, 쉬기·걷기 last", () => {
+    const k: ShelfKey[] = ['hood', 'g4', 'g5', 'g7'];
+    expect(homeOrder(k, 12 * 60)).toEqual(['hood', 'food', 'famous', 'g4', 'new', 'g5', 'g7', 'rest', 'walk']);
+    expect(homeOrder(k, 18 * 60)).toEqual(['hood', 'food', 'famous', 'g4', 'new', 'g5', 'g7', 'rest', 'walk']);
+    expect(homeOrder(k, 15 * 60)).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'food', 'rest', 'walk']);
+    expect(homeOrder(k, 21 * 60)).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'food', 'rest', 'walk']);
+    // no list: the moods alone
+    expect(homeOrder([], 15 * 60)).toEqual(['famous', 'new', 'food', 'rest', 'walk']);
+    expect(homeOrder([], 12 * 60)).toEqual(['food', 'famous', 'new', 'rest', 'walk']);
+  });
+
+  it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf is not there; a short one goes to the back', () => {
+    const sp = (id: string, name: string, kakao: string | null = null) => ({ id, name, kakaoPlaceId: kakao }) as Spot;
+    const cards = Array.from({ length: 6 }, (_, i) => ({ item: place({ id: `kk-${i}`, g: 'G2', word: '전통시장', title: `시장${i}`, link: `https://place.map.kakao.com/${100 + i}` }), why: '', trip: null }));
+    const out = homeShelves([{ key: 'g2', cards }], { food: [sp('a', '시장0'), sp('b', '딴집', '101'), sp('c', '국밥'), sp('e', '냉면')], famous: [sp('c', '국밥'), sp('d', '궁')], rest: [sp('a', '시장0')] }, 15 * 60, SUNSET);
+    // 15:00: g2, 유명한 데, 먹기 (after the hour's), 쉬기 empty
+    expect(out.map((sh) => sh.key)).toEqual(['g2', 'famous', 'food']);
+    expect(out.slice(1).map((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual([['c', 'd'], ['e']]);
+    // a full mood shelf before a short curated one
+    const many = Array.from({ length: 7 }, (_, i) => sp(`f${i}`, `곳${i}`));
+    expect(homeShelves([{ key: 'g2', cards: cards.slice(0, 2) }], { famous: many }, 15 * 60, SUNSET).map((sh) => sh.key)).toEqual(['famous', 'g2']);
   });
 });
 

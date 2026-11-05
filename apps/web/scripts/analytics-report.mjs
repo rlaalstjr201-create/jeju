@@ -5,7 +5,7 @@
 // then 저장 목록 흐름 (ADR-0085, specs/saved-flow-events.md): Q1–Q3 from the counters that are not places;
 // then 숙소 링크 (ADR-0089): per partner tag, 들어옴 · 기분 누름 · 길찾기 and the two ratios;
 // then 시작 화면 (specs/busan.md 7): seen, started (how · why · 여행지) and the rule set in advance for its 4th week;
-// then 오늘 서울 둘러보기 (ADR-0114 7, Amendment 1): opened, the median stay's bin, the share with a card pressed, the links.
+// then 서울 홈의 선반 (ADR-0117 6; the 둘러보기 screen of ADR-0114 7 is gone): card sheets and their links, and the verdict's rule.
 // Little or no data is said as such, never presented as a finding.
 import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -39,16 +39,18 @@ const DEST = { jeju: '제주', busan: '부산', gangwon: '강릉', nation: '다�
 /** 오늘 서울 둘러보기 counters (events/handler.ts BROWSE_IDS): not places */
 const BROWSE = /^browse:/;
 
-/** 오늘 서울 둘러보기 for one window. The rule set in advance (ADR-0114 7, Amendment 1), read once on 2026-11-19 (ADR-0115 7): with
- * 30 or more left screens (browse_done), the bin holding the median stay is 45 s or more (bins are 5 s, floored) and
- * (cards 1 + cards 2) ÷ left is 30% or more → 넓히기; under 30 it is 판단 보류. */
+/** 서울 홈의 선반 for one window. ADR-0114 7's verdict (the screen's stay) is withdrawn with the screen (ADR-0117 6); what the
+ * screen sent before is still shown. The new rule, read once 14 days after the release: of the days 서울 홈 was opened, those with
+ * a shelf card or heading pressed are 30% or more (only with 30 days or more). These counters are per day and event, never per
+ * visit: the days are read in GA4 and our own records together, this section shows the card counts. */
 export function browseLines(rows, key) {
   const n = (id) => rows.filter((r) => r.id === id).reduce((s, r) => s + Number(r[key] || 0), 0);
   const open = n('browse:open');
   const bins = [];
   for (let s = 0; s <= 600; s += 5) bins.push([s, n(`browse:secs:${s}`)]);
   const done = bins.reduce((s, [, x]) => s + x, 0);
-  if (!open && !done) return ['데이터 없음.'];
+  const verdict = '- 판정(ADR-0117 6, 배포일 + 14일에 한 번): 서울 홈을 연 날 가운데 선반 카드·선반 머리를 누른 날 30% 이상(날 30개 이상일 때만). 날 수는 GA4·자체 기록으로 봐요.';
+  if (!open && !done) return n('browse:card') ? [`- 카드 시트 ${n('browse:card')}회 → 길찾기 ${n('browse:go')}, 자세히 ${n('browse:more')}`, verdict] : ['데이터 없음.', verdict];
   let seen = 0;
   let median = null;
   for (const [s, x] of bins) {
@@ -57,15 +59,12 @@ export function browseLines(rows, key) {
   }
   const carded = n('browse:cards:1') + n('browse:cards:2');
   const rowsLine = Array.from({ length: 11 }, (_, i) => [i, n(`browse:rows:${i}`)]).filter(([, x]) => x).map(([i, x]) => `${i}줄 ${x}`).join(', ');
-  const pass = done >= 30 && median >= 45 && carded * 10 >= done * 3;
   return [
     `- 열기 ${open}회, 나감 기록 ${done}회`,
     ...(done ? [`- 머문 시간 중앙값이 든 칸: ${median === 600 ? '600초 이상' : `${median}~${median + 4}초`}`, `- 카드 누름이 있는 나감: ${carded}회 (${pct(carded, done)})`] : []),
     ...(rowsLine ? [`- 가로로 넘긴 줄 수: ${rowsLine}`] : []),
     `- 카드 시트 ${n('browse:card')}회 → 길찾기 ${n('browse:go')}, 자세히 ${n('browse:more')}`,
-    done >= 30
-      ? `- 미리 정한 기준(2026-11-19 한 번): 중앙값 칸 45초 이상 그리고 카드 누름 30% 이상 → ${pass ? '넓히기' : '못 미침(원인을 적고 접거나 고침)'}`
-      : `- 나감 기록이 ${done}회라 30회 전에는 판단 보류예요.`,
+    verdict,
   ];
 }
 
@@ -179,7 +178,7 @@ export function renderReport(allRows, names, today) {
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...srcLines(allRows, key), '');
   out.push('## 시작 화면', '', 'specs/busan.md 7. 1초 넘게 보인 덮개만 「보임」, 그 뒤에 시작한 것만 「시작」으로 세요(자동화 브라우저는 빼요). 판정은 이 수치로 하고 GA4는 보조예요.', '');
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...startLines(allRows, key), '');
-  out.push('## 오늘 서울 둘러보기', '', 'ADR-0114 7·Amendment 1. 머문 시간은 5초 칸(내림)으로만 와요. 자동화 브라우저는 빼요. 판정은 2026-11-19에 한 번(ADR-0115 7), 지난 28일 값으로 해요.', '');
+  out.push('## 서울 홈의 선반', '', 'ADR-0117 6. 둘러보기 화면(ADR-0114)은 없어져 그 판정은 거뒀어요. 열기·머문 시간은 화면이 있던 때 값이에요. 자동화 브라우저는 빼요.', '');
   for (const [label, key] of [['지난 7일', 'n7'], ['지난 28일', 'n28']]) out.push(`### ${label}`, '', ...browseLines(allRows, key), '');
   return `${out.join('\n').trimEnd()}\n`;
 }

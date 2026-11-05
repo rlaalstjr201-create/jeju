@@ -74,6 +74,49 @@
 .btile + .sr + .meta { margin-top: 8px; }
 .bc-top .btile { flex: none; width: 104px; }
 
+/* 서울 홈의 선반 (ADR-0117, Amendment 2): a line map. Each shelf is a 노선 — its heading a station ring on a coloured line that
+   runs off the screen's edge, the way a 지하철 map reads — in one of three line colours that say what the shelf holds:
+   places for a mood (2호선 초록), things to do (3호선 주황), today's own events (5호선 보라). The curated tiles take their
+   line's tint; the places' real photos are the one large thing (144, 4:5). The line colours are this chunk's :root, used in
+   .shelves only (서울 홈). */
+:root {
+  --ln-place: #00a84d; --ln-fun: #ef7c1c; --ln-day: #996cac;
+  --ink-place: #00703a; --ink-fun: #a24c00; --ink-day: #6b3f86;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ln-place: #2fd07a; --ln-fun: #ff9a45; --ln-day: #c49be0;
+    --ink-place: #8ee8b4; --ink-fun: #ffc08a; --ink-day: #dcc2f0;
+  }
+}
+.shelves { margin-top: 4px; }
+.shelves .shelf { --ln: var(--ln-fun); --ink: var(--ink-fun); margin-top: 24px; }
+.shelves .shelf[data-line="place"] { --ln: var(--ln-place); --ink: var(--ink-place); }
+.shelves .shelf[data-line="day"] { --ln: var(--ln-day); --ink: var(--ink-day); }
+.shelves .shelf h2 {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; margin: 0 -16px 6px 0;
+  font-size: 1.0625rem; line-height: 1.35; font-weight: 700; letter-spacing: -0.01em;
+}
+/* the station: a ring in the line's colour; the line runs on to the edge */
+.shelves .shelf h2::before { content: ""; flex: none; width: 16px; aspect-ratio: 1; border: 4px solid var(--ln); border-radius: var(--r-pill); background: var(--bg); }
+.shelves .shelf h2::after { content: ""; flex: 1; min-width: 24px; border-top: 4px solid var(--ln); }
+.shelves .cult-src { margin-top: 20px; }
+.shelves .cult-src + .cult-src { margin-top: 4px; }
+.shelf-go { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; font: inherit; }
+.shelf-go::after { content: "›"; color: var(--ink); font-size: 1.25rem; line-height: 1; }
+.shelf-go:active { color: var(--muted); }
+.shelves .btile { background: color-mix(in srgb, var(--ln) 14%, var(--bg)); color: var(--ink); }
+.shelves .bpic.noimg { background: color-mix(in srgb, var(--ln) 14%, var(--bg)); }
+.shelves .noimg .balt { color: var(--ink); }
+/* a 동네 tile under 「걸어 볼 동네」 need not say 동네 again */
+.shelves .t-hood { justify-content: flex-end; }
+.shelves .t-hood .bk { display: none; }
+.bpic.sq, .bpic.sq img { aspect-ratio: 4 / 5; }
+/* the one large thing: a mood's places are real photos, wider and taller than the tiles and posters (128); the row still
+   shows the next card's edge at 320 */
+.shelf-row > li:has(> .bcard[data-pin]) { width: min(144px, calc((100vw - 32px) / 2.15)); }
+.moods[hidden] + .any { grid-column: 1 / -1; min-height: 56px; }
+
 /* a card's sheet over the screen (the app's bottom sheet, later in #sheet so it is on top) */
 .bc-top { display: flex; align-items: flex-start; gap: 16px; }
 .bc-top .bpic { flex: none; width: 104px; }

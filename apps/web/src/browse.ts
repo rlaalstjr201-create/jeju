@@ -4,7 +4,7 @@
 // in one shelf only; at most 12 a shelf, an empty one not there at all.
 import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from './culture';
 import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
-import { distanceKm, type Point } from './pick';
+import { distanceKm, type Kind, type Point, type Spot } from './pick';
 
 /** The shelves (ADR-0115 1·6): 동네, the five curated kinds, then the day's own list (무대, 오늘만·이번 주까지, 전시). */
 export const SHELVES = ['hood', 'g1', 'g2', 'g4', 'g5', 'g6', 'g7', 'stage', 'today', 'exhibit'] as const;
@@ -108,6 +108,53 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
   const rank = ORDER[bandOf(now.minute, sunset)];
   const short = (s: Shelf) => (s.cards.length < FULL ? 1 : 0);
   return out.sort((a, b) => short(a) - short(b) || rank.indexOf(a.key) - rank.indexOf(b.key));
+}
+
+/** 서울 홈의 선반 (ADR-0117, specs/seoul-home-shelves.md): the five moods' shelves among the hour's. */
+export const MOOD_SHELVES = ['rest', 'walk', 'new', 'famous', 'food'] as const satisfies readonly Kind[];
+export type MoodShelf = (typeof MOOD_SHELVES)[number];
+export type HomeKey = ShelfKey | MoodShelf;
+/** 밥때: 먹기 second (11:00–14:00, 17:00–21:00) */
+const MEAL = (minute: number) => (minute >= 660 && minute < 840) || (minute >= 1020 && minute < 1260);
+/** The order (spec 선반 순서): the hour's shelves (`keys`, ORDER) with 먹기 second at 밥때 (else after them), 유명한 데 third,
+ * 놀러 fifth, 쉬기·걷기 last. */
+export function homeOrder(keys: readonly ShelfKey[], minute: number): HomeKey[] {
+  const out: HomeKey[] = [...keys];
+  const meal = MEAL(minute);
+  if (meal) out.splice(1, 0, 'food');
+  out.splice(2, 0, 'famous');
+  out.splice(4, 0, 'new');
+  if (!meal) out.push('food');
+  out.push('rest', 'walk');
+  return out;
+}
+export type HomeShelf = Shelf | { key: MoodShelf; spots: Spot[] };
+const kakaoOf = (link: string) => /place\.map\.kakao\.com\/(\d+)/.exec(link)?.[1];
+/** The home's shelves: `shelves` (buildShelves) and each mood's places (home.ts moodShelf, nearest first) in homeOrder, each
+ * place once — a place another shelf before it took (by id, 카카오 id or name: a curated place may be a mood's too) is passed
+ * over — at most PER_SHELF a shelf, an empty one not there, then those under FULL at the back (ADR-0115 Amendment 3). */
+export function homeShelves(shelves: readonly Shelf[], moods: Partial<Record<MoodShelf, readonly Spot[]>>, minute: number, sunset: number): HomeShelf[] {
+  const rank = ORDER[bandOf(minute, sunset)];
+  const fun = new Map(shelves.map((s) => [s.key, s]));
+  const taken = new Set<string>(shelves.flatMap((s) => s.cards.flatMap((c) => [c.item.title, kakaoOf(c.item.link) ?? ''])).filter(Boolean));
+  const out: HomeShelf[] = [];
+  for (const key of homeOrder([...fun.keys()].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)), minute)) {
+    const f = fun.get(key as ShelfKey);
+    if (f) {
+      out.push(f);
+      continue;
+    }
+    const spots: Spot[] = [];
+    for (const x of moods[key as MoodShelf] ?? []) {
+      if (spots.length >= PER_SHELF) break;
+      if ([x.id, x.name, x.kakaoPlaceId].some((k) => k && taken.has(k))) continue;
+      spots.push(x);
+      for (const k of [x.id, x.name, x.kakaoPlaceId]) if (k) taken.add(k);
+    }
+    if (spots.length) out.push({ key: key as MoodShelf, spots });
+  }
+  const size = (s: HomeShelf) => ('spots' in s ? s.spots : s.cards).length;
+  return out.sort((a, b) => Number(size(a) < FULL) - Number(size(b) < FULL));
 }
 
 const hhmm = (m: number) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;

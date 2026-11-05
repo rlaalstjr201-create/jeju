@@ -485,12 +485,16 @@ export function mountApp(doc: Document, deps: Deps): App {
     cultureBusy = true;
     const get = deps.fetch;
     void loadCulture()
-      .then((ok) => (ok ? culturePart()!.fetchCulture(get) : null))
+      .then((ok) => {
+        // 서울 홈의 기분 선반 at once (ADR-0117); the day's own when the list comes
+        if (ok && !signal.aborted) void (batching || held ? (unrendered = true) : renderer.render(state));
+        return ok ? culturePart()!.fetchCulture(get) : null;
+      })
       .then((c) => {
         cultureBusy = false;
         if (!signal.aborted && c?.day === day && state.today === day) {
           dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
-          // a card's sheet whose item is not in the new list: back to the screen under it
+          // a card's sheet whose item is not in the new list: closed
           if (state.overlay === 'browse-card' && !c.items.some((i) => i.id === state.browseId)) closeOverlay();
         }
       });
@@ -848,7 +852,8 @@ export function mountApp(doc: Document, deps: Deps): App {
   };
 
   // --- intents ---
-  function onMood(b: Button) {
+  /** `pin`: a 서울 홈 shelf card's place (ADR-0117 Amendment 1), the first of the cards. */
+  function onMood(b: Button, pin?: string) {
     // The mood buttons live on the first screen; from the results they are reached only programmatically
     // (tests), from the saved list not at all (hidden, and 뒤로 comes first).
     if (state.overlay || state.view === 'saved' || guarded(`mood:${b}`)) return;
@@ -860,7 +865,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     batch(() => {
       // a merge already answered has said its piece
       if (state.keep.restore?.k === 'done') dispatch({ type: 'keep', keep: { restore: null } });
-      dispatch({ type: 'mood', button: b });
+      dispatch({ type: 'mood', button: b, ...(pin ? { pin } : {}) });
       count('tap');
       if (from === 'home') nav.push(CARDS);
       request(intent);
@@ -946,8 +951,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (!state.overlay) return;
     stayToken++; // a 숙소 GPS request still in flight is now void (S10)
     hush(); // the 2nd tap of a double tap must not land on the page under the sheet
-    // a card's sheet goes back to 오늘 서울 둘러보기 under it
-    dispatch({ type: 'overlay', overlay: state.overlay === 'browse-card' ? 'browse' : null });
+    dispatch({ type: 'overlay', overlay: null });
     nav.back();
   }
 
@@ -970,12 +974,12 @@ export function mountApp(doc: Document, deps: Deps): App {
     countBrowse({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: culturePart()?.scrolledRows() ?? 0, cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
     tracker.flush();
   }
-  /** A card's sheet over the screen: an entry of its own (back closes the card, then the screen). */
+  /** A card's sheet over 서울 홈 (ADR-0117 5): an entry of its own (back closes it). */
   function openBrowseCard(id: string | undefined) {
-    if (state.overlay !== 'browse' || !id || guarded('browse-card')) return;
+    if (state.overlay || state.view !== 'home' || !id || guarded('browse-card')) return;
     hush();
     dispatch({ type: 'browseCard', id });
-    if (state.overlay === 'browse') return; // not taken (no list for today)
+    if (!state.overlay) return; // not taken (no list for today)
     nav.push({ view: state.view, overlay: 'browse-card' });
     if (browsing) browsing.cards++;
     countBrowse({ e: 'browse_card', d: state.today });
@@ -1281,7 +1285,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   function onMainButton(b: HTMLButtonElement) {
     const keepAct = b.dataset.action ? KEEP_ACTIONS[b.dataset.action] : undefined;
     if (keepAct) return guarded(`keep:${b.dataset.action}`) ? undefined : keepAct();
-    if (b.dataset.mood) return onMood(b.dataset.mood as Button);
+    if (b.dataset.mood) return onMood(b.dataset.mood as Button, b.dataset.pin);
+    // 서울 홈의 선반 (ADR-0117): a card's sheet over the home
+    if (b.dataset.action === 'browse-card') return openBrowseCard(b.dataset.id);
     if (b.dataset.sub) return onSub(b.dataset.sub as Tab);
     if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
     if (b.classList.contains('visited') && b.dataset.id) return onVisited(b.dataset.id);

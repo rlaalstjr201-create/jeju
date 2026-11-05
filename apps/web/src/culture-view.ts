@@ -1,7 +1,8 @@
 // 오늘 근처에서 하는 것 (ADR-0112 8, plans/now-culture.md §3): the home's block (홈 2) and the list sheet (목록 6), a chunk of
 // its own (release.ts loadCulture) so the entry stays in its budget (ADR-0100). The list is asked for here too: 서울 목록
 // 전체, no position in the request (ADR-0112 6); the app filters by distance (culture.ts pickCulture).
-import { BROWSE_COPY, browseCardSheet, browseScreen } from './browse-view';
+import { buildShelves, homeShelves, type MoodShelf } from './browse';
+import { BROWSE_COPY, browseCardSheet, browseScreen, homeShelvesView, type MoodCard } from './browse-view';
 export { scrolledRows } from './browse-view';
 import { WHY_TEXT, pickCulture, type CultureItem, type Now, type Pick } from './culture';
 import type { Fetch } from './effects';
@@ -10,6 +11,8 @@ import { goLink, type MapApp } from './links';
 import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
 import { COPY } from './render';
 import type { State } from './state';
+import { sunsetMinutes } from './sun';
+import type { Day } from './dates';
 import type { Origin } from './types';
 
 /** Its words (ADR-0093: another language's come in through `words`). Titles and places stay as the list gives them. */
@@ -143,6 +146,27 @@ export function browseBody(doc: Document, s: State, origin: Origin | null): HTML
   const c = s.culture!;
   return browseScreen(doc, c.items, nowOf(c), origin?.point ?? null, [...sources(doc, allItems(c)), el(doc, 'p', { class: 'cult-src' }, BROWSE_COPY.fromKakao)]);
 }
+/** 서울 홈의 선반 (ADR-0117): today's list's shelves (when it is in) and the moods' (`moods`, home.ts moodShelf, nearest first),
+ * in the hour's order (browse.ts homeShelves), and at the end the source lines of what they show. `card`: a mood place's name
+ * and how far, as the home words them. Null with no shelf at all. */
+export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Partial<Record<MoodShelf, Spot[]>>, labels: Record<MoodShelf, string>, card: (spot: Spot) => MoodCard): HTMLElement | null {
+  const c = s.culture?.day === s.today ? s.culture : null;
+  const day = (c?.day ?? s.today) as Day;
+  const sunset = sunsetMinutes(origin.point, day);
+  const minute = c?.minute ?? s.clock ?? 12 * 60;
+  const list = homeShelves(c ? buildShelves(c.items, nowOf(c), origin.point, sunset) : [], moods, minute, sunset);
+  if (!list.length) return null;
+  const rows = list.map((sh) => ('spots' in sh ? { key: sh.key, cards: sh.spots.map(card) } : sh));
+  const shown = list.flatMap((sh) => ('cards' in sh ? sh.cards.map((x) => x.item) : []));
+  // only the sources of what is shown: the city's for an event, KOPIS for a show, 카카오맵 for a curated place
+  const src = [
+    ...(shown.some((i) => !isFun(i) && !i.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'seoul' }, CULTURE_COPY.from)] : []),
+    ...(shown.some((i) => i.id.startsWith('kp-')) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kopis' }, CULTURE_COPY.fromShows)] : []),
+    ...(shown.some(isFun) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kakao' }, BROWSE_COPY.fromKakao)] : []),
+  ];
+  return homeShelvesView(doc, rows, labels, src);
+}
+
 /** A card's sheet over it; null when the item is not in today's list. */
 function browseCard(doc: Document, s: State, origin: Origin | null, id: string): HTMLElement | null {
   const c = s.culture!;

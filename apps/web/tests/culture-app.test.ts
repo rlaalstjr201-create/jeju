@@ -1,12 +1,14 @@
 // @vitest-environment jsdom
-// 오늘 근처에서 하는 것 (ADR-0112): 서울's home, 지금, with a basis — the list asked for once (no position in the request),
-// at most 2 on the home with their why line, up to 6 in the sheet; nothing elsewhere, on a 204, for another day or in date
-// mode. With the switch on only (npm run test:nation): 서울 opens with the 자동 지역's part.
+// 서울 홈의 선반 (ADR-0117, before it ADR-0112·0114): 서울's home, 지금, with a basis — the list asked for once (no position in
+// the request), the shelves where the moods were (the list's and the moods'), a card's sheet over the home; the moods'
+// shelves alone without the list; nothing of it elsewhere or in date mode. With the switch on only (npm run test:nation):
+// 서울 opens with the 자동 지역's part.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
 import { SHELVES } from '../src/browse';
+import { initialState, reduce } from '../src/state';
 import { DEST } from '../src/dest';
 import type { Fetch } from '../src/effects';
 import { normalizeNation } from '../src/nation';
@@ -14,7 +16,7 @@ import { NATION, loadCulture, loadNation } from '../src/release';
 import { KEYS } from '../src/store';
 import rows from './fixtures/seoul-culture-20261104.json';
 import { fileSpots } from './fixtures';
-import { $, $$, advance, current, flush, render, reset, settle, tap } from './harness';
+import { $, $$, current, flush, render, reset, settle, tap } from './harness';
 
 const DAY = '2026-11-04';
 const items = cultureItems(rows as SeoulRow[], DAY);
@@ -50,17 +52,19 @@ function mount(fetch: Fetch, o: { dest?: string; at?: { lat: number; lng: number
     fetch,
   });
 }
-const block = () => $('#culture');
-const picks = (box: Element) => [...box.querySelectorAll<HTMLAnchorElement>('.cult a.mk')];
+const shelves = () => $('#shelves');
+const shelfRows = () => $$('#shelves .shelf-row');
+const moodsHidden = () => (document.querySelector('ul.moods') as HTMLElement).hidden;
+const MOODS = ['rest', 'walk', 'new', 'famous', 'food'];
 
-describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
+describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
   beforeAll(async () => {
     vi.stubGlobal('fetch', (url: string) => {
       const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
       return Promise.resolve(m ? { ok: true, json: () => Promise.resolve(JSON.parse(nationFile(m[1]))) } : { ok: false, status: 404 });
     });
     expect(await loadNation()).toBe(true);
-    // the culture chunk (now with 둘러보기's view and stylesheet) in before the first test: its first import can outlast `wait` on a busy run
+    // the culture chunk (the shelves' view and stylesheet) in before the first test: its first import can outlast `wait` on a busy run
     expect(await loadCulture()).toBe(true);
     vi.unstubAllGlobals();
   });
@@ -70,7 +74,7 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
   });
   afterEach(() => reset());
 
-  it('서울 at 14:00: one ask without a position; the home shows at most 2 with why lines, the sheet up to 6', async () => {
+  it('서울 at 14:00: one ask without a position; the shelves where the moods were, 아무거나 under them, no 「오늘 근처에서 하는 것」', async () => {
     const c = cultureFetch({ day: DAY, items });
     mount(c.f);
     await wait();
@@ -78,65 +82,88 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     expect(c.asked()).toEqual(['/api/culture?city=seoul']);
     // no coordinates, no 구 in the request
     expect(c.asked()[0]).not.toMatch(/\d+\.\d+|lat|lng|grid|sgg|gu=/);
-    const home = picks(block());
-    expect(home.length).toBeGreaterThan(0);
-    expect(home.length).toBeLessThanOrEqual(2);
-    for (const a of home) {
-      expect(a.querySelector('.nm')!.textContent).not.toBe('');
-      const metas = [...a.querySelectorAll('.meta')].map((m) => m.textContent!);
-      expect(metas).toHaveLength(2);
-      expect(metas[1]).toMatch(/^(걸어서|차로) 약 \d+분$/);
-      expect(a.getAttribute('href')).toMatch(/^https:\/\/map\.naver\.com\/p\/directions\/-\//);
-      expect(a.getAttribute('href')).not.toContain('126.977,37.5796');
+    expect($('#culture')).toBeNull();
+    expect(shelves()).not.toBeNull();
+    expect(moodsHidden()).toBe(true);
+    expect($('#lede').hidden).toBe(true);
+    expect($('#ask').hidden).toBe(false);
+    // 아무거나 stays, after the shelves
+    const any = $('button.any');
+    expect(any.hidden).toBe(false);
+    expect(shelves().compareDocumentPosition(any) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(shelfRows().length).toBeGreaterThanOrEqual(4);
+    expect(shelfRows().length).toBeLessThanOrEqual(SHELVES.length + MOODS.length);
+    for (const r of shelfRows()) {
+      expect(r.querySelectorAll('.bcard').length).toBeGreaterThan(0);
+      expect(r.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);
     }
-    expect(home[0].querySelector('.meta')!.textContent).toMatch(/요일까지|오늘|지금 열림|시작|무료/);
-    expect(block().querySelector('h2')!.textContent).toBe('오늘 근처에서 하는 것');
-    expect(block().querySelector('.cult-src')!.textContent).toBe('정보: 서울시 문화행사(서울 열린데이터광장)');
-
-    await tap('#culture [data-action="culture-more"]');
-    expect(current().state().overlay).toBe('culture');
-    const sheet = $('#sheet .sheet');
-    expect(sheet.querySelector('h2')!.textContent).toBe('오늘 근처에서 하는 것');
-    const list = picks(sheet);
-    expect(list.length).toBeGreaterThan(home.length);
-    expect(list.length).toBeLessThanOrEqual(6);
-    for (const a of list) expect(a.querySelectorAll('.meta').length).toBeGreaterThanOrEqual(1);
-    expect(list.slice(0, home.length).map((a) => a.querySelector('.nm')!.textContent)).toEqual(home.map((a) => a.querySelector('.nm')!.textContent));
-    await tap('#sheet [data-action="close"]');
-    await wait();
-    expect(current().state().overlay).toBeNull();
+    // the five moods' headings are their buttons, in the mood buttons' words
+    const heads = $$('#shelves .shelf-go');
+    expect(heads.map((b) => b.dataset.mood).sort()).toEqual([...MOODS].sort());
+    expect(heads.find((b) => b.dataset.mood === 'rest')!.textContent).toBe('푹 쉬고 싶어');
+    // each card once
+    const ids = $$('#shelves .bcard').map((b) => b.dataset.id ?? b.dataset.pin);
+    expect(new Set(ids).size).toBe(ids.length);
+    // 지금 여기서's place is not on them again
+    const nowId = $('#now img[data-id]')?.dataset.id;
+    expect(nowId).toBeTruthy();
+    expect(ids).not.toContain(nowId);
+    // a mood card: its photo, name and how far
+    const card = $('#shelves .bcard[data-pin]');
+    expect(card.querySelector('img')!.getAttribute('src')).toBeTruthy();
+    expect(card.querySelector('.nm')!.textContent).not.toBe('');
+    expect(card.querySelector('.meta')!.textContent).toMatch(/(걸어서|차로) 약 \d+분/);
+    // the sources of what is shown, at the shelves' end
+    const src = $$('#shelves .cult-src').map((p) => p.textContent);
+    expect(src).toContain('정보: 서울시 문화행사(서울 열린데이터광장)');
+    expect(src).toContain('장소 정보: 카카오맵');
+    expect(shelves().lastElementChild!.classList.contains('cult-src')).toBe(true);
     // asked once a day: other draws do not ask again
     document.dispatchEvent(new Event('visibilitychange'));
     await wait();
     expect(c.asked()).toHaveLength(1);
+
+    // a mood's heading: that mood's results, as its button did
+    await tap('#shelves .shelf-go[data-mood="famous"]');
+    await wait();
+    expect(current().state()).toMatchObject({ view: 'cards', mood: 'famous' });
   });
 
-  it('a KOPIS show among the picks: its cast after the why line, and the KOPIS source line', async () => {
+  it("a mood card: its mood's results, that place first (Amendment 1)", async () => {
+    mount(cultureFetch({ day: DAY, items }).f);
+    await wait();
+    const cards = $$('#shelves .shelf-row[data-shelf="food"] .bcard');
+    expect(cards.length).toBeGreaterThan(3);
+    const pin = cards[3].dataset.pin!;
+    await tap(cards[3]);
+    await wait();
+    const st = current().state();
+    expect(st).toMatchObject({ view: 'cards', mood: 'food', pin: null });
+    expect(st.cards!.list[0].spot.id).toBe(pin);
+    expect(st.cards!.list).toHaveLength(3);
+    expect(new Set(st.cards!.list.map((c) => c.spot.id)).size).toBe(3);
+  });
+
+  it('a KOPIS show on the shelves: the KOPIS source line', async () => {
     const show = { id: 'kp-PF1', title: '연극 오늘 한 번', kind: '연극', place: '경복궁 앞 소극장', gu: '', lat: 경복궁.lat, lng: 경복궁.lng, start: DAY, end: DAY, time: '수요일 19:00', free: false, forAll: true, link: '', image: '', cast: '김상우·이원우' };
     mount(cultureFetch({ day: DAY, items: [show, ...items] }).f);
     await wait();
-    const a = picks(block()).find((x) => x.querySelector('.nm')!.textContent === show.title)!;
-    expect(a).toBeTruthy();
-    expect(a.querySelector('.meta')!.textContent).toBe('오늘만 · 19:00 시작 · 김상우·이원우 출연');
-    expect([...block().querySelectorAll('.cult-src')].map((p) => p.textContent)).toEqual(['정보: 서울시 문화행사(서울 열린데이터광장)', '출처: (재)예술경영지원센터 공연예술통합전산망(KOPIS)']);
+    expect($(`#shelves .bcard[data-id="${show.id}"]`)).not.toBeNull();
+    expect($$('#shelves .cult-src').map((p) => p.textContent)).toContain('출처: (재)예술경영지원센터 공연예술통합전산망(KOPIS)');
   });
 
-  it('no KOPIS show among the picks: the Seoul source line alone', async () => {
-    mount(cultureFetch({ day: DAY, items }).f);
-    await wait();
-    expect(block().querySelectorAll('.cult-src')).toHaveLength(1);
-  });
-
-  it('not 서울 (제주): never asked, no block', async () => {
+  it('not 서울 (제주): never asked, no shelves, the moods as they were', async () => {
     const c = cultureFetch({ day: DAY, items });
     mount(c.f, { dest: 'jeju', at: 제주시 });
     await wait();
     expect(current().state().dest).toBe('jeju');
     expect(c.asked()).toEqual([]);
-    expect(block()).toBeNull();
+    expect(shelves()).toBeNull();
+    expect(moodsHidden()).toBe(false);
+    expect($('#lede').hidden).toBe(false);
   });
 
-  it('a 204, then 5 minutes on: asked again, and the block comes', async () => {
+  it("a 204: the moods' shelves alone; 5 minutes on, asked again, and the list's come", async () => {
     let status = 204;
     let clock = at1400().getTime();
     const urls: string[] = [];
@@ -156,7 +183,9 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     await wait();
     const asked = () => urls.filter((u) => u.startsWith('/api/culture')).length;
     expect(asked()).toBe(1);
-    expect(block()).toBeNull();
+    expect(shelfRows().map((r) => r.dataset.shelf).sort()).toEqual([...MOODS].sort());
+    expect(moodsHidden()).toBe(true);
+    expect($$('#shelves .cult-src')).toEqual([]);
     // back in front a minute on: not yet
     clock += 60_000;
     document.dispatchEvent(new Event('visibilitychange'));
@@ -167,70 +196,52 @@ describe.runIf(NATION)('오늘 근처에서 하는 것 (switch on)', () => {
     document.dispatchEvent(new Event('visibilitychange'));
     await wait();
     expect(asked()).toBe(2);
-    expect(block()).not.toBeNull();
+    expect(shelfRows().some((r) => !MOODS.includes(r.dataset.shelf!))).toBe(true);
   });
 
-  it('a 204: no block', async () => {
-    const c = cultureFetch(204);
-    mount(c.f);
-    await wait();
-    expect(c.asked()).toHaveLength(1);
-    expect(block()).toBeNull();
-    expect($$('.cult')).toEqual([]);
-  });
-
-  it('nothing near now, but a list today: 오늘 서울 둘러보기 alone (Amendment 1)', async () => {
-    const far = { ...items[0], id: 'sc-far', lat: 37.6542, lng: 127.0568, time: '' };
-    const c = cultureFetch({ day: DAY, items: [far] });
-    mount(c.f);
-    await wait();
-    expect(block()).not.toBeNull();
-    expect(picks(block()!)).toEqual([]);
-    expect([...block()!.querySelectorAll('button')].map((b) => b.dataset.action)).toEqual(['browse']);
-    expect(block()!.querySelector('h2')).toBeNull();
-  });
-
-  it('an empty list today: the way in alone (the curated places ride along, ADR-0115)', async () => {
-    const c = cultureFetch({ day: DAY, items: [] });
-    mount(c.f);
-    await wait();
-    expect(picks(block()!)).toEqual([]);
-    expect([...block()!.querySelectorAll('button')].map((b) => b.dataset.action)).toEqual(['browse']);
-  });
-
-  it("another day's list: no block", async () => {
+  it("another day's list: the moods' shelves alone", async () => {
     const c = cultureFetch({ day: '2026-11-03', items });
     mount(c.f);
     await wait();
     expect(c.asked()).toHaveLength(1);
-    expect(block()).toBeNull();
+    expect(shelfRows().map((r) => r.dataset.shelf).sort()).toEqual([...MOODS].sort());
+    expect($$('#shelves [data-action="browse-card"]')).toEqual([]);
   });
 
-  it('date mode (내일): not asked, no block', async () => {
+  it('date mode (내일): not asked, no shelves, the moods as they were', async () => {
     const c = cultureFetch({ day: DAY, items });
     mount(c.f, { when: '2026-11-05' });
     await wait();
     expect(current().state().when).toBe('2026-11-05');
     expect(c.asked()).toEqual([]);
-    expect(block()).toBeNull();
+    expect(shelves()).toBeNull();
+    expect(moodsHidden()).toBe(false);
   });
 
-  it('back to a day picked after the block was up: the block goes', async () => {
+  it('a day picked after the shelves were up: they go, the moods come back', async () => {
     const c = cultureFetch({ day: DAY, items });
     mount(c.f);
     await wait();
-    expect(block()).not.toBeNull();
+    expect(shelves()).not.toBeNull();
     await tap('#basis');
     await tap('#sheet [data-when="2026-11-05"]');
     await wait();
     expect(current().state().when).toBe('2026-11-05');
-    expect(block()).toBeNull();
+    expect(shelves()).toBeNull();
+    expect(moodsHidden()).toBe(false);
+    expect($('#lede').hidden).toBe(false);
+  });
+
+  it("오늘 서울 둘러보기's screen is gone (ADR-0117 5): an entry of it (a back, a forward) finds the home", () => {
+    const s = { ...initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false }), culture: { day: DAY, items, minute: 840 } };
+    expect(reduce(s, { type: 'overlay', overlay: 'browse' }).overlay).toBeNull();
+    expect(reduce(s, { type: 'route', route: { view: 'home', overlay: 'browse' } }).overlay).toBeNull();
   });
 });
 
-// 오늘 서울 둘러보기 (ADR-0114): the way in under the block, the whole screen (back closes it), a card's sheet over it (back
-// closes the card first), links http(s) only in a new tab, and the counts it sends (no item, no position).
-describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
+// A card's sheet over 서울 홈 (ADR-0114 4, ADR-0117 5): back closes it, links http(s) only in a new tab, and the counts it sends
+// (no item, no position): browse_card and browse_link only — no screen to open or leave any more.
+describe.runIf(NATION)('서울 홈의 카드 시트 (switch on)', () => {
   beforeAll(async () => {
     vi.stubGlobal('fetch', (url: string) => {
       const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);
@@ -262,37 +273,19 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
   }
   const browse = (sent: Record<string, unknown>[]) => sent.filter((e) => String(e.e).startsWith('browse_'));
 
-  it('opens from the block; shelves of cards, each item once; a card sheet over it; back closes the card, then the screen', async () => {
+  it('a card on the home: its sheet over it; back closes it to the home', async () => {
     const sent = mountSent();
     await wait();
-    const way = $('#culture [data-action="browse"]');
-    expect(way.textContent).toBe('오늘 서울 둘러보기');
-    await tap(way);
-    expect(current().state().overlay).toBe('browse');
-    const screen = $('#sheet .browse');
-    expect(screen.querySelector('h2')!.textContent).toBe('오늘 서울 둘러보기');
-    const shelves = [...screen.querySelectorAll<HTMLElement>('.shelf-row')];
-    expect(shelves.length).toBeGreaterThan(1);
-    expect(shelves.length).toBeLessThanOrEqual(SHELVES.length);
-    // 14:00 is 낮: 걸어 볼 동네 first (browse.ts ORDER)
-    expect(shelves[0].dataset.shelf).toBe('hood');
-    const cards = [...screen.querySelectorAll<HTMLElement>('.bcard')];
-    for (const s of shelves) expect(s.querySelectorAll('.bcard').length).toBeLessThanOrEqual(12);
-    expect(new Set(cards.map((c) => c.dataset.id)).size).toBe(cards.length);
     // the show: its poster over https, lazily, no referrer; a picture that fails becomes the text card
-    const poster = screen.querySelector<HTMLElement>(`[data-id="${show.id}"] img`)!;
+    const poster = $(`#shelves [data-id="${show.id}"] img`);
     expect(poster.getAttribute('src')).toBe('https://yeochana.com/cdn-cgi/image/width=256,quality=75,format=auto/https://kopis.or.kr/upload/pfmPoster/PF_1.jpg');
     expect(poster.getAttribute('loading')).toBe('lazy');
     expect(poster.getAttribute('referrerpolicy')).toBe('no-referrer');
     poster.dispatchEvent(new Event('error'));
-    expect(screen.querySelector(`[data-id="${show.id}"] .bpic`)!.classList.contains('noimg')).toBe(true);
-    expect(screen.querySelector(`[data-id="${show.id}"] img`)).toBeNull();
-    // a shelf scrolled sideways (twice: one shelf)
-    shelves[1].dispatchEvent(new Event('scroll'));
-    shelves[1].dispatchEvent(new Event('scroll'));
+    expect($(`#shelves [data-id="${show.id}"] .bpic`).classList.contains('noimg')).toBe(true);
 
-    await tap(screen.querySelector<HTMLElement>(`[data-id="${show.id}"]`)!);
-    expect(current().state()).toMatchObject({ overlay: 'browse-card', browseId: show.id });
+    await tap(`#shelves [data-id="${show.id}"]`);
+    expect(current().state()).toMatchObject({ overlay: 'browse-card', browseId: show.id, view: 'home' });
     const card = $('#sheet .bc');
     expect(card.querySelector('h2')!.textContent).toBe(show.title);
     expect(card.querySelector('.bc-place')!.textContent).toBe(show.place);
@@ -302,79 +295,41 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
     expect([go.target, go.rel]).toEqual(['_blank', 'noopener']);
     // javascript: is no link
     expect(card.querySelector('a[data-blink="more"]')).toBeNull();
-    expect(screen.hasAttribute('inert')).toBe(true);
+    expect($('#sheet .browse')).toBeNull();
     go.addEventListener('click', (e) => e.preventDefault(), { once: true });
     go.click();
-    // the shelf's scroll is kept: the screen is not built again under the card
-    expect($('#sheet .browse')).toBe(screen);
 
-    window.history.back();
-    await wait();
-    expect(current().state().overlay).toBe('browse');
-    expect($('#sheet .bc')).toBeNull();
-    expect($('#sheet .browse')).toBe(screen);
-    expect(screen.hasAttribute('inert')).toBe(false);
-    expect(document.activeElement?.getAttribute('data-id')).toBe(show.id);
-
-    advance(52_000);
     window.history.back();
     await wait();
     expect(current().state().overlay).toBeNull();
+    expect($('#sheet .bc')).toBeNull();
+    expect(shelves()).not.toBeNull();
     // what was sent: no item, no position, nothing but these fields
     expect(browse(sent)).toEqual([
-      { e: 'browse_open', d: DAY },
       { e: 'browse_card', d: DAY },
       { e: 'browse_link', link: 'go', d: DAY },
-      { e: 'browse_done', secs: expect.any(Number), rows: 1, cards: 1, d: DAY },
     ]);
-    // 52 s on the clock plus the harness's own settling: in 5-second bins, floored
-    const secs = browse(sent)[3].secs as number;
-    expect(secs % 5).toBe(0);
-    expect(secs).toBeGreaterThanOrEqual(50);
-    expect(secs).toBeLessThanOrEqual(60);
   });
 
-  it('a card sheet: 자세히 when the link is http(s), in a new tab; 닫기 back to the screen; Esc closes the screen', async () => {
+  it('a card sheet: 자세히 when the link is http(s), in a new tab; 닫기 and Esc close it', async () => {
     const sent = mountSent();
     await wait();
-    await tap('#culture [data-action="browse"]');
-    const withLink = items.find((i) => /^https?:/.test(i.link) && $(`#sheet .bcard[data-id="${i.id}"]`))!;
+    const withLink = items.find((i) => /^https?:/.test(i.link) && $(`#shelves .bcard[data-id="${i.id}"]`))!;
     expect(withLink).toBeTruthy();
-    await tap(`#sheet .bcard[data-id="${withLink.id}"]`);
+    await tap(`#shelves .bcard[data-id="${withLink.id}"]`);
     const more = $('#sheet .bc a[data-blink="more"]') as HTMLAnchorElement;
     expect(more.getAttribute('href')).toBe(withLink.link.trim());
     expect([more.target, more.rel]).toEqual(['_blank', 'noopener']);
     await tap('#sheet .bc .sheet-close');
     await wait();
-    expect(current().state().overlay).toBe('browse');
+    expect(current().state().overlay).toBeNull();
+    await tap(`#shelves .bcard[data-id="${withLink.id}"]`);
+    expect(current().state().overlay).toBe('browse-card');
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await wait();
     expect(current().state().overlay).toBeNull();
-    expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_card', 'browse_done']);
-    expect(browse(sent)[2]).toMatchObject({ rows: 0, cards: 1 });
-  });
-
-  it('the page hidden while it is open: left then, once (a map app may never bring it back)', async () => {
-    const sent = mountSent();
-    await wait();
-    await tap('#culture [data-action="browse"]');
-    Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true });
-    document.dispatchEvent(new Event('visibilitychange'));
-    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true });
-    await tap('#sheet .browse > .sheet-close');
-    await wait();
-    expect(current().state().overlay).toBeNull();
-    expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_done']);
-  });
-
-  it('pagehide without hidden (an in-app WebView closing): left then, once', async () => {
-    const sent = mountSent();
-    await wait();
-    await tap('#culture [data-action="browse"]');
     window.dispatchEvent(new Event('pagehide'));
-    await tap('#sheet .browse > .sheet-close');
-    await wait();
-    expect(browse(sent).map((e) => e.e)).toEqual(['browse_open', 'browse_done']);
+    expect(browse(sent).map((e) => e.e)).toEqual(['browse_card', 'browse_card']);
   });
 
   it('under a webdriver: nothing of it sent (QA runs must not move the verdict)', async () => {
@@ -382,10 +337,8 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
     try {
       const sent = mountSent();
       await wait();
-      await tap('#culture [data-action="browse"]');
-      await tap('#sheet .bcard');
+      await tap('#shelves .bcard[data-action="browse-card"]');
       await tap('#sheet .bc .sheet-close');
-      await tap('#sheet .browse > .sheet-close');
       await wait();
       expect(browse(sent)).toEqual([]);
     } finally {
@@ -396,8 +349,7 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
   it('a card sheet: its links are in the Tab loop', async () => {
     mountSent();
     await wait();
-    await tap('#culture [data-action="browse"]');
-    await tap(`#sheet .bcard[data-id="${show.id}"]`);
+    await tap(`#shelves .bcard[data-id="${show.id}"]`);
     // from 닫기 (the last), Tab comes round to 길찾기, not to 닫기 again
     ($('#sheet .bc .sheet-close') as HTMLElement).focus();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', cancelable: true }));
@@ -408,8 +360,8 @@ describe.runIf(NATION)('오늘 서울 둘러보기 (switch on)', () => {
     localStorage.setItem(KEYS.track, JSON.stringify(false));
     const sent = mountSent();
     await wait();
-    await tap('#culture [data-action="browse"]');
-    await tap('#sheet .browse > .sheet-close');
+    await tap('#shelves .bcard[data-action="browse-card"]');
+    await tap('#sheet .bc .sheet-close');
     await wait();
     expect(sent).toEqual([]);
   });
