@@ -1,5 +1,5 @@
 /**
- * 서울 「밤 놀거리」 (ADR-0122, review/seoul-night/criteria-01.md). scripts/seoul-cafe/curate.mjs와 같은 단계, 호출하는 단계는 한 번만.
+ * 서울 「밤 놀거리」 (ADR-0122, review/seoul-night/criteria-02.md — 기준 01의 R3만 고침). scripts/seoul-cafe/curate.mjs와 같은 단계, 호출하는 단계는 한 번만.
  *   node scripts/seoul-night/curate.mjs candidates   kakao-01 → candidates-01.json (2절, 호출 없음)
  *   node scripts/seoul-night/curate.mjs pop          상호 검색량 → pop-01.json (3절, 네이버 검색광고, 1회)
  *   node scripts/seoul-night/curate.mjs evidence     블로그 최신 10개 → evidence-01.json (4절, 네이버 검색 API, 1회; 끊기면 .part에서 이어 감)
@@ -42,7 +42,7 @@ export const okCategory = (c) => {
   if (/^가정,생활 > 유흥시설 > 나이트,클럽( |$)/.test(s)) return true;
   return /^음식점 > 술집( |$)/.test(s) && !/^음식점 > 술집 > (실내포장마차|오뎅바)( |$)/.test(s);
 };
-/** R3 룸·접객·호스트·헌팅·감성주점·부킹(이름) */
+/** R3 룸·접객·호스트·헌팅·감성주점·부킹 — 이름만(기준 02: 카테고리 「유흥시설 > 나이트,클럽」의 「유흥」이 클럽을 지웠다) */
 export const ADULT = /헌팅|감성주점|토킹|룸살롱|룸술집|룸바|룸식|가라오케|노래|단란|유흥|호빠|호스트|하이퍼블릭|퍼블릭|텐카페|쩜오|셔츠|풀싸롱|레깅스|성인나이트|부킹|콜라텍|캬바레|카바레/i;
 /** R4 대형 술집 체인(고정 목록) */
 export const MASS = ['생활맥주', '역전할머니맥주', '한신포차', '투다리', '봉구비어', '칠성포차', '용용선생', '크라운호프', '금별맥주', '간이역', '호맥', '설맥', '우후죽순', '오내혼술집', '펀비어킹', '인생술집', '청담이상'].map((s) => s.toLowerCase());
@@ -78,7 +78,7 @@ function candidates() {
       continue;
     }
     if (!okCategory(p.category)) { drop.category++; continue; }
-    if (ADULT.test(p.name) || ADULT.test(p.category)) { drop.adult++; continue; }
+    if (ADULT.test(p.name)) { drop.adult++; continue; }
     if (isMass(p.name, p.category)) { drop.mass++; continue; }
     const n = brandIds.get(brandOf(p.name)).size;
     const chain = n >= 3 ? n : null;
@@ -165,7 +165,7 @@ function cut() {
   pass.sort((a, b) => (volOf(b, vol) ?? 0) - (volOf(a, vol) ?? 0) || ev[b.id].total - ev[a.id].total || (a.id < b.id ? -1 : 1));
   const chosen = pass.slice(0, CUT.max).sort((a, b) => (a.id < b.id ? -1 : 1));
   const items = chosen.map((p) => ({ id: p.id, name: p.name, category: p.category, address: p.address, words: p.words, ...(p.chain ? { chain: p.chain } : {}), volume: volOf(p, vol), blog: { total: ev[p.id].total, posts: ev[p.id].posts } }));
-  write('judge-input-01.json', { criteria: 'criteria-01.md', evidenced: Object.keys(ev).length, failed: Object.values(ev).filter((e) => e.failed).length, passed: pass.length, n: items.length, places: items });
+  write('judge-input-01.json', { criteria: 'criteria-02.md', evidenced: Object.keys(ev).length, failed: Object.values(ev).filter((e) => e.failed).length, passed: pass.length, n: items.length, places: items });
   mkdirSync(resolve(dir, 'input'), { recursive: true });
   const files = [];
   for (let i = 0; i * CUT.per < items.length; i++) {
@@ -193,7 +193,7 @@ function sample() {
   const { inputs, v } = verdicts();
   const ids = drawSample(v, SEED, PER);
   const byId = new Map(v.map((x) => [x.id, x]));
-  write('audit-01-input.json', { seed: SEED, per: PER, n: ids.length, criteria: 'criteria-01.md', items: [...ids].sort().map((id) => inputs.get(id)) });
+  write('audit-01-input.json', { seed: SEED, per: PER, n: ids.length, criteria: 'criteria-02.md', items: [...ids].sort().map((id) => inputs.get(id)) });
   const counts = Object.fromEntries(LABELS.map((l) => [l, v.filter((x) => x.label === l).length]));
   write('audit-01-key.json', { seed: SEED, per: PER, counts, items: ids.map((id) => byId.get(id)) });
   console.log(`판정 ${v.length}곳 ${JSON.stringify(counts)} → 감사 표본 ${ids.length}곳`);
@@ -257,7 +257,7 @@ export function oneEach(keeps) {
 export const OWNER_DROP = {};
 function ship() {
   const res = read('audit-01-result.json');
-  if (!res?.pass) throw new Error('감사 게이트 미통과 — 싣지 않는다 (criteria-01.md 8절)');
+  if (!res?.pass) throw new Error('감사 게이트 미통과 — 싣지 않는다 (criteria-02.md 8절)');
   const { inputs, v } = verdicts();
   const cand = new Map(read('candidates-01.json').places.map((p) => [p.id, p]));
   const hoods = JSON.parse(readFileSync(resolve(webRoot, 'review/seoul-fun/hoods-01.json'), 'utf8'));
