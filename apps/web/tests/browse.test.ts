@@ -270,23 +270,12 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     expect(out.flatMap((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual(['x']);
   });
 
-  it("서울's viewing places keep 10:00–18:00 (Amendment 4): out from 17:30 and before 10:00; food and the rest never", () => {
-    const sp = (name: string, mood = 'new') => ({ id: name, name, mood }) as Spot;
-    expect(viewingShut(sp('국립중앙박물관'), 14 * 60)).toBe(false);
-    expect(viewingShut(sp('국립중앙박물관'), 17 * 60 + 30)).toBe(true);
-    expect(viewingShut(sp('리움미술관'), 9 * 60)).toBe(true);
-    expect(viewingShut(sp('경복궁'), 22 * 60)).toBe(true);
-    expect(viewingShut(sp('궁중족발', 'food'), 22 * 60)).toBe(false);
-    expect(viewingShut(sp('남산 야외식물원', 'walk'), 22 * 60)).toBe(false);
-    // Amendment 5: 「궁과」, the galleries the review named, a palace from 9:00; not 아쿠아리움, a stage, a 돌담길, 화랑대
-    expect(viewingShut(sp('창덕궁과 후원'), 22 * 60)).toBe(true);
-    expect(viewingShut(sp('창덕궁과 후원'), 9 * 60 + 30)).toBe(false);
-    expect(viewingShut(sp('리움미술관'), 9 * 60 + 30)).toBe(true);
-    for (const n of ['푸투라서울', '학고재', '바라캇 서울', '송은', '화이트큐브 서울', '스페이스K 서울', '피크닉']) expect(viewingShut(sp(n), 22 * 60)).toBe(true);
-    for (const n of ['코엑스 아쿠아리움', '롯데월드 아쿠아리움']) expect(viewingShut(sp(n), 19 * 60)).toBe(false);
-    for (const n of ['LG아트센터 서울', '창덕궁 소극장', '화랑대역']) expect(viewingShut(sp(n), 20 * 60)).toBe(false);
-    expect(viewingShut(sp('덕수궁 돌담길', 'walk'), 22 * 60)).toBe(false);
-    expect(viewingShut(sp('화랑대 철도공원', 'rest'), 22 * 60)).toBe(false);
+  it("서울 without a 영업 유형 (Amendment 8): in 10:00–17:30 only, 먹기 always; a value the app can not read is none", () => {
+    const sp = (name: string, mood = 'new', opening?: unknown) => ({ id: name, name, mood, opening }) as Spot;
+    for (const n of ['국립중앙박물관', '코엑스 아쿠아리움', 'LG아트센터 서울', '팝콘D스퀘어']) expect([9 * 60 + 59, 10 * 60, 14 * 60, 17 * 60 + 29, 17 * 60 + 30, 22 * 60, 2 * 60].map((m) => viewingShut(sp(n), m)), n).toEqual([true, false, false, false, true, true, true]);
+    for (const [n, mood] of [['덕수궁 돌담길', 'walk'], ['화랑대 철도공원', 'rest']]) expect([viewingShut(sp(n, mood), 14 * 60), viewingShut(sp(n, mood), 22 * 60)]).toEqual([false, true]);
+    expect([viewingShut(sp('궁중족발', 'food'), 22 * 60), viewingShut(sp('궁중족발', 'food'), 2 * 60)]).toEqual([false, false]);
+    for (const bad of ['evening', 'Always', [600], [600, 'x'], [1200, 600], [600.5, 1200], [0, 3000], null, 7]) expect([viewingShut(sp('곳', 'new', bad), 14 * 60), viewingShut(sp('곳', 'new', bad), 22 * 60)], JSON.stringify(bad)).toEqual([false, true]);
   });
 
   it("the order table: 먹기 second at 밥때 (else after the hour's), 유명한 데 third, 놀러 fifth, 쉬기·걷기 last", () => {
@@ -335,7 +324,7 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     }
   });
 
-  it('by its 영업 유형 (Amendment 7): evening to its close, 늘 at dawn, 궁 at 9:30, 모름 by the names', () => {
+  it('by its 영업 유형 (Amendment 7·8): evening to its close, 늘 at dawn, 궁 at 9:30, 모름 by day only', () => {
     const byId = (id: string) => seoul.find((x) => x.id === id)!;
     expect(seoul.filter((x) => x.opening).length).toBe(821);
     // an evening place (롯데월드 아쿠아리움, 10:00–21:00) stays at 19:00, out from 20:30
@@ -364,14 +353,31 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     // 궁 open at 9:30, the 관람형 not yet; both out from 17:30
     for (const x of seoul.filter((x) => x.opening === 'palace')) expect([viewingShut(x, 9 * 60 + 30), viewingShut(x, 17 * 60 + 30), viewingShut(x, 8 * 60 + 59)], x.name).toEqual([false, true, true]);
     for (const x of seoul.filter((x) => x.opening === 'day-viewing')) expect([viewingShut(x, 9 * 60 + 30), viewingShut(x, 14 * 60), viewingShut(x, 17 * 60 + 30)], x.name).toEqual([true, false, true]);
-    // 모름 or not judged: the names, as before (청와대칠궁 and 코엑스 아쿠아리움 are 모름)
+    // 모름 or not judged (Amendment 8): in the daytime viewing hours only (청와대칠궁 and 코엑스 아쿠아리움 are 모름)
     expect(byId('nt-3056238').opening).toBeUndefined();
-    expect([viewingShut(byId('nt-3056238'), 9 * 60 + 30), viewingShut(byId('nt-3056238'), 22 * 60)]).toEqual([false, true]);
+    expect([viewingShut(byId('nt-3056238'), 9 * 60 + 30), viewingShut(byId('nt-3056238'), 14 * 60), viewingShut(byId('nt-3056238'), 22 * 60)]).toEqual([true, false, true]);
     expect(byId('nt-130284').opening).toBeUndefined();
-    expect(viewingShut(byId('nt-130284'), 22 * 60)).toBe(false);
+    expect([viewingShut(byId('nt-130284'), 14 * 60), viewingShut(byId('nt-130284'), 19 * 60)]).toEqual([false, true]);
     // the label before the names: a 걷기 place labeled 관람형 is out at 22:00, a 박물관 labeled 늘 is in
     expect(viewingShut({ id: 'w', name: '식물원', mood: 'walk', opening: 'day-viewing' } as Spot, 22 * 60)).toBe(true);
     expect(viewingShut({ id: 'm', name: '야외박물관', mood: 'new', opening: 'always' } as Spot, 22 * 60)).toBe(false);
+  });
+
+  // Amendment 8: at night 「지금 여기서」 is a place open by its 영업 유형 (or 먹기), and no mood shelf has a 모름 or unjudged place but 먹기
+  it.each([
+    ['용산', 22, HERE.용산],
+    ['용산', 2, HERE.용산],
+    ['삼청', 22, 삼청],
+    ['삼청', 2, 삼청],
+  ] as const)('%s at %i:00: 지금 여기서 and the mood shelves only places open by their 영업 유형, or 먹기 (Amendment 8)', (_, h, p) => {
+    for (const indoor of [false, true]) {
+      const { now, shelves } = seoulAt(p, h, indoor);
+      expect(now?.name ?? '').not.toMatch(/팝콘D스퀘어|어둠속의대화/);
+      for (const x of [...(now ? [now] : []), ...shelves]) {
+        expect(x.mood === 'food' || x.opening !== undefined, x.name).toBe(true);
+        expect(viewingShut(x, h * 60), x.name).toBe(false);
+      }
+    }
   });
 
   it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf keeps its place; a short one goes to the back', () => {

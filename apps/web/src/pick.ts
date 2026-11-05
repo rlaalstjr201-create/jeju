@@ -63,7 +63,7 @@ export interface Spot {
   /** 예약 없이 가는 곳 (ADR-0074 Amendment 1): a 체험 with tickets on site or free entry — shown without a route. */
   walkin?: true;
   /** 서울's 영업 유형 (ADR-0117 Amendment 7, review/seoul-hours): 관람형 10–18, 궁 9–18, 늘 열림, or an evening place's
-   * [open, close] in minutes (close past 1440 past midnight). Unset: not judged, or 모름 (state.ts viewingShut's names). */
+   * [open, close] in minutes (close past 1440 past midnight). Unset: not judged, or 모름 (state.ts viewingShut: only in the daytime viewing hours, 먹기 always). */
   opening?: 'day-viewing' | 'palace' | 'always' | [number, number];
 }
 
