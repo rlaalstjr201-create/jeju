@@ -156,13 +156,41 @@ function apply() {
 }
 
 /** 야외 산행지 (ADR-0117 Amendment 9): 먹기 아닌 곳 가운데 이름에 산·봉우리·봉수대·계곡이 있거나 산을 지나는 둘레길 코스인 곳.
- * 공원·정원·폭포·성지·캠핑장·전시관, 도심 산책로인 남산(목멱산)·낙산·○○동산, 강·공원을 지나는 서울둘레길 코스(8·14·15)는 아니다. */
+ * 공원·정원·폭포·성지·캠핑장·전시관, 도심 산책로인 남산(목멱산)·낙산·○○동산, 강·공원을 지나는 서울둘레길 코스(8·14·15)는 아니다.
+ * 국립공원·자연공원은 「공원」 제외보다 먼저 산행지다(재검토 2 A9-1). 이름 규칙으로 안 잡히는 곳은 INCLUDE, 밤에도 갈 수 있는
+ * 곳은 NIGHT_OK(A9-2)로 사람이 정한다 — 둘 다 이름이 맞는지 돌릴 때 확인한다. */
 export const TRAIL = /[가-힣]+산(?:$|[\s(]|성|코스)|봉$|봉수대|백운대|계곡|서울둘레길|북한산 둘레길|북악하늘길|산림형코스/;
 export const NOT_TRAIL = /공원|정원$|폭포|성지|캠핑장|전시관|^남산|목멱산|낙산|동산|장지·탄천코스|안양천 하류코스|노을·하늘공원코스/;
-export const isTrail = (x) => x.mood !== 'food' && TRAIL.test(x.name) && !NOT_TRAIL.test(x.name);
+export const PARK_TRAIL = /국립공원$|자연공원/;
+export const INCLUDE = [
+  { id: 'nt-2993160', name: '백악마루', why: '북악산 정상, 한양도성 백악구간(개방 시간 있음)' },
+  { id: 'nt-2723499', name: '서울한양도성 백악구간', why: '북악산 성곽 탐방로(개방 시간 있음)' },
+  { id: 'nt-1101088', name: '서울 한양도성 순성길', why: '백악·인왕·낙산·남산을 넘는 성곽길, 산 구간 포함' },
+  { id: 'nt-2774283', name: '선바위(선암)', why: '인왕산 중턱 바위' },
+  { id: 'nt-3076460', name: '대모산숲속야생화원', why: '대모산 숲속' },
+  { id: 'nt-827642', name: '헌인릉 생태경관보전지역(오리나무림)', why: '대모산 기슭 숲' },
+  { id: 'nt-2757831', name: '우면산자연생태공원', why: '우면산 기슭 숲·습지' },
+  { id: 'nt-2773297', name: '워커힐숲길', why: '아차산으로 이어지는 숲길' },
+  { id: 'nt-3544787', name: '연희숲속쉼터', why: '안산 자락 숲속' },
+];
+export const NIGHT_OK = [
+  { id: 'nt-2661502', name: '서대문 안산(안산자락길)', why: '조명 있는 무장애 데크길, 밤 산책 명소' },
+  { id: 'nt-1037031', name: '하늘한마당~하늘마루 (북악하늘길 스카이웨이)', why: '북악스카이웨이 팔각정 쪽, 차로 가는 야경 명소' },
+  { id: 'nt-1874105', name: '응봉산', why: '한강 야경 명소인 낮은 산' },
+];
+const ids = (list) => new Set(list.map((x) => x.id));
+export function isTrail(x) {
+  if (x.mood === 'food' || ids(NIGHT_OK).has(x.id)) return false;
+  return ids(INCLUDE).has(x.id) || PARK_TRAIL.test(x.name) || (TRAIL.test(x.name) && !NOT_TRAIL.test(x.name));
+}
 
 function trail() {
   const all = JSON.parse(readFileSync(SRC, 'utf8'));
+  const wrong = [...INCLUDE, ...NIGHT_OK].filter((m) => all.find((x) => x.id === m.id)?.name !== m.name);
+  if (wrong.length) {
+    console.error(`목록의 이름이 서울 목록과 다름: ${wrong.map((m) => m.id).join(', ')}`);
+    process.exit(1);
+  }
   const items = [];
   for (const x of all) {
     delete x.trail;
@@ -172,7 +200,9 @@ function trail() {
   }
   writeJson(resolve(dir, 'trail-01.json'), {
     adr: 'docs/adr/0117-seoul-home-shelves.md Amendment 9',
-    rule: { trail: TRAIL.source, notTrail: NOT_TRAIL.source, food: 'never' },
+    rule: { trail: TRAIL.source, notTrail: NOT_TRAIL.source, parkFirst: PARK_TRAIL.source, food: 'never' },
+    include: INCLUDE,
+    nightOk: NIGHT_OK,
     n: items.length,
     items,
   });

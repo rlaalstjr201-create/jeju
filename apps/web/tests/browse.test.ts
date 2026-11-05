@@ -397,13 +397,35 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
       for (const x of [...(now ? [now] : []), ...shelves]) expect(x.trail, x.name).toBeUndefined();
     }
   });
-  it('산행지 (Amendment 9): 73 places from the rule, none 먹기; at 14:00 on the shelves of 노원·관악·은평', () => {
+  it('산행지 (Amendment 9): 83 places by the rule and the lists, none 먹기; at 14:00 on the shelves of 노원·관악·은평', () => {
     const trails = seoul.filter((x) => x.trail);
-    expect(trails.length).toBe(73);
+    expect(trails.length).toBe(83);
     expect(trails.some((x) => x.mood === 'food')).toBe(false);
     for (const n of ['불암산', '관악산', '북한산 족두리봉', '우이동계곡', '흰구름길 (북한산 둘레길 3구간)']) expect(seoul.find((x) => x.name === n)?.trail, n).toBe(true);
     for (const n of ['남산공원', '서울숲', '경의선숲길', '여의도 둘레길(여의도 자전거도로)', '관악산 낙성대공원', '노을·하늘공원코스 (서울둘레길 15코스)', '낙산 코스 (종로둘레길 3코스)']) expect(seoul.find((x) => x.name === n)?.trail, n).toBeUndefined();
     for (const p of [HERE.노원, 관악, 은평]) expect(seoulAt(p, 14).shelves.some((x) => x.trail)).toBe(true);
+  });
+
+  // 재검토 2 (Amendment 9): 국립공원·자연공원 and the places the list names are 산행지; the night-ok list stays at night
+  const NAMED9 = /북한산국립공원|대모산도시자연공원|대모산숲속야생화원|백악마루/;
+  it.each([
+    ['노원', HERE.노원],
+    ['도봉', { lat: 37.6796, lng: 127.0455 }],
+    ['수서', { lat: 37.4875, lng: 127.1019 }],
+    ['부암', { lat: 37.5925, lng: 126.9636 }],
+  ] as const)('22:00 %s: none of 북한산국립공원·대모산·백악마루 on a mood shelf or 지금 여기서 (Amendment 9)', (_, p) => {
+    const { now, shelves } = seoulAt(p, 22);
+    for (const x of [...(now ? [now] : []), ...shelves]) expect(x.name).not.toMatch(NAMED9);
+  });
+  it('밤에도 가는 곳 (Amendment 9): 안산자락길·응봉산·북악하늘길 스카이웨이 stay at 22:00', () => {
+    const s22 = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: 22 * 60 });
+    const open = openSpots(s22, seoul, true);
+    for (const n of ['서대문 안산(안산자락길)', '응봉산', '하늘한마당~하늘마루 (북악하늘길 스카이웨이)']) {
+      const x = seoul.find((y) => y.name === n)!;
+      expect(x.trail, n).toBeUndefined();
+      expect(open, n).toContain(x);
+    }
+    for (const n of ['북한산국립공원', '대모산도시자연공원', '대모산숲속야생화원', '백악마루', '관악산자연공원']) expect(seoul.find((y) => y.name === n)?.trail, n).toBe(true);
   });
 
   it('a place a shelf before took is passed over (id, name, 카카오 id); an empty mood shelf keeps its place; a short one goes to the back', () => {
