@@ -1,0 +1,411 @@
+{
+  "batch": "08",
+  "items": [
+    {
+      "id": "nt-130637",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-2714284",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3013174",
+      "label": "evening",
+      "open": "11:00",
+      "close": "22:00",
+      "why": "공연장·극장"
+    },
+    {
+      "id": "nt-3075429",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3338761",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3013173",
+      "label": "evening",
+      "open": "11:00",
+      "close": "22:00",
+      "why": "공연장·극장"
+    },
+    {
+      "id": "nt-130431",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3044306",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3081190",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-3428325",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-3407517",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-131519",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-2761474",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-1253279",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-2741117",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2456069",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-2850356",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-309302",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-753989",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2553908",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-128611",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-3442142",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3442375",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-2946110",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-1874105",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-827494",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-3551183",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-822861",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-3394562",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-2753089",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-736766",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-2704340",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3084400",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-3084413",
+      "label": "evening",
+      "open": "11:00",
+      "close": "22:00",
+      "why": "공연장·극장"
+    },
+    {
+      "id": "nt-3084412",
+      "label": "evening",
+      "open": "11:00",
+      "close": "22:00",
+      "why": "공연장·극장"
+    },
+    {
+      "id": "nt-2453996",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-130658",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-130958",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-2488585",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관·미술관·갤러리·전시관, 낮 운영"
+    },
+    {
+      "id": "nt-2674989",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-3058205",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2783315",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2745620",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-128961",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-3060915",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2756575",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-3043811",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-1030763",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2756578",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2452856",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-126490",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-753964",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-129552",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-2779539",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-742972",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-126518",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원·산·길·강·열린 유적"
+    },
+    {
+      "id": "nt-337546",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    },
+    {
+      "id": "nt-2756589",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "시간대 확신 없음"
+    }
+  ]
+}

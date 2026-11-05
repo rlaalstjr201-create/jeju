@@ -1,0 +1,411 @@
+{
+  "batch": "01",
+  "items": [
+    {
+      "id": "nt-2733967",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "성당이나 미사·관람 시간대 확신 없음"
+    },
+    {
+      "id": "nt-4080919",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "광화문 인근 열린 기념 정원"
+    },
+    {
+      "id": "nt-126508",
+      "label": "palace",
+      "open": null,
+      "close": null,
+      "why": "조선 궁궐"
+    },
+    {
+      "id": "nt-1604652",
+      "label": "palace",
+      "open": null,
+      "close": null,
+      "why": "경복궁 안 건물, 궁궐 관람시간"
+    },
+    {
+      "id": "nt-126484",
+      "label": "palace",
+      "open": null,
+      "close": null,
+      "why": "조선 궁궐"
+    },
+    {
+      "id": "nt-1606042",
+      "label": "palace",
+      "open": null,
+      "close": null,
+      "why": "경희궁 안 전각"
+    },
+    {
+      "id": "nt-1604784",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "경희궁 정문, 외부에서 볼 수 있으나 확신 없음"
+    },
+    {
+      "id": "nt-1604824",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원"
+    },
+    {
+      "id": "nt-126512",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "경복궁 정문, 외부에서 상시 관람"
+    },
+    {
+      "id": "nt-775394",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "광장"
+    },
+    {
+      "id": "nt-2608977",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관"
+    },
+    {
+      "id": "nt-298109",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "북한산 사찰, 시간 확신 없음"
+    },
+    {
+      "id": "nt-2993536",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "번사창 개방 시간 확신 없음"
+    },
+    {
+      "id": "nt-129501",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "성곽 공원"
+    },
+    {
+      "id": "nt-128872",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "사찰, 시간 확신 없음"
+    },
+    {
+      "id": "nt-299980",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "사찰, 시간 확신 없음"
+    },
+    {
+      "id": "nt-1605948",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "별서 관람지(석파정서울미술관 부지), 낮 관람"
+    },
+    {
+      "id": "nt-126534",
+      "label": "evening",
+      "open": "11:00",
+      "close": "23:00",
+      "why": "소극장 밀집 공연 거리"
+    },
+    {
+      "id": "nt-1603677",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "도로변 궁성 망루, 외부 관람"
+    },
+    {
+      "id": "nt-2992824",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "한옥 클래스 체험, 낮 운영"
+    },
+    {
+      "id": "nt-126487",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원"
+    },
+    {
+      "id": "nt-3013272",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "전통문화 한옥 시설, 낮 운영"
+    },
+    {
+      "id": "nt-1603543",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원"
+    },
+    {
+      "id": "nt-2469939",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "박물관"
+    },
+    {
+      "id": "nt-3056596",
+      "label": "evening",
+      "open": "10:30",
+      "close": "21:00",
+      "why": "동물 체험 카페, 저녁까지 영업 추정"
+    },
+    {
+      "id": "nt-605961",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "노상 추모 조형물"
+    },
+    {
+      "id": "nt-809372",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "계곡 숲길"
+    },
+    {
+      "id": "nt-2993160",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "북악산 정상 전망 지점 (개방 시간 제한 있으나 문 없음)"
+    },
+    {
+      "id": "nt-2481866",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "근대 한옥 관람시설"
+    },
+    {
+      "id": "nt-605497",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "노상 터 표지"
+    },
+    {
+      "id": "nt-126516",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "거리 종각, 외부 상시 관람"
+    },
+    {
+      "id": "nt-1367251",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "동네"
+    },
+    {
+      "id": "nt-809190",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "산"
+    },
+    {
+      "id": "nt-129500",
+      "label": "unknown",
+      "open": null,
+      "close": null,
+      "why": "숙정문, 북악산 구간 개방 시간 제한 확신 없음"
+    },
+    {
+      "id": "nt-126943",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "산 위 정자"
+    },
+    {
+      "id": "nt-1100498",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "골목 코스"
+    },
+    {
+      "id": "nt-3056278",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "옥탑 전망대, 낮 운영"
+    },
+    {
+      "id": "nt-2993183",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "공방 체험관"
+    },
+    {
+      "id": "nt-3085314",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "공방 체험"
+    },
+    {
+      "id": "nt-126537",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "한옥마을 골목"
+    },
+    {
+      "id": "nt-2946075",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "거리"
+    },
+    {
+      "id": "nt-3044038",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "복원 가옥, 외부 열린 터"
+    },
+    {
+      "id": "nt-127942",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원"
+    },
+    {
+      "id": "nt-2992891",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "열린 제단 유적"
+    },
+    {
+      "id": "nt-126488",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "공원"
+    },
+    {
+      "id": "nt-250147",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "거리"
+    },
+    {
+      "id": "nt-3019162",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "거리"
+    },
+    {
+      "id": "nt-945824",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "전시 사적"
+    },
+    {
+      "id": "nt-231938",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "터 표지"
+    },
+    {
+      "id": "nt-250338",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "열린 유적"
+    },
+    {
+      "id": "nt-126522",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "사당 유적, 낮 개방"
+    },
+    {
+      "id": "nt-126517",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "문묘·성균관 유적 낮 개방"
+    },
+    {
+      "id": "nt-250358",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "전시 건물"
+    },
+    {
+      "id": "nt-127454",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "운현궁 낮 관람 (궁 아님, 관람형 유적)"
+    },
+    {
+      "id": "nt-2037020",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "마을 골목"
+    },
+    {
+      "id": "nt-3449598",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "별서 정원, 석파정서울미술관 부지"
+    },
+    {
+      "id": "nt-2774283",
+      "label": "always",
+      "open": null,
+      "close": null,
+      "why": "열린 바위"
+    },
+    {
+      "id": "nt-3418283",
+      "label": "day-viewing",
+      "open": null,
+      "close": null,
+      "why": "성균관 명륜당, 낮 개방"
+    }
+  ]
+}
