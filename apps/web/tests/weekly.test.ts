@@ -3,9 +3,10 @@
 import { describe, expect, it } from 'vitest';
 import { JSDOM } from 'jsdom';
 import FILE from '../data/seoul/weekly-seoul.json';
-import { ORDER, SHELVES, buildShelves, inHood } from '../src/browse';
+import { ORDER, SHELVES, browseCard, buildShelves, inHood } from '../src/browse';
 import { BROWSE_COPY, browseCardSheet } from '../src/browse-view';
-import { openNow, type CultureItem, type Now } from '../src/culture';
+import { openNow, seoulMinutes, type CultureItem, type Now } from '../src/culture';
+import { distanceKm } from '../src/pick';
 import { funItems, realItems } from '../src/fun';
 import { isWeek, usualTime, weeklyItems, type WeekRow } from '../src/weekly';
 
@@ -90,6 +91,16 @@ describe("the 'week' shelf", () => {
     // 내 위치 먼저: nearest first (no big-name order as the day's own list has)
     const km = cards.map((c) => c.trip!.minutes);
     expect(km).toEqual([...km].sort((x, y) => x - y));
+  });
+
+  it('the time to get there counts: open at 19:10 from next door, shut when it takes 30 minutes or more (docs/qa/mutation-2026-11-05.md 2)', () => {
+    const w = weeklyItems('2026-11-05', [], [row({})])[0]; // 11:00~20:00 at 성수, out from 19:30
+    const 경복궁 = { lat: 37.5796, lng: 126.977 };
+    expect(browseCard(w, now('2026-11-05', 19, 10), 성수)).not.toBeNull();
+    const card = browseCard(w, now('2026-11-05', 19, 10), null);
+    expect(card?.trip).toBeNull();
+    expect(seoulMinutes(distanceKm(경복궁, w)).minutes).toBeGreaterThanOrEqual(30);
+    expect(browseCard(w, now('2026-11-05', 19, 10), 경복궁)).toBeNull();
   });
 
   it('reads 「월~목 … 금~토 …」: shut on a Sunday', () => {

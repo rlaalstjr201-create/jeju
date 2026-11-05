@@ -71,6 +71,10 @@ describe('the curated places (ADR-0115)', () => {
     // the time to get there counts
     expect(likelyOpen(place({ g: 'G5', word: '방탈출' }), 22 * 60, 40, 11)).toBe(false);
   });
+  it('야구 직관 (G6): out in January and February, in from March and through October (docs/qa/mutation-2026-11-05.md 1)', () => {
+    const ball = place({ g: 'G6', word: '야구장' });
+    expect([1, 2, 3, 10, 11, 12].map((m) => likelyOpen(ball, 18 * 60, 0, m))).toEqual([false, false, true, true, false, false]);
+  });
   it('the hour: late, morning, day, dusk around the sunset, night', () => {
     expect(bandOf(3 * 60, 1045)).toBe('late');
     expect(bandOf(9 * 60, 1045)).toBe('morning');
@@ -165,6 +169,16 @@ describe('buildShelves (ADR-0114 2·3, ADR-0115 6)', () => {
       expect(c.count).toBeGreaterThanOrEqual(HOOD_MIN);
       expect(c.count).toBe(inHood(c.item, items, at(14), 망원).length);
     }
+  });
+
+  it('inHood: within 0.7km of the 동네 only, no other 동네 in it (docs/qa/mutation-2026-11-05.md 4)', () => {
+    const hood = place({ id: 'kk-h', g: 'hood', word: '동네', lat: 37.55, lng: 126.92 });
+    // 1° of latitude ≈ 111.2km: 0.0062° ≈ 0.69km, 0.0064° ≈ 0.71km
+    const near = place({ id: 'kk-n', g: 'G5', word: '찜질방', lat: 37.5562, lng: 126.92 });
+    const far = place({ id: 'kk-f', g: 'G5', word: '찜질방', lat: 37.5564, lng: 126.92 });
+    const other = place({ id: 'kk-o', g: 'hood', word: '동네', lat: 37.551, lng: 126.92 });
+    expect([distanceKm(hood, near) < 0.7, distanceKm(hood, far) > 0.7]).toEqual([true, true]);
+    expect(inHood(hood, [far, other, near], at(14), null).map((c) => c.item.id)).toEqual(['kk-n']);
   });
 
   it('an item takes its own kind\'s shelf; the day\'s list: 무대, 오늘만·이번 주까지, 전시 in that order of taking', () => {
@@ -362,6 +376,15 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     // the label before the names: a 걷기 place labeled 관람형 is out at 22:00, a 박물관 labeled 늘 is in
     expect(viewingShut({ id: 'w', name: '식물원', mood: 'walk', opening: 'day-viewing' } as Spot, 22 * 60)).toBe(true);
     expect(viewingShut({ id: 'm', name: '야외박물관', mood: 'new', opening: 'always' } as Spot, 22 * 60)).toBe(false);
+  });
+
+  it('openSpots leaves the list as it is on a chosen day and when the time is not read (docs/qa/mutation-2026-11-05.md 5)', () => {
+    const viewing = [{ id: 'v', name: '미술관', mood: 'new', opening: 'day-viewing' } as Spot];
+    const base = { dest: 'seoul' as const, basis: 'gps' as const, today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false };
+    // at 22:00 now the 관람형 is out; for tomorrow, or with no clock, nothing is taken out by the time now
+    expect(openSpots(initialState({ ...base, clock: 22 * 60 }), viewing, false)).toEqual([]);
+    expect(openSpots(initialState({ ...base, clock: 22 * 60, when: '2026-11-05' }), viewing, false)).toBe(viewing);
+    expect(openSpots(initialState(base), viewing, false)).toBe(viewing);
   });
 
   // Amendment 8: at night 「지금 여기서」 is a place open by its 영업 유형 (or 먹기), and no mood shelf has a 모름 or unjudged place but 먹기
