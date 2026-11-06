@@ -180,7 +180,7 @@ export function sweepOf(item, day) {
 }
 
 // ── 그림 (10절) ──
-export const BLOCKED = /(^|\.)(blog\.naver\.com|post\.naver\.com|cafe\.naver\.com|in\.naver\.com|map\.naver\.com|m\.place\.naver\.com|place\.naver\.com|naver\.me|smartstore\.naver\.com|booking\.naver\.com|tistory\.com|brunch\.co\.kr|velog\.io|instagram\.com|facebook\.com|fb\.com|youtube\.com|youtu\.be|x\.com|twitter\.com|threads\.net|tiktok\.com|kakao\.com|daum\.net|kko\.to|linktr\.ee|litt\.ly|inpock\.co\.kr|modoo\.at|catchtable\.co\.kr|tablemanager\.io|band\.us|blogspot\.com|wordpress\.com|notion\.site)$/i;
+export const BLOCKED = /(^|\.)(blog\.naver\.com|post\.naver\.com|cafe\.naver\.com|in\.naver\.com|map\.naver\.com|m\.place\.naver\.com|place\.naver\.com|naver\.me|smartstore\.naver\.com|booking\.naver\.com|tistory\.com|brunch\.co\.kr|velog\.io|instagram\.com|facebook\.com|fb\.com|youtube\.com|youtu\.be|x\.com|twitter\.com|threads\.net|tiktok\.com|kakao\.com|daum\.net|kko\.to|linktr\.ee|litt\.ly|inpock\.co\.kr|modoo\.at|catchtable\.co\.kr|tablemanager\.io|band\.us|blogspot\.com|wordpress\.com|notion\.site|notion\.com|oopy\.io|daangn\.com|karroter\.net|tabling\.co\.kr|creatorlink\.net|reserv\.company)$/i;
 export function okPage(u) {
   try {
     const x = new URL(u);
@@ -212,7 +212,7 @@ export function ogOf(html, page) {
   }
   return { image, site: meta('og:site_name') };
 }
-export const BAD_IMAGE = /logo|favicon|icon|noimage|no_image|no-image|placeholder|blank|default_og|og_default|sns_share|share_default/i;
+export const BAD_IMAGE = /logo|favicon|icon|symbol|noimage|no_image|no-image|placeholder|blank|default|sample|temp_|sns[-_]?img|sns_share|share_default/i;
 /** 그림 바이트의 가로·세로 (png·jpeg·gif·webp) */
 export function imageSize(buf) {
   const b = Buffer.from(buf);

@@ -1,0 +1,2592 @@
+{
+ "day": "2026-11-06",
+ "byG": {
+  "G4": {
+   "n": 108,
+   "img": 5
+  },
+  "G10": {
+   "n": 23,
+   "img": 1
+  },
+  "G8": {
+   "n": 77,
+   "img": 5
+  },
+  "G2": {
+   "n": 13,
+   "img": 1
+  },
+  "G7": {
+   "n": 91,
+   "img": 12
+  },
+  "G5": {
+   "n": 68,
+   "img": 3
+  },
+  "G1": {
+   "n": 22,
+   "img": 3
+  },
+  "G6": {
+   "n": 2,
+   "img": 0
+  }
+ },
+ "why": {
+  "no official homepage in Naver local": 295,
+  "too small": 4,
+  "logo-like address": 8,
+  "page net": 11,
+  "no og:image": 23,
+  "shared picture": 10,
+  "over 1.5 MB": 2,
+  "image 404": 3,
+  "image net": 4,
+  "odd shape": 2
+ },
+ "places": {
+  "kk-1003646386": {
+   "name": "피프티북스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1012262230": {
+   "name": "주신당",
+   "g": "G10",
+   "home": "http://thedevilsonthedetail.com",
+   "why": "too small"
+  },
+  "kk-1016477143": {
+   "name": "기욤 청담점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-10174942": {
+   "name": "경동시장",
+   "g": "G2",
+   "home": "https://www.kyungdongmarket.co.kr/",
+   "img": "https://www.kyungdongmarket.co.kr/data/common/snsRepresentImage.jpg?v=1729751296",
+   "imgFrom": "kyungdongmarket.co.kr",
+   "imgPage": "https://www.kyungdongmarket.co.kr/"
+  },
+  "kk-1021367507": {
+   "name": "문화제빵",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1026667156": {
+   "name": "지인시어터",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1032871178": {
+   "name": "괴르츠",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-103401120": {
+   "name": "스탠바이미",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-10341924": {
+   "name": "예스24라이브홀",
+   "g": "G7",
+   "home": "http://www.yes24livehall.com/",
+   "why": "logo-like address"
+  },
+  "kk-1044599831": {
+   "name": "티켓링크1975씨어터",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1045036053": {
+   "name": "탈출브라더스",
+   "g": "G5",
+   "home": "https://escapebro.co.kr/",
+   "why": "page net"
+  },
+  "kk-1045674602": {
+   "name": "껠끄쇼즈",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-104681199": {
+   "name": "유어마인드",
+   "g": "G4",
+   "home": "https://your-mind.com/",
+   "img": "https://your-mind.com/web/imgs/ym_og.jpg",
+   "imgFrom": "유어마인드",
+   "imgPage": "https://your-mind.com/"
+  },
+  "kk-10500235": {
+   "name": "서울풍물시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1051704136": {
+   "name": "더 빅테일",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1051959848": {
+   "name": "교집합",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-10593353": {
+   "name": "아르코예술극장",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1062133270": {
+   "name": "번역가의서재",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1062357412": {
+   "name": "이숙희",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1067445930": {
+   "name": "현대카드 언더스테이지",
+   "g": "G7",
+   "home": "https://dive.hyundaicard.com/web/understage/spaceMain.hdc",
+   "why": "no og:image"
+  },
+  "kk-1071989415": {
+   "name": "드림캐처클라이밍짐",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1075126389": {
+   "name": "서브라이엇 해방촌",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-10889757": {
+   "name": "패션5 한남점",
+   "g": "G8",
+   "home": "https://패션5.com/",
+   "img": "https://xn--5-bv4f396b.com/web/upload/share-image-1-79acb826175edf239cbd6a2e10a8421b.jpg",
+   "imgFrom": "패션5",
+   "imgPage": "https://xn--5-bv4f396b.com/"
+  },
+  "kk-1091304591": {
+   "name": "베통 성수",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-10952963": {
+   "name": "여의도한강공원",
+   "g": "G1",
+   "home": "http://hangang.seoul.go.kr/archives/46758",
+   "why": "page net"
+  },
+  "kk-10952965": {
+   "name": "잠실한강공원",
+   "g": "G1",
+   "home": "https://terarosa.com",
+   "imgFrom": "TERAROSA :: 테라로사",
+   "imgPage": "https://terarosa.com/",
+   "why": "shared picture"
+  },
+  "kk-1099800013": {
+   "name": "벤의서재",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-11016313": {
+   "name": "나무사이로",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-11039135": {
+   "name": "개화산랜드",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1106201978": {
+   "name": "부자책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1114719734": {
+   "name": "어느 날,",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1123419577": {
+   "name": "무신사 개러지",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1127230605": {
+   "name": "소나기그림책양조장",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1132376595": {
+   "name": "믹스매치",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-11330151": {
+   "name": "국립극장",
+   "g": "G7",
+   "home": "https://www.ntok.go.kr",
+   "why": "no og:image"
+  },
+  "kk-11523307": {
+   "name": "인사동한증막",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-11553130": {
+   "name": "커피 리브레 연남점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1160197508": {
+   "name": "무브온",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1162083987": {
+   "name": "픽셀퍼인치",
+   "g": "G4",
+   "home": "https://pixelperinch.com",
+   "why": "over 1.5 MB"
+  },
+  "kk-1162949964": {
+   "name": "포차",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1167645808": {
+   "name": "뮤트",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1168753102": {
+   "name": "심심",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1168819420": {
+   "name": "호텔레토",
+   "g": "G5",
+   "home": "http://hotelletoh.co.kr",
+   "why": "logo-like address"
+  },
+  "kk-11731415": {
+   "name": "국립정동극장 세실",
+   "g": "G7",
+   "home": "https://www.jeongdong.or.kr/",
+   "why": "no og:image"
+  },
+  "kk-1176976817": {
+   "name": "심리편집샵 서로",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1180035280": {
+   "name": "깅꼬서울",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-11808008": {
+   "name": "이화여자대학교 삼성홀",
+   "g": "G7",
+   "home": "http://samsunghall.ticketlink.co.kr",
+   "why": "no og:image"
+  },
+  "kk-119638836": {
+   "name": "식스나잇",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-11970493": {
+   "name": "광진교8번가",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1198183678": {
+   "name": "커피앤시가렛",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1216188454": {
+   "name": "새고서림",
+   "g": "G4",
+   "home": "https://acatatdawn.oopy.io/",
+   "imgFrom": "도서출판 새벽고양이",
+   "imgPage": "https://acatatdawn.oopy.io/",
+   "why": "blocked page (refilter)",
+   "refiltered": "https://oopy.lazyrockets.com/api/rest/cdn/image/8365d372-1dd4-4dce-9eef-f6ec16274b7b.png"
+  },
+  "kk-121735136": {
+   "name": "수상한창고",
+   "g": "G7",
+   "home": "https://suscoop.com",
+   "img": "https://cdn.imweb.me/upload/S2024011061ed2024f8aea/86d5f740df41e.png",
+   "imgFrom": "suscoop.com",
+   "imgPage": "https://suscoop.com/"
+  },
+  "kk-1224362243": {
+   "name": "웨스트브릿지 라이브홀",
+   "g": "G7",
+   "home": "http://www.west-bridge.co.kr",
+   "why": "no og:image"
+  },
+  "kk-1227550312": {
+   "name": "코브",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-123575123": {
+   "name": "당인리책발전소",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1241657127": {
+   "name": "오프더월",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-12518512": {
+   "name": "앤트러사이트 합정점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-12526895": {
+   "name": "명동난타극장",
+   "g": "G7",
+   "home": "http://www.nanta.co.kr/",
+   "imgFrom": "nanta.co.kr",
+   "imgPage": "https://www.nanta.co.kr:452/",
+   "why": "logo-like address (refilter)",
+   "refiltered": "https://www.nanta.co.kr:452/images/defaultMobileBanner.jpg"
+  },
+  "kk-1254879622": {
+   "name": "터틀힙",
+   "g": "G8",
+   "home": "https://turtlehip.com",
+   "why": "image 404"
+  },
+  "kk-126067252": {
+   "name": "브릭베이글",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-12729676": {
+   "name": "긱라이브하우스",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1279097943": {
+   "name": "아지토 라이브 홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-12817416": {
+   "name": "KU시네마테크",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1302549042": {
+   "name": "로우키",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1315457525": {
+   "name": "숲세권 라이브",
+   "g": "G7",
+   "home": "https://forrestlive.com/",
+   "img": "https://forrestlive.com/assets/home/og.jpg",
+   "imgFrom": "숲세권 라이브",
+   "imgPage": "https://forrestlive.com/"
+  },
+  "kk-132573277": {
+   "name": "피커스클라이밍 구로",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1325970548": {
+   "name": "소셜서재",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1330370659": {
+   "name": "63 스카이피크닉",
+   "g": "G1",
+   "home": "https://63skypicnic.com/",
+   "img": "https://63skypicnic.com/img/site/hero-kv.webp",
+   "imgFrom": "63 스카이피크닉",
+   "imgPage": "https://63skypicnic.com/"
+  },
+  "kk-13312633": {
+   "name": "땡스북스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-133237535": {
+   "name": "오케이어맨션",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1333049180": {
+   "name": "허밋",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1333193437": {
+   "name": "커리큘럼",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1336623745": {
+   "name": "오르빗",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1341473552": {
+   "name": "새들러하우스",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1354125961": {
+   "name": "온쉼표",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1362589378": {
+   "name": "기러기둥지 익선동본점",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1368668927": {
+   "name": "얼스어스 서촌점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-138332755": {
+   "name": "책방곱셈",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1390599294": {
+   "name": "다이스타운",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1390982986": {
+   "name": "링크아트센터드림",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1405262610": {
+   "name": "키이스케이프 강남점",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-14095516": {
+   "name": "스페이스본사우나",
+   "g": "G5",
+   "home": "http://spacebon.com",
+   "why": "too small"
+  },
+  "kk-1418826907": {
+   "name": "동물책방 정글핌피 문래점",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1424126931": {
+   "name": "턴다운서비스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1440347564": {
+   "name": "커피한약방",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1442021491": {
+   "name": "스카이락볼링장",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1442041275": {
+   "name": "딥띵커",
+   "g": "G5",
+   "home": "https://deepthinker.co.kr",
+   "why": "logo-like address"
+  },
+  "kk-1444854771": {
+   "name": "이스케이프 시티",
+   "g": "G5",
+   "home": "http://www.escapecity.kr/",
+   "why": "image net"
+  },
+  "kk-1448117866": {
+   "name": "오즈보드게임카페",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1451158104": {
+   "name": "제로헌드레드",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-14529813": {
+   "name": "블루스퀘어",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1454055454": {
+   "name": "비주류",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1459016752": {
+   "name": "카페비온디앤",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1466391245": {
+   "name": "ㅎㄷ카페",
+   "g": "G4",
+   "home": "https://www.hongdaesquare.co.kr",
+   "img": "https://www.hongdaesquare.co.kr/images/common/thumb-7Jik7ZSI6re4656Y7ZSE_1200x627.jpg",
+   "imgFrom": "hongdaesquare.co.kr",
+   "imgPage": "https://www.hongdaesquare.co.kr/"
+  },
+  "kk-1474223015": {
+   "name": "메종인디아 트래블앤북스",
+   "g": "G4",
+   "home": "http://www.maisonindia.co.kr",
+   "why": "no og:image"
+  },
+  "kk-1478483341": {
+   "name": "비트포비아 던전루나",
+   "g": "G5",
+   "home": "https://www.xdungeon.net",
+   "why": "logo-like address"
+  },
+  "kk-1496388407": {
+   "name": "징가",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-149766335": {
+   "name": "코코로카라",
+   "g": "G8",
+   "home": "http://kokorokara.store",
+   "why": "odd shape"
+  },
+  "kk-1508329235": {
+   "name": "스태픽스",
+   "g": "G8",
+   "home": "http://staffpicks.co.kr",
+   "imgFrom": "staffpicks.co.kr",
+   "imgPage": "https://staffpicks.co.kr/",
+   "why": "logo-like address (refilter)",
+   "refiltered": "https://contents.sixshop.com/uploadedFiles/103283/default/image_1567425084317.jpg"
+  },
+  "kk-1512041888": {
+   "name": "키이스케이프백산방역",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1513353724": {
+   "name": "올오어낫싱",
+   "g": "G4",
+   "home": "https://aon.creatorlink.net",
+   "imgFrom": "aon.creatorlink.net",
+   "imgPage": "https://aon.creatorlink.net/",
+   "why": "blocked page (refilter)",
+   "refiltered": "https://storage.googleapis.com/i.addblock.net/sample/temp_culture_02_thumb.jpg?_1793947660"
+  },
+  "kk-1520191663": {
+   "name": "페르마타",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1529581299": {
+   "name": "에포케책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1529594305": {
+   "name": "JS아트홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1532944638": {
+   "name": "오월의종 한남점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1534238244": {
+   "name": "친정숲불한증막",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1539467994": {
+   "name": "거암아트홀",
+   "g": "G7",
+   "home": "https://www.geoam.co.kr",
+   "why": "too small"
+  },
+  "kk-1540882128": {
+   "name": "성북동빵공장",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1548712469": {
+   "name": "방탈출둡두",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-15493954": {
+   "name": "풍월당",
+   "g": "G4",
+   "home": "http://www.pungwoldang.kr/",
+   "why": "no og:image"
+  },
+  "kk-1560724472": {
+   "name": "방탈출 미로",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1565489437": {
+   "name": "락교 라이브펍",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1569570696": {
+   "name": "책익다",
+   "g": "G4",
+   "home": "https://www.bookikda.com",
+   "why": "no og:image"
+  },
+  "kk-1571632756": {
+   "name": "포프",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-15717572": {
+   "name": "피터팬1978 본점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1579572879": {
+   "name": "산울림",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-15825589": {
+   "name": "쉐프조",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1596111775": {
+   "name": "투떰즈업",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1600490814": {
+   "name": "디셈버",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1611418578": {
+   "name": "더챕터",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1621127914": {
+   "name": "퍼즐팩토리 강남2호점",
+   "g": "G5",
+   "home": "http://www.puzzlefactory.co.kr/",
+   "imgFrom": "�������丮",
+   "imgPage": "https://www.puzzlefactory.co.kr/index.html",
+   "why": "shared picture"
+  },
+  "kk-1629378951": {
+   "name": "N서울타워",
+   "g": "G1",
+   "home": "https://www.nseoultower.co.kr/",
+   "why": "no og:image"
+  },
+  "kk-1631356269": {
+   "name": "아소토베이커리",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1637219532": {
+   "name": "스타더스트",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-163966555": {
+   "name": "머스타드 한남",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-16418510": {
+   "name": "미네르바",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1644038519": {
+   "name": "세토리라이브홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1659028835": {
+   "name": "소원책담",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1667078009": {
+   "name": "더누크",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1668558300": {
+   "name": "어거스트클라이밍",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1671825718": {
+   "name": "자키러브",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1675809011": {
+   "name": "우무지",
+   "g": "G7",
+   "home": "http://wumuji.com",
+   "why": "odd shape"
+  },
+  "kk-1677769553": {
+   "name": "퍼스트커피랩 강남역점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1682203426": {
+   "name": "찰리이스케이프",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1684434413": {
+   "name": "을지로쎄시봉",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1688176278": {
+   "name": "디거이즈디깅",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1691201808": {
+   "name": "인현골방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-16990385": {
+   "name": "쟝블랑제리",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-16992549": {
+   "name": "김영모과자점 서초그랑자이점",
+   "g": "G8",
+   "home": "https://www.k-bread.com/",
+   "img": "https://kimyoungmo.com/kakao1.jpg",
+   "imgFrom": "김영모과자점",
+   "imgPage": "https://kimyoungmo.com/"
+  },
+  "kk-169982583": {
+   "name": "돌체",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1702557408": {
+   "name": "고래사냥",
+   "g": "G4",
+   "home": "http://www.lppan.com/",
+   "why": "image net"
+  },
+  "kk-17087789": {
+   "name": "일지아트홀",
+   "g": "G7",
+   "home": "http://ilchiarthall.com/",
+   "why": "image 404"
+  },
+  "kk-17103308": {
+   "name": "백제불한증막인삼사우나",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17125328": {
+   "name": "마이웨이",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17158968": {
+   "name": "CJ아지트 광흥창",
+   "g": "G7",
+   "home": "http://www.cjazit.org",
+   "img": "https://www.cjazit.org/assets/img/og/cjazit.jpg",
+   "imgFrom": "cjazit.org",
+   "imgPage": "https://www.cjazit.org/"
+  },
+  "kk-17165962": {
+   "name": "백암아트홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1734202756": {
+   "name": "라율아트홀",
+   "g": "G7",
+   "home": "https://www.rayularthall.com",
+   "img": "https://cdn.imweb.me/upload/S20241227eaa0c0a64a517/059aa49f3c209.png",
+   "imgFrom": "rayularthall.com",
+   "imgPage": "https://www.rayularthall.com/"
+  },
+  "kk-17344023": {
+   "name": "예술의전당",
+   "g": "G7",
+   "home": "http://www.sac.or.kr/",
+   "why": "logo-like address"
+  },
+  "kk-1737279611": {
+   "name": "세티라이브홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17384905": {
+   "name": "잠원한강공원",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17384968": {
+   "name": "광나루한강공원",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17558075": {
+   "name": "낙산공원 제1전망광장",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1763141309": {
+   "name": "서점 리스본&포르투",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1763634235": {
+   "name": "북커스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1767016860": {
+   "name": "쌀롱드무지끄",
+   "g": "G7",
+   "home": "https://salondemusique9.imweb.me",
+   "img": "https://cdn.imweb.me/upload/S202506253acf28b0d86a6/fcf07b9cb1cae.png",
+   "imgFrom": "salondemusique9.imweb.me",
+   "imgPage": "https://salondemusique9.imweb.me/"
+  },
+  "kk-1771072641": {
+   "name": "올웨이즈씨어터",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1772440780": {
+   "name": "서울숲씨어터",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17806879": {
+   "name": "북서울꿈의숲 전망대",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1780843633": {
+   "name": "업스테이지",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-17811821": {
+   "name": "목동파라곤스파",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1789984655": {
+   "name": "사진-책방, 책가도",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1791629406": {
+   "name": "벙커컴퍼니 압구정점",
+   "g": "G8",
+   "home": "http://www.bunkercompany.co.kr",
+   "imgFrom": "벙커컴퍼니-원두납품l커피l스폐셜티l로스팅l커피원두도매l",
+   "imgPage": "https://www.bunkercompany.co.kr/",
+   "why": "logo-like address (refilter)",
+   "refiltered": "https://contents.sixshop.com/uploadedFiles/50807/default/image_1698648668624.jpg"
+  },
+  "kk-1806918572": {
+   "name": "비주얼콜렉트",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1815669091": {
+   "name": "모래내책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-18164946": {
+   "name": "선유도공원 선유도전망대",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1820434609": {
+   "name": "후케즈",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1821562074": {
+   "name": "국일관사우나",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-18245163": {
+   "name": "두산아트센터 연강홀",
+   "g": "G7",
+   "home": "http://www.doosanartcenter.com/",
+   "imgFrom": "doosanartcenter.com",
+   "imgPage": "https://www.doosanartcenter.com/ko",
+   "why": "logo-like address (refilter)",
+   "refiltered": "https://www.doosan.com/images/sns-img.png"
+  },
+  "kk-1825220691": {
+   "name": "스피키지",
+   "g": "G5",
+   "home": "https://speakeasyescape.co.kr/",
+   "why": "logo-like address"
+  },
+  "kk-1826678860": {
+   "name": "창신책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1831188739": {
+   "name": "플래시백",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1838883297": {
+   "name": "더숲아카데미하우스",
+   "g": "G8",
+   "home": "https://academyhouse.deosup.com",
+   "img": "https://cdn.imweb.me/upload/S20260329f5418c401340c/d7aa2bcccfba2.png",
+   "imgFrom": "academyhouse.deosup.com",
+   "imgPage": "https://academyhouse.deosup.com/"
+  },
+  "kk-1841732402": {
+   "name": "세실마루",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1844212116": {
+   "name": "여가시간",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1846062551": {
+   "name": "바이닐 한강",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1847666883": {
+   "name": "세종문화회관 S씨어터",
+   "g": "G7",
+   "home": "https://www.sejongpac.or.kr/",
+   "why": "image 404"
+  },
+  "kk-18526234": {
+   "name": "망원시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1860330877": {
+   "name": "카페페퍼",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1860681564": {
+   "name": "테라로사 포스코센터점",
+   "g": "G8",
+   "home": "https://terarosa.com",
+   "imgFrom": "TERAROSA :: 테라로사",
+   "imgPage": "https://terarosa.com/",
+   "why": "shared picture"
+  },
+  "kk-1862264503": {
+   "name": "머더파커 건대2호점",
+   "g": "G5",
+   "home": "http://www.murderparker.com",
+   "why": "image net"
+  },
+  "kk-1867991086": {
+   "name": "동대문 일요시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1871729451": {
+   "name": "산문집",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1872221698": {
+   "name": "후즈데어",
+   "g": "G5",
+   "home": "https://www.keyescape.com/",
+   "imgFrom": "keyescape.com",
+   "imgPage": "https://www.keyescape.com/",
+   "why": "shared picture"
+  },
+  "kk-187287513": {
+   "name": "방탈출토끼굴",
+   "g": "G5",
+   "home": "https://www.rabbitholeescape.co.kr",
+   "imgFrom": "방탈출 토끼굴",
+   "imgPage": "https://www.rabbitholeescape.co.kr/",
+   "why": "logo-like address (refilter)",
+   "refiltered": "https://www.rabbitholeescape.co.kr/images/symbol.jpg"
+  },
+  "kk-1874686740": {
+   "name": "셰입오브타임",
+   "g": "G4",
+   "home": "https://shapeoftime.kr",
+   "why": "no og:image"
+  },
+  "kk-1875457428": {
+   "name": "연남5701",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-18828007": {
+   "name": "딱정벌레",
+   "g": "G4",
+   "home": "http://beetlemusic.blog.me/",
+   "why": "page net"
+  },
+  "kk-1886229314": {
+   "name": "푸시풋살룬",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-18959687": {
+   "name": "홍익대학교 대학로아트센터 소극장",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1916712707": {
+   "name": "원스타베이커리",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-19175443": {
+   "name": "뮤즈온",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1925742552": {
+   "name": "솔버 2호점",
+   "g": "G5",
+   "home": "http://www.solver-gd.com/",
+   "why": "image net"
+  },
+  "kk-1927460450": {
+   "name": "중랑천 놀빛광장 전망대",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1937040023": {
+   "name": "아라아트홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1944538983": {
+   "name": "초록서림",
+   "g": "G4",
+   "home": "https://app.notion.com/p/phampham2s/2de1963a871280539ebfdf648dc1b544?source=copy_link",
+   "imgFrom": "Notion",
+   "imgPage": "https://app.notion.com/p/phampham2s/2de1963a871280539ebfdf648dc1b544?source=copy_link",
+   "why": "blocked page (refilter)",
+   "refiltered": "https://app.notion.com/images/meta/default.png"
+  },
+  "kk-195304151": {
+   "name": "와아",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1954978371": {
+   "name": "서울의 시간을 그리다",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1958239830": {
+   "name": "오츠커피",
+   "g": "G8",
+   "home": "https://oatscoffee.kr",
+   "why": "no og:image"
+  },
+  "kk-1960891823": {
+   "name": "벨르",
+   "g": "G7",
+   "home": "https://www.velr.co.kr",
+   "why": "no og:image"
+  },
+  "kk-1961113764": {
+   "name": "퍼즐팩토리 홍대본점",
+   "g": "G5",
+   "home": "http://www.puzzlefactory.co.kr/",
+   "imgFrom": "�������丮",
+   "imgPage": "https://www.puzzlefactory.co.kr/index.html",
+   "why": "shared picture"
+  },
+  "kk-1981304347": {
+   "name": "레코드스톡",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1982729295": {
+   "name": "파이키",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1983810745": {
+   "name": "피스북스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1986362974": {
+   "name": "메이플스토리 이스케이프",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1987558021": {
+   "name": "링크원스테이지",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1995791949": {
+   "name": "콤포타블 남산",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-1997789202": {
+   "name": "옥타바리움 라이브홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2003000361": {
+   "name": "아트포레스트",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2005375589": {
+   "name": "썸띵어바웃커피",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2020129484": {
+   "name": "판타스트릭TGC",
+   "g": "G5",
+   "home": "http://www.fantastrick.co.kr",
+   "imgFrom": "판타스트릭 FANTASTRICK",
+   "imgPage": "https://fantastrick.co.kr/",
+   "why": "logo-like address (refilter)",
+   "refiltered": "https://fantastrick.co.kr/images/og/og-default.png"
+  },
+  "kk-2022597703": {
+   "name": "선셋무드",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2024064695": {
+   "name": "책방 파란",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2034455524": {
+   "name": "카페산아래",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-20459372": {
+   "name": "부빙",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2055391393": {
+   "name": "어글리",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-20740490": {
+   "name": "잠실종합운동장 잠실야구장",
+   "g": "G6",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2081221522": {
+   "name": "유토피아찜질방",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2085695703": {
+   "name": "읽는공간사색서재",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-20919778": {
+   "name": "서연아트홀",
+   "g": "G7",
+   "home": "https://www.paroot.kr/",
+   "img": "https://cdn.imweb.me/upload/S20240118ba432e72e4742/ddcab2ec43e29.png",
+   "imgFrom": "paroot.kr",
+   "imgPage": "https://www.paroot.kr/"
+  },
+  "kk-2094408175": {
+   "name": "북티크",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2102346140": {
+   "name": "코블러",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2115601133": {
+   "name": "플러스씨어터",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-212176813": {
+   "name": "개꿀이스케이프",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2137210266": {
+   "name": "책방오타루",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2137561165": {
+   "name": "책방시나브로",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2138916951": {
+   "name": "스톤즈클라이밍",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-21409150": {
+   "name": "별이빛나는밤에",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-2146740086": {
+   "name": "베이글리스트",
+   "g": "G8",
+   "home": "https://noti.tabling.co.kr/link/point?path=restaurant_details&restaurant_idx=9066",
+   "imgFrom": "알림톡 | 테이블링",
+   "imgPage": "https://noti.tabling.co.kr/link/point?path=restaurant_details&restaurant_idx=9066",
+   "why": "blocked page (refilter)",
+   "refiltered": "https://noti.tabling.co.kr/og_img_260312.png"
+  },
+  "kk-215504194": {
+   "name": "책방 시행과착오",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-21851507": {
+   "name": "동묘시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-22045591": {
+   "name": "윤당아트홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-222397833": {
+   "name": "크래커클라이밍",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-223924532": {
+   "name": "스코프 서촌점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-22676315": {
+   "name": "예그린씨어터",
+   "g": "G7",
+   "home": "http://yegreen.kr",
+   "img": "https://storage.googleapis.com/cr-resource/image/db1a9159aa678b739bb95e90ba87823b/yegreen/yegreen-screen-thumb.png?_1793947708",
+   "imgFrom": "yegreen.kr",
+   "imgPage": "https://www.yegreen.kr/"
+  },
+  "kk-23278986": {
+   "name": "브라이언스커피",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-23634722": {
+   "name": "1984",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-24047993": {
+   "name": "명화라이브홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-24048344": {
+   "name": "더굿씨어터",
+   "g": "G7",
+   "home": "https://www.thegoodtheater.com",
+   "why": "page net"
+  },
+  "kk-24063521": {
+   "name": "채널1969",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-24529429": {
+   "name": "프릳츠 도화점",
+   "g": "G8",
+   "home": "http://www.fritz.co.kr/",
+   "img": "https://fritz.co.kr/web/product/small/201801/directtrade.png",
+   "imgFrom": "프릳츠커피컴퍼니",
+   "imgPage": "https://www.fritz.co.kr/"
+  },
+  "kk-249011741": {
+   "name": "진부책방스튜디오",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-25043156": {
+   "name": "신흥시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-254643912": {
+   "name": "팻어케이크",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-25689487": {
+   "name": "르챔버",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-25779546": {
+   "name": "TOM",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-25969713": {
+   "name": "클럽프리버드",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-259983085": {
+   "name": "단편선 성수",
+   "g": "G5",
+   "home": "https://dpsnnn-s.imweb.me/reserve_ss",
+   "imgFrom": "dpsnnn-s.imweb.me",
+   "imgPage": "https://dpsnnn-s.imweb.me/reserve_ss",
+   "why": "shared picture"
+  },
+  "kk-26235257": {
+   "name": "파랑씨어터",
+   "g": "G7",
+   "home": "https://www.parangart.com",
+   "img": "https://cdn.imweb.me/upload/S20250318299c8a9a073d1/c7a15f97fec6a.png",
+   "imgFrom": "parangart.com",
+   "imgPage": "https://www.parangart.com/"
+  },
+  "kk-26235884": {
+   "name": "피오니 홍대점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-26404597": {
+   "name": "식물",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-26562481": {
+   "name": "강남씨어터",
+   "g": "G7",
+   "home": "http://www.gfac.kr/",
+   "why": "too small"
+  },
+  "kk-26596972": {
+   "name": "메종엠오",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-26625174": {
+   "name": "노말에이",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-26857068": {
+   "name": "앨리스",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-26966842": {
+   "name": "콜린",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-27114079": {
+   "name": "책바",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-27288893": {
+   "name": "프로퍼커피바",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-27300932": {
+   "name": "밀도 성수본점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-27354377": {
+   "name": "엑스케이프",
+   "g": "G5",
+   "home": "https://xcape.kr/xc",
+   "img": "https://xcape.kr/branch/xc-hero-poster.jpg",
+   "imgFrom": "엑스케이프",
+   "imgPage": "https://xcape.kr/xc"
+  },
+  "kk-27379281": {
+   "name": "공상온도",
+   "g": "G7",
+   "home": "https://daangn.com/kr/link/pickup/menu/43886",
+   "imgFrom": "Karrot",
+   "imgPage": "https://daangn.com/kr/link/pickup/menu/43886",
+   "why": "blocked page (refilter)",
+   "refiltered": "https://img.kr.gcp-karroter.net/share-center/share-center/og/og_53275765-d2a4-4886-951c-5f21c54b4df4.png?q=95&s=1440x1440&t=inside&service=share-center"
+  },
+  "kk-27383851": {
+   "name": "광장시장",
+   "g": "G2",
+   "home": "http://kwangjangmarket.co.kr/",
+   "why": "no og:image"
+  },
+  "kk-27405165": {
+   "name": "롯데콘서트홀",
+   "g": "G7",
+   "home": "http://www.lotteconcerthall.com",
+   "why": "no og:image"
+  },
+  "kk-27410769": {
+   "name": "동서울그랜드볼링센터",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-27481601": {
+   "name": "딥블루레이크",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-27508963": {
+   "name": "테일러커피 연남1호점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-276310448": {
+   "name": "숲세권 라이브 카인드스퀘어점",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-287949141": {
+   "name": "넥스트에디션 건대2호점",
+   "g": "G5",
+   "home": "https://nextedition.co.kr/reservation/geondae-2/",
+   "img": "https://img.reserv.company/nextedition/konkuk-2/survivor.jpg",
+   "imgFrom": "넥스트에디션",
+   "imgPage": "https://nextedition.co.kr/reservation/geondae-2/"
+  },
+  "kk-293959444": {
+   "name": "인스크립트",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-294695474": {
+   "name": "연희사과",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-298789057": {
+   "name": "키이스케이프 스테이션",
+   "g": "G5",
+   "home": "https://www.keyescape.com/",
+   "imgFrom": "keyescape.com",
+   "imgPage": "https://www.keyescape.com/",
+   "why": "shared picture"
+  },
+  "kk-302677882": {
+   "name": "바티칸",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-324782159": {
+   "name": "만유인력",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-327610610": {
+   "name": "티켓투이스케이프",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-328817208": {
+   "name": "5TO7",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-335952782": {
+   "name": "스튜디오엔텐바흐",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-344946288": {
+   "name": "페잇퍼",
+   "g": "G4",
+   "home": "http://paperr.kr",
+   "why": "no og:image"
+  },
+  "kk-363104233": {
+   "name": "진저베어",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-365827968": {
+   "name": "뮤직컴플렉스서울",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-366110448": {
+   "name": "디코더",
+   "g": "G5",
+   "home": "http://www.decoder.kr/",
+   "why": "no og:image"
+  },
+  "kk-370544754": {
+   "name": "토바 바스하우스",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-376746050": {
+   "name": "바이닐 성수",
+   "g": "G4",
+   "home": "https://vinylclub.co.kr",
+   "img": "https://vinylclub.co.kr/storage/2025/07/Vinyl-home.jpg",
+   "imgFrom": "Vinyl - Pick, Play, Experience",
+   "imgPage": "https://vinylclub.co.kr/"
+  },
+  "kk-377197835": {
+   "name": "단편선 방탈출",
+   "g": "G5",
+   "home": "http://www.dpsnnn.com",
+   "imgFrom": "dpsnnn.com",
+   "imgPage": "https://www.dpsnnn.com/",
+   "why": "shared picture"
+  },
+  "kk-38392222": {
+   "name": "살롱문보우",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-395520401": {
+   "name": "아우라락볼링장",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-40766168": {
+   "name": "드림이스케이프",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-408816532": {
+   "name": "NOL씨어터 합정",
+   "g": "G7",
+   "home": "https://noltheater-hapjeong.com",
+   "why": "no og:image"
+  },
+  "kk-412120803": {
+   "name": "도토리책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-418405990": {
+   "name": "바이닐인사이드",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-421196175": {
+   "name": "수퍼소닉",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-43859487": {
+   "name": "조앤도슨",
+   "g": "G8",
+   "home": "https://www.joanddawson.com",
+   "img": "https://cdn.imweb.me/upload/S20241118ba9c40dd1d909/3a3684c1efcaf.png",
+   "imgFrom": "joanddawson.com",
+   "imgPage": "https://www.joanddawson.com/"
+  },
+  "kk-441617225": {
+   "name": "소행성",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-443763847": {
+   "name": "소보루북스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-457388695": {
+   "name": "1979라이브펍 2호점",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-45777628": {
+   "name": "셜록홈즈 잠실새내점",
+   "g": "G5",
+   "home": "https://sherlock-holmes.co.kr/reservation/index.php?sido=1&bno=107#reservation",
+   "imgFrom": "sherlock-holmes.co.kr",
+   "imgPage": "https://sherlock-holmes.co.kr/reservation/index.php?sido=1&bno=107",
+   "why": "shared picture"
+  },
+  "kk-459642234": {
+   "name": "키이스케이프 메모리컴퍼니",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-462553617": {
+   "name": "셜록홈즈 종각점",
+   "g": "G5",
+   "home": "https://sherlock-holmes.co.kr/reservation/",
+   "imgFrom": "sherlock-holmes.co.kr",
+   "imgPage": "https://sherlock-holmes.co.kr/reservation/",
+   "why": "shared picture"
+  },
+  "kk-473211511": {
+   "name": "어질인 왕십리역점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-47375196": {
+   "name": "윤숲",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-479395921": {
+   "name": "금토일샴페인빠",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-483686560": {
+   "name": "리저브",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-490067702": {
+   "name": "라티튜드32",
+   "g": "G10",
+   "home": "https://www.sofitel-seoul.com/",
+   "img": "https://d2e5ushqwiltxm.cloudfront.net/wp-content/uploads/sites/252/2026/02/27031707/Sofitel-Ambassador-Seoul-Entrance_02.jpg",
+   "imgFrom": "SOFITEL Ambassador Seoul Hotel",
+   "imgPage": "https://www.sofitel-seoul.com/"
+  },
+  "kk-494032592": {
+   "name": "크라임씨너스",
+   "g": "G5",
+   "home": "https://crime-sceners.com/",
+   "img": "https://gkkgprsflomawizioiao.supabase.co/storage/v1/object/public/images/brand/1773142864574-640kfj.jpg",
+   "imgFrom": "crime-sceners.com",
+   "imgPage": "https://crime-sceners.com/"
+  },
+  "kk-496253521": {
+   "name": "차경",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-500561873": {
+   "name": "9로평상",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-505888908": {
+   "name": "엉금책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-521522824": {
+   "name": "비터스",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-53292857": {
+   "name": "943킹스크로스",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-563520021": {
+   "name": "스토리지북앤필름 로터리점",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-572289250": {
+   "name": "이들스",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-573469038": {
+   "name": "만동제과 연남점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-578778978": {
+   "name": "쿠쿠룸 1089",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-597113075": {
+   "name": "뉴올재즈라운지",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-600129017": {
+   "name": "듈스튜디오",
+   "g": "G7",
+   "home": "http://dulestudio.com/",
+   "img": "https://cdn.imweb.me/upload/S20260812ad5111cf23aeb/dfc6f9bbd5203.png",
+   "imgFrom": "dulestudio.com",
+   "imgPage": "https://dulestudio.com/"
+  },
+  "kk-602058819": {
+   "name": "미드나잇145 롯데월드타워점",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-615124608": {
+   "name": "부기우기",
+   "g": "G7",
+   "home": "https://www.bgwg.kr/",
+   "img": "https://oopy.lazyrockets.com/api/v2/notion/image?src=https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fdd48af40-11fd-4a60-b245-fbb3ee4a4372%2F9be5abfc-16ea-4744-88ad-4812401747ab%2F23d30bec-fef8-47e2-84e6-66263d6e7480.jpg&blockId=37e1fcba-dbca-4717-842c-6ca7d078c92b&width=2400",
+   "imgFrom": "부기우기 Boogie Woogie",
+   "imgPage": "https://www.bgwg.kr/"
+  },
+  "kk-628138029": {
+   "name": "룸엘이스케이프",
+   "g": "G5",
+   "home": "http://www.roomlescape.com",
+   "why": "no og:image"
+  },
+  "kk-629498800": {
+   "name": "제스트",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-648485914": {
+   "name": "메멘토",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-657378473": {
+   "name": "옥류헌릴렉스",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-662516308": {
+   "name": "오프더월클라이밍",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-665085650": {
+   "name": "그림서재",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-669818151": {
+   "name": "사운드스테이션MA",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-672743786": {
+   "name": "더블랙볼링장",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-680545832": {
+   "name": "천년동안도 낙원",
+   "g": "G7",
+   "home": "https://chunnyun.com/?utm_source=naver_place&utm_medium=referral",
+   "img": "https://chunnyun.com/assets/venue/story-20261006/daehangno-queue.png",
+   "imgFrom": "천년동안도",
+   "imgPage": "https://chunnyun.com/?utm_source=naver_place&utm_medium=referral"
+  },
+  "kk-680691609": {
+   "name": "서울스카이",
+   "g": "G1",
+   "home": "https://seoulsky.lotteworld.com",
+   "img": "https://seoulsky.lotteworld.com/og/og_img_seoulsky.jpg",
+   "imgFrom": "seoulsky.lotteworld.com",
+   "imgPage": "https://seoulsky.lotteworld.com/"
+  },
+  "kk-684414079": {
+   "name": "북살롱오티움",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-690123759": {
+   "name": "룸익스케이프 인디고블루점",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-707576258": {
+   "name": "타르틴베이커리 한남점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-709830668": {
+   "name": "네모네",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-716748422": {
+   "name": "을지로노가리골목",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-724172595": {
+   "name": "사운즈굿",
+   "g": "G4",
+   "home": "http://www.soundsgood-store.com/",
+   "img": "https://cdn.imweb.me/upload/S202311273697d47a8cdbb/2b3b4458d373e.png",
+   "imgFrom": "soundsgood-store.com",
+   "imgPage": "https://soundsgood-store.com/"
+  },
+  "kk-728924679": {
+   "name": "도프레코드",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-740621790": {
+   "name": "독립문영천시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-745525153": {
+   "name": "그루트클라이밍",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-753705161": {
+   "name": "베뉴지아쿠아24",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-77702190": {
+   "name": "스몰브랜더",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-7825701": {
+   "name": "JTN아트홀",
+   "g": "G7",
+   "home": "http://jtnarthall.com/",
+   "why": "page net"
+  },
+  "kk-7854938": {
+   "name": "롤링홀",
+   "g": "G7",
+   "home": "https://www.rollinghall.co.kr",
+   "why": "no og:image"
+  },
+  "kk-7855455": {
+   "name": "리치몬드과자점 성산본점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-7890664": {
+   "name": "고척스카이돔",
+   "g": "G6",
+   "home": "http://www.sisul.or.kr/open_content/skydome",
+   "why": "no og:image"
+  },
+  "kk-79185066": {
+   "name": "테레사그림책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-7926624": {
+   "name": "삼일로창고극장",
+   "g": "G7",
+   "home": "http://samilro.com/",
+   "img": "https://storage.googleapis.com/cr-resource/image/a32d4706151aa78639025ae37f8fb7c4/samilro/samilro-screen-thumb.png?_1793947745",
+   "imgFrom": "samilro.com",
+   "imgPage": "https://www.samilro.com/"
+  },
+  "kk-7934963": {
+   "name": "남대문시장",
+   "g": "G2",
+   "home": "http://namdaemunmarket.co.kr/",
+   "why": "no og:image"
+  },
+  "kk-7940056": {
+   "name": "수연산방",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-7948829": {
+   "name": "세시셀라 도산공원점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-798585257": {
+   "name": "용양봉저정공원 하늘전망대",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-7993893": {
+   "name": "양재꽃시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8023565": {
+   "name": "올림픽공원",
+   "g": "G7",
+   "home": "http://www.olympicpark.co.kr/",
+   "why": "no og:image"
+  },
+  "kk-804065834": {
+   "name": "비화림",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8046574": {
+   "name": "예스24 아트원",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8060966": {
+   "name": "국립정동극장",
+   "g": "G7",
+   "home": "http://jeongdong.or.kr",
+   "why": "no og:image"
+  },
+  "kk-807821546": {
+   "name": "웨어하우스 볼더링",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8079875": {
+   "name": "건영스파밸리",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8080638": {
+   "name": "틴틴홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8101657": {
+   "name": "클럽에반스",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8126938": {
+   "name": "난지한강공원",
+   "g": "G1",
+   "home": "http://hangang.seoul.go.kr/archives/46777",
+   "why": "page net"
+  },
+  "kk-8126939": {
+   "name": "망원한강공원",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8128836": {
+   "name": "통인시장",
+   "g": "G2",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8136085": {
+   "name": "뚝섬한강공원",
+   "g": "G1",
+   "home": "http://hangang.seoul.go.kr/archives/46661",
+   "why": "page net"
+  },
+  "kk-8142957": {
+   "name": "반포한강공원",
+   "g": "G1",
+   "home": "http://hangang.seoul.go.kr/archives/46727",
+   "why": "page net"
+  },
+  "kk-8143124": {
+   "name": "양화한강공원",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8143287": {
+   "name": "학림다방",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8252248": {
+   "name": "노들섬",
+   "g": "G1",
+   "home": "https://nodeul.org/",
+   "img": "https://s3-ap-northeast-2.amazonaws.com/nodeul-denomix/wp-content/themes/nodeul/img/nodeul-ogimage.jpg",
+   "imgFrom": "노들섬",
+   "imgPage": "https://nodeul.org/"
+  },
+  "kk-827366623": {
+   "name": "아치서재",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-827688965": {
+   "name": "글로우스트라이크",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8284191": {
+   "name": "라끌레",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-828640256": {
+   "name": "어글리베이커리",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-831814073": {
+   "name": "코프키노",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-832021404": {
+   "name": "바게티",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-834360103": {
+   "name": "여행자극장",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8373453": {
+   "name": "세종문화회관",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-838562721": {
+   "name": "필동서재절기",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8410605": {
+   "name": "스트레인지프룻",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8430119": {
+   "name": "서울레코드",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-846051573": {
+   "name": "NOL씨어터대학로 우리투자증권홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-848848018": {
+   "name": "오아시스 방탈출",
+   "g": "G5",
+   "home": "https://oasismuseum.com",
+   "why": "over 1.5 MB"
+  },
+  "kk-853028118": {
+   "name": "어니언 안국",
+   "g": "G8",
+   "home": "https://onionkr.com",
+   "why": "logo-like address"
+  },
+  "kk-8552691": {
+   "name": "태극당",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8625698": {
+   "name": "이촌한강공원",
+   "g": "G1",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8631818": {
+   "name": "강서한강공원",
+   "g": "G1",
+   "home": "http://hangang.seoul.go.kr/archives/46788",
+   "why": "page net"
+  },
+  "kk-869347589": {
+   "name": "소수책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-874592991": {
+   "name": "프랭크의골동품가게",
+   "g": "G5",
+   "home": "https://thefrank.co.kr/layout/res/home.php",
+   "why": "page net"
+  },
+  "kk-878406079": {
+   "name": "인트리그미션",
+   "g": "G5",
+   "home": "https://intrigue-mission.com/",
+   "why": "page net"
+  },
+  "kk-879402343": {
+   "name": "카탈리스트",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-880372928": {
+   "name": "더파인더 방탈출",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-8814564": {
+   "name": "그루브",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-896402715": {
+   "name": "마망젤라또 성수점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-900538186": {
+   "name": "젠제로",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-906219513": {
+   "name": "책방꼬마",
+   "g": "G4",
+   "home": "https://komabook.co.kr/",
+   "img": "https://komabook.co.kr/wp-content/uploads/2026/10/og-image.png",
+   "imgFrom": "책방 꼬마",
+   "imgPage": "https://komabook.co.kr/"
+  },
+  "kk-922091993": {
+   "name": "비파티세리 공덕점",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-930846069": {
+   "name": "공간과몰입",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-935333631": {
+   "name": "미드나잇",
+   "g": "G10",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-949364137": {
+   "name": "디도재즈라운지",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-949587061": {
+   "name": "클레버타운",
+   "g": "G5",
+   "home": "https://clevertown.co.kr/",
+   "why": "logo-like address"
+  },
+  "kk-954322550": {
+   "name": "스파렉스 동묘점",
+   "g": "G5",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-957772814": {
+   "name": "예스24 원더로크홀",
+   "g": "G7",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-972177208": {
+   "name": "피즈소셜클럽",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-973719223": {
+   "name": "러브러브디럭스",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-978862315": {
+   "name": "보스톤",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-979822323": {
+   "name": "서촌그책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-983089299": {
+   "name": "하이그라운드제빵소",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-992535148": {
+   "name": "LG아트센터 서울",
+   "g": "G7",
+   "home": "https://www.oboksusan.com",
+   "imgFrom": "오복수산",
+   "imgPage": "https://www.oboksusan.com/",
+   "why": "owner: LG아트센터 서울 — 네이버 지역 링크가 다른 업체(오복수산) 사이트",
+   "refiltered": "https://static.wixstatic.com/media/7aae7d_9d774a670fe34ce5b8fe01188a32ac0a%7Emv2.png/v1/fit/w_2500,h_1330,al_c/7aae7d_9d774a670fe34ce5b8fe01188a32ac0a%7Emv2.png"
+  },
+  "kk-993785429": {
+   "name": "자작나무 책방",
+   "g": "G4",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  },
+  "kk-99849164": {
+   "name": "맨홀커피",
+   "g": "G8",
+   "home": "",
+   "why": "no official homepage in Naver local"
+  }
+ },
+ "refiltered": 12
+}
