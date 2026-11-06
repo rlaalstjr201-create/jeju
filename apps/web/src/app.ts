@@ -13,18 +13,18 @@ import { MAP_APPS, kakaoUrl, type MapApp } from './pick/links';
 import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, culturePart, loadBusan, loadCulture, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './region/release';
 import { HOME, createNav } from './nav';
 import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick/pick';
-import { seasonOn, type SeasonKind } from './pick/season';
 import { rainNow, rowTimes } from './pick/home';
 import { createRenderer, findEls } from './render';
 import { PLACE, dateLabel } from './copy';
 import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, createStore } from './store';
 import type { Analytics } from './usage/analytics';
-import { feedbackBody, surveyDue } from './usage/survey';
-import { ageOf, contextOf, createTracker, dwellBucket, type ArrangeOp, type EventName, type UsageEvent } from './usage/track';
+import { surveyDue } from './usage/survey';
+import { contextOf, createTracker, dwellBucket, type ArrangeOp, type UsageEvent } from './usage/track';
 import type { Basis, Route, Stay, When } from './types';
 import { RAIN_RETRY_MS, createToday } from './flow/today';
 import type { AppCtx } from './flow/ctx';
+import { createUsage } from './flow/usage';
 
 export { AREAS, LocateError, inJeju, kakaoUrl };
 export type { NoOrigin as LocateFailure } from './types';
@@ -471,91 +471,7 @@ export function mountApp(doc: Document, deps: Deps): App {
       });
   }
 
-  // --- anonymous usage counts (ADR-0061): place-level events, never a position ---
-  /** `day`: the day a heart is about (dated = not today). `season`: the kind whose 철 words the card showed (ADR-0080).
-   * `flow`: the saved-list fields (ADR-0085). */
-  function count(e: EventName, id?: string, day?: Day, season?: SeasonKind | null, flow?: Pick<UsageEvent, 'live0' | 'past' | 'from' | 'age' | 'op'>) {
-    const ev: UsageEvent = { e, ...(id ? { id } : {}), ...contextOf(state), ...(day ? { dated: day !== state.today } : {}), ...(season ? { season } : {}), ...flow };
-    tracker.track(ev);
-    if (state.tracking) deps.analytics?.event(ev);
-    if (state.src && (e === 'tap' || e === 'map')) countSrc(e);
-  }
-  /** 숙소 링크 (ADR-0089): while this visit came in by one, tap / map (and the arrival's open) once more under
-   * `src:<tag>`, to our own collector only (never GA4·네이버). */
-  function countSrc(e: 'open' | 'tap' | 'map') {
-    tracker.track({ e, id: `src:${state.src}`, d: state.today });
-  }
-  /** Each new set of 3 on screen, once: a re-render, the same 3 brought back or restored after a reload are
-   * not shown again. */
-  let shownSeq = 0;
-  function countShown() {
-    const c = state.cards;
-    if (!c || c.seq === shownSeq || state.view !== 'cards' || state.phase.k !== 'ready') return;
-    shownSeq = c.seq;
-    if (c.how === 'restore') return;
-    for (const card of c.list) count('shown', card.spot.id, undefined, seasonOn(card.spot.season, whenDay(state)));
-  }
-  /** The 철 a results card shows (ADR-0080); none on the saved list. */
-  function seasonShown(id: string): SeasonKind | null {
-    const card = state.view === 'cards' ? state.cards?.list.find((c) => c.spot.id === id) : undefined;
-    return card ? seasonOn(card.spot.season, whenDay(state)) : null;
-  }
-  /** 길찾기 from a saved-list row (ADR-0085): days since that row was saved (never the day itself) and whether
-   * it is under 지난 날. */
-  function savedFlow(id: string, date: Day | undefined): Pick<UsageEvent, 'from' | 'age' | 'past'> | undefined {
-    if (state.view !== 'saved' || !date) return undefined;
-    const entry = state.saved.find((x) => x.id === id && x.date === date) ?? state.unsaved.find((x) => x.id === id && x.date === date);
-    const age = ageOf(entry?.at, state.today);
-    return { from: 'saved', ...(age !== undefined ? { age } : {}), ...(date < state.today ? { past: true as const } : {}) };
-  }
-  /** A link tapped twice (a 2nd tab opening) counts once. */
-  const lastLink = new Map<string, number>();
-  function countLink(e: 'map' | 'book', id: string, date?: Day) {
-    if (e === 'map') markMap();
-    const key = `${e}:${id}`;
-    const t = now();
-    const prev = lastLink.get(key);
-    lastLink.set(key, t);
-    if (prev !== undefined && t - prev < delays.guard) return;
-    count(e, id, undefined, e === 'map' ? seasonShown(id) : null, e === 'map' ? savedFlow(id, date) : undefined);
-    // sent now: the map app may take the page away before it goes hidden (an in-app WebView); the queue empties first
-    tracker.flush();
-  }
-  // --- the survey (ADR-0081, specs/survey.md): all on this device; only 보내기 sends anything ---
-  let mapMarked = !!survey0.map;
-  /** a map opened on this device (local only): the survey line may show from the next visit */
-  function markMap() {
-    if (mapMarked) return;
-    mapMarked = true;
-    store.updateSurvey((r) => ({ ...r, map: true }));
-  }
-  let surveyCounted = false;
-  /** a visit in which the line was drawn on the home counts once (3 such visits, then it stops) */
-  function countSurvey() {
-    if (surveyCounted || !state.surveyLine || !state.tracking || state.view !== 'home') return;
-    surveyCounted = true;
-    store.updateSurvey((r) => ({ ...r, shown: (r.shown ?? 0) + 1 }));
-  }
-  function openSurvey() {
-    if (guarded('survey')) return;
-    store.updateSurvey((r) => ({ ...r, tapped: true }));
-    dispatch({ type: 'surveyTapped' });
-    openOverlay('feedback');
-  }
-  /** 보내기: nothing chosen or written closes; otherwise one POST, not waited for, and 고마워요 whatever happens */
-  function sendFeedback() {
-    if (state.overlay !== 'feedback' || state.feedbackSent || guarded('feedback-send')) return;
-    const checked = (name: string) => [...els.sheet.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)].map((i) => i.value);
-    const text = (id: string) => els.sheet.querySelector<HTMLTextAreaElement>(`#${id}`)?.value ?? '';
-    const body = feedbackBody({ went: checked('fb-went')[0] ?? null, pains: checked('fb-pain'), pain: text('fb-pain-text'), wish: text('fb-wish') }, deps.appVersion ?? 'dev');
-    if (!body) return closeOverlay();
-    try {
-      deps.postFeedback?.(JSON.stringify(body));
-    } catch {
-      /* the app never depends on it */
-    }
-    dispatch({ type: 'feedbackSent' });
-  }
+  const { count, countSrc, countShown, countLink, countSurvey, openSurvey, sendFeedback } = createUsage(app);
 
   function setTracking(on: boolean) {
     if (!on) tracker.drop();
