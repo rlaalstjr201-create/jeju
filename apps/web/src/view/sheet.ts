@@ -9,11 +9,10 @@ import { REACHES } from '../pick/pick';
 import { type State } from '../state';
 import { PAINS, TEXT_MAX, WENT } from '../usage/survey';
 import type { Overlay } from '../types';
-import { COPY, BUSAN_COPY, destNameOf, dayName } from '../copy';
+import { COPY, BUSAN_COPY, destNameOf, dayName, nationOutside } from '../copy';
 import { el, setText } from './dom';
 import type { SheetKit } from './kit';
 import { CHECK, SEARCH } from './icons';
-import { nationOutside } from '../copy';
 
 export function createSheet(kit: SheetKit) {
   const { doc, els, win, timers, later, motion, icon, areaGroups, option, afterPaint } = kit;
