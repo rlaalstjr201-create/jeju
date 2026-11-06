@@ -1,6 +1,6 @@
 {
  "_why": "plans/busan.md 「제주가 그대로임을 보이는 법」. scripts/jeju-baseline.ts writes and checks it.",
- "measuredAt": "60ae831f",
+ "measuredAt": "954caf77",
  "data": {
   "public/spots.json": "4b96af2597c17f490387648704e6fb63738e2e1ed108e3c24004e1507a2f173c",
   "public/i18n/places.en.json": "914a45cc4c155e6b1ae54ea5de3e37de768df4a7c349b45f71a4d9c80c5e73d3",
@@ -35,10 +35,10 @@
   "llms.txt": "a61c0a33797bd2ce",
   "manifest.webmanifest": "6e3d7b6ee8790d00",
   "og.png": "d407fccd1da64109",
-  "privacy-en.html": "6f52abb69ae1ec1c",
-  "privacy-ja.html": "29108e4ce347f2bd",
-  "privacy-zh-Hans.html": "e6f6204614c8d3cc",
-  "privacy.html": "3470ea711895970e",
+  "privacy-en.html": "3710c05d890d4a2e",
+  "privacy-ja.html": "f72d817f6da7f895",
+  "privacy-zh-Hans.html": "91eddbaa1c58f0dc",
+  "privacy.html": "306a87cdd89184f7",
   "robots.txt": "6025d5cfb5c6237a",
   "sitemap-aewol.xml": "5f294733b5de1c53",
   "sitemap-andeok.xml": "fadce3fc580b07b3",
@@ -222,9 +222,9 @@
    "assets/zh-Hans-*.js"
   ],
   "koreanEntryGzip": {
-   "assets/index-*.js": 54838,
+   "assets/index-*.js": 54875,
    "assets/index-*.css": 6152
   },
-  "koreanEntryGzipTotal": 60990
+  "koreanEntryGzipTotal": 61027
  }
 }
