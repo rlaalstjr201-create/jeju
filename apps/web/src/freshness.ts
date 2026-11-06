@@ -27,7 +27,13 @@ export interface Fresh {
   /** today, KST (YYYY-MM-DD) */
   day: string;
   prior: (id: string) => Prior;
+  /** with it (the basis, ADR-0124 Amendment 1): arrange keeps its results for the same day, basis and cards. The record's part
+   * needs no key of its own: a day's order reads yesterday's record only, which does not change that day. */
+  memo?: string;
 }
+/** arrange's kept results (at most KEPT): the same day, basis, limit and cards give the same order */
+const kept = new Map<string, { id: string; slot: Slot }[]>();
+const KEPT = 64;
 
 const DAY_MS = 86_400_000;
 const dayNum = (d: string): number => Math.floor(Date.parse(`${d}T00:00:00Z`) / DAY_MS);
@@ -52,49 +58,87 @@ export function seeded(day: string, id: string): number {
   return h >>> 0;
 }
 
-/** distance bands: under 1, 2.5, 5, 10 km, beyond (no basis: one band) */
-export const bandOfKm = (km: number | null): number => (km === null ? 0 : km < 1 ? 0 : km < 2.5 ? 1 : km < 5 ? 2 : km < 10 ? 3 : 4);
+/** distance bands (ADR-0124 Amendment 1): under 1, 2.5, 5, 10, 15, 20, 30 km; past 30 km no band — each card by its own
+ * distance, so nothing out there is shuffled (no basis: one band) */
+export const bandOfKm = (km: number | null): number => {
+  if (km === null) return 0;
+  const i = [1, 2.5, 5, 10, 15, 20, 30].findIndex((b) => km < b);
+  return i >= 0 ? i : 7 + km;
+};
+/** a band's weight against a prominence step (the day's events): above any band */
+export const PROMINENCE_STEP = 1000;
+/** no card goes ahead of the one the plain order (nearest first) has for its place by more than this many minutes' trip */
+export const LATER_MIN = 10;
 
 export interface Arrangeable {
   id: string;
   km: number | null;
+  /** its trip in minutes (culture.ts seoulMinutes); null without a basis */
+  min: number | null;
   /** its band (bandOfKm, the day's events with prominence ahead of it) */
   tier: number;
   isNew: boolean;
 }
 
-/** A shelf's cards in today's order, each with its slot. `list`: every card that may go on it (open now, in reach). */
-export function arrange<T extends Arrangeable>(list: readonly T[], fresh: Fresh): { card: T; slot: Slot }[] {
+/** A shelf's first `limit` cards in today's order, each with its slot. `list`: every card that may go on it (open now, in
+ * reach), in the plain order (nearest first; the day's events big stages first). Each place is filled with the first card of
+ * today's order that is no more than LATER_MIN minutes later than the plain order's first card left (내 위치 먼저, ADR-0124
+ * Amendment 1); it stops once `limit` are placed. */
+export function arrange<T extends Arrangeable>(list: readonly T[], fresh: Fresh, limit = Infinity): { card: T; slot: Slot }[] {
+  const mk = fresh.memo === undefined ? null : `${fresh.day}|${fresh.memo}|${limit}|${list.map((c) => c.id).join(',')}`;
+  const had = mk ? kept.get(mk) : undefined;
+  if (had) {
+    const by = new Map(list.map((c) => [c.id, c]));
+    return had.map(({ id, slot }) => ({ card: by.get(id)!, slot }));
+  }
   const prior = new Map(list.map((c) => [c.id, fresh.prior(c.id)]));
   const seen = (c: T) => prior.get(c.id)!.n;
   const stale = (c: T) => (seen(c) > STALE_SHOWS && prior.get(c.id)!.t === 0 ? 1 : 0);
   const hash = new Map(list.map((c) => [c.id, seeded(fresh.day, c.id)]));
   // a stale card goes behind the next band (and ahead of the one after it)
-  const key = (c: T) => 2 * c.tier + 3 * stale(c);
-  const left = [...list].sort((a, b) => key(a) - key(b) || hash.get(a.id)! - hash.get(b.id)! || (a.id < b.id ? -1 : 1));
+  const key = new Map(list.map((c) => [c.id, 2 * c.tier + 3 * stale(c)]));
+  const left = [...list].sort((a, b) => key.get(a.id)! - key.get(b.id)! || hash.get(a.id)! - hash.get(b.id)! || (a.id < b.id ? -1 : 1));
+  const taken = new Set<T>();
+  let plain = 0;
+  /** the plain order's first card left */
+  const first = () => {
+    while (plain < list.length && taken.has(list[plain])) plain++;
+    return list[plain];
+  };
+  const inTime = (c: T) => {
+    const f = first();
+    return !f || c.min === null || f.min === null || c.min <= f.min + LATER_MIN;
+  };
   const near = (c: T, at: T | undefined) => !at || c.km === null || at.km === null || c.km <= at.km + PULL_KM;
   const out: { card: T; slot: Slot }[] = [];
   const take = (c: T, slot: Slot) => {
     left.splice(left.indexOf(c), 1);
+    taken.add(c);
     out.push({ card: c, slot: c.isNew ? 'new' : slot });
   };
   // 새로 들어옴 first, none farther than the card it goes ahead of allows
-  while (out.length < NEW_FRONT) {
-    const c = left.find((x) => x.isNew && near(x, left[0]));
+  while (out.length < Math.min(NEW_FRONT, limit)) {
+    const head = left.find(inTime);
+    const c = left.find((x) => x.isNew && near(x, head) && inTime(x));
     if (!c) break;
     take(c, 'new');
   }
-  while (left.length) {
-    const head = left[0];
+  while (left.length && out.length < limit) {
+    // the plain order's first card is always in time: there is one
+    const head = left.find(inTime)!;
     if ((out.length + 1) % EXPLORE_EVERY === 0) {
       let best: T | null = null;
-      for (const c of left) if (c !== head && near(c, head) && seen(c) < seen(head) && (!best || seen(c) < seen(best))) best = c;
+      for (const c of left) if (c !== head && seen(c) < seen(head) && (!best || seen(c) < seen(best)) && near(c, head) && inTime(c)) best = c;
       if (best) {
         take(best, 'pull');
         continue;
       }
     }
     take(head, 'base');
+  }
+  if (mk) {
+    if (kept.size >= KEPT) kept.clear();
+    kept.set(mk, out.map((o) => ({ id: o.card.id, slot: o.slot })));
   }
   return out;
 }

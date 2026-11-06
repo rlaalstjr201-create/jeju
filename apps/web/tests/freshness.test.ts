@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
 import { FULL, HOME_ROWS, MOOD_SHELVES, PER_SHELF, browseCard, buildShelves, homeShelves, homeShown, rotateShelves, type ShelfKey } from '../src/browse';
-import { CARDS_KEY, KEEP_DAYS, MAX_CARDS, PULL_KM, arrange, bump, cardsStore, isNewly, parseBook, priorOf, type Arrangeable, type Fresh, type Prior } from '../src/freshness';
+import { CARDS_KEY, KEEP_DAYS, LATER_MIN, MAX_CARDS, PULL_KM, arrange, bandOfKm, bump, cardsStore, isNewly, parseBook, priorOf, type Arrangeable, type Fresh, type Prior } from '../src/freshness';
 import { funItems } from '../src/fun';
 import { weeklyItems } from '../src/weekly';
 import { normalizeSpots } from '../src/data';
@@ -13,7 +13,7 @@ import { moodShelf } from '../src/home';
 import { initialState, viewingShut } from '../src/state';
 import { distanceKm } from '../src/pick';
 import { sunsetMinutes } from '../src/sun';
-import type { Now } from '../src/culture';
+import { seoulMinutes, type Now } from '../src/culture';
 import rows from './fixtures/seoul-culture-20261104.json';
 
 const DAY = '2026-11-04';
@@ -23,14 +23,14 @@ const 용산 = { lat: 37.5299, lng: 126.9648 };
 const 망원 = { lat: 37.5563, lng: 126.9056 };
 const none = (day = DAY): Fresh => ({ day, prior: () => ({ n: 0, t: 0 }) });
 const withPrior = (day: string, m: Record<string, Prior>): Fresh => ({ day, prior: (id) => m[id] ?? { n: 0, t: 0 } });
-const card = (id: string, km: number, isNew = false, tier = km < 1 ? 0 : 1): Arrangeable => ({ id, km, tier, isNew });
+const card = (id: string, km: number, isNew = false, tier = km < 1 ? 0 : 1): Arrangeable => ({ id, km, min: seoulMinutes(km).minutes, tier, isNew });
 const ids = (out: { card: Arrangeable }[]) => out.map((o) => o.card.id);
 
 describe('arrange (ADR-0124 2–5)', () => {
   const shelf = Array.from({ length: 16 }, (_, i) => card(`c${i}`, 0.1 + i * 0.05));
 
   it('the same day and record: the same order, however often it is drawn', () => {
-    expect(ids(arrange(shelf, none()))).toEqual(ids(arrange([...shelf].reverse(), none())));
+    expect(ids(arrange(shelf, none()))).toEqual(ids(arrange([...shelf], none())));
     expect(ids(arrange(shelf, none()))).toEqual(ids(arrange(shelf, none())));
   });
 
@@ -122,6 +122,47 @@ describe('the shelves with today (buildShelves, homeShelves)', () => {
     }
   });
 
+  // ADR-0124 Amendment 1 (리뷰 m1): out on the edge (노원·강서·우이동) most places are past 10 km; no card on a shelf is more than
+  // LATER_MIN minutes later than one behind it (the plain order's nearest left), and past 30 km nothing is shuffled
+  it.each([
+    ['노원', { lat: 37.6551, lng: 127.0613 }],
+    ['강서', { lat: 37.5509, lng: 126.8495 }],
+    ['우이동', { lat: 37.6627, lng: 127.0121 }],
+    ['용산', 용산],
+  ] as const)('%s 14:00, two days: no card more than 10 minutes later than one behind it (내 위치 먼저)', (_, p) => {
+    expect(LATER_MIN).toBe(10);
+    for (const day of ['2026-11-06', '2026-11-07']) {
+      const sh = buildShelves(items, at(14), p, sunsetMinutes(p, DAY), none(day));
+      const plain = buildShelves(items, at(14), p, sunsetMinutes(p, DAY));
+      for (const s of sh) {
+        const min = s.cards.map((c) => c.trip!.minutes);
+        // the day's events go big stages first (ADR-0114): their first card within LATER_MIN of the plain first
+        if (s.key === 'stage' || s.key === 'today' || s.key === 'exhibit') {
+          const was = plain.find((x) => x.key === s.key)?.cards[0].trip!.minutes;
+          if (was !== undefined) expect(min[0], `${s.key} first`).toBeLessThanOrEqual(was + 10);
+          continue;
+        }
+        for (let i = 0; i < min.length; i++) expect(min[i], `${s.key} ${i}: ${min.join('·')}`).toBeLessThanOrEqual(Math.min(...min.slice(i)) + 10);
+      }
+    }
+  });
+
+  it('the bands: 1·2.5·5·10·15·20·30 km, past 30 km each card by its own distance', () => {
+    expect([0.5, 1, 3, 7, 12, 17, 25].map(bandOfKm)).toEqual([0, 1, 2, 3, 4, 5, 6]);
+    expect(bandOfKm(31)).toBeLessThan(bandOfKm(32));
+    const far = [card('a', 31, false, bandOfKm(31)), card('b', 33, false, bandOfKm(33)), card('c', 35, false, bandOfKm(35))];
+    for (const d of ['2026-11-04', '2026-11-05', '2026-11-06']) expect(ids(arrange(far, none(d)))).toEqual(['a', 'b', 'c']);
+  });
+
+  it('stops at its limit, and the same day, basis and cards give the kept result', () => {
+    const shelf = Array.from({ length: 40 }, (_, i) => card(`k${i}`, 0.1 + i * 0.02));
+    const f = { ...none(), memo: 'here' };
+    const a = arrange(shelf, f, 12);
+    expect(a).toHaveLength(12);
+    expect(arrange(shelf, f, 12)).toEqual(a);
+    expect(ids(arrange(shelf, none(), 12))).toEqual(ids(a));
+  });
+
   it("새로 들어옴: 이번 주 서울's round (its file day) is new for 7 days, its cards lead and say so", () => {
     expect([isNewly('2026-11-05', '2026-11-05'), isNewly('2026-11-05', '2026-11-11'), isNewly('2026-11-05', '2026-11-12'), isNewly('2026-11-05', '2026-11-04'), isNewly(undefined, '2026-11-05')]).toEqual([true, true, false, false, false]);
     const day = '2026-11-06';
@@ -154,7 +195,7 @@ describe('the shelves with today (buildShelves, homeShelves)', () => {
       const s = initialState({ dest: 'seoul', basis: 'gps', today: DAY, region: null, stay: null, saved: [], hintSeen: true, offline: false, clock: h * 60 });
       const origin = { key: 'gps', point: p, isPoint: true, from: '' };
       const ss = sunsetMinutes(p, DAY);
-      const moods = Object.fromEntries(MOOD_SHELVES.map((m) => [m, arrange(moodShelf(s, seoul, origin, m).map((x) => ({ x, id: x.id, km: distanceKm(p, x), tier: 0, isNew: false })), none()).map((o) => o.card.x)]));
+      const moods = Object.fromEntries(MOOD_SHELVES.map((m) => [m, arrange(moodShelf(s, seoul, origin, m).map((x) => ({ x, id: x.id, km: distanceKm(p, x), min: seoulMinutes(distanceKm(p, x)).minutes, tier: 0, isNew: false })), none()).map((o) => o.card.x)]));
       for (const day of [DAY, '2026-11-05']) {
         const list = homeShelves(buildShelves(items, at(h), p, ss, none(day)), moods, h * 60, ss, null, day);
         const shown = homeShown(list);

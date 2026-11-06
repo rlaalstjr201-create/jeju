@@ -5,7 +5,7 @@
 import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from './culture';
 import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
 import { isWeek } from './weekly';
-import { arrange, bandOfKm, dayIndex, isNewly, type Fresh, type Slot } from './freshness';
+import { PROMINENCE_STEP, arrange, bandOfKm, dayIndex, isNewly, type Fresh, type Slot } from './freshness';
 import { distanceKm, type Kind, type Point, type Spot } from './pick';
 
 /** The shelves (ADR-0115 1·6): 동네, the seven curated kinds (카페·디저트 g8, ADR-0120; 밤 놀거리 g10, ADR-0122), 새로 생긴 곳 (ADR-0123), 이번 주 서울 (ADR-0118), then the day's own list (무대, 오늘만·이번 주까지,
@@ -127,8 +127,9 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
     }
     if (fresh) {
       // the day's own: prominence before distance, as in `order`; the others by distance
-      const tier = (c: Cand) => (isFun(c.item) || isWeek(c.item) ? 0 : prominence(c.item) * 5) + bandOfKm(c.km);
-      cards = arrange(cards.map((c) => ({ c, id: c.item.id, km: c.km, tier: tier(c), isNew: isNewly(addedOf(c.item), now.day) })), fresh).map(({ card, slot }) => ({ ...card.c, slot }));
+      const tier = (c: Cand) => (isFun(c.item) || isWeek(c.item) ? 0 : prominence(c.item) * PROMINENCE_STEP) + bandOfKm(c.km);
+      // `cards` is the plain order (`order`, a 동네 by distance): arrange keeps each place within LATER_MIN of it, and stops at PER_SHELF
+      cards = arrange(cards.map((c) => ({ c, id: c.item.id, km: c.km, min: c.trip?.minutes ?? null, tier: tier(c), isNew: isNewly(addedOf(c.item), now.day) })), fresh, PER_SHELF).map(({ card, slot }) => ({ ...card.c, slot }));
     }
     cards = cards.slice(0, PER_SHELF);
     for (const c of cards) shown.add(c.item.id);
