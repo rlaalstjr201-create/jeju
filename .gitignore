@@ -128,6 +128,26 @@ apps/web/review/nation/raw/
 !apps/web/review/curated/calls.log
 !apps/web/review/curated/calls-2.log
 
+# 대량 원자료·실행 산출물(관광공사 원본 응답·판정 입출력·근거, 시뮬레이션 실행 결과)은 비공개 저장소
+# rlaalstjr201-create/jeju-data 에 같은 경로로 둔다. 로컬 파일은 그대로, 공개 저장소는 추적만 하지 않는다.
+# 테스트·빌드가 읽는 자료(review/input·out·copy·busan/raw/detail 등)는 이미 추적 중이라 계속 추적된다.
+# 테스트·빌드가 읽을 새 자료 파일은 git add -f 로 올린다. 사람이 읽는 .md(기준·결과·리뷰)는 그대로 추적된다.
+apps/web/review/**
+!apps/web/review/**/
+!apps/web/review/**/*.md
+# 클라우드 루틴(서울 매일 발굴 docs/discovery/routine-prompt.md, 이번 주 서울)은 새로 받은 사본에서
+# 이 폴더의 지난 회차를 읽고 -f 없이 add 한다 — 통째로 추적한다(로그는 전처럼 무시).
+!apps/web/review/seoul-discovery/**
+!apps/web/review/seoul-weekly/**
+apps/web/review/seoul-discovery/**/*.log
+apps/web/review/seoul-weekly/**/*.log
+docs/research/**/work/
+docs/research/**/shots/
+docs/research/**/01-raw/
+docs/research/**/raw/
+docs/research/**/*-fetched.json
+docs/research/**/02-*.json
+
 # 돌연변이 테스트(Stryker) 리포트·작업 폴더
 apps/web/reports/
 .stryker-tmp/
