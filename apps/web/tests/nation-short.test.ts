@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { parseIndex, sggShorts } from '../src/nation';
+import { parseIndex, sggShorts } from '../src/region/nation';
 
 const ix = parseIndex(JSON.parse(readFileSync(resolve(__dirname, '../data/nation/index.json'), 'utf8')))!;
 const short = sggShorts(ix);

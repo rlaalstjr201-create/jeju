@@ -6,8 +6,8 @@ import { JSDOM } from 'jsdom';
 import { describe, expect, it, vi } from 'vitest';
 import type { GeoPermission } from '../src/effects';
 import { LocateError } from '../src/effects';
-import type { Point } from '../src/pick';
-import { BUSAN, NATION, loadBusan, loadNation } from '../src/release';
+import type { Point } from '../src/pick/pick';
+import { BUSAN, NATION, loadBusan, loadNation } from '../src/region/release';
 import { mountStart } from '../src/start';
 import type { NoOrigin } from '../src/types';
 

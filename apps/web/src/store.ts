@@ -1,15 +1,15 @@
 // Device storage (ADR-0026: no login, everything stays on this device). Every read is validated and
 // repaired; every access is try/catch'd, and when storage is missing or throws the app keeps working from
 // memory for this visit (S27·S28·S29).
-import { LEGACY_REGION, areaByName, inJeju, nearestArea, type RegionName, type SggCode } from './areas';
+import { LEGACY_REGION, areaByName, inJeju, nearestArea, type RegionName, type SggCode } from './region/areas';
 import { isDay, type Day } from './dates';
 import { SRC } from './deeplink';
-import { SGG_DESTS, isDest, isSggDest, type Dest } from './dest';
-import { SGG_CODE } from './nation';
-import { BUSAN, NATION, OPEN_AREAS, openAreasOf, releasedDestOf } from './release';
-import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick';
-import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
-import { parseSurvey, type SurveyRec } from './survey';
+import { SGG_DESTS, isDest, isSggDest, type Dest } from './region/dest';
+import { SGG_CODE } from './region/nation';
+import { BUSAN, NATION, OPEN_AREAS, openAreasOf, releasedDestOf } from './region/release';
+import { DEFAULT_REACH, NEW_SUBS, REACHES, type Button, type Histories, type History, type HistoryKey, type NewSub, type Reach, type Sub } from './pick/pick';
+import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './pick/links';
+import { parseSurvey, type SurveyRec } from './usage/survey';
 import type { Basis, Origin, SavedEntry, Stay, When } from './types';
 
 export const KEYS = {

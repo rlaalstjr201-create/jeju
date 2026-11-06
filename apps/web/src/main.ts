@@ -1,10 +1,10 @@
 import './style.css';
-import { createAnalytics, isLocalHost } from './analytics';
+import { createAnalytics, isLocalHost } from './usage/analytics';
 import { LocateError, mountApp, type Deps } from './app';
-import { DEST, isSggDest, type Dest } from './dest';
+import { DEST, isSggDest, type Dest } from './region/dest';
 import type { GeoPermission } from './effects';
-import type { Point } from './pick';
-import { BUSAN, NATION, loadBusan, loadNation, nationSpots, outsideAt, releasedDestOf } from './release';
+import type { Point } from './pick/pick';
+import { BUSAN, NATION, loadBusan, loadNation, nationSpots, outsideAt, releasedDestOf } from './region/release';
 import { reloadOnUpdate, runsCachedCode } from './update';
 import { yieldToMain } from './yield';
 

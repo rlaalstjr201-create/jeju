@@ -2,8 +2,8 @@
 // the day's list so the state's card sheet can find them (app.ts·state.ts look an id up in culture.items). Pure; in the
 // culture chunk only (ADR-0100). These places have no opening hours: a kind's usual hours (HOURS) keep a bar off the
 // morning and a market off the night, and nothing on a card says 「열림」.
-import FILE from '../data/seoul/fun-seoul.json';
-import type { CultureItem } from './culture';
+import FILE from '../../data/seoul/fun-seoul.json';
+import type { CultureItem } from '../culture/culture';
 import { FOUND_ROWS, isWeek, type FoundRow } from './weekly';
 
 /** NEW: 매일 발굴's new places for their first 8 weeks (새로 생긴 곳, ADR-0123 4) */

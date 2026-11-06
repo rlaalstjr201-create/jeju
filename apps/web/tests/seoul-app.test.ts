@@ -6,11 +6,11 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { normalizeSpots } from '../src/data';
-import { DEST } from '../src/dest';
-import { normalizeNation, sggShorts } from '../src/nation';
-import { pool, type Point, type Spot } from '../src/pick';
-import { NATION, loadNation } from '../src/release';
+import { normalizeSpots } from '../src/pick/data';
+import { DEST } from '../src/region/dest';
+import { normalizeNation, sggShorts } from '../src/region/nation';
+import { pool, type Point, type Spot } from '../src/pick/pick';
+import { NATION, loadNation } from '../src/region/release';
 import { KEYS } from '../src/store';
 import { fileSpots } from './fixtures';
 import { $, cardIds, current, flush, render, reset, settle, tap } from './harness';

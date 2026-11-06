@@ -1,6 +1,6 @@
 // Outbound links (ADR-0025: 예약은 외부 링크; ADR-0071: 지도 앱은 네이버지도 기본, 카카오맵 · TMAP 선택).
-import { DEST } from './dest';
-import { NATION, areaOfPoint, releasedDestOf as destOf, sggOf, sggShort } from './release';
+import { DEST } from '../region/dest';
+import { NATION, areaOfPoint, releasedDestOf as destOf, sggOf, sggShort } from '../region/release';
 import { cleanName } from './data';
 import { distanceKm, islandOf, withinReach, type BookKind, type Island, type Point, type Spot } from './pick';
 

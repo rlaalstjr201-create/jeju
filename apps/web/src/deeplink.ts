@@ -2,10 +2,10 @@
 // — what an AI agent (or anyone) can hand a user so the app opens on that result. Pure parsing, no DOM.
 // 숙소 링크 (ADR-0089): `stay=<lat>,<lng>` (a point in Jeju) and `src=<tag>` (which 숙소's link it was); `relay=1`
 // when an in-app browser's 브라우저로 열기 handed it on (its arrival was counted there).
-import { areaByName, type AreaName } from './areas';
+import { areaByName, type AreaName } from './region/areas';
 import { DAYS_AHEAD, addDays, isDay, type Day } from './dates';
-import { REACHES, type Button, type Point, type Reach } from './pick';
-import { OPEN_AREAS, releasedDestOf } from './release';
+import { REACHES, type Button, type Point, type Reach } from './pick/pick';
+import { OPEN_AREAS, releasedDestOf } from './region/release';
 import type { When } from './types';
 
 export interface DeepLink {

@@ -4,16 +4,16 @@
 // text card. Titles, places, kinds and time words stay as the list gives them (Korean).
 import './browse.css';
 import { browseCard, buildShelves, directUrl, homeShown, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
-import type { CultureItem, Now } from './culture';
+import type { CultureItem, Now } from '../culture/culture';
 import { isFun } from './fun';
 import { isWeek } from './weekly';
-import { sunsetMinutes } from './sun';
-import type { Day } from './dates';
+import { sunsetMinutes } from '../pick/sun';
+import type { Day } from '../dates';
 
 const CITY_HALL = { lat: 37.5663, lng: 126.9779 };
-import { GO_TEXT, goLink, type MapApp } from './links';
-import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
-import { COPY } from './render';
+import { GO_TEXT, goLink, type MapApp } from '../pick/links';
+import { TRAVEL_TEXT, formatMinutes, type Spot } from '../pick/pick';
+import { COPY } from '../render';
 
 /** Its words (ADR-0093: another language's come in through culture-view.ts words, as one table). */
 export const BROWSE_COPY = {

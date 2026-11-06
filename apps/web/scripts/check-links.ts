@@ -18,8 +18,8 @@
 import { execSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
-import { TERMINALS, directionsUrl, goLink, naverDirectionsUrl, walkDirectionsUrl } from '../src/links';
-import type { Spot } from '../src/pick';
+import { TERMINALS, directionsUrl, goLink, naverDirectionsUrl, walkDirectionsUrl } from '../src/pick/links';
+import type { Spot } from '../src/pick/pick';
 
 const UA = {
   'iOS Safari': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',

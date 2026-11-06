@@ -1,6 +1,6 @@
 // ADR-0093: English (docs/i18n/style-en.md). Loaded only when the page is in English (main.ts).
-import { MAP_APP_NAME, placeApp, type MapApp } from '../links';
-import type { Island } from '../pick';
+import { MAP_APP_NAME, placeApp, type MapApp } from '../pick/links';
+import type { Island } from '../pick/pick';
 import { MAX_SAVED } from '../store';
 import { apply, localDays, type Lang } from './apply';
 import './en.css';

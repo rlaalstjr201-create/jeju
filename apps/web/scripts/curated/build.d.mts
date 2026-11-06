@@ -1,4 +1,4 @@
-import type { Spot } from '../../src/pick';
+import type { Spot } from '../../src/pick/pick';
 
 export interface CuratedInputs {
   dest: string;

@@ -4,12 +4,12 @@
 // status line names what moved, only when the order changed; the home's 「예:」 follow the same order and turn at the
 // sunrise by themselves.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { areaByName, type AreaName } from '../src/areas';
+import { areaByName, type AreaName } from '../src/region/areas';
 import { addDays } from '../src/dates';
-import { islandOf, pickCards, type Spot } from '../src/pick';
+import { islandOf, pickCards, type Spot } from '../src/pick/pick';
 import { COPY, statusOf } from '../src/render';
 import { initialState, type State } from '../src/state';
-import { sunriseMinutes, sunsetMinutes } from '../src/sun';
+import { sunriseMinutes, sunsetMinutes } from '../src/pick/sun';
 import { fileSpots } from './fixtures';
 import { $, cardIds, flush, render, reset, tap } from './harness';
 

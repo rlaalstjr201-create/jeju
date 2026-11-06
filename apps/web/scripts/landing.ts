@@ -3,15 +3,15 @@
 // inputs, calls buildSite() and the checks below, and writes dist/. The rules the app uses are imported, not copied:
 // 지역 배정 = nearestArea, 이동 시간 = travel/travelText, 지도 링크 = goLink/naverSearchUrl (ADR-0071 네이버지도 기본).
 import { createHash } from 'node:crypto';
-import { AREAS, AREA_GROUPS, nearestArea, type Area as AnyArea } from '../src/areas';
-import { BUSAN_AREAS } from '../src/busan';
+import { AREAS, AREA_GROUPS, nearestArea, type Area as AnyArea } from '../src/region/areas';
+import { BUSAN_AREAS } from '../src/region/busan';
 /** Jeju's 15 areas (plans/busan.md M1); Busan's 12 have their own pages below (busanPages, ADR-0099). */
 type Area = (typeof AREAS)[number];
 type BusanArea = (typeof BUSAN_AREAS)[number];
-import { cleanName } from '../src/data';
+import { cleanName } from '../src/pick/data';
 import { logoInner } from '../src/logo';
-import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/links';
-import { distanceKm, islandOf, listed, travel, travelText, type Mood, type Spot } from '../src/pick';
+import { bookLink, goLink, naverSearchUrl, TERMINALS } from '../src/pick/links';
+import { distanceKm, islandOf, listed, travel, travelText, type Mood, type Spot } from '../src/pick/pick';
 import { visibleText } from './seo/crawl-parse.mjs';
 
 export const BRAND = '여차나:제주';

@@ -4,10 +4,10 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { applyBooking, loadBookingCalls, loadBookRoutes } from '../scripts/booking.mjs';
 import { assignSlugs, buildSite } from '../scripts/landing';
-import { AREAS } from '../src/areas';
-import { normalizeSpots } from '../src/data';
-import { bookLink } from '../src/links';
-import { REACHES, listed, pickCards, withinReach, type Spot } from '../src/pick';
+import { AREAS } from '../src/region/areas';
+import { normalizeSpots } from '../src/pick/data';
+import { bookLink } from '../src/pick/links';
+import { REACHES, listed, pickCards, withinReach, type Spot } from '../src/pick/pick';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');

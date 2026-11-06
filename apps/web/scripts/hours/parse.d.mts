@@ -1,4 +1,4 @@
-import type { Hours } from '../../src/hours';
+import type { Hours } from '../../src/pick/hours';
 export const FIELDS: Record<number, [string, string]>;
 export function parseOpen(text: unknown): [number, number] | null;
 export function parseClosed(text: unknown): number[] | null;

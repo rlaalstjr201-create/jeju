@@ -3,12 +3,12 @@
 import { describe, expect, it } from 'vitest';
 import { JSDOM } from 'jsdom';
 import FILE from '../data/seoul/weekly-seoul.json';
-import { ORDER, SHELVES, browseCard, buildShelves, inHood } from '../src/browse';
-import { BROWSE_COPY, browseCardSheet } from '../src/browse-view';
-import { openNow, seoulMinutes, type CultureItem, type Now } from '../src/culture';
-import { distanceKm } from '../src/pick';
-import { funItems, realItems } from '../src/fun';
-import { isWeek, usualTime, weeklyItems, type WeekRow } from '../src/weekly';
+import { ORDER, SHELVES, browseCard, buildShelves, inHood } from '../src/seoul/browse';
+import { BROWSE_COPY, browseCardSheet } from '../src/seoul/browse-view';
+import { openNow, seoulMinutes, type CultureItem, type Now } from '../src/culture/culture';
+import { distanceKm } from '../src/pick/pick';
+import { funItems, realItems } from '../src/seoul/fun';
+import { isWeek, usualTime, weeklyItems, type WeekRow } from '../src/seoul/weekly';
 
 const ROWS = FILE.items as WeekRow[];
 const now = (day: string, h: number, m = 0): Now => ({ day, weekday: new Date(`${day}T00:00:00Z`).getUTCDay(), minute: h * 60 + m });
@@ -158,7 +158,7 @@ describe('a kind\'s usual hours where the posts gave none (Amendment 1, review m
 
 describe('the card (Amendment 1, ADR-0123 7): a station-sign tile (kind icon and place), the name under it, one line', () => {
   it('a 4:3 box with the tile; 「토요일까지 · 걸어서 약 …분」', async () => {
-    const { homeShelvesView } = await import('../src/browse-view');
+    const { homeShelvesView } = await import('../src/seoul/browse-view');
     const doc = new JSDOM('<!doctype html><body></body>').window.document;
     const s = buildShelves(weeklyItems('2026-11-05', [], [row({ end: '2026-11-07' })]), now('2026-11-05', 14), 성수, 17 * 60 + 25);
     const box = homeShelvesView(doc, s, { rest: '', walk: '', new: '', famous: '', food: '' }, []);

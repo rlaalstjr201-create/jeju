@@ -1,5 +1,5 @@
 // 오일장 장날 (ADR-0066, specs/market-days.md). Static rules from review/copy/market-days.json, no requests.
-import type { Day } from './dates';
+import type { Day } from '../dates';
 
 /** A five-day market's rule as shipped in spots.json: the days of the month it opens, the label shown
  * (`2·7일`), and 대정's exception (opens on the 31st, not on the 1st after a 31-day month). */

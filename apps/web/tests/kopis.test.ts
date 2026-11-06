@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { CultureItem } from '../functions/_lib/culture-filter';
 import { kopisCast, kopisDrop, kopisItems, kopisKind, kopisTime, listIds, mergeCulture, parseShow, type KopisShow } from '../functions/_lib/kopis';
-import { openNow, parseCultureTime } from '../src/culture';
+import { openNow, parseCultureTime } from '../src/culture/culture';
 
 const DAY = '2026-11-04'; // a Wednesday
 const fx = (name: string) => readFileSync(resolve(__dirname, 'fixtures/kopis', name), 'utf8');

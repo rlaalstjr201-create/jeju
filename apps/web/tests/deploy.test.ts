@@ -2,8 +2,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { GA_NAME, gaParams } from '../src/analytics';
-import type { UsageEvent } from '../src/track';
+import { GA_NAME, gaParams } from '../src/usage/analytics';
+import type { UsageEvent } from '../src/usage/track';
 
 const root = resolve(__dirname, '..');
 const pub = (f: string) => resolve(root, 'public', f);

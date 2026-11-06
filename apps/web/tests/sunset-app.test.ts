@@ -2,12 +2,12 @@
 // 노을 볼 곳 (ADR-0083, specs/sunset-view.md V4): the window, the 3-place and 45-minute edges, the row's place in
 // 비 → 노을 → 장날, date mode, no basis, and a home exactly as before when there is no row.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { areaByName, type AreaName } from '../src/areas';
-import { normalizeSpots } from '../src/data';
-import { DUSK_LEAD_MIN, duskNow, sunsetSpots, todayActs } from '../src/home';
-import type { Spot } from '../src/pick';
+import { areaByName, type AreaName } from '../src/region/areas';
+import { normalizeSpots } from '../src/pick/data';
+import { DUSK_LEAD_MIN, duskNow, sunsetSpots, todayActs } from '../src/pick/home';
+import type { Spot } from '../src/pick/pick';
 import { KEYS } from '../src/store';
-import { sunsetBucket, sunsetMinutes } from '../src/sun';
+import { sunsetBucket, sunsetMinutes } from '../src/pick/sun';
 import { fileSpots } from './fixtures';
 import { $, $$, flush, render, reset, tap } from './harness';
 

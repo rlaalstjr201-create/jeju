@@ -3,7 +3,7 @@
 // destination a point is in is src/busan.ts's (destOf, with Busan's boundary); whether a destination is open to
 // visitors yet is src/release.ts's question, asked only where the app takes a point in.
 
-import type { Kind, Mood } from './pick';
+import type { Kind, Mood } from '../pick/pick';
 
 /** 검수한 곳 (ADR-0101): the destinations whose places were checked one by one. `gangwon` (ADR-0102): 강원's, named by
  * 시군구 — 강릉·속초·춘천 (Amendment 2)·양양 (Amendment 3)·평창 (Amendment 4) now; the others stay 자동 지역 until theirs are checked. */

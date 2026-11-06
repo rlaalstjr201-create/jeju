@@ -1,9 +1,9 @@
 // 지금 못 가는 곳은 고르지 않는다 (specs/open-now.md): the hours read from TourAPI's words, shutAt, and the picks.
 import { describe, expect, it } from 'vitest';
-import { areaByName } from '../src/areas';
-import { normalizeSpots } from '../src/data';
-import { shutAt, weekdayOf } from '../src/hours';
-import { pickCards, type Mood, type Spot } from '../src/pick';
+import { areaByName } from '../src/region/areas';
+import { normalizeSpots } from '../src/pick/data';
+import { shutAt, weekdayOf } from '../src/pick/hours';
+import { pickCards, type Mood, type Spot } from '../src/pick/pick';
 import { hoursOf, parseClosed, parseOpen } from '../scripts/hours/parse.mjs';
 import { matchSpots } from '../scripts/hours/collect.mjs';
 import { fileSpots } from './fixtures';

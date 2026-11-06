@@ -1,6 +1,6 @@
 // 해 지는 시각 (ADR-0075 2): NOAA's solar calculator (the spreadsheet form), on the device, no requests.
 // Checked against Open-Meteo for 제주시 within ±2 minutes (tests/sun.test.ts).
-import { DAY_TEXT, type Day } from './dates';
+import { DAY_TEXT, type Day } from '../dates';
 import type { Point } from './pick';
 
 const rad = Math.PI / 180;

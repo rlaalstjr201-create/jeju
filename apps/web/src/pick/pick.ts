@@ -1,5 +1,5 @@
 // Card selection (plan OQ 1·2·4). Pure functions, no DOM.
-import type { Day } from './dates';
+import type { Day } from '../dates';
 import { shutAt, type Hours } from './hours';
 import { marketDay, type Market } from './market';
 import { seasonOn, type Season } from './season';

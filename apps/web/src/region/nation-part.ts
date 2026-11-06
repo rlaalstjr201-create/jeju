@@ -7,7 +7,7 @@ import { destOf } from './busan';
 import { DEST, DESTS, SGG_DESTS, type Dest } from './dest';
 import { filesFor, inKorea, normalizeNation, parseIndex, regionOf, sggShorts } from './nation';
 import { installNation } from './release';
-import { kmaGrid } from '../functions/_lib/kma';
+import { kmaGrid } from '../../functions/_lib/kma';
 
 /** The 자동 지역's own words (plans/nationwide-app.md 4·8): here rather than in render.ts, so a visit that never comes
  * here carries none of them; another language's (Lang.nation) are written in once this part is in (release.ts whenNation). */

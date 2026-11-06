@@ -4,11 +4,11 @@
 // cover is still a position read. A file of its own: here the part's import always fails.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mountApp, type App } from '../src/app';
-import { BUSAN, loadBusan } from '../src/release';
+import { BUSAN, loadBusan } from '../src/region/release';
 import { fileSpots } from './fixtures';
 import { flush, html, reset, settle } from './harness';
 
-vi.mock('../src/busan-part', () => {
+vi.mock('../src/region/busan-part', () => {
   throw new Error('chunk failed to load');
 });
 

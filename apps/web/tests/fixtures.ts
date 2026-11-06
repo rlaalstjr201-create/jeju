@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { Button, Spot } from '../src/pick';
+import type { Button, Spot } from '../src/pick/pick';
 
 /** public/spots.json exactly as shipped — build-spots.mjs already applied every S1' rule. */
 export const fileSpots = JSON.parse(readFileSync(resolve(__dirname, '../public/spots.json'), 'utf8')) as Spot[];

@@ -2,11 +2,11 @@
 // shelves, each scrolled sideways, the shelves that suit the hour first (ADR-0115 6). Pure: the view (browse-view.ts) and
 // the tests share it. What is shut now is left out (a show: openNow; a curated place: its kind's usual hours); an item is
 // in one shelf only; at most 12 a shelf, an empty one not there at all.
-import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from './culture';
+import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from '../culture/culture';
 import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
 import { isWeek } from './weekly';
 import { PROMINENCE_STEP, arrange, bandOfKm, dayIndex, isNewly, type Fresh, type Slot } from './freshness';
-import { distanceKm, type Kind, type Point, type Spot } from './pick';
+import { distanceKm, type Kind, type Point, type Spot } from '../pick/pick';
 
 /** The shelves (ADR-0115 1·6): 동네, the seven curated kinds (카페·디저트 g8, ADR-0120; 밤 놀거리 g10, ADR-0122), 새로 생긴 곳 (ADR-0123), 이번 주 서울 (ADR-0118), then the day's own list (무대, 오늘만·이번 주까지,
  * 전시). Filled in this order: the week's items are taken before the day's shelves could. */

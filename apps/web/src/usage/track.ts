@@ -3,13 +3,13 @@
 // no time of day. Batched into navigator.sendBeacon (sent at once on a map or booking link, which may take the page
 // away); offline batches are dropped and nothing is retried. With
 // no collection address in the build (VITE_EVENTS_URL, unset in dev and tests) nothing is kept or sent.
-import type { AreaName, RegionName, SggCode } from './areas';
-import type { Day } from './dates';
-import { isSggDest, type Dest } from './dest';
-import type { Button, NewSub, Reach, Sub } from './pick';
-import { BUSAN } from './release';
-import type { SeasonKind } from './season';
-import type { Basis, View, When } from './types';
+import type { AreaName, RegionName, SggCode } from '../region/areas';
+import type { Day } from '../dates';
+import { isSggDest, type Dest } from '../region/dest';
+import type { Button, NewSub, Reach, Sub } from '../pick/pick';
+import { BUSAN } from '../region/release';
+import type { SeasonKind } from '../pick/season';
+import type { Basis, View, When } from '../types';
 
 /** visited / unvisited: 가 봤어요 and its undo (ADR-0087) — this collector only, never GA4·네이버, never in the popularity. */
 export type EventName = 'tap' | 'shown' | 'save' | 'unsave' | 'map' | 'book' | 'open' | 'arrange' | 'visited' | 'unvisited' | StartEvent | BrowseEvent;

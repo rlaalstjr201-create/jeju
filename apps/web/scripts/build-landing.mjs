@@ -9,8 +9,8 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { AREAS } from '../src/areas.ts';
-import { normalizeSpots } from '../src/data.ts';
+import { AREAS } from '../src/region/areas.ts';
+import { normalizeSpots } from '../src/pick/data.ts';
 import { judge } from './seo/keyword-gate.mjs';
 import {
   assignSlugs, buildSite, busanPages, contentHash, copiedReasons, HASH_VERSION, kstDay, ownShare, pageLastmods, similarPairs, sitemapFiles, sourceCopies, CSS_PATH,

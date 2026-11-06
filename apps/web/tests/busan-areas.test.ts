@@ -2,10 +2,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { AREAS, nearestArea } from '../src/areas';
-import { BUSAN_AREAS } from '../src/busan';
-import { normalizeSpots } from '../src/data';
-import { CARD_COUNT, listed, pickCards, pool, withinReach, type Button, type Spot, type Tab } from '../src/pick';
+import { AREAS, nearestArea } from '../src/region/areas';
+import { BUSAN_AREAS } from '../src/region/busan';
+import { normalizeSpots } from '../src/pick/data';
+import { CARD_COUNT, listed, pickCards, pool, withinReach, type Button, type Spot, type Tab } from '../src/pick/pick';
 
 const root = resolve(__dirname, '..');
 const spots = normalizeSpots(JSON.parse(readFileSync(resolve(root, 'public/spots-busan.json'), 'utf8'))) as Spot[];

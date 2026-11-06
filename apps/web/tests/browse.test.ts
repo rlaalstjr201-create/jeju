@@ -4,16 +4,16 @@ import { describe, expect, it } from 'vitest';
 import { cultureItems, type CultureItem, type SeoulRow } from '../functions/_lib/culture-filter';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { FULL, HOME_ROWS, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, homeShown, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/browse';
-import { normalizeSpots } from '../src/data';
-import { moodShelf, nowSpot } from '../src/home';
+import { FULL, HOME_ROWS, HOOD_MIN, MOOD_SHELVES, ORDER, PER_SHELF, browseCard, buildShelves, homeOrder, homeShelves, homeShown, imageUrl, inHood, linkUrl, RESIZE, todayTimes, type ShelfKey } from '../src/seoul/browse';
+import { normalizeSpots } from '../src/pick/data';
+import { moodShelf, nowSpot } from '../src/pick/home';
 import { initialState, openSpots, viewingShut } from '../src/state';
-import type { Spot } from '../src/pick';
-import { openNow, type Now } from '../src/culture';
-import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/fun';
-import { distanceKm } from '../src/pick';
-import { sunsetMinutes } from '../src/sun';
-import { dwellBucket } from '../src/track';
+import type { Spot } from '../src/pick/pick';
+import { openNow, type Now } from '../src/culture/culture';
+import { bandOf, funItems, hoursOf, isFun, likelyOpen, realItems, type FunItem } from '../src/seoul/fun';
+import { distanceKm } from '../src/pick/pick';
+import { sunsetMinutes } from '../src/pick/sun';
+import { dwellBucket } from '../src/usage/track';
 import rows from './fixtures/seoul-culture-20261104.json';
 
 const DAY = '2026-11-04'; // a Wednesday

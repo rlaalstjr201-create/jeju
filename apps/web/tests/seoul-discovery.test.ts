@@ -6,11 +6,11 @@ import { describe, expect, it } from 'vitest';
 import { JSDOM } from 'jsdom';
 import FOUND from '../data/seoul/discovery-seoul.json';
 import FUN from '../data/seoul/fun-seoul.json';
-import { ORDER, SHELVES, buildShelves, directUrl } from '../src/browse';
-import { browseCardSheet, homeShelvesView, iconOf } from '../src/browse-view';
-import type { Now } from '../src/culture';
-import { foundPlaces, funItems, hoursOf, type FunItem } from '../src/fun';
-import { weeklyItems, type FoundRow } from '../src/weekly';
+import { ORDER, SHELVES, buildShelves, directUrl } from '../src/seoul/browse';
+import { browseCardSheet, homeShelvesView, iconOf } from '../src/seoul/browse-view';
+import type { Now } from '../src/culture/culture';
+import { foundPlaces, funItems, hoursOf, type FunItem } from '../src/seoul/fun';
+import { weeklyItems, type FoundRow } from '../src/seoul/weekly';
 import * as L from '../scripts/seoul-discovery/lib.mjs';
 
 const D = '2026-11-06';

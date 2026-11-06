@@ -2,20 +2,20 @@
 // state (design/SPEC.md §12). Card nodes are rebuilt only when the list itself changes — a heart tap patches
 // the heart and ♥ N, a broken photo drops its box in place — so photos never reload.
 import { showPhotos } from './later';
-import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './areas';
-import { DEST, DESTS, destOfId, isSggDest, type Dest, type SggDest } from './dest';
-import { BUSAN, NATION, OPEN_AREAS, culturePart, nationPart, openAreasOf, sggShort } from './release';
+import { AREAS, AREA_GROUPS, areaLabel, type RegionName } from './region/areas';
+import { DEST, DESTS, destOfId, isSggDest, type Dest, type SggDest } from './region/dest';
+import { BUSAN, NATION, OPEN_AREAS, culturePart, nationPart, openAreasOf, sggShort } from './region/release';
 import { DAYS_AHEAD, addDays, dayOf, longDay, shortDay, type Day } from './dates';
-import { duskNow, homeOrigin, moodExamples, moodShelf, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './home';
+import { duskNow, homeOrigin, moodExamples, moodShelf, nightHome, nowSpot, openMarkets, otherAreas, rainNow, sunPoint, sunsetSpots, SUNSET_LIST_MAX, todayActs, type MarketRow, type TodayAct } from './pick/home';
 import { appHome, handoffUrl, kakaoExternal, type InApp } from './keep';
-import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './links';
-import { marketText } from './market';
-import { seasonOn, seasonText } from './season';
-import { CARD_COUNT, REACHES, TRAVEL_TEXT, historyKey, listed, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick';
+import { MAP_APP_NAME, bookLink, goLink, placeApp, placeUrl, type MapApp } from './pick/links';
+import { marketText } from './pick/market';
+import { seasonOn, seasonText } from './pick/season';
+import { CARD_COUNT, REACHES, TRAVEL_TEXT, historyKey, listed, travel, travelText, withinReach, type Button, type Card, type NightShift, type Reach, type Spot } from './pick/pick';
 import { cardsValid, hasSaved, heldDay, isSaved, openPhase, pickSpots, rainArea, savedCount, savedDays, savedIndex, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
-import { sunsetText } from './sun';
-import { PAINS, TEXT_MAX, WENT } from './survey';
+import { sunsetText } from './pick/sun';
+import { PAINS, TEXT_MAX, WENT } from './usage/survey';
 import type { GeoError, NoOrigin, Origin, OutsideAt, Overlay, View } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.

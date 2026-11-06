@@ -467,7 +467,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
 - **아니면**(`p.alt`): 15 `--muted`, `아니면`만 600. 첫 장과 40(ADR-0075, 목록 gap 20 + 위 마진 20), 줄 카드와 12. 두 줄 카드의 이동 문구가 같으면 `아니면&nbsp;· 둘 다 {문구}`(7절). 자동 지역(6.17)은 묶지 않는다 — 이유 줄이 없어 줄 카드가 이름만 남지 않게 각 줄 카드가 제 이동 문구를 둔다. 카드가 1장이면 없다. 저장한 곳에는 없다.
 - **실내**(ADR-0065): `비 와요(실내만)`로 뽑은 결과 카드에만 메타 줄 맨 앞에 `실내`(`span.indoor`, 메타 줄과 같은 15 `--muted`, 태그·칩 아님)와 `&nbsp;·`. 이동 문구가 `아니면` 줄로 묶인 줄 카드는 메타 줄에 `실내`만. 저장한 곳에는 없다.
 - **장날**(ADR-0066, `specs/market-days.md`): 오일장 카드에만 메타 줄 맨 앞에 장날 문구(`span.market`, 메타 줄과 같은 15 `--muted`, 태그·칩 아님)와 `&nbsp;·`. 보는 날(지금 = 오늘, 날짜 모드 = 고른 날)에 장이 서면 `오늘 장 서는 날`(날짜 모드 `이날 장 서는 날`), 아니면 `장날: 2·7일`. 이동 문구가 `아니면` 줄로 묶인 줄 카드는 메타 줄에 장날 문구만. 저장한 곳에는 없다.
-- **철**(ADR-0080, `specs/seasonal-spots.md`): 보는 날(지금 = 오늘, 날짜 모드 = 고른 날)이 그곳의 철 안이면 결과 카드 메타 줄에 `{종류} 철`(`span.season`, 메타 줄과 같은 15 `--muted`, 태그·칩 아님)과 `&nbsp;·`. 둘은 `.nw`로 묶여 320px에서도 갈라지지 않는다. 순서는 `실내`(켜졌을 때) → 철 → 이동 문구. 글자는 `벚꽃 철`·`매화 철`·`단풍 철`·`유채꽃 철`·`수국 철`·`억새 철`·`동백 철`·`귤 따기 철`·`핑크뮬리 철` 중 하나(`src/season.ts` 한 곳). 같은 날 두 철이면 ADR-0080 5 순서의 앞 하나. 이동 문구가 `아니면` 줄로 묶인 줄 카드는 메타 줄에 (`실내` ·) 철 글자만. 철 밖이면 없다. 저장한 곳·오늘 판·랜딩에는 없다.
+- **철**(ADR-0080, `specs/seasonal-spots.md`): 보는 날(지금 = 오늘, 날짜 모드 = 고른 날)이 그곳의 철 안이면 결과 카드 메타 줄에 `{종류} 철`(`span.season`, 메타 줄과 같은 15 `--muted`, 태그·칩 아님)과 `&nbsp;·`. 둘은 `.nw`로 묶여 320px에서도 갈라지지 않는다. 순서는 `실내`(켜졌을 때) → 철 → 이동 문구. 글자는 `벚꽃 철`·`매화 철`·`단풍 철`·`유채꽃 철`·`수국 철`·`억새 철`·`동백 철`·`귤 따기 철`·`핑크뮬리 철` 중 하나(`src/pick/season.ts` 한 곳). 같은 날 두 철이면 ADR-0080 5 순서의 앞 하나. 이동 문구가 `아니면` 줄로 묶인 줄 카드는 메타 줄에 (`실내` ·) 철 글자만. 철 밖이면 없다. 저장한 곳·오늘 판·랜딩에는 없다.
 - **줄 카드**(ADR-0088: 회색 면): `--fill` 면, 모서리 `--r-card` 16, 패딩 12. 왼쪽 정사각 사진(`--thumb: 72px`, radius `--r-thumb` 12), 오른쪽에 이름 17/600(2줄) + 하트, 이유 15(3줄), 메타(묶이지 않았을 때만, `카카오맵` 없이 이동 문구만). 사진은 글 위쪽에 맞춘다. 면 안의 버튼(`길찾기`·`가 봤어요`·예약·`위로` 등)은 `--bg` 면 버튼(그린 40), 누르는 동안 `--fill-press`. 예약 링크와 첫 저장 안내는 **카드 폭 전체 줄**(사진 아래까지 걸친 줄)에 둔다. `마이리얼트립에서 예약 찾아보기`는 15/600에서 약 221px라 320px의 글 칸(196px)에서는 두 줄로 꺾이지만 카드 폭(288px)에서는 한 줄이다.
 - **좁은 폭**: 3.3절의 `@container (max-width: 18em)`이면 줄 카드도 사진이 위로 가고 2:1이 된다(글자를 키웠을 때만).
 - **카드 전체가 지도 링크**: 이름의 `<a>`를 `::after { inset: 0 }`로 카드 전체에 편다. 하트와 예약 링크는 `position: relative; z-index: 1`. 키보드 포커스 링은 카드 전체(`.card:has(.card-link:focus-visible)`에 2px `--text`, offset 4, radius `--r-photo`). 누르는 동안 사진과 이름 `opacity: .72`.
@@ -524,7 +524,7 @@ JS·데이터 전에 첫 화면이 그대로 보여야 한다(S01).
   | 구좌 | 월정리 | 성산 | 일출봉 |
   | 우도 | 배로 가는 섬 | | |
 
-  대표 지명은 모두 그 지역 중심이 가장 가까운 곳이다(15곳 모두 확인, 15.2절 테스트 좌표). 저장 키와 중심 좌표는 `plans/tomorrow-picker.md`의 15곳 그대로, 화면 표기만 `서귀포시내` → `서귀포 시내`. `src/areas.ts`의 `AREAS`에 `landmark` 필드로 둔다.
+  대표 지명은 모두 그 지역 중심이 가장 가까운 곳이다(15곳 모두 확인, 15.2절 테스트 좌표). 저장 키와 중심 좌표는 `plans/tomorrow-picker.md`의 15곳 그대로, 화면 표기만 `서귀포시내` → `서귀포 시내`. `src/region/areas.ts`의 `AREAS`에 `landmark` 필드로 둔다.
 - 폭 확인(크롬 실측): 320px에서 칸 글자 폭 약 110px, 가장 긴 이름 `서귀포 시내` 17px 91px, 가장 긴 지명 `배로 가는 섬` 15px 86px. 모두 한 줄.
 - 7개인 서귀포 쪽은 마지막 줄에 `성산` 한 칸만 남는다. 한 면 안의 목록이라 목록처럼 읽혀 어색하지 않다(심사 1).
 
@@ -975,6 +975,19 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 스택(Vite + TS, 프레임워크 없음), `pick.ts`, `card-text.ts`, 데이터 파이프라인은 유지한다.
 
+`src/` 폴더 배치(ADR-0125). 맨 위는 앱 뼈대(`main`·`app`·`render`·`state`·`store`·`nav`·`effects`·`types`·`dates`·`deeplink`·`keep`·`start`·`later`·`update`·`yield`·`logo`, `style.css`·`landing.css`)이고, 기능은 폴더로 묶는다.
+
+| 폴더 | 들어 있는 것 |
+|---|---|
+| `pick/` | 장소 고르기와 카드: `data`·`pick`·`card-text`·`hours`·`season`·`market`·`sun`·`home`·`links` |
+| `region/` | 여행지·지역과 출시 스위치: `dest`·`areas`·`busan`·`busan-part`·`nation`·`nation-part`·`release` |
+| `seoul/` | 서울 둘러보기 선반: `browse`·`browse-view`·`browse.css`·`fun`·`weekly`·`freshness` |
+| `culture/` | 오늘 근처 문화생활: `culture`·`culture-view` |
+| `usage/` | 사용 기록·분석·설문: `track`·`analytics`·`survey` |
+| `i18n/` | 다른 언어 낱말 |
+
+아래 표의 파일 이름은 이 폴더 안의 이름이다.
+
 | 파일 | 맡는 일 |
 |---|---|
 | `state.ts` | 11.1 State와 순수 `reduce(state, action)`. DOM 없이 테스트 |
@@ -1353,7 +1366,7 @@ io.observe(bar.querySelector('.more-end')!);   // 띠 노드는 결과가 ready�
 
 ## 14. AI 슬롭 체크리스트 (구현이 통과해야 할 것)
 
-자동 검사는 `scripts/check-slop.ts`(`npm run check:slop`, `tests/slop.test.ts`). 대상: `src/**/*.{ts,css}`, `index.html`, `public/manifest.webmanifest`, `public/*.html`(404·개인정보 페이지의 글자와 인라인 `<style>`, ADR-0063), `public/spots.json`의 reason, 빌드 뒤 `dist/assets/*.{js,css}`. UI 문자열 = 한글이 든 문자열 리터럴·템플릿과 HTML 텍스트·aria-label. 철 글자 표(`src/season.ts`, `… 철`, ADR-0080)도 여기에 든다.
+자동 검사는 `scripts/check-slop.ts`(`npm run check:slop`, `tests/slop.test.ts`). 대상: `src/**/*.{ts,css}`, `index.html`, `public/manifest.webmanifest`, `public/*.html`(404·개인정보 페이지의 글자와 인라인 `<style>`, ADR-0063), `public/spots.json`의 reason, 빌드 뒤 `dist/assets/*.{js,css}`. UI 문자열 = 한글이 든 문자열 리터럴·템플릿과 HTML 텍스트·aria-label. 철 글자 표(`src/pick/season.ts`, `… 철`, ADR-0080)도 여기에 든다.
 
 | # | 항목 | 확인 | 통과 |
 |---|---|---|---|

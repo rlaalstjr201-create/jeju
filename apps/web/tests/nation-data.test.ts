@@ -2,8 +2,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { listed } from '../src/pick';
-import { normalizeNation, parseIndex } from '../src/nation';
+import { listed } from '../src/pick/pick';
+import { normalizeNation, parseIndex } from '../src/region/nation';
 
 const fixture = (f: string): unknown => JSON.parse(readFileSync(resolve(__dirname, 'fixtures/nation', f), 'utf8'));
 

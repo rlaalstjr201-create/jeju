@@ -2,9 +2,9 @@
 // reading of it. Pure — no fetch, no build-time define — so tests and scripts may import it. The app reaches it through
 // src/nation-part.ts only (its own chunk).
 import type { SggCode } from './areas';
-import { cleanName } from './data';
+import { cleanName } from '../pick/data';
 import type { Dest } from './dest';
-import { distanceKm, type Mood, type Point, type Spot } from './pick';
+import { distanceKm, type Mood, type Point, type Spot } from '../pick/pick';
 
 /** The moods a 자동 지역 record may carry: no 유명한 데 (ADR-0101 2); 쉬기 since rules v2 (ADR-0105 4). */
 export type NationMood = Extract<Mood, 'rest' | 'walk' | 'new' | 'food'>;

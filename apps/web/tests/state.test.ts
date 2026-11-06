@@ -2,11 +2,11 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import { AREAS } from '../src/areas';
-import { pickCards } from '../src/pick';
-import { NATION, loadNation } from '../src/release';
+import { AREAS } from '../src/region/areas';
+import { pickCards } from '../src/pick/pick';
+import { NATION, loadNation } from '../src/region/release';
 import { basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, isSaved, knownOrigin, moodIntent, rainArea, reduce, savedCount, savedDays, sessionOf, staticOrigin, whenDay, type Action, type State } from '../src/state';
-import type { Point } from '../src/pick';
+import type { Point } from '../src/pick/pick';
 import type { Origin, SavedEntry } from '../src/types';
 import { ORIGINS, realSpots } from './fixtures';
 

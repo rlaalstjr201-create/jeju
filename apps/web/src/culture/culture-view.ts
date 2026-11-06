@@ -1,21 +1,21 @@
 // 오늘 근처에서 하는 것 (ADR-0112 8, plans/now-culture.md §3): the home's block (홈 2) and the list sheet (목록 6), a chunk of
 // its own (release.ts loadCulture) so the entry stays in its budget (ADR-0100). The list is asked for here too: 서울 목록
 // 전체, no position in the request (ADR-0112 6); the app filters by distance (culture.ts pickCulture).
-import { MOOD_SHELVES, PER_SHELF, buildShelves, homeShelves, type HomeShelf, type MoodShelf } from './browse';
-import { BROWSE_COPY, browseCardSheet, browseScreen, homeShelvesView, type MoodCard } from './browse-view';
-export { scrolledRows } from './browse-view';
+import { MOOD_SHELVES, PER_SHELF, buildShelves, homeShelves, type HomeShelf, type MoodShelf } from '../seoul/browse';
+import { BROWSE_COPY, browseCardSheet, browseScreen, homeShelvesView, type MoodCard } from '../seoul/browse-view';
+export { scrolledRows } from '../seoul/browse-view';
 import { WHY_TEXT, pickCulture, seoulMinutes, type CultureItem, type Now, type Pick } from './culture';
-import type { Fetch } from './effects';
-import { funItems, isFun, realItems } from './fun';
-import { isWeek, weeklyItems } from './weekly';
-import { arrange, bandOfKm, cardsStore, type Cards } from './freshness';
-import { goLink, type MapApp } from './links';
-import { TRAVEL_TEXT, distanceKm, formatMinutes, type Spot } from './pick';
-import { COPY } from './render';
-import type { State } from './state';
-import { sunsetMinutes } from './sun';
-import type { Day } from './dates';
-import type { Origin } from './types';
+import type { Fetch } from '../effects';
+import { funItems, isFun, realItems } from '../seoul/fun';
+import { isWeek, weeklyItems } from '../seoul/weekly';
+import { arrange, bandOfKm, cardsStore, type Cards } from '../seoul/freshness';
+import { goLink, type MapApp } from '../pick/links';
+import { TRAVEL_TEXT, distanceKm, formatMinutes, type Spot } from '../pick/pick';
+import { COPY } from '../render';
+import type { State } from '../state';
+import { sunsetMinutes } from '../pick/sun';
+import type { Day } from '../dates';
+import type { Origin } from '../types';
 
 /** Its words (ADR-0093: another language's come in through `words`). Titles and places stay as the list gives them. */
 export const CULTURE_COPY = {

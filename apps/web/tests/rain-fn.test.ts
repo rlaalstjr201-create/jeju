@@ -2,9 +2,9 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { AREAS } from '../src/areas';
-import { BUSAN_AREAS } from '../src/busan';
-import { parseIndex } from '../src/nation';
+import { AREAS } from '../src/region/areas';
+import { BUSAN_AREAS } from '../src/region/busan';
+import { parseIndex } from '../src/region/nation';
 import { NATION_GRIDS } from '../functions/_lib/grids';
 import { areaBySlug, baseTime, kmaGrid, maxPop } from '../functions/_lib/kma';
 import { onRequestGet } from '../functions/api/rain';

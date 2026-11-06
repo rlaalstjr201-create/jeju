@@ -3,7 +3,7 @@
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { checkCss, checkReasons, checkSlop, checkStrings, type Violation } from '../scripts/check-slop';
-import { cleanReason } from '../src/data';
+import { cleanReason } from '../src/pick/data';
 
 const root = resolve(__dirname, '..');
 

@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
 import { kopisDrop, kopisItems, listIds, mergeCulture, parseShow, xmlRecords, xmlTag, type KopisShow } from '../functions/_lib/kopis';
 import VENUES from '../functions/_lib/kopis-venues.json';
-import { pickCulture, type Now } from '../src/culture';
+import { pickCulture, type Now } from '../src/culture/culture';
 import { kopisGet, kopisKey } from './kopis-venues';
 
 const arg = (name: string) => {

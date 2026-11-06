@@ -1,4 +1,4 @@
-import type { Spot } from '../../src/pick';
+import type { Spot } from '../../src/pick/pick';
 
 export interface BuildInputs {
   items: { id: string; title: string; contenttypeid: number; lat: number; lng: number; image: string; lclsSystm3: string }[];

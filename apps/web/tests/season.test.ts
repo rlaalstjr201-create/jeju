@@ -1,8 +1,8 @@
 // 철 판정 (ADR-0080, specs/seasonal-spots.md S2): months, observed windows, order, KST boundary, format check.
 import { describe, expect, it } from 'vitest';
-import { normalizeSpots } from '../src/data';
+import { normalizeSpots } from '../src/pick/data';
 import { dayOf } from '../src/dates';
-import { seasonOn, seasonText, validSeason, type Season } from '../src/season';
+import { seasonOn, seasonText, validSeason, type Season } from '../src/pick/season';
 import { fileSpots } from './fixtures';
 
 const MARCH: Season[] = [{ kind: 'rapeseed', months: [3] }];

@@ -10,9 +10,9 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
-import { destOf } from '../../src/busan';
-import { DEST } from '../../src/dest';
-import { nearestSgg, parseIndex, regionOf } from '../../src/nation';
+import { destOf } from '../../src/region/busan';
+import { DEST } from '../../src/region/dest';
+import { nearestSgg, parseIndex, regionOf } from '../../src/region/nation';
 
 const web = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (p: string) => JSON.parse(readFileSync(resolve(web, p), 'utf8'));

@@ -2,26 +2,26 @@
 // Controller only: user intents → reduce(state) → render(state); effects (GPS, data, storage, history)
 // report back with a request id and stale results are dropped. See design/qa/scenarios.md for the cases.
 import { showPhotos } from './later';
-import { AREAS, areaByName, destOfArea, inJeju, type Area, type RegionName, type SggCode } from './areas';
-import { createSpotSource, normalizeSpots, type SpotSource } from './data';
+import { AREAS, areaByName, destOfArea, inJeju, type Area, type RegionName, type SggCode } from './region/areas';
+import { createSpotSource, normalizeSpots, type SpotSource } from './pick/data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
-import { DEST, destOfId, isDest, isSggDest, type Dest } from './dest';
+import { DEST, destOfId, isDest, isSggDest, type Dest } from './region/dest';
 import { LocateError, fetchAddr, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
-import { MAP_APPS, kakaoUrl, type MapApp } from './links';
-import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, culturePart, loadBusan, loadCulture, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './release';
+import { MAP_APPS, kakaoUrl, type MapApp } from './pick/links';
+import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, culturePart, loadBusan, loadCulture, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './region/release';
 import { HOME, createNav } from './nav';
-import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick';
-import { seasonOn, type SeasonKind } from './season';
-import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './home';
-import { sunriseMinutes, sunsetMinutes } from './sun';
+import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick/pick';
+import { seasonOn, type SeasonKind } from './pick/season';
+import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './pick/home';
+import { sunriseMinutes, sunsetMinutes } from './pick/sun';
 import { PLACE, createRenderer, dateLabel, findEls } from './render';
 import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
-import type { Analytics } from './analytics';
-import { feedbackBody, surveyDue } from './survey';
-import { ageOf, contextOf, createTracker, dwellBucket, type ArrangeOp, type EventName, type UsageEvent } from './track';
+import type { Analytics } from './usage/analytics';
+import { feedbackBody, surveyDue } from './usage/survey';
+import { ageOf, contextOf, createTracker, dwellBucket, type ArrangeOp, type EventName, type UsageEvent } from './usage/track';
 import type { Basis, Route, Stay, When } from './types';
 
 export { AREAS, LocateError, inJeju, kakaoUrl };

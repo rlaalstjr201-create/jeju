@@ -6,17 +6,17 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { normalizeSpots } from '../src/data';
-import { DEST } from '../src/dest';
+import { normalizeSpots } from '../src/pick/data';
+import { DEST } from '../src/region/dest';
 import { apply } from '../src/i18n/apply';
 import { EN } from '../src/i18n/en';
-import { normalizeNation } from '../src/nation';
-import type { Point, Spot } from '../src/pick';
+import { normalizeNation } from '../src/region/nation';
+import type { Point, Spot } from '../src/pick/pick';
 import { LocateError } from '../src/effects';
-import { NATION, loadNation } from '../src/release';
+import { NATION, loadNation } from '../src/region/release';
 import { rainArea } from '../src/state';
 import { KEYS, createStore, destKey } from '../src/store';
-import { contextOf } from '../src/track';
+import { contextOf } from '../src/usage/track';
 import { fileSpots } from './fixtures';
 import { $, $$, cardIds, current, flush, render, reset, settle, tap, destSide } from './harness';
 

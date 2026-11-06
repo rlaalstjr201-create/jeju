@@ -1,9 +1,9 @@
 // S27–S29 + audit "storage validation" / "data loss (storage)": every stored value is validated and
 // repaired, and hearts are read-modify-write so two tabs never erase each other's saves.
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AREAS } from '../src/areas';
+import { AREAS } from '../src/region/areas';
 import { KEYS, MAX_SAVED, createStore, normalizeEntries, parseBasis, parseEntries, parseRegion, parseReach, parseSaved, parseSession, parseStay, parseWhen } from '../src/store';
-import { NATION } from '../src/release';
+import { NATION } from '../src/region/release';
 import type { SavedEntry } from '../src/types';
 
 /** In-memory Storage shared between "tabs". */

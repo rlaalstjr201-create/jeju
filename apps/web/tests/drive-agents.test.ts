@@ -4,13 +4,13 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { AREAS, areaByName } from '../src/areas';
-import { BUSAN_AREAS } from '../src/busan';
+import { AREAS, areaByName } from '../src/region/areas';
+import { BUSAN_AREAS } from '../src/region/busan';
 import { addDays } from '../src/dates';
 import { readDeepLink } from '../src/deeplink';
 import { backupUrl, readBackup } from '../src/keep';
-import { MAP_APPS, TERMINALS, directionsUrl, goLink, kakaoUrl, naverDirectionsUrl, naverSearchUrl, placeUrl, tmapUrl, walkDirectionsUrl } from '../src/links';
-import { islandOf, pickCards } from '../src/pick';
+import { MAP_APPS, TERMINALS, directionsUrl, goLink, kakaoUrl, naverDirectionsUrl, naverSearchUrl, placeUrl, tmapUrl, walkDirectionsUrl } from '../src/pick/links';
+import { islandOf, pickCards } from '../src/pick/pick';
 import { realSpots } from './fixtures';
 import { $, $$, current, flush, render, reset, settle, tap, today } from './harness';
 

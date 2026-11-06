@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { mountApp, type App, type Deps } from '../src/app';
 import { dayOf } from '../src/dates';
-import { pickCards, type Button, type Point, type Reach, type Tab } from '../src/pick';
+import { pickCards, type Button, type Point, type Reach, type Tab } from '../src/pick/pick';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
 export const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');

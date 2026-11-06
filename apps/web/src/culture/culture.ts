@@ -2,8 +2,8 @@
 // few — 홈 2, 목록 6 — nearest and most 「지금」 first, with one line saying why now. Pure: the screen and the tests share it.
 // 판 2 (docs/research/culture-quality-01/04-result.md): times bound to their own weekdays, a show only before it starts (and
 // only if there is time to get there), Seoul travel minutes, the clear exhibitions (museums, palaces) ahead of small notices.
-import type { CultureItem } from '../functions/_lib/culture-filter';
-import { distanceKm, walkMinutes, type Point } from './pick';
+import type { CultureItem } from '../../functions/_lib/culture-filter';
+import { distanceKm, walkMinutes, type Point } from '../pick/pick';
 
 export type { CultureItem };
 

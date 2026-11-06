@@ -10,8 +10,8 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { AREAS } from '../../src/areas.ts';
-import { CARD_COUNT, distanceKm, driveMinutes, listed, pickCards, pool, withinReach } from '../../src/pick.ts';
+import { AREAS } from '../../src/region/areas.ts';
+import { CARD_COUNT, distanceKm, driveMinutes, listed, pickCards, pool, withinReach } from '../../src/pick/pick.ts';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 export const INPUT_SHA = 'eee2cb7054300f2a79822e575d6dda53818f6c2dd68d034fd973b10a6995a198';

@@ -1,8 +1,8 @@
 // Side effects that only *return* results — no UI. The controller checks the request id before it
 // applies anything, so a late GPS answer can never open a sheet or overwrite newer cards (S37·S38).
-import type { RegionName } from './areas';
-import type { Point } from './pick';
-import { nationPart } from './release';
+import type { RegionName } from './region/areas';
+import type { Point } from './pick/pick';
+import { nationPart } from './region/release';
 import { gpsOrigin, staticOrigin } from './state';
 import type { Basis, GeoHit, GeoPermission, NoOrigin, Origin, OutsideAt, Stay } from './types';
 

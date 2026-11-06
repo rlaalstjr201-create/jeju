@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { buildSite, assignSlugs } from '../scripts/landing';
 import { logoInner, MARK } from '../src/logo';
-import type { Spot } from '../src/pick';
+import type { Spot } from '../src/pick/pick';
 
 const root = resolve(__dirname, '..');
 

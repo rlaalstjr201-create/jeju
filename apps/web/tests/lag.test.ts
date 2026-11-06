@@ -3,7 +3,7 @@
 // per tap, the first load cut into turns. What the user ends up seeing is what was drawn before; only when, and in
 // which task, changes. design/SPEC.md §6.10, §12.5.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createSpotSource, normalizeSpots, normalizeSpotsIn } from '../src/data';
+import { createSpotSource, normalizeSpots, normalizeSpotsIn } from '../src/pick/data';
 import { createNav } from '../src/nav';
 import { yieldToMain } from '../src/yield';
 import { fileSpots } from './fixtures';

@@ -10,7 +10,7 @@ import { memoryStore } from '../events/store';
 import { parseBatch } from '../events/validate';
 import { renderReport } from '../scripts/analytics-report.mjs';
 import { readDeepLink } from '../src/deeplink';
-import { BUSAN } from '../src/release';
+import { BUSAN } from '../src/region/release';
 import { parseStay } from '../src/store';
 import { $, $$, current, flush, render, reset, tap, today } from './harness';
 

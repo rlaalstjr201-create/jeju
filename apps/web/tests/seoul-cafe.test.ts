@@ -3,10 +3,10 @@
 // (review/seoul-cafe/criteria-01.md) the curation script keeps.
 import { describe, expect, it } from 'vitest';
 import FILE from '../data/seoul/fun-seoul.json';
-import { ORDER, SHELVES, buildShelves, homeShelves } from '../src/browse';
-import type { CultureItem, Now } from '../src/culture';
-import { hoursOf, likelyOpen, type FunItem } from '../src/fun';
-import type { Spot } from '../src/pick';
+import { ORDER, SHELVES, buildShelves, homeShelves } from '../src/seoul/browse';
+import type { CultureItem, Now } from '../src/culture/culture';
+import { hoursOf, likelyOpen, type FunItem } from '../src/seoul/fun';
+import type { Spot } from '../src/pick/pick';
 import { CUT, OWNER_DROP, isMass, kindOf, passes } from '../scripts/seoul-cafe/curate.mjs';
 
 const DAY = '2026-11-04';

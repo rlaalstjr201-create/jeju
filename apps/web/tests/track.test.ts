@@ -2,10 +2,10 @@
 // 익명 사용 기록 (ADR-0061, specs/usage-events.md U1–U3): the tracker on its own (batching, offline, off), and
 // in the app with a fake sendBeacon (which events, once each, no position).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { FLUSH_AT, FLUSH_MS, ageOf, contextOf, createTracker, type UsageEvent } from '../src/track';
+import { FLUSH_AT, FLUSH_MS, ageOf, contextOf, createTracker, type UsageEvent } from '../src/usage/track';
 import { parseBatch } from '../events/validate';
-import { listed } from '../src/pick';
-import { BUSAN } from '../src/release';
+import { listed } from '../src/pick/pick';
+import { BUSAN } from '../src/region/release';
 import { realSpots } from './fixtures';
 import { $, $$, advance, cardIds, current, flush, render, reset, tap } from './harness';
 

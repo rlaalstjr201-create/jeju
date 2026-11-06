@@ -1,9 +1,9 @@
 // Keeping saves without a login (ADR-0063 2): the backup link, in-app browser detection and the home-screen
 // nudge's kind. Pure functions, no DOM state; app.ts wires them up.
 import { addDays, isDay, type Day } from './dates';
-import { isSggDest, type Dest } from './dest';
-import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './links';
-import { BUSAN } from './release';
+import { isSggDest, type Dest } from './region/dest';
+import { DEFAULT_MAP_APP, MAP_APPS, type MapApp } from './pick/links';
+import { BUSAN } from './region/release';
 import { MAX_SAVED, normalizeEntries } from './store';
 import type { SavedEntry, Stay } from './types';
 

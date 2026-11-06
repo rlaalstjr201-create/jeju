@@ -3,9 +3,9 @@
 // the curation script keeps.
 import { describe, expect, it } from 'vitest';
 import FILE from '../data/seoul/fun-seoul.json';
-import { ORDER, SHELVES, buildShelves } from '../src/browse';
-import type { CultureItem, Now } from '../src/culture';
-import { hoursOf, likelyOpen, type FunItem } from '../src/fun';
+import { ORDER, SHELVES, buildShelves } from '../src/seoul/browse';
+import type { CultureItem, Now } from '../src/culture/culture';
+import { hoursOf, likelyOpen, type FunItem } from '../src/seoul/fun';
 import { ADULT, CUT, KINDS, LP_JAZZ, OWNER_DROP, brandOf, isMass, kindOf, okCategory, oneEach, passes, r6Out } from '../scripts/seoul-night/curate-03.mjs';
 
 const DAY = '2026-11-04';

@@ -1,8 +1,8 @@
 // 지금 주변 문화생활 (ADR-0112): the Seoul rows kept, the time words read, and the few picked.
 import { describe, expect, it } from 'vitest';
 import { cultureItems, decode, dropReason, type SeoulRow } from '../functions/_lib/culture-filter';
-import { nowness, openNow, parseCultureTime, pickCulture, type Now } from '../src/culture';
-import { distanceKm } from '../src/pick';
+import { nowness, openNow, parseCultureTime, pickCulture, type Now } from '../src/culture/culture';
+import { distanceKm } from '../src/pick/pick';
 import rows from './fixtures/seoul-culture-20261104.json';
 
 const DAY = '2026-11-04'; // a Wednesday

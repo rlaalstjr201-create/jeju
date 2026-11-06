@@ -5,7 +5,7 @@
 export default {
   testRunner: 'vitest',
   plugins: ['@stryker-mutator/vitest-runner'],
-  mutate: ['src/fun.ts', 'src/weekly.ts', 'src/browse.ts', 'src/state.ts:460-490'],
+  mutate: ['src/seoul/fun.ts', 'src/seoul/weekly.ts', 'src/seoul/browse.ts', 'src/state.ts:460-490'],
   coverageAnalysis: 'perTest',
   reporters: ['clear-text', 'progress', 'html', 'json'],
   // 리포트·작업 폴더는 커밋하지 않는다 (.gitignore)

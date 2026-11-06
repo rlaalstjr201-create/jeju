@@ -2,9 +2,9 @@
 // items of the day's list, so the shelves and the card sheet treat them like the day's events (openNow: their dates and time
 // words). Pure; in the culture chunk only (ADR-0100). One that has ended is never made into an item; one the day's own list
 // (서울시·KOPIS) has under the same name is left to that list.
-import FILE from '../data/seoul/weekly-seoul.json';
-import FOUND from '../data/seoul/discovery-seoul.json';
-import type { CultureItem } from './culture';
+import FILE from '../../data/seoul/weekly-seoul.json';
+import FOUND from '../../data/seoul/discovery-seoul.json';
+import type { CultureItem } from '../culture/culture';
 
 export type WeekKind = '팝업' | '새로 연 곳' | '전시' | '마켓' | '축제' | '행사';
 export interface WeekRow {

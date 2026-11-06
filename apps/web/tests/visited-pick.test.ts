@@ -2,13 +2,13 @@
 // 가 봤어요 (ADR-0087, specs/hide-visited.md S1): 뺀 곳 are left out of the one array the cards, 「예:」, 노을 볼 곳 and
 // 오늘 장 서는 곳 are picked from; the widening rules (빈손 없음) stay as they are; with none left out nothing changes.
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AREAS, areaByName, type AreaName } from '../src/areas';
-import { openMarkets, sunsetSpots } from '../src/home';
-import { islandTop, pickCards, pool, REACHES, type Button, type Mood, type Spot, type Tab } from '../src/pick';
+import { AREAS, areaByName, type AreaName } from '../src/region/areas';
+import { openMarkets, sunsetSpots } from '../src/pick/home';
+import { islandTop, pickCards, pool, REACHES, type Button, type Mood, type Spot, type Tab } from '../src/pick/pick';
 import { splitName } from '../src/render';
 import { pickSpots } from '../src/state';
 import { KEYS } from '../src/store';
-import { sunsetMinutes } from '../src/sun';
+import { sunsetMinutes } from '../src/pick/sun';
 import { fileSpots } from './fixtures';
 import { $, flush, render, reset } from './harness';
 

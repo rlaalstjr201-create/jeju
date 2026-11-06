@@ -6,8 +6,8 @@ import {
   assignSlugs, buildSite, busanPages, BUSAN_ENTITY, contentHash, copiedReasons, ENTITY, kstDay, pageLastmods, ownShare, romanize, similarPairs, sitemapFiles, slugBase, sourceCopies, type SlugRegistry,
 } from '../scripts/landing';
 import { parseJsonLd } from '../scripts/seo/crawl-parse.mjs';
-import { BUSAN_AREAS } from '../src/busan';
-import type { Spot } from '../src/pick';
+import { BUSAN_AREAS } from '../src/region/busan';
+import type { Spot } from '../src/pick/pick';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');

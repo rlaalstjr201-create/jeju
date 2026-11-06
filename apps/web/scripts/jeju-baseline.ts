@@ -126,7 +126,7 @@ function swList() {
 async function functions() {
   const { onRequestGet } = await import('../functions/api/rain');
   const { handleEvents } = await import('../events/handler');
-  const { AREAS } = await import('../src/areas');
+  const { AREAS } = await import('../src/region/areas');
   const realFetch = globalThis.fetch;
   const rain: Record<string, string> = {};
   try {

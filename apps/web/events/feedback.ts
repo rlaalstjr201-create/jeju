@@ -2,7 +2,7 @@
 // JSON object of known fields → validated → one row (Jeju day, answers, app version). The day is the
 // server's; nothing else of the request is read: no IP, user agent, cookie or header is looked at or stored.
 import { dayOf, type Day } from '../src/dates';
-import { PAINS, TEXT_MAX, WENT } from '../src/survey';
+import { PAINS, TEXT_MAX, WENT } from '../src/usage/survey';
 
 const FEEDBACK_MAX_BYTES = 4 * 1024;
 /** rows kept per Jeju day (abuse stop, ADR-0081 3); past it the answer is still 204, nothing is stored. */

@@ -1,16 +1,16 @@
 // 홈 A′ (ADR-0075, specs/home-refresh.md): what the first screen shows besides the moods. Pure, no DOM — render.ts draws it.
-import { AREAS, areaByName, nearestArea, type Area, type AreaName } from './areas';
-import { addDays, type Day } from './dates';
-import { DEST, destOfId, type Dest } from './dest';
+import { AREAS, areaByName, nearestArea, type Area, type AreaName } from '../region/areas';
+import { addDays, type Day } from '../dates';
+import { DEST, destOfId, type Dest } from '../region/dest';
 import { marketDay } from './market';
-import { BUSAN, NATION, OPEN_AREAS, openAreasOf } from './release';
+import { BUSAN, NATION, OPEN_AREAS, openAreasOf } from '../region/release';
 import { byId, distanceKm, islandTop, listed, pickCards, pool, tabOf, travel, travelText, withinReach, type Kind, type Point, type Spot } from './pick';
-import { minuteNow, openSpots, pickSpots, rainArea, whenDay, type State } from './state';
-import { RAIN_TTL_MS } from './store';
+import { minuteNow, openSpots, pickSpots, rainArea, whenDay, type State } from '../state';
+import { RAIN_TTL_MS } from '../store';
 import { nightNow, sunsetBucket, sunsetMinutes } from './sun';
-import type { Origin } from './types';
+import type { Origin } from '../types';
 
-export { homeOrigin } from './state';
+export { homeOrigin } from '../state';
 
 /** The sun's place: the basis, else the destination's city hall (the 자동 지역 and 강원: its 시군구's centre, plans/nationwide-app.md 5). */
 export const sunPoint = (origin: Origin | null, dest: Dest = 'jeju', sgg: string | null = null): Point => {

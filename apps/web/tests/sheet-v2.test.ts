@@ -4,9 +4,9 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { normalizeNation } from '../src/nation';
-import { NATION, loadNation } from '../src/release';
-import type * as Release from '../src/release';
+import { normalizeNation } from '../src/region/nation';
+import { NATION, loadNation } from '../src/region/release';
+import type * as Release from '../src/region/release';
 import { KEYS, destKey } from '../src/store';
 import type { GeoHit } from '../src/types';
 import { fileSpots } from './fixtures';
@@ -14,7 +14,7 @@ import { $, $$, current, flush, render, reset, settle, tap } from './harness';
 
 // the 자동 지역's part not coming (no connection), for one test: loadNation answers false
 const nationFails = vi.hoisted(() => ({ on: false }));
-vi.mock('../src/release', async (orig) => {
+vi.mock('../src/region/release', async (orig) => {
   const m = await orig<typeof Release>();
   return { ...m, loadNation: () => (nationFails.on ? Promise.resolve(false) : m.loadNation()) };
 });

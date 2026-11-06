@@ -1,6 +1,6 @@
 // S1' 레코드 형식, one rule for every destination's shipped file (plans/busan.md M9): tests/data.test.ts calls it for
 // public/spots.json with Jeju's box, tests/busan-data.test.ts will for public/spots-busan.json with Busan's boundary.
-import type { Point, Spot } from '../src/pick';
+import type { Point, Spot } from '../src/pick/pick';
 
 const FIELDS = ['bookable', 'id', 'image', 'indoor', 'kakaoPlaceId', 'lat', 'lng', 'mood', 'name', 'reason', 'score'];
 const FOOD_FIELDS = [...FIELDS, 'sub'];

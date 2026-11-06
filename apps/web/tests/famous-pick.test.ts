@@ -2,13 +2,13 @@
 // 유명한 데 가 보고 싶어 (ADR-0092, specs/famous-places.md §2·F1–F4·F7): the 유명한 곳 whatever their mood, picked by
 // the rules every mood has (range, score, widening, rotation, 밤); outdoors by default, the indoor ones with 비 와요.
 import { describe, expect, it } from 'vitest';
-import { AREAS, areaByName } from '../src/areas';
+import { AREAS, areaByName } from '../src/region/areas';
 import { readDeepLink } from '../src/deeplink';
 import { parseSession } from '../src/store';
-import { moodExamples } from '../src/home';
+import { moodExamples } from '../src/pick/home';
 import { initialState, staticOrigin } from '../src/state';
 import { parseBatch } from '../events/validate';
-import { famousMix, historyKey, islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Spot } from '../src/pick';
+import { famousMix, historyKey, islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Spot } from '../src/pick/pick';
 import type { FamousItem } from '../scripts/famous.mjs';
 import { loadInputs } from '../scripts/sunset.mjs';
 import { $, $$, cardNames, render, reset, tap } from './harness';

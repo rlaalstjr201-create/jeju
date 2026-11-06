@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 // 홈 A′ (ADR-0075, specs/home-refresh.md): the moods' 「예:」 and photos, 오늘 판, 오늘 장 서는 곳, 다른 동네 둘러보기.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AREAS, areaByName, type AreaName } from '../src/areas';
-import { marketDay } from '../src/market';
-import { islandTop, pool, withinReach, type Mood, type Spot } from '../src/pick';
+import { AREAS, areaByName, type AreaName } from '../src/region/areas';
+import { marketDay } from '../src/pick/market';
+import { islandTop, pool, withinReach, type Mood, type Spot } from '../src/pick/pick';
 import { splitName } from '../src/render';
 import { fileSpots } from './fixtures';
 import { $, $$, flush, render, reset, tap } from './harness';

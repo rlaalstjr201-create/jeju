@@ -1,16 +1,16 @@
 // ADR-0093: another language's words in place of the Korean ones, before the app mounts. The Korean tables stay
 // in their modules; this replaces their entries, writes the page's own words (index.html) and, once its file is
 // in, the place texts. Loaded only for a language other than Korean (main.ts), never precached (vite.config.ts).
-import { AREA_GROUPS, type AreaName } from '../areas';
+import { AREA_GROUPS, type AreaName } from '../region/areas';
 import { DAY_TEXT, type Day } from '../dates';
-import { BOOK_TEXT, GO_TEXT, MAP_APP_NAME, type MapApp } from '../links';
-import { MARKET_TEXT } from '../market';
-import { TRAVEL_TEXT, type Button, type Spot } from '../pick';
-import type { CultureWords } from '../culture-view';
-import type { NationCopy } from '../nation-part';
-import { BUSAN, NATION, OPEN_AREAS, nationPart, whenBusan, whenCulture, whenNation } from '../release';
+import { BOOK_TEXT, GO_TEXT, MAP_APP_NAME, type MapApp } from '../pick/links';
+import { MARKET_TEXT } from '../pick/market';
+import { TRAVEL_TEXT, type Button, type Spot } from '../pick/pick';
+import type { CultureWords } from '../culture/culture-view';
+import type { NationCopy } from '../region/nation-part';
+import { BUSAN, NATION, OPEN_AREAS, nationPart, whenBusan, whenCulture, whenNation } from '../region/release';
 import { BUSAN_COPY, COPY, MOOD_LABEL, PLACE } from '../render';
-import { SEASON_TEXT, type SeasonKind } from '../season';
+import { SEASON_TEXT, type SeasonKind } from '../pick/season';
 import { FROM_TEXT } from '../state';
 
 /** COPY's shape with its words as plain strings (the Korean table is `as const`). */

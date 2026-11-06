@@ -4,8 +4,8 @@
 // in tests/e2e/browser.e2e.mjs (Chromium).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, LocateError } from '../src/app';
-import { islandOf, pickCards, withinReach, type Point } from '../src/pick';
-import { BUSAN, NATION } from '../src/release';
+import { islandOf, pickCards, withinReach, type Point } from '../src/pick/pick';
+import { BUSAN, NATION } from '../src/region/release';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 import { $, $$, advance, cardIds, cardNames, css, current, deferred, expectedNames, flush, html, painted, render, reset, settle, shownMood, tap, wait } from './harness';
 

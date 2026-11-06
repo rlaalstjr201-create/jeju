@@ -2,12 +2,12 @@
 // ADR-0078: GA4 · 네이버 애널리틱스 on the page (after load, only while 기록 is on), and the collector on D1
 // (POST /api/events, GET /api/events/health).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createAnalytics, gaParams, isLocalHost, type Analytics } from '../src/analytics';
-import type { UsageEvent } from '../src/track';
+import { createAnalytics, gaParams, isLocalHost, type Analytics } from '../src/usage/analytics';
+import type { UsageEvent } from '../src/usage/track';
 import { countSince, d1Store, type D1Like, type D1Stmt } from '../events/d1';
 import { onRequest } from '../functions/api/events/index';
 import { onRequestGet as health } from '../functions/api/events/health';
-import { listed } from '../src/pick';
+import { listed } from '../src/pick/pick';
 import { realSpots } from './fixtures';
 import { $, $$, render, tap } from './harness';
 

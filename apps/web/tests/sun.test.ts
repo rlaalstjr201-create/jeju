@@ -1,8 +1,8 @@
 // 해 지는 시각 (ADR-0075 2, specs/home-refresh.md 데이터 규칙): NOAA on the device vs Open-Meteo for 제주시, ±2분.
 // 해 뜨는 시각과 밤 (ADR-0091): the same method, the same reference.
 import { describe, expect, it } from 'vitest';
-import { AREAS } from '../src/areas';
-import { nightNow, sunriseMinutes, sunsetMinutes, sunsetText } from '../src/sun';
+import { AREAS } from '../src/region/areas';
+import { nightNow, sunriseMinutes, sunsetMinutes, sunsetText } from '../src/pick/sun';
 
 const JEJU_CITY = { lat: 33.5125, lng: 126.526 };
 const toMin = (hm: string) => Number(hm.slice(0, 2)) * 60 + Number(hm.slice(3));

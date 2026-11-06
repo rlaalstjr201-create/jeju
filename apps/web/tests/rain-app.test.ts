@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 // 비 소식 앱 쪽 (ADR-0076, plans/home-refresh.md U5): who is asked, the session record, 오늘 판's row and its taps.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { AreaName } from '../src/areas';
+import type { AreaName } from '../src/region/areas';
 import { fetchRain, type Fetch } from '../src/effects';
-import { todayActs, type MarketRow } from '../src/home';
+import { todayActs, type MarketRow } from '../src/pick/home';
 import { initialState, reduce } from '../src/state';
 import { KEYS, parseRain, RAIN_TTL_MS } from '../src/store';
 import { $, flush, render, reset, tap } from './harness';

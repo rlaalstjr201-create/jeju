@@ -3,11 +3,11 @@
 // (yc-row), when render.ts lets it go, and listFailed (the list that did not come).
 import { runInNewContext } from 'node:vm';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { ROW_DAYS, rowTimes } from '../src/home';
-import { BUSAN } from '../src/release';
+import { ROW_DAYS, rowTimes } from '../src/pick/home';
+import { BUSAN } from '../src/region/release';
 import { GPS_KEY, homeOrigin, initialState, reduce, type State } from '../src/state';
 import { KEYS, RAIN_TTL_MS, createStore } from '../src/store';
-import { areaByName, type AreaName } from '../src/areas';
+import { areaByName, type AreaName } from '../src/region/areas';
 import { fileSpots } from './fixtures';
 import { $, deferred, flush, html, render, reset, wait } from './harness';
 

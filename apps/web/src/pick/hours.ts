@@ -1,5 +1,5 @@
 // 지금 못 가는 곳 (specs/open-now.md): the hours a place is known to keep, and whether it is shut at a moment.
-import type { Day } from './dates';
+import type { Day } from '../dates';
 
 /** What the source says, read only where it is sure (scripts/hours/parse.mjs). `c`: the weekdays it is closed every
  * week (0 = Sunday). `o`: open from `o[0]` to `o[1]`, minutes after midnight; `o[1]` past 1440 runs past midnight;

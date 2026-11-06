@@ -6,10 +6,10 @@ import { resolve } from 'node:path';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { kmaGrid } from '../functions/_lib/kma';
 import { fetchRain, type Fetch } from '../src/effects';
-import { sunPoint } from '../src/home';
-import { kakaoUrl, naverSearchUrl } from '../src/links';
-import type { Spot } from '../src/pick';
-import { NATION, loadNation } from '../src/release';
+import { sunPoint } from '../src/pick/home';
+import { kakaoUrl, naverSearchUrl } from '../src/pick/links';
+import type { Spot } from '../src/pick/pick';
+import { NATION, loadNation } from '../src/region/release';
 
 const file = (f: string) => readFileSync(resolve(__dirname, `../data/nation/${f}.json`), 'utf8');
 const 강릉시 = { lat: 37.77063, lng: 128.89712 }; // the index's centre of 51150

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 // 써 본 사람에게 묻는 짧은 설문 (ADR-0081, specs/survey.md F1·F2): when the home's line shows, and what 보내기 sends.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { feedbackBody, parseSurvey, surveyDue } from '../src/survey';
+import { feedbackBody, parseSurvey, surveyDue } from '../src/usage/survey';
 import { reloadOnUpdate } from '../src/update';
 import { $, current, flush, render, reset, settle, tap } from './harness';
 

@@ -5,8 +5,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import type { Spot } from '../src/pick';
-import { BUSAN, released } from '../src/release';
+import type { Spot } from '../src/pick/pick';
+import { BUSAN, released } from '../src/region/release';
 import { fileSpots } from './fixtures';
 import { $, $$, flush, render, reset, settle, tap, destSide } from './harness';
 

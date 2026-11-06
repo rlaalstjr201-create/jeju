@@ -1,6 +1,6 @@
 // 유명한 곳 데이터 (ADR-0092, specs/famous-places.md §1·F5): scripts/famous.mjs on made-up places and on the shipped file.
 import { describe, expect, it } from 'vitest';
-import { normalizeSpots } from '../src/data';
+import { normalizeSpots } from '../src/pick/data';
 import { applyFamous, isFamous, loadPop, popScores, type FamousItem } from '../scripts/famous.mjs';
 import { loadInputs } from '../scripts/sunset.mjs';
 import { fileSpots } from './fixtures';

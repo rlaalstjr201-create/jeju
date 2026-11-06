@@ -4,7 +4,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { addDays } from '../src/dates';
 import { BACKUP_HASH, backupUrl, decodeBackup } from '../src/keep';
-import { BUSAN } from '../src/release';
+import { BUSAN } from '../src/region/release';
 import { MAX_SAVED } from '../src/store';
 import { reloadOnUpdate } from '../src/update';
 import { $, $$, flush, render, reset, tap } from './harness';

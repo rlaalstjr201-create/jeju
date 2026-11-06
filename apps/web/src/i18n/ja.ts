@@ -1,6 +1,6 @@
 // ADR-0093: 日本語 (docs/i18n/style-ja.md). Loaded only when the page is in Japanese (main.ts).
-import { MAP_APP_NAME, placeApp } from '../links';
-import type { Island } from '../pick';
+import { MAP_APP_NAME, placeApp } from '../pick/links';
+import type { Island } from '../pick/pick';
 import { MAX_SAVED } from '../store';
 import { apply, localDays, type Lang } from './apply';
 import './ja.css';

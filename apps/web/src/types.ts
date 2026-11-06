@@ -1,8 +1,8 @@
 // Shared domain types (no runtime code).
-import type { RegionName } from './areas';
+import type { RegionName } from './region/areas';
 import type { Day } from './dates';
-import type { Dest } from './dest';
-import type { Point } from './pick';
+import type { Dest } from './region/dest';
+import type { Point } from './pick/pick';
 
 export type Basis = 'gps' | 'stay' | 'region';
 /** 숙소. `area` = the 동네 it belongs to (shown in the basis sheet); `source` = how it was set (`link`: a 숙소

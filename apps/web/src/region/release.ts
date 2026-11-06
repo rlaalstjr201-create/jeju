@@ -9,9 +9,9 @@ import { AREAS, areaByName, inJeju, nearestArea, type Area, type SggArea, type S
 import { isSggDest, type Dest } from './dest';
 import type { Region } from './nation';
 import type { NationCopy } from './nation-part';
-import type { Point } from './pick';
-import type { StartDeps, StartScreen } from './start';
-import type { OutsideAt } from './types';
+import type { Point } from '../pick/pick';
+import type { StartDeps, StartScreen } from '../start';
+import type { OutsideAt } from '../types';
 
 /** On in a build or test run with `--mode busan`; off (and safe to read) where no define exists. */
 export const BUSAN: boolean = typeof __BUSAN__ !== 'undefined' && __BUSAN__;
@@ -124,13 +124,13 @@ export const nationSpots = (sgg: string): Promise<unknown> => (nation ? nation.s
 
 /** 오늘 근처에서 하는 것 (ADR-0112 8): its view and the list's ask, a chunk of its own (ADR-0100), asked for only on 서울's home
  * (app.ts askCulture), once (again after a failure); false with the switch off or when it could not be loaded. */
-type CulturePart = typeof import('./culture-view');
+type CulturePart = typeof import('../culture/culture-view');
 let culture: CulturePart | null = null;
 let cultureLoading: Promise<boolean> | null = null;
 const cultureWaiting: ((p: CulturePart) => void)[] = [];
 export function loadCulture(): Promise<boolean> {
   if (!NATION) return Promise.resolve(false);
-  return (cultureLoading ??= import('./culture-view').then(
+  return (cultureLoading ??= import('../culture/culture-view').then(
     (m) => {
       culture = m;
       for (const fn of cultureWaiting.splice(0)) fn(m);

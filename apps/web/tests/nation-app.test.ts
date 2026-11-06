@@ -4,10 +4,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { normalizeNation } from '../src/nation';
-import type { Point } from '../src/pick';
+import { normalizeNation } from '../src/region/nation';
+import type { Point } from '../src/pick/pick';
 import { LocateError } from '../src/app';
-import { NATION, loadNation, outsideAt } from '../src/release';
+import { NATION, loadNation, outsideAt } from '../src/region/release';
 import type { OutsideAt } from '../src/types';
 import { homeOrigin } from '../src/state';
 import { KEYS } from '../src/store';

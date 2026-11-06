@@ -24,8 +24,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { config } from 'dotenv';
-import { AREAS } from '../src/areas';
-import { distanceKm, type Point } from '../src/pick';
+import { AREAS } from '../src/region/areas';
+import { distanceKm, type Point } from '../src/pick/pick';
 import { FALLBACK_POINTS, pointKey } from './positions.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));

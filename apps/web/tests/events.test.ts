@@ -8,8 +8,8 @@ import { BROWSE_IDS, FLOW_IDS, START_IDS, handleEvents } from '../events/handler
 import { memoryStore, type CounterStore } from '../events/store';
 import { MAX_EVENTS, eventProblem, parseBatch } from '../events/validate';
 import { addDays } from '../src/dates';
-import { BUSAN } from '../src/release';
-import { contextOf, type UsageEvent } from '../src/track';
+import { BUSAN } from '../src/region/release';
+import { contextOf, type UsageEvent } from '../src/usage/track';
 
 const ID = 'e654312a-2a40-45cd-9464-a83756bac0fa';
 const ID2 = 'ec5de537-0e1a-4503-b1e8-338822d5ab3c';
@@ -361,7 +361,7 @@ describe('F7 저장 목록 흐름 — D1 카운터', () => {
 
 describe('U4 앱 번들 밖', () => {
   it('no app source imports the collector', () => {
-    for (const f of ['main.ts', 'app.ts', 'track.ts', 'render.ts', 'state.ts', 'store.ts']) {
+    for (const f of ['main.ts', 'app.ts', 'usage/track.ts', 'render.ts', 'state.ts', 'store.ts']) {
       expect(readFileSync(resolve(__dirname, '../src', f), 'utf8'), f).not.toMatch(/from ['"][./]*events\//);
     }
   });

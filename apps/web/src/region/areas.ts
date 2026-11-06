@@ -1,7 +1,7 @@
 // 15 destination areas with fixed centres (ADR-0029, plans/tomorrow-picker.md "지역 15곳 중심 좌표").
 import type { BUSAN_AREAS } from './busan';
 import { isSggDest, type Dest, type SggDest } from './dest';
-import { distanceKm, islandOf, type Point } from './pick';
+import { distanceKm, islandOf, type Point } from '../pick/pick';
 
 // Listed west → east within each group (longitude order), so the grid reads like a map (design/SPEC.md §6.9).
 // `name` is the stored key (plans/tomorrow-picker.md); `slug` is its URL name (specs/seo-landing.md, the deep link of

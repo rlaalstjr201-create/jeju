@@ -1,10 +1,10 @@
 // What the collector accepts (specs/usage-events.md): a JSON array of at most 50 events, at most 8 KB, each
 // with known fields and values only. Anything else is refused whole — so a coordinate, an identifier or a
 // time of day can never be stored by accident.
-import { ALL_AREAS } from '../src/busan';
+import { ALL_AREAS } from '../src/region/busan';
 import { addDays, isDay, type Day } from '../src/dates';
-import { SEASON_KINDS } from '../src/season';
-import type { UsageEvent } from '../src/track';
+import { SEASON_KINDS } from '../src/pick/season';
+import type { UsageEvent } from '../src/usage/track';
 
 export const MAX_BYTES = 8 * 1024;
 export const MAX_EVENTS = 50;

@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { dayOf } from '../src/dates';
-import { marketDay, marketText, type Market } from '../src/market';
+import { marketDay, marketText, type Market } from '../src/pick/market';
 
 const JEJU: Market = { days: [2, 7, 12, 17, 22, 27], label: '2·7일' };
 const SEHWA: Market = { days: [5, 10, 15, 20, 25, 30], label: '5·10일' };

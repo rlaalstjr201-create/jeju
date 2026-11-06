@@ -5,12 +5,12 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { inJeju } from '../src/areas';
+import { inJeju } from '../src/region/areas';
 import { readDeepLink } from '../src/deeplink';
-import { areaAt, destOf, inBusan } from '../src/busan';
-import { destOfId } from '../src/dest';
-import { naverDirectionsUrl } from '../src/links';
-import { BUSAN, NATION, OPEN_AREAS, loadBusan, openAreasOf, released, releasedDestOf } from '../src/release';
+import { areaAt, destOf, inBusan } from '../src/region/busan';
+import { destOfId } from '../src/region/dest';
+import { naverDirectionsUrl } from '../src/pick/links';
+import { BUSAN, NATION, OPEN_AREAS, loadBusan, openAreasOf, released, releasedDestOf } from '../src/region/release';
 import { fileSpots } from './fixtures';
 
 const root = resolve(__dirname, '..');
@@ -69,7 +69,7 @@ describe('destOf', () => {
   });
 });
 
-describe('출시 스위치 (src/release.ts)', () => {
+describe('출시 스위치 (src/region/release.ts)', () => {
   it('is on only in mode busan (npm run test:busan) or nation (npm run test:nation), off in npm test', () => {
     expect(BUSAN).toBe(import.meta.env.MODE === 'busan' || import.meta.env.MODE === 'nation');
   });
@@ -79,7 +79,7 @@ describe('출시 스위치 (src/release.ts)', () => {
 
   // plans/busan.md budget: Busan's part is a chunk of its own; until it is in, the app is Jeju's (main.ts asks for it
   // first where Busan is in play, app.ts when Busan is chosen)
-  it('Busan opens only once its part is in (src/busan-part.ts): before, 해운대 is outside and the areas are Jeju\'s 15', async () => {
+  it('Busan opens only once its part is in (src/region/busan-part.ts): before, 해운대 is outside and the areas are Jeju\'s 15', async () => {
     expect(released('busan')).toBe(false);
     expect(releasedDestOf(해운대해수욕장)).toBeNull();
     expect(OPEN_AREAS).toHaveLength(15);
@@ -107,14 +107,14 @@ describe('출시 스위치 (src/release.ts)', () => {
     expect(readDeepLink(`?stay=${성산일출봉.lat},${성산일출봉.lng}`, TODAY)).toEqual({ stay: 성산일출봉 });
   });
 
-  it.each(['__BUSAN__', '__NATION__'])('only src/release.ts reads %s (areas, destinations, functions and scripts never see it)', (name) => {
+  it.each(['__BUSAN__', '__NATION__'])('only src/region/release.ts reads %s (areas, destinations, functions and scripts never see it)', (name) => {
     const walk = (dir: string): string[] =>
       readdirSync(dir).flatMap((f) => (statSync(join(dir, f)).isDirectory() ? walk(join(dir, f)) : [join(dir, f)]));
     const readers = ['src', 'functions', 'events', 'scripts']
       .flatMap((d) => walk(join(root, d)))
       .filter((f) => /\.(ts|mts|mjs|js)$/.test(f) && readFileSync(f, 'utf8').includes(name))
       .map((f) => relative(root, f).replace(/\\/g, '/'));
-    expect(readers.sort()).toEqual(['src/env.d.ts', 'src/release.ts']);
+    expect(readers.sort()).toEqual(['src/env.d.ts', 'src/region/release.ts']);
   });
 
   it('the Pages Functions, the landing build and the switch itself load and answer without any Vite define (as wrangler and tsx run them)', () => {
@@ -123,7 +123,7 @@ describe('출시 스위치 (src/release.ts)', () => {
       const rain = await import(${url('functions/api/rain.ts')});
       const events = await import(${url('functions/api/events/index.ts')});
       await import(${url('scripts/landing.ts')});
-      const { BUSAN } = await import(${url('src/release.ts')});
+      const { BUSAN } = await import(${url('src/region/release.ts')});
       const r = await rain.onRequestGet({ request: new Request('https://x.test/api/rain?area=aewol'), env: {} });
       const e = await events.onRequest({ request: new Request('https://x.test/api/events', { method: 'POST', body: '[]' }), env: {} });
       console.log(JSON.stringify([r.status, r.headers.get('X-Rain-Reason'), e.status, BUSAN]));`;

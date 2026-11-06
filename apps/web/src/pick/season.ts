@@ -1,5 +1,5 @@
 // 철 (ADR-0080, specs/seasonal-spots.md): is a place in season on a Jeju day. Static data, no requests.
-import { isDay, type Day } from './dates';
+import { isDay, type Day } from '../dates';
 
 export type SeasonKind = 'cherry' | 'plum' | 'maple' | 'rapeseed' | 'hydrangea' | 'silvergrass' | 'camellia' | 'tangerine' | 'muhly';
 /** As shipped in spots.json: the whole months the source names, or this year's observed window (Jeju dates). */

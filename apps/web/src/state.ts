@@ -1,16 +1,16 @@
 // App state as data + a pure reducer. No DOM, no storage, no timers — the controller (app.ts) runs the
 // effects and feeds their results back in as actions tagged with a request id; results for an old id are
 // dropped here, so the last user intent always wins (S36–S38).
-import { areaByName, type RegionName, type SggCode } from './areas';
+import { areaByName, type RegionName, type SggCode } from './region/areas';
 import { type Day } from './dates';
-import { DEST, type Dest } from './dest';
-import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick';
+import { DEST, type Dest } from './region/dest';
+import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick/pick';
 import type { InApp, InstallHow } from './keep';
-import { DEFAULT_MAP_APP, type MapApp } from './links';
+import { DEFAULT_MAP_APP, type MapApp } from './pick/links';
 import type { SessionRecord } from './store';
 import type { CultureItem } from '../functions/_lib/culture-filter';
-import { OPEN_AREAS, areaOfPoint } from './release';
-import { nightNow } from './sun';
+import { OPEN_AREAS, areaOfPoint } from './region/release';
+import { nightNow } from './pick/sun';
 import type { Basis, GeoError, GeoHit, GeoPermission, NoOrigin, Origin, OutsideAt, Overlay, Route, SavedEntry, Stay, View, When } from './types';
 
 export type Intent = 'show' | 'more';

@@ -315,7 +315,7 @@ describe('S4 저장한 곳의 「뺀 곳 N곳」', () => {
     await tap('#saved');
     await flush();
     await tap(toggle());
-    const { distanceKm } = await import('../src/pick');
+    const { distanceKm } = await import('../src/pick/pick');
     const { ORIGINS } = await import('./fixtures');
     const want = [...picked].sort((a, b) => distanceKm(ORIGINS.제주시, a) - distanceKm(ORIGINS.제주시, b)).map((s) => s.name.trim());
     expect(names()).toEqual(want);

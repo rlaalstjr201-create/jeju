@@ -3,9 +3,9 @@
 // it comes with the lazily loaded src/busan-part.ts (plans/busan.md budget: a Jeju visit downloads none of it).
 import { AREAS, inJeju, nearestArea, type Area } from './areas';
 import type { Dest } from './dest';
-import type { Point } from './pick';
+import type { Point } from '../pick/pick';
 // only the ring: Vite's JSON import leaves the file's header (source, query, tolerance) out of the bundle
-import { ring } from '../data/geo/busan-boundary.json';
+import { ring } from '../../data/geo/busan-boundary.json';
 
 /** 부산 세부 지역 12곳 (specs/busan.md 2절), west → east, one group with no heading. The centre is the 대표 지명's own point
  * (review/busan/areas-criteria.md 고침 2·3, areas-02.json). `AREAS` stays Jeju's 15: the landing pages, the sitemap and

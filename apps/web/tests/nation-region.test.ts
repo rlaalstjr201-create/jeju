@@ -4,10 +4,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { destOf } from '../src/busan';
-import { DEST } from '../src/dest';
-import { ISLANDS, SGG_MAX_KM, filesFor, inKorea, parseIndex, regionOf } from '../src/nation';
-import { NATION, areaOfPoint, loadNation, nationSpots, openAreasOf, released, releasedDestOf, sggOf, sggShort } from '../src/release';
+import { destOf } from '../src/region/busan';
+import { DEST } from '../src/region/dest';
+import { ISLANDS, SGG_MAX_KM, filesFor, inKorea, parseIndex, regionOf } from '../src/region/nation';
+import { NATION, areaOfPoint, loadNation, nationSpots, openAreasOf, released, releasedDestOf, sggOf, sggShort } from '../src/region/release';
 
 const ix = parseIndex(JSON.parse(readFileSync(resolve(__dirname, '../data/nation/index.json'), 'utf8')))!;
 const at = (lat: number, lng: number) => regionOf({ lat, lng }, ix.sgg, destOf);
@@ -118,7 +118,7 @@ describe('regionOf', () => {
   });
 });
 
-describe('자동 지역 몫 (src/nation-part.ts)', () => {
+describe('자동 지역 몫 (src/region/nation-part.ts)', () => {
   const 강릉역 = { lat: 37.7643, lng: 128.8996 };
   const 동해역 = { lat: 37.4985, lng: 129.124 };
   afterEach(() => void vi.unstubAllGlobals());

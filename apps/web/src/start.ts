@@ -3,12 +3,12 @@
 // runs: the big button reads the position (the app's locate: inside an open destination or `outside`), the two
 // destination buttons choose, and with location already allowed it reads without asking (M4: the cover is there from
 // the first paint and only ever goes away). Used only with the switch on (app.ts).
-import { areaByName, destOfArea, type Area, type SggCode } from './areas';
-import { isDest, isSggDest, type Dest } from './dest';
+import { areaByName, destOfArea, type Area, type SggCode } from './region/areas';
+import { isDest, isSggDest, type Dest } from './region/dest';
 import { locateGps, type GeoDeps } from './effects';
 import { showPhotos } from './later';
-import type { Point } from './pick';
-import { NATION, OPEN_AREAS, loadNation, nationPart, outsideAt, releasedDestOf } from './release';
+import type { Point } from './pick/pick';
+import { NATION, OPEN_AREAS, loadNation, nationPart, outsideAt, releasedDestOf } from './region/release';
 import type { NoOrigin, OutsideAt } from './types';
 
 /** The start screen's words, in the order index.html's table keeps them per language (window.__ycT). */

@@ -1,7 +1,7 @@
 // S2 선택 로직 (plans/tomorrow-picker.md) — coverage tests use the real public/spots.json.
 import { describe, expect, it } from 'vitest';
-import { AREAS } from '../src/areas';
-import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, listed, nearBand, pickCards, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick';
+import { AREAS } from '../src/region/areas';
+import { DEFAULT_REACH, REACHES, distanceKm, driveMinutes, formatMinutes, islandOf, listed, nearBand, pickCards, travel, travelText, walkMinutes, withinReach, type Button, type Histories, type Point, type NewSub, type Reach, type Spot, type Tab } from '../src/pick/pick';
 import { BUTTONS, ORIGINS, SUBS, realSpots } from './fixtures';
 
 /** specs/ranking.md 정렬 키 (ADR-0108): 거리 칸 오름차순 → 점수 내림차순 → 실제 거리 오름차순 → id. */
