@@ -25,3 +25,16 @@ Status: Accepted (2026-11-06, 주인 요청 「새로운 걸 계속 추가하다
 - 옛 ADR·plans·specs·review 문서에 적힌 `src/<이름>.ts` 경로는 고치지 않는다(그때의 기록). 지금 위치는 위 표와 `apps/web/design/SPEC.md` 12절에서 찾는다.
 - 검증: 옮기기 전후 `tsc` 통과, vitest 기본 1853·전국 1958·부산 1876 통과(같은 수), `check:jeju` 「Jeju unchanged」, 한국어 진입 gzip 61,027→61,025 B.
 - 다음 단계(따로 결정): `app.ts`·`render.ts` 안의 기능 덩어리를 이 폴더들로 덜어 낸다(10-15 리뷰 제안 2·3).
+
+## Amendment 1 (2026-11-07)
+
+- 폴더 셋을 더한다(ADR-0126): 그리기 구역은 `src/view/`, 기능 컨트롤러는 `src/flow/`, 화면 문구는 `src/copy.ts`.
+- `scripts/` 맨 위의 제주 자료 스크립트(약 22개, `.mjs`·`.d.mts` 짝)는 옮기지 않는다.
+  - 이 스크립트들은 저장소 루트를 `resolve(dirname(…), '..')`로 찾는다. 옮기면 경로 계산을 손으로 고쳐야 한다.
+  - 그런데 그 중심인 `build:spots`는 실행하지 않기로 한 규칙이라, 고친 뒤 제대로 도는지 확인할 길이 없다.
+  - 서울 스크립트는 이미 `seoul-*` 폴더에 있다.
+- 문서 자리를 정리했다.
+  - 리뷰 기록은 `docs/reviews/`로 모았다.
+  - 정합성 감사는 `docs/audit/2026-10-03/`로 옮겼다.
+  - 루트의 `codex_review.md`·`architecture_review.md`는 CLAUDE.md 워크플로 산출물 자리라 그대로 둔다.
+  - 옛 2026-05 아키텍처 리뷰는 `docs/reviews/architecture-review-2026-05.md`로 이름을 바꿨다.

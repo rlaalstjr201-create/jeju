@@ -975,7 +975,7 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 
 스택(Vite + TS, 프레임워크 없음), `pick.ts`, `card-text.ts`, 데이터 파이프라인은 유지한다.
 
-`src/` 폴더 배치(ADR-0125). 맨 위는 앱 뼈대(`main`·`app`·`render`·`state`·`store`·`nav`·`effects`·`types`·`dates`·`deeplink`·`keep`·`start`·`later`·`update`·`yield`·`logo`, `style.css`·`landing.css`)이고, 기능은 폴더로 묶는다.
+`src/` 폴더 배치(ADR-0125). 맨 위는 앱 뼈대(`main`·`app`·`render`·`copy`(화면 글자, ADR-0126)·`state`·`store`·`nav`·`effects`·`types`·`dates`·`deeplink`·`keep`·`start`·`later`·`update`·`yield`·`logo`, `style.css`·`landing.css`)이고, 기능은 폴더로 묶는다.
 
 | 폴더 | 들어 있는 것 |
 |---|---|
@@ -985,6 +985,8 @@ JSON으로 읽고 쓰며 모든 접근은 try/catch. 저장소가 없거나 던�
 | `culture/` | 오늘 근처 문화생활: `culture`·`culture-view` |
 | `usage/` | 사용 기록·분석·설문: `track`·`analytics`·`survey` |
 | `i18n/` | 다른 언어 낱말 |
+| `view/` | render.ts의 그리기 구역(ADR-0126): `home`(홈 A′·설문 줄)·`sheet`(시트)·`kit`(구역이 받는 묶음)·`dom`·`icons` |
+| `flow/` | app.ts의 기능 컨트롤러(ADR-0126): `today`(노을 타이머·비 소식)·`usage`(사용 기록·설문)·`browse`(서울 둘러보기)·`ctx`(받는 묶음) |
 
 아래 표의 파일 이름은 이 폴더 안의 이름이다.
 
