@@ -3,7 +3,7 @@
 // the pictures load from the event and show sites themselves (5), lazily, over https, and a picture that fails becomes a
 // text card. Titles, places, kinds and time words stay as the list gives them (Korean).
 import './browse.css';
-import { browseCard, buildShelves, homeShown, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
+import { browseCard, buildShelves, directUrl, homeShown, imageUrl, inHood, linkUrl, todayTimes, type BrowseCard, type MoodShelf, type Shelf, type ShelfKey } from './browse';
 import type { CultureItem, Now } from './culture';
 import { isFun } from './fun';
 import { isWeek } from './weekly';
@@ -20,7 +20,7 @@ export const BROWSE_COPY = {
   /** the way in on 서울's home, and the screen's title */
   open: '오늘 서울 둘러보기',
   note: '지금 갈 수 있는 것만, 지금 시간에 맞는 것부터 모았어요.',
-  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·LP·레코드', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', g8: '카페·디저트', g10: '밤 놀거리', week: '이번 주 서울', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
+  shelf: { hood: '걸어 볼 동네', g1: '한강·노을·야경', g2: '시장·포차', g4: '서점·LP·레코드', g5: '몸으로 놀기', g6: '야구 직관', g7: '라이브·인디', g8: '카페·디저트', g10: '밤 놀거리', fresh: '새로 생긴 곳', week: '이번 주 서울', stage: '오늘 무대', today: '오늘만·이번 주까지', exhibit: '전시·박물관' } satisfies Record<ShelfKey, string>,
   /** a 동네 card: what is in it now */
   hoodCount: (n: number) => `지금 갈 곳 ${n}`,
   /** a curated place's sheet: no reservation known */
@@ -44,6 +44,8 @@ export const BROWSE_COPY = {
   onsite: '현장 대기가 있을 수 있어요',
   post: '출처 글 보기',
   fromWeek: '정보: 네이버 블로그·뉴스 · 장소: 카카오맵',
+  /** a card's picture taken from its source page (ADR-0123 6): 「그림: 노들섬」 */
+  picFrom: (site: string) => `그림: ${site}`,
 };
 
 function el(doc: Document, tag: string, attrs: Record<string, string> = {}, text?: string): HTMLElement {
@@ -55,21 +57,60 @@ function el(doc: Document, tag: string, attrs: Record<string, string> = {}, text
 
 const tripText = (c: BrowseCard) => (c.trip ? (c.trip.walk ? TRAVEL_TEXT.walk : TRAVEL_TEXT.drive)(undefined, formatMinutes(c.trip.minutes)) : '');
 
-/** The picture box: the poster resized (browse.ts imageUrl), or (none, or one that fails: never the full-size original) the
- * kind as a text card. With `later` its address is set only once the box is in view (the screen's watcher): the browser's
- * own lazy loading still asks for dozens of a shelf's hidden cards at once. */
-function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTMLElement {
-  // a curated place or a 동네 has no picture: a short tile in its kind's colour, the name large on it (ADR-0115); the week's
-  // too, its kind over its name (ADR-0118 Amendment 1)
-  if (isFun(it) || isWeek(it)) {
-    const tile = el(doc, 'span', { class: `btile t-${isFun(it) ? it.fun.g.toLowerCase() : 'week'}`, 'aria-hidden': 'true' });
-    tile.append(el(doc, 'span', { class: 'bk' }, !isFun(it) || it.fun.g === 'hood' ? it.kind : it.place.split(' · ')[0]), el(doc, 'span', { class: 'bt' }, it.title));
-    return tile;
+/** The tile's icons (ADR-0123 7): 24-unit strokes, one per kind of thing, drawn in the line's ink. */
+const ICONS: [RegExp, string][] = [
+  [/카페|로스터리|찻집|커피/, 'M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M11.5 3v3'],
+  [/베이커리|케이크|도넛|디저트|젤라또|아이스크림/, 'M4 20h16M5 20v-7h14v7M5 16c2 1.5 3.5 1.5 5 0s3.5-1.5 5 0 3 1.5 4 0M12 13V9M12 5.5v.5'],
+  [/LP|재즈|라이브|인디|레코드|콘서트|음악|KOPIS|버스킹|클래식|국악/, 'M9 18V5l10-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM19 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'],
+  [/칵테일|와인|하이볼|^바$|루프탑바|클럽|포차|포장마차|야장|노가리|술/, 'M5 4h14l-7 8zM12 12v8M8 20h8'],
+  [/서점|책/, 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7'],
+  [/소품|문구|향|리빙|빈티지|편집|플래그십|가게/, 'M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2'],
+  [/팝업|행사|새로 연/, 'M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z'],
+  [/전시|미술|박물|갤러리|대안공간/, 'M4 5h16v14H4zM4 15l5-5 4 4 2-2 5 5'],
+  [/마켓|시장/, 'M4 9l1.5-5h13L20 9M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0M5 11v9h14v-9'],
+  [/축제/, 'M5 21V4M5 4h12l-2 4 2 4H5'],
+  [/야구/, 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM7 5.5c1.5 2 1.5 11 0 13M17 5.5c-1.5 2-1.5 11 0 13'],
+  [/한강|노을|야경|전망|공원|피크닉|다리|섬/, 'M3 15c2 0 2-1.5 4.5-1.5S10 15 12 15s2-1.5 4.5-1.5S19 15 21 15M3 19c2 0 2-1.5 4.5-1.5S10 19 12 19s2-1.5 4.5-1.5S19 19 21 19M8 10a4 4 0 0 1 8 0'],
+  [/연극|뮤지컬|무용|오페라|공연|방탈출|보드|볼링|클라이밍|영화|시네마|찜질/, 'M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4zM14 7v10'],
+];
+/** 동네 and anything else: a map pin */
+const PIN = 'M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z';
+export const iconOf = (kind: string): string => ICONS.find(([re]) => re.test(kind))?.[1] ?? PIN;
+/** A tile's words: its kind (for the icon), the place it names (동네, else 구, else the venue) and its colour class */
+function tileOf(it: CultureItem): { kind: string; where: string; cls: string } {
+  if (isFun(it)) {
+    if (it.fun.g === 'hood') return { kind: '동네', where: it.title, cls: 't-hood' };
+    return { kind: it.fun.word, where: it.fun.hood ?? it.place.split(' · ').slice(1).join(' · '), cls: `t-${it.fun.g.toLowerCase()}` };
   }
-  const box = el(doc, 'span', { class: 'bpic' });
-  const src = imageUrl(it.image);
-  box.append(el(doc, 'span', { class: 'balt', 'aria-hidden': 'true' }, it.kind.replace(/\//g, '·')));
-  // no-referrer: the event site is told nothing of this page; the box (browse.css, 5:7) holds its size before it loads
+  if (isWeek(it)) return { kind: it.kind, where: it.week.where, cls: 't-week' };
+  return { kind: it.kind, where: it.gu || it.place, cls: 't-day' };
+}
+/** The station-sign tile (ADR-0123 7): the kind's icon, then the 동네 on the line's ring and rule, the way a 지하철 sign names
+ * its station. Under a picture it waits; it shows when there is none or the picture fails. */
+function tile(doc: Document, it: CultureItem): HTMLElement {
+  const t = tileOf(it);
+  const box = el(doc, 'span', { class: `btile ${t.cls}`, 'aria-hidden': 'true' });
+  const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'bi');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  const path = doc.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', iconOf(t.kind));
+  svg.append(path);
+  box.append(svg, el(doc, 'span', { class: 'bh' }, t.where));
+  return box;
+}
+
+/** The picture box: a curated place's or the week's (4:3), or an event's poster (5:7). The picture is the poster resized
+ * (browse.ts imageUrl), or a curated place's or the week's own og:image straight from its source site (directUrl,
+ * ADR-0123 6); with none, or one that fails (never the full-size original), the station-sign tile. With `later` its
+ * address is set only once the box is in view (the screen's watcher): the browser's own lazy loading still asks for
+ * dozens of a shelf's hidden cards at once. */
+function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTMLElement {
+  const own = isFun(it) || isWeek(it);
+  const box = el(doc, 'span', { class: own ? 'bpic pl' : 'bpic' });
+  const src = own ? directUrl(it.image) : imageUrl(it.image);
+  box.append(tile(doc, it));
+  // no-referrer: the source site is told nothing of this page; the box (browse.css) holds its size before it loads
   if (src) {
     const img = el(doc, 'img', { alt: '', loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' }) as HTMLImageElement;
     // listened to before the address is set: a failure is never missed
@@ -86,10 +127,11 @@ function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTML
 /** A shelf's card: the picture or tile, the title, why now, how far; pressed, its sheet. */
 function cardLi(doc: Document, c: BrowseCard, later?: IntersectionObserver): HTMLElement {
   const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id });
-  const tile = isFun(c.item) || isWeek(c.item);
-  b.append(pic(doc, c.item, later), el(doc, 'span', { class: tile ? 'nm sr' : 'nm' }, c.item.title));
-  // a curated place's tile says its kind already: under it, the rest of its line (where, or how many shows)
-  const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ').slice(1).join(' · ') || c.why : c.why;
+  const hood = isFun(c.item) && c.item.fun.g === 'hood';
+  // a 동네's tile names it already; any other card's name is under its picture or tile
+  b.append(pic(doc, c.item, later), el(doc, 'span', { class: hood ? 'nm sr' : 'nm' }, c.item.title));
+  // a curated place's tile names its 동네: under the name, its kind (「베이커리」)
+  const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ')[0] : c.why;
   const trip = tripText(c);
   // the week's: one short line, 「토요일까지 · 걸어서 약 20분」
   if (isWeek(c.item)) {
@@ -262,7 +304,9 @@ export function browseCardSheet(doc: Document, items: readonly CultureItem[], id
   // the week's (ADR-0118): its dates, and a queue when the posts said so
   const md = (d: string) => `${Number(d.slice(5, 7))}.${Number(d.slice(8, 10))}`;
   const week = isWeek(it) ? [BROWSE_COPY.period(md(it.start), md(it.end)), it.week.reserve === 'onsite' ? BROWSE_COPY.onsite : ''] : [];
-  const lines = fun ? [c ? tripText(c) : '', fun.walkin ? '' : BROWSE_COPY.booking, BROWSE_COPY.hours] : [c?.why ?? '', ...week, when, it.cast ? cast(it.cast) : '', c ? tripText(c) : ''];
+  // a picture taken from its source page names that page (ADR-0123 6)
+  const from = isFun(it) ? it.fun.from : isWeek(it) ? it.week.from : undefined;
+  const lines = [...(fun ? [c ? tripText(c) : '', fun.walkin ? '' : BROWSE_COPY.booking, BROWSE_COPY.hours] : [c?.why ?? '', ...week, when, it.cast ? cast(it.cast) : '', c ? tripText(c) : '']), from ? BROWSE_COPY.picFrom(from) : ''];
   for (const line of lines) if (line) facts.append(el(doc, 'li', {}, line));
   sheet.append(facts);
   const acts = el(doc, 'div', { class: 'bc-acts' });

@@ -4,9 +4,10 @@
 // morning and a market off the night, and nothing on a card says 「열림」.
 import FILE from '../data/seoul/fun-seoul.json';
 import type { CultureItem } from './culture';
-import { isWeek } from './weekly';
+import { FOUND_ROWS, isWeek, type FoundRow } from './weekly';
 
-export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7' | 'G8' | 'G10';
+/** NEW: 매일 발굴's new places for their first 8 weeks (새로 생긴 곳, ADR-0123 4) */
+export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7' | 'G8' | 'G10' | 'NEW';
 interface FunRow {
   id: string;
   name: string;
@@ -18,9 +19,12 @@ interface FunRow {
   walkin: boolean;
   url: string;
   hood?: string;
+  /** its official site's og:image (ADR-0123 6), loaded from there, and that site's name */
+  img?: string;
+  imgFrom?: string;
 }
-/** A curated place or a 동네 among the day's items: `fun` says which. */
-export type FunItem = CultureItem & { fun: { g: FunG | 'hood'; word: string; walkin: boolean; hood?: string } };
+/** A curated place or a 동네 among the day's items: `fun` says which (`from`: its picture's source). */
+export type FunItem = CultureItem & { fun: { g: FunG | 'hood'; word: string; walkin: boolean; hood?: string; from?: string } };
 export const isFun = (i: CultureItem): i is FunItem => 'fun' in i;
 /** The day's own list (events, shows) without the curated places and the week's (ADR-0118). */
 export const realItems = (items: readonly CultureItem[]): CultureItem[] => items.filter((i) => !isFun(i) && !isWeek(i));
@@ -29,11 +33,18 @@ export const realItems = (items: readonly CultureItem[]): CultureItem[] => items
 export const HOOD_KM = 0.7;
 export const HOOD_PREFIX = 'hood:';
 
+/** 매일 발굴's new places on `day` (ADR-0123 4·5): none before they open, 새로 생긴 곳 (NEW) to their end (opening + 55 days),
+ * then the shelf the sweep moved them to (`stay`), else gone. */
+export function foundPlaces(day: string, rows: readonly FoundRow[] = FOUND_ROWS): FunRow[] {
+  return rows
+    .filter((r) => r.kind === '새로 연 곳' && r.start <= day && (r.end >= day || !!r.stay))
+    .map((r) => ({ id: r.id, name: r.name, g: r.end >= day ? 'NEW' : r.stay!, word: r.word, lat: r.lat, lng: r.lng, line: r.line ?? `${r.word} · ${r.hood ?? r.gu ?? ''}`, walkin: true, url: r.kakao, ...(r.hood ? { hood: r.hood } : {}), ...(r.img ? { img: r.img, imgFrom: r.imgFrom } : {}) }));
+}
 /** The curated places and the 동네 as items of `day`'s list. */
 export function funItems(day: string): FunItem[] {
-  const base = { gu: '', start: day, end: day, time: '', free: false, forAll: true, image: '' };
-  const places = (FILE.places as FunRow[]).map((p) => ({ ...base, id: p.id, title: p.name, kind: p.word, place: p.line, lat: p.lat, lng: p.lng, link: p.url, fun: { g: p.g, word: p.word, walkin: p.walkin, ...(p.hood ? { hood: p.hood } : {}) } }));
-  const hoods = FILE.hoods.map((h) => ({ ...base, id: `${HOOD_PREFIX}${h.name}`, title: h.name, kind: '동네', place: '', lat: h.lat, lng: h.lng, link: '', fun: { g: 'hood' as const, word: '동네', walkin: true } }));
+  const base = { gu: '', start: day, end: day, time: '', free: false, forAll: true };
+  const places = [...(FILE.places as FunRow[]), ...foundPlaces(day)].map((p) => ({ ...base, id: p.id, title: p.name, kind: p.word, place: p.line, lat: p.lat, lng: p.lng, link: p.url, image: p.img ?? '', fun: { g: p.g, word: p.word, walkin: p.walkin, ...(p.hood ? { hood: p.hood } : {}), ...(p.img && p.imgFrom ? { from: p.imgFrom } : {}) } }));
+  const hoods = FILE.hoods.map((h) => ({ ...base, image: '', id: `${HOOD_PREFIX}${h.name}`, title: h.name, kind: '동네', place: '', lat: h.lat, lng: h.lng, link: '', fun: { g: 'hood' as const, word: '동네', walkin: true } }));
   return [...places, ...hoods];
 }
 
@@ -54,7 +65,9 @@ const HOURS: [RegExp, readonly [number, number]][] = [
   [/방탈출|보드게임|볼링|클라이밍/, H(10, 23)],
   [/영화관|시네마/, H(10, 24)],
   [/대안공간/, H(12, 19)],
-  [/서점|편집|빈티지|레코드샵|팝업/, H(12, 20)],
+  [/서점|편집|빈티지|레코드샵|레코드숍|팝업/, H(12, 20)],
+  // 매일 발굴's new shops (ADR-0123): the shops' usual hours (ADR-0121 7)
+  [/^(소품샵|문구점|향|리빙숍|플래그십)$/, H(12, 20)],
   [/야구장/, H(13, 22)],
   // 카페·디저트 (ADR-0120 5): the kind on the card (scripts/seoul-cafe/curate.mjs kindOf)
   [/^(베이커리|도넛)$/, H(8, 20)],

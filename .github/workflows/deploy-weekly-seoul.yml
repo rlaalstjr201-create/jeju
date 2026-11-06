@@ -1,4 +1,4 @@
-# 「이번 주 서울」 매주 회차(ADR-0118)가 push한 자료만 운영에 내보낸다.
+# 「이번 주 서울」 매주 회차(ADR-0118)와 서울 매일 발굴(ADR-0123)이 push한 자료만 운영에 내보낸다.
 # 클라우드 루틴은 수집·판정·감사·push까지만 하고(토큰 없음), 배포는 여기서 한다.
 # 이 push에 이번 주 자료 밖의 파일이 섞여 있으면 배포하지 않는다(코드 배포는 지금처럼 사람이 확인한 뒤 손으로).
 name: deploy weekly Seoul
@@ -8,6 +8,7 @@ on:
     branches: [master]
     paths:
       - apps/web/data/seoul/weekly-seoul.json
+      - apps/web/data/seoul/discovery-seoul.json
   # by hand from the Actions tab (a dry run of this pipeline on master as it is)
   workflow_dispatch:
 
@@ -32,7 +33,7 @@ jobs:
         run: |
           base="${{ github.event.before }}"
           if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then echo "no base commit"; exit 1; fi
-          others=$(git diff --name-only "$base" "${{ github.sha }}" | grep -vE '^apps/web/(data/seoul/weekly-seoul\.json|review/seoul-weekly/)' || true)
+          others=$(git diff --name-only "$base" "${{ github.sha }}" | grep -vE '^apps/web/(data/seoul/(weekly|discovery)-seoul\.json|review/seoul-(weekly|discovery)/)' || true)
           if [ -n "$others" ]; then echo "other files changed, not deploying:"; echo "$others"; exit 1; fi
 
       - uses: actions/setup-node@v4

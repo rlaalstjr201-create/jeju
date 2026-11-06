@@ -7,17 +7,17 @@ import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
 import { isWeek } from './weekly';
 import { distanceKm, type Kind, type Point, type Spot } from './pick';
 
-/** The shelves (ADR-0115 1·6): 동네, the seven curated kinds (카페·디저트 g8, ADR-0120; 밤 놀거리 g10, ADR-0122), 이번 주 서울 (ADR-0118), then the day's own list (무대, 오늘만·이번 주까지,
+/** The shelves (ADR-0115 1·6): 동네, the seven curated kinds (카페·디저트 g8, ADR-0120; 밤 놀거리 g10, ADR-0122), 새로 생긴 곳 (ADR-0123), 이번 주 서울 (ADR-0118), then the day's own list (무대, 오늘만·이번 주까지,
  * 전시). Filled in this order: the week's items are taken before the day's shelves could. */
-export const SHELVES = ['hood', 'g1', 'g2', 'g4', 'g5', 'g6', 'g7', 'g8', 'g10', 'week', 'stage', 'today', 'exhibit'] as const;
+export const SHELVES = ['hood', 'g1', 'g2', 'g4', 'g5', 'g6', 'g7', 'g8', 'g10', 'fresh', 'week', 'stage', 'today', 'exhibit'] as const;
 export type ShelfKey = (typeof SHELVES)[number];
 /** Which shelves come first at each hour: what the hour is for leads, the day's exhibitions (교과서 서울) never in the first three. */
 export const ORDER: Record<Band, readonly ShelfKey[]> = {
-  morning: ['g2', 'g8', 'week', 'g1', 'hood', 'g5', 'g4', 'today', 'g7', 'stage', 'g10', 'g6', 'exhibit'],
-  day: ['week', 'g8', 'hood', 'g4', 'g5', 'g7', 'g1', 'today', 'stage', 'g2', 'g10', 'g6', 'exhibit'],
-  dusk: ['g1', 'hood', 'week', 'g8', 'stage', 'g7', 'g2', 'g4', 'g5', 'g10', 'g6', 'today', 'exhibit'],
-  night: ['stage', 'g7', 'g2', 'g10', 'week', 'g1', 'g5', 'hood', 'g4', 'g8', 'g6', 'today', 'exhibit'],
-  late: ['g5', 'g10', 'g2', 'g1', 'g7', 'hood', 'stage', 'week', 'g4', 'g8', 'g6', 'today', 'exhibit'],
+  morning: ['g2', 'g8', 'week', 'fresh', 'g1', 'hood', 'g5', 'g4', 'today', 'g7', 'stage', 'g10', 'g6', 'exhibit'],
+  day: ['week', 'g8', 'fresh', 'hood', 'g4', 'g5', 'g7', 'g1', 'today', 'stage', 'g2', 'g10', 'g6', 'exhibit'],
+  dusk: ['g1', 'hood', 'week', 'g8', 'fresh', 'stage', 'g7', 'g2', 'g4', 'g5', 'g10', 'g6', 'today', 'exhibit'],
+  night: ['stage', 'g7', 'g2', 'g10', 'week', 'fresh', 'g1', 'g5', 'hood', 'g4', 'g8', 'g6', 'today', 'exhibit'],
+  late: ['g5', 'g10', 'g2', 'g1', 'g7', 'hood', 'stage', 'week', 'fresh', 'g4', 'g8', 'g6', 'today', 'exhibit'],
 };
 export const PER_SHELF = 12;
 /** A shelf with fewer cards goes after the full ones (ADR-0115 성공 기준: 줄마다 6장 이상 at the top). */
@@ -96,6 +96,7 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
     g7: g('G7'),
     g8: g('G8'),
     g10: g('G10'),
+    fresh: g('NEW'),
     week: (c) => isWeek(c.item),
     stage: (c) => own(c) && SHOW.test(c.item.kind),
     today: (c) => own(c) && nowness(c.item, now.day) <= 1,
@@ -202,6 +203,15 @@ export const RESIZE = 'https://yeochana.com/cdn-cgi/image/width=256,quality=75,f
 /** A picture's address: https only (an http one is asked for over https; anything else is no picture), resized (RESIZE).
  * KOPIS's www. address only redirects to kopis.or.kr: asked for there at once. The Seoul events site never answers
  * Cloudflare's fetch (9504 after about 7.5 s, measured 2026-11-05): its pictures are the text card at once. */
+/** A card picture taken as it is (ADR-0123 6: a source page's og:image, loaded from that site): https only, else none. */
+export function directUrl(u: string | undefined): string | null {
+  try {
+    const url = new URL(String(u ?? '').trim());
+    return url.protocol === 'https:' ? url.href : null;
+  } catch {
+    return null;
+  }
+}
 export function imageUrl(u: string | undefined): string | null {
   const s = String(u ?? '').trim().replace(/^http:\/\//i, 'https://').replace(/^https:\/\/www\.kopis\.or\.kr\//i, 'https://kopis.or.kr/');
   try {
