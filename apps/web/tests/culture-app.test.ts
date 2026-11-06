@@ -360,10 +360,16 @@ describe.runIf(NATION)('서울 홈의 카드 시트 (switch on)', () => {
     expect($('#sheet .bc')).toBeNull();
     expect(shelves()).not.toBeNull();
     // what was sent: no item, no position, nothing but these fields
+    // with what the card was on its shelf (ADR-0124 6): the show is neither new nor pulled on a first day
     expect(browse(sent)).toEqual([
-      { e: 'browse_card', d: DAY },
+      { e: 'browse_card', slot: 'base', d: DAY },
       { e: 'browse_link', link: 'go', d: DAY },
     ]);
+    // the press is kept on this device only (jeju.cards), written when the page is hidden
+    window.dispatchEvent(new Event('pagehide'));
+    const book = JSON.parse(localStorage.getItem('jeju.cards')!) as { v: number; c: Record<string, number[]> };
+    expect(book.v).toBe(1);
+    expect(book.c[show.id][1]).toBeGreaterThanOrEqual(1);
   });
 
   it('a card sheet: 자세히 when the link is http(s), in a new tab; 닫기 and Esc close it', async () => {

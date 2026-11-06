@@ -34,10 +34,12 @@ const WHYS = new Set(['denied', 'outside', 'unavailable', 'none']);
 const START_FIELDS: Record<string, readonly string[]> = { start_view: ['e', 'd'], start_done: ['e', 'd', 'how', 'why', 'dest'] };
 /** the only fields of each 둘러보기 event: how long it was open (seconds in tens, 600 = ten minutes or more), shelves
  * scrolled sideways (0–7), cards pressed (0, 1, 2 = two or more); which link */
-const BROWSE_FIELDS: Record<string, readonly string[]> = { browse_open: ['e', 'd'], browse_card: ['e', 'd'], browse_link: ['e', 'd', 'link'], browse_done: ['e', 'd', 'secs', 'rows', 'cards'] };
+const BROWSE_FIELDS: Record<string, readonly string[]> = { browse_open: ['e', 'd'], browse_card: ['e', 'd', 'slot'], browse_link: ['e', 'd', 'link'], browse_done: ['e', 'd', 'secs', 'rows', 'cards'] };
 const LINKS = new Set(['go', 'more', 'post']);
+/** browse_card (ADR-0124 6): what the card was on its shelf — 새로 들어옴, 당겨옴, 기본 — or missing */
+const SLOTS = new Set(['new', 'pull', 'base']);
 const SEASONS = new Set<string>(SEASON_KINDS);
-const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'sgg', 'secs', 'rows', 'cards', 'link', 'd']);
+const FIELDS = new Set(['e', 'id', 'mood', 'sub', 'range', 'basis', 'area', 'dated', 'indoor', 'season', 'live0', 'past', 'from', 'age', 'op', 'dest', 'how', 'why', 'sgg', 'secs', 'rows', 'cards', 'link', 'slot', 'd']);
 const whole = (v: unknown, max: number, step = 1) => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v <= max && v % step === 0;
 /** a place id (the data's are UUIDs). */
 const ID = /^[A-Za-z0-9-]{1,64}$/;
@@ -74,10 +76,11 @@ export function eventProblem(x: unknown, today?: Day): string | null {
     const more = Object.keys(o).find((k) => !browse.includes(k));
     if (more) return `${more} on ${o.e}`;
     if (o.e === 'browse_link' && !inSet(LINKS, o.link)) return 'link';
+    if (o.slot !== undefined && !inSet(SLOTS, o.slot)) return 'slot';
     if (o.e === 'browse_done' && !(whole(o.secs, 600, 5) && whole(o.rows, 10) && whole(o.cards, 2))) return 'browse_done';
     return null;
   }
-  if (o.secs !== undefined || o.rows !== undefined || o.cards !== undefined || o.link !== undefined) return `browse fields on ${o.e}`;
+  if (o.secs !== undefined || o.rows !== undefined || o.cards !== undefined || o.link !== undefined || o.slot !== undefined) return `browse fields on ${o.e}`;
   if (o.how !== undefined || o.why !== undefined) return `how / why on ${o.e}`;
   if (o.dest !== undefined && !inSet(DESTS, o.dest)) return 'dest';
   if (NO_PLACE.has(o.e as string)) {

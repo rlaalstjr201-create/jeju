@@ -592,7 +592,30 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
       ]),
     );
     for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
-    expect(BROWSE_IDS).toHaveLength(5 + 121 + 11 + 3);
+    expect(BROWSE_IDS).toHaveLength(5 + 3 + 121 + 11 + 3);
+    expect(aggregate(rows)).toEqual([]);
+  });
+
+  it('browse_card with its slot (ADR-0124 6): 새로 들어옴·당겨옴·기본 each under its own counter, and browse:card too', async () => {
+    const batch: UsageEvent[] = [
+      { e: 'browse_card', slot: 'new', d },
+      { e: 'browse_card', slot: 'pull', d },
+      { e: 'browse_card', slot: 'base', d },
+      { e: 'browse_card', slot: 'base', d },
+    ];
+    expect(parseBatch(JSON.stringify(batch))).toEqual({ ok: true, events: batch });
+    const store = memoryStore();
+    expect((await handle(post(batch), store)).status).toBe(204);
+    const rows = await store.dump();
+    expect(sorted(rows)).toEqual(
+      sorted([
+        { d, id: 'browse:card', e: 'browse_card', n: 4 },
+        { d, id: 'browse:card:new', e: 'browse_card', n: 1 },
+        { d, id: 'browse:card:pull', e: 'browse_card', n: 1 },
+        { d, id: 'browse:card:base', e: 'browse_card', n: 2 },
+      ]),
+    );
+    for (const r of rows) expect(BROWSE_IDS).toContain(r.id);
     expect(aggregate(rows)).toEqual([]);
   });
 
@@ -608,6 +631,10 @@ describe('오늘 서울 둘러보기 — 받는 쪽', () => {
     ['dest on browse_open', [{ e: 'browse_open', dest: 'seoul', d }]],
     ['a position on browse_card', [{ e: 'browse_card', d, lat: 37.57 }]],
     ['a shelf position on browse_card', [{ e: 'browse_card', d, pos: 3 }]],
+    ['an unknown slot on browse_card', [{ e: 'browse_card', slot: 'top', d }]],
+    ['a slot on browse_link', [{ e: 'browse_link', link: 'go', slot: 'new', d }]],
+    ['a slot on browse_open', [{ e: 'browse_open', slot: 'new', d }]],
+    ['a slot on a place event', [{ e: 'shown', id: ID, slot: 'new', d }]],
     ['browse_link without a link', [{ e: 'browse_link', d }]],
     ['browse_link to an unknown link', [{ e: 'browse_link', link: 'book', d }]],
     ['browse_done without secs', [{ e: 'browse_done', rows: 1, cards: 0, d }]],

@@ -74,6 +74,8 @@ export interface UsageEvent {
   cards?: 0 | 1 | 2;
   /** browse_link only: 길찾기, 자세히, or 이번 주 서울's 출처 글 보기 (ADR-0118 Amendment 1). */
   link?: 'go' | 'more' | 'post';
+  /** browse_card only (ADR-0124 6): the card was 새로 들어옴, 당겨옴 or 기본 on its shelf; missing = not known (an older app). */
+  slot?: 'new' | 'pull' | 'base';
   /** Jeju calendar day, no time. */
   d: Day;
 }

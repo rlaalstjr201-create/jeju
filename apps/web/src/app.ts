@@ -988,15 +988,16 @@ export function mountApp(doc: Document, deps: Deps): App {
     countBrowse({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: Math.min(10, culturePart()?.scrolledRows() ?? 0), cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
     tracker.flush();
   }
-  /** A card's sheet over 서울 홈 (ADR-0117 5): an entry of its own (back closes it). */
-  function openBrowseCard(id: string | undefined) {
+  /** A card's sheet over 서울 홈 (ADR-0117 5): an entry of its own (back closes it). `slot` (ADR-0124 6): what the card was
+   * on its shelf, its data-slot. */
+  function openBrowseCard(id: string | undefined, slot?: string) {
     if (state.overlay || state.view !== 'home' || !id || guarded('browse-card')) return;
     hush();
     dispatch({ type: 'browseCard', id });
     if (!state.overlay) return; // not taken (no list for today)
     nav.push({ view: state.view, overlay: 'browse-card' });
     if (browsing) browsing.cards++;
-    countBrowse({ e: 'browse_card', d: state.today });
+    countBrowse({ e: 'browse_card', d: state.today, ...(slot === 'new' || slot === 'pull' || slot === 'base' ? { slot } : {}) });
   }
 
   /** `keep` false (주소·숙소 with no public address, ADR-0103 Amendment 2): for this visit only — nothing saved, the sheet
@@ -1266,7 +1267,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'restay') return openOverlay('stay');
     if (action === 'other-area') return guarded('other-area') ? undefined : toAreas();
     if (action === 'stay-here') return stayHere();
-    if (action === 'browse-card') return openBrowseCard(b.dataset.id);
+    if (action === 'browse-card') return openBrowseCard(b.dataset.id, b.dataset.slot);
     if (action === 'feedback-send') return sendFeedback();
     if (action === 'addr-go') return searchAddr();
     if (b.dataset.hit) return guarded('hit') ? undefined : pickHit(Number(b.dataset.hit));
@@ -1301,7 +1302,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (keepAct) return guarded(`keep:${b.dataset.action}`) ? undefined : keepAct();
     if (b.dataset.mood) return onMood(b.dataset.mood as Button, b.dataset.pin);
     // 서울 홈의 선반 (ADR-0117): a card's sheet over the home
-    if (b.dataset.action === 'browse-card') return openBrowseCard(b.dataset.id);
+    if (b.dataset.action === 'browse-card') return openBrowseCard(b.dataset.id, b.dataset.slot);
     if (b.dataset.sub) return onSub(b.dataset.sub as Tab);
     if (b.classList.contains('heart') && b.dataset.id) return onHeart(b.dataset.id, b.dataset.date);
     if (b.classList.contains('visited') && b.dataset.id) return onVisited(b.dataset.id);

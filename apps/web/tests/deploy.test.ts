@@ -196,7 +196,7 @@ describe('F3 (K2) what GA4 and our own record get is what privacy.html says', ()
   });
 
   it('GA4 fields: exactly these, each named in that paragraph (never the area, the 시군구, the day, 실내만 or a position)', () => {
-    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', dest: 'busan', how: 'pick', why: 'denied', sgg: '51150', secs: 40, rows: 2, cards: 1, link: 'go', d: '2026-10-15' };
+    const every: Required<UsageEvent> = { e: 'map', id: 'p', mood: 'food', sub: 'cafe', range: '30', basis: 'area', area: '애월', dated: true, indoor: true, season: 'tangerine', live0: true, past: true, from: 'saved', age: 2, op: 'up', dest: 'busan', how: 'pick', why: 'denied', sgg: '51150', secs: 40, rows: 2, cards: 1, link: 'go', slot: 'new', d: '2026-10-15' };
     const keys = Object.keys(gaParams(every));
     expect(keys).toEqual(['place_id', 'mood', 'sub', 'range', 'basis', 'dated', 'season', 'from', 'age', 'past', 'live0', 'op', 'dest', 'how', 'why']);
     const said: Record<string, string> = {

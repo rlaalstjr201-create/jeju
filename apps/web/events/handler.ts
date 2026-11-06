@@ -28,12 +28,15 @@ export const START_IDS: readonly string[] = [
   ...['gps', 'pick'].flatMap((how) => ['denied', 'outside', 'unavailable', 'none'].flatMap((why) => ['jeju', 'busan', 'gangwon', 'seoul', 'nation'].map((dest) => `start:${how}:${why}:${dest}`))),
 ];
 
-/** 오늘 서울 둘러보기 (ADR-0114 7): the counter ids of its events — `browse:open`, `browse:card`, `browse:go` / `browse:more` / `browse:post` (ADR-0118), and
+/** 오늘 서울 둘러보기 (ADR-0114 7): the counter ids of its events — `browse:open`, `browse:card` (and `browse:card:<new|pull|base>`, ADR-0124 6), `browse:go` / `browse:more` / `browse:post` (ADR-0118), and
  * for each time it was left one under each of `browse:secs:<0…600 in fives>`, `browse:rows:<0…10>`, `browse:cards:<0…2>` (so the
  * median stay and the share of openings with a card pressed can be read). Not places (`browse:` prefix). */
 export const BROWSE_IDS: readonly string[] = [
   'browse:open',
   'browse:card',
+  'browse:card:new',
+  'browse:card:pull',
+  'browse:card:base',
   'browse:go',
   'browse:more',
   'browse:post',
@@ -48,7 +51,7 @@ function idsOf(ev: UsageEvent): string[] {
   if (ev.e === 'start_view') return ['start:view'];
   if (ev.e === 'start_done') return [`start:${ev.how}:${ev.why}:${ev.dest}`];
   if (ev.e === 'browse_open') return ['browse:open'];
-  if (ev.e === 'browse_card') return ['browse:card'];
+  if (ev.e === 'browse_card') return ev.slot ? ['browse:card', `browse:card:${ev.slot}`] : ['browse:card'];
   if (ev.e === 'browse_link') return [`browse:${ev.link}`];
   if (ev.e === 'browse_done') return [`browse:secs:${ev.secs}`, `browse:rows:${ev.rows}`, `browse:cards:${ev.cards}`];
   if (ev.e === 'tap') return [`mood:${ev.mood}`];
