@@ -7,23 +7,24 @@ import { createSpotSource, normalizeSpots, type SpotSource } from './pick/data';
 import { DAYS_AHEAD, addDays, dayOf, isDay, minuteOf, msToNextDay, type Day } from './dates';
 import { readDeepLink, type DeepLink } from './deeplink';
 import { DEST, destOfId, isDest, isSggDest, type Dest } from './region/dest';
-import { LocateError, fetchAddr, fetchGeo, fetchRain, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
+import { LocateError, fetchAddr, fetchGeo, locateGps, resolveOrigin, type Fetch, type GeoDeps, type OriginResult } from './effects';
 import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, installHow, readBackup } from './keep';
 import { MAP_APPS, kakaoUrl, type MapApp } from './pick/links';
 import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, culturePart, loadBusan, loadCulture, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './region/release';
 import { HOME, createNav } from './nav';
 import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick/pick';
 import { seasonOn, type SeasonKind } from './pick/season';
-import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './pick/home';
-import { sunriseMinutes, sunsetMinutes } from './pick/sun';
+import { rainNow, rowTimes } from './pick/home';
 import { createRenderer, findEls } from './render';
 import { PLACE, dateLabel } from './copy';
-import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
-import { KEYS, RAIN_TTL_MS, createStore } from './store';
+import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { KEYS, createStore } from './store';
 import type { Analytics } from './usage/analytics';
 import { feedbackBody, surveyDue } from './usage/survey';
 import { ageOf, contextOf, createTracker, dwellBucket, type ArrangeOp, type EventName, type UsageEvent } from './usage/track';
 import type { Basis, Route, Stay, When } from './types';
+import { RAIN_RETRY_MS, createToday } from './flow/today';
+import type { AppCtx } from './flow/ctx';
 
 export { AREAS, LocateError, inJeju, kakaoUrl };
 export type { NoOrigin as LocateFailure } from './types';
@@ -392,73 +393,28 @@ export function mountApp(doc: Document, deps: Deps): App {
     }
   }
 
-  /** 노을 줄 (ADR-0083): one timer to the next moment 노을 볼 곳 opens (2시간 30분 before the sunset at the home's
-   * point) or closes (the sunset), set again when that point or the day changes. No minute-by-minute ticking.
-   * 밤 (ADR-0091) runs from that sunset to the sunrise, so the sunrise is a moment too. */
-  let duskKey = '';
-  let duskAt: ReturnType<typeof setTimeout> | null = null;
-  /** before the sunrise (0), then before (1), in (2) or after (3) the 노을 window at the home's point today; -1 unknown */
-  function duskPhase(clock: number | null): number {
-    if (clock == null) return -1;
-    const p = sunPoint(homeOrigin(state), state.dest, state.sgg);
-    const set = sunsetMinutes(p, state.today);
-    return clock < sunriseMinutes(p, state.today) ? 0 : clock < set - DUSK_LEAD_MIN ? 1 : clock < set ? 2 : 3;
-  }
-  function duskTimer() {
-    const p = sunPoint(homeOrigin(state), state.dest, state.sgg);
-    const key = `${p.lat},${p.lng}|${state.today}`;
-    if (key === duskKey) return;
-    duskKey = key;
-    if (duskAt) {
-      clearTimeout(duskAt);
-      timers.delete(duskAt);
-      duskAt = null;
-    }
-    const now = minuteOf(clockNow());
-    // a new point can put now on the other side of an edge (another basis, another sunset): redraw, like tick()
-    if (duskPhase(now) !== duskPhase(state.clock)) {
-      duskKey = '';
-      return dispatch({ type: 'clock', clock: now }); // its own duskTimer() call sets the timer
-    }
-    const set = sunsetMinutes(p, state.today);
-    const rise = sunriseMinutes(p, state.today);
-    const next = now < rise ? rise : now < set - DUSK_LEAD_MIN ? set - DUSK_LEAD_MIN : now < set ? set : null;
-    if (next == null) return; // after the sunset: the midnight tick reads the clock again
-    duskAt = later((next - now) * 60_000 + 500, () => {
-      duskAt = null;
-      duskKey = '';
-      dispatch({ type: 'clock', clock: minuteOf(clockNow()) });
-    });
-  }
+  const app: AppCtx = {
+    deps,
+    get state() {
+      return state;
+    },
+    dispatch: (a) => dispatch(a),
+    store,
+    signal,
+    timers,
+    later: (ms, fn) => later(ms, fn),
+    clockNow,
+    now,
+    delays,
+    tracker,
+    survey0,
+    els,
+    guarded: (key) => guarded(key),
+    openOverlay: (kind) => openOverlay(kind),
+    closeOverlay: () => closeOverlay(),
+  };
 
-  // --- 비 소식 (ADR-0076): asked for the area the home speaks for, again once an answer is 30 minutes old (or 5
-  // minutes after a failed ask); the session keeps an answer 30 minutes. One ask in flight at a time. ---
-  const RAIN_RETRY_MS = 5 * 60_000;
-  let rainAsked: { area: string; at: number; ok: boolean } | null = null;
-  let rainBusy = false;
-  function askRain() {
-    const area = rainArea(state);
-    if (!area || !deps.fetch || rainBusy) return;
-    const now = clockNow().getTime();
-    if (rainAsked?.area === area && now - rainAsked.at < (rainAsked.ok ? RAIN_TTL_MS : RAIN_RETRY_MS)) return;
-    const kept = store.readRain(now);
-    if (kept?.area === area) {
-      rainAsked = { area, at: kept.at, ok: true };
-      return dispatch({ type: 'rain', area, rain: kept.rain });
-    }
-    rainBusy = true;
-    fetchRain(area, deps.fetch).then((rain) => {
-      rainBusy = false;
-      if (signal.aborted) return;
-      const at = clockNow().getTime();
-      rainAsked = { area, at, ok: rain !== null };
-      // a failed ask after an expired answer must not leave the old rain row up for hours; a first one settles the row
-      // as none (render.ts stops holding its place)
-      if (rain === null) return void (!(state.rain?.area === area && !state.rain.rain) && dispatch({ type: 'rain', area, rain: false }));
-      store.writeRain({ v: 1, area, at, rain });
-      dispatch({ type: 'rain', area, rain });
-    });
-  }
+  const { duskPhase, duskTimer, resetDusk, askRain } = createToday(app);
 
   // --- 오늘 근처에서 하는 것 (ADR-0112): 서울's home, 지금, with a basis — the list asked for once a KST day (no position goes
   // with it), with its view (a chunk of its own, release.ts loadCulture); nothing is shown after a failure or for another
@@ -1593,7 +1549,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     renderer.setDate(dateLabel(now));
     // the time of day for 노을 볼 곳 (ADR-0083), and its timer from this moment
     // (a dispatch only when that moves it across an edge of the window — nothing else redraws)
-    duskKey = '';
+    resetDusk();
     if (duskPhase(minuteOf(now)) !== duskPhase(state.clock) || openPhase(state, minuteOf(now)) !== openPhase(state, state.clock)) dispatch({ type: 'clock', clock: minuteOf(now) });
     else duskTimer();
     if (midnight) {
