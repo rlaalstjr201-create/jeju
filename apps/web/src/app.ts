@@ -16,7 +16,8 @@ import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } fro
 import { seasonOn, type SeasonKind } from './pick/season';
 import { DUSK_LEAD_MIN, rainNow, rowTimes, sunPoint } from './pick/home';
 import { sunriseMinutes, sunsetMinutes } from './pick/sun';
-import { PLACE, createRenderer, dateLabel, findEls } from './render';
+import { createRenderer, findEls } from './render';
+import { PLACE, dateLabel } from './copy';
 import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, rainArea, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, RAIN_TTL_MS, createStore } from './store';
 import type { Analytics } from './usage/analytics';

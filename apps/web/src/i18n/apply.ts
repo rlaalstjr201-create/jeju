@@ -9,7 +9,7 @@ import { TRAVEL_TEXT, type Button, type Spot } from '../pick/pick';
 import type { CultureWords } from '../culture/culture-view';
 import type { NationCopy } from '../region/nation-part';
 import { BUSAN, NATION, OPEN_AREAS, nationPart, whenBusan, whenCulture, whenNation } from '../region/release';
-import { BUSAN_COPY, COPY, MOOD_LABEL, PLACE } from '../render';
+import { BUSAN_COPY, COPY, MOOD_LABEL, PLACE } from '../copy';
 import { SEASON_TEXT, type SeasonKind } from '../pick/season';
 import { FROM_TEXT } from '../state';
 

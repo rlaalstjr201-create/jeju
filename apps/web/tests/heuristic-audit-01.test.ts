@@ -1,6 +1,6 @@
 // 휴리스틱 점검 H1·H3 (docs/research/heuristic-audit-01/02-synthesis.md)
 import { describe, expect, it } from 'vitest';
-import { heldText, homeCopy } from '../src/render';
+import { heldText, homeCopy } from '../src/copy';
 import { initialState, type State } from '../src/state';
 
 const TODAY = '2026-10-11';

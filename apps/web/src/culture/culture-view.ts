@@ -11,7 +11,7 @@ import { isWeek, weeklyItems } from '../seoul/weekly';
 import { arrange, bandOfKm, cardsStore, type Cards } from '../seoul/freshness';
 import { goLink, type MapApp } from '../pick/links';
 import { TRAVEL_TEXT, distanceKm, formatMinutes, type Spot } from '../pick/pick';
-import { COPY } from '../render';
+import { COPY } from '../copy';
 import type { State } from '../state';
 import { sunsetMinutes } from '../pick/sun';
 import type { Day } from '../dates';

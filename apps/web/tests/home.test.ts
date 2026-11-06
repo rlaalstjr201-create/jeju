@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AREAS, areaByName, type AreaName } from '../src/region/areas';
 import { marketDay } from '../src/pick/market';
 import { islandTop, pool, withinReach, type Mood, type Spot } from '../src/pick/pick';
-import { splitName } from '../src/render';
+import { splitName } from '../src/copy';
 import { fileSpots } from './fixtures';
 import { $, $$, flush, render, reset, tap } from './harness';
 

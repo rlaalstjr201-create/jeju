@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { AREAS, areaByName, type AreaName } from '../src/region/areas';
 import { openMarkets, sunsetSpots } from '../src/pick/home';
 import { islandTop, pickCards, pool, REACHES, type Button, type Mood, type Spot, type Tab } from '../src/pick/pick';
-import { splitName } from '../src/render';
+import { splitName } from '../src/copy';
 import { pickSpots } from '../src/state';
 import { KEYS } from '../src/store';
 import { sunsetMinutes } from '../src/pick/sun';

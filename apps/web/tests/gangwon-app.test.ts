@@ -529,7 +529,7 @@ describe.runIf(NATION)('강원 (switch on)', () => {
   });
 
   it('every 강원 시군구 has its name in the four languages', async () => {
-    const { BUSAN_COPY } = await import('../src/render');
+    const { BUSAN_COPY } = await import('../src/copy');
     const { JA } = await import('../src/i18n/ja');
     const { ZH } = await import('../src/i18n/zh-Hans');
     for (const t of [BUSAN_COPY, EN.busan, JA.busan, ZH.busan]) expect(Object.keys(t.sggName).sort()).toEqual([...DEST.gangwon.sgg!, ...DEST.seoul.sgg!].sort());

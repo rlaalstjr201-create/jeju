@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
 import { afterEach, describe, expect, it } from 'vitest';
 import { NATION_COPY } from '../src/region/nation-part';
-import { COPY, MOOD_LABEL, PLACE } from '../src/render';
+import { COPY, MOOD_LABEL, PLACE } from '../src/copy';
 import { DAY_TEXT, longDay, shortDay } from '../src/dates';
 import { apply, localDays, type Lang } from '../src/i18n/apply';
 import { EN } from '../src/i18n/en';

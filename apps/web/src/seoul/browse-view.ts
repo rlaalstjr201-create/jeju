@@ -13,7 +13,7 @@ import type { Day } from '../dates';
 const CITY_HALL = { lat: 37.5663, lng: 126.9779 };
 import { GO_TEXT, goLink, type MapApp } from '../pick/links';
 import { TRAVEL_TEXT, formatMinutes, type Spot } from '../pick/pick';
-import { COPY } from '../render';
+import { COPY } from '../copy';
 
 /** Its words (ADR-0093: another language's come in through culture-view.ts words, as one table). */
 export const BROWSE_COPY = {

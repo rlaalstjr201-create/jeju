@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 // 가 봤어요 on the cards and 뺀 곳 on the saved list (ADR-0087, specs/hide-visited.md S2·S3·S4).
 import { beforeEach, describe, expect, it } from 'vitest';
-import { splitName } from '../src/render';
+import { splitName } from '../src/copy';
 import { KEYS } from '../src/store';
 import { fileSpots } from './fixtures';
 import { $, $$, cardIds, current, flush, render, reset, tap } from './harness';
@@ -147,7 +147,7 @@ describe('S3 카드의 「가 봤어요」', () => {
   });
 
   it('the particle follows the last syllable: 받침 → 은/을, none → 는/를', async () => {
-    const { COPY } = await import('../src/render');
+    const { COPY } = await import('../src/copy');
     expect(COPY.visitedOut('협재 해수욕장')).toBe('협재 해수욕장은 다음부터 빼고 골라요.');
     expect(COPY.visitedOut('카페 바다')).toBe('카페 바다는 다음부터 빼고 골라요.');
     expect(COPY.visitedIn('협재 해수욕장')).toBe('협재 해수욕장을 다시 넣었어요.');

@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { areaByName, type AreaName } from '../src/region/areas';
 import { addDays } from '../src/dates';
 import { islandOf, pickCards, type Spot } from '../src/pick/pick';
-import { COPY, statusOf } from '../src/render';
+import { COPY, statusOf } from '../src/copy';
 import { initialState, type State } from '../src/state';
 import { sunriseMinutes, sunsetMinutes } from '../src/pick/sun';
 import { fileSpots } from './fixtures';

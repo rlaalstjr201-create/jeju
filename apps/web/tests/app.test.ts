@@ -12,7 +12,7 @@ import { cleanReason } from '../src/pick/data';
 import { dayOf } from '../src/dates';
 import { pickCards, travel, travelText, type Point, type Sub } from '../src/pick/pick';
 import { BUSAN, NATION } from '../src/region/release';
-import { splitName } from '../src/render';
+import { splitName } from '../src/copy';
 import { ORIGINS, fileSpots, realSpots } from './fixtures';
 
 const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
