@@ -87,6 +87,25 @@ describe('the day (criteria-01 3절)', () => {
   });
 });
 
+describe('the place check (criteria-02 4절)', () => {
+  const hoods = [{ name: '성수', lat: 37.5424, lng: 127.0564 }, { name: '합정·상수', lat: 37.549, lng: 126.914 }];
+  it('the post area from its place words first, else its posts: 구, 동 (「성수동2가」 is 성수), 동네', () => {
+    expect(L.areaOf('성동구 서울숲2길 43', [{ title: '마포구 홍대', day: D, link: 'x' }], hoods)).toEqual({ gus: ['성동'], dongs: [], hoods: [] });
+    expect(L.areaOf('', [{ title: '상수 신상 카페', day: D, link: 'x' }], hoods).hoods).toEqual(['합정·상수']);
+    expect(L.areaOf('더현대 서울', [], hoods)).toEqual({ gus: [], dongs: [], hoods: [] });
+  });
+  it('a Kakao result counts only where its 구, its 동 or its 700 m around a 동네 is the post one', () => {
+    const a = L.areaOf('', [{ title: '성수동 팝업', day: D, link: 'x' }], hoods);
+    const seongsu = { address: '서울 성동구 연무장길 1', jibun: '서울 성동구 성수동2가 1', lat: 37.543, lng: 127.056 };
+    const mapo = { address: '서울 마포구 와우산로 1', jibun: '서울 마포구 서교동 1', lat: 37.551, lng: 126.922 };
+    expect(L.areaMatch(seongsu, a, hoods)).toBe(true);
+    expect(L.areaMatch(mapo, a, hoods)).toBe(false);
+    expect(L.placeOf([mapo, seongsu], a, hoods)).toBe(seongsu);
+    expect(L.placeOf([mapo], a, hoods)).toBeNull();
+    expect(L.areaMatch(mapo, { gus: ['마포'], dongs: [], hoods: [] }, hoods)).toBe(true);
+  });
+});
+
 describe('the sweep (9절)', () => {
   it('an event goes the day after it ends; a new place is checked at 8 weeks, kept after its shelf is set', () => {
     expect(L.sweepOf({ kind: '팝업', start: '2026-11-01', end: '2026-11-05' }, D)).toBe('ended');
@@ -129,10 +148,16 @@ describe('pictures (10절)', () => {
     expect(L.imageSize(png)).toEqual({ type: 'png', w: 1200, h: 630 });
     expect(L.badImage('https://a.kr/p.png', { w: 1200, h: 630 }, 1000)).toBe('');
     expect(L.badImage('https://a.kr/logo.png', { w: 1200, h: 630 }, 1000)).toBeTruthy();
-    expect(L.badImage('https://a.kr/p.png', { w: 300, h: 300 }, 1000)).toBe('too small');
+    expect(L.badImage('https://a.kr/p.png', { w: 300, h: 200 }, 1000)).toBe('too small');
     expect(L.badImage('https://a.kr/p.png', { w: 3000, h: 600 }, 1000)).toBe('odd shape');
     expect(L.badImage('https://a.kr/p.png', { w: 1200, h: 630 }, L.MAX_IMAGE + 1)).toBeTruthy();
     expect(L.badImage('http://a.kr/p.png', { w: 1200, h: 630 }, 1)).toBe('not https');
+  });
+  it('criteria-02: a logo-like picture is no picture — share-image, kakao share, a small square', () => {
+    expect(L.badImage('https://a.kr/web/upload/share-image-1-ab.jpg', { w: 1200, h: 630 }, 1)).toBeTruthy();
+    expect(L.badImage('https://a.kr/kakao1.jpg', { w: 1200, h: 630 }, 1)).toBeTruthy();
+    expect(L.badImage('https://a.kr/p.png', { w: 500, h: 500 }, 1)).toMatch(/square/);
+    expect(L.badImage('https://a.kr/p.png', { w: 1080, h: 1080 }, 1)).toBe('');
   });
   it('a news article is a picture source only when its title has the name\'s core word', () => {
     expect(L.coreWord('2026 코치 LIVE YOUR STORY 팝업')).toBe('코치');

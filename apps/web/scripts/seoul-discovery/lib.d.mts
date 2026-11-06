@@ -34,3 +34,9 @@ export declare function coreWord(name: string): string;
 export declare function sampleOf(ids: string[], n: number, seed: number): string[];
 export declare function gateOf(keepIds: string[], dropIds: string[], audit: Record<string, string>): { keep: { n: number; agree: number; rate: number | null }; drop: { n: number; agree: number; rate: number | null }; pass: boolean };
 export declare function whereOf(p: { lat: number; lng: number }, hoods: { name: string; lat: number; lng: number }[], address: string): { hood?: string; where: string };
+export interface Area { gus: string[]; dongs: string[]; hoods: string[] }
+export declare const CRITERIA: string;
+export declare const LOGO_SQUARE: number;
+export declare function areaOf(placeText: string, posts: { title: string; desc?: string; day?: string; link?: string }[], hoods: { name: string; lat: number; lng: number }[]): Area;
+export declare function areaMatch(doc: { address: string; jibun?: string; lat: number; lng: number }, area: Area, hoods: { name: string; lat: number; lng: number }[]): boolean;
+export declare function placeOf<T extends { address: string; jibun?: string; lat: number; lng: number }>(docs: T[], area: Area, hoods: { name: string; lat: number; lng: number }[]): T | null;

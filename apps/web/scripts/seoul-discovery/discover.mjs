@@ -1,5 +1,5 @@
 /**
- * 서울 매일 발굴 (ADR-0123, review/seoul-discovery/criteria-01.md, specs/seoul-discovery.md). 단계마다 한 명령, 그날 한 번씩.
+ * 서울 매일 발굴 (ADR-0123, review/seoul-discovery/criteria-02.md — 기준 01에서 장소 확인·끝나는 날·로고 그림을 고친 것, specs/seoul-discovery.md). 단계마다 한 명령, 그날 한 번씩.
  *   node scripts/seoul-discovery/discover.mjs seed                 장부 처음 채우기(이미 있으면 멈춤): 즐길 거리·이번 주 서울 01회
  *   node scripts/seoul-discovery/discover.mjs collect [--day D]    1절 네이버 → days/D/raw.json, extract/in-NN.txt
  *   (하위 에이전트) extract/in-NN.txt → extract/out-NN.json       2절
@@ -77,7 +77,7 @@ export async function kakao(q, size = 15, k = keys()) {
     const res = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?${new URLSearchParams({ query: q, size: String(size) })}`, { headers: { Authorization: `KakaoAK ${k.kakao}` } }).catch(() => null);
     appendFileSync(KAKAO_LOG, `${L.kstDay()}\t${new Date().toISOString()}\tdiscovery:${q}\t${res?.status ?? 'net'}\n`);
     if (res?.status === 200) {
-      const docs = (await res.json()).documents.map((d) => ({ id: d.id, name: d.place_name, address: d.road_address_name || d.address_name, category: d.category_name, lat: Number(d.y), lng: Number(d.x), url: String(d.place_url).replace(/^http:/, 'https:') }));
+      const docs = (await res.json()).documents.map((d) => ({ id: d.id, name: d.place_name, address: d.road_address_name || d.address_name, jibun: d.address_name, category: d.category_name, lat: Number(d.y), lng: Number(d.x), url: String(d.place_url).replace(/^http:/, 'https:') }));
       await sleep(100);
       return docs;
     }
@@ -203,23 +203,27 @@ async function enrich() {
   const funIds = new Set(fun.map((p) => /kk-(\d+)/.exec(p.id)?.[1]).filter(Boolean));
   const dataIds = new Set(data().items.map((i) => /place\.map\.kakao\.com\/(\d+)/.exec(i.kakao)?.[1]));
   const k = keys();
+  const hoods = readJ(resolve(webRoot, 'review/seoul-fun/hoods-01.json'));
   const done = readJ(part, {});
   for (const c of pick) {
     if (done[c.cid]) continue;
     const blog = await naver('blog', c.name, 10, k);
     const news = await naver('news', c.name, 5, k);
     const seoul = (docs) => docs.filter((d) => /^서울/.test(d.address));
+    // 기준 02 4절: 장소 글자·주소 먼저, 글의 동네와 맞는 결과만
+    const area = L.areaOf(c.placeText, c.first, hoods);
+    const empty = !area.gus.length && !area.dongs.length && !area.hoods.length;
     let byName = null;
     let place = null;
-    if (c.placeText) place = seoul(await kakao(c.placeText, 5, k))[0] ?? null;
+    if (c.placeText && !empty) place = L.placeOf(await kakao(c.placeText, 15, k), area, hoods);
     const isPlace = c.kind === '새로 연 곳';
-    if (!place || isPlace) {
+    if ((!place && !empty) || isPlace) {
       byName = seoul(await kakao(c.name, 15, k));
-      if (!place) place = byName[0] ?? null;
+      if (!place && !empty) place = L.placeOf(byName, area, hoods);
     }
     const brand = L.brandOf(place?.name ?? c.name);
     const chain = byName ? new Set(byName.filter((d) => L.brandOf(d.name) === brand).map((d) => d.id)).size : 0;
-    done[c.cid] = { blog: { total: blog.total, posts: posts(blog) }, news: posts(news), kakao: place, chain };
+    done[c.cid] = { blog: { total: blog.total, posts: posts(blog) }, news: posts(news), kakao: place, chain, area };
     writeFileSync(part, JSON.stringify(done));
   }
   const rows = [];
@@ -240,6 +244,7 @@ async function enrich() {
       blogTotal: e.blog.total,
       news: e.news,
       kakao: e.kakao,
+      ...(e.area ? { area: e.area } : {}),
       ...(e.chain >= 3 ? { chain: e.chain } : {}),
       ...(c.kind === '새로 연 곳' && brands.has(brand) ? { brandKnown: brands.get(brand) } : {}),
     });
@@ -248,8 +253,8 @@ async function enrich() {
     led.names[L.norm(x.name)] = { status: 'known', day: DAY, cid: x.cid };
   }
   saveLedger(led);
-  for (let i = 0, n = 1; i < rows.length; i += L.PER_JUDGE, n++) writeJ(resolve(dayDir, 'judge', `in-${String(n).padStart(2, '0')}.json`), { day: DAY, criteria: 'criteria-01.md', rows: rows.slice(i, i + L.PER_JUDGE) });
-  if (!rows.length) writeJ(out, { day: DAY, criteria: 'criteria-01.md', rows: [] });
+  for (let i = 0, n = 1; i < rows.length; i += L.PER_JUDGE, n++) writeJ(resolve(dayDir, 'judge', `in-${String(n).padStart(2, '0')}.json`), { day: DAY, criteria: L.CRITERIA, rows: rows.slice(i, i + L.PER_JUDGE) });
+  if (!rows.length) writeJ(out, { day: DAY, criteria: L.CRITERIA, rows: [] });
   unlinkSync(part); // the rows are in judge/in-NN.json now
   console.log(JSON.stringify({ picked: pick.length, known: known.length, judge: rows.length, kakaoFound: rows.filter((r) => r.kakao).length, kakaoUsedToday: kakaoUsed() }));
 }
@@ -514,7 +519,7 @@ function auditSample() {
   for (const d of readdirSync(resolve(dir, 'days'))) if (existsSync(resolve(dir, 'days', d, 'judge'))) for (const [cid, r] of inputs(resolve(dir, 'days', d))) all.set(cid, r);
   const rows = [...keep, ...drop].sort().map((cid) => all.get(cid));
   if (rows.some((r) => !r)) throw new Error('an audited cid has no judge input');
-  writeJ(out, { day: DAY, criteria: 'criteria-01.md', since: led.lastAudit, n: rows.length, rows });
+  writeJ(out, { day: DAY, criteria: L.CRITERIA, since: led.lastAudit, n: rows.length, rows });
   writeJ(resolve(auditDir, `key-${DAY}.json`), { day: DAY, seed: seedN, keep, drop });
   console.log(JSON.stringify({ since: led.lastAudit, shipped: t.keep.length, dropped: t.drop.length, sample: { keep: keep.length, drop: drop.length } }));
 }
@@ -555,7 +560,7 @@ function auditResult() {
   const mism = [...key.keep.filter((c) => audit[c] !== 'keep').map((c) => `- ${c}: 판정 keep, 감사 drop — ${out.find((x) => x.cid === c)?.why ?? ''}`), ...key.drop.filter((c) => audit[c] !== 'drop').map((c) => `- ${c}: 판정 drop, 감사 keep — ${out.find((x) => x.cid === c)?.why ?? ''}`)];
   writeFileSync(
     md,
-    `# 매일 발굴 감사 ${DAY} (criteria-01 8절)\n\n- 대상: ${led.audits.at(-1).since ?? '첫 회차'} 뒤 실린 것${held ? '(첫 회차: 싣기 전 hold)' : ''}\n- 실린 표본 keep 일치: ${pct(g.keep)} — 게이트 90%\n- drop 표본 일치(보고만): ${pct(g.drop)}\n- **게이트: ${g.pass ? '통과' : '미달'}**${g.pass ? '' : ` — 그 기간 실린 ${reverted}곳 되돌림`}\n\n## 불일치\n\n${mism.join('\n') || '- 없음'}\n`,
+    `# 매일 발굴 감사 ${DAY} (${L.CRITERIA} 8절)\n\n- 대상: ${led.audits.at(-1).since ?? '첫 회차'} 뒤 실린 것${held ? '(첫 회차: 싣기 전 hold)' : ''}\n- 실린 표본 keep 일치: ${pct(g.keep)} — 게이트 90%\n- drop 표본 일치(보고만): ${pct(g.drop)}\n- **게이트: ${g.pass ? '통과' : '미달'}**${g.pass ? '' : ` — 그 기간 실린 ${reverted}곳 되돌림`}\n\n## 불일치\n\n${mism.join('\n') || '- 없음'}\n`,
   );
   console.log(JSON.stringify({ ...g, reverted }));
 }

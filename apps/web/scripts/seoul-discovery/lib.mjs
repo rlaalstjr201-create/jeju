@@ -212,7 +212,9 @@ export function ogOf(html, page) {
   }
   return { image, site: meta('og:site_name') };
 }
-export const BAD_IMAGE = /logo|favicon|icon|symbol|noimage|no_image|no-image|placeholder|blank|default|sample|temp_|sns[-_]?img|sns_share|share_default/i;
+export const BAD_IMAGE = /logo|favicon|icon|symbol|noimage|no_image|no-image|placeholder|blank|default|sample|temp_|sns[-_]?img|sns_share|share_default|share[-_]?image|sns[-_]?represent|\/kakao\d*\.(?:jpe?g|png)/i;
+/** 기준 02 10절: 로고로 보이는 크기 — 정사각형이면서 600px 이하 */
+export const LOGO_SQUARE = 600;
 /** 그림 바이트의 가로·세로 (png·jpeg·gif·webp) */
 export function imageSize(buf) {
   const b = Buffer.from(buf);
@@ -246,6 +248,7 @@ export function badImage(url, size, bytes) {
   if (BAD_IMAGE.test(url)) return 'logo-like address';
   if (bytes > MAX_IMAGE) return 'over 1.5 MB';
   if (!size) return 'not an image';
+  if (size.w === size.h && size.w <= LOGO_SQUARE) return 'small square (logo-like)';
   if (size.w < 400 || size.h < 200) return 'too small';
   const r = size.w / size.h;
   if (r < 0.5 || r > 2.6) return 'odd shape';
@@ -257,6 +260,39 @@ export function coreWord(name) {
   for (const w of String(name).replace(/[<>()[\]「」『』'"“”‘’·,:!?]/g, ' ').split(/\s+/)) if (w.length >= 2 && !COMMON.test(w)) return w;
   return '';
 }
+
+// ── 장소 확인 (기준 02 4절) ──
+export const CRITERIA = 'criteria-02.md';
+const GU = ['종로', '중', '용산', '성동', '광진', '동대문', '중랑', '성북', '강북', '도봉', '노원', '은평', '서대문', '마포', '양천', '강서', '구로', '금천', '영등포', '동작', '관악', '서초', '강남', '송파', '강동'];
+const NOT_DONG = /^(이|활|행|운|자|변|감|충|연|공|노|파|진|부|소|출|발|요|원|합|선|후|청|단|협|작|기|구|고|상|대|중)$/;
+/** 글의 동네: 구 이름, 동 이름(「성수동2가」는 성수), 동네 이름(hoods) — 장소 글자에서, 없으면 처음 글에서 */
+export function areaOf(placeText, posts, hoods) {
+  const read = (t) => {
+    const gus = new Set();
+    const dongs = new Set();
+    const named = new Set();
+    for (const m of String(t).matchAll(/([가-힣]{1,4})구(?![가-힣])/g)) if (GU.includes(m[1])) gus.add(m[1]);
+    for (const m of String(t).matchAll(/([가-힣]{1,4})동(?:\d가)?(?![가-힣])/g)) if (m[1].length >= 2 || !NOT_DONG.test(m[1])) dongs.add(m[1]);
+    for (const h of hoods) for (const part of h.name.split('·')) if (String(t).includes(part)) named.add(h.name);
+    return { gus: [...gus], dongs: [...dongs], hoods: [...named] };
+  };
+  const empty = (a) => !a.gus.length && !a.dongs.length && !a.hoods.length;
+  const first = read(placeText ?? '');
+  return empty(first) ? read((posts ?? []).map((p) => `${p.title} ${p.desc ?? ''}`).join(' ')) : first;
+}
+/** 카카오 결과(`doc`: address 도로명 또는 지번, jibun 지번)가 글의 동네와 맞는가 */
+export function areaMatch(doc, area, hoods) {
+  const gu = /^서울\S*\s+(\S+?)구\s/.exec(`${doc.jibun || doc.address} `)?.[1];
+  if (gu && area.gus.includes(gu)) return true;
+  const dong = /\s([가-힣]+?)\d*동(?:\d+가)?\s/.exec(` ${doc.jibun ?? ''} `)?.[1];
+  if (dong && area.dongs.some((d) => d === dong || d.replace(/\d+$/, '') === dong)) return true;
+  return area.hoods.some((name) => {
+    const h = hoods.find((x) => x.name === name);
+    return !!h && km(h, doc) <= HOOD_KM;
+  });
+}
+/** 맞는 서울 결과 가운데 첫 것 */
+export const placeOf = (docs, area, hoods) => docs.find((d) => /^서울/.test(d.address) && areaMatch(d, area, hoods)) ?? null;
 
 // ── 감사 표본 ──
 export function mulberry32(a) {
