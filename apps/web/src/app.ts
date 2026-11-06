@@ -20,11 +20,12 @@ import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, i
 import { KEYS, createStore } from './store';
 import type { Analytics } from './usage/analytics';
 import { surveyDue } from './usage/survey';
-import { contextOf, createTracker, dwellBucket, type ArrangeOp, type UsageEvent } from './usage/track';
+import { contextOf, createTracker, type ArrangeOp, type UsageEvent } from './usage/track';
 import type { Basis, Route, Stay, When } from './types';
 import { RAIN_RETRY_MS, createToday } from './flow/today';
 import type { AppCtx } from './flow/ctx';
 import { createUsage } from './flow/usage';
+import { createBrowse } from './flow/browse';
 
 export { AREAS, LocateError, inJeju, kakaoUrl };
 export type { NoOrigin as LocateFailure } from './types';
@@ -350,7 +351,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     countShown();
     askRain();
     askCulture();
-    if (browsing && state.overlay !== 'browse' && state.overlay !== 'browse-card') endBrowse();
+    if (state.overlay !== 'browse' && state.overlay !== 'browse-card') endBrowse(); // nothing while not browsing
     duskTimer();
     keepRow();
   }
@@ -412,6 +413,11 @@ export function mountApp(doc: Document, deps: Deps): App {
     guarded: (key) => guarded(key),
     openOverlay: (kind) => openOverlay(kind),
     closeOverlay: () => closeOverlay(),
+    nav0,
+    get nav() {
+      return nav;
+    },
+    hush: () => hush(),
   };
 
   const { duskPhase, duskTimer, resetDusk, askRain } = createToday(app);
@@ -842,36 +848,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     nav.back();
   }
 
-  // --- 오늘 서울 둘러보기 (ADR-0114 7): our own collector only (never GA4·네이버), no item, no position ---
-  let browsing: { at: number; cards: number } | null = null;
-  /** never under a webdriver, like the first screen's (QA runs must not move the verdict) */
-  const countBrowse = (ev: UsageEvent) => void (nav0?.webdriver || tracker.track(ev));
-  function openBrowse() {
-    if (state.overlay || state.view !== 'home' || guarded('browse')) return;
-    openOverlay('browse');
-    if (state.overlay !== 'browse') return;
-    browsing = { at: now(), cards: 0 };
-    countBrowse({ e: 'browse_open', d: state.today });
-  }
-  /** Left (closed, or the page hidden: a map app opened from it may never bring it back), once per opening. */
-  function endBrowse() {
-    const b = browsing;
-    if (!b) return;
-    browsing = null;
-    countBrowse({ e: 'browse_done', secs: dwellBucket(now() - b.at), rows: Math.min(10, culturePart()?.scrolledRows() ?? 0), cards: Math.min(2, b.cards) as 0 | 1 | 2, d: state.today });
-    tracker.flush();
-  }
-  /** A card's sheet over 서울 홈 (ADR-0117 5): an entry of its own (back closes it). `slot` (ADR-0124 6): what the card was
-   * on its shelf, its data-slot. */
-  function openBrowseCard(id: string | undefined, slot?: string) {
-    if (state.overlay || state.view !== 'home' || !id || guarded('browse-card')) return;
-    hush();
-    dispatch({ type: 'browseCard', id });
-    if (!state.overlay) return; // not taken (no list for today)
-    nav.push({ view: state.view, overlay: 'browse-card' });
-    if (browsing) browsing.cards++;
-    countBrowse({ e: 'browse_card', d: state.today, ...(slot === 'new' || slot === 'pull' || slot === 'base' ? { slot } : {}) });
-  }
+  const { countBrowse, openBrowse, endBrowse, openBrowseCard } = createBrowse(app);
 
   /** `keep` false (주소·숙소 with no public address, ADR-0103 Amendment 2): for this visit only — nothing saved, the sheet
    * stays open to say so. */

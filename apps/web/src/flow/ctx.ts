@@ -1,6 +1,7 @@
 // What mountApp hands its feature controllers (ADR-0126): the app's live state and the few shared tools. Read
 // lazily (getters and wrappers in app.ts), so a controller sees the state of the moment it runs, never a copy.
 import type { Delays, Deps } from '../app';
+import type { Nav } from '../nav';
 import type { Els } from '../render';
 import type { Action, State } from '../state';
 import type { Store } from '../store';
@@ -32,4 +33,10 @@ export interface AppCtx {
   guarded(key: string): boolean;
   openOverlay(kind: OverlayKind): void;
   closeOverlay(): void;
+  /** the browser's navigator (webdriver: QA runs are not counted) */
+  readonly nav0: Navigator | undefined;
+  /** history entries (nav.ts) */
+  readonly nav: Nav;
+  /** taps right after this one are ignored for a moment (an overlay just opened) */
+  hush(): void;
 }
