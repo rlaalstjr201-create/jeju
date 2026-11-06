@@ -1,6 +1,6 @@
 # 옛 주소 프로젝트(yeogwi, gwichana-jeju)에 올릴 것
 
-정합성 감사 36번·D5(`docs/coherence-audit-2026-10-03.md`). 옛 주소 `yeogwi.pages.dev`·`gwichana-jeju.pages.dev`에 앱 서비스워커가 깔린 기기는 301을 받아도 옛 캐시 셸을 계속 띄울 수 있다. 그래서 301 한 줄에 서비스워커 예외를 더한다.
+정합성 감사 36번·D5(`docs/audit/2026-10-03/coherence-audit.md`). 옛 주소 `yeogwi.pages.dev`·`gwichana-jeju.pages.dev`에 앱 서비스워커가 깔린 기기는 301을 받아도 옛 캐시 셸을 계속 띄울 수 있다. 그래서 301 한 줄에 서비스워커 예외를 더한다.
 
 - `_redirects`: `/sw.js`만 그대로(200) 내주고, 나머지 모든 경로는 `https://yeochana.com/:splat`으로 301(ADR-0082 6). 두 옛 프로젝트 모두 새 주소로 바로 보낸다(두 번 거치지 않는다).
 - `sw.js`: 브라우저가 서비스워커 갱신을 확인할 때 옛 것을 대신한다. 설치 즉시 활성화, 캐시를 모두 지우고 자기 등록을 풀고, 열린 창을 새 주소의 같은 경로로 보낸다. 요청은 가로채지 않는다.

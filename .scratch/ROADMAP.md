@@ -7,7 +7,7 @@
 - 끝나면 상태를 `done (커밋)`으로 바꾸고 다음 줄로 넘어간다.
 
 권고의 출처:
-- `docs/coherence-audit-2026-10-03.md`
+- `docs/audit/2026-10-03/coherence-audit.md`
 - `docs/research/data-sources-korea-japan.md`
 - `docs/research/ux-audit/report.md`
 - `docs/research/ux-audit/mockup-judgment.md` §5
@@ -15,7 +15,7 @@
 
 | # | 할 일 | 상태 | 왜 이 순서인가 | 근거·이슈 |
 |---|---|---|---|---|
-| 1 | 정합성 점검 고침 반영·배포·실화면 확인(홈 위치 처리, 기록 안내, IndexNow 날짜, 옛 주소 SW 해제, 스플래시, 문서 정리) | done (7e24914·8067097, 2026-10-03 배포, smoke 22/22) | 지금 서비스가 목적과 어긋난 채로 두지 않는다 | `docs/coherence-audit-2026-10-03.md` |
+| 1 | 정합성 점검 고침 반영·배포·실화면 확인(홈 위치 처리, 기록 안내, IndexNow 날짜, 옛 주소 SW 해제, 스플래시, 문서 정리) | done (7e24914·8067097, 2026-10-03 배포, smoke 22/22) | 지금 서비스가 목적과 어긋난 채로 두지 않는다 | `docs/audit/2026-10-03/coherence-audit.md` |
 | 2 | 5초 사용자 시험 5~10명(첫 화면 → 「뭐 하는 앱?」, 밥집 하나 정하기 시간) | ready-for-human | 목적이 「단번에」 읽히는지는 사람만 확인할 수 있다. 확장 전에 핵심을 검증한다 | `mockup-judgment.md` §5 통과 기준 |
 | 3 | e2e 기존 실패 2개 + 흔들리는 1건 | done (6f37a98 merge, 2026-10-04 이후 e2e 71~72/72 연속 통과) | 검증 장치가 흔들리면 이후 모든 단계의 신호가 흐려진다 | 세션 칩 2개 |
 | 4 | 축제·행사·시기 이벤트(스팸 아닌 방식) — 결정 완료(2026-10-03): 계절 명소 먼저 → 축제(두 출처 교차, 모드별 날짜, 닫기 없이 상한). ADR-0080 Accepted(2026-10-04, 개화 비교 조사 `docs/research/bloom-timing-02.md`). U1 판정·U2~U4 구현 완료(귤 따기 10곳 11·12월, 유채꽃 1곳). 다음: 주인 API허브 가입 → U-bloom(관측형 매화·벚꽃·단풍, 시즌 중 매일 갱신 작업 등록) / 벚꽃 규칙 문구 개선 후 재감사 / 2단계 축제 ADR | waiting — 1단계 배포 완료(2026-10-04). 축제는 철 측정 뒤(주인 결정), 관측형은 API허브 키(사람) | 제주 안에서 「지금」 가치를 키우는 가장 싼 확장. 데이터 출처가 TourAPI와 겹쳐 6번의 준비도 된다 | `.scratch/seasonal-events/issues/01-research-and-adr.md` |

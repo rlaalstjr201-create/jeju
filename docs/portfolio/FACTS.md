@@ -31,7 +31,7 @@
 
 | 기간 | 단계 | 시작·끝을 만든 결정 | 근거 |
 |---|---|---|---|
-| 2026-05-17 | **슈퍼앱 구상**. Grilling → Office Hours → Light Spec → Plan → Plan Review → 서브에이전트 배치 1~5 → Codex 리뷰 → 아키텍처 개선. 하루에 전 단계 | Office Hours D4 「가장 좁은 쐐기는 목표가 아니다. 전체 도메인」, D6 「제주 슈퍼앱」. ADR-0001~0015 | `docs/office_hours.md`, f3a18e7, 1863f8a, 6d8ec6f, e50d1d8, 63ef338~12bed10, e80e423, c35d58a, 47631d7~958e29f, `docs/architecture_review.md` |
+| 2026-05-17 | **슈퍼앱 구상**. Grilling → Office Hours → Light Spec → Plan → Plan Review → 서브에이전트 배치 1~5 → Codex 리뷰 → 아키텍처 개선. 하루에 전 단계 | Office Hours D4 「가장 좁은 쐐기는 목표가 아니다. 전체 도메인」, D6 「제주 슈퍼앱」. ADR-0001~0015 | `docs/office_hours.md`, f3a18e7, 1863f8a, 6d8ec6f, e50d1d8, 63ef338~12bed10, e80e423, c35d58a, 47631d7~958e29f, `docs/reviews/architecture-review-2026-05.md` |
 | 05-17 산출물 | Fastify API 5개, Postgres+pgvector, 카카오 로그인, 일정(DayPlan) 자동 배치 | ADR-0011(카카오 로그인 필수), ADR-0003(ScheduleComposer) | e2c366b, 48e9064, 메모리 `project_core_flow_complete.md`(217 tests) |
 | 05-18 | **큐레이션 파이프라인**: 두 갈래 추천(큐레이터 픽/인기), 외부 트렌드 ACL | ADR-0017, 0018 | c5ed559, b4ee938(교차 리뷰 ship-blocking 9건 수정) |
 | 05-18~19 | **Phase 0 데이터**: 비짓제주 API 1차 출처, 5슬롯 검증 체인, 네이버 블로그에서 숨은 명소 발굴 + LLM 추출, Gemma 4 26B tool calling | ADR-0023, 0024, 0029(구), 0033, 0040, 0041 | 697e09c, 2bb0cd9, a262e3f(329 tests), 메모리 `project_phase2_tool_calling.md`(428 tests) |
@@ -204,7 +204,7 @@ flowchart TB
 **워크플로(저장소 `CLAUDE.md` 표)**: 1 Grilling(`docs/context.md`) → 2 Office Hours(`docs/office_hours.md`) → 3 Light Spec(`specs/*.md`) → 4 Plan(`plans/*.md`) → 5 Plan Review → 6 서브에이전트 빌드 → 7 Codex 교차 리뷰 → 8 아키텍처 개선. 「단계 건너뛰지 마」. 결정은 `docs/adr/NNNN-title.md`로.
 - 실제 산출물: specs 23개, plans 6개(`ls specs plans`), ADR 82개 파일(번호 75개).
 - 웹 앱 기능은 대부분 「ADR → Light Spec → 구현 커밋」 짝으로 들어갔다. 예: ADR-0065 + `specs/indoor.md`(2fd1e5b) → a875aa5·a672db6. ADR-0066 + `specs/market-days.md`(25edac1) → c50c9a4.
-- 교차 리뷰 7단계: 5월에는 Codex가 실제로 돌았다(e80e423 「Codex BLOCKERs」, `docs/codex_review_curation.md` CRITICAL 3·MAJOR 6, `codex_review_curation_real.md` 「NO-SHIP」). 9월 이후 계정에서 실행 불가 → 「면제, opus 적대적 코드 감사 3라운드 + 시각 QA로 대체」(ADR-0058), 10-03에도 「확인 실패」로 기록하고 Claude 독립 리뷰로 대신함(2486480).
+- 교차 리뷰 7단계: 5월에는 Codex가 실제로 돌았다(e80e423 「Codex BLOCKERs」, `docs/reviews/codex_review_curation.md` CRITICAL 3·MAJOR 6, `codex_review_curation_real.md` 「NO-SHIP」). 9월 이후 계정에서 실행 불가 → 「면제, opus 적대적 코드 감사 3라운드 + 시각 QA로 대체」(ADR-0058), 10-03에도 「확인 실패」로 기록하고 Claude 독립 리뷰로 대신함(2486480).
 
 **검증 게이트(현재 수치)**
 

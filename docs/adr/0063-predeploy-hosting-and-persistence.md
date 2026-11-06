@@ -7,7 +7,7 @@ Amended by ADR-0076·ADR-0078 (2026-10-03): 「서버 없음」에 첫 서버 �
 
 ## Context
 
-배포 전 검수(`docs/predeploy-review.md`)에서 막힘 4건이 나왔다: 사실 확인 수정 미반영, spots.json 재생성 불가, 데이터·사진 출처 표시 없음, 호스트 설정. 저장한 곳·날짜별 플랜은 `localStorage`에만 있어 Safari 7일 삭제, 카카오톡 등 인앱 브라우저 저장소 분리, 기기 변경에 약하다.
+배포 전 검수(`docs/reviews/predeploy-review.md`)에서 막힘 4건이 나왔다: 사실 확인 수정 미반영, spots.json 재생성 불가, 데이터·사진 출처 표시 없음, 호스트 설정. 저장한 곳·날짜별 플랜은 `localStorage`에만 있어 Safari 7일 삭제, 카카오톡 등 인앱 브라우저 저장소 분리, 기기 변경에 약하다.
 
 ## Decision
 

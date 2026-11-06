@@ -29,7 +29,7 @@ Identical 4-line pattern repeated: `authenticate → findById → TripNotFoundEr
 
 **Fix:** `src/application/helpers/resolveOwnedTrip.ts` — extracted shared helper. 3 use cases now call a single function. Unit-tested independently.
 
-**ADR:** [ADR-0013](adr/0013-resolve-owned-trip-helper.md)
+**ADR:** [ADR-0013](../adr/0013-resolve-owned-trip-helper.md)
 
 ---
 
@@ -41,7 +41,7 @@ Layer direction violation: application layer directly references `infrastructure
 
 **Fix:** `src/application/ports/AuthService.ts` — port interface with `authenticate(accessToken): Promise<Traveller>`. `TravellerAuthService` implements `AuthService`. All use cases depend on the port only.
 
-**ADR:** [ADR-0012](adr/0012-auth-service-port.md)
+**ADR:** [ADR-0012](../adr/0012-auth-service-port.md)
 
 ---
 
@@ -71,7 +71,7 @@ Port interface defined alongside its adapter. `CreateTripUseCase` (application l
 
 Codex MINOR: the flag's sticky vs. clearable behaviour was undocumented, and the ON CONFLICT clause could overwrite `true` with `false` under certain conditions.
 
-**Decision:** Sticky (see [ADR-0014](adr/0014-is-auto-filled-sticky-semantics.md)). Once `is_auto_filled = true` is written to a shortlist row, it is preserved by the DB via `GREATEST(shortlist_spots.is_auto_filled, EXCLUDED.is_auto_filled)` in the ON CONFLICT clause. Cross-call delete+re-add is a known v1 limitation (documented in ADR-0014).
+**Decision:** Sticky (see [ADR-0014](../adr/0014-is-auto-filled-sticky-semantics.md)). Once `is_auto_filled = true` is written to a shortlist row, it is preserved by the DB via `GREATEST(shortlist_spots.is_auto_filled, EXCLUDED.is_auto_filled)` in the ON CONFLICT clause. Cross-call delete+re-add is a known v1 limitation (documented in ADR-0014).
 
 **Fix:** Changed ON CONFLICT clause. Added 3 integration tests covering within-call stickiness, day pin preservation, and manual-add default.
 
@@ -85,7 +85,7 @@ Codex MINOR: the flag's sticky vs. clearable behaviour was undocumented, and the
 
 `WHERE category = ANY($categories)` — warm path only returns Spots matching the Shortlist's categories. Single-category Shortlists may produce empty Days after gap-fill if all candidates cluster in one region.
 
-**Decision:** v1 accept (see [ADR-0015](adr/0015-warm-recommender-category-limitation.md)). Single-category single-region Shortlist is an edge case for Tagalong users. Empty Days remain editable (B5). Cold-start fallback considered for v2.
+**Decision:** v1 accept (see [ADR-0015](../adr/0015-warm-recommender-category-limitation.md)). Single-category single-region Shortlist is an edge case for Tagalong users. Empty Days remain editable (B5). Cold-start fallback considered for v2.
 
 **Fix:** Code comment added to `PostgresRecommenderAdapter.ts` warm path. No behaviour change.
 
