@@ -11,6 +11,7 @@ import { heldDay, type State, type VisitNote } from './state';
 import { MAX_SAVED } from './store';
 import { PAINS, WENT } from './usage/survey';
 import type { GeoError, NoOrigin } from './types';
+import type { OutsideAt } from './types';
 
 // Every string on screen (§9). Sentences end with a full stop; buttons, labels, titles and meta don't.
 export const COPY = {
@@ -353,4 +354,17 @@ export function howOf(s: State): string {
   // 강원 in another language (ADR-0102): its places are not translated yet — said once, as the 자동 지역's 동네 index does
   const ko = NATION && DEST[s.dest].sgg ? nationPart()?.copy.koNames : '';
   return ko ? `${how} ${ko}` : how;
+}
+
+/** The 자동 지역's words for a position `outside` (predeploy review M-1·m-2): outside Korea only where it was found to be
+ * (`abroad`); with the 자동 지역 in use, no 시군구 near — or, for a 숙소, the 검수한 곳 it is in; else null: Jeju's and
+ * Busan's own 「~ 밖」 words. */
+export function nationOutside(s: State, at: OutsideAt | undefined, stay: boolean): string | null {
+  if (!NATION) return null;
+  const n = nationPart();
+  if (!n) return null;
+  if (at === 'abroad') return stay ? n.copy.stayOutside : n.copy.outside;
+  if (s.dest !== 'nation') return null;
+  if (stay && (at === 'jeju' || at === 'busan' || isSggDest(at))) return n.copy.stayIn(BUSAN_COPY.destName[at]);
+  return stay ? n.copy.stayNodata : n.copy.nodata;
 }
