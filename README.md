@@ -27,7 +27,7 @@
 - 서비스: https://yeochana.com
 - 앱 코드: `apps/web` (화면 규칙 `apps/web/design/SPEC.md`)
 - 용어: `docs/context.md` · 결정 기록: `docs/adr/README.md`(색인) · 배포: `docs/deploy.md` · SEO: `docs/seo/README.md`
-- `apps/api`·`apps/mobile`은 이전 방향(2026-05) 코드다(`docs/adr/0027-mobile-web-frozen-data.md`).
+- 이전 방향(2026-05) 코드(`apps/api`·`apps/mobile`)는 git 기록에(커밋 `ebd709ba`) 남아 있다(`docs/adr/0027-mobile-web-frozen-data.md`).
 
 ## apps/web 실행
 
@@ -38,5 +38,3 @@ npm run dev      # 로컬 개발 서버
 npm test         # 단위 테스트(vitest)
 npm run build    # 앱 + 정적 랜딩 빌드
 ```
-
-옛 API의 로컬 DB 기동: `npm run db:up`
