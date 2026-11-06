@@ -36,7 +36,7 @@ const SWITCHED = existsSync(join(DIST, 'spots-busan.json'));
 const BUSAN_CHUNK = /^assets\/busan-part-\*\.js$/;
 /** 자동 지역 빌드(plans/nationwide-app.md 10, U19): what it adds on purpose is taken out the same way — dist/nation/ (the
  * 시도 files and their index), the /nation/* 캐시 줄 of _headers, and two chunks in the file and precache lists: nation-part
- * and busan (src/busan.ts, Busan's boundary, split out of busan-part only because nation-part's regionOf needs it too). A
+ * and busan (src/region/busan.ts, Busan's boundary, split out of busan-part only because nation-part's regionOf needs it too). A
  * Jeju device asks for none of them: the browser run below still counts its requests. 강원's list (spots-gangwon.json and
  * its 캐시 줄, ADR-0102) goes out with that build and is taken out the same way. */
 const NATION = existsSync(join(DIST, 'nation/index.json'));

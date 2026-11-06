@@ -24,7 +24,7 @@ export interface SeoulRow {
   PRO_TIME?: string;
 }
 
-/** What the app gets: one row per event, its time words as written (the app reads them, src/culture.ts). */
+/** What the app gets: one row per event, its time words as written (the app reads them, src/culture/culture.ts). */
 export interface CultureItem {
   id: string;
   title: string;

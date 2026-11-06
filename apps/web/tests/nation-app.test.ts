@@ -40,7 +40,7 @@ function mount(o: { dest?: string; sgg?: string; at?: Point; search?: string } =
 const ntIds = () => cardIds().length > 0 && cardIds().every((id) => id?.startsWith('nt-'));
 
 describe.runIf(NATION)('자동 지역 (switch on)', () => {
-  // as main.ts does before the mount where the 자동 지역 is in play (src/release.ts loadNation): the index from the shipped file
+  // as main.ts does before the mount where the 자동 지역 is in play (src/region/release.ts loadNation): the index from the shipped file
   beforeAll(async () => {
     vi.stubGlobal('fetch', (url: string) => {
       const m = /^\/nation\/(\w+)\.json\?v=\w+$/.exec(url);

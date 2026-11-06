@@ -163,7 +163,7 @@ export interface State {
    * (opening, back in front, midnight, the moments 노을 볼 곳 opens and closes, the sunrise, and each answer to a
    * request); null before it is read. */
   clock: number | null;
-  /** ADR-0081: the home's survey line may show this visit (src/survey.ts surveyDue; drawn only while 기록 is on). */
+  /** ADR-0081: the home's survey line may show this visit (src/usage/survey.ts surveyDue; drawn only while 기록 is on). */
   surveyLine: boolean;
   /** the 의견 보내기 sheet was sent: it says 고마워요 until closed. */
   feedbackSent: boolean;

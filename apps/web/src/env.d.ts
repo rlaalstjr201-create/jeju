@@ -4,11 +4,11 @@ declare const __SPOTS_V__: string;
 declare const __APP_V__: string;
 /** sha256 of the translated place files public/i18n/places.*.json (first 10 hex chars), injected by vite.config.ts (ADR-0093). */
 declare const __PLACES_V__: string;
-/** 출시 스위치 (plans/busan.md): true only with `--mode busan`. Read in src/release.ts only. */
+/** 출시 스위치 (plans/busan.md): true only with `--mode busan`. Read in src/region/release.ts only. */
 declare const __BUSAN__: boolean;
 /** sha256 of public/spots-busan.json (first 10 hex chars), '' while there is none; injected by vite.config.ts. */
 declare const __BUSAN_V__: string;
-/** 자동 지역 스위치 (plans/nationwide-app.md 1.2): true in `vite build` and `--mode nation`, false in `--mode busan`·`--mode jeju` and npm test. Read in src/release.ts only. */
+/** 자동 지역 스위치 (plans/nationwide-app.md 1.2): true in `vite build` and `--mode nation`, false in `--mode busan`·`--mode jeju` and npm test. Read in src/region/release.ts only. */
 declare const __NATION__: boolean;
 /** sha256 of data/nation/index.json (first 10 hex chars), '' while there is none; injected by vite.config.ts. */
 declare const __NATION_V__: string;

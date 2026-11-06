@@ -228,7 +228,7 @@ export default defineConfig(({ command, mode: given }) => {
   base: '/',
   // No SPA fallback in dev/preview either: the app has no routes, an unknown path is a 404 (as on the host).
   appType: 'mpa',
-  // 출시 스위치: switchOn above, read in src/release.ts
+  // 출시 스위치: switchOn above, read in src/region/release.ts
   define: {
     __SPOTS_V__: JSON.stringify(SPOTS_V),
     __PLACES_V__: JSON.stringify(PLACES_V),
@@ -244,7 +244,7 @@ export default defineConfig(({ command, mode: given }) => {
   // a production build (SITE_URL) without the three analytics settings fails here (ADR-0078 2)
   plugins: [busanBlock(mode, nation), serviceWorker(mode, nation), siteUrl(), busanFile(mode), nationFiles(nation), pagesNotFound(), analytics(command === 'build' ? analyticsEnv(process.env) : null)],
   // no preload helper (ADR-0093): the dynamic imports are the other languages' words, which a Korean visit never asks for,
-  // and Busan's part (switched-on build only, src/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
+  // and Busan's part (switched-on build only, src/region/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
   // switch on
   build: { target: 'es2020', modulePreload: false, minify: 'terser' },
   };

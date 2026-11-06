@@ -102,9 +102,9 @@ export function apply(lang: string, w: Lang, doc: Document, places: Promise<unkn
     }
   };
   name();
-  // Busan's 12 come with its part, which may be loaded later (src/release.ts)
+  // Busan's 12 come with its part, which may be loaded later (src/region/release.ts)
   if (BUSAN) whenBusan(name);
-  // the 자동 지역's words come with its part (src/release.ts); its 시군구 and places stay Korean, said once (koNames)
+  // the 자동 지역's words come with its part (src/region/release.ts); its 시군구 and places stay Korean, said once (koNames)
   if (NATION) whenNation(() => Object.assign(nationPart()!.copy, w.nation));
   // 오늘 근처에서 하는 것's come with its part; the titles and places stay Korean
   if (NATION) whenCulture((p) => p.words(w.culture));

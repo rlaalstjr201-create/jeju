@@ -214,7 +214,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   const today0 = dayOf(clockNow());
   // 여행지 (ADR-0094, ADR-0096): with the switch on, what index.html's first script decided (a link, the one kept, an
   // older device's Jeju), or none — the 시작 화면 is then up and Jeju is drawn under it until a choice. A link is read
-  // again here: only the app knows whether a ?stay= point is in Busan (src/dest.ts). Off: Jeju, nothing read or kept.
+  // again here: only the app knows whether a ?stay= point is in Busan (src/region/dest.ts). Off: Jeju, nothing read or kept.
   const early = win as (Window & { __dest?: unknown; __destBy?: unknown }) | null;
   // (Busan's part, with the 시작 화면's module, was asked for before the mount, main.ts; without it the cover goes and this is Jeju)
   const covered = BUSAN && doc.documentElement.classList.contains('yc-start') && !!doc.getElementById('ycStart');
@@ -1363,7 +1363,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     if (action === 'other-dest') {
       const d = b.dataset.dest;
       if (isDest(d) && !guarded('other-dest') && state.view === 'saved') {
-        // Busan's (the 자동 지역's) part first (src/release.ts): a Jeju visit has not downloaded it
+        // Busan's (the 자동 지역's) part first (src/region/release.ts): a Jeju visit has not downloaded it
         if (BUSAN && !released(d)) void partOf(d).then((ok) => ok && !signal.aborted && state.view === 'saved' && (switchDest(d), request('show')));
         else {
           switchDest(d);
@@ -1736,7 +1736,7 @@ export function mountApp(doc: Document, deps: Deps): App {
    * its 동네 index, opened in the sheet (the sheet stays open). */
   function pickDest(d: Dest) {
     if (d === state.dest) return;
-    // Busan's (the 자동 지역's) part first (src/release.ts): a Jeju visit has not downloaded it
+    // Busan's (the 자동 지역's) part first (src/region/release.ts): a Jeju visit has not downloaded it
     if (BUSAN && !released(d)) return void partOf(d).then((ok) => ok && !signal.aborted && pickDest(d));
     const fix = state.origin?.key === GPS_KEY ? state.origin.point : null;
     // the 자동 지역 never chosen on this device: 서울시청's 시군구 (the nearest 자동 지역 one now that 중구 is 서울's, ADR-0106) until one is picked in its index

@@ -1,5 +1,5 @@
 /**
- * 위치 판정 정확도 (ADR-0104): 곳마다 그 좌표를 앱과 같은 규칙(src/nation.ts nearestSgg·regionOf)으로 판정해 자기 시군구로 나오는 몫.
+ * 위치 판정 정확도 (ADR-0104): 곳마다 그 좌표를 앱과 같은 규칙(src/region/nation.ts nearestSgg·regionOf)으로 판정해 자기 시군구로 나오는 몫.
  *
  *   npx tsx scripts/nation/region-accuracy.ts [index.json …]     기본은 data/nation/index.json
  *

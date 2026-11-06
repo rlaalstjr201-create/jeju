@@ -15,7 +15,7 @@ function locate(fresh = false): Promise<Point> {
       ({ coords }) => {
         const p = { lat: coords.latitude, lng: coords.longitude };
         // inside a destination open in this build (plans/busan.md: with the switch off, Jeju only — as before). Outside
-        // Jeju with the switch on, Busan's part (its boundary) is asked for first (src/release.ts) — the 자동 지역's with it
+        // Jeju with the switch on, Busan's part (its boundary) is asked for first (src/region/release.ts) — the 자동 지역's with it
         // where that is on (plans/nationwide-app.md 9: a position outside Jeju and Busan).
         if (releasedDestOf(p)) resolve(p);
         // (where it is, for the words: outside Korea only by nation.ts inKorea — predeploy review M-1)
@@ -210,7 +210,7 @@ function start() {
     });
   }
 }
-/** With the switch on, Busan's part goes in before the mount where Busan is in play from the start (src/release.ts): the
+/** With the switch on, Busan's part goes in before the mount where Busan is in play from the start (src/region/release.ts): the
  * 시작 화면 is up, or index.html's first script decided Busan (a link, the device's choice). A failure (offline, 4 s)
  * mounts Jeju. Anywhere else it is asked for only once Busan is chosen. */
 const busanFirst = (): Promise<unknown> =>

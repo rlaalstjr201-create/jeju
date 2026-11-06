@@ -74,7 +74,7 @@ export function kopisKind(genre: string): string {
 const WD = '[월화수목금토일]';
 const DAYS_OK = new RegExp(`^${WD}(-${WD})?(, ${WD}(-${WD})?)*$`);
 /** 회차 (ADR-0113 2): 「화요일 ~ 금요일(20:00), 토요일(15:00,19:00)」 → 「화-금요일 20:00 / 토요일 15:00, 19:00」, the Seoul
- * list's time words (src/culture.ts parseCultureTime reads them). A group not read (HOL, words in place of a time) is left
+ * list's time words (src/culture/culture.ts parseCultureTime reads them). A group not read (HOL, words in place of a time) is left
  * out; '' when none is read — that show is left out. */
 export function kopisTime(dt: string): string {
   const out: string[] = [];

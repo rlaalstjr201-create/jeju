@@ -34,7 +34,7 @@ export const KEYS = {
   inapp: 'jeju.inappSeen',
   /** ADR-0063: the home-screen nudge has been shown once (true). */
   install: 'jeju.installSeen',
-  /** ADR-0081: the home's survey line `{ map?, shown?, tapped? }` (src/survey.ts), this device only. */
+  /** ADR-0081: the home's survey line `{ map?, shown?, tapped? }` (src/usage/survey.ts), this device only. */
   survey: 'jeju.survey',
   session: 'jeju.session',
   /** sessionStorage, ADR-0065: 비 와요(실내만) is on (true). Off = missing. Rain is today's matter: never kept

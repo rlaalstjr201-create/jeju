@@ -87,7 +87,7 @@ const COPY_REVERT = new Set([
 const MOODS = new Set(['rest', 'walk', 'new', 'food']);
 const len = (s) => [...s].length;
 // Some source names carry leading/trailing spaces, tabs or U+3000 — they end up in map/booking search
-// URLs (S32). Collapse any whitespace run and trim; src/data.ts applies the same rule at load time.
+// URLs (S32). Collapse any whitespace run and trim; src/pick/data.ts applies the same rule at load time.
 const cleanName = (s) => String(s).replace(/\s+/g, ' ').trim();
 // Reason as shipped (design/SPEC.md §10·§12.4, 3판): whitespace cleaned, 돈까스 → 돈가스, no final full
 // stop whatever the ending (scripts/reason.mjs).

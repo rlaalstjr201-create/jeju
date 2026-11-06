@@ -1,6 +1,6 @@
 /**
  * 부산 경계 (plans/busan.md S5, specs/busan.md 2절 「부산 안」): freezes OSM's 부산광역시 boundary (relation 2396450, admin_level 4)
- * into data/geo/busan-boundary.json, the one ring src/dest.ts tests a point against. Input: an Overpass answer (JSON,
+ * into data/geo/busan-boundary.json, the one ring src/region/dest.ts tests a point against. Input: an Overpass answer (JSON,
  * `out geom`) to `relation(2396450);out geom;`. The outer ways are joined end to end into one closed ring, simplified
  * (Douglas–Peucker, TOLERANCE_M on a local metric plane, scripts/coast-freeze.mjs) and rounded to 4 decimals (about 10 m).
  * Run once by hand: node scripts/busan/boundary-freeze.mjs <overpass.json>. The build and the app never fetch.
