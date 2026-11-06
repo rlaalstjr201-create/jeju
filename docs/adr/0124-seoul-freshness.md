@@ -41,3 +41,9 @@ Status: Accepted (2026-11-06, 주인 요청 「네이버 홈판·유튜브처럼
 ## 되돌리는 법
 
 - `culture-view.ts shelvesBlock`에서 `buildShelves`·`homeShelves`에 넘기는 최신화 인자를 빼면 예전 순서다. 기록 키 `jeju.cards`는 두어도 해가 없다.
+
+## 구현 확인 (2026-11-06)
+
+- 테스트 `tests/freshness.test.ts`(같은 날 같은 순서, 다음 날 다른 순서, 자주 본 카드 뒤로, 안 본 카드 넷째 칸, 새 카드 앞 1~3칸, 닫힌 곳 0, 거리 상한, 기록 30일·600곳·깨진 값·던지는 저장소), `events.test.ts`(slot 카운터·거절), `culture-app.test.ts`(누른 카드 `slot: 'base'`, `jeju.cards`에 남음).
+- 진입 gzip 61,024 B(기준선 60,990 B, +34 B, 예산 70,000 B). `check:jeju` 차이는 개인정보 안내 4개 파일(이번 문구)뿐.
+- 375 화면(새 컨텍스트, 용산, 11-06 운영 목록): `apps/web/design/qa/seoul-freshness/` — 「새로 들어옴」은 그림 오른쪽 위(타일 아이콘이 왼쪽 위). 이번 주 서울 01회(11-05)가 새로 들어옴인데, 그 선반은 6장 미만이라 「선반 더 보기」 뒤에 있다.
