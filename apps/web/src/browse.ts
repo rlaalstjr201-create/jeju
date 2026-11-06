@@ -5,6 +5,7 @@
 import { nowness, openNow, parseCultureTime, prominence, seoulMinutes, whyNow, type CultureItem, type Now } from './culture';
 import { HOOD_KM, bandOf, isFun, likelyOpen, type Band } from './fun';
 import { isWeek } from './weekly';
+import { arrange, bandOfKm, dayIndex, isNewly, type Fresh, type Slot } from './freshness';
 import { distanceKm, type Kind, type Point, type Spot } from './pick';
 
 /** The shelves (ADR-0115 1·6): 동네, the seven curated kinds (카페·디저트 g8, ADR-0120; 밤 놀거리 g10, ADR-0122), 새로 생긴 곳 (ADR-0123), 이번 주 서울 (ADR-0118), then the day's own list (무대, 오늘만·이번 주까지,
@@ -33,6 +34,8 @@ export interface BrowseCard {
   trip: { walk: boolean; minutes: number } | null;
   /** a 동네's: what is in it now */
   count?: number;
+  /** 서울 홈 최신화 (ADR-0124): 새로 들어옴, 당겨옴 or 기본 — with `fresh` only */
+  slot?: Slot;
 }
 export interface Shelf {
   key: ShelfKey;
@@ -80,8 +83,13 @@ export function inHood(hood: CultureItem, items: readonly CultureItem[], now: No
     .map(({ item, why, trip }) => ({ item, why, trip }));
 }
 
-/** The shelves for `now` (`sunset`: minutes after midnight KST, sun.ts), nearest first where there is a basis (`origin`). */
-export function buildShelves(items: readonly CultureItem[], now: Now, origin: Point | null, sunset: number): Shelf[] {
+/** The day an item came into the data (ADR-0124 1): a curated place's or the week's; the day's own list has none. */
+export const addedOf = (it: CultureItem): string | undefined => (isFun(it) ? it.fun.added : isWeek(it) ? it.week.added : undefined);
+
+/** The shelves for `now` (`sunset`: minutes after midnight KST, sun.ts), nearest first where there is a basis (`origin`).
+ * With `fresh` (서울 홈, ADR-0124): each shelf in today's order (freshness.ts arrange) — out of all it could hold, then the
+ * first PER_SHELF. */
+export function buildShelves(items: readonly CultureItem[], now: Now, origin: Point | null, sunset: number, fresh?: Fresh): Shelf[] {
   const cands = items.map((item) => candOf(item, now, origin)).filter((c): c is Cand => !!c);
   const g = (k: string) => (c: Cand) => isFun(c.item) && c.item.fun.g === k;
   /** the day's own list (서울시·KOPIS): neither a curated place nor the week's */
@@ -117,9 +125,14 @@ export function buildShelves(items: readonly CultureItem[], now: Now, origin: Po
         .filter((c) => c.count >= HOOD_MIN)
         .sort((a, b) => (origin ? far(a) - far(b) : b.count - a.count));
     }
+    if (fresh) {
+      // the day's own: prominence before distance, as in `order`; the others by distance
+      const tier = (c: Cand) => (isFun(c.item) || isWeek(c.item) ? 0 : prominence(c.item) * 5) + bandOfKm(c.km);
+      cards = arrange(cards.map((c) => ({ c, id: c.item.id, km: c.km, tier: tier(c), isNew: isNewly(addedOf(c.item), now.day) })), fresh).map(({ card, slot }) => ({ ...card.c, slot }));
+    }
     cards = cards.slice(0, PER_SHELF);
     for (const c of cards) shown.add(c.item.id);
-    if (cards.length) out.push({ key, cards: cards.map(({ item, why, trip, count }) => ({ item, why, trip, ...(count !== undefined ? { count } : {}) })) });
+    if (cards.length) out.push({ key, cards: cards.map(({ item, why, trip, count, slot }) => ({ item, why, trip, ...(count !== undefined ? { count } : {}), ...(slot ? { slot } : {}) })) });
   }
   const rank = ORDER[bandOf(now.minute, sunset)];
   const short = (s: Shelf) => (s.cards.length < FULL ? 1 : 0);
@@ -150,7 +163,15 @@ const kakaoOf = (link: string) => /place\.map\.kakao\.com\/(\d+)/.exec(link)?.[1
  * place once — a place another shelf before it took (by id, 카카오 id or name: a curated place may be a mood's too) is passed
  * over — at most PER_SHELF a shelf, then those under FULL at the back (ADR-0115 Amendment 3). A mood's shelf is there with
  * no place in it too (ADR-0117 Amendment 5): its heading is the way to that mood. */
-export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShelf, readonly Spot[]>>, minute: number, sunset: number, here: Spot | null = null): HomeShelf[] {
+/** The shelves after the hour's first two turn one place a day (ADR-0124 4): 전시·박물관 stays last. */
+export function rotateShelves(keys: readonly ShelfKey[], day: string): ShelfKey[] {
+  const head = keys.slice(0, 2);
+  const mid = keys.slice(2).filter((k) => k !== 'exhibit');
+  const k = mid.length ? dayIndex(day) % mid.length : 0;
+  return [...head, ...mid.slice(k), ...mid.slice(0, k), ...keys.slice(2).filter((x) => x === 'exhibit')];
+}
+/** `day` (서울 홈 최신화, ADR-0124): the shelves turned (rotateShelves). */
+export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShelf, readonly Spot[]>>, minute: number, sunset: number, here: Spot | null = null, day?: string): HomeShelf[] {
   const rank = ORDER[bandOf(minute, sunset)];
   // 지금 여기서's place (`here`) is on the home already: not on a shelf again
   const own = (c: BrowseCard) => !!here && (c.item.title === here.name || (!!here.kakaoPlaceId && kakaoOf(c.item.link) === here.kakaoPlaceId));
@@ -158,7 +179,8 @@ export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShe
   const fun = new Map(shelves.map((s) => [s.key, s]));
   const taken = new Set<string>([...shelves.flatMap((s) => s.cards.flatMap((c) => [c.item.title, kakaoOf(c.item.link) ?? ''])), ...(here ? [here.id, here.name, here.kakaoPlaceId ?? ''] : [])].filter(Boolean));
   const out: HomeShelf[] = [];
-  for (const key of homeOrder([...fun.keys()].sort((a, b) => rank.indexOf(a) - rank.indexOf(b)), minute)) {
+  const keys = [...fun.keys()].sort((a, b) => rank.indexOf(a) - rank.indexOf(b));
+  for (const key of homeOrder(day ? rotateShelves(keys, day) : keys, minute)) {
     const f = fun.get(key as ShelfKey);
     if (f) {
       out.push(f);

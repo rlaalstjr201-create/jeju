@@ -8,8 +8,9 @@ import { WHY_TEXT, pickCulture, type CultureItem, type Now, type Pick } from './
 import type { Fetch } from './effects';
 import { funItems, isFun, realItems } from './fun';
 import { isWeek, weeklyItems } from './weekly';
+import { arrange, bandOfKm, cardsStore, type Cards } from './freshness';
 import { goLink, type MapApp } from './links';
-import { TRAVEL_TEXT, formatMinutes, type Spot } from './pick';
+import { TRAVEL_TEXT, distanceKm, formatMinutes, type Spot } from './pick';
 import { COPY } from './render';
 import type { State } from './state';
 import { sunsetMinutes } from './sun';
@@ -156,17 +157,36 @@ export function browseBody(doc: Document, s: State, origin: Origin | null): HTML
  * in the hour's order (browse.ts homeShelves), and at the end the source lines of what they show. `card`: a mood place's name
  * and how far, as the home words them. Null with no shelf at all. */
 let last: { sig: string; box: HTMLElement } | null = null;
+/** 본 카드 기록 (ADR-0124 2): this device's, read once a visit, written a second after a change and when the page is hidden */
+let cards: (Cards & { flush(): void }) | null = null;
+function cardsOf(doc: Document, today: string): Cards {
+  if (cards) return cards;
+  const view = doc.defaultView;
+  let storage: Storage | null = null;
+  try {
+    storage = view?.localStorage ?? null;
+  } catch {
+    storage = null;
+  }
+  const c = cardsStore(storage, today);
+  view?.addEventListener('pagehide', () => c.flush());
+  return (cards = c);
+}
 export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Partial<Record<MoodShelf, Spot[]>>, labels: Record<MoodShelf, string>, card: (spot: Spot) => MoodCard, here: Spot | null = null): HTMLElement | null {
   const c = s.culture?.day === s.today ? s.culture : null;
   const day = (c?.day ?? s.today) as Day;
   const sunset = sunsetMinutes(origin.point, day);
   const minute = c?.minute ?? s.clock ?? 12 * 60;
-  const list = homeShelves(c ? buildShelves(c.items, nowOf(c), origin.point, sunset) : [], moods, minute, sunset, here);
+  // 최신화 (ADR-0124): today's order from yesterday's record, the same every draw today
+  const book = cardsOf(doc, day);
+  const fresh = book.fresh(day);
+  const turned = Object.fromEntries(Object.entries(moods).map(([k, spots]) => [k, arrange((spots ?? []).map((x) => ({ x, id: x.id, km: distanceKm(origin.point, x), tier: bandOfKm(distanceKm(origin.point, x)), isNew: false })), fresh).map((a) => a.card.x)]));
+  const list = homeShelves(c ? buildShelves(c.items, nowOf(c), origin.point, sunset, fresh) : [], turned, minute, sunset, here, day);
   if (!list.length) return null;
   const rows = list.map((sh) => ('spots' in sh ? { key: sh.key, cards: sh.spots.map(card) } : sh));
   // the same shelves as drawn (the list's minute moved on, nothing it shows did): the same block, so its scroll, focus and
   // pictures stay as they are (ADR-0117 Amendment 4)
-  const sig = JSON.stringify([labels, rows.map((r) => [r.key, r.cards.map((x) => ('item' in x ? [x.item.id, x.why, x.trip, x.count] : [x.id, x.image, x.trip, x.name]))])]);
+  const sig = JSON.stringify([labels, rows.map((r) => [r.key, r.cards.map((x) => ('item' in x ? [x.item.id, x.why, x.trip, x.count, x.slot] : [x.id, x.image, x.trip, x.name]))])]);
   if (last?.sig === sig && last.box.isConnected) return last.box;
   const shown = list.flatMap((sh) => ('cards' in sh ? sh.cards.map((x) => x.item) : []));
   // only the sources of what is shown: the city's for an event, KOPIS for a show, 카카오맵 for a curated place
@@ -176,7 +196,7 @@ export function shelvesBlock(doc: Document, s: State, origin: Origin, moods: Par
     ...(shown.some(isFun) ? [el(doc, 'p', { class: 'cult-src', 'data-src': 'kakao' }, BROWSE_COPY.fromKakao)] : []),
     ...(shown.some(isWeek) ? [weekSrc(doc)] : []),
   ];
-  const box = homeShelvesView(doc, rows, labels, src);
+  const box = homeShelvesView(doc, rows, labels, src, { seen: (id) => book.seen(id, day), pressed: (id) => book.pressed(id, day) });
   last = { sig, box };
   return box;
 }

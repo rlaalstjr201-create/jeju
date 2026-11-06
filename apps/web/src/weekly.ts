@@ -26,13 +26,15 @@ export interface WeekRow {
   /** 매일 발굴: the 동네 or 구 its tile names (ADR-0123 7) */
   hood?: string;
   gu?: string;
+  /** the day it came into the data (ADR-0124 1): 매일 발굴's `added`, an 이번 주 서울 round's file day */
+  added?: string;
 }
 /** A 매일 발굴 row (data/seoul/discovery-seoul.json, ADR-0123): a week's row, or a new place (새로 연 곳: fun.ts) */
 export type FoundRow = WeekRow & { word: string; added: string; line?: string; stay?: 'G4' | 'G8' | 'G10' };
 export const FOUND_ROWS = FOUND.items as FoundRow[];
 /** A week's item among the day's: `week` says where it was read, whether there may be a queue, its tile's place and its
  * picture's source. */
-export type WeekItem = CultureItem & { week: { reserve: WeekRow['reserve']; kakao: string; where: string; from?: string } };
+export type WeekItem = CultureItem & { week: { reserve: WeekRow['reserve']; kakao: string; where: string; from?: string; added?: string } };
 export const isWeek = (i: CultureItem): i is WeekItem => 'week' in i;
 
 const key = (s: string) => s.replace(/[^\p{L}\p{N}]/gu, '').toLowerCase();
@@ -47,11 +49,11 @@ export function usualTime(r: Pick<WeekRow, 'kind' | 'place'>): string {
   return '11:00~20:00';
 }
 /** The week's rows: 이번 주 서울 01회 and 매일 발굴's dated ones (its new places are fun.ts's, ADR-0123 4). */
-const WEEK_ROWS: WeekRow[] = [...(FILE.items as WeekRow[]), ...FOUND_ROWS.filter((r) => r.kind !== '새로 연 곳')];
+const WEEK_ROWS: WeekRow[] = [...(FILE.items as WeekRow[]).map((r) => ({ ...r, added: r.added ?? FILE.day })), ...FOUND_ROWS.filter((r) => r.kind !== '새로 연 곳')];
 /** The rows still running on `day` (not ended) and not in the day's own list (`own`, by name), as items. */
 export function weeklyItems(day: string, own: readonly CultureItem[] = [], rows: readonly WeekRow[] = WEEK_ROWS): WeekItem[] {
   const names = new Set(own.map((i) => key(i.title)));
   return rows
     .filter((r) => r.end >= day && !names.has(key(r.name)))
-    .map((r) => ({ id: r.id, title: r.name, kind: r.kind, place: r.place, gu: '', lat: r.lat, lng: r.lng, start: r.start, end: r.end, time: r.time || usualTime(r), free: false, forAll: true, link: r.src, image: r.img ?? '', week: { reserve: r.reserve, kakao: r.kakao, where: r.hood || r.gu || r.place, ...(r.img && r.imgFrom ? { from: r.imgFrom } : {}) } }));
+    .map((r) => ({ id: r.id, title: r.name, kind: r.kind, place: r.place, gu: '', lat: r.lat, lng: r.lng, start: r.start, end: r.end, time: r.time || usualTime(r), free: false, forAll: true, link: r.src, image: r.img ?? '', week: { reserve: r.reserve, kakao: r.kakao, where: r.hood || r.gu || r.place, ...(r.img && r.imgFrom ? { from: r.imgFrom } : {}), ...(r.added ? { added: r.added } : {}) } }));
 }

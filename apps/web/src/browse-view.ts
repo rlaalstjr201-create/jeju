@@ -46,6 +46,8 @@ export const BROWSE_COPY = {
   fromWeek: '정보: 네이버 블로그·뉴스 · 장소: 카카오맵',
   /** a card's picture taken from its source page (ADR-0123 6): 「그림: 노들섬」 */
   picFrom: (site: string) => `그림: ${site}`,
+  /** 서울 홈 최신화 (ADR-0124 1): a card that came into the data in the last 7 days */
+  newly: '새로 들어옴',
 };
 
 function el(doc: Document, tag: string, attrs: Record<string, string> = {}, text?: string): HTMLElement {
@@ -126,10 +128,14 @@ function pic(doc: Document, it: CultureItem, later?: IntersectionObserver): HTML
 
 /** A shelf's card: the picture or tile, the title, why now, how far; pressed, its sheet. */
 function cardLi(doc: Document, c: BrowseCard, later?: IntersectionObserver): HTMLElement {
-  const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id });
+  // its slot (ADR-0124 6): read by app.ts for browse_card when it is pressed
+  const b = el(doc, 'button', { type: 'button', class: 'bcard', 'data-action': 'browse-card', 'data-id': c.item.id, ...(c.slot ? { 'data-slot': c.slot } : {}) });
   const hood = isFun(c.item) && c.item.fun.g === 'hood';
+  const box = pic(doc, c.item, later);
+  // 새로 들어옴 (ADR-0124 1): a small mark on the picture's corner
+  if (c.slot === 'new') box.append(el(doc, 'span', { class: 'bnew' }, BROWSE_COPY.newly));
   // a 동네's tile names it already; any other card's name is under its picture or tile
-  b.append(pic(doc, c.item, later), el(doc, 'span', { class: hood ? 'nm sr' : 'nm' }, c.item.title));
+  b.append(box, el(doc, 'span', { class: hood ? 'nm sr' : 'nm' }, c.item.title));
   // a curated place's tile names its 동네: under the name, its kind (「베이커리」)
   const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ')[0] : c.why;
   const trip = tripText(c);
@@ -156,15 +162,48 @@ export interface MoodCard {
 export type HomeRow = Shelf | { key: MoodShelf; cards: MoodCard[] };
 
 let homeWatch: IntersectionObserver | undefined;
+let cardEyes: IntersectionObserver | undefined;
 /** 선반 더 보기 pressed: open for the rest of the visit (a redraw, the list's minute moving on, keeps it open) */
 let allShelves = false;
 /** 서울 홈의 선반 (ADR-0117, specs/seoul-home-shelves.md): each shelf a heading — a mood's is its button (the same as the mood
  * button: its results) — and its cards side by side. A mood card is that mood's results with the place first (Amendment 1).
  * The pictures are asked for once in view, and while the 시작 화면 covers the home held back for it (later.ts, ADR-0116). */
-export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labels: Record<MoodShelf, string>, sources: HTMLElement[]): HTMLElement {
+/** 본 카드 기록 (ADR-0124 2): a card seen (half of it on screen, not under the 시작 화면) once a visit, and pressed */
+export interface CardWatch {
+  seen(id: string): void;
+  pressed(id: string): void;
+}
+/** the cards counted as seen this visit (a page load) */
+const counted = new Set<string>();
+const cardId = (b: HTMLElement) => b.dataset.id ?? b.dataset.pin;
+export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labels: Record<MoodShelf, string>, sources: HTMLElement[], watch?: CardWatch): HTMLElement {
   const box = el(doc, 'div', { id: 'shelves', class: 'shelves' });
   const view = doc.defaultView;
   const start = () => doc.documentElement.classList.contains('yc-start');
+  const eyes =
+    watch && view && 'IntersectionObserver' in view
+      ? new view.IntersectionObserver(
+          (seen, obs) => {
+            for (const e of seen) {
+              const id = cardId(e.target as HTMLElement);
+              if (!e.isIntersecting || start() || !id) continue;
+              obs.unobserve(e.target);
+              if (counted.has(id)) continue;
+              counted.add(id);
+              watch.seen(id);
+            }
+          },
+          { threshold: 0.5 },
+        )
+      : undefined;
+  cardEyes?.disconnect();
+  cardEyes = eyes;
+  if (watch)
+    box.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest?.<HTMLElement>('.bcard');
+      const id = b && cardId(b);
+      if (id) watch.pressed(id);
+    });
   const later =
     view && 'IntersectionObserver' in view
       ? new view.IntersectionObserver((seen, obs) => {
@@ -224,6 +263,7 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
     if (!shown[i] && !allShelves) sec.hidden = true;
     box.append(sec);
   }
+  if (eyes) for (const b of box.querySelectorAll<HTMLElement>('.bcard')) eyes.observe(b);
   if (shown.includes(false) && !allShelves) box.append(more);
   box.append(...sources);
   return box;

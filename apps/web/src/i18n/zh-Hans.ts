@@ -259,6 +259,7 @@ export const ZH: Lang = {
       post: '查看来源文章',
       fromWeek: '信息：NAVER博客·新闻·地点信息：Kakao地图',
       picFrom: (site: string) => `图片：${site}`,
+      newly: '新加入',
     },
   },
   mood: {

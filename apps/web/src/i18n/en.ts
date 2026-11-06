@@ -266,6 +266,7 @@ export const EN: Lang = {
       post: 'See the source post',
       fromWeek: 'Info: Naver blogs · news · Place info: Kakao Map',
       picFrom: (site: string) => `Picture: ${site}`,
+      newly: 'Just added',
     },
   },
   mood: {

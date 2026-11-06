@@ -264,6 +264,7 @@ export const JA: Lang = {
       post: '出典の記事を見る',
       fromWeek: '情報：NAVERブログ・ニュース・場所の情報：カカオマップ',
       picFrom: (site: string) => `画像：${site}`,
+      newly: '新着',
     },
   },
   mood: {

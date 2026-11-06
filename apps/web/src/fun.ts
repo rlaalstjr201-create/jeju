@@ -22,9 +22,11 @@ interface FunRow {
   /** its official site's og:image (ADR-0123 6), loaded from there, and that site's name */
   img?: string;
   imgFrom?: string;
+  /** the day it came into the data (ADR-0124 1): 새로 들어옴 for 7 days; none = the base list, never new */
+  added?: string;
 }
 /** A curated place or a 동네 among the day's items: `fun` says which (`from`: its picture's source). */
-export type FunItem = CultureItem & { fun: { g: FunG | 'hood'; word: string; walkin: boolean; hood?: string; from?: string } };
+export type FunItem = CultureItem & { fun: { g: FunG | 'hood'; word: string; walkin: boolean; hood?: string; from?: string; added?: string } };
 export const isFun = (i: CultureItem): i is FunItem => 'fun' in i;
 /** The day's own list (events, shows) without the curated places and the week's (ADR-0118). */
 export const realItems = (items: readonly CultureItem[]): CultureItem[] => items.filter((i) => !isFun(i) && !isWeek(i));
@@ -38,12 +40,12 @@ export const HOOD_PREFIX = 'hood:';
 export function foundPlaces(day: string, rows: readonly FoundRow[] = FOUND_ROWS): FunRow[] {
   return rows
     .filter((r) => r.kind === '새로 연 곳' && r.start <= day && (r.end >= day || !!r.stay))
-    .map((r) => ({ id: r.id, name: r.name, g: r.end >= day ? 'NEW' : r.stay!, word: r.word, lat: r.lat, lng: r.lng, line: r.line ?? `${r.word} · ${r.hood ?? r.gu ?? ''}`, walkin: true, url: r.kakao, ...(r.hood ? { hood: r.hood } : {}), ...(r.img ? { img: r.img, imgFrom: r.imgFrom } : {}) }));
+    .map((r) => ({ id: r.id, name: r.name, g: r.end >= day ? 'NEW' : r.stay!, word: r.word, lat: r.lat, lng: r.lng, line: r.line ?? `${r.word} · ${r.hood ?? r.gu ?? ''}`, walkin: true, url: r.kakao, ...(r.hood ? { hood: r.hood } : {}), ...(r.img ? { img: r.img, imgFrom: r.imgFrom } : {}), ...(r.added ? { added: r.added } : {}) }));
 }
 /** The curated places and the 동네 as items of `day`'s list. */
 export function funItems(day: string): FunItem[] {
   const base = { gu: '', start: day, end: day, time: '', free: false, forAll: true };
-  const places = [...(FILE.places as FunRow[]), ...foundPlaces(day)].map((p) => ({ ...base, id: p.id, title: p.name, kind: p.word, place: p.line, lat: p.lat, lng: p.lng, link: p.url, image: p.img ?? '', fun: { g: p.g, word: p.word, walkin: p.walkin, ...(p.hood ? { hood: p.hood } : {}), ...(p.img && p.imgFrom ? { from: p.imgFrom } : {}) } }));
+  const places = [...(FILE.places as FunRow[]), ...foundPlaces(day)].map((p) => ({ ...base, id: p.id, title: p.name, kind: p.word, place: p.line, lat: p.lat, lng: p.lng, link: p.url, image: p.img ?? '', fun: { g: p.g, word: p.word, walkin: p.walkin, ...(p.hood ? { hood: p.hood } : {}), ...(p.img && p.imgFrom ? { from: p.imgFrom } : {}), ...(p.added ? { added: p.added } : {}) } }));
   const hoods = FILE.hoods.map((h) => ({ ...base, image: '', id: `${HOOD_PREFIX}${h.name}`, title: h.name, kind: '동네', place: '', lat: h.lat, lng: h.lng, link: '', fun: { g: 'hood' as const, word: '동네', walkin: true } }));
   return [...places, ...hoods];
 }

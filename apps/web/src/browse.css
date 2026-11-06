@@ -153,3 +153,8 @@
 @media (prefers-reduced-motion: no-preference) {
   .browse { animation: fade 160ms ease-out; }
 }
+/* 새로 들어옴 (ADR-0124 1): a small mark on the picture's corner, in the line's ink, no shadow */
+.bnew {
+  position: absolute; top: 6px; left: 6px; z-index: 1; padding: 0 6px; border: 1.5px solid var(--ln, currentColor);
+  border-radius: var(--r-pill); background: var(--bg); color: var(--ink, var(--text)); font-size: 0.9375rem; line-height: 1.35; font-weight: 700;
+}
