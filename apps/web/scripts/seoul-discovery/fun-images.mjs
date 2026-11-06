@@ -3,14 +3,14 @@
  * 홈페이지 링크가 공식 사이트일 때만(블로그·SNS·지도·예약 플랫폼 아님) 그 og:image를 검사해 붙인다. 카카오 place 페이지·블로그 그림은
  * 쓰지 않는다. 한 번만 돈다(결과 review/seoul-discovery/fun-images-01.json이 있으면 멈춤, 끊기면 .part에서 이어 감).
  *   node scripts/seoul-discovery/fun-images.mjs
- *   node scripts/seoul-discovery/fun-images.mjs --refilter   호출 없이, 받아 둔 결과에 지금의 lib.mjs 거르기(BLOCKED·BAD_IMAGE)와
+ *   node scripts/seoul-discovery/fun-images.mjs --refilter   호출 없이, 받아 둔 결과에 지금의 lib.mjs 거르기(BLOCKED·주소 규칙 badImage — 크기는 모름)와
  *                                                           OWNER_DROP을 다시 적용해 fun-seoul.json을 다시 쓴다
  */
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { homepageOf, pictureOf } from './discover.mjs';
-import { BAD_IMAGE, okPage } from './lib.mjs';
+import { badImage, okPage } from './lib.mjs';
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const out = resolve(webRoot, 'review/seoul-discovery/fun-images-01.json');
@@ -18,7 +18,10 @@ const part = `${out}.part`;
 const FUN = resolve(webRoot, 'data/seoul/fun-seoul.json');
 const FUNFILE = JSON.parse(readFileSync(FUN, 'utf8'));
 /** 첫 실행 결과를 눈으로 본 뒤 손으로 뺀 것 (다른 업체의 사이트로 이어진 링크): id → 까닭 */
-export const OWNER_DROP = { 'kk-992535148': 'LG아트센터 서울 — 네이버 지역 링크가 다른 업체(오복수산) 사이트' };
+export const OWNER_DROP = {
+  'kk-992535148': 'LG아트센터 서울 — 네이버 지역 링크가 다른 업체(오복수산) 사이트',
+  'kk-680545832': '천년동안도 낙원 — 다른 지점(대학로) 사진 (리뷰 m3)',
+};
 function apply(file, done) {
   const byG = {};
   for (const p of file.places) {
@@ -39,7 +42,7 @@ if (process.argv.includes('--refilter')) {
   let n = 0;
   for (const [id, r] of Object.entries(res.places)) {
     if (!r.img) continue;
-    const why = OWNER_DROP[id] ? `owner: ${OWNER_DROP[id]}` : !okPage(r.imgPage) || !okPage(r.home) ? 'blocked page (refilter)' : BAD_IMAGE.test(r.img) ? 'logo-like address (refilter)' : '';
+    const why = OWNER_DROP[id] ? `owner: ${OWNER_DROP[id]}` : !okPage(r.imgPage) || !okPage(r.home) ? 'blocked page (refilter)' : badImage(r.img, { w: 1200, h: 630 }, 1) ? `${badImage(r.img, { w: 1200, h: 630 }, 1)} (refilter)` : '';
     if (why) {
       r.why = why;
       r.refiltered = r.img;

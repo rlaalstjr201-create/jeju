@@ -11,7 +11,7 @@
   },
   "G8": {
    "n": 77,
-   "img": 3
+   "img": 2
   },
   "G2": {
    "n": 13,
@@ -19,7 +19,7 @@
   },
   "G7": {
    "n": 91,
-   "img": 12
+   "img": 8
   },
   "G5": {
    "n": 68,
@@ -1518,9 +1518,10 @@
    "name": "예그린씨어터",
    "g": "G7",
    "home": "http://yegreen.kr",
-   "img": "https://storage.googleapis.com/cr-resource/image/db1a9159aa678b739bb95e90ba87823b/yegreen/yegreen-screen-thumb.png?_1793947708",
    "imgFrom": "yegreen.kr",
-   "imgPage": "https://www.yegreen.kr/"
+   "imgPage": "https://www.yegreen.kr/",
+   "why": "product thumbnail or site capture (refilter)",
+   "refiltered": "https://storage.googleapis.com/cr-resource/image/db1a9159aa678b739bb95e90ba87823b/yegreen/yegreen-screen-thumb.png?_1793947708"
   },
   "kk-23278986": {
    "name": "브라이언스커피",
@@ -1556,9 +1557,10 @@
    "name": "프릳츠 도화점",
    "g": "G8",
    "home": "http://www.fritz.co.kr/",
-   "img": "https://fritz.co.kr/web/product/small/201801/directtrade.png",
    "imgFrom": "프릳츠커피컴퍼니",
-   "imgPage": "https://www.fritz.co.kr/"
+   "imgPage": "https://www.fritz.co.kr/",
+   "why": "product thumbnail or site capture (refilter)",
+   "refiltered": "https://fritz.co.kr/web/product/small/201801/directtrade.png"
   },
   "kk-249011741": {
    "name": "진부책방스튜디오",
@@ -2037,9 +2039,10 @@
    "name": "부기우기",
    "g": "G7",
    "home": "https://www.bgwg.kr/",
-   "img": "https://oopy.lazyrockets.com/api/v2/notion/image?src=https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fdd48af40-11fd-4a60-b245-fbb3ee4a4372%2F9be5abfc-16ea-4744-88ad-4812401747ab%2F23d30bec-fef8-47e2-84e6-66263d6e7480.jpg&blockId=37e1fcba-dbca-4717-842c-6ca7d078c92b&width=2400",
    "imgFrom": "부기우기 Boogie Woogie",
-   "imgPage": "https://www.bgwg.kr/"
+   "imgPage": "https://www.bgwg.kr/",
+   "why": "platform image host (refilter)",
+   "refiltered": "https://oopy.lazyrockets.com/api/v2/notion/image?src=https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fdd48af40-11fd-4a60-b245-fbb3ee4a4372%2F9be5abfc-16ea-4744-88ad-4812401747ab%2F23d30bec-fef8-47e2-84e6-66263d6e7480.jpg&blockId=37e1fcba-dbca-4717-842c-6ca7d078c92b&width=2400"
   },
   "kk-628138029": {
    "name": "룸엘이스케이프",
@@ -2093,9 +2096,10 @@
    "name": "천년동안도 낙원",
    "g": "G7",
    "home": "https://chunnyun.com/?utm_source=naver_place&utm_medium=referral",
-   "img": "https://chunnyun.com/assets/venue/story-20261006/daehangno-queue.png",
    "imgFrom": "천년동안도",
-   "imgPage": "https://chunnyun.com/?utm_source=naver_place&utm_medium=referral"
+   "imgPage": "https://chunnyun.com/?utm_source=naver_place&utm_medium=referral",
+   "why": "owner: 천년동안도 낙원 — 다른 지점(대학로) 사진 (리뷰 m3)",
+   "refiltered": "https://chunnyun.com/assets/venue/story-20261006/daehangno-queue.png"
   },
   "kk-680691609": {
    "name": "서울스카이",
@@ -2207,9 +2211,10 @@
    "name": "삼일로창고극장",
    "g": "G7",
    "home": "http://samilro.com/",
-   "img": "https://storage.googleapis.com/cr-resource/image/a32d4706151aa78639025ae37f8fb7c4/samilro/samilro-screen-thumb.png?_1793947745",
    "imgFrom": "samilro.com",
-   "imgPage": "https://www.samilro.com/"
+   "imgPage": "https://www.samilro.com/",
+   "why": "product thumbnail or site capture (refilter)",
+   "refiltered": "https://storage.googleapis.com/cr-resource/image/a32d4706151aa78639025ae37f8fb7c4/samilro/samilro-screen-thumb.png?_1793947745"
   },
   "kk-7934963": {
    "name": "남대문시장",
@@ -2591,5 +2596,5 @@
    "why": "no official homepage in Naver local"
   }
  },
- "refiltered": 3
+ "refiltered": 5
 }

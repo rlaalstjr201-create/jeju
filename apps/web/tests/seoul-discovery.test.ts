@@ -158,6 +158,10 @@ describe('pictures (10절)', () => {
     expect(L.badImage('https://a.kr/kakao1.jpg', { w: 1200, h: 630 }, 1)).toBeTruthy();
     expect(L.badImage('https://a.kr/p.png', { w: 500, h: 500 }, 1)).toMatch(/square/);
     expect(L.badImage('https://a.kr/p.png', { w: 1080, h: 1080 }, 1)).toBe('');
+    // Amendment 2: a Notion proxy, a shop's product thumbnail, a site's own screen capture
+    expect(L.badImage('https://oopy.lazyrockets.com/api/v2/notion/image?src=x', { w: 1200, h: 630 }, 1)).toMatch(/platform/);
+    expect(L.badImage('https://fritz.co.kr/web/product/small/a.png', { w: 1200, h: 630 }, 1)).toBeTruthy();
+    expect(L.badImage('https://storage.googleapis.com/cr/yegreen-screen-thumb.png', { w: 1200, h: 630 }, 1)).toBeTruthy();
   });
   it('a news article is a picture source only when its title has the name\'s core word', () => {
     expect(L.coreWord('2026 코치 LIVE YOUR STORY 팝업')).toBe('코치');

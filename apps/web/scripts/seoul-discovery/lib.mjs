@@ -213,6 +213,9 @@ export function ogOf(html, page) {
   return { image, site: meta('og:site_name') };
 }
 export const BAD_IMAGE = /logo|favicon|icon|symbol|noimage|no_image|no-image|placeholder|blank|default|sample|temp_|sns[-_]?img|sns_share|share_default|share[-_]?image|sns[-_]?represent|\/kakao\d*\.(?:jpe?g|png)/i;
+/** 그림이 이 호스트·경로면 쓰지 않는다 (ADR-0123 Amendment 2): 노션 프록시, 상품 썸네일, 사이트 화면 캡처 */
+export const BAD_IMAGE_HOST = /^https:\/\/([^/]*\.)?(oopy\.lazyrockets\.com|notion\.so|notion\.site|notion\.com|oopy\.io)\//i;
+export const BAD_IMAGE_PATH = /\/product\/|screen-thumb/i;
 /** 기준 02 10절: 로고로 보이는 크기 — 정사각형이면서 600px 이하 */
 export const LOGO_SQUARE = 600;
 /** 그림 바이트의 가로·세로 (png·jpeg·gif·webp) */
@@ -246,6 +249,8 @@ export const MAX_IMAGE = 1.5 * 1024 * 1024;
 export function badImage(url, size, bytes) {
   if (!/^https:\/\//.test(url)) return 'not https';
   if (BAD_IMAGE.test(url)) return 'logo-like address';
+  if (BAD_IMAGE_HOST.test(url)) return 'platform image host';
+  if (BAD_IMAGE_PATH.test(url)) return 'product thumbnail or site capture';
   if (bytes > MAX_IMAGE) return 'over 1.5 MB';
   if (!size) return 'not an image';
   if (size.w === size.h && size.w <= LOGO_SQUARE) return 'small square (logo-like)';
