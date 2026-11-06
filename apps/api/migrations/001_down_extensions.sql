@@ -1,1 +1,0 @@
--- Extensions are left in place on down migration (shared infrastructure)
