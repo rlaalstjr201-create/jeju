@@ -15,7 +15,7 @@
  *   node scripts/seoul-discovery/discover.mjs release [--day D]    첫 회차: 감사 통과한 hold를 자료로
  * 키는 저장소 루트 .env(NAVER_CLIENT_ID·NAVER_CLIENT_SECRET·KAKAO_REST_API_KEY)이고 출력·파일 어디에도 남기지 않는다.
  */
-import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { env } from '../famous-measure.mjs';
@@ -250,6 +250,7 @@ async function enrich() {
   saveLedger(led);
   for (let i = 0, n = 1; i < rows.length; i += L.PER_JUDGE, n++) writeJ(resolve(dayDir, 'judge', `in-${String(n).padStart(2, '0')}.json`), { day: DAY, criteria: 'criteria-01.md', rows: rows.slice(i, i + L.PER_JUDGE) });
   if (!rows.length) writeJ(out, { day: DAY, criteria: 'criteria-01.md', rows: [] });
+  unlinkSync(part); // the rows are in judge/in-NN.json now
   console.log(JSON.stringify({ picked: pick.length, known: known.length, judge: rows.length, kakaoFound: rows.filter((r) => r.kakao).length, kakaoUsedToday: kakaoUsed() }));
 }
 

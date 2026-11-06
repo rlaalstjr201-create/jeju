@@ -1,0 +1,6265 @@
+{
+ "note": "ADR-0123 장부. 이름(norm)·카카오 id·본 글(해시)을 다시 판정하지 않으려고 둔다.",
+ "names": {
+  "1984": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "피프티북스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "주신당": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "기욤청담점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "경동시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "문화제빵": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "지인시어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "괴르츠": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스탠바이미": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "예스24라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "티켓링크1975씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "탈출브라더스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "껠끄쇼즈": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "유어마인드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서울풍물시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더빅테일": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "교집합": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아르코예술극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "번역가의서재": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "이숙희": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "현대카드언더스테이지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "드림캐처클라이밍짐": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서브라이엇해방촌": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "패션5한남점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "베통성수": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "여의도한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "잠실한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "벤의서재": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "나무사이로": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "개화산랜드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "부자책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "어느날": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "무신사개러지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "소나기그림책양조장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "믹스매치": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "국립극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "인사동한증막": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "커피리브레연남점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "무브온": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "픽셀퍼인치": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "포차": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "뮤트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "심심": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "호텔레토": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "국립정동극장세실": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "심리편집샵서로": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "깅꼬서울": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "이화여자대학교삼성홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "식스나잇": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "광진교8번가": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "커피앤시가렛": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "새고서림": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "수상한창고": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "웨스트브릿지라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "코브": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "당인리책발전소": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오프더월": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "앤트러사이트합정점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "명동난타극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "터틀힙": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "브릭베이글": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "긱라이브하우스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아지토라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "ku시네마테크": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "로우키": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "숲세권라이브": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "피커스클라이밍구로": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "소셜서재": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "63스카이피크닉": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "땡스북스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오케이어맨션": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "허밋": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "커리큘럼": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오르빗": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "새들러하우스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "온쉼표": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "기러기둥지익선동본점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "얼스어스서촌점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책방곱셈": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "다이스타운": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "링크아트센터드림": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "키이스케이프강남점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스페이스본사우나": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "동물책방정글핌피문래점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "턴다운서비스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "커피한약방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스카이락볼링장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "딥띵커": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "이스케이프시티": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오즈보드게임카페": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "제로헌드레드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "블루스퀘어": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "비주류": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "카페비온디앤": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "ㅎㄷ카페": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "메종인디아트래블앤북스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "비트포비아던전루나": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "징가": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "코코로카라": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스태픽스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "키이스케이프백산방역": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "올오어낫싱": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "페르마타": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "에포케책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "js아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오월의종한남점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "친정숲불한증막": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "거암아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "성북동빵공장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "방탈출둡두": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "풍월당": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "방탈출미로": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "락교라이브펍": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책익다": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "포프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "피터팬1978본점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "산울림": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "쉐프조": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "투떰즈업": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "디셈버": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더챕터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "퍼즐팩토리강남2호점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "n서울타워": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아소토베이커리": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스타더스트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "머스타드한남": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "미네르바": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "세토리라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "소원책담": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더누크": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "어거스트클라이밍": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "자키러브": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "우무지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "퍼스트커피랩강남역점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "찰리이스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "을지로쎄시봉": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "디거이즈디깅": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "인현골방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "쟝블랑제리": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "김영모과자점서초그랑자이점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "돌체": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "고래사냥": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "일지아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "백제불한증막인삼사우나": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "마이웨이": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "cj아지트광흥창": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "백암아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "라율아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "예술의전당": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "세티라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "잠원한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "광나루한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "낙산공원제1전망광장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서점리스본포르투": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "북커스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "쌀롱드무지끄": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "올웨이즈씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서울숲씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "북서울꿈의숲전망대": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "업스테이지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "목동파라곤스파": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "사진책방책가도": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "벙커컴퍼니압구정점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "비주얼콜렉트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "모래내책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "선유도공원선유도전망대": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "후케즈": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "국일관사우나": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "두산아트센터연강홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스피키지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "창신책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "플래시백": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더숲아카데미하우스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "세실마루": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "여가시간": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "바이닐한강": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "세종문화회관s씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "망원시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "카페페퍼": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "테라로사포스코센터점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "머더파커건대2호점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "동대문일요시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "산문집": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "후즈데어": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "방탈출토끼굴": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "셰입오브타임": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "연남5701": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "딱정벌레": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "푸시풋살룬": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "홍익대학교대학로아트센터소극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "원스타베이커리": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "뮤즈온": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "솔버2호점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "중랑천놀빛광장전망대": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아라아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "초록서림": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "와아": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서울의시간을그리다": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오츠커피": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "벨르": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "퍼즐팩토리홍대본점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "레코드스톡": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "파이키": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "피스북스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "메이플스토리이스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "링크원스테이지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "콤포타블남산": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "옥타바리움라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아트포레스트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "썸띵어바웃커피": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "판타스트릭tgc": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "선셋무드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책방파란": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "카페산아래": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "부빙": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "어글리": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "잠실종합운동장잠실야구장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "유토피아찜질방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "읽는공간사색서재": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서연아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "북티크": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "코블러": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "플러스씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "개꿀이스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책방오타루": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책방시나브로": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스톤즈클라이밍": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "별이빛나는밤에": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "베이글리스트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책방시행과착오": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "동묘시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "윤당아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "크래커클라이밍": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스코프서촌점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "예그린씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "브라이언스커피": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "명화라이브홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더굿씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "채널1969": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "프릳츠도화점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "진부책방스튜디오": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "신흥시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "팻어케이크": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "르챔버": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "tom": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "클럽프리버드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "단편선성수": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "파랑씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "피오니홍대점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "식물": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "강남씨어터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "메종엠오": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "노말에이": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "앨리스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "콜린": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책바": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "프로퍼커피바": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "밀도성수본점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "엑스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "공상온도": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "광장시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "롯데콘서트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "동서울그랜드볼링센터": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "딥블루레이크": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "테일러커피연남1호점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "숲세권라이브카인드스퀘어점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "넥스트에디션건대2호점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "인스크립트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "연희사과": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "키이스케이프스테이션": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "바티칸": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "만유인력": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "티켓투이스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "5to7": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스튜디오엔텐바흐": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "페잇퍼": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "진저베어": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "뮤직컴플렉스서울": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "디코더": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "토바바스하우스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "바이닐성수": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "단편선방탈출": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "살롱문보우": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아우라락볼링장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "드림이스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "nol씨어터합정": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "도토리책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "바이닐인사이드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "수퍼소닉": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "조앤도슨": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "소행성": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "소보루북스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "1979라이브펍2호점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "셜록홈즈잠실새내점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "키이스케이프메모리컴퍼니": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "셜록홈즈종각점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "어질인왕십리역점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "윤숲": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "금토일샴페인빠": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "리저브": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "라티튜드32": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "크라임씨너스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "차경": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "9로평상": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "엉금책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "비터스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "943킹스크로스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스토리지북앤필름로터리점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "이들스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "만동제과연남점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "쿠쿠룸1089": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "뉴올재즈라운지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "듈스튜디오": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "미드나잇145롯데월드타워점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "부기우기": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "룸엘이스케이프": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "제스트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "메멘토": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "옥류헌릴렉스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오프더월클라이밍": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "그림서재": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "사운드스테이션ma": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더블랙볼링장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "천년동안도낙원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서울스카이": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "북살롱오티움": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "룸익스케이프인디고블루점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "타르틴베이커리한남점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "네모네": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "을지로노가리골목": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "사운즈굿": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "도프레코드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "독립문영천시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "그루트클라이밍": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "베뉴지아쿠아24": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스몰브랜더": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "jtn아트홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "롤링홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "리치몬드과자점성산본점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "고척스카이돔": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "테레사그림책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "삼일로창고극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "남대문시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "수연산방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "세시셀라도산공원점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "용양봉저정공원하늘전망대": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "양재꽃시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "올림픽공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "비화림": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "예스24아트원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "국립정동극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "웨어하우스볼더링": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "건영스파밸리": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "틴틴홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "클럽에반스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "난지한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "망원한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "통인시장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "뚝섬한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "반포한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "양화한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "학림다방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "노들섬": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "아치서재": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "글로우스트라이크": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "라끌레": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "어글리베이커리": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "코프키노": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "바게티": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "여행자극장": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "세종문화회관": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "필동서재절기": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스트레인지프룻": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서울레코드": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "nol씨어터대학로우리투자증권홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "오아시스방탈출": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "어니언안국": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "태극당": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "이촌한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "강서한강공원": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "소수책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "프랭크의골동품가게": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "인트리그미션": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "카탈리스트": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "더파인더방탈출": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "그루브": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "마망젤라또성수점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "젠제로": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "책방꼬마": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "비파티세리공덕점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "공간과몰입": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "미드나잇": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "디도재즈라운지": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "클레버타운": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "스파렉스동묘점": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "예스24원더로크홀": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "피즈소셜클럽": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "러브러브디럭스": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "보스톤": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "서촌그책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "하이그라운드제빵소": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "lg아트센터서울": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "자작나무책방": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "맨홀커피": {
+   "status": "known",
+   "day": "2026-11-06",
+   "from": "fun-seoul"
+  },
+  "코치liveyourstory팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "닌텐도팝업스토어서울": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "조앤프렌즈팝업세븐일레븐": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "zooc주크30주년서촌팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "벤츠성수전기차팝업메르세데스벤츠스튜디오서울": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "재혼황후동대제국으로의초대팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "연리희재개성주악더현대팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "요넥스yonexyeouidoopen배드민턴팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "롱샴마이플리아쥬팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "베이글리스트x라크루뜨팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "비디비치라이트인블랙팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "카비시x달빛천사팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026소공인디깅위크디깅라이프랩팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "알리가차쏜다팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "무신사뷰티성수": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "cu홍대ak점다마고치콘셉트스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "cu성수디저트파크점포켓몬팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "현대자동차n팝업스토어아반떼n모노크롬": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "킴스델리마켓롯데백화점본점팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "꼬달이서울휴가김천김밥축제캐릭터": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "안경수팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "지리산soomstation팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "렌시스성수팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "팀홀튼밴프타운성수": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "도드람난로회팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "샤넬홀리데이팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "파우더현대서울팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "아웃도어보이스팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더현대서울뷰티페스타빈느시드유쉬어등팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "요지야마모토청담팝업미공개드로잉전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "사진상점f한국후지필름오프라인매장": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "캐논사진한방당팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "무신사엠프티성수협업컬렉션팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "리센느펄스pulse팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "팝콘d스퀘어대원미디어ip복합문화공간": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "nba라인프렌즈브라운팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더현대서울크리스마스빌리지": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "피크퍼포먼스40주년팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더현대서울주다안팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "오키뷰티더현대서울팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "마이클팝업더현대서울": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "여의도모던하우스크리스마스팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "롬앤10주년팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "트리밍버드10주년플래그십스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "픽스피자성수팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "빼빼로데이2026성수팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "이강소일어나고사라지는롯데뮤지엄": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "잠실빕스": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "롯데타운크리스마스마켓2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "칸초탐정하우스팝업롯데타운크리스마스마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "벨리곰테이크스테이션팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "광화문크리스마스마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "청계천크리스마스마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "석촌호수루미나리에": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "디올홀리데이팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "세븐일레븐x조앤프렌즈빼빼로데이팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "롯데타운크리스마스마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "박경묵formsoftime전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "롯데몰벨리타운청량리": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "쿠로코의농구팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "빈티지팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "도쿄리벤저스마이키마트팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "야마다군과lv999의사랑을하다팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "xreal홍대팝업스토어xrealauraxreal1pro": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "cu포켓몬콘셉트스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "cu다마고치콘셉트스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "이마트24재혼황후팝업존": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "진격의거인thefinalseason팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "데이식스팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "꿈빛파티시엘팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "팝콘d스퀘어성수tcgpopup": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "저스틴비버skylrk팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "fosea포시팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "솔루나세븐데이팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "트러스트마이바이브쟌뭉레코드팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "텐바이텐만지작스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "하이라이트픽팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "또봇팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "상수리나무아래x잊혀진들판팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "리센느pulse성수팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "홍대핫토이팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "산리오문방구팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "오브젝트소품샵소프트썸네일팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "말랑이팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "리락쿠마x하이큐팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "메이플스토리방탈출뒤죽박죽루디브리엄": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "마법소녀마도카마기카팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "ak플라자홍대애니메이션팝업스토어귀멸의칼날체인소맨등": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "롯데웰푸드빼빼로하트어택순회버스팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더마비버터베어팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "goomi전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "니케x무신사컬래버팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "스파오프렌즈매장홍대와강남에이어세번째": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "용산문화재단11월무료전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "용산문화재단greenroombyyeonyeoin": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "리만머핀서울김윤신개인전새로운연속": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "savekarinamlbwintercity한남팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "movingtodamsoloshow": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "bytebite사진전형슬우": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "라미블랑제리팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "그라운드시소한남티보에렘어느마법같은하루": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "w한남w컨셉첫단독플래그십스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "verve70재즈의과거와현재를듣다팝업전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "로시에losié한남동브랜드쇼룸": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "카드캡터사쿠라콜라보카페": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "경남웰니스팝업지리산soomstation": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "경남관광북촌행사한복여행체험": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "경남관광송파구팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "bleach천년혈전편콜라보카페": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026k세일페스타": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "모던하우스매지컬크리스마스팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "엘앤티렉서스올뉴es350e팝업전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "현대자동차nmoment팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "zooc30slayer주크론칭30주년팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "칠칠치못한클럽교원웰스체험형팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026푸드위크코리아": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "르노코리아팝업부스잠실야구장고별경기후원": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "카페고사리익스프레스": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "긴카이자카야": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "지미존스서울을지로3가역점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "열두달화덕1호점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "팀홀튼종로타워점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "삼진어묵롯데백화점노원점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "리센느미니4집pulse팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "러버블팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "오스테리아쵸비": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "트리밍버드10주년성수플래그십스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "남짐릇": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더현대서울팝업스토어etf베이커": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "안경수秀팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더하우스오브테라로사서울성수": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "버질스퀘어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "cu포켓몬컨셉스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "코코로반성수본점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "진사천훠궈성수점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "팀빗성수역점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "라코스테성수플래그십스토어카페포함": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026더현대서울크리스마스빌리지": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "무신사킥스어그ugg팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "김천김밥축제꼬달이의서울휴가": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "안다르인모션팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "재혼황후테마팝업트렌드랩성수점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "뉴발란스플라잉77팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "다프네랩국내첫단독팝업스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "다이닛성수플래그십스토어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "타이니빌슈퍼마켓팝업산리오": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "호호랑수집가마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "직거래장터화들장및플리마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "소원성취페스타": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026번개플리마켓페스티벌": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026서울한국춤페스티벌플리마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "필름플리마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "중구반려견올림픽": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "이태원앤티크스트릿플리마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "백억커피송파삼전점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "김숙성을지로역점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "로쿠데나시사케바": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "사이드와인더카페겸바": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "간빠맥주마곡나루형제점": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "커넥츠커피마곡": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "석촌호수루미나리에2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "번개장터번개플리마켓페스티벌번플페2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026서리풀청소년축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "성동구송정제방길음악축제플리마켓": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "푸드위크코리아2026제21회서울국제식품산업전": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "서울카페쇼2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026대한민국관광기념품박람회": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "언리미티드에디션2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "리움여성작가환경미술전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "서도호전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "웨인티보전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "샤갈전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "설원기개인전": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "그라운드시소전시11월22일종료전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "조르조모란디전시": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "발견유물속보전황자화통": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026환수유물특별전시독대獨對안중근이": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "훈맹정음100주년점자체험": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "광화문마켓2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "서울빛초롱축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "더현대서울크리스마스h빌리지": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "명동크리스마스조명신세계스퀘어": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "제14회2026온가족책잔치": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026중구해피투개더반려동물축제해피워크": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026명동스퀘어미션페스타": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "밤마실먹거리장터음식문화축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "제3회2026문화도시도봉도깨비축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "중랑구소상공인페스타가치살장": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "서울대공원가을축제2026": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "서울식물원국화축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "서울식물원온실야간개장11월축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "조계사국화축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "세종문화회관커튼콜가든2026가을시즌": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "당현천빛조형물공공미술": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "와일드라운드스매쉬": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "아이온2서비스1주년기념축제": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "성수휴게소k관광벤처성수팝업": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "2026궁디팡팡캣페스타": {
+   "status": "seed",
+   "day": "2026-11-06",
+   "from": "seoul-weekly 01"
+  },
+  "세이투셰플래그십": {
+   "status": "known",
+   "day": "2026-11-06",
+   "cid": "20261106-034"
+  },
+  "더현대크리스마스빌리지": {
+   "status": "reverted",
+   "day": "2026-11-06",
+   "cid": "20261106-001"
+  },
+  "까사부사노송파점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-002"
+  },
+  "2026롯데타운크리스마스마켓": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-003"
+  },
+  "뉴뉴맨션안국점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-004"
+  },
+  "쿠엔토": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-005"
+  },
+  "cu성수디저트파크점포켓몬콘셉트스토어": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-006"
+  },
+  "루이티하우스": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-007"
+  },
+  "2026성동미래직업체험온마을체험학습축제": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-008"
+  },
+  "대원미디어팝콘d스퀘어2호점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-009"
+  },
+  "빛과소금연남": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-010"
+  },
+  "nmoment팝업스토어": {
+   "status": "reverted",
+   "day": "2026-11-06",
+   "cid": "20261106-011"
+  },
+  "아카시아스잠실점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-012"
+  },
+  "2026신세계홀리데이마켓": {
+   "status": "reverted",
+   "day": "2026-11-06",
+   "cid": "20261106-013"
+  },
+  "무신사메가스토어성수": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-014"
+  },
+  "우우건대입구역점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-015"
+  },
+  "vitto비토론칭행사": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-016"
+  },
+  "냅독": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-017"
+  },
+  "artincoffee": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-018"
+  },
+  "칼하트성수": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-019"
+  },
+  "밀레브": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-020"
+  },
+  "불가리비제로원익스피리언스팝업": {
+   "status": "reverted",
+   "day": "2026-11-06",
+   "cid": "20261106-021"
+  },
+  "로와이드일원점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-022"
+  },
+  "nofixedform팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-023"
+  },
+  "페이퍼리안": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-024"
+  },
+  "베르베르": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-025"
+  },
+  "올기팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-026"
+  },
+  "소리사람물srsrm": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-027"
+  },
+  "sevendays": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-028"
+  },
+  "쿠오카서촌플래그십스토어": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-029"
+  },
+  "사카바렌": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-030"
+  },
+  "이웃집통통이팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-031"
+  },
+  "시시sisi": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-032"
+  },
+  "광화문k빵축제2026": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-033"
+  },
+  "조앤프렌즈빼빼로데이팝업스토어": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-035"
+  },
+  "앤트러사이트북촌점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-036"
+  },
+  "불가리x송은빛과형상그리고비전": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-037"
+  },
+  "주크zooc30주년팝업스토어": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-038"
+  },
+  "엠엔에이": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-039"
+  },
+  "생명의기원사라진세계들": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-040"
+  },
+  "2026롤드컵팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-041"
+  },
+  "콤포타블커피북촌점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-042"
+  },
+  "시월의선유선유도원축제": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-043"
+  },
+  "2026소공인디깅위크성수팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-044"
+  },
+  "테이퍼드커피": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-045"
+  },
+  "신세계강남점지하1층크리스마스마켓": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-046"
+  },
+  "2026정독도서관온가족책잔치": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-047"
+  },
+  "팀홀튼성수점": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-048"
+  },
+  "티보에렘전시": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-049"
+  },
+  "2026제14회온가족책잔치": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-050"
+  },
+  "팟리추얼신사": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-051"
+  },
+  "2026영등포타임스퀘어크리스마스마켓": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-052"
+  },
+  "savekarina팝업": {
+   "status": "reverted",
+   "day": "2026-11-06",
+   "cid": "20261106-053"
+  },
+  "픽트로스터리": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-054"
+  },
+  "수제말랑페어": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-055"
+  },
+  "군자치이카와팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-056"
+  },
+  "51커피로스터스": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-057"
+  },
+  "김유정팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-058"
+  },
+  "겸사서울": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-059"
+  },
+  "김천김밥축제성수팝업": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "cid": "20261106-060"
+  }
+ },
+ "kakao": {
+  "6862514": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "밀레브"
+  },
+  "7825701": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "JTN아트홀"
+  },
+  "7854938": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "롤링홀"
+  },
+  "7855455": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "리치몬드과자점 성산본점"
+  },
+  "7855876": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "루이티하우스"
+  },
+  "7890664": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "고척스카이돔"
+  },
+  "7926624": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "삼일로창고극장"
+  },
+  "7934963": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "남대문시장"
+  },
+  "7940056": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "수연산방"
+  },
+  "7947003": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "사카바 렌"
+  },
+  "7948829": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "세시셀라 도산공원점"
+  },
+  "7993893": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "양재꽃시장"
+  },
+  "8023565": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "올림픽공원"
+  },
+  "8046574": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "예스24 아트원"
+  },
+  "8060966": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "국립정동극장"
+  },
+  "8079875": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "건영스파밸리"
+  },
+  "8080638": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "틴틴홀"
+  },
+  "8101657": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "클럽에반스"
+  },
+  "8126938": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "난지한강공원"
+  },
+  "8126939": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "망원한강공원"
+  },
+  "8128836": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "통인시장"
+  },
+  "8136085": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "뚝섬한강공원"
+  },
+  "8142957": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "반포한강공원"
+  },
+  "8143124": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "양화한강공원"
+  },
+  "8143287": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "학림다방"
+  },
+  "8252248": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "노들섬"
+  },
+  "8284191": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "라끌레"
+  },
+  "8373453": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "세종문화회관"
+  },
+  "8410605": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스트레인지프룻"
+  },
+  "8430119": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서울레코드"
+  },
+  "8474452": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "앤트러사이트 북촌점"
+  },
+  "8552691": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "태극당"
+  },
+  "8625698": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "이촌한강공원"
+  },
+  "8631818": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "강서한강공원"
+  },
+  "8814564": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "그루브"
+  },
+  "10174942": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "경동시장"
+  },
+  "10241368": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "로와이드 일원점"
+  },
+  "10341924": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "예스24라이브홀"
+  },
+  "10500235": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서울풍물시장"
+  },
+  "10593353": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아르코예술극장"
+  },
+  "10889757": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "패션5 한남점"
+  },
+  "10952963": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "여의도한강공원"
+  },
+  "10952965": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "잠실한강공원"
+  },
+  "11016313": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "나무사이로"
+  },
+  "11039135": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "개화산랜드"
+  },
+  "11330151": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "국립극장"
+  },
+  "11523307": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "인사동한증막"
+  },
+  "11553130": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "커피 리브레 연남점"
+  },
+  "11731415": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "국립정동극장 세실"
+  },
+  "11808008": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "이화여자대학교 삼성홀"
+  },
+  "11970493": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "광진교8번가"
+  },
+  "12518512": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "앤트러사이트 합정점"
+  },
+  "12526895": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "명동난타극장"
+  },
+  "12729676": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "긱라이브하우스"
+  },
+  "12817416": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "KU시네마테크"
+  },
+  "13312633": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "땡스북스"
+  },
+  "14095516": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스페이스본사우나"
+  },
+  "14529813": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "블루스퀘어"
+  },
+  "15493954": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "풍월당"
+  },
+  "15717572": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "피터팬1978 본점"
+  },
+  "15825589": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "쉐프조"
+  },
+  "16418510": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "미네르바"
+  },
+  "16990385": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "쟝블랑제리"
+  },
+  "16992549": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "김영모과자점 서초그랑자이점"
+  },
+  "17087789": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "일지아트홀"
+  },
+  "17103308": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "백제불한증막인삼사우나"
+  },
+  "17125328": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "마이웨이"
+  },
+  "17158968": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "CJ아지트 광흥창"
+  },
+  "17165962": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "백암아트홀"
+  },
+  "17344023": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "예술의전당"
+  },
+  "17384905": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "잠원한강공원"
+  },
+  "17384968": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "광나루한강공원"
+  },
+  "17558075": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "낙산공원 제1전망광장"
+  },
+  "17806879": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "북서울꿈의숲 전망대"
+  },
+  "17811821": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "목동파라곤스파"
+  },
+  "18164946": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "선유도공원 선유도전망대"
+  },
+  "18245163": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "두산아트센터 연강홀"
+  },
+  "18526234": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "망원시장"
+  },
+  "18828007": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "딱정벌레"
+  },
+  "18937478": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "쿠오카 서촌 플래그십 스토어"
+  },
+  "18959687": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "홍익대학교 대학로아트센터 소극장"
+  },
+  "19175443": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "뮤즈온"
+  },
+  "20459372": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "부빙"
+  },
+  "20740490": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "잠실종합운동장 잠실야구장"
+  },
+  "20919778": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서연아트홀"
+  },
+  "21160552": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "뉴뉴맨션 안국점"
+  },
+  "21160625": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "우우 건대입구역점"
+  },
+  "21409150": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "별이빛나는밤에"
+  },
+  "21798080": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "냅독"
+  },
+  "21851507": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "동묘시장"
+  },
+  "22045591": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "윤당아트홀"
+  },
+  "22676315": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "예그린씨어터"
+  },
+  "23278986": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "브라이언스커피"
+  },
+  "23634722": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "1984"
+  },
+  "24047993": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "명화라이브홀"
+  },
+  "24048344": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더굿씨어터"
+  },
+  "24063521": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "채널1969"
+  },
+  "24529429": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "프릳츠 도화점"
+  },
+  "25043156": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "신흥시장"
+  },
+  "25048776": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "엠엔에이"
+  },
+  "25689487": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "르챔버"
+  },
+  "25779546": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "TOM"
+  },
+  "25969713": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "클럽프리버드"
+  },
+  "26235257": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "파랑씨어터"
+  },
+  "26235884": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "피오니 홍대점"
+  },
+  "26404597": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "식물"
+  },
+  "26562481": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "강남씨어터"
+  },
+  "26596972": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "메종엠오"
+  },
+  "26625174": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "노말에이"
+  },
+  "26857068": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "앨리스"
+  },
+  "26966842": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "콜린"
+  },
+  "27114079": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책바"
+  },
+  "27288893": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "프로퍼커피바"
+  },
+  "27300932": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "밀도 성수본점"
+  },
+  "27354377": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "엑스케이프"
+  },
+  "27379281": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "공상온도"
+  },
+  "27383851": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "광장시장"
+  },
+  "27405165": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "롯데콘서트홀"
+  },
+  "27410769": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "동서울그랜드볼링센터"
+  },
+  "27481601": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "딥블루레이크"
+  },
+  "27508963": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "테일러커피 연남1호점"
+  },
+  "38392222": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "살롱문보우"
+  },
+  "40766168": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "드림이스케이프"
+  },
+  "43859487": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "조앤도슨"
+  },
+  "45777628": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "셜록홈즈 잠실새내점"
+  },
+  "47375196": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "윤숲"
+  },
+  "53292857": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "943킹스크로스"
+  },
+  "77702190": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스몰브랜더"
+  },
+  "79185066": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "테레사그림책방"
+  },
+  "90596435": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "무신사 메가스토어 성수"
+  },
+  "99849164": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "맨홀커피"
+  },
+  "103401120": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스탠바이미"
+  },
+  "104681199": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "유어마인드"
+  },
+  "119638836": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "식스나잇"
+  },
+  "121735136": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "수상한창고"
+  },
+  "123575123": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "당인리책발전소"
+  },
+  "126067252": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "브릭베이글"
+  },
+  "132573277": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "피커스클라이밍 구로"
+  },
+  "133237535": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오케이어맨션"
+  },
+  "138332755": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책방곱셈"
+  },
+  "149766335": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "코코로카라"
+  },
+  "163810201": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "베르베르"
+  },
+  "163966555": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "머스타드 한남"
+  },
+  "169982583": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "돌체"
+  },
+  "187287513": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "방탈출토끼굴"
+  },
+  "195304151": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "와아"
+  },
+  "212176813": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "개꿀이스케이프"
+  },
+  "215504194": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책방 시행과착오"
+  },
+  "222397833": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "크래커클라이밍"
+  },
+  "223924532": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스코프 서촌점"
+  },
+  "249011741": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "진부책방스튜디오"
+  },
+  "254643912": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "팻어케이크"
+  },
+  "259983085": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "단편선 성수"
+  },
+  "276310448": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "숲세권 라이브 카인드스퀘어점"
+  },
+  "287949141": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "넥스트에디션 건대2호점"
+  },
+  "293959444": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "인스크립트"
+  },
+  "294695474": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "연희사과"
+  },
+  "298789057": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "키이스케이프 스테이션"
+  },
+  "302677882": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "바티칸"
+  },
+  "324782159": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "만유인력"
+  },
+  "327610610": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "티켓투이스케이프"
+  },
+  "328817208": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "5TO7"
+  },
+  "335952782": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스튜디오엔텐바흐"
+  },
+  "344946288": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "페잇퍼"
+  },
+  "363104233": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "진저베어"
+  },
+  "365827968": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "뮤직컴플렉스서울"
+  },
+  "366110448": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "디코더"
+  },
+  "370544754": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "토바 바스하우스"
+  },
+  "376746050": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "바이닐 성수"
+  },
+  "377197835": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "단편선 방탈출"
+  },
+  "395520401": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아우라락볼링장"
+  },
+  "408816532": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "NOL씨어터 합정"
+  },
+  "412120803": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "도토리책방"
+  },
+  "418405990": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "바이닐인사이드"
+  },
+  "421196175": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "수퍼소닉"
+  },
+  "441617225": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "소행성"
+  },
+  "443763847": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "소보루북스"
+  },
+  "457388695": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "1979라이브펍 2호점"
+  },
+  "459642234": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "키이스케이프 메모리컴퍼니"
+  },
+  "462553617": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "셜록홈즈 종각점"
+  },
+  "473211511": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "어질인 왕십리역점"
+  },
+  "479395921": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "금토일샴페인빠"
+  },
+  "483686560": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "리저브"
+  },
+  "490067702": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "라티튜드32"
+  },
+  "494032592": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "크라임씨너스"
+  },
+  "496253521": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "차경"
+  },
+  "500561873": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "9로평상"
+  },
+  "505888908": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "엉금책방"
+  },
+  "521522824": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "비터스"
+  },
+  "540607897": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "51커피로스터스"
+  },
+  "563520021": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스토리지북앤필름 로터리점"
+  },
+  "572289250": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "이들스"
+  },
+  "573469038": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "만동제과 연남점"
+  },
+  "578778978": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "쿠쿠룸 1089"
+  },
+  "591186900": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "팟 리추얼 신사"
+  },
+  "597113075": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "뉴올재즈라운지"
+  },
+  "600129017": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "듈스튜디오"
+  },
+  "602058819": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "미드나잇145 롯데월드타워점"
+  },
+  "615124608": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "부기우기"
+  },
+  "628138029": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "룸엘이스케이프"
+  },
+  "629498800": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "제스트"
+  },
+  "648485914": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "메멘토"
+  },
+  "657378473": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "옥류헌릴렉스"
+  },
+  "662516308": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오프더월클라이밍"
+  },
+  "665085650": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "그림서재"
+  },
+  "669818151": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "사운드스테이션MA"
+  },
+  "672743786": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더블랙볼링장"
+  },
+  "680545832": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "천년동안도 낙원"
+  },
+  "680691609": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서울스카이"
+  },
+  "684414079": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "북살롱오티움"
+  },
+  "690123759": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "룸익스케이프 인디고블루점"
+  },
+  "707576258": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "타르틴베이커리 한남점"
+  },
+  "709830668": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "네모네"
+  },
+  "716748422": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "을지로노가리골목"
+  },
+  "724172595": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "사운즈굿"
+  },
+  "728924679": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "도프레코드"
+  },
+  "740621790": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "독립문영천시장"
+  },
+  "745525153": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "그루트클라이밍"
+  },
+  "753705161": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "베뉴지아쿠아24"
+  },
+  "781129546": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "콤포타블 커피 북촌점"
+  },
+  "798585257": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "용양봉저정공원 하늘전망대"
+  },
+  "804065834": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "비화림"
+  },
+  "807821546": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "웨어하우스 볼더링"
+  },
+  "827366623": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아치서재"
+  },
+  "827688965": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "글로우스트라이크"
+  },
+  "828640256": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "어글리베이커리"
+  },
+  "831814073": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "코프키노"
+  },
+  "832021404": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "바게티"
+  },
+  "834360103": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "여행자극장"
+  },
+  "838562721": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "필동서재절기"
+  },
+  "846051573": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "NOL씨어터대학로 우리투자증권홀"
+  },
+  "848848018": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오아시스 방탈출"
+  },
+  "853028118": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "어니언 안국"
+  },
+  "869347589": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "소수책방"
+  },
+  "874592991": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "프랭크의골동품가게"
+  },
+  "878406079": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "인트리그미션"
+  },
+  "879402343": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "카탈리스트"
+  },
+  "880372928": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더파인더 방탈출"
+  },
+  "894757733": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "시시(Sisi)"
+  },
+  "896402715": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "마망젤라또 성수점"
+  },
+  "900538186": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "젠제로"
+  },
+  "906219513": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책방꼬마"
+  },
+  "922091993": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "비파티세리 공덕점"
+  },
+  "930846069": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "공간과몰입"
+  },
+  "935333631": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "미드나잇"
+  },
+  "949364137": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "디도재즈라운지"
+  },
+  "949587061": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "클레버타운"
+  },
+  "954322550": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스파렉스 동묘점"
+  },
+  "957772814": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "예스24 원더로크홀"
+  },
+  "972177208": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "피즈소셜클럽"
+  },
+  "973719223": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "러브러브디럭스"
+  },
+  "978862315": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "보스톤"
+  },
+  "979822323": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서촌그책방"
+  },
+  "983089299": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "하이그라운드제빵소"
+  },
+  "992535148": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "LG아트센터 서울"
+  },
+  "993785429": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "자작나무 책방"
+  },
+  "1003646386": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "피프티북스"
+  },
+  "1012262230": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "주신당"
+  },
+  "1016477143": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "기욤 청담점"
+  },
+  "1021367507": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "문화제빵"
+  },
+  "1026667156": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "지인시어터"
+  },
+  "1032871178": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "괴르츠"
+  },
+  "1044599831": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "티켓링크1975씨어터"
+  },
+  "1045036053": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "탈출브라더스"
+  },
+  "1045674602": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "껠끄쇼즈"
+  },
+  "1051704136": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더 빅테일"
+  },
+  "1051959848": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "교집합"
+  },
+  "1062133270": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "번역가의서재"
+  },
+  "1062357412": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "이숙희"
+  },
+  "1067445930": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "현대카드 언더스테이지"
+  },
+  "1071989415": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "드림캐처클라이밍짐"
+  },
+  "1075126389": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서브라이엇 해방촌"
+  },
+  "1091304591": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "베통 성수"
+  },
+  "1099800013": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "벤의서재"
+  },
+  "1106201978": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "부자책방"
+  },
+  "1114719734": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "어느 날,"
+  },
+  "1123419577": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "무신사 개러지"
+  },
+  "1127230605": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "소나기그림책양조장"
+  },
+  "1132376595": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "믹스매치"
+  },
+  "1160197508": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "무브온"
+  },
+  "1162083987": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "픽셀퍼인치"
+  },
+  "1162949964": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "포차"
+  },
+  "1167645808": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "뮤트"
+  },
+  "1168753102": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "심심"
+  },
+  "1168819420": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "호텔레토"
+  },
+  "1176976817": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "심리편집샵 서로"
+  },
+  "1180035280": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "깅꼬서울"
+  },
+  "1198183678": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "커피앤시가렛"
+  },
+  "1216188454": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "새고서림"
+  },
+  "1224362243": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "웨스트브릿지 라이브홀"
+  },
+  "1227550312": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "코브"
+  },
+  "1233477814": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "아카시아스 잠실점"
+  },
+  "1241657127": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오프더월"
+  },
+  "1254879622": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "터틀힙"
+  },
+  "1279097943": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아지토 라이브 홀"
+  },
+  "1281277928": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "겸사서울"
+  },
+  "1302549042": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "로우키"
+  },
+  "1315457525": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "숲세권 라이브"
+  },
+  "1325970548": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "소셜서재"
+  },
+  "1330370659": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "63 스카이피크닉"
+  },
+  "1333049180": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "허밋"
+  },
+  "1333193437": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "커리큘럼"
+  },
+  "1336623745": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오르빗"
+  },
+  "1341473552": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "새들러하우스"
+  },
+  "1354125961": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "온쉼표"
+  },
+  "1362589378": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "기러기둥지 익선동본점"
+  },
+  "1368668927": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "얼스어스 서촌점"
+  },
+  "1390599294": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "다이스타운"
+  },
+  "1390982986": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "링크아트센터드림"
+  },
+  "1405262610": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "키이스케이프 강남점"
+  },
+  "1418826907": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "동물책방 정글핌피 문래점"
+  },
+  "1424126931": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "턴다운서비스"
+  },
+  "1440347564": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "커피한약방"
+  },
+  "1442021491": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스카이락볼링장"
+  },
+  "1442041275": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "딥띵커"
+  },
+  "1444854771": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "이스케이프 시티"
+  },
+  "1448117866": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오즈보드게임카페"
+  },
+  "1451158104": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "제로헌드레드"
+  },
+  "1454055454": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "비주류"
+  },
+  "1459016752": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "카페비온디앤"
+  },
+  "1466391245": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "ㅎㄷ카페"
+  },
+  "1474223015": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "메종인디아 트래블앤북스"
+  },
+  "1478483341": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "비트포비아 던전루나"
+  },
+  "1496388407": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "징가"
+  },
+  "1508329235": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스태픽스"
+  },
+  "1512041888": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "키이스케이프백산방역"
+  },
+  "1513353724": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "올오어낫싱"
+  },
+  "1520191663": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "페르마타"
+  },
+  "1529581299": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "에포케책방"
+  },
+  "1529594305": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "JS아트홀"
+  },
+  "1532944638": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오월의종 한남점"
+  },
+  "1534238244": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "친정숲불한증막"
+  },
+  "1539467994": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "거암아트홀"
+  },
+  "1540882128": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "성북동빵공장"
+  },
+  "1548712469": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "방탈출둡두"
+  },
+  "1560724472": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "방탈출 미로"
+  },
+  "1565489437": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "락교 라이브펍"
+  },
+  "1569570696": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책익다"
+  },
+  "1571632756": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "포프"
+  },
+  "1579572879": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "산울림"
+  },
+  "1596111775": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "투떰즈업"
+  },
+  "1600490814": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "디셈버"
+  },
+  "1611418578": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더챕터"
+  },
+  "1621127914": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "퍼즐팩토리 강남2호점"
+  },
+  "1629378951": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "N서울타워"
+  },
+  "1631356269": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아소토베이커리"
+  },
+  "1637219532": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스타더스트"
+  },
+  "1644038519": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "세토리라이브홀"
+  },
+  "1659028835": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "소원책담"
+  },
+  "1667078009": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더누크"
+  },
+  "1668558300": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "어거스트클라이밍"
+  },
+  "1671825718": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "자키러브"
+  },
+  "1675809011": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "우무지"
+  },
+  "1677769553": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "퍼스트커피랩 강남역점"
+  },
+  "1682203426": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "찰리이스케이프"
+  },
+  "1684434413": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "을지로쎄시봉"
+  },
+  "1688176278": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "디거이즈디깅"
+  },
+  "1691201808": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "인현골방"
+  },
+  "1702557408": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "고래사냥"
+  },
+  "1734202756": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "라율아트홀"
+  },
+  "1737279611": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "세티라이브홀"
+  },
+  "1763141309": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서점 리스본&포르투"
+  },
+  "1763634235": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "북커스"
+  },
+  "1767016860": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "쌀롱드무지끄"
+  },
+  "1771072641": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "올웨이즈씨어터"
+  },
+  "1772440780": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서울숲씨어터"
+  },
+  "1780698606": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "팀홀튼 성수점"
+  },
+  "1780843633": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "업스테이지"
+  },
+  "1789984655": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "사진-책방, 책가도"
+  },
+  "1791629406": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "벙커컴퍼니 압구정점"
+  },
+  "1806918572": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "비주얼콜렉트"
+  },
+  "1815669091": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "모래내책방"
+  },
+  "1820434609": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "후케즈"
+  },
+  "1821562074": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "국일관사우나"
+  },
+  "1825220691": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스피키지"
+  },
+  "1826678860": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "창신책방"
+  },
+  "1831188739": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "플래시백"
+  },
+  "1838883297": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "더숲아카데미하우스"
+  },
+  "1841732402": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "세실마루"
+  },
+  "1844212116": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "여가시간"
+  },
+  "1846062551": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "바이닐 한강"
+  },
+  "1847666883": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "세종문화회관 S씨어터"
+  },
+  "1852962598": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "픽트로스터리"
+  },
+  "1860330877": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "카페페퍼"
+  },
+  "1860681564": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "테라로사 포스코센터점"
+  },
+  "1862264503": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "머더파커 건대2호점"
+  },
+  "1867991086": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "동대문 일요시장"
+  },
+  "1871729451": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "산문집"
+  },
+  "1872221698": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "후즈데어"
+  },
+  "1874686740": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "셰입오브타임"
+  },
+  "1875457428": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "연남5701"
+  },
+  "1886229314": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "푸시풋살룬"
+  },
+  "1915189156": {
+   "status": "dropped",
+   "day": "2026-11-06",
+   "name": "테이퍼드 커피"
+  },
+  "1916712707": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "원스타베이커리"
+  },
+  "1925742552": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "솔버 2호점"
+  },
+  "1927460450": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "중랑천 놀빛광장 전망대"
+  },
+  "1937040023": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아라아트홀"
+  },
+  "1944538983": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "초록서림"
+  },
+  "1954978371": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "서울의 시간을 그리다"
+  },
+  "1958239830": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "오츠커피"
+  },
+  "1960891823": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "벨르"
+  },
+  "1961113764": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "퍼즐팩토리 홍대본점"
+  },
+  "1981304347": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "레코드스톡"
+  },
+  "1982729295": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "파이키"
+  },
+  "1983810745": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "피스북스"
+  },
+  "1986362974": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "메이플스토리 이스케이프"
+  },
+  "1987558021": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "링크원스테이지"
+  },
+  "1995791949": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "콤포타블 남산"
+  },
+  "1997789202": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "옥타바리움 라이브홀"
+  },
+  "2003000361": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "아트포레스트"
+  },
+  "2005375589": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "썸띵어바웃커피"
+  },
+  "2020129484": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "판타스트릭TGC"
+  },
+  "2022597703": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "선셋무드"
+  },
+  "2024064695": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책방 파란"
+  },
+  "2034455524": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "카페산아래"
+  },
+  "2055391393": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "어글리"
+  },
+  "2081221522": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "유토피아찜질방"
+  },
+  "2085695703": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "읽는공간사색서재"
+  },
+  "2094408175": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "북티크"
+  },
+  "2102346140": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "코블러"
+  },
+  "2115601133": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "플러스씨어터"
+  },
+  "2137210266": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책방오타루"
+  },
+  "2137561165": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "책방시나브로"
+  },
+  "2138916951": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "스톤즈클라이밍"
+  },
+  "2146740086": {
+   "status": "known",
+   "day": "2026-11-06",
+   "name": "베이글리스트"
+  }
+ },
+ "posts": {
+  "2026-11-06": [
+   "acb7a63e89",
+   "1642dd5b00",
+   "d947b4938e",
+   "f1c6fa8b74",
+   "4be165805a",
+   "75f6a9e99a",
+   "163af6cfa5",
+   "578368386c",
+   "44596c7e94",
+   "40f8dc8f20",
+   "64ac8e35fe",
+   "0e5f08757d",
+   "809161a30d",
+   "d7acda1f90",
+   "f93799e18c",
+   "e548d32713",
+   "32253e1bc1",
+   "afa7116bb5",
+   "16c6526b36",
+   "4121063fb3",
+   "9054b95bdc",
+   "4db6864ed9",
+   "3c9a6483d1",
+   "c1b363a9b1",
+   "0b60a89d0e",
+   "d57fad802f",
+   "4f4fdc8ea9",
+   "94ab74f751",
+   "a11e4eddc0",
+   "044d1cc32c",
+   "a3dcf5f17c",
+   "eb0041cf97",
+   "25c87b7c30",
+   "270d2efe85",
+   "5701219dcb",
+   "2bc3278476",
+   "5003f09b34",
+   "245b7e60fa",
+   "1186551a15",
+   "27f8267cf9",
+   "11d2bddf10",
+   "3aaa29c7ed",
+   "ae22aaff2b",
+   "0395008eab",
+   "947556f671",
+   "b437ebf5e8",
+   "e53eec15f8",
+   "273ebaf711",
+   "c38243142e",
+   "ce75c1913e",
+   "604d3a6878",
+   "6656800d84",
+   "4fcbe7f766",
+   "89aef78889",
+   "1ecb93f15c",
+   "4308459b98",
+   "78134f7ba2",
+   "71313d5e41",
+   "c735a9be1f",
+   "ca14497588",
+   "41d6f11a63",
+   "34df873dec",
+   "c255ff5dc8",
+   "5ee1fbd3b5",
+   "d86add0d1d",
+   "33b25345b4",
+   "1e443dcd8d",
+   "2a71977d6a",
+   "1c8db607a6",
+   "b8f12cb55c",
+   "28187eacc7",
+   "e7f2d0ccb4",
+   "41b1e78ba9",
+   "d5f8064b4f",
+   "632920a7e1",
+   "bab3fc26b7",
+   "3d3b310ede",
+   "8128a4566d",
+   "3ed0ca1c50",
+   "6573b0ed54",
+   "dc15724040",
+   "c725c4affc",
+   "6cdbf63361",
+   "10941f9dea",
+   "7174948b3b",
+   "f92d1c5f86",
+   "44d659e10c",
+   "445ff83a7b",
+   "86b629b4da",
+   "6883c3b0fd",
+   "361dfd3d6a",
+   "67f842a2d5",
+   "15848f675b",
+   "6bd3d8ba7f",
+   "3c0da3cd7e",
+   "3aa6a5ec95",
+   "5257fcbe8a",
+   "ef72b488f7",
+   "f24c99d1ee",
+   "9b528278f8",
+   "f905af97bc",
+   "12f280a771",
+   "7aa16f8b48",
+   "b2a742a5a6",
+   "748888e9c8",
+   "f26e2116ba",
+   "664bfc57b1",
+   "6aa27c30ba",
+   "fd2154f903",
+   "eed8ebeb7d",
+   "e6fcb2ec28",
+   "3b7dad5a77",
+   "a50175fbb0",
+   "27bdc25195",
+   "2ff4be7623",
+   "5e6fbcab99",
+   "e8cfb653ba",
+   "17f1dee8ba",
+   "f322d6022e",
+   "489996d7cc",
+   "97b568496b",
+   "3703e12e65",
+   "84b33ef11d",
+   "9b2e581568",
+   "fb522d34d9",
+   "e52fd27fdc",
+   "bb02263556",
+   "c2e4bce407",
+   "1a068ac5d9",
+   "27ba875b0a",
+   "d5ec8e2656",
+   "d73066db45",
+   "b4bd06b084",
+   "cbb757786c",
+   "120ff4c67a",
+   "d62e771d25",
+   "c04bda51f8",
+   "f256e3115a",
+   "35525da6bf",
+   "4aa1827896",
+   "02d23772dc",
+   "957896cadc",
+   "019f98cebf",
+   "6511ddc667",
+   "c9cad66d78",
+   "eb75f491da",
+   "0d7c896a50",
+   "1826c8ca72",
+   "5746f7e47b",
+   "d54153087b",
+   "7f2bb5744d",
+   "4fb8e101db",
+   "ff0e83f49d",
+   "5d98dd1422",
+   "7279033f4b",
+   "4f2330f65f",
+   "8add3b5bc3",
+   "50e855bd62",
+   "09cce0142f",
+   "0346fecced",
+   "5b256875e8",
+   "a24a49dca2",
+   "052375f4be",
+   "d1b8ed35b8",
+   "53133f2258",
+   "d47451c832",
+   "bfd8cd5705",
+   "1ac5db7ed3",
+   "247e55ab2d",
+   "8dcf3cf666",
+   "75106a0ada",
+   "b0f0e04231",
+   "b555479b92",
+   "4d7d58f5d8",
+   "56c95f19dd",
+   "8756075067",
+   "73e5428c33",
+   "503c98e720",
+   "3ff0b7e9ad",
+   "20bdeb7b59",
+   "ad40fdb980",
+   "cfe081054f",
+   "46d8e568bc",
+   "d9f951213e",
+   "d0ba1dfcc5",
+   "7b911b193c",
+   "ad1cea65c8",
+   "dc397d79c6",
+   "f817c44618",
+   "b6271e4237",
+   "00c0a2587a",
+   "2a7324b164",
+   "19b68d7858",
+   "cc79100d52",
+   "9c236174a2",
+   "ae17b649b7",
+   "60675c2e18",
+   "1c9d413204",
+   "0fbc8ee806",
+   "2ddea844e4",
+   "a846e8f986",
+   "fada2f7f83",
+   "098db0acc1",
+   "03b9d2c5b3",
+   "02d8a5cc8c",
+   "5e34af976b",
+   "238e9d3e6b",
+   "a13c8e9d44",
+   "cc082a26f5",
+   "db821c600a",
+   "3966530ecd",
+   "120fb15052",
+   "942af9fe05",
+   "fb32a0b197",
+   "2ff154db8e",
+   "b5383ad68b",
+   "10716cfeea",
+   "5f4b274c1b",
+   "2d72acebb3",
+   "f73f4add10",
+   "006f3c97b1",
+   "b959b70db2",
+   "33421a5ac3",
+   "b4d924d794",
+   "493e486eee",
+   "7d393c74ce",
+   "56105d16a8",
+   "720ac2e016",
+   "81da93b6cd",
+   "4d3536364f",
+   "708ec32897",
+   "2199ae350d",
+   "927cf80efe",
+   "92566a3521",
+   "e3384ec089",
+   "7a790e60fe",
+   "885ed39d5c",
+   "f31e186164",
+   "2a2215dabf",
+   "0671320c11",
+   "7e5a93482a",
+   "30511e82c2",
+   "d8e2e43832",
+   "8f41a17804",
+   "a0b028382c",
+   "31ec962fc8",
+   "4ded4c9dba",
+   "f73fc75e40",
+   "c3202e1d2a",
+   "362434f978",
+   "8213a91328",
+   "3c6da5655c",
+   "57680b5794",
+   "e5a1f5e540",
+   "fe0ee4fc9a",
+   "90ac5dbd9c",
+   "43f4183ce4",
+   "932c07befc",
+   "b081fa4d3c",
+   "d7ee024a61",
+   "a372289bd6",
+   "17814aed8a",
+   "916959825a",
+   "09ad5f2a13",
+   "d5a4d4952c",
+   "7ab5515bed",
+   "49e2b96ab2",
+   "f170be7942",
+   "b1ba5508e6",
+   "2f6c714959",
+   "8243bb9386",
+   "d22dc4dd31",
+   "cbbe8ae87e",
+   "4c1b8a12eb",
+   "f81071288e",
+   "50f8a20b91",
+   "8f2744a7ec",
+   "0138e23079",
+   "1ca553fef4",
+   "600cb96924",
+   "f1ef61b74a",
+   "4c1b2a913e",
+   "e6aedc66ed",
+   "8dd3296439",
+   "49f3b3d396",
+   "8a491b883d",
+   "175d8f8b1e",
+   "78f0b80aa8",
+   "ffe660cbf8",
+   "d5c9143c3f",
+   "e5a387540d",
+   "56506c3e9d",
+   "e9a32ce53b",
+   "32800bb112",
+   "737e1d8b3b",
+   "cab9548411",
+   "4525db64db",
+   "24ca912930",
+   "8cad763c50",
+   "eee1075eb1",
+   "57e2d236fc",
+   "8a3a70feac",
+   "79a1ce4751",
+   "30af8189fb",
+   "aa1f45f92b",
+   "33720de208",
+   "f261d9f7c8",
+   "d0af6a1f82",
+   "b0682105c5",
+   "d6a4465f7e",
+   "f10aee3b8e",
+   "bbf09e0149",
+   "816bd0e4cb",
+   "6096132ee8",
+   "223606d769",
+   "67ffbb9ed8",
+   "5f6f0aa0af",
+   "00149a079c",
+   "40971e4211",
+   "07e0470596",
+   "e1fb35883f",
+   "d9dc7e1ae3",
+   "c7dc328b9e",
+   "62357605f6",
+   "7fcdf9ad0b",
+   "929586fd88",
+   "80257d71d6",
+   "0becd9b5ee",
+   "c0ce79c469",
+   "e2965120ac",
+   "7fd41dad7e",
+   "4f13b7e973",
+   "49d8d95f56",
+   "80da2648b7",
+   "420a18f490",
+   "2451da8698",
+   "c98047ec45",
+   "94bb32415f",
+   "22259e5bb4",
+   "fe2c9f4824",
+   "28233d6dd9",
+   "085afd9adb",
+   "a1712bf9f5",
+   "57eb2156f2",
+   "08532ad6d6",
+   "e382effa0f",
+   "d770c7d46d",
+   "1919cca1f5",
+   "561c67090f",
+   "8cb19538f0",
+   "f8159bdb64",
+   "3d89540aa3",
+   "6cba988707",
+   "e816e376f9",
+   "26198f10a3",
+   "c9b56b80a8",
+   "4c46623e77",
+   "40344f94d8",
+   "d638ecc602",
+   "999fd64aa8",
+   "f2cee66e19",
+   "caea231e34",
+   "76f0dfa71b",
+   "671e89c848",
+   "9749aab9ad",
+   "7cff1c766d",
+   "f70a1cae6a",
+   "449eca8271",
+   "d3a5994ba3",
+   "09f2a7f739",
+   "3f310121c8",
+   "f9c57225e0",
+   "c8a007a2af",
+   "bd5c0fb210",
+   "e2164c025e",
+   "4aa0d12abd",
+   "b0be1db506",
+   "4a4b4c4e24",
+   "997238b205",
+   "5e5a0cf45e",
+   "350a5735a5",
+   "4b9c98c2cd",
+   "536e64a722",
+   "478577c6f6",
+   "93895a9b18",
+   "bb261340d4",
+   "4e371d4366",
+   "eb7708d0c4",
+   "eedf5eb22e",
+   "dcd34ade34",
+   "436066960d",
+   "ce5b8dae67",
+   "3c4c83bceb",
+   "139e4f23fc",
+   "ad1e357459",
+   "9b07efcbc9",
+   "2e392af448",
+   "047883599d",
+   "337b1a3e63",
+   "4a72c573b0",
+   "2955e25449",
+   "5435738b11",
+   "0bcc21cb25",
+   "8babf708a7",
+   "8513f2788e",
+   "8b6e55681f",
+   "845201fdae",
+   "7719c754d0",
+   "e10b815b00",
+   "35af8af435",
+   "a27e0604e2",
+   "bb60666dff",
+   "40fb05be18",
+   "a585e2ebdd",
+   "9e0eff7992",
+   "64bd1c9b99",
+   "535f997128",
+   "c1b9cf44e2",
+   "aeb353fa80",
+   "134ba9fd9f",
+   "88985661ba",
+   "ea36bc1c15",
+   "e0e346c2e8",
+   "fa208f016c",
+   "e1f2315f32",
+   "b4d3a64ab2",
+   "521d9b2299",
+   "fcab8c5739",
+   "8e11f7cfc4",
+   "06ae4b00ac",
+   "c3cd0cf3c4",
+   "6c3ff7b4b3",
+   "eb6bf5d2ef",
+   "0ee924e6d1",
+   "78f14c5598",
+   "5f4215e162",
+   "3f16064400",
+   "6fccc1f900",
+   "5284baae49",
+   "89dfc6bbf2",
+   "fda0f7821e",
+   "d99b00be58",
+   "9d56e9a045",
+   "1d32788141",
+   "efe24d0f32",
+   "fdb19f4e44",
+   "a054c4c129",
+   "a9fcf14dc4",
+   "b28c2b0907",
+   "51f9730367",
+   "563b0fe935",
+   "9879f2f12a",
+   "d6aa13d71b",
+   "b17f7ab0cb",
+   "e44e6b31cd",
+   "0a7301dd1d",
+   "1647b02d3a",
+   "ad98233a2d",
+   "8e3b8f7e68",
+   "d9aea0ee18",
+   "b29dce51cd",
+   "38b7116dc6",
+   "18e977a145",
+   "241142a3a4",
+   "01e7be0a71",
+   "953e05393e",
+   "c230c24885",
+   "9b393802e4",
+   "6a0e67d3f1",
+   "0f5168392b",
+   "75c474f951",
+   "303b63f260",
+   "94336f6f3f",
+   "1848f63a47",
+   "76ce719f79",
+   "00d82f80e3",
+   "cc240e8455",
+   "1e79a06c7c",
+   "bd15de37aa",
+   "17fdb420c6",
+   "c5f2d1a214",
+   "cca23b4f60",
+   "aa6673f5e6",
+   "7eae9a99ee",
+   "1cc7e2f0b5",
+   "366519da82",
+   "7ffbfd2a6e",
+   "36e61cfd51",
+   "e3a6b6ba75",
+   "a1b6969228",
+   "796a925521",
+   "23fa65931a",
+   "efedc3099c",
+   "9d5ab4b97b",
+   "bea27fa873",
+   "8179bfed1c",
+   "e749001142",
+   "2f060eeffb",
+   "04fcb22164",
+   "84179e7b78",
+   "26b7f22eb9",
+   "0bbdd5c67c",
+   "c4ab45f8a2",
+   "a8332d1f14",
+   "473eefdf41",
+   "e17b24a8d2",
+   "22f7094e56",
+   "939ee3fb15",
+   "bcd68ff47f",
+   "1cb0995fe8",
+   "29639787b7",
+   "e583ec7dbe",
+   "a129ad7309",
+   "9d16af975c",
+   "1b6aea7f75",
+   "317e09d9b5",
+   "10274304cd",
+   "a900b3feb0",
+   "4232c28767",
+   "d461b6da00",
+   "3c3cd8b5d0",
+   "44d42448af",
+   "81b04a020a",
+   "687597b1f0",
+   "2d752bb4bd",
+   "2479966e00",
+   "71221c6675",
+   "5a239cd788",
+   "a764a41eac",
+   "5d3d851e68",
+   "515d9d42d7",
+   "67cc5ddc98",
+   "d5aad83549",
+   "f508f64589",
+   "08ad70b30b",
+   "4b79b7a3f8",
+   "ffc4922a9b",
+   "267031a2bf",
+   "1ce72dc21a",
+   "0f7a154476",
+   "cc78880a85",
+   "e164ed2a8f",
+   "c8d819634c",
+   "373dc2e22a",
+   "90eddd15f4",
+   "a8b6d5b8a0",
+   "af1e0c0bc6",
+   "3fe7151d28",
+   "39f533ad1d",
+   "3c8248fe12",
+   "e9fd4cd7ad",
+   "6ba34f754a",
+   "4d01e7a64d",
+   "10f75ecc5e",
+   "94a6ca4e90",
+   "51328a4b9b",
+   "46d17e580d",
+   "089d8c3098",
+   "7607ba6de3",
+   "c95f6d65bd",
+   "8b10f0c5c0",
+   "bcbfee5f5a",
+   "8ba9161e86",
+   "6db2fc8ebf",
+   "053147790f",
+   "a2b3adb08c",
+   "f9b133aab7",
+   "1745ad039c",
+   "c2e306ba3c",
+   "50a9318d45",
+   "fa49771d12",
+   "34b86788ed",
+   "d1c2d24d1d",
+   "11b0320e55",
+   "a779820699",
+   "5d4fa2d89b",
+   "2918efd1fd",
+   "ac6d7282db",
+   "d884c4c806",
+   "91cf07a43f",
+   "cef4718e64",
+   "1727684d1a",
+   "11752ccd19",
+   "8224537b8a",
+   "bcfcdf3a78",
+   "8d4ae96ff1",
+   "35ce1935d4",
+   "de6473e7eb",
+   "2f8a623946",
+   "910d6c0779",
+   "4a997948af",
+   "6c10cb97d6",
+   "2970380fc0",
+   "14b01d7436",
+   "f7f496e176",
+   "fac11b3f28",
+   "7492a0298d",
+   "9605161ad6",
+   "9b40132d36",
+   "8d35e27019",
+   "3c64a08fe0",
+   "f905e9177b",
+   "03968c353a",
+   "32d36d22a0",
+   "8efd56cc3f",
+   "a41dbb4479",
+   "4a1856aeee",
+   "12186bc58f",
+   "92dce1df3b",
+   "ddeef1cd8a",
+   "ee63316b6d",
+   "8097ea32e9",
+   "80c556262f",
+   "69812e203d",
+   "bbefb748f6",
+   "8598673307",
+   "714875d9be",
+   "b6bd9e97e9",
+   "2b3374ee30",
+   "bc6504f39b",
+   "c039955cec",
+   "f943469bbb",
+   "38106951f3",
+   "086738de1a",
+   "f431a62b29",
+   "38feb587ad",
+   "5210e449cd",
+   "1d05040c60",
+   "6205c4d745",
+   "58bfe3d3b6",
+   "5fcaac75e2",
+   "36ce0f216e",
+   "4a683bde64",
+   "05460e5ec3",
+   "4b8e2f6930",
+   "03816df518",
+   "a3e62286d2",
+   "a6711c730d",
+   "c08b20e139",
+   "fa08508dda",
+   "acd1816d86",
+   "f95bb6db79",
+   "8ff6b054f0",
+   "cd3c0c26c5",
+   "b178bec79e",
+   "34f1afeae3",
+   "8834f88de9",
+   "a3645a7f3b",
+   "f37450dc64",
+   "46bfe73c0b",
+   "8ebf55eecc",
+   "2f21265fa1",
+   "0e18e2cb0f",
+   "f7cc353a77",
+   "2a424a1b6b",
+   "a5329db3e2",
+   "dc57858b3a",
+   "a5541921b6",
+   "5e4e71f1d6",
+   "71bbb9e7fe",
+   "8b8dbc232d",
+   "e19277083f",
+   "11e51f214c",
+   "dffd61774a",
+   "c5cb6416c2",
+   "41e210ba94",
+   "992e3635c6",
+   "c36c83df67",
+   "baabc35aa2",
+   "9ed953cc07",
+   "bb1a728e7c",
+   "f6c9ad9e8c",
+   "df7f7512c8",
+   "9e3ff3d4d5",
+   "825a3e6963",
+   "51f39f6fe1",
+   "7adc476538",
+   "d3d7745322",
+   "2d264140b0",
+   "c791bd1bcf",
+   "bef7e7cddb",
+   "091114ff2b",
+   "508c3f3caa",
+   "fc312c494e",
+   "420a4334d1",
+   "807cbf00c5",
+   "2d208270ef",
+   "7ab18f6ca4",
+   "254f27c812",
+   "7f8c82557f",
+   "a8336b80bf",
+   "37bcce2865",
+   "c9092b41ff",
+   "f8b39a154b",
+   "d926ba3c0a",
+   "7136cca64c",
+   "c8315b5e91",
+   "cf0998b857",
+   "9b23193d2a",
+   "a5d2ad356f",
+   "28361043b9",
+   "1098752f7f",
+   "e8ed815caf",
+   "0673a00e0d",
+   "8ff4d32054",
+   "fb592dd8db",
+   "55e031f5bb",
+   "9d2b8cdc1e",
+   "5a595c05f2",
+   "a5713be8c1",
+   "9582828895",
+   "6029022e7a",
+   "3cb1ca3cb9",
+   "270ba17e6e",
+   "69e4bbfc8c",
+   "fd9503bf58",
+   "977b9b3b10",
+   "1c51ec5336",
+   "358d4654fb",
+   "8b556baa8f",
+   "23446daaac",
+   "6ed5080985",
+   "ba2f676d14",
+   "b3bcd14cdf",
+   "dcd03e1713",
+   "33e3c72c60",
+   "f6a7893b16",
+   "c6f116cfca",
+   "50c08d4d38",
+   "c71b81f34d",
+   "29aa0a9994",
+   "ecba5ca4f3",
+   "ff1f09c685",
+   "d077b747f3",
+   "15bfcb7b03",
+   "fc39e4eda9",
+   "c137fe2beb",
+   "5b8a5ded53",
+   "cdb4313e3b",
+   "b679f0be42",
+   "bd87b471e7",
+   "b44b865810",
+   "8b24e908b4",
+   "0dacee3264",
+   "b238ddef2a",
+   "4e39110d34",
+   "f35fa49ca1",
+   "0eb292cebc",
+   "207b16a5aa",
+   "0f9e6d8f45",
+   "cb8cfaca84",
+   "5f72f12e00",
+   "20fa4bc27c",
+   "ef6a2df2c5",
+   "89599943cc",
+   "4553de8345",
+   "b8e61a195a",
+   "a14bc8ffb6",
+   "95f2053b1e",
+   "8dac985cae",
+   "3d8d5e0ad2",
+   "afc5294b4e",
+   "c0ab070c56",
+   "969c6e047c",
+   "8fed9666e5",
+   "33bb7c6dc9",
+   "1199497fbb",
+   "7a63bd57e3",
+   "bc102aa027",
+   "05aa27320e",
+   "8f6fce9159",
+   "d6bbcee028",
+   "f8c5aa39b8",
+   "8f1fdb1d4c",
+   "73e4b82562",
+   "1deb5a7ea1",
+   "133db15da0",
+   "29d9aac955",
+   "059ebd201f",
+   "a68e17e79b",
+   "3f2d2ac990",
+   "d7bf1a0fa9",
+   "c864e61c1a",
+   "a864625191",
+   "738a90758d",
+   "58f4841e9f",
+   "1559edf3f5",
+   "3df4895501",
+   "449ff3fc84",
+   "ac2ccef843",
+   "d8360116a6",
+   "9483369e80",
+   "f5c03d103b",
+   "680121d5a7",
+   "abd9d06d86",
+   "7a6fd36acd",
+   "4724e03908",
+   "7b606db3a4",
+   "6e417295b3",
+   "02c8e7fd7a"
+  ]
+ },
+ "audits": [
+  {
+   "day": "2026-11-06",
+   "since": null,
+   "keep": {
+    "n": 5,
+    "agree": 4,
+    "rate": 0.8
+   },
+   "drop": {
+    "n": 20,
+    "agree": 20,
+    "rate": 1
+   },
+   "pass": false,
+   "reverted": 5
+  }
+ ],
+ "lastAudit": "2026-11-06"
+}

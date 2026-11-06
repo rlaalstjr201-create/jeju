@@ -1,0 +1,62 @@
+{
+ "day": "2026-11-06",
+ "held": true,
+ "items": 5,
+ "withImage": 3,
+ "shared": 0,
+ "log": [
+  {
+   "id": "dc-194635892-20261110",
+   "name": "더현대 크리스마스 빌리지",
+   "tried": [
+    {
+     "page": "https://www.newsian.co.kr/news/articleView.html?idxno=100732",
+     "img": "https://cdn.newsian.co.kr/news/photo/202611/100732_100927_169.jpg"
+    }
+   ],
+   "img": "https://cdn.newsian.co.kr/news/photo/202611/100732_100927_169.jpg"
+  },
+  {
+   "id": "dc-41832966-20261105",
+   "name": "N Moment 팝업스토어",
+   "tried": [],
+   "img": null
+  },
+  {
+   "id": "dc-22386977-20261030",
+   "name": "2026 신세계 홀리데이 마켓",
+   "tried": [
+    {
+     "page": "https://weekly.hankooki.com/news/articleView.html?idxno=7192431",
+     "why": "too small"
+    },
+    {
+     "page": "https://www.pressman.kr/news/articleView.html?idxno=104342",
+     "img": "https://cdn.pressman.kr/news/photo/202611/104342_96181_3833.jpg"
+    }
+   ],
+   "img": "https://cdn.pressman.kr/news/photo/202611/104342_96181_3833.jpg"
+  },
+  {
+   "id": "dc-25976553-20261030",
+   "name": "불가리 비제로원 익스피리언스 팝업",
+   "tried": [
+    {
+     "page": "http://www.newskr.kr/news/articleView.html?idxno=107662",
+     "why": "too small"
+    },
+    {
+     "page": "https://www.yna.co.kr/view/AKR20261103048200030?input=1195m",
+     "img": "https://img3.yna.co.kr/etc/inner/KR/2026/11/03/AKR20261103048200030_01_i_P4.jpg"
+    }
+   ],
+   "img": "https://img3.yna.co.kr/etc/inner/KR/2026/11/03/AKR20261103048200030_01_i_P4.jpg"
+  },
+  {
+   "id": "dc-986437976-20261107",
+   "name": "SAVE KARINA 팝업",
+   "tried": [],
+   "img": null
+  }
+ ]
+}
