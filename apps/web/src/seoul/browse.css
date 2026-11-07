@@ -73,7 +73,7 @@
 .btile .bh::before { content: ""; flex: none; width: 10px; aspect-ratio: 1; border: 2.5px solid var(--bg); border-radius: var(--r-pill); }
 .btile .bh:empty::before { display: none; }
 .btile .bname {
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
   margin: 6px 8px 0; color: var(--text); font-size: 1.0625rem; line-height: 1.3; font-weight: 700; letter-spacing: -0.02em; overflow-wrap: anywhere;
 }
 .t-g1 { background: var(--t-g1); color: var(--t-g1-ink); }
@@ -129,9 +129,10 @@
 /* the lines under a card close-set, so a photo shelf starts on the first screen at 375 (Amendment 3) */
 .shelves .bcard .meta { margin-top: 2px; line-height: 1.4; }
 .shelves .bcard .nm { margin-top: 6px; }
-/* how far comes first and in the line's ink: the number that says this one, now (ADR-0127 1) */
-.shelves .bcard .trip { margin-top: 6px; color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; -webkit-line-clamp: 1; }
-.shelves .bcard .trip + .nm { margin-top: 0; }
+/* how far comes first: the number that says this one, now (ADR-0127 1); in the line's ink on the shelves */
+.bcard .trip { margin-top: 6px; font-weight: 700; font-variant-numeric: tabular-nums; -webkit-line-clamp: 1; }
+.bcard .trip + .nm { margin-top: 0; }
+.shelves .bcard .trip { color: var(--ink); }
 /* one small radius on the shelves (ADR-0127 3): pictures, signs and the card's focus ring take the tag's */
 .shelves .bcard, .shelves .bpic, .shelves .btile { border-radius: var(--r-tag); }
 .bpic.sq, .bpic.sq img { aspect-ratio: 4 / 5; }
@@ -143,6 +144,8 @@
 /* a card's sheet over the screen (the app's bottom sheet, later in #sheet so it is on top) */
 .bc-top { display: flex; align-items: flex-start; gap: 16px; }
 .bc-top .bpic { flex: none; width: 104px; }
+/* the sheet's heading names the place: its sign keeps the band (the 동네) only */
+.bc-top .btile .bname { display: none; }
 .bc-txt { min-width: 0; }
 .bc h2 { margin: 0 0 4px; }
 .bc-place { margin: 0; color: var(--muted); }
@@ -165,20 +168,10 @@
 @media (prefers-reduced-motion: no-preference) {
   .browse { animation: fade 160ms ease-out; }
 }
-/* 새로 들어옴 (ADR-0124 1): a small mark on the picture's top right (the tile's icon is top left), in the line's ink, no shadow */
+/* 새로 들어옴 (ADR-0124 1): a small mark on the picture's bottom right (the sign's band is along the top, ADR-0127 2), in the
+   line's ink, no shadow */
 .bnew {
-  position: absolute; top: 6px; right: 4px; z-index: 1; padding: 0 5px; border: 1.5px solid var(--ln, currentColor);
+  position: absolute; bottom: 6px; right: 4px; z-index: 1; padding: 0 5px; border: 1.5px solid var(--ln, currentColor);
   border-radius: var(--r-pill); background: var(--bg); color: var(--ink, var(--text)); font-size: 0.9375rem; line-height: 1.35; font-weight: 700;
 }
 
-/* 서울 홈의 머리 (ADR-0127 4): the starter kit's grey filled boxes go. The day is a line over a hairline, the 「지금 여기서」
-   place sits on the page with a small-radius photo and button (--r-tag). Only where the shelves are (this chunk is 서울's; 제주 is unchanged). */
-#home:has(#shelves) .today { margin-top: 4px; padding: 4px 0 0; background: none; }
-/* the hairline is its own row: the box keeps its radius token, and a border on it would curve up at the ends */
-#home:has(#shelves) .today::after { content: ""; grid-column: 1 / -1; margin-top: 12px; border-top: 1px solid var(--line); }
-#home:has(#shelves) .today-ic { background: none; }
-#home:has(#shelves) .today .act { margin: 0 0 -12px -6px; }
-#home:has(#shelves) .now { gap: 12px; margin-top: 16px; background: none; overflow: visible; }
-#home:has(#shelves) .now-photo { width: 104px; border-radius: var(--r-tag); overflow: hidden; }
-#home:has(#shelves) .now-body { padding: 0; }
-#home:has(#shelves) .now .go { border-radius: var(--r-tag); }

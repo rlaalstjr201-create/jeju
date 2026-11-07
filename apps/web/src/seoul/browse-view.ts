@@ -117,7 +117,7 @@ function cardLi(doc: Document, c: BrowseCard, later?: IntersectionObserver): HTM
   // a curated place's tile names its 동네: under the name, its kind (「베이커리」)
   const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ')[0] : c.why;
   const trip = tripText(c);
-  // how far first, then the name, then why now (ADR-0127 1); the week's: 「토요일까지」 then how far, one line each
+  // how far first, then the name, then why now (ADR-0127 1): the week's too, 「걸어서 약 20분」 · 이름 · 「토요일까지」
   b.append(box);
   if (trip) b.append(el(doc, 'span', { class: 'meta trip' }, trip));
   // a 동네's tile names it already; any other card's name is under its picture (or on its sign, for the screen reader here)
