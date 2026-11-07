@@ -75,7 +75,11 @@ function normalized(rel: string, body: Buffer): Buffer | string {
     const h = body.toString('utf8').replace(/\/spots-busan\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '');
     return NATION ? h.replace(/\/nation\/\*\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '').replace(/\/spots-gangwon\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '').replace(/\/spots-seoul\.json\r?\n {2}Cache-Control: public, max-age=31536000, immutable\r?\n/, '') : h;
   }
-  if (rel === 'sw.js') return unhash(body.toString('utf8')).replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';");
+  // the precache list is sorted by hashed names (sw-build), so its order moves when only a hash does: compared as a set
+  if (rel === 'sw.js')
+    return unhash(body.toString('utf8'))
+      .replace(/const VERSION = '[0-9a-f]+';/, "const VERSION = '*';")
+      .replace(/const PRECACHE = \[([^\]]*)\]/, (_, items: string) => `const PRECACHE = [${items.split(',').sort().join(',')}]`);
   if (rel === 'sitemap-core.xml')
     return body.toString('utf8').replace(new RegExp(`(<loc>${SITE}/(?:privacy)?</loc><lastmod>)[^<]*`, 'g'), '$1*');
   return body;

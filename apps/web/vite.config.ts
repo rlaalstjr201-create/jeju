@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { execSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -247,5 +248,8 @@ export default defineConfig(({ command, mode: given }) => {
   // and Busan's part (switched-on build only, src/region/release.ts). terser (ADR-0098): the Korean entry ≤ 50 kB gzip with the
   // switch on
   build: { target: 'es2020', modulePreload: false, minify: 'terser' },
+  // A hang detector, not a speed check: the jsdom app tests take ~0.4s, but on a loaded machine the 5s default
+  // timed out, and a timed-out test kept running into the next ones (2026-10-10, again 2026-11-07).
+  test: { testTimeout: 15_000 },
   };
 });
