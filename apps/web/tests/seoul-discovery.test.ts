@@ -7,7 +7,7 @@ import { JSDOM } from 'jsdom';
 import FOUND from '../data/seoul/discovery-seoul.json';
 import FUN from '../data/seoul/fun-seoul.json';
 import { ORDER, SHELVES, buildShelves, directUrl } from '../src/seoul/browse';
-import { browseCardSheet, homeShelvesView, iconOf } from '../src/seoul/browse-view';
+import { browseCardSheet, homeShelvesView } from '../src/seoul/browse-view';
 import type { Now } from '../src/culture/culture';
 import { foundPlaces, funItems, hoursOf, type FunItem } from '../src/seoul/fun';
 import { weeklyItems, type FoundRow } from '../src/seoul/weekly';
@@ -228,15 +228,23 @@ describe('the card (ADR-0123 6·7)', () => {
     card.querySelector('img')!.dispatchEvent(new card.ownerDocument.defaultView!.Event('error'));
     expect(card.querySelector('img')).toBeNull();
     expect(card.querySelector('.bpic.pl')!.classList.contains('noimg')).toBe(true);
+    // the sign now names it: the name line under it is for the screen reader only
+    expect(card.querySelector('.nm')!.classList.contains('sr')).toBe(true);
   });
-  it('none (or not https): the station-sign tile — the kind\'s icon and the 동네', () => {
+  it('none (or not https): the station sign (ADR-0127 2) — the 동네 on the band, the name large, no icon; the kind under it', () => {
     for (const u of ['', 'http://bread.kr/og.jpg', 'javascript:alert(1)']) {
       const card = shelf(item(u));
       expect(card.querySelector('img')).toBeNull();
-      expect(card.querySelector('.bpic.noimg .btile.t-g8 svg path')!.getAttribute('d')).toBe(iconOf('베이커리'));
+      const sign = card.querySelector('.bpic.noimg .btile.t-g8')!;
+      expect(sign.querySelector('.bband .bh')!.textContent).toBe('망원');
+      expect(sign.querySelector('.bname')!.textContent).toBe('어느 빵집');
+      expect(sign.querySelector('svg')).toBeNull();
+      // its kind once: the card's line, not the sign
+      expect(sign.textContent).not.toContain('베이커리');
+      expect([...card.querySelectorAll('.meta')].map((m) => m.textContent)).toContain('베이커리');
+      // the name stays under the sign for the screen reader (the sign is aria-hidden)
+      expect(card.querySelector('.nm')!.textContent).toBe('어느 빵집');
     }
-    expect(iconOf('베이커리')).not.toBe(iconOf('칵테일바'));
-    expect(iconOf('동네')).toBe(iconOf('아무것'));
   });
   it('the sheet names the picture\'s source', () => {
     const it0 = item('https://bread.kr/og.jpg');

@@ -156,21 +156,23 @@ describe('a kind\'s usual hours where the posts gave none (Amendment 1, review m
   });
 });
 
-describe('the card (Amendment 1, ADR-0123 7): a station-sign tile (kind icon and place), the name under it, one line', () => {
-  it('a 4:3 box with the tile; 「토요일까지 · 걸어서 약 …분」', async () => {
+describe('the card (Amendment 1, ADR-0123 7): the station sign (ADR-0127 2: the place on the band, the name on the sign), how far first', () => {
+  it('a 4:3 box with the sign; how far first, then the name, then 「토요일까지」 (ADR-0127 1)', async () => {
     const { homeShelvesView } = await import('../src/seoul/browse-view');
     const doc = new JSDOM('<!doctype html><body></body>').window.document;
     const s = buildShelves(weeklyItems('2026-11-05', [], [row({ end: '2026-11-07' })]), now('2026-11-05', 14), 성수, 17 * 60 + 25);
     const box = homeShelvesView(doc, s, { rest: '', walk: '', new: '', famous: '', food: '' }, []);
     const card = box.querySelector('[data-shelf="week"] .bcard')!;
     expect(card.querySelector('.bpic.pl.noimg')).not.toBeNull();
-    expect(card.querySelector('.btile.t-week svg.bi path')).not.toBeNull();
+    expect(card.querySelector('.btile.t-week .bname')!.textContent).toBe('어느 팝업');
     expect(card.querySelector('.btile .bh')!.textContent).toBe('어느 곳');
-    expect(card.querySelector('.nm')!.className).toBe('nm');
+    expect(card.querySelector('.nm')!.className).toBe('nm sr'); // the sign names it; the line stays for the screen reader
     expect(card.querySelector('.nm')!.textContent).toBe('어느 팝업');
-    const metas = [...card.querySelectorAll('.meta')].map((m) => m.textContent);
-    expect(metas.length).toBe(1);
-    expect(metas[0]).toMatch(/^토요일까지 · 걸어서 약 \d+분$/);
+    const lines = [...card.querySelectorAll('.meta, .nm')].map((m) => m.textContent);
+    expect(lines.length).toBe(3);
+    expect(lines[0]).toMatch(/^걸어서 약 \d+분$/);
+    expect(lines[1]).toBe('어느 팝업');
+    expect(lines[2]).toBe('토요일까지');
   });
 });
 

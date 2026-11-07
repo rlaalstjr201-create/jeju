@@ -59,26 +59,7 @@ function el(doc: Document, tag: string, attrs: Record<string, string> = {}, text
 
 const tripText = (c: BrowseCard) => (c.trip ? (c.trip.walk ? TRAVEL_TEXT.walk : TRAVEL_TEXT.drive)(undefined, formatMinutes(c.trip.minutes)) : '');
 
-/** The tile's icons (ADR-0123 7): 24-unit strokes, one per kind of thing, drawn in the line's ink. */
-const ICONS: [RegExp, string][] = [
-  [/카페|로스터리|찻집|커피/, 'M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M11.5 3v3'],
-  [/베이커리|케이크|도넛|디저트|젤라또|아이스크림/, 'M4 20h16M5 20v-7h14v7M5 16c2 1.5 3.5 1.5 5 0s3.5-1.5 5 0 3 1.5 4 0M12 13V9M12 5.5v.5'],
-  [/LP|재즈|라이브|인디|레코드|콘서트|음악|KOPIS|버스킹|클래식|국악/, 'M9 18V5l10-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM19 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'],
-  [/칵테일|와인|하이볼|^바$|루프탑바|클럽|포차|포장마차|야장|노가리|술/, 'M5 4h14l-7 8zM12 12v8M8 20h8'],
-  [/서점|책/, 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7'],
-  [/소품|문구|향|리빙|빈티지|편집|플래그십|가게/, 'M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2'],
-  [/팝업|행사|새로 연/, 'M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z'],
-  [/전시|미술|박물|갤러리|대안공간/, 'M4 5h16v14H4zM4 15l5-5 4 4 2-2 5 5'],
-  [/마켓|시장/, 'M4 9l1.5-5h13L20 9M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0M5 11v9h14v-9'],
-  [/축제/, 'M5 21V4M5 4h12l-2 4 2 4H5'],
-  [/야구/, 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM7 5.5c1.5 2 1.5 11 0 13M17 5.5c-1.5 2-1.5 11 0 13'],
-  [/한강|노을|야경|전망|공원|피크닉|다리|섬/, 'M3 15c2 0 2-1.5 4.5-1.5S10 15 12 15s2-1.5 4.5-1.5S19 15 21 15M3 19c2 0 2-1.5 4.5-1.5S10 19 12 19s2-1.5 4.5-1.5S19 19 21 19M8 10a4 4 0 0 1 8 0'],
-  [/연극|뮤지컬|무용|오페라|공연|방탈출|보드|볼링|클라이밍|영화|시네마|찜질/, 'M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4zM14 7v10'],
-];
-/** 동네 and anything else: a map pin */
-const PIN = 'M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z';
-export const iconOf = (kind: string): string => ICONS.find(([re]) => re.test(kind))?.[1] ?? PIN;
-/** A tile's words: its kind (for the icon), the place it names (동네, else 구, else the venue) and its colour class */
+/** A tile's words: its kind, the place it names (동네, else 구, else the venue) and its colour class */
 function tileOf(it: CultureItem): { kind: string; where: string; cls: string } {
   if (isFun(it)) {
     if (it.fun.g === 'hood') return { kind: '동네', where: it.title, cls: 't-hood' };
@@ -87,18 +68,17 @@ function tileOf(it: CultureItem): { kind: string; where: string; cls: string } {
   if (isWeek(it)) return { kind: it.kind, where: it.week.where, cls: 't-week' };
   return { kind: it.kind, where: it.gu || it.place, cls: 't-day' };
 }
-/** The station-sign tile (ADR-0123 7): the kind's icon, then the 동네 on the line's ring and rule, the way a 지하철 sign names
- * its station. Under a picture it waits; it shows when there is none or the picture fails. */
+/** The station-sign tile (ADR-0127 2, was ADR-0123 7): a band in the line's ink with the 동네 on a ring and the name large,
+ * the way a 지하철 sign names its station. A 동네's own tile: the band says 동네, the name is the 동네. Under
+ * a picture it waits; it shows when there is none or the picture fails. */
 function tile(doc: Document, it: CultureItem): HTMLElement {
   const t = tileOf(it);
+  const hood = t.cls === 't-hood';
   const box = el(doc, 'span', { class: `btile ${t.cls}`, 'aria-hidden': 'true' });
-  const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('class', 'bi');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  const path = doc.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', iconOf(t.kind));
-  svg.append(path);
-  box.append(svg, el(doc, 'span', { class: 'bh' }, t.where));
+  const band = el(doc, 'span', { class: 'bband' });
+  band.append(el(doc, 'span', { class: 'bh' }, hood ? t.kind : t.where));
+  // the kind is the card's own line under the sign (「전망대」), so the sign does not say it twice
+  box.append(band, el(doc, 'span', { class: 'bname' }, it.title));
   return box;
 }
 
@@ -134,19 +114,15 @@ function cardLi(doc: Document, c: BrowseCard, later?: IntersectionObserver): HTM
   const box = pic(doc, c.item, later);
   // 새로 들어옴 (ADR-0124 1): a small mark on the picture's corner
   if (c.slot === 'new') box.append(el(doc, 'span', { class: 'bnew' }, BROWSE_COPY.newly));
-  // a 동네's tile names it already; any other card's name is under its picture or tile
-  b.append(box, el(doc, 'span', { class: hood ? 'nm sr' : 'nm' }, c.item.title));
   // a curated place's tile names its 동네: under the name, its kind (「베이커리」)
   const why = c.count !== undefined ? BROWSE_COPY.hoodCount(c.count) : isFun(c.item) ? c.why.split(' · ')[0] : c.why;
   const trip = tripText(c);
-  // the week's: one short line, 「토요일까지 · 걸어서 약 20분」
-  if (isWeek(c.item)) {
-    const line = [why, trip].filter(Boolean).join(' · ');
-    if (line) b.append(el(doc, 'span', { class: 'meta' }, line));
-  } else {
-    if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
-    if (trip) b.append(el(doc, 'span', { class: 'meta' }, trip));
-  }
+  // how far first, then the name, then why now (ADR-0127 1); the week's: 「토요일까지」 then how far, one line each
+  b.append(box);
+  if (trip) b.append(el(doc, 'span', { class: 'meta trip' }, trip));
+  // a 동네's tile names it already; any other card's name is under its picture (or on its sign, for the screen reader here)
+  b.append(el(doc, 'span', { class: hood || box.classList.contains('noimg') ? 'nm sr' : 'nm' }, c.item.title));
+  if (why) b.append(el(doc, 'span', { class: 'meta' }, why));
   const li = el(doc, 'li');
   li.append(b);
   return li;
@@ -248,8 +224,9 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
           later.observe(img);
         } else img.setAttribute(start() ? 'data-later' : 'src', c.image);
         frame.append(img);
-        b.append(frame, el(doc, 'span', { class: 'nm' }, c.name));
-        if (c.trip) b.append(el(doc, 'span', { class: 'meta' }, c.trip));
+        b.append(frame);
+        if (c.trip) b.append(el(doc, 'span', { class: 'meta trip' }, c.trip));
+        b.append(el(doc, 'span', { class: 'nm' }, c.name));
         const li = el(doc, 'li');
         li.append(b);
         row.append(li);
@@ -399,4 +376,6 @@ export function brokenPicture(img: HTMLImageElement): void {
   if (!box) return;
   box.classList.add('noimg');
   img.remove();
+  // its sign names the place now (ADR-0127 2): the card's name line stays for the screen reader only
+  if (box.querySelector('.btile')) box.parentElement?.querySelector('.nm')?.classList.add('sr');
 }
