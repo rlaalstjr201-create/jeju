@@ -148,6 +148,8 @@ function scroller(doc: Document, row: HTMLElement): HTMLElement {
   };
   const arrow = (dir: -1 | 1) => {
     const b = el(doc, 'button', { type: 'button', class: dir < 0 ? 'sarrow prev' : 'sarrow next', tabindex: '-1', 'aria-hidden': 'true' }, dir < 0 ? '‹' : '›');
+    // a click leaves the focus where it was (the button is aria-hidden: focus on it would read as lost)
+    b.addEventListener('pointerdown', (e) => e.preventDefault());
     b.addEventListener('click', () => {
       const smooth = !!doc.defaultView?.matchMedia?.('(prefers-reduced-motion: no-preference)').matches;
       row.scrollBy({ left: dir * Math.max(120, row.clientWidth * 0.85), behavior: smooth ? 'smooth' : 'auto' });
@@ -158,6 +160,8 @@ function scroller(doc: Document, row: HTMLElement): HTMLElement {
   box.addEventListener('pointerenter', edges);
   box.toggleAttribute('data-start', true);
   box.append(arrow(-1), row, arrow(1));
+  // once laid out: a row with nothing more to show has no ›
+  doc.defaultView?.requestAnimationFrame?.(edges);
   return box;
 }
 
@@ -229,6 +233,7 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
     h?.focus({ preventScroll: true });
   });
   const shown = homeShown(shelves);
+  const held: HTMLElement[] = [];
   for (const [i, sh] of shelves.entries()) {
     // its line (browse.css): a mood's places, the day's own events, or things to do
     const line = sh.key in labels ? 'place' : sh.key === 'stage' || sh.key === 'today' || sh.key === 'exhibit' || sh.key === 'week' ? 'day' : 'fun';
@@ -261,9 +266,13 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
     }
     sec.append(scroller(doc, row));
     if (!sh.cards.length) sec.append(el(doc, 'p', { class: 'note shelf-none' }, BROWSE_COPY.noneNear));
-    if (!shown[i] && !allShelves) sec.hidden = true;
-    box.append(sec);
+    if (!shown[i] && !allShelves) {
+      sec.hidden = true;
+      // the shelves behind 선반 더 보기 sit last, just above it: pressed, they open where the eye is (ADR-0128)
+      held.push(sec);
+    } else box.append(sec);
   }
+  box.append(...held);
   if (eyes) for (const b of box.querySelectorAll<HTMLElement>('.bcard')) eyes.observe(b);
   if (shown.includes(false) && !allShelves) box.append(more);
   box.append(...sources);
