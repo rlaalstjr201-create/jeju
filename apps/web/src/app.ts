@@ -430,6 +430,9 @@ export function mountApp(doc: Document, deps: Deps): App {
   /** an ask unanswered this long timed out (fetchCulture waits 15 s); asked again this soon after (Amendment 6) */
   const CULTURE_SLOW_MS = 14_000;
   const CULTURE_QUICK_MS = 30_000;
+  /** a failed ask that came back at once is tried again in half a minute this many times a visit, then every five (ADR-0128 3) */
+  const CULTURE_QUICK_TRIES = 3;
+  let cultureQuickFails = 0;
   let cultureBusy = false;
   let cultureTimer: ReturnType<typeof setTimeout> | null = null;
   function askCulture() {
@@ -464,9 +467,10 @@ export function mountApp(doc: Document, deps: Deps): App {
           dispatch({ type: 'culture', culture: { day, items: c.items, minute: minuteOf(clockNow()) } });
           // a card's sheet whose item is not in the new list: closed
           if (state.overlay === 'browse-card' && !c.items.some((i) => i.id === state.browseId)) closeOverlay();
-        } else if (!signal.aborted && !c && clockNow().getTime() - sent >= CULTURE_SLOW_MS) {
+        } else if (!signal.aborted && !c && (clockNow().getTime() - sent >= CULTURE_SLOW_MS || cultureQuickFails++ < CULTURE_QUICK_TRIES)) {
           // no answer in time (the day's first ask at an edge builds the list for longer than fetchCulture waits): the edge
-          // goes on and keeps it (waitUntil), so it is asked again in half a minute, not in five (ADR-0117 Amendment 6)
+          // goes on and keeps it (waitUntil), so it is asked again in half a minute, not in five (ADR-0117 Amendment 6). A
+          // quick failure too, the first few times a visit (ADR-0128 3): without the list the home is the 관광지 shelves only.
           cultureAsked = { day, at: clockNow().getTime() - RAIN_RETRY_MS + CULTURE_QUICK_MS };
           if (cultureTimer) {
             clearTimeout(cultureTimer);

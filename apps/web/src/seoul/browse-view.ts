@@ -137,6 +137,30 @@ export interface MoodCard {
 }
 export type HomeRow = Shelf | { key: MoodShelf; cards: MoodCard[] };
 
+/** A shelf's row with ‹ › for a mouse (browse.css shows them only where the pointer is fine and can hover; a finger swipes,
+ * a keyboard tabs through the cards and the row follows focus). Each says nothing to a screen reader and takes no tab stop. A
+ * row's ends hide their arrow, read when the row scrolls and when the pointer comes over it. */
+function scroller(doc: Document, row: HTMLElement): HTMLElement {
+  const box = el(doc, 'div', { class: 'shelf-scroll' });
+  const edges = () => {
+    box.toggleAttribute('data-start', row.scrollLeft <= 4);
+    box.toggleAttribute('data-end', row.scrollLeft + row.clientWidth >= row.scrollWidth - 4);
+  };
+  const arrow = (dir: -1 | 1) => {
+    const b = el(doc, 'button', { type: 'button', class: dir < 0 ? 'sarrow prev' : 'sarrow next', tabindex: '-1', 'aria-hidden': 'true' }, dir < 0 ? '‹' : '›');
+    b.addEventListener('click', () => {
+      const smooth = !!doc.defaultView?.matchMedia?.('(prefers-reduced-motion: no-preference)').matches;
+      row.scrollBy({ left: dir * Math.max(120, row.clientWidth * 0.85), behavior: smooth ? 'smooth' : 'auto' });
+    });
+    return b;
+  };
+  row.addEventListener('scroll', edges, { passive: true });
+  box.addEventListener('pointerenter', edges);
+  box.toggleAttribute('data-start', true);
+  box.append(arrow(-1), row, arrow(1));
+  return box;
+}
+
 let homeWatch: IntersectionObserver | undefined;
 let cardEyes: IntersectionObserver | undefined;
 /** 선반 더 보기 pressed: open for the rest of the visit (a redraw, the list's minute moving on, keeps it open) */
@@ -235,7 +259,7 @@ export function homeShelvesView(doc: Document, shelves: readonly HomeRow[], labe
       sec.append(el(doc, 'h2', { id: `shelf-${sh.key}` }, BROWSE_COPY.shelf[sh.key as ShelfKey]));
       row.append(...(sh as Shelf).cards.map((c) => cardLi(doc, c, later)));
     }
-    sec.append(row);
+    sec.append(scroller(doc, row));
     if (!sh.cards.length) sec.append(el(doc, 'p', { class: 'note shelf-none' }, BROWSE_COPY.noneNear));
     if (!shown[i] && !allShelves) sec.hidden = true;
     box.append(sec);
@@ -290,7 +314,7 @@ export function browseScreen(doc: Document, items: readonly CultureItem[], now: 
     sec.append(el(doc, 'h3', { id: `shelf-${sh.key}` }, BROWSE_COPY.shelf[sh.key]));
     const row = el(doc, 'ul', { class: 'shelf-row', 'data-shelf': sh.key });
     row.append(...sh.cards.map((c) => cardLi(doc, c, later)));
-    sec.append(row);
+    sec.append(scroller(doc, row));
     box.append(sec);
   }
   box.append(...sources, el(doc, 'button', { type: 'button', class: 'sheet-close', 'data-action': 'close' }, COPY.close));

@@ -146,14 +146,14 @@ export type MoodShelf = (typeof MOOD_SHELVES)[number];
 export type HomeKey = ShelfKey | MoodShelf;
 /** 밥때: 먹기 second (11:00–14:00, 17:00–21:00) */
 const MEAL = (minute: number) => (minute >= 660 && minute < 840) || (minute >= 1020 && minute < 1260);
-/** The order (spec 선반 순서): the hour's shelves (`keys`, ORDER) with 먹기 second at 밥때 (else after them), 유명한 데 third,
- * 놀러 fifth, 쉬기·걷기 last. */
+/** The order (spec 선반 순서, ADR-0128 1): the hour's own shelves (`keys`, ORDER — the hot and hip ones: 밤 놀거리, 이번 주,
+ * 라이브·인디, 카페…) lead; 먹기 fourth at 밥때 (else after them), 놀러 sixth; 유명한 데·쉬기·걷기 (the 관광지 data) last. */
 export function homeOrder(keys: readonly ShelfKey[], minute: number): HomeKey[] {
   const out: HomeKey[] = [...keys];
   const meal = MEAL(minute);
-  if (meal) out.splice(1, 0, 'food');
-  out.splice(2, 0, 'famous');
-  out.splice(4, 0, 'new');
+  if (meal) out.splice(Math.min(3, out.length), 0, 'food');
+  out.splice(Math.min(5, out.length), 0, 'new');
+  out.push('famous');
   if (!meal) out.push('food');
   out.push('rest', 'walk');
   return out;
@@ -201,8 +201,8 @@ export function homeShelves(all: readonly Shelf[], moods: Partial<Record<MoodShe
   return out.sort((a, b) => Number(size(a) < FULL) - Number(size(b) < FULL));
 }
 
-/** 서울 홈 shows this many shelves before 선반 더 보기 (ADR-0117 Amendment 3·4). */
-export const HOME_ROWS = 9;
+/** 서울 홈 shows this many shelves before 선반 더 보기 (ADR-0117 Amendment 3·4; ADR-0128 1: the five moods and six of the hour's own). */
+export const HOME_ROWS = 11;
 /** Which shelves are shown before 선반 더 보기 (Amendment 4): the five moods' always (their headings are the mood buttons), the
  * rest of HOME_ROWS the others in the order they come; the order itself is kept. */
 export function homeShown(list: readonly { key: HomeKey }[]): boolean[] {

@@ -178,3 +178,19 @@
 .bpic.noimg > .bnew { top: 0; bottom: auto; }
 .bpic.noimg:has(> .bnew) .bband { padding-right: 64px; }
 
+
+/* ‹ › on a shelf for a mouse (a finger swipes the row, a keyboard tabs through it): round buttons floating at the row's edges,
+   over the pictures, a ring and no shadow (SPEC §14 #1). Hidden at the row's start and end, and on touch screens. */
+.shelf-scroll { position: relative; }
+.sarrow { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .sarrow {
+    position: absolute; top: 32px; z-index: 2; display: grid; place-items: center; width: 40px; aspect-ratio: 1; padding: 0;
+    border: 1px solid var(--field-line); border-radius: var(--r-pill); background: var(--bg); color: var(--text);
+    font-size: 1.25rem; line-height: 1; cursor: pointer;
+  }
+  .sarrow.prev { left: -8px; }
+  .sarrow.next { right: -8px; }
+  .sarrow:hover { background: var(--fill); }
+  .shelf-scroll[data-start] > .prev, .shelf-scroll[data-end] > .next, .shelf-scroll:has(> .shelf-row:empty) > .sarrow { display: none; }
+}

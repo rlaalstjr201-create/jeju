@@ -271,7 +271,7 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
   it('shown before 선반 더 보기: the five moods always, the others in order up to HOME_ROWS (Amendment 4)', () => {
     const keys = ['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'g1', 'today', 'stage', 'g2', 'exhibit', 'food', 'rest', 'walk'] as const;
     const shown = homeShown(keys.map((key) => ({ key })));
-    expect(keys.filter((_, i) => shown[i])).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'food', 'rest', 'walk']);
+    expect(keys.filter((_, i) => shown[i])).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'g1', 'today', 'food', 'rest', 'walk']); // ADR-0128 1: six of the hour's own
     expect(homeShown([{ key: 'famous' }, { key: 'rest' }]).every(Boolean)).toBe(true);
   });
 
@@ -294,13 +294,14 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
 
   it("the order table: 먹기 second at 밥때 (else after the hour's), 유명한 데 third, 놀러 fifth, 쉬기·걷기 last", () => {
     const k: ShelfKey[] = ['hood', 'g4', 'g5', 'g7'];
-    expect(homeOrder(k, 12 * 60)).toEqual(['hood', 'food', 'famous', 'g4', 'new', 'g5', 'g7', 'rest', 'walk']);
-    expect(homeOrder(k, 18 * 60)).toEqual(['hood', 'food', 'famous', 'g4', 'new', 'g5', 'g7', 'rest', 'walk']);
-    expect(homeOrder(k, 15 * 60)).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'food', 'rest', 'walk']);
-    expect(homeOrder(k, 21 * 60)).toEqual(['hood', 'g4', 'famous', 'g5', 'new', 'g7', 'food', 'rest', 'walk']);
+    // ADR-0128 1: the hour's own shelves lead, 먹기 fourth at 밥때, 놀러 after them, the 관광지 moods last
+    expect(homeOrder(k, 12 * 60)).toEqual(['hood', 'g4', 'g5', 'food', 'g7', 'new', 'famous', 'rest', 'walk']);
+    expect(homeOrder(k, 18 * 60)).toEqual(['hood', 'g4', 'g5', 'food', 'g7', 'new', 'famous', 'rest', 'walk']);
+    expect(homeOrder(k, 15 * 60)).toEqual(['hood', 'g4', 'g5', 'g7', 'new', 'famous', 'food', 'rest', 'walk']);
+    expect(homeOrder(k, 21 * 60)).toEqual(['hood', 'g4', 'g5', 'g7', 'new', 'famous', 'food', 'rest', 'walk']);
     // no list: the moods alone
-    expect(homeOrder([], 15 * 60)).toEqual(['famous', 'new', 'food', 'rest', 'walk']);
-    expect(homeOrder([], 12 * 60)).toEqual(['food', 'famous', 'new', 'rest', 'walk']);
+    expect(homeOrder([], 15 * 60)).toEqual(['new', 'famous', 'food', 'rest', 'walk']);
+    expect(homeOrder([], 12 * 60)).toEqual(['food', 'new', 'famous', 'rest', 'walk']);
   });
 
   // 재검토 R1·r2 (Amendment 5): the places the review named at 22:00 — on 「지금 여기서」 and the mood shelves, none
@@ -455,9 +456,9 @@ describe('서울 홈의 선반 (ADR-0117)', () => {
     const sp = (id: string, name: string, kakao: string | null = null) => ({ id, name, kakaoPlaceId: kakao }) as Spot;
     const cards = Array.from({ length: 6 }, (_, i) => ({ item: place({ id: `kk-${i}`, g: 'G2', word: '전통시장', title: `시장${i}`, link: `https://place.map.kakao.com/${100 + i}` }), why: '', trip: null }));
     const out = homeShelves([{ key: 'g2', cards }], { food: [sp('a', '시장0'), sp('b', '딴집', '101'), sp('c', '국밥'), sp('e', '냉면')], famous: [sp('c', '국밥'), sp('d', '궁')], rest: [sp('a', '시장0')] }, 15 * 60, SUNSET);
-    // 15:00: g2, 유명한 데, 놀러, 먹기 (after the hour's), 쉬기·걷기 — the moods with no place in reach stay, empty
-    expect(out.map((sh) => sh.key)).toEqual(['g2', 'famous', 'new', 'food', 'rest', 'walk']);
-    expect(out.slice(1).map((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual([['c', 'd'], [], ['e'], [], []]);
+    // 15:00 (ADR-0128 1): g2, 놀러, then the 관광지 moods: 유명한 데, 먹기 (after the hour's), 쉬기·걷기 — the moods with no place in reach stay, empty
+    expect(out.map((sh) => sh.key)).toEqual(['g2', 'new', 'famous', 'food', 'rest', 'walk']);
+    expect(out.slice(1).map((sh) => ('spots' in sh ? sh.spots.map((x) => x.id) : []))).toEqual([[], ['c', 'd'], ['e'], [], []]);
     // a full mood shelf before a short curated one
     const many = Array.from({ length: 7 }, (_, i) => sp(`f${i}`, `곳${i}`));
     expect(homeShelves([{ key: 'g2', cards: cards.slice(0, 2) }], { famous: many }, 15 * 60, SUNSET).map((sh) => sh.key).slice(0, 2)).toEqual(['famous', 'g2']);

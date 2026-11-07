@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
-import { SHELVES } from '../src/seoul/browse';
+import { HOME_ROWS, SHELVES } from '../src/seoul/browse';
 import { initialState, reduce } from '../src/state';
 import { DEST } from '../src/region/dest';
 import type { Fetch } from '../src/effects';
@@ -96,9 +96,9 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     // at most 9 shown, the five moods' among them, the rest behind 선반 더 보기 (Amendment 4); pressed, all of them, the focus on
     // the first it opened
     const shown = () => $$('#shelves .shelf:not([hidden])');
-    expect(shown().length).toBe(Math.min(9, shelfRows().length));
+    expect(shown().length).toBe(Math.min(HOME_ROWS, shelfRows().length)); // ADR-0128 1
     for (const m of MOODS) expect(shown().map((x) => x.querySelector<HTMLElement>('.shelf-row')!.dataset.shelf)).toContain(m);
-    if (shelfRows().length > 9) {
+    if (shelfRows().length > HOME_ROWS) {
       const first = $('#shelves .shelf[hidden] h2');
       await tap('#shelves .shelves-more');
       expect(shown()).toHaveLength(shelfRows().length);
@@ -185,7 +185,7 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     expect($('#lede').hidden).toBe(false);
   });
 
-  it("a 204: the moods' shelves alone; 5 minutes on, asked again, and the list's come", async () => {
+  it("a 204: the moods' shelves alone; asked again half a minute on, three times a visit, then five minutes (ADR-0128 3); the list's come", async () => {
     let status = 204;
     let clock = at1400().getTime();
     const urls: string[] = [];
@@ -208,16 +208,25 @@ describe.runIf(NATION)('서울 홈의 선반 (switch on)', () => {
     expect(shelfRows().map((r) => r.dataset.shelf).sort()).toEqual([...MOODS].sort());
     expect(moodsHidden()).toBe(true);
     expect($$('#shelves .cult-src')).toEqual([]);
-    // back in front a minute on: not yet
-    clock += 60_000;
-    document.dispatchEvent(new Event('visibilitychange'));
-    await wait();
+    const again = async (ms: number) => {
+      clock += ms;
+      document.dispatchEvent(new Event('visibilitychange'));
+      await wait();
+    };
+    // ten seconds on: not yet
+    await again(10_000);
     expect(asked()).toBe(1);
+    // half a minute on, three more times (each one another quick failure)
+    for (const n of [2, 3, 4]) {
+      await again(40_000);
+      expect(asked()).toBe(n);
+    }
+    // the quick ones spent: not again within five minutes
+    await again(60_000);
+    expect(asked()).toBe(4);
     status = 200;
-    clock += 5 * 60_000;
-    document.dispatchEvent(new Event('visibilitychange'));
-    await wait();
-    expect(asked()).toBe(2);
+    await again(5 * 60_000);
+    expect(asked()).toBe(5);
     expect(shelfRows().some((r) => !MOODS.includes(r.dataset.shelf!))).toBe(true);
   });
 
