@@ -2,8 +2,8 @@
 // (Request → Response), so any host that speaks it can mount it. POST a JSON array → validated → the
 // (day, place, event) counters go up. It reads nothing else from the request: no IP, no user agent, no
 // cookie is looked at or stored.
-import { dayOf } from '../src/dates';
-import type { UsageEvent } from '../src/usage/track';
+import { dayOf } from '../../../src/dates';
+import type { UsageEvent } from '../../../src/usage/track';
 import { readLimited } from './feedback';
 import type { CounterStore } from './store';
 import { MAX_BYTES, parseBatch } from './validate';

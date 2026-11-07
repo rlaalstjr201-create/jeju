@@ -1,7 +1,7 @@
 // POST /api/events (ADR-0078 1): the anonymous usage counts (ADR-0061) into D1 (binding EVENTS_DB, wrangler.toml).
-// events/handler.ts does the work as it is: a JSON array ≤ 8 KB / 50 events, no IP, user agent or cookie read.
-import { d1Store, type D1Like } from '../../../events/d1';
-import { handleEvents } from '../../../events/handler';
+// functions/_lib/events/handler.ts does the work as it is: a JSON array ≤ 8 KB / 50 events, no IP, user agent or cookie read.
+import { d1Store, type D1Like } from '../../_lib/events/d1';
+import { handleEvents } from '../../_lib/events/handler';
 
 interface Ctx {
   request: Request;

@@ -3,10 +3,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { aggregate } from '../events/aggregate';
-import { BROWSE_IDS, FLOW_IDS, START_IDS, handleEvents } from '../events/handler';
-import { memoryStore, type CounterStore } from '../events/store';
-import { MAX_EVENTS, eventProblem, parseBatch } from '../events/validate';
+import { aggregate } from '../functions/_lib/events/aggregate';
+import { BROWSE_IDS, FLOW_IDS, START_IDS, handleEvents } from '../functions/_lib/events/handler';
+import { memoryStore, type CounterStore } from '../functions/_lib/events/store';
+import { MAX_EVENTS, eventProblem, parseBatch } from '../functions/_lib/events/validate';
 import { addDays } from '../src/dates';
 import { BUSAN } from '../src/region/release';
 import { contextOf, type UsageEvent } from '../src/usage/track';
@@ -144,7 +144,7 @@ describe('U4 받는 쪽 — 카운터', () => {
     const req = post([{ e: 'map', id: ID, ...base }], { headers: { 'user-agent': 'UA-SECRET', 'x-forwarded-for': '203.0.113.9', cookie: 'c=COOKIE' } });
     expect((await handle(req, store)).status).toBe(204);
     expect(JSON.stringify(await store.dump())).not.toMatch(/UA-SECRET|203\.0\.113\.9|COOKIE/);
-    expect(readFileSync(resolve(__dirname, '../events/handler.ts'), 'utf8')).not.toMatch(/user-agent|x-forwarded-for|cf-connecting-ip|headers\.get\((?!'content-length')/i);
+    expect(readFileSync(resolve(__dirname, '../functions/_lib/events/handler.ts'), 'utf8')).not.toMatch(/user-agent|x-forwarded-for|cf-connecting-ip|headers\.get\((?!'content-length')/i);
   });
 });
 

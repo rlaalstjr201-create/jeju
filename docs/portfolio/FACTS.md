@@ -13,7 +13,7 @@
 **이름 표기**: 정식 `여차나:제주`, 홈 화면 아이콘 이름 `여차나`, 태그라인 `P를 위한 여행동반자`, 첫 화면 이름 줄 「여차나:제주 · P를 위한 여행동반자」(`docs/context.md` 「웹 앱」 절, ADR-0077 Amendment 1).
 
 **문제 정의(두 번 바뀜)**
-- 처음(2026-05-17): 제주 4~5일 여행에 앱 평균 8개를 써서 인지부하·결정피로가 생긴다 → 「도착부터 떠날 때까지 앱 하나」(`docs/grilling_seed.md` §1·§2).
+- 처음(2026-05-17): 제주 4~5일 여행에 앱 평균 8개를 써서 인지부하·결정피로가 생긴다 → 「도착부터 떠날 때까지 앱 하나」(`docs/history/grilling_seed.md` §1·§2).
 - 지금(2026-09-30 이후): 여행 중 「지금 여기서 뭐하지?」 하는 순간. 사전 계획·일정 짜기는 대상이 아니다(ADR-0025, ADR-0059 2).
 - 전환 이유: 「큐레이션 앱으로 변했고, 더 많은·더 정확한 정보 수집에 매달렸다. 사용자 없이 범위만 커지고 마무리가 안 되는 상태」(ADR-0025 Context).
 - 기준이 된 경험: 유럽 자유여행 중 밤에 「내일 뭐하지?」 싶으면 그 도시를 검색해 체험을 고르던 경험(ADR-0025 Context).
@@ -173,7 +173,7 @@ flowchart LR
 - **호스팅**: Cloudflare Pages 직접 업로드(`wrangler pages deploy dist`, Git 연결 없음). `_headers`로 해시 자산 1년 immutable, `index.html`·`sw.js`·manifest no-cache, SPA 폴백 없이 `404.html`(ADR-0063, `docs/deploy.md` §1).
 - **서버 코드는 Functions 2개 + D1 1개**(ADR-0078 Consequences)
   - `GET /api/rain?area=<slug>`: 기상청 `getVilageFcst`, 15곳 격자표 미리 계산, 엣지 캐시 `s-maxage=1800`, 키 없거나 실패면 204(`functions/api/rain.ts`, `functions/_lib/kma.ts`, ADR-0076).
-  - `POST /api/events`: 익명 이벤트를 D1 `yeogwi-events`에 날짜×장소×이벤트 카운터로(`functions/api/events/`, `events/handler.ts`, `migrations/0001_events.sql`).
+  - `POST /api/events`: 익명 이벤트를 D1 `yeogwi-events`에 날짜×장소×이벤트 카운터로(`functions/api/events/`, `functions/_lib/events/handler.ts`, `migrations/0001_events.sql`).
 - **정적 랜딩 생성기**: `vite build && tsx scripts/build-landing.mjs`(`package.json` build). 허브 1·지역 15·조합(keyword gate target만, 지금 `/jeju/seongsan/new/` 1)·장소마다 1쪽. 스크립트 없는 HTML, 영문 슬러그는 한 번 주면 바꾸지 않음(`data/landing/slugs.json` 2,964개)(ADR-0072 1·2).
 - **개인정보 설계**: 좌표·숙소 위치는 기기 밖으로 안 나간다. 비 소식은 동네 이름만 보내고 GPS 기준이면 기기 안에서 가장 가까운 동네로 바꿔 보낸다(ADR-0076 4). 익명 기록은 좌표·식별자·쿠키·IP를 보내지도 저장하지도 않음(ADR-0061 2, ADR-0078 1). GA4·네이버 애널리틱스는 쿠키를 쓴다고 privacy에 고지하고, 「기록 끄기」가 셋 다 끈다(ADR-0078 3·4).
 - **외부 요청 목록**: 사진 CDN, 외부 링크, 비 소식, 분석 3종뿐(SPEC §12.3 + ADR-0076·0078 예외).
@@ -218,7 +218,7 @@ flowchart TB
 | 대비 | `contrast.test.ts` 10개. 예: 큰 카드 길찾기 글자를 `--main`(4.3:1, AA 미달) 대신 `--text`로 | `plans/home-refresh.md` Plan Review 2 |
 | 링크 실측 | `check:links`: 폰 UA 5종 + PC로 네이버·카카오 × 자동차·도보·배 타는 곳 링크를 실제로 따라감 | 106318c, 39e337c |
 | 배포 직후 | `smoke.sh`: 캐시 규칙·404·og·canonical·robots·llms.txt·옛 이름 0·분석 4항목 | `docs/deploy.md` §3, c7b64de |
-| 분석 꺼짐 방지 | 운영 빌드에서 GA4·네이버·수집 주소 중 하나라도 비면 빌드 실패 | ADR-0078 2, `scripts/analytics-env.ts` |
+| 분석 꺼짐 방지 | 운영 빌드에서 GA4·네이버·수집 주소 중 하나라도 비면 빌드 실패 | ADR-0078 2, `scripts/analytics/analytics-env.ts` |
 
 **사전 등록 기준(돌리기 전에 통과선을 적음)**
 - 전 항목 검수: 기준을 실행 전 `plans/tomorrow-picker.md`에 고정(REPORT.md 첫 줄).

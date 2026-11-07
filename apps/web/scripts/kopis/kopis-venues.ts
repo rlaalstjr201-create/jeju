@@ -1,20 +1,20 @@
 // KOPIS 서울 공연장 좌표 표 (ADR-0113 5): every Seoul venue (prfplc, signgucode=11) and its la/lo, written to
 // functions/_lib/kopis-venues.json as { mt10id: [lat, lng] } (5 decimals). The function asks KOPIS only for a venue
-// missing here. Run by hand now and then: `npx tsx scripts/kopis-venues.ts`. Key: repo-root .env KOPIS_API_KEY (read
+// missing here. Run by hand now and then: `npx tsx scripts/kopis/kopis-venues.ts`. Key: repo-root .env KOPIS_API_KEY (read
 // by name, never printed). KOPIS blocks bursts (60 at once: 51 blocked; at ~6 a second it blocked after ~120 calls, then
 // again soon after each minute's wait), so calls here go one a second (KOPIS_GAP_MS), a block waits 5 minutes, and the
 // work so far is kept in the OS temp folder: a run cut short goes on from there.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { xmlRecords, xmlTag } from '../functions/_lib/kopis';
+import { xmlRecords, xmlTag } from '../../functions/_lib/kopis';
 
 const BASE = 'http://www.kopis.or.kr/openApi/restful';
 const GAP_MS = Number(process.env.KOPIS_GAP_MS ?? 1000);
-const OUT = resolve(import.meta.dirname, '../functions/_lib/kopis-venues.json');
+const OUT = resolve(import.meta.dirname, '../../functions/_lib/kopis-venues.json');
 
 export function kopisKey(): string {
-  const env = readFileSync(resolve(import.meta.dirname, '../../../.env'), 'utf8');
+  const env = readFileSync(resolve(import.meta.dirname, '../../../../.env'), 'utf8');
   const k = env.match(/^KOPIS_API_KEY\s*=\s*"?([^"\r\n]+)"?/m)?.[1].trim();
   if (!k) throw new Error('KOPIS_API_KEY is not in .env');
   return k;

@@ -4,8 +4,8 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { countSince, d1FeedbackStore, type D1Like } from '../events/d1';
-import { FEEDBACK_DAILY_CAP, handleFeedback, memoryFeedbackStore, parseFeedback } from '../events/feedback';
+import { countSince, d1FeedbackStore, type D1Like } from '../functions/_lib/events/d1';
+import { FEEDBACK_DAILY_CAP, handleFeedback, memoryFeedbackStore, parseFeedback } from '../functions/_lib/events/feedback';
 import { onRequest } from '../functions/api/feedback';
 
 /** what the app sends: JSON with its type and length; `headers` may override either */

@@ -1,7 +1,7 @@
 // GET /api/events/health (ADR-0078 2): how many events came in lately, a count only — for smoke.sh and the
-// daily scripts/analytics-health.mjs. Counters have days, not times: `last24h` sums yesterday and today (Seoul),
+// daily scripts/analytics/analytics-health.mjs. Counters have days, not times: `last24h` sums yesterday and today (Seoul),
 // so it covers at least the last 24 hours (and tomorrow, which a phone a little ahead at midnight may send).
-import { countSince, type D1Like } from '../../../events/d1';
+import { countSince, type D1Like } from '../../_lib/events/d1';
 import { addDays, dayOf } from '../../../src/dates';
 
 interface Ctx {

@@ -62,7 +62,7 @@
 
 포인트: 실패를 숨기지 말고 **전환의 근거**로 쓴다. 버린 길 표는 [`FACTS.md`](FACTS.md) §2 「버린 길과 이유」에 있다.
 
-원본: `docs/office_hours.md`, `docs/grilling_seed.md`, `docs/adr/0025-*`(파일명 주의: 0025~0029는 번호가 재사용됐다).
+원본: `docs/office_hours.md`, `docs/history/grilling_seed.md`, `docs/adr/0025-*`(파일명 주의: 0025~0029는 번호가 재사용됐다).
 
 ---
 

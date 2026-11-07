@@ -14,7 +14,7 @@
 
 ## 기록
 - `src`가 있는 동안 기존 이벤트 `open`·`tap`·`map`이 나갈 때마다, 같은 이벤트를 id `src:<꼬리표>`로 한 번 더 보낸다. 단 `open`은 들어온 순간 방문당 1회(저장 목록 열기 `open`과 섞이지 않게 링크 도착 때만).
-- `events/validate.ts`: id `src:` + 꼬리표 규칙만 허용. `aggregate.ts`: `src:`는 장소 인기에서 뺀다. 보고서(`analytics:report`)에 숙소별 줄(들어옴·기분·길찾기·두 비율).
+- `functions/_lib/events/validate.ts`: id `src:` + 꼬리표 규칙만 허용. `aggregate.ts`: `src:`는 장소 인기에서 뺀다. 보고서(`analytics:report`)에 숙소별 줄(들어옴·기분·길찾기·두 비율).
 - GA4·네이버로는 보내지 않는다. 기록 끄기면 0.
 
 ## 문서

@@ -2,7 +2,7 @@ import { execSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
-import { analyticsEnv, type AnalyticsEnv } from './scripts/analytics-env';
+import { analyticsEnv, type AnalyticsEnv } from './scripts/analytics/analytics-env';
 import { buildServiceWorker, spotsVersion } from './scripts/sw-build';
 
 const root = __dirname;
@@ -41,7 +41,7 @@ function nationCarry(): string[] {
   const files = (JSON.parse(readFileSync(NATION_INDEX, 'utf8')) as { files?: Record<string, string> }).files ?? {};
   return [`nation/index.json?v=${NATION_V}`, ...Object.entries(files).map(([f, v]) => `nation/${f}.json?v=${v}`), ...(GANGWON_V ? [`spots-gangwon.json?v=${GANGWON_V}`] : []), ...(SEOUL_V ? [`spots-seoul.json?v=${SEOUL_V}`] : [])];
 }
-/** ADR-0081: the version sent with 의견 보내기 (events/feedback.ts accepts [0-9a-z.-]{1,20}). */
+/** ADR-0081: the version sent with 의견 보내기 (functions/_lib/events/feedback.ts accepts [0-9a-z.-]{1,20}). */
 function appVersion(): string {
   try {
     const v = execSync('git rev-parse --short HEAD', { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();

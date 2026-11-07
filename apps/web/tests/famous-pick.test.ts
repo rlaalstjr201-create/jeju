@@ -7,7 +7,7 @@ import { readDeepLink } from '../src/deeplink';
 import { parseSession } from '../src/store';
 import { moodExamples } from '../src/pick/home';
 import { initialState, staticOrigin } from '../src/state';
-import { parseBatch } from '../events/validate';
+import { parseBatch } from '../functions/_lib/events/validate';
 import { famousMix, historyKey, islandOf, islandTop, pickCards, pool, REACHES, type Button, type Card, type Histories, type Spot } from '../src/pick/pick';
 import type { FamousItem } from '../scripts/famous.mjs';
 import { loadInputs } from '../scripts/sunset.mjs';

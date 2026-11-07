@@ -26,17 +26,17 @@ export function reportSql(today) {
 }
 
 const pct = (a, b) => `${((100 * a) / b).toFixed(1)}%`;
-/** the saved-list flow counters (events/handler.ts FLOW_IDS): not places */
+/** the saved-list flow counters (functions/_lib/events/handler.ts FLOW_IDS): not places */
 const FLOW = /^(open(:|$)|arrange:|saved:|save:)/;
 /** 숙소 링크 counters (ADR-0089): `src:<tag>`, not places and not the overall taps / maps */
 const SRC = /^src:/;
 const OPS = [['up', '위로'], ['down', '아래로'], ['move', '다른 날로'], ['past', '지난 날 펼치기·접기']];
-/** 시작 화면 counters (events/handler.ts START_IDS): `start:view`, `start:<how>:<why>:<dest>` — not places */
+/** 시작 화면 counters (functions/_lib/events/handler.ts START_IDS): `start:view`, `start:<how>:<why>:<dest>` — not places */
 const START = /^start:/;
 const HOW = { gps: '내 위치', pick: '직접 고름' };
 const WHY = { none: '', denied: '거절 뒤', unavailable: '못 찾은 뒤', outside: '밖 문구 뒤' };
 const DEST = { jeju: '제주', busan: '부산', gangwon: '강릉', nation: '다른 곳' };
-/** 오늘 서울 둘러보기 counters (events/handler.ts BROWSE_IDS): not places */
+/** 오늘 서울 둘러보기 counters (functions/_lib/events/handler.ts BROWSE_IDS): not places */
 const BROWSE = /^browse:/;
 
 /** 서울 홈의 선반 for one window. ADR-0114 7's verdict (the screen's stay) is withdrawn with the screen (ADR-0117 6); what the
@@ -195,7 +195,7 @@ export function parseWranglerJson(stdout) {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const app = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+  const app = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
   const today = seoulDay();
   // the SQL has no double quotes, so the same command line works in cmd.exe and sh
   let stdout;

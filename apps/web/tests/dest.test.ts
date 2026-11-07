@@ -110,7 +110,7 @@ describe('출시 스위치 (src/region/release.ts)', () => {
   it.each(['__BUSAN__', '__NATION__'])('only src/region/release.ts reads %s (areas, destinations, functions and scripts never see it)', (name) => {
     const walk = (dir: string): string[] =>
       readdirSync(dir).flatMap((f) => (statSync(join(dir, f)).isDirectory() ? walk(join(dir, f)) : [join(dir, f)]));
-    const readers = ['src', 'functions', 'events', 'scripts']
+    const readers = ['src', 'functions', 'scripts']
       .flatMap((d) => walk(join(root, d)))
       .filter((f) => /\.(ts|mts|mjs|js)$/.test(f) && readFileSync(f, 'utf8').includes(name))
       .map((f) => relative(root, f).replace(/\\/g, '/'));

@@ -1,6 +1,6 @@
 // ADR-0078 2: the build refuses to ship analytics off.
 import { describe, expect, it } from 'vitest';
-import { analyticsEnv } from '../scripts/analytics-env';
+import { analyticsEnv } from '../scripts/analytics/analytics-env';
 
 const SITE = 'https://yeochana.pages.dev';
 const ALL = { SITE_URL: SITE, VITE_GA4_ID: 'G-P8DN26LKBC', VITE_NAVER_WA: 'abc123', VITE_EVENTS_URL: '/api/events' };

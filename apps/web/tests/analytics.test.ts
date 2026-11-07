@@ -4,7 +4,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createAnalytics, gaParams, isLocalHost, type Analytics } from '../src/usage/analytics';
 import type { UsageEvent } from '../src/usage/track';
-import { countSince, d1Store, type D1Like, type D1Stmt } from '../events/d1';
+import { countSince, d1Store, type D1Like, type D1Stmt } from '../functions/_lib/events/d1';
 import { onRequest } from '../functions/api/events/index';
 import { onRequestGet as health } from '../functions/api/events/health';
 import { listed } from '../src/pick/pick';

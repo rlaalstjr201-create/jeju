@@ -125,7 +125,7 @@ function swList() {
 /** The two server functions as deployed (no Vite defines): /api/rain per area slug, /api/events per batch. */
 async function functions() {
   const { onRequestGet } = await import('../functions/api/rain');
-  const { handleEvents } = await import('../events/handler');
+  const { handleEvents } = await import('../functions/_lib/events/handler');
   const { AREAS } = await import('../src/region/areas');
   const realFetch = globalThis.fetch;
   const rain: Record<string, string> = {};

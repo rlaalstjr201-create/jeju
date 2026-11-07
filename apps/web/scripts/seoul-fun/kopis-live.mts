@@ -4,7 +4,7 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { xmlRecords, xmlTag } from '../../functions/_lib/kopis';
-import { kopisGet, kopisKey } from '../kopis-venues';
+import { kopisGet, kopisKey } from '../kopis/kopis-venues';
 
 const out = resolve(dirname(fileURLToPath(import.meta.url)), '../../review/seoul-fun/kopis-live-01.json');
 if (existsSync(out)) throw new Error('kopis-live-01.json exists (one run only)');

@@ -1,6 +1,6 @@
 // ADR-0078 6: npm run analytics:report — the D1 rows → a short Korean summary; no data says so.
 import { describe, expect, it } from 'vitest';
-import { parseWranglerJson, renderReport, reportSql } from '../scripts/analytics-report.mjs';
+import { parseWranglerJson, renderReport, reportSql } from '../scripts/analytics/analytics-report.mjs';
 
 const today = '2026-10-03';
 const names = new Map([

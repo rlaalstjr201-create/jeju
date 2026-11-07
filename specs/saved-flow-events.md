@@ -46,7 +46,7 @@
 - `arrange` → id `arrange:<op>`
 - `map` + `from: 'saved'` → 기존 장소 카운터(장소 id × `map`)는 그대로 올리고, 덧붙여 id `saved:a<age, 없으면 x>:<past면 p, 아니면 ->`(예 `saved:a1:p`, `saved:ax:-`)를 이벤트 `map`으로 한 번 더 올린다.
 - `save` → 기존 장소 카운터 그대로, 덧붙여 id `save:dated` 또는 `save:now`를 이벤트 `save`로(Q1을 D1에서도 보게).
-- 검사(`events/validate.ts`): 새 필드는 위 표의 이벤트에만, 값은 위 목록만. 그 밖은 묶음 전체를 거부한다(지금 원칙). 시각처럼 보이는 문자열은 어느 필드에도 들어갈 수 없다.
+- 검사(`functions/_lib/events/validate.ts`): 새 필드는 위 표의 이벤트에만, 값은 위 목록만. 그 밖은 묶음 전체를 거부한다(지금 원칙). 시각처럼 보이는 문자열은 어느 필드에도 들어갈 수 없다.
 - 덧붙인 카운터 id 목록은 고정이다(`saved:a0:-` … `arrange:past` 등 열 몇 개). 집계 보고서가 장소 이름표와 섞지 않게 접두어(`open`·`arrange:`·`saved:`·`save:`)로 가른다.
 
 ## GA4

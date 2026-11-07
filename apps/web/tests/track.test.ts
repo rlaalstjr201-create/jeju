@@ -3,7 +3,7 @@
 // in the app with a fake sendBeacon (which events, once each, no position).
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { FLUSH_AT, FLUSH_MS, ageOf, contextOf, createTracker, type UsageEvent } from '../src/usage/track';
-import { parseBatch } from '../events/validate';
+import { parseBatch } from '../functions/_lib/events/validate';
 import { listed } from '../src/pick/pick';
 import { BUSAN } from '../src/region/release';
 import { realSpots } from './fixtures';

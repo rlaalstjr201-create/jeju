@@ -41,7 +41,7 @@
 
 ## 받는 쪽
 
-- `apps/web/events/feedback.ts`: 호스트 비종속 `handleFeedback(req, store, now)`.
+- `apps/web/functions/_lib/events/feedback.ts`: 호스트 비종속 `handleFeedback(req, store, now)`.
   - POST만(405). `content-type`이 `application/json`으로 시작하지 않으면 415(다른 사이트의 폼 POST 차단). 길이 머리 없으면 411, 선언 길이 4KB 초과 413, 본문은 흘려 읽다가 4KB를 넘는 순간 413. JSON 아니거나 객체 아니면 400.
   - 필드는 `went`·`pains`·`pain`·`wish`·`v`만(그 밖은 400). `went` ∈ {went, not, yet}. `pains`는 알려진 값만, 중복 없이 1~5개. `pain`·`wish`는 문자열 1~500자(UTF-16 단위, 앞뒤 공백 지운 뒤 비면 400). `v`는 `^[0-9a-z.-]{1,20}$`. 답이 하나도 없으면 400.
   - 날짜는 서버가 정한다(제주 날짜 `YYYY-MM-DD`, 시각 없음).
@@ -72,4 +72,4 @@
 
 ## Open Questions
 
-- 없음(ADR-0081이 정함). 상한 200건은 이 스펙의 값이다. 바꾸려면 이 줄과 `events/feedback.ts`의 상수를 함께 고친다.
+- 없음(ADR-0081이 정함). 상한 200건은 이 스펙의 값이다. 바꾸려면 이 줄과 `functions/_lib/events/feedback.ts`의 상수를 함께 고친다.

@@ -1,8 +1,8 @@
 // POST /api/feedback (ADR-0081, specs/survey.md): 의견 보내기 into D1 (binding EVENTS_DB, table feedback).
-// events/feedback.ts does the work: one JSON object ≤ 4 KB of known answers; the server adds the Jeju day only.
+// functions/_lib/events/feedback.ts does the work: one JSON object ≤ 4 KB of known answers; the server adds the Jeju day only.
 // No IP, user agent, cookie or other header is read.
-import { d1FeedbackStore, type D1Like } from '../../events/d1';
-import { handleFeedback } from '../../events/feedback';
+import { d1FeedbackStore, type D1Like } from '../_lib/events/d1';
+import { handleFeedback } from '../_lib/events/feedback';
 
 interface Ctx {
   request: Request;

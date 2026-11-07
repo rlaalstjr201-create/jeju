@@ -1,14 +1,14 @@
 // KOPIS 공연을 섞은 그날 목록 (ADR-0113): a day's Seoul show list and every show's detail from KOPIS (paced, kopis-venues.ts
 // kopisGet), saved raw, then turned into items by the function's own code (functions/_lib/kopis.ts kopisItems) and merged
 // with a saved Seoul list. Prints the counts and the KOPIS share of the picks at the quality run's scenes.
-//   npx tsx scripts/kopis-today.ts --out <dir> --seoul <rows.json> [--day YYYY-MM-DD] [--raw]
+//   npx tsx scripts/kopis/kopis-today.ts --out <dir> --seoul <rows.json> [--day YYYY-MM-DD] [--raw]
 // --raw: no KOPIS calls, the saved <dir> only. <rows.json>: { rows: SeoulRow[] } (culture-quality-0N/01-rows-fetched.json).
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { cultureItems, type SeoulRow } from '../functions/_lib/culture-filter';
-import { kopisDrop, kopisItems, listIds, mergeCulture, parseShow, xmlRecords, xmlTag, type KopisShow } from '../functions/_lib/kopis';
-import VENUES from '../functions/_lib/kopis-venues.json';
-import { pickCulture, type Now } from '../src/culture/culture';
+import { cultureItems, type SeoulRow } from '../../functions/_lib/culture-filter';
+import { kopisDrop, kopisItems, listIds, mergeCulture, parseShow, xmlRecords, xmlTag, type KopisShow } from '../../functions/_lib/kopis';
+import VENUES from '../../functions/_lib/kopis-venues.json';
+import { pickCulture, type Now } from '../../src/culture/culture';
 import { kopisGet, kopisKey } from './kopis-venues';
 
 const arg = (name: string) => {

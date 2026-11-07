@@ -34,7 +34,7 @@
 ## 상태·내비게이션
 
 - `overlay: 'browse'`로 여는 경로(홈 버튼)는 서울 홈에서 사라진다. 딥링크·뒤로 가기로 browse가 열려도 깨지지 않게, 선반 홈으로 닫히게 한다. `browse-card` 시트는 홈 위에서 열린다(뒤로 가기 = 시트 닫기).
-- 기록: 카드 누름은 `browse_card`, 링크는 `browse_link`를 그대로 쓴다. `browse_open`·`browse_done`은 서울 홈에서 보내지 않는다. 새 GA4 매개변수는 없다. 분석 보고(`scripts/analytics-report.mjs`)의 ADR-0114 판정 절은 ADR-0117 6의 판정으로 바꾼다(날짜: 배포일 + 14일).
+- 기록: 카드 누름은 `browse_card`, 링크는 `browse_link`를 그대로 쓴다. `browse_open`·`browse_done`은 서울 홈에서 보내지 않는다. 새 GA4 매개변수는 없다. 분석 보고(`scripts/analytics/analytics-report.mjs`)의 ADR-0114 판정 절은 ADR-0117 6의 판정으로 바꾼다(날짜: 배포일 + 14일).
 
 ## 청크·예산
 

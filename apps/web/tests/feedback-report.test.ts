@@ -1,8 +1,8 @@
-// ADR-0081 5: scripts/feedback-report.mjs — the feedback rows → a summary on stdout, never a file.
+// ADR-0081 5: scripts/analytics/feedback-report.mjs — the feedback rows → a summary on stdout, never a file.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { KEEP_DAYS, cappedSql, countSql, pruneSql, renderFeedback, reportSql, userText } from '../scripts/feedback-report.mjs';
+import { KEEP_DAYS, cappedSql, countSql, pruneSql, renderFeedback, reportSql, userText } from '../scripts/analytics/feedback-report.mjs';
 
 const row = (o: Partial<{ day: string; went: string; pains: string; pain: string; wish: string }>) => ({ day: '2026-10-05', went: null, pains: null, pain: null, wish: null, v: 'abc1234', ...o });
 
@@ -32,7 +32,7 @@ describe('feedback report', () => {
   });
 
   it('writes no file: only stdout', () => {
-    const src = readFileSync(resolve(__dirname, '../scripts/feedback-report.mjs'), 'utf8');
+    const src = readFileSync(resolve(__dirname, '../scripts/analytics/feedback-report.mjs'), 'utf8');
     expect(src).not.toMatch(/writeFile|appendFile|createWriteStream|mkdir/);
   });
 

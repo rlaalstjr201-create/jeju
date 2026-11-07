@@ -3,7 +3,7 @@
 // Mood taps (`mood:*`), the feedback cap count (`feedback:capped`, ADR-0081) and the saved-list flow counts
 // (`open…`, `arrange:*`, `saved:*`, `save:*`, ADR-0085) and the 숙소 링크 counts (`src:*`, ADR-0089) are not
 // places and stay out.
-//   npx tsx events/aggregate.ts <counters.json> [out.json]   (out defaults to review/popularity.json)
+//   npx tsx functions/_lib/events/aggregate.ts <counters.json> [out.json]   (out defaults to review/popularity.json)
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -34,9 +34,9 @@ export function aggregate(counters: readonly Counter[]): Popularity[] {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const [input, out = resolve(fileURLToPath(new URL('..', import.meta.url)), 'review/popularity.json')] = process.argv.slice(2);
+  const [input, out = resolve(fileURLToPath(new URL('../../..', import.meta.url)), 'review/popularity.json')] = process.argv.slice(2);
   if (!input) {
-    console.error('usage: tsx events/aggregate.ts <counters.json> [out.json]');
+    console.error('usage: tsx functions/_lib/events/aggregate.ts <counters.json> [out.json]');
     process.exit(1);
   }
   const rows = aggregate(JSON.parse(readFileSync(input, 'utf8')) as Counter[]);

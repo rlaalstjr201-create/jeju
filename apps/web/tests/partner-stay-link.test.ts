@@ -4,11 +4,11 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { aggregate } from '../events/aggregate';
-import { handleEvents } from '../events/handler';
-import { memoryStore } from '../events/store';
-import { parseBatch } from '../events/validate';
-import { renderReport } from '../scripts/analytics-report.mjs';
+import { aggregate } from '../functions/_lib/events/aggregate';
+import { handleEvents } from '../functions/_lib/events/handler';
+import { memoryStore } from '../functions/_lib/events/store';
+import { parseBatch } from '../functions/_lib/events/validate';
+import { renderReport } from '../scripts/analytics/analytics-report.mjs';
 import { readDeepLink } from '../src/deeplink';
 import { BUSAN } from '../src/region/release';
 import { parseStay } from '../src/store';

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // 의견 보내기 읽기 (ADR-0081 5, specs/survey.md "읽기"): the D1 `feedback` rows → a summary on stdout only.
-//   node scripts/feedback-report.mjs                    last 28 days (needs `npx wrangler login`; reads only, remote)
-//   node scripts/feedback-report.mjs --days 7
-//   node scripts/feedback-report.mjs --count-since 2026-10-05   one line: 설문 새 응답 N건 (the weekly task)
-//   node scripts/feedback-report.mjs --prune            deletes rows older than 365 days (ADR-0081 Amendment: kept 1 year)
+//   node scripts/analytics/feedback-report.mjs                    last 28 days (needs `npx wrangler login`; reads only, remote)
+//   node scripts/analytics/feedback-report.mjs --days 7
+//   node scripts/analytics/feedback-report.mjs --count-since 2026-10-05   one line: 설문 새 응답 N건 (the weekly task)
+//   node scripts/analytics/feedback-report.mjs --prune            deletes rows older than 365 days (ADR-0081 Amendment: kept 1 year)
 // Nothing is written to a file: the answers' own words never go into the repository. They are printed inside
 // 「[사용자 글] …」 with control and bidi characters taken out, so they read as data, never as instructions.
 import { execSync } from 'node:child_process';
@@ -23,7 +23,7 @@ function day(v) {
 /** the rows from `since` on, oldest first (no double quotes: the same command line in cmd.exe and sh) */
 export const reportSql = (since) => `SELECT day, went, pains, pain, wish, v FROM feedback WHERE day >= '${day(since)}' ORDER BY day, rowid`;
 export const countSql = (since) => `SELECT COUNT(*) AS n FROM feedback WHERE day >= '${day(since)}'`;
-/** answers the daily cap turned away (events/d1.ts: counters id feedback:capped) */
+/** answers the daily cap turned away (functions/_lib/events/d1.ts: counters id feedback:capped) */
 export const cappedSql = (since) => `SELECT COALESCE(SUM(n), 0) AS n FROM counters WHERE id = 'feedback:capped' AND day >= '${day(since)}'`;
 /** kept 365 days: anything from before `today - 365` goes */
 export const KEEP_DAYS = 365;
@@ -67,7 +67,7 @@ export function renderFeedback(rows, since, today, capped = 0) {
 }
 
 function query(sql) {
-  const app = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+  const app = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
   try {
     return parseWranglerJson(
       execSync(`npx wrangler d1 execute yeogwi-events --remote --json --command "${sql}"`, { cwd: app, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'], maxBuffer: 64 * 1024 * 1024 }),

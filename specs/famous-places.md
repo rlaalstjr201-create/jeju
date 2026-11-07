@@ -24,7 +24,7 @@
 - `data.ts`: `famous: true`만 받는다. 다른 값이면 떼고 곳은 남긴다(`trail`과 같다).
 - 첫 화면(`index.html`, `render.ts`): 기분 목록 넷째 줄 `유명한 데 가 보고 싶어`(`data-mood="famous"`). 결과 머리는 같은 문구다. 「예:」는 다른 줄과 같은 방식으로, 첫 그리기에서는 `['rest','walk']` → `['new','famous']` → `['food']` 순서로 두 줄씩 그린다. 유명한 데 줄은 위 줄(쉬기·걷기·새로운 거)의 「예:」에 나온 곳을 건너뛰고 그다음 곳을 쓴다(`home.ts` `moodExamples`, 글자·사진 둘 다). 2곳이 안 되면 건너뛴 곳으로 채운다. 결과 카드는 그대로(ADR-0092 7).
 - 버튼 목록(`app.ts`·`store.ts`·`deeplink.ts`): `famous`를 더한다. 순환 기록 키는 `famous`다.
-- 사용 기록: `events/validate.ts`가 `mood: famous`를 받는다(`sub` 없음). `analytics-report.mjs`의 이름은 `유명한 데`다.
+- 사용 기록: `functions/_lib/events/validate.ts`가 `mood: famous`를 받는다(`sub` 없음). `analytics-report.mjs`의 이름은 `유명한 데`다.
 - 그대로: 아무거나(쉬기·걷기·새로운 것 한 장씩), 고르는 방식 줄, 상태 줄 문구, 카드, 저장·가 봤어요, 개인정보 안내.
 
 ## 3. 랜딩·문서
