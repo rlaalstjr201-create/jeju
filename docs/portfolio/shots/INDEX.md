@@ -42,7 +42,7 @@
 | early-4.png | 첫 QA 라운드(r1) 맛집 결과: 큰 사진 1장과 「아니면」 2곳, 「내 주변」 기준 | apps/web/design/qa/shots-r1/cards-food-390-light.png |
 
 지정한 원본 9개는 모두 있었다. 복사하지 않은 초기 이미지는 아래와 같다.
-- `apps/web/design/shots/proto-{a,b,c}-{home,cards,food,saved,sheet,empty}-{320,390}-{light,dark}.png`: 프로토 A·B·C를 화면별·테마별로 찍은 것(42장).
+- `apps/web/design/shots/proto-{a,b,c}-{home,cards,food,saved,sheet,empty}-{320,390}-{light,dark}.png`: 프로토 A·B·C를 화면별·테마별로 찍은 것(42장).  2026-11-07 저장소에서 뺌(git 기록 `0bbb82db`에 남음).
 - `apps/web/design/qa/shots-r1/`(142장), `shots-r2/`(185장): 1·2차 QA 시나리오 촬영(홈, 기분별 카드, 위치 거부, 기준 시트, 저장, 200% 확대 등).
 - `apps/web/design/qa/home-refresh/`: 홈 개편 QA(u1 실내만 켬/끔, u3 GPS·구제주 라이트/다크, u5 비).
-- `apps/web/design/proto-a/`, `proto-b/`, `proto-c/`: 이미지 파일 없음.
+- `apps/web/design/proto-a/`, `proto-b/`, `proto-c/`: 이미지 파일 없음. 2026-11-07 저장소에서 뺌(git 기록 `0bbb82db`에 남음).

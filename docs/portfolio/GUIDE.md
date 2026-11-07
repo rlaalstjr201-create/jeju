@@ -82,7 +82,7 @@
 | ![프로토 A 홈](shots/history/early-1.png) | ![1차 QA 맛집 결과](shots/history/early-4.png) |
 | 프로토 A: 글자만 있는 기분 목록 | 1차 QA: 큰 사진 1장 + 「아니면」 2곳 구조가 이때 정해졌다 |
 
-더 있음: `shots/history/early-2.png`(프로토 C 홈), `early-3.png`(프로토 B 맛집 카드). 원본 42장은 `apps/web/design/shots/`.
+더 있음: `shots/history/early-2.png`(프로토 C 홈), `early-3.png`(프로토 B 맛집 카드). 원본 42장은 `apps/web/design/shots/`에 있었다(2026-11-07 저장소에서 뺌, git 기록 `0bbb82db`에 남음).
 
 ---
 
