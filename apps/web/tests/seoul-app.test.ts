@@ -66,7 +66,8 @@ describe.runIf(NATION)('서울 (switch on)', () => {
     expect(asked).toEqual(['jeju', 'seoul:11110']);
     expect(cardIds()).toHaveLength(3);
     expect(cardIds().every((id) => byId(id)?.famous)).toBe(true);
-    const hidden = (m: string) => $(`[data-mood="${m}"]`).closest('li')!.hidden;
+    // the mood list's own buttons (with the culture part in, 서울's home also has its shelves' 「…」 buttons)
+    const hidden = (m: string) => $(`button.mood[data-mood="${m}"]`).closest('li')!.hidden;
     expect(['rest', 'walk', 'new', 'famous', 'food'].map(hidden)).toEqual([false, false, false, false, false]);
   });
 

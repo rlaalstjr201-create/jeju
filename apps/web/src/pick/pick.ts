@@ -65,6 +65,9 @@ export interface Spot {
   /** 서울's 영업 유형 (ADR-0117 Amendment 7, review/seoul-hours): 관람형 10–18, 궁 9–18, 늘 열림, or an evening place's
    * [open, close] in minutes (close past 1440 past midnight). Unset: not judged, or 모름 (state.ts viewingShut: only in the daytime viewing hours, 먹기 always). */
   opening?: 'day-viewing' | 'palace' | 'always' | [number, number];
+  /** 서울 큐레이팅 (ADR-0128 2): a curated place or a week's thing made into a card (seoul/fun.ts curatedSpots) — not in the
+   * destination's file; 놀러 가고 싶어 puts two of them first, 지금 only. */
+  curated?: true;
 }
 
 export type BookKind = 'naver' | 'mrt' | 'visitjeju' | 'homepage' | 'phone';
@@ -99,6 +102,10 @@ export type HistoryKey = Exclude<Button, 'food' | 'new'> | `food:${Sub}` | `new:
 export type Histories = Partial<Record<HistoryKey, History>>;
 
 export const CARD_COUNT = 3;
+/** 서울 큐레이팅 (ADR-0128 2): how many of the cards go to the curated places first, when there are that many. */
+export const CURATED_LEAD = 2;
+/** A curated card's id (seoul/fun.ts curatedSpots: `nt-` + a curated place's kk-, a week's wk-, a 매일 발굴's dc-). */
+export const CURATED_ID = /^nt-(kk|wk|dc)-/;
 const ANY_MOODS: readonly Mood[] = ['rest', 'walk', 'new'];
 
 /** 얼마나 (ADR-0060): 걸어서 = 걷기 15분 이내, 차로 30분, 차로 1시간. */
@@ -369,11 +376,13 @@ export function pickCards(
   night = false,
   anyMoods: readonly Mood[] = ANY_MOODS,
   minute: number | null = null,
+  lead = false,
 ): { cards: Card[]; histories: Histories; wrapped: boolean; nightShifted: NightShift } {
   const key = historyKey(button, tab);
   const h = histories[key];
   let picked: Ranked[];
   let poolIds: string[];
+  let leadN = 0;
   const moved = { trail: false, island: false };
   if (button === 'any') {
     // 아무거나: 쉬기·걷기·새로운 것에서 한 장씩. 먹기는 섞지 않는다(맛집은 전용 버튼으로만).
@@ -396,12 +405,23 @@ export function pickCards(
   } else {
     const p = pool(spots, origin, button, tab, reach, indoor, day, night, minute);
     const order = rotate(p, h);
-    picked = order.slice(0, CARD_COUNT);
+    // 서울 큐레이팅 (ADR-0128 2, `lead`): the rotation's first curated places take the first cards, the rest the others — but
+    // never one seen more lately than the first of the others (few open near: no card over and over while others wait)
+    const tier = h ? tierOf(h) : () => 0;
+    const other = order.find((c) => !c.spot.curated);
+    const first = lead ? order.filter((c) => c.spot.curated && (!other || tier(c) <= tier(other))).slice(0, CURATED_LEAD) : [];
+    // the rest: the destination's own places first (2 + 1, ADR-0128 2)
+    const rest = order.filter((c) => !first.includes(c));
+    // (within the rotation's tier: an unseen curated place still goes before a seen one of the others)
+    if (lead) rest.sort((a, b) => tier(a) - tier(b) || Number(!!a.spot.curated) - Number(!!b.spot.curated));
+    picked = [...first, ...rest].slice(0, CARD_COUNT);
+    leadN = first.length;
     if (night) nightMoved(order, h, moved);
     poolIds = p.map((c) => c.spot.id);
   }
   // The rotation decides which 3; they are shown nearest first (ADR-0108, R3), the score itself never.
-  const cards: Card[] = picked.sort(byRank).map(({ spot, minutes }) => ({ spot, minutes }));
+  // the curated ones (ADR-0128 2) stay ahead of the others, nearest first among each
+  const cards: Card[] = [...picked.slice(0, leadN).sort(byRank), ...picked.slice(leadN).sort(byRank)].map(({ spot, minutes }) => ({ spot, minutes }));
   const wrapped = !!h && (!!h.restarted || cards.some((c) => h.seen.includes(c.spot.id)));
   const nightShifted: NightShift = moved.trail ? (moved.island ? 'both' : 'trail') : moved.island ? 'island' : null;
   return { cards, histories: { ...histories, [key]: remember(h, cards, poolIds) }, wrapped, nightShifted };

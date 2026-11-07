@@ -4,7 +4,7 @@
 import { areaByName, type RegionName, type SggCode } from './region/areas';
 import { type Day } from './dates';
 import { DEST, type Dest } from './region/dest';
-import { DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick/pick';
+import { CURATED_ID, DEFAULT_REACH, distanceKm, driveMinutes, historyKey, pickCards, tabOf, type Button, type Point, type Card, type Histories, type HistoryKey, type NewSub, type NightShift, type Reach, type Spot, type Sub, type Tab } from './pick/pick';
 import type { InApp, InstallHow } from './keep';
 import { DEFAULT_MAP_APP, type MapApp } from './pick/links';
 import type { SessionRecord } from './store';
@@ -155,6 +155,9 @@ export interface State {
   /** 오늘 근처에서 하는 것 (ADR-0112): 서울's list for `day` (KST) and the minute it is read at (app.ts askCulture); null until
    * one has come. */
   culture: { day: Day; items: readonly CultureItem[]; minute: number } | null;
+  /** 서울 큐레이팅 (ADR-0128 2): the curated places and the week's things of `day` as 놀러 cards (seoul/fun.ts curatedSpots, app.ts
+   * askCulture); null until the culture part is in. */
+  curated: { day: Day; spots: Spot[]; all: Spot[] } | null;
   /** 오늘 서울 둘러보기 (ADR-0114): the item whose card sheet is (or was last) open; kept so a back onto it finds it again. */
   browseId: string | null;
   /** 서울 홈 선반의 기분 카드 (ADR-0117 Amendment 1): the place pressed, the first of the cards its mood shows next; null after. */
@@ -221,6 +224,7 @@ export type Action =
   /** 비 소식 answered for `area` (slug); dropped unless that is still the home's area. */
   | { type: 'rain'; area: string; rain: boolean }
   | { type: 'culture'; culture: NonNullable<State['culture']> }
+  | { type: 'curated'; curated: NonNullable<State['curated']> }
   /** 오늘 서울 둘러보기: a card pressed (its sheet over the screen) */
   | { type: 'browseCard'; id: string }
   /** the time of day was read (ADR-0083). */
@@ -314,6 +318,7 @@ export function initialState(init: {
     announce: { n: 0, more: false, seq: 0 },
     rain: null,
     culture: null,
+    curated: null,
     browseId: null,
     pin: null,
     clock: init.clock ?? null,
@@ -402,6 +407,25 @@ export function basisIsCurrent(s: State, basis: Basis, region?: RegionName | nul
 }
 
 const indexCache = new WeakMap<Spot[], Map<string, Spot>>();
+/** 서울 큐레이팅 (ADR-0128 2): `spots` with the day's curated places after them — the same array for the same two lists, so
+ * the indexes and openSpots' cache hold. As it is elsewhere, or before they are in. */
+const curatedCache = new WeakMap<Spot[], { curated: Spot[]; list: Spot[] }>();
+const allCache = new WeakMap<Spot[], { curated: Spot[]; list: Spot[] }>();
+/** `all`: every curated place, whatever the day (curatedAll) — for looking a heart or 가 봤어요 up; else the day's (the picks). */
+export function withCurated(s: Pick<State, 'dest' | 'curated'>, spots: Spot[], all = false): Spot[] {
+  const c = s.dest === 'seoul' ? (all ? s.curated?.all : s.curated?.spots) : undefined;
+  if (!c?.length) return spots;
+  const cache = all ? allCache : curatedCache;
+  const hit = cache.get(spots);
+  if (hit?.curated === c) return hit.list;
+  const list = [...spots, ...c];
+  cache.set(spots, { curated: c, list });
+  return list;
+}
+/** 놀러 가고 싶어 (섞어서·놀거리) in 서울, 지금, with the day's curated places in (ADR-0128 2): not on a chosen day, not 구경. */
+export const curatedLead = (s: State, mood: Button): boolean =>
+  s.dest === 'seoul' && s.when === 'now' && mood === 'new' && s.newSub !== 'sight' && s.curated?.day === s.today && s.curated.spots.length > 0;
+
 export function spotIndex(spots: Spot[]): Map<string, Spot> {
   let m = indexCache.get(spots);
   if (!m) {
@@ -428,7 +452,7 @@ export function pickSpots(spots: Spot[], visited: readonly string[]): Spot[] {
  * (in the order they were left out while it is not known). Ids the data lacks are kept but not listed. */
 export function visitedSpots(s: State): Spot[] {
   if (!s.spots) return [];
-  const idx = spotIndex(s.spots);
+  const idx = spotIndex(withCurated(s, s.spots, true));
   const list = s.visited.map((id) => idx.get(id)).filter((x): x is Spot => !!x);
   const p = s.savedList?.origin?.point;
   if (!p) return list;
@@ -506,12 +530,14 @@ export function heldDay(s: State, id: string, day: Day = whenDay(s)): Day | null
 /** The saved ids' places: the whole file the list in use is one 시군구 of (savedPool), else that list; null before it. */
 export const savedIndex = (s: State): Map<string, Spot> | null => {
   const from = s.savedPool ?? s.spots;
-  return from && spotIndex(from);
+  return from && spotIndex(withCurated(s, from, true));
 };
 /** Once data is loaded, only ids that still exist count (S42). */
 function known(s: State): SavedEntry[] {
   const idx = savedIndex(s);
-  return idx ? s.saved.filter((e) => idx.has(e.id)) : s.saved;
+  // a curated place's heart (ADR-0128 2) counts while the curated places are not in yet: it is not known to be gone
+  const waiting = (id: string) => s.dest === 'seoul' && !s.curated && CURATED_ID.test(id);
+  return idx ? s.saved.filter((e) => idx.has(e.id) || waiting(e.id)) : s.saved;
 }
 /** ♥ N: today and later — the days gone by are not counted. */
 export function savedCount(s: State): number {
@@ -578,7 +604,9 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
   // 밤 (ADR-0091): 지금 only (a chosen day has no time of day), at the cards' own point — 야외 산길 and islands by boat
   // (Amendment 1) go after the rest.
   const night = s.when === 'now' && nightNow(s.clock, origin.point, s.today);
-  const from = openSpots(s, pickSpots(spots, s.visited), night);
+  // 서울 큐레이팅 (ADR-0128 2): 지금's 놀러 (섞어서·놀거리) takes the curated places too, two of them first
+  const lead = curatedLead(s, mood);
+  const from = openSpots(s, pickSpots(lead ? withCurated(s, spots) : spots, s.visited), night);
   const restored = intent === 'show' && ids && !s.pin ? cardsFor(from, ids, origin.point) : null;
   if (restored) {
     // Exactly what is already on screen (same 3, same point): keep it as is, so nothing is rebuilt.
@@ -606,7 +634,7 @@ function resolveCards(s: State, origin: Origin, spots: Spot[], intent: Intent): 
     };
   }
   // 오일장 (ADR-0066): the day being viewed (지금 = today) decides which markets open and which are closed.
-  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any, minuteNow(s));
+  const r = pickCards(from, origin.point, mood, histories, tabNow(s), s.reach, s.indoor, whenDay(s), night, DEST[s.dest].any, minuteNow(s), lead);
   // a shelf card pressed (ADR-0117 Amendment 1): that place first, then the picks' others; one the pin put out is not seen
   const pinned = s.pin ? cardsFor(from, [s.pin], origin.point) : null;
   if (pinned) {
@@ -817,6 +845,14 @@ function step(s: State, a: Action): State {
       return a.area === rainArea(s) ? { ...s, rain: { area: a.area, rain: a.rain } } : s;
     case 'culture':
       return { ...s, culture: a.culture };
+    case 'curated': {
+      // the day's first (ADR-0128 2): 놀러's last three were picked without them — the next 놀러 picks anew, so they are in
+      // (three that already have one — a reload's — stay, to come back as they were)
+      const first = s.curated?.day !== a.curated.day;
+      const shown = { ...s.shown };
+      for (const k of ['new:mix', 'new:do'] as const) if (first && !shown[k]?.some((id) => CURATED_ID.test(id))) delete shown[k];
+      return { ...s, curated: a.curated, shown };
+    }
     case 'browseCard': {
       const opened = reduce({ ...s, browseId: a.id }, { type: 'overlay', overlay: 'browse-card' });
       return opened.overlay === 'browse-card' ? opened : s;

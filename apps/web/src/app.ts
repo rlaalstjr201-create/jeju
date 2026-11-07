@@ -12,11 +12,11 @@ import { BACKUP_HASH, appHome, backupUrl, copyText, handoffUrl, inAppOf, install
 import { MAP_APPS, kakaoUrl, type MapApp } from './pick/links';
 import { BUSAN, NATION, OPEN_AREAS, areaOfPoint, culturePart, loadBusan, loadCulture, loadNation, outsideAt, released, releasedDestOf, sggOf, sggShort, startScreen } from './region/release';
 import { HOME, createNav } from './nav';
-import { REACHES, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick/pick';
+import { CURATED_ID, REACHES, historyKey, distanceKm, type Button, type Reach, type Spot, type Tab } from './pick/pick';
 import { rainNow, rowTimes } from './pick/home';
 import { createRenderer, findEls } from './render';
 import { PLACE, dateLabel } from './copy';
-import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, visitedSpots, whenDay, type Action, type Intent, type Keep, type State } from './state';
+import { GPS_KEY, OPEN_STEP, basisIsCurrent, cardsValid, hasSaved, homeOrigin, initialState, knownOrigin, moodIntent, openPhase, reduce, savedCount, savedDays, sessionOf, spotIndex, staticOrigin, tabNow, visitedSpots, whenDay, withCurated, type Action, type Intent, type Keep, type State } from './state';
 import { KEYS, createStore } from './store';
 import type { Analytics } from './usage/analytics';
 import { surveyDue } from './usage/survey';
@@ -351,6 +351,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     countShown();
     askRain();
     askCulture();
+    void askCurated();
     if (state.overlay !== 'browse' && state.overlay !== 'browse-card') endBrowse(); // nothing while not browsing
     duskTimer();
     keepRow();
@@ -481,6 +482,29 @@ export function mountApp(doc: Document, deps: Deps): App {
       });
   }
 
+  /** 놀러 가고 싶어's curated places (ADR-0128 2): wherever 서울 is in use (results and ♥ too, not only its home), the day's, from
+   * the culture part (its data is in it, so no list needs to come). */
+  let curatedAsk: Promise<void> | null = null;
+  /** a failed load (offline) is tried again after this, not on every draw */
+  let curatedFailed = 0;
+  function askCurated(): Promise<void> {
+    if (!NATION || state.dest !== 'seoul' || state.curated?.day === state.today) return Promise.resolve();
+    if (curatedAsk) return curatedAsk;
+    if (clockNow().getTime() - curatedFailed < CULTURE_QUICK_MS) return Promise.resolve();
+    return (curatedAsk = loadCulture().then((ok) => {
+      curatedAsk = null;
+      if (!ok) curatedFailed = clockNow().getTime();
+      const p = culturePart();
+      if (!ok || !p || signal.aborted || state.dest !== 'seoul') return;
+      const day = state.today;
+      dispatch({ type: 'curated', curated: { day, spots: p.curatedSpots(day), all: p.curatedAll() } });
+    }));
+  }
+  /** The three to bring back (a reload's) have a curated place, and those are not in yet: the answer waits for them, so the
+   * same three come back (ADR-0128 2). */
+  const curatedAwaited = () =>
+    state.dest === 'seoul' && !state.curated && !!state.mood && !!state.shown[historyKey(state.mood, tabNow(state))]?.some((id) => CURATED_ID.test(id));
+
   const { count, countSrc, countShown, countLink, countSurvey, openSurvey, sendFeedback } = createUsage(app);
 
   function setTracking(on: boolean) {
@@ -541,7 +565,7 @@ export function mountApp(doc: Document, deps: Deps): App {
     // A fixed origin (지역, 숙소, 다른 3곳) and the list already in: the answer is known now, so it lands in this same
     // step (and, in a batch, the same draw) instead of a microtask later — the same actions as the path below.
     // The time of day goes with the answer: the picks' night is read then, at the cards' own point (ADR-0091).
-    const loaded = fixed ? data.peek() : null;
+    const loaded = fixed && !curatedAwaited() ? data.peek() : null;
     if (fixed && loaded) {
       dispatch({ type: 'resolved', req, origin: fixed, spots: loaded, clock: minuteOf(clockNow()) });
       remember();
@@ -585,7 +609,9 @@ export function mountApp(doc: Document, deps: Deps): App {
         dispatch({ type: 'loadError', req, offline: !online() });
         return;
       }
-      if (req !== reqSeq) return;
+      // at most 3 seconds (a stalled network must not keep the cards waiting): then picked without them
+      if (curatedAwaited()) await Promise.race([askCurated(), new Promise<void>((r) => reqTimers.push(later(3000, r)))]);
+      if (req !== reqSeq || signal.aborted) return;
       clearReqTimers();
       dispatch({ type: 'resolved', req, origin: o.ok ? o.origin : null, spots, clock: minuteOf(clockNow()) });
       remember();
@@ -706,9 +732,10 @@ export function mountApp(doc: Document, deps: Deps): App {
     const r = state.keep.restore;
     if (r?.k !== 'ask') return;
     // places this data no longer has are left behind (once the data is in)
+    // the curated places' hearts (ADR-0128 2) are kept as they are: those places are not in this list
     const idx = state.spots ? spotIndex(state.spots) : null;
     // the other destination's places are kept as they are (specs/busan.md 6), whatever this list has
-    const { entries, added, left } = store.mergeSaved(idx ? r.entries.filter((e) => idx.has(e.id) || destOfId(e.id) !== state.dest) : r.entries);
+    const { entries, added, left } = store.mergeSaved(idx ? r.entries.filter((e) => idx.has(e.id) || destOfId(e.id) !== state.dest || CURATED_ID.test(e.id)) : r.entries);
     dispatch({ type: 'saved', entries });
     dispatch({ type: 'keep', keep: { restore: { k: 'done', added, left } } });
     if (added) askPersist();
@@ -1005,7 +1032,7 @@ export function mountApp(doc: Document, deps: Deps): App {
    * line change; the cards on screen stay as they are. A toggle like the heart: not guarded. */
   function onVisited(id: string) {
     const { visited, added } = store.toggleVisited(id);
-    const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(state.spots).get(id) : undefined);
+    const spot = state.cards?.list.find((c) => c.spot.id === id)?.spot ?? (state.spots ? spotIndex(withCurated(state, state.spots)).get(id) : undefined);
     // left out: the status line offers 되돌리기 for it (ADR-0090 5)
     dispatch({ type: 'visited', ids: visited, note: spot ? { k: added ? 'out' : 'in', name: PLACE.name(spot), ...(added ? { id } : {}) } : null });
     countVisit(added ? 'visited' : 'unvisited', id);
@@ -1020,7 +1047,7 @@ export function mountApp(doc: Document, deps: Deps): App {
   function putBack(id: string) {
     if (state.view !== 'saved' || !state.visited.includes(id)) return;
     hush(); // the next name moves up under the finger
-    const spot = state.spots ? spotIndex(state.spots).get(id) : undefined;
+    const spot = state.spots ? spotIndex(withCurated(state, state.spots)).get(id) : undefined;
     const name = spot && PLACE.name(spot);
     dispatch({ type: 'visited', ids: store.unvisit(id), note: name ? { k: 'in', name } : null });
     countVisit('unvisited', id);

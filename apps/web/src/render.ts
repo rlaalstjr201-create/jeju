@@ -9,7 +9,7 @@ import { appHome, handoffUrl, kakaoExternal } from './keep';
 import { bookLink, goLink, placeUrl, type MapApp } from './pick/links';
 import { marketText } from './pick/market';
 import { seasonOn, seasonText } from './pick/season';
-import { CARD_COUNT, TRAVEL_TEXT, historyKey, listed, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick/pick';
+import { CARD_COUNT, CURATED_ID, TRAVEL_TEXT, historyKey, listed, travel, travelText, type Button, type Card, type Reach, type Spot } from './pick/pick';
 import { cardsValid, hasSaved, isSaved, savedCount, savedDays, savedIndex, spotIndex, tabNow, visitedSpots, whenDay, type SavedRow, type State } from './state';
 import type { NoOrigin, Origin, OutsideAt, View } from './types';
 import { COPY, BUSAN_COPY, destNameOf, MOOD_LABEL, PLACE, dayName, splitName, basisLabel, heldText, visitText, statusOf, howOf } from './copy';
@@ -755,7 +755,7 @@ export function createRenderer(doc: Document, els: Els, opts: RenderOptions = {}
     const k = s.keep;
     const r = k.restore;
     // a backup link's places that this data knows (all of them until the data is in)
-    const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id)).length : r.entries.length) : 0;
+    const n = r?.k === 'ask' ? (s.spots ? r.entries.filter((e) => spotIndex(s.spots!).has(e.id) || CURATED_ID.test(e.id)).length : r.entries.length) : 0;
     const f = s.homeFail;
     const sig = r?.k === 'ask' ? `ask|${n}` : r?.k === 'done' ? `done|${r.added}|${r.left}` : k.inapp && k.inappNote ? `inapp|${k.inapp}|${k.inappNote}` : f ? `fail|${f.why}|${s.dest}` : s.homeReading ? 'reading' : '';
     // 합치기's answer; past MAX_SAVED, how many found no room (with nothing added, that line alone)

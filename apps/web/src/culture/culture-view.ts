@@ -4,6 +4,7 @@
 import { MOOD_SHELVES, PER_SHELF, buildShelves, homeShelves, type HomeShelf, type MoodShelf } from '../seoul/browse';
 import { BROWSE_COPY, browseCardSheet, browseScreen, homeShelvesView, type MoodCard } from '../seoul/browse-view';
 export { scrolledRows } from '../seoul/browse-view';
+export { curatedAll, curatedSpots } from '../seoul/fun';
 import { WHY_TEXT, pickCulture, seoulMinutes, type CultureItem, type Now, type Pick } from './culture';
 import type { Fetch } from '../effects';
 import { funItems, isFun, realItems } from '../seoul/fun';

@@ -4,7 +4,9 @@
 // morning and a market off the night, and nothing on a card says 「열림」.
 import FILE from '../../data/seoul/fun-seoul.json';
 import type { CultureItem } from '../culture/culture';
-import { FOUND_ROWS, isWeek, type FoundRow } from './weekly';
+import { FOUND_ROWS, isWeek, weeklyItems, type FoundRow } from './weekly';
+import { parseCultureTime } from '../culture/culture';
+import type { Spot } from '../pick/pick';
 
 /** NEW: 매일 발굴's new places for their first 8 weeks (새로 생긴 곳, ADR-0123 4) */
 export type FunG = 'G1' | 'G2' | 'G4' | 'G5' | 'G6' | 'G7' | 'G8' | 'G10' | 'NEW';
@@ -110,4 +112,53 @@ export function bandOf(minute: number, sunset: number): Band {
   if (minute >= sunset - 60 && minute < sunset + 40) return 'dusk';
   if (minute >= sunset + 40) return 'night';
   return minute < 11 * 60 ? 'morning' : 'day';
+}
+
+/** 놀러 가고 싶어's curated places (ADR-0128 2, specs/seoul-curated-picks.md): no 카페·디저트 (먹기's), no 동네, only those one
+ * walks into (a ticketed show or a booked room is not 「지금 가기」), no 클럽 (weekend nights only) and no 직관 out of season. */
+const PLAY: ReadonlySet<FunG> = new Set(['G1', 'G2', 'G4', 'G5', 'G6', 'G7', 'G10', 'NEW']);
+/** Indoors (비 와요 keeps them): bookshops·LP bars, play rooms, live venues, bars, and the week's pop-ups and exhibitions. */
+const INDOOR_G: ReadonlySet<FunG> = new Set(['G4', 'G5', 'G7', 'G10']);
+/** 「종류 · 동네」 with our kind (LP바, 독립서점, 방탈출), not the map's (an LP bar the map calls a 카페 is not one on 놀러's card) */
+const kindLine = (word: string, line: string) => (/KOPIS/.test(word) ? line : `${word} · ${line.split(' · ').slice(1).join(' · ') || line}`);
+const kakaoId = (url: string) => /place\.map\.kakao\.com\/(\d+)/.exec(url)?.[1] ?? null;
+const card = (id: string, name: string, lat: number, lng: number, reason: string, image: string, url: string, opening: Spot['opening'], indoor: boolean): Spot => ({
+  // 서울's own prefix (DEST.seoul.idPrefix): a heart on it is 서울's, never read as 제주's (dest.ts destOfId)
+  id: `nt-${id}`, name, lat, lng, mood: 'new', sub: 'do', reason, image, kakaoPlaceId: kakaoId(url), bookable: false, score: 3, walkin: true, opening, curated: true, ...(indoor ? { indoor: true } : {}),
+});
+/** The curated places and the week's pop-ups, exhibitions, markets and festivals of `day` as 놀러 cards: each with its hours
+ * that day as Spot.opening, so 지금's open-now rule (state.ts viewingShut) reads them like the destination's own places. A week's
+ * thing whose hours that day can not be read is left out (never shown as open when it may not be). */
+export function curatedSpots(day: string): Spot[] {
+  const month = Number(day.slice(5, 7));
+  const weekday = new Date(`${day}T00:00:00Z`).getUTCDay();
+  const out: Spot[] = [];
+  for (const it of funItems(day)) {
+    const g = it.fun.g;
+    if (g === 'hood' || !PLAY.has(g) || !it.fun.walkin || WEEKEND_NIGHT.test(it.fun.word)) continue;
+    if (g === 'G6' && (month < 3 || month > 10)) continue;
+    const [open, close] = hoursOf(it.fun.word);
+    // all night only where the kind says so (찜질방); a kind with no hours of its own is taken as daytime to evening
+    const opening: Spot['opening'] = open === 0 && close >= 1440 ? (/찜질방/.test(it.fun.word) ? 'always' : [11 * 60, 22 * 60]) : [open, close];
+    out.push(card(it.id, it.title, it.lat, it.lng, kindLine(it.fun.word, it.place), it.image, it.link, opening, INDOOR_G.has(g)));
+  }
+  for (const it of weeklyItems(day)) {
+    if (it.start > day) continue;
+    const spans = parseCultureTime(it.time)?.[weekday]?.spans ?? [];
+    if (!spans.length) continue;
+    const opening: [number, number] = [Math.min(...spans.map((x) => x[0])), Math.max(...spans.map((x) => x[1]))];
+    out.push(card(it.id, it.title, it.lat, it.lng, `${it.kind} · ${it.week.where}`, it.image, it.week.kakao, opening, it.kind === '팝업' || it.kind === '전시'));
+  }
+  return out;
+}
+
+let ALL: Spot[] | null = null;
+/** Every place curatedSpots may ever make a card of, whatever the day and the hour: what a heart or 가 봤어요 on one is looked up
+ * in (state.ts withCurated) — so it stays saved on the days it is not picked. */
+export function curatedAll(): Spot[] {
+  if (ALL) return ALL;
+  const found: FunRow[] = FOUND_ROWS.filter((r) => r.kind === '새로 연 곳').map((r) => ({ id: r.id, name: r.name, g: 'NEW', word: r.word, lat: r.lat, lng: r.lng, line: r.line ?? `${r.word} · ${r.hood ?? r.gu ?? ''}`, walkin: true, url: r.kakao, ...(r.img ? { img: r.img } : {}) }));
+  const places = [...(FILE.places as FunRow[]), ...found].filter((p) => PLAY.has(p.g) && p.walkin && !WEEKEND_NIGHT.test(p.word)).map((p) => card(p.id, p.name, p.lat, p.lng, kindLine(p.word, p.line), p.img ?? '', p.url, 'always', INDOOR_G.has(p.g)));
+  const weeks = weeklyItems('').map((it) => card(it.id, it.title, it.lat, it.lng, `${it.kind} · ${it.week.where}`, it.image, it.week.kakao, 'always', false));
+  return (ALL = [...places, ...weeks]);
 }
