@@ -13,12 +13,14 @@ interface Row {
   body: string;
   until: number;
 }
-/** The three statements the function sends, over a Map. */
-function fakeD1(fail = false): D1Like & { rows: Map<string, Row>; sql: string[] } {
+/** The statements the function sends, over two Maps: the day's lists and the KOPIS details. */
+function fakeD1(fail = false): D1Like & { rows: Map<string, Row>; shows: Map<string, { body: string; until: number }>; sql: string[] } {
   const rows = new Map<string, Row>();
+  const shows = new Map<string, { body: string; until: number }>();
   const sql: string[] = [];
   return {
     rows,
+    shows,
     sql,
     prepare(q: string): D1Stmt {
       sql.push(q.split(' ')[0]);
@@ -31,12 +33,19 @@ function fakeD1(fail = false): D1Like & { rows: Map<string, Row>; sql: string[] 
         },
         async run() {
           if (fail) throw new Error('d1 down');
+          if (q.includes('kopis_shows')) {
+            if (q.startsWith('INSERT')) for (let i = 0; i < args.length; i += 3) shows.set(args[i] as string, { body: args[i + 1] as string, until: args[i + 2] as number });
+            if (q.startsWith('DELETE')) for (const [k, r] of shows) if (r.until < (args[0] as number)) shows.delete(k);
+            return {};
+          }
           if (q.startsWith('INSERT')) rows.set(args[0] as string, { key: args[0] as string, day: args[1] as string, body: args[2] as string, until: args[3] as number });
           if (q.startsWith('DELETE')) for (const [k, r] of rows) if (q.includes('<=') ? r.day <= (args[0] as string) : r.day < (args[0] as string)) rows.delete(k);
           return {};
         },
         async all<T>() {
-          return { results: [] as T[] };
+          if (fail) throw new Error('d1 down');
+          const [now, ...ids] = args as [number, ...string[]];
+          return { results: ids.filter((id) => (shows.get(id)?.until ?? 0) > now).map((id) => ({ id, body: shows.get(id)!.body })) as T[] };
         },
       };
       return stmt;
@@ -56,11 +65,11 @@ const ask = (q: string, db?: D1Like, init?: RequestInit) => ({
   request: new Request(`https://yeochana.com/api/culture${q}`, init),
   env: { SEOUL_OPEN_API_KEY: 'k', KOPIS_API_KEY: 'kk', ...(db ? { EVENTS_DB: db } : {}) },
 });
-/** fetch: this function's own asks back to it (no D1 there: pages and shows never use it), the Seoul list, KOPIS */
-function stub(kopis: (path: string) => Response) {
+/** fetch: this function's own asks back to it (with `db`: the shows chunks keep their details there), the Seoul list, KOPIS */
+function stub(kopis: (path: string) => Response, db?: D1Like) {
   const outside: string[] = [];
   vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
-    if (url.startsWith('https://yeochana.com/')) return onRequestGet(ask(url.slice('https://yeochana.com/api/culture'.length), undefined, init));
+    if (url.startsWith('https://yeochana.com/')) return onRequestGet(ask(url.slice('https://yeochana.com/api/culture'.length), db, init));
     outside.push(url);
     if (url.startsWith('http://www.kopis.or.kr/')) return kopis(new URL(url).pathname.replace('/openApi/restful/', ''));
     return new Response(JSON.stringify({ culturalEventInfo: { list_total_count: rows.length, row: rows } }), { status: 200 });
@@ -141,7 +150,27 @@ describe('/api/culture kept in D1 (ADR-0129)', () => {
     expect(db.sql).toEqual([]);
   });
 
-  it('a page or a shows ask never touches D1', async () => {
+  it('KOPIS details are one copy too (Amendment 1): a list cut short at one edge is finished at the next, which asks KOPIS only for the rest', async () => {
+    at('2026-11-04T05:00:00Z');
+    const db = fakeD1();
+    // the first edge: KOPIS blocks after two details
+    let n = 0;
+    stub((path) => (path === 'pblprfr' || n++ < 2 ? ok(path) : new Response(BLOCKED, { status: 400 })), db);
+    const cut = await onRequestGet(ask('?city=seoul', db));
+    expect(cut.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+    expect(db.rows.size).toBe(0);
+    const had = db.shows.size;
+    expect(had).toBeGreaterThan(0);
+    // another edge: the details already in D1 are not asked again; the list comes complete and is kept
+    const outside = stub(ok, db);
+    const done = await onRequestGet(ask('?city=seoul', db));
+    expect(done.headers.get('Cache-Control')).toMatch(/s-maxage=\d{4,}$/);
+    expect(db.rows.has(KEY)).toBe(true);
+    const details = outside.filter((u) => /\/pblprfr\/PF/.test(u)).map((u) => u.split('/').pop()!.split('?')[0]);
+    for (const id of details) expect([...db.shows.keys()].slice(0, had)).not.toContain(id);
+  });
+
+  it('a page ask never touches D1', async () => {
     at('2026-11-04T05:00:00Z');
     const db = fakeD1();
     stub(ok);

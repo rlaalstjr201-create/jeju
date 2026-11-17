@@ -15,7 +15,8 @@
 // Subrequests (free plan: 50 an invocation). The list's invocation: Seoul pages P (~20 on 2026-11-04, at most MAX_PAGES)
 // + 1 KOPIS list + C chunks, C <= 50 - 2 (its own cache match/put, in case the Cache API counts) - 3 (D1: its read, write and
 // clean-up, ADR-0129) - P - 1; ~204 shows: 21 chunks of 10 (P = 20: 42 + 2 + 3). With more pages the chunks grow to at most CHUNK_MAX; shows past C x CHUNK_MAX are left
-// out. A chunk's invocation: per show a cache match, a detail and a cache put (<= 3 x CHUNK_MAX = 45) + at most
+// out. A chunk's invocation: per show a cache match, a detail and a cache put (<= 3 x CHUNK_MAX = 45; on the live site one D1
+// read, a detail a show and one D1 write and clean-up instead, ADR-0129 Amendment 1) + at most
 // VENUE_ASKS venues missing from the table. The shows-list invocation: <= KOPIS_LIST_PAGES.
 // One copy for every edge (ADR-0129): the day's list, once it came complete, is kept in D1 (EVENTS_DB, table culture_lists)
 // until KST midnight; an edge without it reads it there before building it again. A list cut short (KOPIS) stays at its
@@ -128,11 +129,12 @@ const STORE_CALLS = 3;
 /** Only the live site keeps a list in D1: a preview build (*.pages.dev) shares the database, and its list must not be every
  * edge's until midnight (review m2). */
 const LIVE_HOST = 'yeochana.com';
+const liveDb = (ctx: Ctx) => (new URL(ctx.request.url).hostname === LIVE_HOST ? ctx.env.EVENTS_DB : undefined);
 
 /** The day's list from D1 (ADR-0129), else `make()`'s, kept there when it came complete (kept at the edge until midnight).
  * D1 missing or failing: as without it. */
 async function stored(ctx: Ctx, key: string, day: string, make: () => Promise<Response>): Promise<Response> {
-  const db = new URL(ctx.request.url).hostname === LIVE_HOST ? ctx.env.EVENTS_DB : undefined;
+  const db = liveDb(ctx);
   if (!db) return make();
   const now = Date.now();
   const row = await db
@@ -326,18 +328,43 @@ const TABLE = VENUES as unknown as Record<string, [number, number]>;
 /** A chunk's shows as items: each detail from the edge (7 days) or KOPIS; a venue from the table, else KOPIS. A failed
  * call stops the chunk's asking (a block: asking more only keeps it blocked); the rest count as failed. */
 async function kopisChunk(ctx: Ctx, key: string, ids: string[], day: string): Promise<Response> {
-  const cache = edge();
+  // the live site (ADR-0129 Amendment 1): the details in D1, one copy for every edge — one read for the chunk, one write for
+  // what it asked KOPIS; elsewhere (a preview, tests) the edge's own copy as before
+  let db = liveDb(ctx);
+  let cache = db ? null : edge();
+  const known = new Map<string, KopisShow>();
+  if (db) {
+    const got = await db
+      .prepare(`SELECT id, body FROM kopis_shows WHERE until > ?1 AND id IN (${ids.map((_, i) => `?${i + 2}`).join(', ')})`)
+      .bind(Date.now(), ...ids)
+      .all<{ id: string; body: string }>()
+      .catch(() => null);
+    // D1 failing (no table yet, an outage): the edge's own copy as before (review m)
+    if (!got) {
+      db = undefined;
+      cache = edge();
+    }
+    for (const r of got?.results ?? []) {
+      try {
+        known.set(r.id, JSON.parse(r.body) as KopisShow);
+      } catch {
+        // a broken row: asked again
+      }
+    }
+  }
+  const fresh: [string, KopisShow][] = [];
   const shows: KopisShow[] = [];
   let failed = 0;
   let blocked = false;
   for (const id of ids) {
     const cacheKey = new Request(`https://culture.cache/kopis/pf/${id}`);
     const hit = await cache?.match(cacheKey).catch(() => undefined);
-    let show = hit ? ((await hit.json().catch(() => null)) as KopisShow | null) : null;
+    let show = known.get(id) ?? (hit ? ((await hit.json().catch(() => null)) as KopisShow | null) : null);
     if (!show && !blocked) {
       const xml = await kopisGet(key, `pblprfr/${id}`);
       if (xml === null) blocked = true;
       show = xml === null ? null : parseShow(xml);
+      if (show && db) fresh.push([id, show]);
       if (show && cache) {
         const put = cache.put(cacheKey, new Response(JSON.stringify(show), { headers: { 'Cache-Control': `s-maxage=${SHOW_KEEP_S}` } })).catch(() => undefined);
         if (ctx.waitUntil) ctx.waitUntil(put);
@@ -359,6 +386,17 @@ async function kopisChunk(ctx: Ctx, key: string, ids: string[], day: string): Pr
       const lng = Number(xmlTag(rec, 'lo'));
       if (lat && lng && Number.isFinite(lat) && Number.isFinite(lng)) venues[s.venue] = [lat, lng];
     }
+  }
+  if (db && fresh.length) {
+    const now = Date.now();
+    const keep = db
+      .prepare(`INSERT INTO kopis_shows (id, body, until) VALUES ${fresh.map((_, i) => `(?${3 * i + 1}, ?${3 * i + 2}, ?${3 * i + 3})`).join(', ')} ON CONFLICT (id) DO UPDATE SET body = excluded.body, until = excluded.until`)
+      .bind(...fresh.flatMap(([id, s]) => [id, JSON.stringify(s), now + SHOW_KEEP_S * 1000]))
+      .run()
+      .then(() => db.prepare('DELETE FROM kopis_shows WHERE until < ?1').bind(now).run())
+      .catch(() => undefined);
+    if (ctx.waitUntil) ctx.waitUntil(keep);
+    else await keep;
   }
   return json({ items: kopisItems(shows, venues, day), failed }, 60);
 }
