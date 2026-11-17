@@ -1,0 +1,35 @@
+# 오늘 근처에서 하는 것 (ADR-0129): the day's culture list built just after KST midnight, so it is in D1 (functions/api/culture.ts
+# stored) before anyone opens the app — every edge then answers from that one copy at once. Only the public URL is asked:
+# no secret, nothing written here. A list cut short (KOPIS) is not kept in D1 and stays 10 minutes at its edge, so it is asked
+# again 11 minutes on, at most three times; its show details asked so far stay at that edge, so the next try finishes more.
+name: warm culture list
+
+on:
+  schedule:
+    - cron: '5 15 * * *' # 00:05 KST
+  workflow_dispatch:
+
+concurrency:
+  group: warm-culture
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Ask for today's list until it comes complete
+        run: |
+          for try in 1 2 3; do
+            h=$(curl -sS -o body.json -D - --max-time 120 'https://yeochana.com/api/culture?city=seoul' || true)
+            status=$(printf '%s' "$h" | head -1 | awk '{print $2}')
+            edge=$(printf '%s' "$h" | tr -d '\r' | grep -i '^cache-control:' | grep -o 's-maxage=[0-9]*' | cut -d= -f2)
+            items=$(node -e "try{console.log(JSON.parse(require('fs').readFileSync('body.json','utf8')).items.length)}catch{console.log(0)}")
+            echo "try $try: status=${status:-none} s-maxage=${edge:-none} items=$items"
+            # complete: kept until midnight (more than the 10 minutes a list cut short gets)
+            if [ "$status" = "200" ] && [ "${edge:-0}" -gt 600 ]; then exit 0; fi
+            [ "$try" = 3 ] || sleep 660
+          done
+          echo "::warning::the list did not come complete; the app's own asks build it as before"

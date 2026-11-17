@@ -13,13 +13,17 @@
 // A show's detail is kept at the edge 7 days: an edge's first day fills in over a few asks (each list cut short is kept
 // 10 minutes), later days ask only new shows. KOPIS failing: the Seoul list alone, kept at the edge 10 minutes only.
 // Subrequests (free plan: 50 an invocation). The list's invocation: Seoul pages P (~20 on 2026-11-04, at most MAX_PAGES)
-// + 1 KOPIS list + C chunks, C <= 50 - 2 (its own cache match/put, in case the Cache API counts) - P - 1; ~204 shows: 21
-// chunks of 10 (P = 20: 42 + 2). With more pages the chunks grow to at most CHUNK_MAX; shows past C x CHUNK_MAX are left
+// + 1 KOPIS list + C chunks, C <= 50 - 2 (its own cache match/put, in case the Cache API counts) - 3 (D1: its read, write and
+// clean-up, ADR-0129) - P - 1; ~204 shows: 21 chunks of 10 (P = 20: 42 + 2 + 3). With more pages the chunks grow to at most CHUNK_MAX; shows past C x CHUNK_MAX are left
 // out. A chunk's invocation: per show a cache match, a detail and a cache put (<= 3 x CHUNK_MAX = 45) + at most
 // VENUE_ASKS venues missing from the table. The shows-list invocation: <= KOPIS_LIST_PAGES.
+// One copy for every edge (ADR-0129): the day's list, once it came complete, is kept in D1 (EVENTS_DB, table culture_lists)
+// until KST midnight; an edge without it reads it there before building it again. A list cut short (KOPIS) stays at its
+// edge only, 10 minutes, as before. .github/workflows/warm-culture.yml asks for it just after midnight.
 import { cultureItems, day10, type CultureItem, type SeoulRow } from '../_lib/culture-filter';
 import { kopisItems, kopisTime, listIds, mergeCulture, parseShow, xmlRecords, xmlTag, type KopisShow } from '../_lib/kopis';
 import VENUES from '../_lib/kopis-venues.json';
+import type { D1Like } from '../_lib/events/d1';
 
 const ENDPOINT = 'http://openapi.seoul.go.kr:8088'; // http only (the API answers nothing on https)
 const PAGE = 1000;
@@ -41,7 +45,7 @@ const KOPIS_FROM = '(재)예술경영지원센터 공연예술통합전산망(KO
 
 interface Ctx {
   request: Request;
-  env: { SEOUL_OPEN_API_KEY?: string; KOPIS_API_KEY?: string };
+  env: { SEOUL_OPEN_API_KEY?: string; KOPIS_API_KEY?: string; EVENTS_DB?: D1Like };
   waitUntil?(p: Promise<unknown>): void;
 }
 
@@ -57,8 +61,9 @@ export const kstDay = (ms: number) => new Date(ms + 9 * 3600e3).toISOString().sl
 /** Seconds to the next KST midnight (an edge copy lasts the day; at least a minute). */
 const toMidnight = (ms: number) => Math.max(60, Math.floor((Date.parse(`${kstDay(ms)}T00:00:00+09:00`) + 86400e3 - ms) / 1000));
 
-const json = (body: unknown, browserSeconds: number, edgeSeconds = toMidnight(Date.now())) =>
-  new Response(JSON.stringify(body), {
+const json = (body: unknown, browserSeconds: number, edgeSeconds = toMidnight(Date.now())) => jsonText(JSON.stringify(body), browserSeconds, edgeSeconds);
+const jsonText = (text: string, browserSeconds: number, edgeSeconds: number) =>
+  new Response(text, {
     status: 200,
     // the browser keeps it a few minutes (a new day is asked again soon after midnight), the edge until KST midnight
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${browserSeconds}, s-maxage=${edgeSeconds}` },
@@ -112,7 +117,49 @@ export async function onRequestGet(ctx: Ctx): Promise<Response> {
     return cached(ctx, `https://culture.cache/seoul/${day}/p${n}`, () => onePage(key, n, day));
   }
   // with KOPIS the list is another one (a Seoul-only copy kept from before must not stand in for it until midnight)
-  return cached(ctx, `https://culture.cache/seoul/${day}${kopisKey ? '/shows' : ''}`, () => wholeDay(ctx.request.url, day, kopisKey || null), 300);
+  const listKey = `https://culture.cache/seoul/${day}${kopisKey ? '/shows' : ''}`;
+  return cached(ctx, listKey, () => stored(ctx, listKey, day, () => wholeDay(ctx.request.url, day, kopisKey || null)), 300);
+}
+
+/** Days a list stays in D1 (ADR-0129): only today's is read; the rest are there to look back at, then deleted. */
+const STORE_DAYS = 7;
+/** D1 calls of the list's invocation (read, write, clean-up): they count among its subrequests too */
+const STORE_CALLS = 3;
+/** Only the live site keeps a list in D1: a preview build (*.pages.dev) shares the database, and its list must not be every
+ * edge's until midnight (review m2). */
+const LIVE_HOST = 'yeochana.com';
+
+/** The day's list from D1 (ADR-0129), else `make()`'s, kept there when it came complete (kept at the edge until midnight).
+ * D1 missing or failing: as without it. */
+async function stored(ctx: Ctx, key: string, day: string, make: () => Promise<Response>): Promise<Response> {
+  const db = new URL(ctx.request.url).hostname === LIVE_HOST ? ctx.env.EVENTS_DB : undefined;
+  if (!db) return make();
+  const now = Date.now();
+  const row = await db
+    .prepare('SELECT body, until FROM culture_lists WHERE key = ?1')
+    .bind(key)
+    .first<{ body: string; until: number }>()
+    .catch(() => null);
+  if (row && row.until > now) return jsonText(row.body, 300, Math.max(60, Math.floor((row.until - now) / 1000)));
+  const res = await make();
+  const edgeSeconds = Number(/s-maxage=(\d+)/.exec(res.headers.get('Cache-Control') ?? '')?.[1] ?? 0);
+  // complete: kept until midnight (a list cut short says so with its 10 minutes, KOPIS_FAIL_S)
+  if (res.status === 200 && edgeSeconds > KOPIS_FAIL_S) {
+    const keep = res
+      .clone()
+      .text()
+      .then((body) =>
+        db
+          .prepare('INSERT INTO culture_lists (key, day, body, until) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (key) DO UPDATE SET day = excluded.day, body = excluded.body, until = excluded.until')
+          .bind(key, day, body, now + edgeSeconds * 1000)
+          .run(),
+      )
+      .then(() => db.prepare('DELETE FROM culture_lists WHERE day <= ?1').bind(kstDay(now - STORE_DAYS * 86400e3)).run())
+      .catch(() => undefined);
+    if (ctx.waitUntil) ctx.waitUntil(keep);
+    else await keep;
+  }
+  return res;
 }
 
 /** Page `n` of the city's list (1,000 rows), only the rows on `day`, and the list's total. */
@@ -205,7 +252,7 @@ async function kopisDay(self: string, day: string, seoulCalls: Promise<number>, 
     return { items: [], ok: false };
   }
   if (!ids.length) return { items: [], ok: true };
-  const room = Math.max(1, SUBREQUESTS - 2 - (await seoulCalls) - 1);
+  const room = Math.max(1, SUBREQUESTS - 2 - STORE_CALLS - (await seoulCalls) - 1);
   const chunks = Math.min(Math.ceil(ids.length / CHUNK), room);
   const size = Math.min(CHUNK_MAX, Math.ceil(ids.length / chunks));
   const parts = Array.from({ length: chunks }, (_, i) => ids.slice(i * size, (i + 1) * size)).filter((p) => p.length);
