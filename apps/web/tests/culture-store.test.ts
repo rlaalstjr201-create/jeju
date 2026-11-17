@@ -112,7 +112,7 @@ describe('/api/culture kept in D1 (ADR-0129)', () => {
     const db = fakeD1();
     stub(() => new Response(BLOCKED, { status: 400 }));
     const res = await onRequestGet(ask('?city=seoul', db));
-    expect(res.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=120, s-maxage=120');
     expect(db.rows.size).toBe(0);
   });
 
@@ -157,7 +157,7 @@ describe('/api/culture kept in D1 (ADR-0129)', () => {
     let n = 0;
     stub((path) => (path === 'pblprfr' || n++ < 2 ? ok(path) : new Response(BLOCKED, { status: 400 })), db);
     const cut = await onRequestGet(ask('?city=seoul', db));
-    expect(cut.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+    expect(cut.headers.get('Cache-Control')).toBe('public, max-age=120, s-maxage=120');
     expect(db.rows.size).toBe(0);
     const had = db.shows.size;
     expect(had).toBeGreaterThan(0);

@@ -123,7 +123,7 @@ describe('/api/culture with KOPIS shows (ADR-0113 5)', () => {
     expect(res.headers.get('Cache-Control')).toMatch(/^public, max-age=300, s-maxage=\d{4,}$/);
   });
 
-  it('KOPIS failing: the Seoul list alone, kept at the edge 10 minutes only', async () => {
+  it('KOPIS failing: the Seoul list alone, kept at the edge 2 minutes only (ADR-0129 Amendment 2)', async () => {
     at14();
     stub(() => new Response(BLOCKED, { status: 400 }));
     const res = await onRequestGet(kreq('?city=seoul'));
@@ -132,16 +132,16 @@ describe('/api/culture with KOPIS shows (ADR-0113 5)', () => {
     expect(b.items.length).toBeGreaterThan(80);
     expect(b.items.every((i) => i.id.startsWith('sc-'))).toBe(true);
     expect(b.fromShows).toBeUndefined();
-    expect(res.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=120, s-maxage=120');
   });
 
-  it('a detail blocked part way: what came, kept 10 minutes', async () => {
+  it('a detail blocked part way: what came, kept 2 minutes', async () => {
     at14();
     let n = 0;
     stub((path) => (path === 'pblprfr' || n++ < 1 ? ok(path) : new Response(BLOCKED, { status: 400 })));
     const res = await onRequestGet(kreq('?city=seoul'));
     expect(res.status).toBe(200);
-    expect(res.headers.get('Cache-Control')).toBe('public, max-age=300, s-maxage=600');
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=120, s-maxage=120');
   });
 
   it('no KOPIS key: the Seoul list as before, until midnight', async () => {

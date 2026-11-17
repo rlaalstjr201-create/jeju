@@ -1,7 +1,8 @@
 # 오늘 근처에서 하는 것 (ADR-0129): the day's culture list built just after KST midnight, so it is in D1 (functions/api/culture.ts
 # stored) before anyone opens the app — every edge then answers from that one copy at once. Only the public URL is asked:
-# no secret, nothing written here. A list cut short (KOPIS) is not kept in D1 and stays 10 minutes at its edge, so it is asked
-# again 11 minutes on, at most three times; its show details asked so far stay at that edge, so the next try finishes more.
+# no secret, nothing written here. A list cut short (KOPIS) is not kept in D1 and stays 2 minutes at its edge, so it is asked
+# again 130 seconds on, at most 12 times; its show details asked so far stay in D1 (Amendment 1), so each try gets further
+# (a day with no new shows: one try; the first day, about ten: some 20 shows a try from a US edge).
 name: warm culture list
 
 on:
@@ -18,18 +19,18 @@ permissions: {}
 jobs:
   warm:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     steps:
       - name: Ask for today's list until it comes complete
         run: |
-          for try in 1 2 3; do
+          for try in $(seq 1 12); do
             h=$(curl -sS -o body.json -D - --max-time 120 'https://yeochana.com/api/culture?city=seoul' || true)
             status=$(printf '%s' "$h" | head -1 | awk '{print $2}')
             edge=$(printf '%s' "$h" | tr -d '\r' | grep -i '^cache-control:' | grep -o 's-maxage=[0-9]*' | cut -d= -f2)
             items=$(node -e "try{console.log(JSON.parse(require('fs').readFileSync('body.json','utf8')).items.length)}catch{console.log(0)}")
             echo "try $try: status=${status:-none} s-maxage=${edge:-none} items=$items"
-            # complete: kept until midnight (more than the 10 minutes a list cut short gets)
-            if [ "$status" = "200" ] && [ "${edge:-0}" -gt 600 ]; then exit 0; fi
-            [ "$try" = 3 ] || sleep 660
+            # complete: kept until midnight (more than the 2 minutes a list cut short gets)
+            if [ "$status" = "200" ] && [ "${edge:-0}" -gt 120 ]; then exit 0; fi
+            [ "$try" = 12 ] || sleep 130
           done
           echo "::warning::the list did not come complete; the app's own asks build it as before"

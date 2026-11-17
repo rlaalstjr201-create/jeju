@@ -11,7 +11,7 @@
 // paced at 4 a second over all the chunk calls at once, an ask stops starting chunks after KOPIS_BUDGET_MS, and a
 // failed call stops its chunk.
 // A show's detail is kept at the edge 7 days: an edge's first day fills in over a few asks (each list cut short is kept
-// 10 minutes), later days ask only new shows. KOPIS failing: the Seoul list alone, kept at the edge 10 minutes only.
+// 2 minutes), later days ask only new shows. KOPIS failing: the Seoul list alone, kept at the edge 2 minutes only.
 // Subrequests (free plan: 50 an invocation). The list's invocation: Seoul pages P (~20 on 2026-11-04, at most MAX_PAGES)
 // + 1 KOPIS list + C chunks, C <= 50 - 2 (its own cache match/put, in case the Cache API counts) - 3 (D1: its read, write and
 // clean-up, ADR-0129) - P - 1; ~204 shows: 21 chunks of 10 (P = 20: 42 + 2 + 3). With more pages the chunks grow to at most CHUNK_MAX; shows past C x CHUNK_MAX are left
@@ -20,7 +20,7 @@
 // VENUE_ASKS venues missing from the table. The shows-list invocation: <= KOPIS_LIST_PAGES.
 // One copy for every edge (ADR-0129): the day's list, once it came complete, is kept in D1 (EVENTS_DB, table culture_lists)
 // until KST midnight; an edge without it reads it there before building it again. A list cut short (KOPIS) stays at its
-// edge only, 10 minutes, as before. .github/workflows/warm-culture.yml asks for it just after midnight.
+// edge only, 2 minutes (Amendment 2). .github/workflows/warm-culture.yml asks for it just after midnight.
 import { cultureItems, day10, type CultureItem, type SeoulRow } from '../_lib/culture-filter';
 import { kopisItems, kopisTime, listIds, mergeCulture, parseShow, xmlRecords, xmlTag, type KopisShow } from '../_lib/kopis';
 import VENUES from '../_lib/kopis-venues.json';
@@ -39,7 +39,8 @@ const CHUNK_MAX = 15;
 const SUBREQUESTS = 50;
 const VENUE_ASKS = 3;
 const SHOW_KEEP_S = 7 * 86400;
-const KOPIS_FAIL_S = 600;
+// a list cut short: kept 2 minutes (ADR-0129 Amendment 2: the details asked stay in D1, so each new ask gets further)
+const KOPIS_FAIL_S = 120;
 const KOPIS_BUDGET_MS = 20000; // no new chunk after this: the app gives up at 15s, waitUntil lasts ~30s
 const SHOW_ID = /^PF\d{5,8}$/;
 const KOPIS_FROM = '(재)예술경영지원센터 공연예술통합전산망(KOPIS)';
@@ -145,7 +146,7 @@ async function stored(ctx: Ctx, key: string, day: string, make: () => Promise<Re
   if (row && row.until > now) return jsonText(row.body, 300, Math.max(60, Math.floor((row.until - now) / 1000)));
   const res = await make();
   const edgeSeconds = Number(/s-maxage=(\d+)/.exec(res.headers.get('Cache-Control') ?? '')?.[1] ?? 0);
-  // complete: kept until midnight (a list cut short says so with its 10 minutes, KOPIS_FAIL_S)
+  // complete: kept until midnight (a list cut short says so with its 2 minutes, KOPIS_FAIL_S)
   if (res.status === 200 && edgeSeconds > KOPIS_FAIL_S) {
     const keep = res
       .clone()
@@ -233,8 +234,8 @@ async function wholeDay(self: string, day: string, shows: string | null): Promis
   if (!kopis) return json(body, 300);
   const k = await kopis;
   const merged = { ...body, items: mergeCulture(items, k.items), ...(k.items.length ? { fromShows: KOPIS_FROM } : {}) };
-  // KOPIS failing (wholly or a chunk): what came, kept at the edge 10 minutes only (the details kept make the next ask quick)
-  return k.ok ? json(merged, 300) : json(merged, 300, KOPIS_FAIL_S);
+  // KOPIS failing (wholly or a chunk): what came, kept at the edge 2 minutes only (the details kept make the next ask quick)
+  return k.ok ? json(merged, 300) : json(merged, KOPIS_FAIL_S, KOPIS_FAIL_S);
 }
 
 /** The day's show items through this same function: the list, then the details a chunk at a time, KOPIS_RUNS at once.
@@ -264,7 +265,7 @@ async function kopisDay(self: string, day: string, seoulCalls: Promise<number>, 
   const t0 = Date.now();
   const run = async () => {
     while (next < parts.length) {
-      // past the budget the rest wait for the next ask (the list then lasts 10 minutes at the edge; the details asked stay)
+      // past the budget the rest wait for the next ask (the list then lasts 2 minutes at the edge; the details asked stay)
       if (Date.now() - t0 > KOPIS_BUDGET_MS) {
         ok = false;
         return;
